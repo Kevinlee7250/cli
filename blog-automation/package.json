@@ -1,0 +1,32 @@
+{
+  "name": "blog-automation",
+  "version": "1.0.0",
+  "description": "AI-powered blog automation system: keyword research, content generation, thumbnail creation, and SNS publishing",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "run-once": "node src/index.js --once",
+    "schedule": "node src/index.js --schedule",
+    "test-keywords": "node scripts/test-keywords.js",
+    "test-content": "node scripts/test-content.js",
+    "test-thumbnail": "node scripts/test-thumbnail.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "axios": "^1.7.0",
+    "canvas": "^2.11.2",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.5",
+    "form-data": "^4.0.0",
+    "node-cron": "^3.0.3",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "sharp": "^0.33.3",
+    "winston": "^3.13.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "MIT"
+}

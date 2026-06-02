@@ -3,11 +3,24 @@ import { fetchNaverTrends, fetchNaverNews } from './naver-trends.js'
 import { logger } from '../utils/logger.js'
 import { config } from '../config.js'
 
+// AdSense CPC 추정치 (카테고리별 클릭당 단가, USD)
+export const ADSENSE_CPC = {
+  금융: { cpc: 2.5, keywords: ['주식', '코인', '펀드', '보험', '대출', '카드', '금리', '부동산', '청약', 'ETF', '투자'] },
+  건강: { cpc: 1.8, keywords: ['다이어트', '운동', '영양제', '병원', '의료', '건강', '질병', '치료', '헬스'] },
+  기술: { cpc: 1.5, keywords: ['AI', '인공지능', '스마트폰', '노트북', '게임', '앱', '소프트웨어', '챗GPT', '자동화'] },
+  여행: { cpc: 1.2, keywords: ['여행', '항공', '호텔', '숙소', '리조트', '해외여행', '국내여행', '캠핑', '항공권'] },
+  교육: { cpc: 1.3, keywords: ['영어', '자격증', '시험', '취업', '학원', '온라인강의', '코딩', '자기계발'] },
+  쇼핑: { cpc: 0.9, keywords: ['할인', '세일', '쿠폰', '가전', '가구', '패션', '명품', '브랜드'] },
+  부동산: { cpc: 2.8, keywords: ['아파트', '분양', '임대', '전세', '월세', '매매', '청약', '재건축'] },
+  법률: { cpc: 3.2, keywords: ['변호사', '소송', '법률', '이혼', '상속', '계약', '손해배상'] },
+}
+
 /**
- * Google + 네이버 트렌드를 통합 분석하여 AdSense 수익화에 최적화된 키워드 선별
+ * Google + 네이버 트렌드 통합 분석
+ * 업그레이드: 트렌드 방향성 가중치 + AdSense CPC 추정 + 상승률 보너스
  */
 export async function analyzeHotKeywords() {
-  logger.info('=== 오늘의 핫 키워드 분석 시작 ===')
+  logger.info('=== 오늘의 핫 키워드 분석 시작 (v2) ===')
 
   const [googleTrends, realtimeTrends, naverTrends] = await Promise.allSettled([
     fetchGoogleTrends(20),
@@ -22,27 +35,66 @@ export async function analyzeHotKeywords() {
 
   const naverKeywords = naverTrends.status === 'fulfilled' ? naverTrends.value : []
 
-  // 교차 분석: 두 플랫폼에 모두 등장하는 키워드 우선
   const scored = scoreKeywords(googleKeywords, naverKeywords)
-
-  // 상위 N개 선택
   const topKeywords = scored.slice(0, config.content.postsPerRun)
 
-  // 각 키워드별 뉴스 컨텍스트 수집
   logger.info(`상위 ${topKeywords.length}개 키워드 뉴스 컨텍스트 수집 중...`)
   const enriched = await Promise.all(
     topKeywords.map(async (item) => {
-      const news = await fetchNaverNews(item.keyword, 3)
-      return { ...item, newsContext: news }
+      const news = await fetchNaverNews(item.keyword, 5)
+      return {
+        ...item,
+        newsContext: news,
+        estimatedDailyCPC: estimateDailyCPC(item),
+        trendDirection: item.naverTrend || 'stable',
+      }
     }),
   )
 
   logger.info('=== 핫 키워드 분석 완료 ===')
   enriched.forEach((k, i) => {
-    logger.info(`  ${i + 1}. ${k.keyword} (점수: ${k.score}, 출처: ${k.sources.join('+')}`)
+    const arrow = k.trendDirection === 'rising' ? '🚀' : k.trendDirection === 'falling' ? '📉' : '📊'
+    logger.info(`  ${i + 1}. ${k.keyword} ${arrow} (점수: ${k.score} | CPC: $${k.estimatedDailyCPC?.cpc || 0} | ${k.sources.join('+')})`)
   })
 
   return enriched
+}
+
+/**
+ * 네이버 DataLab 실시간 데이터로 직접 분석 (MCP 연동용)
+ * keyword-analyzer가 외부에서 네이버 DataLab 결과를 받아 처리
+ */
+export function analyzeNaverDatalabResults(datalabResults) {
+  if (!datalabResults?.results) return []
+
+  return datalabResults.results.map(r => {
+    const data = r.data || []
+    const ratios = data.map(d => d.ratio)
+    const avgRatio = ratios.reduce((a, b) => a + b, 0) / (ratios.length || 1)
+    const maxRatio = Math.max(...ratios, 0)
+
+    // 최근 3일 vs 이전 평균으로 상승률 계산
+    const recentAvg = ratios.slice(-3).reduce((a, b) => a + b, 0) / 3
+    const prevAvg = ratios.slice(0, -3).reduce((a, b) => a + b, 0) / Math.max(ratios.length - 3, 1)
+    const risingRate = prevAvg > 0 ? ((recentAvg - prevAvg) / prevAvg) * 100 : 0
+
+    const trend = risingRate > 30 ? 'rising' : risingRate < -20 ? 'falling' : 'stable'
+
+    return {
+      keyword: r.title,
+      keywords: r.keywords || [],
+      avgRatio: Math.round(avgRatio * 10) / 10,
+      maxRatio: Math.round(maxRatio * 10) / 10,
+      risingRate: Math.round(risingRate),
+      trend,
+      data,
+    }
+  }).sort((a, b) => {
+    // 상승 트렌드에 1.5배 가중치
+    const scoreA = a.avgRatio * (a.trend === 'rising' ? 1.5 : 1)
+    const scoreB = b.avgRatio * (b.trend === 'rising' ? 1.5 : 1)
+    return scoreB - scoreA
+  })
 }
 
 function mergeTrends(googleDaily, googleRealtime) {
@@ -80,17 +132,7 @@ function mergeTrends(googleDaily, googleRealtime) {
 }
 
 function scoreKeywords(googleKeywords, naverKeywords) {
-  const naverSet = new Set(naverKeywords.map(n => n.keyword))
-
-  // AdSense 고가치 카테고리 가중치
-  const highValueCategories = {
-    금융: ['주식', '코인', '펀드', '보험', '대출', '카드', '금리', '부동산', '청약'],
-    건강: ['다이어트', '운동', '영양제', '병원', '의료', '건강', '질병', '치료'],
-    기술: ['AI', '인공지능', '스마트폰', '노트북', '게임', '앱', '소프트웨어'],
-    여행: ['여행', '항공', '호텔', '숙소', '리조트', '해외여행', '국내여행'],
-    교육: ['영어', '자격증', '시험', '취업', '학원', '온라인강의', '코딩'],
-    쇼핑: ['할인', '세일', '쿠폰', '가전', '가구', '패션', '명품'],
-  }
+  const naverMap = new Map(naverKeywords.map(n => [n.keyword, n]))
 
   const scored = googleKeywords.map(item => {
     let score = 100
@@ -99,8 +141,16 @@ function scoreKeywords(googleKeywords, naverKeywords) {
     if (item.googleRank) score += (20 - Math.min(item.googleRank, 20)) * 5
     if (item.googleRealtimeRank) score += (20 - Math.min(item.googleRealtimeRank, 20)) * 3
 
-    // 네이버 교차 검증 보너스
-    if (naverSet.has(item.keyword)) score += 50
+    // 네이버 교차 검증
+    const naverData = naverMap.get(item.keyword)
+    if (naverData) {
+      score += 50
+      item.naverAvgRatio = naverData.avgRatio
+      item.naverTrend = naverData.trend
+      // 상승 트렌드 보너스
+      if (naverData.trend === 'rising') score += 60
+      if (naverData.risingRate > 50) score += 30
+    }
 
     // 트래픽 점수
     const trafficNum = parseInt((item.traffic || '').replace(/[^0-9]/g, ''), 10) || 0
@@ -108,12 +158,12 @@ function scoreKeywords(googleKeywords, naverKeywords) {
     else if (trafficNum > 100000) score += 50
     else if (trafficNum > 10000) score += 30
 
-    // AdSense 고가치 카테고리 보너스
-    for (const [, keywords] of Object.entries(highValueCategories)) {
-      if (keywords.some(k => item.keyword.includes(k))) {
-        score += 40
-        break
-      }
+    // AdSense 카테고리 보너스 (CPC 기반)
+    const adsenseInfo = getAdSenseCategory(item.keyword)
+    if (adsenseInfo) {
+      score += Math.round(adsenseInfo.cpc * 20)
+      item.adsenseCategory = adsenseInfo.category
+      item.estimatedCPC = adsenseInfo.cpc
     }
 
     // 관련 쿼리 풍부도
@@ -123,4 +173,19 @@ function scoreKeywords(googleKeywords, naverKeywords) {
   })
 
   return scored.sort((a, b) => b.score - a.score)
+}
+
+function getAdSenseCategory(keyword) {
+  for (const [category, info] of Object.entries(ADSENSE_CPC)) {
+    if (info.keywords.some(k => keyword.includes(k))) {
+      return { category, cpc: info.cpc }
+    }
+  }
+  return null
+}
+
+function estimateDailyCPC(item) {
+  const category = item.adsenseCategory
+  if (!category || !ADSENSE_CPC[category]) return { cpc: 0.5, category: '일반' }
+  return { cpc: ADSENSE_CPC[category].cpc, category }
 }

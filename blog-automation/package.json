@@ -1,16 +1,19 @@
 {
   "name": "blog-automation",
-  "version": "1.0.0",
-  "description": "AI-powered blog automation system: keyword research, content generation, thumbnail creation, and SNS publishing",
+  "version": "2.0.0",
+  "description": "AI-powered blog automation system v2: keyword research, SEO content generation, thumbnail creation, SNS publishing, AdSense optimization",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
     "run-once": "node src/index.js --once",
+    "preview": "node src/index.js --preview",
+    "draft": "node src/index.js --draft",
     "schedule": "node src/index.js --schedule",
     "test-keywords": "node scripts/test-keywords.js",
     "test-content": "node scripts/test-content.js",
-    "test-thumbnail": "node scripts/test-thumbnail.js"
+    "test-thumbnail": "node scripts/test-thumbnail.js",
+    "test-analytics": "node scripts/test-analytics.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",

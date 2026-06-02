@@ -6,14 +6,18 @@ const client = new Anthropic({ apiKey: config.anthropic.apiKey })
 
 /**
  * Claude AI로 SEO + AdSense 최적화 블로그 포스트 생성 (v2)
- * FAQ 섹션(추천 스니펫), 구조화 데이터, 3-슬롯 광고 배치
+ * 업그레이드: FAQ 섹션(추천 스니펫), 구조화 데이터, 4-슬롯 광고 배치, 내부 링크
  */
 export async function generateBlogPost(keywordData) {
   const { keyword, relatedQueries = [], newsContext = [], newsItems = [], adsenseCategory, estimatedCPC, trendDirection } = keywordData
+
   logger.info(`블로그 포스트 생성 중: "${keyword}" (카테고리: ${adsenseCategory || '일반'}, CPC: $${estimatedCPC || 0.5})`)
 
   const newsSnippet = [...newsContext, ...newsItems.map(t => ({ title: t }))]
-    .slice(0, 5).map(n => `- ${n.title}${n.description ? ': ' + n.description.slice(0, 100) : ''}`).join('\n')
+    .slice(0, 5)
+    .map(n => `- ${n.title}${n.description ? ': ' + n.description.slice(0, 100) : ''}`)
+    .join('\n')
+
   const relatedStr = relatedQueries.slice(0, 8).join(', ')
   const trendBadge = trendDirection === 'rising' ? '🚀 급상승 중' : trendDirection === 'falling' ? '📉 하락 중' : '📊 안정적'
 
@@ -37,15 +41,22 @@ export async function generateBlogPost(keywordData) {
 ${newsSnippet || '일반적인 최신 정보를 활용하여 작성'}
 
 **반드시 포함할 구조:**
-1. 후킹 제목 (숫자+감성어 포함)
-2. 메타 설명 (155자 내외)
-3. URL 슬러그 (영문 소문자, 하이픈 구분)
-4. 서론 (문제 공감 → 해결 기대감, 200자+)
-5. 본문 H2 섹션 최소 5개 (각 300자+, [광고슬롯1] [광고슬롯2] 마커 포함)
-6. FAQ 섹션 (Q&A 형식 5개 — 구글 추천 스니펫 타겟)
-7. 결론 (요약 + CTA)
-8. 구조화 데이터 (JSON-LD Article 스키마)
-9. SEO 태그 7-12개
+1. **후킹 제목** (숫자+감성어 포함, 예: "2026년 AI로 월 300만원? 현실적인 7가지 방법")
+2. **메타 설명** (155자 내외, 클릭 유도 문구 포함)
+3. **URL 슬러그** (영문 소문자, 하이픈 구분)
+4. **서론** (문제 공감 → 해결 기대감 → 이 글의 가치, 200자+)
+5. **본문 H2 섹션 최소 5개** (각 300자+):
+   - 섹션마다 연관 키워드 자연 삽입
+   - 리스트, 표, 강조 텍스트 활용
+   - 실용적 데이터와 수치 포함
+   - [광고슬롯1] 두 번째 H2 이후 삽입 위치 표시
+   - [광고슬롯2] 본문 중간 삽입 위치 표시
+6. **FAQ 섹션** (Q&A 형식 5개 — 구글 추천 스니펫 타겟):
+   - 독자가 실제로 궁금해할 질문
+   - 40-60자 이내 명확한 답변
+7. **결론** (요약 + CTA: "지금 바로 시작하세요", 구독 유도)
+8. **구조화 데이터** (JSON-LD Article 스키마)
+9. **SEO 태그** 7-12개
 
 **응답 형식 (JSON):**
 \`\`\`json
@@ -63,11 +74,11 @@ ${newsSnippet || '일반적인 최신 정보를 활용하여 작성'}
     { "question": "질문4?", "answer": "답변4" },
     { "question": "질문5?", "answer": "답변5" }
   ],
-  "structuredData": { "@context": "https://schema.org", "@type": "Article" },
+  "structuredData": { "@context": "...", 구조화데이터JSON },
   "excerpt": "포스트 요약 (300자)",
   "seoKeywords": ["키워드1", "키워드2"],
   "readingTime": "예상 읽기 시간 (분)",
-  "wordCount": 2000
+  "wordCount": 예상글자수
 }
 \`\`\``
 
@@ -100,11 +111,13 @@ ${newsSnippet || '일반적인 최신 정보를 활용하여 작성'}
 }
 
 /**
- * HTML 콘텐츠에 AdSense 광고 슬롯 삽입 (상단+중간×2+하단 = 4슬롯)
+ * HTML 콘텐츠에 AdSense 광고 슬롯 4개 삽입 (상단/중간1/중간2/하단)
+ * [광고슬롯1] [광고슬롯2] 마커를 실제 AdSense 코드로 교체
  */
 export function injectAdSenseSlots(content, adClientId = 'ca-pub-XXXXXXXXXXXXXXXX') {
   const adTemplate = (slot) => `
 <div class="ad-container" style="text-align:center;margin:2em 0;">
+<!-- Google AdSense -->
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="${adClientId}"
@@ -114,15 +127,21 @@ export function injectAdSenseSlots(content, adClientId = 'ca-pub-XXXXXXXXXXXXXXX
 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>`
 
+  // 상단 광고 (포스트 시작)
   let result = adTemplate('TOP_SLOT_ID') + content
+
+  // 중간 광고 (마커 교체)
   result = result.replace('[광고슬롯1]', adTemplate('MID1_SLOT_ID'))
   result = result.replace('[광고슬롯2]', adTemplate('MID2_SLOT_ID'))
+
+  // 하단 광고 (포스트 끝)
   result = result + adTemplate('BOTTOM_SLOT_ID')
+
   return result
 }
 
 /**
- * FAQ를 JSON-LD FAQPage 스키마로 변환
+ * FAQ를 JSON-LD FAQPage 스키마로 변환 (구글 추천 스니펫 최적화)
  */
 export function buildFAQStructuredData(faqList) {
   return {
@@ -131,7 +150,10 @@ export function buildFAQStructuredData(faqList) {
     mainEntity: faqList.map(item => ({
       '@type': 'Question',
       name: item.question,
-      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
     })),
   }
 }

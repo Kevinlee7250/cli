@@ -32,7 +32,7 @@ export async function publishToTikTok(socialContent, videoPath = null) {
       return {
         skipped: true,
         reason: 'Video file not provided',
-        script: tiktok.script,
+        script: tiktok.fullScript,
         hashtags: tiktok.hashtags,
         scenes: tiktok.scenes,
         message: '아래 스크립트로 영상을 제작 후 업로드하세요.',

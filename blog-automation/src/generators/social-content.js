@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
+import { jsonrepair } from 'jsonrepair'
 import { config } from '../config.js'
 import { logger } from '../utils/logger.js'
 
@@ -157,28 +158,24 @@ export function getNextOptimalPostingTime(platform) {
   return times[0] + ' (내일)'
 }
 
-function sanitizeJSON(raw) {
-  return raw
-    .replace(/['']/g, "'")
-    .replace(/[""]/g, '"')
-    .replace(/[–—]/g, '-')
-    .replace(/\r\n/g, '\n')
-}
-
 function extractJSON(text) {
+  const tryParse = (raw) => {
+    try { return JSON.parse(raw) } catch {}
+    return JSON.parse(jsonrepair(raw))
+  }
+
   const codeStart = text.indexOf('```json')
   if (codeStart !== -1) {
     const jsonStart = text.indexOf('{', codeStart)
     const jsonEnd = text.lastIndexOf('}')
     if (jsonStart !== -1 && jsonEnd > jsonStart) {
-      const raw = sanitizeJSON(text.slice(jsonStart, jsonEnd + 1))
-      try { return JSON.parse(raw) } catch {}
+      try { return tryParse(text.slice(jsonStart, jsonEnd + 1)) } catch {}
     }
   }
   const start = text.indexOf('{')
   const end = text.lastIndexOf('}')
   if (start !== -1 && end > start) {
-    return JSON.parse(sanitizeJSON(text.slice(start, end + 1)))
+    return tryParse(text.slice(start, end + 1))
   }
   throw new Error('응답에서 JSON을 찾을 수 없습니다')
 }

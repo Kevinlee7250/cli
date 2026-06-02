@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
+import { jsonrepair } from 'jsonrepair'
 import { config } from '../config.js'
 import { logger } from '../utils/logger.js'
 
@@ -21,7 +22,9 @@ export async function generateBlogPost(keywordData) {
   const relatedStr = relatedQueries.slice(0, 8).join(', ')
   const trendBadge = trendDirection === 'rising' ? '🚀 급상승 중' : trendDirection === 'falling' ? '📉 하락 중' : '📊 안정적'
 
+  const today = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })
   const systemPrompt = `당신은 구글 애드센스 수익화에 최적화된 한국어 블로그 포스트를 작성하는 전문 SEO 콘텐츠 전략가입니다.
+오늘 날짜: ${today}
 다음 원칙을 철저히 따릅니다:
 - E-E-A-T (경험, 전문성, 권위, 신뢰성) 기준 충족
 - FAQ 섹션으로 구글 추천 스니펫(Featured Snippet) 타겟팅
@@ -29,7 +32,9 @@ export async function generateBlogPost(keywordData) {
 - H2/H3 계층 구조로 가독성과 크롤러 최적화
 - 독자 체류 시간 최대화를 위한 정보 밀도 높은 서술
 - 광고 클릭을 유도하는 콘텐츠 흐름 설계
-- 최소 2000자 이상의 풍부한 본문`
+- 최소 2000자 이상의 풍부한 본문
+- 제공된 최신 뉴스 컨텍스트를 반드시 활용하고, 실제 데이터·수치·사례만 사용 (추측 금지)
+- 연도 표기 시 오늘 날짜 기준으로 정확하게 작성`
 
   const userPrompt = `다음 키워드로 구글 애드센스 수익화에 최적화된 블로그 포스트를 작성해주세요.
 
@@ -171,32 +176,30 @@ export async function generateMultiplePosts(keywordDataList) {
   return posts
 }
 
-function sanitizeJSON(raw) {
-  return raw
-    .replace(/[‘’]/g, "'")   // 곱슬 작은따옴표 → 직선
-    .replace(/[“”]/g, '"')   // 곱슬 큰따옴표 → 직선
-    .replace(/[–—]/g, '-')   // em/en dash → hyphen
-    .replace(/\r\n/g, '\n')
-}
-
 function extractJSON(text) {
+  const tryParse = (raw) => {
+    // 1차: 직접 파싱
+    try { return JSON.parse(raw) } catch {}
+    // 2차: jsonrepair로 자동 수정 (줄바꿈·특수문자 이스케이프 포함)
+    return JSON.parse(jsonrepair(raw))
+  }
+
   // 1순위: ```json ... ``` 블록에서 추출
-  const codeStart = text.indexOf('```json')
+  const codeStart = text.indexOf(‘```json’)
   if (codeStart !== -1) {
-    const jsonStart = text.indexOf('{', codeStart)
-    const jsonEnd = text.lastIndexOf('}')
+    const jsonStart = text.indexOf(‘{‘, codeStart)
+    const jsonEnd = text.lastIndexOf(‘}’)
     if (jsonStart !== -1 && jsonEnd > jsonStart) {
-      const raw = sanitizeJSON(text.slice(jsonStart, jsonEnd + 1))
-      try { return JSON.parse(raw) } catch {}
+      try { return tryParse(text.slice(jsonStart, jsonEnd + 1)) } catch {}
     }
   }
   // 2순위: 텍스트 전체에서 첫 { ~ 마지막 } 추출
-  const start = text.indexOf('{')
-  const end = text.lastIndexOf('}')
+  const start = text.indexOf(‘{‘)
+  const end = text.lastIndexOf(‘}’)
   if (start !== -1 && end > start) {
-    return JSON.parse(sanitizeJSON(text.slice(start, end + 1)))
+    return tryParse(text.slice(start, end + 1))
   }
-  throw new Error('응답에서 JSON을 찾을 수 없습니다')
+  throw new Error(‘응답에서 JSON을 찾을 수 없습니다’)
 }
 
 function delay(ms) {

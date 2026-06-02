@@ -3,6 +3,30 @@ import { config } from '../config.js'
 import { logger } from '../utils/logger.js'
 
 /**
+ * Google News RSS로 실제 최신 뉴스 수집 (API 키 불필요)
+ */
+export async function fetchGoogleNews(keyword, count = 5) {
+  try {
+    const url = `https://news.google.com/rss/search?q=${encodeURIComponent(keyword)}&hl=ko&gl=KR&ceid=KR:ko`
+    const res = await axios.get(url, { timeout: 8000 })
+    const items = []
+    const itemRe = /<item>([\s\S]*?)<\/item>/g
+    let m
+    while ((m = itemRe.exec(res.data)) !== null && items.length < count) {
+      const block = m[1]
+      const title = (block.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/) || block.match(/<title>(.*?)<\/title>/))?.[1] || ''
+      const pubDate = (block.match(/<pubDate>(.*?)<\/pubDate>/))?.[1] || ''
+      if (title) items.push({ title: title.trim(), pubDate: pubDate.trim() })
+    }
+    if (items.length > 0) logger.info(`Google 뉴스 ${items.length}건 수집 (${keyword})`)
+    return items
+  } catch (err) {
+    logger.warn(`Google 뉴스 수집 실패 (${keyword}): ${err.message}`)
+    return []
+  }
+}
+
+/**
  * 네이버 DataLab 검색어 트렌드 조회
  * 최근 7일 인기 검색어 키워드를 분석
  */

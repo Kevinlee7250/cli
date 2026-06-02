@@ -1,5 +1,5 @@
 import { fetchGoogleTrends, fetchGoogleRealtimeTrends } from './google-trends.js'
-import { fetchNaverTrends, fetchNaverNews } from './naver-trends.js'
+import { fetchNaverTrends, fetchNaverNews, fetchGoogleNews } from './naver-trends.js'
 import { logger } from '../utils/logger.js'
 import { config } from '../config.js'
 
@@ -41,7 +41,11 @@ export async function analyzeHotKeywords() {
   logger.info(`상위 ${topKeywords.length}개 키워드 뉴스 컨텍스트 수집 중...`)
   const enriched = await Promise.all(
     topKeywords.map(async (item) => {
-      const news = await fetchNaverNews(item.keyword, 5)
+      // 네이버 뉴스 우선 → 실패 시 Google News RSS로 폴백 (실제 최신 데이터)
+      let news = await fetchNaverNews(item.keyword, 5)
+      if (news.length === 0) {
+        news = await fetchGoogleNews(item.keyword, 5)
+      }
       return {
         ...item,
         newsContext: news,

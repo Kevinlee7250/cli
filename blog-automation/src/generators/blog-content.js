@@ -85,16 +85,15 @@ ${newsSnippet || '일반적인 최신 정보를 활용하여 작성'}
   try {
     const response = await client.messages.create({
       model: config.anthropic.model,
-      max_tokens: 6000,
+      max_tokens: 16000,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }],
     })
 
     const text = response.content[0].text
-    const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/) || text.match(/(\{[\s\S]*\})/s)
-    const jsonStr = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : text
-
-    const post = JSON.parse(jsonStr)
+    logger.info(`Claude 응답 길이: ${text.length}자, stop_reason: ${response.stop_reason}`)
+    logger.info(`Claude 응답 미리보기: ${text.slice(0, 200).replace(/\n/g, ' ')}`)
+    const post = extractJSON(text)
     post.keyword = keyword
     post.date = new Date().toISOString().split('T')[0]
     post.generatedAt = new Date().toISOString()
@@ -170,6 +169,25 @@ export async function generateMultiplePosts(keywordDataList) {
     }
   }
   return posts
+}
+
+function extractJSON(text) {
+  // 1순위: ```json ... ``` 블록에서 추출 (lastIndexOf로 중첩 코드블록 처리)
+  const codeStart = text.indexOf('```json')
+  if (codeStart !== -1) {
+    const jsonStart = text.indexOf('{', codeStart)
+    const jsonEnd = text.lastIndexOf('}')
+    if (jsonStart !== -1 && jsonEnd > jsonStart) {
+      try { return JSON.parse(text.slice(jsonStart, jsonEnd + 1)) } catch {}
+    }
+  }
+  // 2순위: 텍스트 전체에서 첫 { ~ 마지막 } 추출
+  const start = text.indexOf('{')
+  const end = text.lastIndexOf('}')
+  if (start !== -1 && end > start) {
+    return JSON.parse(text.slice(start, end + 1))
+  }
+  throw new Error('응답에서 JSON을 찾을 수 없습니다')
 }
 
 function delay(ms) {

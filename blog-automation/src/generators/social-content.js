@@ -104,15 +104,13 @@ ${faqPreview || '없음'}
   try {
     const response = await client.messages.create({
       model: config.anthropic.model,
-      max_tokens: 5000,
+      max_tokens: 10000,
       system: systemPrompt,
       messages: [{ role: 'user', content: userPrompt }],
     })
 
     const text = response.content[0].text
-    const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/) || text.match(/(\{[\s\S]*\})/s)
-    const jsonStr = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : text
-    const socialContent = JSON.parse(jsonStr)
+    const socialContent = extractJSON(text)
 
     if (!socialContent.instagram?.bestPostingTimes) {
       socialContent.instagram = socialContent.instagram || {}
@@ -157,4 +155,21 @@ export function getNextOptimalPostingTime(platform) {
     if (h * 60 + m > nowMinutes) return time
   }
   return times[0] + ' (내일)'
+}
+
+function extractJSON(text) {
+  const codeStart = text.indexOf('```json')
+  if (codeStart !== -1) {
+    const jsonStart = text.indexOf('{', codeStart)
+    const jsonEnd = text.lastIndexOf('}')
+    if (jsonStart !== -1 && jsonEnd > jsonStart) {
+      try { return JSON.parse(text.slice(jsonStart, jsonEnd + 1)) } catch {}
+    }
+  }
+  const start = text.indexOf('{')
+  const end = text.lastIndexOf('}')
+  if (start !== -1 && end > start) {
+    return JSON.parse(text.slice(start, end + 1))
+  }
+  throw new Error('응답에서 JSON을 찾을 수 없습니다')
 }

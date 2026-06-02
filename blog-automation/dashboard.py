@@ -235,5 +235,22 @@ def run_now():
 
 
 if __name__ == "__main__":
+    import threading, webbrowser, os
+
+    chrome_paths = [
+        r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+        r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
+        os.path.expandvars(r"%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe"),
+    ]
+
+    def open_chrome():
+        import time; time.sleep(1)
+        for path in chrome_paths:
+            if os.path.exists(path):
+                subprocess.Popen([path, "http://localhost:5000"])
+                return
+        webbrowser.open("http://localhost:5000")
+
+    threading.Thread(target=open_chrome, daemon=True).start()
     print("대시보드 시작: http://localhost:5000")
     app.run(host="0.0.0.0", port=5000, debug=False)

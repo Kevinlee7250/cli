@@ -19,10 +19,13 @@ HTML = """<!DOCTYPE html>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
-  header { background: #1e293b; padding: 20px 32px; border-bottom: 1px solid #334155; display: flex; align-items: center; gap: 12px; }
+  header { background: #1e293b; padding: 20px 32px; border-bottom: 1px solid #334155; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   header h1 { font-size: 1.4rem; font-weight: 700; color: #f8fafc; }
   .badge { background: #22c55e; color: #fff; font-size: 0.7rem; padding: 2px 8px; border-radius: 999px; }
   .badge.off { background: #ef4444; }
+  .blog-link { margin-left: auto; display: flex; align-items: center; gap: 8px; background: #334155; border-radius: 8px; padding: 8px 14px; text-decoration: none; color: #818cf8; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
+  .blog-link:hover { background: #475569; color: #a5b4fc; }
+  .blog-link svg { flex-shrink: 0; }
   main { padding: 28px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
   .card { background: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid #334155; }
   .card h2 { font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
@@ -52,6 +55,10 @@ HTML = """<!DOCTYPE html>
 <header>
   <h1>📊 블로그 자동화 대시보드</h1>
   <span class="badge" id="status-badge">확인 중...</span>
+  <a class="blog-link" id="blog-link" href="#" target="_blank">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    <span id="blog-url-text">블로그 열기</span>
+  </a>
 </header>
 <main>
   <div class="card">
@@ -116,6 +123,12 @@ async function loadAll() {
   document.getElementById('next-run').textContent = stats.next_run || '-';
   document.getElementById('last-update').textContent = '업데이트: ' + new Date().toLocaleTimeString('ko-KR');
 
+  if (stats.blog_url) {
+    const link = document.getElementById('blog-link');
+    link.href = stats.blog_url;
+    document.getElementById('blog-url-text').textContent = stats.blog_url.replace('https://', '');
+  }
+
   const badge = document.getElementById('status-badge');
   if (stats.running) { badge.textContent = '실행 중'; badge.className = 'badge'; }
   else { badge.textContent = '중지됨'; badge.className = 'badge off'; }
@@ -153,6 +166,22 @@ setInterval(loadAll, 30000);
 @app.route("/")
 def index():
     return render_template_string(HTML)
+
+
+def _get_blog_url():
+    """로그에서 블로그 URL을 추출합니다."""
+    if LOG_FILE.exists():
+        lines = LOG_FILE.read_text(encoding="utf-8-sig", errors="replace").splitlines()
+        for line in reversed(lines):
+            if "blogspot.com" in line:
+                import re
+                m = re.search(r'https://[^\s]+blogspot\.com[^\s]*', line)
+                if m:
+                    # 포스트 URL에서 블로그 홈 URL 추출
+                    url = m.group()
+                    parts = url.split("/")
+                    return "/".join(parts[:3])
+    return ""
 
 
 @app.route("/api/stats")
@@ -213,6 +242,7 @@ def stats():
         "last_keyword": last_keyword,
         "next_run": next_run,
         "running": running,
+        "blog_url": _get_blog_url(),
     })
 
 

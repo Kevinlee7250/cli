@@ -32,11 +32,11 @@ class CallbackHandler(BaseHTTPRequestHandler):
             received_code = params["code"][0]
             self.send_response(200)
             self.end_headers()
-            self.wfile.write(b"<h1>인증 완료! 터미널로 돌아가세요.</h1>")
+            self.wfile.write("<h1>Auth OK! Go back to terminal.</h1>".encode("utf-8"))
         else:
             self.send_response(400)
             self.end_headers()
-            self.wfile.write(b"<h1>인증 실패</h1>")
+            self.wfile.write(b"<h1>Auth Failed</h1>")
 
     def log_message(self, *args):
         pass

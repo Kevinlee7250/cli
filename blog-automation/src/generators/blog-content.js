@@ -185,21 +185,21 @@ function extractJSON(text) {
   }
 
   // 1순위: ```json ... ``` 블록에서 추출
-  const codeStart = text.indexOf(‘```json’)
+  const codeStart = text.indexOf('```json')
   if (codeStart !== -1) {
-    const jsonStart = text.indexOf(‘{‘, codeStart)
-    const jsonEnd = text.lastIndexOf(‘}’)
+    const jsonStart = text.indexOf('{', codeStart)
+    const jsonEnd = text.lastIndexOf('}')
     if (jsonStart !== -1 && jsonEnd > jsonStart) {
       try { return tryParse(text.slice(jsonStart, jsonEnd + 1)) } catch {}
     }
   }
   // 2순위: 텍스트 전체에서 첫 { ~ 마지막 } 추출
-  const start = text.indexOf(‘{‘)
-  const end = text.lastIndexOf(‘}’)
+  const start = text.indexOf('{')
+  const end = text.lastIndexOf('}')
   if (start !== -1 && end > start) {
     return tryParse(text.slice(start, end + 1))
   }
-  throw new Error(‘응답에서 JSON을 찾을 수 없습니다’)
+  throw new Error('응답에서 JSON을 찾을 수 없습니다')
 }
 
 function delay(ms) {

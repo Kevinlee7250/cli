@@ -20,7 +20,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
         logging.StreamHandler(sys.stdout),
-        logging.FileHandler("blog_automation.log", encoding="utf-8"),
+        logging.FileHandler("blog_automation.log", encoding="utf-8-sig"),
     ],
 )
 logger = logging.getLogger(__name__)

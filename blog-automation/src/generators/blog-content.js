@@ -171,21 +171,30 @@ export async function generateMultiplePosts(keywordDataList) {
   return posts
 }
 
+function sanitizeJSON(raw) {
+  return raw
+    .replace(/[‘’]/g, "'")   // 곱슬 작은따옴표 → 직선
+    .replace(/[“”]/g, '"')   // 곱슬 큰따옴표 → 직선
+    .replace(/[–—]/g, '-')   // em/en dash → hyphen
+    .replace(/\r\n/g, '\n')
+}
+
 function extractJSON(text) {
-  // 1순위: ```json ... ``` 블록에서 추출 (lastIndexOf로 중첩 코드블록 처리)
+  // 1순위: ```json ... ``` 블록에서 추출
   const codeStart = text.indexOf('```json')
   if (codeStart !== -1) {
     const jsonStart = text.indexOf('{', codeStart)
     const jsonEnd = text.lastIndexOf('}')
     if (jsonStart !== -1 && jsonEnd > jsonStart) {
-      try { return JSON.parse(text.slice(jsonStart, jsonEnd + 1)) } catch {}
+      const raw = sanitizeJSON(text.slice(jsonStart, jsonEnd + 1))
+      try { return JSON.parse(raw) } catch {}
     }
   }
   // 2순위: 텍스트 전체에서 첫 { ~ 마지막 } 추출
   const start = text.indexOf('{')
   const end = text.lastIndexOf('}')
   if (start !== -1 && end > start) {
-    return JSON.parse(text.slice(start, end + 1))
+    return JSON.parse(sanitizeJSON(text.slice(start, end + 1)))
   }
   throw new Error('응답에서 JSON을 찾을 수 없습니다')
 }

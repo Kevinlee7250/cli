@@ -101,14 +101,10 @@ def main():
         run_pipeline()
         return
 
-    time_str = _parse_cron_to_schedule(SCHEDULE_CRON)
-    if time_str:
-        logger.info(f"스케줄러 시작: 매일 {time_str}에 실행")
-        schedule.every().day.at(time_str).do(run_pipeline)
-    else:
-        # 기본값: 6시간마다
-        logger.info("스케줄러 시작: 6시간마다 실행")
-        schedule.every(6).hours.do(run_pipeline)
+    schedule_times = ["08:00", "13:00", "18:00"]
+    for t in schedule_times:
+        schedule.every().day.at(t).do(run_pipeline)
+    logger.info(f"스케줄러 시작: 매일 {', '.join(schedule_times)} 실행")
 
     # 시작 시 즉시 한 번 실행
     run_pipeline()

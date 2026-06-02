@@ -7,17 +7,11 @@ let cachedAccessToken = null
 let tokenExpiry = null
 
 async function getAccessToken() {
-  if (cachedAccessToken && tokenExpiry && Date.now() < tokenExpiry) {
-    return cachedAccessToken
-  }
-  if (!config.google.refreshToken) {
-    throw new Error('Google Refresh Token이 설정되지 않았습니다.')
-  }
+  if (cachedAccessToken && tokenExpiry && Date.now() < tokenExpiry) return cachedAccessToken
+  if (!config.google.refreshToken) throw new Error('Google Refresh Token이 설정되지 않았습니다.')
   const response = await axios.post(config.google.tokenUrl, {
-    client_id: config.google.clientId,
-    client_secret: config.google.clientSecret,
-    refresh_token: config.google.refreshToken,
-    grant_type: 'refresh_token',
+    client_id: config.google.clientId, client_secret: config.google.clientSecret,
+    refresh_token: config.google.refreshToken, grant_type: 'refresh_token',
   })
   cachedAccessToken = response.data.access_token
   tokenExpiry = Date.now() + (response.data.expires_in - 60) * 1000
@@ -25,45 +19,26 @@ async function getAccessToken() {
 }
 
 /**
- * Google Blogger에 포스트 게시 (v2)
- * 업그레이드: AdSense 3슬롯, FAQ 구조화 데이터, Article 스키마, 사이트맵 핑
+ * Google Blogger 게시 (v2)
+ * AdSense 4슬롯, FAQ 구조화 데이터, Article+FAQPage 스키마
  */
 export async function publishToBlogger(blogPost, options = {}) {
   const { adClientId = process.env.ADSENSE_CLIENT_ID || 'ca-pub-XXXXXXXXXXXXXXXX', isDraft = false } = options
-
   if (!config.blogger.blogId) {
     logger.warn('Blogger Blog ID가 없습니다. 건너뜁니다.')
     return { skipped: true, reason: 'BLOGGER_BLOG_ID not configured' }
   }
-
   logger.info(`Blogger 게시 중: "${blogPost.title}"`)
-
   try {
     const token = await getAccessToken()
     const htmlContent = buildFullHtmlContent(blogPost, adClientId)
-
-    const labels = [
-      ...(blogPost.tags || []),
-      blogPost.keyword,
-      blogPost.adsenseCategory,
-    ].filter(Boolean)
-
+    const labels = [...(blogPost.tags || []), blogPost.keyword, blogPost.adsenseCategory].filter(Boolean)
     const response = await axios.post(
       `${config.blogger.apiUrl}/blogs/${config.blogger.blogId}/posts`,
       { title: blogPost.title, content: htmlContent, labels },
-      {
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-        params: { isDraft },
-      },
+      { headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, params: { isDraft } },
     )
-
-    const result = {
-      id: response.data.id,
-      url: response.data.url,
-      title: response.data.title,
-      published: response.data.published,
-    }
-
+    const result = { id: response.data.id, url: response.data.url, title: response.data.title, published: response.data.published }
     logger.info(`Blogger 게시 완료: ${result.url}`)
     return result
   } catch (err) {
@@ -73,37 +48,17 @@ export async function publishToBlogger(blogPost, options = {}) {
   }
 }
 
-/**
- * SEO 완전 최적화 HTML 구성
- * - Article 구조화 데이터 (JSON-LD)
- * - FAQPage 구조화 데이터
- * - AdSense 광고 3슬롯
- * - 내부 링크 섹션
- * - SEO 키워드 메타
- */
 function buildFullHtmlContent(blogPost, adClientId) {
-  // 1. 광고 슬롯 주입
   const contentWithAds = injectAdSenseSlots(blogPost.content || '', adClientId)
-
-  // 2. Article 구조화 데이터
   const articleSchema = JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: blogPost.title,
-    description: blogPost.metaDescription,
+    '@context': 'https://schema.org', '@type': 'Article',
+    headline: blogPost.title, description: blogPost.metaDescription,
     author: { '@type': 'Organization', name: '오늘의 핫이슈' },
     datePublished: blogPost.generatedAt || new Date().toISOString(),
     dateModified: new Date().toISOString(),
     keywords: (blogPost.seoKeywords || []).join(', '),
-    ...(blogPost.structuredData || {}),
   }, null, 2)
-
-  // 3. FAQPage 구조화 데이터
-  const faqSchema = blogPost.faq?.length
-    ? JSON.stringify(buildFAQStructuredData(blogPost.faq), null, 2)
-    : null
-
-  // 4. FAQ HTML 섹션
+  const faqSchema = blogPost.faq?.length ? JSON.stringify(buildFAQStructuredData(blogPost.faq), null, 2) : null
   const faqHtml = blogPost.faq?.length ? `
 <div class="faq-section" style="background:#f8f9fa;padding:24px;border-radius:12px;margin:2em 0;">
   <h2>자주 묻는 질문 (FAQ)</h2>
@@ -113,24 +68,16 @@ function buildFullHtmlContent(blogPost, adClientId) {
     <p style="margin-top:8px;color:#444;">${f.answer}</p>
   </details>`).join('\n')}
 </div>` : ''
-
-  // 5. 관련 태그 링크
   const tagLinks = (blogPost.tags || [])
     .map(t => `<a href="/search/label/${encodeURIComponent(t)}" style="display:inline-block;margin:4px;padding:6px 14px;background:#e9ecef;border-radius:20px;text-decoration:none;color:#333;font-size:14px;">${t}</a>`)
     .join('')
-
   return `<!-- SEO: ${(blogPost.seoKeywords || []).join(', ')} -->
 <script type="application/ld+json">${articleSchema}</script>
 ${faqSchema ? `<script type="application/ld+json">${faqSchema}</script>` : ''}
-
 <div class="blog-post-wrap" style="max-width:800px;margin:0 auto;font-family:'Noto Sans KR',sans-serif;line-height:1.8;color:#222;">
-
 ${contentWithAds}
-
 ${faqHtml}
-
 <hr style="margin:3em 0;border:none;border-top:2px solid #eee;"/>
-
 <div class="post-footer" style="padding:20px 0;">
   <h3 style="font-size:16px;color:#555;">관련 태그</h3>
   <div style="margin-bottom:16px;">${tagLinks}</div>

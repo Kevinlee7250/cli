@@ -62,7 +62,6 @@ export async function analyzeHotKeywords() {
 
 /**
  * 네이버 DataLab 실시간 데이터로 직접 분석 (MCP 연동용)
- * keyword-analyzer가 외부에서 네이버 DataLab 결과를 받아 처리
  */
 export function analyzeNaverDatalabResults(datalabResults) {
   if (!datalabResults?.results) return []
@@ -73,11 +72,9 @@ export function analyzeNaverDatalabResults(datalabResults) {
     const avgRatio = ratios.reduce((a, b) => a + b, 0) / (ratios.length || 1)
     const maxRatio = Math.max(...ratios, 0)
 
-    // 최근 3일 vs 이전 평균으로 상승률 계산
     const recentAvg = ratios.slice(-3).reduce((a, b) => a + b, 0) / 3
     const prevAvg = ratios.slice(0, -3).reduce((a, b) => a + b, 0) / Math.max(ratios.length - 3, 1)
     const risingRate = prevAvg > 0 ? ((recentAvg - prevAvg) / prevAvg) * 100 : 0
-
     const trend = risingRate > 30 ? 'rising' : risingRate < -20 ? 'falling' : 'stable'
 
     return {
@@ -90,7 +87,6 @@ export function analyzeNaverDatalabResults(datalabResults) {
       data,
     }
   }).sort((a, b) => {
-    // 상승 트렌드에 1.5배 가중치
     const scoreA = a.avgRatio * (a.trend === 'rising' ? 1.5 : 1)
     const scoreB = b.avgRatio * (b.trend === 'rising' ? 1.5 : 1)
     return scoreB - scoreA
@@ -99,18 +95,13 @@ export function analyzeNaverDatalabResults(datalabResults) {
 
 function mergeTrends(googleDaily, googleRealtime) {
   const map = new Map()
-
   googleDaily.forEach((item, idx) => {
     map.set(item.keyword, {
-      keyword: item.keyword,
-      traffic: item.traffic,
-      relatedQueries: item.relatedQueries,
-      newsItems: item.newsItems,
-      googleRank: idx + 1,
-      sources: ['google-daily'],
+      keyword: item.keyword, traffic: item.traffic,
+      relatedQueries: item.relatedQueries, newsItems: item.newsItems,
+      googleRank: idx + 1, sources: ['google-daily'],
     })
   })
-
   googleRealtime.forEach((item, idx) => {
     if (map.has(item.keyword)) {
       const existing = map.get(item.keyword)
@@ -118,68 +109,48 @@ function mergeTrends(googleDaily, googleRealtime) {
       existing.googleRealtimeRank = idx + 1
     } else {
       map.set(item.keyword, {
-        keyword: item.keyword,
-        traffic: item.traffic,
-        relatedQueries: item.relatedQueries,
-        newsItems: item.newsItems,
-        googleRealtimeRank: idx + 1,
-        sources: ['google-realtime'],
+        keyword: item.keyword, traffic: item.traffic,
+        relatedQueries: item.relatedQueries, newsItems: item.newsItems,
+        googleRealtimeRank: idx + 1, sources: ['google-realtime'],
       })
     }
   })
-
   return Array.from(map.values())
 }
 
 function scoreKeywords(googleKeywords, naverKeywords) {
   const naverMap = new Map(naverKeywords.map(n => [n.keyword, n]))
-
   const scored = googleKeywords.map(item => {
     let score = 100
-
-    // 구글 순위 점수
     if (item.googleRank) score += (20 - Math.min(item.googleRank, 20)) * 5
     if (item.googleRealtimeRank) score += (20 - Math.min(item.googleRealtimeRank, 20)) * 3
-
-    // 네이버 교차 검증
     const naverData = naverMap.get(item.keyword)
     if (naverData) {
       score += 50
       item.naverAvgRatio = naverData.avgRatio
       item.naverTrend = naverData.trend
-      // 상승 트렌드 보너스
       if (naverData.trend === 'rising') score += 60
       if (naverData.risingRate > 50) score += 30
     }
-
-    // 트래픽 점수
     const trafficNum = parseInt((item.traffic || '').replace(/[^0-9]/g, ''), 10) || 0
     if (trafficNum > 1000000) score += 80
     else if (trafficNum > 100000) score += 50
     else if (trafficNum > 10000) score += 30
-
-    // AdSense 카테고리 보너스 (CPC 기반)
     const adsenseInfo = getAdSenseCategory(item.keyword)
     if (adsenseInfo) {
       score += Math.round(adsenseInfo.cpc * 20)
       item.adsenseCategory = adsenseInfo.category
       item.estimatedCPC = adsenseInfo.cpc
     }
-
-    // 관련 쿼리 풍부도
     score += Math.min(item.relatedQueries?.length || 0, 5) * 5
-
     return { ...item, score }
   })
-
   return scored.sort((a, b) => b.score - a.score)
 }
 
 function getAdSenseCategory(keyword) {
   for (const [category, info] of Object.entries(ADSENSE_CPC)) {
-    if (info.keywords.some(k => keyword.includes(k))) {
-      return { category, cpc: info.cpc }
-    }
+    if (info.keywords.some(k => keyword.includes(k))) return { category, cpc: info.cpc }
   }
   return null
 }

@@ -1,4 +1,4 @@
-import { fetchGoogleTrends, fetchGoogleRealtimeTrends } from './google-trends.js'
+import { fetchGoogleTrends, fetchGoogleRealtimeTrends, fetchTodayHotTopics } from './google-trends.js'
 import { fetchNaverTrends, fetchNaverNews, fetchGoogleNews } from './naver-trends.js'
 import { logger } from '../utils/logger.js'
 import { config } from '../config.js'
@@ -22,6 +22,20 @@ export const ADSENSE_CPC = {
 export async function analyzeHotKeywords() {
   logger.info('=== 오늘의 핫 키워드 분석 시작 (v2) ===')
 
+  // 1순위: 오늘 실제 핫이슈 (Google News RSS → Claude 선정)
+  const hotTopics = await fetchTodayHotTopics(config.content.postsPerRun)
+  if (hotTopics.length >= config.content.postsPerRun) {
+    const enriched = await enrichWithAdSense(hotTopics)
+    logger.info('=== 핫 키워드 분석 완료 (오늘의 실시간 이슈 기반) ===')
+    enriched.forEach((k, i) => {
+      const arrow = k.trendDirection === 'rising' ? '🚀' : '📊'
+      logger.info(`  ${i + 1}. ${k.keyword} ${arrow} (CPC: $${k.estimatedDailyCPC?.cpc || 0.5} | ${k.adsenseCategory || '일반'})`)
+    })
+    return enriched
+  }
+
+  // 2순위: Google Trends + Naver 통합 분석 (폴백)
+  logger.info('핫이슈 수집 부족 — Google Trends + Naver 분석으로 전환')
   const [googleTrends, realtimeTrends, naverTrends] = await Promise.allSettled([
     fetchGoogleTrends(20),
     fetchGoogleRealtimeTrends(20),
@@ -32,20 +46,15 @@ export async function analyzeHotKeywords() {
     googleTrends.status === 'fulfilled' ? googleTrends.value : [],
     realtimeTrends.status === 'fulfilled' ? realtimeTrends.value : [],
   )
-
   const naverKeywords = naverTrends.status === 'fulfilled' ? naverTrends.value : []
-
   const scored = scoreKeywords(googleKeywords, naverKeywords)
   const topKeywords = scored.slice(0, config.content.postsPerRun)
 
   logger.info(`상위 ${topKeywords.length}개 키워드 뉴스 컨텍스트 수집 중...`)
   const enriched = await Promise.all(
     topKeywords.map(async (item) => {
-      // 네이버 뉴스 우선 → 실패 시 Google News RSS로 폴백 (실제 최신 데이터)
       let news = await fetchNaverNews(item.keyword, 5)
-      if (news.length === 0) {
-        news = await fetchGoogleNews(item.keyword, 5)
-      }
+      if (news.length === 0) news = await fetchGoogleNews(item.keyword, 5)
       return {
         ...item,
         newsContext: news,
@@ -58,10 +67,25 @@ export async function analyzeHotKeywords() {
   logger.info('=== 핫 키워드 분석 완료 ===')
   enriched.forEach((k, i) => {
     const arrow = k.trendDirection === 'rising' ? '🚀' : k.trendDirection === 'falling' ? '📉' : '📊'
-    logger.info(`  ${i + 1}. ${k.keyword} ${arrow} (점수: ${k.score} | CPC: $${k.estimatedDailyCPC?.cpc || 0} | ${k.sources.join('+')})`)
+    logger.info(`  ${i + 1}. ${k.keyword} ${arrow} (점수: ${k.score} | CPC: $${k.estimatedDailyCPC?.cpc || 0} | ${k.sources?.join('+') || 'fallback'})`)
   })
-
   return enriched
+}
+
+async function enrichWithAdSense(topics) {
+  return topics.map(item => {
+    const adsenseInfo = item.adsenseCategory
+      ? { category: item.adsenseCategory, cpc: ADSENSE_CPC[item.adsenseCategory]?.cpc || 0.5 }
+      : getAdSenseCategory(item.keyword) || { category: '일반', cpc: 0.5 }
+    return {
+      ...item,
+      adsenseCategory: adsenseInfo.category,
+      estimatedCPC: adsenseInfo.cpc,
+      estimatedDailyCPC: adsenseInfo,
+      score: 200,
+      sources: ['google-news-hot'],
+    }
+  })
 }
 
 /**

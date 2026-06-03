@@ -141,12 +141,31 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
         )
         raw = message.content[0].text.strip()
 
-        match = re.search(r"\{[\s\S]*\}", raw)
-        if not match:
-            logger.error("JSON 파싱 실패: 응답에서 JSON을 찾을 수 없음")
-            return None
+        # 코드블록 마커(```json / ```) 제거 후 첫 { ~ 마지막 } 추출
+        text = raw
+        if text.startswith("```"):
+            text = text[text.find("\n") + 1:] if "\n" in text else text[3:]
+            if text.rstrip().endswith("```"):
+                text = text.rstrip()[:-3].rstrip()
 
-        post_data = json.loads(match.group())
+        start = text.find("{")
+        end = text.rfind("}")
+        if start == -1 or end == -1 or end <= start:
+            logger.error(f"JSON 추출 실패 — 응답 앞 200자: {raw[:200]}")
+            return None
+        json_str = text[start: end + 1]
+
+        try:
+            post_data = json.loads(json_str)
+        except json.JSONDecodeError:
+            # Claude 응답의 이스케이프 누락 등 경미한 JSON 오류 자동 복구
+            try:
+                from json_repair import repair_json
+                post_data = json.loads(repair_json(json_str))
+                logger.warning("JSON 자동 복구 후 파싱 성공")
+            except Exception as e2:
+                logger.error(f"JSON 복구 실패: {e2}")
+                return None
         post_data["keyword"] = keyword
 
         # ── 이미지 검색 & 삽입 ────────────────────────────────────────

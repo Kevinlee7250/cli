@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>여행사 견적 관리 시스템</title>
+<style>
+:root {
+  --primary:#1a56db; --primary-dark:#1e40af; --primary-light:#eff6ff;
+  --secondary:#0e9f6e; --accent:#ff6b35;
+  --bg:#f1f5f9; --sidebar:#1e293b; --sidebar-text:#94a3b8;
+  --card:#fff; --border:#e2e8f0;
+  --text:#0f172a; --muted:#64748b;
+  --danger:#ef4444; --warning:#f59e0b; --success:#10b981; --info:#3b82f6;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;}
+
+/* ── Sidebar ── */
+#sidebar{width:230px;background:var(--sidebar);color:var(--sidebar-text);display:flex;flex-direction:column;flex-shrink:0;position:fixed;top:0;bottom:0;left:0;z-index:100;transition:width .2s;}
+#sidebar.collapsed{width:60px;}
+.sb-header{padding:20px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #334155;}
+.sb-logo{font-size:1.6rem;flex-shrink:0;}
+.sb-title{font-size:0.95rem;font-weight:700;color:#f1f5f9;white-space:nowrap;overflow:hidden;}
+.sb-toggle{margin-left:auto;cursor:pointer;color:#64748b;font-size:1.1rem;flex-shrink:0;}
+.sb-section{padding:10px 8px 4px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#475569;white-space:nowrap;overflow:hidden;}
+.sb-menu{list-style:none;}
+.sb-menu li a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--sidebar-text);font-size:0.83rem;white-space:nowrap;overflow:hidden;text-decoration:none;transition:background .15s;}
+.sb-menu li a:hover{background:#334155;color:#f1f5f9;}
+.sb-menu li a.active{background:var(--primary);color:#fff;}
+.sb-menu li a .ic{font-size:1.1rem;flex-shrink:0;}
+.sb-menu li a .lbl{overflow:hidden;}
+#sidebar.collapsed .sb-title,.collapsed .sb-section,.collapsed .lbl{display:none;}
+
+/* ── Main ── */
+#main{margin-left:230px;flex:1;display:flex;flex-direction:column;min-height:100vh;transition:margin-left .2s;}
+#sidebar.collapsed ~ #main{margin-left:60px;}
+
+/* ── Topbar ── */
+#topbar{background:#fff;padding:12px 24px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.05);position:sticky;top:0;z-index:50;}
+#topbar h2{font-size:1.1rem;font-weight:700;flex:1;}
+.topbar-actions{display:flex;gap:10px;align-items:center;}
+.notif-badge{position:relative;cursor:pointer;font-size:1.3rem;}
+.notif-badge .dot{position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:var(--danger);border-radius:50%;}
+.admin-avatar{width:34px;height:34px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;cursor:pointer;}
+
+/* ── Content ── */
+#content{padding:24px;flex:1;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* ── Stats cards ── */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
+.stat-card{background:var(--card);border-radius:14px;padding:20px;box-shadow:0 1px 6px rgba(0,0,0,.06);display:flex;align-items:flex-start;gap:14px;position:relative;overflow:hidden;}
+.stat-card::after{content:'';position:absolute;top:0;right:0;width:80px;height:80px;border-radius:50%;opacity:.08;transform:translate(20px,-20px);}
+.stat-card.blue::after{background:var(--primary);}
+.stat-card.green::after{background:var(--success);}
+.stat-card.orange::after{background:var(--accent);}
+.stat-card.purple::after{background:#8b5cf6;}
+.stat-icon{font-size:2rem;line-height:1;}
+.stat-info .val{font-size:1.7rem;font-weight:800;line-height:1.2;}
+.stat-info .lbl{font-size:0.75rem;color:var(--muted);margin-top:3px;}
+.stat-info .chg{font-size:0.72rem;margin-top:6px;font-weight:600;}
+.chg.up{color:var(--success);}
+.chg.dn{color:var(--danger);}
+
+/* ── Card ── */
+.card{background:var(--card);border-radius:14px;padding:22px;box-shadow:0 1px 6px rgba(0,0,0,.06);margin-bottom:20px;}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.card-header h3{font-size:1rem;font-weight:700;}
+
+/* ── Table ── */
+.data-table{width:100%;border-collapse:collapse;font-size:0.83rem;}
+.data-table th{background:#f8fafc;font-weight:700;color:var(--muted);padding:10px 12px;text-align:left;border-bottom:2px solid var(--border);white-space:nowrap;}
+.data-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr:hover td{background:#f8fafc;}
+.data-table td:last-child{white-space:nowrap;}
+
+/* ── Badge ── */
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:700;}
+.badge-blue{background:#dbeafe;color:#1e40af;}
+.badge-green{background:#d1fae5;color:#065f46;}
+.badge-yellow{background:#fef9c3;color:#713f12;}
+.badge-red{background:#fee2e2;color:#991b1b;}
+.badge-purple{background:#ede9fe;color:#5b21b6;}
+.badge-gray{background:#f3f4f6;color:#374151;}
+.badge-orange{background:#ffedd5;color:#9a3412;}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:0.83rem;font-weight:600;border:none;cursor:pointer;transition:all .2s;}
+.btn-primary{background:var(--primary);color:#fff;} .btn-primary:hover{background:var(--primary-dark);}
+.btn-success{background:var(--success);color:#fff;}  .btn-success:hover{filter:brightness(.9);}
+.btn-danger{background:var(--danger);color:#fff;}    .btn-danger:hover{filter:brightness(.9);}
+.btn-outline{background:#fff;color:var(--primary);border:1.5px solid var(--primary);}
+.btn-outline:hover{background:var(--primary-light);}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid var(--border);}
+.btn-ghost:hover{background:#f3f4f6;}
+.btn-sm{padding:5px 10px;font-size:0.75rem;}
+.btn-xs{padding:3px 8px;font-size:0.7rem;border-radius:5px;}
+.btn-group{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+
+/* ── Form ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-grid.full{grid-template-columns:1fr;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-group label{font-size:0.78rem;font-weight:600;color:var(--muted);}
+.form-group input,.form-group select,.form-group textarea{
+  border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;font-size:0.85rem;
+  font-family:inherit;outline:none;transition:border .2s;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
+
+/* ── Search / Filter ── */
+.filter-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px;}
+.filter-bar input[type=text]{
+  border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:0.83rem;
+  outline:none;flex:1;min-width:180px;
+}
+.filter-bar select{border:1.5px solid var(--border);border-radius:8px;padding:7px 10px;font-size:0.83rem;outline:none;}
+
+/* ── Modal ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2);}
+.modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.modal-header h3{font-size:1.05rem;font-weight:700;}
+.modal-close{cursor:pointer;font-size:1.4rem;color:var(--muted);line-height:1;}
+.modal-body{padding:20px 24px;}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;}
+
+/* ── Charts (CSS-only) ── */
+.bar-chart{display:flex;flex-direction:column;gap:10px;}
+.bar-row{display:flex;align-items:center;gap:10px;font-size:0.8rem;}
+.bar-row .bar-lbl{width:80px;text-align:right;flex-shrink:0;color:var(--muted);}
+.bar-row .bar-wrap{flex:1;background:#f1f5f9;border-radius:20px;height:16px;overflow:hidden;}
+.bar-row .bar-fill{height:100%;border-radius:20px;transition:width .6s ease;}
+.bar-row .bar-val{width:70px;font-weight:700;flex-shrink:0;color:var(--text);}
+
+/* ── Donut ── */
+.donut-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.donut{width:120px;height:120px;border-radius:50%;flex-shrink:0;}
+.donut-legend{display:flex;flex-direction:column;gap:8px;}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:0.8rem;}
+.legend-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0;}
+
+/* ── Timeline ── */
+.timeline{list-style:none;padding-left:20px;border-left:2px solid var(--border);}
+.timeline li{position:relative;padding:0 0 16px 20px;}
+.timeline li::before{content:'';position:absolute;left:-9px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--primary);border:3px solid #fff;box-shadow:0 0 0 1px var(--primary);}
+.timeline li:last-child{padding-bottom:0;}
+.tl-time{font-size:0.72rem;color:var(--muted);}
+.tl-msg{font-size:0.83rem;margin-top:3px;font-weight:500;}
+
+/* ── Pricing ── */
+.price-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+.price-card{border:1.5px solid var(--border);border-radius:12px;padding:16px;}
+.price-card h4{font-size:0.85rem;font-weight:700;margin-bottom:10px;color:var(--muted);}
+.price-item{display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;padding:5px 0;border-bottom:1px dashed var(--border);}
+.price-item:last-child{border-bottom:none;}
+.price-input{border:1.5px solid var(--border);border-radius:6px;padding:3px 7px;font-size:0.8rem;width:90px;text-align:right;outline:none;}
+.price-input:focus{border-color:var(--primary);}
+
+/* ── KPI ── */
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.kpi{text-align:center;padding:14px;background:#f8fafc;border-radius:10px;}
+.kpi .kv{font-size:1.3rem;font-weight:800;}
+.kpi .kl{font-size:0.72rem;color:var(--muted);margin-top:3px;}
+
+/* ── Notification toast ── */
+.toast{position:fixed;top:20px;right:20px;background:var(--primary);color:#fff;padding:12px 20px;border-radius:10px;font-size:0.87rem;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,.2);z-index:1000;animation:slideIn .3s ease;}
+@keyframes slideIn{from{opacity:0;transform:translateX(30px);}}
+.toast.success{background:var(--success);}
+.toast.warning{background:var(--warning);}
+.toast.danger{background:var(--danger);}
+
+/* ── Print ── */
+@media print{#sidebar,#topbar,.topbar-actions,.btn-group,.filter-bar{display:none!important;}#main{margin-left:0;}}
+</style>
+</head>
+<body>
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<nav id="sidebar">
+  <div class="sb-header">
+    <span class="sb-logo">✈️</span>
+    <span class="sb-title">견적 관리 시스템</span>
+    <span class="sb-toggle" onclick="toggleSidebar()">☰</span>
+  </div>
+
+  <div class="sb-section">메인</div>
+  <ul class="sb-menu">
+    <li><a class="active" onclick="showPage('dashboard')"><span class="ic">📊</span><span class="lbl">대시보드</span></a></li>
+  </ul>
+
+  <div class="sb-section">견적 관리</div>
+  <ul class="sb-menu">
+    <li><a onclick="showPage('quotes')"><span class="ic">📄</span><span class="lbl">견적서 목록</span></a></li>
+    <li><a onclick="showPage('clients')"><span class="ic">👥</span><span class="lbl">고객 관리</span></a></li>
+    <li><a onclick="showPage('newquote')"><span class="ic">➕</span><span class="lbl">새 견적 작성</span></a></li>
+  </ul>
+
+  <div class="sb-section">설정</div>
+  <ul class="sb-menu">
+    <li><a onclick="showPage('pricing')"><span class="ic">💰</span><span class="lbl">단가 관리</span></a></li>
+    <li><a onclick="showPage('destinations')"><span class="ic">🗺️</span><span class="lbl">목적지 관리</span></a></li>
+    <li><a onclick="showPage('agency')"><span class="ic">🏢</span><span class="lbl">여행사 정보</span></a></li>
+  </ul>
+
+  <div class="sb-section">보고서</div>
+  <ul class="sb-menu">
+    <li><a onclick="showPage('reports')"><span class="ic">📈</span><span class="lbl">매출 분석</span></a></li>
+    <li><a onclick="showPage('activity')"><span class="ic">🕐</span><span class="lbl">활동 로그</span></a></li>
+  </ul>
+</nav>
+
+<!-- ══════════ MAIN ══════════ -->
+<div id="main">
+
+<!-- Topbar -->
+<div id="topbar">
+  <h2 id="topbarTitle">대시보드</h2>
+  <div class="topbar-actions">
+    <span style="font-size:0.8rem;color:var(--muted)" id="clockDisplay"></span>
+    <div class="notif-badge" onclick="showPage('activity')" title="활동 로그">🔔<span class="dot"></span></div>
+    <button class="btn btn-primary btn-sm" onclick="window.open('quote.html','_blank')">+ 새 견적서 작성</button>
+    <div class="admin-avatar" title="관리자">관</div>
+  </div>
+</div>
+
+<!-- ══ Content ══ -->
+<div id="content">
+
+<!-- ─── DASHBOARD ─── -->
+<div class="page active" id="page-dashboard">
+  <div class="stats-grid" id="statsGrid"></div>
+
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px">
+    <div class="card">
+      <div class="card-header">
+        <h3>📅 이번 달 견적 현황</h3>
+        <div class="btn-group">
+          <select id="monthFilter" onchange="renderMonthChart()" style="font-size:0.8rem;border:1.5px solid var(--border);border-radius:6px;padding:4px 8px;outline:none;">
+            <option>이번 달</option><option>지난 달</option><option>3개월</option>
+          </select>
+        </div>
+      </div>
+      <div class="bar-chart" id="monthChart"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>🌍 여행 유형 분포</h3></div>
+      <div class="donut-wrap">
+        <div class="donut" id="typeDonut"></div>
+        <div class="donut-legend" id="typeLegend"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="card">
+      <div class="card-header"><h3>📋 최근 견적서</h3><a onclick="showPage('quotes')" style="font-size:0.8rem;color:var(--primary);cursor:pointer">전체 보기 →</a></div>
+      <div id="recentQuotes"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>🕐 최근 활동</h3></div>
+      <ul class="timeline" id="activityTimeline"></ul>
+    </div>
+  </div>
+</div>
+
+<!-- ─── QUOTES ─── -->
+<div class="page" id="page-quotes">
+  <div class="filter-bar">
+    <input type="text" id="quoteSearch" placeholder="🔍 고객명, 목적지, 견적번호 검색..." oninput="filterQuotes()">
+    <select id="quoteStatusFilter" onchange="filterQuotes()">
+      <option value="">전체 상태</option>
+      <option value="대기">대기중</option>
+      <option value="확정">확정</option>
+      <option value="취소">취소</option>
+      <option value="완료">완료</option>
+    </select>
+    <select id="quoteTypeFilter" onchange="filterQuotes()">
+      <option value="">전체 유형</option>
+      <option>국내</option><option>해외</option>
+    </select>
+    <button class="btn btn-primary btn-sm" onclick="window.open('quote.html','_blank')">+ 새 견적</button>
+    <button class="btn btn-ghost btn-sm" onclick="exportCsv()">⬇ CSV 내보내기</button>
+  </div>
+  <div class="card" style="padding:0">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>견적번호</th>
+          <th>고객명</th>
+          <th>목적지</th>
+          <th>유형</th>
+          <th>인원</th>
+          <th>출발일</th>
+          <th>총액</th>
+          <th>상태</th>
+          <th>작성일</th>
+          <th>액션</th>
+        </tr>
+      </thead>
+      <tbody id="quotesTableBody"></tbody>
+    </table>
+  </div>
+  <div id="quotePagination" style="display:flex;justify-content:center;gap:8px;margin-top:14px;"></div>
+</div>
+
+<!-- ─── CLIENTS ─── -->
+<div class="page" id="page-clients">
+  <div class="filter-bar">
+    <input type="text" id="clientSearch" placeholder="🔍 이름, 연락처 검색..." oninput="filterClients()">
+    <button class="btn btn-primary btn-sm" onclick="openClientModal()">+ 고객 추가</button>
+    <button class="btn btn-ghost btn-sm" onclick="exportClientCsv()">⬇ CSV</button>
+  </div>
+  <div class="card" style="padding:0">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>이름</th><th>연락처</th><th>이메일</th><th>누적 견적</th><th>총 매출</th><th>최근 여행</th><th>등급</th><th>액션</th>
+        </tr>
+      </thead>
+      <tbody id="clientsTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─── NEW QUOTE ─── -->
+<div class="page" id="page-newquote">
+  <div class="card">
+    <div class="card-header"><h3>✏️ 빠른 견적서 작성</h3></div>
+    <div class="form-grid" style="margin-bottom:14px">
+      <div class="form-group"><label>고객명 *</label><input type="text" id="nq-client" placeholder="홍길동"></div>
+      <div class="form-group"><label>연락처</label><input type="tel" id="nq-phone" placeholder="010-0000-0000"></div>
+      <div class="form-group"><label>여행 지역</label>
+        <select id="nq-area" onchange="updateNqDest()">
+          <option value="domestic">국내</option><option value="overseas">해외</option>
+        </select>
+      </div>
+      <div class="form-group"><label>여행 종류</label>
+        <select id="nq-type">
+          <option value="general">일반여행</option><option value="group">단체여행</option>
+          <option value="sightseeing">관광여행</option><option value="golf">골프여행</option>
+          <option value="honeymoon">허니문</option><option value="family">가족여행</option>
+          <option value="healing">힐링여행</option><option value="adventure">어드벤처</option>
+          <option value="cruise">크루즈</option><option value="business">비즈니스</option>
+        </select>
+      </div>
+      <div class="form-group"><label>목적지</label><select id="nq-dest"></select></div>
+      <div class="form-group"><label>숙박 등급</label>
+        <select id="nq-hotel">
+          <option value="3star">3성급</option><option value="4star" selected>4성급</option>
+          <option value="5star">5성급</option><option value="pension">펜션/리조트</option>
+        </select>
+      </div>
+      <div class="form-group"><label>출발일</label><input type="date" id="nq-depart"></div>
+      <div class="form-group"><label>귀국일</label><input type="date" id="nq-return"></div>
+      <div class="form-group"><label>성인 인원</label><input type="number" id="nq-adult" value="2" min="1"></div>
+      <div class="form-group"><label>아동 인원</label><input type="number" id="nq-child" value="0" min="0"></div>
+      <div class="form-group"><label>식사 옵션</label>
+        <select id="nq-meal">
+          <option value="bb">조식</option><option value="hb">조·석식</option>
+          <option value="fb" selected>3식</option><option value="none">불포함</option>
+        </select>
+      </div>
+      <div class="form-group"><label>현지 교통</label>
+        <select id="nq-transport">
+          <option value="private">전용차량</option><option value="bus">관광버스</option>
+          <option value="public">대중교통</option><option value="rental">렌터카</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form-grid full" style="margin-bottom:14px">
+      <div class="form-group"><label>특별 요청사항</label><textarea id="nq-req" rows="2" placeholder="특이사항"></textarea></div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-success" onclick="saveQuickQuote()">💾 견적서 저장</button>
+      <button class="btn btn-primary" onclick="openFullGenerator()">🔗 상세 작성기 열기</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PRICING ─── -->
+<div class="page" id="page-pricing">
+  <div class="card">
+    <div class="card-header"><h3>💰 기준 단가 관리</h3>
+      <button class="btn btn-success btn-sm" onclick="savePricing()">💾 저장</button>
+    </div>
+    <div class="price-grid" id="priceGrid"></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><h3>✈️ 항공 노선별 기준가</h3>
+      <button class="btn btn-success btn-sm" onclick="saveAirFares()">💾 저장</button>
+    </div>
+    <div id="airFareGrid" class="price-grid"></div>
+  </div>
+</div>
+
+<!-- ─── DESTINATIONS ─── -->
+<div class="page" id="page-destinations">
+  <div class="card">
+    <div class="card-header"><h3>🗺️ 목적지 관리</h3>
+      <button class="btn btn-primary btn-sm" onclick="openDestModal()">+ 목적지 추가</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div>
+        <h4 style="font-size:0.85rem;color:var(--muted);margin-bottom:10px">🇰🇷 국내 목적지</h4>
+        <div id="domesticDestList"></div>
+      </div>
+      <div>
+        <h4 style="font-size:0.85rem;color:var(--muted);margin-bottom:10px">🌍 해외 목적지</h4>
+        <div id="overseasDestList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── AGENCY ─── -->
+<div class="page" id="page-agency">
+  <div class="card">
+    <div class="card-header"><h3>🏢 여행사 기본 정보</h3>
+      <button class="btn btn-success btn-sm" onclick="saveAgency()">💾 저장</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>여행사명</label><input type="text" id="ag-name" placeholder="예) 드림여행사"></div>
+      <div class="form-group"><label>대표자명</label><input type="text" id="ag-ceo" placeholder="홍길동"></div>
+      <div class="form-group"><label>사업자등록번호</label><input type="text" id="ag-biz" placeholder="000-00-00000"></div>
+      <div class="form-group"><label>대표 전화</label><input type="tel" id="ag-tel" placeholder="02-0000-0000"></div>
+      <div class="form-group"><label>이메일</label><input type="email" id="ag-email" placeholder="info@agency.com"></div>
+      <div class="form-group"><label>팩스</label><input type="tel" id="ag-fax" placeholder="02-0000-0000"></div>
+      <div class="form-group full"><label>주소</label><input type="text" id="ag-addr" placeholder="서울시 강남구..."></div>
+      <div class="form-group full"><label>홈페이지</label><input type="url" id="ag-web" placeholder="https://"></div>
+      <div class="form-group full"><label>견적서 하단 안내문</label><textarea id="ag-footer" rows="3" placeholder="본 견적서는..."></textarea></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── REPORTS ─── -->
+<div class="page" id="page-reports">
+  <div class="kpi-row" style="margin-bottom:20px" id="kpiRow"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="card">
+      <div class="card-header"><h3>📊 월별 견적 건수</h3></div>
+      <div class="bar-chart" id="reportMonthBar"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>🌍 목적지 TOP 10</h3></div>
+      <div class="bar-chart" id="reportDestBar"></div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="card">
+      <div class="card-header"><h3>🎯 여행 유형별 매출</h3></div>
+      <div class="bar-chart" id="reportTypeBar"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>💰 월별 매출 추이</h3></div>
+      <div class="bar-chart" id="reportRevenueBar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── ACTIVITY ─── -->
+<div class="page" id="page-activity">
+  <div class="card">
+    <div class="card-header"><h3>🕐 전체 활동 로그</h3>
+      <button class="btn btn-ghost btn-sm" onclick="clearLog()">🗑️ 로그 삭제</button>
+    </div>
+    <ul class="timeline" id="fullTimeline"></ul>
+  </div>
+</div>
+
+</div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ══════════ MODALS ══════════ -->
+
+<!-- Quote Detail Modal -->
+<div class="modal-overlay" id="quoteModal" style="display:none" onclick="closeModal('quoteModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 id="qModalTitle">견적 상세</h3>
+      <span class="modal-close" onclick="closeModal('quoteModal')">✕</span>
+    </div>
+    <div class="modal-body" id="qModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('quoteModal')">닫기</button>
+      <button class="btn btn-primary" onclick="printQuote()">🖨️ 인쇄</button>
+    </div>
+  </div>
+</div>
+
+<!-- Client Modal -->
+<div class="modal-overlay" id="clientModal" style="display:none" onclick="closeModal('clientModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>고객 추가/수정</h3>
+      <span class="modal-close" onclick="closeModal('clientModal')">✕</span>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>이름 *</label><input type="text" id="cm-name"></div>
+        <div class="form-group"><label>연락처</label><input type="tel" id="cm-phone"></div>
+        <div class="form-group"><label>이메일</label><input type="email" id="cm-email"></div>
+        <div class="form-group"><label>생년월일</label><input type="date" id="cm-birth"></div>
+        <div class="form-group full"><label>메모</label><textarea id="cm-memo" rows="2"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('clientModal')">취소</button>
+      <button class="btn btn-primary" onclick="saveClient()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- Destination Modal -->
+<div class="modal-overlay" id="destModal" style="display:none" onclick="closeModal('destModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>목적지 추가</h3>
+      <span class="modal-close" onclick="closeModal('destModal')">✕</span>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>지역 유형</label>
+          <select id="dm-area"><option value="domestic">국내</option><option value="overseas">해외</option></select>
+        </div>
+        <div class="form-group"><label>이모지</label><input type="text" id="dm-flag" placeholder="🏝️" maxlength="4"></div>
+        <div class="form-group full"><label>목적지명</label><input type="text" id="dm-name" placeholder="제주도, 일본 도쿄 등"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('destModal')">취소</button>
+      <button class="btn btn-primary" onclick="saveDest()">추가</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════
+//  DATA STORE (localStorage)
+// ════════════════════════════════
+function load(key, def){ try{return JSON.parse(localStorage.getItem(key))||def;}catch{return def;} }
+function save(key,val){ localStorage.setItem(key,JSON.stringify(val)); }
+
+let quotes      = load('ams_quotes', []);
+let clients     = load('ams_clients', []);
+let activityLog = load('ams_log', []);
+let pricingData = load('ams_pricing', null);
+let agencyInfo  = load('ams_agency', {});
+let destData    = load('ams_dests', null);
+
+// ── Seed demo data if empty ──
+if(!quotes.length) seedDemoData();
+
+function seedDemoData(){
+  const types=['일반여행','단체여행','관광여행','골프여행','허니문','가족여행','힐링여행'];
+  const dests=['제주도','부산','일본 도쿄','태국 방콕','베트남 다낭','유럽 파리','발리','경주','강릉','괌'];
+  const areas=['국내','국내','해외','해외','해외','해외','해외','국내','국내','해외'];
+  const names=['김민준','이서연','박지호','최수아','정예준','강하은','조민서','윤지원','장서준','임지유'];
+  const statuses=['대기','확정','완료','취소','확정','대기','완료','확정','대기','완료'];
+  for(let i=0;i<10;i++){
+    const di=Math.floor(Math.random()*dests.length);
+    const adult=Math.floor(Math.random()*8)+1;
+    const nights=Math.floor(Math.random()*6)+2;
+    const total=(adult*(120000+Math.random()*800000))|0;
+    const d=new Date(); d.setDate(d.getDate()-Math.floor(Math.random()*60));
+    quotes.push({
+      id:'QT-'+Date.now()+i,
+      client:names[i],phone:'010-'+Math.floor(1000+Math.random()*9000)+'-'+Math.floor(1000+Math.random()*9000),
+      area:areas[di],type:types[Math.floor(Math.random()*types.length)],
+      dest:dests[di],flag:'✈️',adult,child:0,nights,
+      depart:fmtDate(d),status:statuses[i],total,
+      createdAt:d.toISOString(),memo:''
+    });
+  }
+  save('ams_quotes',quotes);
+  // clients
+  for(let i=0;i<5;i++){
+    clients.push({id:'CL-'+Date.now()+i,name:names[i],phone:'010-1234-'+String(5678+i),
+      email:names[i].replace(/[가-힣]/g,'')+'@email.com',birth:'',memo:'',grade:'일반'});
+  }
+  save('ams_clients',clients);
+  addLog('시스템 초기화','데모 데이터가 생성되었습니다.');
+}
+
+function addLog(action,detail){
+  activityLog.unshift({ts:new Date().toISOString(),action,detail});
+  if(activityLog.length>100) activityLog=activityLog.slice(0,100);
+  save('ams_log',activityLog);
+}
+
+// ════════════════════════════════
+//  SIDEBAR / NAV
+// ════════════════════════════════
+let sideCollapsed=false;
+function toggleSidebar(){
+  sideCollapsed=!sideCollapsed;
+  document.getElementById('sidebar').classList.toggle('collapsed',sideCollapsed);
+}
+
+const pageTitles={
+  dashboard:'대시보드',quotes:'견적서 목록',clients:'고객 관리',newquote:'새 견적 작성',
+  pricing:'단가 관리',destinations:'목적지 관리',agency:'여행사 정보',
+  reports:'매출 분석',activity:'활동 로그'
+};
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.sb-menu a').forEach(a=>a.classList.remove('active'));
+  document.querySelectorAll('.sb-menu a').forEach(a=>{
+    if(a.getAttribute('onclick')&&a.getAttribute('onclick').includes(`'${name}'`)) a.classList.add('active');
+  });
+  document.getElementById('topbarTitle').textContent = pageTitles[name]||name;
+  // render
+  const renders={
+    dashboard:renderDashboard, quotes:renderQuotes, clients:renderClients,
+    pricing:renderPricing, destinations:renderDestinations, agency:renderAgency,
+    reports:renderReports, activity:renderActivity, newquote:initNewQuote
+  };
+  if(renders[name]) renders[name]();
+}
+
+// ════════════════════════════════
+//  DASHBOARD
+// ════════════════════════════════
+function renderDashboard(){
+  // Stats
+  const total=quotes.length;
+  const confirmed=quotes.filter(q=>q.status==='확정').length;
+  const revenue=quotes.filter(q=>q.status!=='취소').reduce((s,q)=>s+q.total,0);
+  const thisMonth=quotes.filter(q=>new Date(q.createdAt).getMonth()===new Date().getMonth()).length;
+
+  document.getElementById('statsGrid').innerHTML=`
+    <div class="stat-card blue"><span class="stat-icon">📄</span><div class="stat-info"><div class="val">${total}</div><div class="lbl">전체 견적 건수</div><div class="chg up">▲ 이번 달 ${thisMonth}건</div></div></div>
+    <div class="stat-card green"><span class="stat-icon">✅</span><div class="stat-info"><div class="val">${confirmed}</div><div class="lbl">확정 건수</div><div class="chg up">▲ 전환율 ${total?Math.round(confirmed/total*100):0}%</div></div></div>
+    <div class="stat-card orange"><span class="stat-icon">💰</span><div class="stat-info"><div class="val">${fmt(revenue)}</div><div class="lbl">예상 총 매출 (원)</div><div class="chg up">▲ 취소 제외</div></div></div>
+    <div class="stat-card purple"><span class="stat-icon">👥</span><div class="stat-info"><div class="val">${clients.length}</div><div class="lbl">등록 고객 수</div><div class="chg">📋 DB 고객</div></div></div>
+  `;
+
+  // Month chart
+  renderMonthChart();
+
+  // Type donut (CSS gradient)
+  const typeCounts={};
+  quotes.forEach(q=>{typeCounts[q.type]=(typeCounts[q.type]||0)+1;});
+  const colors=['#1a56db','#0e9f6e','#f59e0b','#ef4444','#8b5cf6','#ec4899','#14b8a6'];
+  const entries=Object.entries(typeCounts).slice(0,7);
+  const sum=entries.reduce((s,[,v])=>s+v,0);
+  let pct=0;
+  const stops=entries.map(([k,v],i)=>{
+    const p=Math.round(v/sum*100);
+    const s=`${colors[i%colors.length]} ${pct}% ${pct+p}%`;
+    pct+=p; return s;
+  });
+  document.getElementById('typeDonut').style.background=
+    `conic-gradient(${stops.join(',')})`;
+  document.getElementById('typeLegend').innerHTML=entries.map(([k,v],i)=>
+    `<div class="legend-item"><div class="legend-dot" style="background:${colors[i%colors.length]}"></div>${k} <b style="margin-left:4px">${v}</b></div>`
+  ).join('');
+
+  // Recent quotes
+  const recent=quotes.slice().sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(0,5);
+  document.getElementById('recentQuotes').innerHTML=`
+    <table class="data-table">
+      <thead><tr><th>견적번호</th><th>고객</th><th>목적지</th><th>금액</th><th>상태</th></tr></thead>
+      <tbody>${recent.map(q=>`
+        <tr>
+          <td style="font-size:0.75rem;color:var(--muted)">${q.id}</td>
+          <td>${q.client}</td>
+          <td>${q.dest}</td>
+          <td><b>${fmt(q.total)}원</b></td>
+          <td>${statusBadge(q.status)}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+
+  // Activity
+  document.getElementById('activityTimeline').innerHTML=
+    activityLog.slice(0,8).map(l=>`
+      <li>
+        <div class="tl-time">${fmtTs(l.ts)}</div>
+        <div class="tl-msg"><b>${l.action}</b> — ${l.detail}</div>
+      </li>`).join('') || '<li style="color:var(--muted);font-size:0.82rem">활동 내역이 없습니다.</li>';
+}
+
+function renderMonthChart(){
+  const weeks=['1주','2주','3주','4주'];
+  const data=weeks.map(()=>Math.floor(Math.random()*8+1));
+  const max=Math.max(...data);
+  const colors=['#1a56db','#0e9f6e','#f59e0b','#8b5cf6'];
+  document.getElementById('monthChart').innerHTML=data.map((v,i)=>`
+    <div class="bar-row">
+      <span class="bar-lbl">${weeks[i]}</span>
+      <div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(v/max*100)}%;background:${colors[i]}"></div></div>
+      <span class="bar-val">${v}건</span>
+    </div>`).join('');
+}
+
+// ════════════════════════════════
+//  QUOTES PAGE
+// ════════════════════════════════
+let currentPage=1; const pageSize=10;
+
+function renderQuotes(){
+  filterQuotes();
+}
+
+function filterQuotes(){
+  const q=(document.getElementById('quoteSearch').value||'').toLowerCase();
+  const st=document.getElementById('quoteStatusFilter').value;
+  const tp=document.getElementById('quoteTypeFilter').value;
+  let filtered=quotes.filter(x=>{
+    const match=!q||x.client.toLowerCase().includes(q)||x.dest.toLowerCase().includes(q)||x.id.toLowerCase().includes(q);
+    const sm=!st||x.status===st;
+    const tm=!tp||x.area===tp;
+    return match&&sm&&tm;
+  }).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+
+  const pages=Math.ceil(filtered.length/pageSize)||1;
+  if(currentPage>pages) currentPage=1;
+  const slice=filtered.slice((currentPage-1)*pageSize, currentPage*pageSize);
+
+  document.getElementById('quotesTableBody').innerHTML=slice.map(q=>`
+    <tr>
+      <td style="font-size:0.75rem;color:var(--muted)">${q.id}</td>
+      <td><b>${q.client}</b><br><span style="font-size:0.72rem;color:var(--muted)">${q.phone||''}</span></td>
+      <td>${q.dest}</td>
+      <td>${typeBadge(q.type)}</td>
+      <td>${q.adult}명${q.child>0?'+'+q.child:''}</td>
+      <td style="font-size:0.82rem">${q.depart||'-'}</td>
+      <td><b>${fmt(q.total)}원</b></td>
+      <td>
+        <select onchange="changeStatus('${q.id}',this.value)" style="border:1.5px solid var(--border);border-radius:6px;padding:3px 6px;font-size:0.75rem;outline:none;">
+          ${['대기','확정','취소','완료'].map(s=>`<option ${s===q.status?'selected':''}>${s}</option>`).join('')}
+        </select>
+      </td>
+      <td style="font-size:0.75rem;color:var(--muted)">${fmtTs(q.createdAt)}</td>
+      <td>
+        <div class="btn-group">
+          <button class="btn btn-outline btn-xs" onclick="viewQuote('${q.id}')">상세</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteQuote('${q.id}')">삭제</button>
+        </div>
+      </td>
+    </tr>`).join('') || '<tr><td colspan="10" style="text-align:center;color:var(--muted);padding:30px">견적서가 없습니다.</td></tr>';
+
+  // Pagination
+  let pg='';
+  for(let i=1;i<=pages;i++) pg+=`<button class="btn ${i===currentPage?'btn-primary':'btn-ghost'} btn-sm" onclick="currentPage=${i};filterQuotes()">${i}</button>`;
+  document.getElementById('quotePagination').innerHTML=pg;
+}
+
+function changeStatus(id, status){
+  const q=quotes.find(x=>x.id===id);
+  if(q){q.status=status;save('ams_quotes',quotes);addLog('상태 변경',`${q.client} 견적 → ${status}`);}
+}
+
+function deleteQuote(id){
+  if(!confirm('견적서를 삭제하시겠습니까?')) return;
+  const q=quotes.find(x=>x.id===id);
+  quotes=quotes.filter(x=>x.id!==id);
+  save('ams_quotes',quotes);
+  if(q) addLog('견적 삭제',`${q.client} (${q.dest}) 견적 삭제됨`);
+  filterQuotes();
+  toast('삭제되었습니다.','danger');
+}
+
+function viewQuote(id){
+  const q=quotes.find(x=>x.id===id);
+  if(!q) return;
+  document.getElementById('qModalTitle').textContent=`견적 상세 — ${q.id}`;
+  document.getElementById('qModalBody').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:0.85rem;margin-bottom:16px">
+      <div><b>고객명</b>: ${q.client}</div><div><b>연락처</b>: ${q.phone||'-'}</div>
+      <div><b>목적지</b>: ${q.dest}</div><div><b>여행유형</b>: ${q.type}</div>
+      <div><b>출발일</b>: ${q.depart||'-'}</div><div><b>인원</b>: 성인 ${q.adult}명${q.child>0?' / 아동 '+q.child+'명':''}</div>
+      <div><b>숙박</b>: ${q.nights}박</div><div><b>상태</b>: ${statusBadge(q.status)}</div>
+    </div>
+    <div style="background:#f8fafc;border-radius:10px;padding:14px;text-align:center">
+      <div style="font-size:0.8rem;color:var(--muted)">총 견적 금액</div>
+      <div style="font-size:2rem;font-weight:800;color:var(--primary)">${fmt(q.total)}원</div>
+      <div style="font-size:0.78rem;color:var(--muted)">1인당 ${fmt(Math.round(q.total/(q.adult+q.child||1)))}원</div>
+    </div>
+    ${q.memo?`<div style="margin-top:12px;font-size:0.83rem;color:var(--muted)"><b>메모:</b> ${q.memo}</div>`:''}
+    <div style="margin-top:16px">
+      <label style="font-size:0.78rem;font-weight:600;color:var(--muted)">메모 수정</label>
+      <textarea id="qMemoEdit" rows="2" style="width:100%;border:1.5px solid var(--border);border-radius:8px;padding:8px;font-size:0.83rem;margin-top:4px;font-family:inherit;outline:none">${q.memo||''}</textarea>
+      <button class="btn btn-outline btn-sm" style="margin-top:6px" onclick="saveQuoteMemo('${q.id}')">메모 저장</button>
+    </div>`;
+  openModal('quoteModal');
+}
+
+function saveQuoteMemo(id){
+  const q=quotes.find(x=>x.id===id);
+  if(q){q.memo=document.getElementById('qMemoEdit').value;save('ams_quotes',quotes);toast('메모 저장됨','success');}
+}
+
+function exportCsv(){
+  const rows=[['견적번호','고객명','연락처','목적지','유형','인원','출발일','금액','상태','작성일']];
+  quotes.forEach(q=>rows.push([q.id,q.client,q.phone||'',q.dest,q.type,q.adult+q.child,q.depart||'',q.total,q.status,fmtTs(q.createdAt)]));
+  const csv=rows.map(r=>r.join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,﻿'+encodeURIComponent(csv);
+  a.download='견적서_목록.csv'; a.click();
+}
+
+// ════════════════════════════════
+//  CLIENTS
+// ════════════════════════════════
+function renderClients(){ filterClients(); }
+
+function filterClients(){
+  const q=(document.getElementById('clientSearch').value||'').toLowerCase();
+  const filtered=clients.filter(c=>
+    c.name.includes(q)||(c.phone||'').includes(q)||(c.email||'').includes(q)
+  );
+  document.getElementById('clientsTableBody').innerHTML=filtered.map(c=>{
+    const cqs=quotes.filter(q=>q.client===c.name);
+    const rev=cqs.reduce((s,q)=>s+q.total,0);
+    return `<tr>
+      <td><b>${c.name}</b></td>
+      <td>${c.phone||'-'}</td>
+      <td>${c.email||'-'}</td>
+      <td>${cqs.length}건</td>
+      <td>${fmt(rev)}원</td>
+      <td>${cqs.length?cqs[0].depart||'-':'-'}</td>
+      <td><span class="badge ${c.grade==='VIP'?'badge-purple':c.grade==='우수'?'badge-blue':'badge-gray'}">${c.grade||'일반'}</span></td>
+      <td>
+        <div class="btn-group">
+          <button class="btn btn-outline btn-xs" onclick="editClient('${c.id}')">수정</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteClient('${c.id}')">삭제</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('')||'<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:30px">등록된 고객이 없습니다.</td></tr>';
+}
+
+let editingClientId=null;
+function openClientModal(){ editingClientId=null; ['cm-name','cm-phone','cm-email','cm-birth','cm-memo'].forEach(id=>document.getElementById(id).value=''); openModal('clientModal'); }
+function editClient(id){
+  const c=clients.find(x=>x.id===id); if(!c)return;
+  editingClientId=id;
+  document.getElementById('cm-name').value=c.name;
+  document.getElementById('cm-phone').value=c.phone||'';
+  document.getElementById('cm-email').value=c.email||'';
+  document.getElementById('cm-birth').value=c.birth||'';
+  document.getElementById('cm-memo').value=c.memo||'';
+  openModal('clientModal');
+}
+function saveClient(){
+  const name=document.getElementById('cm-name').value.trim();
+  if(!name){toast('이름을 입력하세요.','warning');return;}
+  if(editingClientId){
+    const c=clients.find(x=>x.id===editingClientId);
+    if(c){c.name=name;c.phone=document.getElementById('cm-phone').value;c.email=document.getElementById('cm-email').value;c.birth=document.getElementById('cm-birth').value;c.memo=document.getElementById('cm-memo').value;}
+    addLog('고객 수정',name);
+  } else {
+    clients.push({id:'CL-'+Date.now(),name,phone:document.getElementById('cm-phone').value,email:document.getElementById('cm-email').value,birth:document.getElementById('cm-birth').value,memo:document.getElementById('cm-memo').value,grade:'일반'});
+    addLog('고객 추가',name);
+  }
+  save('ams_clients',clients); closeModal('clientModal'); filterClients(); toast('저장되었습니다.','success');
+}
+function deleteClient(id){
+  if(!confirm('고객을 삭제하시겠습니까?')) return;
+  const c=clients.find(x=>x.id===id);
+  clients=clients.filter(x=>x.id!==id); save('ams_clients',clients);
+  if(c) addLog('고객 삭제',c.name);
+  filterClients(); toast('삭제되었습니다.','danger');
+}
+function exportClientCsv(){
+  const rows=[['이름','연락처','이메일','등급']];
+  clients.forEach(c=>rows.push([c.name,c.phone||'',c.email||'',c.grade||'일반']));
+  const csv=rows.map(r=>r.join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,﻿'+encodeURIComponent(csv);
+  a.download='고객목록.csv'; a.click();
+}
+
+// ════════════════════════════════
+//  NEW QUOTE
+// ════════════════════════════════
+const DESTS={
+  domestic:['제주도','부산','경주','강릉','여수','전주','거제도','속초','남해','통영','춘천','안동','서울','인천','대구','광주'],
+  overseas:['일본 도쿄','일본 오사카','일본 후쿠오카','태국 방콕','태국 푸켓','베트남 다낭','베트남 하노이','필리핀 세부','인도네시아 발리','싱가포르','홍콩','대만 타이페이','중국 상하이','유럽 파리','유럽 로마','유럽 바르셀로나','미국 하와이','미국 뉴욕','호주 시드니','튀르키예 이스탄불','두바이','몰디브','괌']
+};
+function updateNqDest(){
+  const area=document.getElementById('nq-area').value;
+  const list=destData?destData[area]:DESTS[area];
+  document.getElementById('nq-dest').innerHTML=list.map(d=>`<option>${d}</option>`).join('');
+}
+function initNewQuote(){
+  updateNqDest();
+  const d=new Date(); d.setDate(d.getDate()+14);
+  document.getElementById('nq-depart').value=d.toISOString().split('T')[0];
+  const r=new Date(d); r.setDate(r.getDate()+4);
+  document.getElementById('nq-return').value=r.toISOString().split('T')[0];
+}
+function saveQuickQuote(){
+  const client=document.getElementById('nq-client').value.trim();
+  if(!client){toast('고객명을 입력하세요.','warning');return;}
+  const dep=document.getElementById('nq-depart').value;
+  const ret=document.getElementById('nq-return').value;
+  const nights=dep&&ret?Math.max(1,Math.round((new Date(ret)-new Date(dep))/(864e5))):3;
+  const adult=parseInt(document.getElementById('nq-adult').value)||2;
+  const child=parseInt(document.getElementById('nq-child').value)||0;
+  const total=Math.round(adult*(150000+Math.random()*400000));
+  const typeMap={general:'일반여행',group:'단체여행',sightseeing:'관광여행',golf:'골프여행',honeymoon:'허니문',family:'가족여행',healing:'힐링여행',adventure:'어드벤처',cruise:'크루즈',business:'비즈니스'};
+  const q={
+    id:'QT-'+Date.now(),client,phone:document.getElementById('nq-phone').value,
+    area:document.getElementById('nq-area').value==='domestic'?'국내':'해외',
+    type:typeMap[document.getElementById('nq-type').value],
+    dest:document.getElementById('nq-dest').value,flag:'✈️',
+    adult,child,nights,depart:dep,status:'대기',total,
+    createdAt:new Date().toISOString(),memo:document.getElementById('nq-req').value
+  };
+  quotes.unshift(q);
+  save('ams_quotes',quotes);
+  addLog('견적 생성',`${client} — ${q.dest} ${q.type}`);
+  toast('견적서가 저장되었습니다!','success');
+  // auto-add client
+  if(!clients.find(c=>c.name===client)){
+    clients.push({id:'CL-'+Date.now(),name:client,phone:q.phone,email:'',birth:'',memo:'',grade:'일반'});
+    save('ams_clients',clients);
+  }
+}
+function openFullGenerator(){ window.open('quote.html','_blank'); }
+
+// ════════════════════════════════
+//  PRICING
+// ════════════════════════════════
+const DEFAULT_PRICING={
+  hotel:{'3성급':80000,'4성급':150000,'5성급':280000,'펜션/리조트':70000,'게스트하우스':40000},
+  meal:{'조식(BB)':20000,'조·석식(HB)':35000,'3식(FB)':55000},
+  transport:{'전용 차량':60000,'관광 버스':20000,'대중교통':8000,'렌터카':50000},
+  insurance:{'국내':8000,'해외':25000},
+  guide:{'국내':15000,'해외':30000}
+};
+const DEFAULT_AIRFARES={
+  '일본/중국/홍콩/대만':350000,'동남아(태국/베트남/필리핀/인니)':480000,
+  '싱가포르/괌':550000,'발리/스리랑카':620000,'몰디브/두바이/튀르키예':900000,
+  '유럽/미국 뉴욕':1400000,'하와이/호주':980000
+};
+
+function renderPricing(){
+  const p=pricingData||DEFAULT_PRICING;
+  const sections=[
+    {key:'hotel',label:'🏨 숙박 (1박 1인)'},
+    {key:'meal',label:'🍽️ 식사 (1일 1인)'},
+    {key:'transport',label:'🚐 현지 교통 (1일 1인)'},
+    {key:'insurance',label:'🛡️ 보험 (1인)'},
+    {key:'guide',label:'👤 가이드비 (1일 1인)'}
+  ];
+  document.getElementById('priceGrid').innerHTML=sections.map(s=>`
+    <div class="price-card">
+      <h4>${s.label}</h4>
+      ${Object.entries(p[s.key]).map(([k,v])=>`
+        <div class="price-item">
+          <span>${k}</span>
+          <input class="price-input" type="number" data-section="${s.key}" data-key="${k}" value="${v}">
+        </div>`).join('')}
+    </div>`).join('');
+
+  // Airfares
+  const af=load('ams_airfares',DEFAULT_AIRFARES);
+  document.getElementById('airFareGrid').innerHTML=`
+    <div class="price-card" style="grid-column:1/-1">
+      <h4>노선별 왕복 기준가 (1인)</h4>
+      ${Object.entries(af).map(([k,v])=>`
+        <div class="price-item">
+          <span>${k}</span>
+          <input class="price-input" type="number" data-af="${k}" value="${v}">
+        </div>`).join('')}
+    </div>`;
+}
+
+function savePricing(){
+  const p={hotel:{},meal:{},transport:{},insurance:{},guide:{}};
+  document.querySelectorAll('#priceGrid .price-input').forEach(inp=>{
+    p[inp.dataset.section][inp.dataset.key]=parseInt(inp.value)||0;
+  });
+  pricingData=p; save('ams_pricing',p);
+  addLog('단가 수정','기준 단가가 업데이트되었습니다.');
+  toast('단가가 저장되었습니다.','success');
+}
+function saveAirFares(){
+  const af={};
+  document.querySelectorAll('#airFareGrid .price-input').forEach(inp=>{
+    af[inp.dataset.af]=parseInt(inp.value)||0;
+  });
+  save('ams_airfares',af);
+  addLog('항공 단가 수정','항공 기준가가 업데이트되었습니다.');
+  toast('항공 단가가 저장되었습니다.','success');
+}
+
+// ════════════════════════════════
+//  DESTINATIONS
+// ════════════════════════════════
+const DEFAULT_DESTS={
+  domestic:['제주도','부산','경주','강릉','여수','전주','거제도','속초','남해','통영','춘천','안동','서울','인천','대구','광주'],
+  overseas:['일본 도쿄','일본 오사카','일본 후쿠오카','태국 방콕','태국 푸켓','베트남 다낭','베트남 하노이','필리핀 세부','인도네시아 발리','싱가포르','홍콩','대만 타이페이','중국 상하이','유럽 파리','유럽 로마','유럽 바르셀로나','미국 하와이','미국 뉴욕','호주 시드니','튀르키예 이스탄불','두바이','몰디브','괌']
+};
+
+function renderDestinations(){
+  const d=destData||DEFAULT_DESTS;
+  ['domestic','overseas'].forEach(area=>{
+    const key=area==='domestic'?'domesticDestList':'overseasDestList';
+    document.getElementById(key).innerHTML=d[area].map((dest,i)=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:8px;background:#f8fafc;margin-bottom:6px;font-size:0.83rem">
+        <span>${dest}</span>
+        <button class="btn btn-danger btn-xs" onclick="removeDest('${area}',${i})">✕</button>
+      </div>`).join('');
+  });
+}
+function openDestModal(){ openModal('destModal'); }
+function saveDest(){
+  const area=document.getElementById('dm-area').value;
+  const name=document.getElementById('dm-name').value.trim();
+  if(!name){toast('목적지명을 입력하세요.','warning');return;}
+  const d=destData||JSON.parse(JSON.stringify(DEFAULT_DESTS));
+  d[area].push(name);
+  destData=d; save('ams_dests',d);
+  closeModal('destModal'); renderDestinations();
+  addLog('목적지 추가',name);
+  toast('목적지가 추가되었습니다.','success');
+}
+function removeDest(area,idx){
+  const d=destData||JSON.parse(JSON.stringify(DEFAULT_DESTS));
+  const name=d[area][idx];
+  d[area].splice(idx,1);
+  destData=d; save('ams_dests',d);
+  addLog('목적지 삭제',name);
+  renderDestinations();
+}
+
+// ════════════════════════════════
+//  AGENCY
+// ════════════════════════════════
+function renderAgency(){
+  const info=agencyInfo;
+  document.getElementById('ag-name').value=info.name||'';
+  document.getElementById('ag-ceo').value=info.ceo||'';
+  document.getElementById('ag-biz').value=info.biz||'';
+  document.getElementById('ag-tel').value=info.tel||'';
+  document.getElementById('ag-email').value=info.email||'';
+  document.getElementById('ag-fax').value=info.fax||'';
+  document.getElementById('ag-addr').value=info.addr||'';
+  document.getElementById('ag-web').value=info.web||'';
+  document.getElementById('ag-footer').value=info.footer||'본 견적서는 자동 생성된 예상 견적입니다. 최종 요금은 항공, 숙박, 현지 상황에 따라 변동될 수 있습니다.';
+}
+function saveAgency(){
+  agencyInfo={
+    name:document.getElementById('ag-name').value,ceo:document.getElementById('ag-ceo').value,
+    biz:document.getElementById('ag-biz').value,tel:document.getElementById('ag-tel').value,
+    email:document.getElementById('ag-email').value,fax:document.getElementById('ag-fax').value,
+    addr:document.getElementById('ag-addr').value,web:document.getElementById('ag-web').value,
+    footer:document.getElementById('ag-footer').value
+  };
+  save('ams_agency',agencyInfo);
+  addLog('여행사 정보 수정','기본 정보가 업데이트되었습니다.');
+  toast('저장되었습니다.','success');
+}
+
+// ════════════════════════════════
+//  REPORTS
+// ════════════════════════════════
+function renderReports(){
+  const total=quotes.length;
+  const revenue=quotes.filter(q=>q.status!=='취소').reduce((s,q)=>s+q.total,0);
+  const confirmed=quotes.filter(q=>q.status==='확정').length;
+  document.getElementById('kpiRow').innerHTML=`
+    <div class="kpi"><div class="kv" style="color:var(--primary)">${total}</div><div class="kl">전체 견적</div></div>
+    <div class="kpi"><div class="kv" style="color:var(--success)">${fmt(revenue)}원</div><div class="kl">예상 매출</div></div>
+    <div class="kpi"><div class="kv" style="color:var(--warning)">${total?Math.round(confirmed/total*100):0}%</div><div class="kl">확정 전환율</div></div>
+  `;
+
+  // Month bar
+  const months=['1월','2월','3월','4월','5월','6월'];
+  const mdata=months.map(()=>Math.floor(Math.random()*12+1));
+  const mmax=Math.max(...mdata);
+  document.getElementById('reportMonthBar').innerHTML=mdata.map((v,i)=>`
+    <div class="bar-row">
+      <span class="bar-lbl">${months[i]}</span>
+      <div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(v/mmax*100)}%;background:#1a56db"></div></div>
+      <span class="bar-val">${v}건</span>
+    </div>`).join('');
+
+  // Dest bar
+  const destCount={};
+  quotes.forEach(q=>destCount[q.dest]=(destCount[q.dest]||0)+1);
+  const top=Object.entries(destCount).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const tmax=top[0]?top[0][1]:1;
+  const colors=['#1a56db','#0e9f6e','#f59e0b','#ef4444','#8b5cf6','#ec4899','#14b8a6','#f97316'];
+  document.getElementById('reportDestBar').innerHTML=top.map(([k,v],i)=>`
+    <div class="bar-row">
+      <span class="bar-lbl" style="width:90px;font-size:0.75rem">${k}</span>
+      <div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(v/tmax*100)}%;background:${colors[i%colors.length]}"></div></div>
+      <span class="bar-val">${v}건</span>
+    </div>`).join('');
+
+  // Type bar
+  const typeCount={};
+  quotes.forEach(q=>typeCount[q.type]=(typeCount[q.type]||0)+1);
+  const tp=Object.entries(typeCount).sort((a,b)=>b[1]-a[1]);
+  const tpmax=tp[0]?tp[0][1]:1;
+  document.getElementById('reportTypeBar').innerHTML=tp.map(([k,v],i)=>`
+    <div class="bar-row">
+      <span class="bar-lbl" style="width:90px;font-size:0.75rem">${k}</span>
+      <div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(v/tpmax*100)}%;background:${colors[i%colors.length]}"></div></div>
+      <span class="bar-val">${v}건</span>
+    </div>`).join('');
+
+  // Revenue bar
+  const revdata=months.map(()=>Math.floor((500+Math.random()*4500)*10000));
+  const rvmax=Math.max(...revdata);
+  document.getElementById('reportRevenueBar').innerHTML=revdata.map((v,i)=>`
+    <div class="bar-row">
+      <span class="bar-lbl">${months[i]}</span>
+      <div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(v/rvmax*100)}%;background:#0e9f6e"></div></div>
+      <span class="bar-val" style="font-size:0.72rem">${fmt(Math.round(v/10000))}만</span>
+    </div>`).join('');
+}
+
+// ════════════════════════════════
+//  ACTIVITY
+// ════════════════════════════════
+function renderActivity(){
+  document.getElementById('fullTimeline').innerHTML=
+    activityLog.map(l=>`
+      <li>
+        <div class="tl-time">${fmtTs(l.ts)}</div>
+        <div class="tl-msg"><b>${l.action}</b> — ${l.detail}</div>
+      </li>`).join('') || '<li style="color:var(--muted);font-size:0.82rem">활동 내역이 없습니다.</li>';
+}
+function clearLog(){
+  if(!confirm('로그를 모두 삭제하시겠습니까?')) return;
+  activityLog=[]; save('ams_log',activityLog); renderActivity();
+}
+
+// ════════════════════════════════
+//  MODAL HELPERS
+// ════════════════════════════════
+function openModal(id){ document.getElementById(id).style.display='flex'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+function printQuote(){ window.print(); }
+
+// ════════════════════════════════
+//  UTILS
+// ════════════════════════════════
+function fmt(n){return new Intl.NumberFormat('ko-KR').format(n);}
+function fmtDate(d){return d.toISOString().split('T')[0];}
+function fmtTs(ts){
+  const d=new Date(ts);
+  return d.toLocaleDateString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+
+function statusBadge(s){
+  const map={대기:'badge-yellow',확정:'badge-green',완료:'badge-blue',취소:'badge-red'};
+  return `<span class="badge ${map[s]||'badge-gray'}">${s}</span>`;
+}
+function typeBadge(t){
+  const map={'일반여행':'badge-blue','단체여행':'badge-purple','관광여행':'badge-green','골프여행':'badge-orange','허니문':'badge-red','가족여행':'badge-blue','힐링여행':'badge-green','어드벤처':'badge-orange','크루즈':'badge-blue','비즈니스':'badge-gray'};
+  return `<span class="badge ${map[t]||'badge-gray'}">${t}</span>`;
+}
+
+function toast(msg, type='info'){
+  const el=document.createElement('div');
+  el.className=`toast ${type}`;
+  el.textContent=msg;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),3000);
+}
+
+// Clock
+function updateClock(){
+  document.getElementById('clockDisplay').textContent=
+    new Date().toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+setInterval(updateClock,1000); updateClock();
+
+// ── Init ──
+renderDashboard();
+</script>
+</body>
+</html>

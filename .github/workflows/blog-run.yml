@@ -1,0 +1,64 @@
+name: Blog Automation — Manual Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '실행 모드'
+        required: true
+        default: 'preview'
+        type: choice
+        options:
+          - preview
+          - draft
+      posts:
+        description: '포스트 수 (기본값: 3)'
+        required: false
+        default: '3'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: blog-automation
+        run: npm install
+
+      - name: Create .env
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'EOF'
+          ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
+          NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}
+          GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN=${{ secrets.GOOGLE_REFRESH_TOKEN }}
+          BLOGGER_BLOG_ID=${{ secrets.BLOGGER_BLOG_ID }}
+          POSTS_PER_RUN=${{ inputs.posts }}
+          EOF
+
+      - name: Run blog automation (${{ inputs.mode }})
+        working-directory: blog-automation
+        run: node src/index.js --${{ inputs.mode }}
+
+      - name: Export dashboard data
+        working-directory: blog-automation
+        run: node src/web/export-static.js
+
+      - name: Commit & push dashboard data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "📊 대시보드 데이터 업데이트 (${{ inputs.mode }} 모드)"
+          file_pattern: "docs/data/*.json"
+          branch: claude/blog-automation-system-KAbtE

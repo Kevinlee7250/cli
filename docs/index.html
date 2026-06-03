@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>블로그 자동화 대시보드</title>
+<style>
+  :root {
+    --bg:#0f1117;--bg2:#1a1d27;--bg3:#22263a;--border:#2d3350;
+    --text:#e2e8f0;--muted:#8892b0;--accent:#7c6af7;--accent2:#06b6d4;
+    --green:#34d399;--red:#f87171;--yellow:#fbbf24;--orange:#fb923c;
+    --radius:12px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;min-height:100vh;display:flex;}
+  #sidebar{width:220px;min-height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
+  .logo{padding:24px 20px 16px;border-bottom:1px solid var(--border);}
+  .logo h1{font-size:15px;font-weight:700;color:var(--accent);}
+  .logo p{font-size:11px;color:var(--muted);margin-top:2px;}
+  nav a{display:flex;align-items:center;gap:10px;padding:10px 20px;color:var(--muted);text-decoration:none;font-size:14px;cursor:pointer;transition:all .15s;border-left:3px solid transparent;}
+  nav a:hover{color:var(--text);background:var(--bg3);}
+  nav a.active{color:var(--accent);background:rgba(124,106,247,.1);border-left-color:var(--accent);}
+  .nav-icon{font-size:18px;width:22px;text-align:center;}
+  .sidebar-footer{padding:16px;border-top:1px solid var(--border);}
+  .sidebar-footer a{display:block;color:var(--muted);font-size:12px;text-decoration:none;padding:4px 0;}
+  .sidebar-footer a:hover{color:var(--accent);}
+  .last-updated{font-size:11px;color:var(--muted);margin-top:8px;}
+
+  #main{flex:1;overflow-y:auto;}
+  .page{display:none;padding:28px 32px;}
+  .page.active{display:block;}
+  .page-title{font-size:22px;font-weight:700;margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px;margin-bottom:28px;}
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+  .card .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+  .card .value{font-size:28px;font-weight:700;margin-top:6px;}
+  .card .sub{font-size:12px;color:var(--muted);margin-top:4px;}
+  .card.green .value{color:var(--green);}
+  .card.blue .value{color:var(--accent2);}
+  .card.purple .value{color:var(--accent);}
+  .card.yellow .value{color:var(--yellow);}
+
+  .table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px;}
+  table{width:100%;border-collapse:collapse;}
+  th{background:var(--bg3);padding:12px 16px;text-align:left;font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;}
+  td{padding:12px 16px;border-top:1px solid var(--border);font-size:14px;vertical-align:middle;}
+  tr:hover td{background:rgba(255,255,255,.02);}
+
+  .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;}
+  .badge.green{background:rgba(52,211,153,.15);color:var(--green);}
+  .badge.red{background:rgba(248,113,113,.15);color:var(--red);}
+  .badge.yellow{background:rgba(251,191,36,.15);color:var(--yellow);}
+  .badge.purple{background:rgba(124,106,247,.15);color:var(--accent);}
+  .badge.blue{background:rgba(6,182,212,.15);color:var(--accent2);}
+  .badge.muted{background:rgba(136,146,176,.15);color:var(--muted);}
+
+  .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .section-header h2{font-size:16px;font-weight:600;}
+
+  .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+  .post-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:border-color .15s,transform .1s;}
+  .post-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .post-card .thumb-placeholder{width:100%;height:120px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:36px;}
+  .post-card .info{padding:14px;}
+  .post-card .kw{font-size:11px;color:var(--accent);font-weight:600;text-transform:uppercase;margin-bottom:5px;}
+  .post-card .title{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:8px;}
+  .post-card .footer{display:flex;gap:6px;flex-wrap:wrap;}
+
+  .search-row{display:flex;gap:12px;margin-bottom:20px;align-items:center;}
+  .search-input{flex:1;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none;}
+  .search-input:focus{border-color:var(--accent);}
+  select.filter-sel{padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none;cursor:pointer;}
+
+  #modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center;padding:24px;}
+  #modal-overlay.open{display:flex;}
+  #modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:820px;max-height:88vh;overflow-y:auto;padding:28px;}
+  #modal h2{font-size:17px;font-weight:700;margin-bottom:6px;padding-right:32px;}
+  #modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;}
+  #modal{position:relative;}
+
+  .sns-tabs{display:flex;gap:2px;margin-bottom:20px;background:var(--bg3);padding:4px;border-radius:8px;width:fit-content;}
+  .sns-tab{padding:6px 16px;border-radius:6px;cursor:pointer;font-size:13px;color:var(--muted);transition:all .15s;}
+  .sns-tab.active{background:var(--bg2);color:var(--text);font-weight:600;}
+  .sns-panel{display:none;}
+  .sns-panel.active{display:block;}
+  .sns-caption{background:var(--bg3);border-radius:var(--radius);padding:16px;font-size:13px;line-height:1.8;white-space:pre-wrap;max-height:380px;overflow-y:auto;}
+  .thread-item{background:var(--bg3);border-radius:var(--radius);padding:14px;margin-bottom:10px;font-size:13px;line-height:1.8;white-space:pre-wrap;}
+  .thread-label{font-size:11px;color:var(--accent);font-weight:700;margin-bottom:6px;}
+  .tiktok-scene{background:var(--bg3);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
+  .tiktok-scene .time{font-size:11px;color:var(--accent2);font-weight:700;margin-bottom:6px;}
+  .tiktok-scene .text{font-size:13px;margin-bottom:4px;}
+  .tiktok-scene .dir{font-size:12px;color:var(--muted);}
+  .hashtag-wrap{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
+  .hashtag{background:rgba(124,106,247,.15);color:var(--accent);padding:3px 10px;border-radius:20px;font-size:12px;}
+
+  .fact-issue{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:13px;}
+  .fact-issue .type{color:var(--yellow);font-weight:700;font-size:11px;margin-bottom:4px;}
+  .fact-issue .original{color:var(--red);text-decoration:line-through;margin-bottom:2px;}
+  .fact-issue .corrected{color:var(--green);}
+  .fact-issue .reason{color:var(--muted);font-size:12px;margin-top:4px;}
+
+  .action-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--radius);border:1px solid var(--accent);background:rgba(124,106,247,.15);color:var(--accent);text-decoration:none;font-size:14px;font-weight:600;transition:all .15s;}
+  .action-btn:hover{background:rgba(124,106,247,.3);}
+
+  .earnings-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);}
+  .earnings-row:last-child{border-bottom:none;}
+
+  .alert-box{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:var(--radius);padding:14px 18px;margin-bottom:24px;font-size:13px;color:var(--accent2);}
+
+  ::-webkit-scrollbar{width:6px;height:6px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+  .empty{text-align:center;padding:60px;color:var(--muted);font-size:14px;}
+  .empty .icon{font-size:48px;margin-bottom:12px;}
+
+  @media(max-width:700px){
+    body{flex-direction:column;}
+    #sidebar{width:100%;height:auto;min-height:auto;position:static;flex-direction:row;flex-wrap:wrap;}
+    .logo{flex:1;}
+    nav{display:flex;overflow-x:auto;}
+    nav a{white-space:nowrap;}
+    .page{padding:16px;}
+    .post-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div id="sidebar">
+  <div class="logo">
+    <h1>🤖 블로그 자동화</h1>
+    <p>AI Blog Dashboard</p>
+  </div>
+  <nav>
+    <a class="active" data-page="dashboard"><span class="nav-icon">📊</span> 대시보드</a>
+    <a data-page="posts"><span class="nav-icon">📝</span> 포스트 목록</a>
+    <a data-page="social"><span class="nav-icon">📱</span> SNS 콘텐츠</a>
+    <a data-page="analytics"><span class="nav-icon">💰</span> 수익 분석</a>
+    <a data-page="config"><span class="nav-icon">⚙️</span> AdSense 기준</a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="https://github.com/kevinlee7250/cli" target="_blank">📦 GitHub 저장소</a>
+    <a href="https://github.com/kevinlee7250/cli/actions" target="_blank">▶️ GitHub Actions 실행</a>
+    <a href="https://hoguwhat1.blogspot.com/" target="_blank">🌐 블로그 바로가기</a>
+    <div class="last-updated" id="last-updated-label">데이터 로딩 중...</div>
+  </div>
+</div>
+
+<div id="main">
+  <!-- Dashboard -->
+  <div class="page active" id="page-dashboard">
+    <div class="page-title">📊 대시보드</div>
+    <div class="alert-box">💡 이 대시보드는 자동화 실행 후 자동 업데이트됩니다. 실행은 <a href="https://github.com/kevinlee7250/cli/actions" target="_blank" style="color:var(--accent)">GitHub Actions</a> 또는 로컬 서버에서 가능합니다.</div>
+    <div class="cards">
+      <div class="card purple"><div class="label">총 포스트</div><div class="value" id="s-posts">-</div><div class="sub">생성된 전체 포스트</div></div>
+      <div class="card green"><div class="label">누적 예상 수익</div><div class="value" id="s-revenue">-</div><div class="sub">AdSense 추정치</div></div>
+      <div class="card blue"><div class="label">Blogger 게시</div><div class="value" id="s-blogger">-</div><div class="sub">발행된 포스트</div></div>
+      <div class="card yellow"><div class="label">전체 실행 횟수</div><div class="value" id="s-runs">-</div><div class="sub">자동화 실행 이력</div></div>
+    </div>
+    <div class="section-header"><h2>최근 실행 이력</h2><span class="badge purple" id="s-last-run">-</span></div>
+    <div class="table-wrap">
+      <table><thead><tr><th>날짜/시간</th><th>키워드</th><th>생성</th><th>Blogger</th><th>수익(일)</th><th>오류</th></tr></thead>
+      <tbody id="runs-table"></tbody></table>
+    </div>
+    <div class="section-header"><h2>최근 포스트</h2><a href="#" onclick="navTo('posts');return false;" style="font-size:13px;color:var(--accent)">전체 보기 →</a></div>
+    <div class="post-grid" id="recent-grid"></div>
+  </div>
+
+  <!-- Posts -->
+  <div class="page" id="page-posts">
+    <div class="page-title">📝 포스트 목록 <span class="badge purple" id="posts-count">0</span></div>
+    <div class="search-row">
+      <input class="search-input" id="post-search" placeholder="제목, 키워드 검색..." oninput="filterPosts()">
+      <select class="filter-sel" id="cat-filter" onchange="filterPosts()">
+        <option value="">전체 카테고리</option>
+        <option>금융</option><option>부동산</option><option>건강</option>
+        <option>기술</option><option>여행</option><option>교육</option><option>쇼핑</option><option>법률</option><option>일반</option>
+      </select>
+    </div>
+    <div class="post-grid" id="posts-grid"></div>
+  </div>
+
+  <!-- Social -->
+  <div class="page" id="page-social">
+    <div class="page-title">📱 SNS 콘텐츠</div>
+    <select class="filter-sel" id="social-sel" onchange="showSocial(this.value)" style="width:100%;padding:12px;margin-bottom:24px">
+      <option value="">— 콘텐츠 선택 —</option>
+    </select>
+    <div id="social-area"></div>
+  </div>
+
+  <!-- Analytics -->
+  <div class="page" id="page-analytics">
+    <div class="page-title">💰 수익 분석</div>
+    <div class="cards">
+      <div class="card green"><div class="label">일 예상 수익</div><div class="value" id="a-daily">-</div><div class="sub">AdSense CTR 2.5%</div></div>
+      <div class="card blue"><div class="label">월 예상 수익</div><div class="value" id="a-monthly">-</div><div class="sub">30일 기준</div></div>
+      <div class="card purple"><div class="label">연 예상 수익</div><div class="value" id="a-yearly">-</div><div class="sub">365일 기준</div></div>
+      <div class="card yellow"><div class="label">평균 CPC</div><div class="value" id="a-cpc">-</div><div class="sub">클릭당 단가</div></div>
+    </div>
+    <div class="section-header"><h2>실행별 수익 이력</h2></div>
+    <div class="table-wrap" id="earnings-hist"></div>
+  </div>
+
+  <!-- Config -->
+  <div class="page" id="page-config">
+    <div class="page-title">⚙️ AdSense 카테고리 CPC 기준</div>
+    <div class="table-wrap">
+      <table><thead><tr><th>카테고리</th><th>예상 CPC</th><th>주요 키워드</th><th>전략</th></tr></thead>
+      <tbody>
+        <tr><td>법률</td><td><span class="badge green">$3.20</span></td><td>변호사, 소송, 이혼, 상속, 계약</td><td>전문성 강조, 실제 사례</td></tr>
+        <tr><td>부동산</td><td><span class="badge green">$2.80</span></td><td>아파트, 분양, 청약, 재건축, 전세</td><td>지역별 시세, 정책 분석</td></tr>
+        <tr><td>금융</td><td><span class="badge blue">$2.50</span></td><td>주식, 코인, 보험, 대출, ETF</td><td>수익률, 비교표 포함</td></tr>
+        <tr><td>건강</td><td><span class="badge blue">$1.80</span></td><td>다이어트, 영양제, 병원, 치료</td><td>의학적 근거, 전문가 인용</td></tr>
+        <tr><td>기술</td><td><span class="badge purple">$1.50</span></td><td>AI, 스마트폰, 챗GPT, 자동화</td><td>실용 가이드, 비교 리뷰</td></tr>
+        <tr><td>교육</td><td><span class="badge purple">$1.30</span></td><td>영어, 자격증, 취업, 코딩</td><td>단계별 학습법, 합격 후기</td></tr>
+        <tr><td>여행</td><td><span class="badge yellow">$1.20</span></td><td>여행, 항공, 호텔, 캠핑</td><td>현지 정보, 가격 비교</td></tr>
+        <tr><td>쇼핑</td><td><span class="badge muted">$0.90</span></td><td>할인, 세일, 패션, 가전</td><td>최저가 비교, 쿠폰 정보</td></tr>
+      </tbody></table>
+    </div>
+    <div class="section-header" style="margin-top:24px"><h2>GitHub Actions로 자동화 실행</h2></div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px">
+      <p style="font-size:14px;margin-bottom:16px;color:var(--muted)">아래 버튼을 클릭하면 GitHub Actions 페이지에서 자동화를 수동으로 실행할 수 있습니다.</p>
+      <a class="action-btn" href="https://github.com/kevinlee7250/cli/actions" target="_blank">▶️ GitHub Actions 실행 페이지</a>
+      <a class="action-btn" href="https://hoguwhat1.blogspot.com/" target="_blank" style="margin-left:12px;border-color:var(--accent2);background:rgba(6,182,212,.1);color:var(--accent2)">🌐 블로그 바로가기</a>
+    </div>
+  </div>
+</div>
+
+<!-- Post Modal -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal">
+    <button id="modal-close" onclick="closeModal()">✕</button>
+    <h2 id="modal-title"></h2>
+    <div style="margin-bottom:16px" id="modal-meta"></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+let DATA = { posts: [], social: [], runs: [], analytics: {}, meta: {} }
+
+async function loadAll() {
+  const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
+  const [posts, social, runs, analytics, meta] = await Promise.all([
+    fetch(base + '/posts.json').then(r => r.json()).catch(() => []),
+    fetch(base + '/social.json').then(r => r.json()).catch(() => []),
+    fetch(base + '/runs.json').then(r => r.json()).catch(() => []),
+    fetch(base + '/analytics.json').then(r => r.json()).catch(() => ({})),
+    fetch(base + '/meta.json').then(r => r.json()).catch(() => ({})),
+  ])
+  DATA = { posts, social, runs, analytics, meta }
+  const label = document.getElementById('last-updated-label')
+  if (label && meta.exportedAt) {
+    label.textContent = '업데이트: ' + new Date(meta.exportedAt).toLocaleString('ko-KR')
+  }
+  // Populate social select
+  const sel = document.getElementById('social-sel')
+  sel.innerHTML = '<option value="">— 콘텐츠 선택 —</option>' +
+    social.map((s, i) => `<option value="${i}">${s.date} · ${s.keyword}</option>`).join('')
+  if (social.length) { sel.value = '0'; showSocial('0') }
+  renderDashboard()
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+document.querySelectorAll('nav a').forEach(a =>
+  a.addEventListener('click', e => { e.preventDefault(); navTo(a.dataset.page) })
+)
+function navTo(page) {
+  document.querySelectorAll('nav a').forEach(a => a.classList.toggle('active', a.dataset.page === page))
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page))
+  if (page === 'posts') renderPosts(DATA.posts)
+  if (page === 'analytics') renderAnalytics()
+}
+
+// ── Dashboard ─────────────────────────────────────────────────────────────────
+function renderDashboard() {
+  const { meta, runs, posts } = DATA
+  document.getElementById('s-posts').textContent = meta.totalPosts || posts.length
+  document.getElementById('s-revenue').textContent = '$' + (meta.totalRevenue || 0).toFixed(2)
+  document.getElementById('s-blogger').textContent = meta.bloggerTotal || 0
+  document.getElementById('s-runs').textContent = runs.length
+  document.getElementById('s-last-run').textContent = meta.lastRunAt
+    ? new Date(meta.lastRunAt).toLocaleString('ko-KR') : '없음'
+
+  const tbody = document.getElementById('runs-table')
+  tbody.innerHTML = runs.slice(0, 10).map(r => `<tr>
+    <td>${new Date(r.runAt || r.savedAt).toLocaleString('ko-KR')}</td>
+    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.keywords||[]).join(', ')}</td>
+    <td>${r.postsGenerated ?? (r.posts?.filter(p=>p.blogPost).length ?? 0)}개</td>
+    <td>${r.platforms?.blogger ?? 0}개</td>
+    <td style="color:var(--green)">${r.earnings?.estimatedDailyRevenue != null ? '$'+r.earnings.estimatedDailyRevenue.toFixed(2) : r.earningsEstimate?.totalEstimatedDailyRevenue != null ? '$'+r.earningsEstimate.totalEstimatedDailyRevenue.toFixed(2) : '-'}</td>
+    <td>${(r.errors > 0 || (Array.isArray(r.errors) && r.errors.length > 0)) ? `<span class="badge red">${Array.isArray(r.errors)?r.errors.length:r.errors}</span>` : '<span class="badge green">0</span>'}</td>
+  </tr>`).join('') || '<tr><td colspan="6" class="empty">데이터 없음</td></tr>'
+
+  document.getElementById('recent-grid').innerHTML = posts.slice(0, 6).map(postCardHTML).join('')
+}
+
+// ── Posts ─────────────────────────────────────────────────────────────────────
+function renderPosts(list) {
+  document.getElementById('posts-count').textContent = list.length
+  const grid = document.getElementById('posts-grid')
+  grid.innerHTML = list.length ? list.map(postCardHTML).join('')
+    : '<div class="empty"><div class="icon">📭</div>포스트가 없습니다</div>'
+}
+function filterPosts() {
+  const q = document.getElementById('post-search').value.toLowerCase()
+  const cat = document.getElementById('cat-filter').value
+  renderPosts(DATA.posts.filter(p =>
+    (!q || p.title.toLowerCase().includes(q) || p.keyword.toLowerCase().includes(q)) &&
+    (!cat || (p.adsenseCategory || '일반').includes(cat))
+  ))
+}
+function postCardHTML(p) {
+  const icon = p.trendDirection === 'rising' ? '🚀' : p.trendDirection === 'falling' ? '📉' : '📊'
+  const fc = p.factCheck ? (p.factCheck.issueCount > 0
+    ? `<span class="badge yellow">팩트수정 ${p.factCheck.issueCount}</span>`
+    : '<span class="badge green">팩트✅</span>') : ''
+  const catIcon = {금융:'💰',부동산:'🏠',건강:'💊',기술:'💻',여행:'✈️',교육:'📚',쇼핑:'🛍️',법률:'⚖️'}
+  return `<div class="post-card" onclick="openPost(${JSON.stringify(p.id)})">
+    <div class="thumb-placeholder">${catIcon[p.adsenseCategory] || '📝'}</div>
+    <div class="info">
+      <div class="kw">${icon} ${p.keyword}</div>
+      <div class="title">${p.title}</div>
+      <div class="footer">
+        ${fc}
+        <span class="badge muted">${p.date}</span>
+        <span class="badge purple">${p.adsenseCategory || '일반'}</span>
+        ${p.wordCount ? `<span class="badge blue">${p.wordCount}자</span>` : ''}
+        ${p.faqCount ? `<span class="badge green">FAQ ${p.faqCount}</span>` : ''}
+      </div>
+    </div>
+  </div>`
+}
+function openPost(id) {
+  const p = DATA.posts.find(x => x.id === id)
+  if (!p) return
+  document.getElementById('modal-title').textContent = p.title
+  document.getElementById('modal-meta').innerHTML =
+    `<span class="badge purple">${p.adsenseCategory || '일반'}</span>
+     <span class="badge blue" style="margin-left:6px">${p.date}</span>
+     ${p.wordCount ? `<span class="badge muted" style="margin-left:6px">${p.wordCount}자</span>` : ''}
+     ${p.faqCount ? `<span class="badge green" style="margin-left:6px">FAQ ${p.faqCount}개</span>` : ''}`
+  let body = ''
+  if (p.factCheck) {
+    const fc = p.factCheck
+    body += `<div style="margin-bottom:16px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:${fc.issueCount>0?'var(--yellow)':'var(--green)'}">
+        🔍 팩트체크: ${fc.issueCount > 0 ? `${fc.issueCount}개 수정` : '이상 없음'} — ${fc.summary || ''}
+      </div>`
+    ;(fc.issues || []).forEach(issue => {
+      body += `<div class="fact-issue">
+        <div class="type">[${issue.type}]</div>
+        ${issue.original ? `<div class="original">${esc(issue.original)}</div>` : ''}
+        ${issue.corrected ? `<div class="corrected">→ ${esc(issue.corrected)}</div>` : ''}
+        ${issue.reason ? `<div class="reason">${esc(issue.reason)}</div>` : ''}
+      </div>`
+    })
+    body += '</div>'
+  }
+  if (p.metaDescription) body += `<div style="background:var(--bg3);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--muted)">${esc(p.metaDescription)}</div>`
+  if (p.tags?.length) body += `<div style="margin-bottom:16px">${p.tags.map(t=>`<span class="badge purple" style="margin:2px">#${esc(t)}</span>`).join('')}</div>`
+  if (p.faq?.length) {
+    body += `<div style="margin-bottom:20px"><div style="font-weight:700;margin-bottom:10px;font-size:14px">FAQ</div>`
+    p.faq.forEach(f => {
+      body += `<div style="background:var(--bg3);border-radius:8px;padding:12px;margin-bottom:8px">
+        <div style="font-weight:600;font-size:13px;margin-bottom:4px">Q. ${esc(f.question)}</div>
+        <div style="font-size:13px;color:var(--muted)">A. ${esc(f.answer)}</div>
+      </div>`
+    })
+    body += '</div>'
+  }
+  if (p.contentPreview) {
+    body += `<div style="font-size:13px;font-weight:700;margin-bottom:8px">본문 미리보기</div>
+      <div style="background:var(--bg3);border-radius:8px;padding:14px;font-size:13px;line-height:1.8;color:var(--muted)">${esc(p.contentPreview)}</div>`
+  }
+  document.getElementById('modal-body').innerHTML = body
+  document.getElementById('modal-overlay').classList.add('open')
+}
+function closeModal(e) {
+  if (!e || e.target.id === 'modal-overlay' || e.target.id === 'modal-close') {
+    document.getElementById('modal-overlay').classList.remove('open')
+  }
+}
+
+// ── Social ────────────────────────────────────────────────────────────────────
+function showSocial(idx) {
+  if (idx === '') return
+  const s = DATA.social[parseInt(idx)]
+  if (!s) return
+  const ig = s.instagram || {}
+  const th = s.threads || {}
+  const tt = s.tiktok || {}
+  const igTags = [...(ig.hashtags?.popular||[]), ...(ig.hashtags?.medium||[]), ...(ig.hashtags?.niche||[])]
+  document.getElementById('social-area').innerHTML = `
+    <div class="sns-tabs">
+      <div class="sns-tab active" onclick="stab(this,'ig')">📸 Instagram</div>
+      <div class="sns-tab" onclick="stab(this,'th')">🧵 Threads</div>
+      <div class="sns-tab" onclick="stab(this,'tt')">🎵 TikTok</div>
+    </div>
+    <div class="sns-panel active" id="sp-ig">
+      <div style="margin-bottom:12px">${(ig.bestPostingTimes||[]).map(t=>`<span class="badge purple">${t}</span>`).join(' ')} ${ig.storyHighlightTitle?`<span class="badge blue" style="margin-left:8px">하이라이트: ${ig.storyHighlightTitle}</span>`:''}</div>
+      ${ig.hookLine ? `<div style="background:rgba(124,106,247,.1);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:13px;font-weight:600">${esc(ig.hookLine)}</div>` : ''}
+      <div class="sns-caption">${esc(ig.caption || '')}</div>
+      <div class="hashtag-wrap">${igTags.map(t=>`<span class="hashtag">${t.startsWith('#')?t:'#'+t}</span>`).join('')}</div>
+    </div>
+    <div class="sns-panel" id="sp-th">
+      <div style="margin-bottom:12px">${(th.bestPostingTimes||[]).map(t=>`<span class="badge blue">${t}</span>`).join(' ')}</div>
+      ${(th.posts||[]).map(p=>`<div class="thread-item"><div class="thread-label">${p.label}</div>${esc(p.content||'')}</div>`).join('')}
+      ${th.engagementQuestion?`<div style="background:rgba(6,182,212,.1);border-radius:8px;padding:12px;margin-top:10px;font-size:13px;color:var(--accent2)">💬 ${esc(th.engagementQuestion)}</div>`:''}
+    </div>
+    <div class="sns-panel" id="sp-tt">
+      <div style="margin-bottom:12px;font-weight:600">${esc(tt.title||'')} ${(tt.bestPostingTimes||[]).map(t=>`<span class="badge yellow">${t}</span>`).join(' ')}</div>
+      ${(tt.scenes||[]).map(sc=>`<div class="tiktok-scene"><div class="time">⏱ ${sc.time}</div><div class="text">${esc(sc.text||'')}</div><div class="dir">🎬 ${esc(sc.direction||'')}${sc.sound?' | 🔊 '+esc(sc.sound):''}</div></div>`).join('')}
+      ${tt.commentBait?`<div style="background:rgba(251,191,36,.1);border-radius:8px;padding:12px;margin-top:10px;font-size:13px;color:var(--yellow)">💬 ${esc(tt.commentBait)}</div>`:''}
+      ${tt.backgroundMusic?`<div style="font-size:13px;color:var(--muted);margin-top:10px">🎵 ${tt.backgroundMusic.genre} — ${tt.backgroundMusic.mood}</div>`:''}
+      <div class="hashtag-wrap">${(tt.hashtags||[]).map(t=>`<span class="hashtag">${t.startsWith('#')?t:'#'+t}</span>`).join('')}</div>
+    </div>`
+}
+function stab(el, panel) {
+  el.parentElement.querySelectorAll('.sns-tab').forEach(t => t.classList.remove('active'))
+  el.classList.add('active')
+  document.querySelectorAll('.sns-panel').forEach(p => p.classList.remove('active'))
+  document.getElementById('sp-' + panel).classList.add('active')
+}
+
+// ── Analytics ─────────────────────────────────────────────────────────────────
+function renderAnalytics() {
+  const { runs } = DATA
+  const last = runs[0]
+  const e = last?.earnings || {}
+  document.getElementById('a-daily').textContent = '$' + (e.estimatedDailyRevenue || 0).toFixed(2)
+  document.getElementById('a-monthly').textContent = '$' + (e.estimatedMonthlyRevenue || 0).toFixed(2)
+  document.getElementById('a-yearly').textContent = '$' + (e.estimatedYearlyRevenue || 0).toFixed(0)
+  document.getElementById('a-cpc').textContent = '$' + (e.avgCPC || 0).toFixed(2)
+  document.getElementById('earnings-hist').innerHTML = `<table><thead><tr><th>날짜</th><th>키워드</th><th>포스트</th><th>Blogger</th><th>일수익</th></tr></thead><tbody>` +
+    runs.slice(0, 20).map(r => `<tr>
+      <td>${new Date(r.runAt||r.savedAt).toLocaleDateString('ko-KR')}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.keywords||[]).join(', ')}</td>
+      <td>${r.postsGenerated ?? 0}개</td>
+      <td>${r.platforms?.blogger ?? 0}개</td>
+      <td style="color:var(--green);font-weight:700">${r.earnings?.estimatedDailyRevenue != null ? '$'+r.earnings.estimatedDailyRevenue.toFixed(2) : '-'}</td>
+    </tr>`).join('') + '</tbody></table>'
+}
+
+// ── Utils ─────────────────────────────────────────────────────────────────────
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+loadAll()
+</script>
+</body>
+</html>

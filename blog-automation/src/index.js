@@ -141,6 +141,13 @@ async function runAutomation() {
 
   saveRunHistory(results)
   if (results.earningsEstimate) recordRunStats(results, results.earningsEstimate)
+
+  // 정적 대시보드 데이터 자동 업데이트
+  try {
+    const { exportStaticData } = await import('./web/export-static.js')
+    exportStaticData()
+  } catch {}
+
   return results
 }
 

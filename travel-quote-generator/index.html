@@ -1014,6 +1014,7 @@ function generateQuote() {
   showSpinner();
   setTimeout(()=>{
     hideSpinner();
+    saveToAdmin();
     buildIdeas();
     renderQuote();
     currentStep=5; goStep(5);
@@ -1399,6 +1400,48 @@ ${document.getElementById('quotePreview').innerHTML}
 function copyQuoteText() {
   const text = document.getElementById('quotePreview').innerText;
   navigator.clipboard.writeText(text).then(()=>notify('클립보드에 복사되었습니다.','success'));
+}
+
+// ─────────── SAVE TO ADMIN ───────────
+function saveToAdmin() {
+  const typeNames = {
+    general:'일반여행',group:'단체여행',sightseeing:'관광여행',golf:'골프여행',
+    honeymoon:'허니문',family:'가족여행',healing:'힐링여행',adventure:'어드벤처',
+    cruise:'크루즈',business:'비즈니스'
+  };
+  const total = state.costItems.reduce((s,i)=>s+i.unit*i.qty, 0);
+  const record = {
+    id: 'QT-' + Date.now(),
+    client: state.clientName,
+    phone: state.clientPhone,
+    area: state.area === 'domestic' ? '국내' : '해외',
+    type: typeNames[state.travelType] || state.travelType,
+    dest: state.destination,
+    flag: state.destFlag,
+    adult: state.adultCount,
+    child: state.childCount,
+    nights: state.nights,
+    depart: state.departDate,
+    status: '대기',
+    total,
+    createdAt: new Date().toISOString(),
+    memo: state.specialReq
+  };
+  try {
+    const existing = JSON.parse(localStorage.getItem('ams_quotes') || '[]');
+    existing.unshift(record);
+    localStorage.setItem('ams_quotes', JSON.stringify(existing));
+    // auto-register client
+    const clients = JSON.parse(localStorage.getItem('ams_clients') || '[]');
+    if (!clients.find(c => c.name === state.clientName)) {
+      clients.push({id:'CL-'+Date.now(), name:state.clientName, phone:state.clientPhone, email:'', birth:'', memo:'', grade:'일반'});
+      localStorage.setItem('ams_clients', JSON.stringify(clients));
+    }
+    // activity log
+    const log = JSON.parse(localStorage.getItem('ams_log') || '[]');
+    log.unshift({ts:new Date().toISOString(), action:'견적 생성', detail:`${state.clientName} — ${state.destination} ${typeNames[state.travelType]}`});
+    localStorage.setItem('ams_log', JSON.stringify(log.slice(0,100)));
+  } catch(e) {}
 }
 
 // ─────────── INIT ───────────

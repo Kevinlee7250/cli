@@ -178,23 +178,52 @@ export async function generateMultiplePosts(keywordDataList) {
 
 function extractJSON(text) {
   const tryParse = (raw) => {
-    // 1차: 직접 파싱
     try { return JSON.parse(raw) } catch {}
-    // 2차: jsonrepair로 자동 수정 (줄바꿈·특수문자 이스케이프 포함)
     return JSON.parse(jsonrepair(raw))
   }
 
-  // 1순위: ```json ... ``` 블록에서 추출
+  // 1순위: ```json ... ``` 블록에서 정확하게 추출 (닫는 ``` 기준)
   const codeStart = text.indexOf('```json')
   if (codeStart !== -1) {
     const jsonStart = text.indexOf('{', codeStart)
-    const jsonEnd = text.lastIndexOf('}')
-    if (jsonStart !== -1 && jsonEnd > jsonStart) {
-      try { return tryParse(text.slice(jsonStart, jsonEnd + 1)) } catch {}
+    // 닫는 ``` 를 찾아 그 직전까지만 추출
+    const codeEnd = text.indexOf('```', codeStart + 7)
+    if (jsonStart !== -1) {
+      const jsonEnd = codeEnd !== -1
+        ? text.lastIndexOf('}', codeEnd)
+        : text.lastIndexOf('}')
+      if (jsonEnd > jsonStart) {
+        try { return tryParse(text.slice(jsonStart, jsonEnd + 1)) } catch (e) {
+          logger.warn(`코드블록 JSON 파싱 실패: ${e.message.slice(0, 80)}`)
+        }
+      }
     }
   }
-  // 2순위: 텍스트 전체에서 첫 { ~ 마지막 } 추출
+
+  // 2순위: 중첩 깊이 추적으로 정확한 JSON 객체 경계 탐색
   const start = text.indexOf('{')
+  if (start !== -1) {
+    let depth = 0, inString = false, escape = false
+    for (let i = start; i < text.length; i++) {
+      const ch = text[i]
+      if (escape) { escape = false; continue }
+      if (ch === '\\' && inString) { escape = true; continue }
+      if (ch === '"') { inString = !inString; continue }
+      if (inString) continue
+      if (ch === '{' || ch === '[') depth++
+      else if (ch === '}' || ch === ']') {
+        depth--
+        if (depth === 0) {
+          try { return tryParse(text.slice(start, i + 1)) } catch (e) {
+            logger.warn(`깊이추적 JSON 파싱 실패: ${e.message.slice(0, 80)}`)
+            break
+          }
+        }
+      }
+    }
+  }
+
+  // 3순위: 단순 첫 { ~ 마지막 } (최후 수단)
   const end = text.lastIndexOf('}')
   if (start !== -1 && end > start) {
     return tryParse(text.slice(start, end + 1))

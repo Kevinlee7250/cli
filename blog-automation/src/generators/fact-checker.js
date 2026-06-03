@@ -3,6 +3,43 @@ import { jsonrepair } from 'jsonrepair'
 import { config } from '../config.js'
 import { logger } from '../utils/logger.js'
 
+function extractJSON(text) {
+  const tryParse = (raw) => {
+    try { return JSON.parse(raw) } catch {}
+    return JSON.parse(jsonrepair(raw))
+  }
+  const codeStart = text.indexOf('```json')
+  if (codeStart !== -1) {
+    const jsonStart = text.indexOf('{', codeStart)
+    const codeEnd = text.indexOf('```', codeStart + 7)
+    if (jsonStart !== -1) {
+      const jsonEnd = codeEnd !== -1 ? text.lastIndexOf('}', codeEnd) : text.lastIndexOf('}')
+      if (jsonEnd > jsonStart) {
+        try { return tryParse(text.slice(jsonStart, jsonEnd + 1)) } catch {}
+      }
+    }
+  }
+  const start = text.indexOf('{')
+  if (start !== -1) {
+    let depth = 0, inString = false, escape = false
+    for (let i = start; i < text.length; i++) {
+      const ch = text[i]
+      if (escape) { escape = false; continue }
+      if (ch === '\\' && inString) { escape = true; continue }
+      if (ch === '"') { inString = !inString; continue }
+      if (inString) continue
+      if (ch === '{' || ch === '[') depth++
+      else if (ch === '}' || ch === ']') {
+        depth--
+        if (depth === 0) { try { return tryParse(text.slice(start, i + 1)) } catch { break } }
+      }
+    }
+  }
+  const end = text.lastIndexOf('}')
+  if (start !== -1 && end > start) return tryParse(text.slice(start, end + 1))
+  throw new Error('응답에서 JSON을 찾을 수 없습니다')
+}
+
 const client = new Anthropic({ apiKey: config.anthropic.apiKey })
 
 /**
@@ -63,9 +100,7 @@ ${faqText || '없음'}
     })
 
     const text = response.content[0].text
-    const jsonStart = text.indexOf('{')
-    const jsonEnd = text.lastIndexOf('}')
-    const parsed = JSON.parse(jsonrepair(text.slice(jsonStart, jsonEnd + 1)))
+    const parsed = extractJSON(text)
 
     const issueCount = parsed.issueCount || parsed.issues?.length || 0
     if (issueCount === 0) {

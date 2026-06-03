@@ -48,6 +48,7 @@ from config import (
 from content_generator import generate_post
 from blogger_uploader import upload_post
 from keyword_collector import get_trending_keywords
+from dashboard_exporter import log_run, export_dashboard
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -98,6 +99,7 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False) -> None:
 
     success_count = 0
     fail_count = 0
+    completed_posts: list[dict] = []
 
     for i, keyword in enumerate(keywords, 1):
         logger.info(f"\n[{i}/{len(keywords)}] 키워드: '{keyword}'")
@@ -115,7 +117,8 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False) -> None:
         logger.info(f"  이미지: {images}개 삽입")
 
         if dry_run:
-            logger.info(f"  [테스트 모드] 업로드 건너뜀")
+            logger.info("  [테스트 모드] 업로드 건너뜀")
+            completed_posts.append(post_data)
             success_count += 1
             continue
 
@@ -123,7 +126,9 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False) -> None:
         result = upload_post(post_data)
         if result:
             url = result.get("url", "")
+            post_data["blogUrl"] = url
             logger.info(f"  ✅ 업로드 성공: {url}")
+            completed_posts.append(post_data)
             success_count += 1
         else:
             logger.error(f"  ❌ 업로드 실패: '{title}'")
@@ -136,6 +141,19 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False) -> None:
     logger.info("\n" + "=" * 60)
     logger.info(f"완료: 성공 {success_count}개 / 실패 {fail_count}개")
     logger.info("=" * 60)
+
+    # 대시보드 데이터 업데이트
+    try:
+        log_run(
+            keywords=keywords,
+            results=completed_posts,
+            blogger_uploaded=success_count if not dry_run else 0,
+            errors=fail_count,
+        )
+        export_dashboard()
+        logger.info("대시보드 데이터 업데이트 완료")
+    except Exception as e:
+        logger.warning(f"대시보드 업데이트 실패 (무시): {e}")
 
 
 # ──────────────────────────────────────────────────────────────────────────────

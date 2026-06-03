@@ -54,9 +54,17 @@
   .badge.purple{background:rgba(124,106,247,.15);color:var(--accent);}
   .badge.blue{background:rgba(6,182,212,.15);color:var(--accent2);}
   .badge.muted{background:rgba(136,146,176,.15);color:var(--muted);}
+  .badge.orange{background:rgba(251,146,60,.15);color:var(--orange);}
 
   .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
   .section-header h2{font-size:16px;font-weight:600;}
+
+  .stat-bar{display:flex;align-items:center;gap:6px;margin-top:6px;}
+  .stat-bar-fill{height:4px;border-radius:2px;background:var(--accent);transition:width .4s;}
+  .img-pill{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(6,182,212,.12);color:var(--accent2);}
+  .toc-pill{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(52,211,153,.12);color:var(--green);}
+  .ad-pill{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(251,146,60,.12);color:var(--orange);}
+  .system-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;background:rgba(124,106,247,.2);color:var(--accent);border:1px solid rgba(124,106,247,.3);}
 
   .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
   .post-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:border-color .15s,transform .1s;}
@@ -130,14 +138,13 @@
 <div id="sidebar">
   <div class="logo">
     <h1>🤖 블로그 자동화</h1>
-    <p>AI Blog Dashboard</p>
+    <p id="sys-ver">Python 3.11 · Claude AI</p>
   </div>
   <nav>
     <a class="active" data-page="dashboard"><span class="nav-icon">📊</span> 대시보드</a>
     <a data-page="posts"><span class="nav-icon">📝</span> 포스트 목록</a>
-    <a data-page="social"><span class="nav-icon">📱</span> SNS 콘텐츠</a>
     <a data-page="analytics"><span class="nav-icon">💰</span> 수익 분석</a>
-    <a data-page="config"><span class="nav-icon">⚙️</span> AdSense 기준</a>
+    <a data-page="config"><span class="nav-icon">⚙️</span> 시스템 정보</a>
   </nav>
   <div class="sidebar-footer">
     <a href="https://github.com/kevinlee7250/cli" target="_blank">📦 GitHub 저장소</a>
@@ -151,16 +158,22 @@
   <!-- Dashboard -->
   <div class="page active" id="page-dashboard">
     <div class="page-title">📊 대시보드</div>
-    <div class="alert-box">💡 이 대시보드는 자동화 실행 후 자동 업데이트됩니다. 실행은 <a href="https://github.com/kevinlee7250/cli/actions" target="_blank" style="color:var(--accent)">GitHub Actions</a> 또는 로컬 서버에서 가능합니다.</div>
+    <div class="alert-box" id="top-alert">💡 이 대시보드는 자동화 실행 후 자동 업데이트됩니다. 실행은 <a href="https://github.com/kevinlee7250/cli/actions" target="_blank" style="color:var(--accent)">GitHub Actions</a> 또는 로컬에서 가능합니다.</div>
     <div class="cards">
       <div class="card purple"><div class="label">총 포스트</div><div class="value" id="s-posts">-</div><div class="sub">생성된 전체 포스트</div></div>
-      <div class="card green"><div class="label">누적 예상 수익</div><div class="value" id="s-revenue">-</div><div class="sub">AdSense 추정치</div></div>
+      <div class="card green"><div class="label">누적 예상 수익</div><div class="value" id="s-revenue">-</div><div class="sub">AdSense 추정치 (USD)</div></div>
       <div class="card blue"><div class="label">Blogger 게시</div><div class="value" id="s-blogger">-</div><div class="sub">발행된 포스트</div></div>
       <div class="card yellow"><div class="label">전체 실행 횟수</div><div class="value" id="s-runs">-</div><div class="sub">자동화 실행 이력</div></div>
     </div>
+    <div class="cards" style="margin-top:-8px">
+      <div class="card" style="border-color:rgba(6,182,212,.3)"><div class="label">이미지 자동 삽입</div><div class="value" id="s-images" style="color:var(--accent2)">-</div><div class="sub">총 삽입된 이미지 수</div></div>
+      <div class="card" style="border-color:rgba(52,211,153,.3)"><div class="label">AdSense 슬롯</div><div class="value" style="color:var(--green)">6</div><div class="sub">포스트당 광고 위치</div></div>
+      <div class="card" style="border-color:rgba(251,146,60,.3)"><div class="label">구조화 데이터</div><div class="value" style="color:var(--orange)">ON</div><div class="sub">FAQ + Article 스키마</div></div>
+      <div class="card" style="border-color:rgba(124,106,247,.3)"><div class="label">목차 (TOC)</div><div class="value" style="color:var(--accent)">ON</div><div class="sub">자동 생성 앵커 링크</div></div>
+    </div>
     <div class="section-header"><h2>최근 실행 이력</h2><span class="badge purple" id="s-last-run">-</span></div>
     <div class="table-wrap">
-      <table><thead><tr><th>날짜/시간</th><th>키워드</th><th>생성</th><th>Blogger</th><th>수익(일)</th><th>오류</th></tr></thead>
+      <table><thead><tr><th>날짜/시간</th><th>키워드</th><th>생성</th><th>Blogger</th><th>이미지</th><th>수익(일)</th><th>오류</th></tr></thead>
       <tbody id="runs-table"></tbody></table>
     </div>
     <div class="section-header"><h2>최근 포스트</h2><a href="#" onclick="navTo('posts');return false;" style="font-size:13px;color:var(--accent)">전체 보기 →</a></div>
@@ -181,15 +194,6 @@
     <div class="post-grid" id="posts-grid"></div>
   </div>
 
-  <!-- Social -->
-  <div class="page" id="page-social">
-    <div class="page-title">📱 SNS 콘텐츠</div>
-    <select class="filter-sel" id="social-sel" onchange="showSocial(this.value)" style="width:100%;padding:12px;margin-bottom:24px">
-      <option value="">— 콘텐츠 선택 —</option>
-    </select>
-    <div id="social-area"></div>
-  </div>
-
   <!-- Analytics -->
   <div class="page" id="page-analytics">
     <div class="page-title">💰 수익 분석</div>
@@ -205,7 +209,26 @@
 
   <!-- Config -->
   <div class="page" id="page-config">
-    <div class="page-title">⚙️ AdSense 카테고리 CPC 기준</div>
+    <div class="page-title">⚙️ 시스템 정보 & AdSense 기준</div>
+    <div class="cards" style="margin-bottom:24px">
+      <div class="card purple"><div class="label">실행 엔진</div><div class="value" style="font-size:16px;color:var(--accent)" id="cfg-engine">Python 3.11</div><div class="sub">Claude API claude-sonnet-4-6</div></div>
+      <div class="card blue"><div class="label">이미지 소스</div><div class="value" style="font-size:16px;color:var(--accent2)">3단계</div><div class="sub">Naver → DDG → Wikimedia</div></div>
+      <div class="card green"><div class="label">JSON-LD 스키마</div><div class="value" style="font-size:16px;color:var(--green)">2종</div><div class="sub">Article + FAQPage</div></div>
+      <div class="card yellow"><div class="label">AdSense 슬롯</div><div class="value" style="font-size:16px;color:var(--yellow)">6개</div><div class="sub">포스트당 최적 배치</div></div>
+    </div>
+    <div class="section-header"><h2>AdSense 슬롯 배치 전략</h2></div>
+    <div class="table-wrap" style="margin-bottom:24px">
+      <table><thead><tr><th>슬롯</th><th>위치</th><th>CTR 기여</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge green">슬롯 1</span></td><td>도입부 첫 &lt;p&gt; 바로 다음 (Above the fold)</td><td style="color:var(--green);font-weight:700">최고 ★★★★★</td></tr>
+        <tr><td><span class="badge blue">슬롯 2</span></td><td>2번째 H2 섹션 앞</td><td style="color:var(--accent2);font-weight:700">높음 ★★★★</td></tr>
+        <tr><td><span class="badge blue">슬롯 3</span></td><td>3번째 H2 섹션 앞</td><td style="color:var(--accent2);font-weight:700">높음 ★★★★</td></tr>
+        <tr><td><span class="badge purple">슬롯 4</span></td><td>4번째 H2 섹션 앞</td><td style="color:var(--accent);font-weight:700">보통 ★★★</td></tr>
+        <tr><td><span class="badge purple">슬롯 5</span></td><td>FAQ H2 섹션 앞</td><td style="color:var(--accent);font-weight:700">보통 ★★★</td></tr>
+        <tr><td><span class="badge yellow">슬롯 6</span></td><td>본문 끝 (독자 이탈 전 마지막)</td><td style="color:var(--yellow);font-weight:700">보통 ★★★</td></tr>
+      </tbody></table>
+    </div>
+    <div class="page-title" style="font-size:16px;margin-bottom:16px">AdSense 카테고리 CPC 기준</div>
     <div class="table-wrap">
       <table><thead><tr><th>카테고리</th><th>예상 CPC</th><th>주요 키워드</th><th>전략</th></tr></thead>
       <tbody>
@@ -240,27 +263,27 @@
 
 <script>
 // ── Data ──────────────────────────────────────────────────────────────────────
-let DATA = { posts: [], social: [], runs: [], analytics: {}, meta: {} }
+let DATA = { posts: [], runs: [], analytics: {}, meta: {} }
 
 async function loadAll() {
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
-  const [posts, social, runs, analytics, meta] = await Promise.all([
+  const [posts, runs, analytics, meta] = await Promise.all([
     fetch(base + '/posts.json').then(r => r.json()).catch(() => []),
-    fetch(base + '/social.json').then(r => r.json()).catch(() => []),
     fetch(base + '/runs.json').then(r => r.json()).catch(() => []),
     fetch(base + '/analytics.json').then(r => r.json()).catch(() => ({})),
     fetch(base + '/meta.json').then(r => r.json()).catch(() => ({})),
   ])
-  DATA = { posts, social, runs, analytics, meta }
+  DATA = { posts, runs, analytics, meta }
   const label = document.getElementById('last-updated-label')
   if (label && meta.exportedAt) {
     label.textContent = '업데이트: ' + new Date(meta.exportedAt).toLocaleString('ko-KR')
   }
-  // Populate social select
-  const sel = document.getElementById('social-sel')
-  sel.innerHTML = '<option value="">— 콘텐츠 선택 —</option>' +
-    social.map((s, i) => `<option value="${i}">${s.date} · ${s.keyword}</option>`).join('')
-  if (social.length) { sel.value = '0'; showSocial('0') }
+  if (meta.systemVersion) {
+    const el = document.getElementById('sys-ver')
+    if (el) el.textContent = meta.systemVersion + ' · Claude AI'
+    const cfgEl = document.getElementById('cfg-engine')
+    if (cfgEl) cfgEl.textContent = meta.systemVersion
+  }
   renderDashboard()
 }
 
@@ -273,6 +296,7 @@ function navTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page))
   if (page === 'posts') renderPosts(DATA.posts)
   if (page === 'analytics') renderAnalytics()
+  if (page === 'config') {} // static
 }
 
 // ── Dashboard ─────────────────────────────────────────────────────────────────
@@ -285,15 +309,20 @@ function renderDashboard() {
   document.getElementById('s-last-run').textContent = meta.lastRunAt
     ? new Date(meta.lastRunAt).toLocaleString('ko-KR') : '없음'
 
+  const totalImages = runs.reduce((s, r) => s + (r.imagesInserted || 0), 0)
+  const imgEl = document.getElementById('s-images')
+  if (imgEl) imgEl.textContent = totalImages + '개'
+
   const tbody = document.getElementById('runs-table')
   tbody.innerHTML = runs.slice(0, 10).map(r => `<tr>
     <td>${new Date(r.runAt || r.savedAt).toLocaleString('ko-KR')}</td>
-    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.keywords||[]).join(', ')}</td>
-    <td>${r.postsGenerated ?? (r.posts?.filter(p=>p.blogPost).length ?? 0)}개</td>
-    <td>${r.platforms?.blogger ?? 0}개</td>
-    <td style="color:var(--green)">${r.earnings?.estimatedDailyRevenue != null ? '$'+r.earnings.estimatedDailyRevenue.toFixed(2) : r.earningsEstimate?.totalEstimatedDailyRevenue != null ? '$'+r.earningsEstimate.totalEstimatedDailyRevenue.toFixed(2) : '-'}</td>
+    <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.keywords||[]).join(', ')}</td>
+    <td>${r.postsGenerated ?? 0}개</td>
+    <td>${r.bloggerUploaded ?? r.platforms?.blogger ?? 0}개</td>
+    <td><span class="img-pill">🖼 ${r.imagesInserted || 0}</span></td>
+    <td style="color:var(--green)">${r.earnings?.estimatedDailyRevenue != null ? '$'+r.earnings.estimatedDailyRevenue.toFixed(2) : '-'}</td>
     <td>${(r.errors > 0 || (Array.isArray(r.errors) && r.errors.length > 0)) ? `<span class="badge red">${Array.isArray(r.errors)?r.errors.length:r.errors}</span>` : '<span class="badge green">0</span>'}</td>
-  </tr>`).join('') || '<tr><td colspan="6" class="empty">데이터 없음</td></tr>'
+  </tr>`).join('') || '<tr><td colspan="7" class="empty">데이터 없음</td></tr>'
 
   document.getElementById('recent-grid').innerHTML = posts.slice(0, 6).map(postCardHTML).join('')
 }
@@ -315,21 +344,21 @@ function filterPosts() {
 }
 function postCardHTML(p) {
   const icon = p.trendDirection === 'rising' ? '🚀' : p.trendDirection === 'falling' ? '📉' : '📊'
-  const fc = p.factCheck ? (p.factCheck.issueCount > 0
-    ? `<span class="badge yellow">팩트수정 ${p.factCheck.issueCount}</span>`
-    : '<span class="badge green">팩트✅</span>') : ''
   const catIcon = {금융:'💰',부동산:'🏠',건강:'💊',기술:'💻',여행:'✈️',교육:'📚',쇼핑:'🛍️',법률:'⚖️'}
+  const blogLink = p.blogUrl ? `<a href="${p.blogUrl}" target="_blank" onclick="event.stopPropagation()" style="font-size:11px;color:var(--accent2);text-decoration:none;">🔗 블로그</a>` : ''
   return `<div class="post-card" onclick="openPost(${JSON.stringify(p.id)})">
     <div class="thumb-placeholder">${catIcon[p.adsenseCategory] || '📝'}</div>
     <div class="info">
-      <div class="kw">${icon} ${p.keyword}</div>
-      <div class="title">${p.title}</div>
-      <div class="footer">
-        ${fc}
+      <div class="kw">${icon} ${esc(p.keyword)}</div>
+      <div class="title">${esc(p.title)}</div>
+      <div class="footer" style="gap:4px">
         <span class="badge muted">${p.date}</span>
         <span class="badge purple">${p.adsenseCategory || '일반'}</span>
-        ${p.wordCount ? `<span class="badge blue">${p.wordCount}자</span>` : ''}
         ${p.faqCount ? `<span class="badge green">FAQ ${p.faqCount}</span>` : ''}
+        ${p.imagesInserted > 0 ? `<span class="img-pill">🖼 ${p.imagesInserted}</span>` : ''}
+        ${p.hasToc ? `<span class="toc-pill">📋 TOC</span>` : ''}
+        ${p.adSlots ? `<span class="ad-pill">📢 ${p.adSlots}슬롯</span>` : ''}
+        ${blogLink}
       </div>
     </div>
   </div>`

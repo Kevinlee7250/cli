@@ -1,5 +1,5 @@
 import express from 'express'
-import { createReadStream, readFileSync, existsSync, readdirSync, statSync } from 'fs'
+import { createReadStream, readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'fs'
 import { join, dirname, basename } from 'path'
 import { fileURLToPath } from 'url'
 import { spawn } from 'child_process'
@@ -84,6 +84,8 @@ app.get('/api/posts', (req, res) => {
       factCheck: data.factCheck || null,
       metaDescription: data.metaDescription || '',
       tags: data.tags || [],
+      publishStatus: data.publishStatus || 'published',
+      bloggerUrl: data.bloggerUrl || null,
     }
   })
   res.json(posts)
@@ -94,6 +96,56 @@ app.get('/api/posts/:id', (req, res) => {
   const data = readJSON(file)
   if (!data) return res.status(404).json({ error: '포스트를 찾을 수 없습니다' })
   res.json(data)
+})
+
+app.put('/api/posts/:id', (req, res) => {
+  const file = join(OUTPUT, 'posts', req.params.id + '.json')
+  const existing = readJSON(file)
+  if (!existing) return res.status(404).json({ error: '포스트를 찾을 수 없습니다' })
+  const allowed = ['title', 'metaDescription', 'tags', 'content', 'faq']
+  const updated = { ...existing }
+  for (const key of allowed) {
+    if (req.body[key] !== undefined) updated[key] = req.body[key]
+  }
+  updated.updatedAt = new Date().toISOString()
+  try {
+    writeFileSync(file, JSON.stringify(updated, null, 2), 'utf-8')
+    res.json({ ok: true })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+app.post('/api/posts/:id/publish', async (req, res) => {
+  const file = join(OUTPUT, 'posts', req.params.id + '.json')
+  const post = readJSON(file)
+  if (!post) return res.status(404).json({ error: '포스트를 찾을 수 없습니다' })
+  try {
+    const { publishToBlogger } = await import('../publishers/blogger.js')
+    const result = await publishToBlogger(post, { isDraft: false })
+    if (result?.error) return res.status(500).json({ error: result.error })
+    post.publishStatus = 'published'
+    post.bloggerUrl = result?.url || null
+    post.publishedAt = new Date().toISOString()
+    writeFileSync(file, JSON.stringify(post, null, 2), 'utf-8')
+    res.json({ ok: true, url: result?.url })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
+app.delete('/api/posts/:id', (req, res) => {
+  const file = join(OUTPUT, 'posts', req.params.id + '.json')
+  const post = readJSON(file)
+  if (!post) return res.status(404).json({ error: '포스트를 찾을 수 없습니다' })
+  post.publishStatus = 'rejected'
+  post.rejectedAt = new Date().toISOString()
+  try {
+    writeFileSync(file, JSON.stringify(post, null, 2), 'utf-8')
+    res.json({ ok: true })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 })
 
 // ── API: Thumbnails ───────────────────────────────────────────────────────────

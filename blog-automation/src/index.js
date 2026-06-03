@@ -28,10 +28,11 @@ const args = process.argv.slice(2)
 const isScheduleMode = args.includes('--schedule')
 const isPreviewMode = args.includes('--preview')
 const isDraftMode = args.includes('--draft')
+const isConfirmMode = args.includes('--confirm')
 
 async function runAutomation() {
   const runStart = Date.now()
-  const modeLabel = isPreviewMode ? '[미리보기]' : isDraftMode ? '[임시저장]' : '[게시]'
+  const modeLabel = isPreviewMode ? '[미리보기]' : isDraftMode ? '[임시저장]' : isConfirmMode ? '[확인대기]' : '[게시]'
 
   logger.info('━'.repeat(62))
   logger.info(`🚀 블로그 자동화 시스템 v2 ${modeLabel} — ${new Date().toLocaleString('ko-KR')}`)
@@ -39,7 +40,7 @@ async function runAutomation() {
 
   const results = {
     date: new Date().toISOString().split('T')[0],
-    mode: isPreviewMode ? 'preview' : isDraftMode ? 'draft' : 'publish',
+    mode: isPreviewMode ? 'preview' : isDraftMode ? 'draft' : isConfirmMode ? 'confirm' : 'publish',
     keywords: [], posts: [], errors: [], earningsEstimate: null,
   }
 
@@ -62,6 +63,7 @@ async function runAutomation() {
 
         logger.info('🔍 [3/7] 팩트체크 중...')
         const blogPost = await factCheckBlogPost(rawPost)
+        if (isConfirmMode) blogPost.publishStatus = 'pending'
         savePost(blogPost)
         postResult.blogPost = { title: blogPost.title, wordCount: blogPost.wordCount, faqCount: blogPost.faq?.length || 0, factCheck: blogPost.factCheck }
 
@@ -85,6 +87,9 @@ async function runAutomation() {
         if (isPreviewMode) {
           logger.info('👁️  [7/7] 미리보기 모드 — 게시 건너뜀')
           postResult.status = 'preview'
+        } else if (isConfirmMode) {
+          logger.info('📋 [7/7] 확인 모드 — 대시보드 [게시 대기] 탭에서 검토 후 승인하세요')
+          postResult.status = 'pending'
         } else {
           logger.info('🚀 [7/7] 플랫폼 게시 중...')
           const blogUrl = await publishWithRetry(() => publishToBlogger(blogPost, { isDraft: isDraftMode }))

@@ -213,6 +213,51 @@
   .earnings-row:last-child { border-bottom: none; }
   .earnings-label { font-size: 13px; color: var(--muted); }
   .earnings-value { font-size: 15px; font-weight: 700; color: var(--green); }
+
+  /* Pending queue */
+  .pending-alert { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.35); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; }
+  .pending-alert .pa-count { font-size: 16px; font-weight: 700; color: var(--yellow); }
+  .pending-alert .pa-text { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .btn-review { padding: 9px 18px; background: var(--yellow); color: #0f1117; border: none; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 700; white-space: nowrap; }
+  .post-card.pending { border-color: rgba(251,191,36,0.45); }
+  .post-card.rejected { opacity: 0.45; }
+  .post-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .btn-approve { padding: 6px 13px; background: rgba(52,211,153,0.12); color: var(--green); border: 1px solid rgba(52,211,153,0.5); border-radius: 7px; cursor: pointer; font-size: 12px; font-weight: 600; }
+  .btn-approve:hover { background: rgba(52,211,153,0.25); }
+  .btn-edit { padding: 6px 13px; background: rgba(124,106,247,0.12); color: var(--accent); border: 1px solid rgba(124,106,247,0.5); border-radius: 7px; cursor: pointer; font-size: 12px; font-weight: 600; }
+  .btn-edit:hover { background: rgba(124,106,247,0.25); }
+  .btn-reject-sm { padding: 6px 13px; background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.5); border-radius: 7px; cursor: pointer; font-size: 12px; font-weight: 600; }
+  .btn-reject-sm:hover { background: rgba(248,113,113,0.25); }
+
+  /* Edit modal */
+  #edit-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.82); z-index: 1100; align-items: flex-start; justify-content: center; padding: 20px; overflow-y: auto; }
+  #edit-overlay.open { display: flex; }
+  #edit-modal { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 900px; padding: 28px; position: relative; margin: auto; }
+  .form-group { margin-bottom: 16px; }
+  .form-label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .form-input { width: 100%; padding: 10px 13px; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; outline: none; }
+  .form-input:focus { border-color: var(--accent); }
+  textarea.form-input { font-family: monospace; font-size: 12px; min-height: 280px; resize: vertical; line-height: 1.5; }
+  .faq-item { background: var(--bg3); border-radius: 8px; padding: 12px 40px 12px 12px; margin-bottom: 8px; position: relative; }
+  .faq-item input { width: 100%; padding: 7px 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 13px; outline: none; margin-bottom: 5px; }
+  .faq-item input:last-child { margin-bottom: 0; }
+  .faq-item input:focus { border-color: var(--accent); }
+  .btn-del-faq { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--muted); cursor: pointer; font-size: 15px; line-height: 1; }
+  .edit-footer { display: flex; gap: 10px; margin-top: 22px; justify-content: flex-end; flex-wrap: wrap; }
+
+  /* Confirm dialog */
+  #confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 1200; align-items: center; justify-content: center; }
+  #confirm-overlay.open { display: flex; }
+  #confirm-dialog { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; max-width: 400px; width: 90%; text-align: center; }
+  #confirm-dialog h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+  #confirm-dialog p { font-size: 13px; color: var(--muted); margin-bottom: 22px; line-height: 1.7; white-space: pre-line; }
+  .confirm-row { display: flex; gap: 12px; justify-content: center; }
+  #confirm-no { padding: 10px 22px; border: 1px solid var(--border); background: var(--bg3); color: var(--text); border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; }
+  #confirm-yes { padding: 10px 22px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 700; color: #fff; }
+
+  /* Toast */
+  .toast { position: fixed; bottom: 24px; right: 24px; padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; z-index: 9999; animation: toastIn .2s ease; pointer-events: none; }
+  @keyframes toastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 </style>
 </head>
 <body>
@@ -226,6 +271,7 @@
   <nav>
     <a class="active" data-page="dashboard"><span class="icon">📊</span> 대시보드</a>
     <a data-page="run"><span class="icon">▶️</span> 실행 제어</a>
+    <a data-page="pending" style="position:relative"><span class="icon">📋</span> 게시 대기 <span id="nav-pending-badge" class="badge yellow" style="margin-left:auto;display:none;font-size:10px;padding:1px 6px">0</span></a>
     <a data-page="posts"><span class="icon">📝</span> 포스트 목록</a>
     <a data-page="social"><span class="icon">📱</span> SNS 콘텐츠</a>
     <a data-page="analytics"><span class="icon">💰</span> 수익 분석</a>
@@ -249,6 +295,14 @@
       <div class="card green"><div class="label">예상 총 수익</div><div class="value" id="stat-revenue">-</div><div class="sub">AdSense 누적 추정</div></div>
       <div class="card blue"><div class="label">Blogger 게시</div><div class="value" id="stat-blogger">-</div><div class="sub">실제 발행된 포스트</div></div>
       <div class="card yellow"><div class="label">전체 실행 횟수</div><div class="value" id="stat-runs">-</div><div class="sub">자동화 실행 이력</div></div>
+    </div>
+
+    <div id="pending-alert" style="display:none" class="pending-alert">
+      <div>
+        <div class="pa-count" id="pa-count">0개 포스트 대기 중</div>
+        <div class="pa-text">검토 후 게시 승인하거나 수정하세요</div>
+      </div>
+      <button class="btn-review" onclick="navTo('pending')">검토하기 →</button>
     </div>
 
     <div class="section-header"><h2>최근 실행 이력</h2><span class="badge purple" id="last-run-badge">-</span></div>
@@ -277,6 +331,15 @@
       <button onclick="clearLog()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px">지우기</button>
     </div>
     <div id="log-box"></div>
+  </div>
+
+  <!-- Pending Posts -->
+  <div class="page" id="page-pending">
+    <div class="page-title">📋 게시 대기 <span class="badge yellow" id="pending-count-badge">0</span></div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px">
+      <code>--confirm</code> 모드로 생성된 포스트를 검토하고 게시하거나 수정하세요.
+    </p>
+    <div class="post-grid" id="pending-grid"></div>
   </div>
 
   <!-- Posts -->
@@ -356,13 +419,62 @@
 
 </div>
 
-<!-- Modal -->
+<!-- View Modal -->
 <div id="modal-overlay" onclick="closeModal(event)">
   <div id="modal">
     <button id="modal-close" onclick="closeModal()">✕</button>
     <h2 id="modal-title"></h2>
     <div class="meta" id="modal-meta"></div>
     <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div id="edit-overlay" onclick="closeEditModal(event)">
+  <div id="edit-modal">
+    <button onclick="closeEditModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1">✕</button>
+    <h2 style="margin-bottom:20px;padding-right:32px">✏️ 포스트 수정</h2>
+    <input type="hidden" id="edit-post-id">
+    <div class="form-group">
+      <label class="form-label">제목</label>
+      <input class="form-input" id="edit-title" type="text" placeholder="포스트 제목" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">메타 설명 (SEO)</label>
+      <input class="form-input" id="edit-meta" type="text" placeholder="검색 결과에 표시될 설명 (150자 내외)" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">태그 (쉼표로 구분)</label>
+      <input class="form-input" id="edit-tags" type="text" placeholder="AI, 기술, 트렌드" />
+    </div>
+    <div class="form-group">
+      <label class="form-label" style="display:flex;align-items:center;justify-content:space-between">
+        <span>FAQ</span>
+        <button onclick="addFaqItem()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:3px 10px;border-radius:6px;cursor:pointer;font-size:12px">+ 추가</button>
+      </label>
+      <div id="edit-faq-list"></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">본문 HTML</label>
+      <textarea class="form-input" id="edit-content" placeholder="<p>본문 HTML...</p>"></textarea>
+    </div>
+    <div class="edit-footer">
+      <button onclick="closeEditModal()" style="padding:9px 18px;border:1px solid var(--border);background:var(--bg3);color:var(--text);border-radius:8px;cursor:pointer;font-size:13px;font-weight:600">취소</button>
+      <button onclick="saveEditedPost()" class="btn-edit" style="padding:9px 18px">💾 저장</button>
+      <button onclick="approveFromEditor()" class="btn-approve" style="padding:9px 18px">✅ 저장 후 게시</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Dialog -->
+<div id="confirm-overlay">
+  <div id="confirm-dialog">
+    <h3 id="confirm-title">확인</h3>
+    <p id="confirm-message"></p>
+    <div class="confirm-row">
+      <button id="confirm-no" onclick="resolveConfirm(false)">취소</button>
+      <button id="confirm-yes" onclick="resolveConfirm(true)">확인</button>
+    </div>
   </div>
 </div>
 
@@ -381,6 +493,7 @@ function navTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page))
   if (page === 'dashboard') loadDashboard()
   if (page === 'posts') loadPosts()
+  if (page === 'pending') loadPendingPosts()
   if (page === 'social') loadSocial()
   if (page === 'analytics') loadAnalytics()
   if (page === 'logs') loadLogs()
@@ -395,6 +508,15 @@ async function loadDashboard() {
     fetch('/api/runs').then(r => r.json()),
     fetch('/api/posts').then(r => r.json()),
   ])
+  // Pending alert
+  const pendingPosts = posts.filter(p => p.publishStatus === 'pending')
+  const alertEl = document.getElementById('pending-alert')
+  if (alertEl) {
+    alertEl.style.display = pendingPosts.length ? 'flex' : 'none'
+    const paCount = document.getElementById('pa-count')
+    if (paCount) paCount.textContent = `${pendingPosts.length}개 포스트 게시 대기 중`
+  }
+  updateNavPendingBadge(pendingPosts.length)
   document.getElementById('stat-posts').textContent = status.totalPosts || 0
   document.getElementById('stat-revenue').textContent = '$' + (status.totalRevenue || 0).toFixed(2)
   document.getElementById('stat-blogger').textContent = status.bloggerPosts || 0
@@ -445,20 +567,26 @@ function renderPosts(posts) {
   grid.innerHTML = posts.map(p => postCardHTML(p)).join('')
 }
 function postCardHTML(p) {
-  const thumbName = p.id ? p.id.replace('json','').replace(/[·!]/g,'').replace(/\s/g,'_') : ''
   const fcBadge = p.factCheck
     ? p.factCheck.issueCount > 0
       ? `<span class="badge yellow">팩트수정 ${p.factCheck.issueCount}</span>`
       : '<span class="badge green">팩트✅</span>'
     : ''
   const trendIcon = p.trendDirection === 'rising' ? '🚀' : p.trendDirection === 'falling' ? '📉' : '📊'
-  return `<div class="post-card" onclick="openPost('${encodeURIComponent(p.id)}')">
+  const statusBadge = p.publishStatus === 'pending'
+    ? '<span class="badge yellow">⏳ 대기</span>'
+    : p.publishStatus === 'rejected'
+    ? '<span class="badge red">❌ 거절</span>'
+    : p.bloggerUrl ? '<span class="badge green">✅ 게시됨</span>' : ''
+  const cardClass = p.publishStatus === 'pending' ? 'post-card pending' : p.publishStatus === 'rejected' ? 'post-card rejected' : 'post-card'
+  return `<div class="${cardClass}" onclick="openPost('${encodeURIComponent(p.id)}')">
     <img class="thumb" src="/api/thumbnail/${encodeURIComponent(p.id.replace(/[·!]/g,'').split('_').slice(0,4).join('_'))}.png"
       onerror="this.outerHTML='<div class=\\"thumb-placeholder\\">📝</div>'" loading="lazy" />
     <div class="info">
       <div class="keyword">${trendIcon} ${p.keyword || ''}</div>
       <div class="title">${p.title}</div>
       <div class="footer">
+        ${statusBadge}
         ${fcBadge}
         <span class="badge muted">${p.date}</span>
         <span class="badge purple">${p.adsenseCategory || '일반'}</span>
@@ -724,6 +852,206 @@ function logClass(line) {
   return 'log-default'
 }
 function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+
+// ── Pending Posts ─────────────────────────────────────────────────────────────
+
+async function loadPendingPosts() {
+  const posts = await fetch('/api/posts').then(r => r.json()).catch(() => [])
+  const pending = posts.filter(p => p.publishStatus === 'pending')
+  document.getElementById('pending-count-badge').textContent = pending.length
+  updateNavPendingBadge(pending.length)
+  const grid = document.getElementById('pending-grid')
+  if (!grid) return
+  if (!pending.length) {
+    grid.innerHTML = '<div class="empty"><div class="icon">✅</div>대기 중인 포스트가 없습니다<br><br><span style="font-size:12px;color:var(--muted)">npm run confirm 으로 실행하면 검토 후 게시할 수 있습니다</span></div>'
+    return
+  }
+  grid.innerHTML = pending.map(p => pendingCardHTML(p)).join('')
+}
+
+function updateNavPendingBadge(count) {
+  const badge = document.getElementById('nav-pending-badge')
+  if (!badge) return
+  badge.textContent = count
+  badge.style.display = count > 0 ? 'inline-block' : 'none'
+}
+
+function pendingCardHTML(p) {
+  const fcBadge = p.factCheck
+    ? p.factCheck.issueCount > 0
+      ? `<span class="badge yellow">팩트수정 ${p.factCheck.issueCount}</span>`
+      : '<span class="badge green">팩트✅</span>'
+    : ''
+  return `<div class="post-card pending">
+    <div class="thumb-placeholder">📝</div>
+    <div class="info">
+      <div class="keyword">⏳ ${p.keyword || ''}</div>
+      <div class="title">${escHtml(p.title)}</div>
+      <div class="footer">
+        <span class="badge yellow">게시 대기</span>
+        ${fcBadge}
+        <span class="badge muted">${p.date}</span>
+        <span class="badge purple">${p.adsenseCategory || '일반'}</span>
+        ${p.wordCount ? `<span class="badge blue">${p.wordCount}자</span>` : ''}
+      </div>
+      <div class="post-actions">
+        <button class="btn-edit" onclick="openEditModal('${encodeURIComponent(p.id)}');event.stopPropagation()">✏️ 수정</button>
+        <button class="btn-approve" onclick="confirmAndPublish('${encodeURIComponent(p.id)}','${escHtml(p.title).replace(/'/g,"\\'")}');event.stopPropagation()">✅ 게시</button>
+        <button class="btn-reject-sm" onclick="confirmAndReject('${encodeURIComponent(p.id)}','${escHtml(p.title).replace(/'/g,"\\'")}');event.stopPropagation()">❌ 거절</button>
+      </div>
+    </div>
+  </div>`
+}
+
+// ── Edit Modal ─────────────────────────────────────────────────────────────────
+
+let editingPostId = null
+
+async function openEditModal(encodedId) {
+  const id = decodeURIComponent(encodedId)
+  const post = await fetch('/api/posts/' + encodeURIComponent(id)).then(r => r.json()).catch(() => null)
+  if (!post) return showToast('포스트를 불러올 수 없습니다', true)
+  editingPostId = id
+  document.getElementById('edit-post-id').value = id
+  document.getElementById('edit-title').value = post.title || ''
+  document.getElementById('edit-meta').value = post.metaDescription || ''
+  document.getElementById('edit-tags').value = (post.tags || []).join(', ')
+  document.getElementById('edit-content').value = post.content || ''
+  renderFaqEdit(post.faq || [])
+  document.getElementById('edit-overlay').classList.add('open')
+}
+
+function renderFaqEdit(faqs) {
+  const list = document.getElementById('edit-faq-list')
+  list.innerHTML = faqs.map((f, i) => `
+    <div class="faq-item" id="fi-${i}">
+      <button class="btn-del-faq" onclick="removeFaqItem(${i})" type="button">✕</button>
+      <input placeholder="질문" value="${escHtml(f.question || '')}" id="fq-${i}" />
+      <input placeholder="답변" value="${escHtml(f.answer || '')}" id="fa-${i}" />
+    </div>`).join('')
+}
+
+function addFaqItem() {
+  const list = document.getElementById('edit-faq-list')
+  const i = Date.now()
+  const item = document.createElement('div')
+  item.className = 'faq-item'
+  item.id = `fi-${i}`
+  item.innerHTML = `<button class="btn-del-faq" onclick="document.getElementById('fi-${i}').remove()" type="button">✕</button>
+    <input placeholder="질문" id="fq-${i}" />
+    <input placeholder="답변" id="fa-${i}" />`
+  list.appendChild(item)
+}
+
+function removeFaqItem(i) {
+  document.getElementById(`fi-${i}`)?.remove()
+}
+
+function collectFaqs() {
+  return [...document.querySelectorAll('#edit-faq-list .faq-item')].reduce((acc, item) => {
+    const idx = item.id.replace('fi-', '')
+    const q = document.getElementById(`fq-${idx}`)?.value?.trim()
+    const a = document.getElementById(`fa-${idx}`)?.value?.trim()
+    if (q && a) acc.push({ question: q, answer: a })
+    return acc
+  }, [])
+}
+
+async function saveEditedPost() {
+  const id = document.getElementById('edit-post-id').value
+  const updates = {
+    title: document.getElementById('edit-title').value,
+    metaDescription: document.getElementById('edit-meta').value,
+    tags: document.getElementById('edit-tags').value.split(',').map(t => t.trim()).filter(Boolean),
+    content: document.getElementById('edit-content').value,
+    faq: collectFaqs(),
+  }
+  const res = await fetch('/api/posts/' + encodeURIComponent(id), {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updates)
+  })
+  if (res.ok) { showToast('저장 완료') }
+  else { showToast('저장 실패', true) }
+  return res.ok
+}
+
+async function approveFromEditor() {
+  const title = document.getElementById('edit-title').value
+  const ok = await saveEditedPost()
+  if (!ok) return
+  const id = document.getElementById('edit-post-id').value
+  const confirmed = await showConfirm('게시 확인', `"${title}"\n\nGoogle Blogger에 게시하시겠습니까?`, '게시하기', 'var(--green)')
+  if (!confirmed) return
+  closeEditModal()
+  await publishPost(id)
+}
+
+async function confirmAndPublish(encodedId, title) {
+  const id = decodeURIComponent(encodedId)
+  const confirmed = await showConfirm('게시 확인', `"${title}"\n\nGoogle Blogger에 게시하시겠습니까?`, '게시하기', 'var(--green)')
+  if (!confirmed) return
+  await publishPost(id)
+}
+
+async function publishPost(id) {
+  showToast('게시 중...')
+  const res = await fetch('/api/posts/' + encodeURIComponent(id) + '/publish', { method: 'POST' })
+  const data = await res.json()
+  if (data.url) {
+    showToast('✅ 게시 완료!')
+    loadPendingPosts()
+    updateNavPendingBadge(0)
+  } else {
+    showToast('게시 실패: ' + (data.error || '오류'), true)
+  }
+}
+
+async function confirmAndReject(encodedId, title) {
+  const id = decodeURIComponent(encodedId)
+  const confirmed = await showConfirm('거절 확인', `"${title}"\n\n이 포스트를 거절 처리하시겠습니까?`, '거절', 'var(--red)')
+  if (!confirmed) return
+  const res = await fetch('/api/posts/' + encodeURIComponent(id), { method: 'DELETE' })
+  if (res.ok) { showToast('거절 처리 완료'); loadPendingPosts() }
+  else showToast('처리 실패', true)
+}
+
+function closeEditModal(e) {
+  if (!e || e.target === document.getElementById('edit-overlay')) {
+    document.getElementById('edit-overlay').classList.remove('open')
+  }
+}
+
+// ── Confirm Dialog ─────────────────────────────────────────────────────────────
+
+let _confirmResolve = null
+
+function showConfirm(title, message, yesText = '확인', yesColor = 'var(--accent)') {
+  return new Promise(resolve => {
+    _confirmResolve = resolve
+    document.getElementById('confirm-title').textContent = title
+    document.getElementById('confirm-message').textContent = message
+    const yesBtn = document.getElementById('confirm-yes')
+    yesBtn.textContent = yesText
+    yesBtn.style.background = yesColor
+    document.getElementById('confirm-overlay').classList.add('open')
+  })
+}
+
+function resolveConfirm(result) {
+  document.getElementById('confirm-overlay').classList.remove('open')
+  if (_confirmResolve) { _confirmResolve(result); _confirmResolve = null }
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+
+function showToast(msg, isError = false) {
+  const t = document.createElement('div')
+  t.className = 'toast'
+  t.style.background = isError ? 'var(--red)' : 'var(--green)'
+  t.style.color = '#fff'
+  t.textContent = msg
+  document.body.appendChild(t)
+  setTimeout(() => t.remove(), 3000)
+}
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 loadDashboard()

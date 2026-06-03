@@ -74,8 +74,9 @@ def _inject_ads(html: str) -> str:
     """
     import re
 
-    # 슬롯 1: 첫 번째 </p> 뒤
-    html = re.sub(r'(</p>)', r'\1' + _ad_unit(0), html, count=1, flags=re.IGNORECASE)
+    # 슬롯 1: 첫 번째 </p> 뒤 (lambda 사용 — 교체 문자열의 백슬래시 오동작 방지)
+    ad0 = _ad_unit(0)
+    html = re.sub(r'</p>', lambda m: m.group(0) + ad0, html, count=1, flags=re.IGNORECASE)
 
     # 슬롯 2~5: H2 태그 앞 (2~5번째)
     h2_positions = [m.start() for m in re.finditer(r'<h2', html, re.IGNORECASE)]
@@ -134,6 +135,19 @@ def _faq_schema(faq: list[dict]) -> str:
 # 목차 (Table of Contents)
 # ──────────────────────────────────────────────────────────────────────────────
 
+def _add_h2_ids(html: str) -> str:
+    """H2 태그에 id 속성을 추가해 목차 앵커 링크가 작동하게 합니다."""
+    import re
+
+    def replacer(m):
+        inner = m.group(1)
+        clean = re.sub(r'<[^>]+>', '', inner).strip()
+        slug = re.sub(r'[^\w가-힣]', '-', clean).strip('-')[:40]
+        return f'<h2 id="{slug}">{inner}</h2>'
+
+    return re.sub(r'<h2[^>]*>(.*?)</h2>', replacer, html, flags=re.IGNORECASE | re.DOTALL)
+
+
 def _build_toc(html: str) -> str:
     """H2 태그를 파싱해 목차 HTML을 생성합니다."""
     import re
@@ -141,20 +155,16 @@ def _build_toc(html: str) -> str:
     if len(headings) < 2:
         return ""
 
-    # H2에 id 추가
-    def add_id(m):
-        clean = re.sub(r'<[^>]+>', '', m.group(1)).strip()
-        slug = re.sub(r'[^\w가-힣]', '-', clean)[:40]
-        return f'<h2 id="{slug}">{m.group(1)}</h2>'
-
-    # 목차 항목
     items = []
     for h in headings:
         clean = re.sub(r'<[^>]+>', '', h).strip()
-        slug = re.sub(r'[^\w가-힣]', '-', clean)[:40]
-        items.append(f'<li><a href="#{slug}" style="color:#4a90e2;text-decoration:none;">{clean}</a></li>')
+        slug = re.sub(r'[^\w가-힣]', '-', clean).strip('-')[:40]
+        items.append(
+            f'<li><a href="#{slug}" style="color:#4a90e2;text-decoration:none;">'
+            f'{clean}</a></li>'
+        )
 
-    toc = f"""
+    return f"""
 <div style="background:#f8f9fa;border-left:4px solid #4a90e2;border-radius:8px;
 padding:20px 24px;margin:2em 0;max-width:680px;">
   <p style="font-weight:700;font-size:16px;margin:0 0 12px;">📋 목차</p>
@@ -163,7 +173,6 @@ padding:20px 24px;margin:2em 0;max-width:680px;">
   </ol>
 </div>
 """
-    return toc
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -177,19 +186,23 @@ def _build_full_content(post_data: dict) -> str:
     keyword = post_data.get("keyword", "")
     labels = post_data.get("labels", [])
 
-    # ① AdSense 광고 삽입
-    html = _inject_ads(html)
+    # ① H2에 id 부여 (목차 앵커 링크 작동용)
+    html = _add_h2_ids(html)
 
-    # ② 목차 생성 & 도입부 뒤에 삽입
+    # ② 목차 생성 — 첫 번째 </p> 뒤에 삽입 (광고 유무 무관하게 안정적)
     toc = _build_toc(html)
     if toc:
-        import re
-        # 첫 번째 광고 슬롯 다음에 목차 삽입
-        html = re.sub(
-            r'(<!-- AdSense 광고 슬롯 1 -->[\s\S]*?</div>\s*)',
-            r'\1' + toc,
-            html, count=1
-        )
+        toc_inserted = False
+        # 첫 번째 </p> 뒤에 삽입
+        idx = html.lower().find('</p>')
+        if idx != -1:
+            html = html[:idx + 4] + toc + html[idx + 4:]
+            toc_inserted = True
+        if not toc_inserted:
+            html = toc + html
+
+    # ③ AdSense 광고 삽입
+    html = _inject_ads(html)
 
     # ③ 태그 클라우드 (내부 링크 효과)
     tag_links = "".join(

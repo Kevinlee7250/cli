@@ -46,17 +46,17 @@ def _ddg_images(keyword: str, count: int) -> list[dict]:
             timeout=12,
         )
         images = []
-        for r in jr.json().get("results", []):
-            url = r.get("image", "")
+        for item in jr.json().get("results", []):
+            url = item.get("image", "")
             if not re.search(r"\.(jpe?g|png|webp)", url, re.I):
                 continue
-            if r.get("width", 0) < 400:
+            if item.get("width", 0) < 400:
                 continue
             images.append({
                 "url": url,
-                "title": r.get("title", keyword),
-                "width": r.get("width", 800),
-                "height": r.get("height", 450),
+                "title": item.get("title", keyword),
+                "width": item.get("width", 800),
+                "height": item.get("height", 450),
             })
             if len(images) >= count:
                 break

@@ -13,7 +13,9 @@
     "test-keywords": "node scripts/test-keywords.js",
     "test-content": "node scripts/test-content.js",
     "test-thumbnail": "node scripts/test-thumbnail.js",
-    "test-analytics": "node scripts/test-analytics.js"
+    "test-analytics": "node scripts/test-analytics.js",
+    "dashboard": "node src/web/server.js",
+    "web": "node src/web/server.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
@@ -21,6 +23,7 @@
     "axios": "^1.7.0",
     "cheerio": "^1.0.0",
     "dotenv": "^16.4.5",
+    "express": "^5.2.1",
     "form-data": "^4.0.0",
     "jsonrepair": "^3.14.0",
     "node-cron": "^3.0.3",

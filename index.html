@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>여행사 견적 시스템</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans KR','Malgun Gothic',sans-serif;background:linear-gradient(135deg,#1a56db 0%,#0e9f6e 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.wrap{text-align:center;color:white;padding:40px 20px;}
+h1{font-size:2.5rem;font-weight:900;margin-bottom:12px;}
+.sub{font-size:1rem;opacity:.85;margin-bottom:40px;}
+.cards{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;}
+.card{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:1.5px solid rgba(255,255,255,.3);border-radius:20px;padding:36px 32px;width:280px;cursor:pointer;transition:all .2s;text-decoration:none;color:white;display:block;}
+.card:hover{background:rgba(255,255,255,.25);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.2);}
+.icon{font-size:3rem;margin-bottom:16px;}
+.card h2{font-size:1.2rem;font-weight:700;margin-bottom:8px;}
+.card p{font-size:0.83rem;opacity:.85;margin:0;}
+.badge{display:inline-block;background:rgba(255,255,255,.2);border-radius:20px;padding:4px 12px;font-size:0.72rem;font-weight:700;margin-top:12px;}
+footer{margin-top:40px;font-size:0.75rem;opacity:.55;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="icon">✈️</div>
+  <h1>여행사 견적 시스템</h1>
+  <p class="sub">국내·해외 / 일반·단체·골프·허니문 등 모든 여행 유형 지원</p>
+  <div class="cards">
+    <a class="card" href="quote.html">
+      <div class="icon">📄</div>
+      <h2>견적서 작성기</h2>
+      <p>5단계 마법사로 자동 일정·비용·준비물 생성</p>
+      <div><span class="badge">고객·상담용</span></div>
+    </a>
+    <a class="card" href="admin.html">
+      <div class="icon">📊</div>
+      <h2>관리자 대시보드</h2>
+      <p>견적 관리·고객 DB·매출 분석·단가 설정</p>
+      <div><span class="badge">직원·관리자용</span></div>
+    </a>
+  </div>
+  <footer>© 2026 여행사 견적 시스템 — GitHub Pages</footer>
+</div>
+</body>
+</html>

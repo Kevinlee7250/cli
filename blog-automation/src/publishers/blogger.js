@@ -38,15 +38,22 @@ export async function publishToBlogger(blogPost, options = {}) {
 
   logger.info(`Blogger 게시 중: "${blogPost.title}"`)
 
-  try {
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      if (attempt > 1) {
+        const wait = attempt * 5000
+        logger.info(`Blogger 재시도 ${attempt}/3 (${wait / 1000}초 후)...`)
+        await new Promise(r => setTimeout(r, wait))
+      }
     const token = await getAccessToken()
     const htmlContent = buildFullHtmlContent(blogPost, adClientId)
 
+    // 라벨: 최대 20개, 각 200자 이하로 제한
     const labels = [
       ...(blogPost.tags || []),
       blogPost.keyword,
       blogPost.adsenseCategory,
-    ].filter(Boolean)
+    ].filter(Boolean).slice(0, 20).map(l => String(l).slice(0, 200))
 
     const response = await axios.post(
       `${config.blogger.apiUrl}/blogs/${config.blogger.blogId}/posts`,
@@ -64,12 +71,19 @@ export async function publishToBlogger(blogPost, options = {}) {
       published: response.data.published,
     }
 
-    logger.info(`Blogger 게시 완료: ${result.url}`)
-    return result
-  } catch (err) {
-    const errMsg = err.response?.data?.error?.message || err.message
-    logger.error(`Blogger 게시 실패: ${errMsg}`)
-    return { error: errMsg }
+      logger.info(`Blogger 게시 완료: ${result.url}`)
+      return result
+    } catch (err) {
+      const errData = err.response?.data?.error
+      const errMsg = errData?.message || err.message
+      const errDetails = errData?.errors ? JSON.stringify(errData.errors) : ''
+      if (attempt < 3) {
+        logger.warn(`Blogger 게시 오류 (시도 ${attempt}/3): ${errMsg}`)
+      } else {
+        logger.error(`Blogger 게시 실패: ${errMsg}${errDetails ? ' | ' + errDetails : ''}`)
+        return { error: errMsg }
+      }
+    }
   }
 }
 

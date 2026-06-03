@@ -1,13 +1,127 @@
 import axios from 'axios'
 import * as cheerio from 'cheerio'
+import Anthropic from '@anthropic-ai/sdk'
 import { config } from '../config.js'
 import { logger } from '../utils/logger.js'
+
+const client = new Anthropic({ apiKey: config.anthropic.apiKey })
 
 const TRENDING_RSS = {
   KR: 'https://trends.google.com/trends/trendingsearches/daily/rss?geo=KR',
   US: 'https://trends.google.com/trends/trendingsearches/daily/rss?geo=US',
   JP: 'https://trends.google.com/trends/trendingsearches/daily/rss?geo=JP',
 }
+
+/**
+ * Google News RSS로 오늘의 핫이슈 수집 후 Claude가 블로그 키워드 Top3 선정
+ */
+export async function fetchTodayHotTopics(count = 3) {
+  const today = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })
+  logger.info(`오늘(${today}) 핫이슈 수집 중... (Google News RSS)`)
+
+  let headlines = []
+
+  // 1) Google News 한국 Top Stories RSS
+  try {
+    const res = await axios.get('https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko', {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
+      timeout: 12000,
+    })
+    const $ = cheerio.load(res.data, { xmlMode: true })
+    $('item').each((i, el) => {
+      if (i >= 30) return false
+      const title = $(el).find('title').first().text().replace(/\s*-\s*[^-]+$/, '').trim()
+      const pubDate = $(el).find('pubDate').text().trim()
+      if (title) headlines.push({ title, pubDate })
+    })
+    logger.info(`Google News ${headlines.length}개 헤드라인 수집 완료`)
+  } catch (err) {
+    logger.warn(`Google News RSS 실패: ${err.message}`)
+  }
+
+  // 2) Naver News 폴백 (헤드라인이 적으면 추가)
+  if (headlines.length < 10 && config.naver.clientId) {
+    try {
+      const res = await axios.get('https://openapi.naver.com/v1/search/news.json', {
+        params: { query: '오늘 이슈', display: 20, sort: 'date' },
+        headers: {
+          'X-Naver-Client-Id': config.naver.clientId,
+          'X-Naver-Client-Secret': config.naver.clientSecret,
+        },
+        timeout: 8000,
+      })
+      const items = (res.data.items || []).map(i => ({
+        title: i.title.replace(/<[^>]*>/g, ''),
+        pubDate: i.pubDate,
+      }))
+      headlines = [...headlines, ...items]
+      logger.info(`Naver 뉴스 ${items.length}개 추가`)
+    } catch {}
+  }
+
+  if (headlines.length === 0) {
+    logger.warn('외부 뉴스 수집 불가 → Claude 지식 기반 오늘의 키워드 생성')
+    return generateKeywordsWithClaude(count)
+  }
+
+  // 3) Claude로 오늘의 핫이슈 Top3 블로그 키워드 선정
+  logger.info(`Claude가 ${headlines.length}개 헤드라인에서 블로그 키워드 Top${count} 선정 중...`)
+  try {
+    const headlineText = headlines.slice(0, 25).map((h, i) => `${i + 1}. ${h.title}`).join('\n')
+    const response = await client.messages.create({
+      model: config.anthropic.model,
+      max_tokens: 1000,
+      messages: [{
+        role: 'user',
+        content: `오늘(${today}) 뉴스 헤드라인 목록입니다:
+${headlineText}
+
+위 헤드라인에서 한국 독자가 관심 가질 블로그 포스트 키워드 상위 ${count}개를 선정하세요.
+조건: ① 구글 AdSense CPC가 높을 것 ② 검색량이 많을 것 ③ 실제 오늘 이슈와 연관
+
+아래 JSON 형식으로만 응답하세요:
+{
+  "keywords": [
+    { "keyword": "키워드1", "reason": "선정 이유", "newsTitle": "관련 헤드라인", "adsenseCategory": "카테고리" },
+    { "keyword": "키워드2", "reason": "선정 이유", "newsTitle": "관련 헤드라인", "adsenseCategory": "카테고리" },
+    { "keyword": "키워드3", "reason": "선정 이유", "newsTitle": "관련 헤드라인", "adsenseCategory": "카테고리" }
+  ]
+}`,
+      }],
+    })
+
+    const { jsonrepair } = await import('jsonrepair')
+    const text = response.content[0].text
+    const jsonStart = text.indexOf('{')
+    const jsonEnd = text.lastIndexOf('}')
+    const parsed = JSON.parse(jsonrepair(text.slice(jsonStart, jsonEnd + 1)))
+
+    const result = (parsed.keywords || []).slice(0, count).map(k => ({
+      keyword: k.keyword,
+      traffic: '오늘 핫이슈',
+      relatedQueries: [k.newsTitle].filter(Boolean),
+      newsItems: [k.newsTitle].filter(Boolean),
+      newsContext: [{ title: k.newsTitle, description: k.reason }].filter(h => h.title),
+      adsenseCategory: k.adsenseCategory || null,
+      trendDirection: 'rising',
+    }))
+
+    logger.info(`오늘의 핫이슈 Top${result.length} 선정 완료:`)
+    result.forEach((k, i) => logger.info(`  ${i + 1}. ${k.keyword} (${k.adsenseCategory || '일반'})`))
+    return result
+  } catch (err) {
+    logger.warn(`Claude 키워드 선정 실패: ${err.message} → 헤드라인 직접 사용`)
+    return headlines.slice(0, count).map(h => ({
+      keyword: h.title.slice(0, 20),
+      traffic: '오늘 이슈',
+      relatedQueries: [],
+      newsItems: [h.title],
+      newsContext: [{ title: h.title }],
+      trendDirection: 'rising',
+    }))
+  }
+}
+
 
 /**
  * Google Trends 일간 트렌딩 키워드 수집
@@ -100,6 +214,67 @@ export async function fetchGoogleRealtimeTrends(limit = 10) {
     return trends.length > 0 ? trends : getFallbackKeywords()
   } catch (err) {
     logger.warn(`Google 실시간 트렌드 수집 실패: ${err.message}`)
+    return getFallbackKeywords()
+  }
+}
+
+/**
+ * Claude 지식 기반 오늘의 핫 키워드 생성 (외부 RSS 불가 시 폴백)
+ */
+async function generateKeywordsWithClaude(count = 3) {
+  const today = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })
+  const dayOfWeek = new Date().toLocaleDateString('ko-KR', { weekday: 'long' })
+  logger.info(`Claude 지식 기반 오늘(${today}) 핫 키워드 ${count}개 생성 중...`)
+
+  try {
+    const response = await client.messages.create({
+      model: config.anthropic.model,
+      max_tokens: 1500,
+      messages: [{
+        role: 'user',
+        content: `오늘은 ${today} (${dayOfWeek})입니다.
+
+한국에서 오늘 날짜 기준으로 가장 핫한 이슈·키워드 상위 ${count}개를 선정해주세요.
+계절, 시사, 경제, 문화, 스포츠, 정치, 사회 이슈를 종합적으로 고려하세요.
+
+조건:
+① 오늘 날짜(${today})와 관련성이 높을 것
+② 구글 AdSense CPC가 높은 카테고리 우선 (법률 > 부동산 > 금융 > 건강 > 기술 > 교육)
+③ 한국 독자가 검색할 가능성이 높을 것
+④ 블로그 포스트 작성에 적합한 주제일 것
+
+아래 JSON 형식으로만 응답하세요:
+{
+  "keywords": [
+    { "keyword": "키워드1", "reason": "선정 이유 (날짜·시사 연관성)", "newsTitle": "예상 관련 뉴스 헤드라인", "adsenseCategory": "카테고리" },
+    { "keyword": "키워드2", "reason": "선정 이유", "newsTitle": "예상 관련 뉴스 헤드라인", "adsenseCategory": "카테고리" },
+    { "keyword": "키워드3", "reason": "선정 이유", "newsTitle": "예상 관련 뉴스 헤드라인", "adsenseCategory": "카테고리" }
+  ]
+}`,
+      }],
+    })
+
+    const { jsonrepair } = await import('jsonrepair')
+    const text = response.content[0].text
+    const jsonStart = text.indexOf('{')
+    const jsonEnd = text.lastIndexOf('}')
+    const parsed = JSON.parse(jsonrepair(text.slice(jsonStart, jsonEnd + 1)))
+
+    const result = (parsed.keywords || []).slice(0, count).map(k => ({
+      keyword: k.keyword,
+      traffic: '오늘 핫이슈',
+      relatedQueries: [k.newsTitle].filter(Boolean),
+      newsItems: [k.newsTitle].filter(Boolean),
+      newsContext: [{ title: k.newsTitle, description: k.reason }].filter(h => h.title),
+      adsenseCategory: k.adsenseCategory || null,
+      trendDirection: 'rising',
+    }))
+
+    logger.info(`Claude 지식 기반 키워드 ${result.length}개 생성 완료:`)
+    result.forEach((k, i) => logger.info(`  ${i + 1}. ${k.keyword} (${k.adsenseCategory || '일반'})`))
+    return result
+  } catch (err) {
+    logger.warn(`Claude 키워드 생성 실패: ${err.message} → 시즌 폴백 사용`)
     return getFallbackKeywords()
   }
 }

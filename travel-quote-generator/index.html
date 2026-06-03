@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>여행사 견적서 자동 생성기</title>
+<style>
+  :root {
+    --primary: #1a56db;
+    --primary-dark: #1e40af;
+    --secondary: #0e9f6e;
+    --accent: #ff6b35;
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --border: #d1d5db;
+    --text: #111827;
+    --text-muted: #6b7280;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --success: #10b981;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ─── Header ─── */
+  header {
+    background: linear-gradient(135deg, #1a56db 0%, #0e9f6e 100%);
+    color: white;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  header .logo { font-size: 2rem; }
+  header h1 { font-size: 1.6rem; font-weight: 700; }
+  header p  { font-size: 0.85rem; opacity: 0.85; margin-top: 2px; }
+
+  /* ─── Layout ─── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+
+  .step-bar {
+    display: flex;
+    gap: 0;
+    margin-bottom: 28px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .step {
+    flex: 1;
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-right: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .step:last-child { border-right: none; }
+  .step.active { background: var(--primary); color: white; }
+  .step.done   { background: #e0f2fe; color: var(--primary); }
+  .step .step-num {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 2px;
+  }
+
+  /* ─── Card ─── */
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-bottom: 20px;
+  }
+  .card h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-dark);
+  }
+
+  /* ─── Destination Type ─── */
+  .type-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  .type-btn {
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    position: relative;
+  }
+  .type-btn:hover { border-color: var(--primary); background: #eff6ff; }
+  .type-btn.selected {
+    border-color: var(--primary);
+    background: #eff6ff;
+    box-shadow: 0 0 0 3px rgba(26,86,219,0.15);
+  }
+  .type-btn .icon { font-size: 1.9rem; display: block; margin-bottom: 6px; }
+  .type-btn .label { font-size: 0.82rem; font-weight: 600; }
+  .type-btn .badge {
+    position: absolute;
+    top: -6px; right: -6px;
+    background: var(--primary);
+    color: white;
+    font-size: 0.62rem;
+    padding: 2px 5px;
+    border-radius: 20px;
+  }
+
+  /* ─── Destination Selection ─── */
+  .dest-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+    max-height: 260px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .dest-btn {
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    font-size: 0.8rem;
+  }
+  .dest-btn:hover  { border-color: var(--secondary); background: #f0fdf4; }
+  .dest-btn.selected {
+    border-color: var(--secondary);
+    background: #d1fae5;
+    font-weight: 700;
+  }
+  .dest-btn .flag { font-size: 1.5rem; display: block; margin-bottom: 4px; }
+
+  /* ─── Form ─── */
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .form-row.full { grid-template-columns: 1fr; }
+  @media(max-width:600px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-group label { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: border 0.2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--primary); }
+
+  /* ─── Buttons ─── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+  }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-success { background: var(--secondary); color: white; }
+  .btn-success:hover { background: #057a55; }
+  .btn-outline {
+    background: white;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn-outline:hover { background: #eff6ff; }
+  .btn-danger { background: var(--danger); color: white; }
+  .btn-warning { background: var(--warning); color: white; }
+
+  .btn-group {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+
+  /* ─── Quote Preview ─── */
+  #quotePreview {
+    font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  }
+
+  .quote-header-box {
+    background: linear-gradient(135deg, #1a56db 0%, #0e9f6e 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .quote-header-box .agency { font-size: 1.2rem; font-weight: 700; }
+  .quote-header-box .quote-title { font-size: 1.6rem; font-weight: 900; margin-top: 4px; }
+  .quote-header-box .meta { font-size: 0.82rem; opacity: 0.85; margin-top: 4px; line-height: 1.6; }
+  .quote-header-box .num { text-align: right; }
+  .quote-header-box .num .n { font-size: 0.78rem; opacity: 0.8; }
+  .quote-header-box .num .v { font-size: 1.1rem; font-weight: 700; }
+
+  /* Summary tags */
+  .summary-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .tag {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .tag-blue  { background: #dbeafe; color: #1e40af; }
+  .tag-green { background: #d1fae5; color: #065f46; }
+  .tag-orange{ background: #ffedd5; color: #9a3412; }
+  .tag-purple{ background: #ede9fe; color: #5b21b6; }
+
+  /* Sections */
+  .section {
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .section-header {
+    background: #f8fafc;
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1.5px solid var(--border);
+    color: var(--primary-dark);
+  }
+  .section-body { padding: 16px 18px; }
+
+  /* Itinerary table */
+  .itinerary-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .itinerary-table th {
+    background: #eff6ff;
+    color: var(--primary-dark);
+    font-weight: 700;
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 2px solid #bfdbfe;
+  }
+  .itinerary-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+  }
+  .itinerary-table tr:last-child td { border-bottom: none; }
+  .itinerary-table tr:hover td { background: #f9fafb; }
+  .day-label {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* Cost table */
+  .cost-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .cost-table th {
+    background: #f0fdf4;
+    color: #065f46;
+    font-weight: 700;
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 2px solid #a7f3d0;
+  }
+  .cost-table td { padding: 8px 12px; border-bottom: 1px solid #e5e7eb; }
+  .cost-table tr:last-child td { border-bottom: none; }
+  .cost-total {
+    background: #d1fae5;
+    font-weight: 800;
+    font-size: 1rem;
+  }
+  .cost-total td { padding: 10px 12px !important; }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 6px;
+  }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    font-size: 0.83rem;
+    padding: 5px 8px;
+    border-radius: 6px;
+    background: #f9fafb;
+  }
+  .checklist li .ci { flex-shrink: 0; }
+
+  /* Notice list */
+  .notice-list { list-style: none; }
+  .notice-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.84rem;
+    padding: 7px 0;
+    border-bottom: 1px dashed #e5e7eb;
+    line-height: 1.5;
+  }
+  .notice-list li:last-child { border-bottom: none; }
+
+  /* ─── Print ─── */
+  @media print {
+    header, .step-bar, .card:not(.quote-output), .btn-group { display: none; }
+    .quote-output { box-shadow: none; }
+    body { background: white; }
+  }
+
+  /* ─── Tabs ─── */
+  .tabs { display: flex; gap: 0; margin-bottom: 0; }
+  .tab {
+    padding: 9px 18px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    background: #f3f4f6;
+    color: var(--text-muted);
+    margin-right: 4px;
+  }
+  .tab.active { background: white; color: var(--primary); border-color: var(--primary); }
+  .tab-content {
+    border: 1.5px solid var(--border);
+    border-radius: 0 8px 8px 8px;
+    padding: 16px;
+    background: white;
+  }
+
+  /* ─── Toggle ─── */
+  .toggle-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+  .toggle-icon { transition: transform 0.2s; }
+  .collapsed .toggle-icon { transform: rotate(-90deg); }
+
+  /* ─── Ideas ─── */
+  .idea-card {
+    border: 2px dashed #fbbf24;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: #fffbeb;
+  }
+  .idea-card h4 { font-size: 0.9rem; font-weight: 700; color: #92400e; margin-bottom: 4px; }
+  .idea-card p  { font-size: 0.82rem; color: #78350f; margin-bottom: 10px; line-height: 1.5; }
+  .idea-actions { display: flex; gap: 8px; }
+  .idea-approve {
+    padding: 5px 12px; border-radius: 6px;
+    background: var(--secondary); color: white;
+    font-size: 0.78rem; font-weight: 600; border: none; cursor: pointer;
+  }
+  .idea-reject {
+    padding: 5px 12px; border-radius: 6px;
+    background: #f3f4f6; color: var(--text-muted);
+    font-size: 0.78rem; font-weight: 600; border: none; cursor: pointer;
+  }
+
+  /* Spinner */
+  .spinner-overlay {
+    position: fixed; inset: 0;
+    background: rgba(255,255,255,0.8);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 999;
+    gap: 14px;
+  }
+  .spinner {
+    width: 48px; height: 48px;
+    border: 5px solid #bfdbfe;
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Notification */
+  .notif {
+    position: fixed; top: 20px; right: 20px;
+    background: var(--primary); color: white;
+    padding: 12px 20px; border-radius: 10px;
+    font-size: 0.88rem; font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+    max-width: 320px;
+  }
+  @keyframes slideIn { from { opacity:0; transform: translateX(30px); } }
+
+  .highlight-row td { background: #fef9c3 !important; }
+
+  .editable-field {
+    border: none; border-bottom: 1.5px dashed #cbd5e1;
+    outline: none; width: 100%; font-family: inherit;
+    font-size: inherit; background: transparent; padding: 2px 0;
+  }
+  .editable-field:focus { border-bottom-color: var(--primary); }
+
+  .include-exclude { display: flex; gap: 12px; flex-wrap: wrap; }
+  .incl { color: var(--success); font-size: 0.82rem; }
+  .excl { color: var(--danger);  font-size: 0.82rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">✈️</div>
+  <div>
+    <h1>여행사 견적서 자동 생성기</h1>
+    <p>국내·해외 / 일반·단체·관광·골프 등 모든 여행 유형 지원</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Step bar -->
+  <div class="step-bar" id="stepBar">
+    <div class="step active" onclick="goStep(1)"><span class="step-num">①</span>여행 유형</div>
+    <div class="step"        onclick="goStep(2)"><span class="step-num">②</span>목적지</div>
+    <div class="step"        onclick="goStep(3)"><span class="step-num">③</span>기본 정보</div>
+    <div class="step"        onclick="goStep(4)"><span class="step-num">④</span>비용 설정</div>
+    <div class="step"        onclick="goStep(5)"><span class="step-num">⑤</span>견적서 확인</div>
+  </div>
+
+  <!-- ===================== STEP 1: 여행 유형 ===================== -->
+  <div id="step1">
+    <div class="card">
+      <h2>🌍 여행 지역 선택</h2>
+      <div class="type-grid">
+        <div class="type-btn" id="area-domestic" onclick="selectArea('domestic')">
+          <span class="icon">🇰🇷</span>
+          <span class="label">국내 여행</span>
+        </div>
+        <div class="type-btn" id="area-overseas" onclick="selectArea('overseas')">
+          <span class="icon">🌐</span>
+          <span class="label">해외 여행</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎯 여행 종류 선택</h2>
+      <div class="type-grid" id="travelTypeGrid">
+        <div class="type-btn" id="type-general" onclick="selectType('general')">
+          <span class="icon">🧳</span>
+          <span class="label">일반 여행</span>
+        </div>
+        <div class="type-btn" id="type-group" onclick="selectType('group')">
+          <span class="icon">👥</span>
+          <span class="label">단체 여행</span>
+          <span class="badge">10인+</span>
+        </div>
+        <div class="type-btn" id="type-sightseeing" onclick="selectType('sightseeing')">
+          <span class="icon">🗺️</span>
+          <span class="label">관광 여행</span>
+        </div>
+        <div class="type-btn" id="type-golf" onclick="selectType('golf')">
+          <span class="icon">⛳</span>
+          <span class="label">골프 여행</span>
+        </div>
+        <div class="type-btn" id="type-honeymoon" onclick="selectType('honeymoon')">
+          <span class="icon">💑</span>
+          <span class="label">허니문</span>
+        </div>
+        <div class="type-btn" id="type-family" onclick="selectType('family')">
+          <span class="icon">👨‍👩‍👧‍👦</span>
+          <span class="label">가족 여행</span>
+        </div>
+        <div class="type-btn" id="type-healing" onclick="selectType('healing')">
+          <span class="icon">🧘</span>
+          <span class="label">힐링 여행</span>
+        </div>
+        <div class="type-btn" id="type-adventure" onclick="selectType('adventure')">
+          <span class="icon">🏔️</span>
+          <span class="label">어드벤처</span>
+        </div>
+        <div class="type-btn" id="type-cruise" onclick="selectType('cruise')">
+          <span class="icon">🚢</span>
+          <span class="label">크루즈</span>
+        </div>
+        <div class="type-btn" id="type-business" onclick="selectType('business')">
+          <span class="icon">💼</span>
+          <span class="label">비즈니스</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="nextStep(1)">다음 단계 →</button>
+    </div>
+  </div>
+
+  <!-- ===================== STEP 2: 목적지 ===================== -->
+  <div id="step2" style="display:none">
+    <div class="card">
+      <h2 id="destTitle">🗺️ 목적지 선택</h2>
+      <div class="dest-grid" id="destGrid"></div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-outline" onclick="goStep(1)">← 이전</button>
+      <button class="btn btn-primary" onclick="nextStep(2)">다음 단계 →</button>
+    </div>
+  </div>
+
+  <!-- ===================== STEP 3: 기본 정보 ===================== -->
+  <div id="step3" style="display:none">
+    <div class="card">
+      <h2>📋 기본 여행 정보</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>고객명 / 단체명</label>
+          <input type="text" id="clientName" placeholder="예) 홍길동 / 삼성전자 임직원팀">
+        </div>
+        <div class="form-group">
+          <label>연락처</label>
+          <input type="tel" id="clientPhone" placeholder="010-0000-0000">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>출발일</label>
+          <input type="date" id="departDate">
+        </div>
+        <div class="form-group">
+          <label>귀국일</label>
+          <input type="date" id="returnDate">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>인원 수 (성인)</label>
+          <input type="number" id="adultCount" value="2" min="1">
+        </div>
+        <div class="form-group">
+          <label>인원 수 (아동/소인, 만 12세 미만)</label>
+          <input type="number" id="childCount" value="0" min="0">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>출발지 (공항/도시)</label>
+          <input type="text" id="departureCity" placeholder="예) 인천국제공항, 김포공항">
+        </div>
+        <div class="form-group">
+          <label>숙박 등급</label>
+          <select id="hotelGrade">
+            <option value="3star">3성급 호텔</option>
+            <option value="4star" selected>4성급 호텔</option>
+            <option value="5star">5성급 호텔</option>
+            <option value="pension">펜션/리조트</option>
+            <option value="guest">게스트하우스</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>식사 옵션</label>
+          <select id="mealOption">
+            <option value="bb">조식 포함 (B&B)</option>
+            <option value="hb">조·석식 포함 (HB)</option>
+            <option value="fb" selected>3식 포함 (FB)</option>
+            <option value="none">식사 불포함</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>교통 수단 (현지)</label>
+          <select id="transport">
+            <option value="private">전용 차량</option>
+            <option value="bus">관광 버스</option>
+            <option value="public">대중교통</option>
+            <option value="rental">렌터카</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row full">
+        <div class="form-group">
+          <label>특별 요청사항</label>
+          <textarea id="specialReq" rows="3" placeholder="예) 채식 식단 필요, 휠체어 접근 가능 숙소, 특정 명소 방문 희망 등"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-outline" onclick="goStep(2)">← 이전</button>
+      <button class="btn btn-primary" onclick="nextStep(3)">다음 단계 →</button>
+    </div>
+  </div>
+
+  <!-- ===================== STEP 4: 비용 설정 ===================== -->
+  <div id="step4" style="display:none">
+    <div class="card">
+      <h2>💰 비용 항목 설정</h2>
+      <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:16px">자동 산출된 예상 금액입니다. 직접 수정 가능합니다.</p>
+
+      <table class="cost-table" style="margin-bottom:16px">
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>단가 (1인)</th>
+            <th>수량</th>
+            <th>소계</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="costTableBody"></tbody>
+        <tfoot>
+          <tr class="cost-total">
+            <td colspan="3"><b>합계</b></td>
+            <td id="costGrandTotal" colspan="2"><b>-</b></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <button class="btn btn-outline" onclick="addCostRow()" style="font-size:0.82rem">+ 항목 추가</button>
+    </div>
+
+    <!-- 포함/불포함 -->
+    <div class="card">
+      <h2>📌 포함/불포함 사항</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>포함 사항</label>
+          <textarea id="includeItems" rows="5" style="font-size:0.83rem"></textarea>
+        </div>
+        <div class="form-group">
+          <label>불포함 사항</label>
+          <textarea id="excludeItems" rows="5" style="font-size:0.83rem"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-outline" onclick="goStep(3)">← 이전</button>
+      <button class="btn btn-success" onclick="generateQuote()">📄 견적서 생성</button>
+    </div>
+  </div>
+
+  <!-- ===================== STEP 5: 견적서 ===================== -->
+  <div id="step5" style="display:none">
+
+    <!-- Ideas -->
+    <div class="card" id="ideasCard" style="border:2px solid #fbbf24;background:#fffbeb;">
+      <h2 style="color:#92400e">💡 AI 추천 아이디어 (승인 대기)</h2>
+      <p style="font-size:0.82rem;color:#78350f;margin-bottom:14px">아래 아이디어를 검토하고 견적서에 반영할 항목을 승인해 주세요.</p>
+      <div id="ideasList"></div>
+    </div>
+
+    <!-- Quote output -->
+    <div class="card quote-output" id="quoteOutput">
+      <div id="quotePreview"></div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-outline" onclick="goStep(4)">← 수정</button>
+      <button class="btn btn-warning" onclick="window.print()">🖨️ 인쇄</button>
+      <button class="btn btn-primary" onclick="downloadHtml()">⬇️ HTML 저장</button>
+      <button class="btn btn-success" onclick="copyQuoteText()">📋 텍스트 복사</button>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- Spinner -->
+<div class="spinner-overlay" id="spinnerOverlay" style="display:none">
+  <div class="spinner"></div>
+  <div style="font-size:0.95rem;font-weight:600;color:var(--primary)">견적서를 자동 생성 중입니다...</div>
+</div>
+
+<script>
+// ─────────── STATE ───────────
+const state = {
+  area: '',          // domestic | overseas
+  travelType: '',
+  destination: '',
+  destFlag: '',
+  clientName: '',
+  clientPhone: '',
+  departDate: '',
+  returnDate: '',
+  nights: 0,
+  adultCount: 2,
+  childCount: 0,
+  departureCity: '인천국제공항',
+  hotelGrade: '4star',
+  mealOption: 'fb',
+  transport: 'private',
+  specialReq: '',
+  costItems: [],
+  includeItems: '',
+  excludeItems: '',
+  approvedIdeas: []
+};
+
+let currentStep = 1;
+
+// ─────────── DESTINATIONS ───────────
+const DOMESTIC_DESTS = [
+  {name:'제주도',flag:'🏝️'},{name:'부산',flag:'🌊'},{name:'경주',flag:'🏛️'},
+  {name:'강릉',flag:'🏔️'},{name:'여수',flag:'⛵'},{name:'전주',flag:'🎭'},
+  {name:'거제도',flag:'🐚'},{name:'속초',flag:'🦞'},{name:'남해',flag:'🌿'},
+  {name:'통영',flag:'🎨'},{name:'춘천',flag:'🌲'},{name:'안동',flag:'🏯'},
+  {name:'서울',flag:'🏙️'},{name:'인천',flag:'✈️'},{name:'대구',flag:'🍎'},
+  {name:'광주',flag:'🌸'}
+];
+const OVERSEAS_DESTS = [
+  {name:'일본 도쿄',flag:'🗾'},{name:'일본 오사카',flag:'🏯'},{name:'일본 후쿠오카',flag:'⛩️'},
+  {name:'태국 방콕',flag:'🇹🇭'},{name:'태국 푸켓',flag:'🏖️'},{name:'베트남 다낭',flag:'🇻🇳'},
+  {name:'베트남 하노이',flag:'🏛️'},{name:'필리핀 세부',flag:'🐠'},{name:'인도네시아 발리',flag:'🌺'},
+  {name:'싱가포르',flag:'🦁'},{name:'홍콩',flag:'🌉'},{name:'대만 타이페이',flag:'🧋'},
+  {name:'중국 상하이',flag:'🇨🇳'},{name:'유럽 파리',flag:'🗼'},{name:'유럽 로마',flag:'🏛️'},
+  {name:'유럽 바르셀로나',flag:'🎨'},{name:'유럽 프라하',flag:'🏰'},{name:'미국 하와이',flag:'🌺'},
+  {name:'미국 뉴욕',flag:'🗽'},{name:'호주 시드니',flag:'🦘'},{name:'튀르키예 이스탄불',flag:'🕌'},
+  {name:'두바이',flag:'🏙️'},{name:'몰디브',flag:'🌊'},{name:'괌',flag:'🏝️'}
+];
+
+// ─────────── STEP CONTROL ───────────
+function goStep(n) {
+  if(n > currentStep) return; // forward only via buttons
+  currentStep = n;
+  [1,2,3,4,5].forEach(i => {
+    document.getElementById('step'+i).style.display = i===n ? 'block' : 'none';
+    const s = document.querySelectorAll('.step')[i-1];
+    s.classList.toggle('active', i===n);
+    s.classList.toggle('done', i<n);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function nextStep(from) {
+  if(from===1) {
+    if(!state.area)        { notify('여행 지역을 선택해 주세요.','warning'); return; }
+    if(!state.travelType)  { notify('여행 종류를 선택해 주세요.','warning'); return; }
+    buildDestGrid();
+    currentStep=2;
+    goStep(2);
+    return;
+  }
+  if(from===2) {
+    if(!state.destination) { notify('목적지를 선택해 주세요.','warning'); return; }
+    // pre-fill dates
+    const today = new Date();
+    const dep = new Date(today); dep.setDate(dep.getDate()+7);
+    const ret = new Date(dep);
+    const nights = defaultNights();
+    ret.setDate(ret.getDate()+nights);
+    if(!document.getElementById('departDate').value)
+      document.getElementById('departDate').value = dep.toISOString().split('T')[0];
+    if(!document.getElementById('returnDate').value)
+      document.getElementById('returnDate').value = ret.toISOString().split('T')[0];
+    currentStep=3; goStep(3); return;
+  }
+  if(from===3) {
+    readBasicInfo();
+    if(!state.clientName) { notify('고객명을 입력해 주세요.','warning'); return; }
+    if(state.nights<=0)   { notify('출발일/귀국일을 올바르게 입력해 주세요.','warning'); return; }
+    buildCostTable();
+    buildIncludeExclude();
+    currentStep=4; goStep(4); return;
+  }
+}
+
+function defaultNights() {
+  const map = {
+    domestic:3, overseas:5,
+    golf:4, honeymoon:6, cruise:7, adventure:5
+  };
+  return map[state.area==='domestic'?'domestic':'overseas'] || 4;
+}
+
+// ─────────── SELECTION ───────────
+function selectArea(a) {
+  state.area = a;
+  document.querySelectorAll('[id^="area-"]').forEach(el=>el.classList.remove('selected'));
+  document.getElementById('area-'+a).classList.add('selected');
+}
+function selectType(t) {
+  state.travelType = t;
+  document.querySelectorAll('[id^="type-"]').forEach(el=>el.classList.remove('selected'));
+  document.getElementById('type-'+t).classList.add('selected');
+}
+function buildDestGrid() {
+  const list = state.area==='domestic' ? DOMESTIC_DESTS : OVERSEAS_DESTS;
+  document.getElementById('destTitle').textContent =
+    state.area==='domestic' ? '🗺️ 국내 목적지 선택' : '🌍 해외 목적지 선택';
+  const grid = document.getElementById('destGrid');
+  grid.innerHTML = list.map(d=>`
+    <div class="dest-btn" id="dest-${d.name.replace(/ /g,'_')}" onclick="selectDest('${d.name}','${d.flag}')">
+      <span class="flag">${d.flag}</span>${d.name}
+    </div>`).join('');
+}
+function selectDest(name,flag) {
+  state.destination = name; state.destFlag = flag;
+  document.querySelectorAll('.dest-btn').forEach(el=>el.classList.remove('selected'));
+  const key = name.replace(/ /g,'_');
+  document.getElementById('dest-'+key)?.classList.add('selected');
+}
+
+// ─────────── READ INFO ───────────
+function readBasicInfo() {
+  state.clientName    = document.getElementById('clientName').value || '고객';
+  state.clientPhone   = document.getElementById('clientPhone').value;
+  state.departDate    = document.getElementById('departDate').value;
+  state.returnDate    = document.getElementById('returnDate').value;
+  state.adultCount    = parseInt(document.getElementById('adultCount').value)||2;
+  state.childCount    = parseInt(document.getElementById('childCount').value)||0;
+  state.departureCity = document.getElementById('departureCity').value || '인천국제공항';
+  state.hotelGrade    = document.getElementById('hotelGrade').value;
+  state.mealOption    = document.getElementById('mealOption').value;
+  state.transport     = document.getElementById('transport').value;
+  state.specialReq    = document.getElementById('specialReq').value;
+  if(state.departDate && state.returnDate) {
+    const d1=new Date(state.departDate), d2=new Date(state.returnDate);
+    state.nights = Math.max(1, Math.round((d2-d1)/(1000*60*60*24)));
+  }
+}
+
+// ─────────── COST TABLE ───────────
+const HOTEL_PRICE = { '3star':80000,'4star':150000,'5star':280000,'pension':70000,'guest':40000 };
+const MEAL_PRICE  = { 'bb':20000,'hb':35000,'fb':55000,'none':0 };
+const TRANSPORT_PRICE = { 'private':60000,'bus':20000,'public':8000,'rental':50000 };
+
+function buildCostTable() {
+  const nights = state.nights;
+  const total  = state.adultCount + state.childCount;
+  const isOverseas = state.area==='overseas';
+  const items = [];
+
+  // 항공/교통
+  if(isOverseas) {
+    items.push({name:'왕복 항공권', unit: airFare(), qty: state.adultCount + Math.round(state.childCount*0.75), editable:true});
+  } else {
+    items.push({name:'교통비 (KTX/버스)', unit: 60000, qty: state.adultCount + Math.round(state.childCount*0.5), editable:true});
+  }
+  // 숙박
+  items.push({name:`숙박비 (${gradeLabel(state.hotelGrade)}, ${nights}박)`, unit: HOTEL_PRICE[state.hotelGrade]*nights, qty: total, editable:true});
+  // 식사
+  if(state.mealOption !== 'none') {
+    items.push({name:`식사비 (${mealLabel(state.mealOption)})`, unit: MEAL_PRICE[state.mealOption]*nights, qty: total, editable:true});
+  }
+  // 현지 교통
+  items.push({name:'현지 교통비', unit: TRANSPORT_PRICE[state.transport]*nights, qty: total, editable:true});
+  // 여행유형별 추가
+  if(state.travelType==='golf') {
+    items.push({name:'골프장 그린피', unit: isOverseas?250000:150000, qty: state.adultCount, editable:true});
+    items.push({name:'캐디피', unit: isOverseas?80000:50000, qty: state.adultCount, editable:true});
+    items.push({name:'골프 카트 이용료', unit: 30000, qty: state.adultCount, editable:true});
+  }
+  if(state.travelType==='cruise') {
+    items.push({name:'크루즈 승선료', unit: 800000, qty: total, editable:true});
+  }
+  if(state.travelType==='honeymoon') {
+    items.push({name:'허니문 특별 패키지', unit: 200000, qty: 2, editable:true});
+  }
+  if(state.travelType==='group') {
+    items.push({name:'전담 가이드비', unit: 50000, qty: total, editable:true});
+    items.push({name:'단체 보험료', unit: 15000, qty: total, editable:true});
+  }
+  // 관광지 입장료
+  items.push({name:'관광지 입장료', unit: isOverseas?40000:20000, qty: total, editable:true});
+  // 여행자 보험
+  items.push({name:'여행자 보험', unit: isOverseas?25000:8000, qty: total, editable:true});
+  // 가이드비
+  if(state.travelType!=='group') {
+    items.push({name:'현지 가이드비', unit: isOverseas?30000:15000, qty: total, editable:true});
+  }
+  // 비자
+  if(isOverseas) items.push({name:'비자 수수료', unit: visaFee(), qty: total, editable:true});
+
+  state.costItems = items;
+  renderCostTable();
+}
+
+function airFare() {
+  const d = state.destination;
+  if(d.includes('일본')||d.includes('중국')||d.includes('홍콩')||d.includes('대만')) return 350000;
+  if(d.includes('동남아')||d.includes('태국')||d.includes('베트남')||d.includes('필리핀')||d.includes('인도네시아')) return 480000;
+  if(d.includes('몰디브')||d.includes('두바이')||d.includes('튀르키예')) return 900000;
+  if(d.includes('유럽')||d.includes('미국 뉴욕')) return 1400000;
+  if(d.includes('하와이')||d.includes('호주')) return 980000;
+  if(d.includes('괌')||d.includes('싱가포르')) return 550000;
+  return 600000;
+}
+function visaFee() {
+  const d = state.destination;
+  if(d.includes('일본')||d.includes('동남아')||d.includes('유럽')||d.includes('싱가포르')||d.includes('몰디브')) return 0;
+  return 30000;
+}
+function gradeLabel(g){return{
+  '3star':'3성급','4star':'4성급','5star':'5성급','pension':'펜션/리조트','guest':'게스트하우스'
+}[g]||g;}
+function mealLabel(m){return{
+  'bb':'조식','hb':'조·석식','fb':'3식','none':'없음'
+}[m]||m;}
+
+function renderCostTable() {
+  const tbody = document.getElementById('costTableBody');
+  tbody.innerHTML = state.costItems.map((item,i)=>`
+    <tr>
+      <td><input class="editable-field" value="${item.name}" onchange="state.costItems[${i}].name=this.value;updateTotal()"></td>
+      <td><input class="editable-field" type="number" value="${item.unit}" style="width:90px" onchange="state.costItems[${i}].unit=parseInt(this.value)||0;updateTotal()"></td>
+      <td><input class="editable-field" type="number" value="${item.qty}" style="width:50px" onchange="state.costItems[${i}].qty=parseInt(this.value)||0;updateTotal()"></td>
+      <td><b>${fmt(item.unit*item.qty)}원</b></td>
+      <td><button onclick="removeCostRow(${i})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:1rem">✕</button></td>
+    </tr>`).join('');
+  updateTotal();
+}
+function updateTotal() {
+  const total = state.costItems.reduce((s,i)=>s+i.unit*i.qty,0);
+  document.getElementById('costGrandTotal').innerHTML = `<b>${fmt(total)}원</b>`;
+}
+function addCostRow() {
+  state.costItems.push({name:'추가 항목', unit:0, qty:1, editable:true});
+  renderCostTable();
+}
+function removeCostRow(i) {
+  state.costItems.splice(i,1);
+  renderCostTable();
+}
+function fmt(n){return new Intl.NumberFormat('ko-KR').format(n);}
+
+// ─────────── INCLUDE/EXCLUDE ───────────
+function buildIncludeExclude() {
+  const isOverseas = state.area==='overseas';
+  const incl = [
+    isOverseas ? '왕복 항공권' : '왕복 교통비',
+    `${gradeLabel(state.hotelGrade)} 숙박 (${state.nights}박)`,
+    `식사비 (${mealLabel(state.mealOption)})`,
+    '현지 교통비',
+    '관광지 입장료',
+    '여행자 보험',
+    '현지 가이드 서비스',
+    state.travelType==='golf' ? '골프장 그린피 및 카트비' : null,
+    state.travelType==='group' ? '전담 인솔 가이드' : null,
+    state.travelType==='honeymoon' ? '허니문 특별 혜택' : null,
+  ].filter(Boolean);
+
+  const excl = [
+    '개인 지출 비용',
+    '초과 수하물 요금',
+    '팁/봉사료',
+    isOverseas && visaFee()===0 ? null : (isOverseas ? '비자 수수료 (별도 안내)' : null),
+    '기내식 (일부 항공사)',
+    '선택 관광 비용',
+    '환전 수수료',
+    '여권 관련 비용',
+  ].filter(Boolean);
+
+  document.getElementById('includeItems').value = incl.join('\n');
+  document.getElementById('excludeItems').value = excl.join('\n');
+}
+
+// ─────────── GENERATE QUOTE ───────────
+function generateQuote() {
+  state.includeItems = document.getElementById('includeItems').value;
+  state.excludeItems = document.getElementById('excludeItems').value;
+
+  showSpinner();
+  setTimeout(()=>{
+    hideSpinner();
+    buildIdeas();
+    renderQuote();
+    currentStep=5; goStep(5);
+  },1500);
+}
+
+// ─────────── IDEAS ───────────
+function buildIdeas() {
+  const ideas = getIdeasFor();
+  state.approvedIdeas = [];
+  const list = document.getElementById('ideasList');
+  list.innerHTML = ideas.map((idea,i)=>`
+    <div class="idea-card" id="idea-${i}">
+      <h4>${idea.icon} ${idea.title}</h4>
+      <p>${idea.desc}</p>
+      <div class="idea-actions">
+        <button class="idea-approve" onclick="approveIdea(${i},'${idea.title.replace(/'/g,"\\'")}')">✅ 승인 - 견적서에 반영</button>
+        <button class="idea-reject" onclick="rejectIdea(${i})">✕ 거절</button>
+      </div>
+    </div>`).join('');
+}
+
+function getIdeasFor() {
+  const isOverseas = state.area==='overseas';
+  const pool = [
+    {icon:'📸',title:'포토 서비스 패키지',
+     desc:'전문 사진작가가 동행하여 여행 내내 고품질 사진을 촬영해 드립니다. 앨범 인쇄 포함. (1인당 80,000원 추가)'},
+    {icon:'🍽️',title:'미식 투어 추가 옵션',
+     desc:`${state.destination}의 현지 유명 레스토랑 예약 서비스와 쿠킹 클래스를 패키지에 추가합니다. (1인당 60,000원 추가)`},
+    {icon:'🎁',title:'웰컴 기프트 & 어메니티',
+     desc:'투숙 시 현지 특산품 기프트 세트와 고급 어메니티를 제공합니다. (1인당 25,000원 추가)'},
+    {icon:'🚁',title:'헬리콥터/드론 투어',
+     desc:`${state.destination} 상공에서 바라보는 특별한 시각 경험을 제공합니다. (1인당 150,000원 추가)`},
+    {icon:'💆',title:'스파 & 웰니스 프로그램',
+     desc:'전통 마사지 및 스파 패키지 1회를 포함합니다. 피로 회복과 힐링에 최적화. (1인당 70,000원 추가)'},
+    {icon:'🎭',title:'현지 공연·문화 체험',
+     desc:'현지 전통 공연 관람권 및 문화 체험 프로그램을 일정에 추가합니다. (1인당 45,000원 추가)'},
+    {icon:'📱',title:'여행 전용 포켓 와이파이',
+     desc:`${isOverseas?'해외 로밍 부담 없이':'국내 어디서나'} 무제한 인터넷 사용. 포켓 와이파이 대여 포함. (건당 8,000원/일 추가)`},
+    {icon:'🛡️',title:'프리미엄 여행자 보험 업그레이드',
+     desc:'기본 보험 대비 보장 범위를 3배 확대, 취소 환불 보험 포함. (1인당 20,000원 추가)'},
+  ];
+  // type-specific
+  if(state.travelType==='golf') pool.push(
+    {icon:'🏌️',title:'골프 레슨 패키지',desc:'현지 프로 골퍼에게 1:1 레슨 2회. 실력 향상에 도움. (1인당 100,000원 추가)'}
+  );
+  if(state.travelType==='honeymoon') pool.push(
+    {icon:'🌹',title:'로맨틱 스페셜 디너',desc:'해변 또는 루프탑 캔들 디너 예약. 꽃장식 포함. (2인 기준 120,000원 추가)'},
+    {icon:'💍',title:'커플 스파 & 마사지',desc:'2인용 프라이빗 스파룸에서의 커플 마사지 패키지. (2인 기준 160,000원 추가)'}
+  );
+  if(state.travelType==='group') pool.push(
+    {icon:'🎤',title:'단체 환영 만찬',desc:'단체 전용 레스토랑에서 웰컴 디너 파티. 기념 촬영 포함. (1인당 50,000원 추가)'}
+  );
+  // shuffle & pick 4
+  return pool.sort(()=>Math.random()-0.5).slice(0,4);
+}
+
+function approveIdea(i, title) {
+  state.approvedIdeas.push(title);
+  document.getElementById('idea-'+i).style.opacity='0.4';
+  document.getElementById('idea-'+i).querySelector('.idea-actions').innerHTML =
+    `<span style="color:var(--success);font-size:0.85rem;font-weight:700">✅ 승인됨 - 안내사항에 반영</span>`;
+  renderQuote();
+  notify('아이디어가 견적서에 반영되었습니다.','success');
+}
+function rejectIdea(i) {
+  document.getElementById('idea-'+i).style.display='none';
+}
+
+// ─────────── ITINERARY ───────────
+function buildItinerary() {
+  const nights = state.nights;
+  const days   = nights + 1;
+  const dest   = state.destination;
+  const isOverseas = state.area==='overseas';
+  const rows   = [];
+
+  for(let d=1; d<=days; d++) {
+    const isFirst = d===1, isLast = d===days;
+    rows.push({
+      day: d,
+      date: addDays(state.departDate, d-1),
+      morning: isFirst ? (isOverseas ? `${state.departureCity} 출발 → ${dest} 도착 / 공항 입국 수속` : `${state.departureCity} 출발 → ${dest} 이동`)
+        : (isLast ? `${dest} 호텔 체크아웃 / 짐 정리` : dayPlan(dest, d, 'morning')),
+      afternoon: isFirst ? `${dest} 호텔 체크인 / 휴식 및 주변 탐방`
+        : (isLast ? (isOverseas ? '면세점 쇼핑 / 공항 이동' : '귀환 이동') : dayPlan(dest, d, 'afternoon')),
+      evening: isFirst ? `환영 만찬 / 오리엔테이션`
+        : (isLast ? (isOverseas ? `${dest} 출발 → ${state.departureCity} 귀국` : `${state.departureCity} 도착 / 해산`) : dayPlan(dest, d, 'evening')),
+      meal: mealOfDay(d),
+      hotel: isLast ? '귀국' : `${gradeLabel(state.hotelGrade)} 숙박`
+    });
+  }
+  return rows;
+}
+
+const DEST_PLANS = {
+  '제주도':     [['한라산 등반','성산일출봉','우도 자전거'],['천지연폭포','중문단지','올레길'],['협재해수욕장','애월카페거리','항공우주박물관']],
+  '부산':       [['해운대 해수욕장','광안리','동백섬'],['자갈치시장','국제시장','영도','부산타워'],['감천문화마을','송정해수욕장']],
+  '경주':       [['불국사','석굴암','첨성대'],['안압지(동궁과 월지)','국립경주박물관'],['교촌마을','황리단길']],
+  '일본 도쿄':  [['신주쿠','시부야','하라주쿠'],['아사쿠사','우에노 공원','아키하바라'],['오다이바','도쿄 스카이트리','팀랩']],
+  '일본 오사카':[['오사카 성','도톤보리','구로몬 시장'],['유니버셜 스튜디오','난바'],['교토 아라시야마','후시미이나리']],
+  '태국 방콕':  [['왕궁','왓포','짜오프라야강 크루즈'],['차뚜짝 시장','씨암','칠롬'],['마사지&스파','야시장 투어']],
+  '베트남 다낭':[['미케 비치','바나힐','선월드'],['호이안 구시가지','투본강 보트'],['마블 마운틴','쿠킹 클래스']],
+  '인도네시아 발리':[['우붓 원숭이 숲','따나롯 사원'],['꾸따 비치','스미냑','스파 투어'],['울루와뚜','짐바란 씨푸드 디너']],
+  '유럽 파리':  [['에펠탑','루브르 박물관'],['베르사유 궁전','샹젤리제'],['몽마르트르','오르세 미술관','센강 크루즈']],
+};
+function dayPlan(dest, day, slot) {
+  const plans = DEST_PLANS[dest];
+  if(!plans) return genericPlan(dest, day, slot);
+  const idx = (day-2) % plans.length;
+  const items = plans[idx] || plans[0];
+  const slotMap = {morning:0, afternoon:1, evening:2};
+  return items[slotMap[slot]] ? items[slotMap[slot]] + ' 관광' : genericPlan(dest,day,slot);
+}
+function genericPlan(dest, day, slot) {
+  const m = ['현지 유명 관광지 방문','문화 유적 탐방','시장/쇼핑 투어','자유 시간'];
+  const a = ['현지 식당 점심','박물관/미술관 관람','해변/자연경관 탐방','현지 체험 프로그램'];
+  const e = ['현지 맛집 저녁','문화 공연 관람','야경 투어','자유 시간'];
+  const idx = day%4;
+  return {morning:m,afternoon:a,evening:e}[slot][idx];
+}
+function mealOfDay(d) {
+  const map={bb:'조식',hb:'조식·석식',fb:'조·중·석식',none:'-'};
+  return map[state.mealOption];
+}
+function addDays(dateStr, n) {
+  if(!dateStr) return '';
+  const d = new Date(dateStr); d.setDate(d.getDate()+n);
+  return d.toLocaleDateString('ko-KR',{month:'numeric',day:'numeric',weekday:'short'});
+}
+
+// ─────────── CHECKLIST ───────────
+function buildChecklist() {
+  const isOverseas = state.area === 'overseas';
+  const base = [
+    '여권 (유효기간 6개월 이상)', '여행자 보험 증서', '항공권/교통권', '숙박 예약 확인서',
+    '환전 (현지 화폐)', '신용카드 (비자/마스터)', '충전기 및 멀티어댑터',
+    '상비약 (진통제, 소화제, 지사제)', '개인 세면도구', '여벌 옷 및 속옷',
+    '선크림 및 자외선 차단제', '편한 운동화', '우산 또는 우비', '소형 배낭',
+    '물통', '마스크', '손 소독제'
+  ];
+  if(isOverseas) base.splice(1,0,'비자 (필요 시)', 'ESTA/여행 허가 (필요 시)');
+  if(state.travelType==='golf') base.push('골프복 (3~4벌)','골프화','장갑','골프모자','골프볼 여분');
+  if(state.travelType==='honeymoon') base.push('공식 혼인 서류 사본','커플 사진');
+  if(state.travelType==='adventure') base.push('트레킹화','등산 스틱','방수 재킷','헤드랜턴');
+  if(state.travelType==='cruise') base.push('정장 (포멀 나이트)','멀미약','선글라스','비치웨어');
+  return base;
+}
+
+// ─────────── NOTICES ───────────
+function buildNotices() {
+  const isOverseas = state.area==='overseas';
+  const list = [
+    {icon:'⚠️', text:'출발 전 여권 유효기간을 반드시 확인하세요. 유효기간 6개월 미만 시 입국 거절될 수 있습니다.'},
+    {icon:'✈️', text:'항공편 출발 최소 2시간 전 공항 도착을 권장합니다.'},
+    {icon:'💊', text:'지병이 있으신 경우 필요한 약을 충분히 지참하시고, 영문 처방전을 준비해 주세요.'},
+    {icon:'💰', text:'현지 화폐는 출발 전 환전하시거나 현지 ATM을 이용하세요. 환전 수수료 비교 후 유리한 방법을 선택하세요.'},
+    {icon:'📞', text:`긴급 연락처: 담당자 ${state.clientPhone||'여행사 대표번호'} / 현지 가이드 번호는 출발 3일 전 별도 안내드립니다.`},
+    {icon:'🚫', text:'여행 중 귀중품은 호텔 세이프티 박스에 보관하시고, 소매치기에 주의하세요.'},
+    {icon:'🌡️', text:'일정 출발 전 해당 목적지의 날씨 및 현지 상황을 재확인해 주세요.'},
+  ];
+  if(isOverseas) {
+    list.push({icon:'🛃',text:'세관 신고 시 면세 한도(800달러)를 초과하는 물품은 반드시 신고하세요.'});
+    list.push({icon:'📡',text:'해외 로밍 또는 현지 유심 카드 구매를 미리 준비하시면 편리합니다.'});
+  }
+  if(state.travelType==='golf') list.push(
+    {icon:'⛳',text:'골프 클럽은 항공사 규정에 따라 위탁 수하물로 처리됩니다. 케이스 및 잠금장치를 확인하세요.'}
+  );
+  if(state.approvedIdeas.length>0) list.push(
+    {icon:'💡',text:`승인된 추가 옵션: ${state.approvedIdeas.join(', ')}. 각 서비스는 현지 일정에 맞춰 사전 예약되며, 3일 전 상세 안내를 드립니다.`}
+  );
+  return list;
+}
+
+// ─────────── RENDER QUOTE ───────────
+function renderQuote() {
+  const typeNames = {
+    general:'일반여행',group:'단체여행',sightseeing:'관광여행',golf:'골프여행',
+    honeymoon:'허니문',family:'가족여행',healing:'힐링여행',adventure:'어드벤처',
+    cruise:'크루즈',business:'비즈니스'
+  };
+  const typeName = typeNames[state.travelType]||'여행';
+  const totalPax = state.adultCount + state.childCount;
+  const grandTotal = state.costItems.reduce((s,i)=>s+i.unit*i.qty,0);
+  const itinerary = buildItinerary();
+  const checklist = buildChecklist();
+  const notices   = buildNotices();
+
+  const quoteNo = 'QT-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*90000)+10000);
+  const today = new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+
+  const inclLines = state.includeItems.split('\n').filter(Boolean);
+  const exclLines = state.excludeItems.split('\n').filter(Boolean);
+
+  document.getElementById('quotePreview').innerHTML = `
+    <div class="quote-header-box">
+      <div>
+        <div class="agency">✈️ 여행사 공식 견적서</div>
+        <div class="quote-title">${state.destFlag} ${state.destination} ${typeName}</div>
+        <div class="meta">
+          ${state.departDate} ~ ${state.returnDate} (${state.nights}박 ${state.nights+1}일)<br>
+          성인 ${state.adultCount}명${state.childCount>0?' / 아동 '+state.childCount+'명':''} | ${state.departureCity} 출발
+        </div>
+      </div>
+      <div class="num">
+        <div class="n">견적번호</div>
+        <div class="v">${quoteNo}</div>
+        <div class="n" style="margin-top:6px">발행일</div>
+        <div class="v" style="font-size:0.88rem">${today}</div>
+      </div>
+    </div>
+
+    <div class="summary-tags">
+      <span class="tag tag-blue">✈️ ${state.area==='domestic'?'국내':'해외'}</span>
+      <span class="tag tag-green">${typeName}</span>
+      <span class="tag tag-orange">👤 총 ${totalPax}명</span>
+      <span class="tag tag-purple">🏨 ${gradeLabel(state.hotelGrade)}</span>
+      <span class="tag tag-blue">🍽️ ${mealLabel(state.mealOption)}</span>
+      <span class="tag tag-green">🚐 ${transportLabel(state.transport)}</span>
+    </div>
+
+    <!-- 고객 정보 -->
+    <div class="section" style="margin-bottom:16px">
+      <div class="section-header">👤 고객 정보</div>
+      <div class="section-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:0.85rem">
+          <div><b>고객명</b>: ${state.clientName}</div>
+          <div><b>연락처</b>: ${state.clientPhone||'-'}</div>
+          <div><b>출발일</b>: ${state.departDate}</div>
+          <div><b>귀국일</b>: ${state.returnDate}</div>
+          <div><b>인원</b>: 성인 ${state.adultCount}명 ${state.childCount>0?'/ 아동 '+state.childCount+'명':''}</div>
+          <div><b>특이사항</b>: ${state.specialReq||'없음'}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 일정표 -->
+    <div class="section">
+      <div class="section-header">📅 여행 일정표</div>
+      <div class="section-body" style="padding:0">
+        <table class="itinerary-table">
+          <thead>
+            <tr>
+              <th style="width:60px">날짜</th>
+              <th>오전</th>
+              <th>오후</th>
+              <th>저녁</th>
+              <th style="width:70px">식사</th>
+              <th style="width:90px">숙박</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${itinerary.map(r=>`
+              <tr>
+                <td><span class="day-label">DAY${r.day}</span><br><small style="color:#6b7280">${r.date}</small></td>
+                <td>${r.morning}</td>
+                <td>${r.afternoon}</td>
+                <td>${r.evening}</td>
+                <td style="font-size:0.78rem">${r.meal}</td>
+                <td style="font-size:0.78rem">${r.hotel}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 비용 -->
+    <div class="section" style="margin-top:16px">
+      <div class="section-header">💰 비용 견적 (총 ${fmt(grandTotal)}원)</div>
+      <div class="section-body" style="padding:0">
+        <table class="cost-table">
+          <thead>
+            <tr>
+              <th>항목</th>
+              <th>단가 (1인)</th>
+              <th>수량</th>
+              <th>소계</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${state.costItems.map(item=>`
+              <tr>
+                <td>${item.name}</td>
+                <td>${fmt(item.unit)}원</td>
+                <td>${item.qty}명</td>
+                <td><b>${fmt(item.unit*item.qty)}원</b></td>
+              </tr>`).join('')}
+          </tbody>
+          <tfoot>
+            <tr class="cost-total">
+              <td colspan="3"><b>총 합계</b></td>
+              <td><b style="font-size:1.05rem">${fmt(grandTotal)}원</b></td>
+            </tr>
+            <tr style="background:#f0fdf4">
+              <td colspan="3" style="font-size:0.82rem;color:#065f46">1인당 평균</td>
+              <td style="font-size:0.9rem;font-weight:700;color:#065f46">${fmt(Math.round(grandTotal/totalPax))}원</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- 포함/불포함 -->
+    <div class="section" style="margin-top:16px">
+      <div class="section-header">📌 포함·불포함 사항</div>
+      <div class="section-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+          <div>
+            <b style="color:var(--success);font-size:0.88rem">✅ 포함 사항</b>
+            <ul style="list-style:none;margin-top:8px">
+              ${inclLines.map(l=>`<li class="incl" style="padding:3px 0">▪ ${l}</li>`).join('')}
+            </ul>
+          </div>
+          <div>
+            <b style="color:var(--danger);font-size:0.88rem">❌ 불포함 사항</b>
+            <ul style="list-style:none;margin-top:8px">
+              ${exclLines.map(l=>`<li class="excl" style="padding:3px 0">▪ ${l}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 준비물 -->
+    <div class="section" style="margin-top:16px">
+      <div class="section-header">🎒 여행 준비물 체크리스트</div>
+      <div class="section-body">
+        <ul class="checklist">
+          ${checklist.map(item=>`<li><span class="ci">☐</span>${item}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+
+    <!-- 안내사항 -->
+    <div class="section" style="margin-top:16px">
+      <div class="section-header">📢 여행 안내 및 주의사항</div>
+      <div class="section-body">
+        <ul class="notice-list">
+          ${notices.map(n=>`<li><span>${n.icon}</span><span>${n.text}</span></li>`).join('')}
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;padding:16px;background:#f8fafc;border-radius:10px;font-size:0.78rem;color:#6b7280;text-align:center;line-height:1.8">
+      본 견적서는 자동 생성된 예상 견적입니다. 최종 요금은 항공, 숙박, 현지 상황에 따라 변동될 수 있습니다.<br>
+      견적 유효기간: 발행일로부터 7일 | 문의: 여행사 대표번호 | 담당자: 여행 컨설턴트
+    </div>
+  `;
+}
+
+function transportLabel(t){return{
+  private:'전용 차량',bus:'관광 버스',public:'대중교통',rental:'렌터카'
+}[t]||t;}
+
+// ─────────── UTILS ───────────
+function showSpinner() { document.getElementById('spinnerOverlay').style.display='flex'; }
+function hideSpinner() { document.getElementById('spinnerOverlay').style.display='none'; }
+
+function notify(msg, type='info') {
+  const el = document.createElement('div');
+  el.className = 'notif';
+  el.style.background = type==='warning'?'#f59e0b':type==='success'?'var(--secondary)':'var(--primary)';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 3000);
+}
+
+function downloadHtml() {
+  const html = `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>여행견적서</title>
+<style>
+  body{font-family:'Malgun Gothic',sans-serif;max-width:900px;margin:20px auto;padding:20px;}
+  table{width:100%;border-collapse:collapse;}th,td{padding:8px 12px;border:1px solid #ddd;font-size:13px;}
+  th{background:#eff6ff;} .cost-total td{background:#d1fae5;font-weight:bold;}
+</style></head><body>
+${document.getElementById('quotePreview').innerHTML}
+</body></html>`;
+  const a = document.createElement('a');
+  a.href = 'data:text/html;charset=utf-8,'+encodeURIComponent(html);
+  a.download = `여행견적서_${state.destination}_${state.departDate||'날짜미정'}.html`;
+  a.click();
+}
+
+function copyQuoteText() {
+  const text = document.getElementById('quotePreview').innerText;
+  navigator.clipboard.writeText(text).then(()=>notify('클립보드에 복사되었습니다.','success'));
+}
+
+// ─────────── INIT ───────────
+document.getElementById('departureCity').value = '인천국제공항';
+</script>
+</body>
+</html>

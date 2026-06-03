@@ -22,6 +22,7 @@ import { publishToBlogger } from './publishers/blogger.js'
 import { publishToInstagram } from './publishers/instagram.js'
 import { publishToThreads } from './publishers/threads.js'
 import { publishToTikTok } from './publishers/tiktok.js'
+import { factCheckBlogPost } from './generators/fact-checker.js'
 
 const args = process.argv.slice(2)
 const isScheduleMode = args.includes('--schedule')
@@ -56,33 +57,36 @@ async function runAutomation() {
       logger.info(`🔑 [${i + 1}/${hotKeywords.length}] "${keywordData.keyword}" | 트렌드: ${keywordData.trendDirection === 'rising' ? '🚀 급상승' : '📊 안정'} | CPC: $${keywordData.estimatedCPC || 0.5}`)
 
       try {
-        logger.info('✍️  [2/6] 블로그 포스트 생성 중...')
-        const blogPost = { ...await generateBlogPost(keywordData), rank: i + 1 }
-        savePost(blogPost)
-        postResult.blogPost = { title: blogPost.title, wordCount: blogPost.wordCount, faqCount: blogPost.faq?.length || 0 }
+        logger.info('✍️  [2/7] 블로그 포스트 생성 중...')
+        const rawPost = { ...await generateBlogPost(keywordData), rank: i + 1 }
 
-        logger.info('🖼️  [3/6] 썸네일 생성 중...')
+        logger.info('🔍 [3/7] 팩트체크 중...')
+        const blogPost = await factCheckBlogPost(rawPost)
+        savePost(blogPost)
+        postResult.blogPost = { title: blogPost.title, wordCount: blogPost.wordCount, faqCount: blogPost.faq?.length || 0, factCheck: blogPost.factCheck }
+
+        logger.info('🖼️  [4/7] 썸네일 생성 중...')
         const [thumbnailPath, verticalPath] = await Promise.allSettled([
           generateThumbnail(blogPost),
           generateVerticalThumbnail(blogPost),
         ]).then(res => res.map(r => r.status === 'fulfilled' ? r.value : null))
         postResult.thumbnails = { horizontal: thumbnailPath, vertical: verticalPath }
 
-        logger.info('📱 [4/6] SNS 콘텐츠 생성 중...')
+        logger.info('📱 [5/7] SNS 콘텐츠 생성 중...')
         const socialContent = await generateSocialContent(blogPost, '')
         saveSocialContent(socialContent, keywordData.keyword)
         postResult.socialContent = socialContent
         logger.info(`   IG 최적 게시: ${getNextOptimalPostingTime('instagram')} | TikTok: ${getNextOptimalPostingTime('tiktok')}`)
 
-        logger.info('💰 [5/6] AdSense 수익 추정 중...')
+        logger.info('💰 [6/7] AdSense 수익 추정 중...')
         const postEarnings = estimateAdSenseEarnings([{ ...blogPost, naverAvgRatio: keywordData.naverAvgRatio }])
         postResult.earnings = postEarnings.posts[0]
 
         if (isPreviewMode) {
-          logger.info('👁️  [6/6] 미리보기 모드 — 게시 건너뜀')
+          logger.info('👁️  [7/7] 미리보기 모드 — 게시 건너뜀')
           postResult.status = 'preview'
         } else {
-          logger.info('🚀 [6/6] 플랫폼 게시 중...')
+          logger.info('🚀 [7/7] 플랫폼 게시 중...')
           const blogUrl = await publishWithRetry(() => publishToBlogger(blogPost, { isDraft: isDraftMode }))
           postResult.blogger = blogUrl
 
@@ -153,7 +157,9 @@ async function publishWithRetry(fn, maxRetries = 3) {
 
 function logPostSummary(keyword, blogPost, r) {
   logger.info(`\n✅ "${keyword}" 완료:`)
-  logger.info(`   📄 ${blogPost.title} | FAQ: ${blogPost.faq?.length || 0}개 | ${blogPost.wordCount || '?'}자`)
+  const fc = blogPost.factCheck
+  const fcLabel = fc ? (fc.issueCount > 0 ? ` | 팩트수정 ${fc.issueCount}건` : ' | 팩트✅') : ''
+  logger.info(`   📄 ${blogPost.title} | FAQ: ${blogPost.faq?.length || 0}개 | ${blogPost.wordCount || '?'}자${fcLabel}`)
   if (r.blogger?.url) logger.info(`   🔗 ${r.blogger.url}`)
   if (r.instagram?.url) logger.info(`   📸 ${r.instagram.url}`)
   if (r.threads?.url) logger.info(`   🧵 ${r.threads.url}`)

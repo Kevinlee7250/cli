@@ -1,168 +1,147 @@
 # 블로그 자동화 시스템
 
-Google AdSense 수익화를 위한 완전 자동화 블로그 운영 시스템입니다.
+Claude AI + Google Blogger + AdSense 수익 극대화 완전 자동화 시스템.
 
 ## 🔄 자동화 흐름
 
 ```
-Google Trends + 네이버 DataLab
-         ↓
-   핫 키워드 분석 & 선별
-         ↓
+Google Trends RSS / 네이버 DataLab
+          ↓
+    트렌드 키워드 자동 수집
+          ↓
   Claude AI 블로그 포스트 작성
-  (SEO + AdSense 최적화)
-         ↓
-  ┌──────────────────────────────┐
-  │  썸네일 자동 생성 (Canvas)    │
-  │  - 가로형 1280×720 (Blogger) │
-  │  - 세로형 1080×1920 (SNS)    │
-  └──────────────────────────────┘
-         ↓
-  ┌──────────────────────────────┐
-  │    플랫폼별 콘텐츠 배포        │
-  │  📝 Google Blogger 게시      │
-  │  📸 Instagram 이미지+캡션     │
-  │  🧵 Threads 연속 스레드       │
-  │  🎵 TikTok 스크립트 생성      │
-  └──────────────────────────────┘
+  (SEO + AdSense 최적화 + 이미지 자동 삽입)
+          ↓
+  Google Blogger 자동 업로드
+  (구조화 데이터 + 목차 + 광고 슬롯 6개)
 ```
 
-## 📂 프로젝트 구조
+## 📂 파일 구조
 
 ```
 blog-automation/
-├── src/
-│   ├── index.js                 # 메인 오케스트레이터
-│   ├── config.js                # 환경 설정
-│   ├── scrapers/
-│   │   ├── google-trends.js     # Google Trends RSS/API 수집
-│   │   ├── naver-trends.js      # 네이버 DataLab + 뉴스 검색
-│   │   └── keyword-analyzer.js  # 통합 키워드 분석 & 점수화
-│   ├── generators/
-│   │   ├── blog-content.js      # Claude AI 블로그 포스트 생성
-│   │   ├── social-content.js    # Instagram/Threads/TikTok 콘텐츠
-│   │   └── thumbnail.js         # Canvas 썸네일 생성
-│   ├── publishers/
-│   │   ├── blogger.js           # Google Blogger API
-│   │   ├── instagram.js         # Instagram Graph API
-│   │   ├── threads.js           # Meta Threads API
-│   │   └── tiktok.js            # TikTok Content Posting API
-│   └── utils/
-│       ├── logger.js            # Winston 로거
-│       └── storage.js           # 로컬 파일 저장
-├── scripts/
-│   ├── test-keywords.js         # 키워드 수집 테스트
-│   ├── test-content.js          # 콘텐츠 생성 테스트
-│   └── test-thumbnail.js        # 썸네일 생성 테스트
-├── output/
-│   ├── posts/                   # 생성된 블로그 포스트 JSON
-│   ├── social/                  # SNS 콘텐츠 JSON
-│   └── thumbnails/              # 생성된 썸네일 이미지
-├── .env.example                 # 환경 변수 예시
-└── package.json
+├── main.py                # 메인 실행 파일
+├── config.py              # 환경 변수 설정
+├── keyword_collector.py   # 트렌드 키워드 수집
+├── content_generator.py   # Claude AI 포스트 생성
+├── image_fetcher.py       # 이미지 자동 검색 & 삽입
+├── blogger_uploader.py    # Blogger API 업로드
+├── requirements.txt       # Python 의존성
+├── .env.example           # 환경 변수 예시
+└── test_image.py          # 이미지 기능 테스트
 ```
 
-## ⚙️ 설치 및 설정
+---
 
-### 1. 의존성 설치
+## 🚀 GitHub Actions에서 실행하기
+
+### 1단계 — GitHub Secrets 등록
+
+저장소 → **Settings → Secrets and variables → Actions → New repository secret**
+
+| Secret 이름 | 설명 | 취득 방법 |
+|-------------|------|-----------|
+| `ANTHROPIC_API_KEY` | Claude API 키 | [console.anthropic.com](https://console.anthropic.com) |
+| `GOOGLE_CLIENT_ID` | Blogger OAuth 클라이언트 ID | Google Cloud Console |
+| `GOOGLE_CLIENT_SECRET` | Blogger OAuth 클라이언트 시크릿 | Google Cloud Console |
+| `GOOGLE_REFRESH_TOKEN` | Blogger OAuth 리프레시 토큰 | OAuth 인증 후 취득 |
+| `BLOGGER_BLOG_ID` | 블로그 ID | Blogger 대시보드 URL의 숫자 |
+| `NAVER_CLIENT_ID` | 네이버 이미지 검색 API ID | [developers.naver.com](https://developers.naver.com/apps/) |
+| `NAVER_CLIENT_SECRET` | 네이버 이미지 검색 API 시크릿 | 동일 |
+| `ADSENSE_CLIENT_ID` | AdSense 게시자 ID | AdSense 관리자 → 계정 정보 |
+| `ADSENSE_SLOT_IDS` | 광고 슬롯 ID 6개 (쉼표 구분) | AdSense → 광고 → 광고 단위 |
+
+### 2단계 — 워크플로우 수동 실행
+
+1. GitHub 저장소 → **Actions** 탭
+2. **블로그 자동화 실행** 선택
+3. **Run workflow** 클릭
+4. 옵션 설정:
+   - **키워드**: 비워두면 Google Trends 자동 수집
+   - **포스트 수**: 1~5 (기본 3)
+   - **모드**: `live`(즉시 게시) / `draft`(임시저장) / `test`(업로드 없이 확인)
+
+### 자동 실행 스케줄
+
+매일 **오전 9시 (KST)** 자동 실행 (`.github/workflows/blog-run.yml`의 cron 설정).
+
+---
+
+## 💻 로컬에서 실행하기
+
+### 설치
 
 ```bash
 cd blog-automation
-npm install
-```
-
-> canvas 패키지는 시스템 의존성이 필요합니다:
-> - Ubuntu/Debian: `sudo apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev`
-> - macOS: `brew install pkg-config cairo pango libpng jpeg giflib librsvg`
-
-### 2. 환경 변수 설정
-
-```bash
+pip install -r requirements.txt
 cp .env.example .env
-# .env 파일을 열어 API 키 입력
+# .env 파일에 API 키 입력
 ```
 
-### 3. 필수 API 설정
+### 실행 명령어
 
-| 서비스 | 취득 경로 | 필수 여부 |
-|--------|-----------|-----------|
-| **Anthropic Claude** | [console.anthropic.com](https://console.anthropic.com) | ✅ 필수 |
-| **Naver API** | [developers.naver.com](https://developers.naver.com) | 권장 |
-| **Google OAuth2** | [console.cloud.google.com](https://console.cloud.google.com) | Blogger 사용 시 |
-| **Instagram Graph** | [developers.facebook.com](https://developers.facebook.com) | Instagram 사용 시 |
-| **Threads API** | Meta Developer Portal (Instagram과 동일 앱) | Threads 사용 시 |
-| **TikTok API** | [developers.tiktok.com](https://developers.tiktok.com) | TikTok 사용 시 |
-
-## 🚀 실행 방법
-
-### 즉시 1회 실행 (테스트용)
 ```bash
-npm run run-once
-# 또는
-node src/index.js
+# 테스트 (업로드 없이 글만 생성)
+python main.py --test
+
+# 특정 키워드로 테스트
+python main.py --test --keyword "재테크 방법,주식 투자"
+
+# 즉시 1회 실행 (Blogger 업로드)
+python main.py --once
+
+# 특정 키워드로 1회 실행
+python main.py --once --keyword "재테크 방법"
+
+# 스케줄 모드 (매일 오전 9시 자동 실행)
+python main.py
+
+# 이미지 기능 테스트
+python test_image.py "오늘 핫이슈"
 ```
 
-### 스케줄러 실행 (매일 자동 실행)
-```bash
-npm run schedule
+---
+
+## ⚙️ Blogger OAuth 설정 방법
+
+1. [Google Cloud Console](https://console.cloud.google.com) → 새 프로젝트 생성
+2. **API 및 서비스 → 라이브러리** → "Blogger API v3" 사용 설정
+3. **사용자 인증 정보 → OAuth 클라이언트 ID 만들기** (유형: 웹 애플리케이션)
+4. 리디렉션 URI 추가: `https://developers.google.com/oauthplayground`
+5. [OAuth 2.0 Playground](https://developers.google.com/oauthplayground) 접속
+   - 오른쪽 상단 설정 아이콘 → "Use your own OAuth credentials" 체크
+   - Client ID / Secret 입력
+   - Step 1: `https://www.googleapis.com/auth/blogger` 입력 후 Authorize
+   - Step 2: Exchange authorization code for tokens
+   - **Refresh token** 복사 → `GOOGLE_REFRESH_TOKEN`에 입력
+6. Blogger 블로그 URL에서 Blog ID 확인: `https://www.blogger.com/blog/posts/{BLOG_ID}`
+
+---
+
+## 🔧 환경 변수 (`.env`)
+
+```env
+# Claude API
+ANTHROPIC_API_KEY=sk-ant-...
+
+# Google Blogger OAuth2
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+GOOGLE_REFRESH_TOKEN=...
+BLOGGER_BLOG_ID=...
+
+# AdSense
+ADSENSE_CLIENT_ID=ca-pub-XXXXXXXXXXXXXXXX
+ADSENSE_SLOT_IDS=1111111111,2222222222,3333333333,4444444444,5555555555,6666666666
+
+# 네이버 이미지 검색 (선택)
+NAVER_CLIENT_ID=...
+NAVER_CLIENT_SECRET=...
+
+# 실행 설정
+POSTS_PER_RUN=3
+POST_STATUS=live         # live | draft
+BLOG_LANGUAGE=ko         # ko | en
+TREND_COUNTRY=KR         # KR | US
+SCHEDULE_CRON=0 9 * * *  # 매일 오전 9시
 ```
-기본 스케줄: **매일 오전 8시** (`.env`의 `SCHEDULE_CRON`으로 변경 가능)
-
-### 개별 기능 테스트
-```bash
-# 키워드 수집만 테스트
-npm run test-keywords
-
-# 콘텐츠 생성 테스트
-npm run test-content "인공지능"
-
-# 썸네일 생성 테스트
-npm run test-thumbnail
-```
-
-## 📊 키워드 점수 시스템
-
-키워드 선별 시 다음 기준으로 점수를 산정합니다:
-
-| 요소 | 가중치 |
-|------|--------|
-| Google 일간 트렌드 순위 | ×5 |
-| Google 실시간 트렌드 순위 | ×3 |
-| 네이버 교차 검증 | +50점 |
-| 검색 트래픽 규모 | +30~80점 |
-| AdSense 고가치 카테고리 (금융, 건강, 기술 등) | +40점 |
-| 연관 쿼리 풍부도 | ×5/개 |
-
-## 📱 SNS 플랫폼별 콘텐츠 전략
-
-### Instagram
-- 2줄 후킹 오프닝 → 상세 내용 → 해시태그 20~30개
-- 세로형 썸네일 첨부 (1080×1920)
-
-### Threads
-- 5개 연속 스레드로 정보를 단계적 전달
-- 마지막 스레드에서 블로그 유입 유도
-
-### TikTok
-- 60초 영상 스크립트 (씬별 연출 지시 포함)
-- 배경음악 추천 + 썸네일 텍스트 제공
-- 영상 제작 후 수동 업로드 또는 영상 API 연동 필요
-
-## 🔧 커스터마이징
-
-### 게시 횟수 변경
-`.env`에서 `POSTS_PER_RUN=5`로 설정 (최대 5개)
-
-### 스케줄 변경
-`.env`에서 `SCHEDULE_CRON="0 9 * * *"` (매일 오전 9시)
-
-### 썸네일 크기 변경
-`.env`에서 `THUMBNAIL_WIDTH=1920`, `THUMBNAIL_HEIGHT=1080`
-
-## ⚠️ 주의사항
-
-1. **API 사용량**: Claude API는 호출당 비용이 발생합니다. `POSTS_PER_RUN` 조정으로 비용 관리
-2. **Instagram**: 이미지 업로드 시 공개 URL이 필요합니다 (`IMGBB_API_KEY` 설정 또는 직접 URL 제공)
-3. **TikTok**: 영상 파일이 없는 경우 스크립트만 저장됩니다. 영상 제작 후 업로드하세요
-4. **콘텐츠 검수**: AI 생성 콘텐츠는 게시 전 반드시 검수를 권장합니다
-5. **API 제한**: 각 플랫폼의 일일 API 호출 한도를 확인하세요

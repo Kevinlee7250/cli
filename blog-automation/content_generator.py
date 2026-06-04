@@ -9,7 +9,7 @@ import time
 import anthropic
 
 from config import ANTHROPIC_API_KEY, CLAUDE_MODEL, BLOG_LANGUAGE
-from image_fetcher import fetch_relevant_images, inject_images_into_content
+from image_fetcher import fetch_images_for_queries, inject_images_into_content
 
 logger = logging.getLogger(__name__)
 _client: anthropic.Anthropic | None = None
@@ -196,6 +196,19 @@ def _parse_response(raw: str) -> dict | None:
             return None
 
 
+def _extract_section_queries(html: str, keyword: str) -> list[str]:
+    """H2 섹션 제목을 파싱해 이미지 검색 쿼리 목록을 반환합니다."""
+    headings = re.findall(r'<h2[^>]*>(.*?)</h2>', html, re.IGNORECASE | re.DOTALL)
+    queries = [keyword]  # 첫 이미지: 도입부 → 메인 키워드
+    for heading in headings[:3]:
+        clean = re.sub(r'<[^>]+>', '', heading).strip()
+        clean = re.sub(r'[^\w\s가-힣a-zA-Z0-9]', ' ', clean)
+        clean = re.sub(r'\s+', ' ', clean).strip()[:25]
+        if clean:
+            queries.append(f"{keyword} {clean}".strip())
+    return queries[:4]
+
+
 def _word_count(html: str) -> int:
     """HTML 태그 제거 후 글자 수를 반환합니다."""
     text = re.sub(r"<[^>]+>", "", html)
@@ -253,11 +266,11 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
                 logger.error("컨텐츠 생성 실패: 유효한 내용 없음")
                 return None
 
-            # 이미지 검색 & 삽입
-            logger.info(f"관련 이미지 검색 중: '{keyword}'")
-            images = fetch_relevant_images(
-                keyword,
-                count=4,
+            # 섹션별 이미지 검색 & 삽입
+            section_queries = _extract_section_queries(post_data.get("content", ""), keyword)
+            logger.info(f"섹션별 이미지 검색: {section_queries}")
+            images = fetch_images_for_queries(
+                section_queries,
                 naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
                 naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
             )

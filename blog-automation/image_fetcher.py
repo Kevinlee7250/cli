@@ -157,6 +157,43 @@ def _wikimedia_images(keyword: str, count: int) -> list[dict]:
 # 통합 검색 & HTML 삽입
 # ──────────────────────────────────────────────────────────────────────────────
 
+def _fetch_one_image(
+    query: str,
+    naver_client_id: str = "",
+    naver_client_secret: str = "",
+) -> dict | None:
+    """단일 쿼리로 이미지 1개를 검색합니다. Naver → DDG → Wikimedia 순."""
+    if naver_client_id and naver_client_secret:
+        imgs = _naver_images(query, 1, naver_client_id, naver_client_secret)
+        if imgs:
+            return imgs[0]
+    imgs = _ddg_images(query, 1)
+    if imgs:
+        return imgs[0]
+    imgs = _wikimedia_images(query, 1)
+    if imgs:
+        return imgs[0]
+    return None
+
+
+def fetch_images_for_queries(
+    queries: list[str],
+    naver_client_id: str = "",
+    naver_client_secret: str = "",
+) -> list[dict]:
+    """섹션별 쿼리 목록에 맞춰 이미지를 1개씩 검색합니다."""
+    images = []
+    for query in queries:
+        img = _fetch_one_image(query, naver_client_id, naver_client_secret)
+        if img:
+            img["search_query"] = query
+            images.append(img)
+            logger.info(f"이미지 수집 성공: '{query}'")
+        else:
+            logger.warning(f"이미지 없음: '{query}'")
+    return images
+
+
 def fetch_relevant_images(
     keyword: str,
     count: int = 3,
@@ -224,13 +261,13 @@ def inject_images_into_content(html: str, images: list[dict], keyword: str) -> s
     if first_p:
         try:
             idx, img = next(img_iter)
-            img_html = _make_img_html(img, f"{keyword} 이미지", img.get("title", ""))
+            alt = img.get("search_query", keyword)
+            img_html = _make_img_html(img, alt, img.get("title", ""))
             html = html[:first_p.end()] + img_html + html[first_p.end():]
         except StopIteration:
             return html
 
     # ② 나머지 이미지: <h2> 태그 직전에 삽입 (섹션 사이 배치)
-    # h2 인덱스 1, 3, 5 번째마다 (짝수 번째 섹션 전)
     h2_positions = [m.start() for m in re.finditer(r'<h2', html, re.IGNORECASE)]
     insert_positions = h2_positions[1::2]  # 2번째, 4번째, 6번째 H2 앞
 
@@ -238,9 +275,10 @@ def inject_images_into_content(html: str, images: list[dict], keyword: str) -> s
     for pos in insert_positions:
         try:
             idx, img = next(img_iter)
+            alt = img.get("search_query", f"{keyword} 관련 이미지 {idx + 1}")
             img_html = _make_img_html(
                 img,
-                f"{keyword} 관련 이미지 {idx + 1}",
+                alt,
                 img.get("title", ""),
             )
             actual_pos = pos + offset

@@ -200,11 +200,11 @@ def _extract_section_queries(html: str, keyword: str) -> list[str]:
     """H2 섹션 제목을 파싱해 이미지 검색 쿼리 목록을 반환합니다."""
     headings = re.findall(r'<h2[^>]*>(.*?)</h2>', html, re.IGNORECASE | re.DOTALL)
     queries = [keyword]  # 첫 이미지: 도입부 → 메인 키워드
-    for heading in headings[:3]:
+    for heading in headings[:6]:  # 최대 6개 섹션 처리
         clean = re.sub(r'<[^>]+>', '', heading).strip()
         clean = re.sub(r'[^\w\s가-힣a-zA-Z0-9]', ' ', clean)
-        clean = re.sub(r'\s+', ' ', clean).strip()[:25]
-        if clean:
+        clean = re.sub(r'\s+', ' ', clean).strip()[:50]
+        if clean and len(clean) > 2:
             queries.append(f"{keyword} {clean}".strip())
     return queries[:4]
 
@@ -265,6 +265,13 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
                     continue
                 logger.error("컨텐츠 생성 실패: 유효한 내용 없음")
                 return None
+
+            # sources 필드 유효성 검증
+            if not isinstance(post_data.get("sources"), list):
+                post_data["sources"] = []
+                logger.warning("sources 필드 누락 또는 잘못된 형식 — 초기화")
+            elif not post_data["sources"]:
+                logger.warning("sources 필드 비어있음 — 출처 링크 미포함")
 
             # 섹션별 이미지 검색 & 삽입
             section_queries = _extract_section_queries(post_data.get("content", ""), keyword)

@@ -84,11 +84,19 @@ def _naver_images(keyword: str, count: int, client_id: str, client_secret: str) 
         for item in r.json().get("items", []):
             link = item.get("link", "")
             if re.search(r"\.(jpe?g|png|webp)", link, re.I):
+                try:
+                    width = int(item.get("sizewidth") or 0)
+                except (ValueError, TypeError):
+                    width = 0
+                try:
+                    height = int(item.get("sizeheight") or 0)
+                except (ValueError, TypeError):
+                    height = 0
                 images.append({
                     "url": item.get("thumbnail", link),
                     "title": re.sub(r"<[^>]+>", "", item.get("title", keyword)).strip(),
-                    "width": int(item.get("sizewidth", 0) or 0),
-                    "height": int(item.get("sizeheight", 0) or 0),
+                    "width": width,
+                    "height": height,
                 })
             if len(images) >= count:
                 break
@@ -194,34 +202,6 @@ def fetch_images_for_queries(
     return images
 
 
-def fetch_relevant_images(
-    keyword: str,
-    count: int = 3,
-    naver_client_id: str = "",
-    naver_client_secret: str = "",
-) -> list[dict]:
-    """키워드 관련 이미지를 검색합니다. 순서: Naver → DuckDuckGo → Wikimedia."""
-    # 1순위: 네이버 (설정된 경우)
-    if naver_client_id and naver_client_secret:
-        imgs = _naver_images(keyword, count, naver_client_id, naver_client_secret)
-        if imgs:
-            logger.info(f"네이버 이미지 {len(imgs)}개 수집: '{keyword}'")
-            return imgs
-
-    # 2순위: DuckDuckGo
-    imgs = _ddg_images(keyword, count)
-    if imgs:
-        logger.info(f"DuckDuckGo 이미지 {len(imgs)}개 수집: '{keyword}'")
-        return imgs
-
-    # 3순위: Wikimedia Commons
-    imgs = _wikimedia_images(keyword, count)
-    if imgs:
-        logger.info(f"Wikimedia 이미지 {len(imgs)}개 수집: '{keyword}'")
-        return imgs
-
-    logger.warning(f"이미지 수집 실패: '{keyword}'")
-    return []
 
 
 def _make_img_html(img: dict, alt: str, caption: str = "") -> str:

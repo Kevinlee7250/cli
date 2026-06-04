@@ -25,7 +25,10 @@ NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET", "")
 
 # 블로그 설정
 BLOG_LANGUAGE = os.getenv("BLOG_LANGUAGE", "ko")   # ko | en
-POSTS_PER_RUN = int(os.getenv("POSTS_PER_RUN") or "1")
+try:
+    POSTS_PER_RUN = max(1, min(int((os.getenv("POSTS_PER_RUN") or "1").strip()), 10))
+except (ValueError, TypeError):
+    POSTS_PER_RUN = 1
 TREND_COUNTRY = os.getenv("TREND_COUNTRY", "KR")   # KR | US | JP
 POST_STATUS = os.getenv("POST_STATUS", "live")       # live | draft
 

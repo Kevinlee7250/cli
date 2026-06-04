@@ -60,13 +60,13 @@ from dashboard_exporter import log_run, export_dashboard
 def _check_config() -> bool:
     """필수 환경 변수가 모두 설정됐는지 확인합니다."""
     errors = []
-    if not ANTHROPIC_API_KEY or ANTHROPIC_API_KEY.startswith("sk-ant-xxx"):
+    if not ANTHROPIC_API_KEY.strip() or ANTHROPIC_API_KEY.startswith("sk-ant-xxx"):
         errors.append("ANTHROPIC_API_KEY 미설정")
-    if not BLOGGER_CLIENT_ID or BLOGGER_CLIENT_ID.startswith("your_"):
+    if not BLOGGER_CLIENT_ID.strip() or BLOGGER_CLIENT_ID.startswith("your_"):
         errors.append("GOOGLE_CLIENT_ID(Blogger OAuth) 미설정")
-    if not BLOGGER_BLOG_ID or BLOGGER_BLOG_ID.startswith("your_"):
+    if not BLOGGER_BLOG_ID.strip() or BLOGGER_BLOG_ID.startswith("your_"):
         errors.append("BLOGGER_BLOG_ID 미설정")
-    if not BLOGGER_REFRESH_TOKEN or BLOGGER_REFRESH_TOKEN.startswith("your_"):
+    if not BLOGGER_REFRESH_TOKEN.strip() or BLOGGER_REFRESH_TOKEN.startswith("your_"):
         errors.append("GOOGLE_REFRESH_TOKEN 미설정")
 
     if errors:

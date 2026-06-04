@@ -115,6 +115,8 @@ def log_run(
                 "wordCount": r.get("word_count", 0),
                 "contentPreview": r.get("content_preview", ""),
                 "faqCount": len(r.get("faq", [])),
+                "faq": r.get("faq", []),
+                "sources": r.get("sources", []),
                 "labels": r.get("labels", []),
                 "metaDescription": r.get("meta_description", ""),
             }
@@ -162,7 +164,8 @@ def export_dashboard() -> None:
                 "blogUrl": p.get("blogUrl", ""),
                 "metaDescription": p.get("metaDescription", ""),
                 "contentPreview": p.get("contentPreview", ""),
-                "faq": [],
+                "faq": p.get("faq", []),
+                "sources": p.get("sources", []),
             })
     posts.sort(key=lambda x: x["date"], reverse=True)
 
@@ -183,21 +186,20 @@ def export_dashboard() -> None:
         for run in history
     ]
 
-    # analytics.json
-    total_revenue = sum(r.get("earnings", {}).get("estimatedDailyRevenue", 0) for r in history)
+    # analytics.json — 최신 실행의 누적 수익 추정치 사용 (모든 포스트 기반)
     last_earnings = history[0].get("earnings", {}) if history else {}
     analytics = {
         "estimatedDailyRevenue": last_earnings.get("estimatedDailyRevenue", 0),
         "estimatedMonthlyRevenue": last_earnings.get("estimatedMonthlyRevenue", 0),
         "estimatedYearlyRevenue": last_earnings.get("estimatedYearlyRevenue", 0),
         "avgCPC": last_earnings.get("avgCPC", 0.9),
-        "totalCumulativeRevenue": round(total_revenue, 2),
         "runCount": len(history),
         "totalWords": sum(r.get("totalWords", 0) for r in history),
     }
 
-    # meta.json
+    # meta.json — totalRevenue는 현재 누적 포스트 기준 연 예상 수익
     blogger_total = sum(r.get("bloggerUploaded", 0) for r in history)
+    total_revenue = last_earnings.get("estimatedYearlyRevenue", 0)
     meta = {
         "exportedAt": datetime.now().isoformat(),
         "totalPosts": len(posts),

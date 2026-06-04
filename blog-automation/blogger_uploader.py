@@ -276,7 +276,9 @@ def upload_post(post_data: dict) -> dict | None:
         return None
 
     full_content = _build_full_content(post_data)
-    labels = list({*post_data.get("labels", []), post_data.get("keyword", "")})
+    kw = post_data.get("keyword", "")
+    raw_labels = post_data.get("labels", [])
+    labels = list(dict.fromkeys([kw] + raw_labels if kw not in raw_labels else raw_labels))
 
     payload = {
         "title": post_data.get("title", "Untitled"),

@@ -6,6 +6,7 @@ Google OAuth Refresh Token 발급 스크립트
 import json
 import os
 import socket
+import urllib.error
 import urllib.parse
 import urllib.request
 import webbrowser
@@ -86,8 +87,16 @@ def main():
         data=data,
         headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
-    with urllib.request.urlopen(req) as resp:
-        tokens = json.loads(resp.read())
+    try:
+        with urllib.request.urlopen(req) as resp:
+            tokens = json.loads(resp.read())
+    except urllib.error.HTTPError as e:
+        body = e.read().decode("utf-8", errors="replace")
+        print(f"❌ 토큰 교환 실패 (HTTP {e.code}): {body}")
+        return
+    except Exception as e:
+        print(f"❌ 토큰 교환 오류: {e}")
+        return
 
     refresh_token = tokens.get("refresh_token", "")
     if not refresh_token:

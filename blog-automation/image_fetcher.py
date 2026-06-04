@@ -93,7 +93,7 @@ def _naver_images(keyword: str, count: int, client_id: str, client_secret: str) 
                 except (ValueError, TypeError):
                     height = 0
                 images.append({
-                    "url": item.get("thumbnail", link),
+                    "url": link,
                     "title": re.sub(r"<[^>]+>", "", item.get("title", keyword)).strip(),
                     "width": width,
                     "height": height,

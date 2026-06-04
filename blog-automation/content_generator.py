@@ -245,7 +245,7 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
 
             if post_data is None:
                 if attempt < 2:
-                    logger.warning(f"JSON 파싱 실패 — 재시도 {attempt + 1}/2")
+                    logger.warning(f"JSON 파싱 실패 — 재시도 {attempt + 1}/3")
                     time.sleep(2)
                     continue
                 return None
@@ -260,7 +260,7 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
             # 컨텐츠 유효성 검사 (json_repair로 복구됐지만 내용이 비어있는 경우 방지)
             if not content_html.strip() or post_data["word_count"] < 100:
                 if attempt < 2:
-                    logger.warning(f"컨텐츠 비어있음 또는 너무 짧음({post_data['word_count']}자) — 재시도 {attempt + 1}/2")
+                    logger.warning(f"컨텐츠 비어있음 또는 너무 짧음({post_data['word_count']}자) — 재시도 {attempt + 1}/3")
                     time.sleep(2)
                     continue
                 logger.error("컨텐츠 생성 실패: 유효한 내용 없음")

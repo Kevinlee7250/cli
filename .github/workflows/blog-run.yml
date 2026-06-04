@@ -56,17 +56,17 @@ jobs:
         working-directory: blog-automation
         run: |
           cat > .env << 'ENVEOF'
-          ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
-          NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}
-          NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}
-          GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
-          GOOGLE_REFRESH_TOKEN=${{ secrets.GOOGLE_REFRESH_TOKEN }}
-          BLOGGER_BLOG_ID=${{ secrets.BLOGGER_BLOG_ID }}
-          ADSENSE_CLIENT_ID=${{ secrets.ADSENSE_CLIENT_ID }}
-          ADSENSE_SLOT_IDS=${{ secrets.ADSENSE_SLOT_IDS }}
-          POSTS_PER_RUN=${{ inputs.posts_per_run || '3' }}
-          POST_STATUS=${{ inputs.mode || 'live' }}
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          NAVER_CLIENT_ID="${{ secrets.NAVER_CLIENT_ID }}"
+          NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
+          ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"
+          POSTS_PER_RUN="${{ inputs.posts_per_run || '3' }}"
+          POST_STATUS="${{ inputs.mode || 'live' }}"
           BLOG_LANGUAGE=ko
           TREND_COUNTRY=KR
           LOG_LEVEL=info

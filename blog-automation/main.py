@@ -40,6 +40,7 @@ logger = logging.getLogger("main")
 from config import (
     ANTHROPIC_API_KEY,
     BLOGGER_CLIENT_ID,
+    BLOGGER_CLIENT_SECRET,
     BLOGGER_BLOG_ID,
     BLOGGER_REFRESH_TOKEN,
     BLOG_LANGUAGE,
@@ -68,6 +69,8 @@ def _check_config() -> bool:
         errors.append("BLOGGER_BLOG_ID 미설정")
     if not BLOGGER_REFRESH_TOKEN.strip() or BLOGGER_REFRESH_TOKEN.startswith("your_"):
         errors.append("GOOGLE_REFRESH_TOKEN 미설정")
+    if not BLOGGER_CLIENT_SECRET.strip() or BLOGGER_CLIENT_SECRET.startswith("your_"):
+        errors.append("GOOGLE_CLIENT_SECRET 미설정")
 
     if errors:
         for e in errors:

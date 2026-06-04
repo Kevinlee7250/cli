@@ -115,7 +115,11 @@ def _naver_datalab_keywords(client_id: str, client_secret: str, count: int = 10)
             timeout=10,
         )
         if r.status_code == 200:
-            results = r.json().get("results", [])
+            try:
+                results = r.json().get("results", [])
+            except ValueError:
+                logger.debug("Naver DataLab API 응답이 JSON이 아님")
+                return []
             return [res.get("title", "") for res in results[:count] if res.get("title")]
     except Exception as e:
         logger.debug(f"Naver DataLab 오류: {e}")

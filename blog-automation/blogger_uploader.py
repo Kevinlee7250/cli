@@ -34,8 +34,13 @@ def _get_access_token() -> str | None:
         "grant_type": "refresh_token",
     }, timeout=15)
     if resp.status_code == 200:
-        return resp.json().get("access_token")
-    logger.error(f"토큰 발급 실패: {resp.status_code} {resp.text}")
+        try:
+            token = resp.json().get("access_token")
+            if token:
+                return token
+        except ValueError:
+            pass
+    logger.error(f"토큰 발급 실패: {resp.status_code} {resp.text[:200]}")
     if "invalid_grant" in resp.text:
         logger.error("💡 해결: blog-automation/get_refresh_token.py 실행 후 GOOGLE_REFRESH_TOKEN Secret을 새 토큰으로 교체하세요.")
     return None
@@ -274,7 +279,7 @@ def upload_post(post_data: dict) -> dict | None:
     labels = list({*post_data.get("labels", []), post_data.get("keyword", "")})
 
     payload = {
-        "title": post_data["title"],
+        "title": post_data.get("title", "Untitled"),
         "content": full_content,
         "labels": labels[:20],
     }

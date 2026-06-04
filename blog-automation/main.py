@@ -175,8 +175,12 @@ def run_scheduled() -> None:
         logger.error(f"잘못된 SCHEDULE_CRON 형식: '{SCHEDULE_CRON}'")
         sys.exit(1)
 
-    minute, hour = parts[0], parts[1]
-    time_str = f"{int(hour):02d}:{int(minute):02d}"
+    try:
+        minute, hour = int(parts[0]), int(parts[1])
+        time_str = f"{hour:02d}:{minute:02d}"
+    except (ValueError, IndexError):
+        logger.error(f"잘못된 SCHEDULE_CRON 형식: '{SCHEDULE_CRON}'")
+        sys.exit(1)
     schedule.every().day.at(time_str).do(run_once)
     logger.info(f"스케줄 등록: 매일 {time_str} 실행 (cron: {SCHEDULE_CRON})")
     logger.info("Ctrl+C로 종료")

@@ -77,6 +77,9 @@ def _naver_images(keyword: str, count: int, client_id: str, client_secret: str) 
             headers={"X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": client_secret},
             timeout=10,
         )
+        if r.status_code != 200:
+            logger.debug(f"Naver 이미지 API 오류: HTTP {r.status_code}")
+            return []
         images = []
         for item in r.json().get("items", []):
             link = item.get("link", "")
@@ -97,12 +100,18 @@ def _naver_images(keyword: str, count: int, client_id: str, client_secret: str) 
 
 def _wikimedia_search_titles(keyword: str, count: int) -> list[str]:
     """Wikimedia Commons에서 파일 제목 목록을 반환합니다."""
-    base = "https://commons.wikimedia.org/w/api.php"
-    sr = requests.get(base, params={
-        "action": "query", "list": "search", "srnamespace": 6,
-        "srsearch": keyword, "srlimit": count * 3, "format": "json",
-    }, headers=_HEADERS, timeout=10)
-    return [r["title"] for r in sr.json().get("query", {}).get("search", [])]
+    try:
+        base = "https://commons.wikimedia.org/w/api.php"
+        sr = requests.get(base, params={
+            "action": "query", "list": "search", "srnamespace": 6,
+            "srsearch": keyword, "srlimit": count * 3, "format": "json",
+        }, headers=_HEADERS, timeout=10)
+        if sr.status_code != 200:
+            return []
+        return [r["title"] for r in sr.json().get("query", {}).get("search", [])]
+    except Exception as e:
+        logger.debug(f"Wikimedia 검색 오류: {e}")
+        return []
 
 
 def _wikimedia_images(keyword: str, count: int) -> list[dict]:
@@ -124,6 +133,8 @@ def _wikimedia_images(keyword: str, count: int) -> list[dict]:
                 "action": "query", "titles": title,
                 "prop": "imageinfo", "iiprop": "url|size|mime", "format": "json",
             }, headers=_HEADERS, timeout=8)
+            if ir.status_code != 200:
+                continue
             for page in ir.json().get("query", {}).get("pages", {}).values():
                 for info in page.get("imageinfo", []):
                     if info.get("mime", "").startswith("image/") and info.get("width", 0) >= 400:

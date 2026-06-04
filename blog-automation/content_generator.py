@@ -184,7 +184,11 @@ def _parse_response(raw: str) -> dict | None:
     except json.JSONDecodeError:
         try:
             from json_repair import repair_json
-            result = json.loads(repair_json(json_str))
+            repaired = repair_json(json_str)
+            if not repaired or not repaired.strip():
+                logger.error("JSON 복구 실패: 복구 후 빈 결과")
+                return None
+            result = json.loads(repaired)
             logger.warning("JSON 자동 복구 후 파싱 성공")
             return result
         except Exception as e:
@@ -217,6 +221,12 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
                 max_tokens=16000,
                 messages=[{"role": "user", "content": prompt}],
             )
+            if not message.content or not hasattr(message.content[0], "text"):
+                logger.error("Claude 응답 형식 오류: text 콘텐츠 없음")
+                if attempt < 2:
+                    time.sleep(2)
+                    continue
+                return None
             raw = message.content[0].text.strip()
             post_data = _parse_response(raw)
 

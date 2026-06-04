@@ -34,7 +34,9 @@ def _ddg_images(keyword: str, count: int) -> list[dict]:
             timeout=12,
         )
         vqd = (re.search(r'vqd="([^"]+)"', r.text) or
-               re.search(r"vqd='([^']+)'", r.text))
+               re.search(r"vqd='([^']+)'", r.text) or
+               re.search(r'vqd-5="([^"]+)"', r.text) or
+               re.search(r"vqd-5='([^']+)'", r.text))
         if not vqd:
             return []
 
@@ -93,16 +95,28 @@ def _naver_images(keyword: str, count: int, client_id: str, client_secret: str) 
         return []
 
 
+def _wikimedia_search_titles(keyword: str, count: int) -> list[str]:
+    """Wikimedia Commons에서 파일 제목 목록을 반환합니다."""
+    base = "https://commons.wikimedia.org/w/api.php"
+    sr = requests.get(base, params={
+        "action": "query", "list": "search", "srnamespace": 6,
+        "srsearch": keyword, "srlimit": count * 3, "format": "json",
+    }, headers=_HEADERS, timeout=10)
+    return [r["title"] for r in sr.json().get("query", {}).get("search", [])]
+
+
 def _wikimedia_images(keyword: str, count: int) -> list[dict]:
-    """Wikimedia Commons 이미지 (저작권 없는 공개 이미지)."""
+    """Wikimedia Commons 이미지 (저작권 없는 공개 이미지). 한국어 키워드 실패 시 영어 단어로 재시도."""
     try:
         base = "https://commons.wikimedia.org/w/api.php"
-        # 검색
-        sr = requests.get(base, params={
-            "action": "query", "list": "search", "srnamespace": 6,
-            "srsearch": keyword, "srlimit": count * 3, "format": "json",
-        }, headers=_HEADERS, timeout=10)
-        titles = [r["title"] for r in sr.json().get("query", {}).get("search", [])]
+        titles = _wikimedia_search_titles(keyword, count)
+
+        # 한국어 키워드로 결과 없으면 영어 단순 변환 시도 (공백→ 언더스코어 제거 후 영단어 추출)
+        if not titles:
+            # 숫자/영어 단어만 추출해 영어 쿼리로 재시도
+            en_keyword = " ".join(re.findall(r'[A-Za-z0-9]+', keyword))
+            if en_keyword and en_keyword != keyword:
+                titles = _wikimedia_search_titles(en_keyword, count)
 
         images = []
         for title in titles:

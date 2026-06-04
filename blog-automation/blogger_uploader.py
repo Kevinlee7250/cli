@@ -36,6 +36,8 @@ def _get_access_token() -> str | None:
     if resp.status_code == 200:
         return resp.json().get("access_token")
     logger.error(f"토큰 발급 실패: {resp.status_code} {resp.text}")
+    if "invalid_grant" in resp.text:
+        logger.error("💡 해결: blog-automation/get_refresh_token.py 실행 후 GOOGLE_REFRESH_TOKEN Secret을 새 토큰으로 교체하세요.")
     return None
 
 

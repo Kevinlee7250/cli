@@ -149,12 +149,16 @@ def _parse_response(raw: str) -> dict | None:
 
     # 첫 { ~ 마지막 } 추출
     start = text.find("{")
-    end = text.rfind("}")
-    if start == -1 or end == -1 or end <= start:
+    if start == -1:
         logger.error(f"JSON 구조 없음 — 응답 앞 200자: {raw[:200]}")
         return None
 
-    json_str = text[start:end + 1]
+    end = text.rfind("}")
+    if end == -1 or end <= start:
+        logger.warning("JSON 잘림 감지 — json_repair 시도")
+        json_str = text[start:]  # closing } 없음, json_repair에 전달
+    else:
+        json_str = text[start:end + 1]
     try:
         return json.loads(json_str)
     except json.JSONDecodeError:
@@ -190,7 +194,7 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
         try:
             message = _get_client().messages.create(
                 model=CLAUDE_MODEL,
-                max_tokens=8192,
+                max_tokens=16000,
                 messages=[{"role": "user", "content": prompt}],
             )
             raw = message.content[0].text.strip()
@@ -209,6 +213,15 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
             content_html = post_data.get("content", "")
             post_data["word_count"] = _word_count(content_html)
             post_data["content_preview"] = _content_preview(content_html)
+
+            # 컨텐츠 유효성 검사 (json_repair로 복구됐지만 내용이 비어있는 경우 방지)
+            if not content_html.strip() or post_data["word_count"] < 100:
+                if attempt < 2:
+                    logger.warning(f"컨텐츠 비어있음 또는 너무 짧음({post_data['word_count']}자) — 재시도 {attempt + 1}/2")
+                    time.sleep(2)
+                    continue
+                logger.error("컨텐츠 생성 실패: 유효한 내용 없음")
+                return None
 
             # 이미지 검색 & 삽입
             logger.info(f"관련 이미지 검색 중: '{keyword}'")

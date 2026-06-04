@@ -23,7 +23,9 @@ load_dotenv()
 # 로그 설정
 _log_level = os.getenv("LOG_LEVEL", "info").upper()
 _log_file = os.getenv("LOG_FILE", "./logs/automation.log")
-os.makedirs(os.path.dirname(_log_file), exist_ok=True)
+_log_dir = os.path.dirname(_log_file)
+if _log_dir:
+    os.makedirs(_log_dir, exist_ok=True)
 
 logging.basicConfig(
     level=getattr(logging, _log_level, logging.INFO),

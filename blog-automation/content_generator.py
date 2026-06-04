@@ -12,7 +12,14 @@ from config import ANTHROPIC_API_KEY, CLAUDE_MODEL, BLOG_LANGUAGE
 from image_fetcher import fetch_relevant_images, inject_images_into_content
 
 logger = logging.getLogger(__name__)
-client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+_client: anthropic.Anthropic | None = None
+
+
+def _get_client() -> anthropic.Anthropic:
+    global _client
+    if _client is None:
+        _client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    return _client
 
 
 def _build_prompt(keyword: str, traffic: str) -> str:
@@ -181,7 +188,7 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
 
     for attempt in range(3):
         try:
-            message = client.messages.create(
+            message = _get_client().messages.create(
                 model=CLAUDE_MODEL,
                 max_tokens=8192,
                 messages=[{"role": "user", "content": prompt}],

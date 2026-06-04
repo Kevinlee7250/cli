@@ -68,10 +68,16 @@ FAQ 섹션 (h2 "자주 묻는 질문"): 5개 질문/답변 → Google Featured S
 • 라벨 10개 (고CPC 키워드 우선)
 • meta_description: 클릭 유도 문구, 155자 이내
 
+━━━ 출처 링크 (신뢰도·SEO 강화) ━━━
+• 통계·수치를 인용할 때 실제 출처 URL을 sources 배열에 포함
+• 공신력 있는 사이트 우선 (정부기관, 학술지, 주요 언론, 공식 기관)
+• 최소 3개 이상, 최대 8개
+• 본문 HTML에 <a href="URL" target="_blank" rel="nofollow noopener">출처명</a> 형태로 인용 표시
+
 JSON 형식으로만 응답하세요. 마크다운 코드블록(```) 없이 순수 JSON만:
 {{
   "title": "...",
-  "content": "<완전한 HTML — H2 6개 + FAQ H2 포함>",
+  "content": "<완전한 HTML — H2 6개 + FAQ H2 포함, 인용 링크 포함>",
   "labels": ["태그1","태그2","태그3","태그4","태그5","태그6","태그7","태그8","태그9","태그10"],
   "meta_description": "...",
   "faq": [
@@ -80,6 +86,10 @@ JSON 형식으로만 응답하세요. 마크다운 코드블록(```) 없이 순�
     {{"q": "질문3", "a": "답변3"}},
     {{"q": "질문4", "a": "답변4"}},
     {{"q": "질문5", "a": "답변5"}}
+  ],
+  "sources": [
+    {{"title": "출처명1", "url": "https://..."}},
+    {{"title": "출처명2", "url": "https://..."}}
   ]
 }}"""
 
@@ -120,10 +130,16 @@ Conclusion (200w): Summary + strong CTA
 • Labels: 10 high-CPC related keywords
 • meta_description: click-bait, under 155 chars
 
+━━━ SOURCE LINKS (trust & SEO boost) ━━━
+• Include real source URLs in sources array when citing stats/facts
+• Prefer authoritative sites (gov, academic, major media, official orgs)
+• Min 3, max 8 sources
+• In HTML body, mark citations as <a href="URL" target="_blank" rel="nofollow noopener">Source Name</a>
+
 Respond with ONLY raw JSON (no markdown code blocks):
 {{
   "title": "...",
-  "content": "<complete HTML — 6 H2 + FAQ H2>",
+  "content": "<complete HTML — 6 H2 + FAQ H2, with citation links>",
   "labels": ["t1","t2","t3","t4","t5","t6","t7","t8","t9","t10"],
   "meta_description": "...",
   "faq": [
@@ -132,6 +148,10 @@ Respond with ONLY raw JSON (no markdown code blocks):
     {{"q": "Q3", "a": "A3"}},
     {{"q": "Q4", "a": "A4"}},
     {{"q": "Q5", "a": "A5"}}
+  ],
+  "sources": [
+    {{"title": "Source Name 1", "url": "https://..."}},
+    {{"title": "Source Name 2", "url": "https://..."}}
   ]
 }}"""
 

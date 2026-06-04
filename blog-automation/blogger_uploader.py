@@ -216,7 +216,26 @@ def _build_full_content(post_data: dict) -> str:
 </div>
 """
 
-    # ⑤ 면책조항 + 소셜 공유 유도
+    # ⑤ 출처 섹션
+    sources = post_data.get("sources", [])
+    sources_section = ""
+    if sources:
+        source_items = "".join(
+            f'<li style="margin:6px 0;">'
+            f'<a href="{s.get("url", "#")}" target="_blank" rel="nofollow noopener" '
+            f'style="color:#1a73e8;text-decoration:none;">'
+            f'{s.get("title", s.get("url", ""))}</a></li>'
+            for s in sources
+        )
+        sources_section = (
+            '<div style="margin:2.5em 0;padding:20px 24px;background:#f1f3f4;'
+            'border-radius:10px;border-left:4px solid #5f6368;">'
+            '<p style="font-weight:700;font-size:15px;margin:0 0 10px;">📚 참고 자료</p>'
+            f'<ul style="margin:0;padding-left:20px;line-height:1.9;font-size:14px;">{source_items}</ul>'
+            '</div>'
+        )
+
+    # ⑥ 면책조항 + 소셜 공유 유도
     footer = """
 <div style="margin-top:3em;padding:18px 20px;background:#fff3cd;border-radius:10px;
 border-left:4px solid #ffc107;">
@@ -235,6 +254,7 @@ border-left:4px solid #ffc107;">
           'font-family:\'Noto Sans KR\',sans-serif;line-height:1.9;color:#222;">'
         + html
         + tag_section
+        + sources_section
         + footer
         + '</div>'
     )

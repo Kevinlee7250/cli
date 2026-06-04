@@ -1,9 +1,10 @@
-"""블로그 포스트 생성 — AdSense 최적화 + 이미지 자동 삽입"""
+"""블로그 포스트 생성 — AdSense 최적화 + 이미지 자동 삽입 + 재시도 로직"""
 
 import json
 import logging
 import os
 import re
+import time
 
 import anthropic
 
@@ -60,7 +61,7 @@ FAQ 섹션 (h2 "자주 묻는 질문"): 5개 질문/답변 → Google Featured S
 • 라벨 10개 (고CPC 키워드 우선)
 • meta_description: 클릭 유도 문구, 155자 이내
 
-JSON 형식으로만 응답:
+JSON 형식으로만 응답하세요. 마크다운 코드블록(```) 없이 순수 JSON만:
 {{
   "title": "...",
   "content": "<완전한 HTML — H2 6개 + FAQ H2 포함>",
@@ -75,7 +76,6 @@ JSON 형식으로만 응답:
   ]
 }}"""
 
-    # English
     return f"""You are an AdSense revenue maximization SEO expert.
 Write posts that maximize reader dwell time and ad click-through rate.
 
@@ -113,7 +113,7 @@ Conclusion (200w): Summary + strong CTA
 • Labels: 10 high-CPC related keywords
 • meta_description: click-bait, under 155 chars
 
-Respond ONLY in this JSON format:
+Respond with ONLY raw JSON (no markdown code blocks):
 {{
   "title": "...",
   "content": "<complete HTML — 6 H2 + FAQ H2>",
@@ -129,71 +129,120 @@ Respond ONLY in this JSON format:
 }}"""
 
 
-def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
-    """Claude API로 포스트 생성 후 이미지를 자동 삽입합니다."""
-    logger.info(f"포스트 생성 중: '{keyword}'")
+def _parse_response(raw: str) -> dict | None:
+    """Claude 응답 텍스트에서 JSON을 파싱합니다."""
+    text = raw.strip()
 
+    # 코드블록 마커 제거 (```json ... ``` 또는 ``` ... ```)
+    if text.startswith("```"):
+        first_nl = text.find("\n")
+        text = text[first_nl + 1:] if first_nl != -1 else text[3:]
+        if text.rstrip().endswith("```"):
+            text = text.rstrip()[:-3].rstrip()
+
+    # 첫 { ~ 마지막 } 추출
+    start = text.find("{")
+    end = text.rfind("}")
+    if start == -1 or end == -1 or end <= start:
+        logger.error(f"JSON 구조 없음 — 응답 앞 200자: {raw[:200]}")
+        return None
+
+    json_str = text[start:end + 1]
     try:
-        message = client.messages.create(
-            model=CLAUDE_MODEL,
-            max_tokens=8192,
-            messages=[{"role": "user", "content": _build_prompt(keyword, traffic)}],
-        )
-        raw = message.content[0].text.strip()
-
-        # 코드블록 마커(```json / ```) 제거 후 첫 { ~ 마지막 } 추출
-        text = raw
-        if text.startswith("```"):
-            text = text[text.find("\n") + 1:] if "\n" in text else text[3:]
-            if text.rstrip().endswith("```"):
-                text = text.rstrip()[:-3].rstrip()
-
-        start = text.find("{")
-        end = text.rfind("}")
-        if start == -1 or end == -1 or end <= start:
-            logger.error(f"JSON 추출 실패 — 응답 앞 200자: {raw[:200]}")
-            return None
-        json_str = text[start: end + 1]
-
+        return json.loads(json_str)
+    except json.JSONDecodeError:
         try:
-            post_data = json.loads(json_str)
-        except json.JSONDecodeError:
-            # Claude 응답의 이스케이프 누락 등 경미한 JSON 오류 자동 복구
-            try:
-                from json_repair import repair_json
-                post_data = json.loads(repair_json(json_str))
-                logger.warning("JSON 자동 복구 후 파싱 성공")
-            except Exception as e2:
-                logger.error(f"JSON 복구 실패: {e2}")
-                return None
-        post_data["keyword"] = keyword
+            from json_repair import repair_json
+            result = json.loads(repair_json(json_str))
+            logger.warning("JSON 자동 복구 후 파싱 성공")
+            return result
+        except Exception as e:
+            logger.error(f"JSON 복구 실패: {e} — 앞 300자: {json_str[:300]}")
+            return None
 
-        # ── 이미지 검색 & 삽입 ────────────────────────────────────────
-        logger.info(f"관련 이미지 검색 중: '{keyword}'")
-        images = fetch_relevant_images(
-            keyword,
-            count=4,
-            naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
-            naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
-        )
-        if images:
-            post_data["content"] = inject_images_into_content(
-                post_data["content"], images, keyword
+
+def _word_count(html: str) -> int:
+    """HTML 태그 제거 후 글자 수를 반환합니다."""
+    text = re.sub(r"<[^>]+>", "", html)
+    return len(re.sub(r"\s+", "", text))
+
+
+def _content_preview(html: str, chars: int = 200) -> str:
+    """HTML 태그 제거 후 미리보기 텍스트를 반환합니다."""
+    text = re.sub(r"<[^>]+>", "", html)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text[:chars] + ("..." if len(text) > chars else "")
+
+
+def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
+    """Claude API로 포스트 생성 후 이미지를 자동 삽입합니다. 실패 시 최대 2회 재시도."""
+    logger.info(f"포스트 생성 중: '{keyword}'")
+    prompt = _build_prompt(keyword, traffic)
+
+    for attempt in range(3):
+        try:
+            message = client.messages.create(
+                model=CLAUDE_MODEL,
+                max_tokens=8192,
+                messages=[{"role": "user", "content": prompt}],
             )
-            post_data["images_inserted"] = len(images)
-            logger.info(f"이미지 {len(images)}개 본문 삽입 완료")
-        else:
-            logger.warning("이미지 없음 — 텍스트만으로 업로드 진행")
+            raw = message.content[0].text.strip()
+            post_data = _parse_response(raw)
 
-        logger.info(f"포스트 생성 완료: '{post_data.get('title', '?')}'")
-        return post_data
+            if post_data is None:
+                if attempt < 2:
+                    logger.warning(f"JSON 파싱 실패 — 재시도 {attempt + 1}/2")
+                    time.sleep(2)
+                    continue
+                return None
 
-    except anthropic.APIError as e:
-        logger.error(f"Claude API 오류: {e}")
-        return None
-    except Exception as e:
-        logger.error(f"포스트 생성 오류: {e}")
-        return None
+            post_data["keyword"] = keyword
+
+            # 글자 수 및 미리보기 추가
+            content_html = post_data.get("content", "")
+            post_data["word_count"] = _word_count(content_html)
+            post_data["content_preview"] = _content_preview(content_html)
+
+            # 이미지 검색 & 삽입
+            logger.info(f"관련 이미지 검색 중: '{keyword}'")
+            images = fetch_relevant_images(
+                keyword,
+                count=4,
+                naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
+                naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
+            )
+            if images:
+                post_data["content"] = inject_images_into_content(
+                    post_data["content"], images, keyword
+                )
+                post_data["images_inserted"] = len(images)
+                logger.info(f"이미지 {len(images)}개 본문 삽입 완료")
+            else:
+                post_data["images_inserted"] = 0
+                logger.warning("이미지 없음 — 텍스트만으로 업로드 진행")
+
+            logger.info(
+                f"포스트 생성 완료: '{post_data.get('title', '?')}' "
+                f"({post_data['word_count']}자, 이미지 {post_data['images_inserted']}개)"
+            )
+            return post_data
+
+        except anthropic.APIStatusError as e:
+            if attempt < 2 and e.status_code in (429, 529):
+                wait = 8 * (2 ** attempt)
+                logger.warning(f"API 과부하 — {wait}s 후 재시도 ({attempt + 1}/2)")
+                time.sleep(wait)
+            else:
+                logger.error(f"Claude API 오류: {e}")
+                return None
+        except anthropic.APIError as e:
+            logger.error(f"Claude API 오류: {e}")
+            return None
+        except Exception as e:
+            logger.error(f"포스트 생성 오류: {e}", exc_info=True)
+            return None
+
+    return None
 
 
 if __name__ == "__main__":
@@ -202,5 +251,7 @@ if __name__ == "__main__":
     if result:
         print(f"제목: {result['title']}")
         print(f"라벨: {result['labels']}")
-        print(f"이미지 삽입: {result.get('images_inserted', 0)}개")
+        print(f"글자 수: {result.get('word_count', 0)}자")
+        print(f"이미지: {result.get('images_inserted', 0)}개")
         print(f"FAQ: {len(result.get('faq', []))}개")
+        print(f"미리보기: {result.get('content_preview', '')[:100]}")

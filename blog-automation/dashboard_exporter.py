@@ -33,7 +33,7 @@ def _save_history(history: list[dict]) -> None:
 
 
 def _estimate_earnings(post_count: int, avg_cpc: float = 0.9) -> dict:
-    """AdSense 수익 추정 (CTR 2.5%, 페이지뷰 100/일 기준)."""
+    """AdSense 수익 추정 (CTR 2.5%, 포스트당 80 페이지뷰/일 기준)."""
     daily_views = post_count * 80
     daily_clicks = daily_views * 0.025
     daily_rev = daily_clicks * avg_cpc
@@ -49,14 +49,14 @@ def _estimate_earnings(post_count: int, avg_cpc: float = 0.9) -> dict:
 
 def _categorize(keyword: str) -> str:
     cats = {
-        "금융": ["주식", "코인", "ETF", "펀드", "재테크", "투자", "금리", "배당", "채권"],
-        "부동산": ["아파트", "분양", "청약", "전세", "월세", "부동산", "재건축"],
-        "건강": ["다이어트", "운동", "영양", "건강", "병원", "치료", "의료", "약"],
-        "기술": ["AI", "챗GPT", "코딩", "스마트폰", "앱", "IT", "자동화", "소프트웨어"],
-        "여행": ["여행", "호텔", "항공", "캠핑", "해외", "국내여행"],
-        "교육": ["영어", "자격증", "취업", "공부", "학습", "시험"],
+        "금융": ["주식", "코인", "ETF", "펀드", "재테크", "투자", "금리", "배당", "채권", "보험", "대출", "신용"],
+        "부동산": ["아파트", "분양", "청약", "전세", "월세", "부동산", "재건축", "임대"],
+        "건강": ["다이어트", "운동", "영양", "건강", "병원", "치료", "의료", "약", "혈당", "면역"],
+        "기술": ["AI", "챗GPT", "코딩", "스마트폰", "앱", "IT", "자동화", "소프트웨어", "유튜브", "블로그"],
+        "여행": ["여행", "호텔", "항공", "캠핑", "해외", "국내여행", "맛집"],
+        "교육": ["영어", "자격증", "취업", "공부", "학습", "시험", "재취업"],
         "쇼핑": ["할인", "세일", "쿠폰", "구매", "패션", "가전"],
-        "법률": ["법률", "소송", "변호사", "계약", "이혼", "상속"],
+        "법률": ["법률", "소송", "변호사", "계약", "이혼", "상속", "교통사고"],
     }
     kw_lower = keyword.lower()
     for cat, words in cats.items():
@@ -72,11 +72,6 @@ def _cpc_for_category(cat: str) -> float:
     }.get(cat, 0.9)
 
 
-def _word_count(html: str) -> int:
-    text = re.sub(r"<[^>]+>", "", html)
-    return len(re.sub(r"\s+", "", text))
-
-
 def log_run(
     keywords: list[str],
     results: list[dict],
@@ -88,12 +83,15 @@ def log_run(
 
     total_images = sum(r.get("images_inserted", 0) for r in results)
     total_posts = len(results)
+    total_words = sum(r.get("word_count", 0) for r in results)
 
-    # 평균 CPC 계산
     avg_cpc = 0.9
     if results:
         cpcs = [_cpc_for_category(_categorize(r.get("keyword", ""))) for r in results]
         avg_cpc = sum(cpcs) / len(cpcs)
+
+    # 전체 누적 포스트 수 (이번 실행 + 이전 이력)
+    total_cumulative = total_posts + sum(h.get("postsGenerated", 0) for h in history)
 
     entry = {
         "runAt": datetime.now().isoformat(),
@@ -103,24 +101,28 @@ def log_run(
         "bloggerUploaded": blogger_uploaded,
         "errors": errors,
         "imagesInserted": total_images,
+        "totalWords": total_words,
         "platforms": {
             "blogger": blogger_uploaded,
         },
-        "earnings": _estimate_earnings(total_posts + len(history) * 2, avg_cpc),
+        "earnings": _estimate_earnings(total_cumulative, avg_cpc),
         "posts": [
             {
                 "title": r.get("title", ""),
                 "keyword": r.get("keyword", ""),
                 "blogUrl": r.get("blogUrl", ""),
                 "imagesInserted": r.get("images_inserted", 0),
+                "wordCount": r.get("word_count", 0),
+                "contentPreview": r.get("content_preview", ""),
                 "faqCount": len(r.get("faq", [])),
                 "labels": r.get("labels", []),
+                "metaDescription": r.get("meta_description", ""),
             }
             for r in results
         ],
     }
     history.insert(0, entry)
-    history = history[:100]  # 최대 100개 보관
+    history = history[:100]
     _save_history(history)
     logger.info(f"실행 이력 저장 완료 (총 {len(history)}개)")
 
@@ -147,7 +149,7 @@ def export_dashboard() -> None:
                 "title": title,
                 "keyword": kw,
                 "date": run["date"],
-                "wordCount": 3000,
+                "wordCount": p.get("wordCount") or 3000,
                 "faqCount": p.get("faqCount", 0),
                 "imagesInserted": p.get("imagesInserted", 0),
                 "hasToc": True,
@@ -158,26 +160,28 @@ def export_dashboard() -> None:
                 "factCheck": None,
                 "tags": p.get("labels", [])[:7],
                 "blogUrl": p.get("blogUrl", ""),
-                "metaDescription": "",
-                "contentPreview": "",
+                "metaDescription": p.get("metaDescription", ""),
+                "contentPreview": p.get("contentPreview", ""),
                 "faq": [],
             })
     posts.sort(key=lambda x: x["date"], reverse=True)
 
     # runs.json 생성
-    runs_export = []
-    for run in history:
-        runs_export.append({
+    runs_export = [
+        {
             "runAt": run["runAt"],
             "date": run["date"],
             "keywords": run["keywords"],
             "postsGenerated": run["postsGenerated"],
             "bloggerUploaded": run.get("bloggerUploaded", 0),
             "imagesInserted": run.get("imagesInserted", 0),
+            "totalWords": run.get("totalWords", 0),
             "errors": run["errors"],
             "platforms": run.get("platforms", {}),
             "earnings": run.get("earnings", {}),
-        })
+        }
+        for run in history
+    ]
 
     # analytics.json
     total_revenue = sum(r.get("earnings", {}).get("estimatedDailyRevenue", 0) for r in history)
@@ -189,6 +193,7 @@ def export_dashboard() -> None:
         "avgCPC": last_earnings.get("avgCPC", 0.9),
         "totalCumulativeRevenue": round(total_revenue, 2),
         "runCount": len(history),
+        "totalWords": sum(r.get("totalWords", 0) for r in history),
     }
 
     # meta.json
@@ -207,7 +212,6 @@ def export_dashboard() -> None:
         "blogUrl": "https://hoguwhat1.blogspot.com/",
     }
 
-    # 파일 저장
     for name, data in [
         ("posts.json", posts),
         ("runs.json", runs_export),

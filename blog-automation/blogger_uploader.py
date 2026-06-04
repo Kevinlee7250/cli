@@ -2,6 +2,7 @@
 
 import json
 import logging
+import re
 import requests
 from datetime import datetime
 
@@ -45,7 +46,7 @@ def _get_access_token() -> str | None:
 def _ad_unit(slot_index: int) -> str:
     """반응형 AdSense 광고 유닛 HTML."""
     if not ADSENSE_CLIENT_ID or ADSENSE_CLIENT_ID == "ca-pub-XXXXXXXXXXXXXXXXX":
-        return ""  # AdSense ID 미설정 시 광고 비활성화
+        return ""
     slots = ADSENSE_SLOT_IDS
     slot_id = slots[slot_index % len(slots)] if slots else "0000000000"
     return f"""
@@ -72,15 +73,12 @@ def _inject_ads(html: str) -> str:
       슬롯 5 — FAQ H2 앞
       슬롯 6 — 본문 끝
     """
-    import re
-
-    # 슬롯 1: 첫 번째 </p> 뒤 (lambda 사용 — 교체 문자열의 백슬래시 오동작 방지)
+    # 슬롯 1: 첫 번째 </p> 뒤
     ad0 = _ad_unit(0)
     html = re.sub(r'</p>', lambda m: m.group(0) + ad0, html, count=1, flags=re.IGNORECASE)
 
     # 슬롯 2~5: H2 태그 앞 (2~5번째)
     h2_positions = [m.start() for m in re.finditer(r'<h2', html, re.IGNORECASE)]
-    # 2~5번째 H2 앞에 광고 삽입 (인덱스 1,2,3,4)
     targets = h2_positions[1:5]
     offset = 0
     for i, pos in enumerate(targets):
@@ -136,13 +134,16 @@ def _faq_schema(faq: list[dict]) -> str:
 # ──────────────────────────────────────────────────────────────────────────────
 
 def _add_h2_ids(html: str) -> str:
-    """H2 태그에 id 속성을 추가해 목차 앵커 링크가 작동하게 합니다."""
-    import re
+    """H2 태그에 id 속성을 추가해 목차 앵커 링크가 작동하게 합니다. 중복 slug 방지."""
+    used_slugs: dict[str, int] = {}
 
-    def replacer(m):
+    def replacer(m: re.Match) -> str:
         inner = m.group(1)
         clean = re.sub(r'<[^>]+>', '', inner).strip()
-        slug = re.sub(r'[^\w가-힣]', '-', clean).strip('-')[:40]
+        base_slug = re.sub(r'[^\w가-힣]', '-', clean).strip('-')[:40]
+        count = used_slugs.get(base_slug, 0)
+        used_slugs[base_slug] = count + 1
+        slug = base_slug if count == 0 else f'{base_slug}-{count}'
         return f'<h2 id="{slug}">{inner}</h2>'
 
     return re.sub(r'<h2[^>]*>(.*?)</h2>', replacer, html, flags=re.IGNORECASE | re.DOTALL)
@@ -150,15 +151,13 @@ def _add_h2_ids(html: str) -> str:
 
 def _build_toc(html: str) -> str:
     """H2 태그를 파싱해 목차 HTML을 생성합니다."""
-    import re
-    headings = re.findall(r'<h2[^>]*>(.*?)</h2>', html, re.IGNORECASE | re.DOTALL)
+    headings = re.findall(r'<h2[^>]*id="([^"]+)"[^>]*>(.*?)</h2>', html, re.IGNORECASE | re.DOTALL)
     if len(headings) < 2:
         return ""
 
     items = []
-    for h in headings:
-        clean = re.sub(r'<[^>]+>', '', h).strip()
-        slug = re.sub(r'[^\w가-힣]', '-', clean).strip('-')[:40]
+    for slug, inner in headings:
+        clean = re.sub(r'<[^>]+>', '', inner).strip()
         items.append(
             f'<li><a href="#{slug}" style="color:#4a90e2;text-decoration:none;">'
             f'{clean}</a></li>'
@@ -183,28 +182,24 @@ def _build_full_content(post_data: dict) -> str:
     """SEO 완전 최적화 HTML을 구성합니다."""
     html = post_data.get("content", "")
     faq = post_data.get("faq", [])
-    keyword = post_data.get("keyword", "")
     labels = post_data.get("labels", [])
 
-    # ① H2에 id 부여 (목차 앵커 링크 작동용)
+    # ① H2에 id 부여 (중복 slug 방지 포함)
     html = _add_h2_ids(html)
 
-    # ② 목차 생성 — 첫 번째 </p> 뒤에 삽입 (광고 유무 무관하게 안정적)
+    # ② 목차 생성 — 첫 번째 </p> 뒤에 삽입
     toc = _build_toc(html)
     if toc:
-        toc_inserted = False
-        # 첫 번째 </p> 뒤에 삽입
         idx = html.lower().find('</p>')
         if idx != -1:
             html = html[:idx + 4] + toc + html[idx + 4:]
-            toc_inserted = True
-        if not toc_inserted:
+        else:
             html = toc + html
 
     # ③ AdSense 광고 삽입
     html = _inject_ads(html)
 
-    # ③ 태그 클라우드 (내부 링크 효과)
+    # ④ 태그 클라우드 (내부 링크 효과)
     tag_links = "".join(
         f'<a href="/search/label/{label}" '
         f'style="display:inline-block;margin:4px;padding:5px 14px;'
@@ -219,29 +214,23 @@ def _build_full_content(post_data: dict) -> str:
 </div>
 """
 
-    # ④ 면책조항 + 소셜 공유 유도
-    footer = f"""
+    # ⑤ 면책조항 + 소셜 공유 유도
+    footer = """
 <div style="margin-top:3em;padding:18px 20px;background:#fff3cd;border-radius:10px;
 border-left:4px solid #ffc107;">
   <p style="font-size:13px;color:#666;margin:0;">
-    📌 이 글이 도움이 됐다면 북마크 & 공유해주세요!<br>
+    📌 이 글이 도움이 됐다면 북마크 &amp; 공유해주세요!<br>
     ⚠️ 본 콘텐츠는 AI가 최신 트렌드를 바탕으로 작성했습니다.
     투자·의료·법률 등 전문 분야는 반드시 전문가와 상담하세요.
   </p>
 </div>
 """
 
-    # ⑤ 조합
-    adsense_init = """
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-"""
     return (
         _article_schema(post_data)
         + _faq_schema(faq)
-        + f'<div class="blog-post" style="max-width:800px;margin:0 auto;'
-          f'font-family:\'Noto Sans KR\',sans-serif;line-height:1.9;color:#222;">'
+        + '<div class="blog-post" style="max-width:800px;margin:0 auto;'
+          'font-family:\'Noto Sans KR\',sans-serif;line-height:1.9;color:#222;">'
         + html
         + tag_section
         + footer
@@ -280,9 +269,8 @@ def upload_post(post_data: dict) -> dict | None:
         result = resp.json()
         logger.info(f"업로드 성공: {result.get('url', '')}")
         return result
-    else:
-        logger.error(f"업로드 실패: {resp.status_code} {resp.text[:300]}")
-        return None
+    logger.error(f"업로드 실패: {resp.status_code} {resp.text[:300]}")
+    return None
 
 
 def get_blog_info() -> dict | None:

@@ -26,6 +26,7 @@ on:
           - live    # Blogger 즉시 게시
           - draft   # 임시저장
           - test    # 업로드 없이 글만 생성 (API 테스트용)
+          - review  # 글 생성 후 pending_posts.json에 저장 (수동 검토용)
 
 permissions:
   contents: write
@@ -90,6 +91,13 @@ jobs:
             else
               python main.py --test
             fi
+          elif [ "$MODE" = "review" ]; then
+            echo "=== 검토 모드: pending_posts.json에 저장 ==="
+            if [ -n "$KEYWORD" ]; then
+              python main.py --review --keyword "$KEYWORD"
+            else
+              python main.py --review
+            fi
           else
             echo "=== 실행 모드: $MODE ==="
             if [ -n "$KEYWORD" ]; then
@@ -104,7 +112,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/data/ blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json 2>/dev/null || true
+          git add docs/data/ blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json docs/data/pending_posts.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else

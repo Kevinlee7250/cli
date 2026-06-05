@@ -273,6 +273,7 @@
     <a data-page="keywords"><span class="nav-icon">🔑</span> 키워드 분석</a>
     <a data-page="analytics"><span class="nav-icon">💰</span> 수익 분석</a>
     <a data-page="social"><span class="nav-icon">📱</span> 소셜 미디어</a>
+    <a data-page="review"><span class="nav-icon">✍️</span> 수동 검토</a>
     <a data-page="config"><span class="nav-icon">⚙️</span> 시스템 정보</a>
   </nav>
   <div class="sidebar-footer">
@@ -570,6 +571,65 @@
     <div id="social-tiktok" class="social-content"></div>
   </div>
 
+  <!-- ═══ 수동 검토 ═══ -->
+  <div class="page" id="page-review">
+    <div class="page-title">✍️ 수동 검토</div>
+    <div class="alert-box">
+      💡 <strong>review</strong> 모드로 생성된 포스트를 검토 후 직접 게시할 수 있습니다. 아래에서 Google OAuth 설정 후 각 포스트의 <strong>🚀 게시</strong> 버튼을 누르세요.
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="cards" style="margin-bottom:24px">
+      <div class="card purple"><div class="label">검토 대기</div><div class="value" id="review-pending-count">0</div><div class="sub">포스트</div></div>
+      <div class="card green"><div class="label">게시 완료</div><div class="value" id="review-published-count">0</div><div class="sub">이번 세션</div></div>
+    </div>
+
+    <!-- Google OAuth Settings -->
+    <div class="run-panel" style="margin-bottom:24px">
+      <h3>🔑 Google OAuth 설정</h3>
+      <div class="warn-box">⚠️ 아래 정보는 브라우저 localStorage에만 저장됩니다. 서버나 GitHub에 전송되지 않습니다.</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>GOOGLE_CLIENT_ID</label>
+          <input type="text" class="form-input" id="oauth-client-id" placeholder="123456789-xxx.apps.googleusercontent.com">
+        </div>
+        <div class="form-group">
+          <label>GOOGLE_CLIENT_SECRET</label>
+          <input type="password" class="form-input" id="oauth-client-secret" placeholder="GOCSPX-xxx">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>GOOGLE_REFRESH_TOKEN</label>
+          <input type="password" class="form-input" style="min-width:320px" id="oauth-refresh-token" placeholder="1//04xxx...">
+        </div>
+        <div class="form-group">
+          <label>BLOGGER_BLOG_ID</label>
+          <input type="text" class="form-input" id="oauth-blog-id" placeholder="123456789012345678">
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="run-btn" onclick="saveOAuthSettings()">💾 저장</button>
+        <button style="padding:11px 20px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:14px;cursor:pointer;font-weight:600" onclick="clearOAuthSettings()">🗑 초기화</button>
+        <button style="padding:11px 20px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:14px;cursor:pointer;font-weight:600" onclick="testOAuthToken()">🔄 토큰 테스트</button>
+      </div>
+      <div id="oauth-test-result" class="status-panel" style="margin-top:12px;display:none"></div>
+    </div>
+
+    <!-- Pending Posts -->
+    <div class="section-header"><h2>📋 검토 대기 포스트</h2><button class="csv-btn" onclick="loadPendingPosts()" style="font-size:12px;padding:7px 14px">🔄 새로고침</button></div>
+    <div id="review-posts-container">
+      <div class="empty"><div class="icon">📭</div>검토 대기 포스트가 없습니다<br><small style="font-size:12px;margin-top:6px;display:block">GitHub Actions에서 <strong>review</strong> 모드로 실행하면 여기에 포스트가 표시됩니다</small></div>
+    </div>
+
+    <!-- Used Keywords Management -->
+    <div class="section-header" style="margin-top:32px"><h2>🔑 사용된 키워드 목록</h2></div>
+    <div class="alert-box" style="margin-bottom:16px">키워드는 30일 후 자동 만료됩니다. 아래는 실행 이력에서 가져온 키워드 목록입니다.</div>
+    <div id="used-keywords-container">
+      <div class="empty"><div class="icon">🔑</div>키워드 데이터 없음</div>
+    </div>
+  </div>
+
   <!-- ═══ 시스템 정보 ═══ -->
   <div class="page" id="page-config">
     <div class="page-title">⚙️ 시스템 정보</div>
@@ -702,6 +762,7 @@ function navTo(page) {
   if (page === 'run') { checkPATStatus(); loadGHRuns() }
   if (page === 'social') renderSocial()
   if (page === 'keywords') renderKeywords()
+  if (page === 'review') { loadOAuthSettings(); loadPendingPosts(); renderUsedKeywords() }
 }
 
 // ── Dashboard ─────────────────────────────────────────────────────────────────
@@ -1500,6 +1561,186 @@ function showToast(msg, type = 'info') {
     toast.classList.remove('show')
     setTimeout(() => toast.remove(), 350)
   }, 3000)
+}
+
+// ── Review Tab ────────────────────────────────────────────────────────────────
+let pendingPosts = []
+let sessionPublished = []
+
+function saveOAuthSettings() {
+  const fields = {oauth_client_id:'oauth-client-id',oauth_client_secret:'oauth-client-secret',oauth_refresh_token:'oauth-refresh-token',oauth_blog_id:'oauth-blog-id'}
+  Object.entries(fields).forEach(([k,id]) => {
+    const v = document.getElementById(id)?.value.trim() || ''
+    if (v) localStorage.setItem(k, v)
+    else localStorage.removeItem(k)
+  })
+  showToast('OAuth 설정이 저장됐습니다', 'success')
+}
+
+function clearOAuthSettings() {
+  ['oauth_client_id','oauth_client_secret','oauth_refresh_token','oauth_blog_id'].forEach(k => localStorage.removeItem(k))
+  ;['oauth-client-id','oauth-client-secret','oauth-refresh-token','oauth-blog-id'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = ''
+  })
+  showToast('OAuth 설정이 초기화됐습니다', 'info')
+}
+
+function loadOAuthSettings() {
+  const map = {oauth_client_id:'oauth-client-id',oauth_client_secret:'oauth-client-secret',oauth_refresh_token:'oauth-refresh-token',oauth_blog_id:'oauth-blog-id'}
+  Object.entries(map).forEach(([k, id]) => {
+    const el = document.getElementById(id)
+    if (el) el.value = localStorage.getItem(k) || ''
+  })
+}
+
+async function getAccessToken() {
+  const clientId = localStorage.getItem('oauth_client_id')
+  const clientSecret = localStorage.getItem('oauth_client_secret')
+  const refreshToken = localStorage.getItem('oauth_refresh_token')
+  if (!clientId || !clientSecret || !refreshToken)
+    throw new Error('OAuth 설정이 없습니다. 위의 설정 패널에서 입력 후 저장하세요.')
+  const resp = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ client_id: clientId, client_secret: clientSecret, refresh_token: refreshToken, grant_type: 'refresh_token' })
+  })
+  const data = await resp.json()
+  if (!data.access_token) throw new Error(data.error_description || 'access_token 획득 실패')
+  return data.access_token
+}
+
+async function testOAuthToken() {
+  const resultEl = document.getElementById('oauth-test-result')
+  resultEl.style.display = 'block'
+  resultEl.className = 'status-panel running'
+  resultEl.innerHTML = '<span class="pulse">⏳ 토큰 테스트 중...</span>'
+  try {
+    const token = await getAccessToken()
+    resultEl.className = 'status-panel success'
+    resultEl.innerHTML = '✅ 토큰 정상! (access_token: ' + token.substring(0, 20) + '...)'
+    showToast('토큰이 정상입니다', 'success')
+  } catch (err) {
+    resultEl.className = 'status-panel error'
+    resultEl.innerHTML = '❌ ' + esc(err.message)
+    showToast('토큰 오류: ' + err.message, 'error')
+  }
+}
+
+async function loadPendingPosts() {
+  const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
+  pendingPosts = await fetch(base + '/pending_posts.json?t=' + Date.now()).then(r => r.json()).catch(() => [])
+  renderPendingPosts()
+  showToast('검토 목록을 새로고침했습니다', 'info')
+}
+
+function renderPendingPosts() {
+  const publishedIds = new Set(JSON.parse(localStorage.getItem('published_post_ids') || '[]'))
+  const filtered = pendingPosts.filter(p => p.status === 'pending' && !publishedIds.has(p.id))
+  document.getElementById('review-pending-count').textContent = filtered.length
+  document.getElementById('review-published-count').textContent = sessionPublished.length
+  const container = document.getElementById('review-posts-container')
+  if (!filtered.length) {
+    container.innerHTML = '<div class="empty"><div class="icon">📭</div>검토 대기 포스트가 없습니다<br><small style="font-size:12px;margin-top:6px;display:block">GitHub Actions에서 <strong>review</strong> 모드로 실행하면 여기에 포스트가 표시됩니다</small></div>'
+    return
+  }
+  container.innerHTML = filtered.map(p => {
+    const safeId = p.id.replace(/[^a-zA-Z0-9_-]/g, '_')
+    return `<div class="run-panel" id="rpost-${safeId}" style="margin-bottom:16px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:11px;color:var(--accent);font-weight:700;margin-bottom:5px">${esc(p.keyword)} · ${p.date || ''}</div>
+          <div style="font-size:15px;font-weight:700;line-height:1.4">${esc(p.title)}</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0">
+          <button class="run-btn" style="padding:9px 20px;font-size:13px" onclick="publishPost(${JSON.stringify(p.id)})">🚀 게시</button>
+          <button style="padding:9px 14px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.2);border-radius:8px;color:var(--red);font-size:13px;cursor:pointer;font-weight:600" onclick="skipPost(${JSON.stringify(p.id)})">🗑 건너뜀</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        ${p.wordCount ? `<span class="badge muted">${p.wordCount.toLocaleString()}자</span>` : ''}
+        ${(p.imagesInserted || 0) > 0 ? `<span class="img-pill">🖼 ${p.imagesInserted}개</span>` : ''}
+        ${(p.labels || []).slice(0,5).map(l => `<span class="badge purple">${esc(l)}</span>`).join('')}
+      </div>
+      ${p.metaDescription ? `<div style="font-size:12px;color:var(--muted);line-height:1.6">${esc(p.metaDescription)}</div>` : ''}
+      <div id="rstatus-${safeId}" class="status-panel" style="margin-top:10px;display:none"></div>
+    </div>`
+  }).join('')
+}
+
+function skipPost(id) {
+  const ids = JSON.parse(localStorage.getItem('published_post_ids') || '[]')
+  ids.push(id)
+  localStorage.setItem('published_post_ids', JSON.stringify(ids))
+  renderPendingPosts()
+  showToast('포스트를 건너뛰었습니다', 'info')
+}
+
+async function publishPost(id) {
+  const post = pendingPosts.find(p => p.id === id)
+  if (!post) return
+  const blogId = localStorage.getItem('oauth_blog_id')
+  if (!blogId) { showToast('BLOGGER_BLOG_ID를 설정하세요', 'error'); return }
+  const safeId = id.replace(/[^a-zA-Z0-9_-]/g, '_')
+  const statusEl = document.getElementById('rstatus-' + safeId)
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.className = 'status-panel running'; statusEl.innerHTML = '<span class="pulse">⏳ 게시 중...</span>' }
+  try {
+    const accessToken = await getAccessToken()
+    const resp = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts/`, {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: post.title, content: post.content, labels: post.labels || [] })
+    })
+    const result = await resp.json()
+    if (resp.ok && result.url) {
+      if (statusEl) { statusEl.className = 'status-panel success'; statusEl.innerHTML = `✅ 게시 성공! <a href="${result.url}" target="_blank" style="color:var(--accent2)">${result.url}</a>` }
+      const ids = JSON.parse(localStorage.getItem('published_post_ids') || '[]')
+      ids.push(id)
+      localStorage.setItem('published_post_ids', JSON.stringify(ids))
+      sessionPublished.push(id)
+      document.getElementById('review-published-count').textContent = sessionPublished.length
+      document.getElementById('review-pending-count').textContent = Math.max(0, parseInt(document.getElementById('review-pending-count').textContent) - 1)
+      showToast('포스트가 게시됐습니다! 🎉', 'success')
+    } else {
+      throw new Error(result.error?.message || '게시 실패 (HTTP ' + resp.status + ')')
+    }
+  } catch (err) {
+    if (statusEl) { statusEl.className = 'status-panel error'; statusEl.innerHTML = '❌ ' + esc(err.message) }
+    showToast('게시 실패: ' + err.message, 'error')
+  }
+}
+
+function renderUsedKeywords() {
+  const runs = DATA.runs || []
+  const kwMap = {}
+  runs.forEach(r => {
+    const d = (r.runAt || r.date || '').slice(0, 10)
+    ;(r.keywords || []).forEach(kw => {
+      if (!kw) return
+      if (!kwMap[kw]) kwMap[kw] = { keyword: kw, lastUsed: d, count: 0 }
+      else if (d > kwMap[kw].lastUsed) kwMap[kw].lastUsed = d
+      kwMap[kw].count++
+    })
+  })
+  const arr = Object.values(kwMap).sort((a, b) => b.lastUsed.localeCompare(a.lastUsed))
+  const container = document.getElementById('used-keywords-container')
+  if (!arr.length) {
+    container.innerHTML = '<div class="empty"><div class="icon">🔑</div>키워드 데이터 없음</div>'
+    return
+  }
+  const cutoffDate = new Date(); cutoffDate.setDate(cutoffDate.getDate() - 30)
+  container.innerHTML = `<div class="table-wrap"><table>
+    <thead><tr><th>키워드</th><th>사용 횟수</th><th>마지막 사용</th><th>상태</th></tr></thead>
+    <tbody>${arr.map(k => {
+      const lastDate = new Date(k.lastUsed || '2000-01-01')
+      const expired = lastDate < cutoffDate
+      return `<tr>
+        <td><strong>${esc(k.keyword)}</strong></td>
+        <td><span class="badge purple">${k.count}회</span></td>
+        <td style="color:var(--muted)">${k.lastUsed || '-'}</td>
+        <td>${expired ? '<span class="badge green">만료됨 (재사용 가능)</span>' : '<span class="badge yellow">사용 중 (30일 제한)</span>'}</td>
+      </tr>`
+    }).join('')}</tbody>
+  </table></div>`
 }
 
 // ── Keyboard Shortcuts ────────────────────────────────────────────────────────

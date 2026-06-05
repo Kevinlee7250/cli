@@ -51,7 +51,7 @@ from config import (
 from content_generator import generate_post
 from blogger_uploader import upload_post
 from keyword_collector import get_trending_keywords, _migrate_used_keywords
-from dashboard_exporter import log_run, export_dashboard
+from dashboard_exporter import log_run, export_dashboard, save_pending_posts
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -84,7 +84,7 @@ def _check_config() -> bool:
 # 단일 실행
 # ──────────────────────────────────────────────────────────────────────────────
 
-def run_once(keywords: list[str] | None = None, dry_run: bool = False) -> None:
+def run_once(keywords: list[str] | None = None, dry_run: bool = False, review: bool = False) -> None:
     """키워드를 수집해 포스트를 생성하고 Blogger에 업로드합니다."""
     # 구버전 used_keywords.json 포맷 자동 마이그레이션
     _migrate_used_keywords()
@@ -124,8 +124,9 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False) -> None:
         logger.info(f"  제목: {title}")
         logger.info(f"  이미지: {images}개 삽입")
 
-        if dry_run:
-            logger.info("  [테스트 모드] 업로드 건너뜀")
+        if dry_run or review:
+            mode_label = "검토 모드" if review else "테스트 모드"
+            logger.info(f"  [{mode_label}] 업로드 건너뜀")
             completed_posts.append(post_data)
             success_count += 1
             continue
@@ -152,10 +153,13 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False) -> None:
 
     # 대시보드 데이터 업데이트
     try:
+        if review and completed_posts:
+            save_pending_posts(completed_posts)
+            logger.info("검토 대기 포스트 저장 완료")
         log_run(
             keywords=keywords,
             results=completed_posts,
-            blogger_uploaded=success_count if not dry_run else 0,
+            blogger_uploaded=success_count if not (dry_run or review) else 0,
             errors=fail_count,
         )
         export_dashboard()
@@ -204,25 +208,29 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="블로그 자동화 시스템")
     parser.add_argument("--once", action="store_true", help="즉시 1회 실행")
     parser.add_argument("--test", action="store_true", help="글 생성만 (업로드 없음)")
+    parser.add_argument("--review", action="store_true", help="검토 모드 — 글 생성 후 pending_posts.json에 저장 (업로드 없음)")
     parser.add_argument("--keyword", type=str, help="특정 키워드로 실행 (쉼표로 복수 지정)")
     args = parser.parse_args()
 
-    dry_run = args.test
     keywords = None
     if args.keyword:
         keywords = [k.strip() for k in args.keyword.split(",") if k.strip()]
 
     if args.test:
         logger.info("테스트 모드 — 업로드 없이 글만 생성합니다")
-        # 테스트 모드는 config 오류가 있어도 글 생성까지는 확인 가능
         run_once(keywords=keywords, dry_run=True)
+        return
+
+    if args.review:
+        logger.info("검토 모드 — pending_posts.json에 저장합니다")
+        run_once(keywords=keywords, review=True)
         return
 
     if not _check_config():
         sys.exit(1)
 
     if args.once or keywords:
-        run_once(keywords=keywords, dry_run=dry_run)
+        run_once(keywords=keywords)
     else:
         run_scheduled()
 

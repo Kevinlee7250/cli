@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 HISTORY_FILE = os.path.join(os.path.dirname(__file__), "logs", "run_history.json")
 DOCS_DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "docs", "data")
+PENDING_FILE = os.path.join(os.path.dirname(__file__), "..", "docs", "data", "pending_posts.json")
 
 
 def _load_history() -> list[dict]:
@@ -229,3 +230,40 @@ def export_dashboard() -> None:
 
     logger.info(f"대시보드 데이터 내보내기 완료 → {DOCS_DATA_DIR}")
     logger.info(f"  포스트: {len(posts)}개 / 실행 이력: {len(runs_export)}개")
+
+
+def save_pending_posts(results: list[dict]) -> None:
+    """생성된 포스트를 검토 대기 목록으로 저장합니다 (Blogger 업로드 없이)."""
+    pending: list[dict] = []
+    if os.path.exists(PENDING_FILE):
+        try:
+            with open(PENDING_FILE, encoding="utf-8") as f:
+                pending = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            pending = []
+
+    now = datetime.now()
+    for r in results:
+        safe_kw = re.sub(r"[^\w가-힣]", "_", r.get("keyword", ""))[:20]
+        pending.append({
+            "id": now.strftime("%Y%m%d%H%M%S") + "_" + safe_kw,
+            "savedAt": now.isoformat(),
+            "date": now.strftime("%Y-%m-%d"),
+            "keyword": r.get("keyword", ""),
+            "title": r.get("title", ""),
+            "content": r.get("content", ""),
+            "labels": r.get("labels", []),
+            "wordCount": r.get("word_count", 0),
+            "imagesInserted": r.get("images_inserted", 0),
+            "faq": r.get("faq", []),
+            "metaDescription": r.get("meta_description", ""),
+            "status": "pending",
+        })
+
+    try:
+        os.makedirs(os.path.dirname(PENDING_FILE), exist_ok=True)
+        with open(PENDING_FILE, "w", encoding="utf-8") as f:
+            json.dump(pending, f, ensure_ascii=False, indent=2)
+        logger.info(f"검토 대기 포스트 저장 완료: {len(results)}개 추가 (총 {len(pending)}개)")
+    except OSError as e:
+        logger.error(f"검토 대기 파일 저장 실패: {e}")

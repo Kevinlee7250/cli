@@ -197,15 +197,43 @@ def _parse_response(raw: str) -> dict | None:
 
 
 def _extract_section_queries(html: str, keyword: str) -> list[str]:
-    """H2 섹션 제목을 파싱해 이미지 검색 쿼리 목록을 반환합니다."""
-    headings = re.findall(r'<h2[^>]*>(.*?)</h2>', html, re.IGNORECASE | re.DOTALL)
+    """H2 섹션 제목 + 본문 핵심어를 결합해 이미지 검색 쿼리 목록을 반환합니다."""
     queries = [keyword]  # 첫 이미지: 도입부 → 메인 키워드
-    for heading in headings[:6]:  # 최대 6개 섹션 처리
-        clean = re.sub(r'<[^>]+>', '', heading).strip()
-        clean = re.sub(r'[^\w\s가-힣a-zA-Z0-9]', ' ', clean)
-        clean = re.sub(r'\s+', ' ', clean).strip()[:50]
-        if clean and len(clean) > 2:
-            queries.append(f"{keyword} {clean}".strip())
+
+    # 키워드에 포함된 단어 집합 (중복 제거용)
+    kw_words = set(re.findall(r'[가-힣]{2,}|[A-Za-z]{3,}', keyword.lower()))
+
+    # H2 기준으로 섹션 분리
+    sections = re.split(r'(?=<h2[\s>])', html, flags=re.IGNORECASE)
+
+    for section in sections[1:7]:  # 최대 6개 섹션
+        h2_m = re.match(r'<h2[^>]*>(.*?)</h2>', section, re.IGNORECASE | re.DOTALL)
+        if not h2_m:
+            continue
+
+        # 1) 제목 정제
+        heading = re.sub(r'<[^>]+>', '', h2_m.group(1)).strip()
+        heading = re.sub(r'[^\w\s가-힣]', ' ', heading)
+        heading = re.sub(r'\s+', ' ', heading).strip()[:30]
+        if not heading or len(heading) < 2:
+            continue
+
+        # 2) 섹션 본문 첫 단락에서 핵심 명사 추출
+        body = section[h2_m.end():]
+        p_m = re.search(r'<p[^>]*>(.*?)</p>', body, re.IGNORECASE | re.DOTALL)
+        extra_terms = ""
+        if p_m:
+            p_text = re.sub(r'<[^>]+>', '', p_m.group(1))
+            # 한국어 명사(2~6자) 또는 영어 단어(3~12자) 추출, 키워드 중복 제외
+            nouns = re.findall(r'[가-힣]{2,6}|[A-Za-z]{3,12}', p_text)
+            filtered = [w for w in nouns if w.lower() not in kw_words][:2]
+            extra_terms = " ".join(filtered)
+
+        query = f"{keyword} {heading}".strip()
+        if extra_terms:
+            query = f"{query} {extra_terms}".strip()
+        queries.append(query[:60])
+
     return queries[:4]
 
 

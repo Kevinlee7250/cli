@@ -196,6 +196,8 @@ def fetch_images_for_queries(
         img = _fetch_one_image(query, naver_client_id, naver_client_secret)
         if img:
             img["search_query"] = query
+            # alt 텍스트용: 쿼리 앞 40자 이내로 자연스럽게 줄임
+            img["alt_text"] = query[:40].rsplit(" ", 1)[0] if len(query) > 40 else query
             images.append(img)
             logger.info(f"이미지 수집 성공: '{query}'")
         else:
@@ -239,13 +241,15 @@ def inject_images_into_content(content: str, images: list[dict], keyword: str) -
 
     img_iter = iter(enumerate(images))
 
+    def _alt(img: dict, fallback: str) -> str:
+        return img.get("alt_text") or img.get("search_query", fallback)
+
     # ① 첫 번째 이미지: 첫 <p>...</p> 바로 다음
     first_p = re.search(r'(</p>)', content, re.IGNORECASE)
     if first_p:
         try:
             idx, img = next(img_iter)
-            alt = img.get("search_query", keyword)
-            img_html = _make_img_html(img, alt, img.get("title", ""))
+            img_html = _make_img_html(img, _alt(img, keyword), img.get("title", ""))
             content = content[:first_p.end()] + img_html + content[first_p.end():]
         except StopIteration:
             return content
@@ -258,10 +262,9 @@ def inject_images_into_content(content: str, images: list[dict], keyword: str) -
     for pos in insert_positions:
         try:
             idx, img = next(img_iter)
-            alt = img.get("search_query", f"{keyword} 관련 이미지 {idx + 1}")
             img_html = _make_img_html(
                 img,
-                alt,
+                _alt(img, f"{keyword} 관련 이미지 {idx + 1}"),
                 img.get("title", ""),
             )
             actual_pos = pos + offset

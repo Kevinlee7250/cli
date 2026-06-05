@@ -66,17 +66,20 @@ jobs:
           POST_IDS="${{ inputs.post_ids }}"
           PUBLISH_ALL="${{ inputs.publish_all }}"
 
-          ARGS=""
-          [ -n "$POST_ID" ]   && ARGS="$ARGS --id \"$POST_ID\""
-          [ -n "$POST_IDS" ]  && ARGS="$ARGS --ids \"$POST_IDS\""
-          [ "$PUBLISH_ALL" = "true" ] && ARGS="$ARGS --all-pending"
-
-          if [ -z "$ARGS" ]; then
+          if [ -z "$POST_ID" ] && [ -z "$POST_IDS" ] && [ "$PUBLISH_ALL" != "true" ]; then
             echo "❌ 게시할 포스트가 지정되지 않았습니다 (post_id, post_ids, 또는 publish_all=true 필요)"
             exit 1
           fi
 
-          eval python publish_pending.py $ARGS
+          if [ "$PUBLISH_ALL" = "true" ]; then
+            python publish_pending.py --all-pending
+          elif [ -n "$POST_IDS" ] && [ -n "$POST_ID" ]; then
+            python publish_pending.py --id "$POST_ID" --ids "$POST_IDS"
+          elif [ -n "$POST_IDS" ]; then
+            python publish_pending.py --ids "$POST_IDS"
+          else
+            python publish_pending.py --id "$POST_ID"
+          fi
 
       - name: pending_posts.json 업데이트 커밋
         if: always()

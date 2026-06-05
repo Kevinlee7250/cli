@@ -377,15 +377,15 @@ def get_trending_keywords(
         logger.info(f"유사 주제 제외 {len(rejected_similar)}개: {rejected_similar[:5]}")
 
     # 그래도 부족하면 유사도 기준을 낮춰서 재시도
+    result_set = set(result)
     if len(result) < count:
         logger.warning(f"선정 키워드 부족 ({len(result)}/{count}) — 유사도 기준 완화하여 재시도")
         for kw in candidates:
             kw = kw.strip()
-            if not kw or kw in {r for r in result}:
-                continue
-            if kw in active_used_set:
+            if not kw or kw in result_set or kw in active_used_set:
                 continue
             result.append(kw)
+            result_set.add(kw)
             if len(result) >= count:
                 break
 
@@ -394,9 +394,10 @@ def get_trending_keywords(
         logger.warning(f"선정 키워드 여전히 부족 ({len(result)}/{count}) — 이전 사용 키워드 일부 허용")
         for kw in candidates:
             kw = kw.strip()
-            if not kw or kw in {r for r in result}:
+            if not kw or kw in result_set:
                 continue
             result.append(kw)
+            result_set.add(kw)
             if len(result) >= count:
                 break
 

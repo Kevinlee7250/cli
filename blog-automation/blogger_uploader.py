@@ -85,9 +85,16 @@ def _inject_ads(html: str) -> str:
       슬롯 5 — FAQ H2 앞
       슬롯 6 — 본문 끝
     """
-    # 슬롯 1: 첫 번째 </p> 뒤
+    # 슬롯 1: 목차 div 이후 첫 번째 </p> 뒤 (목차 내부 삽입 방지)
     ad0 = _ad_unit(0)
-    html = re.sub(r'</p>', lambda m: m.group(0) + ad0, html, count=1, flags=re.IGNORECASE)
+    toc_end = html.lower().find('</div>', html.lower().find('📋 목차'))
+    search_start = toc_end + 6 if toc_end != -1 else 0
+    p_match = re.search(r'</p>', html[search_start:], re.IGNORECASE)
+    if p_match:
+        insert_at = search_start + p_match.end()
+        html = html[:insert_at] + ad0 + html[insert_at:]
+    else:
+        html = re.sub(r'</p>', lambda m: m.group(0) + ad0, html, count=1, flags=re.IGNORECASE)
 
     # 슬롯 2~5: H2 태그 앞 (2~5번째)
     h2_positions = [m.start() for m in re.finditer(r'<h2', html, re.IGNORECASE)]

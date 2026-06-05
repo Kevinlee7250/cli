@@ -42,6 +42,7 @@ def load_pending() -> list[dict]:
 
 def save_pending(pending: list[dict]) -> None:
     try:
+        os.makedirs(os.path.dirname(PENDING_FILE), exist_ok=True)
         with open(PENDING_FILE, "w", encoding="utf-8") as f:
             json.dump(pending, f, ensure_ascii=False, indent=2)
     except OSError as e:
@@ -93,6 +94,9 @@ def main() -> None:
             "content": post["content"],
             "labels": post.get("labels", []),
             "keyword": post.get("keyword", ""),
+            "faq": post.get("faq", []),
+            "meta_description": post.get("metaDescription", ""),
+            "sources": post.get("sources", []),
         })
 
         if result:

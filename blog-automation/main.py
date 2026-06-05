@@ -58,24 +58,26 @@ from dashboard_exporter import log_run, export_dashboard, save_pending_posts
 # 사전 점검
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _check_config() -> bool:
-    """필수 환경 변수가 모두 설정됐는지 확인합니다."""
+def _check_config(skip_blogger: bool = False) -> bool:
+    """필수 환경 변수가 모두 설정됐는지 확인합니다.
+    skip_blogger=True 이면 Blogger OAuth 키 검사를 생략합니다 (test/review 모드).
+    """
     errors = []
     if not ANTHROPIC_API_KEY.strip() or ANTHROPIC_API_KEY.startswith("sk-ant-xxx"):
-        errors.append("ANTHROPIC_API_KEY 미설정")
-    if not BLOGGER_CLIENT_ID.strip() or BLOGGER_CLIENT_ID.startswith("your_"):
-        errors.append("GOOGLE_CLIENT_ID(Blogger OAuth) 미설정")
-    if not BLOGGER_BLOG_ID.strip() or BLOGGER_BLOG_ID.startswith("your_"):
-        errors.append("BLOGGER_BLOG_ID 미설정")
-    if not BLOGGER_REFRESH_TOKEN.strip() or BLOGGER_REFRESH_TOKEN.startswith("your_"):
-        errors.append("GOOGLE_REFRESH_TOKEN 미설정")
-    if not BLOGGER_CLIENT_SECRET.strip() or BLOGGER_CLIENT_SECRET.startswith("your_"):
-        errors.append("GOOGLE_CLIENT_SECRET 미설정")
+        errors.append("ANTHROPIC_API_KEY")
+    if not skip_blogger:
+        if not BLOGGER_CLIENT_ID.strip() or BLOGGER_CLIENT_ID.startswith("your_"):
+            errors.append("GOOGLE_CLIENT_ID")
+        if not BLOGGER_CLIENT_SECRET.strip() or BLOGGER_CLIENT_SECRET.startswith("your_"):
+            errors.append("GOOGLE_CLIENT_SECRET")
+        if not BLOGGER_BLOG_ID.strip() or BLOGGER_BLOG_ID.startswith("your_"):
+            errors.append("BLOGGER_BLOG_ID")
+        if not BLOGGER_REFRESH_TOKEN.strip() or BLOGGER_REFRESH_TOKEN.startswith("your_"):
+            errors.append("GOOGLE_REFRESH_TOKEN")
 
     if errors:
         for e in errors:
-            logger.error(f"⚠️  설정 누락: {e}")
-        logger.error(".env 파일을 확인하세요 (참고: .env.example)")
+            logger.error(f"⚠️  설정 누락: {e} (.env 또는 GitHub Secrets 확인)")
         return False
     return True
 
@@ -215,6 +217,9 @@ def main() -> None:
     keywords = None
     if args.keyword:
         keywords = [k.strip() for k in args.keyword.split(",") if k.strip()]
+
+    if not _check_config(skip_blogger=(args.test or args.review)):
+        sys.exit(1)
 
     if args.test:
         logger.info("테스트 모드 — 업로드 없이 글만 생성합니다")

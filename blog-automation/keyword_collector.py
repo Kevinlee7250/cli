@@ -35,30 +35,56 @@ _REUSE_AFTER_DAYS = 30
 # 유사도 판단 단어 겹침 임계값 (0~1)
 _SIMILARITY_THRESHOLD = 0.55
 
-# 폴백 키워드 — 매번 다른 키워드가 선택되도록 충분히 많이 유지
+# 폴백 키워드 — 2026년 6월 기준 트렌드 반영, 매번 다른 키워드가 선택되도록 충분히 유지
 _FALLBACK_KEYWORDS_KR = [
-    "재테크 방법", "주식 투자 초보", "부동산 투자 전략", "다이어트 방법", "건강 관리 팁",
-    "부업 아이디어", "자기계발 방법", "여행 추천지", "최신 IT 기기 추천",
-    "ETF 투자 방법", "청약 당첨 전략", "코인 투자 입문", "다이어트 식단 계획", "운동 루틴",
-    "자격증 추천", "영어 공부법", "재취업 준비", "노후 준비 방법", "보험 비교 가이드",
-    "아파트 분양 정보", "전세 월세 비교", "대출 금리 비교", "신용카드 혜택 분석", "절세 방법",
-    "챗GPT 활용법", "AI 투자 도구", "스마트폰 추천", "유튜브 수익화", "블로그 수익화",
-    "법률 상식 정리", "이혼 절차 안내", "상속세 계산법", "교통사고 처리 방법", "소비자 권리",
-    "건강검진 추천", "영양제 효능 비교", "혈당 관리법", "면역력 높이는 법", "수면의 질 높이기",
-    "주식 배당금 투자", "해외 직구 방법", "캠핑 준비물 체크리스트", "반려동물 건강관리",
-    "중고차 구매 가이드", "전기차 장단점", "태양광 발전 투자", "프리랜서 세금 신고",
-    "퇴직금 활용 방법", "연금보험 비교", "해외여행 준비", "국내 여행지 추천",
-    "온라인 쇼핑 꿀팁", "중고거래 주의사항", "인테리어 셀프 팁", "가전제품 절전 방법",
+    # 금융·투자 (2026년 트렌드)
+    "2026년 ETF 투자 전략", "미국 주식 투자 방법", "금리 인하 수혜주 추천",
+    "배당주 포트폴리오 구성법", "코스피 하반기 전망", "달러 환율 재테크",
+    "ISA 계좌 절세 방법", "퇴직연금 DC형 운용법", "코인 비트코인 2026 전망",
+    "개인연금 세액공제 방법",
+    # 부동산
+    "2026년 아파트 청약 전략", "전세 월세 전환 시점", "부동산 PF 위기 대응",
+    "재건축 재개발 투자", "상가 임대수익률 분석", "역세권 오피스텔 투자",
+    # AI·기술
+    "AI 업무 자동화 방법", "챗GPT o3 활용법", "클로드 AI 사용법",
+    "AI 이미지 생성 수익화", "유튜브 AI 편집 자동화", "노코드 앱 개발 입문",
+    "AI 주식 투자 도구", "딥러닝 자격증 취득법",
+    # 건강·의료
+    "2026년 건강검진 항목 정리", "다이어트 GLP-1 주사 효과", "혈당 스파이크 예방법",
+    "면역력 높이는 식단", "수면 질환 자가진단", "갱년기 증상 관리법",
+    "실손보험 청구 방법", "암보험 비교 가이드",
+    # 세금·법률
+    "2026년 종합소득세 신고 방법", "상속세 절세 전략", "증여세 비과세 한도",
+    "프리랜서 종합소득세 신고", "교통사고 합의금 산정", "이혼 재산분할 방법",
+    # 부업·수익화
+    "블로그 애드센스 수익화 2026", "쿠팡파트너스 부업", "스마트스토어 창업",
+    "전자책 출판 수익화", "온라인 강의 만들기", "유튜브 쇼츠 수익화",
+    # 여행·라이프
+    "일본 여행 엔화 환율 절약법", "동남아 한 달 살기 비용", "유럽 여행 항공권 저렴하게",
+    "국내 캠핑 명소 추천", "전기차 충전 요금 비교", "중고차 시세 확인법",
+    # 교육·자기계발
+    "2026년 인기 자격증 추천", "영어 회화 독학 방법", "공무원 시험 준비",
+    "파이썬 코딩 독학", "재취업 이력서 작성법", "MBTI 직업 추천",
 ]
 
 _FALLBACK_KEYWORDS_EN = [
-    "passive income ideas", "investing for beginners", "weight loss tips", "remote work productivity",
-    "best travel destinations", "healthy meal prep", "personal finance tips", "side hustle ideas",
-    "tech gadgets review", "home workout routines", "credit card rewards", "tax saving strategies",
-    "real estate investing", "crypto for beginners", "AI tools productivity", "freelancing tips",
-    "retirement planning", "dividend investing", "budget travel hacks", "online courses worth it",
-    "stock market basics", "emergency fund tips", "debt payoff strategies", "home buying guide",
-    "car insurance comparison", "health insurance tips", "social media marketing", "dropshipping guide",
+    # Finance & Investing (2026)
+    "AI stock trading strategies 2026", "dividend investing beginners", "index fund vs ETF 2026",
+    "interest rate impact on stocks", "real estate market outlook 2026", "crypto regulation update",
+    "passive income side hustles", "tax optimization strategies 2026", "emergency fund building",
+    # AI & Tech
+    "AI tools for productivity 2026", "Claude AI vs ChatGPT comparison", "best AI image generators",
+    "no-code app development", "AI automation side income", "YouTube AI editing tools",
+    "prompt engineering guide", "AI freelancing opportunities",
+    # Health
+    "GLP-1 weight loss guide", "blood sugar management tips", "sleep optimization methods",
+    "mental health apps review", "anti-aging supplements 2026", "gut health diet plan",
+    # Career & Money
+    "remote work best practices", "freelancer tax guide 2026", "LinkedIn profile optimization",
+    "online course creation guide", "dropshipping 2026 guide", "Etsy seller tips",
+    # Travel & Lifestyle
+    "budget travel hacks 2026", "best travel credit cards", "electric vehicle buying guide",
+    "home energy saving tips", "minimalist lifestyle benefits", "subscription box reviews",
 ]
 
 

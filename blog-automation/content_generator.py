@@ -24,15 +24,18 @@ def _get_client() -> anthropic.Anthropic:
 
 def _build_prompt(keyword: str, traffic: str) -> str:
     from datetime import datetime
-    y = datetime.now().year
-    m = datetime.now().month
+    now = datetime.now()
+    y = now.year
+    m = now.month
+    date_str = now.strftime("%Y년 %m월 %d일")
 
     if BLOG_LANGUAGE == "ko":
         return f"""당신은 AdSense 수익 극대화 전문 SEO 블로거입니다.
 독자 체류 시간을 최대화하고 광고 클릭률(CTR)을 높이는 포스트를 작성하세요.
 
+【현재 시점】 {date_str} — 이 날짜 기준의 최신 정보·트렌드·통계를 반영하여 작성하세요.
 키워드: {keyword}
-작성 기준: {y}년 {m}월 | 예상 트래픽: {traffic}
+예상 트래픽: {traffic}
 
 ━━━ 제목 규칙 ━━━
 • 숫자 필수 ("5가지", "87%", "TOP 7", "3배 효과")
@@ -93,10 +96,12 @@ JSON 형식으로만 응답하세요. 마크다운 코드블록(```) 없이 순�
   ]
 }}"""
 
+    date_str_en = now.strftime("%B %d, %Y")
     return f"""You are an AdSense revenue maximization SEO expert.
 Write posts that maximize reader dwell time and ad click-through rate.
 
-Keyword: {keyword} | Reference: {m}/{y} | Traffic: {traffic}
+【Current Date】 {date_str_en} — use this date as reference for all current trends, stats, and information.
+Keyword: {keyword} | Traffic: {traffic}
 
 ━━━ TITLE ━━━
 • Numbers required ("7 Ways", "93%", "TOP 5", "3x faster")
@@ -277,9 +282,21 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
 
     for attempt in range(3):
         try:
+            from datetime import datetime as _dt
+            _now = _dt.now()
+            _sys = (
+                f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
+                "이 날짜를 기준으로 최신 정보를 사용하세요. "
+                "지식 학습 시점 이후의 사건은 '최신 동향에 따르면' 등의 표현으로 처리하세요."
+                if BLOG_LANGUAGE == "ko" else
+                f"Current date: {_now.strftime('%B %d, %Y')}. "
+                "Use this date as your reference. "
+                "For events after your knowledge cutoff, use phrasing like 'according to recent trends'."
+            )
             message = _get_client().messages.create(
                 model=CLAUDE_MODEL,
                 max_tokens=16000,
+                system=_sys,
                 messages=[{"role": "user", "content": prompt}],
             )
             if not message.content or not hasattr(message.content[0], "text"):

@@ -1,0 +1,100 @@
+name: 수동 포스트 게시
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_id:
+        description: '게시할 포스트 ID (pending_posts.json 내 id 값)'
+        required: false
+        default: ''
+      post_ids:
+        description: '여러 포스트 ID (쉼표 구분)'
+        required: false
+        default: ''
+      publish_all:
+        description: '모든 pending 포스트 일괄 게시'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
+          ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"
+          POST_STATUS="live"
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: 포스트 게시
+        working-directory: blog-automation
+        run: |
+          POST_ID="${{ inputs.post_id }}"
+          POST_IDS="${{ inputs.post_ids }}"
+          PUBLISH_ALL="${{ inputs.publish_all }}"
+
+          ARGS=""
+          [ -n "$POST_ID" ]   && ARGS="$ARGS --id \"$POST_ID\""
+          [ -n "$POST_IDS" ]  && ARGS="$ARGS --ids \"$POST_IDS\""
+          [ "$PUBLISH_ALL" = "true" ] && ARGS="$ARGS --all-pending"
+
+          if [ -z "$ARGS" ]; then
+            echo "❌ 게시할 포스트가 지정되지 않았습니다 (post_id, post_ids, 또는 publish_all=true 필요)"
+            exit 1
+          fi
+
+          eval python publish_pending.py $ARGS
+
+      - name: pending_posts.json 업데이트 커밋
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data/pending_posts.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "✅ 수동 게시 완료 (#${{ github.run_number }})"
+            git push origin claude/blog-automation-system-KAbtE
+          fi
+
+      - name: 로그 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: publish-logs-${{ github.run_number }}
+          path: blog-automation/logs/
+          retention-days: 7

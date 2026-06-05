@@ -623,9 +623,27 @@
       </div>
     </div>
 
-    <!-- Google OAuth Settings -->
+    <!-- Publish Mode Toggle -->
     <div class="run-panel" style="margin-bottom:24px">
-      <h3>🔑 Google OAuth 설정</h3>
+      <h3>📡 게시 방식 선택</h3>
+      <div style="display:flex;gap:0;margin-bottom:16px;border:1px solid var(--border);border-radius:8px;overflow:hidden">
+        <button id="mode-actions-btn" onclick="setPublishMode('actions')"
+          style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s">
+          🔒 서버 게시 (GitHub Actions)<br><span style="font-size:11px;font-weight:400;opacity:.85">기존 GitHub Secrets 사용 · OAuth 입력 불필요</span>
+        </button>
+        <button id="mode-direct-btn" onclick="setPublishMode('direct')"
+          style="flex:1;padding:12px;background:var(--bg3);color:var(--muted);border:none;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s">
+          🌐 브라우저 직접 게시<br><span style="font-size:11px;font-weight:400">OAuth 자격증명 별도 입력 필요</span>
+        </button>
+      </div>
+      <div id="publish-mode-desc" style="font-size:13px;color:var(--muted);line-height:1.7">
+        🔒 <strong>서버 게시</strong>: PAT로 GitHub Actions 워크플로우를 트리거합니다. 이미 등록된 GitHub Secrets(GOOGLE_REFRESH_TOKEN 등)을 그대로 사용하므로 별도 OAuth 설정이 필요 없습니다.
+      </div>
+    </div>
+
+    <!-- Direct Publish OAuth Settings (숨김 기본) -->
+    <div id="oauth-settings-panel" style="display:none;margin-bottom:24px" class="run-panel">
+      <h3>🔑 직접 게시용 Google OAuth 설정</h3>
       <div class="warn-box">⚠️ 아래 정보는 브라우저 localStorage에만 저장됩니다. 서버나 GitHub에 전송되지 않습니다.</div>
       <div class="form-row">
         <div class="form-group">
@@ -803,6 +821,7 @@ function navTo(page) {
   if (page === 'social') renderSocial()
   if (page === 'keywords') renderKeywords()
   if (page === 'review') {
+    setPublishMode(publishMode)
     loadOAuthSettings()
     loadPendingPosts()
     renderUsedKeywords()
@@ -1616,6 +1635,27 @@ function showToast(msg, type = 'info') {
 // ── Review Tab ────────────────────────────────────────────────────────────────
 let pendingPosts = []
 let sessionPublished = []
+let publishMode = localStorage.getItem('publish_mode') || 'actions'  // 'actions' | 'direct'
+
+function setPublishMode(mode) {
+  publishMode = mode
+  localStorage.setItem('publish_mode', mode)
+  const actBtn = document.getElementById('mode-actions-btn')
+  const dirBtn = document.getElementById('mode-direct-btn')
+  const oauthPanel = document.getElementById('oauth-settings-panel')
+  const desc = document.getElementById('publish-mode-desc')
+  if (mode === 'actions') {
+    if (actBtn) { actBtn.style.background = 'var(--accent)'; actBtn.style.color = '#fff' }
+    if (dirBtn) { dirBtn.style.background = 'var(--bg3)'; dirBtn.style.color = 'var(--muted)' }
+    if (oauthPanel) oauthPanel.style.display = 'none'
+    if (desc) desc.innerHTML = '🔒 <strong>서버 게시</strong>: PAT로 GitHub Actions 워크플로우를 트리거합니다. 이미 등록된 GitHub Secrets(GOOGLE_REFRESH_TOKEN 등)을 그대로 사용하므로 별도 OAuth 설정이 필요 없습니다.'
+  } else {
+    if (actBtn) { actBtn.style.background = 'var(--bg3)'; actBtn.style.color = 'var(--muted)' }
+    if (dirBtn) { dirBtn.style.background = 'var(--accent)'; dirBtn.style.color = '#fff' }
+    if (oauthPanel) oauthPanel.style.display = 'block'
+    if (desc) desc.innerHTML = '🌐 <strong>브라우저 직접 게시</strong>: 브라우저에서 Blogger API를 직접 호출합니다. 아래 OAuth 자격증명 설정이 필요합니다.'
+  }
+}
 
 function updatePendingBadge() {
   const publishedIds = new Set(JSON.parse(localStorage.getItem('published_post_ids') || '[]'))
@@ -1762,7 +1802,7 @@ function renderPendingPosts() {
           <div style="font-size:15px;font-weight:700;line-height:1.4">${esc(p.title)}</div>
         </div>
         <div style="display:flex;gap:8px;flex-shrink:0">
-          <button class="run-btn" style="padding:9px 20px;font-size:13px" onclick="publishPost(${JSON.stringify(p.id)})">🚀 게시</button>
+          <button class="run-btn" style="padding:9px 20px;font-size:13px" onclick="publishPost(${JSON.stringify(p.id)})">${publishMode === 'actions' ? '🔒 서버 게시' : '🌐 직접 게시'}</button>
           <button style="padding:9px 14px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.2);border-radius:8px;color:var(--red);font-size:13px;cursor:pointer;font-weight:600" onclick="skipPost(${JSON.stringify(p.id)})">🗑 건너뜀</button>
         </div>
       </div>
@@ -1786,13 +1826,82 @@ function skipPost(id) {
 }
 
 async function publishPost(id) {
+  if (publishMode === 'actions') {
+    await publishPostViaActions(id)
+  } else {
+    await publishPostDirect(id)
+  }
+}
+
+async function publishPostViaActions(id) {
+  const pat = getPAT()
+  const safeId = id.replace(/[^a-zA-Z0-9_-]/g, '_')
+  const statusEl = document.getElementById('rstatus-' + safeId)
+  if (!pat) {
+    if (statusEl) { statusEl.style.display = 'block'; statusEl.className = 'status-panel error'; statusEl.innerHTML = '❌ PAT가 없습니다. <a href="#" onclick="navTo(\'run\');return false;" style="color:var(--red)">실행 제어 탭</a>에서 PAT를 설정하세요.' }
+    showToast('PAT 설정 필요', 'error'); return
+  }
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.className = 'status-panel running'; statusEl.innerHTML = '<span class="pulse">⏳</span> GitHub Actions로 게시 요청 중...' }
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/manual-publish.yml/dispatches`,
+      { method: 'POST', headers: { 'Authorization': `Bearer ${pat}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: { post_id: id, post_ids: '', publish_all: 'false' } }) }
+    )
+    if (resp.status === 204) {
+      if (statusEl) {
+        statusEl.className = 'status-panel success'
+        statusEl.innerHTML = '✅ 게시 워크플로우 시작됨! <span style="color:var(--muted);font-size:12px">약 3~5분 후 완료됩니다.</span>' +
+          '<br><button style="margin-top:8px;padding:6px 14px;background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.3);border-radius:6px;color:var(--accent2);font-size:12px;cursor:pointer" onclick="pollPublishResult(\'' + safeId + '\',\'' + id + '\')">⏳ 결과 확인 대기</button>'
+      }
+      sessionPublished.push(id)
+      document.getElementById('review-published-count').textContent = sessionPublished.length
+      showToast('게시 워크플로우가 시작됐습니다', 'success')
+      setTimeout(() => pollPublishResult(safeId, id), 30000)
+    } else {
+      const err = await resp.json().catch(() => ({}))
+      throw new Error(`HTTP ${resp.status}: ${err.message || '알 수 없는 오류'}`)
+    }
+  } catch (err) {
+    if (statusEl) { statusEl.className = 'status-panel error'; statusEl.innerHTML = '❌ ' + esc(err.message) }
+    showToast('게시 요청 실패: ' + err.message, 'error')
+  }
+}
+
+async function pollPublishResult(safeId, postId) {
+  const statusEl = document.getElementById('rstatus-' + safeId)
+  if (statusEl) { statusEl.innerHTML = statusEl.innerHTML.replace(/⏳.*$/, '') + '<br><span class="pulse" style="font-size:12px;color:var(--muted)">⏳ 결과 확인 중...</span>' }
+  // Reload pending_posts.json to check if published
+  const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
+  const fresh = await fetch(base + '/pending_posts.json?t=' + Date.now()).then(r => r.json()).catch(() => null)
+  if (!fresh) return
+  const post = fresh.find(p => p.id === postId)
+  if (post?.status === 'published') {
+    if (statusEl) {
+      statusEl.className = 'status-panel success'
+      statusEl.innerHTML = `✅ 게시 완료!${post.blogUrl ? ` <a href="${post.blogUrl}" target="_blank" style="color:var(--accent2)">${post.blogUrl}</a>` : ''}`
+    }
+    pendingPosts = fresh; DATA.pending = fresh
+    const ids = JSON.parse(localStorage.getItem('published_post_ids') || '[]')
+    if (!ids.includes(postId)) { ids.push(postId); localStorage.setItem('published_post_ids', JSON.stringify(ids)) }
+    updatePendingBadge()
+    showToast('게시가 완료됐습니다! 🎉', 'success')
+  } else if (post?.status === 'failed') {
+    if (statusEl) { statusEl.className = 'status-panel error'; statusEl.innerHTML = '❌ 게시 실패. GitHub Actions 로그를 확인하세요.' }
+  } else {
+    // Still pending — retry after 20s (max 6 retries ≈ 2min)
+    setTimeout(() => pollPublishResult(safeId, postId), 20000)
+  }
+}
+
+async function publishPostDirect(id) {
   const post = pendingPosts.find(p => p.id === id)
   if (!post) return
   const blogId = localStorage.getItem('oauth_blog_id')
   if (!blogId) { showToast('BLOGGER_BLOG_ID를 설정하세요', 'error'); return }
   const safeId = id.replace(/[^a-zA-Z0-9_-]/g, '_')
   const statusEl = document.getElementById('rstatus-' + safeId)
-  if (statusEl) { statusEl.style.display = 'block'; statusEl.className = 'status-panel running'; statusEl.innerHTML = '<span class="pulse">⏳ 게시 중...</span>' }
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.className = 'status-panel running'; statusEl.innerHTML = '<span class="pulse">⏳ 직접 게시 중...</span>' }
   try {
     const accessToken = await getAccessToken()
     const resp = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts/`, {
@@ -1804,8 +1913,7 @@ async function publishPost(id) {
     if (resp.ok && result.url) {
       if (statusEl) { statusEl.className = 'status-panel success'; statusEl.innerHTML = `✅ 게시 성공! <a href="${result.url}" target="_blank" style="color:var(--accent2)">${result.url}</a>` }
       const ids = JSON.parse(localStorage.getItem('published_post_ids') || '[]')
-      ids.push(id)
-      localStorage.setItem('published_post_ids', JSON.stringify(ids))
+      ids.push(id); localStorage.setItem('published_post_ids', JSON.stringify(ids))
       sessionPublished.push(id)
       document.getElementById('review-published-count').textContent = sessionPublished.length
       document.getElementById('review-pending-count').textContent = Math.max(0, parseInt(document.getElementById('review-pending-count').textContent) - 1)

@@ -75,7 +75,16 @@
   .post-card .title{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:8px;}
   .post-card .footer{display:flex;gap:6px;flex-wrap:wrap;}
 
-  .search-row{display:flex;gap:12px;margin-bottom:20px;align-items:center;flex-wrap:wrap;}
+  /* List view for posts */
+  .post-list-row{display:flex;align-items:center;gap:12px;padding:10px 16px;border-top:1px solid var(--border);cursor:pointer;transition:background .12s;font-size:13px;}
+  .post-list-row:hover{background:rgba(255,255,255,.03);}
+  .post-list-row:first-child{border-top:none;}
+  .post-list-icon{font-size:22px;width:32px;text-align:center;flex-shrink:0;}
+  .post-list-info{flex:1;min-width:0;}
+  .post-list-title{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:2px;}
+  .post-list-meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+
+  .search-row{display:flex;gap:12px;margin-bottom:12px;align-items:center;flex-wrap:wrap;}
   .search-input{flex:1;min-width:160px;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none;}
   .search-input:focus{border-color:var(--accent);}
   select.filter-sel{padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none;cursor:pointer;}
@@ -83,6 +92,21 @@
 
   .csv-btn{padding:9px 16px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:var(--green);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s;}
   .csv-btn:hover{background:rgba(52,211,153,.22);}
+
+  /* Sort / view toggle row */
+  .sort-row{display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap;}
+  .sort-btn{padding:6px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;}
+  .sort-btn:hover{color:var(--text);border-color:var(--accent);}
+  .sort-btn.active{color:var(--accent);border-color:var(--accent);background:rgba(124,106,247,.1);}
+  .view-btn{padding:6px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;margin-left:auto;}
+  .view-btn:hover{color:var(--text);border-color:var(--accent);}
+
+  /* Pagination */
+  .pagination{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:20px;}
+  .page-btn{padding:7px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;}
+  .page-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent);}
+  .page-btn:disabled{opacity:.4;cursor:not-allowed;}
+  .page-info{font-size:13px;color:var(--muted);}
 
   #modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center;padding:24px;}
   #modal-overlay.open{display:flex;}
@@ -105,12 +129,40 @@
   .alert-box{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:var(--radius);padding:14px 18px;margin-bottom:24px;font-size:13px;color:var(--accent2);}
   .warn-box{background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;font-size:13px;color:var(--yellow);}
 
+  /* Last run status banner */
+  .status-banner{border-radius:var(--radius);padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;font-size:13px;}
+  .status-banner.ok{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:var(--green);}
+  .status-banner.err{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:var(--red);}
+  .status-banner .sb-icon{font-size:22px;}
+  .status-banner .sb-text{flex:1;}
+  .status-banner .sb-title{font-weight:700;margin-bottom:3px;}
+  .status-banner .sb-detail{color:var(--muted);font-size:12px;}
+
+  /* Countdown */
+  .countdown-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .countdown-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+  .countdown-timer{font-size:28px;font-weight:700;color:var(--accent2);font-variant-numeric:tabular-nums;letter-spacing:.04em;}
+  .countdown-next{font-size:12px;color:var(--muted);margin-top:2px;}
+
   /* Charts */
   .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px;}
   .chart-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
   .chart-box h3{font-size:14px;font-weight:600;margin-bottom:16px;color:var(--muted);}
   .chart-box canvas{max-height:220px;}
   @media(max-width:800px){.chart-grid{grid-template-columns:1fr;}}
+
+  /* Progress bar */
+  .progress-wrap{margin-bottom:24px;}
+  .progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px;}
+  .progress-bar-bg{height:10px;background:var(--bg3);border-radius:20px;overflow:hidden;}
+  .progress-bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .5s;}
+
+  /* Goal input */
+  .goal-row{display:flex;gap:10px;align-items:center;margin-bottom:16px;}
+  .goal-input{padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none;width:140px;}
+  .goal-input:focus{border-color:var(--accent);}
+  .goal-save-btn{padding:8px 16px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.3);border-radius:8px;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;}
+  .goal-save-btn:hover{background:rgba(124,106,247,.25);}
 
   /* Run Control */
   .run-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
@@ -177,6 +229,20 @@
   .copy-btn{padding:4px 12px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.2);border-radius:6px;color:var(--accent);font-size:11px;cursor:pointer;transition:all .15s;}
   .copy-btn:hover{background:rgba(124,106,247,.25);}
 
+  /* Toast */
+  #toast-container{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none;}
+  .toast{padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;color:#fff;min-width:200px;max-width:340px;box-shadow:0 4px 20px rgba(0,0,0,.4);pointer-events:auto;transform:translateX(120%);transition:transform .3s cubic-bezier(.34,1.56,.64,1);opacity:0;}
+  .toast.show{transform:translateX(0);opacity:1;}
+  .toast.success{background:rgba(52,211,153,.9);border:1px solid var(--green);}
+  .toast.error{background:rgba(248,113,113,.9);border:1px solid var(--red);}
+  .toast.info{background:rgba(124,106,247,.9);border:1px solid var(--accent);}
+
+  /* Skeleton */
+  @keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+  .skeleton{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg2) 50%,var(--bg3) 75%);background-size:800px 100%;animation:shimmer 1.5s infinite;border-radius:8px;}
+  .skeleton-card{height:100px;border-radius:var(--radius);}
+  .skeleton-row{height:44px;margin-bottom:8px;}
+
   ::-webkit-scrollbar{width:6px;height:6px;}
   ::-webkit-scrollbar-track{background:transparent;}
   ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
@@ -204,6 +270,7 @@
     <a class="active" data-page="dashboard"><span class="nav-icon">📊</span> 대시보드</a>
     <a data-page="run"><span class="nav-icon">▶️</span> 실행 제어</a>
     <a data-page="posts"><span class="nav-icon">📝</span> 포스트 목록</a>
+    <a data-page="keywords"><span class="nav-icon">🔑</span> 키워드 분석</a>
     <a data-page="analytics"><span class="nav-icon">💰</span> 수익 분석</a>
     <a data-page="social"><span class="nav-icon">📱</span> 소셜 미디어</a>
     <a data-page="config"><span class="nav-icon">⚙️</span> 시스템 정보</a>
@@ -226,44 +293,73 @@
       💡 이 대시보드는 자동화 실행 후 자동 업데이트됩니다.
       <a data-page="run" onclick="navTo('run');return false;" href="#" style="color:var(--accent);font-weight:700">▶️ 실행 제어</a> 탭에서 대시보드 내에서 직접 실행하세요.
     </div>
-    <div class="cards">
-      <div class="card purple"><div class="label">총 포스트</div><div class="value" id="s-posts">-</div><div class="sub">생성된 전체 포스트</div></div>
-      <div class="card green"><div class="label">누적 예상 수익</div><div class="value" id="s-revenue">-</div><div class="sub">AdSense 추정치 (USD)</div></div>
-      <div class="card blue"><div class="label">Blogger 게시</div><div class="value" id="s-blogger">-</div><div class="sub">발행된 포스트</div></div>
-      <div class="card yellow"><div class="label">전체 실행 횟수</div><div class="value" id="s-runs">-</div><div class="sub">자동화 실행 이력</div></div>
-    </div>
-    <div class="cards" style="margin-top:-8px">
-      <div class="card" style="border-color:rgba(6,182,212,.3)"><div class="label">이미지 자동 삽입</div><div class="value" id="s-images" style="color:var(--accent2)">-</div><div class="sub">총 삽입된 이미지 수</div></div>
-      <div class="card" style="border-color:rgba(52,211,153,.3)"><div class="label">AdSense 슬롯</div><div class="value" style="color:var(--green)">6</div><div class="sub">포스트당 광고 위치</div></div>
-      <div class="card" style="border-color:rgba(251,146,60,.3)"><div class="label">구조화 데이터</div><div class="value" style="color:var(--orange)">ON</div><div class="sub">FAQ + Article 스키마</div></div>
-      <div class="card" style="border-color:rgba(124,106,247,.3)"><div class="label">목차 (TOC)</div><div class="value" style="color:var(--accent)">ON</div><div class="sub">자동 생성 앵커 링크</div></div>
-    </div>
 
-    <!-- Charts -->
-    <div class="chart-grid">
-      <div class="chart-box">
-        <h3>📈 수익 트렌드 (최근 14회 실행)</h3>
-        <canvas id="chart-revenue"></canvas>
+    <!-- Last run status banner -->
+    <div id="last-run-banner" style="display:none"></div>
+
+    <!-- Countdown -->
+    <div class="countdown-card">
+      <div>
+        <div class="countdown-label">다음 실행까지</div>
+        <div class="countdown-timer" id="countdown-timer">--:--:--</div>
+        <div class="countdown-next" id="countdown-next"></div>
       </div>
-      <div class="chart-box">
-        <h3>🏷️ 카테고리별 포스트 분포</h3>
-        <canvas id="chart-category"></canvas>
+      <div style="text-align:right">
+        <div style="font-size:12px;color:var(--muted)">자동 스케줄</div>
+        <div style="font-size:14px;font-weight:600;color:var(--accent);margin-top:4px">07:00 / 19:00 KST</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">매일 2회 자동 실행</div>
       </div>
     </div>
 
-    <div class="section-header">
-      <h2>최근 실행 이력</h2>
-      <span class="badge purple" id="s-last-run">-</span>
+    <div id="dashboard-skeleton" class="cards">
+      <div class="skeleton skeleton-card"></div>
+      <div class="skeleton skeleton-card"></div>
+      <div class="skeleton skeleton-card"></div>
+      <div class="skeleton skeleton-card"></div>
     </div>
-    <div class="table-wrap">
-      <table><thead><tr><th>날짜/시간</th><th>키워드</th><th>생성</th><th>Blogger</th><th>이미지</th><th>수익(일)</th><th>오류</th></tr></thead>
-      <tbody id="runs-table"></tbody></table>
+
+    <div id="dashboard-content" style="display:none">
+      <div class="cards">
+        <div class="card purple"><div class="label">총 포스트</div><div class="value" id="s-posts">-</div><div class="sub">생성된 전체 포스트</div></div>
+        <div class="card green"><div class="label">누적 예상 수익</div><div class="value" id="s-revenue">-</div><div class="sub">AdSense 추정치 (USD)</div></div>
+        <div class="card blue"><div class="label">Blogger 게시</div><div class="value" id="s-blogger">-</div><div class="sub">발행된 포스트</div></div>
+        <div class="card yellow"><div class="label">전체 실행 횟수</div><div class="value" id="s-runs">-</div><div class="sub">자동화 실행 이력</div></div>
+        <div class="card" style="border-color:rgba(6,182,212,.3)"><div class="label">이번 주 실행</div><div class="value" id="s-week-runs" style="color:var(--accent2)">-</div><div class="sub">최근 7일 실행 횟수</div></div>
+        <div class="card" style="border-color:rgba(52,211,153,.3)"><div class="label">성공률</div><div class="value" id="s-success-rate" style="color:var(--green)">-</div><div class="sub">게시 / 생성 × 100</div></div>
+      </div>
+      <div class="cards" style="margin-top:-8px">
+        <div class="card" style="border-color:rgba(6,182,212,.3)"><div class="label">이미지 자동 삽입</div><div class="value" id="s-images" style="color:var(--accent2)">-</div><div class="sub">총 삽입된 이미지 수</div></div>
+        <div class="card" style="border-color:rgba(52,211,153,.3)"><div class="label">AdSense 슬롯</div><div class="value" style="color:var(--green)">6</div><div class="sub">포스트당 광고 위치</div></div>
+        <div class="card" style="border-color:rgba(251,146,60,.3)"><div class="label">구조화 데이터</div><div class="value" style="color:var(--orange)">ON</div><div class="sub">FAQ + Article 스키마</div></div>
+        <div class="card" style="border-color:rgba(124,106,247,.3)"><div class="label">목차 (TOC)</div><div class="value" style="color:var(--accent)">ON</div><div class="sub">자동 생성 앵커 링크</div></div>
+      </div>
+
+      <!-- Charts -->
+      <div class="chart-grid">
+        <div class="chart-box">
+          <h3>📈 수익 트렌드 (최근 14회 실행)</h3>
+          <canvas id="chart-revenue"></canvas>
+        </div>
+        <div class="chart-box">
+          <h3>🏷️ 카테고리별 포스트 분포</h3>
+          <canvas id="chart-category"></canvas>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <h2>최근 실행 이력</h2>
+        <span class="badge purple" id="s-last-run">-</span>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>날짜/시간</th><th>키워드</th><th>생성</th><th>Blogger</th><th>이미지</th><th>수익(일)</th><th>오류</th></tr></thead>
+        <tbody id="runs-table"></tbody></table>
+      </div>
+      <div class="section-header">
+        <h2>최근 포스트</h2>
+        <a href="#" onclick="navTo('posts');return false;" style="font-size:13px;color:var(--accent)">전체 보기 →</a>
+      </div>
+      <div class="post-grid" id="recent-grid"></div>
     </div>
-    <div class="section-header">
-      <h2>최근 포스트</h2>
-      <a href="#" onclick="navTo('posts');return false;" style="font-size:13px;color:var(--accent)">전체 보기 →</a>
-    </div>
-    <div class="post-grid" id="recent-grid"></div>
   </div>
 
   <!-- ═══ 실행 제어 ═══ -->
@@ -369,7 +465,38 @@
       <input type="date" class="filter-sel" id="date-to" onchange="filterPosts()" title="종료일">
       <button class="csv-btn" onclick="exportPostsCSV()">⬇️ CSV 내보내기</button>
     </div>
-    <div class="post-grid" id="posts-grid"></div>
+    <div class="sort-row">
+      <button class="sort-btn active" id="sort-date" onclick="setSort('date')">날짜순 <span id="sort-date-ind">▼</span></button>
+      <button class="sort-btn" id="sort-wc" onclick="setSort('wc')">글자수순 <span id="sort-wc-ind"></span></button>
+      <button class="sort-btn" id="sort-img" onclick="setSort('img')">이미지순 <span id="sort-img-ind"></span></button>
+      <button class="view-btn" id="view-toggle-btn" onclick="toggleView()">🔲 그리드</button>
+    </div>
+    <div id="posts-container"></div>
+    <div class="pagination" id="posts-pagination"></div>
+  </div>
+
+  <!-- ═══ 키워드 분석 ═══ -->
+  <div class="page" id="page-keywords">
+    <div class="page-title">🔑 키워드 분석</div>
+    <div class="cards" id="kw-summary-cards">
+      <div class="card purple"><div class="label">총 사용 키워드</div><div class="value" id="kw-total">-</div><div class="sub">전체 키워드 수</div></div>
+      <div class="card blue"><div class="label">중복 없는 키워드</div><div class="value" id="kw-unique">-</div><div class="sub">고유 키워드 수</div></div>
+      <div class="card green"><div class="label">가장 많은 카테고리</div><div class="value" id="kw-top-cat" style="font-size:18px;color:var(--green)">-</div><div class="sub">최다 포스트 카테고리</div></div>
+      <div class="card yellow"><div class="label">평균 CPC</div><div class="value" id="kw-avg-cpc">-</div><div class="sub">카테고리 기준 USD</div></div>
+    </div>
+    <div class="chart-grid">
+      <div class="chart-box" style="grid-column:1/-1">
+        <h3>📊 TOP 10 키워드 사용 빈도</h3>
+        <canvas id="chart-keywords" style="max-height:280px;"></canvas>
+      </div>
+    </div>
+    <div class="section-header"><h2>키워드 상세 목록</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>키워드</th><th>카테고리</th><th>사용 횟수</th><th>CPC</th><th>평균 글자수</th><th>마지막 사용</th></tr></thead>
+        <tbody id="kw-table"></tbody>
+      </table>
+    </div>
   </div>
 
   <!-- ═══ 수익 분석 ═══ -->
@@ -382,11 +509,42 @@
       <div class="card yellow"><div class="label">평균 CPC</div><div class="value" id="a-cpc">-</div><div class="sub">클릭당 단가</div></div>
     </div>
 
+    <!-- Goal input & progress -->
+    <div class="run-panel" style="padding:20px;margin-bottom:24px">
+      <h3 style="margin-bottom:12px">🎯 월 수익 목표</h3>
+      <div class="goal-row">
+        <span style="font-size:13px;color:var(--muted)">목표 금액 (USD):</span>
+        <input type="number" id="goal-input" class="goal-input" placeholder="예: 100" min="0" step="0.01">
+        <button class="goal-save-btn" onclick="saveGoal()">저장</button>
+      </div>
+      <div class="progress-wrap" id="goal-progress-wrap" style="display:none">
+        <div class="progress-header">
+          <span id="goal-progress-label" style="color:var(--muted)"></span>
+          <span id="goal-progress-pct" style="font-weight:700;color:var(--accent)"></span>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="goal-progress-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+
     <div class="chart-grid">
-      <div class="chart-box" style="grid-column:1/-1">
+      <div class="chart-box">
         <h3>📊 실행별 일 예상 수익 추이</h3>
         <canvas id="chart-revenue-analytics" style="max-height:200px;"></canvas>
       </div>
+      <div class="chart-box">
+        <h3>📈 누적 포스트 성장 추이</h3>
+        <canvas id="chart-cumulative" style="max-height:200px;"></canvas>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h2>월별 요약</h2>
+    </div>
+    <div class="table-wrap" style="margin-bottom:24px">
+      <table>
+        <thead><tr><th>연월</th><th>실행 횟수</th><th>포스트 수</th><th>평균 일 수익</th><th>월 예상 수익</th></tr></thead>
+        <tbody id="monthly-summary-table"></tbody>
+      </table>
     </div>
 
     <div class="section-header">
@@ -460,6 +618,9 @@
   </div>
 </div>
 
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
 <script>
 // ── Constants ──────────────────────────────────────────────────────────────────
 const GH_OWNER = 'kevinlee7250'
@@ -467,16 +628,34 @@ const GH_REPO = 'cli'
 const GH_WORKFLOW = 'blog-run.yml'
 const GH_BRANCH = 'claude/blog-automation-system-KAbtE'
 
+const CPC_MAP = {법률:3.20,부동산:2.80,금융:2.50,건강:1.80,기술:1.50,교육:1.30,여행:1.20,쇼핑:0.90,일반:1.00}
+
 // ── Data ──────────────────────────────────────────────────────────────────────
 let DATA = { posts: [], runs: [], analytics: {}, meta: {}, social: [] }
 let autoRefreshTimer = null
 let pollTimer = null
+let countdownInterval = null
 let revenueChart = null
 let categoryChart = null
 let analyticsChart = null
+let cumulativeChart = null
+let keywordsChart = null
 
+// ── Posts page state ──────────────────────────────────────────────────────────
+let postsViewMode = 'grid'   // 'grid' | 'list'
+let postsSortKey = 'date'    // 'date' | 'wc' | 'img'
+let postsSortAsc = false
+let postsCurrentPage = 1
+const POSTS_PER_PAGE = 12
+let postsFiltered = []
+
+// ── Load ──────────────────────────────────────────────────────────────────────
 async function loadAll(silent = false) {
   if (!silent) document.getElementById('last-updated-label').textContent = '로딩 중...'
+  if (!silent) {
+    document.getElementById('dashboard-skeleton').style.display = 'grid'
+    document.getElementById('dashboard-content').style.display = 'none'
+  }
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
   const [posts, runs, analytics, meta, social] = await Promise.all([
@@ -494,12 +673,16 @@ async function loadAll(silent = false) {
   if (sysEl && meta.systemVersion) sysEl.textContent = meta.systemVersion + ' · Claude AI'
   const cfgEl = document.getElementById('cfg-engine')
   if (cfgEl && meta.systemVersion) cfgEl.textContent = meta.systemVersion
+  document.getElementById('dashboard-skeleton').style.display = 'none'
+  document.getElementById('dashboard-content').style.display = 'block'
   renderDashboard()
+  if (!silent) showToast('데이터를 불러왔습니다', 'success')
 }
 
 function manualRefresh() {
   loadAll()
   resetAutoRefresh()
+  showToast('새로고침 완료', 'info')
 }
 
 function resetAutoRefresh() {
@@ -514,10 +697,11 @@ document.querySelectorAll('nav a').forEach(a =>
 function navTo(page) {
   document.querySelectorAll('nav a').forEach(a => a.classList.toggle('active', a.dataset.page === page))
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page))
-  if (page === 'posts') renderPosts(DATA.posts)
+  if (page === 'posts') { postsCurrentPage = 1; filterPosts() }
   if (page === 'analytics') renderAnalytics()
   if (page === 'run') { checkPATStatus(); loadGHRuns() }
   if (page === 'social') renderSocial()
+  if (page === 'keywords') renderKeywords()
 }
 
 // ── Dashboard ─────────────────────────────────────────────────────────────────
@@ -532,6 +716,33 @@ function renderDashboard() {
   const totalImages = runs.reduce((s, r) => s + (r.imagesInserted || 0), 0)
   const imgEl = document.getElementById('s-images')
   if (imgEl) imgEl.textContent = totalImages + '개'
+
+  // Week runs
+  const oneWeekAgo = Date.now() - 7 * 24 * 3600 * 1000
+  const weekRuns = runs.filter(r => new Date(r.runAt || r.savedAt).getTime() >= oneWeekAgo).length
+  document.getElementById('s-week-runs').textContent = weekRuns + '회'
+
+  // Success rate
+  const totalGen = runs.reduce((s, r) => s + (r.postsGenerated || 0), 0)
+  const totalUp = runs.reduce((s, r) => s + (r.bloggerUploaded || r.platforms?.blogger || 0), 0)
+  const rate = totalGen > 0 ? Math.round(totalUp / totalGen * 100) : 0
+  document.getElementById('s-success-rate').textContent = rate + '%'
+
+  // Last run banner
+  const lastRun = runs[0]
+  if (lastRun) {
+    const banner = document.getElementById('last-run-banner')
+    const hasErr = (lastRun.errors || 0) > 0
+    const dt = new Date(lastRun.runAt || lastRun.savedAt).toLocaleString('ko-KR')
+    banner.style.display = 'flex'
+    banner.className = 'status-banner ' + (hasErr ? 'err' : 'ok')
+    banner.innerHTML = `
+      <div class="sb-icon">${hasErr ? '❌' : '✅'}</div>
+      <div class="sb-text">
+        <div class="sb-title">마지막 실행 ${hasErr ? '오류 발생' : '정상 완료'}</div>
+        <div class="sb-detail">${dt} · 생성 ${lastRun.postsGenerated || 0}개 · Blogger ${lastRun.bloggerUploaded || lastRun.platforms?.blogger || 0}개 · 오류 ${lastRun.errors || 0}개</div>
+      </div>`
+  }
 
   const tbody = document.getElementById('runs-table')
   tbody.innerHTML = runs.slice(0, 10).map(r => `<tr>
@@ -548,12 +759,35 @@ function renderDashboard() {
   renderCharts()
 }
 
-// ── Charts ─────────────────────────────────────────────────────────────────────
-const CHART_DEFAULTS = {
-  color: '#e2e8f0',
-  plugins: { legend: { labels: { color: '#8892b0', font: { size: 11 } } } },
+// ── Countdown ─────────────────────────────────────────────────────────────────
+function startCountdown() {
+  if (countdownInterval) clearInterval(countdownInterval)
+  countdownInterval = setInterval(updateCountdown, 1000)
+  updateCountdown()
 }
 
+function updateCountdown() {
+  const now = new Date()
+  const kstOffset = 9 * 60 // KST = UTC+9
+  const utcMs = now.getTime() + now.getTimezoneOffset() * 60000
+  const kstNow = new Date(utcMs + kstOffset * 60000)
+  const h = kstNow.getHours(), m = kstNow.getMinutes(), s = kstNow.getSeconds()
+  const nowSec = h * 3600 + m * 60 + s
+  const targets = [7 * 3600, 19 * 3600]
+  let nextSec = null, nextLabel = ''
+  for (const t of targets) {
+    if (t > nowSec) { nextSec = t; nextLabel = t === 7*3600 ? '오전 7:00 KST' : '오후 7:00 KST'; break }
+  }
+  if (nextSec === null) { nextSec = targets[0] + 24 * 3600; nextLabel = '오전 7:00 KST (내일)' }
+  const diff = nextSec - nowSec
+  const hh = String(Math.floor(diff / 3600)).padStart(2, '0')
+  const mm = String(Math.floor((diff % 3600) / 60)).padStart(2, '0')
+  const ss = String(diff % 60).padStart(2, '0')
+  document.getElementById('countdown-timer').textContent = `${hh}:${mm}:${ss}`
+  document.getElementById('countdown-next').textContent = `다음: ${nextLabel}`
+}
+
+// ── Charts ─────────────────────────────────────────────────────────────────────
 function renderCharts() {
   renderRevenueChart()
   renderCategoryChart()
@@ -567,131 +801,250 @@ function renderRevenueChart() {
     return (d.getMonth()+1) + '/' + d.getDate()
   })
   const values = recent.map(r => r.earnings?.estimatedDailyRevenue || 0)
-
   const ctx = document.getElementById('chart-revenue')
   if (!ctx) return
   if (revenueChart) revenueChart.destroy()
   revenueChart = new Chart(ctx, {
     type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        label: '일 예상 수익 ($)',
-        data: values,
-        borderColor: '#34d399',
-        backgroundColor: 'rgba(52,211,153,.1)',
-        tension: 0.4,
-        fill: true,
-        pointBackgroundColor: '#34d399',
-        pointRadius: 4,
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { color: '#8892b0', font: { size: 10 } }, grid: { color: '#2d3350' } },
-        y: { ticks: { color: '#8892b0', font: { size: 10 }, callback: v => '$'+v.toFixed(2) }, grid: { color: '#2d3350' } }
-      }
-    }
+    data: { labels, datasets: [{ label: '일 예상 수익 ($)', data: values, borderColor: '#34d399', backgroundColor: 'rgba(52,211,153,.1)', tension: 0.4, fill: true, pointBackgroundColor: '#34d399', pointRadius: 4 }] },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#8892b0', font: { size: 10 } }, grid: { color: '#2d3350' } }, y: { ticks: { color: '#8892b0', font: { size: 10 }, callback: v => '$'+v.toFixed(2) }, grid: { color: '#2d3350' } } } }
   })
 }
 
 function renderCategoryChart() {
   const { posts } = DATA
   const counts = {}
-  posts.forEach(p => {
-    const cat = p.adsenseCategory || '일반'
-    counts[cat] = (counts[cat] || 0) + 1
-  })
+  posts.forEach(p => { const cat = p.adsenseCategory || '일반'; counts[cat] = (counts[cat] || 0) + 1 })
   const labels = Object.keys(counts)
   const values = Object.values(counts)
   const colors = ['#7c6af7','#06b6d4','#34d399','#fbbf24','#fb923c','#f87171','#a78bfa','#60a5fa']
-
   const ctx = document.getElementById('chart-category')
   if (!ctx) return
   if (categoryChart) categoryChart.destroy()
-  if (!labels.length) {
-    ctx.parentElement.querySelector('h3').insertAdjacentHTML('afterend',
-      '<div style="text-align:center;padding:40px;color:var(--muted);font-size:13px">포스트 데이터 없음</div>')
-    return
-  }
+  if (!labels.length) return
   categoryChart = new Chart(ctx, {
     type: 'doughnut',
-    data: {
-      labels,
-      datasets: [{
-        data: values,
-        backgroundColor: colors.slice(0, labels.length),
-        borderColor: '#1a1d27',
-        borderWidth: 2,
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'right', labels: { color: '#8892b0', font: { size: 11 }, padding: 10 } }
-      }
-    }
+    data: { labels, datasets: [{ data: values, backgroundColor: colors.slice(0, labels.length), borderColor: '#1a1d27', borderWidth: 2 }] },
+    options: { responsive: true, plugins: { legend: { position: 'right', labels: { color: '#8892b0', font: { size: 11 }, padding: 10 } } } }
   })
 }
 
 function renderAnalyticsChart() {
   const { runs } = DATA
   const recent = runs.slice(0, 20).reverse()
-  const labels = recent.map(r => {
-    const d = new Date(r.runAt || r.savedAt)
-    return (d.getMonth()+1) + '/' + d.getDate()
-  })
+  const labels = recent.map(r => { const d = new Date(r.runAt || r.savedAt); return (d.getMonth()+1) + '/' + d.getDate() })
   const values = recent.map(r => r.earnings?.estimatedDailyRevenue || 0)
-
   const ctx = document.getElementById('chart-revenue-analytics')
   if (!ctx) return
   if (analyticsChart) analyticsChart.destroy()
   analyticsChart = new Chart(ctx, {
     type: 'bar',
+    data: { labels, datasets: [{ label: '일 예상 수익 ($)', data: values, backgroundColor: 'rgba(124,106,247,.5)', borderColor: '#7c6af7', borderWidth: 1, borderRadius: 4 }] },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#8892b0', font: { size: 10 } }, grid: { color: '#2d3350' } }, y: { ticks: { color: '#8892b0', font: { size: 10 }, callback: v => '$'+v.toFixed(2) }, grid: { color: '#2d3350' } } } }
+  })
+}
+
+function renderCumulativeChart() {
+  const { runs } = DATA
+  const sorted = [...runs].reverse()
+  let cumulative = 0
+  const labels = [], values = []
+  sorted.forEach(r => {
+    const d = new Date(r.runAt || r.savedAt)
+    labels.push((d.getMonth()+1)+'/'+d.getDate())
+    cumulative += (r.postsGenerated || 0)
+    values.push(cumulative)
+  })
+  const ctx = document.getElementById('chart-cumulative')
+  if (!ctx) return
+  if (cumulativeChart) cumulativeChart.destroy()
+  cumulativeChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets: [{ label: '누적 포스트', data: values, borderColor: '#06b6d4', backgroundColor: 'rgba(6,182,212,.1)', tension: 0.3, fill: true, pointRadius: 3, pointBackgroundColor: '#06b6d4' }] },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#8892b0', font: { size: 10 } }, grid: { color: '#2d3350' } }, y: { ticks: { color: '#8892b0', font: { size: 10 } }, grid: { color: '#2d3350' }, beginAtZero: true } } }
+  })
+}
+
+// ── Keywords chart ────────────────────────────────────────────────────────────
+function renderKeywordsChart(kwData) {
+  const top10 = kwData.slice(0, 10)
+  const ctx = document.getElementById('chart-keywords')
+  if (!ctx) return
+  if (keywordsChart) keywordsChart.destroy()
+  keywordsChart = new Chart(ctx, {
+    type: 'bar',
     data: {
-      labels,
-      datasets: [{
-        label: '일 예상 수익 ($)',
-        data: values,
-        backgroundColor: 'rgba(124,106,247,.5)',
-        borderColor: '#7c6af7',
-        borderWidth: 1,
-        borderRadius: 4,
-      }]
+      labels: top10.map(k => k.keyword),
+      datasets: [{ label: '사용 횟수', data: top10.map(k => k.count), backgroundColor: 'rgba(124,106,247,.6)', borderColor: '#7c6af7', borderWidth: 1, borderRadius: 4 }]
     },
     options: {
+      indexAxis: 'y',
       responsive: true,
       plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { color: '#8892b0', font: { size: 10 } }, grid: { color: '#2d3350' } },
-        y: { ticks: { color: '#8892b0', font: { size: 10 }, callback: v => '$'+v.toFixed(2) }, grid: { color: '#2d3350' } }
-      }
+      scales: { x: { ticks: { color: '#8892b0', font: { size: 10 } }, grid: { color: '#2d3350' } }, y: { ticks: { color: '#e2e8f0', font: { size: 11 } }, grid: { color: '#2d3350' } } }
     }
   })
 }
 
-// ── Posts ─────────────────────────────────────────────────────────────────────
-function renderPosts(list) {
-  document.getElementById('posts-count').textContent = list.length
-  const grid = document.getElementById('posts-grid')
-  grid.innerHTML = list.length ? list.map(postCardHTML).join('')
-    : '<div class="empty"><div class="icon">📭</div>포스트가 없습니다</div>'
+// ── Keywords page ─────────────────────────────────────────────────────────────
+function renderKeywords() {
+  const { posts, runs } = DATA
+  // Build keyword frequency map
+  const kwMap = {} // keyword -> { count, category, dates, wordCounts }
+  posts.forEach(p => {
+    const kw = (p.keyword || '').trim()
+    if (!kw) return
+    if (!kwMap[kw]) kwMap[kw] = { keyword: kw, count: 0, category: p.adsenseCategory || '일반', dates: [], wordCounts: [] }
+    kwMap[kw].count++
+    if (p.date) kwMap[kw].dates.push(p.date)
+    if (p.wordCount) kwMap[kw].wordCounts.push(p.wordCount)
+  })
+  // Also from runs
+  runs.forEach(r => {
+    (r.keywords || []).forEach(kw => {
+      const k = (kw || '').trim()
+      if (!k) return
+      if (!kwMap[k]) kwMap[k] = { keyword: k, count: 0, category: '일반', dates: [], wordCounts: [] }
+    })
+  })
+  const kwArr = Object.values(kwMap).sort((a, b) => b.count - a.count)
+
+  // Summary cards
+  document.getElementById('kw-total').textContent = posts.filter(p => p.keyword).length
+  document.getElementById('kw-unique').textContent = kwArr.length
+
+  // Top category
+  const catCount = {}
+  posts.forEach(p => { const c = p.adsenseCategory || '일반'; catCount[c] = (catCount[c] || 0) + 1 })
+  const topCat = Object.entries(catCount).sort((a,b) => b[1]-a[1])[0]
+  document.getElementById('kw-top-cat').textContent = topCat ? topCat[0] : '-'
+
+  // Avg CPC
+  const cpcs = posts.map(p => CPC_MAP[p.adsenseCategory || '일반'] || 1.0)
+  const avgCpc = cpcs.length ? cpcs.reduce((s,v) => s+v, 0) / cpcs.length : 0
+  document.getElementById('kw-avg-cpc').textContent = '$' + avgCpc.toFixed(2)
+
+  // Table
+  const tbody = document.getElementById('kw-table')
+  tbody.innerHTML = kwArr.length ? kwArr.map(k => {
+    const cpc = CPC_MAP[k.category] || 1.0
+    const avgWc = k.wordCounts.length ? Math.round(k.wordCounts.reduce((s,v)=>s+v,0)/k.wordCounts.length) : '-'
+    const lastDate = k.dates.sort().reverse()[0] || '-'
+    return `<tr>
+      <td><strong>${esc(k.keyword)}</strong></td>
+      <td><span class="badge purple">${esc(k.category)}</span></td>
+      <td><strong style="color:var(--accent)">${k.count}</strong></td>
+      <td style="color:var(--green)">$${cpc.toFixed(2)}</td>
+      <td>${avgWc !== '-' ? avgWc.toLocaleString() + '자' : '-'}</td>
+      <td style="color:var(--muted)">${lastDate}</td>
+    </tr>`
+  }).join('') : '<tr><td colspan="6" class="empty">키워드 데이터 없음</td></tr>'
+
+  renderKeywordsChart(kwArr)
 }
+
+// ── Posts ─────────────────────────────────────────────────────────────────────
+function setSort(key) {
+  if (postsSortKey === key) {
+    postsSortAsc = !postsSortAsc
+  } else {
+    postsSortKey = key
+    postsSortAsc = key !== 'date' // date desc by default, others asc
+  }
+  ;['date','wc','img'].forEach(k => {
+    document.getElementById('sort-'+k).classList.toggle('active', k === postsSortKey)
+    const ind = document.getElementById('sort-'+k+'-ind')
+    ind.textContent = k === postsSortKey ? (postsSortAsc ? '▲' : '▼') : ''
+  })
+  postsCurrentPage = 1
+  filterPosts()
+}
+
+function toggleView() {
+  postsViewMode = postsViewMode === 'grid' ? 'list' : 'grid'
+  const btn = document.getElementById('view-toggle-btn')
+  btn.textContent = postsViewMode === 'grid' ? '🔲 그리드' : '☰ 리스트'
+  filterPosts()
+}
+
 function filterPosts() {
-  const q = document.getElementById('post-search').value.toLowerCase()
-  const cat = document.getElementById('cat-filter').value
-  const from = document.getElementById('date-from').value
-  const to = document.getElementById('date-to').value
-  renderPosts(DATA.posts.filter(p => {
+  const q = (document.getElementById('post-search')?.value || '').toLowerCase()
+  const cat = document.getElementById('cat-filter')?.value || ''
+  const from = document.getElementById('date-from')?.value || ''
+  const to = document.getElementById('date-to')?.value || ''
+  let list = DATA.posts.filter(p => {
     if (q && !p.title.toLowerCase().includes(q) && !(p.keyword||'').toLowerCase().includes(q)) return false
     if (cat && !(p.adsenseCategory || '일반').includes(cat)) return false
     if (from && p.date && p.date < from) return false
     if (to && p.date && p.date > to) return false
     return true
-  }))
+  })
+  // Sort
+  list = list.slice().sort((a, b) => {
+    let va, vb
+    if (postsSortKey === 'date') { va = a.date || ''; vb = b.date || '' }
+    else if (postsSortKey === 'wc') { va = a.wordCount || 0; vb = b.wordCount || 0 }
+    else { va = a.imagesInserted || 0; vb = b.imagesInserted || 0 }
+    if (va < vb) return postsSortAsc ? -1 : 1
+    if (va > vb) return postsSortAsc ? 1 : -1
+    return 0
+  })
+  postsFiltered = list
+  document.getElementById('posts-count').textContent = list.length
+  renderPostsPage()
 }
+
+function renderPostsPage() {
+  const total = postsFiltered.length
+  const totalPages = Math.max(1, Math.ceil(total / POSTS_PER_PAGE))
+  if (postsCurrentPage > totalPages) postsCurrentPage = totalPages
+  const start = (postsCurrentPage - 1) * POSTS_PER_PAGE
+  const pageItems = postsFiltered.slice(start, start + POSTS_PER_PAGE)
+  const container = document.getElementById('posts-container')
+
+  if (!total) {
+    container.innerHTML = '<div class="empty"><div class="icon">📭</div>포스트가 없습니다</div>'
+    document.getElementById('posts-pagination').innerHTML = ''
+    return
+  }
+
+  if (postsViewMode === 'grid') {
+    container.innerHTML = `<div class="post-grid">${pageItems.map(postCardHTML).join('')}</div>`
+  } else {
+    container.innerHTML = `<div class="table-wrap"><div>${pageItems.map(postListRowHTML).join('')}</div></div>`
+  }
+
+  // Pagination
+  const pag = document.getElementById('posts-pagination')
+  pag.innerHTML = `
+    <button class="page-btn" onclick="goPage(${postsCurrentPage-1})" ${postsCurrentPage<=1?'disabled':''}>이전</button>
+    <span class="page-info">${postsCurrentPage} / ${totalPages} 페이지</span>
+    <button class="page-btn" onclick="goPage(${postsCurrentPage+1})" ${postsCurrentPage>=totalPages?'disabled':''}>다음</button>`
+}
+
+function goPage(n) {
+  postsCurrentPage = n
+  renderPostsPage()
+  document.getElementById('page-posts').scrollTop = 0
+}
+
+function postListRowHTML(p) {
+  const catIcon = {금융:'💰',부동산:'🏠',건강:'💊',기술:'💻',여행:'✈️',교육:'📚',쇼핑:'🛍️',법률:'⚖️'}
+  return `<div class="post-list-row" onclick="openPost(${JSON.stringify(p.id)})">
+    <div class="post-list-icon">${catIcon[p.adsenseCategory] || '📝'}</div>
+    <div class="post-list-info">
+      <div class="post-list-title">${esc(p.title)}</div>
+      <div class="post-list-meta">
+        <span class="badge muted">${p.date || '-'}</span>
+        <span class="badge purple">${p.adsenseCategory || '일반'}</span>
+        ${p.wordCount ? `<span class="badge muted">${p.wordCount.toLocaleString()}자</span>` : ''}
+        ${p.imagesInserted > 0 ? `<span class="img-pill">🖼 ${p.imagesInserted}</span>` : ''}
+      </div>
+    </div>
+    ${p.blogUrl ? `<a href="${p.blogUrl}" target="_blank" onclick="event.stopPropagation()" style="font-size:11px;color:var(--accent2);text-decoration:none;background:rgba(6,182,212,.1);padding:3px 9px;border-radius:20px;white-space:nowrap">🔗 보기</a>` : ''}
+  </div>`
+}
+
 function postCardHTML(p) {
   const icon = p.trendDirection === 'rising' ? '🚀' : '📊'
   const catIcon = {금융:'💰',부동산:'🏠',건강:'💊',기술:'💻',여행:'✈️',교육:'📚',쇼핑:'🛍️',법률:'⚖️'}
@@ -717,6 +1070,7 @@ function postCardHTML(p) {
     </div>
   </div>`
 }
+
 function openPost(id) {
   const p = DATA.posts.find(x => x.id === id)
   if (!p) return
@@ -736,27 +1090,73 @@ function openPost(id) {
   }
   if (p.faq?.length) {
     body += `<div class="modal-section"><div class="modal-section-title">❓ FAQ (${p.faq.length}개)</div>`
-    p.faq.forEach(f => {
-      body += `<div class="faq-item"><div class="faq-q">Q. ${esc(f.q)}</div><div class="faq-a">${esc(f.a)}</div></div>`
-    })
+    p.faq.forEach(f => { body += `<div class="faq-item"><div class="faq-q">Q. ${esc(f.q)}</div><div class="faq-a">${esc(f.a)}</div></div>` })
     body += `</div>`
   }
   if (p.sources?.length) {
     body += `<div class="modal-section"><div class="modal-section-title">📚 출처 (${p.sources.length}개)</div>`
-    p.sources.forEach(s => {
-      body += `<div class="source-link">🔗 <a href="${esc(s.url||'#')}" target="_blank" rel="nofollow noopener">${esc(s.title||s.url||'')}</a></div>`
-    })
+    p.sources.forEach(s => { body += `<div class="source-link">🔗 <a href="${esc(s.url||'#')}" target="_blank" rel="nofollow noopener">${esc(s.title||s.url||'')}</a></div>` })
     body += `</div>`
   }
   document.getElementById('modal-body').innerHTML = body || '<div style="color:var(--muted);font-size:13px">상세 데이터 없음</div>'
   document.getElementById('modal-overlay').classList.add('open')
 }
+
 function closeModal(e) {
   if (!e || e.target.id === 'modal-overlay' || e.target.id === 'modal-close')
     document.getElementById('modal-overlay').classList.remove('open')
 }
 
 // ── Analytics ─────────────────────────────────────────────────────────────────
+function saveGoal() {
+  const val = parseFloat(document.getElementById('goal-input').value)
+  if (isNaN(val) || val < 0) { showToast('올바른 금액을 입력하세요', 'error'); return }
+  localStorage.setItem('monthly_goal', val)
+  showToast('목표 금액이 저장됐습니다', 'success')
+  updateGoalProgress()
+}
+
+function updateGoalProgress() {
+  const goal = parseFloat(localStorage.getItem('monthly_goal') || '0')
+  const goalInput = document.getElementById('goal-input')
+  if (goalInput && goal > 0) goalInput.value = goal
+  const wrap = document.getElementById('goal-progress-wrap')
+  if (!wrap) return
+  if (!goal) { wrap.style.display = 'none'; return }
+  const last = DATA.runs[0]
+  const monthly = last?.earnings?.estimatedMonthlyRevenue || 0
+  const pct = Math.min(Math.round(monthly / goal * 100), 100)
+  wrap.style.display = 'block'
+  document.getElementById('goal-progress-label').textContent = `현재 월 수익: $${monthly.toFixed(2)} / 목표: $${goal.toFixed(2)}`
+  document.getElementById('goal-progress-pct').textContent = pct + '%'
+  document.getElementById('goal-progress-fill').style.width = pct + '%'
+}
+
+function renderMonthlySummary() {
+  const { runs } = DATA
+  const monthMap = {}
+  runs.forEach(r => {
+    const d = new Date(r.runAt || r.savedAt)
+    const key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0')
+    if (!monthMap[key]) monthMap[key] = { runs: 0, posts: 0, dailyRevs: [] }
+    monthMap[key].runs++
+    monthMap[key].posts += (r.postsGenerated || 0)
+    if (r.earnings?.estimatedDailyRevenue != null) monthMap[key].dailyRevs.push(r.earnings.estimatedDailyRevenue)
+  })
+  const rows = Object.entries(monthMap).sort((a,b) => b[0].localeCompare(a[0])).map(([month, d]) => {
+    const avgDaily = d.dailyRevs.length ? d.dailyRevs.reduce((s,v)=>s+v,0)/d.dailyRevs.length : 0
+    const monthEst = avgDaily * 30
+    return `<tr>
+      <td><strong>${month}</strong></td>
+      <td>${d.runs}회</td>
+      <td>${d.posts}개</td>
+      <td style="color:var(--green)">$${avgDaily.toFixed(2)}</td>
+      <td style="color:var(--accent);font-weight:700">$${monthEst.toFixed(2)}</td>
+    </tr>`
+  }).join('')
+  document.getElementById('monthly-summary-table').innerHTML = rows || '<tr><td colspan="5" class="empty">데이터 없음</td></tr>'
+}
+
 function renderAnalytics() {
   const { runs } = DATA
   const last = runs[0]
@@ -775,7 +1175,10 @@ function renderAnalytics() {
       <td>${r.totalWords ? r.totalWords.toLocaleString()+'자' : '-'}</td>
       <td style="color:var(--green);font-weight:700">${r.earnings?.estimatedDailyRevenue != null ? '$'+r.earnings.estimatedDailyRevenue.toFixed(2) : '-'}</td>
     </tr>`).join('') + '</tbody></table>'
+  updateGoalProgress()
   renderAnalyticsChart()
+  renderCumulativeChart()
+  renderMonthlySummary()
 }
 
 // ── Social Media ───────────────────────────────────────────────────────────────
@@ -808,6 +1211,7 @@ function copyText(text, btn) {
   navigator.clipboard.writeText(text).then(() => {
     const orig = btn.textContent
     btn.textContent = '✅ 복사됨'
+    showToast('클립보드에 복사됐습니다', 'success')
     setTimeout(() => btn.textContent = orig, 1500)
   })
 }
@@ -817,11 +1221,7 @@ function renderInstagram(social) {
   el.innerHTML = social.map((item, idx) => {
     const ig = item.instagram
     if (!ig) return ''
-    const allHashtags = [
-      ...(ig.hashtags?.popular||[]),
-      ...(ig.hashtags?.medium||[]),
-      ...(ig.hashtags?.niche||[])
-    ].join(' ')
+    const allHashtags = [...(ig.hashtags?.popular||[]),...(ig.hashtags?.medium||[]),...(ig.hashtags?.niche||[])].join(' ')
     const captionWithTags = (ig.caption || '') + (allHashtags ? '\n\n' + allHashtags : '')
     return `<div class="social-item">
       <div class="social-item-header">
@@ -842,18 +1242,9 @@ function renderInstagram(social) {
           <button class="expand-btn" onclick="toggleCaption('ig-cap-${idx}',this)">더 보기 ▼</button>
         </div>
         <div class="hashtag-groups">
-          <div>
-            <div class="hashtag-group-label">인기 해시태그</div>
-            <div class="hashtag-chips">${(ig.hashtags?.popular||[]).map(h=>`<span class="hashtag-chip">${esc(h)}</span>`).join('')}</div>
-          </div>
-          <div>
-            <div class="hashtag-group-label">중간 해시태그</div>
-            <div class="hashtag-chips">${(ig.hashtags?.medium||[]).map(h=>`<span class="hashtag-chip medium">${esc(h)}</span>`).join('')}</div>
-          </div>
-          <div>
-            <div class="hashtag-group-label">니치 해시태그</div>
-            <div class="hashtag-chips">${(ig.hashtags?.niche||[]).map(h=>`<span class="hashtag-chip niche">${esc(h)}</span>`).join('')}</div>
-          </div>
+          <div><div class="hashtag-group-label">인기 해시태그</div><div class="hashtag-chips">${(ig.hashtags?.popular||[]).map(h=>`<span class="hashtag-chip">${esc(h)}</span>`).join('')}</div></div>
+          <div><div class="hashtag-group-label">중간 해시태그</div><div class="hashtag-chips">${(ig.hashtags?.medium||[]).map(h=>`<span class="hashtag-chip medium">${esc(h)}</span>`).join('')}</div></div>
+          <div><div class="hashtag-group-label">니치 해시태그</div><div class="hashtag-chips">${(ig.hashtags?.niche||[]).map(h=>`<span class="hashtag-chip niche">${esc(h)}</span>`).join('')}</div></div>
         </div>
         <div style="margin-top:12px">
           <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px">⏰ 최적 게시 시간</div>
@@ -883,16 +1274,13 @@ function renderThreads(social) {
           <div class="thread-post">
             <div class="thread-label">${esc(p.label||'')} · <button class="copy-btn" style="padding:2px 8px;font-size:10px" onclick="copyText(${JSON.stringify(p.content||'')},this)">복사</button></div>
             <div class="thread-content">${esc(p.content||'')}</div>
-          </div>
-        `).join('')}
+          </div>`).join('')}
         ${th.engagementQuestion ? `<div style="background:rgba(124,106,247,.1);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:13px;color:var(--accent)">💬 ${esc(th.engagementQuestion)}</div>` : ''}
         <div style="margin-top:12px">
           <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px">⏰ 최적 게시 시간</div>
           <div class="post-times">${(th.bestPostingTimes||[]).map(t=>`<span class="post-time-chip">${esc(t)}</span>`).join('')}</div>
         </div>
-        <div style="margin-top:10px">
-          <div class="hashtag-chips">${(th.hashtags||[]).map(h=>`<span class="hashtag-chip">${esc(h)}</span>`).join('')}</div>
-        </div>
+        <div style="margin-top:10px"><div class="hashtag-chips">${(th.hashtags||[]).map(h=>`<span class="hashtag-chip">${esc(h)}</span>`).join('')}</div></div>
       </div>
     </div>`
   }).join('')
@@ -923,16 +1311,13 @@ function renderTiktok(social) {
             <div class="scene-time">⏱ ${esc(s.time||'')}</div>
             <div class="scene-text">${esc(s.text||'')}</div>
             ${s.direction ? `<div class="scene-dir">📽 ${esc(s.direction)}</div>` : ''}
-          </div>
-        `).join('')}
+          </div>`).join('')}
         ${tt.commentBait ? `<div style="background:rgba(6,182,212,.1);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:13px;color:var(--accent2)">💬 ${esc(tt.commentBait)}</div>` : ''}
         <div style="margin-top:12px">
           <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px">⏰ 최적 게시 시간</div>
           <div class="post-times">${(tt.bestPostingTimes||[]).map(t=>`<span class="post-time-chip">${esc(t)}</span>`).join('')}</div>
         </div>
-        <div style="margin-top:10px">
-          <div class="hashtag-chips">${(tt.hashtags||[]).map(h=>`<span class="hashtag-chip">${esc(h)}</span>`).join('')}</div>
-        </div>
+        <div style="margin-top:10px"><div class="hashtag-chips">${(tt.hashtags||[]).map(h=>`<span class="hashtag-chip">${esc(h)}</span>`).join('')}</div></div>
       </div>
     </div>`
   }).join('')
@@ -940,19 +1325,16 @@ function renderTiktok(social) {
 
 function toggleCaption(id, btn) {
   const el = document.getElementById(id)
-  if (el.classList.toggle('expanded')) {
-    btn.textContent = '접기 ▲'
-  } else {
-    btn.textContent = '더 보기 ▼'
-  }
+  if (el.classList.toggle('expanded')) { btn.textContent = '접기 ▲' }
+  else { btn.textContent = '더 보기 ▼' }
 }
 
 // ── CSV Export ────────────────────────────────────────────────────────────────
 function exportPostsCSV() {
-  const q = document.getElementById('post-search').value.toLowerCase()
-  const cat = document.getElementById('cat-filter').value
-  const from = document.getElementById('date-from').value
-  const to = document.getElementById('date-to').value
+  const q = (document.getElementById('post-search')?.value || '').toLowerCase()
+  const cat = document.getElementById('cat-filter')?.value || ''
+  const from = document.getElementById('date-from')?.value || ''
+  const to = document.getElementById('date-to')?.value || ''
   const filtered = DATA.posts.filter(p => {
     if (q && !p.title.toLowerCase().includes(q) && !(p.keyword||'').toLowerCase().includes(q)) return false
     if (cat && !(p.adsenseCategory || '일반').includes(cat)) return false
@@ -961,18 +1343,9 @@ function exportPostsCSV() {
     return true
   })
   const headers = ['날짜', '키워드', '제목', '카테고리', '글자수', 'FAQ수', '이미지수', 'TOC', '블로그URL']
-  const rows = filtered.map(p => [
-    p.date || '',
-    p.keyword || '',
-    p.title || '',
-    p.adsenseCategory || '일반',
-    p.wordCount || '',
-    p.faqCount || '',
-    p.imagesInserted || '',
-    p.hasToc ? 'Y' : 'N',
-    p.blogUrl || '',
-  ])
+  const rows = filtered.map(p => [p.date||'',p.keyword||'',p.title||'',p.adsenseCategory||'일반',p.wordCount||'',p.faqCount||'',p.imagesInserted||'',p.hasToc?'Y':'N',p.blogUrl||''])
   downloadCSV('posts.csv', headers, rows)
+  showToast('CSV 파일을 내보냈습니다', 'success')
 }
 
 function exportRunsCSV() {
@@ -987,6 +1360,7 @@ function exportRunsCSV() {
     r.earnings?.estimatedDailyRevenue?.toFixed(2) || '0.00',
   ])
   downloadCSV('runs.csv', headers, rows)
+  showToast('CSV 파일을 내보냈습니다', 'success')
 }
 
 function downloadCSV(filename, headers, rows) {
@@ -1003,15 +1377,17 @@ function downloadCSV(filename, headers, rows) {
 function getPAT() { return localStorage.getItem('gh_pat') || '' }
 function savePAT() {
   const v = document.getElementById('pat-input').value.trim()
-  if (!v) { alert('PAT를 입력하세요'); return }
+  if (!v) { showToast('PAT를 입력하세요', 'error'); return }
   localStorage.setItem('gh_pat', v)
   document.getElementById('pat-input').value = ''
   checkPATStatus()
   loadGHRuns()
+  showToast('PAT가 저장됐습니다', 'success')
 }
 function clearPAT() {
   localStorage.removeItem('gh_pat')
   checkPATStatus()
+  showToast('PAT가 삭제됐습니다', 'info')
 }
 function checkPATStatus() {
   const pat = getPAT()
@@ -1038,48 +1414,33 @@ function showRunStatus(msg, type = '') {
 async function runNow() {
   const pat = getPAT()
   if (!pat) { showRunStatus('❌ GitHub PAT를 먼저 설정하세요 (위 설정 섹션)', 'error'); return }
-
   const keyword = document.getElementById('run-keyword').value.trim()
   const mode = document.getElementById('run-mode').value
   const posts = document.getElementById('run-posts').value
   const btn = document.getElementById('run-btn')
-
   btn.disabled = true
   btn.className = 'run-btn running'
   btn.textContent = '⏳ 실행 중...'
   showRunStatus('<span class="pulse">⏳</span> GitHub Actions 워크플로우 시작 요청 중...', 'running')
-
   try {
     const resp = await fetch(
       `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${pat}`,
-          'Accept': 'application/vnd.github.v3+json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ref: GH_BRANCH,
-          inputs: { keyword, mode, posts_per_run: posts }
-        })
-      }
+      { method: 'POST', headers: { 'Authorization': `Bearer ${pat}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: { keyword, mode, posts_per_run: posts } }) }
     )
     if (resp.status === 204) {
-      showRunStatus(
-        `✅ 워크플로우 시작됨!<br>
-         모드: <strong>${mode}</strong> | 포스트: <strong>${posts}개</strong>${keyword ? ' | 키워드: <strong>' + esc(keyword) + '</strong>' : ''}<br>
-         <span style="color:var(--muted);font-size:12px">약 5~10분 후 완료됩니다. 완료 후 데이터 새로고침을 눌러주세요.</span>`,
-        'success'
-      )
+      showRunStatus(`✅ 워크플로우 시작됨!<br>모드: <strong>${mode}</strong> | 포스트: <strong>${posts}개</strong>${keyword ? ' | 키워드: <strong>' + esc(keyword) + '</strong>' : ''}<br><span style="color:var(--muted);font-size:12px">약 5~10분 후 완료됩니다.</span>`, 'success')
+      showToast('워크플로우가 시작됐습니다', 'success')
       setTimeout(() => loadGHRuns(), 5000)
       startPollTimer()
     } else {
       const err = await resp.json().catch(() => ({}))
       showRunStatus(`❌ 실패 (HTTP ${resp.status}): ${err.message || '알 수 없는 오류'}<br>PAT에 <strong>workflow</strong> 권한이 있는지 확인하세요.`, 'error')
+      showToast('실행 요청 실패', 'error')
     }
   } catch (e) {
     showRunStatus(`❌ 네트워크 오류: ${e.message}`, 'error')
+    showToast('네트워크 오류', 'error')
   } finally {
     btn.disabled = false
     btn.className = 'run-btn'
@@ -1098,13 +1459,10 @@ async function loadGHRuns() {
     if (!resp.ok) return
     const data = await resp.json()
     renderGHRuns(data.workflow_runs || [])
-
     const inProgress = (data.workflow_runs || []).some(r => r.status === 'in_progress' || r.status === 'queued')
     if (inProgress && !pollTimer) startPollTimer()
     if (!inProgress && pollTimer) { clearTimeout(pollTimer); pollTimer = null; loadAll(true) }
-  } catch (e) {
-    console.warn('GitHub runs 로드 실패:', e)
-  }
+  } catch (e) { console.warn('GitHub runs 로드 실패:', e) }
 }
 
 function renderGHRuns(runs) {
@@ -1114,9 +1472,7 @@ function renderGHRuns(runs) {
     const status = r.conclusion || r.status
     const statusClass = status === 'success' ? 'success' : status === 'failure' ? 'failure' : status === 'cancelled' ? 'cancelled' : 'in_progress'
     const statusLabel = {success:'✅ 성공', failure:'❌ 실패', cancelled:'⏹ 취소', in_progress:'⏳ 실행 중', queued:'🕐 대기 중'}[status] || status
-    const duration = r.updated_at && r.created_at
-      ? Math.round((new Date(r.updated_at) - new Date(r.created_at)) / 1000) + 's'
-      : '-'
+    const duration = r.updated_at && r.created_at ? Math.round((new Date(r.updated_at) - new Date(r.created_at)) / 1000) + 's' : '-'
     return `<tr>
       <td>#${r.run_number}</td>
       <td>${new Date(r.created_at).toLocaleString('ko-KR')}</td>
@@ -1129,11 +1485,30 @@ function renderGHRuns(runs) {
 
 function startPollTimer() {
   if (pollTimer) clearTimeout(pollTimer)
-  pollTimer = setTimeout(async () => {
-    pollTimer = null
-    await loadGHRuns()
-  }, 15000)
+  pollTimer = setTimeout(async () => { pollTimer = null; await loadGHRuns() }, 15000)
 }
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+function showToast(msg, type = 'info') {
+  const container = document.getElementById('toast-container')
+  const toast = document.createElement('div')
+  toast.className = 'toast ' + type
+  toast.textContent = msg
+  container.appendChild(toast)
+  requestAnimationFrame(() => { requestAnimationFrame(() => { toast.classList.add('show') }) })
+  setTimeout(() => {
+    toast.classList.remove('show')
+    setTimeout(() => toast.remove(), 350)
+  }, 3000)
+}
+
+// ── Keyboard Shortcuts ────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  const tag = document.activeElement.tagName.toLowerCase()
+  if (tag === 'input' || tag === 'textarea' || tag === 'select') return
+  if (e.key === 'Escape') closeModal()
+  if (e.key === 'r' || e.key === 'R') manualRefresh()
+})
 
 // ── Utils ─────────────────────────────────────────────────────────────────────
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
@@ -1141,6 +1516,13 @@ function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'
 // ── Init ──────────────────────────────────────────────────────────────────────
 loadAll()
 resetAutoRefresh()
+startCountdown()
+// Restore goal from localStorage
+const savedGoal = localStorage.getItem('monthly_goal')
+if (savedGoal) {
+  const gi = document.getElementById('goal-input')
+  if (gi) gi.value = savedGoal
+}
 </script>
 </body>
 </html>

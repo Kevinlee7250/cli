@@ -823,7 +823,7 @@ function navTo(page) {
   if (page === 'review') {
     setPublishMode(publishMode)
     loadOAuthSettings()
-    loadPendingPosts()
+    loadPendingPosts(true)   // silent: no toast on tab open
     renderUsedKeywords()
     const warnEl = document.getElementById('review-no-pat-warn')
     if (warnEl) warnEl.style.display = getPAT() ? 'none' : 'block'
@@ -1773,13 +1773,26 @@ async function testOAuthToken() {
   }
 }
 
-async function loadPendingPosts() {
+async function loadPendingPosts(silent = false) {
+  const container = document.getElementById('review-posts-container')
+  if (!silent && container) container.innerHTML = '<div class="empty"><div class="icon" style="font-size:36px">⏳</div>로딩 중...</div>'
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
-  pendingPosts = await fetch(base + '/pending_posts.json?t=' + Date.now()).then(r => r.json()).catch(() => [])
+  try {
+    const resp = await fetch(base + '/pending_posts.json?t=' + Date.now())
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+    pendingPosts = await resp.json()
+  } catch (e) {
+    pendingPosts = []
+    if (!silent) showToast('pending_posts.json 로드 실패: ' + e.message, 'error')
+  }
   DATA.pending = pendingPosts
   renderPendingPosts()
   updatePendingBadge()
-  showToast('검토 목록을 새로고침했습니다', 'info')
+  if (!silent) showToast('검토 목록을 새로고침했습니다 (' + pendingPosts.length + '개)', 'info')
+}
+
+function stripHtml(html) {
+  return (html || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
 }
 
 function renderPendingPosts() {
@@ -1789,32 +1802,77 @@ function renderPendingPosts() {
   document.getElementById('review-published-count').textContent = sessionPublished.length
   updatePendingBadge()
   const container = document.getElementById('review-posts-container')
+
+  // Info bar: total in file vs filtered
+  const totalInFile = pendingPosts.length
+  const infoBar = totalInFile > 0 && totalInFile !== filtered.length
+    ? `<div style="font-size:12px;color:var(--muted);margin-bottom:12px">파일 내 총 ${totalInFile}개 중 대기 ${filtered.length}개 표시 (게시완료/건너뜀 제외)</div>`
+    : ''
+
   if (!filtered.length) {
-    container.innerHTML = '<div class="empty"><div class="icon">📭</div>검토 대기 포스트가 없습니다<br><small style="font-size:12px;margin-top:6px;display:block">GitHub Actions에서 <strong>review</strong> 모드로 실행하면 여기에 포스트가 표시됩니다</small></div>'
+    container.innerHTML = infoBar + '<div class="empty"><div class="icon">📭</div>검토 대기 포스트가 없습니다<br><small style="font-size:12px;margin-top:6px;display:block">GitHub Actions에서 <strong>review</strong> 모드로 실행하면 여기에 포스트가 표시됩니다</small></div>'
     return
   }
-  container.innerHTML = filtered.map(p => {
+
+  container.innerHTML = infoBar + filtered.map(p => {
     const safeId = p.id.replace(/[^a-zA-Z0-9_-]/g, '_')
+    const excerpt = stripHtml(p.content).substring(0, 220)
+    const excerptHtml = excerpt ? `<div style="font-size:12px;color:var(--muted);line-height:1.7;margin-top:10px;border-left:3px solid var(--border);padding-left:10px">${esc(excerpt)}…</div>` : ''
+    const metaHtml = p.metaDescription ? `<div style="font-size:12px;color:var(--muted);line-height:1.6;margin-top:6px"><strong style="color:var(--accent2)">Meta:</strong> ${esc(p.metaDescription)}</div>` : ''
+    const hasContent = !!(p.content && p.content.trim())
     return `<div class="run-panel" id="rpost-${safeId}" style="margin-bottom:16px">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap">
-        <div style="flex:1;min-width:0">
-          <div style="font-size:11px;color:var(--accent);font-weight:700;margin-bottom:5px">${esc(p.keyword)} · ${p.date || ''}</div>
-          <div style="font-size:15px;font-weight:700;line-height:1.4">${esc(p.title)}</div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;flex-wrap:wrap">
+        <div style="flex:1;min-width:0;cursor:pointer" onclick="openPendingPreview(${JSON.stringify(p.id)})">
+          <div style="font-size:11px;color:var(--accent);font-weight:700;margin-bottom:4px">${esc(p.keyword)} · ${p.date || ''}</div>
+          <div style="font-size:15px;font-weight:700;line-height:1.4;color:var(--text)">${esc(p.title)}</div>
         </div>
-        <div style="display:flex;gap:8px;flex-shrink:0">
-          <button class="run-btn" style="padding:9px 20px;font-size:13px" onclick="publishPost(${JSON.stringify(p.id)})">${publishMode === 'actions' ? '🔒 서버 게시' : '🌐 직접 게시'}</button>
-          <button style="padding:9px 14px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.2);border-radius:8px;color:var(--red);font-size:13px;cursor:pointer;font-weight:600" onclick="skipPost(${JSON.stringify(p.id)})">🗑 건너뜀</button>
+        <div style="display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap">
+          ${hasContent ? `<button style="padding:8px 14px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer;font-weight:600" onclick="openPendingPreview(${JSON.stringify(p.id)})">📄 내용 보기</button>` : ''}
+          <button class="run-btn" style="padding:9px 18px;font-size:13px" onclick="publishPost(${JSON.stringify(p.id)})">${publishMode === 'actions' ? '🔒 서버 게시' : '🌐 직접 게시'}</button>
+          <button style="padding:9px 12px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.2);border-radius:8px;color:var(--red);font-size:12px;cursor:pointer;font-weight:600" onclick="skipPost(${JSON.stringify(p.id)})">🗑</button>
         </div>
       </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
         ${p.wordCount ? `<span class="badge muted">${p.wordCount.toLocaleString()}자</span>` : ''}
         ${(p.imagesInserted || 0) > 0 ? `<span class="img-pill">🖼 ${p.imagesInserted}개</span>` : ''}
+        ${(p.faq || []).length > 0 ? `<span class="badge blue">FAQ ${p.faq.length}개</span>` : ''}
         ${(p.labels || []).slice(0,5).map(l => `<span class="badge purple">${esc(l)}</span>`).join('')}
       </div>
-      ${p.metaDescription ? `<div style="font-size:12px;color:var(--muted);line-height:1.6">${esc(p.metaDescription)}</div>` : ''}
+      ${metaHtml}
+      ${excerptHtml}
       <div id="rstatus-${safeId}" class="status-panel" style="margin-top:10px;display:none"></div>
     </div>`
   }).join('')
+}
+
+function openPendingPreview(id) {
+  const post = pendingPosts.find(p => p.id === id)
+  if (!post) return
+  document.getElementById('modal-title').textContent = post.title
+  document.getElementById('modal-meta').innerHTML =
+    `<span class="badge purple">${esc(post.keyword)}</span> ` +
+    `<span class="badge muted">${post.date || ''}</span> ` +
+    `${post.wordCount ? `<span class="badge muted">${post.wordCount.toLocaleString()}자</span>` : ''} ` +
+    `${(post.imagesInserted || 0) > 0 ? `<span class="img-pill">🖼 ${post.imagesInserted}개</span>` : ''}`
+  const body = document.getElementById('modal-body')
+  if (post.content && post.content.trim()) {
+    // Render HTML inside sandboxed iframe
+    body.innerHTML = `
+      <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap">
+        ${post.metaDescription ? `<div style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:8px;width:100%"><strong style="color:var(--accent2)">Meta:</strong> ${esc(post.metaDescription)}</div>` : ''}
+        ${(post.labels || []).map(l => `<span class="badge purple">${esc(l)}</span>`).join('')}
+      </div>
+      <iframe id="preview-iframe" style="width:100%;height:520px;border:1px solid var(--border);border-radius:8px;background:#fff" sandbox="allow-same-origin"></iframe>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button class="run-btn" style="padding:9px 20px;font-size:13px" onclick="publishPost(${JSON.stringify(post.id)});closeModal()">${publishMode === 'actions' ? '🔒 서버 게시' : '🌐 직접 게시'}</button>
+        <button style="padding:9px 16px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:13px;cursor:pointer" onclick="closeModal()">닫기</button>
+      </div>`
+    const iframe = document.getElementById('preview-iframe')
+    iframe.srcdoc = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{font-family:sans-serif;padding:16px;color:#333;font-size:15px;line-height:1.8}h1,h2,h3{color:#111}img{max-width:100%;height:auto}a{color:#5b6af7}</style></head><body>${post.content}</body></html>`
+  } else {
+    body.innerHTML = '<div style="color:var(--muted);font-size:14px;padding:20px;text-align:center">본문 내용이 없습니다.</div>'
+  }
+  document.getElementById('modal-overlay').classList.add('open')
 }
 
 function skipPost(id) {

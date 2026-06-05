@@ -243,15 +243,21 @@ def save_pending_posts(results: list[dict]) -> None:
             pending = []
 
     now = datetime.now()
-    for r in results:
+    for idx, r in enumerate(results):
+        title = r.get("title", "")
+        content = r.get("content", "")
+        if not title or not content:
+            logger.warning(f"포스트 #{idx+1} 제목 또는 본문 비어있음 — 건너뜀 (title={repr(title[:30])})")
+            continue
         safe_kw = re.sub(r"[^\w가-힣]", "_", r.get("keyword", ""))[:20]
+        uid = f"{now.strftime('%Y%m%d%H%M%S')}_{idx:02d}_{safe_kw}"
         pending.append({
-            "id": now.strftime("%Y%m%d%H%M%S") + "_" + safe_kw,
+            "id": uid,
             "savedAt": now.isoformat(),
             "date": now.strftime("%Y-%m-%d"),
             "keyword": r.get("keyword", ""),
-            "title": r.get("title", ""),
-            "content": r.get("content", ""),
+            "title": title,
+            "content": content,
             "labels": r.get("labels", []),
             "wordCount": r.get("word_count", 0),
             "imagesInserted": r.get("images_inserted", 0),
@@ -259,6 +265,7 @@ def save_pending_posts(results: list[dict]) -> None:
             "metaDescription": r.get("meta_description", ""),
             "status": "pending",
         })
+        logger.info(f"  검토 대기 저장: {title[:60]} ({len(content)}자 HTML)")
 
     try:
         os.makedirs(os.path.dirname(PENDING_FILE), exist_ok=True)

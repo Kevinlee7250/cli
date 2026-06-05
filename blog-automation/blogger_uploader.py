@@ -42,8 +42,9 @@ def _get_access_token() -> str | None:
             token = resp.json().get("access_token")
             if token:
                 return token
-        except ValueError:
-            pass
+        except json.JSONDecodeError as e:
+            logger.error(f"토큰 응답 JSON 파싱 실패: {e}")
+            return None
     logger.error(f"토큰 발급 실패: {resp.status_code} {resp.text[:200]}")
     if "invalid_grant" in resp.text:
         logger.error("💡 해결: blog-automation/get_refresh_token.py 실행 후 GOOGLE_REFRESH_TOKEN Secret을 새 토큰으로 교체하세요.")
@@ -275,6 +276,9 @@ border-left:4px solid #ffc107;">
 
 def upload_post(post_data: dict) -> dict | None:
     """Blogger API로 포스트를 업로드합니다."""
+    if not post_data.get("title") or not post_data.get("content"):
+        logger.error("포스트 제목 또는 내용이 비어있음 — 업로드 건너뜀")
+        return None
     access_token = _get_access_token()
     if not access_token:
         return None
@@ -303,7 +307,11 @@ def upload_post(post_data: dict) -> dict | None:
         logger.error(f"업로드 네트워크 오류: {e}")
         return None
     if resp.status_code in (200, 201):
-        result = resp.json()
+        try:
+            result = resp.json()
+        except json.JSONDecodeError as e:
+            logger.error(f"업로드 응답 JSON 파싱 실패: {e} — {resp.text[:300]}")
+            return None
         logger.info(f"업로드 성공: {result.get('url', '')}")
         return result
     logger.error(f"업로드 실패: {resp.status_code} {resp.text[:300]}")

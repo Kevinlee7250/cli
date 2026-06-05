@@ -5,6 +5,7 @@
 - Wikimedia Commons (폴백)
 """
 
+import html
 import re
 import logging
 import requests
@@ -206,6 +207,8 @@ def fetch_images_for_queries(
 
 def _make_img_html(img: dict, alt: str, caption: str = "") -> str:
     """이미지 SEO 최적화 HTML 생성."""
+    alt_safe = html.escape(alt, quote=True)
+    caption_safe = html.escape(caption, quote=True)
     fig_style = "margin:2.5em auto;text-align:center;max-width:720px;"
     img_style = (
         "max-width:100%;height:auto;border-radius:10px;"
@@ -213,42 +216,42 @@ def _make_img_html(img: dict, alt: str, caption: str = "") -> str:
     )
     cap_html = (
         f'<figcaption style="text-align:center;font-size:13px;color:#777;'
-        f'margin-top:8px;font-style:italic;">{caption}</figcaption>'
+        f'margin-top:8px;font-style:italic;">{caption_safe}</figcaption>'
         if caption else ""
     )
     return (
         f'\n<figure style="{fig_style}">'
-        f'\n  <img src="{img["url"]}" alt="{alt}" title="{alt}" '
+        f'\n  <img src="{img["url"]}" alt="{alt_safe}" title="{alt_safe}" '
         f'style="{img_style}" loading="lazy" decoding="async" width="720"/>'
         f'\n  {cap_html}'
         f'\n</figure>\n'
     )
 
 
-def inject_images_into_content(html: str, images: list[dict], keyword: str) -> str:
+def inject_images_into_content(content: str, images: list[dict], keyword: str) -> str:
     """
     블로그 본문 HTML에 이미지를 전략적으로 삽입합니다.
     - 첫 이미지: 도입부 첫 <p> 바로 다음
     - 나머지 이미지: 짝수 번째 <h2> 섹션 끝에 삽입
     """
     if not images:
-        return html
+        return content
 
     img_iter = iter(enumerate(images))
 
     # ① 첫 번째 이미지: 첫 <p>...</p> 바로 다음
-    first_p = re.search(r'(</p>)', html, re.IGNORECASE)
+    first_p = re.search(r'(</p>)', content, re.IGNORECASE)
     if first_p:
         try:
             idx, img = next(img_iter)
             alt = img.get("search_query", keyword)
             img_html = _make_img_html(img, alt, img.get("title", ""))
-            html = html[:first_p.end()] + img_html + html[first_p.end():]
+            content = content[:first_p.end()] + img_html + content[first_p.end():]
         except StopIteration:
-            return html
+            return content
 
     # ② 나머지 이미지: <h2> 태그 직전에 삽입 (섹션 사이 배치)
-    h2_positions = [m.start() for m in re.finditer(r'<h2', html, re.IGNORECASE)]
+    h2_positions = [m.start() for m in re.finditer(r'<h2', content, re.IGNORECASE)]
     insert_positions = h2_positions[1::2]  # 2번째, 4번째, 6번째 H2 앞
 
     offset = 0
@@ -262,9 +265,9 @@ def inject_images_into_content(html: str, images: list[dict], keyword: str) -> s
                 img.get("title", ""),
             )
             actual_pos = pos + offset
-            html = html[:actual_pos] + img_html + html[actual_pos:]
+            content = content[:actual_pos] + img_html + content[actual_pos:]
             offset += len(img_html)
         except StopIteration:
             break
 
-    return html
+    return content

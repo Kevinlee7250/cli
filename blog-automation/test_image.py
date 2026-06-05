@@ -59,10 +59,10 @@ def test_duckduckgo(keyword="Korea news today"):
 
 
 def test_full_pipeline(keyword="재테크 방법"):
-    from image_fetcher import fetch_relevant_images, inject_images_into_content
+    from image_fetcher import fetch_images_for_queries, inject_images_into_content
     print(f"\n🚀 전체 파이프라인 테스트: '{keyword}'")
-    imgs = fetch_relevant_images(
-        keyword, count=3,
+    imgs = fetch_images_for_queries(
+        [keyword, f"{keyword} 방법", f"{keyword} 사례"],
         naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
         naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
     )

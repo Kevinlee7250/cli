@@ -21,15 +21,18 @@ def _load_history() -> list[dict]:
         try:
             with open(HISTORY_FILE, encoding="utf-8") as f:
                 return json.load(f)
-        except Exception:
+        except (json.JSONDecodeError, OSError):
             pass
     return []
 
 
 def _save_history(history: list[dict]) -> None:
-    os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
-    with open(HISTORY_FILE, "w", encoding="utf-8") as f:
-        json.dump(history, f, ensure_ascii=False, indent=2)
+    try:
+        os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
+        with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+            json.dump(history, f, ensure_ascii=False, indent=2)
+    except OSError as e:
+        logger.error(f"히스토리 저장 실패: {e}")
 
 
 def _estimate_earnings(post_count: int, avg_cpc: float = 0.9) -> dict:

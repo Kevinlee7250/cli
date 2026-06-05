@@ -196,11 +196,22 @@ def _parse_response(raw: str) -> dict | None:
             return None
 
 
+_KO_STOPWORDS = {
+    # 조사/어미/의존명사/지시어
+    "이것", "그것", "저것", "이런", "그런", "저런", "이때", "그때", "모든", "여러",
+    "어떤", "이런", "많은", "위한", "통한", "대한", "있는", "없는", "하는", "되는",
+    "있어", "있다", "없다", "한다", "된다", "합니다", "합니다", "됩니다", "있습니다",
+    "하면", "되면", "이며", "으로", "에서", "에게", "부터", "까지", "라고", "라는",
+    "것은", "것을", "것이", "것도", "것과", "것만", "것으로", "통해", "때문", "위해",
+    "하고", "하며", "하여", "하지", "보다", "같은", "같이", "때문", "경우", "정도",
+}
+
+
 def _extract_section_queries(html: str, keyword: str) -> list[str]:
-    """H2 섹션 제목 + 본문 핵심어를 결합해 이미지 검색 쿼리 목록을 반환합니다."""
+    """H2 섹션 제목 + 본문 핵심 명사를 결합해 이미지 검색 쿼리 목록을 반환합니다."""
     queries = [keyword]  # 첫 이미지: 도입부 → 메인 키워드
 
-    # 키워드에 포함된 단어 집합 (중복 제거용)
+    # 키워드 구성 단어 (중복 추가 방지)
     kw_words = set(re.findall(r'[가-힣]{2,}|[A-Za-z]{3,}', keyword.lower()))
 
     # H2 기준으로 섹션 분리
@@ -211,23 +222,32 @@ def _extract_section_queries(html: str, keyword: str) -> list[str]:
         if not h2_m:
             continue
 
-        # 1) 제목 정제
+        # 1) 제목 정제 (번호·특수문자 제거)
         heading = re.sub(r'<[^>]+>', '', h2_m.group(1)).strip()
+        heading = re.sub(r'^\d+[\.\)]\s*', '', heading)   # 앞 번호 제거
         heading = re.sub(r'[^\w\s가-힣]', ' ', heading)
-        heading = re.sub(r'\s+', ' ', heading).strip()[:30]
+        heading = re.sub(r'\s+', ' ', heading).strip()[:25]
         if not heading or len(heading) < 2:
             continue
 
-        # 2) 섹션 본문 첫 단락에서 핵심 명사 추출
+        # 2) 본문 첫 단락 앞 80자에서 핵심 명사 추출
         body = section[h2_m.end():]
         p_m = re.search(r'<p[^>]*>(.*?)</p>', body, re.IGNORECASE | re.DOTALL)
         extra_terms = ""
         if p_m:
-            p_text = re.sub(r'<[^>]+>', '', p_m.group(1))
-            # 한국어 명사(2~6자) 또는 영어 단어(3~12자) 추출, 키워드 중복 제외
-            nouns = re.findall(r'[가-힣]{2,6}|[A-Za-z]{3,12}', p_text)
-            filtered = [w for w in nouns if w.lower() not in kw_words][:2]
-            extra_terms = " ".join(filtered)
+            p_text = re.sub(r'<[^>]+>', '', p_m.group(1))[:120]
+            # 영문 대문자 약어만 추출 (ETF, S&P500, GDP 등) — 한국어 형태소 분석 없이 신뢰도 높음
+            acronyms = re.findall(r'[A-Z][A-Z0-9&]{1,9}', p_text)
+            filtered = [a for a in acronyms if a.lower() not in kw_words]
+            seen: set[str] = set()
+            unique = []
+            for w in filtered:
+                if w not in seen:
+                    seen.add(w)
+                    unique.append(w)
+                if len(unique) == 2:
+                    break
+            extra_terms = " ".join(unique)
 
         query = f"{keyword} {heading}".strip()
         if extra_terms:

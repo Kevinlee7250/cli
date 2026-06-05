@@ -50,7 +50,7 @@ from config import (
 )
 from content_generator import generate_post
 from blogger_uploader import upload_post
-from keyword_collector import get_trending_keywords
+from keyword_collector import get_trending_keywords, _migrate_used_keywords
 from dashboard_exporter import log_run, export_dashboard
 
 
@@ -86,6 +86,9 @@ def _check_config() -> bool:
 
 def run_once(keywords: list[str] | None = None, dry_run: bool = False) -> None:
     """키워드를 수집해 포스트를 생성하고 Blogger에 업로드합니다."""
+    # 구버전 used_keywords.json 포맷 자동 마이그레이션
+    _migrate_used_keywords()
+
     logger.info("=" * 60)
     logger.info(f"블로그 자동화 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     logger.info("=" * 60)

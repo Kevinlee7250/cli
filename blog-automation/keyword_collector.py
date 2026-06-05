@@ -3,6 +3,9 @@
 - Google Trends RSS (무료, 인증 불필요)
 - Naver DataLab 인기 검색어 (API 키 있을 때)
 - 폴백: 고정 키워드 목록 (중복 방지 로테이션)
+- 유사 키워드 필터링 (단어 겹침 비율 기반)
+- 포스트 제목/키워드 이력과 비교하여 주제 중복 방지
+- 30일 경과 키워드는 자동 재사용 가능
 """
 
 import json
@@ -24,17 +27,28 @@ _HEADERS = {
 }
 
 _USED_KW_FILE = os.path.join(os.path.dirname(__file__), "logs", "used_keywords.json")
+_HISTORY_FILE = os.path.join(os.path.dirname(__file__), "logs", "run_history.json")
+
+# 키워드 재사용 허용 기간 (일)
+_REUSE_AFTER_DAYS = 30
+
+# 유사도 판단 단어 겹침 임계값 (0~1)
+_SIMILARITY_THRESHOLD = 0.55
 
 # 폴백 키워드 — 매번 다른 키워드가 선택되도록 충분히 많이 유지
 _FALLBACK_KEYWORDS_KR = [
     "재테크 방법", "주식 투자 초보", "부동산 투자 전략", "다이어트 방법", "건강 관리 팁",
-    "부업 아이디어", "자기계발 방법", "여행 추천지", "맛집 추천", "최신 IT 기기",
-    "ETF 투자 방법", "청약 당첨 전략", "코인 투자 입문", "다이어트 식단", "운동 루틴",
-    "자격증 추천", "영어 공부법", "재취업 준비", "노후 준비 방법", "보험 비교",
-    "아파트 분양 정보", "전세 월세 비교", "대출 금리 비교", "신용카드 혜택", "절세 방법",
+    "부업 아이디어", "자기계발 방법", "여행 추천지", "최신 IT 기기 추천",
+    "ETF 투자 방법", "청약 당첨 전략", "코인 투자 입문", "다이어트 식단 계획", "운동 루틴",
+    "자격증 추천", "영어 공부법", "재취업 준비", "노후 준비 방법", "보험 비교 가이드",
+    "아파트 분양 정보", "전세 월세 비교", "대출 금리 비교", "신용카드 혜택 분석", "절세 방법",
     "챗GPT 활용법", "AI 투자 도구", "스마트폰 추천", "유튜브 수익화", "블로그 수익화",
-    "법률 상식", "이혼 절차", "상속세 계산", "교통사고 처리", "소비자 권리",
-    "건강검진 추천", "영양제 효능", "혈당 관리법", "면역력 높이는 법", "수면의 질 높이기",
+    "법률 상식 정리", "이혼 절차 안내", "상속세 계산법", "교통사고 처리 방법", "소비자 권리",
+    "건강검진 추천", "영양제 효능 비교", "혈당 관리법", "면역력 높이는 법", "수면의 질 높이기",
+    "주식 배당금 투자", "해외 직구 방법", "캠핑 준비물 체크리스트", "반려동물 건강관리",
+    "중고차 구매 가이드", "전기차 장단점", "태양광 발전 투자", "프리랜서 세금 신고",
+    "퇴직금 활용 방법", "연금보험 비교", "해외여행 준비", "국내 여행지 추천",
+    "온라인 쇼핑 꿀팁", "중고거래 주의사항", "인테리어 셀프 팁", "가전제품 절전 방법",
 ]
 
 _FALLBACK_KEYWORDS_EN = [
@@ -43,8 +57,14 @@ _FALLBACK_KEYWORDS_EN = [
     "tech gadgets review", "home workout routines", "credit card rewards", "tax saving strategies",
     "real estate investing", "crypto for beginners", "AI tools productivity", "freelancing tips",
     "retirement planning", "dividend investing", "budget travel hacks", "online courses worth it",
+    "stock market basics", "emergency fund tips", "debt payoff strategies", "home buying guide",
+    "car insurance comparison", "health insurance tips", "social media marketing", "dropshipping guide",
 ]
 
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 사용 이력 관리
+# ──────────────────────────────────────────────────────────────────────────────
 
 def _load_used_keywords() -> dict:
     """최근 사용된 키워드 목록을 로드합니다."""
@@ -54,15 +74,116 @@ def _load_used_keywords() -> dict:
                 return json.load(f)
         except Exception:
             pass
-    return {"keywords": []}
+    return {"keywords": [], "entries": []}
 
 
-def _save_used_keywords(used: list[str]) -> None:
-    """사용된 키워드 목록을 저장합니다 (최근 300개 유지)."""
-    os.makedirs(os.path.dirname(_USED_KW_FILE), exist_ok=True)
-    with open(_USED_KW_FILE, "w", encoding="utf-8") as f:
-        json.dump({"keywords": used[-300:], "updatedAt": datetime.now().isoformat()}, f, ensure_ascii=False, indent=2)
+def _save_used_keywords(used_data: dict) -> None:
+    """사용된 키워드 목록을 저장합니다."""
+    try:
+        os.makedirs(os.path.dirname(_USED_KW_FILE), exist_ok=True)
+        # keywords 리스트는 최근 300개만 유지
+        used_data["keywords"] = used_data.get("keywords", [])[-300:]
+        # entries도 최근 300개만 유지
+        used_data["entries"] = used_data.get("entries", [])[-300:]
+        used_data["updatedAt"] = datetime.now().isoformat()
+        with open(_USED_KW_FILE, "w", encoding="utf-8") as f:
+            json.dump(used_data, f, ensure_ascii=False, indent=2)
+    except OSError as e:
+        logger.error(f"키워드 이력 저장 실패: {e}")
 
+
+def _get_active_used_set(used_data: dict) -> set[str]:
+    """
+    아직 재사용 금지 기간(_REUSE_AFTER_DAYS)이 지나지 않은 키워드 집합을 반환합니다.
+    entries 필드가 있으면 날짜 기반으로, 없으면 keywords 전체를 반환합니다.
+    """
+    entries = used_data.get("entries", [])
+    if not entries:
+        # 구버전 호환: entries 없으면 keywords 전체 사용
+        return set(used_data.get("keywords", []))
+
+    cutoff = datetime.now() - timedelta(days=_REUSE_AFTER_DAYS)
+    active = set()
+    for entry in entries:
+        try:
+            used_at = datetime.fromisoformat(entry["usedAt"])
+            if used_at >= cutoff:
+                active.add(entry["keyword"])
+        except (KeyError, ValueError):
+            # 날짜 파싱 불가 시 안전하게 활성으로 처리
+            active.add(entry.get("keyword", ""))
+    return active
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 포스팅 이력 로드
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _load_recent_post_corpus(limit_runs: int = 30) -> list[str]:
+    """
+    최근 포스팅 이력에서 키워드 + 제목 코퍼스를 수집합니다.
+    유사도 비교에 사용됩니다.
+    """
+    if not os.path.exists(_HISTORY_FILE):
+        return []
+    try:
+        with open(_HISTORY_FILE, encoding="utf-8") as f:
+            history = json.load(f)
+        corpus = []
+        for run in history[:limit_runs]:
+            corpus.extend(run.get("keywords", []))
+            for post in run.get("posts", []):
+                if post.get("keyword"):
+                    corpus.append(post["keyword"])
+                if post.get("title"):
+                    corpus.append(post["title"])
+        return corpus
+    except Exception as e:
+        logger.debug(f"포스팅 이력 로드 실패: {e}")
+        return []
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 유사도 판단
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _tokenize(text: str) -> set[str]:
+    """한국어/영어 단어 단위로 토크나이징합니다 (2글자 이상만)."""
+    return {w for w in re.findall(r'[가-힣]{2,}|[a-zA-Z]{3,}', text.lower()) if w}
+
+
+def _similarity(a: str, b: str) -> float:
+    """두 문자열의 단어 겹침 비율 (Jaccard 유사도)을 반환합니다."""
+    ta, tb = _tokenize(a), _tokenize(b)
+    if not ta or not tb:
+        return 1.0 if a.strip() == b.strip() else 0.0
+    return len(ta & tb) / len(ta | tb)
+
+
+def _is_too_similar(candidate: str, corpus: list[str], threshold: float = _SIMILARITY_THRESHOLD) -> bool:
+    """
+    후보 키워드가 코퍼스 내 어느 항목과라도 너무 유사하면 True를 반환합니다.
+    - 완전 일치
+    - 한쪽이 다른 쪽을 포함
+    - Jaccard 유사도 >= threshold
+    """
+    cand = candidate.strip().lower()
+    for item in corpus:
+        item = item.strip().lower()
+        if not item:
+            continue
+        if cand == item:
+            return True
+        if cand in item or item in cand:
+            return True
+        if _similarity(cand, item) >= threshold:
+            return True
+    return False
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 트렌드 수집 소스
+# ──────────────────────────────────────────────────────────────────────────────
 
 def _google_trends_rss(country: str = "KR", count: int = 10) -> list[str]:
     """Google Trends 일간 트렌드 RSS에서 키워드를 수집합니다."""
@@ -126,6 +247,35 @@ def _naver_datalab_keywords(client_id: str, client_secret: str, count: int = 10)
     return []
 
 
+# ──────────────────────────────────────────────────────────────────────────────
+# 메인 함수
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _migrate_used_keywords() -> None:
+    """
+    구버전 used_keywords.json (keywords 리스트만 있는 형태)을
+    신버전 (entries 포함) 포맷으로 자동 마이그레이션합니다.
+    이미 마이그레이션됐거나 파일이 없으면 아무 작업도 하지 않습니다.
+    """
+    if not os.path.exists(_USED_KW_FILE):
+        return
+    try:
+        with open(_USED_KW_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        if data.get("entries") is not None:
+            return  # 이미 신버전
+        keywords = data.get("keywords", [])
+        # 날짜 정보가 없으므로 30일 전으로 일괄 처리 (즉시 재사용 가능)
+        old_date = (datetime.now() - timedelta(days=_REUSE_AFTER_DAYS + 1)).isoformat()
+        data["entries"] = [{"keyword": kw, "usedAt": old_date} for kw in keywords]
+        data["updatedAt"] = datetime.now().isoformat()
+        with open(_USED_KW_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        logger.info(f"used_keywords.json 마이그레이션 완료: {len(keywords)}개 키워드 (재사용 가능 상태)")
+    except Exception as e:
+        logger.warning(f"used_keywords.json 마이그레이션 실패 (무시): {e}")
+
+
 def get_trending_keywords(
     country: str = "KR",
     language: str = "ko",
@@ -134,58 +284,103 @@ def get_trending_keywords(
     naver_client_secret: str = "",
 ) -> list[str]:
     """
-    트렌드 키워드를 수집합니다. 이미 사용된 키워드는 건너뜁니다.
-    우선순위: Google Trends RSS → Naver DataLab → 고정 폴백 목록
+    트렌드 키워드를 수집합니다.
+    - 이미 사용된 키워드(30일 이내)는 제외
+    - 포스팅 이력과 유사한 주제도 제외 (Jaccard 유사도 기반)
+    - 우선순위: Google Trends RSS → Naver DataLab → 고정 폴백 목록
     """
     used_data = _load_used_keywords()
-    used_set = set(used_data.get("keywords", []))
+    active_used_set = _get_active_used_set(used_data)
+
+    # 포스팅 이력 코퍼스 (키워드 + 제목)
+    post_corpus = _load_recent_post_corpus()
+    logger.info(f"포스팅 이력 코퍼스: {len(post_corpus)}개 항목 로드 (중복 방지 기준)")
 
     candidates: list[str] = []
 
     # 1순위: Google Trends RSS
-    candidates = _google_trends_rss(country, count * 3)
+    candidates = _google_trends_rss(country, count * 4)
 
     # 2순위: Naver DataLab
     if len(candidates) < count and naver_client_id:
         candidates += _naver_datalab_keywords(naver_client_id, naver_client_secret, count * 2)
 
     # 3순위: 고정 폴백 (미사용 키워드 우선)
-    if len(candidates) < count:
-        fallback = _FALLBACK_KEYWORDS_KR if language == "ko" else _FALLBACK_KEYWORDS_EN
-        unused = [kw for kw in fallback if kw not in used_set]
-        if not unused:
-            unused = fallback  # 모두 사용했으면 전체 목록 재사용
-            logger.info("폴백 키워드 전체 재사용 (사이클 완료)")
-        else:
-            logger.warning(f"외부 트렌드 API 실패 — 미사용 폴백 키워드 {len(unused)}개 사용")
-        candidates += unused
+    fallback = _FALLBACK_KEYWORDS_KR if language == "ko" else _FALLBACK_KEYWORDS_EN
+    unused_fallback = [kw for kw in fallback if kw not in active_used_set]
+    if not unused_fallback:
+        unused_fallback = fallback
+        logger.info("폴백 키워드 전체 재사용 (30일 사이클 완료)")
+    candidates += unused_fallback
 
-    # 중복 제거 및 count 개 선택 (미사용 우선)
+    # 중복 제거 및 유사도 필터링
     seen: set[str] = set()
     result: list[str] = []
+    rejected_similar: list[str] = []
+    rejected_used: list[str] = []
 
-    # 미사용 키워드 우선
+    # 이번 회차 선정 키워드도 코퍼스에 누적 (선정된 것끼리도 중복 방지)
+    session_corpus = list(post_corpus)
+
     for kw in candidates:
         kw = kw.strip()
-        if kw and kw not in seen and kw not in used_set:
-            seen.add(kw)
-            result.append(kw)
+        if not kw or kw in seen:
+            continue
+        seen.add(kw)
+
+        # 30일 이내 사용 키워드 제외
+        if kw in active_used_set:
+            rejected_used.append(kw)
+            continue
+
+        # 포스팅 이력 + 이번 회차 선정 키워드와 유사도 비교
+        if _is_too_similar(kw, session_corpus):
+            rejected_similar.append(kw)
+            logger.debug(f"유사 주제 제외: '{kw}'")
+            continue
+
+        result.append(kw)
+        session_corpus.append(kw)  # 선정된 키워드를 코퍼스에 추가
+
         if len(result) >= count:
             break
 
-    # 부족하면 이미 사용한 것도 포함
+    if rejected_used:
+        logger.info(f"최근 사용 제외 {len(rejected_used)}개: {rejected_used[:5]}")
+    if rejected_similar:
+        logger.info(f"유사 주제 제외 {len(rejected_similar)}개: {rejected_similar[:5]}")
+
+    # 그래도 부족하면 유사도 기준을 낮춰서 재시도
     if len(result) < count:
+        logger.warning(f"선정 키워드 부족 ({len(result)}/{count}) — 유사도 기준 완화하여 재시도")
         for kw in candidates:
             kw = kw.strip()
-            if kw and kw not in seen:
-                seen.add(kw)
-                result.append(kw)
+            if not kw or kw in {r for r in result}:
+                continue
+            if kw in active_used_set:
+                continue
+            result.append(kw)
+            if len(result) >= count:
+                break
+
+    # 그래도 부족하면 오래된 키워드도 허용
+    if len(result) < count:
+        logger.warning(f"선정 키워드 여전히 부족 ({len(result)}/{count}) — 이전 사용 키워드 일부 허용")
+        for kw in candidates:
+            kw = kw.strip()
+            if not kw or kw in {r for r in result}:
+                continue
+            result.append(kw)
             if len(result) >= count:
                 break
 
     # 사용 이력 업데이트
-    updated_used = used_data.get("keywords", []) + result
-    _save_used_keywords(updated_used)
+    now_iso = datetime.now().isoformat()
+    existing_entries = used_data.get("entries", [])
+    new_entries = [{"keyword": kw, "usedAt": now_iso} for kw in result]
+    used_data["keywords"] = used_data.get("keywords", []) + result
+    used_data["entries"] = existing_entries + new_entries
+    _save_used_keywords(used_data)
 
-    logger.info(f"선택된 키워드 {len(result)}개: {result}")
+    logger.info(f"최종 선정 키워드 {len(result)}개: {result}")
     return result

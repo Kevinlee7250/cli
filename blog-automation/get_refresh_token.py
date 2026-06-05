@@ -5,7 +5,6 @@ Google OAuth Refresh Token 발급 스크립트
 
 import json
 import os
-import socket
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -37,12 +36,6 @@ class _Handler(BaseHTTPRequestHandler):
 
     def log_message(self, *args):
         pass  # 불필요한 로그 숨김
-
-
-def _find_free_port():
-    with socket.socket() as s:
-        s.bind(("", 0))
-        return s.getsockname()[1]
 
 
 def main():

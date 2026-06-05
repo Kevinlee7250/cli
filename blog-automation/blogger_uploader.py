@@ -27,12 +27,16 @@ BLOGGER_API_BASE = "https://www.googleapis.com/blogger/v3"
 # ──────────────────────────────────────────────────────────────────────────────
 
 def _get_access_token() -> str | None:
-    resp = requests.post(TOKEN_URL, data={
-        "client_id": BLOGGER_CLIENT_ID,
-        "client_secret": BLOGGER_CLIENT_SECRET,
-        "refresh_token": BLOGGER_REFRESH_TOKEN,
-        "grant_type": "refresh_token",
-    }, timeout=15)
+    try:
+        resp = requests.post(TOKEN_URL, data={
+            "client_id": BLOGGER_CLIENT_ID,
+            "client_secret": BLOGGER_CLIENT_SECRET,
+            "refresh_token": BLOGGER_REFRESH_TOKEN,
+            "grant_type": "refresh_token",
+        }, timeout=15)
+    except requests.exceptions.RequestException as e:
+        logger.error(f"토큰 요청 네트워크 오류: {e}")
+        return None
     if resp.status_code == 200:
         try:
             token = resp.json().get("access_token")
@@ -278,7 +282,7 @@ def upload_post(post_data: dict) -> dict | None:
     full_content = _build_full_content(post_data)
     kw = post_data.get("keyword", "")
     raw_labels = post_data.get("labels", [])
-    labels = list(dict.fromkeys([kw] + raw_labels if kw not in raw_labels else raw_labels))
+    labels = list(dict.fromkeys([kw] + raw_labels))
 
     payload = {
         "title": post_data.get("title", "Untitled"),
@@ -286,14 +290,18 @@ def upload_post(post_data: dict) -> dict | None:
         "labels": labels[:20],
     }
 
-    url = f"{BLOGGER_API_BASE}/blogs/{BLOGGER_BLOG_ID}/posts/"
+    url = f"{BLOGGER_API_BASE}/blogs/{BLOGGER_BLOG_ID}/posts"
     params = {"isDraft": POST_STATUS != "live"}
     headers = {
         "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json",
     }
 
-    resp = requests.post(url, json=payload, headers=headers, params=params, timeout=30)
+    try:
+        resp = requests.post(url, json=payload, headers=headers, params=params, timeout=30)
+    except requests.exceptions.RequestException as e:
+        logger.error(f"업로드 네트워크 오류: {e}")
+        return None
     if resp.status_code in (200, 201):
         result = resp.json()
         logger.info(f"업로드 성공: {result.get('url', '')}")

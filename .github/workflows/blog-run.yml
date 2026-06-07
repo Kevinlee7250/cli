@@ -67,7 +67,7 @@ jobs:
           ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
           ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"
           POSTS_PER_RUN="${{ inputs.posts_per_run || '3' }}"
-          POST_STATUS="${{ inputs.mode || 'live' }}"
+          POST_STATUS="${{ (inputs.mode == 'draft') && 'draft' || 'live' }}"
           BLOG_LANGUAGE=ko
           TREND_COUNTRY=KR
           LOG_LEVEL=info

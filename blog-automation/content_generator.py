@@ -227,21 +227,25 @@ def _extract_section_queries(html: str, keyword: str) -> list[str]:
         if not h2_m:
             continue
 
-        # 1) 제목 정제 (번호·특수문자 제거)
+        # 1) 제목 정제 (이모지·번호·특수문자 제거)
         heading = re.sub(r'<[^>]+>', '', h2_m.group(1)).strip()
-        heading = re.sub(r'^\d+[\.\)]\s*', '', heading)   # 앞 번호 제거
-        heading = re.sub(r'[^\w\s가-힣]', ' ', heading)
-        heading = re.sub(r'\s+', ' ', heading).strip()[:25]
-        if not heading or len(heading) < 2:
+        heading = re.sub(r'[^\w\s가-힣]', ' ', heading)   # 이모지·특수문자 제거
+        heading = re.sub(r'^\s*\d+\s*', '', heading)       # 앞 번호 제거
+        heading = re.sub(r'\s+', ' ', heading).strip()
+
+        # 제목에서 키워드 단어와 겹치는 부분 제거 (중복 쿼리 방지)
+        heading_words = heading.split()
+        deduped = [w for w in heading_words if w.lower() not in kw_words]
+        heading_clean = " ".join(deduped).strip()[:25]
+        if not heading_clean or len(heading_clean) < 2:
             continue
 
-        # 2) 본문 첫 단락 앞 80자에서 핵심 명사 추출
+        # 2) 본문 첫 단락에서 영문 대문자 약어 추출 (ETF, GDP 등)
         body = section[h2_m.end():]
         p_m = re.search(r'<p[^>]*>(.*?)</p>', body, re.IGNORECASE | re.DOTALL)
         extra_terms = ""
         if p_m:
             p_text = re.sub(r'<[^>]+>', '', p_m.group(1))[:120]
-            # 영문 대문자 약어만 추출 (ETF, S&P500, GDP 등) — 한국어 형태소 분석 없이 신뢰도 높음
             acronyms = re.findall(r'[A-Z][A-Z0-9&]{1,9}', p_text)
             filtered = [a for a in acronyms if a.lower() not in kw_words]
             seen: set[str] = set()
@@ -254,10 +258,10 @@ def _extract_section_queries(html: str, keyword: str) -> list[str]:
                     break
             extra_terms = " ".join(unique)
 
-        query = f"{keyword} {heading}".strip()
+        query = f"{keyword} {heading_clean}".strip()
         if extra_terms:
             query = f"{query} {extra_terms}".strip()
-        queries.append(query[:60])
+        queries.append(query[:55])
 
     return queries[:4]
 

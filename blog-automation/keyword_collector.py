@@ -1,7 +1,7 @@
 """
 트렌드 키워드 수집 모듈
 - Google Trends RSS (무료, 인증 불필요)
-- Naver DataLab 인기 검색어 (API 키 있을 때)
+- Claude AI 키워드 생성 (Google Trends 결과 부족 시 2순위)
 - 폴백: 고정 키워드 목록 (중복 방지 로테이션)
 - 유사 키워드 필터링 (단어 겹침 비율 기반)
 - 포스트 제목/키워드 이력과 비교하여 주제 중복 방지
@@ -236,40 +236,48 @@ def _google_trends_rss(country: str = "KR", count: int = 10) -> list[str]:
         return []
 
 
-def _naver_datalab_keywords(client_id: str, client_secret: str, count: int = 10) -> list[str]:
-    """Naver DataLab 검색어 트렌드 API (선택적)."""
-    if not client_id or not client_secret:
-        return []
+def _claude_ai_keywords(language: str = "ko", count: int = 10) -> list[str]:
+    """Claude API로 현재 트렌드 기반 키워드를 생성합니다 (Google Trends 결과 부족 시 2순위)."""
     try:
-        today = datetime.now().strftime("%Y-%m-%d")
-        week_ago = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
-
-        r = requests.post(
-            "https://openapi.naver.com/v1/datalab/search",
-            json={
-                "startDate": week_ago,
-                "endDate": today,
-                "timeUnit": "date",
-                "keywordGroups": [
-                    {"groupName": "트렌드", "keywords": ["주식", "부동산", "재테크", "다이어트", "여행"]},
-                ],
-            },
-            headers={
-                "X-Naver-Client-Id": client_id,
-                "X-Naver-Client-Secret": client_secret,
-                "Content-Type": "application/json",
-            },
-            timeout=10,
+        import anthropic
+        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
+        if not ANTHROPIC_API_KEY or ANTHROPIC_API_KEY.startswith("sk-ant-xxx"):
+            return []
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        now = datetime.now()
+        if language == "ko":
+            date_str = now.strftime("%Y년 %m월 %d일")
+            prompt = (
+                f"오늘 날짜: {date_str}\n\n"
+                f"한국 블로그 애드센스 수익화에 적합한 검색량 높은 키워드 {count}개를 생성하세요.\n"
+                "조건: 금융/재테크·AI/기술·건강·부동산·부업·세금/법률 카테고리 골고루 포함, "
+                "현재 한국 트렌드 반영, 5~15자 롱테일 키워드.\n"
+                f'JSON 배열만 응답 (설명 없이): ["키워드1", ..., "키워드{count}"]'
+            )
+        else:
+            date_str = now.strftime("%B %d, %Y")
+            prompt = (
+                f"Today: {date_str}\n\n"
+                f"Generate {count} high-CPC blog keywords for AdSense monetization.\n"
+                "Categories: finance, AI/tech, health, real estate, side income, legal. "
+                "Long-tail keywords, 3-8 words each, currently trending.\n"
+                f'JSON array only (no explanation): ["keyword1", ..., "keyword{count}"]'
+            )
+        msg = client.messages.create(
+            model=CLAUDE_MODEL,
+            max_tokens=400,
+            messages=[{"role": "user", "content": prompt}],
         )
-        if r.status_code == 200:
-            try:
-                results = r.json().get("results", [])
-            except json.JSONDecodeError:
-                logger.debug("Naver DataLab API 응답이 JSON이 아님")
-                return []
-            return [res.get("title", "") for res in results[:count] if res.get("title")]
-    except Exception as e:
-        logger.debug(f"Naver DataLab 오류: {e}")
+        raw = msg.content[0].text.strip()
+        s, e = raw.find('['), raw.rfind(']')
+        if s != -1 and e > s:
+            kws = json.loads(raw[s:e + 1])
+            if isinstance(kws, list):
+                result = [str(k).strip() for k in kws if str(k).strip()][:count]
+                logger.info(f"Claude AI 키워드 생성: {len(result)}개")
+                return result
+    except Exception as exc:
+        logger.debug(f"Claude AI 키워드 생성 실패: {exc}")
     return []
 
 
@@ -313,7 +321,7 @@ def get_trending_keywords(
     트렌드 키워드를 수집합니다.
     - 이미 사용된 키워드(30일 이내)는 제외
     - 포스팅 이력과 유사한 주제도 제외 (Jaccard 유사도 기반)
-    - 우선순위: Google Trends RSS → Naver DataLab → 고정 폴백 목록
+    - 우선순위: Google Trends RSS → Claude AI → 고정 폴백 목록
     """
     used_data = _load_used_keywords()
     active_used_set = _get_active_used_set(used_data)
@@ -323,13 +331,21 @@ def get_trending_keywords(
     logger.info(f"포스팅 이력 코퍼스: {len(post_corpus)}개 항목 로드 (중복 방지 기준)")
 
     candidates: list[str] = []
+    keyword_sources: dict[str, str] = {}  # 키워드별 수집 출처 추적
 
     # 1순위: Google Trends RSS
-    candidates = _google_trends_rss(country, count * 4)
+    trends_kws = _google_trends_rss(country, count * 4)
+    for kw in trends_kws:
+        keyword_sources[kw] = "google_trends"
+    candidates = trends_kws
 
-    # 2순위: Naver DataLab
-    if len(candidates) < count and naver_client_id:
-        candidates += _naver_datalab_keywords(naver_client_id, naver_client_secret, count * 2)
+    # 2순위: Claude AI (Google Trends 결과 부족 시)
+    if len(candidates) < count * 2:
+        claude_kws = _claude_ai_keywords(language, count * 2)
+        for kw in claude_kws:
+            if kw not in keyword_sources:
+                keyword_sources[kw] = "claude_ai"
+        candidates += claude_kws
 
     # 3순위: 고정 폴백 (미사용 키워드 우선)
     fallback = _FALLBACK_KEYWORDS_KR if language == "ko" else _FALLBACK_KEYWORDS_EN
@@ -337,6 +353,9 @@ def get_trending_keywords(
     if not unused_fallback:
         unused_fallback = fallback
         logger.info("폴백 키워드 전체 재사용 (30일 사이클 완료)")
+    for kw in unused_fallback:
+        if kw not in keyword_sources:
+            keyword_sources[kw] = "fallback"
     candidates += unused_fallback
 
     # 중복 제거 및 유사도 필터링
@@ -404,10 +423,21 @@ def get_trending_keywords(
     # 사용 이력 업데이트
     now_iso = datetime.now().isoformat()
     existing_entries = used_data.get("entries", [])
-    new_entries = [{"keyword": kw, "usedAt": now_iso} for kw in result]
+    new_entries = [
+        {"keyword": kw, "usedAt": now_iso, "source": keyword_sources.get(kw, "unknown")}
+        for kw in result
+    ]
     used_data["keywords"] = used_data.get("keywords", []) + result
     used_data["entries"] = existing_entries + new_entries
     _save_used_keywords(used_data)
+
+    # 수집 출처별 요약 로그
+    source_summary: dict[str, list[str]] = {}
+    for kw in result:
+        src = keyword_sources.get(kw, "unknown")
+        source_summary.setdefault(src, []).append(kw)
+    for src, kws in source_summary.items():
+        logger.info(f"  [{src}] {len(kws)}개: {kws}")
 
     logger.info(f"최종 선정 키워드 {len(result)}개: {result}")
     return result

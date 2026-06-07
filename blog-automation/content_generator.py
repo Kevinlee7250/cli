@@ -214,6 +214,7 @@ _KO_STOPWORDS = {
 
 def _extract_section_queries(html: str, keyword: str) -> list[str]:
     """H2 섹션 제목 + 본문 핵심 명사를 결합해 이미지 검색 쿼리 목록을 반환합니다."""
+    from collections import Counter
     queries = [keyword]  # 첫 이미지: 도입부 → 메인 키워드
 
     # 키워드 구성 단어 (중복 추가 방지)
@@ -240,23 +241,33 @@ def _extract_section_queries(html: str, keyword: str) -> list[str]:
         if not heading_clean or len(heading_clean) < 2:
             continue
 
-        # 2) 본문 첫 단락에서 영문 대문자 약어 추출 (ETF, GDP 등)
+        # 2) 본문 첫 단락에서 핵심 단어 추출
         body = section[h2_m.end():]
         p_m = re.search(r'<p[^>]*>(.*?)</p>', body, re.IGNORECASE | re.DOTALL)
         extra_terms = ""
         if p_m:
-            p_text = re.sub(r'<[^>]+>', '', p_m.group(1))[:120]
+            p_text = re.sub(r'<[^>]+>', '', p_m.group(1))[:200]
+
+            # 영문 대문자 약어 (ETF, GDP 등) — 최우선
             acronyms = re.findall(r'[A-Z][A-Z0-9&]{1,9}', p_text)
-            filtered = [a for a in acronyms if a.lower() not in kw_words]
-            seen: set[str] = set()
-            unique = []
-            for w in filtered:
-                if w not in seen:
-                    seen.add(w)
-                    unique.append(w)
-                if len(unique) == 2:
+            filtered_en = [a for a in dict.fromkeys(acronyms) if a.lower() not in kw_words]
+
+            # 한국어 핵심 명사 (2~4자, 스톱워드·키워드 단어 제외, 빈도순)
+            ko_words = re.findall(r'[가-힣]{2,4}', p_text)
+            filtered_ko = [
+                w for w in ko_words
+                if w not in _KO_STOPWORDS and w.lower() not in kw_words
+            ]
+            top_ko = [w for w, _ in Counter(filtered_ko).most_common(5)]
+
+            # 우선순위: 영문 약어 → 한국어 명사 (합쳐서 최대 2개)
+            extra_parts: list[str] = []
+            for term in filtered_en + top_ko:
+                if term not in extra_parts:
+                    extra_parts.append(term)
+                if len(extra_parts) == 2:
                     break
-            extra_terms = " ".join(unique)
+            extra_terms = " ".join(extra_parts)
 
         query = f"{keyword} {heading_clean}".strip()
         if extra_terms:

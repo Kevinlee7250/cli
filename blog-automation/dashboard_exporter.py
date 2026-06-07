@@ -212,7 +212,7 @@ def export_dashboard() -> None:
         "lastKeywords": history[0].get("keywords", []) if history else [],
         "bloggerTotal": blogger_total,
         "totalRevenue": round(total_revenue, 2),
-        "systemVersion": "Python 3.11",
+        "systemVersion": "Python 3.11 v2.0",
         "repoUrl": "https://github.com/kevinlee7250/cli",
         "actionsUrl": "https://github.com/kevinlee7250/cli/actions",
         "blogUrl": "https://hoguwhat1.blogspot.com/",
@@ -263,6 +263,7 @@ def save_pending_posts(results: list[dict]) -> None:
             "imagesInserted": r.get("images_inserted", 0),
             "faq": r.get("faq", []),
             "metaDescription": r.get("meta_description", ""),
+            "sources": r.get("sources", []),
             "status": "pending",
         })
         logger.info(f"  검토 대기 저장: {title[:60]} ({len(content)}자 HTML)")

@@ -1625,8 +1625,8 @@ function kwRenderSuggests() {
   const merged = [...new Set([...recentKws, ...SUGGEST_KW_DEFAULT])].slice(0, 20)
   row.innerHTML = merged.map(kw => {
     const used = runKeywords.includes(kw)
-    return `<span class="kw-suggest-chip${used ? ' used' : ''}"
-      onclick="${used ? '' : `kwAddKeyword(${JSON.stringify(kw)})`}">${esc(kw)}</span>`
+    return `<span class="kw-suggest-chip${used ? ' used' : ''}" data-kw="${esc(kw)}"
+      onclick="if(!this.classList.contains('used')) kwAddKeyword(this.dataset.kw)">${esc(kw)}</span>`
   }).join('')
 }
 
@@ -1784,8 +1784,8 @@ function rvKwRender() {
     const merged = [...new Set([...recentKws, ...SUGGEST_KW_DEFAULT])].slice(0, 20)
     row.innerHTML = merged.map(kw => {
       const used = rvRunKeywords.includes(kw)
-      return `<span class="kw-suggest-chip${used ? ' used' : ''}"
-        onclick="${used ? '' : `rvKwAdd(${JSON.stringify(kw)})`}">${esc(kw)}</span>`
+      return `<span class="kw-suggest-chip${used ? ' used' : ''}" data-kw="${esc(kw)}"
+        onclick="if(!this.classList.contains('used')) rvKwAdd(this.dataset.kw)">${esc(kw)}</span>`
     }).join('')
   }
 }

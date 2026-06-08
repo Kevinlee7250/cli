@@ -187,6 +187,20 @@
   .status-panel.success{border-left:3px solid var(--green);}
   .status-panel.error{border-left:3px solid var(--red);}
   .status-panel.running{border-left:3px solid var(--yellow);}
+
+  /* Keyword chip input */
+  .kw-chips-box{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;cursor:text;min-height:46px;}
+  .kw-chips-box:focus-within{border-color:var(--accent);}
+  .kw-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px 4px 12px;background:rgba(124,106,247,.18);border:1px solid rgba(124,106,247,.35);border-radius:20px;font-size:13px;color:var(--text);white-space:nowrap;}
+  .kw-chip-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:15px;padding:0 0 0 2px;line-height:1;transition:color .1s;}
+  .kw-chip-remove:hover{color:var(--red);}
+  .kw-type-input{background:none;border:none;outline:none;color:var(--text);font-size:14px;min-width:120px;flex:1;padding:2px 4px;}
+  .kw-type-input::placeholder{color:var(--muted);}
+  .kw-suggest-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+  .kw-suggest-chip{padding:4px 11px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;font-size:12px;color:var(--muted);cursor:pointer;transition:all .12s;white-space:nowrap;}
+  .kw-suggest-chip:hover{border-color:var(--accent);color:var(--accent);background:rgba(124,106,247,.1);}
+  .kw-suggest-chip.used{opacity:.35;cursor:default;pointer-events:none;}
+
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
   .pulse{animation:pulse 1.5s infinite;}
   .gh-run-status{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
@@ -396,9 +410,20 @@
     <div class="run-panel">
       <h3>🚀 자동화 즉시 실행</h3>
       <div class="form-row">
-        <div class="form-group" style="flex:1;min-width:200px">
-          <label>키워드 (비우면 트렌드 자동 수집)</label>
-          <input type="text" id="run-keyword" class="form-input" placeholder="예: 재테크 방법, 다이어트">
+        <div class="form-group" style="flex:1;min-width:260px;max-width:100%">
+          <label>키워드 <span style="font-weight:400;color:var(--muted)">(비우면 트렌드 자동 수집 · 최대 5개)</span></label>
+          <div class="kw-chips-box" id="kw-chips-box" onclick="document.getElementById('kw-type-input').focus()">
+            <span id="kw-chips-list"></span>
+            <input id="kw-type-input" class="kw-type-input"
+              placeholder="키워드 입력 후 Enter 또는 , (쉼표)"
+              onkeydown="onKwKeydown(event)" oninput="onKwInput(event)">
+          </div>
+          <div style="margin-top:7px">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:5px">💡 추천 키워드 (클릭으로 추가):</div>
+            <div class="kw-suggest-row" id="kw-suggest-row">
+              <span style="font-size:12px;color:var(--muted)">데이터 로딩 중...</span>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label>실행 모드</label>
@@ -599,9 +624,20 @@
       <h3>▶️ Review 모드 즉시 실행</h3>
       <div style="font-size:13px;color:var(--muted);margin-bottom:14px">GitHub Actions를 review 모드로 실행합니다. PAT가 설정되어 있어야 합니다.</div>
       <div class="form-row">
-        <div class="form-group" style="flex:1;min-width:200px">
-          <label>키워드 (비우면 트렌드 자동 수집)</label>
-          <input type="text" id="review-run-keyword" class="form-input" placeholder="예: 재테크 방법, 다이어트">
+        <div class="form-group" style="flex:1;min-width:260px;max-width:100%">
+          <label>키워드 <span style="font-weight:400;color:var(--muted)">(비우면 트렌드 자동 수집 · 최대 5개)</span></label>
+          <div class="kw-chips-box" id="rv-kw-chips-box" onclick="document.getElementById('rv-kw-type-input').focus()">
+            <span id="rv-kw-chips-list"></span>
+            <input id="rv-kw-type-input" class="kw-type-input"
+              placeholder="키워드 입력 후 Enter 또는 , (쉼표)"
+              onkeydown="onRvKwKeydown(event)" oninput="onRvKwInput(event)">
+          </div>
+          <div style="margin-top:7px">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:5px">💡 추천 키워드 (클릭으로 추가):</div>
+            <div class="kw-suggest-row" id="rv-kw-suggest-row">
+              <span style="font-size:12px;color:var(--muted)">데이터 로딩 중...</span>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label>생성 포스트 수</label>
@@ -794,6 +830,7 @@ async function loadAll(silent = false) {
   document.getElementById('dashboard-skeleton').style.display = 'none'
   document.getElementById('dashboard-content').style.display = 'block'
   renderDashboard()
+  kwRenderSuggests()   // 추천 키워드 갱신
   if (!silent) showToast('데이터를 불러왔습니다', 'success')
 }
 
@@ -817,7 +854,7 @@ function navTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page))
   if (page === 'posts') { postsCurrentPage = 1; filterPosts() }
   if (page === 'analytics') renderAnalytics()
-  if (page === 'run') { checkPATStatus(); loadGHRuns() }
+  if (page === 'run') { checkPATStatus(); loadGHRuns(); kwRenderSuggests() }
   if (page === 'social') renderSocial()
   if (page === 'keywords') renderKeywords()
   if (page === 'review') {
@@ -825,6 +862,7 @@ function navTo(page) {
     loadOAuthSettings()
     loadPendingPosts(true)   // silent: no toast on tab open
     renderUsedKeywords()
+    rvKwRender()
     const warnEl = document.getElementById('review-no-pat-warn')
     if (warnEl) warnEl.style.display = getPAT() ? 'none' : 'block'
   }
@@ -1540,10 +1578,88 @@ function showRunStatus(msg, type = '') {
   el.innerHTML = msg
 }
 
+// ── Keyword chip input ─────────────────────────────────────────────────────────
+let runKeywords = []
+
+const SUGGEST_KW_DEFAULT = [
+  '2026년 ETF 투자 전략','미국 주식 투자 방법','ISA 계좌 절세 방법',
+  'AI 업무 자동화 방법','챗GPT o3 활용법','클로드 AI 사용법',
+  '2026년 건강검진 항목 정리','다이어트 GLP-1 주사 효과','혈당 스파이크 예방법',
+  '2026년 아파트 청약 전략','퇴직연금 DC형 운용법','코인 비트코인 2026 전망',
+  '블로그 애드센스 수익화 2026','쿠팡파트너스 부업','프리랜서 종합소득세 신고',
+  '2026년 인기 자격증 추천','영어 회화 독학 방법','재취업 이력서 작성법',
+]
+
+function kwAddKeyword(kw) {
+  kw = kw.trim()
+  if (!kw) return
+  if (runKeywords.includes(kw)) { showToast('이미 추가된 키워드입니다', 'info'); return }
+  if (runKeywords.length >= 5) { showToast('키워드는 최대 5개까지 입력 가능합니다', 'error'); return }
+  runKeywords.push(kw)
+  kwRender()
+  kwSyncPostsCount()
+}
+
+function kwRemove(i) {
+  runKeywords.splice(i, 1)
+  kwRender()
+  kwSyncPostsCount()
+}
+
+function kwRender() {
+  const list = document.getElementById('kw-chips-list')
+  if (list) {
+    list.innerHTML = runKeywords.map((kw, i) =>
+      `<span class="kw-chip">${esc(kw)}<button class="kw-chip-remove" onclick="kwRemove(${i})" title="삭제">✕</button></span>`
+    ).join('')
+  }
+  const inp = document.getElementById('kw-type-input')
+  if (inp) inp.placeholder = runKeywords.length ? '' : '키워드 입력 후 Enter 또는 , (쉼표)'
+  kwRenderSuggests()
+}
+
+function kwRenderSuggests() {
+  const row = document.getElementById('kw-suggest-row')
+  if (!row) return
+  const recentKws = (DATA.posts || []).slice(0, 15).map(p => p.keyword).filter(Boolean)
+  const merged = [...new Set([...recentKws, ...SUGGEST_KW_DEFAULT])].slice(0, 20)
+  row.innerHTML = merged.map(kw => {
+    const used = runKeywords.includes(kw)
+    return `<span class="kw-suggest-chip${used ? ' used' : ''}"
+      onclick="${used ? '' : `kwAddKeyword(${JSON.stringify(kw)})`}">${esc(kw)}</span>`
+  }).join('')
+}
+
+function onKwKeydown(e) {
+  const inp = e.target
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault()
+    const val = inp.value.replace(/,$/, '').trim()
+    if (val) kwAddKeyword(val)
+    inp.value = ''
+  } else if (e.key === 'Backspace' && !inp.value && runKeywords.length) {
+    kwRemove(runKeywords.length - 1)
+  }
+}
+
+function onKwInput(e) {
+  const val = e.target.value
+  if (val.includes(',')) {
+    val.split(',').forEach(k => { if (k.trim()) kwAddKeyword(k) })
+    e.target.value = ''
+  }
+}
+
+function kwSyncPostsCount() {
+  const sel = document.getElementById('run-posts')
+  if (!sel) return
+  sel.value = runKeywords.length > 0 ? String(Math.min(runKeywords.length, 5)) : '3'
+}
+
 async function runNow() {
   const pat = getPAT()
   if (!pat) { showRunStatus('❌ GitHub PAT를 먼저 설정하세요 (위 설정 섹션)', 'error'); return }
-  const keyword = document.getElementById('run-keyword').value.trim()
+  const keyword = runKeywords.join(', ')
   const mode = document.getElementById('run-mode').value
   const posts = document.getElementById('run-posts').value
   const btn = document.getElementById('run-btn')
@@ -1632,6 +1748,68 @@ function showToast(msg, type = 'info') {
   }, 3000)
 }
 
+// ── Review Tab keyword chips ──────────────────────────────────────────────────
+let rvRunKeywords = []
+
+function rvKwAdd(kw) {
+  kw = kw.trim()
+  if (!kw) return
+  if (rvRunKeywords.includes(kw)) { showToast('이미 추가된 키워드입니다', 'info'); return }
+  if (rvRunKeywords.length >= 5) { showToast('키워드는 최대 5개까지 입력 가능합니다', 'error'); return }
+  rvRunKeywords.push(kw)
+  rvKwRender()
+  const sel = document.getElementById('review-run-posts')
+  if (sel) sel.value = String(Math.min(rvRunKeywords.length, 5))
+}
+
+function rvKwRemove(i) {
+  rvRunKeywords.splice(i, 1)
+  rvKwRender()
+  const sel = document.getElementById('review-run-posts')
+  if (sel) sel.value = rvRunKeywords.length > 0 ? String(Math.min(rvRunKeywords.length, 5)) : '3'
+}
+
+function rvKwRender() {
+  const list = document.getElementById('rv-kw-chips-list')
+  if (list) {
+    list.innerHTML = rvRunKeywords.map((kw, i) =>
+      `<span class="kw-chip">${esc(kw)}<button class="kw-chip-remove" onclick="rvKwRemove(${i})" title="삭제">✕</button></span>`
+    ).join('')
+  }
+  const inp = document.getElementById('rv-kw-type-input')
+  if (inp) inp.placeholder = rvRunKeywords.length ? '' : '키워드 입력 후 Enter 또는 , (쉼표)'
+  const row = document.getElementById('rv-kw-suggest-row')
+  if (row) {
+    const recentKws = (DATA.posts || []).slice(0, 15).map(p => p.keyword).filter(Boolean)
+    const merged = [...new Set([...recentKws, ...SUGGEST_KW_DEFAULT])].slice(0, 20)
+    row.innerHTML = merged.map(kw => {
+      const used = rvRunKeywords.includes(kw)
+      return `<span class="kw-suggest-chip${used ? ' used' : ''}"
+        onclick="${used ? '' : `rvKwAdd(${JSON.stringify(kw)})`}">${esc(kw)}</span>`
+    }).join('')
+  }
+}
+
+function onRvKwKeydown(e) {
+  const inp = e.target
+  if (e.key === 'Enter' || e.key === ',') {
+    e.preventDefault()
+    const val = inp.value.replace(/,$/, '').trim()
+    if (val) rvKwAdd(val)
+    inp.value = ''
+  } else if (e.key === 'Backspace' && !inp.value && rvRunKeywords.length) {
+    rvKwRemove(rvRunKeywords.length - 1)
+  }
+}
+
+function onRvKwInput(e) {
+  const val = e.target.value
+  if (val.includes(',')) {
+    val.split(',').forEach(k => { if (k.trim()) rvKwAdd(k) })
+    e.target.value = ''
+  }
+}
+
 // ── Review Tab ────────────────────────────────────────────────────────────────
 let pendingPosts = []
 let sessionPublished = []
@@ -1682,7 +1860,7 @@ async function runReview() {
     return
   }
   if (warnEl) warnEl.style.display = 'none'
-  const keyword = document.getElementById('review-run-keyword')?.value.trim() || ''
+  const keyword = rvRunKeywords.join(', ')
   const posts = document.getElementById('review-run-posts')?.value || '3'
   const btn = document.getElementById('review-run-btn')
   const statusEl = document.getElementById('review-run-status')

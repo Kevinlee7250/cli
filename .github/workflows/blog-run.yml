@@ -10,11 +10,11 @@ on:
   workflow_dispatch:
     inputs:
       keyword:
-        description: '키워드 (쉼표로 여러 개 입력, 비워두면 트렌드 자동 수집)'
+        description: '키워드 (예: 2026년 ETF 투자 전략, AI 업무 자동화 — 쉼표로 여러 개 입력, 비워두면 트렌드 자동 수집)'
         required: false
         default: ''
       posts_per_run:
-        description: '생성할 포스트 수 (1~5)'
+        description: '생성할 포스트 수 (1~5, 키워드 여러 개 입력 시 첫 N개만 처리)'
         required: false
         default: '3'
       mode:

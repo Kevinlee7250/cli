@@ -3,10 +3,13 @@
 블로그 자동화 시스템 — 메인 실행 파일
 
 사용법:
-  python main.py            # 스케줄 모드 (SCHEDULE_CRON 기준 자동 실행)
-  python main.py --once     # 즉시 1회 실행
-  python main.py --test     # 글 생성만 (Blogger 업로드 없음)
-  python main.py --keyword "재테크" --once   # 특정 키워드로 1회 실행
+  python main.py                          # 스케줄 모드 (SCHEDULE_CRON 기준 자동 실행)
+  python main.py --once                   # 즉시 1회 실행 (트렌드 자동 수집)
+  python main.py --test                   # 글 생성만 (Blogger 업로드 없음)
+  python main.py --keyword "재테크" --once # 특정 키워드로 1회 실행
+  python main.py --interactive            # 키워드 직접 입력 후 즉시 실행
+  python main.py --interactive --test     # 키워드 직접 입력 후 테스트 모드
+  python main.py --interactive --review   # 키워드 직접 입력 후 검토 모드
 """
 
 import argparse
@@ -203,6 +206,46 @@ def run_scheduled() -> None:
 
 
 # ──────────────────────────────────────────────────────────────────────────────
+# 인터랙티브 키워드 입력
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _prompt_keywords(preset: list[str] | None = None) -> list[str] | None:
+    """
+    키워드를 대화형으로 입력받습니다.
+    - preset 이 있으면 미리 표시하고 수정 여부를 묻습니다.
+    - 빈 입력 시 트렌드 자동 수집으로 진행합니다.
+    """
+    print("\n" + "=" * 60)
+    print("  블로그 자동화 — 키워드 직접 입력")
+    print("=" * 60)
+
+    if preset:
+        print(f"  현재 키워드: {', '.join(preset)}")
+        ans = input("  이대로 사용하시겠습니까? [Y/n] ").strip().lower()
+        if ans in ("", "y", "yes"):
+            print("=" * 60 + "\n")
+            return preset
+
+    print("  여러 키워드는 쉼표(,)로 구분하세요.")
+    print("  예) 2026년 ETF 투자 전략, AI 업무 자동화, 건강보험 환급금")
+    print("  (비워두면 트렌드 자동 수집)")
+    raw = input("\n  키워드 입력: ").strip()
+    print("=" * 60 + "\n")
+
+    if not raw:
+        logger.info("키워드 미입력 — 트렌드 자동 수집으로 진행")
+        return None
+
+    keywords = [k.strip() for k in raw.split(",") if k.strip()]
+    if not keywords:
+        logger.info("유효한 키워드 없음 — 트렌드 자동 수집으로 진행")
+        return None
+
+    logger.info(f"수동 입력 키워드 {len(keywords)}개: {keywords}")
+    return keywords
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 # 진입점
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -212,11 +255,15 @@ def main() -> None:
     parser.add_argument("--test", action="store_true", help="글 생성만 (업로드 없음)")
     parser.add_argument("--review", action="store_true", help="검토 모드 — 글 생성 후 pending_posts.json에 저장 (업로드 없음)")
     parser.add_argument("--keyword", type=str, help="특정 키워드로 실행 (쉼표로 복수 지정)")
+    parser.add_argument("--interactive", "-i", action="store_true", help="키워드 직접 입력 후 즉시 실행")
     args = parser.parse_args()
 
     keywords = None
     if args.keyword:
         keywords = [k.strip() for k in args.keyword.split(",") if k.strip()]
+
+    if args.interactive:
+        keywords = _prompt_keywords(keywords)
 
     if not _check_config(skip_blogger=(args.test or args.review)):
         sys.exit(1)
@@ -234,7 +281,7 @@ def main() -> None:
     if not _check_config():
         sys.exit(1)
 
-    if args.once or keywords:
+    if args.once or args.interactive or keywords:
         run_once(keywords=keywords)
     else:
         run_scheduled()

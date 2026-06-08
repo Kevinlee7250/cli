@@ -1,4 +1,4 @@
-"""Blogger 업로드 — AdSense 6슬롯 + 구조화 데이터 + 목차 포함"""
+"""Blogger 업로드 — AdSense 4슬롯 + 구조화 데이터 + 목차 포함"""
 
 import json
 import logging
@@ -77,13 +77,11 @@ def _ad_unit(slot_index: int) -> str:
 
 def _inject_ads(html: str) -> str:
     """
-    광고 슬롯 6개를 전략적 위치에 삽입:
+    광고 슬롯 4개를 전략적 위치에 삽입 (AdSense 콘텐츠 대비 광고 비율 준수):
       슬롯 1 — 도입부 첫 <p> 다음 (Above the fold, 최고 CTR)
-      슬롯 2 — 2번째 H2 앞
-      슬롯 3 — 3번째 H2 앞
-      슬롯 4 — 4번째 H2 앞
-      슬롯 5 — FAQ H2 앞
-      슬롯 6 — 본문 끝
+      슬롯 2 — 3번째 H2 앞 (본문 중간)
+      슬롯 3 — 5번째 H2 앞 (후반부)
+      슬롯 4 — 본문 끝
     """
     # 슬롯 1: 목차 div 이후 첫 번째 </p> 뒤 (목차 내부 삽입 방지)
     ad0 = _ad_unit(0)
@@ -96,9 +94,9 @@ def _inject_ads(html: str) -> str:
     else:
         html = re.sub(r'</p>', lambda m: m.group(0) + ad0, html, count=1, flags=re.IGNORECASE)
 
-    # 슬롯 2~5: H2 태그 앞 (2~5번째)
+    # 슬롯 2~3: H2 태그 앞 (3번째, 5번째 — 본문 중간·후반)
     h2_positions = [m.start() for m in re.finditer(r'<h2', html, re.IGNORECASE)]
-    targets = h2_positions[1:5]
+    targets = [p for i, p in enumerate(h2_positions) if i in (2, 4)]
     offset = 0
     for i, pos in enumerate(targets):
         ad = _ad_unit(i + 1)
@@ -106,8 +104,8 @@ def _inject_ads(html: str) -> str:
         html = html[:actual] + ad + html[actual:]
         offset += len(ad)
 
-    # 슬롯 6: 본문 끝
-    html += _ad_unit(5)
+    # 슬롯 4: 본문 끝
+    html += _ad_unit(3)
     return html
 
 

@@ -62,25 +62,27 @@ def plan_series(keyword: str, count: int = 4) -> dict | None:
 시리즈 편수: {count}편
 
 이 주제로 {count}편짜리 블로그 시리즈를 기획하세요.
+글쓰기 방향: 정보 나열이 아닌 '직접 경험하고 공부한 사람의 인사이트 공유' 스타일.
 
-조건:
-- 편 1: 개요·입문 (처음 접하는 독자 대상)
-- 편 2~{count - 1}: 심화 내용 (구체적 방법, 사례, 전략)
-- 편 {count}: 실전 총정리 (바로 적용 가능한 액션 플랜)
-- 각 편은 독립적으로 읽어도 충분한 가치가 있어야 함
-- 각 편 제목: 숫자 포함, {y}년 포함, 35자 이내
+시리즈 구조 원칙:
+- 편 1: "왜 이 주제를 파게 됐는지" — 입문자 공감형 도입 (계기·실패담·첫 경험)
+- 편 2~{count - 1}: 실전 경험 기반 심화 (각자 독립적 주제, 남들이 안 다루는 구체적 각도)
+- 편 {count}: 지금까지 배운 것들의 솔직한 총평 + 실전 액션 플랜
+- 각 편: 독립적으로 읽어도 완결되는 글, "이 각도는 다른 곳에서 못 봤다"는 느낌
+- 제목: 경험·솔직함·구체성 강조 (예: "직접 해봤더니", "이것만은 진짜 주의", "{y}년 현재 기준")
+- 제목 40자 이내
 
 JSON만 응답 (마크다운 없이):
 {{
-  "series_title": "시리즈 전체 제목 (예: 2026년 재테크 완전정복 시리즈)",
-  "series_label": "Blogger 라벨 태그 (공백 없음, 하이픈 사용, 예: 재테크-시리즈-2026)",
-  "series_description": "시리즈 소개 (100자 이내)",
+  "series_title": "시리즈 전체 제목 (경험 기반, 예: {keyword} 직접 해보고 정리한 시리즈)",
+  "series_label": "Blogger 라벨 태그 (공백 없음, 하이픈 사용)",
+  "series_description": "시리즈 소개: 어떤 경험을 기반으로 쓰는 시리즈인지 (100자 이내)",
   "episodes": [
     {{
       "episode": 1,
-      "title": "[1편] {y}년 ... (35자 이내, 숫자 포함)",
-      "focus": "이 편의 핵심 주제 (30자 이내)",
-      "search_keyword": "이 편의 대표 검색 키워드"
+      "title": "[1편] ... (40자 이내, 경험/솔직함 강조)",
+      "focus": "이 편의 핵심 — 어떤 경험/인사이트를 공유하는지 (30자 이내)",
+      "search_keyword": "이 편의 대표 검색 키워드 (닌치하고 구체적으로)"
     }}
   ]
 }}"""
@@ -88,24 +90,28 @@ JSON만 응답 (마크다운 없이):
             prompt = f"""Today: {date_str}
 Topic: {keyword}  Episodes: {count}
 
-Plan a {count}-part blog series.
-- Part 1: overview/intro for beginners
-- Parts 2-{count - 1}: deep dives (methods, case studies, strategies)
-- Part {count}: complete action guide
+Plan a {count}-part blog series with an E-E-A-T focus.
+Writing angle: "Sharing personal experience and honest insights" NOT generic information dumps.
 
-Each part must be valuable standalone. Titles include numbers and {y}, under 65 chars.
+Series structure:
+- Part 1: "Why I got into this" — relatable intro for beginners (personal story, first mistake)
+- Parts 2-{count-1}: Experience-based deep dives (each independent, angles others don't cover)
+- Part {count}: Honest assessment of everything learned + real action plan
+- Each part: standalone value, angles that feel fresh and personal
+- Titles: emphasize experience/honesty/specificity (e.g., "what I discovered", "the part no one mentions")
+- Titles under 65 chars
 
 JSON only:
 {{
-  "series_title": "Full series title",
+  "series_title": "Full series title (experience-based, e.g., 'My Honest {keyword} Journey')",
   "series_label": "blogger-label-no-spaces",
-  "series_description": "Series description under 150 chars",
+  "series_description": "What experience/perspective this series is based on, under 150 chars",
   "episodes": [
     {{
       "episode": 1,
-      "title": "[Part 1] {y} ... (under 65 chars)",
-      "focus": "Core focus of this episode",
-      "search_keyword": "primary search keyword"
+      "title": "[Part 1] ... (under 65 chars, honest/experience angle)",
+      "focus": "What specific experience/insight this episode shares (concise)",
+      "search_keyword": "niche specific search keyword for this episode"
     }}
   ]
 }}"""

@@ -36,56 +36,56 @@ _REUSE_AFTER_DAYS = 30
 # 유사도 판단 단어 겹침 임계값 (0~1)
 _SIMILARITY_THRESHOLD = 0.55
 
-# 폴백 키워드 — 2026년 6월 기준 트렌드 반영, 매번 다른 키워드가 선택되도록 충분히 유지
+# 폴백 키워드 — 2026년 기준, 포괄적 키워드 대신 뾰족한 닌치·경험 기반 주제 중심
+# E-E-A-T 전략: "직접 해본 사람 입장", "남들이 안 다루는 구체적 각도"
 _FALLBACK_KEYWORDS_KR = [
-    # 금융·투자 (2026년 트렌드)
-    "2026년 ETF 투자 전략", "미국 주식 투자 방법", "금리 인하 수혜주 추천",
-    "배당주 포트폴리오 구성법", "코스피 하반기 전망", "달러 환율 재테크",
-    "ISA 계좌 절세 방법", "퇴직연금 DC형 운용법", "코인 비트코인 2026 전망",
-    "개인연금 세액공제 방법",
-    # 부동산
-    "2026년 아파트 청약 전략", "전세 월세 전환 시점", "부동산 PF 위기 대응",
-    "재건축 재개발 투자", "상가 임대수익률 분석", "역세권 오피스텔 투자",
-    # AI·기술
-    "AI 업무 자동화 방법", "챗GPT o3 활용법", "클로드 AI 사용법",
-    "AI 이미지 생성 수익화", "유튜브 AI 편집 자동화", "노코드 앱 개발 입문",
-    "AI 주식 투자 도구", "딥러닝 자격증 취득법",
-    # 건강·의료
-    "2026년 건강검진 항목 정리", "다이어트 GLP-1 주사 효과", "혈당 스파이크 예방법",
-    "면역력 높이는 식단", "수면 질환 자가진단", "갱년기 증상 관리법",
-    "실손보험 청구 방법", "암보험 비교 가이드",
-    # 세금·법률
-    "2026년 종합소득세 신고 방법", "상속세 절세 전략", "증여세 비과세 한도",
-    "프리랜서 종합소득세 신고", "교통사고 합의금 산정", "이혼 재산분할 방법",
-    # 부업·수익화
-    "블로그 애드센스 수익화 2026", "쿠팡파트너스 부업", "스마트스토어 창업",
-    "전자책 출판 수익화", "온라인 강의 만들기", "유튜브 쇼츠 수익화",
-    # 여행·라이프
-    "일본 여행 엔화 환율 절약법", "동남아 한 달 살기 비용", "유럽 여행 항공권 저렴하게",
-    "국내 캠핑 명소 추천", "전기차 충전 요금 비교", "중고차 시세 확인법",
-    # 교육·자기계발
-    "2026년 인기 자격증 추천", "영어 회화 독학 방법", "공무원 시험 준비",
-    "파이썬 코딩 독학", "재취업 이력서 작성법", "MBTI 직업 추천",
+    # 금융·투자 — 경험·실전 각도
+    "직장인 월 30만원 ETF 투자 솔직 후기", "ISA 계좌 3년 직접 써본 결과",
+    "배당주 처음 사기 전 내가 몰랐던 것", "퇴직연금 DC형 직접 운용하면서 배운 것",
+    "달러 환전 타이밍 내가 틀린 적 있는 이유", "코인 투자 1년 후 솔직한 이야기",
+    "종합소득세 처음 신고할 때 가장 헷갈렸던 것", "개인연금 세액공제 실수로 놓친 사람 사례",
+    # 부동산 — 실제 경험 각도
+    "아파트 청약 2026년 달라진 점 정리", "전세 사기 직접 겪어본 사람이 알려주는 주의사항",
+    "처음 부동산 투자할 때 내가 후회한 것", "상가 투자 1년 후 임대수익 현실 공개",
+    # AI·기술 — 실용 활용 각도
+    "챗GPT 업무에 실제로 쓰면서 달라진 것", "AI 이미지 생성 직접 써본 무료 툴 비교",
+    "노코드로 앱 만들어본 솔직 후기", "유튜브 쇼츠 AI 자동화 직접 해봤더니",
+    "클로드 AI vs 챗GPT 업무 효율 비교 직접 테스트",
+    # 건강 — 경험 기반 각도
+    "혈당 스파이크 식단 2달 바꾸고 나서 달라진 것", "GLP-1 주사 실제 맞아본 사람 후기",
+    "수면 무호흡증 검사 받아보고 알게 된 것", "면역력 영양제 직접 먹어본 솔직 리뷰",
+    "건강검진 결과 보는 법 처음엔 몰랐던 항목들",
+    # 세금·법률 — 실전 체험 각도
+    "프리랜서 종합소득세 처음 신고하면서 실수한 것", "교통사고 합의 직접 해본 사람의 팁",
+    "상속세 예상보다 많이 나온 이유", "증여세 부모님한테 돈 받을 때 주의사항",
+    # 부업·수익화 — 현실적 각도
+    "블로그 애드센스 승인 2026 실제로 해보니", "쿠팡파트너스 3개월 해본 솔직 수익 공개",
+    "스마트스토어 첫 달 매출 0원 극복 방법", "전자책 처음 만들면서 몰랐던 것들",
+    # 여행·라이프 — 체험 후기 각도
+    "일본 여행 엔화 환전 직접 해본 가장 싼 방법", "동남아 한 달 살기 현실적인 비용 공개",
+    "전기차 첫 구매 후 6개월 솔직 후기", "중고차 직거래 실패담과 주의사항",
+    # 교육·자기계발 — 경험 기반 각도
+    "자격증 독학으로 합격한 사람이 알려주는 방법", "영어 회화 6개월 독학 솔직 중간 점검",
+    "파이썬 독학 3개월 후 실제 쓸 수 있는 것들", "이직 성공하고 나서 후회한 것 3가지",
 ]
 
 _FALLBACK_KEYWORDS_EN = [
-    # Finance & Investing (2026)
-    "AI stock trading strategies 2026", "dividend investing beginners", "index fund vs ETF 2026",
-    "interest rate impact on stocks", "real estate market outlook 2026", "crypto regulation update",
-    "passive income side hustles", "tax optimization strategies 2026", "emergency fund building",
-    # AI & Tech
-    "AI tools for productivity 2026", "Claude AI vs ChatGPT comparison", "best AI image generators",
-    "no-code app development", "AI automation side income", "YouTube AI editing tools",
-    "prompt engineering guide", "AI freelancing opportunities",
-    # Health
-    "GLP-1 weight loss guide", "blood sugar management tips", "sleep optimization methods",
-    "mental health apps review", "anti-aging supplements 2026", "gut health diet plan",
-    # Career & Money
-    "remote work best practices", "freelancer tax guide 2026", "LinkedIn profile optimization",
-    "online course creation guide", "dropshipping 2026 guide", "Etsy seller tips",
-    # Travel & Lifestyle
-    "budget travel hacks 2026", "best travel credit cards", "electric vehicle buying guide",
-    "home energy saving tips", "minimalist lifestyle benefits", "subscription box reviews",
+    # Finance — experience angle
+    "what I learned after 1 year of dividend investing", "honest ETF investing review after 3 years",
+    "mistakes I made with index funds as a beginner", "real numbers from my passive income portfolio",
+    "things I wish I knew before opening an IRA", "freelancer tax mistakes I made my first year",
+    # AI & Tech — practical experience
+    "ChatGPT vs Claude for real work tasks honest comparison", "AI tools I actually use daily vs ones I stopped",
+    "I tried 5 AI image generators here's the truth", "no-code app I built in a weekend honest review",
+    # Health — personal experience
+    "blood sugar changes after 2 months of diet overhaul", "GLP-1 injection honest 3-month experience",
+    "sleep apnea test I finally got what I discovered", "gut health supplements I tested for 60 days",
+    # Career & Money — specific experience
+    "what actually changed after I switched to remote work", "I tracked my spending for 6 months here's what I found",
+    "freelance rate negotiation what worked and what didn't", "side hustle income after 1 year of trying",
+    # Travel & Lifestyle — honest experience
+    "budget Japan trip what I spent vs what I planned", "one month in Southeast Asia real cost breakdown",
+    "electric vehicle after 6 months the honest review", "minimalist experiment 30 days what I kept and ditched",
 ]
 
 
@@ -250,18 +250,28 @@ def _claude_ai_keywords(language: str = "ko", count: int = 10) -> list[str]:
             date_str = now.strftime("%Y년 %m월 %d일")
             prompt = (
                 f"오늘 날짜: {date_str}\n\n"
-                f"한국 블로그 애드센스 수익화에 적합한 검색량 높은 키워드 {count}개를 생성하세요.\n"
-                "조건: 금융/재테크·AI/기술·건강·부동산·부업·세금/법률 카테고리 골고루 포함, "
-                "현재 한국 트렌드 반영, 5~15자 롱테일 키워드.\n"
+                f"구글 AdSense 승인을 목표로 하는 한국 블로그에 적합한 E-E-A-T 기반 키워드 {count}개를 생성하세요.\n\n"
+                "핵심 조건:\n"
+                "1. '정보 나열'이 아닌 '경험과 인사이트 공유'가 가능한 주제\n"
+                "2. 너무 포괄적인 주제 금지 (예: '2026년 재테크 방법' X)\n"
+                "3. 뾰족한 닌치 각도 필수 (예: '직장인 투잡 세금 신고 시 놓치기 쉬운 것', '처음 ETF 살 때 내가 한 실수')\n"
+                "4. 카테고리: 금융/재테크·AI/기술·건강·부동산·부업·세금/법률 골고루\n"
+                "5. 검색 의도가 명확한 롱테일 키워드 (8~20자)\n"
+                "6. '솔직 후기', '직접 해봤더니', '실수담', '현실 공개' 등 경험 기반 각도 포함\n\n"
                 f'JSON 배열만 응답 (설명 없이): ["키워드1", ..., "키워드{count}"]'
             )
         else:
             date_str = now.strftime("%B %d, %Y")
             prompt = (
                 f"Today: {date_str}\n\n"
-                f"Generate {count} high-CPC blog keywords for AdSense monetization.\n"
-                "Categories: finance, AI/tech, health, real estate, side income, legal. "
-                "Long-tail keywords, 3-8 words each, currently trending.\n"
+                f"Generate {count} E-E-A-T focused blog keywords for Google AdSense approval.\n\n"
+                "Requirements:\n"
+                "1. Experience-driven topics — NOT generic information dumps\n"
+                "2. No overly broad topics (e.g., 'how to invest 2026' is too generic)\n"
+                "3. Niche angles required: 'what I learned after X months', 'honest review', 'mistakes beginners make'\n"
+                "4. Categories: finance, AI/tech, health, real estate, side income, legal\n"
+                "5. Long-tail keywords, 4-10 words each, with clear search intent\n"
+                "6. Include experience angles: 'honest review', 'real numbers', 'after trying for 6 months'\n\n"
                 f'JSON array only (no explanation): ["keyword1", ..., "keyword{count}"]'
             )
         msg = client.messages.create(

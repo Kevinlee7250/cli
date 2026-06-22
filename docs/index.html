@@ -882,6 +882,51 @@
         <tr><td>쇼핑</td><td><span class="badge muted">$0.90</span></td><td>할인, 세일, 패션, 가전</td><td>최저가 비교, 쿠폰 정보</td></tr>
       </tbody></table>
     </div>
+
+    <!-- AdSense 셋업 섹션 -->
+    <div class="section-header" style="margin-top:32px"><h2>🔧 AdSense 심사 체크리스트</h2></div>
+    <div class="run-panel" style="padding:20px;margin-bottom:20px">
+      <div style="margin-bottom:16px;font-size:13px;color:var(--muted)">
+        아래 체크리스트를 모두 완료한 후 AdSense 심사를 신청하세요.
+      </div>
+      <div id="adsense-checklist" style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer">
+          <input type="checkbox" id="chk-policy" onchange="saveChecklist()" style="width:16px;height:16px;accent-color:var(--accent)">
+          <span><strong>개인정보처리방침 페이지</strong> — Blogger에 게시됨</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer">
+          <input type="checkbox" id="chk-about" onchange="saveChecklist()" style="width:16px;height:16px;accent-color:var(--accent)">
+          <span><strong>블로그 소개(About) 페이지</strong> — E-E-A-T 작성자 신뢰성 증명</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer">
+          <input type="checkbox" id="chk-posts" onchange="saveChecklist()" style="width:16px;height:16px;accent-color:var(--accent)">
+          <span><strong>고품질 포스트 15개 이상</strong> — E-E-A-T 기반, 경험·인사이트 포함</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer">
+          <input type="checkbox" id="chk-niche" onchange="saveChecklist()" style="width:16px;height:16px;accent-color:var(--accent)">
+          <span><strong>카테고리 집중</strong> — 1~2개 주제 카테고리에 집중</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer">
+          <input type="checkbox" id="chk-age" onchange="saveChecklist()" style="width:16px;height:16px;accent-color:var(--accent)">
+          <span><strong>블로그 운영 기간</strong> — 최소 3개월 이상 (한국 기준)</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer">
+          <input type="checkbox" id="chk-noai" onchange="saveChecklist()" style="width:16px;height:16px;accent-color:var(--accent)">
+          <span><strong>AI 느낌 제거</strong> — 번역투 제거, 1인칭 경험·의견 포함됨</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer">
+          <input type="checkbox" id="chk-applied" onchange="saveChecklist()" style="width:16px;height:16px;accent-color:var(--accent)">
+          <span><strong>AdSense 심사 신청 완료</strong></span>
+        </label>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <button class="run-btn" id="setup-pages-btn" onclick="runSetupPages()" style="background:var(--green)">
+          📄 필수 페이지 자동 생성 (Blogger)
+        </button>
+        <span style="font-size:12px;color:var(--muted)">개인정보처리방침 + 블로그 소개 페이지를 Blogger에 자동으로 만듭니다</span>
+      </div>
+      <div id="setup-pages-status" class="status-panel" style="display:none;margin-top:12px"></div>
+    </div>
   </div>
 </div>
 
@@ -2675,9 +2720,63 @@ document.addEventListener('keydown', e => {
 // ── Utils ─────────────────────────────────────────────────────────────────────
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
 
+// ── AdSense setup page creator ────────────────────────────────────────────────
+async function runSetupPages() {
+  const pat = getPAT()
+  if (!pat) { showToast('실행 제어 탭에서 GitHub PAT를 먼저 설정하세요', 'error'); return }
+  const btn = document.getElementById('setup-pages-btn')
+  const statusEl = document.getElementById('setup-pages-status')
+  btn.disabled = true
+  btn.textContent = '⏳ 실행 중...'
+  statusEl.style.display = 'block'
+  statusEl.className = 'status-panel running'
+  statusEl.textContent = '개인정보처리방침·블로그 소개 페이지 생성 요청 중...'
+  try {
+    const resp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`, {
+      method: 'POST',
+      headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ref: GH_BRANCH, inputs: { keyword: '', mode: 'setup', posts_per_run: '1' } })
+    })
+    if (resp.status === 204) {
+      statusEl.className = 'status-panel success'
+      statusEl.textContent = '✅ 페이지 생성 요청 완료! GitHub Actions에서 실행 중입니다. 2~3분 후 블로그에서 확인하세요.'
+      showToast('필수 페이지 생성 요청 완료', 'success')
+      document.getElementById('chk-policy').checked = true
+      document.getElementById('chk-about').checked = true
+      saveChecklist()
+    } else {
+      statusEl.className = 'status-panel error'
+      statusEl.textContent = `❌ 오류 (${resp.status}): PAT 권한 또는 워크플로 설정을 확인하세요`
+    }
+  } catch (e) {
+    statusEl.className = 'status-panel error'
+    statusEl.textContent = `❌ 요청 실패: ${e.message}`
+  }
+  btn.disabled = false
+  btn.textContent = '📄 필수 페이지 자동 생성 (Blogger)'
+}
+
+function saveChecklist() {
+  const ids = ['chk-policy','chk-about','chk-posts','chk-niche','chk-age','chk-noai','chk-applied']
+  const state = {}
+  ids.forEach(id => { const el = document.getElementById(id); if (el) state[id] = el.checked })
+  localStorage.setItem('adsense_checklist', JSON.stringify(state))
+}
+
+function loadChecklist() {
+  try {
+    const state = JSON.parse(localStorage.getItem('adsense_checklist') || '{}')
+    Object.entries(state).forEach(([id, checked]) => {
+      const el = document.getElementById(id)
+      if (el) el.checked = checked
+    })
+  } catch {}
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 loadAll()
 resetAutoRefresh()
+loadChecklist()
 startCountdown()
 // Restore goal from localStorage
 const savedGoal = localStorage.getItem('monthly_goal')

@@ -12,6 +12,7 @@
   python main.py --series --series-count 3 --keyword "ETF"   # 시리즈 3편 실행
   python main.py --series --keyword "재테크" --test           # 시리즈 테스트 (업로드 없음)
   python main.py --series --keyword "재테크" --review         # 시리즈 검토 모드
+  python main.py --setup                                       # AdSense 필수 페이지 생성 (개인정보처리방침·소개)
 """
 
 import argparse
@@ -370,6 +371,7 @@ def main() -> None:
     parser.add_argument("--interactive", "-i", action="store_true", help="키워드 직접 입력 후 즉시 실행")
     parser.add_argument("--series", action="store_true", help="시리즈 모드 — 주제를 N편으로 분할 기획·생성·게시 (--keyword 필수)")
     parser.add_argument("--series-count", type=int, default=4, metavar="N", help="시리즈 편수 (2~5, 기본값 4)")
+    parser.add_argument("--setup", action="store_true", help="AdSense 심사 필수 페이지 생성 (개인정보처리방침·블로그 소개)")
     args = parser.parse_args()
 
     keywords = None
@@ -378,6 +380,21 @@ def main() -> None:
 
     if args.interactive:
         keywords = _prompt_keywords(keywords)
+
+    if args.setup:
+        logger.info("=== AdSense 필수 페이지 생성 모드 ===")
+        from page_creator import create_required_pages
+        from config import BLOGGER_BLOG_ID
+        if not BLOGGER_BLOG_ID:
+            logger.error("BLOGGER_BLOG_ID 미설정 — .env 확인")
+            sys.exit(1)
+        results = create_required_pages()
+        for name, url in results.items():
+            if url:
+                logger.info(f"  ✅ {name}: {url}")
+            else:
+                logger.error(f"  ❌ {name}: 생성 실패")
+        return
 
     if args.series:
         if not keywords:

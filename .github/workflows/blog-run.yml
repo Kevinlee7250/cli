@@ -28,6 +28,7 @@ on:
           - test    # 업로드 없이 글만 생성 (API 테스트용)
           - review  # 글 생성 후 pending_posts.json에 저장 (수동 검토용)
           - series  # 시리즈 포스트 자동 기획 (keyword 필수)
+          - setup   # AdSense 필수 페이지 생성 (개인정보처리방침·블로그 소개)
       series_count:
         description: '시리즈 편수 (2~5, series 모드에서만 사용)'
         required: false
@@ -92,7 +93,10 @@ jobs:
 
           SERIES_COUNT="${{ inputs.series_count || '4' }}"
 
-          if [ "$MODE" = "series" ]; then
+          if [ "$MODE" = "setup" ]; then
+            echo "=== 셋업 모드: AdSense 필수 페이지 생성 (개인정보처리방침·블로그 소개) ==="
+            python main.py --setup
+          elif [ "$MODE" = "series" ]; then
             echo "=== 시리즈 모드: 주제를 ${SERIES_COUNT}편으로 분할 ==="
             if [ -z "$KEYWORD" ]; then
               echo "❌ 시리즈 모드는 keyword 입력이 필수입니다"

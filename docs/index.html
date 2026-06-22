@@ -308,6 +308,97 @@
   .series-run-btn{padding:11px 28px;background:var(--accent);border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;}
   .series-run-btn:hover{background:#6a59e0;}
   .series-run-btn:disabled{opacity:.5;cursor:not-allowed;}
+
+  /* System health panel */
+  .health-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;}
+  .health-panel-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+  .health-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;}
+  .health-item{background:var(--bg3);border-radius:8px;padding:9px 12px;display:flex;align-items:center;gap:8px;}
+  .health-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .health-dot.ok{background:var(--green);box-shadow:0 0 6px rgba(52,211,153,.5);}
+  .health-dot.warn{background:var(--yellow);box-shadow:0 0 6px rgba(251,191,36,.5);}
+  .health-dot.err{background:var(--red);box-shadow:0 0 6px rgba(248,113,113,.5);}
+  .health-dot.unknown{background:var(--muted);}
+  .health-label{font-size:12px;font-weight:600;flex:1;}
+  .health-val{font-size:10px;color:var(--muted);}
+
+  /* Quick actions panel */
+  .quick-actions{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:24px;}
+  .qa-btn{padding:16px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .15s;text-align:center;display:flex;flex-direction:column;align-items:center;}
+  .qa-btn:hover{transform:translateY(-2px);}
+  .qa-btn .qa-icon{font-size:26px;margin-bottom:6px;}
+  .qa-btn .qa-label{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;}
+  .qa-btn .qa-desc{font-size:11px;color:var(--muted);}
+  .qa-btn.qa-primary{border-color:rgba(124,106,247,.45);background:rgba(124,106,247,.07);}
+  .qa-btn.qa-primary:hover{border-color:var(--accent);background:rgba(124,106,247,.14);}
+  .qa-btn.qa-green{border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.06);}
+  .qa-btn.qa-green:hover{border-color:var(--green);background:rgba(52,211,153,.12);}
+  .qa-btn.qa-blue{border-color:rgba(6,182,212,.4);background:rgba(6,182,212,.06);}
+  .qa-btn.qa-blue:hover{border-color:var(--accent2);background:rgba(6,182,212,.12);}
+  .qa-btn.qa-yellow{border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.05);}
+  .qa-btn.qa-yellow:hover{border-color:var(--yellow);background:rgba(251,191,36,.1);}
+
+  /* Publication heatmap */
+  .heatmap-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:24px;overflow-x:auto;}
+  .heatmap-wrap h3{font-size:14px;font-weight:600;color:var(--muted);margin-bottom:14px;}
+  .heatmap-outer{display:flex;gap:0;}
+  .heatmap-day-labels{display:flex;flex-direction:column;gap:3px;margin-right:5px;padding-top:18px;}
+  .heatmap-day-label{height:13px;font-size:9px;color:var(--muted);line-height:13px;}
+  .heatmap-inner{flex:1;}
+  .heatmap-months-row{display:flex;gap:3px;margin-bottom:4px;}
+  .heatmap-month-label{font-size:10px;color:var(--muted);}
+  .heatmap-grid{display:flex;gap:3px;}
+  .heatmap-col{display:flex;flex-direction:column;gap:3px;}
+  .heatmap-cell{width:13px;height:13px;border-radius:2px;transition:transform .1s;cursor:default;}
+  .heatmap-cell:hover{transform:scale(1.4);}
+  .heatmap-cell.c0{background:rgba(255,255,255,.04);}
+  .heatmap-cell.c1{background:rgba(124,106,247,.28);}
+  .heatmap-cell.c2{background:rgba(124,106,247,.52);}
+  .heatmap-cell.c3{background:rgba(124,106,247,.78);}
+  .heatmap-cell.c4{background:var(--accent);}
+  .heatmap-legend{display:flex;align-items:center;gap:5px;margin-top:10px;font-size:11px;color:var(--muted);justify-content:flex-end;}
+  .heatmap-legend-cell{width:12px;height:12px;border-radius:2px;}
+
+  /* Revenue forecast */
+  .forecast-box{background:var(--bg2);border:1px solid rgba(52,211,153,.3);border-radius:var(--radius);padding:20px;margin-bottom:24px;}
+  .forecast-box h3{font-size:14px;font-weight:600;margin-bottom:4px;}
+  .forecast-box .forecast-sub{font-size:12px;color:var(--muted);margin-bottom:14px;}
+
+  /* Earnings calculator */
+  .calc-panel{background:var(--bg2);border:1px solid rgba(251,191,36,.35);border-radius:var(--radius);padding:22px;margin-bottom:24px;}
+  .calc-panel h3{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+  .calc-row{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;}
+  .calc-label{font-size:12px;color:var(--muted);min-width:110px;font-weight:600;}
+  .calc-slider{flex:1;min-width:120px;accent-color:var(--accent);height:4px;cursor:pointer;}
+  .calc-val{font-size:14px;font-weight:700;color:var(--text);min-width:55px;text-align:right;}
+  .calc-result-box{background:var(--bg3);border-radius:10px;padding:16px 20px;margin-top:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:14px;}
+  .cr-label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;margin-bottom:4px;}
+  .cr-value{font-size:22px;font-weight:700;color:var(--green);}
+
+  /* Category gap analysis */
+  .gap-panel{background:var(--bg2);border:1px solid rgba(248,113,113,.3);border-radius:var(--radius);padding:20px;margin-bottom:24px;}
+  .gap-panel h3{font-size:14px;font-weight:700;color:var(--red);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .gap-item{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--bg3);border-radius:8px;margin-bottom:7px;}
+  .gap-cat{font-size:12px;font-weight:700;min-width:56px;}
+  .gap-bar-wrap{flex:1;display:flex;flex-direction:column;gap:3px;}
+  .gap-bar-label{font-size:10px;color:var(--muted);display:flex;justify-content:space-between;}
+  .gap-bar-bg{height:7px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;}
+  .gap-bar-fill{height:100%;border-radius:4px;}
+  .gap-cpc{font-size:12px;color:var(--green);font-weight:700;min-width:38px;text-align:right;}
+
+  /* Run history timeline */
+  .run-timeline{margin-bottom:24px;}
+  .timeline-item{display:flex;gap:12px;position:relative;}
+  .timeline-item:not(:last-child)::before{content:'';position:absolute;left:6px;top:16px;width:2px;bottom:-12px;background:var(--border);}
+  .tl-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:2px;z-index:1;}
+  .tl-dot.ok{background:var(--green);box-shadow:0 0 8px rgba(52,211,153,.4);}
+  .tl-dot.err{background:var(--red);box-shadow:0 0 8px rgba(248,113,113,.4);}
+  .tl-dot.warn{background:var(--yellow);}
+  .tl-card{flex:1;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:13px;}
+  .tl-date{font-size:11px;color:var(--muted);margin-bottom:4px;}
+  .tl-kw{font-weight:700;margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .tl-stats{display:flex;gap:8px;flex-wrap:wrap;}
+  .tl-stat{padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;}
 </style>
 </head>
 <body>
@@ -344,6 +435,49 @@
     <div class="alert-box" id="top-alert">
       💡 이 대시보드는 자동화 실행 후 자동 업데이트됩니다.
       <a data-page="run" onclick="navTo('run');return false;" href="#" style="color:var(--accent);font-weight:700">▶️ 실행 제어</a> 탭에서 대시보드 내에서 직접 실행하세요.
+    </div>
+
+    <!-- System Health -->
+    <div class="health-panel" id="health-panel">
+      <div class="health-panel-title">
+        <span>⚡ 시스템 상태</span>
+        <span id="health-last-check" style="font-size:10px;color:var(--muted)"></span>
+      </div>
+      <div class="health-grid" id="health-grid"></div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions" id="quick-actions">
+      <button class="qa-btn qa-primary" onclick="navTo('run')">
+        <span class="qa-icon">▶️</span>
+        <span class="qa-label">즉시 실행</span>
+        <span class="qa-desc">트렌드 자동 수집</span>
+      </button>
+      <button class="qa-btn qa-blue" onclick="navTo('series')">
+        <span class="qa-icon">📚</span>
+        <span class="qa-label">시리즈 기획</span>
+        <span class="qa-desc">주제 분할 자동화</span>
+      </button>
+      <button class="qa-btn qa-green" onclick="navTo('review')">
+        <span class="qa-icon">✍️</span>
+        <span class="qa-label">검토 대기 <span id="qa-pending-count" style="display:none;background:var(--yellow);color:#1a1d27;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700;margin-left:4px"></span></span>
+        <span class="qa-desc">포스트 검토 후 게시</span>
+      </button>
+      <button class="qa-btn qa-yellow" onclick="navTo('config')">
+        <span class="qa-icon">📄</span>
+        <span class="qa-label">AdSense 셋업</span>
+        <span class="qa-desc">필수 페이지 자동 생성</span>
+      </button>
+      <button class="qa-btn" onclick="navTo('analytics')">
+        <span class="qa-icon">💰</span>
+        <span class="qa-label">수익 분석</span>
+        <span class="qa-desc">예측·목표 관리</span>
+      </button>
+      <button class="qa-btn" onclick="navTo('keywords')">
+        <span class="qa-icon">🔑</span>
+        <span class="qa-label">키워드 갭</span>
+        <span class="qa-desc">고CPC 미활용 발굴</span>
+      </button>
     </div>
 
     <!-- Last run status banner -->
@@ -419,6 +553,35 @@
         <a href="#" onclick="navTo('posts');return false;" style="font-size:13px;color:var(--accent)">전체 보기 →</a>
       </div>
       <div class="post-grid" id="recent-grid"></div>
+
+      <!-- Publication Heatmap -->
+      <div class="heatmap-wrap" id="heatmap-wrap">
+        <h3>📅 포스팅 히트맵 (최근 26주)</h3>
+        <div class="heatmap-outer">
+          <div class="heatmap-day-labels">
+            <div class="heatmap-day-label"></div>
+            <div class="heatmap-day-label">월</div>
+            <div class="heatmap-day-label"></div>
+            <div class="heatmap-day-label">수</div>
+            <div class="heatmap-day-label"></div>
+            <div class="heatmap-day-label">금</div>
+            <div class="heatmap-day-label"></div>
+          </div>
+          <div class="heatmap-inner">
+            <div class="heatmap-months-row" id="heatmap-months"></div>
+            <div class="heatmap-grid" id="heatmap-grid"></div>
+          </div>
+        </div>
+        <div class="heatmap-legend">
+          <span>적음</span>
+          <div class="heatmap-legend-cell c0" style="background:rgba(255,255,255,.04)"></div>
+          <div class="heatmap-legend-cell" style="background:rgba(124,106,247,.28)"></div>
+          <div class="heatmap-legend-cell" style="background:rgba(124,106,247,.55)"></div>
+          <div class="heatmap-legend-cell" style="background:rgba(124,106,247,.8)"></div>
+          <div class="heatmap-legend-cell" style="background:var(--accent)"></div>
+          <span>많음</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -495,6 +658,15 @@
       <div id="run-status-panel" class="status-panel" style="display:none"></div>
     </div>
 
+    <!-- Run History Timeline -->
+    <div class="section-header" style="margin-top:4px">
+      <h2>📅 실행 이력 타임라인</h2>
+      <button onclick="renderRunTimeline()" style="background:none;border:none;color:var(--accent);font-size:13px;cursor:pointer">🔄 새로고침</button>
+    </div>
+    <div class="run-timeline" id="run-timeline">
+      <div class="empty">데이터 로딩 중...</div>
+    </div>
+
     <!-- GitHub Actions 실행 현황 -->
     <div class="section-header">
       <h2>📋 GitHub Actions 실행 현황</h2>
@@ -560,6 +732,12 @@
       <div class="card green"><div class="label">가장 많은 카테고리</div><div class="value" id="kw-top-cat" style="font-size:18px;color:var(--green)">-</div><div class="sub">최다 포스트 카테고리</div></div>
       <div class="card yellow"><div class="label">평균 CPC</div><div class="value" id="kw-avg-cpc">-</div><div class="sub">카테고리 기준 USD</div></div>
     </div>
+    <!-- Category Gap Analysis -->
+    <div class="gap-panel" id="gap-panel" style="display:none">
+      <h3>🚨 카테고리 갭 분석 — 고CPC 미활용 기회</h3>
+      <div id="gap-list"></div>
+    </div>
+
     <!-- Keyword Recommendation Panel -->
     <div class="kw-rec-panel" id="kw-rec-panel" style="display:none">
       <h3>💡 다음 추천 키워드 (고CPC 미활용 카테고리 중심)</h3>
@@ -608,6 +786,37 @@
       </div>
     </div>
 
+    <!-- Earnings Calculator -->
+    <div class="calc-panel">
+      <h3>🧮 수익 시뮬레이터</h3>
+      <div class="calc-row">
+        <span class="calc-label">총 포스트 수</span>
+        <input type="range" id="calc-posts" class="calc-slider" min="1" max="500" value="30" oninput="updateCalc()">
+        <span class="calc-val" id="calc-posts-val">30개</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">일 방문자 (명)</span>
+        <input type="range" id="calc-visitors" class="calc-slider" min="10" max="10000" value="300" step="10" oninput="updateCalc()">
+        <span class="calc-val" id="calc-visitors-val">300명</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">평균 CPC (USD)</span>
+        <input type="range" id="calc-cpc" class="calc-slider" min="0.10" max="3.50" value="1.50" step="0.05" oninput="updateCalc()">
+        <span class="calc-val" id="calc-cpc-val">$1.50</span>
+      </div>
+      <div class="calc-row">
+        <span class="calc-label">CTR (%)</span>
+        <input type="range" id="calc-ctr" class="calc-slider" min="0.5" max="8" value="2.5" step="0.1" oninput="updateCalc()">
+        <span class="calc-val" id="calc-ctr-val">2.5%</span>
+      </div>
+      <div class="calc-result-box">
+        <div><div class="cr-label">일 수익</div><div class="cr-value" id="calc-daily">-</div></div>
+        <div><div class="cr-label">월 수익</div><div class="cr-value" id="calc-monthly">-</div></div>
+        <div><div class="cr-label">연 수익</div><div class="cr-value" id="calc-yearly">-</div></div>
+        <div><div class="cr-label">일 클릭 수</div><div class="cr-value" id="calc-clicks" style="color:var(--accent2)">-</div></div>
+      </div>
+    </div>
+
     <div class="chart-grid">
       <div class="chart-box">
         <h3>📊 실행별 일 예상 수익 추이</h3>
@@ -617,6 +826,13 @@
         <h3>📈 누적 포스트 성장 추이</h3>
         <canvas id="chart-cumulative" style="max-height:200px;"></canvas>
       </div>
+    </div>
+
+    <!-- Revenue Forecast -->
+    <div class="forecast-box">
+      <h3>🔮 30일 수익 예측</h3>
+      <div class="forecast-sub">현재 추세 기반 선형 예측 (점선: 예측구간)</div>
+      <canvas id="chart-forecast" style="max-height:200px;"></canvas>
     </div>
     <div class="chart-grid" style="margin-bottom:28px">
       <div class="chart-box">
@@ -1025,9 +1241,9 @@ function navTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page))
   if (page === 'posts') { postsCurrentPage = 1; filterPosts() }
   if (page === 'analytics') renderAnalytics()
-  if (page === 'run') { checkPATStatus(); loadGHRuns(); kwRenderSuggests() }
+  if (page === 'run') { checkPATStatus(); loadGHRuns(); kwRenderSuggests(); renderRunTimeline() }
   if (page === 'social') renderSocial()
-  if (page === 'keywords') renderKeywords()
+  if (page === 'keywords') { renderKeywords(); renderCategoryGap() }
   if (page === 'review') {
     setPublishMode(publishMode)
     loadOAuthSettings()
@@ -1154,6 +1370,8 @@ function renderDashboard() {
 
   document.getElementById('recent-grid').innerHTML = posts.slice(0, 6).map(postCardHTML).join('')
   renderCharts()
+  renderSystemHealth()
+  renderHeatmap()
 }
 
 // ── Countdown ─────────────────────────────────────────────────────────────────
@@ -1625,6 +1843,8 @@ function renderAnalytics() {
   renderCatRevenueChart()
   renderGSCCategoryChart()
   renderGSC()
+  renderForecastChart()
+  initCalcFromData()
 }
 
 let chartCatRevenue = null
@@ -2771,6 +2991,359 @@ function loadChecklist() {
       if (el) el.checked = checked
     })
   } catch {}
+}
+
+// ── System Health ─────────────────────────────────────────────────────────────
+function renderSystemHealth() {
+  const { runs, meta, gsc } = DATA
+  const lastRun = runs[0]
+  const now = Date.now()
+  const lastRunMs = lastRun ? new Date(lastRun.runAt || lastRun.savedAt).getTime() : 0
+  const hoursSinceRun = lastRunMs ? ((now - lastRunMs) / 3600000).toFixed(1) : null
+  const hasErr = lastRun && (lastRun.errors || 0) > 0
+  const runOk = lastRunMs && (now - lastRunMs) < 26 * 3600000 // within 26h schedule
+
+  const items = [
+    {
+      label: '마지막 실행',
+      dot: !lastRunMs ? 'unknown' : hasErr ? 'err' : runOk ? 'ok' : 'warn',
+      val: hoursSinceRun ? hoursSinceRun + '시간 전' : '없음'
+    },
+    {
+      label: 'Blogger 연동',
+      dot: (meta.bloggerTotal || 0) > 0 ? 'ok' : 'unknown',
+      val: (meta.bloggerTotal || 0) + '개 게시됨'
+    },
+    {
+      label: 'Google Search Console',
+      dot: (gsc && gsc.site_url) ? 'ok' : 'unknown',
+      val: (gsc && gsc.site_url) ? '연결됨' : '미연결'
+    },
+    {
+      label: '포스트 품질',
+      dot: (() => {
+        const posts = DATA.posts || []
+        const aCount = posts.filter(p => qualityGrade(p).cls !== 'grade-c').length
+        const pct = posts.length ? aCount / posts.length : 0
+        return pct >= 0.7 ? 'ok' : pct >= 0.4 ? 'warn' : 'err'
+      })(),
+      val: (() => {
+        const posts = DATA.posts || []
+        const a = posts.filter(p => qualityGrade(p).cls !== 'grade-c').length
+        return posts.length ? a + '/' + posts.length + ' B급+' : '포스트 없음'
+      })()
+    },
+    {
+      label: '검토 대기',
+      dot: (DATA.pending || []).length > 0 ? 'warn' : 'ok',
+      val: (DATA.pending || []).length + '개'
+    },
+    {
+      label: '성공률',
+      dot: (() => {
+        const r = runs
+        const gen = r.reduce((s,x) => s + (x.postsGenerated||0), 0)
+        const up = r.reduce((s,x) => s + (x.bloggerUploaded||x.platforms?.blogger||0), 0)
+        const rate = gen > 0 ? up/gen : 1
+        return rate >= 0.8 ? 'ok' : rate >= 0.5 ? 'warn' : 'err'
+      })(),
+      val: (() => {
+        const r = runs
+        const gen = r.reduce((s,x) => s + (x.postsGenerated||0), 0)
+        const up = r.reduce((s,x) => s + (x.bloggerUploaded||x.platforms?.blogger||0), 0)
+        return gen > 0 ? Math.round(up/gen*100) + '%' : 'N/A'
+      })()
+    }
+  ]
+
+  const grid = document.getElementById('health-grid')
+  if (grid) {
+    grid.innerHTML = items.map(it => `
+      <div class="health-item">
+        <div class="health-dot ${it.dot}"></div>
+        <div>
+          <div class="health-label">${it.label}</div>
+          <div class="health-val">${it.val}</div>
+        </div>
+      </div>`).join('')
+  }
+  const checkEl = document.getElementById('health-last-check')
+  if (checkEl) checkEl.textContent = '업데이트: ' + new Date().toLocaleTimeString('ko-KR')
+
+  // Update quick action pending count
+  const qaPending = document.getElementById('qa-pending-count')
+  const pendingCount = (DATA.pending || []).length
+  if (qaPending) {
+    qaPending.textContent = pendingCount
+    qaPending.style.display = pendingCount > 0 ? '' : 'none'
+  }
+}
+
+// ── Publication Heatmap ───────────────────────────────────────────────────────
+function renderHeatmap() {
+  const { posts } = DATA
+  const today = new Date()
+  today.setHours(0,0,0,0)
+
+  // Build date→count map from posts
+  const dateMap = {}
+  posts.forEach(p => {
+    const d = (p.date || '').slice(0, 10)
+    if (d) dateMap[d] = (dateMap[d] || 0) + 1
+  })
+
+  // Build 26 weeks grid (Sunday start)
+  const WEEKS = 26
+  const totalCells = WEEKS * 7
+  const startDate = new Date(today)
+  startDate.setDate(startDate.getDate() - (totalCells - 1))
+
+  const cols = []
+  const monthLabels = []
+  let lastMonth = -1
+
+  for (let w = 0; w < WEEKS; w++) {
+    const col = []
+    let monthLabel = ''
+    for (let d = 0; d < 7; d++) {
+      const cellDate = new Date(startDate)
+      cellDate.setDate(startDate.getDate() + w * 7 + d)
+      const iso = cellDate.toISOString().slice(0, 10)
+      const count = dateMap[iso] || 0
+      const cls = count === 0 ? 'c0' : count === 1 ? 'c1' : count === 2 ? 'c2' : count === 3 ? 'c3' : 'c4'
+      const dt = cellDate.toLocaleDateString('ko-KR', {month:'long',day:'numeric'})
+      col.push(`<div class="heatmap-cell ${cls}" title="${dt}: ${count}개" data-date="${iso}" data-count="${count}"></div>`)
+
+      if (d === 0) {
+        const m = cellDate.getMonth()
+        if (m !== lastMonth) {
+          monthLabel = cellDate.toLocaleDateString('ko-KR', {month:'short'})
+          lastMonth = m
+        }
+      }
+    }
+    cols.push(col)
+    monthLabels.push(monthLabel)
+  }
+
+  const monthsRow = document.getElementById('heatmap-months')
+  const grid = document.getElementById('heatmap-grid')
+  if (!grid || !monthsRow) return
+
+  monthsRow.innerHTML = monthLabels.map(m =>
+    `<div class="heatmap-month-label" style="min-width:${(13+3)}px;text-align:left">${m}</div>`
+  ).join('')
+
+  grid.innerHTML = cols.map(col =>
+    `<div class="heatmap-col">${col.join('')}</div>`
+  ).join('')
+}
+
+// ── Revenue Forecast Chart ───────────────────────────────────────────────────
+let forecastChart = null
+function renderForecastChart() {
+  const ctx = document.getElementById('chart-forecast')
+  if (!ctx) return
+  const { runs } = DATA
+  if (runs.length < 2) {
+    ctx.parentElement.innerHTML = '<div class="forecast-sub" style="text-align:center;padding:30px;color:var(--muted)">실행 이력이 2개 이상 필요합니다</div>'
+    return
+  }
+
+  // Historical data (up to 14 runs, reverse-sorted = oldest first)
+  const hist = runs.slice(0, 14).reverse()
+  const histLabels = hist.map(r => new Date(r.runAt || r.savedAt).toLocaleDateString('ko-KR', {month:'numeric',day:'numeric'}))
+  const histValues = hist.map(r => +(r.earnings?.estimatedDailyRevenue || 0).toFixed(3))
+
+  // Linear regression for forecast
+  const n = histValues.length
+  const xMean = (n - 1) / 2
+  const yMean = histValues.reduce((s, v) => s + v, 0) / n
+  let num = 0, den = 0
+  histValues.forEach((v, i) => { num += (i - xMean) * (v - yMean); den += (i - xMean) ** 2 })
+  const slope = den ? num / den : 0
+  const intercept = yMean - slope * xMean
+
+  // Project 7 more points
+  const PROJ = 7
+  const projLabels = []
+  const projValues = []
+  const lastDate = new Date(hist[hist.length - 1]?.runAt || Date.now())
+  for (let i = 1; i <= PROJ; i++) {
+    const d = new Date(lastDate)
+    d.setDate(d.getDate() + i * 2) // ~2 runs/day
+    projLabels.push(d.toLocaleDateString('ko-KR', {month:'numeric',day:'numeric'}))
+    projValues.push(+(intercept + slope * (n + i - 1)).toFixed(3))
+  }
+
+  const allLabels = [...histLabels, ...projLabels]
+  const histDataset = [...histValues, ...Array(PROJ).fill(null)]
+  const projDataset = [...Array(n - 1).fill(null), histValues[n-1], ...projValues]
+
+  if (forecastChart) forecastChart.destroy()
+  forecastChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: allLabels,
+      datasets: [
+        {
+          label: '실제 수익',
+          data: histDataset,
+          borderColor: 'var(--green)',
+          backgroundColor: 'rgba(52,211,153,.08)',
+          borderWidth: 2,
+          pointRadius: 4,
+          tension: 0.3,
+          fill: true
+        },
+        {
+          label: '예측 수익',
+          data: projDataset,
+          borderColor: 'var(--yellow)',
+          backgroundColor: 'rgba(251,191,36,.06)',
+          borderWidth: 2,
+          borderDash: [6, 4],
+          pointRadius: 3,
+          tension: 0.3,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { labels: { color: '#8892b0', font: { size: 11 } } },
+        tooltip: { callbacks: { label: ctx => `$${ctx.parsed.y.toFixed(3)}` } }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,.04)' }, ticks: { color: '#8892b0', font: { size: 10 } } },
+        y: { grid: { color: 'rgba(255,255,255,.04)' }, ticks: { color: '#8892b0', callback: v => '$'+v.toFixed(2) } }
+      }
+    }
+  })
+}
+
+// ── Earnings Calculator ───────────────────────────────────────────────────────
+function updateCalc() {
+  const posts = +document.getElementById('calc-posts').value
+  const visitors = +document.getElementById('calc-visitors').value
+  const cpc = +document.getElementById('calc-cpc').value
+  const ctr = +document.getElementById('calc-ctr').value / 100
+
+  document.getElementById('calc-posts-val').textContent = posts + '개'
+  document.getElementById('calc-visitors-val').textContent = visitors.toLocaleString() + '명'
+  document.getElementById('calc-cpc-val').textContent = '$' + cpc.toFixed(2)
+  document.getElementById('calc-ctr-val').textContent = (ctr * 100).toFixed(1) + '%'
+
+  const clicks = Math.floor(visitors * ctr)
+  const daily = clicks * cpc
+  const monthly = daily * 30
+  const yearly = daily * 365
+
+  document.getElementById('calc-clicks').textContent = clicks + '회'
+  document.getElementById('calc-daily').textContent = '$' + daily.toFixed(2)
+  document.getElementById('calc-monthly').textContent = '$' + monthly.toFixed(0)
+  document.getElementById('calc-yearly').textContent = '$' + yearly.toFixed(0)
+}
+
+function initCalcFromData() {
+  const { runs, posts } = DATA
+  const lastEarnings = runs[0]?.earnings
+  if (lastEarnings?.avgCPC) {
+    const cpcEl = document.getElementById('calc-cpc')
+    if (cpcEl) cpcEl.value = Math.min(3.5, Math.max(0.1, lastEarnings.avgCPC)).toFixed(2)
+  }
+  const postsEl = document.getElementById('calc-posts')
+  if (postsEl && posts.length > 0) postsEl.value = Math.min(500, posts.length)
+  updateCalc()
+}
+
+// ── Category Gap Analysis ─────────────────────────────────────────────────────
+function renderCategoryGap() {
+  const { posts } = DATA
+  const panel = document.getElementById('gap-panel')
+  const list = document.getElementById('gap-list')
+  if (!panel || !list) return
+
+  // Count posts per category
+  const catCount = {}
+  posts.forEach(p => { const c = p.adsenseCategory || '일반'; catCount[c] = (catCount[c] || 0) + 1 })
+
+  const totalPosts = posts.length || 1
+  const maxPosts = Math.max(...Object.values(catCount), 1)
+
+  // Build gap items: categories sorted by potential (CPC × (1 - coverage))
+  const items = Object.entries(CPC_MAP).map(([cat, cpc]) => {
+    const count = catCount[cat] || 0
+    const coverage = count / totalPosts
+    const potential = cpc * (1 - Math.min(coverage * 3, 1))
+    return { cat, cpc, count, coverage, potential }
+  }).sort((a, b) => b.potential - a.potential)
+
+  const maxPotential = items[0]?.potential || 1
+
+  list.innerHTML = items.map(it => {
+    const pct = (it.count / maxPosts * 100).toFixed(0)
+    const potPct = (it.potential / maxPotential * 100).toFixed(0)
+    const oppColor = it.potential > 1.5 ? 'var(--red)' : it.potential > 0.8 ? 'var(--yellow)' : 'var(--green)'
+    return `<div class="gap-item">
+      <span class="gap-cat">${it.cat}</span>
+      <div class="gap-bar-wrap">
+        <div class="gap-bar-label">
+          <span>현재 ${it.count}개 포스트 (${pct}%)</span>
+          <span style="color:${oppColor}">기회지수 ${potPct}%</span>
+        </div>
+        <div class="gap-bar-bg">
+          <div class="gap-bar-fill" style="width:${pct}%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div>
+        </div>
+      </div>
+      <span class="gap-cpc">$${it.cpc.toFixed(2)}</span>
+    </div>`
+  }).join('')
+
+  panel.style.display = 'block'
+}
+
+// ── Run History Timeline ──────────────────────────────────────────────────────
+function renderRunTimeline() {
+  const { runs } = DATA
+  const container = document.getElementById('run-timeline')
+  if (!container) return
+  if (!runs.length) {
+    container.innerHTML = '<div class="empty"><div class="icon">📭</div>실행 이력이 없습니다</div>'
+    return
+  }
+
+  const SHOW = 10
+  const items = runs.slice(0, SHOW)
+  container.innerHTML = items.map((r, idx) => {
+    const hasErr = (r.errors || 0) > 0
+    const dt = new Date(r.runAt || r.savedAt)
+    const dtStr = dt.toLocaleDateString('ko-KR', {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})
+    const kws = (r.keywords || []).join(', ') || '(트렌드 자동)'
+    const gen = r.postsGenerated || 0
+    const up = r.bloggerUploaded || r.platforms?.blogger || 0
+    const img = r.imagesInserted || 0
+    const rev = r.earnings?.estimatedDailyRevenue
+    const isLast = idx === items.length - 1
+    return `<div class="timeline-item">
+      <div style="display:flex;flex-direction:column;align-items:center;">
+        <div class="tl-dot ${hasErr ? 'err' : 'ok'}"></div>
+        ${!isLast ? '<div style="flex:1;width:2px;background:var(--border);margin-top:4px;min-height:28px;"></div>' : ''}
+      </div>
+      <div class="tl-card">
+        <div class="tl-date">${dtStr}</div>
+        <div class="tl-kw" title="${esc(kws)}">${esc(kws.length > 60 ? kws.slice(0,60)+'…' : kws)}</div>
+        <div class="tl-stats">
+          <span class="tl-stat" style="background:rgba(124,106,247,.15);color:var(--accent)">생성 ${gen}개</span>
+          <span class="tl-stat" style="background:rgba(52,211,153,.12);color:var(--green)">게시 ${up}개</span>
+          <span class="tl-stat" style="background:rgba(6,182,212,.1);color:var(--accent2)">이미지 ${img}</span>
+          ${rev != null ? `<span class="tl-stat" style="background:rgba(251,191,36,.1);color:var(--yellow)">$${rev.toFixed(3)}</span>` : ''}
+          ${hasErr ? `<span class="tl-stat" style="background:rgba(248,113,113,.15);color:var(--red)">오류 ${r.errors}개</span>` : ''}
+        </div>
+      </div>
+    </div>`
+  }).join('')
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────

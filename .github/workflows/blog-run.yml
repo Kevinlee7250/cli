@@ -140,6 +140,8 @@ jobs:
             echo "변경사항 없음 — 커밋 건너뜀"
           else
             git commit -m "📊 대시보드 데이터 업데이트 (#${{ github.run_number }})"
+            # 코드 변경 커밋이 먼저 Push된 경우를 대비해 rebase 후 push
+            git pull --rebase origin claude/blog-automation-system-KAbtE
             git push origin claude/blog-automation-system-KAbtE
           fi
 

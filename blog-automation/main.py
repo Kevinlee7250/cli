@@ -3,13 +3,15 @@
 블로그 자동화 시스템 — 메인 실행 파일
 
 사용법:
-  python main.py                          # 스케줄 모드 (SCHEDULE_CRON 기준 자동 실행)
-  python main.py --once                   # 즉시 1회 실행 (트렌드 자동 수집)
-  python main.py --test                   # 글 생성만 (Blogger 업로드 없음)
-  python main.py --keyword "재테크" --once # 특정 키워드로 1회 실행
-  python main.py --interactive            # 키워드 직접 입력 후 즉시 실행
-  python main.py --interactive --test     # 키워드 직접 입력 후 테스트 모드
-  python main.py --interactive --review   # 키워드 직접 입력 후 검토 모드
+  python main.py                                              # 스케줄 모드
+  python main.py --once                                       # 즉시 1회 실행
+  python main.py --test                                       # 글 생성만 (업로드 없음)
+  python main.py --keyword "재테크" --once                    # 특정 키워드로 1회 실행
+  python main.py --interactive                                # 키워드 직접 입력 후 실행
+  python main.py --series --keyword "재테크 완전정복"         # 시리즈 4편 자동 기획·생성·게시
+  python main.py --series --series-count 3 --keyword "ETF"   # 시리즈 3편 실행
+  python main.py --series --keyword "재테크" --test           # 시리즈 테스트 (업로드 없음)
+  python main.py --series --keyword "재테크" --review         # 시리즈 검토 모드
 """
 
 import argparse
@@ -51,7 +53,7 @@ from config import (
     TREND_COUNTRY,
     SCHEDULE_CRON,
 )
-from content_generator import generate_post
+from content_generator import generate_post, generate_series_post
 from blogger_uploader import upload_post
 from keyword_collector import get_trending_keywords, _migrate_used_keywords
 from dashboard_exporter import log_run, export_dashboard, save_pending_posts
@@ -174,6 +176,116 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False, review: b
 
 
 # ──────────────────────────────────────────────────────────────────────────────
+# 시리즈 모드
+# ──────────────────────────────────────────────────────────────────────────────
+
+def run_series(keyword: str, count: int = 4, dry_run: bool = False, review: bool = False) -> None:
+    """시리즈 포스트를 순서대로 기획·생성·게시합니다."""
+    from series_planner import plan_series, build_series_nav, save_series
+
+    logger.info("=" * 60)
+    logger.info(f"시리즈 모드 시작: '{keyword}' {count}편")
+    logger.info("=" * 60)
+
+    series_plan = plan_series(keyword, count)
+    if not series_plan:
+        logger.error("시리즈 기획 실패 — 종료")
+        return
+    save_series(series_plan)
+    logger.info(f"시리즈 기획 완료: '{series_plan.get('series_title')}'")
+    for ep in series_plan.get("episodes", []):
+        logger.info(f"  편 {ep['episode']}: {ep.get('title', '')}")
+
+    generated_posts: list[dict] = []
+    pending_list: list[dict] = []
+    episodes = series_plan.get("episodes", [])
+
+    for ep in episodes:
+        ep_num = ep["episode"]
+        ep_keyword = ep.get("search_keyword", keyword)
+
+        logger.info(f"\n--- [{ep_num}/{len(episodes)}편] '{ep_keyword}' 생성 중 ---")
+
+        series_context = {
+            **series_plan,
+            "episode": ep_num,
+            "focus": ep.get("focus", ""),
+            "title": ep.get("title", ""),
+        }
+
+        post_data = generate_series_post(ep_keyword, "N/A", series_context)
+        if not post_data:
+            logger.error(f"편 {ep_num} 생성 실패 — 건너뜀")
+            ep["status"] = "failed"
+            save_series(series_plan)
+            continue
+
+        ep["status"] = "generated"
+        nav_html = build_series_nav(series_plan, ep_num)
+        post_data["series_nav"] = nav_html
+        post_data["series_label"] = series_plan.get("series_label", "")
+
+        if dry_run:
+            logger.info(f"[테스트] 편 {ep_num}: '{post_data.get('title','?')}' ({post_data.get('word_count',0)}자)")
+            ep["status"] = "done"
+            generated_posts.append(post_data)
+            save_series(series_plan)
+            continue
+
+        if review:
+            post_data["status"] = "pending"
+            pending_list.append(post_data)
+            ep["status"] = "pending_review"
+            generated_posts.append(post_data)
+            save_series(series_plan)
+            continue
+
+        result = upload_post(post_data)
+        if result:
+            blogger_url = result.get("url", "")
+            ep["status"] = "done"
+            ep["blogger_url"] = blogger_url
+            ep["post_id"] = result.get("id", "")
+            post_data["blogUrl"] = blogger_url
+            logger.info(f"  ✅ 편 {ep_num} 업로드 완료: {blogger_url}")
+        else:
+            ep["status"] = "upload_failed"
+            logger.error(f"  ❌ 편 {ep_num} 업로드 실패")
+
+        generated_posts.append(post_data)
+        save_series(series_plan)
+
+        if ep_num < len(episodes):
+            time.sleep(3)
+
+    all_done = all(ep.get("status") in ("done", "pending_review") for ep in episodes)
+    series_plan["status"] = "completed" if all_done else "partial"
+    save_series(series_plan)
+
+    uploaded = sum(1 for ep in episodes if ep.get("status") == "done")
+    errors = sum(1 for ep in episodes if ep.get("status") in ("failed", "upload_failed"))
+
+    try:
+        if pending_list:
+            save_pending_posts(pending_list)
+        if generated_posts:
+            log_run(
+                keywords=[keyword],
+                results=generated_posts,
+                blogger_uploaded=uploaded if not (dry_run or review) else 0,
+                errors=errors,
+            )
+            export_dashboard()
+            logger.info("대시보드 데이터 업데이트 완료")
+    except Exception as e:
+        logger.warning(f"대시보드 업데이트 실패 (무시): {e}")
+
+    logger.info("\n" + "=" * 60)
+    logger.info(f"시리즈 완료: {uploaded}/{len(episodes)}편 성공")
+    logger.info("=" * 60)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 # 스케줄 모드
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -256,6 +368,8 @@ def main() -> None:
     parser.add_argument("--review", action="store_true", help="검토 모드 — 글 생성 후 pending_posts.json에 저장 (업로드 없음)")
     parser.add_argument("--keyword", type=str, help="특정 키워드로 실행 (쉼표로 복수 지정)")
     parser.add_argument("--interactive", "-i", action="store_true", help="키워드 직접 입력 후 즉시 실행")
+    parser.add_argument("--series", action="store_true", help="시리즈 모드 — 주제를 N편으로 분할 기획·생성·게시 (--keyword 필수)")
+    parser.add_argument("--series-count", type=int, default=4, metavar="N", help="시리즈 편수 (2~5, 기본값 4)")
     args = parser.parse_args()
 
     keywords = None
@@ -264,6 +378,27 @@ def main() -> None:
 
     if args.interactive:
         keywords = _prompt_keywords(keywords)
+
+    if args.series:
+        if not keywords:
+            logger.error("시리즈 모드는 --keyword 가 필수입니다 (예: --series --keyword '재테크 완전정복')")
+            sys.exit(1)
+        series_kw = keywords[0]
+        series_count = max(2, min(getattr(args, "series_count", 4), 5))
+        skip_blogger = args.test or args.review
+        if not _check_config(skip_blogger=skip_blogger):
+            sys.exit(1)
+        if not skip_blogger and not _check_config():
+            sys.exit(1)
+        if args.test:
+            logger.info(f"[시리즈 테스트] '{series_kw}' {series_count}편 — 업로드 없이 생성만")
+            run_series(series_kw, series_count, dry_run=True)
+        elif args.review:
+            logger.info(f"[시리즈 검토] '{series_kw}' {series_count}편 — pending에 저장")
+            run_series(series_kw, series_count, review=True)
+        else:
+            run_series(series_kw, series_count)
+        return
 
     if not _check_config(skip_blogger=(args.test or args.review)):
         sys.exit(1)

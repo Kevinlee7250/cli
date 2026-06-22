@@ -27,6 +27,11 @@ on:
           - draft   # 임시저장
           - test    # 업로드 없이 글만 생성 (API 테스트용)
           - review  # 글 생성 후 pending_posts.json에 저장 (수동 검토용)
+          - series  # 시리즈 포스트 자동 기획 (keyword 필수)
+      series_count:
+        description: '시리즈 편수 (2~5, series 모드에서만 사용)'
+        required: false
+        default: '4'
 
 permissions:
   contents: write
@@ -84,7 +89,16 @@ jobs:
           MODE="${{ inputs.mode || 'live' }}"
           KEYWORD="${{ inputs.keyword }}"
 
-          if [ "$MODE" = "test" ]; then
+          SERIES_COUNT="${{ inputs.series_count || '4' }}"
+
+          if [ "$MODE" = "series" ]; then
+            echo "=== 시리즈 모드: 주제를 ${SERIES_COUNT}편으로 분할 ==="
+            if [ -z "$KEYWORD" ]; then
+              echo "❌ 시리즈 모드는 keyword 입력이 필수입니다"
+              exit 1
+            fi
+            python main.py --series --series-count "$SERIES_COUNT" --keyword "$KEYWORD"
+          elif [ "$MODE" = "test" ]; then
             echo "=== 테스트 모드: 업로드 없이 글만 생성 ==="
             if [ -n "$KEYWORD" ]; then
               python main.py --test --keyword "$KEYWORD"
@@ -113,8 +127,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # docs/data/ 는 tracked 파일 (-f: 루트 .gitignore /*  규칙 우회)
-          git add -f docs/data/posts.json docs/data/runs.json docs/data/analytics.json docs/data/meta.json docs/data/pending_posts.json 2>/dev/null || true
-          git add blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json 2>/dev/null || true
+          git add -f docs/data/posts.json docs/data/runs.json docs/data/analytics.json docs/data/meta.json docs/data/pending_posts.json docs/data/series.json 2>/dev/null || true
+          git add blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json blog-automation/logs/series.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else

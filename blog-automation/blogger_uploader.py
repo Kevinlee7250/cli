@@ -200,6 +200,7 @@ def _build_full_content(post_data: dict) -> str:
     html = post_data.get("content", "")
     faq = post_data.get("faq", [])
     labels = post_data.get("labels", [])
+    series_nav = post_data.get("series_nav", "")  # 시리즈 내비게이션 HTML
 
     # ① H2에 id 부여 (중복 slug 방지 포함)
     html = _add_h2_ids(html)
@@ -267,7 +268,9 @@ border-left:4px solid #ffc107;">
         + _faq_schema(faq)
         + '<div class="blog-post" style="max-width:800px;margin:0 auto;'
           'font-family:\'Noto Sans KR\',sans-serif;line-height:1.9;color:#222;">'
+        + series_nav           # ⑦ 시리즈 내비게이션 (상단)
         + html
+        + series_nav           # ⑧ 시리즈 내비게이션 (하단 — 읽은 후 다음 편 유도)
         + tag_section
         + sources_section
         + footer

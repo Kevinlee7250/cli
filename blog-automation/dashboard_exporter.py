@@ -133,6 +133,46 @@ def log_run(
     logger.info(f"실행 이력 저장 완료 (총 {len(history)}개)")
 
 
+def _export_series(docs_dir: str) -> None:
+    """시리즈 기획 데이터를 docs/data/series.json으로 내보냅니다."""
+    series_src = os.path.join(os.path.dirname(__file__), "logs", "series.json")
+    series_dst = os.path.join(docs_dir, "series.json")
+    try:
+        if os.path.exists(series_src):
+            with open(series_src, encoding="utf-8") as f:
+                series_list = json.load(f)
+        else:
+            series_list = []
+        export = [
+            {
+                "series_id": s.get("series_id", ""),
+                "series_title": s.get("series_title", ""),
+                "series_label": s.get("series_label", ""),
+                "series_description": s.get("series_description", ""),
+                "keyword": s.get("keyword", ""),
+                "total_episodes": s.get("total_episodes", 0),
+                "created_at": s.get("created_at", ""),
+                "status": s.get("status", "planned"),
+                "episodes": [
+                    {
+                        "episode": ep.get("episode"),
+                        "title": ep.get("title", ""),
+                        "focus": ep.get("focus", ""),
+                        "status": ep.get("status", "pending"),
+                        "blogger_url": ep.get("blogger_url"),
+                    }
+                    for ep in s.get("episodes", [])
+                ],
+            }
+            for s in series_list
+        ]
+        with open(series_dst, "w", encoding="utf-8") as f:
+            json.dump(export, f, ensure_ascii=False, indent=2)
+        logger.info(f"  시리즈: {len(export)}개 내보내기 완료")
+    except Exception as exc:
+        logger.warning(f"시리즈 데이터 내보내기 실패 (무시): {exc}")
+
+
 def export_dashboard() -> None:
     """대시보드용 JSON을 docs/data/에 내보냅니다."""
     os.makedirs(DOCS_DATA_DIR, exist_ok=True)
@@ -159,7 +199,7 @@ def export_dashboard() -> None:
                 "faqCount": p.get("faqCount", 0),
                 "imagesInserted": p.get("imagesInserted", 0),
                 "hasToc": True,
-                "adSlots": 6,
+                "adSlots": 4,
                 "adsenseCategory": cat,
                 "estimatedCPC": _cpc_for_category(cat),
                 "trendDirection": "rising",
@@ -227,6 +267,8 @@ def export_dashboard() -> None:
         path = os.path.join(DOCS_DATA_DIR, name)
         with open(path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
+
+    _export_series(DOCS_DATA_DIR)
 
     logger.info(f"대시보드 데이터 내보내기 완료 → {DOCS_DATA_DIR}")
     logger.info(f"  포스트: {len(posts)}개 / 실행 이력: {len(runs_export)}개")

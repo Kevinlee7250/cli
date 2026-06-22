@@ -333,6 +333,237 @@ def _validate_sources(sources: list) -> list:
     return valid
 
 
+def _build_series_prompt(keyword: str, traffic: str, series_context: dict) -> str:
+    """시리즈 포스트용 프롬프트"""
+    from datetime import datetime
+    now = datetime.now()
+    y = now.year
+    date_str = now.strftime("%Y년 %m월 %d일")
+
+    series_title = series_context.get("series_title", "")
+    episode = series_context.get("episode", 1)
+    total = series_context.get("total_episodes", 1)
+    focus = series_context.get("focus", "")
+    title_hint = series_context.get("title", "")
+    series_label = series_context.get("series_label", "")
+    all_eps = series_context.get("episodes", [])
+    other_eps = [ep for ep in all_eps if ep.get("episode") != episode]
+    other_list = "\n".join(
+        [f"  • {ep['episode']}편: {ep.get('title', '')}" for ep in other_eps]
+    )
+
+    if BLOG_LANGUAGE == "ko":
+        return f"""당신은 독자에게 실질적으로 유용한 정보를 제공하는 전문 블로거입니다.
+구글 AdSense 정책을 준수하며 독자 신뢰도를 최우선으로 합니다.
+
+【현재 시점】 {date_str}
+【시리즈】 "{series_title}" — {total}편 시리즈의 {episode}번째 글
+【이 편 초점】 {focus}
+키워드: {keyword} | 예상 트래픽: {traffic}
+
+━━━ 시리즈 작성 규칙 ━━━
+시리즈의 다른 편:
+{other_list}
+
+• 이 편만 읽어도 완결되는 내용을 담을 것
+• 본문에서 다른 편을 1~2회 자연스럽게 언급해 독자 유도
+• 제목 힌트: "{title_hint}" 를 참고해 더 구체적으로 작성
+
+━━━ 제목 규칙 ━━━
+• "[{episode}편]" 으로 시작 (예: "[1편] 2026년 ...")
+• 숫자 포함 | {y}년 포함 | 35자 이내 | 과장 표현 금지
+
+━━━ 본문 구조 ━━━
+분량: 2800~3500자 완전한 HTML
+도입부(300자): 독자의 핵심 고민 + 이 편의 가치 예고 + 시리즈 1줄 소개
+
+H2 섹션 6개 (각 400~450자):
+1. "📊 {keyword} 현황 및 최신 통계 ({y}년)"
+2. "✅ {focus} 핵심 방법 TOP 5"
+3. "💡 실제 사례로 보는 성공 전략"
+4. "⚠️ 반드시 피해야 할 실수 3가지"
+5. "🔥 {y}년 최신 트렌드 & 변화 포인트"
+6. "💰 실전 적용 팁 & 다음 편 예고"
+
+FAQ 섹션 (h2 "자주 묻는 질문"): 5개
+결론(200자): 핵심 요약 + 시리즈 다음 편 읽기 권유
+
+━━━ 콘텐츠 품질 기준 ━━━
+• 각 H2: 즉시 실행 가능한 구체적 정보
+• 통계·수치: 검증 가능한 수치만 (추정치는 "약 ~")
+• <strong> 핵심 개념·용어 강조
+• 번호 리스트 / 불렛포인트 활용
+
+━━━ SEO ━━━
+• 키워드 10~14회 자연스럽게 | LSI 키워드 배치
+• 라벨 10개 — 반드시 "{series_label}" 포함
+• meta_description 155자 이내
+
+━━━ 출처 링크 ━━━
+• 실존하는 공신력 있는 URL만
+• 확인 불가 통계는 출처 생략
+• 최소 2개, 최대 6개
+
+JSON만 응답 (마크다운 없이):
+{{
+  "title": "[{episode}편] ...",
+  "content": "<완전한 HTML>",
+  "labels": ["{series_label}","태그2","태그3","태그4","태그5","태그6","태그7","태그8","태그9","태그10"],
+  "meta_description": "...",
+  "faq": [{{"q":"...","a":"..."}},...],
+  "sources": [{{"title":"...","url":"..."}}]
+}}"""
+
+    other_list_en = "\n".join([f"  • Part {ep['episode']}: {ep.get('title','')}" for ep in other_eps])
+    return f"""You are an expert blogger providing genuinely useful information to readers.
+Follow Google AdSense content policies. Reader trust is top priority.
+
+【Date】 {now.strftime("%B %d, %Y")}
+【Series】 "{series_title}" — Part {episode} of {total}
+【Episode Focus】 {focus}
+Keyword: {keyword} | Traffic: {traffic}
+
+━━━ SERIES RULES ━━━
+Other parts:
+{other_list_en}
+
+• This episode must be self-contained and valuable alone
+• Naturally mention other parts 1-2 times to encourage series reading
+
+━━━ TITLE ━━━
+• Start with "[Part {episode}]" (e.g., "[Part 1] 2026...")
+• Include numbers and {y} | Under 65 chars | No sensationalism
+
+━━━ CONTENT STRUCTURE ━━━
+Length: 2800-3500 words, complete HTML
+Intro (300w): reader problem + episode value + 1-line series intro
+
+6 H2 sections (400-450w each):
+1. "📊 {keyword} Stats & Data ({y})"
+2. "✅ {focus} TOP 5 Methods"
+3. "💡 Real Case Studies"
+4. "⚠️ 3 Mistakes to Avoid"
+5. "🔥 {y} Trends & Updates"
+6. "💰 Action Steps & What's Next"
+
+FAQ (h2 "Frequently Asked Questions"): 5 Q&As
+Conclusion (200w): summary + encourage reading next part
+
+━━━ CONTENT QUALITY ━━━
+• Each H2: actionable, specific info
+• Stats: verifiable only; estimates say "approximately"
+• <strong> key concepts | Bullet/numbered lists
+
+━━━ SEO ━━━
+• Keyword 10-14 times | LSI keywords throughout
+• 10 labels — must include "{series_label}"
+• meta_description under 155 chars
+
+━━━ SOURCES ━━━
+• Real URLs from credible sources only | Min 2, max 6
+
+JSON only:
+{{
+  "title": "[Part {episode}] ...",
+  "content": "<complete HTML>",
+  "labels": ["{series_label}","tag2","tag3","tag4","tag5","tag6","tag7","tag8","tag9","tag10"],
+  "meta_description": "...",
+  "faq": [{{"q":"...","a":"..."}},...],
+  "sources": [{{"title":"...","url":"..."}}]
+}}"""
+
+
+def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dict | None = None) -> dict | None:
+    """시리즈 포스트를 생성합니다."""
+    if not series_context:
+        return generate_post(keyword, traffic)
+
+    episode = series_context.get("episode", "?")
+    total = series_context.get("total_episodes", "?")
+    logger.info(f"시리즈 포스트 생성: '{keyword}' ({episode}/{total}편)")
+    prompt = _build_series_prompt(keyword, traffic, series_context)
+
+    for attempt in range(3):
+        try:
+            from datetime import datetime as _dt
+            _now = _dt.now()
+            _sys = (
+                f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. 이 날짜 기준 최신 정보를 사용하세요. JSON만 응답하세요."
+                if BLOG_LANGUAGE == "ko" else
+                f"Current date: {_now.strftime('%B %d, %Y')}. JSON only."
+            )
+            message = _get_client().messages.create(
+                model=CLAUDE_MODEL,
+                max_tokens=16000,
+                system=_sys,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            if not message.content or not hasattr(message.content[0], "text"):
+                if attempt < 2:
+                    time.sleep(2)
+                    continue
+                return None
+            raw = message.content[0].text.strip()
+            post_data = _parse_response(raw)
+            if post_data is None:
+                if attempt < 2:
+                    logger.warning(f"JSON 파싱 실패 — 재시도 {attempt + 1}/3")
+                    time.sleep(2)
+                    continue
+                return None
+
+            post_data["keyword"] = keyword
+            post_data["series_id"] = series_context.get("series_id", "")
+            post_data["episode"] = episode
+
+            content_html = post_data.get("content", "")
+            post_data["word_count"] = _word_count(content_html)
+            post_data["content_preview"] = _content_preview(content_html)
+
+            if not content_html.strip() or post_data["word_count"] < 100:
+                if attempt < 2:
+                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자) — 재시도")
+                    time.sleep(2)
+                    continue
+                return None
+
+            if not isinstance(post_data.get("sources"), list):
+                post_data["sources"] = []
+            else:
+                post_data["sources"] = _validate_sources(post_data["sources"])
+
+            section_queries = _extract_section_queries(content_html, keyword)
+            images = fetch_images_for_queries(
+                section_queries,
+                naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
+                naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
+            )
+            if images:
+                post_data["content"] = inject_images_into_content(post_data["content"], images, keyword)
+                post_data["images_inserted"] = len(images)
+            else:
+                post_data["images_inserted"] = 0
+
+            logger.info(
+                f"시리즈 포스트 생성 완료: '{post_data.get('title', '?')}' "
+                f"({post_data['word_count']}자, 이미지 {post_data['images_inserted']}개)"
+            )
+            return post_data
+
+        except anthropic.APIStatusError as e:
+            if attempt < 2 and e.status_code in (429, 529):
+                wait = 8 * (2 ** attempt)
+                logger.warning(f"API 과부하 — {wait}s 재시도")
+                time.sleep(wait)
+            else:
+                logger.error(f"Claude API 오류: {e}")
+                return None
+        except Exception as e:
+            logger.error(f"시리즈 포스트 생성 오류: {e}", exc_info=True)
+            return None
+    return None
+
+
 def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
     """Claude API로 포스트 생성 후 이미지를 자동 삽입합니다. 실패 시 최대 2회 재시도."""
     logger.info(f"포스트 생성 중: '{keyword}'")

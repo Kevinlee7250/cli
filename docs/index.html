@@ -288,6 +288,7 @@
     <a data-page="analytics"><span class="nav-icon">💰</span> 수익 분석</a>
     <a data-page="social"><span class="nav-icon">📱</span> 소셜 미디어</a>
     <a data-page="review"><span class="nav-icon">✍️</span> 수동 검토 <span id="review-nav-badge" style="display:none;background:var(--yellow);color:#1a1d27;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
+    <a data-page="series"><span class="nav-icon">📚</span> 시리즈 기획 <span id="series-nav-badge" style="display:none;background:var(--accent);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
     <a data-page="config"><span class="nav-icon">⚙️</span> 시스템 정보</a>
   </nav>
   <div class="sidebar-footer">
@@ -723,6 +724,26 @@
     </div>
   </div>
 
+  <!-- ═══ 시리즈 기획 ═══ -->
+  <div class="page" id="page-series">
+    <div class="page-title">📚 시리즈 기획</div>
+    <div class="cards" style="margin-bottom:20px">
+      <div class="card blue"><div class="label">전체 시리즈</div><div class="value" id="series-total-count">0</div><div class="sub">기획된 시리즈 수</div></div>
+      <div class="card green"><div class="label">완료 편수</div><div class="value" id="series-done-eps">0</div><div class="sub">업로드 완료된 편</div></div>
+      <div class="card yellow"><div class="label">진행 중</div><div class="value" id="series-active-count">0</div><div class="sub">partial / planned</div></div>
+      <div class="card purple"><div class="label">체류 시간 효과</div><div class="value" style="font-size:14px;color:var(--accent)">+3~5배</div><div class="sub">시리즈 연속 읽기 유도</div></div>
+    </div>
+    <div class="alert-box" style="margin-bottom:20px">
+      💡 <strong>시리즈 모드 실행:</strong>
+      <a href="#" onclick="navTo('run');return false;" style="color:var(--accent);font-weight:700">실행 제어</a> 탭 →
+      모드 <code style="background:rgba(255,255,255,.1);padding:2px 6px;border-radius:4px">series</code> 선택 →
+      키워드 입력 (예: <em>재테크 완전정복</em>) → 실행
+    </div>
+    <div id="series-list-container">
+      <div class="empty"><div class="icon">📚</div>아직 시리즈가 없습니다<br><span style="font-size:13px;color:var(--muted)">실행 제어 탭에서 series 모드로 첫 시리즈를 기획하세요</span></div>
+    </div>
+  </div>
+
   <!-- ═══ 시스템 정보 ═══ -->
   <div class="page" id="page-config">
     <div class="page-title">⚙️ 시스템 정보</div>
@@ -730,18 +751,16 @@
       <div class="card purple"><div class="label">실행 엔진</div><div class="value" style="font-size:16px;color:var(--accent)" id="cfg-engine">Python 3.11</div><div class="sub">Claude API claude-sonnet-4-6</div></div>
       <div class="card blue"><div class="label">이미지 소스</div><div class="value" style="font-size:16px;color:var(--accent2)">3단계</div><div class="sub">Naver → DDG → Wikimedia</div></div>
       <div class="card green"><div class="label">JSON-LD 스키마</div><div class="value" style="font-size:16px;color:var(--green)">2종</div><div class="sub">Article + FAQPage</div></div>
-      <div class="card yellow"><div class="label">AdSense 슬롯</div><div class="value" style="font-size:16px;color:var(--yellow)">6개</div><div class="sub">포스트당 최적 배치</div></div>
+      <div class="card yellow"><div class="label">AdSense 슬롯</div><div class="value" style="font-size:16px;color:var(--yellow)">4개</div><div class="sub">포스트당 AdSense 정책 준수 배치</div></div>
     </div>
     <div class="section-header"><h2>AdSense 슬롯 배치 전략</h2></div>
     <div class="table-wrap" style="margin-bottom:24px">
       <table><thead><tr><th>슬롯</th><th>위치</th><th>CTR 기여</th></tr></thead>
       <tbody>
         <tr><td><span class="badge green">슬롯 1</span></td><td>도입부 첫 &lt;p&gt; 바로 다음 (Above the fold)</td><td style="color:var(--green);font-weight:700">최고 ★★★★★</td></tr>
-        <tr><td><span class="badge blue">슬롯 2</span></td><td>2번째 H2 섹션 앞</td><td style="color:var(--accent2);font-weight:700">높음 ★★★★</td></tr>
-        <tr><td><span class="badge blue">슬롯 3</span></td><td>3번째 H2 섹션 앞</td><td style="color:var(--accent2);font-weight:700">높음 ★★★★</td></tr>
-        <tr><td><span class="badge purple">슬롯 4</span></td><td>4번째 H2 섹션 앞</td><td style="color:var(--accent);font-weight:700">보통 ★★★</td></tr>
-        <tr><td><span class="badge purple">슬롯 5</span></td><td>FAQ H2 섹션 앞</td><td style="color:var(--accent);font-weight:700">보통 ★★★</td></tr>
-        <tr><td><span class="badge yellow">슬롯 6</span></td><td>본문 끝 (독자 이탈 전 마지막)</td><td style="color:var(--yellow);font-weight:700">보통 ★★★</td></tr>
+        <tr><td><span class="badge blue">슬롯 2</span></td><td>3번째 H2 섹션 앞 (본문 중간)</td><td style="color:var(--accent2);font-weight:700">높음 ★★★★</td></tr>
+        <tr><td><span class="badge blue">슬롯 3</span></td><td>5번째 H2 섹션 앞 (본문 후반)</td><td style="color:var(--accent2);font-weight:700">높음 ★★★★</td></tr>
+        <tr><td><span class="badge yellow">슬롯 4</span></td><td>본문 끝 (독자 이탈 전 마지막)</td><td style="color:var(--yellow);font-weight:700">보통 ★★★</td></tr>
       </tbody></table>
     </div>
     <div class="section-header" style="margin-top:8px"><h2>AdSense 카테고리 CPC 기준</h2></div>
@@ -811,15 +830,16 @@ async function loadAll(silent = false) {
   }
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, social, pending] = await Promise.all([
+  const [posts, runs, analytics, meta, social, pending, series] = await Promise.all([
     fetch(base + '/posts.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/runs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/analytics.json' + ts).then(r => r.json()).catch(() => ({})),
     fetch(base + '/meta.json' + ts).then(r => r.json()).catch(() => ({})),
     fetch(base + '/social.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/pending_posts.json' + ts).then(r => r.json()).catch(() => []),
+    fetch(base + '/series.json' + ts).then(r => r.json()).catch(() => []),
   ])
-  DATA = { posts, runs, analytics, meta, social, pending }
+  DATA = { posts, runs, analytics, meta, social, pending, series }
   const lbl = document.getElementById('last-updated-label')
   if (lbl && meta.exportedAt)
     lbl.textContent = '업데이트: ' + new Date(meta.exportedAt).toLocaleString('ko-KR')
@@ -866,6 +886,7 @@ function navTo(page) {
     const warnEl = document.getElementById('review-no-pat-warn')
     if (warnEl) warnEl.style.display = getPAT() ? 'none' : 'block'
   }
+  if (page === 'series') renderSeries()
 }
 
 // ── Dashboard ─────────────────────────────────────────────────────────────────
@@ -894,6 +915,14 @@ function renderDashboard() {
 
   // Pending posts count
   updatePendingBadge()
+
+  // Series badge
+  const series = DATA.series || []
+  const seriesBadge = document.getElementById('series-nav-badge')
+  if (seriesBadge) {
+    seriesBadge.textContent = series.length
+    seriesBadge.style.display = series.length > 0 ? '' : 'none'
+  }
 
   // Last run banner
   const lastRun = runs[0]
@@ -2161,6 +2190,77 @@ async function publishPostDirect(id) {
     if (statusEl) { statusEl.className = 'status-panel error'; statusEl.innerHTML = '❌ ' + esc(err.message) }
     showToast('게시 실패: ' + err.message, 'error')
   }
+}
+
+// ── Series ────────────────────────────────────────────────────────────────────
+function renderSeries() {
+  const series = DATA.series || []
+  const totalEps = series.reduce((s, sr) => s + (sr.total_episodes || 0), 0)
+  const doneEps = series.reduce((s, sr) => s + sr.episodes.filter(e => e.status === 'done').length, 0)
+  const active = series.filter(sr => sr.status !== 'completed').length
+
+  const totalEl = document.getElementById('series-total-count')
+  const doneEl = document.getElementById('series-done-eps')
+  const activeEl = document.getElementById('series-active-count')
+  if (totalEl) totalEl.textContent = series.length
+  if (doneEl) doneEl.textContent = doneEps + '/' + totalEps + '편'
+  if (activeEl) activeEl.textContent = active
+
+  // nav badge
+  const badge = document.getElementById('series-nav-badge')
+  if (badge) {
+    badge.textContent = series.length
+    badge.style.display = series.length > 0 ? '' : 'none'
+  }
+
+  const container = document.getElementById('series-list-container')
+  if (!container) return
+  if (!series.length) {
+    container.innerHTML = '<div class="empty"><div class="icon">📚</div>아직 시리즈가 없습니다<br><span style="font-size:13px;color:var(--muted)">실행 제어 탭에서 series 모드로 첫 시리즈를 기획하세요</span></div>'
+    return
+  }
+
+  const statusColor = { completed: 'var(--green)', partial: 'var(--yellow)', planned: 'var(--muted)', in_progress: 'var(--accent)' }
+  const statusLabel = { completed: '완료', partial: '일부 완료', planned: '기획됨', in_progress: '진행 중' }
+  const epStatusBadge = { done: '<span class="badge green">완료</span>', pending: '<span class="badge yellow">대기</span>', pending_review: '<span class="badge purple">검토 중</span>', failed: '<span class="badge" style="background:var(--red)">실패</span>', upload_failed: '<span class="badge" style="background:var(--red)">업로드 실패</span>', generated: '<span class="badge blue">생성됨</span>' }
+
+  container.innerHTML = series.map(sr => {
+    const st = sr.status || 'planned'
+    const doneCount = sr.episodes.filter(e => e.status === 'done').length
+    const epRows = sr.episodes.map(ep => {
+      const badge = epStatusBadge[ep.status] || `<span class="badge">${esc(ep.status)}</span>`
+      const link = ep.blogger_url
+        ? `<a href="${esc(ep.blogger_url)}" target="_blank" style="color:var(--accent);text-decoration:none;font-size:12px;">🔗 보기</a>`
+        : '<span style="color:var(--muted);font-size:12px;">미게시</span>'
+      return `<tr>
+        <td style="color:var(--muted);text-align:center;">${ep.episode}</td>
+        <td><strong>${esc(ep.title || '')}</strong><br><span style="font-size:12px;color:var(--muted)">${esc(ep.focus || '')}</span></td>
+        <td>${badge}</td>
+        <td>${link}</td>
+      </tr>`
+    }).join('')
+
+    return `<div class="card" style="margin-bottom:20px;padding:20px 24px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+        <div>
+          <div style="font-weight:700;font-size:16px;margin-bottom:4px;">${esc(sr.series_title || '')}</div>
+          <div style="font-size:13px;color:var(--muted);">${esc(sr.series_description || '')} &nbsp;·&nbsp; 키워드: <strong>${esc(sr.keyword || '')}</strong></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px;">${sr.created_at ? new Date(sr.created_at).toLocaleString('ko-KR') : ''}</div>
+        </div>
+        <div style="text-align:right;">
+          <span style="font-weight:700;color:${statusColor[st] || 'var(--muted)'};">${statusLabel[st] || st}</span>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px;">${doneCount}/${sr.total_episodes}편 완료</div>
+          ${sr.series_label ? `<div style="margin-top:6px;"><a href="https://hoguwhat1.blogspot.com/search/label/${esc(sr.series_label)}" target="_blank" style="font-size:12px;color:var(--accent2);text-decoration:none;">📋 Blogger 시리즈 페이지</a></div>` : ''}
+        </div>
+      </div>
+      <div class="table-wrap" style="margin:0;">
+        <table>
+          <thead><tr><th style="width:40px;">편</th><th>제목 / 초점</th><th style="width:90px;">상태</th><th style="width:70px;">링크</th></tr></thead>
+          <tbody>${epRows}</tbody>
+        </table>
+      </div>
+    </div>`
+  }).join('')
 }
 
 function renderUsedKeywords() {

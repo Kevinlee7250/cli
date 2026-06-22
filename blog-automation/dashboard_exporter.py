@@ -133,6 +133,20 @@ def log_run(
     logger.info(f"실행 이력 저장 완료 (총 {len(history)}개)")
 
 
+def _export_gsc(docs_dir: str) -> None:
+    """GSC 캐시 데이터를 docs/data/gsc.json으로 내보냅니다."""
+    try:
+        from config import GSC_SITE_URL
+        if not GSC_SITE_URL:
+            return
+        from gsc_fetcher import fetch_search_analytics, save_gsc_for_dashboard
+        data = fetch_search_analytics(GSC_SITE_URL)
+        if data:
+            save_gsc_for_dashboard(data, docs_dir)
+    except Exception as exc:
+        logger.debug(f"GSC 내보내기 생략: {exc}")
+
+
 def _export_series(docs_dir: str) -> None:
     """시리즈 기획 데이터를 docs/data/series.json으로 내보냅니다."""
     series_src = os.path.join(os.path.dirname(__file__), "logs", "series.json")
@@ -269,6 +283,7 @@ def export_dashboard() -> None:
             json.dump(data, f, ensure_ascii=False, indent=2)
 
     _export_series(DOCS_DATA_DIR)
+    _export_gsc(DOCS_DATA_DIR)
 
     logger.info(f"대시보드 데이터 내보내기 완료 → {DOCS_DATA_DIR}")
     logger.info(f"  포스트: {len(posts)}개 / 실행 이력: {len(runs_export)}개")

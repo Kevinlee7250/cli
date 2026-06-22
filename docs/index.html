@@ -589,6 +589,35 @@
       <button class="csv-btn" onclick="exportRunsCSV()">⬇️ CSV 내보내기</button>
     </div>
     <div class="table-wrap" id="earnings-hist"></div>
+
+    <!-- GSC Section -->
+    <div class="section-header" style="margin-top:32px">
+      <h2>🔍 Google Search Console 데이터</h2>
+      <span id="gsc-fetch-time" style="font-size:12px;color:var(--muted)"></span>
+    </div>
+    <div id="gsc-not-configured" class="alert-box" style="display:none">
+      💡 GSC_SITE_URL 시크릿을 설정하면 실제 검색 노출·클릭 데이터가 여기에 표시됩니다.
+    </div>
+    <div id="gsc-data-section" style="display:none">
+      <div class="cards" style="margin-bottom:20px">
+        <div class="card blue"><div class="label">총 쿼리 수</div><div class="value" id="gsc-total-queries">-</div><div class="sub">지난 30일</div></div>
+        <div class="card green"><div class="label">총 클릭 수</div><div class="value" id="gsc-total-clicks">-</div><div class="sub">검색 클릭</div></div>
+        <div class="card purple"><div class="label">총 노출 수</div><div class="value" id="gsc-total-impressions">-</div><div class="sub">검색 노출</div></div>
+        <div class="card yellow"><div class="label">평균 CTR</div><div class="value" id="gsc-avg-ctr">-</div><div class="sub">클릭률</div></div>
+      </div>
+      <div class="chart-grid">
+        <div class="chart-box" style="overflow-x:auto">
+          <h3>📋 상위 검색 쿼리 (클릭 순)</h3>
+          <table><thead><tr><th>쿼리</th><th>클릭</th><th>노출</th><th>CTR</th><th>평균 순위</th></tr></thead>
+          <tbody id="gsc-top-queries"></tbody></table>
+        </div>
+        <div class="chart-box" style="overflow-x:auto">
+          <h3>📂 카테고리별 성과</h3>
+          <table><thead><tr><th>카테고리</th><th>클릭</th><th>노출</th><th>CTR</th><th>주요 쿼리</th></tr></thead>
+          <tbody id="gsc-cat-performance"></tbody></table>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ═══ 소셜 미디어 ═══ -->
@@ -830,7 +859,7 @@ async function loadAll(silent = false) {
   }
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, social, pending, series] = await Promise.all([
+  const [posts, runs, analytics, meta, social, pending, series, gsc] = await Promise.all([
     fetch(base + '/posts.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/runs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/analytics.json' + ts).then(r => r.json()).catch(() => ({})),
@@ -838,8 +867,9 @@ async function loadAll(silent = false) {
     fetch(base + '/social.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/pending_posts.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/series.json' + ts).then(r => r.json()).catch(() => []),
+    fetch(base + '/gsc.json' + ts).then(r => r.json()).catch(() => ({})),
   ])
-  DATA = { posts, runs, analytics, meta, social, pending, series }
+  DATA = { posts, runs, analytics, meta, social, pending, series, gsc }
   const lbl = document.getElementById('last-updated-label')
   if (lbl && meta.exportedAt)
     lbl.textContent = '업데이트: ' + new Date(meta.exportedAt).toLocaleString('ko-KR')
@@ -1375,6 +1405,56 @@ function renderAnalytics() {
   renderAnalyticsChart()
   renderCumulativeChart()
   renderMonthlySummary()
+  renderGSC()
+}
+
+function renderGSC() {
+  const gsc = DATA.gsc || {}
+  const notConfigEl = document.getElementById('gsc-not-configured')
+  const dataEl = document.getElementById('gsc-data-section')
+  const fetchTimeEl = document.getElementById('gsc-fetch-time')
+
+  if (!gsc.site_url || !gsc.fetched_at || !gsc.total_rows) {
+    if (notConfigEl) notConfigEl.style.display = 'block'
+    if (dataEl) dataEl.style.display = 'none'
+    return
+  }
+  if (notConfigEl) notConfigEl.style.display = 'none'
+  if (dataEl) dataEl.style.display = 'block'
+  if (fetchTimeEl) fetchTimeEl.textContent = '마지막 수집: ' + new Date(gsc.fetched_at).toLocaleString('ko-KR')
+
+  const queries = gsc.top_queries || []
+  const totalClicks = queries.reduce((s, q) => s + (q.clicks || 0), 0)
+  const totalImpressions = queries.reduce((s, q) => s + (q.impressions || 0), 0)
+  const avgCTR = totalImpressions > 0 ? (totalClicks / totalImpressions * 100).toFixed(2) : '0.00'
+
+  const el = id => document.getElementById(id)
+  if (el('gsc-total-queries')) el('gsc-total-queries').textContent = queries.length
+  if (el('gsc-total-clicks')) el('gsc-total-clicks').textContent = totalClicks.toLocaleString()
+  if (el('gsc-total-impressions')) el('gsc-total-impressions').textContent = totalImpressions.toLocaleString()
+  if (el('gsc-avg-ctr')) el('gsc-avg-ctr').textContent = avgCTR + '%'
+
+  const topQEl = el('gsc-top-queries')
+  if (topQEl) topQEl.innerHTML = queries.slice(0, 15).map(q => `<tr>
+    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${q.query}</td>
+    <td style="color:var(--green);font-weight:600">${q.clicks}</td>
+    <td>${q.impressions.toLocaleString()}</td>
+    <td>${q.ctr}%</td>
+    <td>${q.position}</td>
+  </tr>`).join('')
+
+  const catEl = el('gsc-cat-performance')
+  if (catEl) {
+    const cats = Object.entries(gsc.category_performance || {})
+      .sort((a, b) => b[1].clicks - a[1].clicks)
+    catEl.innerHTML = cats.map(([cat, s]) => `<tr>
+      <td><strong>${cat}</strong></td>
+      <td style="color:var(--green);font-weight:600">${s.clicks}</td>
+      <td>${s.impressions.toLocaleString()}</td>
+      <td>${s.ctr}%</td>
+      <td style="font-size:11px;color:var(--muted)">${(s.top_queries || []).slice(0,2).join(', ')}</td>
+    </tr>`).join('')
+  }
 }
 
 // ── Social Media ───────────────────────────────────────────────────────────────

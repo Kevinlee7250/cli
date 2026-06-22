@@ -34,3 +34,6 @@ POST_STATUS = os.getenv("POST_STATUS", "live")       # live | draft
 
 # 스케줄 (cron 형식: 분 시 * * *)
 SCHEDULE_CRON = os.getenv("SCHEDULE_CRON", "0 9 * * *")
+
+# Google Search Console
+GSC_SITE_URL = os.getenv("GSC_SITE_URL", "")  # 예: https://hoguwhat1.blogspot.com/

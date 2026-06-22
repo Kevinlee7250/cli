@@ -2,7 +2,8 @@
 트렌드 키워드 수집 모듈
 - Google Trends RSS (무료, 인증 불필요)
 - Claude AI 키워드 생성 (Google Trends 결과 부족 시 2순위)
-- 폴백: 고정 키워드 목록 (중복 방지 로테이션)
+- Google Search Console 고성과 카테고리 우선 정렬 (GSC_SITE_URL 설정 시)
+- 폴백: 고정 키워드 목록 (중복 방지 로테이션, GSC 성과 카테고리 먼저)
 - 유사 키워드 필터링 (단어 겹침 비율 기반)
 - 포스트 제목/키워드 이력과 비교하여 주제 중복 방지
 - 30일 경과 키워드는 자동 재사용 가능
@@ -310,6 +311,23 @@ def _migrate_used_keywords() -> None:
         logger.warning(f"used_keywords.json 마이그레이션 실패 (무시): {e}")
 
 
+def _sort_by_category(keywords: list[str], priority_cats: list[str]) -> list[str]:
+    """GSC 고성과 카테고리 순서로 키워드 목록을 재정렬합니다."""
+    # dashboard_exporter의 _categorize 함수 사용
+    try:
+        from dashboard_exporter import _categorize
+    except ImportError:
+        return keywords
+
+    cat_order = {cat: i for i, cat in enumerate(priority_cats)}
+    default_rank = len(priority_cats)
+
+    def rank(kw: str) -> int:
+        return cat_order.get(_categorize(kw), default_rank)
+
+    return sorted(keywords, key=rank)
+
+
 def get_trending_keywords(
     country: str = "KR",
     language: str = "ko",
@@ -347,12 +365,35 @@ def get_trending_keywords(
                 keyword_sources[kw] = "claude_ai"
         candidates += claude_kws
 
-    # 3순위: 고정 폴백 (미사용 키워드 우선)
+    # GSC 고성과 카테고리 수집 (GSC_SITE_URL 설정 시)
+    gsc_high_cats: list[str] = []
+    gsc_suggested: list[str] = []
+    try:
+        from config import GSC_SITE_URL
+        if GSC_SITE_URL:
+            from gsc_fetcher import get_high_performing_categories, get_gsc_suggested_keywords
+            gsc_high_cats = get_high_performing_categories(GSC_SITE_URL)
+            gsc_suggested = get_gsc_suggested_keywords(GSC_SITE_URL, count=count)
+            # GSC 추천 키워드를 후보에 추가
+            for kw in gsc_suggested:
+                if kw not in keyword_sources:
+                    keyword_sources[kw] = "gsc_suggested"
+            candidates = gsc_suggested + candidates
+    except Exception as e:
+        logger.debug(f"GSC 연동 생략: {e}")
+
+    # 3순위: 고정 폴백 (미사용 키워드 우선 + GSC 고성과 카테고리 먼저)
     fallback = _FALLBACK_KEYWORDS_KR if language == "ko" else _FALLBACK_KEYWORDS_EN
     unused_fallback = [kw for kw in fallback if kw not in active_used_set]
     if not unused_fallback:
         unused_fallback = fallback
         logger.info("폴백 키워드 전체 재사용 (30일 사이클 완료)")
+
+    # GSC 고성과 카테고리 순서로 폴백 재정렬
+    if gsc_high_cats:
+        unused_fallback = _sort_by_category(unused_fallback, gsc_high_cats)
+        logger.info(f"GSC 카테고리 우선 정렬 적용: {gsc_high_cats[:3]}")
+
     for kw in unused_fallback:
         if kw not in keyword_sources:
             keyword_sources[kw] = "fallback"

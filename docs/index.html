@@ -272,6 +272,42 @@
     .post-grid{grid-template-columns:1fr;}
     .form-row{flex-direction:column;}
   }
+
+  /* Quality grade badges */
+  .grade-s{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:800;background:linear-gradient(135deg,rgba(251,191,36,.25),rgba(251,146,60,.2));color:#fbbf24;border:1px solid rgba(251,191,36,.4);}
+  .grade-a{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(52,211,153,.15);color:var(--green);border:1px solid rgba(52,211,153,.35);}
+  .grade-b{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(6,182,212,.12);color:var(--accent2);border:1px solid rgba(6,182,212,.3);}
+  .grade-c{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:800;background:rgba(136,146,176,.1);color:var(--muted);border:1px solid rgba(136,146,176,.2);}
+
+  .trend-up{color:var(--green);font-size:11px;font-weight:700;}
+  .trend-down{color:var(--red);font-size:11px;font-weight:700;}
+  .trend-flat{color:var(--muted);font-size:11px;}
+
+  .top-post-widget{background:var(--bg2);border:1px solid rgba(251,191,36,.35);border-radius:var(--radius);padding:18px 22px;margin-bottom:20px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:border-color .15s;}
+  .top-post-widget:hover{border-color:var(--yellow);}
+  .top-post-icon{font-size:32px;flex-shrink:0;}
+  .top-post-info{flex:1;min-width:0;}
+  .top-post-label{font-size:11px;color:var(--yellow);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+  .top-post-title{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px;}
+  .top-post-meta{display:flex;gap:8px;font-size:12px;color:var(--muted);flex-wrap:wrap;}
+
+  .kw-rec-panel{background:var(--bg2);border:1px solid rgba(124,106,247,.3);border-radius:var(--radius);padding:20px;margin-bottom:24px;}
+  .kw-rec-panel h3{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:14px;}
+  .kw-rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
+  .kw-rec-item{background:var(--bg3);border-radius:8px;padding:10px 14px;cursor:pointer;border:1px solid transparent;transition:all .15s;}
+  .kw-rec-item:hover{border-color:var(--accent);background:rgba(124,106,247,.08);}
+  .kw-rec-cat{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;margin-bottom:4px;}
+  .kw-rec-kw{font-size:13px;font-weight:600;margin-bottom:3px;}
+  .kw-rec-cpc{font-size:11px;color:var(--green);}
+
+  .series-create-panel{background:var(--bg2);border:1px solid rgba(124,106,247,.3);border-radius:var(--radius);padding:22px;margin-bottom:24px;}
+  .series-create-panel h3{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+  .episode-count-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .ep-count-btn{padding:7px 18px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;}
+  .ep-count-btn:hover,.ep-count-btn.active{color:var(--accent);border-color:var(--accent);background:rgba(124,106,247,.1);}
+  .series-run-btn{padding:11px 28px;background:var(--accent);border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;}
+  .series-run-btn:hover{background:#6a59e0;}
+  .series-run-btn:disabled{opacity:.5;cursor:not-allowed;}
 </style>
 </head>
 <body>
@@ -337,7 +373,7 @@
     <div id="dashboard-content" style="display:none">
       <div class="cards">
         <div class="card purple"><div class="label">총 포스트</div><div class="value" id="s-posts">-</div><div class="sub">생성된 전체 포스트</div></div>
-        <div class="card green"><div class="label">누적 예상 수익</div><div class="value" id="s-revenue">-</div><div class="sub">AdSense 추정치 (USD)</div></div>
+        <div class="card green"><div class="label">누적 예상 수익</div><div class="value" id="s-revenue">-</div><div class="sub">AdSense 추정치 (USD) <span id="s-revenue-trend"></span></div></div>
         <div class="card blue"><div class="label">Blogger 게시</div><div class="value" id="s-blogger">-</div><div class="sub">발행된 포스트</div></div>
         <div class="card yellow"><div class="label">전체 실행 횟수</div><div class="value" id="s-runs">-</div><div class="sub">자동화 실행 이력</div></div>
         <div class="card" style="border-color:rgba(6,182,212,.3)"><div class="label">이번 주 실행</div><div class="value" id="s-week-runs" style="color:var(--accent2)">-</div><div class="sub">최근 7일 실행 횟수</div></div>
@@ -350,10 +386,13 @@
       </div>
       <div class="cards" style="margin-top:-8px">
         <div class="card" style="border-color:rgba(6,182,212,.3)"><div class="label">이미지 자동 삽입</div><div class="value" id="s-images" style="color:var(--accent2)">-</div><div class="sub">총 삽입된 이미지 수</div></div>
-        <div class="card" style="border-color:rgba(52,211,153,.3)"><div class="label">AdSense 슬롯</div><div class="value" style="color:var(--green)">6</div><div class="sub">포스트당 광고 위치</div></div>
+        <div class="card" style="border-color:rgba(52,211,153,.3)"><div class="label">AdSense 슬롯</div><div class="value" style="color:var(--green)">4</div><div class="sub">포스트당 광고 위치</div></div>
         <div class="card" style="border-color:rgba(251,146,60,.3)"><div class="label">구조화 데이터</div><div class="value" style="color:var(--orange)">ON</div><div class="sub">FAQ + Article 스키마</div></div>
         <div class="card" style="border-color:rgba(124,106,247,.3)"><div class="label">목차 (TOC)</div><div class="value" style="color:var(--accent)">ON</div><div class="sub">자동 생성 앵커 링크</div></div>
       </div>
+
+      <!-- Top Post Widget -->
+      <div id="top-post-widget" style="display:none"></div>
 
       <!-- Charts -->
       <div class="chart-grid">
@@ -521,6 +560,12 @@
       <div class="card green"><div class="label">가장 많은 카테고리</div><div class="value" id="kw-top-cat" style="font-size:18px;color:var(--green)">-</div><div class="sub">최다 포스트 카테고리</div></div>
       <div class="card yellow"><div class="label">평균 CPC</div><div class="value" id="kw-avg-cpc">-</div><div class="sub">카테고리 기준 USD</div></div>
     </div>
+    <!-- Keyword Recommendation Panel -->
+    <div class="kw-rec-panel" id="kw-rec-panel" style="display:none">
+      <h3>💡 다음 추천 키워드 (고CPC 미활용 카테고리 중심)</h3>
+      <div class="kw-rec-grid" id="kw-rec-grid"></div>
+    </div>
+
     <div class="chart-grid">
       <div class="chart-box" style="grid-column:1/-1">
         <h3>📊 TOP 10 키워드 사용 빈도</h3>
@@ -571,6 +616,16 @@
       <div class="chart-box">
         <h3>📈 누적 포스트 성장 추이</h3>
         <canvas id="chart-cumulative" style="max-height:200px;"></canvas>
+      </div>
+    </div>
+    <div class="chart-grid" style="margin-bottom:28px">
+      <div class="chart-box">
+        <h3>🏷️ 카테고리별 CPC × 포스트 수 (예상 기여도)</h3>
+        <canvas id="chart-cat-revenue" style="max-height:220px;"></canvas>
+      </div>
+      <div class="chart-box" id="gsc-cat-chart-box" style="display:none">
+        <h3>🔍 GSC 카테고리별 클릭 (실측)</h3>
+        <canvas id="chart-gsc-cats" style="max-height:220px;"></canvas>
       </div>
     </div>
 
@@ -762,12 +817,33 @@
       <div class="card yellow"><div class="label">진행 중</div><div class="value" id="series-active-count">0</div><div class="sub">partial / planned</div></div>
       <div class="card purple"><div class="label">체류 시간 효과</div><div class="value" style="font-size:14px;color:var(--accent)">+3~5배</div><div class="sub">시리즈 연속 읽기 유도</div></div>
     </div>
-    <div class="alert-box" style="margin-bottom:20px">
-      💡 <strong>시리즈 모드 실행:</strong>
-      <a href="#" onclick="navTo('run');return false;" style="color:var(--accent);font-weight:700">실행 제어</a> 탭 →
-      모드 <code style="background:rgba(255,255,255,.1);padding:2px 6px;border-radius:4px">series</code> 선택 →
-      키워드 입력 (예: <em>재테크 완전정복</em>) → 실행
+    <!-- Series Create Form -->
+    <div class="series-create-panel">
+      <h3>✨ 새 시리즈 기획</h3>
+      <div class="form-row">
+        <div class="form-group" style="flex:1;min-width:220px">
+          <label>주제 키워드 <span style="font-weight:400;color:var(--muted)">(예: 재테크 완전정복, ETF 투자 입문)</span></label>
+          <input id="series-kw-input" class="form-input" placeholder="하나의 큰 주제를 입력하세요" style="min-width:unset;width:100%">
+        </div>
+        <div class="form-group">
+          <label>편수 선택</label>
+          <div class="episode-count-row" id="ep-count-row">
+            <button class="ep-count-btn" onclick="setEpCount(2)">2편</button>
+            <button class="ep-count-btn active" onclick="setEpCount(3)">3편</button>
+            <button class="ep-count-btn" onclick="setEpCount(4)">4편</button>
+            <button class="ep-count-btn" onclick="setEpCount(5)">5편</button>
+          </div>
+        </div>
+        <div class="form-group" style="justify-content:flex-end">
+          <button class="series-run-btn" id="series-run-btn" onclick="runSeriesNow()">📚 시리즈 기획 실행</button>
+        </div>
+      </div>
+      <div id="series-create-hint" style="font-size:12px;color:var(--muted);margin-top:4px">
+        💡 GitHub Actions에서 시리즈 모드로 실행됩니다. GitHub PAT가 설정되어 있어야 합니다.
+      </div>
+      <div id="series-create-status" class="status-panel" style="display:none;margin-top:12px"></div>
     </div>
+
     <div id="series-list-container">
       <div class="empty"><div class="icon">📚</div>아직 시리즈가 없습니다<br><span style="font-size:13px;color:var(--muted)">실행 제어 탭에서 series 모드로 첫 시리즈를 기획하세요</span></div>
     </div>
@@ -919,6 +995,16 @@ function navTo(page) {
   if (page === 'series') renderSeries()
 }
 
+// ── Quality grade ──────────────────────────────────────────────────────────────
+function qualityGrade(p) {
+  const wc = p.wordCount || 0
+  const fq = p.faqCount || 0
+  if (wc >= 3000 && fq >= 5) return { cls: 'grade-s', label: 'S급' }
+  if (wc >= 2000 && fq >= 3) return { cls: 'grade-a', label: 'A급' }
+  if (wc >= 1000 && fq >= 1) return { cls: 'grade-b', label: 'B급' }
+  return { cls: 'grade-c', label: 'C급' }
+}
+
 // ── Dashboard ─────────────────────────────────────────────────────────────────
 function renderDashboard() {
   const { meta, runs, posts } = DATA
@@ -980,6 +1066,46 @@ function renderDashboard() {
     <td style="color:var(--green)">${r.earnings?.estimatedDailyRevenue != null ? '$'+r.earnings.estimatedDailyRevenue.toFixed(2) : '-'}</td>
     <td>${(r.errors > 0) ? `<span class="badge red">${r.errors}</span>` : '<span class="badge green">0</span>'}</td>
   </tr>`).join('') || '<tr><td colspan="7" class="empty">데이터 없음</td></tr>'
+
+  // Revenue trend (last run vs previous)
+  const trendEl = document.getElementById('s-revenue-trend')
+  if (trendEl && runs.length >= 2) {
+    const curr = runs[0]?.earnings?.estimatedDailyRevenue || 0
+    const prev = runs[1]?.earnings?.estimatedDailyRevenue || 0
+    if (prev > 0) {
+      const diff = ((curr - prev) / prev * 100).toFixed(1)
+      if (curr > prev) trendEl.innerHTML = `<span class="trend-up">▲${diff}%</span>`
+      else if (curr < prev) trendEl.innerHTML = `<span class="trend-down">▼${Math.abs(diff)}%</span>`
+      else trendEl.innerHTML = `<span class="trend-flat">→ 동일</span>`
+    }
+  }
+
+  // Top post widget (highest wordCount in last 30 days)
+  const topWidget = document.getElementById('top-post-widget')
+  if (topWidget) {
+    const recent = posts.filter(p => p.date >= new Date(Date.now() - 30*24*3600*1000).toISOString().slice(0,10))
+    const topPost = recent.sort((a,b) => (b.wordCount||0) - (a.wordCount||0))[0]
+    if (topPost) {
+      const g = qualityGrade(topPost)
+      const catIcon = {금융:'💰',부동산:'🏠',건강:'💊',기술:'💻',여행:'✈️',교육:'📚',쇼핑:'🛍️',법률:'⚖️'}
+      topWidget.style.display = 'flex'
+      topWidget.className = 'top-post-widget'
+      topWidget.onclick = () => openPost(topPost.id)
+      topWidget.innerHTML = `
+        <div class="top-post-icon">${catIcon[topPost.adsenseCategory] || '📝'}</div>
+        <div class="top-post-info">
+          <div class="top-post-label">⭐ 이번 달 Best 포스트</div>
+          <div class="top-post-title">${esc(topPost.title)}</div>
+          <div class="top-post-meta">
+            <span>${topPost.date}</span>
+            <span class="${g.cls}">${g.label}</span>
+            <span>${(topPost.wordCount||0).toLocaleString()}자</span>
+            ${topPost.faqCount ? `<span>FAQ ${topPost.faqCount}개</span>` : ''}
+            ${topPost.blogUrl ? `<a href="${topPost.blogUrl}" target="_blank" onclick="event.stopPropagation()" style="color:var(--accent2);text-decoration:none;">🔗 블로그에서 보기</a>` : ''}
+          </div>
+        </div>`
+    }
+  }
 
   document.getElementById('recent-grid').innerHTML = posts.slice(0, 6).map(postCardHTML).join('')
   renderCharts()
@@ -1167,6 +1293,46 @@ function renderKeywords() {
   }).join('') : '<tr><td colspan="6" class="empty">키워드 데이터 없음</td></tr>'
 
   renderKeywordsChart(kwArr)
+
+  // Keyword recommendation panel
+  const recPanel = document.getElementById('kw-rec-panel')
+  const recGrid = document.getElementById('kw-rec-grid')
+  if (recPanel && recGrid) {
+    const usedCats = new Set(Object.values(kwMap).map(k => k.category))
+    const CAT_SUGGESTIONS = {
+      법률: ['상속 분쟁 해결 방법', '이혼 위자료 청구 절차', '교통사고 합의금 계산'],
+      부동산: ['2026 아파트 분양 일정', '청약 당첨 확률 높이기', '전세 사기 예방법'],
+      금융: ['ETF 월배당 포트폴리오', '연금저축 세액공제 방법', '달러 환전 타이밍'],
+      건강: ['혈당 스파이크 예방 식단', '무릎 통증 자가 치료', '수면 질 높이는 방법'],
+      기술: ['ChatGPT 업무 활용법', 'AI 이미지 생성 무료 툴', '구글 검색 최적화 방법'],
+      교육: ['공무원 시험 독학 전략', '영어 회화 독학 3개월', '자격증 최단기 취득'],
+      여행: ['국내 여름 여행지 추천', '항공권 최저가 예약 팁', '캠핑 초보 장비 리스트'],
+      쇼핑: ['여름 쿠폰 할인 정리', '가성비 가전 추천', '명품 직구 방법'],
+    }
+    const highCpcFirst = Object.entries(CPC_MAP)
+      .filter(([c]) => c !== '일반')
+      .sort((a,b) => b[1]-a[1])
+    const recs = []
+    for (const [cat, cpc] of highCpcFirst) {
+      const suggestions = CAT_SUGGESTIONS[cat] || []
+      for (const kw of suggestions) {
+        if (!Object.keys(kwMap).some(k => k.includes(kw.slice(0,5)))) {
+          recs.push({ cat, kw, cpc })
+          if (recs.length >= 9) break
+        }
+      }
+      if (recs.length >= 9) break
+    }
+    if (recs.length) {
+      recPanel.style.display = 'block'
+      recGrid.innerHTML = recs.map(r => `
+        <div class="kw-rec-item" onclick="addRecKw(${JSON.stringify(r.kw)})">
+          <div class="kw-rec-cat">${r.cat}</div>
+          <div class="kw-rec-kw">${esc(r.kw)}</div>
+          <div class="kw-rec-cpc">💰 CPC $${r.cpc.toFixed(2)} · 클릭시 실행 탭에 추가</div>
+        </div>`).join('')
+    }
+  }
 }
 
 // ── Posts ─────────────────────────────────────────────────────────────────────
@@ -1263,6 +1429,7 @@ function postListRowHTML(p) {
       <div class="post-list-meta">
         <span class="badge muted">${p.date || '-'}</span>
         <span class="badge purple">${p.adsenseCategory || '일반'}</span>
+        <span class="${qualityGrade(p).cls}">${qualityGrade(p).label}</span>
         ${p.wordCount ? `<span class="badge muted">${p.wordCount.toLocaleString()}자</span>` : ''}
         ${p.imagesInserted > 0 ? `<span class="img-pill">🖼 ${p.imagesInserted}</span>` : ''}
       </div>
@@ -1278,8 +1445,11 @@ function postCardHTML(p) {
     ? `<a href="${p.blogUrl}" target="_blank" onclick="event.stopPropagation()" style="font-size:11px;color:var(--accent2);text-decoration:none;background:rgba(6,182,212,.1);padding:2px 7px;border-radius:20px;">🔗 보기</a>`
     : ''
   const wc = p.wordCount ? `<span class="badge muted">${p.wordCount.toLocaleString()}자</span>` : ''
+  const g = qualityGrade(p)
   return `<div class="post-card" onclick="openPost(${JSON.stringify(p.id)})">
-    <div class="thumb-placeholder">${catIcon[p.adsenseCategory] || '📝'}</div>
+    <div class="thumb-placeholder" style="position:relative">${catIcon[p.adsenseCategory] || '📝'}
+      <span class="${g.cls}" style="position:absolute;top:8px;right:8px">${g.label}</span>
+    </div>
     <div class="info">
       <div class="kw">${icon} ${esc(p.keyword)}</div>
       <div class="title">${esc(p.title)}</div>
@@ -1301,9 +1471,11 @@ function openPost(id) {
   const p = DATA.posts.find(x => x.id === id)
   if (!p) return
   document.getElementById('modal-title').textContent = p.title
+  const g = qualityGrade(p)
   document.getElementById('modal-meta').innerHTML =
     `<span class="badge purple">${p.adsenseCategory || '일반'}</span>
      <span class="badge blue" style="margin-left:6px">${p.date}</span>
+     <span class="${g.cls}" style="margin-left:6px">${g.label}</span>
      ${p.wordCount ? `<span class="badge muted" style="margin-left:6px">${p.wordCount.toLocaleString()}자</span>` : ''}
      ${p.faqCount ? `<span class="badge green" style="margin-left:6px">FAQ ${p.faqCount}개</span>` : ''}
      ${p.blogUrl ? `<a href="${p.blogUrl}" target="_blank" style="margin-left:10px;color:var(--accent2);font-size:13px">🔗 블로그에서 보기</a>` : ''}`
@@ -1405,7 +1577,64 @@ function renderAnalytics() {
   renderAnalyticsChart()
   renderCumulativeChart()
   renderMonthlySummary()
+  renderCatRevenueChart()
+  renderGSCCategoryChart()
   renderGSC()
+}
+
+let chartCatRevenue = null
+function renderCatRevenueChart() {
+  const { posts } = DATA
+  const catMap = {}
+  posts.forEach(p => {
+    const cat = p.adsenseCategory || '일반'
+    if (!catMap[cat]) catMap[cat] = { count: 0, cpc: CPC_MAP[cat] || 1.0 }
+    catMap[cat].count++
+  })
+  const sorted = Object.entries(catMap).sort((a,b) => b[1].count*b[1].cpc - a[1].count*a[1].cpc)
+  const labels = sorted.map(([c]) => c)
+  const values = sorted.map(([, v]) => +(v.count * v.cpc * 80 * 0.025 * v.cpc).toFixed(2))
+  const ctx = document.getElementById('chart-cat-revenue')
+  if (!ctx) return
+  if (chartCatRevenue) chartCatRevenue.destroy()
+  chartCatRevenue = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ label: '예상 일 수익 기여 ($)', data: values,
+        backgroundColor: ['#7c6af7','#34d399','#06b6d4','#fbbf24','#fb923c','#f87171','#a78bfa','#4ade80','#38bdf8'],
+        borderRadius: 6, borderWidth: 0 }]
+    },
+    options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } },
+      scales: { x: { grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#8892b0', callback: v => '$'+v } },
+        y: { grid: { display: false }, ticks: { color: '#e2e8f0' } } } }
+  })
+}
+
+let chartGSCCats = null
+function renderGSCCategoryChart() {
+  const gsc = DATA.gsc || {}
+  const catBox = document.getElementById('gsc-cat-chart-box')
+  const ctx = document.getElementById('chart-gsc-cats')
+  if (!ctx || !catBox) return
+  const catPerf = gsc.category_performance || {}
+  const entries = Object.entries(catPerf).sort((a,b) => b[1].clicks - a[1].clicks)
+  if (!entries.length) { catBox.style.display = 'none'; return }
+  catBox.style.display = 'block'
+  const labels = entries.map(([c]) => c)
+  const clicks = entries.map(([,v]) => v.clicks)
+  if (chartGSCCats) chartGSCCats.destroy()
+  chartGSCCats = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ label: '실제 클릭 수', data: clicks,
+        backgroundColor: 'rgba(6,182,212,.7)', borderRadius: 6, borderWidth: 0 }]
+    },
+    options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } },
+      scales: { x: { grid: { color: 'rgba(255,255,255,.05)' }, ticks: { color: '#8892b0' } },
+        y: { grid: { display: false }, ticks: { color: '#e2e8f0' } } } }
+  })
 }
 
 function renderGSC() {
@@ -2273,6 +2502,64 @@ async function publishPostDirect(id) {
 }
 
 // ── Series ────────────────────────────────────────────────────────────────────
+// ── Series create helpers ──────────────────────────────────────────────────────
+let selectedEpCount = 3
+function setEpCount(n) {
+  selectedEpCount = n
+  document.querySelectorAll('.ep-count-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === n + '편')
+  })
+}
+
+async function runSeriesNow() {
+  const kw = (document.getElementById('series-kw-input')?.value || '').trim()
+  if (!kw) { showToast('키워드를 입력하세요', 'error'); return }
+  const pat = getPAT()
+  if (!pat) { showToast('실행 제어 탭에서 GitHub PAT를 먼저 설정하세요', 'error'); return }
+  const btn = document.getElementById('series-run-btn')
+  const statusEl = document.getElementById('series-create-status')
+  btn.disabled = true
+  btn.textContent = '⏳ 실행 중...'
+  statusEl.style.display = 'block'
+  statusEl.className = 'status-panel running'
+  statusEl.textContent = `시리즈 "${kw}" ${selectedEpCount}편 기획 요청 중...`
+  try {
+    const resp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`, {
+      method: 'POST',
+      headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ref: GH_BRANCH, inputs: { keyword: kw, mode: 'series', series_count: String(selectedEpCount), posts_per_run: '1' } })
+    })
+    if (resp.status === 204) {
+      statusEl.className = 'status-panel success'
+      statusEl.textContent = `✅ GitHub Actions 시리즈 실행 요청 완료! "${kw}" ${selectedEpCount}편 기획 중...`
+      showToast('시리즈 실행 요청 완료', 'success')
+      document.getElementById('series-kw-input').value = ''
+      setTimeout(() => navTo('run'), 2000)
+    } else {
+      const t = await resp.text()
+      statusEl.className = 'status-panel error'
+      statusEl.textContent = `❌ 오류 (${resp.status}): ${t.slice(0,100)}`
+    }
+  } catch (e) {
+    statusEl.className = 'status-panel error'
+    statusEl.textContent = `❌ 요청 실패: ${e.message}`
+  }
+  btn.disabled = false
+  btn.textContent = '📚 시리즈 기획 실행'
+}
+
+// ── Keyword recommendation helpers ─────────────────────────────────────────────
+function addRecKw(kw) {
+  navTo('run')
+  setTimeout(() => {
+    const input = document.getElementById('kw-type-input')
+    if (input) {
+      input.value = kw
+      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }))
+    }
+  }, 300)
+}
+
 function renderSeries() {
   const series = DATA.series || []
   const totalEps = series.reduce((s, sr) => s + (sr.total_episodes || 0), 0)

@@ -293,13 +293,24 @@ def upload_post(post_data: dict) -> dict | None:
 
     full_content = _build_full_content(post_data)
     kw = post_data.get("keyword", "")
-    raw_labels = post_data.get("labels", [])
-    labels = list(dict.fromkeys([kw] + raw_labels))
+    # None-safe: Claude가 "labels": null 반환해도 안전하게 처리
+    raw_labels = post_data.get("labels") or []
+    if not isinstance(raw_labels, list):
+        raw_labels = []
+
+    # 레이블 정제: 빈 문자열·공백만인 항목 제거, 200자 초과 자르기
+    def _clean_label(lb: str) -> str:
+        return str(lb).strip()[:200]
+
+    all_labels = [_clean_label(kw)] + [_clean_label(lb) for lb in raw_labels]
+    labels = [lb for lb in dict.fromkeys(all_labels) if lb][:20]
+
+    logger.debug(f"업로드 레이블 ({len(labels)}개): {labels[:5]}{'…' if len(labels)>5 else ''}")
 
     payload = {
         "title": post_data.get("title", "Untitled"),
         "content": full_content,
-        "labels": labels[:20],
+        "labels": labels,
     }
 
     url = f"{BLOGGER_API_BASE}/blogs/{BLOGGER_BLOG_ID}/posts"
@@ -322,7 +333,8 @@ def upload_post(post_data: dict) -> dict | None:
             return None
         logger.info(f"업로드 성공: {result.get('url', '')}")
         return result
-    logger.error(f"업로드 실패: {resp.status_code} {resp.text[:300]}")
+    # 전체 에러 응답 로깅 (원인 파악용)
+    logger.error(f"업로드 실패 [{resp.status_code}]: {resp.text[:1000]}")
     return None
 
 

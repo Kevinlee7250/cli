@@ -120,20 +120,41 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False, review: b
     # ── 자동 시리즈 체크 ─────────────────────────────────────────
     # 조건: AUTO_SERIES=true + live 모드 + 마지막 시리즈로부터 MIN_DAYS 경과
     auto_series_keyword: str | None = None
+    auto_series_plan: dict | None = None   # 드라마 기획 시 미리 생성된 플랜
+
     if AUTO_SERIES and not dry_run and not review:
-        from series_planner import get_last_series_date, pick_series_keyword
+        from series_planner import get_last_series_date, pick_series_keyword, plan_drama_series
+        from keyword_collector import _naver_drama_news, extract_drama_titles
+
         last_date = get_last_series_date()
-        if last_date:
-            days_elapsed = (datetime.now() - last_date).days
-        else:
-            days_elapsed = AUTO_SERIES_MIN_DAYS + 1  # 처음 실행이면 바로 시리즈 시작
+        days_elapsed = (datetime.now() - last_date).days if last_date else AUTO_SERIES_MIN_DAYS + 1
+
         if days_elapsed >= AUTO_SERIES_MIN_DAYS:
             logger.info(
                 f"자동 시리즈 조건 충족 "
-                f"(마지막 시리즈: {'없음' if not last_date else f'{days_elapsed}일 전'},"
-                f" 최소 {AUTO_SERIES_MIN_DAYS}일 필요)"
+                f"(마지막 시리즈: {'없음' if not last_date else f'{days_elapsed}일 전'})"
             )
-            auto_series_keyword = pick_series_keyword(keywords)
+
+            # ① 인기 드라마 탐지 — 트렌드 키워드보다 우선
+            drama_headlines = _naver_drama_news(
+                os.getenv("NAVER_CLIENT_ID", ""),
+                os.getenv("NAVER_CLIENT_SECRET", ""),
+            )
+            drama_titles = extract_drama_titles(drama_headlines)
+
+            if drama_titles:
+                drama_name = drama_titles[0]
+                logger.info(f"[자동 드라마 시리즈] '{drama_name}' 감지 — 리뷰 시리즈 기획 시작")
+                auto_series_plan = plan_drama_series(drama_name, AUTO_SERIES_COUNT)
+                if auto_series_plan:
+                    auto_series_keyword = drama_name
+                else:
+                    logger.warning("드라마 시리즈 기획 실패 — 일반 트렌드 시리즈로 폴백")
+
+            # ② 드라마 없음 또는 기획 실패 → 일반 트렌드 키워드 중 시리즈 선정
+            if not auto_series_keyword:
+                auto_series_keyword = pick_series_keyword(keywords)
+
         else:
             logger.info(
                 f"자동 시리즈 대기 중 "
@@ -147,7 +168,7 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False, review: b
             f"[자동 시리즈] '{auto_series_keyword}' {AUTO_SERIES_COUNT}편 기획 시작 "
             f"(이후 단독 포스트 {len(remaining)}개)"
         )
-        run_series(auto_series_keyword, AUTO_SERIES_COUNT)
+        run_series(auto_series_keyword, AUTO_SERIES_COUNT, series_plan=auto_series_plan)
         keywords = remaining
     else:
         keywords = keywords[:POSTS_PER_RUN]
@@ -222,7 +243,13 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False, review: b
 # 시리즈 모드
 # ──────────────────────────────────────────────────────────────────────────────
 
-def run_series(keyword: str, count: int = 4, dry_run: bool = False, review: bool = False) -> None:
+def run_series(
+    keyword: str,
+    count: int = 4,
+    dry_run: bool = False,
+    review: bool = False,
+    series_plan: dict | None = None,  # 기획이 이미 완료된 경우 바로 전달
+) -> None:
     """시리즈 포스트를 순서대로 기획·생성·게시합니다."""
     from series_planner import plan_series, build_series_nav, save_series
 
@@ -230,7 +257,8 @@ def run_series(keyword: str, count: int = 4, dry_run: bool = False, review: bool
     logger.info(f"시리즈 모드 시작: '{keyword}' {count}편")
     logger.info("=" * 60)
 
-    series_plan = plan_series(keyword, count)
+    if series_plan is None:
+        series_plan = plan_series(keyword, count)
     if not series_plan:
         logger.error("시리즈 기획 실패 — 종료")
         return

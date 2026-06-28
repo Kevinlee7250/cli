@@ -324,6 +324,102 @@ def _headlines_to_keywords(headlines: list[str], count: int = 10) -> list[str]:
     return []
 
 
+def _naver_drama_news(
+    naver_client_id: str = "",
+    naver_client_secret: str = "",
+) -> list[str]:
+    """
+    네이버 뉴스에서 현재 화제 드라마 관련 헤드라인을 수집합니다.
+    RSS + 뉴스검색 API를 모두 활용합니다.
+    """
+    headlines: list[str] = []
+
+    # 1) RSS에서 드라마 관련 키워드 필터링 (기존 수집 헤드라인 재활용)
+    drama_rss_keywords = ["드라마", "넷플릭스", "티빙", "쿠팡플레이", "OTT", "시즌", "결말", "시청률"]
+    for url, name in _NAVER_RSS_FEEDS[:3]:  # 경제·사회·IT 카테고리
+        try:
+            r = requests.get(url, headers=_HEADERS, timeout=10)
+            if r.status_code != 200:
+                continue
+            root = ET.fromstring(r.content)
+            for item in root.findall(".//item"):
+                title = re.sub(r'<[^>]+>', '', item.findtext("title", "")).strip()
+                if title and any(kw in title for kw in drama_rss_keywords):
+                    headlines.append(title)
+        except Exception as e:
+            logger.debug(f"드라마 RSS 수집 오류 [{name}]: {e}")
+
+    # 2) 네이버 뉴스검색 API — 드라마 전용 쿼리 (API 키 있을 때)
+    if naver_client_id and naver_client_secret:
+        drama_queries = ["화제 드라마 시청률", "넷플릭스 신작 드라마", "OTT 드라마 인기", "주말드라마 화제"]
+        api_headers = {
+            "X-Naver-Client-Id": naver_client_id,
+            "X-Naver-Client-Secret": naver_client_secret,
+        }
+        for q in drama_queries:
+            try:
+                resp = requests.get(
+                    "https://openapi.naver.com/v1/search/news.json",
+                    headers=api_headers,
+                    params={"query": q, "display": 5, "sort": "date"},
+                    timeout=10,
+                )
+                if resp.status_code == 200:
+                    for item in resp.json().get("items", []):
+                        title = re.sub(r'<[^>]+>', '', item.get("title", "")).strip()
+                        if title:
+                            headlines.append(title)
+            except Exception as e:
+                logger.debug(f"드라마 뉴스 API [{q}] 오류: {e}")
+
+    logger.info(f"드라마 뉴스 헤드라인 수집: {len(headlines)}개")
+    return headlines
+
+
+def extract_drama_titles(headlines: list[str]) -> list[str]:
+    """
+    드라마 뉴스 헤드라인에서 현재 방영 중이거나 최근 화제인 드라마 제목을 추출합니다.
+    Claude API를 사용해 정확한 드라마명만 필터링합니다.
+    """
+    if not headlines:
+        return []
+    try:
+        import anthropic
+        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
+        if not ANTHROPIC_API_KEY or ANTHROPIC_API_KEY.startswith("sk-ant-xxx"):
+            return []
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        headlines_text = "\n".join(f"- {h}" for h in headlines[:25])
+        prompt = (
+            "다음 뉴스 헤드라인에서 현재 방영 중이거나 최근 종영한 화제 드라마 제목을 추출하세요.\n\n"
+            "규칙:\n"
+            "1. TV/OTT 드라마 제목만 (영화·예능·웹툰·애니메이션 제외)\n"
+            "2. 정확한 공식 드라마명으로 (예: '눈물의 여왕', '지금 거신 전화는')\n"
+            "3. AdSense 안전 콘텐츠에 적합한 드라마 (폭력·성인물 제외)\n"
+            "4. 최대 3개, 인기순\n"
+            "5. 드라마를 찾을 수 없으면 빈 배열 반환\n\n"
+            f"헤드라인:\n{headlines_text}\n\n"
+            'JSON 배열만 응답: ["드라마제목1", "드라마제목2"]'
+        )
+        msg = client.messages.create(
+            model=CLAUDE_MODEL,
+            max_tokens=100,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        raw = msg.content[0].text.strip()
+        s, e = raw.find('['), raw.rfind(']')
+        if s != -1 and e > s:
+            titles = json.loads(raw[s:e + 1])
+            if isinstance(titles, list):
+                result = [str(t).strip() for t in titles if str(t).strip()]
+                if result:
+                    logger.info(f"화제 드라마 감지: {result}")
+                return result
+    except Exception as exc:
+        logger.debug(f"드라마 제목 추출 실패: {exc}")
+    return []
+
+
 def _google_trends_rss(country: str = "KR", count: int = 10) -> list[str]:
     """Google Trends 일간 트렌드 RSS에서 키워드를 수집합니다."""
     url = f"https://trends.google.com/trends/trendingsearches/daily/rss?geo={country.upper()}"

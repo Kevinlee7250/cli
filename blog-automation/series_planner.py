@@ -207,6 +207,94 @@ JSON only:
 
 
 # ─────────────────────────────────────────────
+# 드라마 리뷰 시리즈 기획
+# ─────────────────────────────────────────────
+
+def plan_drama_series(drama_name: str, count: int = 4) -> dict | None:
+    """
+    인기 드라마 리뷰 특화 시리즈를 기획합니다.
+    편 구성: 소개·첫인상 → 인물 분석 → 명장면·반전 → 결말·총평·추천
+    """
+    count = max(3, min(count, 5))
+    try:
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        now = datetime.now()
+        y = now.year
+        date_str = now.strftime("%Y년 %m월 %d일")
+
+        # 편수별 구조 가이드 동적 생성
+        mid_eps = ""
+        if count >= 4:
+            mid_eps = f"\n- 편 3: 중반부 명장면·화제 장면 해석 + 반전 포인트 (스포 주의 안내 포함)"
+        if count >= 5:
+            mid_eps = mid_eps + f"\n- 편 4: OST 전곡 소개 + 촬영지·배경 이야기 + 제작비화"
+
+        prompt = f"""오늘: {date_str}
+드라마: {drama_name}
+편수: {count}편
+
+"{drama_name}" 드라마 리뷰 블로그 시리즈를 기획하세요.
+관점: 직접 시청한 일반 시청자의 솔직한 감상 — 홍보·광고 아님.
+
+편 구성 원칙:
+- 편 1: 첫인상 + 시청 전 알면 좋은 것 (줄거리 스포 최소화, 장르·분위기 위주)
+- 편 2: 등장인물 심층 분석 + 배우 연기력 솔직 평가 + 인물 관계도{mid_eps}
+- 편 {count}: 결말 종합 총평 (스포 주의 경고 포함) + OST 추천 + 유사 드라마 추천 + 최종 별점
+- 각 편은 독립적으로 읽어도 가치 있어야 함
+- 제목: 검색 의도 명확하게 (예: "{drama_name} 1화 첫인상 솔직 리뷰", "{drama_name} 등장인물 분석")
+- 제목 40자 이내, {y}년 포함
+
+JSON만 응답:
+{{
+  "series_title": "{drama_name} 드라마 리뷰 시리즈",
+  "series_label": "드라마리뷰",
+  "drama_label": "{re.sub(r'[^가-힣a-zA-Z0-9]', '-', drama_name)}",
+  "series_description": "직접 본 시청자 입장의 {drama_name} 솔직 리뷰 시리즈 (100자 이내)",
+  "drama_name": "{drama_name}",
+  "episodes": [
+    {{
+      "episode": 1,
+      "title": "[1편] ... (40자 이내, {y} 포함)",
+      "focus": "이 편의 핵심 포커스 (30자 이내)",
+      "search_keyword": "이 편의 대표 검색 키워드 (드라마명 + 세부 주제)"
+    }}
+  ]
+}}"""
+
+        msg = client.messages.create(
+            model=CLAUDE_MODEL,
+            max_tokens=2000,
+            system=f"현재 날짜: {date_str}. JSON만 응답하세요.",
+            messages=[{"role": "user", "content": prompt}],
+        )
+        raw = msg.content[0].text.strip()
+        s, e = raw.find("{"), raw.rfind("}")
+        if s == -1 or e <= s:
+            logger.error(f"드라마 시리즈 기획 JSON 파싱 실패: {raw[:300]}")
+            return None
+        plan = json.loads(raw[s:e + 1])
+
+        plan["series_id"] = str(uuid.uuid4())[:8]
+        plan["keyword"] = drama_name
+        plan["total_episodes"] = len(plan.get("episodes", []))
+        plan["created_at"] = datetime.now().isoformat()
+        plan["status"] = "planned"
+        plan["type"] = "drama_review"
+
+        for ep in plan.get("episodes", []):
+            ep.setdefault("status", "pending")
+            ep.setdefault("post_id", None)
+            ep.setdefault("blogger_url", None)
+
+        logger.info(f"드라마 시리즈 기획 완료: '{plan.get('series_title')}' {plan['total_episodes']}편")
+        return plan
+
+    except Exception as exc:
+        logger.error(f"드라마 시리즈 기획 오류: {exc}", exc_info=True)
+        return None
+
+
+# ─────────────────────────────────────────────
 # 내비게이션 HTML
 # ─────────────────────────────────────────────
 

@@ -725,10 +725,13 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                 post_data["sources"] = _validate_sources(post_data["sources"])
 
             section_queries = _extract_section_queries(content_html, keyword)
+            plain_text = _content_preview(post_data.get("content", ""), chars=600)
             images = fetch_images_for_queries(
                 section_queries,
                 naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
                 naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
+                article_plain_text=plain_text,
+                keyword=keyword,
             )
             if images:
                 post_data["content"] = inject_images_into_content(post_data["content"], images, keyword)
@@ -821,13 +824,16 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
                 if not post_data["sources"]:
                     logger.warning("sources 필드: 유효한 출처 없음 — 전부 제거됨")
 
-            # 섹션별 이미지 검색 & 삽입
+            # 섹션별 이미지 검색 & 삽입 (관련성 검증 포함)
             section_queries = _extract_section_queries(post_data.get("content", ""), keyword)
             logger.info(f"섹션별 이미지 검색: {section_queries}")
+            plain_text = _content_preview(post_data.get("content", ""), chars=600)
             images = fetch_images_for_queries(
                 section_queries,
                 naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
                 naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
+                article_plain_text=plain_text,
+                keyword=keyword,
             )
             if images:
                 post_data["content"] = inject_images_into_content(
@@ -837,7 +843,7 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
                 logger.info(f"이미지 {len(images)}개 본문 삽입 완료")
             else:
                 post_data["images_inserted"] = 0
-                logger.warning("이미지 없음 — 텍스트만으로 업로드 진행")
+                logger.warning("글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행")
 
             logger.info(
                 f"포스트 생성 완료: '{post_data.get('title', '?')}' "

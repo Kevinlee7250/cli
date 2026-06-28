@@ -185,12 +185,75 @@ def _fetch_one_image(
     return None
 
 
+def _filter_relevant_images(
+    images: list[dict],
+    keyword: str,
+    article_plain_text: str,
+) -> list[dict]:
+    """
+    Claude를 사용해 글 내용과 관련 없는 이미지를 제거합니다 (배치 평가, max_tokens=50).
+    API 오류 시 모두 허용(기본 통과)하여 자동화를 중단시키지 않습니다.
+    """
+    if not images:
+        return images
+    try:
+        import anthropic
+        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+
+        img_list = "\n".join(
+            f"{i + 1}. 검색어={img.get('search_query', '')} / 이미지제목={img.get('title', '')}"
+            for i, img in enumerate(images)
+        )
+        summary = article_plain_text[:600]
+
+        msg = client.messages.create(
+            model=CLAUDE_MODEL,
+            max_tokens=50,
+            messages=[{
+                "role": "user",
+                "content": (
+                    f"블로그 주제: {keyword}\n"
+                    f"글 요약: {summary}\n\n"
+                    f"아래 이미지 중 이 글 내용과 실제로 관련 있는 이미지 번호만 "
+                    f"쉼표로 나열하세요. 관련 없으면 '없음'.\n\n"
+                    f"{img_list}\n\n"
+                    "번호만 답하세요 (예: 1,3 또는 없음):"
+                ),
+            }],
+        )
+        answer = msg.content[0].text.strip()
+        logger.debug(f"이미지 관련성 평가 결과: {answer}")
+
+        if answer.lower() in ("없음", "none", "없음.", "없음,"):
+            logger.info("이미지 관련성 검증: 관련 이미지 없음 — 전체 제거")
+            return []
+
+        keep = set()
+        for part in answer.replace(".", "").split(","):
+            part = part.strip()
+            if part.isdigit():
+                keep.add(int(part) - 1)
+
+        filtered = [img for i, img in enumerate(images) if i in keep]
+        removed = len(images) - len(filtered)
+        if removed:
+            logger.info(f"이미지 관련성 검증: {removed}개 제거, {len(filtered)}개 유지")
+        return filtered
+
+    except Exception as e:
+        logger.debug(f"이미지 관련성 검증 오류 (기본 허용): {e}")
+        return images
+
+
 def fetch_images_for_queries(
     queries: list[str],
     naver_client_id: str = "",
     naver_client_secret: str = "",
+    article_plain_text: str = "",
+    keyword: str = "",
 ) -> list[dict]:
-    """섹션별 쿼리 목록에 맞춰 이미지를 1개씩 검색합니다."""
+    """섹션별 쿼리 목록에 맞춰 이미지를 1개씩 검색하고 글 내용과의 관련성을 검증합니다."""
     images = []
     for query in queries:
         img = _fetch_one_image(query, naver_client_id, naver_client_secret)
@@ -202,6 +265,11 @@ def fetch_images_for_queries(
             logger.info(f"이미지 수집 성공: '{query}'")
         else:
             logger.warning(f"이미지 없음: '{query}'")
+
+    # 글 내용과 관련성 검증 (article_plain_text 제공 시)
+    if images and article_plain_text:
+        images = _filter_relevant_images(images, keyword or queries[0], article_plain_text)
+
     return images
 
 

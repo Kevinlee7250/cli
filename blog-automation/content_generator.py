@@ -121,7 +121,29 @@ def _build_prompt(keyword: str, traffic: str) -> str:
 • 문단은 3~4문장. 너무 긴 문단 금지.
 • 가끔 짧은 한 문장 문단도 OK ("그게 핵심이에요.")
 
-4. 특정 틈새(Niche) 공략
+4. AI 상투어 패턴 완전 제거 (독자가 AI 티를 못 느끼게)
+• 접속부사 남발 금지 — "또한", "더불어", "아울러"를 한 글에서 합산 3회 이하로 제한
+  → 대신 문장을 자연스럽게 이어주는 구어체 연결 사용:
+    ✗ "또한, 이 방법은 효과적입니다" → ✓ "이 방법도 생각보다 잘 돼요"
+• 자동요약 문구 금지 — "이처럼", "정리하자면", "결론적으로", "이를 통해 알 수 있듯이"
+  → AI가 단락을 마무리하는 패턴. 다음 문단으로 자연스럽게 이어가거나 결론을 섹션 안에 녹일 것
+• 과도한 중립성·객관적 어투 탈피 — 모든 문장을 "~할 수 있습니다", "~로 볼 수 있습니다"로 끝내지 말 것
+  ✗ "이 방법은 효과적일 수 있습니다" → ✓ "저는 이게 확실히 더 낫더라고요"
+  → 개인 의견은 명확하게: "솔직히 A보다 B가 훨씬 낫다고 생각해요"
+• 같은 길이 문장 반복 금지 — 짧은 문장(5~10자)·중간(15~25자)·긴 문장(30자+)을 섞어 리듬감 만들기
+  → 문장 끝 처리도 "~요", "~다", "~네요", "~거든요" 다양하게
+• 과도하게 매끄러운 구조 금지 — 모든 H2 섹션이 "정의 → 특징 → 장점 → 주의사항 → 요약" 패턴 반복 금지
+  → 어떤 섹션은 경험담으로만, 어떤 섹션은 숫자 비교로만 써도 OK
+• 목록화 남발 금지 — 모든 내용을 불릿/번호 리스트로 만들지 말 것
+  ✗ "장점: ① ... ② ... ③ ..." → ✓ "이게 제일 좋았던 점인데, ... 그다음으로는 ..."
+  → 서술로 충분히 표현 가능한 내용은 단락으로 쓰기. 리스트는 진짜 나열이 필요할 때만
+• 딱딱한 격식체·보고서 문체 금지:
+  ✗ "~에 대하여 살펴보겠습니다" ✗ "~임을 알 수 있다" ✗ "~에 기인한다"
+  → 블로그 구어체: "~얘기해볼게요", "~그러더라고요", "~생각해봤어요"
+• 클리셰 표현 반복 금지 — "중요합니다", "필수적입니다", "반드시 ~해야 합니다"를 2회 이상 쓰지 말 것
+  → 구체적 이유나 경험으로 대체: "이걸 빠뜨리면 나중에 진짜 후회해요 — 저도 그랬거든요"
+
+5. 특정 틈새(Niche) 공략
 • "{keyword}"와 관련해서 인터넷에 이미 넘치는 포괄적 내용 금지
 • 독자가 "이런 구체적인 얘기는 처음 봤다"고 느낄 각도로 접근
 • 예: "직장인이 점심시간에 할 수 있는", "실패해본 사람 입장에서", "2025년 기준으로 달라진 점"
@@ -201,7 +223,26 @@ You strictly follow Google AdSense content policies and prioritize genuine value
 • Paragraphs: 3-4 sentences. Occasional single-sentence paragraphs for emphasis.
 • Vary sentence length. Sound like a real person writing, not a report.
 
-4. Niche Angle
+4. Eliminate AI Tell-Tale Patterns
+• Overused transitions banned — "Furthermore", "Additionally", "Moreover": max 3 combined per post
+  ✗ "Furthermore, this method is effective." → ✓ "This one actually works better than I expected."
+• Auto-summary phrases banned — "In summary", "To conclude", "As we can see", "This shows that"
+  → AI signature closers. Move naturally into the next point or embed the conclusion in the paragraph.
+• Excessive neutrality banned — don't end every sentence with "can be", "may be", "is considered"
+  ✗ "This approach can be effective." → ✓ "Honestly, I'd pick this over the alternatives."
+• Same-length sentence repetition banned — mix short (5-8 words), medium (12-18), and long (25+) sentences
+  Vary sentence endings too: questions, em dashes, fragments for emphasis.
+• Overly smooth structure banned — not every H2 should follow "definition → benefits → warnings → summary"
+  → Some sections as pure storytelling, some as data comparisons — vary by what fits
+• Over-listing banned — not everything needs bullet points
+  ✗ "Benefits: 1. ... 2. ... 3. ..." → ✓ "The biggest win for me was... and on top of that..."
+  → Use prose when ideas flow naturally; lists only when truly enumerating parallel items
+• Formal/report tone banned — "This paper examines", "It is evident that", "The aforementioned"
+  → Blog voice: "Here's what I found", "Turns out", "Here's the thing"
+• Cliché phrases banned — no more than 1 use of "important", "essential", "critical", "must"
+  → Replace with specific experience: "Skip this and you'll regret it — learned that the hard way"
+
+5. Niche Angle
 • Find a specific angle other articles aren't covering well
 • Example angles: "from a beginner's perspective after failing twice", "what changed in {y}", "the part no one talks about"
 
@@ -479,6 +520,22 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict) -> st
 • 번역투/AI 투 표현 금지: "~살펴보도록 하겠습니다", "~에 대한 것들을", "다양한 방법을 통해"
 • 블로그 구어체 사용: "오늘은 ~에 대해 얘기해볼게요", "솔직히 저도 처음엔 몰랐어요"
 • 짧은 강조 문단 활용 ("그게 핵심이에요.")
+
+4. AI 상투어 패턴 완전 제거 (독자가 AI 티를 못 느끼게)
+• 접속부사 남발 금지 — "또한", "더불어", "아울러"를 한 글에서 합산 3회 이하로 제한
+  ✗ "또한, 이 방법은 효과적입니다" → ✓ "이 방법도 생각보다 잘 돼요"
+• 자동요약 문구 금지 — "이처럼", "정리하자면", "결론적으로", "이를 통해 알 수 있듯이"
+  → AI 특유의 단락 마무리 패턴. 자연스럽게 다음 내용으로 이어가거나 결론을 섹션 안에 녹일 것
+• 과도한 중립성 탈피 — "~할 수 있습니다", "~로 볼 수 있습니다"만 반복 금지
+  ✗ "이 방법은 효과적일 수 있습니다" → ✓ "저는 이게 확실히 더 낫더라고요"
+• 같은 길이 문장 반복 금지 — 짧은·중간·긴 문장 섞어 리듬감 만들기
+  문장 끝 처리도 "~요", "~다", "~네요", "~거든요" 다양하게
+• 과도하게 매끄러운 구조 금지 — 모든 섹션이 "정의→특징→주의→요약" 패턴 반복 금지
+• 목록화 남발 금지 — 서술로 충분한 내용은 단락으로. 리스트는 진짜 나열이 필요할 때만
+  ✗ "장점: ① ... ② ..." → ✓ "이게 제일 좋았는데, ... 그다음으로는 ..."
+• 딱딱한 격식체 금지 — "~에 대하여", "~임을 알 수 있다", "~에 기인한다"
+• 클리셰 반복 금지 — "중요합니다", "필수적입니다"를 2회 이상 쓰지 말 것
+  → "이걸 빠뜨리면 진짜 후회해요 — 저도 그랬거든요" 같은 경험 기반 표현으로 대체
 
 ━━━ 제목 규칙 ━━━
 • "[{episode}편]"으로 시작

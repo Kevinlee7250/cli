@@ -3623,6 +3623,7 @@ function renderSystemPage() {
   renderModuleStatusGrid()
   updatePendingInfo()
   loadBlogList()
+  renderLearningReport()
   // GitHub Actions 이력은 PAT 있을 때만 자동 로드
   if (getPAT()) loadSystemRuns()
 }
@@ -4871,18 +4872,7 @@ function closeBot() {
   document.getElementById('bot-panel').classList.remove('open')
 }
 
-function botInit() {
-  _refreshBotKeyUI()
-  if (_botMessages.length === 0) {
-    _botAppend('assistant', '안녕하세요! 저는 블로그 자동화 관리봇입니다 🤖\n\n시스템 상태, 수익 분석, 포스트 생성, 검토 대기 포스트 승인 등을 도와드릴 수 있어요. 아래 빠른 버튼을 누르거나 자유롭게 질문해 주세요!', [
-      { label: '📊 현재 시스템 상태', cmd: '현재 시스템 상태를 알려줘' },
-      { label: '📝 대기 포스트 현황', cmd: '검토 대기 중인 포스트를 알려줘' },
-      { label: '💰 수익 분석', cmd: '현재 수익 추정치와 분석을 알려줘' },
-      { label: '🚀 포스트 생성 방법', cmd: '포스트를 어떻게 생성하면 되나요?' },
-    ])
-  }
-  document.getElementById('bot-input').focus()
-}
+function botInit() { window.botInit && window.botInit() }
 
 function _refreshBotKeyUI() {
   const key = localStorage.getItem(BOT_KEY_LS) || ''

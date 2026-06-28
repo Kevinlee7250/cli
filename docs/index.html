@@ -416,6 +416,7 @@
     <a data-page="social"><span class="nav-icon">📱</span> 소셜 미디어</a>
     <a data-page="review"><span class="nav-icon">✍️</span> 수동 검토 <span id="review-nav-badge" style="display:none;background:var(--yellow);color:#1a1d27;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
     <a data-page="series"><span class="nav-icon">📚</span> 시리즈 기획 <span id="series-nav-badge" style="display:none;background:var(--accent);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
+    <a data-page="system"><span class="nav-icon">🖥️</span> 시스템 관리 <span id="system-alert-badge" style="display:none;background:var(--red);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">!</span></a>
     <a data-page="config"><span class="nav-icon">⚙️</span> 시스템 정보</a>
   </nav>
   <div class="sidebar-footer">
@@ -1065,6 +1066,161 @@
     </div>
   </div>
 
+  <!-- ═══ 시스템 관리 ═══ -->
+  <div class="page" id="page-system">
+    <div class="page-title">🖥️ 시스템 관리</div>
+
+    <!-- ① 전체 상태 모니터 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>📡 전체 상태 모니터</h2>
+      <button onclick="refreshSystemStatus()" style="padding:6px 14px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.3);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">🔄 새로고침</button>
+    </div>
+    <div id="system-status-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:28px">
+      <!-- filled by renderSystemPage() -->
+      <div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>
+      <div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>
+      <div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>
+      <div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>
+      <div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>
+      <div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>
+    </div>
+
+    <!-- ② 워크플로우 실행 제어 -->
+    <div class="section-header" style="margin-bottom:12px"><h2>🚀 워크플로우 실행 제어</h2></div>
+    <div id="workflow-control-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:28px">
+
+      <!-- 포스트 생성 -->
+      <div class="run-panel" style="padding:18px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <span style="font-size:22px">📝</span>
+          <div><div style="font-weight:700;font-size:14px">포스트 생성</div><div style="font-size:11px;color:var(--muted)">blog-run.yml · live 모드</div></div>
+          <span id="wf-live-dot" style="margin-left:auto;width:10px;height:10px;border-radius:50%;background:var(--muted)"></span>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+          <select id="wf-live-mode" style="flex:1;min-width:90px;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
+            <option value="live">🌐 Live 게시</option>
+            <option value="draft">📄 Draft 저장</option>
+            <option value="review">✍️ Review 모드</option>
+          </select>
+          <select id="wf-live-count" style="width:70px;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
+            <option value="1">1편</option>
+            <option value="2">2편</option>
+            <option value="3">3편</option>
+          </select>
+        </div>
+        <input id="wf-live-kw" placeholder="키워드 (빈칸=자동)" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:10px;box-sizing:border-box">
+        <button class="run-btn" style="width:100%;padding:9px" onclick="wfRunLive()">▶ 지금 실행</button>
+        <div id="wf-live-status" class="status-panel" style="display:none;margin-top:8px;font-size:12px"></div>
+      </div>
+
+      <!-- 시리즈 기획 -->
+      <div class="run-panel" style="padding:18px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <span style="font-size:22px">📚</span>
+          <div><div style="font-weight:700;font-size:14px">시리즈 기획</div><div style="font-size:11px;color:var(--muted)">blog-run.yml · series 모드</div></div>
+          <span id="wf-series-dot" style="margin-left:auto;width:10px;height:10px;border-radius:50%;background:var(--muted)"></span>
+        </div>
+        <input id="wf-series-kw" placeholder="시리즈 키워드" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:8px;box-sizing:border-box">
+        <div style="display:flex;gap:6px;margin-bottom:10px">
+          <span style="font-size:12px;color:var(--muted);align-self:center">편 수:</span>
+          <button onclick="wfSetSeries(2)" id="wfs-2" class="sort-btn">2편</button>
+          <button onclick="wfSetSeries(3)" id="wfs-3" class="sort-btn active">3편</button>
+          <button onclick="wfSetSeries(4)" id="wfs-4" class="sort-btn">4편</button>
+          <button onclick="wfSetSeries(5)" id="wfs-5" class="sort-btn">5편</button>
+        </div>
+        <button class="run-btn" style="width:100%;padding:9px" onclick="wfRunSeries()">▶ 시리즈 실행</button>
+        <div id="wf-series-status" class="status-panel" style="display:none;margin-top:8px;font-size:12px"></div>
+      </div>
+
+      <!-- 수동 게시 -->
+      <div class="run-panel" style="padding:18px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <span style="font-size:22px">🚀</span>
+          <div><div style="font-weight:700;font-size:14px">수동 게시</div><div style="font-size:11px;color:var(--muted)">manual-publish.yml · pending → Blogger</div></div>
+          <span id="wf-pub-dot" style="margin-left:auto;width:10px;height:10px;border-radius:50%;background:var(--muted)"></span>
+        </div>
+        <div id="wf-pub-pending-info" style="font-size:13px;color:var(--muted);margin-bottom:10px">검토 대기 포스트를 로드 중...</div>
+        <button class="run-btn" style="width:100%;padding:9px;background:rgba(251,191,36,.15);border-color:rgba(251,191,36,.4);color:var(--yellow)" onclick="wfPublishAll()">🚀 전체 게시 (Actions)</button>
+        <div style="margin-top:8px"><a href="#" onclick="navTo('review');return false;" style="font-size:12px;color:var(--accent2)">→ 수동 검토 탭에서 개별 관리</a></div>
+        <div id="wf-pub-status" class="status-panel" style="display:none;margin-top:8px;font-size:12px"></div>
+      </div>
+
+      <!-- 시스템 설정 -->
+      <div class="run-panel" style="padding:18px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <span style="font-size:22px">🔧</span>
+          <div><div style="font-weight:700;font-size:14px">초기 설정</div><div style="font-size:11px;color:var(--muted)">blog-run.yml · setup 모드</div></div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">개인정보처리방침 · 블로그 소개 페이지를 Blogger에 자동 생성합니다.</div>
+        <button class="run-btn" style="width:100%;padding:9px;background:rgba(52,211,153,.12);border-color:rgba(52,211,153,.3);color:var(--green)" onclick="wfSetup()">📄 필수 페이지 생성</button>
+        <div id="wf-setup-status" class="status-panel" style="display:none;margin-top:8px;font-size:12px"></div>
+      </div>
+
+    </div>
+
+    <!-- ③ 최근 실행 이력 (GitHub Actions API) -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>📋 최근 실행 이력</h2>
+      <button onclick="loadSystemRuns()" style="padding:6px 14px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer;font-weight:600">🔄 GitHub에서 불러오기</button>
+    </div>
+    <div class="table-wrap" style="margin-bottom:28px">
+      <table id="system-runs-table">
+        <thead><tr>
+          <th>상태</th><th>워크플로우</th><th>트리거</th><th>시작 시각</th><th>소요</th><th>브랜치</th>
+        </tr></thead>
+        <tbody id="system-runs-body">
+          <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px;font-size:13px">
+            PAT가 설정되면 GitHub Actions 실행 이력을 실시간으로 불러옵니다.<br>
+            <button onclick="loadSystemRuns()" style="margin-top:10px;padding:6px 14px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer">불러오기</button>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ④ 데이터 현황 -->
+    <div class="section-header" style="margin-bottom:12px"><h2>🗄️ 데이터 현황</h2></div>
+    <div id="data-status-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-bottom:28px">
+      <!-- filled by renderSystemPage() -->
+    </div>
+
+    <!-- ⑤ 모듈별 상태 -->
+    <div class="section-header" style="margin-bottom:12px"><h2>🔩 모듈별 상태</h2></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:28px" id="module-status-grid">
+      <!-- filled by renderSystemPage() -->
+    </div>
+
+    <!-- ⑥ 로컬 설정 관리 -->
+    <div class="section-header" style="margin-bottom:12px"><h2>🔑 로컬 설정 관리</h2></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px">
+
+      <div class="run-panel" style="padding:18px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:10px">🔐 GitHub PAT</div>
+        <div id="sys-pat-status" style="font-size:13px;margin-bottom:12px;color:var(--muted)">확인 중...</div>
+        <div style="display:flex;gap:8px">
+          <button onclick="navTo('run')" style="padding:7px 14px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.3);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer">설정하기</button>
+          <button onclick="sysCheckPAT()" style="padding:7px 14px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">재확인</button>
+        </div>
+      </div>
+
+      <div class="run-panel" style="padding:18px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:10px">🌐 OAuth 직접 게시</div>
+        <div id="sys-oauth-status" style="font-size:13px;margin-bottom:12px;color:var(--muted)">확인 중...</div>
+        <div style="display:flex;gap:8px">
+          <button onclick="navTo('review')" style="padding:7px 14px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer">설정하기</button>
+          <button onclick="sysTestOAuth()" style="padding:7px 14px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">토큰 테스트</button>
+        </div>
+        <div id="sys-oauth-test-result" style="display:none;margin-top:8px;font-size:12px"></div>
+      </div>
+
+      <div class="run-panel" style="padding:18px">
+        <div style="font-weight:700;font-size:13px;margin-bottom:10px">🗑️ 로컬 캐시 초기화</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">게시 완료 ID 목록, 체크리스트 등 브라우저 로컬 데이터를 초기화합니다.</div>
+        <button onclick="sysClearLocalStorage()" style="padding:7px 14px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:8px;color:var(--red);font-size:12px;cursor:pointer;width:100%">⚠️ 로컬 캐시 전체 초기화</button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ═══ 시스템 정보 ═══ -->
   <div class="page" id="page-config">
     <div class="page-title">⚙️ 시스템 정보</div>
@@ -1254,6 +1410,7 @@ function navTo(page) {
     if (warnEl) warnEl.style.display = getPAT() ? 'none' : 'block'
   }
   if (page === 'series') renderSeries()
+  if (page === 'system') renderSystemPage()
 }
 
 // ── Quality grade ──────────────────────────────────────────────────────────────
@@ -2936,6 +3093,402 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModal()
   if (e.key === 'r' || e.key === 'R') manualRefresh()
 })
+
+// ── 시스템 관리 페이지 ──────────────────────────────────────────────────────────
+
+let _wfSeriesCount = 3
+
+function wfSetSeries(n) {
+  _wfSeriesCount = n
+  ;[2,3,4,5].forEach(i => {
+    const b = document.getElementById('wfs-' + i)
+    if (b) b.classList.toggle('active', i === n)
+  })
+}
+
+function renderSystemPage() {
+  sysCheckPAT()
+  sysCheckOAuth()
+  renderSystemStatusGrid()
+  renderDataStatusGrid()
+  renderModuleStatusGrid()
+  updatePendingInfo()
+  // GitHub Actions 이력은 PAT 있을 때만 자동 로드
+  if (getPAT()) loadSystemRuns()
+}
+
+function refreshSystemStatus() {
+  renderSystemPage()
+  showToast('시스템 상태를 새로고침했습니다', 'info')
+}
+
+// ① 전체 상태 카드 렌더
+function renderSystemStatusGrid() {
+  const { posts, runs, pending, series, meta, gsc } = DATA
+  const lastRun = (runs || []).slice(-1)[0] || {}
+  const now = Date.now()
+  const lastRunTs = lastRun.timestamp ? new Date(lastRun.timestamp).getTime() : 0
+  const hoursAgo = lastRunTs ? Math.round((now - lastRunTs) / 3600000) : null
+  const successRate = (() => {
+    const r = runs || []; if (!r.length) return null
+    const ok = r.filter(x => (x.uploaded || 0) > 0 || x.status === 'success').length
+    return Math.round(ok / r.length * 100)
+  })()
+  const bGrade = (() => {
+    const p = posts || []; if (!p.length) return null
+    const good = p.filter(x => (x.wordCount||0) >= 1000).length
+    return Math.round(good / p.length * 100)
+  })()
+  const pendingCount = (pending || []).filter(p => p.status === 'pending').length
+  const seriesCount = (series || []).length
+  const hasPAT = !!getPAT()
+  const hasGSC = !!(gsc && Object.keys(gsc).length)
+
+  const statusCard = (icon, label, val, sub, color, dotColor) => `
+    <div style="background:var(--bg2);border:1px solid var(--border);border-left:3px solid ${dotColor};border-radius:var(--radius);padding:16px 18px;display:flex;gap:14px;align-items:center">
+      <span style="font-size:26px">${icon}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:3px">${label}</div>
+        <div style="font-size:20px;font-weight:700;color:${color}">${val}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">${sub}</div>
+      </div>
+    </div>`
+
+  const runColor = hoursAgo === null ? 'var(--muted)' : hoursAgo < 25 ? 'var(--green)' : hoursAgo < 49 ? 'var(--yellow)' : 'var(--red)'
+  const runBorder = hoursAgo === null ? 'var(--border)' : hoursAgo < 25 ? 'var(--green)' : hoursAgo < 49 ? 'var(--yellow)' : 'var(--red)'
+
+  document.getElementById('system-status-grid').innerHTML = [
+    statusCard('📊', '마지막 실행', hoursAgo !== null ? hoursAgo + '시간 전' : '기록 없음',
+      lastRun.timestamp ? new Date(lastRun.timestamp).toLocaleString('ko-KR', {month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}) : '없음',
+      runColor, runBorder),
+    statusCard('📝', '총 포스트', (meta.totalPosts || posts.length) + '개',
+      '이번 달 ' + (posts.filter(p => p.date && p.date.startsWith(new Date().toISOString().slice(0,7))).length) + '개',
+      'var(--accent)', 'var(--accent)'),
+    statusCard('✅', '성공률', successRate !== null ? successRate + '%' : '-',
+      '최근 ' + (runs||[]).length + '회 실행 기준',
+      successRate === null ? 'var(--muted)' : successRate >= 80 ? 'var(--green)' : successRate >= 60 ? 'var(--yellow)' : 'var(--red)',
+      successRate === null ? 'var(--border)' : successRate >= 80 ? 'var(--green)' : successRate >= 60 ? 'var(--yellow)' : 'var(--red)'),
+    statusCard('✍️', '검토 대기', pendingCount + '개',
+      pendingCount > 0 ? '수동 게시 필요' : '대기 없음',
+      pendingCount > 0 ? 'var(--yellow)' : 'var(--green)',
+      pendingCount > 0 ? 'var(--yellow)' : 'var(--border)'),
+    statusCard('📚', '시리즈', seriesCount + '개',
+      '진행 중 · 완료 포함',
+      'var(--accent2)', 'var(--accent2)'),
+    statusCard('🔍', 'GSC 연동', hasGSC ? '연결됨' : '미연동',
+      hasGSC ? 'Search Console 데이터 수신 중' : 'GSC_SITE_URL 설정 필요',
+      hasGSC ? 'var(--green)' : 'var(--muted)',
+      hasGSC ? 'var(--green)' : 'var(--border)'),
+    statusCard('🔐', 'GitHub PAT', hasPAT ? '설정됨' : '미설정',
+      hasPAT ? 'Actions 워크플로우 실행 가능' : '실행 제어 탭에서 설정 필요',
+      hasPAT ? 'var(--green)' : 'var(--red)',
+      hasPAT ? 'var(--green)' : 'var(--red)'),
+    statusCard('💰', 'AdSense 추정 수익', '$' + ((meta.totalRevenue || 0)).toFixed(2),
+      '누적 추정 수익',
+      'var(--yellow)', 'var(--yellow)'),
+  ].join('')
+
+  // 알림 뱃지: 이슈 있으면 nav에 표시
+  const hasAlert = !hasPAT || pendingCount > 0 || (hoursAgo !== null && hoursAgo > 48)
+  const badge = document.getElementById('system-alert-badge')
+  if (badge) badge.style.display = hasAlert ? '' : 'none'
+}
+
+// ② 데이터 현황 카드
+function renderDataStatusGrid() {
+  const { posts, runs, pending, series, social, gsc, meta } = DATA
+  const exportedAt = meta.exportedAt ? new Date(meta.exportedAt).toLocaleString('ko-KR') : '없음'
+  const items = [
+    { icon:'📝', name:'posts.json', count:(posts||[]).length+'개', sub:'포스트 메타데이터' },
+    { icon:'📋', name:'runs.json', count:(runs||[]).length+'개', sub:'실행 이력' },
+    { icon:'✍️', name:'pending_posts.json', count:(pending||[]).length+'개', sub:(pending||[]).filter(p=>p.status==='pending').length+'개 대기' },
+    { icon:'📚', name:'series.json', count:(series||[]).length+'개', sub:'시리즈 기획 데이터' },
+    { icon:'📱', name:'social.json', count:(social||[]).length+'개', sub:'소셜 콘텐츠' },
+    { icon:'🔍', name:'gsc.json', count:Object.keys(gsc||{}).length+'개 항목', sub:'Search Console 데이터' },
+  ]
+  document.getElementById('data-status-grid').innerHTML = items.map(x => `
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;display:flex;gap:12px;align-items:center">
+      <span style="font-size:22px">${x.icon}</span>
+      <div>
+        <div style="font-size:12px;color:var(--accent);font-weight:700;margin-bottom:2px">${x.name}</div>
+        <div style="font-size:18px;font-weight:700">${x.count}</div>
+        <div style="font-size:11px;color:var(--muted)">${x.sub}</div>
+      </div>
+    </div>`).join('') +
+    `<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;display:flex;gap:12px;align-items:center;grid-column:1/-1">
+       <span style="font-size:22px">⏱️</span>
+       <div style="font-size:12px;color:var(--muted)">마지막 데이터 내보내기: <strong style="color:var(--text)">${exportedAt}</strong></div>
+       <button onclick="manualRefresh()" style="margin-left:auto;padding:6px 14px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:var(--green);font-size:12px;cursor:pointer">🔄 새로고침</button>
+     </div>`
+}
+
+// ③ 모듈별 상태 카드
+function renderModuleStatusGrid() {
+  const { posts, runs, meta, pending } = DATA
+  const totalImages = (posts||[]).reduce((s,p) => s + (p.imagesInserted||0), 0)
+  const avgImages = posts.length ? (totalImages / posts.length).toFixed(1) : 0
+  const hasFaq = (posts||[]).filter(p => (p.faqCount||0) > 0).length
+  const lastRun = (runs||[]).slice(-1)[0] || {}
+  const pendingCount = (pending||[]).filter(p=>p.status==='pending').length
+  const modules = [
+    {
+      icon:'🤖', name:'Claude AI 콘텐츠 생성',
+      items:[
+        ['모델', 'claude-sonnet-4-6'],
+        ['최대 토큰', '16,000 tokens'],
+        ['마지막 실행', lastRun.timestamp ? new Date(lastRun.timestamp).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}) : '없음'],
+        ['생성 포스트', (meta.totalPosts||(posts||[]).length)+'개 누적'],
+      ],
+      status: (runs||[]).length > 0 ? 'ok' : 'warn',
+    },
+    {
+      icon:'📸', name:'이미지 수집 (3단계)',
+      items:[
+        ['1순위', 'Naver 이미지 API (설정 시)'],
+        ['2순위', 'DuckDuckGo (API 키 불필요)'],
+        ['3순위', 'Wikimedia Commons'],
+        ['평균 삽입', avgImages + '개/포스트'],
+        ['관련성 검증', '✅ Claude AI 배치 평가'],
+      ],
+      status: avgImages > 0 ? 'ok' : 'warn',
+    },
+    {
+      icon:'📤', name:'Blogger 업로드',
+      items:[
+        ['방식', 'Google Blogger API v3'],
+        ['인증', 'OAuth2 Refresh Token'],
+        ['게시 상태', (meta.bloggerTotal||0)+'개 업로드됨'],
+        ['광고 슬롯', '4개 자동 삽입 (AdSense)'],
+        ['JSON-LD', 'Article + FAQPage'],
+      ],
+      status: (meta.bloggerTotal||0) > 0 ? 'ok' : 'warn',
+    },
+    {
+      icon:'🔍', name:'키워드 수집',
+      items:[
+        ['0순위', '네이버 실시간 뉴스 RSS'],
+        ['1순위', 'Google Trends RSS (KR)'],
+        ['2순위', 'Claude AI 트렌드 분석'],
+        ['드라마 감지', '✅ OTT/방송 자동 감지'],
+        ['AdSense 필터', '✅ 정책 위반 키워드 제거'],
+      ],
+      status: 'ok',
+    },
+    {
+      icon:'✅', name:'AdSense 정책 검증',
+      items:[
+        ['검증 항목', '8개 (pass/warn/fail)'],
+        ['업로드 기준', '80점 이상'],
+        ['검토 전환', '65~79점 → 수동 검토'],
+        ['즉시 거부', 'harmful_content fail'],
+        ['검토 대기', pendingCount+'개 포스트'],
+      ],
+      status: pendingCount > 5 ? 'warn' : 'ok',
+    },
+    {
+      icon:'📚', name:'시리즈 자동화',
+      items:[
+        ['자동 감지', '트렌드 키워드 중 자동 선정'],
+        ['드라마 시리즈', '✅ OTT 드라마 자동 기획'],
+        ['최소 간격', '7일 (AUTO_SERIES_MIN_DAYS)'],
+        ['편 수', '2~5편 (기본 3편)'],
+        ['AI 상투어 제거', '✅ 8개 패턴 금지'],
+      ],
+      status: 'ok',
+    },
+  ]
+  const dotCls = { ok: 'var(--green)', warn: 'var(--yellow)', err: 'var(--red)' }
+  document.getElementById('module-status-grid').innerHTML = modules.map(m => `
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span style="font-size:20px">${m.icon}</span>
+        <span style="font-weight:700;font-size:13px">${m.name}</span>
+        <span style="margin-left:auto;width:9px;height:9px;border-radius:50%;background:${dotCls[m.status]||'var(--muted)'};flex-shrink:0"></span>
+      </div>
+      <table style="width:100%;border-collapse:collapse">
+        ${m.items.map(([k,v]) => `<tr>
+          <td style="padding:4px 0;font-size:12px;color:var(--muted);width:45%">${k}</td>
+          <td style="padding:4px 0;font-size:12px;font-weight:600;color:var(--text)">${v}</td>
+        </tr>`).join('')}
+      </table>
+    </div>`).join('')
+}
+
+// ④ GitHub Actions 실행 이력 (실시간 API)
+async function loadSystemRuns() {
+  const pat = getPAT()
+  const tbody = document.getElementById('system-runs-body')
+  if (!pat) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px;font-size:13px">
+      🔐 GitHub PAT가 없습니다. <a href="#" onclick="navTo('run');return false;" style="color:var(--accent)">실행 제어 탭</a>에서 PAT를 설정하세요.</td></tr>`
+    return
+  }
+  tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px;font-size:13px"><span class="pulse">⏳</span> GitHub에서 불러오는 중...</td></tr>`
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/runs?per_page=20&branch=${GH_BRANCH}`,
+      { headers: { Authorization: `Bearer ${pat}`, Accept: 'application/vnd.github.v3+json' } }
+    )
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
+    const data = await resp.json()
+    const runs = data.workflow_runs || []
+    if (!runs.length) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px">실행 이력이 없습니다.</td></tr>`; return }
+
+    const statusIcon = s => s === 'completed' ? '✅' : s === 'in_progress' ? '🔄' : s === 'queued' ? '⏳' : '⚫'
+    const concl = c => c === 'success' ? '<span class="badge green">성공</span>' : c === 'failure' ? '<span class="badge red">실패</span>' : c === 'cancelled' ? '<span class="badge muted">취소</span>' : '<span class="badge yellow">실행 중</span>'
+    const dur = (start, end) => {
+      if (!start || !end) return '-'
+      const s = Math.round((new Date(end) - new Date(start)) / 1000)
+      return s < 60 ? s + 's' : Math.floor(s/60) + 'm ' + (s%60) + 's'
+    }
+    const fmt = d => d ? new Date(d).toLocaleString('ko-KR', {month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}) : '-'
+
+    tbody.innerHTML = runs.map(r => `<tr>
+      <td>${statusIcon(r.status)} ${concl(r.conclusion)}</td>
+      <td style="font-size:12px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+        <a href="${r.html_url}" target="_blank" style="color:var(--accent2);text-decoration:none">${esc(r.name||r.workflow_id||'')}</a>
+      </td>
+      <td style="font-size:12px;color:var(--muted)">${esc(r.event||'')}</td>
+      <td style="font-size:12px">${fmt(r.created_at)}</td>
+      <td style="font-size:12px;color:var(--muted)">${dur(r.created_at, r.updated_at)}</td>
+      <td style="font-size:12px;color:var(--muted)">${esc(r.head_branch||'')}</td>
+    </tr>`).join('')
+
+    // workflow 상태 도트 업데이트
+    const lastBlog = runs.find(r => r.name === 'Blog Automation' || (r.path||'').includes('blog-run'))
+    const lastPub = runs.find(r => (r.path||'').includes('manual-publish'))
+    if (lastBlog) {
+      const d = document.getElementById('wf-live-dot')
+      if (d) d.style.background = lastBlog.conclusion === 'success' ? 'var(--green)' : lastBlog.conclusion === 'failure' ? 'var(--red)' : 'var(--yellow)'
+    }
+    if (lastPub) {
+      const d = document.getElementById('wf-pub-dot')
+      if (d) d.style.background = lastPub.conclusion === 'success' ? 'var(--green)' : lastPub.conclusion === 'failure' ? 'var(--red)' : 'var(--yellow)'
+    }
+  } catch (e) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--red);padding:20px;font-size:13px">❌ 불러오기 실패: ${esc(e.message)}</td></tr>`
+  }
+}
+
+// ⑤ 워크플로우 실행 함수들
+async function _wfDispatch(mode, extraInputs, statusElId, dotElId) {
+  const pat = getPAT()
+  const statusEl = document.getElementById(statusElId)
+  const dotEl = document.getElementById(dotElId)
+  if (!pat) {
+    if (statusEl) { statusEl.style.display='block'; statusEl.className='status-panel error'; statusEl.textContent='❌ PAT가 없습니다. 실행 제어 탭에서 설정하세요.' }
+    showToast('PAT 설정 필요', 'error'); return
+  }
+  if (statusEl) { statusEl.style.display='block'; statusEl.className='status-panel running'; statusEl.innerHTML='<span class="pulse">⏳</span> 워크플로우 요청 중...' }
+  if (dotEl) dotEl.style.background = 'var(--yellow)'
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`,
+      { method:'POST', headers:{ Authorization:`Bearer ${pat}`, Accept:'application/vnd.github.v3+json', 'Content-Type':'application/json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: { mode, posts_per_run:'1', keyword:'', ...extraInputs } }) }
+    )
+    if (resp.status === 204) {
+      if (statusEl) { statusEl.className='status-panel success'; statusEl.textContent='✅ 워크플로우 시작됨! 2~5분 후 완료됩니다.' }
+      if (dotEl) dotEl.style.background = 'var(--green)'
+      showToast(mode + ' 워크플로우 시작', 'success')
+      setTimeout(() => loadSystemRuns(), 5000)
+    } else {
+      const err = await resp.json().catch(() => ({}))
+      throw new Error(`HTTP ${resp.status}: ${err.message||''}`)
+    }
+  } catch (e) {
+    if (statusEl) { statusEl.className='status-panel error'; statusEl.textContent='❌ ' + e.message }
+    if (dotEl) dotEl.style.background = 'var(--red)'
+    showToast('실행 실패: ' + e.message, 'error')
+  }
+}
+
+function wfRunLive() {
+  const mode = document.getElementById('wf-live-mode')?.value || 'live'
+  const count = document.getElementById('wf-live-count')?.value || '1'
+  const kw = document.getElementById('wf-live-kw')?.value.trim() || ''
+  _wfDispatch(mode, { keyword: kw, posts_per_run: count }, 'wf-live-status', 'wf-live-dot')
+}
+
+function wfRunSeries() {
+  const kw = document.getElementById('wf-series-kw')?.value.trim() || ''
+  if (!kw) { showToast('시리즈 키워드를 입력하세요', 'error'); return }
+  _wfDispatch('series', { keyword: kw, series_count: String(_wfSeriesCount) }, 'wf-series-status', 'wf-series-dot')
+}
+
+async function wfPublishAll() {
+  const pat = getPAT()
+  const statusEl = document.getElementById('wf-pub-status')
+  if (!pat) { if (statusEl) { statusEl.style.display='block'; statusEl.className='status-panel error'; statusEl.textContent='❌ PAT 필요' }; showToast('PAT 설정 필요','error'); return }
+  if (statusEl) { statusEl.style.display='block'; statusEl.className='status-panel running'; statusEl.innerHTML='<span class="pulse">⏳</span> 전체 게시 요청 중...' }
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/manual-publish.yml/dispatches`,
+      { method:'POST', headers:{ Authorization:`Bearer ${pat}`, Accept:'application/vnd.github.v3+json', 'Content-Type':'application/json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: { post_id:'', post_ids:'', publish_all:'true' } }) }
+    )
+    if (resp.status === 204) {
+      if (statusEl) { statusEl.className='status-panel success'; statusEl.textContent='✅ 전체 게시 워크플로우 시작됨!' }
+      showToast('전체 게시 시작', 'success')
+      setTimeout(() => loadSystemRuns(), 5000)
+    } else throw new Error('HTTP ' + resp.status)
+  } catch (e) {
+    if (statusEl) { statusEl.className='status-panel error'; statusEl.textContent='❌ ' + e.message }
+    showToast('실패: ' + e.message, 'error')
+  }
+}
+
+function wfSetup() {
+  _wfDispatch('setup', { keyword: '', posts_per_run: '1' }, 'wf-setup-status', null)
+}
+
+function updatePendingInfo() {
+  const p = (DATA.pending || []).filter(x => x.status === 'pending')
+  const el = document.getElementById('wf-pub-pending-info')
+  if (el) el.innerHTML = p.length > 0
+    ? `<span style="color:var(--yellow);font-weight:700">${p.length}개</span> 대기 중 · <span style="color:var(--muted)">${p.map(x=>esc(x.title||'').slice(0,20)).slice(0,2).join(', ')}${p.length>2?' 외 '+(p.length-2)+'개':''}</span>`
+    : '<span style="color:var(--muted)">검토 대기 포스트 없음</span>'
+}
+
+// ⑥ 로컬 설정 관리
+function sysCheckPAT() {
+  const el = document.getElementById('sys-pat-status')
+  if (!el) return
+  const pat = getPAT()
+  el.innerHTML = pat
+    ? `<span style="color:var(--green)">✅ PAT 설정됨</span> — <span style="color:var(--muted);font-size:11px">****${pat.slice(-4)}</span>`
+    : '<span style="color:var(--red)">❌ 미설정</span> — GitHub Actions 실행 불가'
+}
+
+function sysCheckOAuth() {
+  const el = document.getElementById('sys-oauth-status')
+  if (!el) return
+  const clientId = localStorage.getItem('oauth_client_id')
+  const blogId = localStorage.getItem('oauth_blog_id')
+  el.innerHTML = (clientId && blogId)
+    ? `<span style="color:var(--green)">✅ 설정됨</span> — Blog ID: <span style="color:var(--muted);font-size:11px">${esc(blogId)}</span>`
+    : '<span style="color:var(--muted)">미설정</span> — 직접 게시 사용 시 필요'
+}
+
+async function sysTestOAuth() {
+  const el = document.getElementById('sys-oauth-test-result')
+  if (el) { el.style.display='block'; el.style.color='var(--muted)'; el.textContent='⏳ 테스트 중...' }
+  try {
+    const token = await getAccessToken()
+    if (el) { el.style.color='var(--green)'; el.textContent='✅ OAuth 토큰 정상' }
+  } catch (e) {
+    if (el) { el.style.color='var(--red)'; el.textContent='❌ ' + e.message }
+  }
+}
+
+function sysClearLocalStorage() {
+  if (!confirm('PAT, OAuth 설정, 게시 기록 등 모든 로컬 데이터를 초기화합니다. 계속하시겠습니까?')) return
+  const keep = []  // 삭제하지 않을 키 목록 (없음)
+  const keys = Object.keys(localStorage)
+  keys.forEach(k => localStorage.removeItem(k))
+  showToast('로컬 캐시를 초기화했습니다', 'success')
+  renderSystemPage()
+}
 
 // ── Utils ─────────────────────────────────────────────────────────────────────
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }

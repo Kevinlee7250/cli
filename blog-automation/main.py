@@ -56,8 +56,11 @@ from config import (
     AUTO_SERIES,
     AUTO_SERIES_COUNT,
     AUTO_SERIES_MIN_DAYS,
+    ADSENSE_VALIDATION,
+    ADSENSE_MIN_SCORE,
 )
 from content_generator import generate_post, generate_series_post
+from adsense_validator import validate_adsense
 from blogger_uploader import upload_post
 from keyword_collector import get_trending_keywords, _migrate_used_keywords
 from dashboard_exporter import log_run, export_dashboard, save_pending_posts
@@ -202,6 +205,29 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False, review: b
             success_count += 1
             continue
 
+        # AdSense 정책 검증
+        if ADSENSE_VALIDATION:
+            validation = validate_adsense(post_data)
+            post_data["adsense_score"] = validation["score"]
+            post_data["adsense_recommendation"] = validation["recommendation"]
+            if validation["recommendation"] == "reject":
+                logger.error(
+                    f"  ❌ AdSense 정책 위반 — 업로드 취소 (점수: {validation['score']}/100)"
+                )
+                for issue in validation["issues"]:
+                    logger.error(f"     🔴 {issue}")
+                fail_count += 1
+                continue
+            if validation["recommendation"] == "review" or validation["score"] < ADSENSE_MIN_SCORE:
+                logger.warning(
+                    f"  ⚠️ AdSense 검토 필요 — pending 저장 (점수: {validation['score']}/100)"
+                )
+                post_data["status"] = "pending"
+                completed_posts.append(post_data)
+                save_pending_posts([post_data])
+                success_count += 1
+                continue
+
         # Blogger 업로드
         result = upload_post(post_data)
         if result:
@@ -310,6 +336,31 @@ def run_series(
             generated_posts.append(post_data)
             save_series(series_plan)
             continue
+
+        # AdSense 정책 검증
+        if ADSENSE_VALIDATION:
+            validation = validate_adsense(post_data)
+            post_data["adsense_score"] = validation["score"]
+            post_data["adsense_recommendation"] = validation["recommendation"]
+            if validation["recommendation"] == "reject":
+                logger.error(
+                    f"  ❌ [편 {ep_num}] AdSense 정책 위반 — 업로드 취소 (점수: {validation['score']}/100)"
+                )
+                for issue in validation["issues"]:
+                    logger.error(f"     🔴 {issue}")
+                ep["status"] = "rejected_policy"
+                save_series(series_plan)
+                continue
+            if validation["recommendation"] == "review" or validation["score"] < ADSENSE_MIN_SCORE:
+                logger.warning(
+                    f"  ⚠️ [편 {ep_num}] AdSense 검토 필요 — pending 저장 (점수: {validation['score']}/100)"
+                )
+                post_data["status"] = "pending"
+                pending_list.append(post_data)
+                ep["status"] = "pending_review"
+                generated_posts.append(post_data)
+                save_series(series_plan)
+                continue
 
         result = upload_post(post_data)
         if result:

@@ -38,6 +38,15 @@ SCHEDULE_CRON = os.getenv("SCHEDULE_CRON", "0 9 * * *")
 # Google Search Console
 GSC_SITE_URL = os.getenv("GSC_SITE_URL", "")  # 예: https://hoguwhat1.blogspot.com/
 
+# AdSense 정책 자동 검증
+# ADSENSE_VALIDATION=true: 업로드 전 8개 항목 자동 검증 (false면 생략)
+ADSENSE_VALIDATION = os.getenv("ADSENSE_VALIDATION", "true").lower() in ("true", "1", "yes")
+# 검증 통과 최소 점수 (0~100): 미만이면 pending으로 전환 (기본 70)
+try:
+    ADSENSE_MIN_SCORE = max(0, min(int(os.getenv("ADSENSE_MIN_SCORE", "70").strip()), 100))
+except (ValueError, TypeError):
+    ADSENSE_MIN_SCORE = 70
+
 # 시리즈 자동화
 # AUTO_SERIES=true 이면 정기 실행 시 트렌드 키워드 중 하나를 자동으로 시리즈로 기획
 AUTO_SERIES = os.getenv("AUTO_SERIES", "true").lower() in ("true", "1", "yes")

@@ -127,6 +127,22 @@ def run_once(
             naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
             naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
         )
+        # 주간 학습 키워드를 트렌드 키워드 부족 시 보완
+        if len(keywords) < collect_count:
+            learned_kw_path = os.path.join(os.path.dirname(__file__), "logs", "learned_keywords.json")
+            if os.path.exists(learned_kw_path):
+                try:
+                    import json as _json
+                    with open(learned_kw_path, encoding="utf-8") as _f:
+                        learned = _json.load(_f)
+                    need = collect_count - len(keywords)
+                    existing_set = set(keywords)
+                    extras = [kw for kw in learned if kw not in existing_set][:need]
+                    if extras:
+                        keywords += extras
+                        logger.info(f"학습 키워드 {len(extras)}개 보완: {extras}")
+                except Exception:
+                    pass
     keywords = keywords[:POSTS_PER_RUN + 1]
     logger.info(f"수집된 키워드 {len(keywords)}개: {keywords}")
 
@@ -511,6 +527,8 @@ def main() -> None:
     parser.add_argument("--setup", action="store_true", help="AdSense 심사 필수 페이지 생성 (개인정보처리방침·블로그 소개)")
     parser.add_argument("--blog", type=str, default="", metavar="BLOG_ID",
                         help="특정 블로그 ID만 실행 (BLOGS_CONFIG의 id 값; 기본값: 모든 블로그)")
+    parser.add_argument("--weekly-check", action="store_true",
+                        help="주간 시스템 점검 및 학습 실행 (weekly_learning.py)")
     args = parser.parse_args()
 
     keywords = None
@@ -519,6 +537,15 @@ def main() -> None:
 
     if args.interactive:
         keywords = _prompt_keywords(keywords)
+
+    if args.weekly_check:
+        logger.info("=== 주간 학습 및 시스템 점검 모드 ===")
+        from weekly_learning import run_weekly_check
+        report = run_weekly_check()
+        health = report["analysis"].get("health_score")
+        issues = report.get("issues", [])
+        logger.info(f"점검 완료 | 건강점수: {health} | 이슈: {len(issues)}건")
+        return
 
     if args.setup:
         logger.info("=== AdSense 필수 페이지 생성 모드 ===")

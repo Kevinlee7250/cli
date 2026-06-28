@@ -1280,7 +1280,16 @@
 
     </div>
 
-    <!-- ⑦ 블로그 관리 -->
+    <!-- ⑦ 주간 학습 리포트 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>🧠 주간 학습 리포트</h2>
+      <button onclick="wfRunWeeklyCheck()" style="padding:6px 14px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.4);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">🔍 지금 점검 실행</button>
+    </div>
+    <div id="learning-report-wrap" style="margin-bottom:28px">
+      <div style="color:var(--muted);font-size:13px;padding:24px;text-align:center">학습 데이터를 로드 중...</div>
+    </div>
+
+    <!-- ⑧ 블로그 관리 -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>📰 블로그 관리</h2>
       <div style="display:flex;gap:8px">
@@ -1602,7 +1611,7 @@ async function loadAll(silent = false) {
   }
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs] = await Promise.all([
+  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning] = await Promise.all([
     fetch(base + '/posts.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/runs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/analytics.json' + ts).then(r => r.json()).catch(() => ({})),
@@ -1612,8 +1621,9 @@ async function loadAll(silent = false) {
     fetch(base + '/series.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/gsc.json' + ts).then(r => r.json()).catch(() => ({})),
     fetch(base + '/blogs.json' + ts).then(r => r.json()).catch(() => []),
+    fetch(base + '/learning.json' + ts).then(r => r.json()).catch(() => []),
   ])
-  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs }
+  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning }
   const lbl = document.getElementById('last-updated-label')
   if (lbl && meta.exportedAt)
     lbl.textContent = '업데이트: ' + new Date(meta.exportedAt).toLocaleString('ko-KR')
@@ -1625,6 +1635,8 @@ async function loadAll(silent = false) {
   document.getElementById('dashboard-content').style.display = 'block'
   renderDashboard()
   kwRenderSuggests()   // 추천 키워드 갱신
+  renderLearningReport()
+  _botCheckErrors()    // 봇 오류 자동 감지
   if (!silent) showToast('데이터를 불러왔습니다', 'success')
 }
 
@@ -4636,6 +4648,194 @@ function renderRunTimeline() {
   }).join('')
 }
 
+// ── 학습 리포트 렌더링 ────────────────────────────────────────────────────────
+function renderLearningReport() {
+  const wrap = document.getElementById('learning-report-wrap')
+  if (!wrap) return
+  const learning = DATA.learning || []
+
+  if (!learning.length) {
+    wrap.innerHTML = `<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center;color:var(--muted);font-size:13px">
+      <div style="font-size:32px;margin-bottom:10px">🧠</div>
+      아직 학습 데이터가 없습니다.<br>
+      매주 일요일 23:00 KST에 자동으로 점검되거나, 위 버튼으로 즉시 실행할 수 있습니다.
+    </div>`
+    return
+  }
+
+  const latest = learning[0]
+  const health = latest.analysis?.health_score
+  const healthColor = health >= 80 ? 'var(--green)' : health >= 60 ? 'var(--yellow)' : health != null ? 'var(--red)' : 'var(--muted)'
+  const issues = latest.issues || []
+  const insights = latest.analysis?.key_insights || []
+  const roadmap = latest.analysis?.improvement_roadmap || []
+  const recKws = latest.analysis?.recommended_keywords || []
+  const applied = latest.auto_applied || []
+  const stats = latest.stats || {}
+
+  const issueHtml = issues.map(iss => {
+    const color = iss.level === 'error' ? 'var(--red)' : 'var(--yellow)'
+    const icon = iss.level === 'error' ? '❌' : '⚠️'
+    return `<div style="display:flex;gap:10px;padding:10px 14px;background:var(--bg3);border-radius:8px;margin-bottom:7px;border-left:3px solid ${color}">
+      <span>${icon}</span>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:${color}">${esc(iss.message)}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px">${esc(iss.suggestion || '')}</div>
+      </div>
+    </div>`
+  }).join('')
+
+  const historyHtml = learning.slice(0, 8).map((rep, i) => {
+    const h = rep.analysis?.health_score
+    const hc = h >= 80 ? 'var(--green)' : h >= 60 ? 'var(--yellow)' : h != null ? 'var(--red)' : 'var(--muted)'
+    const dt = new Date(rep.checked_at).toLocaleDateString('ko-KR', {month:'short',day:'numeric'})
+    return `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer" title="${rep.week_start} ~ ${rep.week_end}">
+      <div style="width:36px;height:36px;border-radius:50%;background:${hc};opacity:${i===0?1:0.6};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#000">
+        ${h != null ? h : '?'}
+      </div>
+      <div style="font-size:10px;color:var(--muted)">${dt}</div>
+    </div>`
+  }).join('')
+
+  wrap.innerHTML = `
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+    <!-- 최신 요약 -->
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div style="font-weight:700;font-size:14px">📋 최근 주간 점검</div>
+        <span style="font-size:11px;color:var(--muted)">${new Date(latest.checked_at).toLocaleDateString('ko-KR')}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
+        <div style="width:64px;height:64px;border-radius:50%;border:3px solid ${healthColor};display:flex;align-items:center;justify-content:center;flex-direction:column;flex-shrink:0">
+          <span style="font-size:20px;font-weight:700;color:${healthColor}">${health ?? '?'}</span>
+          <span style="font-size:9px;color:var(--muted)">건강점수</span>
+        </div>
+        <div style="flex:1">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center">
+              <div style="font-size:18px;font-weight:700;color:var(--accent)">${stats.posts_generated || 0}</div>
+              <div style="font-size:10px;color:var(--muted)">생성</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center">
+              <div style="font-size:18px;font-weight:700;color:var(--green)">${stats.posts_uploaded || 0}</div>
+              <div style="font-size:10px;color:var(--muted)">게시</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center">
+              <div style="font-size:18px;font-weight:700;color:var(--yellow)">${stats.error_rate_pct || 0}%</div>
+              <div style="font-size:10px;color:var(--muted)">오류율</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center">
+              <div style="font-size:18px;font-weight:700;color:var(--accent2)">${stats.runs || 0}</div>
+              <div style="font-size:10px;color:var(--muted)">실행</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      ${latest.analysis?.performance_summary ? `<p style="font-size:12px;color:var(--muted);line-height:1.6;border-top:1px solid var(--border);padding-top:10px">${esc(latest.analysis.performance_summary)}</p>` : ''}
+    </div>
+
+    <!-- 점검 이력 -->
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+      <div style="font-weight:700;font-size:14px;margin-bottom:14px">📈 건강점수 이력</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+        ${historyHtml}
+      </div>
+      ${applied.length ? `<div style="margin-top:14px;border-top:1px solid var(--border);padding-top:10px">
+        <div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:7px">✨ 자동 적용됨</div>
+        ${applied.map(a => `<div style="font-size:12px;color:var(--green);padding:3px 0">• ${esc(a)}</div>`).join('')}
+      </div>` : ''}
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px">
+    <!-- 이슈 -->
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px">
+      <div style="font-weight:700;font-size:13px;margin-bottom:12px">🚨 감지된 이슈 (${issues.length})</div>
+      ${issueHtml || '<div style="font-size:12px;color:var(--green);padding:8px 0">✅ 이슈 없음</div>'}
+    </div>
+
+    <!-- AI 인사이트 -->
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px">
+      <div style="font-weight:700;font-size:13px;margin-bottom:12px">💡 AI 핵심 인사이트</div>
+      ${insights.map(ins => `<div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;line-height:1.5"><span style="color:var(--accent);flex-shrink:0">→</span><span style="color:var(--muted)">${esc(ins)}</span></div>`).join('') || '<div style="font-size:12px;color:var(--muted)">AI 분석 대기 중</div>'}
+    </div>
+
+    <!-- 추천 키워드 + 로드맵 -->
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px">
+      <div style="font-weight:700;font-size:13px;margin-bottom:10px">🎯 다음 주 추천 키워드</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">
+        ${recKws.map(kw => `<span class="badge purple" style="cursor:pointer" onclick="botQuick('${esc(kw)} 키워드로 포스트 만드는 방법 알려줘')">${esc(kw)}</span>`).join('') || '<span style="font-size:12px;color:var(--muted)">분석 대기 중</span>'}
+      </div>
+      ${roadmap.length ? `<div style="border-top:1px solid var(--border);padding-top:10px">
+        <div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:7px">🗺️ 개선 로드맵</div>
+        ${roadmap.map(r => `<div style="font-size:11px;color:var(--muted);padding:3px 0"><span style="color:var(--accent2);font-weight:600">${r.week}주</span> ${esc(r.action)}</div>`).join('')}
+      </div>` : ''}
+    </div>
+  </div>`
+}
+
+// ── 주간 점검 워크플로우 실행 ─────────────────────────────────────────────────
+function wfRunWeeklyCheck() {
+  const pat = localStorage.getItem('github_pat') || ''
+  if (!pat) { showToast('GitHub PAT가 필요합니다 (실행 제어 탭에서 설정)', 'error'); navTo('run'); return }
+  const owner = 'kevinlee7250', repo = 'cli'
+  fetch(`https://api.github.com/repos/${owner}/${repo}/actions/workflows/weekly-learning.yml/dispatches`, {
+    method: 'POST',
+    headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ref: 'claude/blog-automation-system-KAbtE', inputs: { force_analyze: 'true' } }),
+  }).then(r => {
+    if (r.status === 204) showToast('주간 점검 워크플로우 실행 시작됨 (약 5분 소요)', 'success')
+    else showToast(`실행 실패 (${r.status}) — PAT 권한 확인`, 'error')
+  }).catch(() => showToast('네트워크 오류', 'error'))
+}
+
+// ── 봇 오류 자동 감지 ─────────────────────────────────────────────────────────
+function _botCheckErrors() {
+  const recentRuns = (DATA.runs || []).slice(0, 14)
+  const errRuns = recentRuns.filter(r => (r.errors || 0) > 0)
+  const badge = document.getElementById('bot-fab-badge')
+  if (errRuns.length > 0) {
+    if (badge) { badge.style.display = 'flex'; badge.textContent = errRuns.length }
+    // learning에서 이슈도 확인
+    const latest = (DATA.learning || [])[0]
+    const criticalIssues = (latest?.issues || []).filter(iss => iss.level === 'error')
+    window._botAutoErrorContext = {
+      errorRuns: errRuns.length,
+      totalErrors: errRuns.reduce((s, r) => s + (r.errors || 0), 0),
+      recentKeywords: [...new Set(errRuns.flatMap(r => r.keywords || []))].slice(0, 5),
+      criticalIssues: criticalIssues.map(i => i.message),
+      healthScore: latest?.analysis?.health_score,
+    }
+  } else {
+    if (badge) badge.style.display = 'none'
+    window._botAutoErrorContext = null
+  }
+}
+
+// ── 봇 자동 오류 진단 (봇 open 시 에러 있으면 자동 메시지) ─────────────────────
+async function _botAutodiagnose() {
+  const ctx = window._botAutoErrorContext
+  if (!ctx) return
+  const key = localStorage.getItem(BOT_KEY_LS)
+  if (!key) return
+
+  const summary = `최근 ${ctx.errorRuns}회 실행에서 총 ${ctx.totalErrors}건 오류 발생\n키워드: ${ctx.recentKeywords.join(', ')}\n${ctx.criticalIssues.length ? '심각 이슈: ' + ctx.criticalIssues.join(', ') : ''}\n시스템 건강점수: ${ctx.healthScore ?? 'N/A'}`
+
+  _botTyping = true
+  _renderBotMessages()
+  try {
+    const reply = await _callClaude([{
+      role: 'user',
+      content: `아래 시스템 오류 현황을 분석하고 자동 수정 방법을 알려줘:\n\n${summary}`
+    }])
+    _botTyping = false
+    _botAppend('assistant', reply)
+  } catch {
+    _botTyping = false
+    _renderBotMessages()
+  }
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 loadAll()
 resetAutoRefresh()
@@ -4736,6 +4936,13 @@ function _buildBotContext() {
     return `  - [${s.series_label || s.series_title}] ${done}/${total}편 완료`
   }).join('\n') || '  (없음)'
 
+  // 주간 학습 데이터
+  const latestLearning = (DATA.learning || [])[0]
+  const healthScore = latestLearning?.analysis?.health_score
+  const learnInsights = (latestLearning?.analysis?.key_insights || []).join(' | ')
+  const learnIssues = (latestLearning?.issues || []).map(i => `[${i.level}] ${i.message}`).join('; ')
+  const learnKws = (latestLearning?.analysis?.recommended_keywords || []).join(', ')
+
   return `당신은 블로그 자동화 시스템의 관리 도우미입니다. 아래 현재 시스템 상태를 바탕으로 사용자를 도와주세요.
 
 현재 시각: ${now}
@@ -4748,6 +4955,10 @@ function _buildBotContext() {
 관리 블로그: ${blogNames}
 시리즈 기획:
 ${seriesSummary}
+시스템 건강점수: ${healthScore ?? '점검 필요'}
+주간 학습 인사이트: ${learnInsights || '없음'}
+현재 이슈: ${learnIssues || '없음'}
+AI 추천 키워드: ${learnKws || '없음'}
 
 사용자가 요청할 수 있는 액션:
 - 포스트 목록 보기 → 포스트 목록 페이지로 이동
@@ -4861,15 +5072,26 @@ function _botAppendWithChips(role, text, chips) {
     if (!panel) return
     _refreshBotKeyUI()
     if (_botMessages.length === 0) {
-      _botAppendWithChips('assistant',
-        '안녕하세요! 저는 블로그 자동화 관리봇입니다 🤖\n\n시스템 상태, 수익 분석, 포스트 생성, 검토 대기 포스트 관리 등을 도와드릴 수 있어요. 아래 빠른 버튼을 누르거나 자유롭게 질문해 주세요!',
-        [
-          { label: '📊 시스템 상태', cmd: '현재 시스템 상태를 알려줘' },
-          { label: '📝 대기 포스트', cmd: '검토 대기 중인 포스트를 알려줘' },
-          { label: '💰 수익 분석', cmd: '현재 수익 추정치와 분석을 알려줘' },
-          { label: '🚀 포스트 생성', cmd: '포스트를 어떻게 생성하면 되나요?' },
-        ]
-      )
+      const hasErrors = !!window._botAutoErrorContext
+      const errCtx = window._botAutoErrorContext
+      let welcomeText = '안녕하세요! 저는 블로그 자동화 관리봇입니다 🤖\n\n시스템 상태, 수익 분석, 포스트 생성, 검토 대기 포스트 관리 등을 도와드릴 수 있어요.'
+      if (hasErrors) {
+        welcomeText += `\n\n⚠️ 최근 ${errCtx.errorRuns}회 실행에서 오류가 감지되었습니다 (총 ${errCtx.totalErrors}건). 아래 버튼으로 자동 진단을 시작할 수 있습니다.`
+      }
+      const chips = hasErrors
+        ? [
+            { label: '🔧 오류 자동 진단', cmd: '__autodiagnose__' },
+            { label: '📊 시스템 상태', cmd: '현재 시스템 상태를 알려줘' },
+            { label: '💰 수익 분석', cmd: '현재 수익 추정치와 분석을 알려줘' },
+            { label: '🚀 포스트 생성', cmd: '포스트를 어떻게 생성하면 되나요?' },
+          ]
+        : [
+            { label: '📊 시스템 상태', cmd: '현재 시스템 상태를 알려줘' },
+            { label: '📝 대기 포스트', cmd: '검토 대기 중인 포스트를 알려줘' },
+            { label: '💰 수익 분석', cmd: '현재 수익 추정치와 분석을 알려줘' },
+            { label: '🚀 포스트 생성', cmd: '포스트를 어떻게 생성하면 되나요?' },
+          ]
+      _botAppendWithChips('assistant', welcomeText, chips)
     }
     setTimeout(() => {
       const inp = document.getElementById('bot-input')
@@ -4923,6 +5145,10 @@ function botAction(cmd) {
 }
 
 function botQuick(cmd) {
+  if (cmd === '__autodiagnose__') {
+    _botAutodiagnose()
+    return
+  }
   const inp = document.getElementById('bot-input')
   if (inp) inp.value = cmd
   sendBotMsg()

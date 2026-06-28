@@ -1589,7 +1589,7 @@ function renderKeywords() {
     if (recs.length) {
       recPanel.style.display = 'block'
       recGrid.innerHTML = recs.map(r => `
-        <div class="kw-rec-item" onclick="addRecKw(${JSON.stringify(r.kw)})">
+        <div class="kw-rec-item" onclick="addRecKw(${jsonq(r.kw)})">
           <div class="kw-rec-cat">${r.cat}</div>
           <div class="kw-rec-kw">${esc(r.kw)}</div>
           <div class="kw-rec-cpc">💰 CPC $${r.cpc.toFixed(2)} · 클릭시 실행 탭에 추가</div>
@@ -1685,7 +1685,7 @@ function goPage(n) {
 
 function postListRowHTML(p) {
   const catIcon = {금융:'💰',부동산:'🏠',건강:'💊',기술:'💻',여행:'✈️',교육:'📚',쇼핑:'🛍️',법률:'⚖️'}
-  return `<div class="post-list-row" onclick="openPost(${JSON.stringify(p.id)})">
+  return `<div class="post-list-row" onclick="openPost(${jsonq(p.id)})">
     <div class="post-list-icon">${catIcon[p.adsenseCategory] || '📝'}</div>
     <div class="post-list-info">
       <div class="post-list-title">${esc(p.title)}</div>
@@ -1709,7 +1709,7 @@ function postCardHTML(p) {
     : ''
   const wc = p.wordCount ? `<span class="badge muted">${p.wordCount.toLocaleString()}자</span>` : ''
   const g = qualityGrade(p)
-  return `<div class="post-card" onclick="openPost(${JSON.stringify(p.id)})">
+  return `<div class="post-card" onclick="openPost(${jsonq(p.id)})">
     <div class="thumb-placeholder" style="position:relative">${catIcon[p.adsenseCategory] || '📝'}
       <span class="${g.cls}" style="position:absolute;top:8px;right:8px">${g.label}</span>
     </div>
@@ -1999,7 +1999,7 @@ function renderInstagram(social) {
           <div class="social-item-kw">📸 ${esc(item.keyword)}</div>
           <div class="social-item-date">${item.date} · ${ig.storyHighlightTitle ? '하이라이트: ' + esc(ig.storyHighlightTitle) : ''}</div>
         </div>
-        <button class="copy-btn" onclick="copyText(${JSON.stringify(captionWithTags)},this)">📋 전체 복사</button>
+        <button class="copy-btn" onclick="copyText(${jsonq(captionWithTags)},this)">📋 전체 복사</button>
       </div>
       <div class="social-item-body">
         <div style="margin-bottom:12px">
@@ -2037,12 +2037,12 @@ function renderThreads(social) {
           <div class="social-item-kw">🧵 ${esc(item.keyword)}</div>
           <div class="social-item-date">${item.date} · ${th.posts?.length||0}개 스레드</div>
         </div>
-        <button class="copy-btn" onclick="copyText(${JSON.stringify(allPosts)},this)">📋 전체 복사</button>
+        <button class="copy-btn" onclick="copyText(${jsonq(allPosts)},this)">📋 전체 복사</button>
       </div>
       <div class="social-item-body">
         ${(th.posts||[]).map(p => `
           <div class="thread-post">
-            <div class="thread-label">${esc(p.label||'')} · <button class="copy-btn" style="padding:2px 8px;font-size:10px" onclick="copyText(${JSON.stringify(p.content||'')},this)">복사</button></div>
+            <div class="thread-label">${esc(p.label||'')} · <button class="copy-btn" style="padding:2px 8px;font-size:10px" onclick="copyText(${jsonq(p.content||'')},this)">복사</button></div>
             <div class="thread-content">${esc(p.content||'')}</div>
           </div>`).join('')}
         ${th.engagementQuestion ? `<div style="background:rgba(124,106,247,.1);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:13px;color:var(--accent)">💬 ${esc(th.engagementQuestion)}</div>` : ''}
@@ -2068,7 +2068,7 @@ function renderTiktok(social) {
           <div class="social-item-kw">🎵 ${esc(item.keyword)}</div>
           <div class="social-item-date">${item.date} · ${tt.scenes?.length||0}개 씬</div>
         </div>
-        <button class="copy-btn" onclick="copyText(${JSON.stringify(scriptText)},this)">📋 스크립트 복사</button>
+        <button class="copy-btn" onclick="copyText(${jsonq(scriptText)},this)">📋 스크립트 복사</button>
       </div>
       <div class="social-item-body">
         <div style="margin-bottom:12px">
@@ -2603,14 +2603,14 @@ function renderPendingPosts() {
     const hasContent = !!(p.content && p.content.trim())
     return `<div class="run-panel" id="rpost-${safeId}" style="margin-bottom:16px">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;flex-wrap:wrap">
-        <div style="flex:1;min-width:0;cursor:pointer" onclick="openPendingPreview(${JSON.stringify(p.id)})">
+        <div style="flex:1;min-width:0;cursor:pointer" onclick="openPendingPreview(${jsonq(p.id)})">
           <div style="font-size:11px;color:var(--accent);font-weight:700;margin-bottom:4px">${esc(p.keyword)} · ${p.date || ''}</div>
           <div style="font-size:15px;font-weight:700;line-height:1.4;color:var(--text)">${esc(p.title)}</div>
         </div>
         <div style="display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap">
-          ${hasContent ? `<button style="padding:8px 14px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer;font-weight:600" onclick="openPendingPreview(${JSON.stringify(p.id)})">📄 내용 보기</button>` : ''}
-          <button class="run-btn" style="padding:9px 18px;font-size:13px" onclick="publishPost(${JSON.stringify(p.id)})">${publishMode === 'actions' ? '🔒 서버 게시' : '🌐 직접 게시'}</button>
-          <button style="padding:9px 12px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.2);border-radius:8px;color:var(--red);font-size:12px;cursor:pointer;font-weight:600" onclick="skipPost(${JSON.stringify(p.id)})">🗑</button>
+          ${hasContent ? `<button style="padding:8px 14px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer;font-weight:600" onclick="openPendingPreview(${jsonq(p.id)})">📄 내용 보기</button>` : ''}
+          <button class="run-btn" style="padding:9px 18px;font-size:13px" onclick="publishPost(${jsonq(p.id)})">${publishMode === 'actions' ? '🔒 서버 게시' : '🌐 직접 게시'}</button>
+          <button style="padding:9px 12px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.2);border-radius:8px;color:var(--red);font-size:12px;cursor:pointer;font-weight:600" onclick="skipPost(${jsonq(p.id)})">🗑</button>
         </div>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
@@ -2645,7 +2645,7 @@ function openPendingPreview(id) {
       </div>
       <iframe id="preview-iframe" style="width:100%;height:520px;border:1px solid var(--border);border-radius:8px;background:#fff" sandbox="allow-same-origin"></iframe>
       <div style="margin-top:12px;display:flex;gap:8px">
-        <button class="run-btn" style="padding:9px 20px;font-size:13px" onclick="publishPost(${JSON.stringify(post.id)});closeModal()">${publishMode === 'actions' ? '🔒 서버 게시' : '🌐 직접 게시'}</button>
+        <button class="run-btn" style="padding:9px 20px;font-size:13px" onclick="publishPost(${jsonq(post.id)});closeModal()">${publishMode === 'actions' ? '🔒 서버 게시' : '🌐 직접 게시'}</button>
         <button style="padding:9px 16px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:13px;cursor:pointer" onclick="closeModal()">닫기</button>
       </div>`
     const iframe = document.getElementById('preview-iframe')
@@ -2939,6 +2939,7 @@ document.addEventListener('keydown', e => {
 
 // ── Utils ─────────────────────────────────────────────────────────────────────
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
+function jsonq(v) { return JSON.stringify(v).replace(/"/g,'&quot;') }
 
 // ── AdSense setup page creator ────────────────────────────────────────────────
 async function runSetupPages() {

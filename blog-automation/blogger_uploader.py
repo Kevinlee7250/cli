@@ -257,8 +257,7 @@ def _build_full_content(post_data: dict) -> str:
 border-left:4px solid #ffc107;">
   <p style="font-size:13px;color:#666;margin:0;">
     📌 이 글이 도움이 됐다면 북마크 &amp; 공유해주세요!<br>
-    ⚠️ 본 콘텐츠는 AI가 최신 트렌드를 바탕으로 작성했습니다.
-    투자·의료·법률 등 전문 분야는 반드시 전문가와 상담하세요.
+    ⚠️ 투자·의료·법률 등 전문 분야는 반드시 전문가와 상담하세요.
   </p>
 </div>
 """

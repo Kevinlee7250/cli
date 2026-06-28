@@ -399,6 +399,65 @@
   .tl-kw{font-weight:700;margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .tl-stats{display:flex;gap:8px;flex-wrap:wrap;}
   .tl-stat{padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+
+  /* ── 시스템 관리봇 ──────────────────────────────────────────────── */
+  #bot-fab{position:fixed;bottom:80px;right:24px;z-index:9000;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;cursor:pointer;font-size:24px;box-shadow:0 4px 20px rgba(124,106,247,.5);transition:transform .2s,box-shadow .2s;display:flex;align-items:center;justify-content:center;}
+  #bot-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(124,106,247,.7);}
+  #bot-fab .bot-badge{position:absolute;top:-2px;right:-2px;width:14px;height:14px;background:var(--red);border-radius:50%;border:2px solid var(--bg);display:none;font-size:8px;align-items:center;justify-content:center;color:#fff;font-weight:700;}
+
+  #bot-panel{position:fixed;bottom:148px;right:24px;z-index:9000;width:380px;max-height:560px;background:var(--bg2);border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.6);display:flex;flex-direction:column;overflow:hidden;transition:opacity .2s,transform .2s;opacity:0;transform:translateY(12px) scale(.97);pointer-events:none;}
+  #bot-panel.open{opacity:1;transform:none;pointer-events:all;}
+
+  .bot-header{background:linear-gradient(135deg,rgba(124,106,247,.2),rgba(6,182,212,.15));padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+  .bot-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+  .bot-title{flex:1;}
+  .bot-title strong{font-size:14px;font-weight:700;display:block;}
+  .bot-title span{font-size:11px;color:var(--muted);}
+  .bot-header-btns{display:flex;gap:6px;}
+  .bot-hbtn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:3px;border-radius:5px;transition:color .15s,background .15s;}
+  .bot-hbtn:hover{color:var(--text);background:rgba(255,255,255,.08);}
+
+  #bot-key-setup{padding:18px;border-bottom:1px solid var(--border);background:rgba(251,191,36,.05);}
+  #bot-key-setup p{font-size:12px;color:var(--muted);margin-bottom:10px;}
+  .bot-key-row{display:flex;gap:8px;}
+  #bot-key-input{flex:1;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;outline:none;font-family:monospace;}
+  #bot-key-input:focus{border-color:var(--accent);}
+  .bot-key-save{padding:8px 14px;background:var(--accent);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s;}
+  .bot-key-save:hover{opacity:.85;}
+
+  #bot-messages{flex:1;overflow-y:auto;padding:14px 14px 4px;display:flex;flex-direction:column;gap:12px;min-height:120px;}
+  #bot-messages::-webkit-scrollbar{width:4px;}
+  #bot-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+  .bot-msg{display:flex;gap:8px;align-items:flex-start;max-width:100%;}
+  .bot-msg.user{flex-direction:row-reverse;}
+  .bot-msg-avatar{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;}
+  .bot-msg.bot .bot-msg-avatar{background:linear-gradient(135deg,var(--accent),var(--accent2));}
+  .bot-msg.user .bot-msg-avatar{background:var(--bg3);border:1px solid var(--border);}
+  .bot-msg-body{max-width:78%;}
+  .bot-msg-bubble{padding:9px 13px;border-radius:12px;font-size:13px;line-height:1.55;white-space:pre-wrap;word-break:break-word;}
+  .bot-msg.bot .bot-msg-bubble{background:var(--bg3);border:1px solid var(--border);border-top-left-radius:3px;color:var(--text);}
+  .bot-msg.user .bot-msg-bubble{background:linear-gradient(135deg,var(--accent),#6054e8);color:#fff;border-top-right-radius:3px;}
+  .bot-msg-actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;}
+  .bot-chip{padding:4px 11px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--accent);transition:all .15s;}
+  .bot-chip:hover{background:rgba(124,106,247,.15);border-color:var(--accent);}
+  .bot-typing{display:flex;gap:4px;align-items:center;padding:10px 14px;}
+  .bot-typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:botBounce 1.2s infinite ease-in-out;}
+  .bot-typing span:nth-child(2){animation-delay:.2s;}
+  .bot-typing span:nth-child(3){animation-delay:.4s;}
+  @keyframes botBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+
+  .bot-quick-bar{display:flex;gap:6px;overflow-x:auto;padding:8px 14px;border-top:1px solid var(--border);scrollbar-width:none;}
+  .bot-quick-bar::-webkit-scrollbar{display:none;}
+  .bot-quick-btn{flex-shrink:0;padding:5px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;color:var(--muted);font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;}
+  .bot-quick-btn:hover{color:var(--accent);border-color:var(--accent);background:rgba(124,106,247,.08);}
+
+  .bot-input-row{display:flex;gap:8px;padding:10px 14px 14px;border-top:1px solid var(--border);}
+  #bot-input{flex:1;padding:9px 13px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:13px;outline:none;resize:none;min-height:38px;max-height:100px;font-family:inherit;line-height:1.4;}
+  #bot-input:focus{border-color:var(--accent);}
+  #bot-send{padding:9px 14px;background:var(--accent);border:none;border-radius:10px;color:#fff;font-size:16px;cursor:pointer;transition:opacity .15s;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  #bot-send:hover{opacity:.85;}
+  #bot-send:disabled{opacity:.4;cursor:default;}
 </style>
 </head>
 <body>
@@ -4588,6 +4647,348 @@ if (savedGoal) {
   const gi = document.getElementById('goal-input')
   if (gi) gi.value = savedGoal
 }
+
+// ── 시스템 관리봇 ─────────────────────────────────────────────────────────────
+const BOT_KEY_LS = 'anthropic_api_key_local'
+const BOT_HISTORY_MAX = 40
+let _botOpen = false
+let _botMessages = []   // {role:'user'|'assistant', content:string}
+let _botTyping = false
+
+function toggleBot() {
+  _botOpen = !_botOpen
+  const panel = document.getElementById('bot-panel')
+  if (_botOpen) {
+    panel.classList.add('open')
+    botInit()
+  } else {
+    panel.classList.remove('open')
+  }
+}
+
+function closeBot() {
+  _botOpen = false
+  document.getElementById('bot-panel').classList.remove('open')
+}
+
+function botInit() {
+  _refreshBotKeyUI()
+  if (_botMessages.length === 0) {
+    _botAppend('assistant', '안녕하세요! 저는 블로그 자동화 관리봇입니다 🤖\n\n시스템 상태, 수익 분석, 포스트 생성, 검토 대기 포스트 승인 등을 도와드릴 수 있어요. 아래 빠른 버튼을 누르거나 자유롭게 질문해 주세요!', [
+      { label: '📊 현재 시스템 상태', cmd: '현재 시스템 상태를 알려줘' },
+      { label: '📝 대기 포스트 현황', cmd: '검토 대기 중인 포스트를 알려줘' },
+      { label: '💰 수익 분석', cmd: '현재 수익 추정치와 분석을 알려줘' },
+      { label: '🚀 포스트 생성 방법', cmd: '포스트를 어떻게 생성하면 되나요?' },
+    ])
+  }
+  document.getElementById('bot-input').focus()
+}
+
+function _refreshBotKeyUI() {
+  const key = localStorage.getItem(BOT_KEY_LS) || ''
+  const setup = document.getElementById('bot-key-setup')
+  const inp = document.getElementById('bot-key-input')
+  if (setup) setup.style.display = key ? 'none' : 'block'
+  if (inp) inp.value = key ? '••••••••••••••••' : ''
+}
+
+function botSaveKey() {
+  const v = (document.getElementById('bot-key-input').value || '').trim()
+  if (!v || v.startsWith('•')) return
+  if (!v.startsWith('sk-ant-')) { showToast('Anthropic API 키는 sk-ant- 로 시작해야 합니다', 'error'); return }
+  localStorage.setItem(BOT_KEY_LS, v)
+  _refreshBotKeyUI()
+  showToast('API 키 저장됨', 'success')
+}
+
+function botClearKey() {
+  localStorage.removeItem(BOT_KEY_LS)
+  _refreshBotKeyUI()
+  showToast('API 키 삭제됨', 'info')
+}
+
+function botShowKeyInput() {
+  const setup = document.getElementById('bot-key-setup')
+  const inp = document.getElementById('bot-key-input')
+  if (setup) setup.style.display = 'block'
+  if (inp) { inp.value = ''; inp.focus() }
+}
+
+function _buildBotContext() {
+  const now = new Date().toLocaleString('ko-KR')
+  const posts = (DATA.posts || [])
+  const runs = (DATA.runs || [])
+  const pending = (DATA.pending || [])
+  const series = (DATA.series || [])
+  const blogs = (DATA.blogs || [])
+
+  const totalPosts = posts.length
+  const totalRuns = runs.length
+  const pendingCount = pending.filter(p => p.status === 'pending').length
+  const lastRun = runs[0] ? new Date(runs[0].runAt).toLocaleString('ko-KR') : '없음'
+  const monthly = DATA.analytics?.estimatedMonthlyRevenue?.toFixed(2) || '0'
+  const yearly = DATA.analytics?.estimatedYearlyRevenue?.toFixed(2) || '0'
+  const blogNames = blogs.map(b => b.name || b.id).join(', ') || '설정 없음'
+
+  const seriesSummary = series.slice(0, 5).map(s => {
+    const done = (s.episodes || []).filter(e => e.status === 'done').length
+    const total = s.total_episodes || 0
+    return `  - [${s.series_label || s.series_title}] ${done}/${total}편 완료`
+  }).join('\n') || '  (없음)'
+
+  return `당신은 블로그 자동화 시스템의 관리 도우미입니다. 아래 현재 시스템 상태를 바탕으로 사용자를 도와주세요.
+
+현재 시각: ${now}
+총 발행 포스트: ${totalPosts}개
+총 실행 횟수: ${totalRuns}회
+마지막 실행: ${lastRun}
+검토 대기 포스트: ${pendingCount}개
+예상 월 수익: $${monthly} USD
+예상 연 수익: $${yearly} USD
+관리 블로그: ${blogNames}
+시리즈 기획:
+${seriesSummary}
+
+사용자가 요청할 수 있는 액션:
+- 포스트 목록 보기 → 포스트 목록 페이지로 이동
+- 수동 검토 페이지 보기 → 검토 대기 포스트 확인
+- 시리즈 기획 보기 → 시리즈 관리 페이지
+- 실행 제어 → 포스트 생성 실행
+- 수익 분석 → 수익 분석 페이지
+
+한국어로 간결하게 답변해 주세요. 액션 제안 시에는 응답 끝에 JSON 블록으로 표시하세요:
+\`\`\`actions
+[{"label":"버튼 이름","cmd":"페이지이동:posts"}]
+\`\`\`
+가능한 cmd 값: 페이지이동:posts, 페이지이동:review, 페이지이동:series, 페이지이동:run, 페이지이동:analytics, 페이지이동:dashboard`
+}
+
+async function _callClaude(messages) {
+  const key = localStorage.getItem(BOT_KEY_LS)
+  if (!key) throw new Error('API 키가 설정되지 않았습니다')
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'x-api-key': key,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-allow-browser': 'true',
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 1024,
+      system: _buildBotContext(),
+      messages,
+    }),
+  })
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.error?.message || `API 오류 ${res.status}`)
+  }
+  const data = await res.json()
+  return data.content?.[0]?.text || ''
+}
+
+function _parseActions(text) {
+  const match = text.match(/```actions\n([\s\S]*?)```/)
+  if (!match) return { clean: text, actions: [] }
+  try {
+    const actions = JSON.parse(match[1])
+    const clean = text.replace(/```actions\n[\s\S]*?```/, '').trim()
+    return { clean, actions }
+  } catch { return { clean: text, actions: [] } }
+}
+
+function _botAppend(role, text, chips) {
+  _botMessages.push({ role, content: text })
+  if (_botMessages.length > BOT_HISTORY_MAX) _botMessages.shift()
+  _renderBotMessages()
+  const msgs = document.getElementById('bot-messages')
+  if (msgs) msgs.scrollTop = msgs.scrollHeight
+}
+
+function _renderBotMessages() {
+  const container = document.getElementById('bot-messages')
+  if (!container) return
+  container.innerHTML = _botMessages.map((m, i) => {
+    const isUser = m.role === 'user'
+    const { clean, actions } = _parseActions(m.content)
+    const chipsHtml = (actions.length ? actions : (i === 0 && !isUser ? [] : [])).map(a =>
+      `<button class="bot-chip" onclick="botAction('${esc(a.cmd)}')">${esc(a.label)}</button>`
+    ).join('')
+
+    // Inline chips passed directly (first message)
+    let extraChips = ''
+    if (i === 0 && m._chips) {
+      extraChips = m._chips.map(c =>
+        `<button class="bot-chip" onclick="botQuick('${esc(c.cmd)}')">${esc(c.label)}</button>`
+      ).join('')
+    }
+
+    return `<div class="bot-msg ${isUser ? 'user' : 'bot'}">
+      <div class="bot-msg-avatar">${isUser ? '👤' : '🤖'}</div>
+      <div class="bot-msg-body">
+        <div class="bot-msg-bubble">${esc(clean)}</div>
+        ${(chipsHtml || extraChips) ? `<div class="bot-msg-actions">${chipsHtml}${extraChips}</div>` : ''}
+      </div>
+    </div>`
+  }).join('')
+  if (_botTyping) {
+    container.innerHTML += `<div class="bot-msg bot" id="bot-typing-indicator">
+      <div class="bot-msg-avatar">🤖</div>
+      <div class="bot-msg-body"><div class="bot-msg-bubble" style="padding:8px 14px"><div class="bot-typing"><span></span><span></span><span></span></div></div></div>
+    </div>`
+  }
+  container.scrollTop = container.scrollHeight
+}
+
+// Override _botAppend to support chips on first msg
+function _botAppendWithChips(role, text, chips) {
+  const entry = { role, content: text }
+  if (chips) entry._chips = chips
+  _botMessages.push(entry)
+  if (_botMessages.length > BOT_HISTORY_MAX) _botMessages.shift()
+  _renderBotMessages()
+  const msgs = document.getElementById('bot-messages')
+  if (msgs) msgs.scrollTop = msgs.scrollHeight
+}
+
+// Override the first call
+;(function() {
+  const orig = botInit
+  window.botInit = function() {
+    const panel = document.getElementById('bot-panel')
+    if (!panel) return
+    _refreshBotKeyUI()
+    if (_botMessages.length === 0) {
+      _botAppendWithChips('assistant',
+        '안녕하세요! 저는 블로그 자동화 관리봇입니다 🤖\n\n시스템 상태, 수익 분석, 포스트 생성, 검토 대기 포스트 관리 등을 도와드릴 수 있어요. 아래 빠른 버튼을 누르거나 자유롭게 질문해 주세요!',
+        [
+          { label: '📊 시스템 상태', cmd: '현재 시스템 상태를 알려줘' },
+          { label: '📝 대기 포스트', cmd: '검토 대기 중인 포스트를 알려줘' },
+          { label: '💰 수익 분석', cmd: '현재 수익 추정치와 분석을 알려줘' },
+          { label: '🚀 포스트 생성', cmd: '포스트를 어떻게 생성하면 되나요?' },
+        ]
+      )
+    }
+    setTimeout(() => {
+      const inp = document.getElementById('bot-input')
+      if (inp) inp.focus()
+    }, 100)
+  }
+})()
+
+async function sendBotMsg() {
+  if (_botTyping) return
+  const inp = document.getElementById('bot-input')
+  const text = (inp.value || '').trim()
+  if (!text) return
+
+  const key = localStorage.getItem(BOT_KEY_LS)
+  if (!key) {
+    botShowKeyInput()
+    showToast('먼저 Anthropic API 키를 입력해 주세요', 'warning')
+    return
+  }
+
+  inp.value = ''
+  inp.style.height = ''
+  _botAppend('user', text)
+
+  _botTyping = true
+  document.getElementById('bot-send').disabled = true
+  _renderBotMessages()
+
+  try {
+    const history = _botMessages.slice(0, -1).slice(-20).map(m => ({ role: m.role, content: m.content }))
+    history.push({ role: 'user', content: text })
+    const reply = await _callClaude(history)
+    _botTyping = false
+    document.getElementById('bot-send').disabled = false
+    _botAppend('assistant', reply)
+  } catch (e) {
+    _botTyping = false
+    document.getElementById('bot-send').disabled = false
+    _botAppend('assistant', `❌ 오류가 발생했습니다: ${e.message}\n\nAPI 키를 확인하거나 다시 시도해 주세요.`)
+    if (e.message.includes('API 키')) botShowKeyInput()
+  }
+}
+
+function botAction(cmd) {
+  if (cmd.startsWith('페이지이동:')) {
+    const page = cmd.replace('페이지이동:', '')
+    navTo(page)
+    closeBot()
+  }
+}
+
+function botQuick(cmd) {
+  const inp = document.getElementById('bot-input')
+  if (inp) inp.value = cmd
+  sendBotMsg()
+}
+
+// Enter to send (Shift+Enter for newline)
+document.addEventListener('DOMContentLoaded', () => {
+  const inp = document.getElementById('bot-input')
+  if (inp) {
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault()
+        sendBotMsg()
+      }
+    })
+    inp.addEventListener('input', () => {
+      inp.style.height = 'auto'
+      inp.style.height = Math.min(inp.scrollHeight, 100) + 'px'
+    })
+  }
+})
 </script>
+
+<!-- ── 시스템 관리봇 UI ────────────────────────────────────────────────────── -->
+<button id="bot-fab" onclick="toggleBot()" title="시스템 관리봇">
+  🤖
+  <span class="bot-badge" id="bot-fab-badge"></span>
+</button>
+
+<div id="bot-panel">
+  <div class="bot-header">
+    <div class="bot-avatar">🤖</div>
+    <div class="bot-title">
+      <strong>시스템 관리봇</strong>
+      <span>Claude Haiku · 블로그 자동화 AI 어시스턴트</span>
+    </div>
+    <div class="bot-header-btns">
+      <button class="bot-hbtn" onclick="botShowKeyInput()" title="API 키 설정">🔑</button>
+      <button class="bot-hbtn" onclick="closeBot()" title="닫기">✕</button>
+    </div>
+  </div>
+
+  <div id="bot-key-setup">
+    <p>🔑 Anthropic API 키를 입력하면 AI 어시스턴트를 사용할 수 있습니다. 키는 브라우저 로컬 스토리지에만 저장됩니다.</p>
+    <div class="bot-key-row">
+      <input id="bot-key-input" type="password" placeholder="sk-ant-api03-..." autocomplete="off">
+      <button class="bot-key-save" onclick="botSaveKey()">저장</button>
+      <button class="bot-key-save" style="background:var(--bg3);color:var(--muted);border:1px solid var(--border);" onclick="botClearKey()">삭제</button>
+    </div>
+  </div>
+
+  <div id="bot-messages"></div>
+
+  <div class="bot-quick-bar">
+    <button class="bot-quick-btn" onclick="botQuick('현재 시스템 상태를 알려줘')">📊 시스템 상태</button>
+    <button class="bot-quick-btn" onclick="botQuick('검토 대기 포스트를 알려줘')">📝 대기 포스트</button>
+    <button class="bot-quick-btn" onclick="botQuick('수익 분석을 해줘')">💰 수익 분석</button>
+    <button class="bot-quick-btn" onclick="botQuick('시리즈 진행 현황을 알려줘')">📚 시리즈 현황</button>
+    <button class="bot-quick-btn" onclick="botQuick('어떤 키워드로 포스트를 만들면 좋을까?')">💡 키워드 추천</button>
+    <button class="bot-quick-btn" onclick="botQuick('수익을 높이기 위한 전략을 알려줘')">📈 수익 전략</button>
+  </div>
+
+  <div class="bot-input-row">
+    <textarea id="bot-input" placeholder="질문을 입력하세요... (Enter로 전송, Shift+Enter 줄바꿈)" rows="1"></textarea>
+    <button id="bot-send" onclick="sendBotMsg()">➤</button>
+  </div>
+</div>
 </body>
 </html>

@@ -1,7 +1,8 @@
 """
 트렌드 키워드 수집 모듈
+- 네이버 실시간 뉴스 RSS + 뉴스검색 API (0순위 — 가장 최신 트렌드)
 - Google Trends RSS (무료, 인증 불필요)
-- Claude AI 키워드 생성 (Google Trends 결과 부족 시 2순위)
+- Claude AI 키워드 생성 (결과 부족 시)
 - Google Search Console 고성과 카테고리 우선 정렬 (GSC_SITE_URL 설정 시)
 - 폴백: 고정 키워드 목록 (중복 방지 로테이션, GSC 성과 카테고리 먼저)
 - 유사 키워드 필터링 (단어 겹침 비율 기반)
@@ -212,6 +213,117 @@ def _is_too_similar(candidate: str, corpus: list[str], threshold: float = _SIMIL
 # 트렌드 수집 소스
 # ──────────────────────────────────────────────────────────────────────────────
 
+# 네이버 뉴스 카테고리 RSS 목록 (인증 불필요)
+_NAVER_RSS_FEEDS = [
+    ("https://www.rss.naver.com/main/rss.nhn?code=economic", "경제"),
+    ("https://www.rss.naver.com/main/rss.nhn?code=social", "사회"),
+    ("https://www.rss.naver.com/main/rss.nhn?code=science", "IT과학"),
+    ("https://www.rss.naver.com/main/rss.nhn?code=culture", "생활문화"),
+    ("https://www.rss.naver.com/main/rss.nhn?code=world", "세계"),
+]
+
+# 네이버 뉴스검색 API 보조 쿼리 (카테고리별 최신 기사 수집용)
+_NAVER_API_QUERIES = ["경제 재테크", "건강 의료", "IT AI 기술", "생활 소비"]
+
+
+def _naver_realtime_news(
+    naver_client_id: str = "",
+    naver_client_secret: str = "",
+    count: int = 25,
+) -> list[str]:
+    """
+    네이버 실시간 뉴스 헤드라인을 수집합니다.
+    1) 네이버 뉴스 카테고리 RSS (인증 불필요)
+    2) 네이버 뉴스검색 API (API 키 있을 때 추가 수집)
+    """
+    headlines: list[str] = []
+
+    # 1) 네이버 뉴스 카테고리 RSS
+    for url, name in _NAVER_RSS_FEEDS:
+        try:
+            r = requests.get(url, headers=_HEADERS, timeout=10)
+            if r.status_code != 200:
+                continue
+            root = ET.fromstring(r.content)
+            for item in root.findall(".//item")[:6]:
+                title = re.sub(r'<[^>]+>', '', item.findtext("title", "")).strip()
+                if title and len(title) >= 5:
+                    headlines.append(title)
+            logger.debug(f"Naver RSS [{name}]: {len(headlines)}개 누적")
+        except Exception as e:
+            logger.debug(f"Naver RSS [{name}] 오류: {e}")
+
+    # 2) 네이버 뉴스검색 API (API 키 있을 때만)
+    if naver_client_id and naver_client_secret:
+        api_headers = {
+            "X-Naver-Client-Id": naver_client_id,
+            "X-Naver-Client-Secret": naver_client_secret,
+        }
+        for q in _NAVER_API_QUERIES:
+            try:
+                resp = requests.get(
+                    "https://openapi.naver.com/v1/search/news.json",
+                    headers=api_headers,
+                    params={"query": q, "display": 5, "sort": "date"},
+                    timeout=10,
+                )
+                if resp.status_code == 200:
+                    for item in resp.json().get("items", []):
+                        title = re.sub(r'<[^>]+>', '', item.get("title", "")).strip()
+                        if title and len(title) >= 5:
+                            headlines.append(title)
+            except Exception as e:
+                logger.debug(f"Naver 뉴스 API [{q}] 오류: {e}")
+
+    logger.info(f"Naver 실시간 뉴스 헤드라인 수집: {len(headlines)}개")
+    return headlines[:count]
+
+
+def _headlines_to_keywords(headlines: list[str], count: int = 10) -> list[str]:
+    """
+    뉴스 헤드라인 목록을 블로그 검색 키워드로 변환합니다.
+    Claude API를 사용해 AdSense 적합 주제만 선별·다듬습니다.
+    """
+    if not headlines:
+        return []
+    try:
+        import anthropic
+        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
+        if not ANTHROPIC_API_KEY or ANTHROPIC_API_KEY.startswith("sk-ant-xxx"):
+            return []
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        headlines_text = "\n".join(f"- {h}" for h in headlines[:25])
+        prompt = (
+            f"다음 네이버 실시간 뉴스 헤드라인을 분석해서 블로그 포스트 키워드 {count}개를 추출하세요.\n\n"
+            "선별 기준:\n"
+            "1. AdSense 안전 주제 — 정치·갈등·혐오·선정적 이슈 완전 제외\n"
+            "2. 재테크·건강·IT·생활정보·여행·소비·부업 카테고리 우선\n"
+            "3. 지속 검색 가능한 주제 — 일회성 속보는 제외, 관심이 며칠 이상 이어질 내용\n"
+            "4. 경험/후기/방법/비교로 풀 수 있는 각도로 다듬을 것\n"
+            "5. 헤드라인 그대로 쓰지 말고 블로그 검색 의도에 맞게 변환:\n"
+            "   예) '삼성전자 2분기 실적 발표' → '삼성전자 주가 전망 2026 실적 분석'\n"
+            "   예) '여름 휴가철 항공료 급등' → '여름 항공권 저렴하게 구매하는 방법'\n\n"
+            f"헤드라인 목록:\n{headlines_text}\n\n"
+            f'JSON 배열만 응답 (설명 없이): ["키워드1", ..., "키워드{count}"]'
+        )
+        msg = client.messages.create(
+            model=CLAUDE_MODEL,
+            max_tokens=400,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        raw = msg.content[0].text.strip()
+        s, e = raw.find('['), raw.rfind(']')
+        if s != -1 and e > s:
+            kws = json.loads(raw[s:e + 1])
+            if isinstance(kws, list):
+                result = [str(k).strip() for k in kws if str(k).strip()][:count]
+                logger.info(f"Naver 뉴스 → 블로그 키워드 변환: {len(result)}개")
+                return result
+    except Exception as exc:
+        logger.debug(f"헤드라인 → 키워드 변환 실패: {exc}")
+    return []
+
+
 def _google_trends_rss(country: str = "KR", count: int = 10) -> list[str]:
     """Google Trends 일간 트렌드 RSS에서 키워드를 수집합니다."""
     url = f"https://trends.google.com/trends/trendingsearches/daily/rss?geo={country.upper()}"
@@ -349,7 +461,7 @@ def get_trending_keywords(
     트렌드 키워드를 수집합니다.
     - 이미 사용된 키워드(30일 이내)는 제외
     - 포스팅 이력과 유사한 주제도 제외 (Jaccard 유사도 기반)
-    - 우선순위: Google Trends RSS → Claude AI → 고정 폴백 목록
+    - 우선순위: 네이버 실시간 뉴스 → Google Trends RSS → Claude AI → 고정 폴백 목록
     """
     used_data = _load_used_keywords()
     active_used_set = _get_active_used_set(used_data)
@@ -361,13 +473,23 @@ def get_trending_keywords(
     candidates: list[str] = []
     keyword_sources: dict[str, str] = {}  # 키워드별 수집 출처 추적
 
+    # 0순위: 네이버 실시간 뉴스 (한국어 블로그일 때만)
+    if language == "ko":
+        naver_headlines = _naver_realtime_news(naver_client_id, naver_client_secret)
+        naver_kws = _headlines_to_keywords(naver_headlines, count * 2)
+        for kw in naver_kws:
+            keyword_sources[kw] = "naver_realtime"
+        candidates = naver_kws
+        logger.info(f"네이버 실시간 뉴스 키워드: {len(naver_kws)}개")
+
     # 1순위: Google Trends RSS
     trends_kws = _google_trends_rss(country, count * 4)
     for kw in trends_kws:
-        keyword_sources[kw] = "google_trends"
-    candidates = trends_kws
+        if kw not in keyword_sources:
+            keyword_sources[kw] = "google_trends"
+    candidates = candidates + [kw for kw in trends_kws if kw not in keyword_sources or keyword_sources[kw] != "naver_realtime"]
 
-    # 2순위: Claude AI (Google Trends 결과 부족 시)
+    # 2순위: Claude AI (결과 부족 시)
     if len(candidates) < count * 2:
         claude_kws = _claude_ai_keywords(language, count * 2)
         for kw in claude_kws:

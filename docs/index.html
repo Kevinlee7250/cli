@@ -1223,47 +1223,138 @@
     <!-- ⑦ 블로그 관리 -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>📰 블로그 관리</h2>
-      <button onclick="loadBlogList()" style="padding:6px 14px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:var(--green);font-size:12px;cursor:pointer;font-weight:600">🔄 새로고침</button>
-    </div>
-    <div id="blog-list-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:28px">
-      <div style="color:var(--muted);font-size:13px;padding:24px;text-align:center;grid-column:1/-1">
-        블로그 데이터 로딩 중...
+      <div style="display:flex;gap:8px">
+        <button onclick="loadBlogList()" style="padding:6px 14px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:var(--green);font-size:12px;cursor:pointer;font-weight:600">🔄 새로고침</button>
+        <button onclick="openBlogModal(-1)" style="padding:6px 14px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.4);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">+ 블로그 추가</button>
       </div>
-    </div>
-    <div class="run-panel" style="padding:18px;margin-bottom:20px">
-      <div style="font-weight:700;font-size:13px;margin-bottom:10px">ℹ️ 다중 블로그 설정 방법</div>
-      <div style="font-size:12px;color:var(--muted);line-height:1.8">
-        GitHub Secrets에 <code style="background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--accent)">BLOGS_CONFIG</code> 를 JSON 배열로 설정하면 여러 블로그를 동시에 운영할 수 있습니다.<br>
-        워크플로우 수동 실행 시 <strong>blog_id</strong> 를 지정하면 해당 블로그만 실행되고, 비워두면 모든 블로그를 순차 실행합니다.
-      </div>
-      <details style="margin-top:12px">
-        <summary style="font-size:12px;color:var(--accent);cursor:pointer;user-select:none">예시 JSON 보기</summary>
-        <pre style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:11px;color:var(--muted);overflow-x:auto;margin-top:8px">[
-  {
-    "id": "blog1",
-    "name": "메인 블로그",
-    "blog_id": "123456789",
-    "client_id": "CLIENT_ID",
-    "client_secret": "CLIENT_SECRET",
-    "refresh_token": "REFRESH_TOKEN",
-    "adsense_client_id": "ca-pub-XXX",
-    "adsense_slot_ids": ["111", "222"],
-    "language": "ko",
-    "post_status": "live",
-    "enabled": true
-  },
-  {
-    "id": "blog2",
-    "name": "영어 블로그",
-    "blog_id": "987654321",
-    "language": "en",
-    "post_status": "draft",
-    "enabled": true
-  }
-]</pre>
-      </details>
     </div>
 
+    <!-- 블로그 카드 목록 -->
+    <div id="blog-list-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:24px">
+      <div style="color:var(--muted);font-size:13px;padding:24px;text-align:center;grid-column:1/-1">블로그 데이터 로딩 중...</div>
+    </div>
+
+    <!-- BLOGS_CONFIG 내보내기 -->
+    <div class="run-panel" style="padding:18px;margin-bottom:20px" id="blogs-export-panel">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="font-weight:700;font-size:13px">📋 GitHub Secrets 내보내기</div>
+        <div style="display:flex;gap:8px">
+          <button onclick="copyBlogsConfig()" style="padding:6px 14px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.4);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">복사</button>
+          <button onclick="toggleBlogsExport()" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer" id="blogs-export-toggle-btn">JSON 보기</button>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px">
+        아래 JSON을 복사해서 GitHub Secrets의 <code style="background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--accent)">BLOGS_CONFIG</code> 값으로 등록하세요.
+      </div>
+      <pre id="blogs-config-json" style="display:none;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:11px;color:var(--muted);overflow-x:auto;white-space:pre-wrap;word-break:break-all;max-height:260px;overflow-y:auto"></pre>
+    </div>
+
+  </div>
+
+  <!-- ══ 블로그 설정 모달 ══════════════════════════════════════════════════ -->
+  <div id="blog-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9000;align-items:center;justify-content:center;padding:16px">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:620px;max-height:90vh;overflow-y:auto;position:relative">
+      <!-- 헤더 -->
+      <div style="padding:20px 24px 0;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg2);z-index:1;border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:20px">
+        <div style="font-weight:700;font-size:16px" id="blog-modal-title">블로그 추가</div>
+        <button onclick="closeBlogModal()" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:18px;line-height:1">×</button>
+      </div>
+
+      <div style="padding:0 24px 24px">
+        <!-- 기본 정보 -->
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">기본 정보</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+          <div>
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">블로그 ID <span style="color:var(--red)">*</span></label>
+            <input id="bm-id" placeholder="blog1" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box">
+            <div style="font-size:11px;color:var(--muted);margin-top:4px">영문·숫자·하이픈만 (식별용)</div>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">블로그 이름 <span style="color:var(--red)">*</span></label>
+            <input id="bm-name" placeholder="메인 블로그" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+          <div>
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">Blogger Blog ID <span style="color:var(--red)">*</span></label>
+            <input id="bm-blog-id" placeholder="1234567890" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box">
+            <div style="font-size:11px;color:var(--muted);margin-top:4px">Blogger URL의 숫자 ID</div>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">블로그 주소</label>
+            <input id="bm-url" placeholder="https://myblog.blogspot.com" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box">
+          </div>
+        </div>
+
+        <!-- Google OAuth -->
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;border-top:1px solid var(--border);padding-top:16px">Google OAuth 인증</div>
+        <div style="margin-bottom:12px">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">Google Client ID</label>
+          <input id="bm-client-id" placeholder="XXXXXXXXXX-XXXX.apps.googleusercontent.com" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box;font-family:monospace">
+        </div>
+        <div style="margin-bottom:12px">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">Google Client Secret</label>
+          <input id="bm-client-secret" type="password" placeholder="GOCSPX-XXXXXXXXXX" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box;font-family:monospace">
+        </div>
+        <div style="margin-bottom:8px">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">Google Refresh Token</label>
+          <input id="bm-refresh-token" type="password" placeholder="1//XXXXXXXXXXXXXXXXXXXXXX" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box;font-family:monospace">
+        </div>
+        <div style="margin-bottom:20px">
+          <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none">
+            <input type="checkbox" id="bm-show-secrets" onchange="toggleBmSecrets()" style="accent-color:var(--accent)">
+            <span style="font-size:12px;color:var(--muted)">시크릿 값 표시</span>
+          </label>
+        </div>
+
+        <!-- AdSense -->
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;border-top:1px solid var(--border);padding-top:16px">AdSense 광고</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+          <div>
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">AdSense Client ID</label>
+            <input id="bm-adsense-id" placeholder="ca-pub-XXXXXXXXXXXXXXXX" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box;font-family:monospace">
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">AdSense Slot IDs (쉼표 구분)</label>
+            <input id="bm-adsense-slots" placeholder="1111111111,2222222222" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box;font-family:monospace">
+          </div>
+        </div>
+
+        <!-- 실행 설정 -->
+        <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;border-top:1px solid var(--border);padding-top:16px">실행 설정</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">
+          <div>
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">언어</label>
+            <select id="bm-language" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px">
+              <option value="ko">한국어 (ko)</option>
+              <option value="en">English (en)</option>
+              <option value="ja">日本語 (ja)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">게시 상태</label>
+            <select id="bm-post-status" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px">
+              <option value="live">Live 즉시게시</option>
+              <option value="draft">Draft 임시저장</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">활성화</label>
+            <select id="bm-enabled" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px">
+              <option value="true">활성</option>
+              <option value="false">비활성</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 액션 버튼 -->
+        <div style="display:flex;gap:10px;justify-content:flex-end;border-top:1px solid var(--border);padding-top:16px">
+          <button onclick="closeBlogModal()" style="padding:10px 20px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:13px;cursor:pointer">취소</button>
+          <button id="bm-delete-btn" onclick="deleteBlogFromModal()" style="display:none;padding:10px 20px;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.3);border-radius:8px;color:var(--red);font-size:13px;cursor:pointer">삭제</button>
+          <button onclick="saveBlogModal()" style="padding:10px 24px;background:var(--accent);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;cursor:pointer">저장</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ═══ 시스템 정보 ═══ -->
@@ -3166,70 +3257,243 @@ function renderSystemPage() {
   if (getPAT()) loadSystemRuns()
 }
 
+// ── 블로그 설정 localStorage 키 ──────────────────────────────────────────────
+const BLOGS_LS_KEY = 'blog_configs_local'
+
+function getBlogsFromLS() {
+  try { return JSON.parse(localStorage.getItem(BLOGS_LS_KEY) || '[]') } catch { return [] }
+}
+
+function saveBlogsToLS(arr) {
+  localStorage.setItem(BLOGS_LS_KEY, JSON.stringify(arr))
+}
+
+// ── 블로그 카드 목록 렌더 ────────────────────────────────────────────────────
 function loadBlogList() {
-  const blogs = DATA.blogs || []
+  const lsBlogs = getBlogsFromLS()
+  const statsMap = {}
+  ;(DATA.blogs || []).forEach(b => { statsMap[b.id] = b })
+
   const grid = document.getElementById('blog-list-grid')
   if (!grid) return
 
-  if (!blogs.length) {
-    grid.innerHTML = `<div style="color:var(--muted);font-size:13px;padding:24px;text-align:center;grid-column:1/-1">
-      블로그 데이터 없음 — 한 번 실행 후 blogs.json이 생성됩니다.<br>
-      <span style="font-size:12px;margin-top:6px;display:block">단일 블로그 모드이거나 아직 포스트가 게시되지 않은 상태입니다.</span>
+  if (!lsBlogs.length) {
+    grid.innerHTML = `<div style="color:var(--muted);font-size:13px;padding:30px;text-align:center;grid-column:1/-1;border:2px dashed var(--border);border-radius:12px">
+      <div style="font-size:32px;margin-bottom:12px">📰</div>
+      <div style="font-weight:600;margin-bottom:6px">등록된 블로그 없음</div>
+      <div style="font-size:12px;margin-bottom:14px">+ 블로그 추가 버튼으로 첫 번째 블로그를 등록하세요</div>
+      <button onclick="openBlogModal(-1)" style="padding:8px 18px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.4);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">+ 블로그 추가</button>
     </div>`
+    document.getElementById('blogs-export-panel').style.display = 'none'
     return
   }
+  document.getElementById('blogs-export-panel').style.display = ''
 
-  grid.innerHTML = blogs.map(b => {
-    const postCount = b.postCount || 0
-    const runCount = b.runCount || 0
-    const lastRun = b.lastRunAt ? new Date(b.lastRunAt).toLocaleDateString('ko-KR') : '없음'
-    const blogId = esc(b.id || 'default')
-    const blogName = esc(b.name || b.id || '이름 없음')
-    return `<div class="run-panel" style="padding:18px">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <span style="font-size:24px">📰</span>
+  grid.innerHTML = lsBlogs.map((b, idx) => {
+    const stats = statsMap[b.id] || {}
+    const postCount = stats.postCount || 0
+    const runCount = stats.runCount || 0
+    const lastRun = stats.lastRunAt ? new Date(stats.lastRunAt).toLocaleDateString('ko-KR') : '없음'
+    const enabled = b.enabled !== false
+    const hasOAuth = !!(b.client_id && b.refresh_token)
+    const statusColor = enabled ? (hasOAuth ? 'var(--green)' : 'var(--yellow)') : 'var(--muted)'
+    const statusText = !enabled ? '비활성' : (hasOAuth ? '설정 완료' : 'OAuth 미설정')
+    const blogUrl = b.url || ''
+    return `<div class="run-panel" style="padding:18px;border-left:3px solid ${statusColor}">
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px">
+        <span style="font-size:22px;flex-shrink:0">📰</span>
         <div style="flex:1;min-width:0">
-          <div style="font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${blogName}</div>
-          <div style="font-size:11px;color:var(--muted);font-family:monospace">${blogId}</div>
+          <div style="font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(b.name || b.id)}</div>
+          <div style="font-size:11px;color:var(--muted);font-family:monospace;margin-top:2px">${esc(b.id)}</div>
+          ${blogUrl ? `<a href="${esc(blogUrl)}" target="_blank" rel="noopener" style="font-size:11px;color:var(--accent2);text-decoration:none;display:block;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(blogUrl)}</a>` : ''}
         </div>
-        <span style="width:10px;height:10px;border-radius:50%;background:${runCount > 0 ? 'var(--green)' : 'var(--muted)'};flex-shrink:0"></span>
+        <span style="padding:3px 8px;background:${statusColor}22;border:1px solid ${statusColor}44;border-radius:6px;font-size:10px;color:${statusColor};white-space:nowrap;flex-shrink:0">${statusText}</span>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
-        <div style="background:var(--bg3);border-radius:8px;padding:10px;text-align:center">
-          <div style="font-size:20px;font-weight:700;color:var(--accent)">${postCount}</div>
-          <div style="font-size:11px;color:var(--muted)">포스트</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px">
+        <div style="background:var(--bg3);border-radius:8px;padding:8px;text-align:center">
+          <div style="font-size:18px;font-weight:700;color:var(--accent)">${postCount}</div>
+          <div style="font-size:10px;color:var(--muted)">포스트</div>
         </div>
-        <div style="background:var(--bg3);border-radius:8px;padding:10px;text-align:center">
-          <div style="font-size:20px;font-weight:700;color:var(--accent2)">${runCount}</div>
-          <div style="font-size:11px;color:var(--muted)">실행 횟수</div>
+        <div style="background:var(--bg3);border-radius:8px;padding:8px;text-align:center">
+          <div style="font-size:18px;font-weight:700;color:var(--accent2)">${runCount}</div>
+          <div style="font-size:10px;color:var(--muted)">실행</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:8px;padding:8px;text-align:center">
+          <div style="font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${lastRun}</div>
+          <div style="font-size:10px;color:var(--muted)">마지막</div>
         </div>
       </div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:12px">마지막 실행: ${lastRun}</div>
-      <div style="display:flex;gap:8px">
-        <button onclick="wfRunForBlog('${blogId}')" style="flex:1;padding:7px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.3);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">▶ 실행</button>
-        <button onclick="filterByBlog('${blogId}')" style="flex:1;padding:7px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer">📋 포스트 보기</button>
+      <div style="display:flex;gap:6px">
+        <button onclick="openBlogModal(${idx})" style="flex:1;padding:7px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">✏️ 편집</button>
+        <button onclick="wfRunForBlog('${esc(b.id)}')" style="flex:1;padding:7px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.3);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">▶ 실행</button>
+        <button onclick="filterByBlog('${esc(b.id)}')" style="flex:1;padding:7px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer">📋 보기</button>
       </div>
     </div>`
   }).join('')
+
+  updateBlogsConfigJson()
 }
 
+// ── 모달 열기/닫기 ────────────────────────────────────────────────────────────
+let _bmEditIdx = -1
+
+function openBlogModal(idx) {
+  _bmEditIdx = idx
+  const overlay = document.getElementById('blog-modal-overlay')
+  overlay.style.display = 'flex'
+  document.getElementById('blog-modal-title').textContent = idx === -1 ? '블로그 추가' : '블로그 편집'
+  document.getElementById('bm-delete-btn').style.display = idx === -1 ? 'none' : ''
+  document.getElementById('bm-show-secrets').checked = false
+  toggleBmSecrets()
+
+  const blogs = getBlogsFromLS()
+  const b = idx >= 0 ? blogs[idx] : {}
+  document.getElementById('bm-id').value = b.id || ''
+  document.getElementById('bm-id').disabled = idx >= 0  // 편집 시 ID 변경 불가
+  document.getElementById('bm-name').value = b.name || ''
+  document.getElementById('bm-blog-id').value = b.blog_id || ''
+  document.getElementById('bm-url').value = b.url || ''
+  document.getElementById('bm-client-id').value = b.client_id || ''
+  document.getElementById('bm-client-secret').value = b.client_secret || ''
+  document.getElementById('bm-refresh-token').value = b.refresh_token || ''
+  document.getElementById('bm-adsense-id').value = b.adsense_client_id || ''
+  document.getElementById('bm-adsense-slots').value = (b.adsense_slot_ids || []).join(', ')
+  document.getElementById('bm-language').value = b.language || 'ko'
+  document.getElementById('bm-post-status').value = b.post_status || 'live'
+  document.getElementById('bm-enabled').value = b.enabled === false ? 'false' : 'true'
+}
+
+function closeBlogModal() {
+  document.getElementById('blog-modal-overlay').style.display = 'none'
+}
+
+function toggleBmSecrets() {
+  const show = document.getElementById('bm-show-secrets')?.checked
+  const type = show ? 'text' : 'password'
+  document.getElementById('bm-client-secret').type = type
+  document.getElementById('bm-refresh-token').type = type
+}
+
+// ── 모달 저장 ────────────────────────────────────────────────────────────────
+function saveBlogModal() {
+  const id = document.getElementById('bm-id').value.trim()
+  const name = document.getElementById('bm-name').value.trim()
+  const blogId = document.getElementById('bm-blog-id').value.trim()
+
+  if (!id) { showToast('블로그 ID를 입력하세요', 'error'); return }
+  if (!/^[a-zA-Z0-9_-]+$/.test(id)) { showToast('블로그 ID는 영문·숫자·하이픈·언더스코어만 허용됩니다', 'error'); return }
+  if (!name) { showToast('블로그 이름을 입력하세요', 'error'); return }
+  if (!blogId) { showToast('Blogger Blog ID를 입력하세요', 'error'); return }
+
+  const slotRaw = document.getElementById('bm-adsense-slots').value.trim()
+  const slots = slotRaw ? slotRaw.split(',').map(s => s.trim()).filter(Boolean) : []
+
+  const entry = {
+    id,
+    name,
+    blog_id: blogId,
+    url: document.getElementById('bm-url').value.trim(),
+    client_id: document.getElementById('bm-client-id').value.trim(),
+    client_secret: document.getElementById('bm-client-secret').value.trim(),
+    refresh_token: document.getElementById('bm-refresh-token').value.trim(),
+    adsense_client_id: document.getElementById('bm-adsense-id').value.trim(),
+    adsense_slot_ids: slots,
+    language: document.getElementById('bm-language').value,
+    post_status: document.getElementById('bm-post-status').value,
+    enabled: document.getElementById('bm-enabled').value !== 'false',
+  }
+  // url 없으면 제외
+  if (!entry.url) delete entry.url
+  if (!entry.client_id) delete entry.client_id
+  if (!entry.client_secret) delete entry.client_secret
+  if (!entry.refresh_token) delete entry.refresh_token
+  if (!entry.adsense_client_id) delete entry.adsense_client_id
+  if (!slots.length) delete entry.adsense_slot_ids
+
+  const blogs = getBlogsFromLS()
+  if (_bmEditIdx === -1) {
+    if (blogs.find(b => b.id === id)) { showToast(`ID '${id}' 는 이미 사용 중입니다`, 'error'); return }
+    blogs.push(entry)
+  } else {
+    blogs[_bmEditIdx] = entry
+  }
+  saveBlogsToLS(blogs)
+  closeBlogModal()
+  loadBlogList()
+  showToast(_bmEditIdx === -1 ? '블로그가 추가되었습니다' : '블로그 설정이 저장되었습니다', 'success')
+}
+
+function deleteBlogFromModal() {
+  if (_bmEditIdx < 0) return
+  const blogs = getBlogsFromLS()
+  const name = blogs[_bmEditIdx]?.name || blogs[_bmEditIdx]?.id || ''
+  if (!confirm(`'${name}' 블로그를 삭제하시겠습니까?`)) return
+  blogs.splice(_bmEditIdx, 1)
+  saveBlogsToLS(blogs)
+  closeBlogModal()
+  loadBlogList()
+  showToast('블로그가 삭제되었습니다', 'info')
+}
+
+// ── BLOGS_CONFIG JSON 내보내기 ────────────────────────────────────────────────
+let _blogsExportVisible = false
+
+function updateBlogsConfigJson() {
+  const blogs = getBlogsFromLS()
+  const exportData = blogs.map(b => {
+    const obj = { id: b.id, name: b.name, blog_id: b.blog_id }
+    if (b.client_id) obj.client_id = b.client_id
+    if (b.client_secret) obj.client_secret = b.client_secret
+    if (b.refresh_token) obj.refresh_token = b.refresh_token
+    if (b.adsense_client_id) obj.adsense_client_id = b.adsense_client_id
+    if (b.adsense_slot_ids?.length) obj.adsense_slot_ids = b.adsense_slot_ids
+    obj.language = b.language || 'ko'
+    obj.post_status = b.post_status || 'live'
+    obj.enabled = b.enabled !== false
+    return obj
+  })
+  const el = document.getElementById('blogs-config-json')
+  if (el) el.textContent = JSON.stringify(exportData, null, 2)
+}
+
+function toggleBlogsExport() {
+  _blogsExportVisible = !_blogsExportVisible
+  const el = document.getElementById('blogs-config-json')
+  const btn = document.getElementById('blogs-export-toggle-btn')
+  if (el) el.style.display = _blogsExportVisible ? 'block' : 'none'
+  if (btn) btn.textContent = _blogsExportVisible ? 'JSON 숨기기' : 'JSON 보기'
+}
+
+function copyBlogsConfig() {
+  const el = document.getElementById('blogs-config-json')
+  const text = el?.textContent || ''
+  if (!text) { showToast('내보낼 블로그 설정이 없습니다', 'error'); return }
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('BLOGS_CONFIG JSON이 클립보드에 복사되었습니다', 'success')
+  }).catch(() => {
+    prompt('아래 JSON을 복사하세요:', text)
+  })
+}
+
+// ── 블로그별 실행 / 필터 ──────────────────────────────────────────────────────
 function wfRunForBlog(blogId) {
   const mode = document.getElementById('wf-live-mode')?.value || 'live'
   const count = document.getElementById('wf-live-count')?.value || '1'
   const kw = document.getElementById('wf-live-kw')?.value || ''
-  _wfDispatch(mode, {
-    posts_per_run: count,
-    keyword: kw, blog_id: blogId,
-  }, 'wf-live-status', 'wf-live-dot')
+  _wfDispatch(mode, { posts_per_run: count, keyword: kw, blog_id: blogId }, 'wf-live-status', 'wf-live-dot')
 }
 
 function filterByBlog(blogId) {
   navTo('posts')
-  // 블로그 필터링을 위해 전역 필터 변수 활용
   window._blogFilter = blogId
   filterPosts()
-  showToast(`블로그 '${blogId}' 포스트만 표시합니다`, 'info')
+  showToast(`'${blogId}' 블로그 포스트만 표시`, 'info')
 }
+
+// 모달 오버레이 클릭으로 닫기
+document.getElementById('blog-modal-overlay')?.addEventListener('click', function(e) {
+  if (e.target === this) closeBlogModal()
+})
 
 function refreshSystemStatus() {
   renderSystemPage()

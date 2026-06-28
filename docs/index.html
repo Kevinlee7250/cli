@@ -1051,12 +1051,13 @@
             <button class="ep-count-btn" onclick="setEpCount(5)">5편</button>
           </div>
         </div>
-        <div class="form-group" style="justify-content:flex-end">
-          <button class="series-run-btn" id="series-run-btn" onclick="runSeriesNow()">📚 시리즈 기획 실행</button>
+        <div class="form-group" style="justify-content:flex-end;gap:8px;display:flex;flex-direction:column">
+          <button class="series-run-btn" id="series-run-btn" onclick="runSeriesNow('series')">📚 시리즈 기획 실행</button>
+          <button style="padding:9px 18px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.35);border-radius:10px;color:var(--yellow);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap" id="series-review-btn" onclick="runSeriesNow('review')">✏️ 검토 모드로 실행</button>
         </div>
       </div>
       <div id="series-create-hint" style="font-size:12px;color:var(--muted);margin-top:4px">
-        💡 GitHub Actions에서 시리즈 모드로 실행됩니다. GitHub PAT가 설정되어 있어야 합니다.
+        💡 <strong>검토 모드</strong>: 글 생성 후 업로드하지 않고 검토 대기에 저장합니다. 시리즈 목록에서 각 편을 확인 후 승인하면 게시됩니다.
       </div>
       <div id="series-create-status" class="status-panel" style="display:none;margin-top:12px"></div>
     </div>
@@ -1353,6 +1354,60 @@
           <button id="bm-delete-btn" onclick="deleteBlogFromModal()" style="display:none;padding:10px 20px;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.3);border-radius:8px;color:var(--red);font-size:13px;cursor:pointer">삭제</button>
           <button onclick="saveBlogModal()" style="padding:10px 24px;background:var(--accent);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;cursor:pointer">저장</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 시리즈 에피소드 검토 모달 ═══════════════════════════════════════════ -->
+  <div id="ser-ep-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9100;align-items:flex-start;justify-content:center;padding:24px;overflow-y:auto">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:760px;position:relative;margin:auto">
+      <!-- 헤더 -->
+      <div style="padding:20px 24px;display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid var(--border);gap:12px">
+        <div>
+          <div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px" id="ser-ep-modal-series-label">시리즈명</div>
+          <div style="font-weight:700;font-size:17px" id="ser-ep-modal-title">에피소드 제목</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px" id="ser-ep-modal-focus">초점</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+          <span id="ser-ep-modal-badge" style="padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600"></span>
+          <button onclick="closeSerEpModal()" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:18px;line-height:1">×</button>
+        </div>
+      </div>
+
+      <!-- 메타 정보 바 -->
+      <div style="padding:12px 24px;display:flex;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--border);background:var(--bg3)" id="ser-ep-modal-meta">
+        <!-- filled by JS -->
+      </div>
+
+      <!-- 탭 -->
+      <div style="display:flex;gap:0;border-bottom:1px solid var(--border);padding:0 24px">
+        <button class="ser-ep-tab active" onclick="serEpTab('preview')" id="ser-ep-tab-preview" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid var(--accent);color:var(--accent);font-size:13px;font-weight:600;cursor:pointer">미리보기</button>
+        <button class="ser-ep-tab" onclick="serEpTab('html')" id="ser-ep-tab-html" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:13px;cursor:pointer">HTML</button>
+        <button class="ser-ep-tab" onclick="serEpTab('faq')" id="ser-ep-tab-faq" style="padding:10px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:13px;cursor:pointer">FAQ <span id="ser-ep-faq-count" style="font-size:11px"></span></button>
+      </div>
+
+      <!-- 탭 콘텐츠 -->
+      <div style="padding:20px 24px;max-height:420px;overflow-y:auto">
+        <div id="ser-ep-tab-content-preview">
+          <div id="ser-ep-preview-text" style="font-size:13px;color:var(--text);line-height:1.85;white-space:pre-wrap"></div>
+        </div>
+        <div id="ser-ep-tab-content-html" style="display:none">
+          <pre style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:11px;color:var(--muted);overflow-x:auto;white-space:pre-wrap;word-break:break-all;max-height:380px;overflow-y:auto" id="ser-ep-html-pre"></pre>
+        </div>
+        <div id="ser-ep-tab-content-faq" style="display:none">
+          <div id="ser-ep-faq-list" style="display:flex;flex-direction:column;gap:12px"></div>
+        </div>
+      </div>
+
+      <!-- 게시 상태 -->
+      <div id="ser-ep-modal-status" style="display:none;margin:0 24px 12px;padding:10px 14px;border-radius:8px;font-size:13px"></div>
+
+      <!-- 액션 버튼 -->
+      <div style="padding:16px 24px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <button onclick="closeSerEpModal()" style="padding:10px 18px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:13px;cursor:pointer">닫기</button>
+        <div style="flex:1"></div>
+        <button id="ser-ep-skip-btn" onclick="serEpSkip()" style="padding:10px 18px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);border-radius:8px;color:var(--red);font-size:13px;cursor:pointer">건너뜀</button>
+        <button id="ser-ep-approve-btn" onclick="serEpApprove()" style="padding:10px 24px;background:var(--accent);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;cursor:pointer">✅ 승인 후 게시</button>
       </div>
     </div>
   </div>
@@ -3072,30 +3127,35 @@ function setEpCount(n) {
   })
 }
 
-async function runSeriesNow() {
+async function runSeriesNow(mode = 'series') {
   const kw = (document.getElementById('series-kw-input')?.value || '').trim()
   if (!kw) { showToast('키워드를 입력하세요', 'error'); return }
   const pat = getPAT()
   if (!pat) { showToast('실행 제어 탭에서 GitHub PAT를 먼저 설정하세요', 'error'); return }
-  const btn = document.getElementById('series-run-btn')
+  const isReview = mode === 'review'
+  const runBtn = document.getElementById('series-run-btn')
+  const reviewBtn = document.getElementById('series-review-btn')
   const statusEl = document.getElementById('series-create-status')
-  btn.disabled = true
-  btn.textContent = '⏳ 실행 중...'
+  if (runBtn) { runBtn.disabled = true; runBtn.textContent = '⏳ 실행 중...' }
+  if (reviewBtn) reviewBtn.disabled = true
   statusEl.style.display = 'block'
   statusEl.className = 'status-panel running'
-  statusEl.textContent = `시리즈 "${kw}" ${selectedEpCount}편 기획 요청 중...`
+  statusEl.textContent = isReview
+    ? `검토 모드: "${kw}" ${selectedEpCount}편 생성 요청 중... (업로드 없이 검토 대기 저장)`
+    : `시리즈 "${kw}" ${selectedEpCount}편 기획 요청 중...`
   try {
     const resp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`, {
       method: 'POST',
       headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ref: GH_BRANCH, inputs: { keyword: kw, mode: 'series', series_count: String(selectedEpCount), posts_per_run: '1' } })
+      body: JSON.stringify({ ref: GH_BRANCH, inputs: { keyword: kw, mode: isReview ? 'review' : 'series', series_count: String(selectedEpCount), posts_per_run: '1' } })
     })
     if (resp.status === 204) {
       statusEl.className = 'status-panel success'
-      statusEl.textContent = `✅ GitHub Actions 시리즈 실행 요청 완료! "${kw}" ${selectedEpCount}편 기획 중...`
-      showToast('시리즈 실행 요청 완료', 'success')
+      statusEl.innerHTML = isReview
+        ? `✅ 검토 모드 실행 요청 완료! "${kw}" ${selectedEpCount}편이 생성 후 <strong>검토 대기</strong>에 저장됩니다.<br><span style="font-size:12px;color:var(--muted)">약 5~10분 후 시리즈 목록에서 각 편을 검토하고 승인할 수 있습니다.</span>`
+        : `✅ GitHub Actions 시리즈 실행 요청 완료! "${kw}" ${selectedEpCount}편 기획 중...`
+      showToast(isReview ? '검토 모드 시리즈 요청 완료' : '시리즈 실행 요청 완료', 'success')
       document.getElementById('series-kw-input').value = ''
-      setTimeout(() => navTo('run'), 2000)
     } else {
       const t = await resp.text()
       statusEl.className = 'status-panel error'
@@ -3105,8 +3165,8 @@ async function runSeriesNow() {
     statusEl.className = 'status-panel error'
     statusEl.textContent = `❌ 요청 실패: ${e.message}`
   }
-  btn.disabled = false
-  btn.textContent = '📚 시리즈 기획 실행'
+  if (runBtn) { runBtn.disabled = false; runBtn.textContent = '📚 시리즈 기획 실행' }
+  if (reviewBtn) reviewBtn.disabled = false
 }
 
 // ── Keyword recommendation helpers ─────────────────────────────────────────────
@@ -3150,46 +3210,285 @@ function renderSeries() {
 
   const statusColor = { completed: 'var(--green)', partial: 'var(--yellow)', planned: 'var(--muted)', in_progress: 'var(--accent)' }
   const statusLabel = { completed: '완료', partial: '일부 완료', planned: '기획됨', in_progress: '진행 중' }
-  const epStatusBadge = { done: '<span class="badge green">완료</span>', pending: '<span class="badge yellow">대기</span>', pending_review: '<span class="badge purple">검토 중</span>', failed: '<span class="badge" style="background:var(--red)">실패</span>', upload_failed: '<span class="badge" style="background:var(--red)">업로드 실패</span>', generated: '<span class="badge blue">생성됨</span>' }
+  const epStatusBadge = {
+    done: '<span class="badge green">완료</span>',
+    pending: '<span class="badge yellow">대기</span>',
+    pending_review: '<span class="badge purple">검토 대기</span>',
+    failed: '<span class="badge" style="background:rgba(248,113,113,.25);color:var(--red);border:1px solid rgba(248,113,113,.4)">실패</span>',
+    upload_failed: '<span class="badge" style="background:rgba(248,113,113,.25);color:var(--red);border:1px solid rgba(248,113,113,.4)">업로드 실패</span>',
+    generated: '<span class="badge blue">생성됨</span>',
+    rejected_policy: '<span class="badge" style="background:rgba(251,191,36,.2);color:var(--yellow);border:1px solid rgba(251,191,36,.4)">정책 거부</span>',
+  }
 
-  container.innerHTML = series.map(sr => {
+  container.innerHTML = series.map((sr, srIdx) => {
     const st = sr.status || 'planned'
     const doneCount = sr.episodes.filter(e => e.status === 'done').length
-    const epRows = sr.episodes.map(ep => {
-      const badge = epStatusBadge[ep.status] || `<span class="badge">${esc(ep.status)}</span>`
+    const reviewCount = sr.episodes.filter(e => e.status === 'pending_review').length
+    const failedCount = sr.episodes.filter(e => ['upload_failed', 'failed'].includes(e.status)).length
+
+    const epRows = sr.episodes.map((ep, epIdx) => {
+      const badge = epStatusBadge[ep.status] || `<span class="badge">${esc(ep.status || '')}</span>`
       const link = ep.blogger_url
-        ? `<a href="${esc(ep.blogger_url)}" target="_blank" style="color:var(--accent);text-decoration:none;font-size:12px;">🔗 보기</a>`
+        ? `<a href="${esc(ep.blogger_url)}" target="_blank" style="color:var(--accent2);text-decoration:none;font-size:12px;">🔗 보기</a>`
         : '<span style="color:var(--muted);font-size:12px;">미게시</span>'
+
+      let actionBtn = ''
+      if (ep.status === 'pending_review') {
+        actionBtn = `<button onclick="openSerEpModal(${srIdx},${epIdx})" style="padding:4px 10px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.35);border-radius:6px;color:var(--accent);font-size:11px;cursor:pointer;font-weight:600;white-space:nowrap">✏️ 검토</button>`
+      } else if (ep.status === 'upload_failed' || ep.status === 'generated') {
+        actionBtn = `<button onclick="retrySeriesEp(${srIdx},${epIdx})" style="padding:4px 10px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:6px;color:var(--accent2);font-size:11px;cursor:pointer;white-space:nowrap">🔄 재시도</button>`
+      } else if (ep.status === 'done') {
+        actionBtn = link
+      }
+
       return `<tr>
-        <td style="color:var(--muted);text-align:center;">${ep.episode}</td>
+        <td style="color:var(--muted);text-align:center;font-weight:600;">${ep.episode}</td>
         <td><strong>${esc(ep.title || '')}</strong><br><span style="font-size:12px;color:var(--muted)">${esc(ep.focus || '')}</span></td>
         <td>${badge}</td>
-        <td>${link}</td>
+        <td style="text-align:center">${actionBtn || (ep.status !== 'done' ? link : '')}</td>
       </tr>`
     }).join('')
 
+    const reviewBadgeHtml = reviewCount > 0
+      ? `<button onclick="openSerEpModal(${srIdx}, ${sr.episodes.findIndex(e => e.status === 'pending_review')})" style="padding:4px 12px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.35);border-radius:6px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">✏️ 검토 대기 ${reviewCount}편</button>` : ''
+    const failedBadgeHtml = failedCount > 0
+      ? `<span style="padding:4px 10px;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.3);border-radius:6px;color:var(--red);font-size:12px;">실패 ${failedCount}편</span>` : ''
+
     return `<div class="card" style="margin-bottom:20px;padding:20px 24px;">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
         <div>
           <div style="font-weight:700;font-size:16px;margin-bottom:4px;">${esc(sr.series_title || '')}</div>
           <div style="font-size:13px;color:var(--muted);">${esc(sr.series_description || '')} &nbsp;·&nbsp; 키워드: <strong>${esc(sr.keyword || '')}</strong></div>
           <div style="font-size:12px;color:var(--muted);margin-top:4px;">${sr.created_at ? new Date(sr.created_at).toLocaleString('ko-KR') : ''}</div>
         </div>
-        <div style="text-align:right;">
-          <span style="font-weight:700;color:${statusColor[st] || 'var(--muted)'};">${statusLabel[st] || st}</span>
-          <div style="font-size:12px;color:var(--muted);margin-top:4px;">${doneCount}/${sr.total_episodes}편 완료</div>
-          ${sr.series_label ? `<div style="margin-top:6px;"><a href="https://hoguwhat1.blogspot.com/search/label/${esc(sr.series_label)}" target="_blank" style="font-size:12px;color:var(--accent2);text-decoration:none;">📋 Blogger 시리즈 페이지</a></div>` : ''}
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-weight:700;color:${statusColor[st] || 'var(--muted)'};">${statusLabel[st] || st}</span>
+            <span style="font-size:12px;color:var(--muted);">${doneCount}/${sr.total_episodes}편 완료</span>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+            ${reviewBadgeHtml}${failedBadgeHtml}
+            ${sr.series_label ? `<a href="https://hoguwhat1.blogspot.com/search/label/${esc(sr.series_label)}" target="_blank" style="font-size:12px;color:var(--accent2);text-decoration:none;padding:4px 10px;border:1px solid rgba(6,182,212,.3);border-radius:6px;background:rgba(6,182,212,.08)">📋 Blogger 페이지</a>` : ''}
+          </div>
         </div>
       </div>
       <div class="table-wrap" style="margin:0;">
         <table>
-          <thead><tr><th style="width:40px;">편</th><th>제목 / 초점</th><th style="width:90px;">상태</th><th style="width:70px;">링크</th></tr></thead>
+          <thead><tr><th style="width:40px;">편</th><th>제목 / 초점</th><th style="width:100px;">상태</th><th style="width:90px;text-align:center">액션</th></tr></thead>
           <tbody>${epRows}</tbody>
         </table>
       </div>
     </div>`
   }).join('')
 }
+
+// ── 시리즈 에피소드 검토 모달 ─────────────────────────────────────────────────
+
+let _serEpModal = { srIdx: -1, epIdx: -1, postId: null }
+
+function openSerEpModal(srIdx, epIdx) {
+  const series = DATA.series || []
+  const sr = series[srIdx]
+  if (!sr) return
+  const ep = sr.episodes[epIdx]
+  if (!ep) return
+
+  _serEpModal = { srIdx, epIdx, postId: null }
+
+  // 헤더
+  document.getElementById('ser-ep-modal-series-label').textContent = sr.series_title || sr.keyword || ''
+  document.getElementById('ser-ep-modal-title').textContent = ep.title || `${ep.episode}편`
+  document.getElementById('ser-ep-modal-focus').textContent = ep.focus || ''
+
+  // 상태 뱃지
+  const badgeEl = document.getElementById('ser-ep-modal-badge')
+  const statusStyles = {
+    pending_review: ['검토 대기', 'rgba(124,106,247,.25)', 'var(--accent)', 'rgba(124,106,247,.4)'],
+    upload_failed:  ['업로드 실패', 'rgba(248,113,113,.2)', 'var(--red)', 'rgba(248,113,113,.4)'],
+    generated:      ['생성됨', 'rgba(6,182,212,.15)', 'var(--accent2)', 'rgba(6,182,212,.35)'],
+    done:           ['완료', 'rgba(52,211,153,.15)', 'var(--green)', 'rgba(52,211,153,.35)'],
+  }
+  const [label, bg, color, border] = statusStyles[ep.status] || ['알 수 없음', 'var(--bg3)', 'var(--muted)', 'var(--border)']
+  badgeEl.textContent = label
+  badgeEl.style.cssText = `padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600;background:${bg};color:${color};border:1px solid ${border}`
+
+  // pending_posts.json에서 매칭 포스트 찾기 (제목 정확 일치 우선, 없으면 키워드 포함)
+  const pending = DATA.pending || []
+  let matched = pending.find(p => p.title === ep.title)
+  if (!matched && ep.title) matched = pending.find(p => p.title && p.title.includes(ep.title.slice(0, 15)))
+  if (!matched) matched = pending.find(p => p.keyword === sr.keyword || p.keyword === ep.search_keyword)
+
+  _serEpModal.postId = matched?.id || null
+
+  // 메타 정보
+  const metaEl = document.getElementById('ser-ep-modal-meta')
+  if (matched) {
+    metaEl.innerHTML = [
+      `<span style="font-size:12px;color:var(--muted)">편: <strong style="color:var(--text)">${ep.episode}/${sr.total_episodes}</strong></span>`,
+      `<span style="font-size:12px;color:var(--muted)">글자 수: <strong style="color:var(--text)">${(matched.wordCount || 0).toLocaleString()}자</strong></span>`,
+      `<span style="font-size:12px;color:var(--muted)">이미지: <strong style="color:var(--text)">${matched.imagesInserted || 0}개</strong></span>`,
+      `<span style="font-size:12px;color:var(--muted)">FAQ: <strong style="color:var(--text)">${(matched.faq || []).length}개</strong></span>`,
+      `<span style="font-size:12px;color:var(--muted)">저장: <strong style="color:var(--text)">${matched.savedAt ? new Date(matched.savedAt).toLocaleDateString('ko-KR') : '-'}</strong></span>`,
+    ].join('')
+  } else {
+    metaEl.innerHTML = `<span style="font-size:12px;color:var(--yellow)">⚠️ pending_posts.json에서 매칭되는 포스트를 찾을 수 없습니다. 데이터를 새로고침하거나 검토 모드로 재실행하세요.</span>`
+  }
+
+  // FAQ 카운트
+  const faqList = matched?.faq || []
+  document.getElementById('ser-ep-faq-count').textContent = faqList.length ? `(${faqList.length})` : ''
+
+  // 탭 콘텐츠 채우기
+  const content = matched?.content || ''
+  const plainText = content ? content.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim() : '(내용 없음 — 검토 모드로 재실행 후 데이터를 새로고침하세요)'
+  document.getElementById('ser-ep-preview-text').textContent = plainText.slice(0, 3000) + (plainText.length > 3000 ? '\n\n...(이하 생략)' : '')
+  document.getElementById('ser-ep-html-pre').textContent = content ? content.slice(0, 4000) : '(HTML 없음)'
+
+  // FAQ
+  const faqEl = document.getElementById('ser-ep-faq-list')
+  if (faqList.length) {
+    faqEl.innerHTML = faqList.map((f, i) => `
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 14px">
+        <div style="font-size:13px;font-weight:600;color:var(--accent);margin-bottom:6px">Q${i+1}. ${esc(f.q || '')}</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.7">${esc(f.a || '')}</div>
+      </div>`).join('')
+  } else {
+    faqEl.innerHTML = '<div style="color:var(--muted);font-size:13px">FAQ 없음</div>'
+  }
+
+  // 버튼 상태
+  const approveBtn = document.getElementById('ser-ep-approve-btn')
+  const skipBtn = document.getElementById('ser-ep-skip-btn')
+  const alreadyDone = ep.status === 'done'
+  if (approveBtn) {
+    approveBtn.disabled = !matched || alreadyDone
+    approveBtn.textContent = alreadyDone ? '✅ 이미 게시됨' : '✅ 승인 후 게시'
+    approveBtn.style.opacity = (!matched || alreadyDone) ? '0.45' : '1'
+  }
+  if (skipBtn) skipBtn.style.display = alreadyDone ? 'none' : ''
+
+  document.getElementById('ser-ep-modal-status').style.display = 'none'
+
+  // 첫 탭 활성화
+  serEpTab('preview')
+
+  const overlay = document.getElementById('ser-ep-modal-overlay')
+  overlay.style.display = 'flex'
+  overlay.scrollTop = 0
+}
+
+function closeSerEpModal() {
+  document.getElementById('ser-ep-modal-overlay').style.display = 'none'
+}
+
+function serEpTab(tab) {
+  ['preview', 'html', 'faq'].forEach(t => {
+    const content = document.getElementById('ser-ep-tab-content-' + t)
+    const btn = document.getElementById('ser-ep-tab-' + t)
+    if (content) content.style.display = t === tab ? 'block' : 'none'
+    if (btn) {
+      btn.style.borderBottomColor = t === tab ? 'var(--accent)' : 'transparent'
+      btn.style.color = t === tab ? 'var(--accent)' : 'var(--muted)'
+      btn.style.fontWeight = t === tab ? '600' : '400'
+    }
+  })
+}
+
+async function serEpApprove() {
+  const postId = _serEpModal.postId
+  if (!postId) { showToast('게시할 포스트 데이터를 찾을 수 없습니다', 'error'); return }
+
+  const statusEl = document.getElementById('ser-ep-modal-status')
+  const approveBtn = document.getElementById('ser-ep-approve-btn')
+  statusEl.style.display = 'block'
+  statusEl.className = 'status-panel running'
+  statusEl.innerHTML = '<span class="pulse">⏳</span> 게시 요청 중...'
+  if (approveBtn) { approveBtn.disabled = true; approveBtn.textContent = '⏳ 게시 중...' }
+
+  try {
+    if (publishMode === 'direct') {
+      await _serEpPublishDirect(postId, statusEl)
+    } else {
+      await _serEpPublishViaActions(postId, statusEl)
+    }
+  } catch (e) {
+    statusEl.className = 'status-panel error'
+    statusEl.textContent = '❌ ' + e.message
+    if (approveBtn) { approveBtn.disabled = false; approveBtn.textContent = '✅ 승인 후 게시' }
+  }
+}
+
+async function _serEpPublishViaActions(postId, statusEl) {
+  const pat = getPAT()
+  if (!pat) throw new Error('PAT가 없습니다. 실행 제어 탭에서 PAT를 설정하세요.')
+  const resp = await fetch(
+    `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/manual-publish.yml/dispatches`,
+    { method: 'POST', headers: { Authorization: `Bearer ${pat}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ref: GH_BRANCH, inputs: { post_id: postId, post_ids: '', publish_all: 'false' } }) }
+  )
+  if (resp.status === 204) {
+    statusEl.className = 'status-panel success'
+    statusEl.innerHTML = '✅ 게시 워크플로우 시작됨! 약 3~5분 후 완료됩니다. 수동 검토 탭에서 결과를 확인하세요.'
+    showToast('시리즈 에피소드 게시 요청 완료', 'success')
+    const approveBtn = document.getElementById('ser-ep-approve-btn')
+    if (approveBtn) { approveBtn.textContent = '✅ 게시 요청됨' }
+  } else {
+    const err = await resp.json().catch(() => ({}))
+    throw new Error(`HTTP ${resp.status}: ${err.message || ''}`)
+  }
+}
+
+async function _serEpPublishDirect(postId, statusEl) {
+  const post = (DATA.pending || []).find(p => p.id === postId)
+  if (!post) throw new Error('포스트 데이터를 찾을 수 없습니다')
+  const blogId = localStorage.getItem('oauth_blog_id')
+  if (!blogId) throw new Error('BLOGGER_BLOG_ID를 설정하세요 (수동 검토 탭 → 설정)')
+  const accessToken = await getAccessToken()
+  const resp = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts/`, {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title: post.title, content: post.content, labels: post.labels || [] })
+  })
+  const result = await resp.json()
+  if (resp.ok && result.url) {
+    statusEl.className = 'status-panel success'
+    statusEl.innerHTML = `✅ 게시 성공! <a href="${esc(result.url)}" target="_blank" style="color:var(--accent2)">${esc(result.url)}</a>`
+    showToast('시리즈 에피소드 게시 완료!', 'success')
+    const approveBtn = document.getElementById('ser-ep-approve-btn')
+    if (approveBtn) { approveBtn.textContent = '✅ 게시됨'; approveBtn.disabled = true }
+    // 데이터 새로고침
+    setTimeout(() => loadAll(true), 3000)
+  } else {
+    throw new Error(result.error?.message || `HTTP ${resp.status}`)
+  }
+}
+
+function serEpSkip() {
+  closeSerEpModal()
+  showToast('에피소드를 건너뜀', 'info')
+}
+
+async function retrySeriesEp(srIdx, epIdx) {
+  const series = DATA.series || []
+  const sr = series[srIdx]
+  const ep = sr?.episodes[epIdx]
+  if (!ep) return
+  if (!confirm(`[${ep.episode}편] "${ep.title || ''}" 을 다시 업로드 시도하시겠습니까?\n\n수동 검토 탭에서 pending 포스트로 게시하거나, 시리즈를 review 모드로 재실행하세요.`)) return
+  // 해당 에피소드 제목으로 pending에서 찾아서 게시
+  const pending = DATA.pending || []
+  const matched = pending.find(p => p.title === ep.title)
+  if (matched) {
+    showToast(`"${ep.title}" 를 pending에서 찾았습니다. 수동 검토 탭으로 이동합니다.`, 'info')
+    navTo('review')
+  } else {
+    showToast('pending_posts.json에 해당 에피소드가 없습니다. 검토 모드로 재실행하세요.', 'error')
+  }
+}
+
+// 시리즈 에피소드 모달 오버레이 클릭 닫기
+document.getElementById('ser-ep-modal-overlay')?.addEventListener('click', function(e) {
+  if (e.target === this) closeSerEpModal()
+})
 
 function renderUsedKeywords() {
   const runs = DATA.runs || []
@@ -3229,7 +3528,7 @@ function renderUsedKeywords() {
 document.addEventListener('keydown', e => {
   const tag = document.activeElement.tagName.toLowerCase()
   if (tag === 'input' || tag === 'textarea' || tag === 'select') return
-  if (e.key === 'Escape') closeModal()
+  if (e.key === 'Escape') { closeModal(); closeSerEpModal(); closeBlogModal() }
   if (e.key === 'r' || e.key === 'R') manualRefresh()
 })
 

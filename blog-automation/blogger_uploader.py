@@ -26,12 +26,16 @@ BLOGGER_API_BASE = "https://www.googleapis.com/blogger/v3"
 # OAuth
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _get_access_token() -> str | None:
+def _get_access_token(blog_config: dict | None = None) -> str | None:
+    cfg = blog_config or {}
+    client_id = cfg.get("client_id") or BLOGGER_CLIENT_ID
+    client_secret = cfg.get("client_secret") or BLOGGER_CLIENT_SECRET
+    refresh_token = cfg.get("refresh_token") or BLOGGER_REFRESH_TOKEN
     try:
         resp = requests.post(TOKEN_URL, data={
-            "client_id": BLOGGER_CLIENT_ID,
-            "client_secret": BLOGGER_CLIENT_SECRET,
-            "refresh_token": BLOGGER_REFRESH_TOKEN,
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "refresh_token": refresh_token,
             "grant_type": "refresh_token",
         }, timeout=15)
     except requests.exceptions.RequestException as e:
@@ -55,18 +59,20 @@ def _get_access_token() -> str | None:
 # AdSense 광고 슬롯 생성
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _ad_unit(slot_index: int) -> str:
+def _ad_unit(slot_index: int, blog_config: dict | None = None) -> str:
     """반응형 AdSense 광고 유닛 HTML."""
-    if not ADSENSE_CLIENT_ID or ADSENSE_CLIENT_ID == "ca-pub-XXXXXXXXXXXXXXXXX":
+    cfg = blog_config or {}
+    adsense_client = cfg.get("adsense_client_id") or ADSENSE_CLIENT_ID
+    adsense_slots = cfg.get("adsense_slot_ids") or ADSENSE_SLOT_IDS
+    if not adsense_client or adsense_client == "ca-pub-XXXXXXXXXXXXXXXXX":
         return ""
-    slots = ADSENSE_SLOT_IDS
-    slot_id = slots[slot_index % len(slots)] if slots else "0000000000"
+    slot_id = adsense_slots[slot_index % len(adsense_slots)] if adsense_slots else "0000000000"
     return f"""
 <!-- AdSense 광고 슬롯 {slot_index + 1} -->
 <div style="margin:2em auto;text-align:center;max-width:728px;overflow:hidden;">
   <ins class="adsbygoogle"
     style="display:block;width:100%;min-height:100px;"
-    data-ad-client="{ADSENSE_CLIENT_ID}"
+    data-ad-client="{adsense_client}"
     data-ad-slot="{slot_id}"
     data-ad-format="auto"
     data-full-width-responsive="true"></ins>
@@ -75,7 +81,7 @@ def _ad_unit(slot_index: int) -> str:
 """
 
 
-def _inject_ads(html: str) -> str:
+def _inject_ads(html: str, blog_config: dict | None = None) -> str:
     """
     광고 슬롯 4개를 전략적 위치에 삽입 (AdSense 콘텐츠 대비 광고 비율 준수):
       슬롯 1 — 도입부 첫 <p> 다음 (Above the fold, 최고 CTR)
@@ -84,7 +90,7 @@ def _inject_ads(html: str) -> str:
       슬롯 4 — 본문 끝
     """
     # 슬롯 1: 목차 div 이후 첫 번째 </p> 뒤 (목차 내부 삽입 방지)
-    ad0 = _ad_unit(0)
+    ad0 = _ad_unit(0, blog_config)
     toc_end = html.lower().find('</div>', html.lower().find('📋 목차'))
     search_start = toc_end + 6 if toc_end != -1 else 0
     p_match = re.search(r'</p>', html[search_start:], re.IGNORECASE)
@@ -99,13 +105,13 @@ def _inject_ads(html: str) -> str:
     targets = [p for i, p in enumerate(h2_positions) if i in (2, 4)]
     offset = 0
     for i, pos in enumerate(targets):
-        ad = _ad_unit(i + 1)
+        ad = _ad_unit(i + 1, blog_config)
         actual = pos + offset
         html = html[:actual] + ad + html[actual:]
         offset += len(ad)
 
     # 슬롯 4: 본문 끝
-    html += _ad_unit(3)
+    html += _ad_unit(3, blog_config)
     return html
 
 
@@ -195,7 +201,7 @@ padding:20px 24px;margin:2em 0;max-width:680px;">
 # 최종 HTML 조립
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _build_full_content(post_data: dict) -> str:
+def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str:
     """SEO 완전 최적화 HTML을 구성합니다."""
     html = post_data.get("content", "")
     faq = post_data.get("faq", [])
@@ -215,7 +221,7 @@ def _build_full_content(post_data: dict) -> str:
             html = toc + html
 
     # ③ AdSense 광고 삽입
-    html = _inject_ads(html)
+    html = _inject_ads(html, blog_config)
 
     # ④ 태그 클라우드 (내부 링크 효과)
     tag_links = "".join(
@@ -281,16 +287,20 @@ border-left:4px solid #ffc107;">
 # 업로드
 # ──────────────────────────────────────────────────────────────────────────────
 
-def upload_post(post_data: dict) -> dict | None:
+def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None:
     """Blogger API로 포스트를 업로드합니다."""
     if not post_data.get("title") or not post_data.get("content"):
         logger.error("포스트 제목 또는 내용이 비어있음 — 업로드 건너뜀")
         return None
-    access_token = _get_access_token()
+    cfg = blog_config or {}
+    blog_id = cfg.get("blog_id") or BLOGGER_BLOG_ID
+    post_status = cfg.get("post_status") or POST_STATUS
+
+    access_token = _get_access_token(blog_config)
     if not access_token:
         return None
 
-    full_content = _build_full_content(post_data)
+    full_content = _build_full_content(post_data, blog_config)
     kw = post_data.get("keyword", "")
     # None-safe: Claude가 "labels": null 반환해도 안전하게 처리
     raw_labels = post_data.get("labels") or []
@@ -304,7 +314,10 @@ def upload_post(post_data: dict) -> dict | None:
     all_labels = [_clean_label(kw)] + [_clean_label(lb) for lb in raw_labels]
     labels = [lb for lb in dict.fromkeys(all_labels) if lb][:20]
 
+    blog_name = cfg.get("name", "")
     logger.debug(f"업로드 레이블 ({len(labels)}개): {labels[:5]}{'…' if len(labels)>5 else ''}")
+    if blog_name:
+        logger.info(f"업로드 대상 블로그: {blog_name} (blog_id={blog_id})")
 
     payload = {
         "title": post_data.get("title", "Untitled"),
@@ -312,8 +325,8 @@ def upload_post(post_data: dict) -> dict | None:
         "labels": labels,
     }
 
-    url = f"{BLOGGER_API_BASE}/blogs/{BLOGGER_BLOG_ID}/posts"
-    params = {"isDraft": POST_STATUS != "live"}
+    url = f"{BLOGGER_API_BASE}/blogs/{blog_id}/posts"
+    params = {"isDraft": post_status != "live"}
     headers = {
         "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json",
@@ -337,12 +350,14 @@ def upload_post(post_data: dict) -> dict | None:
     return None
 
 
-def get_blog_info() -> dict | None:
-    access_token = _get_access_token()
+def get_blog_info(blog_config: dict | None = None) -> dict | None:
+    cfg = blog_config or {}
+    blog_id = cfg.get("blog_id") or BLOGGER_BLOG_ID
+    access_token = _get_access_token(blog_config)
     if not access_token:
         return None
     resp = requests.get(
-        f"{BLOGGER_API_BASE}/blogs/{BLOGGER_BLOG_ID}",
+        f"{BLOGGER_API_BASE}/blogs/{blog_id}",
         headers={"Authorization": f"Bearer {access_token}"},
         timeout=15,
     )

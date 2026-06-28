@@ -81,6 +81,7 @@ def log_run(
     results: list[dict],
     blogger_uploaded: int,
     errors: int,
+    blog_config: dict | None = None,
 ) -> None:
     """실행 결과를 run_history.json에 기록합니다."""
     history = _load_history()
@@ -97,6 +98,7 @@ def log_run(
     # 전체 누적 포스트 수 (이번 실행 + 이전 이력)
     total_cumulative = total_posts + sum(h.get("postsGenerated", 0) for h in history)
 
+    cfg = blog_config or {}
     entry = {
         "runAt": datetime.now().isoformat(),
         "date": datetime.now().strftime("%Y-%m-%d"),
@@ -106,6 +108,8 @@ def log_run(
         "errors": errors,
         "imagesInserted": total_images,
         "totalWords": total_words,
+        "blogId": cfg.get("id", "default"),
+        "blogName": cfg.get("name", ""),
         "platforms": {
             "blogger": blogger_uploaded,
         },
@@ -123,6 +127,8 @@ def log_run(
                 "sources": r.get("sources", []),
                 "labels": r.get("labels", []),
                 "metaDescription": r.get("meta_description", ""),
+                "blogId": cfg.get("id", "default"),
+                "blogName": cfg.get("name", ""),
             }
             for r in results
         ],
@@ -195,7 +201,22 @@ def export_dashboard() -> None:
     # posts.json 생성
     posts = []
     seen_titles: set[str] = set()
+    blog_stats: dict[str, dict] = {}
     for run in history:
+        run_blog_id = run.get("blogId", "default")
+        run_blog_name = run.get("blogName", "")
+        if run_blog_id not in blog_stats:
+            blog_stats[run_blog_id] = {
+                "id": run_blog_id, "name": run_blog_name,
+                "postCount": 0, "runCount": 0,
+                "lastRunAt": run.get("runAt", ""),
+            }
+        blog_stats[run_blog_id]["runCount"] += 1
+        if run.get("runAt", "") > blog_stats[run_blog_id].get("lastRunAt", ""):
+            blog_stats[run_blog_id]["lastRunAt"] = run.get("runAt", "")
+        if run_blog_name and not blog_stats[run_blog_id]["name"]:
+            blog_stats[run_blog_id]["name"] = run_blog_name
+
         for p in run.get("posts", []):
             title = p.get("title", "")
             if not title or title in seen_titles:
@@ -204,6 +225,7 @@ def export_dashboard() -> None:
             kw = p.get("keyword", "")
             cat = _categorize(kw)
             post_id = run["date"] + "_" + re.sub(r"[^\w가-힣]", "_", title)[:60]
+            blog_stats[run_blog_id]["postCount"] += 1
             posts.append({
                 "id": post_id,
                 "title": title,
@@ -224,6 +246,8 @@ def export_dashboard() -> None:
                 "contentPreview": p.get("contentPreview", ""),
                 "faq": p.get("faq", []),
                 "sources": p.get("sources", []),
+                "blogId": p.get("blogId", run_blog_id),
+                "blogName": p.get("blogName", run_blog_name),
             })
     posts.sort(key=lambda x: x["date"], reverse=True)
 
@@ -272,11 +296,14 @@ def export_dashboard() -> None:
         "blogUrl": "https://hoguwhat1.blogspot.com/",
     }
 
+    blogs_export = sorted(blog_stats.values(), key=lambda b: b.get("lastRunAt", ""), reverse=True)
+
     for name, data in [
         ("posts.json", posts),
         ("runs.json", runs_export),
         ("analytics.json", analytics),
         ("meta.json", meta),
+        ("blogs.json", blogs_export),
     ]:
         path = os.path.join(DOCS_DATA_DIR, name)
         with open(path, "w", encoding="utf-8") as f:
@@ -286,10 +313,10 @@ def export_dashboard() -> None:
     _export_gsc(DOCS_DATA_DIR)
 
     logger.info(f"대시보드 데이터 내보내기 완료 → {DOCS_DATA_DIR}")
-    logger.info(f"  포스트: {len(posts)}개 / 실행 이력: {len(runs_export)}개")
+    logger.info(f"  포스트: {len(posts)}개 / 실행 이력: {len(runs_export)}개 / 블로그: {len(blogs_export)}개")
 
 
-def save_pending_posts(results: list[dict]) -> None:
+def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> None:
     """생성된 포스트를 검토 대기 목록으로 저장합니다 (Blogger 업로드 없이)."""
     pending: list[dict] = []
     if os.path.exists(PENDING_FILE):
@@ -299,6 +326,7 @@ def save_pending_posts(results: list[dict]) -> None:
         except (json.JSONDecodeError, OSError):
             pending = []
 
+    cfg = blog_config or {}
     now = datetime.now()
     for idx, r in enumerate(results):
         title = r.get("title", "")
@@ -322,6 +350,8 @@ def save_pending_posts(results: list[dict]) -> None:
             "metaDescription": r.get("meta_description", ""),
             "sources": r.get("sources", []),
             "status": "pending",
+            "blogId": cfg.get("id", r.get("blogId", "default")),
+            "blogName": cfg.get("name", r.get("blogName", "")),
         })
         logger.info(f"  검토 대기 저장: {title[:60]} ({len(content)}자 HTML)")
 

@@ -704,7 +704,7 @@
   <div class="page" id="page-posts">
     <div class="page-title">📝 포스트 목록 <span class="badge purple" id="posts-count">0</span></div>
     <div class="search-row">
-      <input class="search-input" id="post-search" placeholder="제목, 키워드 검색..." oninput="filterPosts()">
+      <input class="search-input" id="post-search" placeholder="제목, 키워드 검색..." oninput="window._blogFilter='';filterPosts()">
       <select class="filter-sel" id="cat-filter" onchange="filterPosts()">
         <option value="">전체 카테고리</option>
         <option>금융</option><option>부동산</option><option>건강</option>
@@ -1219,6 +1219,51 @@
       </div>
 
     </div>
+
+    <!-- ⑦ 블로그 관리 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>📰 블로그 관리</h2>
+      <button onclick="loadBlogList()" style="padding:6px 14px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:var(--green);font-size:12px;cursor:pointer;font-weight:600">🔄 새로고침</button>
+    </div>
+    <div id="blog-list-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:28px">
+      <div style="color:var(--muted);font-size:13px;padding:24px;text-align:center;grid-column:1/-1">
+        블로그 데이터 로딩 중...
+      </div>
+    </div>
+    <div class="run-panel" style="padding:18px;margin-bottom:20px">
+      <div style="font-weight:700;font-size:13px;margin-bottom:10px">ℹ️ 다중 블로그 설정 방법</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        GitHub Secrets에 <code style="background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--accent)">BLOGS_CONFIG</code> 를 JSON 배열로 설정하면 여러 블로그를 동시에 운영할 수 있습니다.<br>
+        워크플로우 수동 실행 시 <strong>blog_id</strong> 를 지정하면 해당 블로그만 실행되고, 비워두면 모든 블로그를 순차 실행합니다.
+      </div>
+      <details style="margin-top:12px">
+        <summary style="font-size:12px;color:var(--accent);cursor:pointer;user-select:none">예시 JSON 보기</summary>
+        <pre style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:11px;color:var(--muted);overflow-x:auto;margin-top:8px">[
+  {
+    "id": "blog1",
+    "name": "메인 블로그",
+    "blog_id": "123456789",
+    "client_id": "CLIENT_ID",
+    "client_secret": "CLIENT_SECRET",
+    "refresh_token": "REFRESH_TOKEN",
+    "adsense_client_id": "ca-pub-XXX",
+    "adsense_slot_ids": ["111", "222"],
+    "language": "ko",
+    "post_status": "live",
+    "enabled": true
+  },
+  {
+    "id": "blog2",
+    "name": "영어 블로그",
+    "blog_id": "987654321",
+    "language": "en",
+    "post_status": "draft",
+    "enabled": true
+  }
+]</pre>
+      </details>
+    </div>
+
   </div>
 
   <!-- ═══ 시스템 정보 ═══ -->
@@ -1352,7 +1397,7 @@ async function loadAll(silent = false) {
   }
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, social, pending, series, gsc] = await Promise.all([
+  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs] = await Promise.all([
     fetch(base + '/posts.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/runs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/analytics.json' + ts).then(r => r.json()).catch(() => ({})),
@@ -1361,8 +1406,9 @@ async function loadAll(silent = false) {
     fetch(base + '/pending_posts.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/series.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/gsc.json' + ts).then(r => r.json()).catch(() => ({})),
+    fetch(base + '/blogs.json' + ts).then(r => r.json()).catch(() => []),
   ])
-  DATA = { posts, runs, analytics, meta, social, pending, series, gsc }
+  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs }
   const lbl = document.getElementById('last-updated-label')
   if (lbl && meta.exportedAt)
     lbl.textContent = '업데이트: ' + new Date(meta.exportedAt).toLocaleString('ko-KR')
@@ -1784,11 +1830,13 @@ function filterPosts() {
   const cat = document.getElementById('cat-filter')?.value || ''
   const from = document.getElementById('date-from')?.value || ''
   const to = document.getElementById('date-to')?.value || ''
+  const blogFilter = window._blogFilter || ''
   let list = DATA.posts.filter(p => {
     if (q && !p.title.toLowerCase().includes(q) && !(p.keyword||'').toLowerCase().includes(q)) return false
     if (cat && !(p.adsenseCategory || '일반').includes(cat)) return false
     if (from && p.date && p.date < from) return false
     if (to && p.date && p.date > to) return false
+    if (blogFilter && (p.blogId || 'default') !== blogFilter) return false
     return true
   })
   // Sort
@@ -3113,8 +3161,74 @@ function renderSystemPage() {
   renderDataStatusGrid()
   renderModuleStatusGrid()
   updatePendingInfo()
+  loadBlogList()
   // GitHub Actions 이력은 PAT 있을 때만 자동 로드
   if (getPAT()) loadSystemRuns()
+}
+
+function loadBlogList() {
+  const blogs = DATA.blogs || []
+  const grid = document.getElementById('blog-list-grid')
+  if (!grid) return
+
+  if (!blogs.length) {
+    grid.innerHTML = `<div style="color:var(--muted);font-size:13px;padding:24px;text-align:center;grid-column:1/-1">
+      블로그 데이터 없음 — 한 번 실행 후 blogs.json이 생성됩니다.<br>
+      <span style="font-size:12px;margin-top:6px;display:block">단일 블로그 모드이거나 아직 포스트가 게시되지 않은 상태입니다.</span>
+    </div>`
+    return
+  }
+
+  grid.innerHTML = blogs.map(b => {
+    const postCount = b.postCount || 0
+    const runCount = b.runCount || 0
+    const lastRun = b.lastRunAt ? new Date(b.lastRunAt).toLocaleDateString('ko-KR') : '없음'
+    const blogId = esc(b.id || 'default')
+    const blogName = esc(b.name || b.id || '이름 없음')
+    return `<div class="run-panel" style="padding:18px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <span style="font-size:24px">📰</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${blogName}</div>
+          <div style="font-size:11px;color:var(--muted);font-family:monospace">${blogId}</div>
+        </div>
+        <span style="width:10px;height:10px;border-radius:50%;background:${runCount > 0 ? 'var(--green)' : 'var(--muted)'};flex-shrink:0"></span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+        <div style="background:var(--bg3);border-radius:8px;padding:10px;text-align:center">
+          <div style="font-size:20px;font-weight:700;color:var(--accent)">${postCount}</div>
+          <div style="font-size:11px;color:var(--muted)">포스트</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:8px;padding:10px;text-align:center">
+          <div style="font-size:20px;font-weight:700;color:var(--accent2)">${runCount}</div>
+          <div style="font-size:11px;color:var(--muted)">실행 횟수</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px">마지막 실행: ${lastRun}</div>
+      <div style="display:flex;gap:8px">
+        <button onclick="wfRunForBlog('${blogId}')" style="flex:1;padding:7px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.3);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">▶ 실행</button>
+        <button onclick="filterByBlog('${blogId}')" style="flex:1;padding:7px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer">📋 포스트 보기</button>
+      </div>
+    </div>`
+  }).join('')
+}
+
+function wfRunForBlog(blogId) {
+  const mode = document.getElementById('wf-live-mode')?.value || 'live'
+  const count = document.getElementById('wf-live-count')?.value || '1'
+  const kw = document.getElementById('wf-live-kw')?.value || ''
+  _wfDispatch(mode, {
+    posts_per_run: count,
+    keyword: kw, blog_id: blogId,
+  }, 'wf-live-status', 'wf-live-dot')
+}
+
+function filterByBlog(blogId) {
+  navTo('posts')
+  // 블로그 필터링을 위해 전역 필터 변수 활용
+  window._blogFilter = blogId
+  filterPosts()
+  showToast(`블로그 '${blogId}' 포스트만 표시합니다`, 'info')
 }
 
 function refreshSystemStatus() {

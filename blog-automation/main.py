@@ -58,6 +58,7 @@ from config import (
     AUTO_SERIES_MIN_DAYS,
     ADSENSE_VALIDATION,
     ADSENSE_MIN_SCORE,
+    get_blog_configs,
 )
 from content_generator import generate_post, generate_series_post
 from adsense_validator import validate_adsense
@@ -98,13 +99,22 @@ def _check_config(skip_blogger: bool = False) -> bool:
 # 단일 실행
 # ──────────────────────────────────────────────────────────────────────────────
 
-def run_once(keywords: list[str] | None = None, dry_run: bool = False, review: bool = False) -> None:
+def run_once(
+    keywords: list[str] | None = None,
+    dry_run: bool = False,
+    review: bool = False,
+    blog_config: dict | None = None,
+) -> None:
     """키워드를 수집해 포스트를 생성하고 Blogger에 업로드합니다."""
     # 구버전 used_keywords.json 포맷 자동 마이그레이션
     _migrate_used_keywords()
 
+    cfg = blog_config or {}
+    blog_label = f"[{cfg.get('name', '기본')}] " if cfg.get("name") else ""
+    language = cfg.get("language") or BLOG_LANGUAGE
+
     logger.info("=" * 60)
-    logger.info(f"블로그 자동화 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    logger.info(f"{blog_label}블로그 자동화 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     logger.info("=" * 60)
 
     # 키워드 수집 (자동 시리즈를 위해 여유분 +1개 더 수집)
@@ -112,7 +122,7 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False, review: b
         collect_count = POSTS_PER_RUN + (1 if AUTO_SERIES and not dry_run and not review else 0)
         keywords = get_trending_keywords(
             country=TREND_COUNTRY,
-            language=BLOG_LANGUAGE,
+            language=language,
             count=collect_count,
             naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
             naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
@@ -229,7 +239,7 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False, review: b
                 continue
 
         # Blogger 업로드
-        result = upload_post(post_data)
+        result = upload_post(post_data, blog_config)
         if result:
             url = result.get("url", "")
             post_data["blogUrl"] = url
@@ -245,19 +255,20 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False, review: b
             time.sleep(2)
 
     logger.info("\n" + "=" * 60)
-    logger.info(f"완료: 성공 {success_count}개 / 실패 {fail_count}개")
+    logger.info(f"{blog_label}완료: 성공 {success_count}개 / 실패 {fail_count}개")
     logger.info("=" * 60)
 
     # 대시보드 데이터 업데이트
     try:
         if review and completed_posts:
-            save_pending_posts(completed_posts)
+            save_pending_posts(completed_posts, blog_config)
             logger.info("검토 대기 포스트 저장 완료")
         log_run(
             keywords=keywords,
             results=completed_posts,
             blogger_uploaded=success_count if not (dry_run or review) else 0,
             errors=fail_count,
+            blog_config=blog_config,
         )
         export_dashboard()
         logger.info("대시보드 데이터 업데이트 완료")
@@ -275,12 +286,16 @@ def run_series(
     dry_run: bool = False,
     review: bool = False,
     series_plan: dict | None = None,  # 기획이 이미 완료된 경우 바로 전달
+    blog_config: dict | None = None,
 ) -> None:
     """시리즈 포스트를 순서대로 기획·생성·게시합니다."""
     from series_planner import plan_series, build_series_nav, save_series
 
+    cfg = blog_config or {}
+    blog_label = f"[{cfg.get('name', '기본')}] " if cfg.get("name") else ""
+
     logger.info("=" * 60)
-    logger.info(f"시리즈 모드 시작: '{keyword}' {count}편")
+    logger.info(f"{blog_label}시리즈 모드 시작: '{keyword}' {count}편")
     logger.info("=" * 60)
 
     if series_plan is None:
@@ -362,7 +377,7 @@ def run_series(
                 save_series(series_plan)
                 continue
 
-        result = upload_post(post_data)
+        result = upload_post(post_data, blog_config)
         if result:
             blogger_url = result.get("url", "")
             ep["status"] = "done"
@@ -389,13 +404,14 @@ def run_series(
 
     try:
         if pending_list:
-            save_pending_posts(pending_list)
+            save_pending_posts(pending_list, blog_config)
         if generated_posts:
             log_run(
                 keywords=[keyword],
                 results=generated_posts,
                 blogger_uploaded=uploaded if not (dry_run or review) else 0,
                 errors=errors,
+                blog_config=blog_config,
             )
             export_dashboard()
             logger.info("대시보드 데이터 업데이트 완료")
@@ -403,7 +419,7 @@ def run_series(
         logger.warning(f"대시보드 업데이트 실패 (무시): {e}")
 
     logger.info("\n" + "=" * 60)
-    logger.info(f"시리즈 완료: {uploaded}/{len(episodes)}편 성공")
+    logger.info(f"{blog_label}시리즈 완료: {uploaded}/{len(episodes)}편 성공")
     logger.info("=" * 60)
 
 
@@ -493,6 +509,8 @@ def main() -> None:
     parser.add_argument("--series", action="store_true", help="시리즈 모드 — 주제를 N편으로 분할 기획·생성·게시 (--keyword 필수)")
     parser.add_argument("--series-count", type=int, default=4, metavar="N", help="시리즈 편수 (2~5, 기본값 4)")
     parser.add_argument("--setup", action="store_true", help="AdSense 심사 필수 페이지 생성 (개인정보처리방침·블로그 소개)")
+    parser.add_argument("--blog", type=str, default="", metavar="BLOG_ID",
+                        help="특정 블로그 ID만 실행 (BLOGS_CONFIG의 id 값; 기본값: 모든 블로그)")
     args = parser.parse_args()
 
     keywords = None
@@ -517,6 +535,22 @@ def main() -> None:
                 logger.error(f"  ❌ {name}: 생성 실패")
         return
 
+    # 블로그 목록 결정
+    all_blogs = get_blog_configs()
+    if args.blog:
+        target_blogs = [b for b in all_blogs if b.get("id") == args.blog]
+        if not target_blogs:
+            logger.error(f"블로그 ID '{args.blog}'를 BLOGS_CONFIG에서 찾을 수 없습니다.")
+            logger.error(f"사용 가능한 블로그: {[b.get('id') for b in all_blogs]}")
+            sys.exit(1)
+    else:
+        target_blogs = all_blogs
+
+    if len(target_blogs) > 1:
+        logger.info(f"다중 블로그 모드: {len(target_blogs)}개 블로그 순차 실행")
+        for b in target_blogs:
+            logger.info(f"  - [{b.get('id')}] {b.get('name', '')}")
+
     if args.series:
         if not keywords:
             logger.error("시리즈 모드는 --keyword 가 필수입니다 (예: --series --keyword '재테크 완전정복')")
@@ -526,16 +560,15 @@ def main() -> None:
         skip_blogger = args.test or args.review
         if not _check_config(skip_blogger=skip_blogger):
             sys.exit(1)
-        if not skip_blogger and not _check_config():
-            sys.exit(1)
-        if args.test:
-            logger.info(f"[시리즈 테스트] '{series_kw}' {series_count}편 — 업로드 없이 생성만")
-            run_series(series_kw, series_count, dry_run=True)
-        elif args.review:
-            logger.info(f"[시리즈 검토] '{series_kw}' {series_count}편 — pending에 저장")
-            run_series(series_kw, series_count, review=True)
-        else:
-            run_series(series_kw, series_count)
+        for blog_cfg in target_blogs:
+            if args.test:
+                logger.info(f"[시리즈 테스트] '{series_kw}' {series_count}편 — 업로드 없이 생성만")
+                run_series(series_kw, series_count, dry_run=True, blog_config=blog_cfg)
+            elif args.review:
+                logger.info(f"[시리즈 검토] '{series_kw}' {series_count}편 — pending에 저장")
+                run_series(series_kw, series_count, review=True, blog_config=blog_cfg)
+            else:
+                run_series(series_kw, series_count, blog_config=blog_cfg)
         return
 
     if not _check_config(skip_blogger=(args.test or args.review)):
@@ -543,19 +576,22 @@ def main() -> None:
 
     if args.test:
         logger.info("테스트 모드 — 업로드 없이 글만 생성합니다")
-        run_once(keywords=keywords, dry_run=True)
+        for blog_cfg in target_blogs:
+            run_once(keywords=keywords, dry_run=True, blog_config=blog_cfg)
         return
 
     if args.review:
         logger.info("검토 모드 — pending_posts.json에 저장합니다")
-        run_once(keywords=keywords, review=True)
+        for blog_cfg in target_blogs:
+            run_once(keywords=keywords, review=True, blog_config=blog_cfg)
         return
 
     if not _check_config():
         sys.exit(1)
 
     if args.once or args.interactive or keywords:
-        run_once(keywords=keywords)
+        for blog_cfg in target_blogs:
+            run_once(keywords=keywords, blog_config=blog_cfg)
     else:
         run_scheduled()
 

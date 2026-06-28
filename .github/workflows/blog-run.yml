@@ -33,6 +33,10 @@ on:
         description: '시리즈 편수 (2~5, series 모드에서만 사용)'
         required: false
         default: '4'
+      blog_id:
+        description: '특정 블로그 ID (BLOGS_CONFIG의 id 값; 비워두면 모든 블로그 실행)'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -75,6 +79,8 @@ jobs:
           ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
           ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"
           GSC_SITE_URL="${{ secrets.GSC_SITE_URL }}"
+          BLOGS_CONFIG="${{ secrets.BLOGS_CONFIG }}"
+          BLOG_NAME="${{ secrets.BLOG_NAME }}"
           POSTS_PER_RUN="${{ inputs.posts_per_run || '3' }}"
           POST_STATUS="${{ (inputs.mode == 'draft') && 'draft' || 'live' }}"
           BLOG_LANGUAGE=ko
@@ -95,36 +101,41 @@ jobs:
 
           SERIES_COUNT="${{ inputs.series_count || '4' }}"
 
+          BLOG_ARG=""
+          if [ -n "${{ inputs.blog_id }}" ]; then
+            BLOG_ARG="--blog ${{ inputs.blog_id }}"
+          fi
+
           if [ "$MODE" = "setup" ]; then
             echo "=== 셋업 모드: AdSense 필수 페이지 생성 (개인정보처리방침·블로그 소개) ==="
-            python main.py --setup
+            python main.py --setup $BLOG_ARG
           elif [ "$MODE" = "series" ]; then
             echo "=== 시리즈 모드: 주제를 ${SERIES_COUNT}편으로 분할 ==="
             if [ -z "$KEYWORD" ]; then
               echo "❌ 시리즈 모드는 keyword 입력이 필수입니다"
               exit 1
             fi
-            python main.py --series --series-count "$SERIES_COUNT" --keyword "$KEYWORD"
+            python main.py --series --series-count "$SERIES_COUNT" --keyword "$KEYWORD" $BLOG_ARG
           elif [ "$MODE" = "test" ]; then
             echo "=== 테스트 모드: 업로드 없이 글만 생성 ==="
             if [ -n "$KEYWORD" ]; then
-              python main.py --test --keyword "$KEYWORD"
+              python main.py --test --keyword "$KEYWORD" $BLOG_ARG
             else
-              python main.py --test
+              python main.py --test $BLOG_ARG
             fi
           elif [ "$MODE" = "review" ]; then
             echo "=== 검토 모드: pending_posts.json에 저장 ==="
             if [ -n "$KEYWORD" ]; then
-              python main.py --review --keyword "$KEYWORD"
+              python main.py --review --keyword "$KEYWORD" $BLOG_ARG
             else
-              python main.py --review
+              python main.py --review $BLOG_ARG
             fi
           else
             echo "=== 실행 모드: $MODE ==="
             if [ -n "$KEYWORD" ]; then
-              python main.py --once --keyword "$KEYWORD"
+              python main.py --once --keyword "$KEYWORD" $BLOG_ARG
             else
-              python main.py --once
+              python main.py --once $BLOG_ARG
             fi
           fi
 
@@ -134,7 +145,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # docs/data/ 는 tracked 파일 (-f: 루트 .gitignore /*  규칙 우회)
-          git add -f docs/data/posts.json docs/data/runs.json docs/data/analytics.json docs/data/meta.json docs/data/pending_posts.json docs/data/series.json docs/data/gsc.json 2>/dev/null || true
+          git add -f docs/data/posts.json docs/data/runs.json docs/data/analytics.json docs/data/meta.json docs/data/pending_posts.json docs/data/series.json docs/data/gsc.json docs/data/blogs.json 2>/dev/null || true
           git add blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json blog-automation/logs/series.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"

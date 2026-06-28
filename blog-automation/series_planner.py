@@ -3,6 +3,7 @@
 import json
 import logging
 import os
+import re
 import uuid
 from datetime import datetime
 
@@ -19,6 +20,59 @@ _MAX_SERIES = 50
 # ─────────────────────────────────────────────
 # I/O
 # ─────────────────────────────────────────────
+
+def get_last_series_date() -> datetime | None:
+    """가장 최근에 생성된 시리즈의 날짜를 반환합니다. 시리즈가 없으면 None."""
+    for s in load_series():
+        created = s.get("created_at")
+        if created:
+            try:
+                return datetime.fromisoformat(created)
+            except ValueError:
+                continue
+    return None
+
+
+def pick_series_keyword(keywords: list[str]) -> str | None:
+    """
+    키워드 목록 중 시리즈로 확장하기 가장 적합한 키워드 1개를 Claude가 선택합니다.
+    모든 키워드가 시리즈 부적합이면 None을 반환합니다.
+    """
+    if not keywords:
+        return None
+    try:
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        kw_list = "\n".join(f"{i + 1}. {kw}" for i, kw in enumerate(keywords))
+        prompt = (
+            "다음 키워드 목록 중 3~4편 블로그 시리즈로 확장하기 가장 적합한 것 1개를 선택하세요.\n\n"
+            "선택 기준:\n"
+            "• 한 주제 안에 서로 다른 하위 각도 3개 이상이 나올 수 있는 것\n"
+            "• 독자가 여러 편을 이어 읽을 만큼 깊이와 범위가 있는 것\n"
+            "• 즉각적인 속보가 아닌 지속 검색 수요가 있는 것\n"
+            "• 모든 키워드가 시리즈로 확장하기 어려우면 'none' 반환\n\n"
+            f"키워드 목록:\n{kw_list}\n\n"
+            "번호만 응답 (예: 2) 또는 none:"
+        )
+        msg = client.messages.create(
+            model=CLAUDE_MODEL,
+            max_tokens=10,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        ans = msg.content[0].text.strip().lower()
+        if "none" in ans:
+            logger.info("시리즈 적합 키워드 없음 — 단독 포스트로 진행")
+            return None
+        m = re.search(r'\d+', ans)
+        if m:
+            idx = int(m.group()) - 1
+            if 0 <= idx < len(keywords):
+                chosen = keywords[idx]
+                logger.info(f"자동 시리즈 키워드 선정: '{chosen}'")
+                return chosen
+    except Exception as e:
+        logger.debug(f"시리즈 키워드 자동 선정 실패: {e}")
+    return None
+
 
 def load_series() -> list:
     try:

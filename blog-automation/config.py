@@ -37,3 +37,16 @@ SCHEDULE_CRON = os.getenv("SCHEDULE_CRON", "0 9 * * *")
 
 # Google Search Console
 GSC_SITE_URL = os.getenv("GSC_SITE_URL", "")  # 예: https://hoguwhat1.blogspot.com/
+
+# 시리즈 자동화
+# AUTO_SERIES=true 이면 정기 실행 시 트렌드 키워드 중 하나를 자동으로 시리즈로 기획
+AUTO_SERIES = os.getenv("AUTO_SERIES", "true").lower() in ("true", "1", "yes")
+try:
+    AUTO_SERIES_COUNT = max(2, min(int(os.getenv("AUTO_SERIES_COUNT", "3").strip()), 5))
+except (ValueError, TypeError):
+    AUTO_SERIES_COUNT = 3
+# 마지막 시리즈 기획 이후 최소 N일이 지나야 새 시리즈를 자동 생성
+try:
+    AUTO_SERIES_MIN_DAYS = max(1, int(os.getenv("AUTO_SERIES_MIN_DAYS", "7").strip()))
+except (ValueError, TypeError):
+    AUTO_SERIES_MIN_DAYS = 7

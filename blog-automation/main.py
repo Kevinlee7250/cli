@@ -53,6 +53,9 @@ from config import (
     POSTS_PER_RUN,
     TREND_COUNTRY,
     SCHEDULE_CRON,
+    AUTO_SERIES,
+    AUTO_SERIES_COUNT,
+    AUTO_SERIES_MIN_DAYS,
 )
 from content_generator import generate_post, generate_series_post
 from blogger_uploader import upload_post
@@ -101,17 +104,56 @@ def run_once(keywords: list[str] | None = None, dry_run: bool = False, review: b
     logger.info(f"블로그 자동화 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     logger.info("=" * 60)
 
-    # 키워드 수집
+    # 키워드 수집 (자동 시리즈를 위해 여유분 +1개 더 수집)
     if not keywords:
+        collect_count = POSTS_PER_RUN + (1 if AUTO_SERIES and not dry_run and not review else 0)
         keywords = get_trending_keywords(
             country=TREND_COUNTRY,
             language=BLOG_LANGUAGE,
-            count=POSTS_PER_RUN,
+            count=collect_count,
             naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
             naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
         )
-    keywords = keywords[:POSTS_PER_RUN]
-    logger.info(f"대상 키워드 {len(keywords)}개: {keywords}")
+    keywords = keywords[:POSTS_PER_RUN + 1]
+    logger.info(f"수집된 키워드 {len(keywords)}개: {keywords}")
+
+    # ── 자동 시리즈 체크 ─────────────────────────────────────────
+    # 조건: AUTO_SERIES=true + live 모드 + 마지막 시리즈로부터 MIN_DAYS 경과
+    auto_series_keyword: str | None = None
+    if AUTO_SERIES and not dry_run and not review:
+        from series_planner import get_last_series_date, pick_series_keyword
+        last_date = get_last_series_date()
+        if last_date:
+            days_elapsed = (datetime.now() - last_date).days
+        else:
+            days_elapsed = AUTO_SERIES_MIN_DAYS + 1  # 처음 실행이면 바로 시리즈 시작
+        if days_elapsed >= AUTO_SERIES_MIN_DAYS:
+            logger.info(
+                f"자동 시리즈 조건 충족 "
+                f"(마지막 시리즈: {'없음' if not last_date else f'{days_elapsed}일 전'},"
+                f" 최소 {AUTO_SERIES_MIN_DAYS}일 필요)"
+            )
+            auto_series_keyword = pick_series_keyword(keywords)
+        else:
+            logger.info(
+                f"자동 시리즈 대기 중 "
+                f"(마지막 시리즈 {days_elapsed}일 전, {AUTO_SERIES_MIN_DAYS - days_elapsed}일 후 활성화)"
+            )
+
+    # 시리즈 키워드를 단독 목록에서 제거하고 먼저 시리즈 실행
+    if auto_series_keyword:
+        remaining = [kw for kw in keywords if kw != auto_series_keyword][:POSTS_PER_RUN - 1]
+        logger.info(
+            f"[자동 시리즈] '{auto_series_keyword}' {AUTO_SERIES_COUNT}편 기획 시작 "
+            f"(이후 단독 포스트 {len(remaining)}개)"
+        )
+        run_series(auto_series_keyword, AUTO_SERIES_COUNT)
+        keywords = remaining
+    else:
+        keywords = keywords[:POSTS_PER_RUN]
+    # ─────────────────────────────────────────────────────────────
+
+    logger.info(f"단독 포스트 대상 키워드 {len(keywords)}개: {keywords}")
 
     success_count = 0
     fail_count = 0

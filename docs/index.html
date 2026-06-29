@@ -4943,8 +4943,9 @@ function renderApiKeyManager() {
           ${k.scope ? `<div style="font-size:10px;color:var(--muted);margin-top:2px">${k.scope}</div>` : ''}
         </div>
         <div style="flex:1;min-width:120px">${statusHtml}</div>
-        <div style="display:flex;gap:6px;align-items:center">
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
           ${editBtnHtml}
+          ${isSet && k.lsKey === BOT_KEY_LS ? `<button onclick="apiKeyTestAnthropic()" id="ant-test-btn" style="padding:4px 10px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:6px;color:var(--green);font-size:11px;cursor:pointer">🔌 연결 테스트</button>` : ''}
           ${isSet && !k.secretOnly ? `<button onclick="apiKeyClear('${k.id}')" style="padding:4px 8px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:6px;color:var(--red);font-size:11px;cursor:pointer">🗑</button>` : ''}
         </div>
         <div id="apikey-input-${k.id}" style="display:none;flex:0 0 100%;margin-top:8px"></div>
@@ -4961,6 +4962,79 @@ function renderApiKeyManager() {
 function apiKeyRefreshStatus() {
   renderApiKeyManager()
   showToast('API 키 상태 새로고침됨', 'info')
+}
+
+async function apiKeyTestAnthropic() {
+  const key = (localStorage.getItem(BOT_KEY_LS) || '').trim()
+  if (!key) { showToast('Anthropic API 키가 없습니다', 'error'); return }
+
+  const btn = document.getElementById('ant-test-btn')
+  const row = document.getElementById('apirow-ant_key')
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ 테스트 중...' }
+
+  // 기존 결과 제거
+  row?.querySelectorAll('.ant-test-result').forEach(el => el.remove())
+
+  const resultDiv = document.createElement('div')
+  resultDiv.className = 'ant-test-result'
+  resultDiv.style.cssText = 'flex:0 0 100%;margin-top:8px;padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.6'
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-allow-browser': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 10,
+        messages: [{ role: 'user', content: '안녕' }]
+      }),
+    })
+
+    if (res.ok) {
+      resultDiv.style.background = 'rgba(52,211,153,.08)'
+      resultDiv.style.border = '1px solid rgba(52,211,153,.3)'
+      resultDiv.innerHTML = `<strong style="color:var(--green)">✅ 연결 성공!</strong> — Anthropic API 정상 응답 (HTTP ${res.status})<br>
+        <span style="color:var(--muted)">봇이 정상적으로 작동합니다. 연결 오류가 계속되면 브라우저를 새로고침하세요.</span>`
+    } else if (res.status === 401) {
+      resultDiv.style.background = 'rgba(248,113,113,.08)'
+      resultDiv.style.border = '1px solid rgba(248,113,113,.3)'
+      resultDiv.innerHTML = `<strong style="color:var(--red)">❌ 인증 실패 (401)</strong> — API 키가 잘못됐습니다<br>
+        <span style="color:var(--muted)">✏️ 수정 버튼을 클릭해서 올바른 Anthropic API 키를 다시 입력하세요<br>
+        키는 <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--accent2)">Anthropic Console → API Keys</a>에서 확인하세요</span>`
+    } else if (res.status === 403) {
+      resultDiv.style.background = 'rgba(248,113,113,.08)'
+      resultDiv.style.border = '1px solid rgba(248,113,113,.3)'
+      const errBody = await res.json().catch(() => ({}))
+      resultDiv.innerHTML = `<strong style="color:var(--red)">❌ 권한 오류 (403)</strong><br>
+        <span style="color:var(--muted)">${errBody.error?.message || '브라우저 직접 접근이 차단됐습니다'}<br>
+        <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--accent2)">Anthropic Console</a>에서 API 키의 브라우저 접근 허용 여부를 확인하세요</span>`
+    } else {
+      const errBody = await res.json().catch(() => ({}))
+      resultDiv.style.background = 'rgba(251,191,36,.06)'
+      resultDiv.style.border = '1px solid rgba(251,191,36,.3)'
+      resultDiv.innerHTML = `<strong style="color:#fbbf24">⚠️ API 오류 (${res.status})</strong><br>
+        <span style="color:var(--muted)">${errBody.error?.message || '알 수 없는 오류'}</span>`
+    }
+  } catch (netErr) {
+    resultDiv.style.background = 'rgba(248,113,113,.08)'
+    resultDiv.style.border = '1px solid rgba(248,113,113,.3)'
+    resultDiv.innerHTML = `<strong style="color:var(--red)">❌ 네트워크 오류 — CORS 차단</strong><br>
+      <span style="color:var(--muted)">브라우저가 <code>api.anthropic.com</code> 요청을 차단했습니다.<br>
+      <strong>해결 방법 (하나씩 시도):</strong><br>
+      1️⃣ <strong>시크릿/프라이빗 모드</strong>로 열고 재시도 (브라우저 확장 비활성화)<br>
+      2️⃣ <strong>다른 브라우저</strong>에서 시도 (Chrome → Firefox 등)<br>
+      3️⃣ VPN/프록시 사용 중이면 해제<br>
+      4️⃣ <a href="https://console.anthropic.com/settings/keys" target="_blank" style="color:var(--accent2)">Anthropic Console</a>에서 해당 키의 "Allow browser access" 활성화 확인</span>`
+  }
+
+  if (row) row.appendChild(resultDiv)
+  if (btn) { btn.disabled = false; btn.textContent = '🔌 연결 테스트' }
 }
 
 function _findKeyDef(id) {

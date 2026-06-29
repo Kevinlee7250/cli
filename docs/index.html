@@ -4834,20 +4834,20 @@ function renderRepairReport() {
   const score = latest.health_score ?? 0
   const scoreColor = score >= 80 ? 'var(--green)' : score >= 60 ? '#f59e0b' : 'var(--red)'
   const scoreIcon = score >= 80 ? '✅' : score >= 60 ? '⚠️' : '❌'
-  const runAt = latest.run_at ? new Date(latest.run_at).toLocaleString('ko-KR') : '알 수 없음'
+  const runAt = (latest.run_at || latest.timestamp) ? new Date(latest.run_at || latest.timestamp).toLocaleString('ko-KR') : '알 수 없음'
   const issuesFound = latest.issues_found ?? 0
   const repairsApplied = latest.repairs_applied ?? 0
   const issues = latest.issues || []
-  const appliedList = latest.applied_repairs || []
+  const appliedList = latest.repairs || latest.applied_repairs || []
 
   const issueRows = issues.map(iss => {
-    const lvlColor = iss.severity === 'critical' ? 'var(--red)' : iss.severity === 'high' ? '#f59e0b' : iss.severity === 'warning' ? '#60a5fa' : 'var(--muted)'
-    const lvlIcon = iss.severity === 'critical' ? '🔴' : iss.severity === 'high' ? '🟠' : iss.severity === 'warning' ? '🟡' : '⚪'
-    const fixed = appliedList.some(r => r.fix === iss.fix)
+    const lvlColor = iss.level === 'critical' ? 'var(--red)' : iss.level === 'high' ? '#f59e0b' : iss.level === 'warning' ? '#60a5fa' : 'var(--muted)'
+    const lvlIcon = iss.level === 'critical' ? '🔴' : iss.level === 'high' ? '🟠' : iss.level === 'warning' ? '🟡' : '⚪'
+    const fixed = appliedList.some(r => (r.fix_applied || r.fix) === iss.fix)
     return `<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;background:rgba(255,255,255,.03);border-radius:8px;margin-bottom:6px">
       <span style="font-size:13px;line-height:1.4">${lvlIcon}</span>
       <div style="flex:1;min-width:0">
-        <div style="font-size:12px;font-weight:600;color:${lvlColor}">[${(iss.severity||'').toUpperCase()}] ${iss.message || iss.fix || ''}</div>
+        <div style="font-size:12px;font-weight:600;color:${lvlColor}">[${(iss.level||'').toUpperCase()}] ${iss.message || iss.fix || ''}</div>
         ${iss.detail ? `<div style="font-size:11px;color:var(--muted);margin-top:2px">${iss.detail}</div>` : ''}
       </div>
       <span style="font-size:11px;color:${fixed ? 'var(--green)' : 'var(--muted)'}">${fixed ? '✅ 수리됨' : '⏳ 대기'}</span>
@@ -4857,7 +4857,7 @@ function renderRepairReport() {
   const historyRows = repairs.slice(0, 8).map(r => {
     const s = r.health_score ?? 0
     const sc = s >= 80 ? 'var(--green)' : s >= 60 ? '#f59e0b' : 'var(--red)'
-    const t = r.run_at ? new Date(r.run_at).toLocaleString('ko-KR') : ''
+    const t = (r.run_at || r.timestamp) ? new Date(r.run_at || r.timestamp).toLocaleString('ko-KR') : ''
     const mode = r.dry_run ? '진단' : '수리'
     return `<div style="display:flex;align-items:center;gap:12px;padding:6px 10px;border-bottom:1px solid var(--border);font-size:12px">
       <span style="color:var(--muted);flex:0 0 130px">${t}</span>
@@ -4902,7 +4902,7 @@ function _botCheckErrors() {
   // 수리 데이터에서 위험/경고 이슈 확인
   const latestRepair = (DATA.repairs || [])[0]
   const repairScore = latestRepair?.health_score ?? 100
-  const repairCritical = (latestRepair?.issues || []).filter(i => i.severity === 'critical' || i.severity === 'high')
+  const repairCritical = (latestRepair?.issues || []).filter(i => i.level === 'critical' || i.level === 'high')
   const hasCriticalRepair = repairScore < 60 || repairCritical.length > 0
   if (errRuns.length > 0 || hasCriticalRepair) {
     const badgeCount = errRuns.length + repairCritical.length
@@ -4917,7 +4917,7 @@ function _botCheckErrors() {
       criticalIssues: criticalIssues.map(i => i.message),
       healthScore: latest?.analysis?.health_score,
       repairHealthScore: repairScore,
-      repairIssues: repairCritical.map(i => `[${i.severity}] ${i.message}`),
+      repairIssues: repairCritical.map(i => `[${i.level}] ${i.message}`),
     }
   } else {
     if (badge) badge.style.display = 'none'
@@ -5048,8 +5048,8 @@ function _buildBotContext() {
   // 자동 수리 데이터
   const latestRepair = (DATA.repairs || [])[0]
   const repairScore = latestRepair?.health_score ?? '점검 필요'
-  const repairTime = latestRepair?.run_at ? new Date(latestRepair.run_at).toLocaleString('ko-KR') : '없음'
-  const repairIssues = (latestRepair?.issues || []).map(i => `[${i.severity}] ${i.message}`).join('; ') || '없음'
+  const repairTime = (latestRepair?.run_at || latestRepair?.timestamp) ? new Date(latestRepair.run_at || latestRepair.timestamp).toLocaleString('ko-KR') : '없음'
+  const repairIssues = (latestRepair?.issues || []).map(i => `[${i.level}] ${i.message}`).join('; ') || '없음'
   const repairApplied = latestRepair?.repairs_applied ?? 0
 
   return `당신은 블로그 자동화 시스템의 관리 도우미입니다. 아래 현재 시스템 상태를 바탕으로 사용자를 도와주세요.

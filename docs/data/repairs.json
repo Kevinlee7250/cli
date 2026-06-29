@@ -1,0 +1,35 @@
+[
+  {
+    "timestamp": "2026-06-29T04:56:12.706498",
+    "health_score": 93,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "stuck_series",
+        "level": "warning",
+        "message": "24시간 이상 멈춘 시리즈 2개",
+        "context": {
+          "series": [
+            "SK하이닉스 주가, 직접 물려보고 공부한 3편 시리즈",
+            "삼성전자 주가 직접 공부하고 투자해보며 깨달은 것들"
+          ]
+        },
+        "fix": "reset_stuck_series"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "stuck_series",
+        "issue_level": "warning",
+        "issue_message": "24시간 이상 멈춘 시리즈 2개",
+        "fix_applied": "reset_stuck_series",
+        "timestamp": "2026-06-29T04:56:12.705998",
+        "success": true,
+        "detail": "멈춘 시리즈 2개 → completed 처리",
+        "fixed": 2
+      }
+    ],
+    "dry_run": false
+  }
+]

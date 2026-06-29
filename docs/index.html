@@ -4960,10 +4960,10 @@ function _botCheckErrors() {
   const repairScore = latestRepair?.health_score ?? 100
   const repairCritical = (latestRepair?.issues || []).filter(i => i.level === 'critical' || i.level === 'high')
   const hasCriticalRepair = repairScore < 60 || repairCritical.length > 0
+
   if (errRuns.length > 0 || hasCriticalRepair) {
     const badgeCount = errRuns.length + repairCritical.length
     if (badge) { badge.style.display = 'flex'; badge.textContent = badgeCount }
-    // learning에서 이슈도 확인
     const latest = (DATA.learning || [])[0]
     const criticalIssues = (latest?.issues || []).filter(iss => iss.level === 'error')
     window._botAutoErrorContext = {
@@ -4975,27 +4975,48 @@ function _botCheckErrors() {
       repairHealthScore: repairScore,
       repairIssues: repairCritical.map(i => `[${i.level}] ${i.message}`),
     }
+    // 심각 오류이고 API 키가 있고 이번 세션에 아직 자동 활성화 안 된 경우 → 봇 자동 실행
+    const isCritical = errRuns.length >= 3 || hasCriticalRepair
+    const hasKey = !!localStorage.getItem(BOT_KEY_LS)
+    if (isCritical && hasKey && !window._botAutoActivated) {
+      window._botAutoActivated = true
+      setTimeout(() => {
+        showToast(`⚠️ 오류 ${badgeCount}건 감지 — 시스템봇이 자동 진단을 시작합니다`, 'error')
+        setTimeout(() => {
+          if (!_botOpen) toggleBot()
+          setTimeout(_botAutodiagnose, 800)
+        }, 1200)
+      }, 1500)
+    }
   } else {
     if (badge) badge.style.display = 'none'
     window._botAutoErrorContext = null
   }
 }
 
-// ── 봇 자동 오류 진단 (봇 open 시 에러 있으면 자동 메시지) ─────────────────────
+// ── 봇 자동 오류 진단 ─────────────────────────────────────────────────────────
 async function _botAutodiagnose() {
   const ctx = window._botAutoErrorContext
   if (!ctx) return
   const key = localStorage.getItem(BOT_KEY_LS)
   if (!key) return
 
-  const summary = `최근 ${ctx.errorRuns}회 실행에서 총 ${ctx.totalErrors}건 오류 발생\n키워드: ${ctx.recentKeywords.join(', ')}\n${ctx.criticalIssues.length ? '심각 이슈: ' + ctx.criticalIssues.join(', ') : ''}\n시스템 건강점수: ${ctx.healthScore ?? 'N/A'}`
+  const repairPart = ctx.repairIssues?.length
+    ? `\n수리 진단 이슈: ${ctx.repairIssues.join(', ')}\n시스템 건강점수: ${ctx.repairHealthScore}/100`
+    : ''
+  const summary =
+    `[자동 감지된 시스템 오류]\n` +
+    `• 최근 오류 발생 실행: ${ctx.errorRuns}회 (총 ${ctx.totalErrors}건)\n` +
+    (ctx.recentKeywords.length ? `• 오류 키워드: ${ctx.recentKeywords.join(', ')}\n` : '') +
+    (ctx.criticalIssues.length ? `• 심각 이슈: ${ctx.criticalIssues.join(' / ')}\n` : '') +
+    repairPart
 
   _botTyping = true
   _renderBotMessages()
   try {
     const reply = await _callClaude([{
       role: 'user',
-      content: `아래 시스템 오류 현황을 분석하고 자동 수정 방법을 알려줘:\n\n${summary}`
+      content: `${summary}\n\n위 오류들을 분석해서:\n1. 근본 원인이 무엇인지\n2. 지금 당장 할 수 있는 조치\n3. 재발 방지 방법\n을 간결하게 알려줘. 필요하면 액션 버튼도 제안해줘.`
     }])
     _botTyping = false
     _botAppend('assistant', reply)
@@ -5243,24 +5264,43 @@ function _botAppendWithChips(role, text, chips) {
     if (_botMessages.length === 0) {
       const hasErrors = !!window._botAutoErrorContext
       const errCtx = window._botAutoErrorContext
-      let welcomeText = '안녕하세요! 저는 블로그 자동화 관리봇입니다 🤖\n\n시스템 상태, 수익 분석, 포스트 생성, 검토 대기 포스트 관리 등을 도와드릴 수 있어요.'
+      const hasKey = !!localStorage.getItem(BOT_KEY_LS)
+
       if (hasErrors) {
-        welcomeText += `\n\n⚠️ 최근 ${errCtx.errorRuns}회 실행에서 오류가 감지되었습니다 (총 ${errCtx.totalErrors}건). 아래 버튼으로 자동 진단을 시작할 수 있습니다.`
+        const errCount = (errCtx.errorRuns || 0)
+        const repairIssueCount = (errCtx.repairIssues || []).length
+        const welcomeText =
+          `⚠️ 오류가 감지되어 자동 활성화됐습니다.\n\n` +
+          (errCount > 0 ? `• 오류 발생 실행: ${errCount}회 (총 ${errCtx.totalErrors}건)\n` : '') +
+          (repairIssueCount > 0 ? `• 시스템 이슈: ${errCtx.repairIssues.join(', ')}\n` : '') +
+          `• 건강점수: ${errCtx.repairHealthScore ?? errCtx.healthScore ?? 'N/A'}/100\n\n` +
+          (hasKey ? '아래 버튼을 눌러 자동 진단을 시작하거나 직접 질문하세요.' : '🔑 Anthropic API 키를 먼저 입력하면 자동 진단을 받을 수 있어요.')
+        const chips = hasKey
+          ? [
+              { label: '🔧 지금 바로 진단', cmd: '__autodiagnose__' },
+              { label: '🔨 자동 수리 실행', cmd: '자동 수리 워크플로우를 실행해줘' },
+              { label: '📊 오류 원인 분석', cmd: '최근 실행 오류의 원인을 분석해줘' },
+              { label: '✅ 시스템 점검', cmd: '현재 시스템 전체 상태를 점검해줘' },
+            ]
+          : [
+              { label: '📊 시스템 상태', cmd: '현재 시스템 상태를 알려줘' },
+              { label: '💰 수익 분석', cmd: '현재 수익 추정치와 분석을 알려줘' },
+            ]
+        _botAppendWithChips('assistant', welcomeText, chips)
+        // API 키 있으면 자동으로 진단 시작
+        if (hasKey && window._botAutoActivated) {
+          setTimeout(_botAutodiagnose, 600)
+        }
+      } else {
+        const welcomeText = '안녕하세요! 저는 블로그 자동화 관리봇입니다 🤖\n\n시스템 상태, 수익 분석, 포스트 생성, 검토 대기 포스트 관리 등을 도와드릴 수 있어요.'
+        const chips = [
+          { label: '📊 시스템 상태', cmd: '현재 시스템 상태를 알려줘' },
+          { label: '📝 대기 포스트', cmd: '검토 대기 중인 포스트를 알려줘' },
+          { label: '💰 수익 분석', cmd: '현재 수익 추정치와 분석을 알려줘' },
+          { label: '🚀 포스트 생성', cmd: '포스트를 어떻게 생성하면 되나요?' },
+        ]
+        _botAppendWithChips('assistant', welcomeText, chips)
       }
-      const chips = hasErrors
-        ? [
-            { label: '🔧 오류 자동 진단', cmd: '__autodiagnose__' },
-            { label: '📊 시스템 상태', cmd: '현재 시스템 상태를 알려줘' },
-            { label: '💰 수익 분석', cmd: '현재 수익 추정치와 분석을 알려줘' },
-            { label: '🚀 포스트 생성', cmd: '포스트를 어떻게 생성하면 되나요?' },
-          ]
-        : [
-            { label: '📊 시스템 상태', cmd: '현재 시스템 상태를 알려줘' },
-            { label: '📝 대기 포스트', cmd: '검토 대기 중인 포스트를 알려줘' },
-            { label: '💰 수익 분석', cmd: '현재 수익 추정치와 분석을 알려줘' },
-            { label: '🚀 포스트 생성', cmd: '포스트를 어떻게 생성하면 되나요?' },
-          ]
-      _botAppendWithChips('assistant', welcomeText, chips)
     }
     setTimeout(() => {
       const inp = document.getElementById('bot-input')

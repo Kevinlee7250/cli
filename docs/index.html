@@ -4883,7 +4883,7 @@ const _API_KEYS = [
   {
     group: 'Anthropic',
     keys: [
-      { id: 'ant_key',     label: 'Anthropic API Key (봇)', hint: 'sk-ant-...', lsKey: BOT_KEY_LS, secret: 'ANTHROPIC_API_KEY', scope: 'Claude API 호출' },
+      { id: 'ant_key', label: 'Anthropic API Key', hint: 'sk-ant-... 또는 sk-proj-...', lsKey: BOT_KEY_LS, secret: 'ANTHROPIC_API_KEY', scope: '블로그 자동화 + 관리봇 공용 (하나의 키)', syncBoth: true },
     ]
   },
   {
@@ -5000,9 +5000,96 @@ function apiKeySave(id) {
   document.getElementById(`apikey-input-${id}`).style.display = 'none'
   renderApiKeyManager()
   showToast(`${k.label} 저장됨`, 'success')
-  // 특수 처리: PAT 저장 시 runs 갱신, OAuth 저장 시 상태 갱신
   if (k.lsKey === 'gh_pat') { checkPATStatus(); loadSystemRuns(); }
   if (k.lsKey === BOT_KEY_LS) _refreshBotKeyUI()
+  // syncBoth: 봇 + 시스템 공용 키 → GitHub Secret 동기화 안내
+  if (k.syncBoth && k.secret) {
+    _apiKeyShowSecretSyncPrompt(id, k, val)
+  }
+}
+
+function _apiKeyShowSecretSyncPrompt(id, k, val) {
+  const row = document.getElementById(`apirow-${id}`)
+  if (!row) return
+  // 기존 프롬프트 제거
+  const old = row.querySelector('.secret-sync-prompt')
+  if (old) old.remove()
+
+  const div = document.createElement('div')
+  div.className = 'secret-sync-prompt'
+  div.style.cssText = 'flex:0 0 100%;margin-top:8px;padding:10px 14px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.3);border-radius:8px;font-size:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap'
+  div.innerHTML = `
+    <span style="color:#fbbf24;font-weight:600">⚠️ 브라우저 봇 저장 완료</span>
+    <span style="color:var(--muted);flex:1">GitHub Actions 자동화도 같은 키를 쓰려면 <strong style="color:var(--text)">ANTHROPIC_API_KEY</strong> Secret을 업데이트하세요</span>
+    <button onclick="_apiKeyAutoSyncSecret('${id}')" style="padding:5px 12px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.4);border-radius:6px;color:var(--accent);font-size:11px;cursor:pointer;font-weight:600;white-space:nowrap">🔄 자동 동기화 시도</button>
+    <button onclick="navigator.clipboard.writeText('${val.replace(/'/g,"\\'")}');showToast('키 복사됨','success')" style="padding:5px 12px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:6px;color:var(--green);font-size:11px;cursor:pointer;white-space:nowrap">📋 키 복사</button>
+    <a href="https://github.com/${GH_OWNER}/${GH_REPO}/settings/secrets/actions" target="_blank" style="padding:5px 12px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;text-decoration:none;white-space:nowrap">→ GitHub Secret 페이지</a>
+    <button onclick="this.parentElement.remove()" style="padding:4px 8px;background:transparent;border:none;color:var(--muted);font-size:13px;cursor:pointer;margin-left:auto">✕</button>`
+  row.appendChild(div)
+}
+
+async function _apiKeyAutoSyncSecret(id) {
+  const k = _findKeyDef(id)
+  if (!k?.secret) return
+  const val = (localStorage.getItem(k.lsKey) || '').trim()
+  if (!val) { showToast('먼저 키를 저장하세요', 'error'); return }
+  const pat = getPAT()
+  if (!pat) { showToast('GitHub PAT가 없습니다 — GitHub PAT를 먼저 설정하세요', 'warning'); return }
+
+  const btn = event.target
+  btn.disabled = true; btn.textContent = '⏳ 동기화 중...'
+
+  try {
+    // 공개키 가져오기
+    const pkResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/secrets/public-key`, {
+      headers: { Authorization: `Bearer ${pat}`, Accept: 'application/vnd.github.v3+json' }
+    })
+    if (!pkResp.ok) throw new Error(`공개키 조회 실패 (${pkResp.status}) — PAT에 secrets 쓰기 권한 필요`)
+    const { key: pubKey, key_id } = await pkResp.json()
+
+    // tweetnacl-sealedbox로 암호화
+    await _loadNacl()
+    const encryptedB64 = _sealBox(val, pubKey)
+
+    const upResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/secrets/${k.secret}`, {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${pat}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ encrypted_value: encryptedB64, key_id })
+    })
+    if (!upResp.ok && upResp.status !== 204) throw new Error(`Secret 업데이트 실패 (${upResp.status})`)
+
+    btn.parentElement.remove()
+    showToast(`✅ ANTHROPIC_API_KEY Secret 동기화 완료 — 시스템과 봇이 같은 키를 사용합니다`, 'success')
+  } catch (err) {
+    btn.disabled = false; btn.textContent = '🔄 자동 동기화 시도'
+    showToast(`동기화 실패: ${err.message}`, 'error')
+  }
+}
+
+async function _loadNacl() {
+  if (window._naclLoaded) return
+  // tweetnacl + tweetnacl-sealedbox
+  await _loadScript('https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl-fast.min.js')
+  await _loadScript('https://cdn.jsdelivr.net/npm/tweetnacl-sealedbox-js@1.2.0/src/sealedbox.js')
+  window._naclLoaded = true
+}
+
+function _loadScript(src) {
+  return new Promise((res, rej) => {
+    if (document.querySelector(`script[src="${src}"]`)) return res()
+    const s = document.createElement('script')
+    s.src = src; s.onload = res; s.onerror = rej
+    document.head.appendChild(s)
+  })
+}
+
+function _sealBox(plaintext, pubKeyBase64) {
+  // tweetnacl-sealedbox-js 사용
+  const recipientPublicKey = Uint8Array.from(atob(pubKeyBase64), c => c.charCodeAt(0))
+  const messageBytes = new TextEncoder().encode(plaintext)
+  if (typeof window.sealedBox === 'undefined') throw new Error('sealedbox 라이브러리 로드 실패')
+  const sealed = window.sealedBox.seal(messageBytes, recipientPublicKey)
+  return btoa(String.fromCharCode(...sealed))
 }
 
 async function apiKeySaveToSecret(id) {
@@ -5045,62 +5132,37 @@ async function apiKeyEditSecret(id) {
 }
 
 async function apiKeySecretUpdate(id) {
+  // syncBoth 키는 _apiKeyAutoSyncSecret으로 처리
   const k = _findKeyDef(id)
   if (!k?.secret) return
   const val = (document.getElementById(`apikey-val-${id}`)?.value || '').trim()
   if (!val) { showToast('값을 입력하세요', 'error'); return }
-  const pat = getPAT()
-  if (!pat) { showToast('GitHub PAT가 없습니다', 'error'); return }
-
+  // 로컬 저장 후 동기화
+  if (k.lsKey) localStorage.setItem(k.lsKey, val)
   const btn = document.querySelector(`#apikey-input-${id} button`)
-  const origText = btn?.textContent
-  if (btn) { btn.disabled = true; btn.textContent = '⏳ 업데이트 중...' }
-
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ 동기화 중...' }
   try {
-    // 1. 공개키 가져오기
+    await _loadNacl()
+    const pat = getPAT()
+    if (!pat) throw new Error('GitHub PAT가 없습니다')
     const pkResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/secrets/public-key`, {
       headers: { Authorization: `Bearer ${pat}`, Accept: 'application/vnd.github.v3+json' }
     })
-    if (!pkResp.ok) throw new Error(`공개키 조회 실패 (${pkResp.status}) — PAT에 secrets 권한이 필요합니다`)
-    const { key, key_id } = await pkResp.json()
-
-    // 2. sodium으로 암호화 (CDN 로드)
-    if (!window._sodiumReady) {
-      await new Promise((res, rej) => {
-        const s = document.createElement('script')
-        s.src = 'https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl-fast.min.js'
-        s.onload = res; s.onerror = rej
-        document.head.appendChild(s)
-      })
-      window._sodiumReady = true
-    }
-    const keyBytes = Uint8Array.from(atob(key), c => c.charCodeAt(0))
-    const valBytes = new TextEncoder().encode(val)
-    const encrypted = window.nacl.box.before
-      ? (() => { throw new Error('nacl.box 사용 불가') })()
-      : (() => {
-          // tweetnacl seal (libsodium crypto_box_seal)
-          const nonce = window.nacl.randomBytes(window.nacl.box.nonceLength)
-          // libsodium seal = anonymous box; tweetnacl doesn't have seal natively
-          // Fallback: guide user to update via GitHub UI
-          throw new Error('브라우저에서 직접 암호화 불가 — GitHub 웹에서 Secret을 수동 업데이트하세요')
-        })()
-
-    // 3. Secret 업데이트
+    if (!pkResp.ok) throw new Error(`공개키 조회 실패 (${pkResp.status})`)
+    const { key: pubKey, key_id } = await pkResp.json()
+    const encryptedB64 = _sealBox(val, pubKey)
     const upResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/secrets/${k.secret}`, {
       method: 'PUT',
       headers: { Authorization: `Bearer ${pat}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ encrypted_value: encrypted, key_id })
+      body: JSON.stringify({ encrypted_value: encryptedB64, key_id })
     })
     if (!upResp.ok && upResp.status !== 204) throw new Error(`Secret 업데이트 실패 (${upResp.status})`)
     document.getElementById(`apikey-input-${id}`).style.display = 'none'
     renderApiKeyManager()
-    showToast(`✅ ${k.secret} Secret 업데이트 완료`, 'success')
+    showToast(`✅ ${k.secret} Secret 동기화 완료`, 'success')
   } catch (err) {
-    if (btn) { btn.disabled = false; btn.textContent = origText }
-    // GitHub Secret은 브라우저에서 직접 암호화가 복잡하므로 안내
+    if (btn) { btn.disabled = false; btn.textContent = '🔒 Secret 업데이트' }
     showToast(err.message, 'error')
-    // 복사 버튼 제공
     const wrap = document.getElementById(`apikey-input-${id}`)
     if (wrap) {
       const copyDiv = document.createElement('div')

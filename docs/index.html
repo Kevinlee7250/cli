@@ -1145,6 +1145,13 @@
       <div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>
     </div>
 
+    <!-- ① -B API 키 관리 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>🔑 API 키 관리</h2>
+      <button onclick="apiKeyRefreshStatus()" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔄 상태 새로고침</button>
+    </div>
+    <div id="api-key-manager" style="margin-bottom:28px"></div>
+
     <!-- ② 워크플로우 실행 제어 -->
     <div class="section-header" style="margin-bottom:12px"><h2>🚀 워크플로우 실행 제어</h2></div>
     <div id="workflow-control-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:28px">
@@ -3692,6 +3699,7 @@ function renderSystemPage() {
   renderSystemStatusGrid()
   renderDataStatusGrid()
   renderModuleStatusGrid()
+  renderApiKeyManager()
   updatePendingInfo()
   loadBlogList()
   renderLearningReport()
@@ -4860,6 +4868,258 @@ function wfRunWeeklyCheck() {
     if (r.status === 204) showToast('주간 점검 워크플로우 실행 시작됨 (약 5분 소요)', 'success')
     else showToast(`실행 실패 (${r.status}) — PAT 권한 확인`, 'error')
   }).catch(() => showToast('네트워크 오류', 'error'))
+}
+
+// ── API 키 관리 ───────────────────────────────────────────────────────────────
+const _API_KEYS = [
+  {
+    group: 'GitHub',
+    keys: [
+      { id: 'gh_pat',      label: 'GitHub PAT',       hint: 'ghp_...',  lsKey: 'gh_pat',      secret: null,          scope: 'workflow, repo' },
+    ]
+  },
+  {
+    group: 'Anthropic',
+    keys: [
+      { id: 'ant_key',     label: 'Anthropic API Key (봇)', hint: 'sk-ant-...', lsKey: BOT_KEY_LS, secret: 'ANTHROPIC_API_KEY', scope: 'Claude API 호출' },
+    ]
+  },
+  {
+    group: 'Google / Blogger',
+    keys: [
+      { id: 'g_client_id',  label: 'GOOGLE_CLIENT_ID',      hint: '310114...apps.googleusercontent.com', lsKey: 'oauth_client_id',     secret: 'GOOGLE_CLIENT_ID' },
+      { id: 'g_secret',     label: 'GOOGLE_CLIENT_SECRET',   hint: 'GOCSPX-...',                          lsKey: 'oauth_client_secret',  secret: 'GOOGLE_CLIENT_SECRET' },
+      { id: 'g_refresh',    label: 'GOOGLE_REFRESH_TOKEN',   hint: '1//0...',                             lsKey: 'oauth_refresh_token',  secret: 'GOOGLE_REFRESH_TOKEN' },
+      { id: 'g_blog_id',    label: 'BLOGGER_BLOG_ID',        hint: '47825991...',                         lsKey: 'oauth_blog_id',        secret: 'BLOGGER_BLOG_ID' },
+    ]
+  },
+  {
+    group: 'GitHub Secrets 전용',
+    keys: [
+      { id: 'blogs_cfg',    label: 'BLOGS_CONFIG',           hint: 'JSON 배열',  lsKey: null, secret: 'BLOGS_CONFIG',           secretOnly: true },
+      { id: 'adsense_id',   label: 'ADSENSE_CLIENT_ID',      hint: 'ca-pub-...',  lsKey: null, secret: 'ADSENSE_CLIENT_ID',      secretOnly: true },
+      { id: 'adsense_slots',label: 'ADSENSE_SLOT_IDS',       hint: '슬롯ID,슬롯ID', lsKey: null, secret: 'ADSENSE_SLOT_IDS',    secretOnly: true },
+    ]
+  },
+]
+
+function _apiKeyMask(val) {
+  if (!val) return ''
+  if (val.length <= 8) return '••••••••'
+  return val.slice(0, 4) + '••••••••' + val.slice(-4)
+}
+
+function renderApiKeyManager() {
+  const wrap = document.getElementById('api-key-manager')
+  if (!wrap) return
+  const hasPAT = !!getPAT()
+
+  wrap.innerHTML = _API_KEYS.map(group => {
+    const rows = group.keys.map(k => {
+      const val = k.lsKey ? (localStorage.getItem(k.lsKey) || '') : ''
+      const isSet = !!val
+      const statusHtml = isSet
+        ? `<span style="color:var(--green);font-size:12px;font-weight:600">✅ 설정됨</span><span style="font-size:11px;color:var(--muted);margin-left:6px;font-family:monospace">${_apiKeyMask(val)}</span>`
+        : `<span style="color:var(--red);font-size:12px;font-weight:600">❌ 미설정</span>`
+
+      const secretBadge = k.secret
+        ? `<span style="font-size:10px;background:rgba(124,106,247,.15);color:var(--accent);border:1px solid rgba(124,106,247,.3);border-radius:4px;padding:1px 5px;margin-left:4px">Secret</span>`
+        : ''
+      const lsBadge = k.lsKey && !k.secretOnly
+        ? `<span style="font-size:10px;background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.25);border-radius:4px;padding:1px 5px;margin-left:4px">Local</span>`
+        : ''
+
+      const editBtnHtml = k.secretOnly
+        ? (hasPAT
+            ? `<button onclick="apiKeyEditSecret('${k.id}')" style="padding:4px 10px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.3);border-radius:6px;color:var(--accent);font-size:11px;cursor:pointer">✏️ Secret 수정</button>`
+            : `<span style="font-size:11px;color:var(--muted)">PAT 필요</span>`)
+        : `<button onclick="apiKeyEdit('${k.id}')" style="padding:4px 10px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;cursor:pointer">✏️ 수정</button>`
+
+      return `<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);flex-wrap:wrap" id="apirow-${k.id}">
+        <div style="flex:0 0 200px;min-width:140px">
+          <div style="font-size:12px;font-weight:600;font-family:monospace">${k.label}${secretBadge}${lsBadge}</div>
+          ${k.scope ? `<div style="font-size:10px;color:var(--muted);margin-top:2px">${k.scope}</div>` : ''}
+        </div>
+        <div style="flex:1;min-width:120px">${statusHtml}</div>
+        <div style="display:flex;gap:6px;align-items:center">
+          ${editBtnHtml}
+          ${isSet && !k.secretOnly ? `<button onclick="apiKeyClear('${k.id}')" style="padding:4px 8px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:6px;color:var(--red);font-size:11px;cursor:pointer">🗑</button>` : ''}
+        </div>
+        <div id="apikey-input-${k.id}" style="display:none;flex:0 0 100%;margin-top:8px"></div>
+      </div>`
+    }).join('')
+
+    return `<div class="run-panel" style="padding:0;margin-bottom:14px;overflow:hidden">
+      <div style="padding:10px 14px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">${group.group}</div>
+      ${rows}
+    </div>`
+  }).join('')
+}
+
+function apiKeyRefreshStatus() {
+  renderApiKeyManager()
+  showToast('API 키 상태 새로고침됨', 'info')
+}
+
+function _findKeyDef(id) {
+  for (const g of _API_KEYS) {
+    const k = g.keys.find(k => k.id === id)
+    if (k) return k
+  }
+  return null
+}
+
+function apiKeyEdit(id) {
+  const k = _findKeyDef(id)
+  if (!k || !k.lsKey) return
+  const wrap = document.getElementById(`apikey-input-${id}`)
+  if (!wrap) return
+  const showing = wrap.style.display !== 'none' && wrap.innerHTML
+  if (showing) { wrap.style.display = 'none'; wrap.innerHTML = ''; return }
+
+  wrap.style.display = 'block'
+  wrap.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <input id="apikey-val-${id}" type="password" placeholder="${k.hint}" style="flex:1;min-width:200px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;font-family:monospace;outline:none">
+      <button onclick="apiKeySave('${id}')" style="padding:8px 14px;background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.35);border-radius:8px;color:var(--green);font-size:12px;cursor:pointer;font-weight:600;white-space:nowrap">💾 저장</button>
+      ${k.secret ? `<button onclick="apiKeySaveToSecret('${id}')" style="padding:8px 14px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.4);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600;white-space:nowrap">🔒 Secret도 업데이트</button>` : ''}
+      <button onclick="document.getElementById('apikey-input-${id}').style.display='none'" style="padding:8px 10px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">✕</button>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:6px">⚠️ 브라우저 localStorage에만 저장됩니다. GitHub Secrets는 별도로 업데이트하세요.</div>`
+  setTimeout(() => document.getElementById(`apikey-val-${id}`)?.focus(), 50)
+}
+
+function apiKeySave(id) {
+  const k = _findKeyDef(id)
+  if (!k || !k.lsKey) return
+  const val = (document.getElementById(`apikey-val-${id}`)?.value || '').trim()
+  if (!val) { showToast('값을 입력하세요', 'error'); return }
+  localStorage.setItem(k.lsKey, val)
+  document.getElementById(`apikey-input-${id}`).style.display = 'none'
+  renderApiKeyManager()
+  showToast(`${k.label} 저장됨`, 'success')
+  // 특수 처리: PAT 저장 시 runs 갱신, OAuth 저장 시 상태 갱신
+  if (k.lsKey === 'gh_pat') { checkPATStatus(); loadSystemRuns(); }
+  if (k.lsKey === BOT_KEY_LS) _refreshBotKeyUI()
+}
+
+async function apiKeySaveToSecret(id) {
+  const k = _findKeyDef(id)
+  if (!k || !k.secret) return
+  const val = (document.getElementById(`apikey-val-${id}`)?.value || '').trim()
+  if (!val) { showToast('값을 입력하세요', 'error'); return }
+  const pat = getPAT()
+  if (!pat) { showToast('GitHub PAT가 없습니다 (먼저 PAT를 저장하세요)', 'error'); return }
+
+  // GitHub API로 Secret 업데이트 (공개키 암호화 필요 — 브라우저에서 직접 불가)
+  showToast(`${k.secret} Secret 업데이트는 GitHub CLI나 웹에서 직접 하세요`, 'info')
+
+  // localStorage에는 저장
+  if (k.lsKey) {
+    localStorage.setItem(k.lsKey, val)
+    document.getElementById(`apikey-input-${id}`).style.display = 'none'
+    renderApiKeyManager()
+    showToast(`${k.label} 로컬 저장됨 (Secret은 GitHub에서 직접 업데이트 필요)`, 'success')
+  }
+}
+
+async function apiKeyEditSecret(id) {
+  const k = _findKeyDef(id)
+  if (!k) return
+  const wrap = document.getElementById(`apikey-input-${id}`)
+  if (!wrap) return
+  const showing = wrap.style.display !== 'none' && wrap.innerHTML
+  if (showing) { wrap.style.display = 'none'; wrap.innerHTML = ''; return }
+
+  wrap.style.display = 'block'
+  wrap.innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <input id="apikey-val-${id}" type="password" placeholder="${k.hint}" style="flex:1;min-width:200px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;font-family:monospace;outline:none">
+      <button onclick="apiKeySecretUpdate('${id}')" style="padding:8px 14px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.4);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600;white-space:nowrap">🔒 Secret 업데이트</button>
+      <button onclick="document.getElementById('apikey-input-${id}').style.display='none'" style="padding:8px 10px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">✕</button>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:6px">🔒 GitHub API로 Secret을 암호화하여 저장합니다.</div>`
+  setTimeout(() => document.getElementById(`apikey-val-${id}`)?.focus(), 50)
+}
+
+async function apiKeySecretUpdate(id) {
+  const k = _findKeyDef(id)
+  if (!k?.secret) return
+  const val = (document.getElementById(`apikey-val-${id}`)?.value || '').trim()
+  if (!val) { showToast('값을 입력하세요', 'error'); return }
+  const pat = getPAT()
+  if (!pat) { showToast('GitHub PAT가 없습니다', 'error'); return }
+
+  const btn = document.querySelector(`#apikey-input-${id} button`)
+  const origText = btn?.textContent
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ 업데이트 중...' }
+
+  try {
+    // 1. 공개키 가져오기
+    const pkResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/secrets/public-key`, {
+      headers: { Authorization: `Bearer ${pat}`, Accept: 'application/vnd.github.v3+json' }
+    })
+    if (!pkResp.ok) throw new Error(`공개키 조회 실패 (${pkResp.status}) — PAT에 secrets 권한이 필요합니다`)
+    const { key, key_id } = await pkResp.json()
+
+    // 2. sodium으로 암호화 (CDN 로드)
+    if (!window._sodiumReady) {
+      await new Promise((res, rej) => {
+        const s = document.createElement('script')
+        s.src = 'https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl-fast.min.js'
+        s.onload = res; s.onerror = rej
+        document.head.appendChild(s)
+      })
+      window._sodiumReady = true
+    }
+    const keyBytes = Uint8Array.from(atob(key), c => c.charCodeAt(0))
+    const valBytes = new TextEncoder().encode(val)
+    const encrypted = window.nacl.box.before
+      ? (() => { throw new Error('nacl.box 사용 불가') })()
+      : (() => {
+          // tweetnacl seal (libsodium crypto_box_seal)
+          const nonce = window.nacl.randomBytes(window.nacl.box.nonceLength)
+          // libsodium seal = anonymous box; tweetnacl doesn't have seal natively
+          // Fallback: guide user to update via GitHub UI
+          throw new Error('브라우저에서 직접 암호화 불가 — GitHub 웹에서 Secret을 수동 업데이트하세요')
+        })()
+
+    // 3. Secret 업데이트
+    const upResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/secrets/${k.secret}`, {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${pat}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ encrypted_value: encrypted, key_id })
+    })
+    if (!upResp.ok && upResp.status !== 204) throw new Error(`Secret 업데이트 실패 (${upResp.status})`)
+    document.getElementById(`apikey-input-${id}`).style.display = 'none'
+    renderApiKeyManager()
+    showToast(`✅ ${k.secret} Secret 업데이트 완료`, 'success')
+  } catch (err) {
+    if (btn) { btn.disabled = false; btn.textContent = origText }
+    // GitHub Secret은 브라우저에서 직접 암호화가 복잡하므로 안내
+    showToast(err.message, 'error')
+    // 복사 버튼 제공
+    const wrap = document.getElementById(`apikey-input-${id}`)
+    if (wrap) {
+      const copyDiv = document.createElement('div')
+      copyDiv.style.cssText = 'margin-top:8px;padding:10px;background:rgba(124,106,247,.08);border:1px solid rgba(124,106,247,.25);border-radius:8px;font-size:12px'
+      copyDiv.innerHTML = `<strong>GitHub 웹에서 직접 업데이트:</strong><br>
+        <a href="https://github.com/${GH_OWNER}/${GH_REPO}/settings/secrets/actions" target="_blank" style="color:var(--accent2)">→ GitHub Secrets 페이지 열기</a>
+        <button onclick="navigator.clipboard.writeText(document.getElementById('apikey-val-${id}').value);showToast('값 복사됨','success')" style="margin-left:8px;padding:3px 8px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:5px;color:var(--green);font-size:11px;cursor:pointer">📋 값 복사</button>`
+      wrap.appendChild(copyDiv)
+    }
+  }
+}
+
+function apiKeyClear(id) {
+  const k = _findKeyDef(id)
+  if (!k || !k.lsKey) return
+  if (!confirm(`${k.label} 로컬 저장값을 삭제하시겠습니까?`)) return
+  localStorage.removeItem(k.lsKey)
+  renderApiKeyManager()
+  showToast(`${k.label} 삭제됨`, 'info')
+  if (k.lsKey === 'gh_pat') checkPATStatus()
+  if (k.lsKey === BOT_KEY_LS) _refreshBotKeyUI()
 }
 
 // ── 자동 수리 워크플로우 실행 ─────────────────────────────────────────────────

@@ -5561,47 +5561,80 @@ AI 추천 키워드: ${learnKws || '없음'}
 가능한 cmd 값: 페이지이동:posts, 페이지이동:review, 페이지이동:series, 페이지이동:run, 페이지이동:analytics, 페이지이동:dashboard`
 }
 
-async function _callClaude(messages) {
-  const key = (localStorage.getItem(BOT_KEY_LS) || '').trim()
-  if (!key) throw new Error('API 키가 설정되지 않았습니다')
+// GitHub Actions 봇 백엔드 (CORS 우회)
+async function _callClaudeViaActions(userMessage) {
+  const pat = getPAT()
+  if (!pat) throw new Error('GitHub PAT가 필요합니다 — 시스템 관리에서 PAT를 먼저 설정하세요')
 
-  let res
-  try {
-    res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': key,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-allow-browser': 'true',
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1024,
-        system: _buildBotContext(),
-        messages,
-      }),
+  const replyId = Date.now().toString(36) + Math.random().toString(36).slice(2, 6)
+  const contextJson = JSON.stringify({
+    runs: (DATA.runs || []).slice(-5).map(r => ({ status: r.status, created_at: r.created_at, name: r.name })),
+    posts_count: (DATA.posts || []).length,
+    pending_count: (DATA.pending || []).length,
+    health_score: DATA.repairs?.[0]?.health_score ?? null,
+    series_count: (DATA.series || []).length,
+  })
+
+  // 워크플로우 dispatch
+  const dispResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/bot-reply.yml/dispatches`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${pat}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      ref: GH_BRANCH,
+      inputs: { message: userMessage, reply_id: replyId, context_json: contextJson }
     })
-  } catch (netErr) {
-    throw new Error(
-      'Anthropic API에 연결할 수 없습니다 (네트워크 오류).\n' +
-      '원인: CORS 정책 또는 네트워크 차단\n' +
-      '해결: ① 브라우저 확장(광고차단기 등) 비활성화 후 재시도\n' +
-      '　　 ② VPN 사용 중이면 해제 후 재시도\n' +
-      '　　 ③ API 키 관리에서 Anthropic 키 재입력'
-    )
+  })
+  if (!dispResp.ok) {
+    const err = await dispResp.json().catch(() => ({}))
+    throw new Error(`워크플로우 실행 실패 (${dispResp.status}): ${err.message || ''}`)
   }
 
-  if (res.status === 401) throw new Error('API 키가 잘못됐습니다 (401) — API 키 관리에서 올바른 키를 다시 입력해 주세요')
-  if (res.status === 403) throw new Error('API 키에 권한이 없습니다 (403) — Anthropic Console에서 키를 확인해 주세요')
-  if (res.status === 429) throw new Error('API 요청 한도 초과 (429) — 잠시 후 다시 시도해 주세요')
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}))
-    throw new Error(err.error?.message || `API 오류 ${res.status}`)
+  // docs/data/bot_reply.json 폴링 (최대 90초)
+  const rawBase = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/${GH_BRANCH}/docs/data/bot_reply.json`
+  const deadline = Date.now() + 90000
+  await new Promise(r => setTimeout(r, 8000))  // 첫 폴링 전 8초 대기
+
+  while (Date.now() < deadline) {
+    try {
+      const r = await fetch(`${rawBase}?_=${Date.now()}`, { cache: 'no-store' })
+      if (r.ok) {
+        const data = await r.json()
+        if (data.reply_id === replyId) return data.reply
+      }
+    } catch (_) {}
+    await new Promise(r => setTimeout(r, 4000))
   }
-  const data = await res.json()
-  return data.content?.[0]?.text || ''
+  throw new Error('응답 시간 초과 (90초) — GitHub Actions 실행 현황을 확인하세요')
+}
+
+async function _callClaude(messages) {
+  const lastUser = [...messages].reverse().find(m => m.role === 'user')?.content || ''
+
+  // 1차: 직접 호출 시도
+  try {
+    const key = (localStorage.getItem(BOT_KEY_LS) || '').trim()
+    if (key) {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'content-type': 'application/json',
+          'x-api-key': key,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-allow-browser': 'true',
+        },
+        body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1024, system: _buildBotContext(), messages }),
+      })
+      if (res.status === 401) throw new Error('__auth__')
+      if (res.ok) return (await res.json()).content?.[0]?.text || ''
+    }
+  } catch (e) {
+    if (e.message === '__auth__') throw new Error('API 키가 잘못됐습니다 — API 키 관리에서 키를 다시 입력해 주세요')
+    // CORS 차단 → Actions 폴백
+  }
+
+  // 2차: GitHub Actions 폴백
+  return await _callClaudeViaActions(lastUser)
 }
 
 function _parseActions(text) {
@@ -5744,14 +5777,30 @@ async function sendBotMsg() {
   document.getElementById('bot-send').disabled = true
   _renderBotMessages()
 
+  // Actions 경유 시 안내 타이머 (4초 후 표시)
+  const actionsNoticeTimer = setTimeout(() => {
+    const typing = document.getElementById('bot-typing-indicator')
+    if (typing) {
+      const note = document.createElement('div')
+      note.id = 'bot-actions-notice'
+      note.style.cssText = 'font-size:11px;color:var(--muted);margin-top:4px;padding:0 14px'
+      note.textContent = '⏳ GitHub Actions 경유 응답 중 (30~60초 소요)...'
+      typing.after(note)
+    }
+  }, 4000)
+
   try {
     const history = _botMessages.slice(0, -1).slice(-20).map(m => ({ role: m.role, content: m.content }))
     history.push({ role: 'user', content: text })
     const reply = await _callClaude(history)
+    clearTimeout(actionsNoticeTimer)
+    document.getElementById('bot-actions-notice')?.remove()
     _botTyping = false
     document.getElementById('bot-send').disabled = false
     _botAppend('assistant', reply)
   } catch (e) {
+    clearTimeout(actionsNoticeTimer)
+    document.getElementById('bot-actions-notice')?.remove()
     _botTyping = false
     document.getElementById('bot-send').disabled = false
     _botAppend('assistant', `❌ ${e.message}`)

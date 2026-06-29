@@ -56,7 +56,7 @@ jobs:
           ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
           ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"
           GSC_SITE_URL="${{ secrets.GSC_SITE_URL }}"
-          BLOGS_CONFIG="${{ secrets.BLOGS_CONFIG }}"
+          BLOGS_CONFIG=${{ secrets.BLOGS_CONFIG }}
           BLOG_NAME="${{ secrets.BLOG_NAME }}"
           BLOG_LANGUAGE=ko
           LOG_LEVEL=info

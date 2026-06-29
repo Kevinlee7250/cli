@@ -189,6 +189,70 @@ def _export_gsc(docs_dir: str) -> None:
         logger.debug(f"GSC 내보내기 생략: {exc}")
 
 
+def _export_social(docs_dir: str) -> None:
+    """run_history.json 포스트에서 기본 SNS 콘텐츠 항목을 생성합니다."""
+    dst = os.path.join(docs_dir, "social.json")
+    try:
+        history = _load_history()
+        seen: set[str] = set()
+        entries: list[dict] = []
+        cat_tags: dict[str, list[str]] = {
+            "금융": ["#재테크", "#주식투자", "#경제", "#투자", "#금융"],
+            "부동산": ["#부동산", "#아파트", "#청약", "#부동산투자"],
+            "건강": ["#건강", "#다이어트", "#운동", "#건강관리"],
+            "기술": ["#IT", "#기술", "#AI", "#디지털"],
+            "여행": ["#여행", "#국내여행", "#여행스타그램"],
+            "교육": ["#공부", "#자기계발", "#교육", "#학습"],
+            "쇼핑": ["#쇼핑", "#할인", "#리뷰"],
+            "법률": ["#법률", "#생활법률", "#법"],
+        }
+        default_tags = ["#정보", "#블로그", "#일상"]
+
+        for run in history:
+            run_date = (run.get("runAt", "") or "")[:10]
+            for post in run.get("posts", []):
+                title = post.get("title", "")
+                keyword = post.get("keyword", "")
+                url = post.get("url", "")
+                if not title or title in seen:
+                    continue
+                seen.add(title)
+                cat = _categorize(keyword)
+                tags = cat_tags.get(cat, default_tags)
+                kw_slug = re.sub(r"[^가-힣a-zA-Z0-9]", "", keyword)
+                caption = (
+                    f"{title}\n\n💡 {keyword}에 대한 핵심 정보를 정리했습니다.\n\n"
+                    + " ".join(tags)
+                )
+                entries.append({
+                    "id": f"{run_date}_{kw_slug}_social",
+                    "date": run_date,
+                    "keyword": keyword,
+                    "postTitle": title,
+                    "postUrl": url,
+                    "instagram": {
+                        "caption": caption,
+                        "hookLine": title[:50],
+                        "hashtags": {
+                            "popular": tags,
+                            "medium": [f"#{kw_slug}"] if kw_slug else [],
+                            "niche": [],
+                        },
+                        "bestPostingTimes": ["07:00", "12:00", "21:00"],
+                        "storyHighlightTitle": keyword[:10],
+                    },
+                    "threads": None,
+                    "tiktok": None,
+                })
+
+        entries = entries[:50]
+        with open(dst, "w", encoding="utf-8") as f:
+            json.dump(entries, f, ensure_ascii=False, indent=2)
+        logger.info(f"  SNS 데이터: {len(entries)}개 내보내기 완료")
+    except Exception as exc:
+        logger.debug(f"SNS 데이터 내보내기 생략: {exc}")
+
+
 def _export_series(docs_dir: str) -> None:
     """시리즈 기획 데이터를 docs/data/series.json으로 내보냅니다."""
     series_src = os.path.join(os.path.dirname(__file__), "logs", "series.json")
@@ -346,6 +410,7 @@ def export_dashboard() -> None:
             json.dump(data, f, ensure_ascii=False, indent=2)
 
     _export_series(DOCS_DATA_DIR)
+    _export_social(DOCS_DATA_DIR)
     _export_gsc(DOCS_DATA_DIR)
     _export_learning(DOCS_DATA_DIR)
     _export_repairs(DOCS_DATA_DIR)

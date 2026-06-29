@@ -3322,7 +3322,7 @@ function renderSeries() {
       if (ep.status === 'pending_review') {
         actionBtn = `<button onclick="openSerEpModal(${srIdx},${epIdx})" style="padding:4px 10px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.35);border-radius:6px;color:var(--accent);font-size:11px;cursor:pointer;font-weight:600;white-space:nowrap">✏️ 검토</button>`
       } else if (ep.status === 'upload_failed' || ep.status === 'generated') {
-        actionBtn = `<button onclick="retrySeriesEp(${srIdx},${epIdx})" style="padding:4px 10px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:6px;color:var(--accent2);font-size:11px;cursor:pointer;white-space:nowrap">🔄 재시도</button>`
+        actionBtn = `<button id="ser-retry-btn-${srIdx}-${epIdx}" onclick="retrySeriesEp(${srIdx},${epIdx})" style="padding:4px 10px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:6px;color:var(--accent2);font-size:11px;cursor:pointer;white-space:nowrap">🔄 재시도</button>`
       } else if (ep.status === 'done') {
         actionBtn = link
       }
@@ -3331,7 +3331,7 @@ function renderSeries() {
         <td style="color:var(--muted);text-align:center;font-weight:600;">${ep.episode}</td>
         <td><strong>${esc(ep.title || '')}</strong><br><span style="font-size:12px;color:var(--muted)">${esc(ep.focus || '')}</span></td>
         <td>${badge}</td>
-        <td style="text-align:center">${actionBtn || (ep.status !== 'done' ? link : '')}</td>
+        <td style="text-align:center" id="ser-retry-cell-${srIdx}-${epIdx}">${actionBtn || (ep.status !== 'done' ? link : '')}</td>
       </tr>`
     }).join('')
 
@@ -3559,15 +3559,71 @@ async function retrySeriesEp(srIdx, epIdx) {
   const sr = series[srIdx]
   const ep = sr?.episodes[epIdx]
   if (!ep) return
-  if (!confirm(`[${ep.episode}편] "${ep.title || ''}" 을 다시 업로드 시도하시겠습니까?\n\n수동 검토 탭에서 pending 포스트로 게시하거나, 시리즈를 review 모드로 재실행하세요.`)) return
-  // 해당 에피소드 제목으로 pending에서 찾아서 게시
+
+  const cell = document.getElementById(`ser-retry-cell-${srIdx}-${epIdx}`)
+  const btn  = document.getElementById(`ser-retry-btn-${srIdx}-${epIdx}`)
+
+  // pending에서 제목 매칭으로 포스트 데이터 탐색
   const pending = DATA.pending || []
-  const matched = pending.find(p => p.title === ep.title)
-  if (matched) {
-    showToast(`"${ep.title}" 를 pending에서 찾았습니다. 수동 검토 탭으로 이동합니다.`, 'info')
-    navTo('review')
+  const post = pending.find(p => p.title === ep.title)
+
+  if (!post) {
+    showToast(`"${ep.title}" 포스트 데이터 없음 — GitHub Actions로 재생성합니다`, 'info')
+    // PAT가 있으면 workflow_dispatch로 재생성 요청
+    const pat = getPAT()
+    if (!pat) { showToast('PAT가 없습니다. 실행 제어 탭에서 설정하세요.', 'error'); return }
+    if (!confirm(`[${ep.episode}편] "${ep.title}"\n\npending에 데이터가 없어 GitHub Actions로 재생성합니다.\n계속하시겠습니까?`)) return
+    if (btn) { btn.disabled = true; btn.textContent = '⏳ 요청 중...' }
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`,
+      { method: 'POST', headers: { Authorization: `Bearer ${pat}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: { mode: 'review', keyword: sr.keyword || '', posts_per_run: '1' } }) }
+    )
+    if (resp.status === 204) {
+      if (cell) cell.innerHTML = '<span style="color:var(--green);font-size:11px">✅ 재생성 요청됨</span>'
+      showToast('재생성 요청됨 — 약 3~5분 후 수동 검토 탭에서 확인하세요', 'success')
+    } else {
+      if (btn) { btn.disabled = false; btn.textContent = '🔄 재시도' }
+      showToast('요청 실패 — PAT 권한 확인', 'error')
+    }
+    return
+  }
+
+  // 직접 게시 모드
+  const isDirect = publishMode !== 'actions'
+  if (isDirect) {
+    const blogId = localStorage.getItem('oauth_blog_id')
+    if (!blogId) { showToast('BLOGGER_BLOG_ID 설정이 필요합니다 (수동 검토 탭 → OAuth 설정)', 'error'); return }
+    const hasOAuth = localStorage.getItem('oauth_refresh_token')
+    if (!hasOAuth) { showToast('Google OAuth 설정이 필요합니다 (수동 검토 탭 → OAuth 설정)', 'error'); return }
   } else {
-    showToast('pending_posts.json에 해당 에피소드가 없습니다. 검토 모드로 재실행하세요.', 'error')
+    if (!getPAT()) { showToast('PAT가 없습니다. 실행 제어 탭에서 설정하세요.', 'error'); return }
+  }
+
+  if (!confirm(`[${ep.episode}편] "${ep.title}"\n\n${isDirect ? '직접 Blogger에 게시' : 'GitHub Actions로 게시'}합니다. 계속하시겠습니까?`)) return
+
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ 업로드 중...' }
+  if (cell) {
+    const statusSpan = document.createElement('div')
+    statusSpan.id = `ser-retry-status-${srIdx}-${epIdx}`
+    statusSpan.style.cssText = 'font-size:11px;margin-top:4px;color:var(--muted)'
+    statusSpan.textContent = isDirect ? '직접 게시 중...' : '워크플로우 요청 중...'
+    cell.appendChild(statusSpan)
+  }
+
+  const statusEl = document.getElementById(`ser-retry-status-${srIdx}-${epIdx}`) || { className: '', innerHTML: '' }
+
+  try {
+    if (isDirect) {
+      await _serEpPublishDirect(post.id, statusEl)
+    } else {
+      await _serEpPublishViaActions(post.id, statusEl)
+    }
+    if (cell) cell.innerHTML = '<span style="color:var(--green);font-size:12px;font-weight:700">✅ 게시 완료</span>'
+  } catch (err) {
+    if (btn) { btn.disabled = false; btn.textContent = '🔄 재시도' }
+    if (statusEl) statusEl.innerHTML = '<span style="color:var(--red);font-size:11px">❌ ' + esc(err.message) + '</span>'
+    showToast('게시 실패: ' + err.message, 'error')
   }
 }
 

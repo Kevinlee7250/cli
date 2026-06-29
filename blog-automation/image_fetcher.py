@@ -166,23 +166,34 @@ def _wikimedia_images(keyword: str, count: int) -> list[dict]:
 # 통합 검색 & HTML 삽입
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _fetch_one_image(
+def _score_title_relevance(img: dict, query: str) -> float:
+    """이미지 제목·URL과 쿼리 단어의 겹침 비율 (0~1). 관련성 순위 정렬에 사용."""
+    query_words = set(re.findall(r'[가-힣]{2,}|[A-Za-z]{3,}', query.lower()))
+    if not query_words:
+        return 0.0
+    haystack = (img.get("title", "") + " " + img.get("url", "")).lower()
+    title_words = set(re.findall(r'[가-힣]{2,}|[A-Za-z]{3,}', haystack))
+    return len(query_words & title_words) / len(query_words)
+
+
+def _fetch_best_image(
     query: str,
     naver_client_id: str = "",
     naver_client_secret: str = "",
+    n_candidates: int = 4,
 ) -> dict | None:
-    """단일 쿼리로 이미지 1개를 검색합니다. Naver → DDG → Wikimedia 순."""
+    """단일 쿼리로 후보 이미지 여러 개를 가져와 제목 관련성이 가장 높은 것을 반환합니다."""
+    candidates: list[dict] = []
     if naver_client_id and naver_client_secret:
-        imgs = _naver_images(query, 1, naver_client_id, naver_client_secret)
-        if imgs:
-            return imgs[0]
-    imgs = _ddg_images(query, 1)
-    if imgs:
-        return imgs[0]
-    imgs = _wikimedia_images(query, 1)
-    if imgs:
-        return imgs[0]
-    return None
+        candidates = _naver_images(query, n_candidates, naver_client_id, naver_client_secret)
+    if not candidates:
+        candidates = _ddg_images(query, n_candidates)
+    if not candidates:
+        candidates = _wikimedia_images(query, n_candidates)
+    if not candidates:
+        return None
+    # 제목 관련성 점수가 가장 높은 후보 선택 (동점 시 API 기본 순위 존중)
+    return max(candidates, key=lambda img: _score_title_relevance(img, query))
 
 
 def _filter_relevant_images(
@@ -191,7 +202,7 @@ def _filter_relevant_images(
     article_plain_text: str,
 ) -> list[dict]:
     """
-    Claude를 사용해 글 내용과 관련 없는 이미지를 제거합니다 (배치 평가, max_tokens=50).
+    Claude를 사용해 글 내용과 관련 없는 이미지를 제거합니다.
     API 오류 시 모두 허용(기본 통과)하여 자동화를 중단시키지 않습니다.
     """
     if not images:
@@ -202,36 +213,42 @@ def _filter_relevant_images(
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
         img_list = "\n".join(
-            f"{i + 1}. 검색어={img.get('search_query', '')} / 이미지제목={img.get('title', '')}"
+            f"{i + 1}. 검색어={img.get('search_query', '')} / 제목={img.get('title', '')}"
             for i, img in enumerate(images)
         )
-        summary = article_plain_text[:600]
+        # 본문 앞뒤 각 400자 → 글 전체 주제와 마지막 섹션 주제를 모두 커버
+        summary = article_plain_text[:400]
+        if len(article_plain_text) > 800:
+            summary += " ... " + article_plain_text[-200:]
 
         msg = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=50,
+            max_tokens=200,
             messages=[{
                 "role": "user",
                 "content": (
                     f"블로그 주제: {keyword}\n"
-                    f"글 요약: {summary}\n\n"
-                    f"아래 이미지 중 이 글 내용과 실제로 관련 있는 이미지 번호만 "
-                    f"쉼표로 나열하세요. 관련 없으면 '없음'.\n\n"
+                    f"글 내용 요약: {summary}\n\n"
+                    f"아래 각 이미지의 검색어와 제목을 보고, 이 블로그 글의 시각적 자료로 "
+                    f"적합한 이미지 번호만 쉼표로 나열하세요.\n"
+                    f"기준: 글 주제·섹션 내용과 직접 관련된 이미지만 포함. "
+                    f"키워드와 무관하거나 전혀 다른 주제의 이미지는 제외.\n"
+                    f"모두 관련 없으면 '없음'.\n\n"
                     f"{img_list}\n\n"
-                    "번호만 답하세요 (예: 1,3 또는 없음):"
+                    "번호만 답 (예: 1,3 또는 없음):"
                 ),
             }],
         )
         answer = msg.content[0].text.strip()
         logger.debug(f"이미지 관련성 평가 결과: {answer}")
 
-        if answer.lower() in ("없음", "none", "없음.", "없음,"):
+        # '없음' 변형 처리
+        if re.search(r'^없음[\.!,]?$', answer, re.IGNORECASE) or answer.lower() in ("none", "없음"):
             logger.info("이미지 관련성 검증: 관련 이미지 없음 — 전체 제거")
             return []
 
         keep = set()
-        for part in answer.replace(".", "").split(","):
-            part = part.strip()
+        for part in re.split(r'[,\s]+', answer.replace(".", "")):
             if part.isdigit():
                 keep.add(int(part) - 1)
 
@@ -239,6 +256,10 @@ def _filter_relevant_images(
         removed = len(images) - len(filtered)
         if removed:
             logger.info(f"이미지 관련성 검증: {removed}개 제거, {len(filtered)}개 유지")
+        # keep이 완전히 비었으면 (파싱 실패) 원본 반환
+        if not filtered and keep == set():
+            logger.debug("이미지 관련성 검증 파싱 실패 — 원본 유지")
+            return images
         return filtered
 
     except Exception as e:
@@ -253,20 +274,21 @@ def fetch_images_for_queries(
     article_plain_text: str = "",
     keyword: str = "",
 ) -> list[dict]:
-    """섹션별 쿼리 목록에 맞춰 이미지를 1개씩 검색하고 글 내용과의 관련성을 검증합니다."""
+    """섹션별 쿼리 목록에 맞춰 이미지를 검색(후보 4개 중 관련성 최고 선택)하고 Claude로 최종 검증합니다."""
     images = []
     for query in queries:
-        img = _fetch_one_image(query, naver_client_id, naver_client_secret)
+        img = _fetch_best_image(query, naver_client_id, naver_client_secret, n_candidates=4)
         if img:
             img["search_query"] = query
-            # alt 텍스트용: 쿼리 앞 40자 이내로 자연스럽게 줄임
-            img["alt_text"] = query[:40].rsplit(" ", 1)[0] if len(query) > 40 else query
-            images.append(img)
-            logger.info(f"이미지 수집 성공: '{query}'")
+            img["alt_text"] = query if len(query) <= 50 else query[:50].rsplit(" ", 1)[0]
+            score = _score_title_relevance(img, query)
+            logger.info(f"이미지 수집 성공: '{query}' → 제목='{img.get('title','')[:40]}' (관련성={score:.2f})")
         else:
             logger.warning(f"이미지 없음: '{query}'")
+        if img:
+            images.append(img)
 
-    # 글 내용과 관련성 검증 (article_plain_text 제공 시)
+    # Claude로 최종 관련성 검증 (article_plain_text 제공 시)
     if images and article_plain_text:
         images = _filter_relevant_images(images, keyword or queries[0], article_plain_text)
 

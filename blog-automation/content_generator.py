@@ -390,7 +390,7 @@ def _extract_section_queries(html: str, keyword: str) -> list[str]:
         # 제목에서 키워드 단어와 겹치는 부분 제거 (중복 쿼리 방지)
         heading_words = heading.split()
         deduped = [w for w in heading_words if w.lower() not in kw_words]
-        heading_clean = " ".join(deduped).strip()[:25]
+        heading_clean = " ".join(deduped).strip()[:40]
         if not heading_clean or len(heading_clean) < 2:
             continue
 
@@ -425,7 +425,7 @@ def _extract_section_queries(html: str, keyword: str) -> list[str]:
         query = f"{keyword} {heading_clean}".strip()
         if extra_terms:
             query = f"{query} {extra_terms}".strip()
-        queries.append(query[:55])
+        queries.append(query[:65])
 
     return queries[:4]
 

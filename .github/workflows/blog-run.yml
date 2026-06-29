@@ -79,7 +79,7 @@ jobs:
           ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
           ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"
           GSC_SITE_URL="${{ secrets.GSC_SITE_URL }}"
-          BLOGS_CONFIG="${{ secrets.BLOGS_CONFIG }}"
+          BLOGS_CONFIG=${{ secrets.BLOGS_CONFIG }}
           BLOG_NAME="${{ secrets.BLOG_NAME }}"
           POSTS_PER_RUN="${{ inputs.posts_per_run || '3' }}"
           POST_STATUS="${{ (inputs.mode == 'draft') && 'draft' || 'live' }}"

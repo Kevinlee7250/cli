@@ -293,8 +293,16 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
         logger.error("포스트 제목 또는 내용이 비어있음 — 업로드 건너뜀")
         return None
     cfg = blog_config or {}
-    blog_id = cfg.get("blog_id") or BLOGGER_BLOG_ID
+    blog_id = str(cfg.get("blog_id") or BLOGGER_BLOG_ID).strip()
     post_status = cfg.get("post_status") or POST_STATUS
+
+    # blog_id 사전 검증 — 비어있으면 즉시 실패 (URL이 .../blogs//posts 가 됨)
+    if not blog_id:
+        logger.error(
+            "❌ blog_id가 비어있습니다. "
+            "BLOGGER_BLOG_ID Secret 또는 BLOGS_CONFIG의 blog_id 필드를 확인하세요."
+        )
+        return None
 
     access_token = _get_access_token(blog_config)
     if not access_token:
@@ -316,8 +324,7 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
 
     blog_name = cfg.get("name", "")
     logger.debug(f"업로드 레이블 ({len(labels)}개): {labels[:5]}{'…' if len(labels)>5 else ''}")
-    if blog_name:
-        logger.info(f"업로드 대상 블로그: {blog_name} (blog_id={blog_id})")
+    logger.info(f"업로드 대상 블로그: {blog_name or '기본'} (blog_id={blog_id})")
 
     payload = {
         "title": post_data.get("title", "Untitled"),
@@ -326,7 +333,9 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
     }
 
     url = f"{BLOGGER_API_BASE}/blogs/{blog_id}/posts"
-    params = {"isDraft": post_status != "live"}
+    # isDraft 파라미터: Python bool을 그대로 전달하면 "False"/"True" (대문자) 로 직렬화되어
+    # Blogger API가 400을 반환할 수 있으므로 draft일 때만 명시적으로 "true" 문자열로 전달한다
+    params = {"isDraft": "true"} if post_status != "live" else {}
     headers = {
         "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json",
@@ -345,8 +354,13 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
             return None
         logger.info(f"업로드 성공: {result.get('url', '')}")
         return result
-    # 전체 에러 응답 로깅 (원인 파악용)
+    # 상세 에러 로깅 — 원인 파악용
     logger.error(f"업로드 실패 [{resp.status_code}]: {resp.text[:1000]}")
+    logger.error(f"  요청 URL: {url}")
+    logger.error(f"  params: {params}")
+    logger.error(f"  title: {post_data.get('title', '')[:80]}")
+    logger.error(f"  labels ({len(labels)}개): {labels[:5]}")
+    logger.error(f"  content 길이: {len(full_content)}자, 앞 300자: {full_content[:300]}")
     return None
 
 

@@ -4871,6 +4871,8 @@ function wfRunWeeklyCheck() {
 }
 
 // ── API 키 관리 ───────────────────────────────────────────────────────────────
+const BOT_KEY_LS = 'anthropic_api_key_local'
+
 const _API_KEYS = [
   {
     group: 'GitHub',
@@ -5299,7 +5301,6 @@ if (savedGoal) {
 }
 
 // ── 시스템 관리봇 ─────────────────────────────────────────────────────────────
-const BOT_KEY_LS = 'anthropic_api_key_local'
 const BOT_HISTORY_MAX = 40
 let _botOpen = false
 let _botMessages = []   // {role:'user'|'assistant', content:string}

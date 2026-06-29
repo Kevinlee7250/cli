@@ -95,7 +95,11 @@ jobs:
             echo "변경사항 없음 — 커밋 건너뜀"
           else
             git commit -m "🔧 자동 수리 완료 (#${{ github.run_number }})"
-            git pull --rebase origin claude/blog-automation-system-KAbtE
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE && break
+              echo "rebase 재시도 $i/3..."
+              sleep 3
+            done
             git push origin claude/blog-automation-system-KAbtE
           fi
 

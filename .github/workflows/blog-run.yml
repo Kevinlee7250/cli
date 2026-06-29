@@ -145,14 +145,27 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # docs/data/ 는 tracked 파일 (-f: 루트 .gitignore /*  규칙 우회)
-          git add -f docs/data/posts.json docs/data/runs.json docs/data/analytics.json docs/data/meta.json docs/data/pending_posts.json docs/data/series.json docs/data/gsc.json docs/data/blogs.json docs/data/learning.json 2>/dev/null || true
-          git add blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json blog-automation/logs/series.json blog-automation/logs/learning.json blog-automation/logs/learned_keywords.json 2>/dev/null || true
+          git add -f \
+            docs/data/posts.json docs/data/runs.json docs/data/analytics.json \
+            docs/data/meta.json docs/data/pending_posts.json docs/data/series.json \
+            docs/data/gsc.json docs/data/blogs.json docs/data/learning.json \
+            docs/data/repairs.json \
+            2>/dev/null || true
+          git add \
+            blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
+            blog-automation/logs/series.json blog-automation/logs/learning.json \
+            blog-automation/logs/learned_keywords.json \
+            2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else
             git commit -m "📊 대시보드 데이터 업데이트 (#${{ github.run_number }})"
-            # 코드 변경 커밋이 먼저 Push된 경우를 대비해 rebase 후 push
-            git pull --rebase origin claude/blog-automation-system-KAbtE
+            # 충돌 없이 rebase 후 push (최대 3회 재시도)
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE && break
+              echo "rebase 재시도 $i/3..."
+              sleep 3
+            done
             git push origin claude/blog-automation-system-KAbtE
           fi
 

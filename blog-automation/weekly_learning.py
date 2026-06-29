@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-_log_dir = "./logs"
+_log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
 os.makedirs(_log_dir, exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,

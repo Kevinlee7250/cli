@@ -378,7 +378,11 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
                 flags=re.DOTALL | re.IGNORECASE
             )
             payload2 = {**payload, "content": safe_content}
-            resp2 = requests.post(url, json=payload2, headers=headers, params=params, timeout=30)
+            try:
+                resp2 = requests.post(url, json=payload2, headers=headers, params=params, timeout=30)
+            except requests.exceptions.RequestException as e:
+                logger.error(f"  ❌ 재시도 네트워크 오류: {e}")
+                return None
             if resp2.status_code in (200, 201):
                 try:
                     result = resp2.json()
@@ -408,12 +412,16 @@ def get_blog_info(blog_config: dict | None = None) -> dict | None:
     access_token = _get_access_token(blog_config)
     if not access_token:
         return None
-    resp = requests.get(
-        f"{BLOGGER_API_BASE}/blogs/{blog_id}",
-        headers={"Authorization": f"Bearer {access_token}"},
-        timeout=15,
-    )
-    return resp.json() if resp.status_code == 200 else None
+    try:
+        resp = requests.get(
+            f"{BLOGGER_API_BASE}/blogs/{blog_id}",
+            headers={"Authorization": f"Bearer {access_token}"},
+            timeout=15,
+        )
+        return resp.json() if resp.status_code == 200 else None
+    except requests.exceptions.RequestException as e:
+        logger.error(f"get_blog_info 네트워크 오류: {e}")
+        return None
 
 
 if __name__ == "__main__":

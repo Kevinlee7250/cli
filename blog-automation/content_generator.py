@@ -347,6 +347,9 @@ def _parse_response(raw: str) -> dict | None:
                 logger.error("JSON 복구 실패: 복구 후 빈 결과")
                 return None
             result = json.loads(repaired)
+            if not isinstance(result, dict):
+                logger.error(f"JSON 복구 후 dict가 아닌 타입 반환: {type(result)}")
+                return None
             logger.warning("JSON 자동 복구 후 파싱 성공")
             return result
         except Exception as e:

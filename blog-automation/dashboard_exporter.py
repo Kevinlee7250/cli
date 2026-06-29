@@ -215,7 +215,7 @@ def _export_social(docs_dir: str) -> None:
             for post in run.get("posts", []):
                 title = post.get("title", "")
                 keyword = post.get("keyword", "")
-                url = post.get("url", "")
+                url = post.get("blogUrl", "")
                 if not title or title in seen:
                     continue
                 seen.add(title)

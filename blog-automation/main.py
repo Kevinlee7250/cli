@@ -141,8 +141,8 @@ def run_once(
                     if extras:
                         keywords += extras
                         logger.info(f"학습 키워드 {len(extras)}개 보완: {extras}")
-                except Exception:
-                    pass
+                except Exception as e:
+                    logger.warning(f"학습 키워드 로드 실패: {e}")
     keywords = keywords[:POSTS_PER_RUN + 1]
     logger.info(f"수집된 키워드 {len(keywords)}개: {keywords}")
 
@@ -206,6 +206,7 @@ def run_once(
     logger.info(f"단독 포스트 대상 키워드 {len(keywords)}개: {keywords}")
 
     success_count = 0
+    blogger_count = 0
     fail_count = 0
     completed_posts: list[dict] = []
     error_messages: list[str] = []
@@ -265,6 +266,7 @@ def run_once(
             logger.info(f"  ✅ 업로드 성공: {url}")
             completed_posts.append(post_data)
             success_count += 1
+            blogger_count += 1
         else:
             msg = f"Blogger 업로드 실패: '{title}'"
             logger.error(f"  ❌ {msg}")
@@ -287,7 +289,7 @@ def run_once(
         log_run(
             keywords=keywords,
             results=completed_posts,
-            blogger_uploaded=success_count if not (dry_run or review) else 0,
+            blogger_uploaded=blogger_count if not (dry_run or review) else 0,
             errors=fail_count,
             blog_config=blog_config,
             error_messages=error_messages,

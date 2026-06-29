@@ -1761,7 +1761,7 @@ function renderDashboard() {
   const tbody = document.getElementById('runs-table')
   tbody.innerHTML = runs.slice(0, 10).map(r => `<tr>
     <td>${new Date(r.runAt || r.savedAt).toLocaleString('ko-KR')}</td>
-    <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.keywords||[]).join(', ')}</td>
+    <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.keywords||[]).map(k=>esc(k)).join(', ')}</td>
     <td>${r.postsGenerated ?? 0}개</td>
     <td>${r.bloggerUploaded ?? r.platforms?.blogger ?? 0}개</td>
     <td><span class="img-pill">🖼 ${r.imagesInserted || 0}</span></td>
@@ -2379,11 +2379,11 @@ function renderGSC() {
 
   const topQEl = el('gsc-top-queries')
   if (topQEl) topQEl.innerHTML = queries.slice(0, 15).map(q => `<tr>
-    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${q.query}</td>
-    <td style="color:var(--green);font-weight:600">${q.clicks}</td>
-    <td>${q.impressions.toLocaleString()}</td>
-    <td>${q.ctr}%</td>
-    <td>${q.position}</td>
+    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(q.query)}</td>
+    <td style="color:var(--green);font-weight:600">${esc(String(q.clicks))}</td>
+    <td>${esc(String(q.impressions.toLocaleString()))}</td>
+    <td>${esc(String(q.ctr))}%</td>
+    <td>${esc(String(q.position))}</td>
   </tr>`).join('')
 
   const catEl = el('gsc-cat-performance')
@@ -3190,7 +3190,14 @@ async function pollPublishResult(safeId, postId) {
   } else if (post?.status === 'failed') {
     if (statusEl) { statusEl.className = 'status-panel error'; statusEl.innerHTML = '❌ 게시 실패. GitHub Actions 로그를 확인하세요.' }
   } else {
-    // Still pending — retry after 20s (max 6 retries ≈ 2min)
+    // Still pending — retry after 20s, max 12 retries (≈ 4min)
+    const retries = (pollPublishResult._retries = pollPublishResult._retries || {})
+    retries[safeId] = (retries[safeId] || 0) + 1
+    if (retries[safeId] >= 12) {
+      delete retries[safeId]
+      if (statusEl) { statusEl.className = 'status-panel error'; statusEl.innerHTML = '⏰ 게시 확인 시간 초과. GitHub Actions 로그를 확인하세요.' }
+      return
+    }
     setTimeout(() => pollPublishResult(safeId, postId), 20000)
   }
 }
@@ -3198,6 +3205,7 @@ async function pollPublishResult(safeId, postId) {
 function _sanitizeBloggerContent(html) {
   // Strip Schema.org microdata attributes — Blogger API rejects them as invalid arguments
   let cleaned = (html || '')
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
     .replace(/\s+itemscope(?==|\s|>)/gi, '')
     .replace(/\s+itemtype="[^"]*"/gi, '')
     .replace(/\s+itemprop="[^"]*"/gi, '')
@@ -3229,7 +3237,7 @@ async function publishPostDirect(id) {
     })
     const result = await resp.json()
     if (resp.ok && result.url) {
-      if (statusEl) { statusEl.className = 'status-panel success'; statusEl.innerHTML = `✅ 게시 성공! <a href="${result.url}" target="_blank" style="color:var(--accent2)">${result.url}</a>` }
+      if (statusEl) { statusEl.className = 'status-panel success'; statusEl.innerHTML = `✅ 게시 성공! <a href="${esc(result.url)}" target="_blank" style="color:var(--accent2)">${esc(result.url)}</a>` }
       const ids = JSON.parse(localStorage.getItem('published_post_ids') || '[]')
       ids.push(id); localStorage.setItem('published_post_ids', JSON.stringify(ids))
       sessionPublished.push(id)
@@ -5516,7 +5524,7 @@ function _refreshBotKeyUI() {
 function botSaveKey() {
   const v = (document.getElementById('bot-key-input').value || '').trim()
   if (!v || v.startsWith('•')) return
-  if (!v.startsWith('sk-ant-')) { showToast('Anthropic API 키는 sk-ant- 로 시작해야 합니다', 'error'); return }
+  if (!v.startsWith('sk-ant-') && !v.startsWith('sk-proj-')) { showToast('Anthropic API 키는 sk-ant- 또는 sk-proj- 로 시작해야 합니다', 'error'); return }
   localStorage.setItem(BOT_KEY_LS, v)
   _refreshBotKeyUI()
   showToast('API 키 저장됨', 'success')

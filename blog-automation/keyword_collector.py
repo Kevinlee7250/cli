@@ -139,7 +139,9 @@ def _get_active_used_set(used_data: dict) -> set[str]:
                 active.add(entry["keyword"])
         except (KeyError, ValueError):
             # 날짜 파싱 불가 시 안전하게 활성으로 처리
-            active.add(entry.get("keyword", ""))
+            kw_val = entry.get("keyword", "")
+            if kw_val:
+                active.add(kw_val)
     return active
 
 

@@ -256,9 +256,9 @@ def _filter_relevant_images(
         removed = len(images) - len(filtered)
         if removed:
             logger.info(f"이미지 관련성 검증: {removed}개 제거, {len(filtered)}개 유지")
-        # keep이 완전히 비었으면 (파싱 실패) 원본 반환
-        if not filtered and keep == set():
-            logger.debug("이미지 관련성 검증 파싱 실패 — 원본 유지")
+        # 파싱 결과가 비어있으면 (인덱스 오류 포함) 원본 반환
+        if not filtered:
+            logger.debug("이미지 관련성 검증 파싱 실패 또는 범위 초과 — 원본 유지")
             return images
         return filtered
 

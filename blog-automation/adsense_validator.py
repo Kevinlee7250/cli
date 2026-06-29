@@ -138,7 +138,7 @@ def validate_adsense(post_data: dict) -> dict:
     plain_text   = _strip_html(html)
     ad_count     = _count_ads(html)
     h2_count     = _count_h2(html)
-    faq_preview  = " | ".join(f["q"] for f in faq[:3]) if faq else "없음"
+    faq_preview  = " | ".join(f.get("q", "") for f in faq[:3]) if faq else "없음"
     src_info     = f"{len(sources)}개 출처 포함" if sources else "출처 없음"
 
     try:
@@ -277,7 +277,7 @@ JSON만 응답 (설명 없이):
 
         # 점수 계산 (96 → 100 환산)
         raw_score = sum(_SCORE_MAP[c["status"]] for c in checks.values())
-        score = int(raw_score / _MAX_RAW * 100)
+        score = round(raw_score / _MAX_RAW * 100)
 
         # 필수 항목 fail 여부
         mandatory_failed = any(

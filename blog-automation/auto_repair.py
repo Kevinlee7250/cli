@@ -36,7 +36,7 @@ def _load_json(path: str, default):
     try:
         with open(path, encoding="utf-8") as f:
             return json.load(f)
-    except Exception:
+    except (FileNotFoundError, json.JSONDecodeError):
         return default
 
 
@@ -221,6 +221,8 @@ def _fix_trim_history(issue: dict) -> dict:
     runs = _load_json(RUN_HISTORY, [])
     if not isinstance(runs, list):
         return {"success": False, "detail": "run_history.json 형식 오류"}
+    if not runs:
+        return {"success": False, "detail": "이력 없음 — 삭제 방지"}
     before = len(runs)
     trimmed = runs[:150]
     _save_json(RUN_HISTORY, trimmed)

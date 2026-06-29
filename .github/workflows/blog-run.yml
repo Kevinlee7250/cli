@@ -91,7 +91,12 @@ jobs:
 
       - name: 로그 디렉토리 생성
         working-directory: blog-automation
-        run: mkdir -p logs
+        run: |
+          mkdir -p logs
+          # 로그 파일 500줄 이상이면 마지막 500줄만 보존 (git 용량 관리)
+          if [ -f logs/automation.log ] && [ "$(wc -l < logs/automation.log)" -gt 500 ]; then
+            tail -n 500 logs/automation.log > logs/automation.log.tmp && mv logs/automation.log.tmp logs/automation.log
+          fi
 
       - name: 블로그 자동화 실행
         working-directory: blog-automation
@@ -154,7 +159,7 @@ jobs:
           git add \
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
-            blog-automation/logs/learned_keywords.json \
+            blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
             2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"

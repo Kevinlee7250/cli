@@ -82,6 +82,7 @@ def log_run(
     blogger_uploaded: int,
     errors: int,
     blog_config: dict | None = None,
+    error_messages: list[str] | None = None,
 ) -> None:
     """실행 결과를 run_history.json에 기록합니다."""
     history = _load_history()
@@ -106,6 +107,7 @@ def log_run(
         "postsGenerated": total_posts,
         "bloggerUploaded": blogger_uploaded,
         "errors": errors,
+        "errorMessages": (error_messages or [])[:20],
         "imagesInserted": total_images,
         "totalWords": total_words,
         "blogId": cfg.get("id", "default"),

@@ -208,6 +208,7 @@ def run_once(
     success_count = 0
     fail_count = 0
     completed_posts: list[dict] = []
+    error_messages: list[str] = []
 
     for i, keyword in enumerate(keywords, 1):
         logger.info(f"\n[{i}/{len(keywords)}] 키워드: '{keyword}'")
@@ -215,8 +216,10 @@ def run_once(
         # 포스트 생성
         post_data = generate_post(keyword)
         if not post_data:
-            logger.error(f"  포스트 생성 실패: '{keyword}'")
+            msg = f"콘텐츠 생성 실패: '{keyword}'"
+            logger.error(f"  {msg}")
             fail_count += 1
+            error_messages.append(msg)
             continue
 
         title = post_data.get("title", "?")
@@ -237,12 +240,12 @@ def run_once(
             post_data["adsense_score"] = validation["score"]
             post_data["adsense_recommendation"] = validation["recommendation"]
             if validation["recommendation"] == "reject":
-                logger.error(
-                    f"  ❌ AdSense 정책 위반 — 업로드 취소 (점수: {validation['score']}/100)"
-                )
+                msg = f"AdSense 정책 위반 — 업로드 취소: '{title}' (점수: {validation['score']}/100)"
+                logger.error(f"  ❌ {msg}")
                 for issue in validation["issues"]:
                     logger.error(f"     🔴 {issue}")
                 fail_count += 1
+                error_messages.append(msg)
                 continue
             if validation["recommendation"] == "review" or validation["score"] < ADSENSE_MIN_SCORE:
                 logger.warning(
@@ -263,8 +266,10 @@ def run_once(
             completed_posts.append(post_data)
             success_count += 1
         else:
-            logger.error(f"  ❌ 업로드 실패: '{title}'")
+            msg = f"Blogger 업로드 실패: '{title}'"
+            logger.error(f"  ❌ {msg}")
             fail_count += 1
+            error_messages.append(msg)
 
         # API 과부하 방지 (포스트 사이 2초 대기)
         if i < len(keywords):
@@ -285,6 +290,7 @@ def run_once(
             blogger_uploaded=success_count if not (dry_run or review) else 0,
             errors=fail_count,
             blog_config=blog_config,
+            error_messages=error_messages,
         )
         export_dashboard()
         logger.info("대시보드 데이터 업데이트 완료")
@@ -417,6 +423,13 @@ def run_series(
 
     uploaded = sum(1 for ep in episodes if ep.get("status") == "done")
     errors = sum(1 for ep in episodes if ep.get("status") in ("failed", "upload_failed"))
+    series_error_messages = [
+        f"시리즈 편 {ep['episode']} 생성 실패: {ep.get('title', '')}"
+        for ep in episodes if ep.get("status") == "failed"
+    ] + [
+        f"시리즈 편 {ep['episode']} Blogger 업로드 실패: {ep.get('title', '')}"
+        for ep in episodes if ep.get("status") == "upload_failed"
+    ]
 
     try:
         if pending_list:
@@ -428,6 +441,7 @@ def run_series(
                 blogger_uploaded=uploaded if not (dry_run or review) else 0,
                 errors=errors,
                 blog_config=blog_config,
+                error_messages=series_error_messages,
             )
             export_dashboard()
             logger.info("대시보드 데이터 업데이트 완료")

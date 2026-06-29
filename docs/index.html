@@ -5562,9 +5562,30 @@ AI 추천 키워드: ${learnKws || '없음'}
 }
 
 // GitHub Actions 봇 백엔드 (CORS 우회)
+// PAT workflow 권한 캐시 (null=미확인, true=있음, false=없음)
+let _patWorkflowScope = null
+
+async function _checkPatWorkflowScope() {
+  if (_patWorkflowScope !== null) return _patWorkflowScope
+  const pat = getPAT()
+  if (!pat) return (_patWorkflowScope = false)
+  try {
+    const r = await fetch('https://api.github.com/user', {
+      headers: { Authorization: `Bearer ${pat}` }
+    })
+    const scopes = r.headers.get('x-oauth-scopes') || ''
+    _patWorkflowScope = scopes.includes('workflow') || scopes.includes('repo') && scopes.includes('workflow')
+    // Fine-grained PAT는 scopes 헤더가 없음 → 실제 dispatch로 확인
+    if (!r.headers.has('x-oauth-scopes')) _patWorkflowScope = null
+  } catch (_) {
+    _patWorkflowScope = null
+  }
+  return _patWorkflowScope
+}
+
 async function _callClaudeViaActions(userMessage) {
   const pat = getPAT()
-  if (!pat) throw new Error('GitHub PAT가 필요합니다 — 시스템 관리에서 PAT를 먼저 설정하세요')
+  if (!pat) throw new Error('__no_pat__')
 
   const replyId = Date.now().toString(36) + Math.random().toString(36).slice(2, 6)
   const contextJson = JSON.stringify({
@@ -5575,24 +5596,25 @@ async function _callClaudeViaActions(userMessage) {
     series_count: (DATA.series || []).length,
   })
 
-  // 워크플로우 dispatch
   const dispResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/bot-reply.yml/dispatches`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${pat}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      ref: GH_BRANCH,
-      inputs: { message: userMessage, reply_id: replyId, context_json: contextJson }
-    })
+    body: JSON.stringify({ ref: GH_BRANCH, inputs: { message: userMessage, reply_id: replyId, context_json: contextJson } })
   })
+
+  if (dispResp.status === 404) {
+    _patWorkflowScope = false
+    throw new Error('__no_workflow_scope__')
+  }
   if (!dispResp.ok) {
     const err = await dispResp.json().catch(() => ({}))
     throw new Error(`워크플로우 실행 실패 (${dispResp.status}): ${err.message || ''}`)
   }
 
-  // docs/data/bot_reply.json 폴링 (최대 90초)
+  _patWorkflowScope = true
   const rawBase = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/${GH_BRANCH}/docs/data/bot_reply.json`
   const deadline = Date.now() + 90000
-  await new Promise(r => setTimeout(r, 8000))  // 첫 폴링 전 8초 대기
+  await new Promise(r => setTimeout(r, 8000))
 
   while (Date.now() < deadline) {
     try {
@@ -5607,16 +5629,30 @@ async function _callClaudeViaActions(userMessage) {
   throw new Error('응답 시간 초과 (90초) — GitHub Actions 실행 현황을 확인하세요')
 }
 
+const _BOT_SETUP_MSG = `⚙️ 봇을 사용하려면 아래 중 하나를 설정하세요.
+
+【방법 A — GitHub PAT에 workflow 권한 추가 (권장)】
+1. GitHub → Settings → Developer settings → Personal access tokens
+2. 현재 PAT 편집 → ✅ workflow 체크 → Update token
+3. 대시보드 시스템 관리 → API 키 관리 → GitHub PAT 재입력
+
+【방법 B — Anthropic API 키 직접 연결】
+• 현재 브라우저(kevinlee7250.github.io)에서 Anthropic API 직접 호출이 차단되어 있어 사용 불가
+
+PAT workflow 권한을 추가하면 봇이 즉시 작동합니다.`
+
 async function _callClaude(messages) {
   const lastUser = [...messages].reverse().find(m => m.role === 'user')?.content || ''
+
+  // 이미 workflow scope 없음으로 확인된 경우 바로 안내
+  if (_patWorkflowScope === false) throw new Error('__no_workflow_scope__')
 
   // 1차: 직접 호출 시도
   try {
     const key = (localStorage.getItem(BOT_KEY_LS) || '').trim()
     if (key) {
       const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        mode: 'cors',
+        method: 'POST', mode: 'cors',
         headers: {
           'content-type': 'application/json',
           'x-api-key': key,
@@ -5625,12 +5661,12 @@ async function _callClaude(messages) {
         },
         body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1024, system: _buildBotContext(), messages }),
       })
-      if (res.status === 401) throw new Error('__auth__')
+      if (res.status === 401) throw new Error('API 키가 잘못됐습니다 — API 키 관리에서 키를 다시 입력해 주세요')
       if (res.ok) return (await res.json()).content?.[0]?.text || ''
     }
   } catch (e) {
-    if (e.message === '__auth__') throw new Error('API 키가 잘못됐습니다 — API 키 관리에서 키를 다시 입력해 주세요')
-    // CORS 차단 → Actions 폴백
+    if (!e.message.startsWith('API 키')) { /* CORS 차단 → Actions 폴백 */ }
+    else throw e
   }
 
   // 2차: GitHub Actions 폴백
@@ -5803,8 +5839,12 @@ async function sendBotMsg() {
     document.getElementById('bot-actions-notice')?.remove()
     _botTyping = false
     document.getElementById('bot-send').disabled = false
-    _botAppend('assistant', `❌ ${e.message}`)
-    if (e.message.includes('API 키가 설정') || e.message.includes('API 키가 잘못')) botShowKeyInput()
+    if (e.message === '__no_workflow_scope__' || e.message === '__no_pat__') {
+      _botAppend('assistant', _BOT_SETUP_MSG)
+    } else {
+      _botAppend('assistant', `❌ ${e.message}`)
+      if (e.message.includes('API 키가 설정') || e.message.includes('API 키가 잘못')) botShowKeyInput()
+    }
   }
 }
 

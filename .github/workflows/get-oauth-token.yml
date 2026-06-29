@@ -1,0 +1,104 @@
+name: 🔑 Google OAuth 토큰 발급
+
+on:
+  workflow_dispatch:
+    inputs:
+      step:
+        description: '실행 단계'
+        required: true
+        type: choice
+        options:
+          - '1_get_url'
+          - '2_exchange_code'
+        default: '1_get_url'
+      auth_code:
+        description: '[2단계] Google에서 받은 인증 코드 (1단계 URL 방문 후 입력)'
+        required: false
+        default: ''
+
+jobs:
+  get-token:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Python 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: requests 설치
+        run: pip install requests -q
+
+      - name: 🔗 1단계 — 인증 URL 생성
+        if: ${{ inputs.step == '1_get_url' }}
+        env:
+          CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+        run: |
+          python3 - <<'PYEOF'
+          import os, urllib.parse
+          client_id = os.environ["CLIENT_ID"]
+          params = {
+              "client_id": client_id,
+              "redirect_uri": "urn:ietf:wg:oauth:2.0:oob",
+              "response_type": "code",
+              "scope": "https://www.googleapis.com/auth/blogger",
+              "access_type": "offline",
+              "prompt": "consent",
+          }
+          url = "https://accounts.google.com/o/oauth2/auth?" + urllib.parse.urlencode(params)
+          print("=" * 60)
+          print("아래 URL을 브라우저에서 열고 Google 계정으로 로그인하세요:")
+          print()
+          print(url)
+          print()
+          print("=" * 60)
+          print("로그인 후 표시되는 '인증 코드'를 복사하세요.")
+          print("그 다음 이 워크플로우를 step=2_exchange_code 로 재실행하고")
+          print("auth_code 항목에 복사한 코드를 붙여넣으세요.")
+          PYEOF
+
+      - name: 🔄 2단계 — 코드 교환 및 Refresh Token 출력
+        if: ${{ inputs.step == '2_exchange_code' }}
+        env:
+          CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          AUTH_CODE: ${{ inputs.auth_code }}
+        run: |
+          python3 - <<'PYEOF'
+          import os, requests
+
+          client_id     = os.environ["CLIENT_ID"]
+          client_secret = os.environ["CLIENT_SECRET"]
+          auth_code     = os.environ["AUTH_CODE"].strip()
+
+          if not auth_code:
+              print("❌ auth_code 가 비어 있습니다. 1단계 URL을 먼저 방문하세요.")
+              exit(1)
+
+          resp = requests.post("https://oauth2.googleapis.com/token", data={
+              "code":          auth_code,
+              "client_id":     client_id,
+              "client_secret": client_secret,
+              "redirect_uri":  "urn:ietf:wg:oauth:2.0:oob",
+              "grant_type":    "authorization_code",
+          })
+
+          data = resp.json()
+
+          if "refresh_token" not in data:
+              print(f"❌ 토큰 교환 실패: {data}")
+              exit(1)
+
+          refresh_token = data["refresh_token"]
+          print("=" * 60)
+          print("✅ Refresh Token 발급 성공!")
+          print()
+          print("GOOGLE_REFRESH_TOKEN 값:")
+          print(refresh_token)
+          print()
+          print("=" * 60)
+          print("이 값을 복사해서:")
+          print("1. GitHub Secrets → GOOGLE_REFRESH_TOKEN 에 업데이트")
+          print("2. 대시보드 OAuth 설정 → GOOGLE_REFRESH_TOKEN 에 입력")
+          PYEOF

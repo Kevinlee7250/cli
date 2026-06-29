@@ -2588,6 +2588,7 @@ function savePAT() {
   document.getElementById('pat-input').value = ''
   checkPATStatus()
   loadGHRuns()
+  loadSystemRuns()
   showToast('PAT가 저장됐습니다', 'success')
 }
 function clearPAT() {
@@ -4792,7 +4793,7 @@ function renderLearningReport() {
 
 // ── 주간 점검 워크플로우 실행 ─────────────────────────────────────────────────
 function wfRunWeeklyCheck() {
-  const pat = localStorage.getItem('github_pat') || ''
+  const pat = getPAT()
   if (!pat) { showToast('GitHub PAT가 필요합니다 (실행 제어 탭에서 설정)', 'error'); navTo('run'); return }
   const owner = 'kevinlee7250', repo = 'cli'
   fetch(`https://api.github.com/repos/${owner}/${repo}/actions/workflows/weekly-learning.yml/dispatches`, {
@@ -4807,7 +4808,7 @@ function wfRunWeeklyCheck() {
 
 // ── 자동 수리 워크플로우 실행 ─────────────────────────────────────────────────
 function wfRunAutoRepair(dryRun = false) {
-  const pat = localStorage.getItem('github_pat') || ''
+  const pat = getPAT()
   if (!pat) { showToast('GitHub PAT가 필요합니다 (실행 제어 탭에서 설정)', 'error'); navTo('run'); return }
   const owner = 'kevinlee7250', repo = 'cli'
   fetch(`https://api.github.com/repos/${owner}/${repo}/actions/workflows/auto-repair.yml/dispatches`, {

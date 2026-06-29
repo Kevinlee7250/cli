@@ -139,6 +139,24 @@ def log_run(
     logger.info(f"실행 이력 저장 완료 (총 {len(history)}개)")
 
 
+def _export_repairs(docs_dir: str) -> None:
+    """auto_repair.py 가 생성한 repair_history.json 을 docs/data/ 로 복사합니다."""
+    src = os.path.join(os.path.dirname(__file__), "logs", "repair_history.json")
+    dst = os.path.join(docs_dir, "repairs.json")
+    try:
+        if os.path.exists(src):
+            with open(src, encoding="utf-8") as f:
+                data = json.load(f)
+            with open(dst, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            logger.info(f"  수리 이력: {len(data)}건 내보내기 완료")
+        else:
+            with open(dst, "w", encoding="utf-8") as f:
+                json.dump([], f)
+    except Exception as exc:
+        logger.debug(f"수리 데이터 내보내기 생략: {exc}")
+
+
 def _export_learning(docs_dir: str) -> None:
     """weekly_learning.py 가 생성한 learning.json 을 docs/data/ 로 복사합니다."""
     src = os.path.join(os.path.dirname(__file__), "logs", "learning.json")
@@ -330,6 +348,7 @@ def export_dashboard() -> None:
     _export_series(DOCS_DATA_DIR)
     _export_gsc(DOCS_DATA_DIR)
     _export_learning(DOCS_DATA_DIR)
+    _export_repairs(DOCS_DATA_DIR)
 
     logger.info(f"대시보드 데이터 내보내기 완료 → {DOCS_DATA_DIR}")
     logger.info(f"  포스트: {len(posts)}개 / 실행 이력: {len(runs_export)}개 / 블로그: {len(blogs_export)}개")

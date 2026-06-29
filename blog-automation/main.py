@@ -529,6 +529,10 @@ def main() -> None:
                         help="특정 블로그 ID만 실행 (BLOGS_CONFIG의 id 값; 기본값: 모든 블로그)")
     parser.add_argument("--weekly-check", action="store_true",
                         help="주간 시스템 점검 및 학습 실행 (weekly_learning.py)")
+    parser.add_argument("--auto-repair", action="store_true",
+                        help="자동 진단·수리 실행 (auto_repair.py)")
+    parser.add_argument("--dry", action="store_true",
+                        help="--auto-repair 와 함께 사용: 진단만 하고 실제 수리는 하지 않음")
     args = parser.parse_args()
 
     keywords = None
@@ -545,6 +549,17 @@ def main() -> None:
         health = report["analysis"].get("health_score")
         issues = report.get("issues", [])
         logger.info(f"점검 완료 | 건강점수: {health} | 이슈: {len(issues)}건")
+        return
+
+    if args.auto_repair:
+        dry = getattr(args, "dry", False)
+        logger.info(f"=== 자동 수리 모드{'(dry-run)' if dry else ''} ===")
+        from auto_repair import run_auto_repair
+        report = run_auto_repair(dry_run=dry)
+        logger.info(
+            f"수리 완료 | 건강점수: {report['health_score']}/100 | "
+            f"이슈: {report['issues_found']}개 | 수리: {report['repairs_applied']}개"
+        )
         return
 
     if args.setup:

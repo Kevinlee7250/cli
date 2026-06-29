@@ -245,7 +245,20 @@ JSON만 응답 (설명 없이):
             logger.warning(f"AdSense 검증 JSON 파싱 실패 — 기본 처리: {raw[:200]}")
             return _default_pass()
 
-        data = json.loads(raw[s:e + 1])
+        json_str = raw[s:e + 1]
+        try:
+            data = json.loads(json_str)
+        except json.JSONDecodeError:
+            # json_repair로 재시도 (Claude가 trailing comma 등 비표준 JSON 반환 시)
+            try:
+                import json_repair
+                data = json_repair.repair_json(json_str, return_objects=True)
+                if not isinstance(data, dict):
+                    raise ValueError("json_repair 결과가 dict가 아님")
+                logger.debug("AdSense 검증 JSON json_repair로 복구 성공")
+            except Exception as repair_e:
+                logger.warning(f"AdSense 검증 JSON 복구 실패 ({repair_e}) — 기본 처리")
+                return _default_pass()
         checks_raw = data.get("checks", {})
 
         # 정규화

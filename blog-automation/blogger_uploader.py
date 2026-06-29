@@ -354,13 +354,51 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
             return None
         logger.info(f"업로드 성공: {result.get('url', '')}")
         return result
-    # 상세 에러 로깅 — 원인 파악용
+    # ── 상세 에러 로깅 ─────────────────────────────────────────────────────────
     logger.error(f"업로드 실패 [{resp.status_code}]: {resp.text[:1000]}")
-    logger.error(f"  요청 URL: {url}")
-    logger.error(f"  params: {params}")
+    logger.error(f"  요청 URL: {url} | params: {params}")
     logger.error(f"  title: {post_data.get('title', '')[:80]}")
     logger.error(f"  labels ({len(labels)}개): {labels[:5]}")
-    logger.error(f"  content 길이: {len(full_content)}자, 앞 300자: {full_content[:300]}")
+
+    # ── 자동 진단: 블로그 접근 확인 ───────────────────────────────────────────
+    # GET /blogs/{blogId} 로 blog_id·토큰이 유효한지 먼저 검사한다
+    try:
+        info_resp = requests.get(
+            f"{BLOGGER_API_BASE}/blogs/{blog_id}",
+            headers={"Authorization": f"Bearer {access_token}"},
+            timeout=15,
+        )
+        if info_resp.status_code == 200:
+            blog_url = info_resp.json().get("url", "")
+            logger.info(f"  ✅ 블로그 접근 확인 (blog_id·토큰 정상): {blog_url}")
+            logger.info("  ➡ 400 원인은 요청 본문 문제 — <script> 태그 제거 후 재시도합니다")
+            # 재시도: <script> 태그 제거 (JSON-LD 스키마 등 Blogger가 거부하는 태그 제거)
+            safe_content = re.sub(
+                r'<script[^>]*>.*?</script>', '', full_content,
+                flags=re.DOTALL | re.IGNORECASE
+            )
+            payload2 = {**payload, "content": safe_content}
+            resp2 = requests.post(url, json=payload2, headers=headers, params=params, timeout=30)
+            if resp2.status_code in (200, 201):
+                try:
+                    result = resp2.json()
+                    logger.info(f"  ✅ 재시도 성공 (script 태그 제거): {result.get('url', '')}")
+                    return result
+                except json.JSONDecodeError:
+                    pass
+            logger.error(f"  ❌ 재시도도 실패 [{resp2.status_code}]: {resp2.text[:500]}")
+            logger.error(f"  content 앞 300자: {safe_content[:300]}")
+        elif info_resp.status_code == 404:
+            logger.error(f"  ❌ 블로그 없음 [404]: BLOGGER_BLOG_ID='{blog_id}' 가 잘못됐거나 다른 계정 블로그입니다.")
+        elif info_resp.status_code == 403:
+            logger.error(f"  ❌ 권한 없음 [403]: OAuth 토큰에 블로그 쓰기 권한이 없습니다.")
+            logger.error("  💡 blog-automation/get_refresh_token.py 실행 후 GOOGLE_REFRESH_TOKEN Secret 교체")
+        else:
+            logger.error(f"  ❌ 블로그 접근 실패 [{info_resp.status_code}]: {info_resp.text[:200]}")
+    except requests.exceptions.RequestException as diag_e:
+        logger.error(f"  진단 API 호출 오류: {diag_e}")
+        logger.error(f"  content 앞 300자: {full_content[:300]}")
+
     return None
 
 

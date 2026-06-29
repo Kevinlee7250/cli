@@ -3195,20 +3195,37 @@ async function pollPublishResult(safeId, postId) {
   }
 }
 
+function _sanitizeBloggerContent(html) {
+  // Strip Schema.org microdata attributes — Blogger API rejects them as invalid arguments
+  let cleaned = (html || '')
+    .replace(/\s+itemscope(?==|\s|>)/gi, '')
+    .replace(/\s+itemtype="[^"]*"/gi, '')
+    .replace(/\s+itemprop="[^"]*"/gi, '')
+    .replace(/\s+itemid="[^"]*"/gi, '')
+  // Blogger requires content wrapped in a block element, not an HTML5 semantic root.
+  // If raw content starts with <article>, wrap in <div> like blogger_uploader.py does.
+  if (/^\s*<article[\s>]/i.test(cleaned)) {
+    cleaned = '<div style="max-width:800px;margin:0 auto;font-family:\'Noto Sans KR\',sans-serif;line-height:1.9">' + cleaned + '</div>'
+  }
+  return cleaned
+}
+
 async function publishPostDirect(id) {
   const post = pendingPosts.find(p => p.id === id)
   if (!post) return
-  const blogId = localStorage.getItem('oauth_blog_id')
+  const blogId = (localStorage.getItem('oauth_blog_id') || '').trim()
   if (!blogId) { showToast('BLOGGER_BLOG_ID를 설정하세요', 'error'); return }
   const safeId = id.replace(/[^a-zA-Z0-9_-]/g, '_')
   const statusEl = document.getElementById('rstatus-' + safeId)
   if (statusEl) { statusEl.style.display = 'block'; statusEl.className = 'status-panel running'; statusEl.innerHTML = '<span class="pulse">⏳ 직접 게시 중...</span>' }
   try {
     const accessToken = await getAccessToken()
-    const resp = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts/`, {
+    const sanitizedContent = _sanitizeBloggerContent(post.content)
+    const cleanLabels = (post.labels || []).filter(l => l && typeof l === 'string' && l.trim())
+    const resp = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts`, {
       method: 'POST',
       headers: { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: post.title, content: post.content, labels: post.labels || [] })
+      body: JSON.stringify({ title: post.title, content: sanitizedContent, labels: cleanLabels })
     })
     const result = await resp.json()
     if (resp.ok && result.url) {
@@ -3220,7 +3237,13 @@ async function publishPostDirect(id) {
       document.getElementById('review-pending-count').textContent = Math.max(0, parseInt(document.getElementById('review-pending-count').textContent) - 1)
       showToast('포스트가 게시됐습니다! 🎉', 'success')
     } else {
-      throw new Error(result.error?.message || '게시 실패 (HTTP ' + resp.status + ')')
+      const apiErr = result.error || {}
+      const violations = (apiErr.details || [])
+        .flatMap(d => d.fieldViolations || [])
+        .map(v => `[${v.field}] ${v.description}`)
+        .join(', ')
+      const detail = violations ? ` (${violations})` : ` (HTTP ${resp.status})`
+      throw new Error((apiErr.message || '게시 실패') + detail)
     }
   } catch (err) {
     if (statusEl) { statusEl.className = 'status-panel error'; statusEl.innerHTML = '❌ ' + esc(err.message) }

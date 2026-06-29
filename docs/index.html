@@ -3213,7 +3213,7 @@ function _sanitizeBloggerContent(html) {
   // Blogger requires content wrapped in a block element, not an HTML5 semantic root.
   // If raw content starts with <article>, wrap in <div> like blogger_uploader.py does.
   if (/^\s*<article[\s>]/i.test(cleaned)) {
-    cleaned = '<div style="max-width:800px;margin:0 auto;font-family:\'Noto Sans KR\',sans-serif;line-height:1.9">' + cleaned + '</div>'
+    cleaned = '<div style="max-width:780px;margin:0 auto;padding:8px 4px;font-family:\'Noto Sans KR\',\'Apple SD Gothic Neo\',sans-serif;font-size:16px;line-height:1.9;color:#374151;word-break:keep-all;">' + cleaned + '</div>'
   }
   return cleaned
 }

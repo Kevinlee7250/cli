@@ -1,5 +1,6 @@
 """블로그 포스트 생성 — AdSense 최적화 + 이미지 자동 삽입 + 재시도 로직"""
 
+import html as _html_esc
 import json
 import logging
 import os
@@ -186,10 +187,18 @@ def _build_prompt(keyword: str, traffic: str) -> str:
 H2 섹션: 4~6개 (주제에 따라 자유롭게, 공식 개수 없음)
 도입부·각 섹션·결론 모두 단락(p 태그) 기반으로 작성
 
+핵심 요약 박스: 본문 첫 번째 <h2> 태그 바로 앞에 아래 HTML 그대로 1개 삽입:
+<div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>핵심 포인트:</strong> [이 글의 가장 실용적인 핵심을 1~2문장으로]</div>
+
 ━━━ FAQ ━━━
 • h2 제목 "자주 묻는 질문" 아래 5개
 • 실제로 사람들이 검색할 법한 구체적 질문 (너무 일반적인 질문 금지)
 • 답변은 2~4문장, 단정적이고 실질적으로
+• Schema.org 마크업(itemscope/itemtype/itemprop) 사용 금지 — 아래 형식으로만:
+  <h2>자주 묻는 질문</h2>
+  <h3>Q. 질문 텍스트</h3>
+  <p>답변 텍스트</p>
+  (5쌍 반복)
 
 ━━━ SEO ━━━
 • 키워드 10~14회 자연스럽게 (강제 반복 느낌 금지)
@@ -283,9 +292,17 @@ Length: 2800-3500 chars, complete HTML
 H2 sections: 4-6 (based on topic, not a fixed count)
 All sections paragraph-based (p tags)
 
+Key summary box: Insert this HTML exactly, immediately before the first <h2> in the body:
+<div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>Key takeaway:</strong> [The single most practical insight from this article in 1-2 sentences]</div>
+
 ━━━ FAQ ━━━
 h2 "Frequently Asked Questions" + 5 Q&As
 Specific questions people actually search | 2-4 sentence answers
+No Schema.org markup (itemscope/itemtype/itemprop) — use this format only:
+<h2>Frequently Asked Questions</h2>
+<h3>Q. Question text</h3>
+<p>Answer text</p>
+(repeat 5 times)
 
 ━━━ SEO ━━━
 Keyword 10-14 times naturally | LSI keywords | 10 labels | meta_description under 155 chars
@@ -312,6 +329,160 @@ JSON only (no markdown):
     {{"title": "Source 2", "url": "https://real-url"}}
   ]
 }}"""
+
+
+def _apply_style_to_tag(html: str, tag: str, style: str) -> str:
+    """HTML 태그에 인라인 style 추가. 기존 style이 있으면 앞에 병합."""
+    def rep(m: re.Match) -> str:
+        attrs = m.group(1) or ''
+        sx = re.search(r'style="([^"]*)"', attrs, re.I)
+        if sx:
+            merged = f'style="{style};{sx.group(1).rstrip(";")}"'
+            attrs = attrs[:sx.start()] + merged + attrs[sx.end():]
+        else:
+            attrs = attrs.rstrip() + f' style="{style}"'
+        return f'<{tag}{attrs}>'
+    return re.sub(rf'<{tag}(\s[^>]*)?>', rep, html, flags=re.I)
+
+
+def _faq_to_cards(content: str) -> str:
+    """
+    FAQ h2 섹션 아래의 h3(질문)+p(답변) 쌍을 시각적 카드로 변환.
+    h3 태그를 기준으로 분리하므로 Schema.org div 중첩도 처리 가능.
+    """
+    faq_h2 = re.search(
+        r'(<h2[^>]*>[^<]*(?:자주\s*묻는\s*질문|Frequently Asked Questions|FAQ)[^<]*</h2>)',
+        content, re.I,
+    )
+    if not faq_h2:
+        return content
+
+    pre  = content[:faq_h2.start()]
+    h2   = faq_h2.group(1)
+    rest = content[faq_h2.end():]
+
+    end_m = re.search(r'<h2[\s>]|</article>', rest, re.I)
+    faq_body  = rest[:end_m.start()] if end_m else rest
+    post_body = rest[end_m.start():] if end_m else ''
+
+    card_style = (
+        "background:#f8fafc;border-radius:12px;"
+        "padding:20px 24px;margin:14px 0;"
+        "border:1px solid #e5e7eb;"
+        "box-shadow:0 2px 8px rgba(0,0,0,0.06);"
+    )
+    q_style = "font-weight:700;color:#1d4ed8;margin:0 0 10px;font-size:1.02em;"
+    a_style = "color:#374151;margin:0;line-height:1.85;"
+
+    pieces = re.split(r'(<h3[^>]*>.*?</h3>)', faq_body, flags=re.I | re.DOTALL)
+    cards = []
+    i = 1
+    while i < len(pieces):
+        h3_tag  = pieces[i]
+        q_text  = re.sub(r'<[^>]+>', '', h3_tag).strip().lstrip('Q.').lstrip('Q：').strip()
+        q_safe  = _html_esc.escape(q_text)
+
+        following = pieces[i + 1] if i + 1 < len(pieces) else ''
+        p_m = re.search(r'<p[^>]*>(.*?)</p>', following, re.I | re.DOTALL)
+        a_inner = p_m.group(1).strip() if p_m else ''
+
+        if q_text:
+            cards.append(
+                f'<div style="{card_style}">'
+                f'<p style="{q_style}">Q. {q_safe}</p>'
+                f'<p style="{a_style}">{a_inner}</p>'
+                f'</div>'
+            )
+        i += 2
+
+    faq_rebuilt = '\n'.join(cards) if cards else faq_body
+    return pre + h2 + '\n' + faq_rebuilt + '\n' + post_body
+
+
+def _apply_design(html: str) -> str:
+    """
+    Claude 생성 HTML에 Blogger 호환 인라인 스타일 비주얼 디자인 적용.
+    Blogger는 <style> 블록을 무시하므로 모든 스타일은 인라인으로 처리.
+    """
+    if not html:
+        return html
+
+    BLUE     = "#1d4ed8"
+    BLUE_BG  = "#eff6ff"
+    BLUE_BDR = "#2563eb"
+    PURPLE   = "#7c3aed"
+    TEXT     = "#374151"
+    DARK     = "#111827"
+    GOLD     = "#d97706"
+    GOLD_BG  = "#fffbeb"
+    BORDER   = "#e5e7eb"
+
+    st = _apply_style_to_tag  # shortcut
+
+    # article 루트: 폰트 패밀리 + 기본 가독성
+    html = re.sub(
+        r'<article(\s[^>]*)?>',
+        lambda m: (
+            f'<article{m.group(1) or ""}'
+            f" style=\"font-family:'Noto Sans KR','Apple SD Gothic Neo','맑은 고딕',sans-serif;"
+            f"font-size:16px;line-height:1.9;color:{TEXT};word-break:keep-all;\">"
+        ),
+        html, count=1, flags=re.I,
+    )
+
+    # H2: 파랑 left-border + 연한 그라디언트 배경
+    html = st(html, 'h2',
+        f"font-size:1.42em;font-weight:800;color:{DARK};"
+        f"border-left:5px solid {BLUE_BDR};"
+        f"padding:12px 0 12px 18px;margin:2.8em 0 1.1em;"
+        f"background:linear-gradient(90deg,{BLUE_BG},transparent);"
+        f"border-radius:0 10px 10px 0;line-height:1.4;"
+    )
+
+    # H3: 보라 + 하단 점선
+    html = st(html, 'h3',
+        f"font-size:1.12em;font-weight:700;color:{PURPLE};"
+        f"margin:1.8em 0 0.6em;padding-bottom:4px;"
+        f"border-bottom:2px solid #ddd6fe;"
+    )
+
+    # P: 가독성 최적화
+    html = st(html, 'p', f"margin:0 0 1.2em;line-height:1.9;color:{TEXT};")
+
+    # Strong: 파랑 강조
+    html = st(html, 'strong', f"color:{BLUE};font-weight:700;")
+
+    # 목록
+    html = st(html, 'ul', f"margin:0.5em 0 1.3em 0;padding-left:1.4em;color:{TEXT};")
+    html = st(html, 'ol', f"margin:0.5em 0 1.3em 0;padding-left:1.6em;color:{TEXT};")
+    html = st(html, 'li', "margin-bottom:0.55em;line-height:1.8;")
+
+    # Blockquote: 골드 left-border + 따뜻한 배경
+    html = st(html, 'blockquote',
+        f"margin:1.5em 0;padding:16px 22px;"
+        f"border-left:4px solid {GOLD};background:{GOLD_BG};"
+        f"border-radius:0 10px 10px 0;color:#78350f;"
+        f"font-style:italic;font-size:0.97em;"
+    )
+
+    # Table: 깔끔한 박스
+    html = st(html, 'table',
+        f"width:100%;border-collapse:collapse;margin:1.5em 0;"
+        f"font-size:0.95em;box-shadow:0 2px 8px rgba(0,0,0,0.07);"
+    )
+    html = st(html, 'th',
+        f"background:{BLUE};color:#fff;"
+        f"padding:11px 14px;text-align:left;font-weight:600;"
+    )
+    html = st(html, 'td',
+        f"padding:10px 14px;border-bottom:1px solid {BORDER};"
+        f"color:{TEXT};vertical-align:top;"
+    )
+
+    # FAQ 섹션을 카드 스타일로 변환
+    html = _faq_to_cards(html)
+
+    return html
 
 
 def _parse_response(raw: str) -> dict | None:
@@ -742,6 +913,9 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             else:
                 post_data["images_inserted"] = 0
 
+            # 인라인 스타일 비주얼 디자인 적용
+            post_data["content"] = _apply_design(post_data["content"])
+
             logger.info(
                 f"시리즈 포스트 생성 완료: '{post_data.get('title', '?')}' "
                 f"({post_data['word_count']}자, 이미지 {post_data['images_inserted']}개)"
@@ -847,6 +1021,9 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
             else:
                 post_data["images_inserted"] = 0
                 logger.warning("글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행")
+
+            # 인라인 스타일 비주얼 디자인 적용
+            post_data["content"] = _apply_design(post_data["content"])
 
             logger.info(
                 f"포스트 생성 완료: '{post_data.get('title', '?')}' "

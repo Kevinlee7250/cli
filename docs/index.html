@@ -2728,7 +2728,15 @@ async function runNow() {
       startPollTimer()
     } else {
       const err = await resp.json().catch(() => ({}))
-      showRunStatus(`❌ 실패 (HTTP ${resp.status}): ${err.message || '알 수 없는 오류'}<br>PAT에 <strong>workflow</strong> 권한이 있는지 확인하세요.`, 'error')
+      let errMsg
+      if (resp.status === 401) {
+        errMsg = `❌ 인증 실패 (HTTP 401): PAT가 만료됐거나 잘못됐습니다.<br>위 PAT 설정란에서 <strong>새 PAT를 발급해 재입력</strong>하세요.<br><a href="https://github.com/settings/tokens/new?scopes=workflow,repo&description=blog-automation" target="_blank" style="color:var(--yellow)">→ GitHub PAT 발급 (workflow + repo 권한 필요)</a>`
+      } else if (resp.status === 404) {
+        errMsg = `❌ 실패 (HTTP 404): PAT에 <strong>workflow</strong> 권한이 없습니다.<br>PAT 재발급 시 <code>workflow</code> scope를 체크하세요.<br><a href="https://github.com/settings/tokens/new?scopes=workflow,repo&description=blog-automation" target="_blank" style="color:var(--yellow)">→ GitHub PAT 발급 페이지</a>`
+      } else {
+        errMsg = `❌ 실패 (HTTP ${resp.status}): ${err.message || '알 수 없는 오류'}`
+      }
+      showRunStatus(errMsg, 'error')
       showToast('실행 요청 실패', 'error')
     }
   } catch (e) {
@@ -2927,7 +2935,11 @@ async function runReview() {
     } else {
       const err = await resp.json().catch(() => ({}))
       statusEl.className = 'status-panel error'
-      statusEl.innerHTML = `❌ 실패 (HTTP ${resp.status}): ${esc(err.message || '알 수 없는 오류')}<br>PAT에 <strong>workflow</strong> 권한이 있는지 확인하세요.`
+      statusEl.innerHTML = resp.status === 401
+        ? `❌ 인증 실패 (HTTP 401): PAT가 만료됐거나 잘못됐습니다. <a href="https://github.com/settings/tokens/new?scopes=workflow,repo&description=blog-automation" target="_blank" style="color:var(--yellow)">새 PAT 발급</a> 후 재입력하세요.`
+        : resp.status === 404
+          ? `❌ 실패 (HTTP 404): PAT에 <strong>workflow</strong> 권한이 없습니다. <a href="https://github.com/settings/tokens/new?scopes=workflow,repo" target="_blank" style="color:var(--yellow)">PAT 재발급</a>`
+          : `❌ 실패 (HTTP ${resp.status}): ${esc(err.message || '알 수 없는 오류')}`
       showToast('실행 요청 실패', 'error')
     }
   } catch (e) {

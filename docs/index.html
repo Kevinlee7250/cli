@@ -5426,23 +5426,40 @@ AI 추천 키워드: ${learnKws || '없음'}
 }
 
 async function _callClaude(messages) {
-  const key = localStorage.getItem(BOT_KEY_LS)
+  const key = (localStorage.getItem(BOT_KEY_LS) || '').trim()
   if (!key) throw new Error('API 키가 설정되지 않았습니다')
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': key,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-allow-browser': 'true',
-    },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1024,
-      system: _buildBotContext(),
-      messages,
-    }),
-  })
+
+  let res
+  try {
+    res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-allow-browser': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1024,
+        system: _buildBotContext(),
+        messages,
+      }),
+    })
+  } catch (netErr) {
+    throw new Error(
+      'Anthropic API에 연결할 수 없습니다 (네트워크 오류).\n' +
+      '원인: CORS 정책 또는 네트워크 차단\n' +
+      '해결: ① 브라우저 확장(광고차단기 등) 비활성화 후 재시도\n' +
+      '　　 ② VPN 사용 중이면 해제 후 재시도\n' +
+      '　　 ③ API 키 관리에서 Anthropic 키 재입력'
+    )
+  }
+
+  if (res.status === 401) throw new Error('API 키가 잘못됐습니다 (401) — API 키 관리에서 올바른 키를 다시 입력해 주세요')
+  if (res.status === 403) throw new Error('API 키에 권한이 없습니다 (403) — Anthropic Console에서 키를 확인해 주세요')
+  if (res.status === 429) throw new Error('API 요청 한도 초과 (429) — 잠시 후 다시 시도해 주세요')
   if (!res.ok) {
     const err = await res.json().catch(() => ({}))
     throw new Error(err.error?.message || `API 오류 ${res.status}`)
@@ -5601,8 +5618,8 @@ async function sendBotMsg() {
   } catch (e) {
     _botTyping = false
     document.getElementById('bot-send').disabled = false
-    _botAppend('assistant', `❌ 오류가 발생했습니다: ${e.message}\n\nAPI 키를 확인하거나 다시 시도해 주세요.`)
-    if (e.message.includes('API 키')) botShowKeyInput()
+    _botAppend('assistant', `❌ ${e.message}`)
+    if (e.message.includes('API 키가 설정') || e.message.includes('API 키가 잘못')) botShowKeyInput()
   }
 }
 

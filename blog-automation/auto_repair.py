@@ -53,7 +53,12 @@ def _diagnose_upload_failures(runs: list[dict]) -> list[dict]:
     """최근 5회 중 3회 이상 업로드 0건이면 critical 이슈로 등록."""
     issues = []
     recent = runs[:5]  # 최신순 (insert(0, …) 방식으로 저장됨)
-    fail_runs = [r for r in recent if r.get("bloggerUploaded", 0) == 0 and r.get("errors", 0) > 0]
+    # errors==0이어도 postsGenerated>0이면 silent 실패(JSON 파싱 오류 등)로 간주
+    fail_runs = [
+        r for r in recent
+        if r.get("bloggerUploaded", 0) == 0
+        and (r.get("errors", 0) > 0 or r.get("postsGenerated", 0) > 0)
+    ]
     if len(fail_runs) >= 3:
         issues.append({
             "id": "consecutive_upload_failures",
@@ -84,7 +89,7 @@ def _diagnose_no_runs_recently(runs: list[dict]) -> list[dict]:
                 "context": {"last_run": last_run_at, "hours_ago": round(hours_ago, 1)},
                 "fix": None,  # 수동 조치 필요
             })
-    except ValueError:
+    except (ValueError, TypeError):
         pass
     return issues
 
@@ -205,7 +210,7 @@ def _fix_prune_old_keywords(issue: dict) -> dict:
     used_kw = _load_json(USED_KW_FILE, {})
     if not isinstance(used_kw, dict):
         return {"success": False, "detail": "used_keywords.json 형식 오류"}
-    cutoff = issue["context"]["cutoff"]
+    cutoff = issue.get("context", {}).get("cutoff", "")
     before = len(used_kw)
     pruned = {k: v for k, v in used_kw.items() if not (isinstance(v, str) and v < cutoff)}
     removed = before - len(pruned)
@@ -351,11 +356,15 @@ def run_auto_repair(dry_run: bool = False) -> dict:
     """자동 진단·수리를 실행하고 결과 dict를 반환합니다."""
     os.makedirs(_LOGS, exist_ok=True)
 
-    # 데이터 로드
+    # 데이터 로드 (타입 검증 포함 — 파일 손상 시 기본값으로 폴백)
     runs       = _load_json(RUN_HISTORY, [])
+    if not isinstance(runs, list):       runs = []
     used_kw    = _load_json(USED_KW_FILE, {})
+    if not isinstance(used_kw, dict):   used_kw = {}
     series_lst = _load_json(SERIES_FILE, [])
+    if not isinstance(series_lst, list): series_lst = []
     pending    = _load_json(PENDING_FILE, [])
+    if not isinstance(pending, list):    pending = []
 
     # ── 진단 ─────────────────────────────────────────────────────────────────
     issues: list[dict] = []

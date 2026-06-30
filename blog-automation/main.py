@@ -223,6 +223,13 @@ def run_once(
             error_messages.append(msg)
             continue
 
+        # 내부 링크 자동 삽입 (기존 포스트와 연결 — SEO 개선)
+        try:
+            from internal_linker import insert_internal_links
+            post_data["content"] = insert_internal_links(post_data)
+        except Exception as _ile:
+            logger.debug(f"내부 링크 삽입 건너뜀: {_ile}")
+
         title = post_data.get("title", "?")
         images = post_data.get("images_inserted", 0)
         logger.info(f"  제목: {title}")

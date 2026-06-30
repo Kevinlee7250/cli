@@ -103,7 +103,12 @@ def _diagnose_keyword_exhaustion(used_kw: dict) -> list[dict]:
     if total < 100:
         return issues
     cutoff = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
-    old_count = sum(1 for v in used_kw.values() if isinstance(v, str) and v < cutoff)
+    # used_keywords.json 은 구형(str) 또는 신형(dict {"used_at": ...}) 포맷 모두 지원
+    def _kw_date(v) -> str:
+        if isinstance(v, str): return v
+        if isinstance(v, dict): return v.get("used_at", "9999-99-99")
+        return "9999-99-99"
+    old_count = sum(1 for v in used_kw.values() if _kw_date(v) < cutoff)
     if old_count > 50:
         issues.append({
             "id": "keyword_pool_exhaustion",
@@ -212,7 +217,12 @@ def _fix_prune_old_keywords(issue: dict) -> dict:
         return {"success": False, "detail": "used_keywords.json 형식 오류"}
     cutoff = issue.get("context", {}).get("cutoff", "")
     before = len(used_kw)
-    pruned = {k: v for k, v in used_kw.items() if not (isinstance(v, str) and v < cutoff)}
+    # used_keywords.json 은 구형(str) 또는 신형(dict) 포맷 모두 지원
+    def _kw_date(v) -> str:
+        if isinstance(v, str): return v
+        if isinstance(v, dict): return v.get("used_at", "9999-99-99")
+        return "9999-99-99"
+    pruned = {k: v for k, v in used_kw.items() if not (_kw_date(v) < cutoff)}
     removed = before - len(pruned)
     _save_json(USED_KW_FILE, pruned)
     return {

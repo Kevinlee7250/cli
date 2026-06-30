@@ -840,7 +840,12 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
     if not series_context:
         return generate_post(keyword, traffic)
 
-    episode = series_context.get("episode", "?")
+    # episode 는 반드시 int — 기본값 "?" 는 build_series_nav에서 TypeError 유발
+    _ep_raw = series_context.get("episode", 1)
+    try:
+        episode = int(_ep_raw)
+    except (TypeError, ValueError):
+        episode = 1
     total = series_context.get("total_episodes", "?")
     logger.info(f"시리즈 포스트 생성: '{keyword}' ({episode}/{total}편)")
     prompt = _build_series_prompt(keyword, traffic, series_context)

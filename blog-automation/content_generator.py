@@ -337,7 +337,7 @@ def _apply_style_to_tag(html: str, tag: str, style: str) -> str:
         attrs = m.group(1) or ''
         sx = re.search(r'style="([^"]*)"', attrs, re.I)
         if sx:
-            merged = f'style="{style};{sx.group(1).rstrip(";")}"'
+            merged = f'style="{sx.group(1).rstrip(";")};{style}"'
             attrs = attrs[:sx.start()] + merged + attrs[sx.end():]
         else:
             attrs = attrs.rstrip() + f' style="{style}"'
@@ -527,7 +527,7 @@ def _parse_response(raw: str) -> dict | None:
 _KO_STOPWORDS = {
     # 조사/어미/의존명사/지시어
     "이것", "그것", "저것", "이런", "그런", "저런", "이때", "그때", "모든", "여러",
-    "어떤", "이런", "많은", "위한", "통한", "대한", "있는", "없는", "하는", "되는",
+    "어떤", "많은", "위한", "통한", "대한", "있는", "없는", "하는", "되는",
     "있어", "있다", "없다", "한다", "된다", "합니다", "합니다", "됩니다", "있습니다",
     "하면", "되면", "이며", "으로", "에서", "에게", "부터", "까지", "라고", "라는",
     "것은", "것을", "것이", "것도", "것과", "것만", "것으로", "통해", "때문", "위해",

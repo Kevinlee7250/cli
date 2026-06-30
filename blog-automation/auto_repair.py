@@ -41,7 +41,8 @@ def _load_json(path: str, default):
 
 
 def _save_json(path: str, data) -> None:
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    if _dir := os.path.dirname(path):
+        os.makedirs(_dir, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 

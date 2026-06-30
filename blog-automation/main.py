@@ -336,7 +336,7 @@ def run_series(
     pending_list: list[dict] = []
     episodes = series_plan.get("episodes", [])
 
-    for ep in episodes:
+    for ep_idx, ep in enumerate(episodes):
         ep_num = ep["episode"]
         ep_keyword = ep.get("search_keyword", keyword)
 
@@ -416,7 +416,7 @@ def run_series(
         generated_posts.append(post_data)
         save_series(series_plan)
 
-        if ep_num < len(episodes):
+        if ep_idx < len(episodes) - 1:
             time.sleep(3)
 
     all_done = all(ep.get("status") in ("done", "pending_review") for ep in episodes)
@@ -643,9 +643,6 @@ def main() -> None:
         for blog_cfg in target_blogs:
             run_once(keywords=keywords, review=True, blog_config=blog_cfg)
         return
-
-    if not _check_config():
-        sys.exit(1)
 
     if args.once or args.interactive or keywords:
         for blog_cfg in target_blogs:

@@ -432,6 +432,7 @@ def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> 
             pending = []
 
     cfg = blog_config or {}
+    initial_pending_len = len(pending)
     now = datetime.now()
     for idx, r in enumerate(results):
         title = r.get("title", "")
@@ -464,6 +465,6 @@ def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> 
         os.makedirs(os.path.dirname(PENDING_FILE), exist_ok=True)
         with open(PENDING_FILE, "w", encoding="utf-8") as f:
             json.dump(pending, f, ensure_ascii=False, indent=2)
-        logger.info(f"검토 대기 포스트 저장 완료: {len(results)}개 추가 (총 {len(pending)}개)")
+        logger.info(f"검토 대기 포스트 저장 완료: {len(pending) - initial_pending_len}개 추가 (총 {len(pending)}개)")
     except OSError as e:
         logger.error(f"검토 대기 파일 저장 실패: {e}")

@@ -90,9 +90,14 @@ def _inject_ads(html: str, blog_config: dict | None = None) -> str:
       슬롯 4 — 본문 끝
     """
     # 슬롯 1: 목차 div 이후 첫 번째 </p> 뒤 (목차 내부 삽입 방지)
+    # </ol> 을 기준으로 목차 끝 위치를 잡는다 — 내부 </div> 오인 방지
     ad0 = _ad_unit(0, blog_config)
-    toc_end = html.lower().find('</div>', html.lower().find('📋 목차'))
-    search_start = toc_end + 6 if toc_end != -1 else 0
+    toc_pos = html.find('📋 목차')
+    if toc_pos != -1:
+        ol_end = html.lower().find('</ol>', toc_pos)
+        search_start = ol_end + 5 if ol_end != -1 else 0
+    else:
+        search_start = 0
     p_match = re.search(r'</p>', html[search_start:], re.IGNORECASE)
     if p_match:
         insert_at = search_start + p_match.end()
@@ -314,7 +319,7 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
         return None
 
     full_content = _build_full_content(post_data, blog_config)
-    kw = post_data.get("keyword", "")
+    kw = post_data.get("keyword") or ""
     # None-safe: Claude가 "labels": null 반환해도 안전하게 처리
     raw_labels = post_data.get("labels") or []
     if not isinstance(raw_labels, list):

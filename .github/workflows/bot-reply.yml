@@ -1,0 +1,97 @@
+name: 🤖 시스템 관리봇 응답
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: '사용자 메시지'
+        required: true
+      reply_id:
+        description: '응답 추적 ID'
+        required: true
+      context_json:
+        description: '시스템 컨텍스트 JSON'
+        required: false
+        default: '{}'
+
+permissions:
+  contents: write
+
+jobs:
+  bot-reply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: anthropic 설치
+        run: pip install anthropic -q
+
+      - name: Claude 응답 생성
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          USER_MESSAGE: ${{ inputs.message }}
+          REPLY_ID: ${{ inputs.reply_id }}
+          CONTEXT_JSON: ${{ inputs.context_json }}
+        run: |
+          python3 - <<'PYEOF'
+          import os, json, anthropic, datetime
+
+          client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+          user_msg = os.environ["USER_MESSAGE"]
+          reply_id = os.environ["REPLY_ID"]
+
+          try:
+            ctx = json.loads(os.environ.get("CONTEXT_JSON", "{}"))
+          except Exception:
+            ctx = {}
+
+          # 시스템 컨텍스트 구성
+          system_parts = [
+            "당신은 블로그 자동화 시스템의 관리봇입니다. Claude Haiku 모델 기반으로 시스템 상태를 분석하고 조언합니다.",
+            "응답은 간결하고 실용적으로 한국어로 작성하세요.",
+          ]
+          if ctx:
+            system_parts.append(f"\n현재 시스템 상태:\n{json.dumps(ctx, ensure_ascii=False, indent=2)}")
+
+          response = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=1024,
+            system="\n".join(system_parts),
+            messages=[{"role": "user", "content": user_msg}]
+          )
+          reply_text = response.content[0].text
+
+          # docs/data/bot_reply.json 저장
+          os.makedirs("docs/data", exist_ok=True)
+          result = {
+            "reply_id": reply_id,
+            "message": user_msg,
+            "reply": reply_text,
+            "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+            "model": "claude-haiku-4-5-20251001"
+          }
+          with open("docs/data/bot_reply.json", "w", encoding="utf-8") as f:
+            json.dump(result, f, ensure_ascii=False, indent=2)
+          print(f"✅ 응답 생성 완료 (reply_id={reply_id})")
+          PYEOF
+
+      - name: 응답 커밋 & 푸시
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f docs/data/bot_reply.json
+          git diff --staged --quiet && echo "변경없음" && exit 0
+          git commit -m "🤖 봇 응답 (#${{ github.run_number }})"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin claude/blog-automation-system-KAbtE && break
+            sleep 3
+          done
+          git push origin claude/blog-automation-system-KAbtE

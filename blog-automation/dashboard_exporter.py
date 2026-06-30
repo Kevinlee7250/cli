@@ -129,6 +129,7 @@ def log_run(
                 "sources": r.get("sources", []),
                 "labels": r.get("labels", []),
                 "metaDescription": r.get("meta_description", ""),
+                "adsenseCategory": _categorize(r.get("keyword", "")),
                 "blogId": cfg.get("id", "default"),
                 "blogName": cfg.get("name", ""),
             }

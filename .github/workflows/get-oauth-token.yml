@@ -42,7 +42,7 @@ jobs:
               "client_id": client_id,
               "redirect_uri": "urn:ietf:wg:oauth:2.0:oob",
               "response_type": "code",
-              "scope": "https://www.googleapis.com/auth/blogger",
+              "scope": "https://www.googleapis.com/auth/blogger https://www.googleapis.com/auth/webmasters.readonly",
               "access_type": "offline",
               "prompt": "consent",
           }

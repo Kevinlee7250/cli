@@ -96,11 +96,12 @@ jobs:
           else
             git commit -m "🔧 자동 수리 완료 (#${{ github.run_number }})"
             for i in 1 2 3; do
-              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE && break
-              echo "rebase 재시도 $i/3..."
-              sleep 3
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && break
+              echo "pull+push 재시도 $i/3..."
+              sleep $((i * 3))
             done
-            git push origin claude/blog-automation-system-KAbtE
           fi
 
       - name: 수리 로그 아티팩트

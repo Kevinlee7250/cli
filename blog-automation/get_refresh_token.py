@@ -19,7 +19,10 @@ if not CLIENT_ID or not CLIENT_SECRET:
     CLIENT_ID = input("GOOGLE_CLIENT_ID: ").strip()
     CLIENT_SECRET = input("GOOGLE_CLIENT_SECRET: ").strip()
 REDIRECT_URI = "http://localhost:8080"
-SCOPE = "https://www.googleapis.com/auth/blogger"
+SCOPE = " ".join([
+    "https://www.googleapis.com/auth/blogger",
+    "https://www.googleapis.com/auth/webmasters.readonly",
+])
 
 _auth_code = None
 

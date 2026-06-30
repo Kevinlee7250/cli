@@ -379,7 +379,7 @@ def _faq_to_cards(content: str) -> str:
     i = 1
     while i < len(pieces):
         h3_tag  = pieces[i]
-        q_text  = re.sub(r'<[^>]+>', '', h3_tag).strip().lstrip('Q.').lstrip('Q：').strip()
+        q_text  = re.sub(r'^Q[.：]\s*', '', re.sub(r'<[^>]+>', '', h3_tag).strip())
         q_safe  = _html_esc.escape(q_text)
 
         following = pieces[i + 1] if i + 1 < len(pieces) else ''
@@ -420,15 +420,11 @@ def _apply_design(html: str) -> str:
     st = _apply_style_to_tag  # shortcut
 
     # article 루트: 폰트 패밀리 + 기본 가독성
-    html = re.sub(
-        r'<article(\s[^>]*)?>',
-        lambda m: (
-            f'<article{m.group(1) or ""}'
-            f" style=\"font-family:'Noto Sans KR','Apple SD Gothic Neo','맑은 고딕',sans-serif;"
-            f"font-size:16px;line-height:1.9;color:{TEXT};word-break:keep-all;\">"
-        ),
-        html, count=1, flags=re.I,
+    _article_style = (
+        f"font-family:'Noto Sans KR','Apple SD Gothic Neo','맑은 고딕',sans-serif;"
+        f"font-size:16px;line-height:1.9;color:{TEXT};word-break:keep-all;"
     )
+    html = _apply_style_to_tag(html, 'article', _article_style)
 
     # H2: 파랑 left-border + 연한 그라디언트 배경
     html = st(html, 'h2',

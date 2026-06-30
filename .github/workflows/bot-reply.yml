@@ -87,11 +87,15 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # bot_reply.json 내용 보존 후 최신 원격 상태로 리셋 (충돌 방지)
+          cp docs/data/bot_reply.json /tmp/bot_reply.json
+          git fetch origin claude/blog-automation-system-KAbtE
+          git reset --hard origin/claude/blog-automation-system-KAbtE
+          cp /tmp/bot_reply.json docs/data/bot_reply.json
           git add -f docs/data/bot_reply.json
           git diff --staged --quiet && echo "변경없음" && exit 0
           git commit -m "🤖 봇 응답 (#${{ github.run_number }})"
           for i in 1 2 3; do
-            git pull --rebase --autostash origin claude/blog-automation-system-KAbtE && break
-            sleep 3
+            git push origin claude/blog-automation-system-KAbtE && break
+            sleep $((i * 2))
           done
-          git push origin claude/blog-automation-system-KAbtE

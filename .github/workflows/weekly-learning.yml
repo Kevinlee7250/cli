@@ -89,8 +89,13 @@ jobs:
           else
             WEEK=$(TZ='Asia/Seoul' date '+%Y년 %m월 %d일')
             git commit -m "🧠 주간 학습 완료 — ${WEEK} (#${{ github.run_number }})"
-            git pull --rebase origin claude/blog-automation-system-KAbtE
-            git push origin claude/blog-automation-system-KAbtE
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && break
+              echo "pull+push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
           fi
 
       - name: 로그 업로드 (아티팩트)

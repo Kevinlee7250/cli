@@ -77,9 +77,27 @@ def _build_summary(week_runs: list[dict]) -> dict:
     total_posts = sum(r.get("postsGenerated", 0) for r in week_runs)
     total_uploaded = sum(r.get("bloggerUploaded", 0) for r in week_runs)
 
+    # adsenseCategory 가 없는 구형 이력은 keyword 로 카테고리를 도출 (하위 호환)
+    _CAT_KW = {
+        "금융": ["주식", "코인", "ETF", "펀드", "재테크", "투자", "금리", "배당", "채권", "보험", "대출", "신용"],
+        "부동산": ["아파트", "분양", "청약", "전세", "월세", "부동산", "재건축", "임대"],
+        "건강": ["다이어트", "운동", "영양", "건강", "병원", "치료", "의료", "약", "혈당", "면역"],
+        "기술": ["AI", "챗GPT", "코딩", "스마트폰", "앱", "IT", "자동화", "소프트웨어", "유튜브", "블로그"],
+        "여행": ["여행", "호텔", "항공", "캠핑", "해외", "국내여행", "맛집"],
+        "교육": ["영어", "자격증", "취업", "공부", "학습", "시험", "재취업"],
+        "쇼핑": ["할인", "세일", "쿠폰", "구매", "패션", "가전"],
+        "법률": ["법률", "소송", "변호사", "계약", "이혼", "상속", "교통사고"],
+    }
+    def _cat_from_keyword(kw: str) -> str:
+        kw_l = kw.lower()
+        for c, words in _CAT_KW.items():
+            if any(w in kw_l for w in words):
+                return c
+        return "일반"
+
     cat_count: dict[str, int] = {}
     for p in all_posts:
-        cat = p.get("adsenseCategory", "일반")
+        cat = p.get("adsenseCategory") or _cat_from_keyword(p.get("keyword", ""))
         cat_count[cat] = cat_count.get(cat, 0) + 1
 
     cpc_map = {

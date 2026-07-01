@@ -123,7 +123,7 @@
         "url": "https://www.hf.go.kr"
       }
     ],
-    "status": "failed",
+    "status": "paused",
     "failedAt": "2026-07-01T13:34:20.071600",
     "failReason": "업로드 실패 [400]: {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Request contains an invalid argument.\",\n    \"errors\": [\n      {\n        \"message\": \"Request contains an invalid argument.\",\n        \"domain\": \"global\",\n        \"reason\": \"badRequest\"\n      }\n    ],\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n\n  요청 URL: https://www.googleapis.com/blogger/v3/blogs/4782599180249292575/posts | params: {}\n  title: 전세 계약 전 등기부등본 확인 안 했다가 진짜 큰일 날 뻔했어요 (2026)\n  labels (11개): ['전세 계약 전 등기부등본 확인 안 해서 생긴 일', '전세계약', '등기부등본확인', '전세사기예방', '전세보증보험']\n  ❌ 재시도도 실패 [400]: {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Request contains an invalid argument.\",\n    \"errors\": [\n      {\n        \"message\": \"Request contains an invalid argument.\",\n        \"domain\": \"global\",\n        \"reason\": \"badRequest\"\n      }\n    ],\n    "
   },
@@ -181,7 +181,7 @@
         "url": "https://www.ftc.go.kr"
       }
     ],
-    "status": "failed",
+    "status": "paused",
     "failedAt": "2026-07-01T13:34:21.112691",
     "failReason": "업로드 실패 [400]: {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Request contains an invalid argument.\",\n    \"errors\": [\n      {\n        \"message\": \"Request contains an invalid argument.\",\n        \"domain\": \"global\",\n        \"reason\": \"badRequest\"\n      }\n    ],\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n\n  요청 URL: https://www.googleapis.com/blogger/v3/blogs/4782599180249292575/posts | params: {}\n  title: 스마트스토어 부업 3개월 솔직 후기 — 월 수익 공개합니다 (2026년)\n  labels (11개): ['스마트스토어 부업 3개월 수익 공개 및 현실적인 후기', '스마트스토어부업', '부업수익공개', '직장인부업', '위탁판매후기']\n  ❌ 재시도도 실패 [400]: {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Request contains an invalid argument.\",\n    \"errors\": [\n      {\n        \"message\": \"Request contains an invalid argument.\",\n        \"domain\": \"global\",\n        \"reason\": \"badRequest\"\n      }\n    ],\n "
   },
@@ -239,7 +239,7 @@
         "url": "https://www.karm.or.kr"
       }
     ],
-    "status": "failed",
+    "status": "paused",
     "failedAt": "2026-07-01T13:34:21.924769",
     "failReason": "업로드 실패 [400]: {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Request contains an invalid argument.\",\n    \"errors\": [\n      {\n        \"message\": \"Request contains an invalid argument.\",\n        \"domain\": \"global\",\n        \"reason\": \"badRequest\"\n      }\n    ],\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n\n  요청 URL: https://www.googleapis.com/blogger/v3/blogs/4782599180249292575/posts | params: {}\n  title: 허리디스크 진단 후 6개월 직접 운동해봤더니 달라진 것들 (2026 솔직 후기)\n  labels (11개): ['허리디스크 진단 후 운동 직접 해봤더니 달라진 것들', '허리디스크', '허리디스크운동', '허리디스크재활', '척추건강']\n  ❌ 재시도도 실패 [400]: {\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"Request contains an invalid argument.\",\n    \"errors\": [\n      {\n        \"message\": \"Request contains an invalid argument.\",\n        \"domain\": \"global\",\n        \"reason\": \"badRequest\"\n      }\n    ],\n"
   },
@@ -297,7 +297,7 @@
         "url": "https://www.kobis.or.kr"
       }
     ],
-    "status": "failed",
+    "status": "paused",
     "blogId": "default",
     "blogName": "",
     "failedAt": "2026-07-01T13:34:22.818578",
@@ -357,7 +357,7 @@
         "url": "https://comic.naver.com"
       }
     ],
-    "status": "failed",
+    "status": "paused",
     "blogId": "default",
     "blogName": "",
     "failedAt": "2026-07-01T13:34:23.716694",
@@ -411,5 +411,28 @@
     "blogName": "HOGU What?",
     "publishedAt": "2026-07-01T13:02:32.885337",
     "blogUrl": "https://hoguwhat1.blogspot.com/2026/07/2026_01433674074.html"
+  },
+  {
+    "id": "test-api-simple-001",
+    "title": "API 연결 테스트 포스트 (삭제 예정)",
+    "content": "<p>This is a simple API connection test. 이것은 API 연결 테스트용 포스트입니다.</p>",
+    "labels": [],
+    "keyword": "",
+    "faq": [],
+    "status": "pending",
+    "publishedAt": null
+  },
+  {
+    "id": "test-api-labels-002",
+    "title": "API 레이블 테스트 포스트 (삭제 예정)",
+    "content": "<p>레이블 테스트용 포스트입니다.</p>",
+    "labels": [
+      "전세계약",
+      "등기부등본확인"
+    ],
+    "keyword": "전세 계약 전 등기부등본 확인 안 해서 생긴 일",
+    "faq": [],
+    "status": "pending",
+    "publishedAt": null
   }
 ]

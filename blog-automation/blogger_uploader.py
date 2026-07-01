@@ -259,8 +259,9 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
     html = _inject_ads(html, blog_config)
 
     # ④ 태그 클라우드 (내부 링크 효과)
+    from urllib.parse import quote as _url_quote
     tag_links = "".join(
-        f'<a href="/search/label/{label}" '
+        f'<a href="/search/label/{_url_quote(label, safe="")}" '
         f'style="display:inline-block;margin:4px 3px;padding:6px 16px;'
         f'background:#eff6ff;border-radius:20px;text-decoration:none;'
         f'color:#1d4ed8;font-size:13px;font-weight:500;border:1px solid #bfdbfe;">{label}</a>'
@@ -360,6 +361,11 @@ def _sanitize_for_blogger(html: str) -> str:
     # 내부 앵커 링크 href="#..." → 텍스트만 남김
     html = re.sub(
         r'<a[^>]*\shref="#[^"]*"[^>]*>(.*?)</a>',
+        r'\1', html, flags=re.IGNORECASE | re.DOTALL
+    )
+    # /search/label/ 한국어 비인코딩 href → 텍스트로 변환 (Blogger API 400 원인)
+    html = re.sub(
+        r'<a[^>]*\shref="/search/label/[^"]*"[^>]*>(.*?)</a>',
         r'\1', html, flags=re.IGNORECASE | re.DOTALL
     )
     return html

@@ -50,7 +50,7 @@ jobs:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
-          BLOGGER_BLOG_ID: ${{ secrets.BLOG_ID }}
+          BLOGGER_BLOG_ID: ${{ secrets.BLOGGER_BLOG_ID }}
           GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
           NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
@@ -72,11 +72,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/data/posts.json \
-                  docs/data/analytics_summary.json \
-                  blog-automation/logs/analytics_report.json 2>/dev/null || true
-          git diff --cached --quiet && echo "변경 없음 — 커밋 생략" || \
-            git commit -m "📊 블로그 성과 분석 업데이트 — $(date -u +%Y-%m-%d) (S/A/B/C 등급 + 실수익 계산)"
+          git add docs/data/posts.json                   docs/data/analytics_summary.json                   blog-automation/logs/analytics_report.json 2>/dev/null || true
+          git diff --cached --quiet && echo "변경 없음 — 커밋 생략" ||             git commit -m "📊 블로그 성과 분석 업데이트 — $(date -u +%Y-%m-%d) (S/A/B/C 등급 + 실수익 계산)"
           git push origin ${{ github.ref_name }} || true
 
       - name: Print grade summary
@@ -88,16 +85,16 @@ jobs:
           if os.path.exists(path):
               d = json.load(open(path))
               g = d.get('gradeDistribution', {})
-              print(f\"S(최우수): {g.get('S',0)}개\")
-              print(f\"A(양호):   {g.get('A',0)}개\")
-              print(f\"B(기본):   {g.get('B',0)}개\")
-              print(f\"C(요주의): {g.get('C',0)}개\")
-              print(f\"추정 월수익: \${ d.get('totalEstimatedRevenueMonthly',0):.2f} USD\")
+              print(f"S(최우수): {g.get('S',0)}개")
+              print(f"A(양호):   {g.get('A',0)}개")
+              print(f"B(기본):   {g.get('B',0)}개")
+              print(f"C(요주의): {g.get('C',0)}개")
+              print(f"추정 월수익: \${ d.get('totalEstimatedRevenueMonthly',0):.2f} USD")
               rt = d.get('rewriteTargets', [])
               if rt:
-                  print(f\"리라이팅 대상: {len(rt)}개\")
+                  print(f"리라이팅 대상: {len(rt)}개")
                   for t in rt[:3]:
-                      print(f\"  - {t.get('title','-')[:50]}\")
+                      print(f"  - {t.get('title','-')[:50]}")
           else:
-              print(\"analytics_summary.json 없음\")
+              print("analytics_summary.json 없음")
           " || true

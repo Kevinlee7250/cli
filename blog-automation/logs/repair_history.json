@@ -1,5 +1,53 @@
 [
   {
+    "timestamp": "2026-07-01T12:46:07.146667",
+    "health_score": 86,
+    "issues_found": 2,
+    "issues": [
+      {
+        "id": "stuck_series",
+        "level": "warning",
+        "message": "24시간 이상 멈춘 시리즈 1개",
+        "context": {
+          "series": [
+            "드라마 참교육 정주행하고 나서야 보인 것들"
+          ]
+        },
+        "fix": "reset_stuck_series"
+      },
+      {
+        "id": "adsense_not_configured",
+        "level": "warning",
+        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "context": {},
+        "fix": null
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "stuck_series",
+        "issue_level": "warning",
+        "issue_message": "24시간 이상 멈춘 시리즈 1개",
+        "fix_applied": "reset_stuck_series",
+        "timestamp": "2026-07-01T12:46:07.146086",
+        "success": true,
+        "detail": "멈춘 시리즈 1개 → completed 처리",
+        "fixed": 1
+      },
+      {
+        "issue_id": "adsense_not_configured",
+        "issue_level": "warning",
+        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "fix_applied": null,
+        "timestamp": "2026-07-01T12:46:07.146602",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-06-29T04:56:12.706498",
     "health_score": 93,
     "issues_found": 1,

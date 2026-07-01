@@ -83,15 +83,11 @@ if _blogs_config_raw.strip():
 BLOG_NAME = os.getenv("BLOG_NAME", "기본 블로그")
 
 
-def get_blog_configs() -> list[dict]:
-    """활성화된 블로그 설정 목록을 반환합니다.
-    BLOGS_CONFIG가 설정돼 있으면 해당 목록을 사용하고,
-    없으면 기존 단일 블로그 환경 변수로 폴백합니다.
-    """
-    if _BLOGS_CONFIG_LIST:
-        return [b for b in _BLOGS_CONFIG_LIST if b.get("enabled", True)]
-    # 단일 블로그 폴백
-    return [{
+_BLOGS_REGISTRY_FILE = os.path.join(os.path.dirname(__file__), "blogs.json")
+
+
+def _default_blog() -> dict:
+    return {
         "id": "default",
         "name": BLOG_NAME,
         "blog_id": BLOGGER_BLOG_ID,
@@ -103,4 +99,50 @@ def get_blog_configs() -> list[dict]:
         "language": BLOG_LANGUAGE,
         "post_status": POST_STATUS,
         "enabled": True,
-    }]
+    }
+
+
+def get_blog_configs() -> list[dict]:
+    """활성화된 블로그 설정 목록을 반환합니다.
+
+    우선순위:
+    1. BLOGS_CONFIG 환경변수 (JSON 배열) — 모든 자격증명 명시 필요
+    2. blogs.json 레지스트리 — blog_id·이름만 관리, OAuth는 공유 Secrets 사용
+    3. 단일 블로그 폴백 (기존 방식)
+    """
+    # 1) BLOGS_CONFIG 환경변수
+    if _BLOGS_CONFIG_LIST:
+        return [b for b in _BLOGS_CONFIG_LIST if b.get("enabled", True)]
+
+    # 2) blogs.json 레지스트리 (OAuth는 공유 Secrets 자동 주입)
+    if os.path.exists(_BLOGS_REGISTRY_FILE):
+        try:
+            with open(_BLOGS_REGISTRY_FILE, encoding="utf-8") as f:
+                registry = json.load(f)
+            if isinstance(registry, list) and registry:
+                configs = []
+                for b in registry:
+                    if not b.get("enabled", True):
+                        continue
+                    configs.append({
+                        "id": b.get("id", "blog1"),
+                        "name": b.get("name") or BLOG_NAME,
+                        # blog_id 미지정 시 기존 단일 Secret 사용
+                        "blog_id": b.get("blog_id") or BLOGGER_BLOG_ID,
+                        # OAuth·AdSense는 항상 공유 Secrets 사용
+                        "client_id": BLOGGER_CLIENT_ID,
+                        "client_secret": BLOGGER_CLIENT_SECRET,
+                        "refresh_token": BLOGGER_REFRESH_TOKEN,
+                        "adsense_client_id": b.get("adsense_client_id") or ADSENSE_CLIENT_ID,
+                        "adsense_slot_ids": b.get("adsense_slot_ids") or ADSENSE_SLOT_IDS,
+                        "language": b.get("language", BLOG_LANGUAGE),
+                        "post_status": b.get("post_status", POST_STATUS),
+                        "enabled": True,
+                    })
+                if configs:
+                    return configs
+        except Exception:
+            pass
+
+    # 3) 단일 블로그 폴백
+    return [_default_blog()]

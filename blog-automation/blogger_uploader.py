@@ -297,6 +297,28 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
 # 업로드
 # ──────────────────────────────────────────────────────────────────────────────
 
+def _sanitize_for_blogger(html: str) -> str:
+    """Blogger API 호환성: 거부되는 HTML 요소 제거 및 변환.
+
+    Blogger API는 다음을 거부하는 것으로 확인됨:
+      - <nav aria-label="..."> 등 HTML5 시맨틱 태그 (특히 aria-* 속성 동반 시)
+      - aria-* 속성 자체
+      - <script> 태그 (JSON-LD 스키마 등)
+
+    성공 사례에서 <article>, <section> 단독은 허용 확인됨.
+    """
+    # <script> 태그 제거
+    html = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL | re.IGNORECASE)
+    # HTML5 시맨틱 블록 태그 → <div> 변환 (aria-* 속성과 함께 올 경우 400 유발)
+    for tag in ['nav', 'main', 'aside', 'header', 'footer']:
+        html = re.sub(f'<{tag}([^>]*)>', r'<div\1>', html, flags=re.IGNORECASE)
+        html = re.sub(f'</{tag}>', '</div>', html, flags=re.IGNORECASE)
+    # aria-* 속성 제거 (큰따옴표/작은따옴표 모두)
+    html = re.sub(r'\s+aria-[\w-]+="[^"]*"', '', html)
+    html = re.sub(r"\s+aria-[\w-]+='[^']*'", '', html)
+    return html
+
+
 def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None:
     """Blogger API로 포스트를 업로드합니다."""
     if not post_data.get("title") or not post_data.get("content"):
@@ -319,6 +341,7 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
         return None
 
     full_content = _build_full_content(post_data, blog_config)
+    full_content = _sanitize_for_blogger(full_content)  # Blogger API 호환성: nav/aria-*/script 제거
     kw = post_data.get("keyword") or ""
     # None-safe: Claude가 "labels": null 반환해도 안전하게 처리
     raw_labels = post_data.get("labels") or []
@@ -383,10 +406,9 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
             logger.info(f"  ✅ 블로그 접근 확인 (blog_id·토큰 정상): {blog_url}")
             logger.info("  ➡ 400 원인은 요청 본문 문제 — <script> 태그 제거 후 재시도합니다")
             # 재시도: <script> 태그 제거 (JSON-LD 스키마 등 Blogger가 거부하는 태그 제거)
-            safe_content = re.sub(
-                r'<script[^>]*>.*?</script>', '', full_content,
-                flags=re.DOTALL | re.IGNORECASE
-            )
+            # full_content는 이미 _sanitize_for_blogger 처리됨
+            # 추가 보호: 남은 script 태그 제거 후 재시도
+            safe_content = _sanitize_for_blogger(full_content)
             payload2 = {**payload, "content": safe_content}
             try:
                 resp2 = requests.post(url, json=payload2, headers=headers, params=params, timeout=30)

@@ -1,0 +1,52 @@
+name: 대시보드 GitHub Pages 배포
+
+on:
+  # blog-run.yml 완료 후 자동 배포
+  workflow_run:
+    workflows: ["블로그 자동화 실행"]
+    types: [completed]
+    branches: [claude/blog-automation-system-KAbtE]
+
+  # 수동 배포
+  workflow_dispatch:
+
+  # docs/ 변경 시 즉시 배포
+  push:
+    branches: [claude/blog-automation-system-KAbtE]
+    paths:
+      - 'docs/index.html'
+      - 'docs/data/**'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: GitHub Pages 설정
+        uses: actions/configure-pages@v5
+
+      - name: 대시보드 아티팩트 업로드
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: GitHub Pages 배포
+        id: deployment
+        uses: actions/deploy-pages@v4

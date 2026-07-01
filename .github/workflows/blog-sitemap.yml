@@ -1,0 +1,128 @@
+name: 🗺️ Sitemap 자동 생성 & GSC 제출
+
+on:
+  schedule:
+    - cron: '0 1 * * *'          # 매일 01:00 UTC (KST 10:00)
+  workflow_dispatch:
+  push:
+    branches: [latest]
+    paths:
+      - 'docs/data/posts.json'   # posts.json 변경 시 자동 실행
+
+permissions:
+  contents: write
+
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 코드 체크아웃 (latest)
+        uses: actions/checkout@v4
+        with:
+          ref: latest
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Python 설치
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Git 설정
+        run: |
+          git config user.email "github-actions@github.com"
+          git config user.name "GitHub Actions"
+
+      - name: Sitemap 생성
+        env:
+          GOOGLE_CLIENT_ID:     ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+          GSC_SITE_URL:         ${{ secrets.GSC_SITE_URL }}
+          SITEMAP_URL:          https://kevinlee7250.github.io/cli/sitemap.xml
+        run: |
+          cd blog-automation
+          python3 sitemap_generator.py
+
+      - name: latest 브랜치에 sitemap.xml 커밋
+        run: |
+          git add -f docs/sitemap.xml
+          git status --short
+          git diff --cached --quiet && echo "변경 없음 — 커밋 생략" || \
+            git commit -m "🗺️ sitemap.xml 업데이트 — $(date -u +%Y-%m-%d) ($(grep -c '<loc>' docs/sitemap.xml)개 URL)"
+          git push origin latest || true
+
+      - name: GitHub Pages 브랜치(claude/blog-automation-system-KAbtE)에 sitemap 배포
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - << 'PYEOF'
+          import json, base64, os, urllib.request, urllib.error
+
+          TOKEN  = os.environ["GITHUB_TOKEN"]
+          REPO   = "Kevinlee7250/cli"
+          BRANCH = "claude/blog-automation-system-KAbtE"
+          PATH   = "docs/sitemap.xml"
+
+          with open(PATH, "rb") as f:
+              raw = f.read()
+          b64 = base64.b64encode(raw).decode()
+
+          # 현재 SHA 조회 (업데이트 시 필요)
+          check_url = f"https://api.github.com/repos/{REPO}/contents/{PATH}?ref={BRANCH}"
+          req = urllib.request.Request(check_url, headers={
+              "Authorization": f"token {TOKEN}",
+              "User-Agent": "Python"
+          })
+          sha = ""
+          try:
+              with urllib.request.urlopen(req) as r:
+                  sha = json.load(r).get("sha", "")
+                  print(f"기존 파일 SHA: {sha[:12]}")
+          except urllib.error.HTTPError as e:
+              if e.code == 404:
+                  print("신규 파일 생성")
+              else:
+                  print(f"SHA 조회 실패: {e.code}")
+
+          # PUT으로 업로드
+          payload = {
+              "message": f"🗺️ sitemap.xml GitHub Pages 배포",
+              "content": b64,
+              "branch":  BRANCH,
+          }
+          if sha:
+              payload["sha"] = sha
+
+          put_url = f"https://api.github.com/repos/{REPO}/contents/{PATH}"
+          req2 = urllib.request.Request(
+              put_url,
+              data=json.dumps(payload).encode(),
+              method="PUT",
+              headers={
+                  "Authorization":  f"token {TOKEN}",
+                  "Content-Type":   "application/json",
+                  "User-Agent":     "Python",
+              },
+          )
+          try:
+              with urllib.request.urlopen(req2) as r:
+                  result = json.load(r)
+                  print(f"✅ GitHub Pages 배포 성공: {result.get('commit',{}).get('sha','')[:12]}")
+          except urllib.error.HTTPError as e:
+              body = e.read().decode(errors="replace")[:400]
+              print(f"❌ 배포 실패: HTTP {e.code} — {body}")
+          PYEOF
+
+      - name: 결과 확인
+        run: |
+          echo "=== sitemap.xml (첫 25줄) ==="
+          head -25 docs/sitemap.xml
+          echo ""
+          echo "=== 총 URL 수 ==="
+          grep -c "<loc>" docs/sitemap.xml
+          echo ""
+          echo "=== GitHub Pages sitemap URL ==="
+          echo "https://kevinlee7250.github.io/cli/sitemap.xml"

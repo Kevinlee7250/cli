@@ -19,6 +19,14 @@ on:
         options:
           - 'false'
           - 'true'
+      retry_failed:
+        description: 'failed 포스트 재시도'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 permissions:
   contents: write
@@ -26,7 +34,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
 
     steps:
       - name: 코드 체크아웃
@@ -49,15 +57,18 @@ jobs:
         working-directory: blog-automation
         run: |
           cat > .env << 'ENVEOF'
-          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
-          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
-          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
-          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
-          ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
-          ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"
-          POST_STATUS="live"
-          LOG_LEVEL=info
-          ENVEOF
+GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
+ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"
+POST_STATUS=live
+LOG_LEVEL=info
+ENVEOF
+          echo "✅ .env 생성 완료"
+          # 환경변수 키만 확인 (값 노출 방지)
+          grep -o '^[^=]*' .env
 
       - name: 포스트 게시
         working-directory: blog-automation
@@ -65,13 +76,16 @@ jobs:
           POST_ID="${{ inputs.post_id }}"
           POST_IDS="${{ inputs.post_ids }}"
           PUBLISH_ALL="${{ inputs.publish_all }}"
+          RETRY_FAILED="${{ inputs.retry_failed }}"
 
-          if [ -z "$POST_ID" ] && [ -z "$POST_IDS" ] && [ "$PUBLISH_ALL" != "true" ]; then
-            echo "❌ 게시할 포스트가 지정되지 않았습니다 (post_id, post_ids, 또는 publish_all=true 필요)"
+          if [ -z "$POST_ID" ] && [ -z "$POST_IDS" ] && [ "$PUBLISH_ALL" != "true" ] && [ "$RETRY_FAILED" != "true" ]; then
+            echo "❌ 게시할 포스트가 지정되지 않았습니다"
             exit 1
           fi
 
-          if [ "$PUBLISH_ALL" = "true" ]; then
+          if [ "$RETRY_FAILED" = "true" ]; then
+            python publish_pending.py --retry-failed
+          elif [ "$PUBLISH_ALL" = "true" ]; then
             python publish_pending.py --all-pending
           elif [ -n "$POST_IDS" ] && [ -n "$POST_ID" ]; then
             python publish_pending.py --id "$POST_ID" --ids "$POST_IDS"

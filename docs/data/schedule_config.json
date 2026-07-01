@@ -1,0 +1,174 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "블로그 자동화 스케줄 중앙 설정 파일",
+    "timezone": "Asia/Seoul (KST = UTC+9)",
+    "updated_at": "2026-07-02T00:00:00+09:00"
+  },
+  "schedules": [
+    {
+      "id": "blog-run-morning",
+      "workflow": "blog-run.yml",
+      "slot": "morning",
+      "cron_utc": "0 22 * * *",
+      "cron_kst": "매일 07:00 KST",
+      "description": "블로그 포스트 자동 생성 (오전 슬롯)",
+      "category": "content",
+      "priority": 1,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": true,
+      "max_retries": 2,
+      "depends_on": [],
+      "triggers_after": [
+        "blog-sitemap.yml"
+      ]
+    },
+    {
+      "id": "blog-run-evening",
+      "workflow": "blog-run.yml",
+      "slot": "evening",
+      "cron_utc": "0 10 * * *",
+      "cron_kst": "매일 19:00 KST",
+      "description": "블로그 포스트 자동 생성 (저녁 슬롯)",
+      "category": "content",
+      "priority": 1,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": true,
+      "max_retries": 2,
+      "depends_on": [],
+      "triggers_after": [
+        "blog-sitemap.yml"
+      ]
+    },
+    {
+      "id": "auto-repair-daily",
+      "workflow": "auto-repair.yml",
+      "cron_utc": "0 17 * * *",
+      "cron_kst": "매일 02:00 KST",
+      "description": "시스템 자동 수리 - 오류 감지 및 자동 복구",
+      "category": "maintenance",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 20,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": []
+    },
+    {
+      "id": "blog-analytics-weekly",
+      "workflow": "blog-analytics.yml",
+      "cron_utc": "0 0 * * 1",
+      "cron_kst": "매주 월요일 09:00 KST",
+      "description": "Blogger 조회수 + GSC 클릭 합산 등급 분류",
+      "category": "analytics",
+      "priority": 3,
+      "enabled": true,
+      "timeout_minutes": 15,
+      "retry_on_failure": true,
+      "max_retries": 1,
+      "depends_on": []
+    },
+    {
+      "id": "blog-optimize-weekly",
+      "workflow": "blog-optimize.yml",
+      "cron_utc": "0 0 * * 2",
+      "cron_kst": "매주 화요일 09:00 KST",
+      "description": "GSC CTR 낮은 포스트 자동 리라이팅 (충돌 해결: 월→화 이동)",
+      "category": "seo",
+      "priority": 3,
+      "enabled": true,
+      "timeout_minutes": 25,
+      "retry_on_failure": true,
+      "max_retries": 1,
+      "depends_on": [
+        "blog-analytics-weekly"
+      ],
+      "conflict_note": "기존 월요일 09:00 → 화요일 09:00으로 이동 (blog-analytics와 충돌 해결)"
+    },
+    {
+      "id": "blog-season-trend-weekly",
+      "workflow": "blog-season-trend.yml",
+      "cron_utc": "0 23 * * 6",
+      "cron_kst": "매주 일요일 08:00 KST",
+      "description": "계절/트렌드 키워드 수집 및 스케줄링",
+      "category": "content",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 20,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": []
+    },
+    {
+      "id": "blog-cluster-weekly",
+      "workflow": "blog-cluster.yml",
+      "cron_utc": "0 3 * * 0",
+      "cron_kst": "매주 일요일 12:00 KST",
+      "description": "내부 링크 클러스터 재빌드 (관련 포스트 추천 데이터 갱신)",
+      "category": "seo",
+      "priority": 4,
+      "enabled": true,
+      "timeout_minutes": 10,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": []
+    },
+    {
+      "id": "weekly-learning",
+      "workflow": "weekly-learning.yml",
+      "cron_utc": "0 14 * * 0",
+      "cron_kst": "매주 일요일 23:00 KST",
+      "description": "주간 학습 및 시스템 점검",
+      "category": "maintenance",
+      "priority": 5,
+      "enabled": true,
+      "timeout_minutes": 15,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": []
+    },
+    {
+      "id": "schedule-monitor-daily",
+      "workflow": "blog-schedule-monitor.yml",
+      "cron_utc": "0 18 * * *",
+      "cron_kst": "매일 03:00 KST",
+      "description": "스케줄 실행 이력 수집 + 연속 실패 감지 + GitHub Issue 알림",
+      "category": "monitoring",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 10,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": []
+    }
+  ],
+  "categories": {
+    "content": {
+      "label": "콘텐츠 생성",
+      "color": "#3b82f6"
+    },
+    "seo": {
+      "label": "SEO 최적화",
+      "color": "#10b981"
+    },
+    "analytics": {
+      "label": "분석",
+      "color": "#8b5cf6"
+    },
+    "maintenance": {
+      "label": "유지보수",
+      "color": "#f59e0b"
+    },
+    "monitoring": {
+      "label": "모니터링",
+      "color": "#ef4444"
+    }
+  },
+  "alert_rules": {
+    "consecutive_failures": 2,
+    "notify_channel": "github_issue",
+    "notify_on_recovery": true
+  }
+}

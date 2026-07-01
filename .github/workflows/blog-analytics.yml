@@ -79,22 +79,23 @@ jobs:
       - name: Print grade summary
         run: |
           echo "=== 성과 등급 요약 ==="
-          python3 -c "
+          python3 - << 'PYEOF2'
           import json, os
           path = 'docs/data/analytics_summary.json'
           if os.path.exists(path):
               d = json.load(open(path))
               g = d.get('gradeDistribution', {})
-              print(f"S(최우수): {g.get('S',0)}개")
-              print(f"A(양호):   {g.get('A',0)}개")
-              print(f"B(기본):   {g.get('B',0)}개")
-              print(f"C(요주의): {g.get('C',0)}개")
-              print(f"추정 월수익: \${ d.get('totalEstimatedRevenueMonthly',0):.2f} USD")
+              print("S(최우수): %d개" % g.get('S', 0))
+              print("A(양호):   %d개" % g.get('A', 0))
+              print("B(기본):   %d개" % g.get('B', 0))
+              print("C(요주의): %d개" % g.get('C', 0))
+              rev = d.get('totalEstimatedRevenueMonthly', 0)
+              print("추정 월수익: $%.2f USD" % rev)
               rt = d.get('rewriteTargets', [])
               if rt:
-                  print(f"리라이팅 대상: {len(rt)}개")
+                  print("리라이팅 대상: %d개" % len(rt))
                   for t in rt[:3]:
-                      print(f"  - {t.get('title','-')[:50]}")
+                      print("  - " + str(t.get('title','-'))[:50])
           else:
               print("analytics_summary.json 없음")
-          " || true
+          PYEOF2

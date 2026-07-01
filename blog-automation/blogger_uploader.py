@@ -300,22 +300,32 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
 def _sanitize_for_blogger(html: str) -> str:
     """Blogger API 호환성: 거부되는 HTML 요소 제거 및 변환.
 
-    Blogger API는 다음을 거부하는 것으로 확인됨:
-      - <nav aria-label="..."> 등 HTML5 시맨틱 태그 (특히 aria-* 속성 동반 시)
-      - aria-* 속성 자체
+    실제 테스트로 확인된 Blogger API 거부 요소:
       - <script> 태그 (JSON-LD 스키마 등)
+      - <nav>, <section>, <main>, <aside>, <header>, <footer> 시맨틱 태그
+      - aria-* 속성
+      - id 속성 (앵커 타겟)
+      - href="#..." 내부 앵커 링크
 
-    성공 사례에서 <article>, <section> 단독은 허용 확인됨.
+    성공 사례에서 허용 확인됨: <article>, <p>, <h2>, <ul>, <li>, <div>
     """
     # <script> 태그 제거
     html = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL | re.IGNORECASE)
-    # HTML5 시맨틱 블록 태그 → <div> 변환 (aria-* 속성과 함께 올 경우 400 유발)
-    for tag in ['nav', 'main', 'aside', 'header', 'footer']:
+    # HTML5 시맨틱 블록 태그 → <div> 변환
+    for tag in ['nav', 'section', 'main', 'aside', 'header', 'footer']:
         html = re.sub(f'<{tag}([^>]*)>', r'<div\1>', html, flags=re.IGNORECASE)
         html = re.sub(f'</{tag}>', '</div>', html, flags=re.IGNORECASE)
-    # aria-* 속성 제거 (큰따옴표/작은따옴표 모두)
+    # aria-* 속성 제거
     html = re.sub(r'\s+aria-[\w-]+="[^"]*"', '', html)
     html = re.sub(r"\s+aria-[\w-]+='[^']*'", '', html)
+    # id 속성 제거 (앵커 타겟 — Blogger가 앵커 링크 체계를 거부)
+    html = re.sub(r'\s+id="[^"]*"', '', html, flags=re.IGNORECASE)
+    html = re.sub(r"\s+id='[^']*'", '', html, flags=re.IGNORECASE)
+    # 내부 앵커 링크 href="#..." → 텍스트만 남김
+    html = re.sub(
+        r'<a[^>]*\shref="#[^"]*"[^>]*>(.*?)</a>',
+        r'\1', html, flags=re.IGNORECASE | re.DOTALL
+    )
     return html
 
 

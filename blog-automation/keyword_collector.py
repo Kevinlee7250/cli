@@ -29,6 +29,7 @@ _HEADERS = {
 }
 
 _USED_KW_FILE = os.path.join(os.path.dirname(__file__), "logs", "used_keywords.json")
+_SCHEDULED_KW_FILE = os.path.join(os.path.dirname(__file__), "logs", "scheduled_keywords.json")
 _HISTORY_FILE = os.path.join(os.path.dirname(__file__), "logs", "run_history.json")
 
 
@@ -568,6 +569,70 @@ def _claude_ai_keywords(
 # 메인 함수
 # ──────────────────────────────────────────────────────────────────────────────
 
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 시즌 예약 키워드 로드 (trend_scheduler.py가 생성한 큐)
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _load_scheduled_keywords(today: datetime | None = None) -> list[str]:
+    """
+    logs/scheduled_keywords.json 큐에서 오늘 포스팅을 시작할 시즌 예약 키워드를 로드합니다.
+    - scheduledFor <= 오늘 이면서 consumed=False 인 항목만 반환
+    - 우선순위(priority) → trendScore 순으로 정렬
+    - 소비 표시(consumed=True)는 keyword_collector가 실제 사용 후 main.py에서 처리하거나
+      get_trending_keywords()가 result에 포함되면 자동 마킹
+    """
+    if today is None:
+        today = datetime.now()
+    today_str = today.strftime("%Y-%m-%d")
+
+    if not os.path.exists(_SCHEDULED_KW_FILE):
+        return []
+
+    try:
+        with open(_SCHEDULED_KW_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+
+        queue = data.get("queue", [])
+        eligible = [
+            item for item in queue
+            if not item.get("consumed", False)
+            and item.get("scheduledFor", "9999-99-99") <= today_str
+        ]
+        # 우선순위(낮을수록 높음) → trendScore 내림차순 정렬
+        eligible.sort(key=lambda x: (x.get("priority", 9), -x.get("trendScore", 1.0)))
+        result = [item["keyword"] for item in eligible]
+        if result:
+            logger.info(f"시즌 예약 키워드 {len(result)}개 로드: {result[:3]}{'...' if len(result)>3 else ''}")
+        return result
+    except Exception as exc:
+        logger.debug(f"scheduled_keywords.json 로드 실패: {exc}")
+        return []
+
+
+def _mark_scheduled_keywords_consumed(keywords: list[str]) -> None:
+    """사용된 시즌 예약 키워드를 큐에서 consumed=True로 표시합니다."""
+    if not keywords or not os.path.exists(_SCHEDULED_KW_FILE):
+        return
+    try:
+        with open(_SCHEDULED_KW_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        used_set = set(keywords)
+        changed = False
+        for item in data.get("queue", []):
+            if item.get("keyword") in used_set and not item.get("consumed", False):
+                item["consumed"] = True
+                item["consumedAt"] = datetime.now().isoformat()
+                changed = True
+        if changed:
+            data["updatedAt"] = datetime.now().isoformat()
+            with open(_SCHEDULED_KW_FILE, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            logger.debug(f"시즌 키워드 소비 표시: {list(used_set)[:3]}")
+    except Exception as exc:
+        logger.debug(f"시즌 키워드 consumed 표시 실패: {exc}")
+
 def _migrate_used_keywords() -> None:
     """
     구버전 used_keywords.json (keywords 리스트만 있는 형태)을
@@ -640,6 +705,12 @@ def get_trending_keywords(
 
     candidates: list[str] = []
     keyword_sources: dict[str, str] = {}  # 키워드별 수집 출처 추적
+
+    # -1순위: 시즌 예약 키워드 (trend_scheduler.py가 2주 전 생성한 큐)
+    season_kws = _load_scheduled_keywords()
+    for kw in season_kws:
+        keyword_sources[kw] = "season_scheduled"
+    candidates = season_kws[:]  # 최상단에 배치
 
     # 0순위: 네이버 실시간 뉴스 (한국어 블로그일 때만)
     if language == "ko":
@@ -769,6 +840,11 @@ def get_trending_keywords(
             result_set.add(kw)
             if len(result) >= count:
                 break
+
+    # 시즌 예약 키워드 consumed 마킹 (result에 포함된 것만)
+    season_used = [kw for kw in result if keyword_sources.get(kw) == "season_scheduled"]
+    if season_used:
+        _mark_scheduled_keywords_consumed(season_used)
 
     # 사용 이력 업데이트
     now_iso = datetime.now().isoformat()

@@ -10,6 +10,7 @@
     --border: #2d3350; --text: #e2e8f0; --muted: #8892b0;
     --accent: #7c6af7; --accent2: #06b6d4; --green: #34d399;
     --red: #f87171; --yellow: #fbbf24; --orange: #fb923c;
+    --sky: #0ea5e9; --sports: #ef4444;
     --radius: 12px; --font: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -78,6 +79,9 @@
   .badge.yellow { background: rgba(251,191,36,0.15); color: var(--yellow); }
   .badge.purple { background: rgba(124,106,247,0.15); color: var(--accent); }
   .badge.blue { background: rgba(6,182,212,0.15); color: var(--accent2); }
+  .badge.sky { background: rgba(14,165,233,0.15); color: var(--sky); }
+  .badge.sports { background: rgba(239,68,68,0.15); color: var(--sports); }
+  .badge.orange { background: rgba(251,146,60,0.15); color: var(--orange); }
   .badge.muted { background: rgba(136,146,176,0.15); color: var(--muted); }
 
   /* Trend arrows */
@@ -278,6 +282,11 @@
     <a data-page="logs"><span class="icon">🪵</span> 로그 뷰어</a>
     <a data-page="config"><span class="icon">⚙️</span> 설정</a>
   </nav>
+  <div style="padding:0 12px 12px">
+    <select id="blog-selector" onchange="onBlogFilter()" style="width:100%;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;cursor:pointer;outline:none">
+      <option value="">🗂 전체 블로그</option>
+    </select>
+  </div>
   <button class="run-btn" id="sidebar-run-btn" onclick="quickRun()">
     <span id="run-indicator"></span>
     <span id="sidebar-run-label">▶ 즉시 실행</span>
@@ -305,10 +314,13 @@
       <button class="btn-review" onclick="navTo('pending')">검토하기 →</button>
     </div>
 
+    <div class="section-header" style="margin-top:4px"><h2>블로그별 현황</h2></div>
+    <div class="cards" id="blog-stat-cards" style="margin-bottom:28px"></div>
+
     <div class="section-header"><h2>최근 실행 이력</h2><span class="badge purple" id="last-run-badge">-</span></div>
     <div class="table-wrap" style="margin-bottom:28px">
       <table>
-        <thead><tr><th>날짜</th><th>모드</th><th>키워드</th><th>생성</th><th>Blogger</th><th>수익(일)</th><th>오류</th></tr></thead>
+        <thead><tr><th>날짜</th><th>블로그</th><th>키워드</th><th>생성</th><th>Blogger</th><th>수익(일)</th><th>오류</th></tr></thead>
         <tbody id="run-history-table"></tbody>
       </table>
     </div>
@@ -350,7 +362,20 @@
       <select class="filter-select" id="post-category" onchange="filterPosts()">
         <option value="">전체 카테고리</option>
         <option>금융</option><option>부동산</option><option>건강</option>
-        <option>기술</option><option>여행</option><option>교육</option><option>쇼핑</option><option>일반</option>
+        <option>기술</option><option>여행</option><option>스포츠</option><option>교육</option><option>쇼핑</option><option>일반</option>
+      </select>
+      <select class="filter-select" id="post-blog-filter" onchange="filterPosts()">
+        <option value="">전체 블로그</option>
+      </select>
+      <select class="filter-select" id="post-type-filter" onchange="filterPosts()">
+        <option value="">전체 유형</option>
+        <option value="travel_guide">🏖 여행가이드</option>
+        <option value="sports_review">⚽ 스포츠</option>
+        <option value="drama_review">🎭 드라마</option>
+        <option value="how_to">📖 방법안내</option>
+        <option value="review">⭐ 리뷰</option>
+        <option value="comparison">⚖️ 비교</option>
+        <option value="analysis">📊 분석</option>
       </select>
     </div>
     <div class="post-grid" id="posts-grid"></div>
@@ -391,7 +416,8 @@
           <tr><td>건강</td><td><span class="badge blue">$1.80</span></td><td>다이어트, 영양제, 병원</td></tr>
           <tr><td>기술</td><td><span class="badge purple">$1.50</span></td><td>AI, 스마트폰, 챗GPT</td></tr>
           <tr><td>교육</td><td><span class="badge purple">$1.30</span></td><td>영어, 자격증, 취업</td></tr>
-          <tr><td>여행</td><td><span class="badge yellow">$1.20</span></td><td>여행, 항공, 호텔</td></tr>
+          <tr><td>여행</td><td><span class="badge sky">$1.20</span></td><td>여행, 항공, 호텔, 관광</td></tr>
+          <tr><td>스포츠</td><td><span class="badge sports">$1.10</span></td><td>축구, 야구, 농구, 선수</td></tr>
           <tr><td>쇼핑</td><td><span class="badge muted">$0.90</span></td><td>할인, 세일, 패션</td></tr>
         </tbody>
       </table>
@@ -481,8 +507,10 @@
 <script>
 // ── State ─────────────────────────────────────────────────────────────────────
 let allPosts = []
+let allBlogs = []
 let runEventSource = null
 let isRunning = false
+let selectedBlog = ''
 
 // ── Navigation ────────────────────────────────────────────────────────────────
 document.querySelectorAll('nav a').forEach(a => {
@@ -501,12 +529,36 @@ function navTo(page) {
   if (page === 'run') initRunPage()
 }
 
+// ── Blog selector ─────────────────────────────────────────────────────────────
+async function loadBlogSelector() {
+  try {
+    allBlogs = await fetch('/api/blogs').then(r => r.json()).catch(() => [])
+    const sel = document.getElementById('blog-selector')
+    sel.innerHTML = '<option value="">🗂 전체 블로그</option>' +
+      allBlogs.map(b => `<option value="${b.id}">${b.name || b.id}</option>`).join('')
+    // 포스트 필터용 블로그 드롭다운도 동기화
+    const pf = document.getElementById('post-blog-filter')
+    if (pf) pf.innerHTML = '<option value="">전체 블로그</option>' +
+      allBlogs.map(b => `<option value="${b.id}">${b.name || b.id}</option>`).join('')
+  } catch {}
+}
+function onBlogFilter() {
+  selectedBlog = document.getElementById('blog-selector').value
+  const pf = document.getElementById('post-blog-filter')
+  if (pf) pf.value = selectedBlog
+  // 현재 활성 페이지 새로고침
+  const activePage = document.querySelector('.page.active')?.id?.replace('page-','')
+  if (activePage === 'dashboard') loadDashboard()
+  if (activePage === 'posts') filterPosts()
+}
+
 // ── Dashboard ─────────────────────────────────────────────────────────────────
 async function loadDashboard() {
-  const [status, runs, posts] = await Promise.all([
+  const [status, runs, posts, blogs] = await Promise.all([
     fetch('/api/status').then(r => r.json()),
     fetch('/api/runs').then(r => r.json()),
     fetch('/api/posts').then(r => r.json()),
+    fetch('/api/blogs').then(r => r.json()).catch(() => []),
   ])
   // Pending alert
   const pendingPosts = posts.filter(p => p.publishStatus === 'pending')
@@ -517,22 +569,39 @@ async function loadDashboard() {
     if (paCount) paCount.textContent = `${pendingPosts.length}개 포스트 게시 대기 중`
   }
   updateNavPendingBadge(pendingPosts.length)
-  document.getElementById('stat-posts').textContent = status.totalPosts || 0
+
+  // 블로그 필터 적용한 포스트/실행
+  const filteredPosts = selectedBlog ? posts.filter(p => p.blogId === selectedBlog) : posts
+  const filteredRuns  = selectedBlog ? runs.filter(r => r.blogId === selectedBlog) : runs
+
+  document.getElementById('stat-posts').textContent = filteredPosts.length
   document.getElementById('stat-revenue').textContent = '$' + (status.totalRevenue || 0).toFixed(2)
-  document.getElementById('stat-blogger').textContent = status.bloggerPosts || 0
-  document.getElementById('stat-runs').textContent = status.runCount || 0
-  const lastRun = runs[0]
+  document.getElementById('stat-blogger').textContent = filteredRuns.reduce((s,r)=>s+(r.platforms?.blogger||0),0)
+  document.getElementById('stat-runs').textContent = filteredRuns.length || status.runCount || 0
+  const lastRun = filteredRuns[0]
   document.getElementById('last-run-badge').textContent = lastRun
     ? new Date(lastRun.runAt).toLocaleString('ko-KR')
     : '실행 이력 없음'
 
-  // Run history table
+  // 블로그별 현황 mini cards
+  const blogCards = document.getElementById('blog-stat-cards')
+  if (blogCards && blogs.length) {
+    blogCards.innerHTML = blogs.map(b => `
+      <div class="card ${b.id==='blog2'?'blue':'purple'}" style="cursor:pointer" onclick="document.getElementById('blog-selector').value='${b.id}';onBlogFilter()">
+        <div class="label">${b.name || b.id}</div>
+        <div class="value">${b.postCount || 0}<span style="font-size:14px;color:var(--muted)"> 포스트</span></div>
+        <div class="sub">실행 ${b.runCount || 0}회 · ${b.lastRunAt ? new Date(b.lastRunAt).toLocaleDateString('ko-KR') : '미실행'}</div>
+      </div>
+    `).join('')
+  }
+
+  // Run history table (블로그 컬럼 추가)
   const tbody = document.getElementById('run-history-table')
-  tbody.innerHTML = runs.slice(0, 10).map(r => `
+  tbody.innerHTML = filteredRuns.slice(0, 10).map(r => `
     <tr>
       <td>${new Date(r.runAt).toLocaleString('ko-KR')}</td>
-      <td><span class="badge ${r.mode==='publish'?'purple':r.mode==='draft'?'yellow':'blue'}">${r.mode}</span></td>
-      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.keywords||[]).join(', ')}</td>
+      <td><span class="badge ${r.blogId==='blog2'?'sky':'purple'}" style="font-size:10px">${r.blogName||r.blogId||'기본'}</span></td>
+      <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.keywords||[]).join(', ')}</td>
       <td>${r.postsGenerated || 0}개</td>
       <td>${r.platforms?.blogger || 0}개</td>
       <td class="${(r.earnings?.estimatedDailyRevenue||0)>0?'rising':''}">${r.earnings ? '$'+(r.earnings.estimatedDailyRevenue||0).toFixed(2) : '-'}</td>
@@ -542,7 +611,7 @@ async function loadDashboard() {
 
   // Recent posts
   const grid = document.getElementById('recent-posts-grid')
-  grid.innerHTML = posts.slice(0, 6).map(p => postCardHTML(p)).join('')
+  grid.innerHTML = filteredPosts.slice(0, 6).map(p => postCardHTML(p)).join('')
 }
 
 // ── Posts ─────────────────────────────────────────────────────────────────────
@@ -555,9 +624,13 @@ async function loadPosts() {
 function filterPosts() {
   const q = document.getElementById('post-search').value.toLowerCase()
   const cat = document.getElementById('post-category').value
+  const blogF = (document.getElementById('post-blog-filter')?.value) || selectedBlog || ''
+  const typeF = document.getElementById('post-type-filter')?.value || ''
   const filtered = allPosts.filter(p =>
-    (!q || p.title.toLowerCase().includes(q) || p.keyword.toLowerCase().includes(q)) &&
-    (!cat || (p.adsenseCategory || '일반').includes(cat))
+    (!q || p.title.toLowerCase().includes(q) || (p.keyword||'').toLowerCase().includes(q)) &&
+    (!cat || (p.adsenseCategory || '일반').includes(cat)) &&
+    (!blogF || p.blogId === blogF) &&
+    (!typeF || p.articleType === typeF)
   )
   renderPosts(filtered)
 }
@@ -565,6 +638,15 @@ function renderPosts(posts) {
   const grid = document.getElementById('posts-grid')
   if (!posts.length) { grid.innerHTML = '<div class="empty"><div class="icon">📭</div>포스트가 없습니다</div>'; return }
   grid.innerHTML = posts.map(p => postCardHTML(p)).join('')
+}
+function articleTypeLabel(t) {
+  const map = {
+    travel_guide: ['sky','🏖 여행'], sports_review: ['sports','⚽ 스포츠'],
+    drama_review: ['purple','🎭 드라마'], how_to: ['blue','📖 방법'],
+    review: ['yellow','⭐ 리뷰'], comparison: ['orange','⚖️ 비교'],
+    explainer: ['muted','💡 설명'], analysis: ['muted','📊 분석'],
+  }
+  return map[t] || null
 }
 function postCardHTML(p) {
   const fcBadge = p.factCheck
@@ -577,17 +659,22 @@ function postCardHTML(p) {
     ? '<span class="badge yellow">⏳ 대기</span>'
     : p.publishStatus === 'rejected'
     ? '<span class="badge red">❌ 거절</span>'
-    : p.bloggerUrl ? '<span class="badge green">✅ 게시됨</span>' : ''
+    : p.blogUrl ? '<span class="badge green">✅ 게시됨</span>' : ''
   const cardClass = p.publishStatus === 'pending' ? 'post-card pending' : p.publishStatus === 'rejected' ? 'post-card rejected' : 'post-card'
+  const blogBadge = p.blogName ? `<span class="badge ${p.blogId==='blog2'?'sky':'muted'}" style="font-size:10px">${p.blogName}</span>` : ''
+  const atInfo = articleTypeLabel(p.articleType)
+  const atBadge = atInfo ? `<span class="badge ${atInfo[0]}" style="font-size:10px">${atInfo[1]}</span>` : ''
   return `<div class="${cardClass}" onclick="openPost('${encodeURIComponent(p.id)}')">
     <img class="thumb" src="/api/thumbnail/${encodeURIComponent(p.id.replace(/[·!]/g,'').split('_').slice(0,4).join('_'))}.png"
-      onerror="this.outerHTML='<div class=\\"thumb-placeholder\\">📝</div>'" loading="lazy" />
+      onerror="this.outerHTML='<div class=\\"thumb-placeholder\\">${p.articleType==='travel_guide'?'🏖':p.articleType==='sports_review'?'⚽':p.articleType==='drama_review'?'🎭':'📝'}</div>'" loading="lazy" />
     <div class="info">
       <div class="keyword">${trendIcon} ${p.keyword || ''}</div>
       <div class="title">${p.title}</div>
       <div class="footer">
         ${statusBadge}
         ${fcBadge}
+        ${blogBadge}
+        ${atBadge}
         <span class="badge muted">${p.date}</span>
         <span class="badge purple">${p.adsenseCategory || '일반'}</span>
         ${p.wordCount ? `<span class="badge blue">${p.wordCount}자</span>` : ''}
@@ -1054,6 +1141,7 @@ function showToast(msg, isError = false) {
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
+loadBlogSelector()
 loadDashboard()
 // Poll run status every 3s
 setInterval(async () => {

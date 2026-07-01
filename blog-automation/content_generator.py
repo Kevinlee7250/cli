@@ -1099,6 +1099,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                 return None
 
             post_data["keyword"] = keyword
+            post_data["article_type"] = _detect_article_type(keyword)
             post_data["series_id"] = series_context.get("series_id", "")
             post_data["episode"] = episode
 
@@ -1199,6 +1200,7 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
                 return None
 
             post_data["keyword"] = keyword
+            post_data["article_type"] = _detect_article_type(keyword)
 
             # 글자 수 및 미리보기 추가
             content_html = post_data.get("content", "")

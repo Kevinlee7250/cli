@@ -8,6 +8,8 @@ import { config } from '../config.js'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '../..')
 const OUTPUT = join(ROOT, 'output')
+// Python dashboard_exporter가 내보내는 docs/data 디렉토리 (GitHub Pages용 + 서버 겸용)
+const DOCS_DATA = join(ROOT, '..', 'docs', 'data')
 const LOGS = join(ROOT, 'logs/automation.log')
 
 const app = express()
@@ -36,18 +38,25 @@ function mask(str) {
 // ── API: Status ───────────────────────────────────────────────────────────────
 
 function loadRuns() {
-  // analytics.json has full run history with `runAt` field
+  // Prefer docs/data/runs.json (written by dashboard_exporter.py — includes blogId/blogName)
+  const docsRuns = readJSON(join(DOCS_DATA, 'runs.json'))
+  if (Array.isArray(docsRuns) && docsRuns.length) {
+    return docsRuns.map(r => ({ ...r, runAt: r.runAt || r.savedAt }))
+  }
+  // Fallback: analytics.json
   const analytics = readJSON(join(OUTPUT, 'analytics.json'))
   if (analytics?.runs?.length) {
     return analytics.runs.map(r => ({ ...r, runAt: r.runAt || r.savedAt }))
   }
-  // Fallback to run-history.json (uses `savedAt`)
+  // Fallback: run-history.json
   const raw = readJSON(join(OUTPUT, 'run-history.json'))
   const runs = Array.isArray(raw) ? raw : (raw?.runs || [])
   return runs.map(r => ({ ...r, runAt: r.runAt || r.savedAt }))
 }
 
 app.get('/api/status', (req, res) => {
+  // Prefer docs/data/meta.json (written by dashboard_exporter.py)
+  const meta = readJSON(join(DOCS_DATA, 'meta.json')) || {}
   const analytics = readJSON(join(OUTPUT, 'analytics.json')) || {}
   const runs = loadRuns()
   const posts = listJSONDir(join(OUTPUT, 'posts'))
@@ -55,8 +64,8 @@ app.get('/api/status', (req, res) => {
   const today = new Date().toISOString().split('T')[0]
 
   res.json({
-    totalPosts: analytics.totalPosts || posts.length,
-    totalRevenue: analytics.totalEstimatedRevenue || 0,
+    totalPosts: meta.totalPosts || analytics.totalPosts || posts.length,
+    totalRevenue: meta.totalEstimatedRevenue || analytics.totalEstimatedRevenue || 0,
     lastRunAt: lastRun?.savedAt || lastRun?.runAt || null,
     lastRunKeywords: lastRun?.keywords || [],
     bloggerPosts: runs.reduce((s, r) => s + (r.platforms?.blogger || 0), 0),
@@ -65,14 +74,33 @@ app.get('/api/status', (req, res) => {
   })
 })
 
+// ── API: Blogs ────────────────────────────────────────────────────────────────
+
+app.get('/api/blogs', (req, res) => {
+  // docs/data/blogs.json written by dashboard_exporter.py; fallback to blogs.json in project root
+  const data = readJSON(join(DOCS_DATA, 'blogs.json'))
+    || readJSON(join(ROOT, 'blogs.json'))
+    || []
+  res.json(data)
+})
+
 // ── API: Posts ────────────────────────────────────────────────────────────────
 
 app.get('/api/posts', (req, res) => {
+  // Build a lookup from docs/data/posts.json for enriched fields (blogId, blogName, articleType)
+  const docsPosts = readJSON(join(DOCS_DATA, 'posts.json')) || []
+  const docsMap = {}
+  for (const p of docsPosts) {
+    if (p.id) docsMap[p.id] = p
+  }
+
   const files = listJSONDir(join(OUTPUT, 'posts'))
   const posts = files.map(({ file }) => {
     const data = readJSON(join(OUTPUT, 'posts', file)) || {}
+    const id = file.replace('.json', '')
+    const extra = docsMap[id] || {}
     return {
-      id: file.replace('.json', ''),
+      id,
       title: data.title || file,
       keyword: data.keyword || '',
       date: data.date || file.slice(0, 10),
@@ -86,6 +114,9 @@ app.get('/api/posts', (req, res) => {
       tags: data.tags || [],
       publishStatus: data.publishStatus || 'published',
       bloggerUrl: data.bloggerUrl || null,
+      blogId: data.blogId || extra.blogId || '',
+      blogName: data.blogName || extra.blogName || '',
+      articleType: data.article_type || extra.articleType || '',
     }
   })
   res.json(posts)

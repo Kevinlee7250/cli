@@ -76,7 +76,7 @@ jobs:
           ls -la docs/data/ 2>/dev/null || echo "docs/data 없음"
           ls -la blog-automation/logs/ 2>/dev/null || echo "logs 없음"
           git add docs/data/posts.json || true
-          git add docs/data/analytics_summary.json || true
+          git add -f docs/data/analytics_summary.json || true
           git add blog-automation/logs/analytics_report.json || true
           git status --short
           git diff --cached --quiet && echo "변경 없음 — 커밋 생략" ||             git commit -m "📊 블로그 성과 분석 업데이트 — $(date -u +%Y-%m-%d) (S/A/B/C 등급 + 실수익 계산)"

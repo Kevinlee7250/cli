@@ -6,6 +6,7 @@ import re
 import requests
 from datetime import datetime
 from schema_generator import generate_all_schemas
+from related_posts import build_related_section
 
 from config import (
     BLOGGER_CLIENT_ID,
@@ -299,6 +300,13 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
         )
 
     # ⑥ 면책조항 + 소셜 공유 유도
+    # ── 관련 포스트 섹션 (유사도 기반 자동 추천) ──
+    try:
+        related_section = build_related_section(post_data, blog_config)
+    except Exception as _rp_e:
+        logger.warning(f'related_section 생성 실패: {_rp_e}')
+        related_section = ''
+
     footer = (
         '<div style="margin-top:3em;padding:18px 22px;'
         'background:#fffbeb;border-radius:0 12px 12px 0;'
@@ -318,6 +326,7 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
         + series_nav           # ⑦ 시리즈 내비게이션 (상단)
         + html
         + series_nav           # ⑧ 시리즈 내비게이션 (하단 — 읽은 후 다음 편 유도)
+        + related_section
         + tag_section
         + sources_section
         + footer

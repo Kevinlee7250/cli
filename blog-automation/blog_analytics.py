@@ -356,7 +356,20 @@ def load_posts(limit: int = 0) -> list[dict]:
 
 
 def save_posts(posts: list[dict]) -> None:
-    """docs/data/posts.json에 저장합니다."""
+    """docs/data/posts.json에 저장합니다. 포스트 수 축소 방지 포함."""
+    # 기존 포스트 수 확인 — 줄어들면 경고 후 병합
+    existing = []
+    if os.path.exists(_POSTS_JSON):
+        with open(_POSTS_JSON, encoding="utf-8") as f:
+            existing = json.load(f)
+    if existing and len(posts) < len(existing):
+        logger.warning(f"⚠️ 포스트 수 감소 감지: {len(existing)} → {len(posts)} — 기존 포스트 보존 병합")
+        # 기존 포스트를 id 기준으로 업데이트
+        existing_map = {p.get("id", p.get("title","")): p for p in existing}
+        update_map = {p.get("id", p.get("title","")): p for p in posts}
+        existing_map.update(update_map)
+        posts = list(existing_map.values())
+        logger.info(f"병합 후 포스트 수: {len(posts)}개")
     os.makedirs(os.path.dirname(_POSTS_JSON), exist_ok=True)
     with open(_POSTS_JSON, "w", encoding="utf-8") as f:
         json.dump(posts, f, ensure_ascii=False, indent=2)
@@ -378,6 +391,7 @@ def save_analytics_report(report: dict) -> None:
         json.dump(report, f, ensure_ascii=False, indent=2)
 
     logger.info(f"분석 리포트 저장: {_ANALYTICS_LOG}")
+    logger.info(f"analytics_summary.json 저장: {os.path.abspath(_ANALYTICS_EXPORT)}")
 
 
 # ──────────────────────────────────────────────────────────────────────────────

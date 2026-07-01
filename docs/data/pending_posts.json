@@ -549,5 +549,31 @@
     "status": "failed",
     "failedAt": "2026-07-01T14:08:20.951021",
     "failReason": "업로드 실패 [429]: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"Resource has been exhausted (e.g. check quota).\",\n    \"errors\": [\n      {\n        \"message\": \"Resource has been exhausted (e.g. check quota).\",\n        \"domain\": \"global\",\n        \"reason\": \"rateLimitExceeded\"\n      }\n    ],\n    \"status\": \"RESOURCE_EXHAUSTED\"\n  }\n}\n\n  요청 URL: https://www.googleapis.com/blogger/v3/blogs/4782599180249292575/posts | params: {}\n  title: Isolation Test — 11 English Labels\n  labels (11개): ['label00', 'label01', 'label02', 'label03', 'label04']\n  ❌ 재시도도 실패 [429]: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"Resource has been exhausted (e.g. check quota).\",\n    \"errors\": [\n      {\n        \"message\": \"Resource has been exhausted (e.g. check quota).\",\n        \"domain\": \"global\",\n        \"reason\": \"rate"
+  },
+  {
+    "id": "schema-test-20260701224334",
+    "status": "pending",
+    "title": "허리디스크 자가치료 방법 6가지 가이드 — 집에서 하는 운동 (Schema 테스트)",
+    "keyword": "허리디스크 치료 방법",
+    "labels": [
+      "건강정보"
+    ],
+    "metaDescription": "허리디스크 자가치료 방법 6가지를 소개합니다. 맥켄지 운동, 코어 강화, 스트레칭 등 집에서 할 수 있는 검증된 방법.",
+    "content": "<h2>허리디스크 자가치료 방법</h2><p>허리디스크는 적절한 운동으로 90% 이상이 수술 없이 호전됩니다.</p><ol><li>맥켄지 신전 운동 — 하루 10회, 3세트</li><li>코어 강화 플랭크 — 30초 유지, 3세트</li><li>햄스트링 스트레칭 — 양쪽 각 30초</li><li>고양이-낙타 운동 — 천천히 10회</li><li>버드독 운동 — 좌우 각 10회</li><li>수영 또는 아쿠아로빅 — 주 3회</li></ol>",
+    "faq": [
+      {
+        "question": "허리디스크는 반드시 수술해야 하나요?",
+        "answer": "대부분의 허리디스크는 보존적 치료(운동, 물리치료)로 호전됩니다. 마비 증상이 없다면 수술 없이 치료 가능합니다."
+      },
+      {
+        "question": "자가치료 기간은 얼마나 걸리나요?",
+        "answer": "꾸준한 운동을 기준으로 평균 4~8주면 일상 생활이 가능한 수준으로 회복됩니다."
+      },
+      {
+        "question": "운동 중 통증이 심해지면 어떻게 하나요?",
+        "answer": "즉시 운동을 멈추고 냉찜질을 20분간 하세요. 통증이 지속되면 전문의 상담이 필요합니다."
+      }
+    ],
+    "savedAt": "20260701224334"
   }
 ]

@@ -190,6 +190,13 @@ H2 섹션: 4~6개 (주제에 따라 자유롭게, 공식 개수 없음)
 핵심 요약 박스: 본문 첫 번째 <h2> 태그 바로 앞에 아래 HTML 그대로 1개 삽입:
 <div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>핵심 포인트:</strong> [이 글의 가장 실용적인 핵심을 1~2문장으로]</div>
 
+강조 & 가독성 규칙:
+• 핵심 수치·팩트·행동 지침은 <strong>으로 강조 (문단당 1~2개, 남용 금지)
+• 독자가 꼭 챙겨야 할 팁 단락: 문장 맨 앞에 💡 배치 (글 전체에서 1~3개)
+• 중요 주의사항·실수 패턴 단락: 문장 맨 앞에 ⚠️ 배치 (글 전체에서 1~2개)
+• 핵심 인사이트나 인상적인 문장은 <blockquote>로 감싸기 (1~2개)
+• 과도한 강조는 오히려 효과 없음 — 진짜 중요한 것만 강조
+
 ━━━ FAQ ━━━
 • h2 제목 "자주 묻는 질문" 아래 5개
 • 실제로 사람들이 검색할 법한 구체적 질문 (너무 일반적인 질문 금지)
@@ -295,6 +302,13 @@ All sections paragraph-based (p tags)
 Key summary box: Insert this HTML exactly, immediately before the first <h2> in the body:
 <div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>Key takeaway:</strong> [The single most practical insight from this article in 1-2 sentences]</div>
 
+Emphasis & readability rules:
+• Use <strong> for key numbers, facts, action items (max 1-2 per paragraph, no overuse)
+• Important tip paragraphs: start the sentence with 💡 (1-3 per article max)
+• Warning/mistake paragraphs: start the sentence with ⚠️ (1-2 per article max)
+• Wrap standout insights in <blockquote> (1-2 per article)
+• Over-emphasis loses impact — only mark what truly matters
+
 ━━━ FAQ ━━━
 h2 "Frequently Asked Questions" + 5 Q&As
 Specific questions people actually search | 2-4 sentence answers
@@ -343,6 +357,130 @@ def _apply_style_to_tag(html: str, tag: str, style: str) -> str:
             attrs = attrs.rstrip() + f' style="{style}"'
         return f'<{tag}{attrs}>'
     return re.sub(rf'<{tag}(\s[^>]*)?>', rep, html, flags=re.I)
+
+
+# ── 주제별 컬러 테마 ─────────────────────────────────────────────────────────
+_THEMES: dict[str, dict[str, str]] = {
+    "finance": {
+        "PRIMARY": "#059669", "PRIMARY_DARK": "#065f46", "PRIMARY_BDR": "#10b981",
+        "BG": "#ecfdf5", "STRONG_BG": "rgba(5,150,105,0.13)",
+        "BLOCKQUOTE_BG": "#fffbeb", "BLOCKQUOTE_BDR": "#d97706", "BLOCKQUOTE_COLOR": "#92400e",
+        "TIP_BG": "#f0fdf4", "TIP_BDR": "#22c55e", "TIP_COLOR": "#14532d",
+        "WARN_BG": "#fffbeb", "WARN_BDR": "#f59e0b", "WARN_COLOR": "#78350f",
+        "H3_COLOR": "#047857", "TH_BG": "#059669",
+    },
+    "health": {
+        "PRIMARY": "#0891b2", "PRIMARY_DARK": "#164e63", "PRIMARY_BDR": "#06b6d4",
+        "BG": "#ecfeff", "STRONG_BG": "rgba(8,145,178,0.13)",
+        "BLOCKQUOTE_BG": "#f0fdfa", "BLOCKQUOTE_BDR": "#14b8a6", "BLOCKQUOTE_COLOR": "#134e4a",
+        "TIP_BG": "#ecfeff", "TIP_BDR": "#06b6d4", "TIP_COLOR": "#164e63",
+        "WARN_BG": "#fff7ed", "WARN_BDR": "#f97316", "WARN_COLOR": "#7c2d12",
+        "H3_COLOR": "#0e7490", "TH_BG": "#0891b2",
+    },
+    "drama": {
+        "PRIMARY": "#7c3aed", "PRIMARY_DARK": "#4c1d95", "PRIMARY_BDR": "#8b5cf6",
+        "BG": "#faf5ff", "STRONG_BG": "rgba(124,58,237,0.1)",
+        "BLOCKQUOTE_BG": "#fdf2f8", "BLOCKQUOTE_BDR": "#ec4899", "BLOCKQUOTE_COLOR": "#831843",
+        "TIP_BG": "#faf5ff", "TIP_BDR": "#8b5cf6", "TIP_COLOR": "#4c1d95",
+        "WARN_BG": "#fff1f2", "WARN_BDR": "#fb7185", "WARN_COLOR": "#881337",
+        "H3_COLOR": "#6d28d9", "TH_BG": "#7c3aed",
+    },
+    "default": {
+        "PRIMARY": "#1d4ed8", "PRIMARY_DARK": "#1e3a8a", "PRIMARY_BDR": "#2563eb",
+        "BG": "#eff6ff", "STRONG_BG": "rgba(29,78,216,0.1)",
+        "BLOCKQUOTE_BG": "#fffbeb", "BLOCKQUOTE_BDR": "#d97706", "BLOCKQUOTE_COLOR": "#78350f",
+        "TIP_BG": "#eff6ff", "TIP_BDR": "#2563eb", "TIP_COLOR": "#1e3a8a",
+        "WARN_BG": "#fffbeb", "WARN_BDR": "#d97706", "WARN_COLOR": "#92400e",
+        "H3_COLOR": "#7c3aed", "TH_BG": "#1d4ed8",
+    },
+}
+
+_FINANCE_KW = {"재테크","투자","주식","펀드","etf","부동산","절세","저축","금융",
+               "연금","적금","대출","금리","경제","세금","월세","전세","청약","재정",
+               "배당","코인","가상화폐","포트폴리오","절약","용돈","가계부"}
+_HEALTH_KW  = {"건강","다이어트","운동","의료","병원","영양","질병","약","치료",
+               "헬스","요가","필라테스","수면","스트레스","피부","탈모","체중",
+               "면역","혈압","당뇨","근육","칼로리","단백질","식단","비타민"}
+_DRAMA_KW   = {"드라마","영화","넷플릭스","티빙","쿠팡플레이","왓챠","ott","음악",
+               "연예","아이돌","가수","배우","예능","웹툰","애니","시즌","결말"}
+
+
+def _detect_theme(keyword: str, article_type: str) -> dict:
+    """키워드·아티클 유형으로 최적 컬러 테마를 반환합니다."""
+    kw = keyword.lower()
+    if any(w in kw for w in _FINANCE_KW):
+        return _THEMES["finance"]
+    if any(w in kw for w in _HEALTH_KW):
+        return _THEMES["health"]
+    if any(w in kw for w in _DRAMA_KW) or article_type == "drama_review":
+        return _THEMES["drama"]
+    return _THEMES["default"]
+
+
+def _retheme_summary_box(html: str, theme: dict) -> str:
+    """Claude 프롬프트에서 생성된 핵심 요약 박스의 고정 색상을 현재 테마로 교체."""
+    # 원본 패턴: background:#eff6ff;border-left:5px solid #2563eb;...color:#1e3a8a
+    html = re.sub(
+        r'background:#eff6ff;(border-left:5px solid )#2563eb;'
+        r'(padding:[^;]+;margin:[^;]+;border-radius:[^;]+;)color:#1e3a8a;',
+        lambda m: (
+            f'background:{theme["BG"]};{m.group(1)}{theme["PRIMARY_BDR"]};'
+            f'{m.group(2)}color:{theme["PRIMARY_DARK"]};'
+        ),
+        html,
+    )
+    return html
+
+
+_TIP_EMOJIS  = {"💡", "📌", "🔑", "✅", "🔥", "💰", "📊", "ℹ️", "👉", "🎯"}
+_WARN_EMOJIS = {"⚠️", "🚨", "❌", "🛑", "🔴"}
+
+
+def _style_callout_paragraphs(html: str, theme: dict) -> str:
+    """💡/⚠️ 등 이모지로 시작하는 <p>를 주제 컬러 callout 박스로 변환합니다."""
+
+    def _make_box(callout_type: str) -> str:
+        if callout_type == "warn":
+            return (
+                f"background:{theme['WARN_BG']};border-left:4px solid {theme['WARN_BDR']};"
+                f"padding:14px 20px;margin:1.3em 0;border-radius:0 10px 10px 0;"
+                f"color:{theme['WARN_COLOR']};font-size:0.95em;line-height:1.85;"
+            )
+        return (
+            f"background:{theme['TIP_BG']};border-left:4px solid {theme['TIP_BDR']};"
+            f"padding:14px 20px;margin:1.3em 0;border-radius:0 10px 10px 0;"
+            f"color:{theme['TIP_COLOR']};font-size:0.95em;line-height:1.85;"
+        )
+
+    def replace_p(m: re.Match) -> str:
+        open_tag = m.group(1)
+        content  = m.group(2)
+
+        text_start = re.sub(r'<[^>]+>', '', content).lstrip()
+
+        ctype = None
+        for em in _WARN_EMOJIS:
+            if text_start.startswith(em):
+                ctype = "warn"; break
+        if ctype is None:
+            for em in _TIP_EMOJIS:
+                if text_start.startswith(em):
+                    ctype = "tip"; break
+
+        if ctype is None:
+            return m.group(0)
+
+        box_style = _make_box(ctype)
+        sx = re.search(r'style="([^"]*)"', open_tag, re.I)
+        if sx:
+            merged = sx.group(1).rstrip(";") + ";" + box_style
+            new_open = open_tag[:sx.start()] + f'style="{merged}"' + open_tag[sx.end():]
+        else:
+            new_open = open_tag.rstrip(">").rstrip() + f' style="{box_style}">'
+
+        return f'{new_open}{content}</p>'
+
+    return re.sub(r'(<p(?:\s[^>]*)?>)(.*?)</p>', replace_p, html, flags=re.I | re.DOTALL)
 
 
 def _faq_to_cards(content: str) -> str:
@@ -399,66 +537,80 @@ def _faq_to_cards(content: str) -> str:
     return pre + h2 + '\n' + faq_rebuilt + '\n' + post_body
 
 
-def _apply_design(html: str) -> str:
+def _apply_design(html: str, keyword: str = "", article_type: str = "analysis") -> str:
     """
     Claude 생성 HTML에 Blogger 호환 인라인 스타일 비주얼 디자인 적용.
     Blogger는 <style> 블록을 무시하므로 모든 스타일은 인라인으로 처리.
+    keyword·article_type으로 주제별 컬러 테마 자동 선택.
     """
     if not html:
         return html
 
-    BLUE     = "#1d4ed8"
-    BLUE_BG  = "#eff6ff"
-    BLUE_BDR = "#2563eb"
-    PURPLE   = "#7c3aed"
-    TEXT     = "#374151"
-    DARK     = "#111827"
-    GOLD     = "#d97706"
-    GOLD_BG  = "#fffbeb"
-    BORDER   = "#e5e7eb"
+    theme  = _detect_theme(keyword, article_type)
+    PRIMARY     = theme["PRIMARY"]
+    PRIMARY_BDR = theme["PRIMARY_BDR"]
+    PRIMARY_DARK = theme["PRIMARY_DARK"]
+    BG          = theme["BG"]
+    STRONG_BG   = theme["STRONG_BG"]
+    H3_COLOR    = theme["H3_COLOR"]
+    TH_BG       = theme["TH_BG"]
+    BLOCKQUOTE_BG  = theme["BLOCKQUOTE_BG"]
+    BLOCKQUOTE_BDR = theme["BLOCKQUOTE_BDR"]
+    BLOCKQUOTE_CLR = theme["BLOCKQUOTE_COLOR"]
 
-    st = _apply_style_to_tag  # shortcut
+    TEXT   = "#374151"
+    DARK   = "#111827"
+    BORDER = "#e5e7eb"
 
-    # article 루트: 폰트 패밀리 + 기본 가독성
-    _article_style = (
+    st = _apply_style_to_tag
+
+    # article 루트: 폰트 + 기본 가독성
+    html = st(html, 'article',
         f"font-family:'Noto Sans KR','Apple SD Gothic Neo','맑은 고딕',sans-serif;"
         f"font-size:16px;line-height:1.9;color:{TEXT};word-break:keep-all;"
     )
-    html = _apply_style_to_tag(html, 'article', _article_style)
 
-    # H2: 파랑 left-border + 연한 그라디언트 배경
+    # H2: 주제 컬러 left-border + 연한 그라디언트 배경
     html = st(html, 'h2',
         f"font-size:1.42em;font-weight:800;color:{DARK};"
-        f"border-left:5px solid {BLUE_BDR};"
+        f"border-left:5px solid {PRIMARY_BDR};"
         f"padding:12px 0 12px 18px;margin:2.8em 0 1.1em;"
-        f"background:linear-gradient(90deg,{BLUE_BG},transparent);"
+        f"background:linear-gradient(90deg,{BG},transparent);"
         f"border-radius:0 10px 10px 0;line-height:1.4;"
     )
 
-    # H3: 보라 + 하단 점선
+    # H3: 주제 컬러 + 하단 점선
     html = st(html, 'h3',
-        f"font-size:1.12em;font-weight:700;color:{PURPLE};"
+        f"font-size:1.12em;font-weight:700;color:{H3_COLOR};"
         f"margin:1.8em 0 0.6em;padding-bottom:4px;"
-        f"border-bottom:2px solid #ddd6fe;"
+        f"border-bottom:2px solid {BG};"
     )
 
     # P: 가독성 최적화
     html = st(html, 'p', f"margin:0 0 1.2em;line-height:1.9;color:{TEXT};")
 
-    # Strong: 파랑 강조
-    html = st(html, 'strong', f"color:{BLUE};font-weight:700;")
+    # Strong: 주제 컬러 + 배경 하이라이트(마커 효과)
+    html = st(html, 'strong',
+        f"color:{PRIMARY};font-weight:700;"
+        f"background:{STRONG_BG};padding:1px 4px;border-radius:3px;"
+    )
+
+    # Em: 주제 컬러 이탤릭 강조
+    html = st(html, 'em',
+        f"color:{PRIMARY_DARK};font-style:italic;font-weight:500;"
+    )
 
     # 목록
     html = st(html, 'ul', f"margin:0.5em 0 1.3em 0;padding-left:1.4em;color:{TEXT};")
     html = st(html, 'ol', f"margin:0.5em 0 1.3em 0;padding-left:1.6em;color:{TEXT};")
     html = st(html, 'li', "margin-bottom:0.55em;line-height:1.8;")
 
-    # Blockquote: 골드 left-border + 따뜻한 배경
+    # Blockquote: 주제 컬러 left-border + 배경
     html = st(html, 'blockquote',
         f"margin:1.5em 0;padding:16px 22px;"
-        f"border-left:4px solid {GOLD};background:{GOLD_BG};"
-        f"border-radius:0 10px 10px 0;color:#78350f;"
-        f"font-style:italic;font-size:0.97em;"
+        f"border-left:4px solid {BLOCKQUOTE_BDR};background:{BLOCKQUOTE_BG};"
+        f"border-radius:0 10px 10px 0;color:{BLOCKQUOTE_CLR};"
+        f"font-style:italic;font-size:0.97em;line-height:1.85;"
     )
 
     # Table: 깔끔한 박스
@@ -467,7 +619,7 @@ def _apply_design(html: str) -> str:
         f"font-size:0.95em;box-shadow:0 2px 8px rgba(0,0,0,0.07);"
     )
     html = st(html, 'th',
-        f"background:{BLUE};color:#fff;"
+        f"background:{TH_BG};color:#fff;"
         f"padding:11px 14px;text-align:left;font-weight:600;"
     )
     html = st(html, 'td',
@@ -477,6 +629,12 @@ def _apply_design(html: str) -> str:
 
     # FAQ 섹션을 카드 스타일로 변환
     html = _faq_to_cards(html)
+
+    # 이모지 callout 박스 (💡팁 / ⚠️주의 단락 자동 스타일)
+    html = _style_callout_paragraphs(html, theme)
+
+    # 핵심 요약 박스 색상을 현재 테마로 교체
+    html = _retheme_summary_box(html, theme)
 
     return html
 
@@ -754,6 +912,12 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict) -> st
 분량: 2800~3500자 완전한 HTML
 H2 섹션: 4~6개 (주제에 따라 자유롭게)
 
+━━━ 강조 & 가독성 ━━━
+• 핵심 수치·팩트·행동 지침은 <strong>으로 강조 (문단당 1~2개, 남용 금지)
+• 독자가 꼭 챙겨야 할 팁 단락: 문장 맨 앞에 💡 배치 (글 전체에서 1~3개)
+• 중요 주의사항 단락: 문장 맨 앞에 ⚠️ 배치 (1~2개)
+• 핵심 인사이트는 <blockquote>로 감싸기 (1~2개)
+
 ━━━ FAQ ━━━
 h2 "자주 묻는 질문" + 5개 / 구체적이고 실질적인 질문·답변
 
@@ -914,8 +1078,10 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             else:
                 post_data["images_inserted"] = 0
 
-            # 인라인 스타일 비주얼 디자인 적용
-            post_data["content"] = _apply_design(post_data["content"])
+            # 인라인 스타일 비주얼 디자인 적용 (주제별 컬러 테마)
+            post_data["content"] = _apply_design(
+                post_data["content"], keyword, _detect_article_type(keyword)
+            )
 
             logger.info(
                 f"시리즈 포스트 생성 완료: '{post_data.get('title', '?')}' "
@@ -1023,8 +1189,10 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
                 post_data["images_inserted"] = 0
                 logger.warning("글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행")
 
-            # 인라인 스타일 비주얼 디자인 적용
-            post_data["content"] = _apply_design(post_data["content"])
+            # 인라인 스타일 비주얼 디자인 적용 (주제별 컬러 테마)
+            post_data["content"] = _apply_design(
+                post_data["content"], keyword, _detect_article_type(keyword)
+            )
 
             logger.info(
                 f"포스트 생성 완료: '{post_data.get('title', '?')}' "

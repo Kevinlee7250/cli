@@ -31,6 +31,13 @@ _HEADERS = {
 _USED_KW_FILE = os.path.join(os.path.dirname(__file__), "logs", "used_keywords.json")
 _HISTORY_FILE = os.path.join(os.path.dirname(__file__), "logs", "run_history.json")
 
+
+def _get_used_kw_file(blog_id: str = "") -> str:
+    """블로그별 독립 사용 키워드 파일 경로를 반환합니다."""
+    if blog_id and blog_id not in ("default", "blog1"):
+        return os.path.join(os.path.dirname(__file__), "logs", f"used_keywords_{blog_id}.json")
+    return _USED_KW_FILE
+
 # 키워드 재사용 허용 기간 (일)
 _REUSE_AFTER_DAYS = 30
 
@@ -70,6 +77,47 @@ _FALLBACK_KEYWORDS_KR = [
     "파이썬 독학 3개월 후 실제 쓸 수 있는 것들", "이직 성공하고 나서 후회한 것 3가지",
 ]
 
+_FALLBACK_KEYWORDS_TRAVEL_SPORTS = [
+    # 국내여행 — 경험 기반
+    "제주도 여행 현지인처럼 즐기는 방법 솔직 후기",
+    "부산 1박2일 혼자 여행 현실 비용 공개",
+    "강원도 캠핑 처음 해봤을 때 몰랐던 것들",
+    "경주 당일치기 놓치면 후회하는 코스 직접 다녀와서",
+    "전주 한옥마을 사람 적은 시간대와 숨은 맛집",
+    "서울 근교 드라이브 코스 직접 가본 솔직 평가",
+    "국내 호캉스 가성비 호텔 실제 후기 비교",
+    "남해 여행 봄에 가면 좋은 이유와 준비물",
+    "통영 여행 2박3일 실제 여행 경비 공개",
+    "설악산 단풍 트레킹 초보자가 가도 괜찮을까",
+    # 해외여행 — 실전 정보
+    "일본 오사카 여행 2026 달라진 점과 환전 꿀팁",
+    "베트남 다낭 4박5일 실제 비용 솔직 후기",
+    "태국 방콕 처음 가는 사람이 꼭 알아야 할 것",
+    "유럽 배낭여행 처음 준비하면서 실수한 것들",
+    "괌 패키지 vs 자유여행 직접 비교해봤더니",
+    "필리핀 세부 다이빙 입문 솔직한 경험 후기",
+    "하와이 허니문 실제 비용과 아낄 수 있는 방법",
+    "홍콩 싱가포르 중 여행지 선택 기준 직접 비교",
+    "동유럽 여행 치안 걱정했는데 실제로 가보니",
+    "모로코 여행 혼자 가도 괜찮을까 솔직 후기",
+    # 스포츠 — 경기 분석·관람
+    "손흥민 토트넘 2026 최신 경기 분석과 전망",
+    "KBO 야구 직관 처음 가는 사람을 위한 준비물",
+    "프리미어리그 중계 무료로 보는 합법적인 방법",
+    "류현진 복귀 후 성적 분석 실제로 달라진 점",
+    "NBA 2026 플레이오프 관전 포인트와 예상 결과",
+    "국내 프로축구 K리그 직관 좌석 추천과 관람 팁",
+    "테니스 입문자가 처음 라켓 살 때 알아야 할 것",
+    "골프 비기너 첫 필드 나가기 전 준비 체크리스트",
+    "마라톤 처음 완주한 사람이 알려주는 훈련법",
+    "등산 초보가 지리산 종주 도전하면서 배운 것",
+    # 스포츠 용품·건강
+    "러닝화 처음 구매할 때 나이키 vs 아디다스 비교",
+    "홈트레이닝 기구 6개월 써본 솔직한 후기",
+    "수영 초보가 1km 완주하기까지 걸린 시간과 방법",
+    "자전거 출퇴근 3개월 해본 솔직 장단점 정리",
+]
+
 _FALLBACK_KEYWORDS_EN = [
     # Finance — experience angle
     "what I learned after 1 year of dividend investing", "honest ETF investing review after 3 years",
@@ -94,27 +142,27 @@ _FALLBACK_KEYWORDS_EN = [
 # 사용 이력 관리
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _load_used_keywords() -> dict:
+def _load_used_keywords(file_path: str = _USED_KW_FILE) -> dict:
     """최근 사용된 키워드 목록을 로드합니다."""
-    if os.path.exists(_USED_KW_FILE):
+    if os.path.exists(file_path):
         try:
-            with open(_USED_KW_FILE, encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 return json.load(f)
         except Exception:
             pass
     return {"keywords": [], "entries": []}
 
 
-def _save_used_keywords(used_data: dict) -> None:
+def _save_used_keywords(used_data: dict, file_path: str = _USED_KW_FILE) -> None:
     """사용된 키워드 목록을 저장합니다."""
     try:
-        os.makedirs(os.path.dirname(_USED_KW_FILE), exist_ok=True)
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
         # keywords 리스트는 최근 300개만 유지
         used_data["keywords"] = used_data.get("keywords", [])[-300:]
         # entries도 최근 300개만 유지
         used_data["entries"] = used_data.get("entries", [])[-300:]
         used_data["updatedAt"] = datetime.now().isoformat()
-        with open(_USED_KW_FILE, "w", encoding="utf-8") as f:
+        with open(file_path, "w", encoding="utf-8") as f:
             json.dump(used_data, f, ensure_ascii=False, indent=2)
     except OSError as e:
         logger.error(f"키워드 이력 저장 실패: {e}")
@@ -232,13 +280,16 @@ def _naver_realtime_news(
     naver_client_id: str = "",
     naver_client_secret: str = "",
     count: int = 25,
+    queries: list[str] | None = None,
 ) -> list[str]:
     """
     네이버 실시간 뉴스 헤드라인을 수집합니다.
     1) 네이버 뉴스 카테고리 RSS (인증 불필요)
     2) 네이버 뉴스검색 API (API 키 있을 때 추가 수집)
+    queries: 블로그별 커스텀 검색 쿼리 (None이면 기본 _NAVER_API_QUERIES 사용)
     """
     headlines: list[str] = []
+    api_queries = queries if queries is not None else _NAVER_API_QUERIES
 
     # 1) 네이버 뉴스 카테고리 RSS
     for url, name in _NAVER_RSS_FEEDS:
@@ -261,7 +312,7 @@ def _naver_realtime_news(
             "X-Naver-Client-Id": naver_client_id,
             "X-Naver-Client-Secret": naver_client_secret,
         }
-        for q in _NAVER_API_QUERIES:
+        for q in api_queries:
             try:
                 resp = requests.get(
                     "https://openapi.naver.com/v1/search/news.json",
@@ -447,8 +498,14 @@ def _google_trends_rss(country: str = "KR", count: int = 10) -> list[str]:
         return []
 
 
-def _claude_ai_keywords(language: str = "ko", count: int = 10) -> list[str]:
-    """Claude API로 현재 트렌드 기반 키워드를 생성합니다 (Google Trends 결과 부족 시 2순위)."""
+def _claude_ai_keywords(
+    language: str = "ko",
+    count: int = 10,
+    topics: list[str] | None = None,
+) -> list[str]:
+    """Claude API로 현재 트렌드 기반 키워드를 생성합니다 (Google Trends 결과 부족 시 2순위).
+    topics 목록이 있으면 해당 주제에 특화된 키워드를 생성합니다.
+    """
     try:
         import anthropic
         from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
@@ -456,33 +513,38 @@ def _claude_ai_keywords(language: str = "ko", count: int = 10) -> list[str]:
             return []
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
         now = datetime.now()
+
+        topic_hint = ""
+        if topics:
+            topic_hint = f"\n\n⚠️ 반드시 다음 주제 카테고리 내에서만 생성: {', '.join(topics)}"
+
         if language == "ko":
             date_str = now.strftime("%Y년 %m월 %d일")
             prompt = (
                 f"오늘 날짜: {date_str}\n\n"
-                f"구글 AdSense 승인을 목표로 하는 한국 블로그에 적합한 E-E-A-T 기반 키워드 {count}개를 생성하세요.\n\n"
+                f"구글 AdSense 승인을 목표로 하는 한국 블로그에 적합한 E-E-A-T 기반 키워드 {count}개를 생성하세요."
+                f"{topic_hint}\n\n"
                 "핵심 조건:\n"
                 "1. '정보 나열'이 아닌 '경험과 인사이트 공유'가 가능한 주제\n"
-                "2. 너무 포괄적인 주제 금지 (예: '2026년 재테크 방법' X)\n"
-                "3. 뾰족한 닌치 각도 필수 (예: '직장인 투잡 세금 신고 시 놓치기 쉬운 것', '처음 ETF 살 때 내가 한 실수')\n"
-                "4. 카테고리: 금융/재테크·AI/기술·건강·부동산·부업·세금/법률 골고루\n"
-                "5. 검색 의도가 명확한 롱테일 키워드 (8~20자)\n"
-                "6. '솔직 후기', '직접 해봤더니', '실수담', '현실 공개' 등 경험 기반 각도 포함\n\n"
+                "2. 너무 포괄적인 주제 금지\n"
+                "3. 뾰족한 닌치 각도 필수 (예: '직접 가봤더니', '솔직 후기', '처음 할 때 몰랐던 것')\n"
+                "4. 검색 의도가 명확한 롱테일 키워드 (8~20자)\n"
+                "5. '솔직 후기', '직접 해봤더니', '실수담', '현실 공개' 등 경험 기반 각도 포함\n\n"
                 f'JSON 배열만 응답 (설명 없이): ["키워드1", ..., "키워드{count}"]'
             )
         else:
             date_str = now.strftime("%B %d, %Y")
+            topic_hint_en = f"\n\n⚠️ Generate keywords ONLY within these categories: {', '.join(topics)}" if topics else ""
             prompt = (
                 f"Today: {date_str}\n\n"
-                f"Generate {count} E-E-A-T focused blog keywords for Google AdSense approval.\n\n"
+                f"Generate {count} E-E-A-T focused blog keywords for Google AdSense approval."
+                f"{topic_hint_en}\n\n"
                 "Requirements:\n"
                 "1. Experience-driven topics — NOT generic information dumps\n"
-                "2. No overly broad topics (e.g., 'how to invest 2026' is too generic)\n"
-                "3. Niche angles required: 'what I learned after X months', 'honest review', 'mistakes beginners make'\n"
-                "4. Categories: finance, AI/tech, health, real estate, side income, legal\n"
-                "5. Long-tail keywords, 4-10 words each, with clear search intent\n"
-                "6. Include experience angles: 'honest review', 'real numbers', 'after trying for 6 months'\n\n"
-                f'JSON array only (no explanation): ["keyword1", ..., "keyword{count}"]'
+                "2. No overly broad topics\n"
+                "3. Niche angles: 'what I learned', 'honest review', 'mistakes beginners make'\n"
+                "4. Long-tail keywords, 4-10 words each\n\n"
+                f'JSON array only: ["keyword1", ..., "keyword{count}"]'
             )
         msg = client.messages.create(
             model=CLAUDE_MODEL,
@@ -554,14 +616,22 @@ def get_trending_keywords(
     count: int = 5,
     naver_client_id: str = "",
     naver_client_secret: str = "",
+    blog_config: dict | None = None,
 ) -> list[str]:
     """
     트렌드 키워드를 수집합니다.
     - 이미 사용된 키워드(30일 이내)는 제외
     - 포스팅 이력과 유사한 주제도 제외 (Jaccard 유사도 기반)
     - 우선순위: 네이버 실시간 뉴스 → Google Trends RSS → Claude AI → 고정 폴백 목록
+    - blog_config: 블로그별 설정 (topics, naver_api_queries 등)
     """
-    used_data = _load_used_keywords()
+    cfg = blog_config or {}
+    blog_id = cfg.get("id", "")
+    topics: list[str] | None = cfg.get("topics") or None
+    blog_naver_queries: list[str] | None = cfg.get("naver_api_queries") or None
+
+    used_kw_file = _get_used_kw_file(blog_id)
+    used_data = _load_used_keywords(used_kw_file)
     active_used_set = _get_active_used_set(used_data)
 
     # 포스팅 이력 코퍼스 (키워드 + 제목)
@@ -573,7 +643,9 @@ def get_trending_keywords(
 
     # 0순위: 네이버 실시간 뉴스 (한국어 블로그일 때만)
     if language == "ko":
-        naver_headlines = _naver_realtime_news(naver_client_id, naver_client_secret)
+        naver_headlines = _naver_realtime_news(
+            naver_client_id, naver_client_secret, queries=blog_naver_queries
+        )
         naver_kws = _headlines_to_keywords(naver_headlines, count * 2)
         for kw in naver_kws:
             keyword_sources[kw] = "naver_realtime"
@@ -589,7 +661,7 @@ def get_trending_keywords(
 
     # 2순위: Claude AI (결과 부족 시)
     if len(candidates) < count * 2:
-        claude_kws = _claude_ai_keywords(language, count * 2)
+        claude_kws = _claude_ai_keywords(language, count * 2, topics=topics)
         for kw in claude_kws:
             if kw not in keyword_sources:
                 keyword_sources[kw] = "claude_ai"
@@ -613,7 +685,14 @@ def get_trending_keywords(
         logger.debug(f"GSC 연동 생략: {e}")
 
     # 3순위: 고정 폴백 (미사용 키워드 우선 + GSC 고성과 카테고리 먼저)
-    fallback = _FALLBACK_KEYWORDS_KR if language == "ko" else _FALLBACK_KEYWORDS_EN
+    _TRAVEL_SPORTS_TOPICS = {"여행", "스포츠", "travel", "sports"}
+    is_travel_sports = bool(topics and _TRAVEL_SPORTS_TOPICS.intersection(set(t.lower() for t in topics)))
+    if is_travel_sports:
+        fallback = _FALLBACK_KEYWORDS_TRAVEL_SPORTS
+    elif language == "ko":
+        fallback = _FALLBACK_KEYWORDS_KR
+    else:
+        fallback = _FALLBACK_KEYWORDS_EN
     unused_fallback = [kw for kw in fallback if kw not in active_used_set]
     if not unused_fallback:
         unused_fallback = fallback
@@ -700,7 +779,7 @@ def get_trending_keywords(
     ]
     used_data["keywords"] = used_data.get("keywords", []) + result
     used_data["entries"] = existing_entries + new_entries
-    _save_used_keywords(used_data)
+    _save_used_keywords(used_data, used_kw_file)
 
     # 수집 출처별 요약 로그
     source_summary: dict[str, list[str]] = {}

@@ -30,6 +30,15 @@ def _detect_article_type(keyword: str) -> str:
     if any(w in kw for w in ["드라마", "시즌", "넷플릭스", "티빙", "쿠팡플레이", "ott", "왓챠",
                               "결말 해석", "등장인물", "ost 추천", "명장면"]):
         return "drama_review"
+    # 여행 가이드
+    if any(w in kw for w in ["여행", "관광", "투어", "코스", "명소", "숙소", "호텔", "맛집",
+                              "공항", "비자", "패키지", "자유여행", "배낭", "현지"]):
+        return "travel_guide"
+    # 스포츠 분석·리뷰
+    if any(w in kw for w in ["경기", "축구", "야구", "농구", "테니스", "골프", "k리그", "kbo",
+                              "nba", "epl", "선수", "감독", "시즌", "분석", "전망", "순위",
+                              "스포츠", "마라톤", "트레킹", "등산", "러닝", "수영", "자전거"]):
+        return "sports_review"
     if any(w in kw for w in ["방법", "하는법", "어떻게", "가이드", "절차", "단계"]):
         return "how_to"
     if any(w in kw for w in ["후기", "리뷰", "써봤", "직접", "경험", "솔직히", "추천"]):
@@ -88,6 +97,26 @@ _STRUCTURE_GUIDE = {
 - 감상 표현은 독자와 함께 이야기하는 구어체: "저는 이 부분에서 울었어요", "이건 좀 아쉬웠거든요"
 - 과도한 칭찬이나 홍보성 표현 금지 — 아쉬운 점도 솔직하게
 - 마지막: "이런 취향이면 강추 / 이런 취향이면 비추" 식의 명확한 추천 기준""",
+
+    "travel_guide": """
+- 도입부: 이 여행지를 선택하게 된 계기 + 출발 전 기대했던 것과 현실 비교 예고
+- 본문 구성:
+  • 실제 여행 경비 공개 (교통·숙소·식비·관광비 항목별 현실 숫자)
+  • 현지에서 직접 해보고 "이건 몰랐던 것" 또는 "이건 생각보다 좋았던 것"
+  • 숨은 명소·맛집 — 포털에 안 나오는 로컬 스팟 위주
+  • 가면 안 되는 시간대·시즌 또는 주의사항 (경험 기반)
+- "유명 블로그에서 추천한 곳인데 실제로 가보니..." 같은 반전 경험 포함
+- 마지막: 이 여행지가 어떤 사람에게 맞는지 명확한 추천 기준""",
+
+    "sports_review": """
+- 도입부: 이 경기/선수/팀을 응원·관심 갖게 된 계기 (팬 시점 or 분석가 시점)
+- 본문 구성:
+  • 최근 성적·경기 결과 요약 (수치 기반 — 득점·순위·승률 등)
+  • 핵심 포인트 분석: "이 부분이 승패를 갈랐다고 생각해요"
+  • 선수·전술·팀 운영 관련 솔직한 평가 (과도한 찬양 금지)
+  • 앞으로의 전망 — 명확한 개인 의견 포함 ("제 예상엔...")
+- 직관 경험이 있으면 분위기·관람 팁 추가
+- 마지막: 이 팀/선수/종목에 처음 관심 갖는 독자에게 입문 팁""",
 }
 
 
@@ -385,6 +414,22 @@ _THEMES: dict[str, dict[str, str]] = {
         "WARN_BG": "#fff1f2", "WARN_BDR": "#fb7185", "WARN_COLOR": "#881337",
         "H3_COLOR": "#6d28d9", "TH_BG": "#7c3aed",
     },
+    "travel": {
+        "PRIMARY": "#0369a1", "PRIMARY_DARK": "#0c4a6e", "PRIMARY_BDR": "#0ea5e9",
+        "BG": "#f0f9ff", "STRONG_BG": "rgba(3,105,161,0.11)",
+        "BLOCKQUOTE_BG": "#ecfdf5", "BLOCKQUOTE_BDR": "#10b981", "BLOCKQUOTE_COLOR": "#065f46",
+        "TIP_BG": "#f0f9ff", "TIP_BDR": "#0ea5e9", "TIP_COLOR": "#0c4a6e",
+        "WARN_BG": "#fffbeb", "WARN_BDR": "#f59e0b", "WARN_COLOR": "#78350f",
+        "H3_COLOR": "#0369a1", "TH_BG": "#0369a1",
+    },
+    "sports": {
+        "PRIMARY": "#dc2626", "PRIMARY_DARK": "#7f1d1d", "PRIMARY_BDR": "#ef4444",
+        "BG": "#fff1f2", "STRONG_BG": "rgba(220,38,38,0.1)",
+        "BLOCKQUOTE_BG": "#fef3c7", "BLOCKQUOTE_BDR": "#f59e0b", "BLOCKQUOTE_COLOR": "#78350f",
+        "TIP_BG": "#fff1f2", "TIP_BDR": "#ef4444", "TIP_COLOR": "#7f1d1d",
+        "WARN_BG": "#fffbeb", "WARN_BDR": "#d97706", "WARN_COLOR": "#92400e",
+        "H3_COLOR": "#b91c1c", "TH_BG": "#dc2626",
+    },
     "default": {
         "PRIMARY": "#1d4ed8", "PRIMARY_DARK": "#1e3a8a", "PRIMARY_BDR": "#2563eb",
         "BG": "#eff6ff", "STRONG_BG": "rgba(29,78,216,0.1)",
@@ -403,6 +448,12 @@ _HEALTH_KW  = {"건강","다이어트","운동","의료","병원","영양","질�
                "면역","혈압","당뇨","근육","칼로리","단백질","식단","비타민"}
 _DRAMA_KW   = {"드라마","영화","넷플릭스","티빙","쿠팡플레이","왓챠","ott","음악",
                "연예","아이돌","가수","배우","예능","웹툰","애니","시즌","결말"}
+_TRAVEL_KW  = {"여행","관광","투어","코스","명소","숙소","호텔","맛집","공항",
+               "비자","패키지","자유여행","배낭","현지","국내여행","해외여행",
+               "제주","부산","오사카","방콕","다낭","유럽","괌","하와이"}
+_SPORTS_KW  = {"축구","야구","농구","테니스","골프","k리그","kbo","nba","epl","선수",
+               "감독","스포츠","마라톤","트레킹","등산","러닝","수영","자전거",
+               "손흥민","류현진","경기","승리","패배","득점","순위","직관"}
 
 
 def _detect_theme(keyword: str, article_type: str) -> dict:
@@ -414,6 +465,10 @@ def _detect_theme(keyword: str, article_type: str) -> dict:
         return _THEMES["health"]
     if any(w in kw for w in _DRAMA_KW) or article_type == "drama_review":
         return _THEMES["drama"]
+    if any(w in kw for w in _TRAVEL_KW) or article_type == "travel_guide":
+        return _THEMES["travel"]
+    if any(w in kw for w in _SPORTS_KW) or article_type == "sports_review":
+        return _THEMES["sports"]
     return _THEMES["default"]
 
 

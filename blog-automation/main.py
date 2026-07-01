@@ -126,6 +126,7 @@ def run_once(
             count=collect_count,
             naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
             naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
+            blog_config=blog_config,
         )
         # 주간 학습 키워드를 트렌드 키워드 부족 시 보완
         if len(keywords) < collect_count:

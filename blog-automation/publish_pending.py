@@ -5,6 +5,7 @@
   python publish_pending.py --id <post_id>
   python publish_pending.py --ids "id1,id2,id3"
   python publish_pending.py --all-pending
+  python publish_pending.py --retry-failed
 """
 
 import argparse
@@ -54,11 +55,12 @@ def main() -> None:
     parser.add_argument("--id", dest="post_id", default="", help="게시할 포스트 ID")
     parser.add_argument("--ids", default="", help="쉼표로 구분된 포스트 ID 목록")
     parser.add_argument("--all-pending", action="store_true", help="모든 pending 포스트 게시")
+    parser.add_argument("--retry-failed", action="store_true", help="failed 상태 포스트 재시도")
     args = parser.parse_args()
 
     pending = load_pending()
     if not pending:
-        logger.error("게시할 포스트가 없습니다")
+        logger.error("pending_posts.json이 비어있거나 로드 실패")
         sys.exit(1)
 
     ids_to_publish: list[str] = []
@@ -67,11 +69,18 @@ def main() -> None:
     if args.ids.strip():
         ids_to_publish.extend(i.strip() for i in args.ids.split(",") if i.strip())
     if args.all_pending:
-        ids_to_publish = [p["id"] for p in pending if p.get("status") == "pending"]
+        # pending + failed 모두 포함
+        ids_to_publish = [
+            p["id"] for p in pending
+            if p.get("status") in ("pending", "failed")
+        ]
+    if args.retry_failed:
+        failed_ids = [p["id"] for p in pending if p.get("status") == "failed"]
+        ids_to_publish = list(dict.fromkeys(ids_to_publish + failed_ids))  # 중복 제거
 
     if not ids_to_publish:
-        logger.error("게시할 포스트 ID 없음 (--id, --ids, 또는 --all-pending 필요)")
-        sys.exit(1)
+        logger.warning("게시할 포스트가 없습니다 (pending/failed 상태 포스트 없음)")
+        sys.exit(0)  # 오류가 아닌 정상 종료
 
     logger.info(f"게시 대상 {len(ids_to_publish)}개: {ids_to_publish}")
 
@@ -79,25 +88,30 @@ def main() -> None:
 
     success, fail = 0, 0
     for post_id in ids_to_publish:
-        post = next((p for p in pending if p["id"] == post_id), None)
+        # id 기준으로 첫 번째 매칭 (중복 id 처리)
+        post = next((p for p in pending if p["id"] == post_id and p.get("status") != "published"), None)
         if not post:
-            logger.error(f"포스트 ID 없음: {post_id}")
-            fail += 1
-            continue
-        if post.get("status") == "published":
-            logger.warning(f"이미 게시됨 (건너뜀): {post.get('title', post_id)}")
+            logger.warning(f"포스트 없음 또는 이미 게시됨 (건너뜀): {post_id}")
             continue
 
         logger.info(f"[{post_id}] 게시 중: {post.get('title', '')}")
-        result = upload_post({
-            "title": post["title"],
-            "content": post["content"],
-            "labels": post.get("labels", []),
-            "keyword": post.get("keyword", ""),
-            "faq": post.get("faq", []),
-            "meta_description": post.get("metaDescription", ""),
-            "sources": post.get("sources", []),
-        })
+        try:
+            result = upload_post({
+                "title": post["title"],
+                "content": post["content"],
+                "labels": post.get("labels", []),
+                "keyword": post.get("keyword", ""),
+                "faq": post.get("faq", []),
+                "meta_description": post.get("metaDescription", ""),
+                "sources": post.get("sources", []),
+            })
+        except Exception as e:
+            logger.error(f"  ❌ 예외 발생: {e}")
+            post["status"] = "failed"
+            post["failedAt"] = datetime.now().isoformat()
+            post["failReason"] = str(e)
+            fail += 1
+            continue
 
         if result:
             post["status"] = "published"
@@ -107,12 +121,13 @@ def main() -> None:
             success += 1
         else:
             post["status"] = "failed"
+            post["failedAt"] = datetime.now().isoformat()
             logger.error(f"  ❌ 실패: {post.get('title', post_id)}")
             fail += 1
 
     save_pending(pending)
     logger.info(f"\n완료: 성공 {success}개 / 실패 {fail}개")
-    if fail > 0:
+    if fail > 0 and success == 0:
         sys.exit(1)
 
 

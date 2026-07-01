@@ -110,7 +110,8 @@ def fetch_blogger_pageviews(blog_id: str, token: str) -> dict[str, int]:
     headers = {"Authorization": f"Bearer {token}"}
     result: dict[str, int] = {"total_30d": 0, "total_7d": 0, "total_1d": 0}
 
-    for range_label, key in [("30DAYS", "total_30d"), ("7DAYS", "total_7d"), ("1DAYS", "total_1d")]:
+    # Blogger API 파라미터: 30DAYS, 7DAYS, TODAY (1DAYS는 400 에러)
+    for range_label, key in [("30DAYS", "total_30d"), ("7DAYS", "total_7d"), ("TODAY", "total_1d")]:
         try:
             url = f"{BLOGGER_API_BASE}/blogs/{blog_id}/pageviews"
             resp = requests.get(
@@ -123,10 +124,9 @@ def fetch_blogger_pageviews(blog_id: str, token: str) -> dict[str, int]:
                 raw = resp.json()
                 logger.info(f"Blogger API [{range_label}] 응답: {str(raw)[:300]}")
                 counts = raw.get("counts", [])
-                for item in counts:
-                    if item.get("timeRange") == range_label:
-                        result[key] = int(item.get("count", 0))
-                        break
+                # API는 THIRTY_DAYS / SEVEN_DAYS 형식으로 반환 — 첫 번째 count 사용
+                if counts:
+                    result[key] = int(counts[0].get("count", 0))
             elif resp.status_code == 403:
                 logger.warning("Blogger 조회수 API 권한 없음 (블로그 소유자 확인 필요)")
                 break

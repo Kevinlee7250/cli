@@ -1,0 +1,109 @@
+name: 게시 완료글 검증
+
+on:
+  # blog-run.yml 완료 후 자동 실행
+  workflow_run:
+    workflows: ["블로그 자동화 실행"]
+    types: [completed]
+    branches: [claude/blog-automation-system-KAbtE]
+
+  # 수동 실행
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '검증 범위'
+        required: false
+        default: 'recent'
+        type: choice
+        options:
+          - recent   # 최근 25시간 내 게시 포스트
+          - all      # 전체 포스트 재검증
+          - report   # 기존 리포트만 출력
+      grade:
+        description: '특정 등급만 재검증 (빈칸=전체, S/A/B/C/F)'
+        required: false
+        default: ''
+      no_issue:
+        description: 'GitHub Issue 생성 안 함'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+permissions:
+  contents: write
+  issues:   write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    # blog-run이 성공한 경우에만 실행
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    timeout-minutes: 15
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        run: pip install requests
+
+      - name: 게시 완료글 검증 실행
+        working-directory: blog-automation
+        env:
+          GITHUB_TOKEN:      ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF_NAME:   ${{ github.ref_name }}
+          BLOGGER_BLOG_ID:   ${{ secrets.BLOGGER_BLOG_ID }}
+        run: |
+          MODE="${{ inputs.mode || 'recent' }}"
+          GRADE="${{ inputs.grade }}"
+          NO_ISSUE="${{ inputs.no_issue || 'false' }}"
+
+          # 플래그 조합
+          FLAGS=""
+          if [ "$MODE" = "all" ];    then FLAGS="$FLAGS --all"; fi
+          if [ "$MODE" = "report" ]; then FLAGS="$FLAGS --report"; fi
+          if [ -n "$GRADE" ];        then FLAGS="$FLAGS --grade $GRADE"; fi
+          if [ "$NO_ISSUE" = "true" ]; then FLAGS="$FLAGS --no-issue"; fi
+
+          echo "=== 검증 실행: python post_verifier.py $FLAGS ==="
+          python post_verifier.py $FLAGS || true
+          # exit 1 (재게시 필요)이어도 다음 스텝 계속 실행하기 위해 || true
+
+      - name: 검증 결과 커밋 & 푸시
+        if: ${{ inputs.mode != 'report' }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add docs/data/verify_report.json 2>/dev/null || true
+
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            TIMESTAMP=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M KST')
+            git commit -m "chore: 게시 완료글 검증 결과 업데이트 ($TIMESTAMP)"
+            git pull --rebase --autostash origin claude/blog-automation-system-KAbtE
+            git push origin claude/blog-automation-system-KAbtE
+            echo "✅ 커밋 완료"
+          fi
+
+      - name: 검증 리포트 아티팩트 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-report-${{ github.run_number }}
+          path: docs/data/verify_report.json
+          retention-days: 14

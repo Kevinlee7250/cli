@@ -21,6 +21,31 @@ logger = logging.getLogger(__name__)
 TOKEN_URL = "https://oauth2.googleapis.com/token"
 BLOGGER_API_BASE = "https://www.googleapis.com/blogger/v3"
 
+# Blogger API가 거부하는 HTML 속성 패턴 (INVALID_ARGUMENT 400 원인)
+_BLOGGER_BLOCKED_ATTRS = re.compile(
+    r'\s(?:aria-[\w-]+|itemscope|itemtype|itemprop|itemid|vocab|property|role)'
+    r'(?:=["\'][^"\']*["\']|=[^\s>]*)?',
+    re.IGNORECASE,
+)
+
+
+def _sanitize_for_blogger(html: str) -> str:
+    """Blogger API가 거부하는 속성을 제거합니다.
+
+    제거 대상:
+    - aria-* 속성 (aria-label, aria-describedby 등)
+    - Schema.org 마이크로데이터 속성 (itemscope, itemtype, itemprop, itemid)
+    - role 속성
+    - <script> 태그 전체 (JSON-LD 포함)
+    """
+    # 1) <script> 태그 전체 제거
+    html = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL | re.IGNORECASE)
+    # 2) 차단된 속성 제거 (태그 내부에서만 적용)
+    def _clean_tag(m: re.Match) -> str:
+        return _BLOGGER_BLOCKED_ATTRS.sub('', m.group(0))
+    html = re.sub(r'<[a-zA-Z][^>]*>', _clean_tag, html)
+    return html
+
 
 # ──────────────────────────────────────────────────────────────────────────────
 # OAuth
@@ -215,7 +240,10 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
     labels = post_data.get("labels", [])
     series_nav = post_data.get("series_nav", "")  # 시리즈 내비게이션 HTML
 
-    # ① H2에 id 부여 (중복 slug 방지 포함)
+    # ① Blogger가 거부하는 속성 사전 제거 (aria-*, itemscope, itemtype 등)
+    html = _sanitize_for_blogger(html)
+
+    # ② H2에 id 부여 (중복 slug 방지 포함)
     html = _add_h2_ids(html)
 
     # ② 목차 생성 — 첫 번째 </p> 뒤에 삽입
@@ -420,10 +448,8 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
         if info_resp.status_code == 200:
             blog_url = info_resp.json().get("url", "")
             logger.info(f"  ✅ 블로그 접근 확인 (blog_id·토큰 정상): {blog_url}")
-            logger.info("  ➡ 400 원인은 요청 본문 문제 — <script> 태그 제거 후 재시도합니다")
-            # 재시도: <script> 태그 제거 (JSON-LD 스키마 등 Blogger가 거부하는 태그 제거)
-            # full_content는 이미 _sanitize_for_blogger 처리됨
-            # 추가 보호: 남은 script 태그 제거 후 재시도
+            logger.info("  ➡ 400 원인은 요청 본문 문제 — 차단 속성 제거 후 재시도합니다")
+            # 재시도: script 태그 + aria-* + itemscope/itemtype 등 Blogger 차단 요소 제거
             safe_content = _sanitize_for_blogger(full_content)
             payload2 = {**payload, "content": safe_content}
             try:

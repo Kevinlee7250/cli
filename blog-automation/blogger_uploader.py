@@ -5,6 +5,7 @@ import logging
 import re
 import requests
 from datetime import datetime
+from schema_generator import generate_all_schemas
 
 from config import (
     BLOGGER_CLIENT_ID,
@@ -36,10 +37,13 @@ def _sanitize_for_blogger(html: str) -> str:
     - aria-* 속성 (aria-label, aria-describedby 등)
     - Schema.org 마이크로데이터 속성 (itemscope, itemtype, itemprop, itemid)
     - role 속성
-    - <script> 태그 전체 (JSON-LD 포함)
+    - <script> 태그 (JSON-LD 제외 — AdSense/일반 script만 제거)
     """
-    # 1) <script> 태그 전체 제거
-    html = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL | re.IGNORECASE)
+    # 1) <script> 태그 제거 — JSON-LD(application/ld+json)는 SEO 필수이므로 유지
+    html = re.sub(
+        r'<script(?![^>]*type=["\']application/ld\+json["\'])[^>]*>.*?</script>',
+        '', html, flags=re.DOTALL | re.IGNORECASE
+    )
     # 2) 차단된 속성 제거 (태그 내부에서만 적용)
     def _clean_tag(m: re.Match) -> str:
         return _BLOGGER_BLOCKED_ATTRS.sub('', m.group(0))
@@ -307,8 +311,7 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
     )
 
     return (
-        _article_schema(post_data)
-        + _faq_schema(faq)
+        generate_all_schemas(post_data, blog_config)
         + '<div class="blog-post" style="max-width:780px;margin:0 auto;padding:8px 4px;'
           'font-family:\'Noto Sans KR\',\'Apple SD Gothic Neo\',\'맑은 고딕\',sans-serif;'
           'font-size:16px;line-height:1.9;color:#374151;word-break:keep-all;">'
@@ -329,7 +332,7 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
 def _sanitize_for_blogger(html: str) -> str:
     """Blogger API 호환성: 거부되는 HTML 요소 제거 및 변환.
     실제 테스트로 확인된 Blogger API 거부 요소:
-      - <script> 태그 (JSON-LD 스키마, AdSense push 등)
+      - <script> 태그 (JSON-LD 제외 — AdSense push만 제거)
       - <ins> 태그 (AdSense <ins class="adsbygoogle"> 포함)
       - data-ad-* 속성 (AdSense 광고 데이터)
       - <nav>, <section>, <main>, <aside>, <header>, <footer> 시맨틱 태그
@@ -338,8 +341,11 @@ def _sanitize_for_blogger(html: str) -> str:
       - href="#..." 내부 앵커 링크
     성공 사례에서 허용 확인됨: <article>, <p>, <h2>, <ul>, <li>, <div>
     """
-    # <script> 태그 제거 (AdSense push 코드 포함)
-    html = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL | re.IGNORECASE)
+    # <script> 태그 제거 — JSON-LD(application/ld+json)는 SEO 필수이므로 유지
+    html = re.sub(
+        r'<script(?![^>]*type=["\']application/ld\+json["\'])[^>]*>.*?</script>',
+        '', html, flags=re.DOTALL | re.IGNORECASE
+    )
     # AdSense 광고 블록 전체 제거 (<!-- AdSense ... --> 주석 + <ins> + </div>)
     html = re.sub(r'<!--\s*AdSense 광고 슬롯[^>]*-->.*?</div>', '', html, flags=re.DOTALL | re.IGNORECASE)
     # <ins> 태그 제거 (잔여 AdSense 코드)

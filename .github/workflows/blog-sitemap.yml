@@ -1,0 +1,145 @@
+name: 사이트맵 생성 (블로그 포스트 업데이트 후 자동 실행)
+
+on:
+  # blog-run.yml 완료 후 자동 실행 (의존성 체인)
+  workflow_run:
+    workflows: ["블로그 자동화 실행"]
+    types: [completed]
+    branches: [claude/blog-automation-system-KAbtE]
+
+  # 수동 실행
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-sitemap:
+    runs-on: ubuntu-latest
+    # blog-run이 성공한 경우에만 실행 (실패 시 스킵)
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    timeout-minutes: 10
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 사이트맵 생성
+        run: |
+          python3 << 'PYEOF'
+          import json
+          import re
+          from pathlib import Path
+          from datetime import datetime, timezone
+
+          # 설정
+          POSTS_JSON = Path("docs/data/posts.json")
+          SITEMAP_PATH = Path("docs/sitemap.xml")
+          ROBOTS_PATH  = Path("docs/robots.txt")
+
+          # posts.json 로드
+          if not POSTS_JSON.exists():
+              print("❌ posts.json 없음")
+              exit(0)
+
+          posts = json.loads(POSTS_JSON.read_text(encoding="utf-8"))
+          print(f"📄 포스트 수: {len(posts)}")
+
+          # 블로그 URL 수집
+          blog_urls = set()
+          entries = []
+
+          for p in posts:
+              url = p.get("url") or p.get("blogUrl") or p.get("link") or ""
+              if not url or "blogspot.com" not in url:
+                  continue
+              
+              # 블로그 루트 URL 추출
+              match = re.match(r"(https?://[^/]+)", url)
+              if match:
+                  blog_urls.add(match.group(1))
+
+              # 날짜 파싱
+              pub_date = p.get("publishedAt") or p.get("savedAt") or p.get("createdAt") or ""
+              if len(pub_date) == 14 and pub_date.isdigit():
+                  pub_date = f"{pub_date[:4]}-{pub_date[4:6]}-{pub_date[6:8]}"
+              elif len(pub_date) > 10:
+                  pub_date = pub_date[:10]
+
+              # 우선순위 계산 (성적 기반)
+              grade = p.get("grade", "C")
+              priority_map = {"S": "1.0", "A": "0.8", "B": "0.6", "C": "0.5"}
+              priority = priority_map.get(grade, "0.5")
+
+              entries.append({
+                  "url": url,
+                  "lastmod": pub_date or datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+                  "priority": priority,
+                  "changefreq": "monthly",
+              })
+
+          # 블로그 루트 URL 추가 (최고 우선순위)
+          for root_url in sorted(blog_urls):
+              entries.insert(0, {
+                  "url": root_url + "/",
+                  "lastmod": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+                  "priority": "1.0",
+                  "changefreq": "daily",
+              })
+
+          # XML 생성
+          xml_lines = [
+              '<?xml version="1.0" encoding="UTF-8"?>',
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+          ]
+          for e in entries:
+              xml_lines += [
+                  "  <url>",
+                  f"    <loc>{e['url']}</loc>",
+                  f"    <lastmod>{e['lastmod']}</lastmod>",
+                  f"    <changefreq>{e['changefreq']}</changefreq>",
+                  f"    <priority>{e['priority']}</priority>",
+                  "  </url>",
+              ]
+          xml_lines.append("</urlset>")
+
+          SITEMAP_PATH.parent.mkdir(parents=True, exist_ok=True)
+          SITEMAP_PATH.write_text("\n".join(xml_lines), encoding="utf-8")
+          print(f"✅ sitemap.xml 생성 완료: {len(entries)}개 URL → {SITEMAP_PATH}")
+
+          # robots.txt 생성/업데이트
+          for blog_url in sorted(blog_urls):
+              robots_content = f"""User-agent: *
+Allow: /
+
+Sitemap: {blog_url}/sitemap.xml
+"""
+          if blog_urls:
+              ROBOTS_PATH.write_text(robots_content, encoding="utf-8")
+              print(f"✅ robots.txt 업데이트 완료")
+
+          PYEOF
+
+      - name: 사이트맵 커밋 & 푸시
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add docs/sitemap.xml docs/robots.txt 2>/dev/null || true
+
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            TIMESTAMP=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M KST')
+            git commit -m "chore: 사이트맵 자동 갱신 ($TIMESTAMP)"
+            git pull --rebase --autostash origin claude/blog-automation-system-KAbtE
+            git push origin claude/blog-automation-system-KAbtE
+            echo "✅ 커밋 완료"
+          fi

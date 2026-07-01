@@ -120,7 +120,9 @@ def fetch_blogger_pageviews(blog_id: str, token: str) -> dict[str, int]:
                 timeout=15,
             )
             if resp.status_code == 200:
-                counts = resp.json().get("counts", [])
+                raw = resp.json()
+                logger.info(f"Blogger API [{range_label}] 응답: {str(raw)[:300]}")
+                counts = raw.get("counts", [])
                 for item in counts:
                     if item.get("timeRange") == range_label:
                         result[key] = int(item.get("count", 0))
@@ -129,7 +131,7 @@ def fetch_blogger_pageviews(blog_id: str, token: str) -> dict[str, int]:
                 logger.warning("Blogger 조회수 API 권한 없음 (블로그 소유자 확인 필요)")
                 break
             else:
-                logger.debug(f"Blogger 조회수 [{range_label}]: HTTP {resp.status_code}")
+                logger.warning(f"Blogger 조회수 API [{range_label}]: HTTP {resp.status_code} — {resp.text[:200]}")
         except Exception as exc:
             logger.debug(f"Blogger 조회수 API 오류 [{range_label}]: {exc}")
 

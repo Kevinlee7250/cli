@@ -1606,12 +1606,29 @@
   <div class="page" id="page-postmgr">
     <div class="page-title">📋 포스트 관리 <span class="badge purple" id="pm-total-badge">0</span></div>
 
-    <!-- 상태 요약 카드 -->
-    <div class="cards" style="margin-bottom:24px">
+    <!-- 블로그 탭 -->
+    <div id="pm-blog-tabs" style="display:flex;gap:0;margin-bottom:20px;border-bottom:1px solid var(--border);overflow-x:auto">
+      <!-- JS로 동적 생성 -->
+    </div>
+
+    <!-- 블로그별 미니 통계 -->
+    <div id="pm-blog-stats" style="display:none;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px">
+      <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em" id="pm-blog-stat-name">블로그</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap">
+        <div><span style="font-size:20px;font-weight:700;color:var(--green)" id="pm-bstat-pub">0</span> <span style="font-size:12px;color:var(--muted)">게시</span></div>
+        <div><span style="font-size:20px;font-weight:700;color:var(--red)" id="pm-bstat-fail">0</span> <span style="font-size:12px;color:var(--muted)">실패</span></div>
+        <div><span style="font-size:20px;font-weight:700;color:var(--yellow)" id="pm-bstat-pend">0</span> <span style="font-size:12px;color:var(--muted)">대기</span></div>
+        <div><span style="font-size:20px;font-weight:700;color:var(--muted)" id="pm-bstat-skip">0</span> <span style="font-size:12px;color:var(--muted)">건너뜀</span></div>
+        <div style="margin-left:auto;font-size:12px;color:var(--muted)" id="pm-bstat-last"></div>
+      </div>
+    </div>
+
+    <!-- 전체 상태 요약 카드 -->
+    <div class="cards" style="margin-bottom:24px" id="pm-summary-cards">
       <div class="card green" style="cursor:pointer" onclick="pmFilter('published')">
         <div class="label">게시 완료</div>
         <div class="value" id="pm-published" style="color:var(--green)">-</div>
-        <div class="sub">Blogger 발행됨</div>
+        <div class="sub" id="pm-pub-sub">Blogger 발행됨</div>
       </div>
       <div class="card" style="border-color:rgba(248,113,113,.3);cursor:pointer" onclick="pmFilter('failed')">
         <div class="label">실패</div>
@@ -1648,8 +1665,9 @@
       </div>
     </div>
 
-    <!-- 필터 칩 -->
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+    <!-- 상태 필터 칩 -->
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      <span style="font-size:12px;color:var(--muted);font-weight:600;white-space:nowrap">상태:</span>
       <button class="pm-chip active" onclick="pmFilter('all')" id="pm-chip-all">전체</button>
       <button class="pm-chip" onclick="pmFilter('published')" id="pm-chip-published">게시 완료</button>
       <button class="pm-chip" onclick="pmFilter('failed')" id="pm-chip-failed">실패</button>
@@ -5666,12 +5684,8 @@ async function _botAutodiagnose() {
 
 // ── 포스트 관리 ───────────────────────────────────────────────────────────────
 let pmCurrentFilter = 'all'
+let pmCurrentBlog   = 'all'   // 선택된 blogId ('all' = 전체)
 let pmShowCount = 50
-
-const PM_STATUS_LABELS = {
-  published: '게시됨', failed: '실패', pending: '대기',
-  skipped: '건너뜀', retry_queued: '재시도 예약', draft: '임시저장',
-}
 
 function _pmStatusBadge(status) {
   const labels = { published: '✅ 게시됨', failed: '❌ 실패', pending: '⏳ 대기',
@@ -5680,33 +5694,92 @@ function _pmStatusBadge(status) {
   return `<span class="pm-status-${status}" style="white-space:nowrap">${label}</span>`
 }
 
+// 블로그 목록 추출 (registry에서)
+function _pmBlogs(registry) {
+  const map = {}
+  registry.forEach(p => {
+    const id   = p.blogId   || 'default'
+    const name = p.blogName || p.blogId || '기본 블로그'
+    if (!map[id]) map[id] = { id, name, total: 0, published: 0, failed: 0, pending: 0, skipped: 0, retry_queued: 0, lastAt: '' }
+    map[id].total++
+    if (p.status in map[id]) map[id][p.status]++
+    if ((p.createdAt || '') > map[id].lastAt) map[id].lastAt = p.createdAt || ''
+  })
+  return Object.values(map).sort((a, b) => b.lastAt.localeCompare(a.lastAt))
+}
+
 function renderPostMgr() {
   const registry = DATA.registry || []
 
-  // 요약 카드
-  const summary = { published: 0, failed: 0, pending: 0, skipped: 0, retry_queued: 0 }
-  registry.forEach(p => { if (p.status in summary) summary[p.status]++ })
+  // ── 블로그 탭 렌더 ──────────────────────────
+  const blogs = _pmBlogs(registry)
+  const tabEl = document.getElementById('pm-blog-tabs')
+  if (tabEl) {
+    const tabStyle = 'padding:10px 18px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;margin-bottom:-1px;white-space:nowrap'
+    const tabActiveStyle = 'border-bottom-color:var(--accent);color:var(--accent)'
+    const allActive = pmCurrentBlog === 'all'
+    let tabs = `<button style="${tabStyle}${allActive ? ';'+tabActiveStyle : ''}" onclick="pmBlogFilter('all')">
+      전체 <span style="font-size:11px;opacity:.7">(${registry.length})</span>
+    </button>`
+    blogs.forEach(b => {
+      const isActive = pmCurrentBlog === b.id
+      const failMark = (b.failed + b.retry_queued) > 0 ? ` <span style="background:var(--red);color:#fff;border-radius:8px;font-size:10px;font-weight:700;padding:1px 5px">${b.failed + b.retry_queued}</span>` : ''
+      tabs += `<button style="${tabStyle}${isActive ? ';'+tabActiveStyle : ''}" onclick="pmBlogFilter('${b.id}')">
+        ${b.name} <span style="font-size:11px;opacity:.7">(${b.total})</span>${failMark}
+      </button>`
+    })
+    tabEl.innerHTML = tabs
+  }
 
-  document.getElementById('pm-total-badge').textContent = registry.length
+  // 현재 블로그 기준 필터링된 registry
+  const scoped = pmCurrentBlog === 'all' ? registry : registry.filter(p => (p.blogId || 'default') === pmCurrentBlog)
+
+  // ── 블로그별 미니 통계 ──────────────────────
+  const statsEl = document.getElementById('pm-blog-stats')
+  if (statsEl) {
+    if (pmCurrentBlog !== 'all') {
+      const b = blogs.find(x => x.id === pmCurrentBlog)
+      if (b) {
+        statsEl.style.display = 'block'
+        document.getElementById('pm-blog-stat-name').textContent = b.name
+        document.getElementById('pm-bstat-pub').textContent  = b.published
+        document.getElementById('pm-bstat-fail').textContent = b.failed + b.retry_queued
+        document.getElementById('pm-bstat-pend').textContent = b.pending
+        document.getElementById('pm-bstat-skip').textContent = b.skipped
+        const lastDate = b.lastAt ? b.lastAt.slice(0,10) : '-'
+        document.getElementById('pm-bstat-last').textContent = `마지막 포스트: ${lastDate}`
+      }
+    } else {
+      statsEl.style.display = 'none'
+    }
+  }
+
+  // ── 상태 요약 카드 (scoped 기준) ────────────
+  const summary = { published: 0, failed: 0, pending: 0, skipped: 0, retry_queued: 0 }
+  scoped.forEach(p => { if (p.status in summary) summary[p.status]++ })
+
+  document.getElementById('pm-total-badge').textContent = scoped.length
   document.getElementById('pm-published').textContent = summary.published
   document.getElementById('pm-failed').textContent = summary.failed
   document.getElementById('pm-pending').textContent = summary.pending
   document.getElementById('pm-skipped').textContent = summary.skipped
 
-  // 실패 배지 (nav)
+  // 전체 기준 실패 배지 (nav)
+  const totalFail = registry.filter(p => p.status === 'failed' || p.status === 'retry_queued').length
   const failBadge = document.getElementById('pm-fail-badge')
-  const failCount = summary.failed + summary.retry_queued
   if (failBadge) {
-    failBadge.textContent = failCount
-    failBadge.style.display = failCount > 0 ? 'inline' : 'none'
+    failBadge.textContent = totalFail
+    failBadge.style.display = totalFail > 0 ? 'inline' : 'none'
   }
 
-  // 재시도 섹션
+  // 재시도 섹션 (scoped 기준 실패 수)
+  const scopedFail = summary.failed + summary.retry_queued
   const retrySection = document.getElementById('pm-retry-section')
   if (retrySection) {
-    retrySection.style.display = failCount > 0 ? 'block' : 'none'
+    retrySection.style.display = scopedFail > 0 ? 'block' : 'none'
     const desc = document.getElementById('pm-retry-desc')
-    if (desc) desc.textContent = `실패한 포스트 ${failCount}개를 GitHub Actions를 통해 재업로드합니다.`
+    const blogLabel = pmCurrentBlog === 'all' ? '' : ` (${blogs.find(b=>b.id===pmCurrentBlog)?.name || ''})`
+    if (desc) desc.textContent = `실패한 포스트 ${scopedFail}개${blogLabel}를 GitHub Actions를 통해 재업로드합니다.`
     const patStatus = document.getElementById('pm-pat-status')
     if (patStatus) {
       const pat = getPAT()
@@ -5716,6 +5789,15 @@ function renderPostMgr() {
   }
 
   pmRenderTable()
+}
+
+function pmBlogFilter(blogId) {
+  pmCurrentBlog   = blogId
+  pmCurrentFilter = 'all'
+  pmShowCount = 50
+  // 상태 칩 초기화
+  document.querySelectorAll('.pm-chip').forEach(c => c.classList.toggle('active', c.id === 'pm-chip-all'))
+  renderPostMgr()
 }
 
 function pmFilter(status) {
@@ -5729,10 +5811,11 @@ function pmFilter(status) {
 
 function pmRenderTable() {
   const registry = DATA.registry || []
-  let list = registry
-  if (pmCurrentFilter !== 'all') {
-    list = registry.filter(p => p.status === pmCurrentFilter)
-  }
+
+  // 블로그 필터 먼저
+  let list = pmCurrentBlog === 'all' ? registry : registry.filter(p => (p.blogId || 'default') === pmCurrentBlog)
+  // 상태 필터
+  if (pmCurrentFilter !== 'all') list = list.filter(p => p.status === pmCurrentFilter)
 
   const tbody = document.getElementById('pm-table-body')
   if (!tbody) return
@@ -5745,17 +5828,20 @@ function pmRenderTable() {
 
   const slice = list.slice(0, pmShowCount)
   tbody.innerHTML = slice.map(p => {
-    const date = (p.createdAt || '').slice(0, 10)
-    const title = p.title ? `<span title="${p.title}">${p.title.slice(0, 30)}${p.title.length > 30 ? '…' : ''}</span>` : '-'
-    const blogLink = p.blogUrl ? `<a href="${p.blogUrl}" target="_blank" style="color:var(--accent2);font-size:12px">↗</a>` : '-'
-    const errTip = p.errorMessage ? `<span title="${p.errorMessage.replace(/"/g,"'")}" style="cursor:help;color:var(--red);font-size:12px">${p.errorMessage.slice(0,30)}${p.errorMessage.length>30?'…':''}</span>` : '-'
+    const date     = (p.createdAt || '').slice(0, 10)
+    const titleTxt = p.title || '-'
+    const title    = `<span title="${titleTxt.replace(/"/g,"'")}">${titleTxt.slice(0,32)}${titleTxt.length > 32 ? '…' : ''}</span>`
+    const blogLink = p.blogUrl ? `<a href="${p.blogUrl}" target="_blank" style="color:var(--accent2);font-size:12px;margin-right:4px">↗</a>` : ''
     const blogName = p.blogName || p.blogId || '-'
+    const errTip   = p.errorMessage
+      ? `<span title="${p.errorMessage.replace(/"/g,"'")}" style="cursor:help;color:var(--red);font-size:11px">${p.errorMessage.slice(0,28)}${p.errorMessage.length>28?'…':''}</span>`
+      : '-'
     return `<tr>
       <td style="white-space:nowrap;font-size:12px;color:var(--muted)">${date}</td>
       <td style="font-size:12px">${p.keyword || '-'}</td>
       <td style="font-size:12px">${title}</td>
       <td>${_pmStatusBadge(p.status)}</td>
-      <td style="font-size:12px">${blogLink}<span style="margin-left:4px;font-size:11px;color:var(--muted)">${blogName}</span></td>
+      <td style="font-size:12px">${blogLink}<span style="font-size:11px;color:var(--muted)">${blogName}</span></td>
       <td style="text-align:center;font-size:12px">${p.attempts || 1}</td>
       <td style="font-size:11px">${errTip}</td>
     </tr>`

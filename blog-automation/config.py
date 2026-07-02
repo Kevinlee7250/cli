@@ -40,6 +40,22 @@ SCHEDULE_CRON = os.getenv("SCHEDULE_CRON", "0 9 * * *")
 # Google Search Console
 GSC_SITE_URL = os.getenv("GSC_SITE_URL", "")
 
+# ── 소셜 미디어 크리덴셜 ────────────────────────────────────────────────────────
+# Instagram Graph API (미설정 시 게시 건너뜀)
+INSTAGRAM_ACCESS_TOKEN = os.getenv("INSTAGRAM_ACCESS_TOKEN", "")
+INSTAGRAM_ACCOUNT_ID   = os.getenv("INSTAGRAM_ACCOUNT_ID", "")
+
+# Threads API (미설정 시 게시 건너뜀)
+THREADS_ACCESS_TOKEN = os.getenv("THREADS_ACCESS_TOKEN", "")
+THREADS_USER_ID      = os.getenv("THREADS_USER_ID", "")
+THREADS_HANDLE       = os.getenv("THREADS_HANDLE", "")   # @ 없이 핸들명 ex) myaccount
+
+# ImgBB (Instagram 이미지 호스팅 — 선택, 미설정 시 텍스트만 게시)
+IMGBB_API_KEY = os.getenv("IMGBB_API_KEY", "")
+
+# 소셜 미디어 자동 게시 (false = 콘텐츠만 생성, 게시는 건너뜀)
+SOCIAL_AUTO_PUBLISH = os.getenv("SOCIAL_AUTO_PUBLISH", "false").lower() in ("true", "1", "yes")
+
 # AdSense 정책 자동 검증
 ADSENSE_VALIDATION = os.getenv("ADSENSE_VALIDATION", "true").lower() in ("true", "1", "yes")
 try:

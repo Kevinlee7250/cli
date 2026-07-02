@@ -58,6 +58,7 @@ from config import (
     AUTO_SERIES_MIN_DAYS,
     ADSENSE_VALIDATION,
     ADSENSE_MIN_SCORE,
+    SOCIAL_AUTO_PUBLISH,
     get_blog_configs,
 )
 from content_generator import generate_post, generate_series_post
@@ -272,6 +273,24 @@ def run_once(
             url = result.get("url", "")
             post_data["blogUrl"] = url
             logger.info(f"  ✅ 업로드 성공: {url}")
+
+            # 소셜 미디어 콘텐츠 생성 (업로드 성공 시 항상 실행)
+            try:
+                from social_publisher import publish_all, generate_social_content
+                if SOCIAL_AUTO_PUBLISH:
+                    social_result = publish_all(post_data, blog_url=url)
+                else:
+                    # 자동 게시 비활성화 — 콘텐츠만 생성
+                    social_content = generate_social_content(post_data, blog_url=url)
+                    social_result = {"socialContent": social_content}
+                    logger.info(f"  📱 소셜 콘텐츠 생성 완료 (자동 게시 비활성, SOCIAL_AUTO_PUBLISH=true 시 게시)")
+                post_data["socialContent"]    = social_result.get("socialContent")
+                post_data["social_instagram"] = social_result.get("instagram")
+                post_data["social_threads"]   = social_result.get("threads")
+                post_data["social_tiktok"]    = social_result.get("tiktok")
+            except Exception as _se:
+                logger.warning(f"  ⚠️ 소셜 콘텐츠 생성 실패 (무시): {_se}")
+
             completed_posts.append(post_data)
             success_count += 1
             blogger_count += 1

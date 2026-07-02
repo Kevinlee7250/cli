@@ -2434,11 +2434,25 @@ function renderSocial() {
       document.getElementById('social-' + t).innerHTML =
         '<div class="empty"><div class="icon">📭</div>소셜 콘텐츠가 없습니다.<br>블로그 포스팅 시 자동 생성됩니다.</div>'
     })
+    _updateSocialTabBadges(0, 0, 0)
     return
   }
   renderInstagram(social)
   renderThreads(social)
   renderTiktok(social)
+  const igCount = social.filter(s => s.instagram).length
+  const thCount = social.filter(s => s.threads).length
+  const ttCount = social.filter(s => s.tiktok).length
+  _updateSocialTabBadges(igCount, thCount, ttCount)
+}
+
+function _updateSocialTabBadges(ig, th, tt) {
+  const btns = document.querySelectorAll('.social-tab-btn')
+  const counts = [ig, th, tt]
+  const labels = ['📸 Instagram', '🧵 Threads', '🎵 TikTok']
+  btns.forEach((b, i) => {
+    b.textContent = counts[i] > 0 ? `${labels[i]} (${counts[i]})` : labels[i]
+  })
 }
 
 function copyText(text, btn) {
@@ -2450,18 +2464,32 @@ function copyText(text, btn) {
   })
 }
 
+function _socialPublishedBadge(pub) {
+  if (!pub) return ''
+  if (pub.url)     return `<span style="background:#166534;color:#bbf7d0;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px">✅ 게시됨</span>`
+  if (pub.skipped) return `<span style="background:#374151;color:#9ca3af;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px">⏭ 건너뜀</span>`
+  if (pub.error)   return `<span style="background:#7f1d1d;color:#fca5a5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px">❌ 실패</span>`
+  return ''
+}
+
+function _postUrlLink(url) {
+  if (!url) return ''
+  return `<a href="${esc(url)}" target="_blank" rel="noopener" style="font-size:11px;color:var(--accent);text-decoration:none;margin-left:6px">🔗 원문 보기</a>`
+}
+
 function renderInstagram(social) {
   const el = document.getElementById('social-instagram')
   el.innerHTML = social.map((item, idx) => {
     const ig = item.instagram
     if (!ig) return ''
+    const pub = item.published?.instagram
     const allHashtags = [...(ig.hashtags?.popular||[]),...(ig.hashtags?.medium||[]),...(ig.hashtags?.niche||[])].join(' ')
     const captionWithTags = (ig.caption || '') + (allHashtags ? '\n\n' + allHashtags : '')
     return `<div class="social-item">
       <div class="social-item-header">
         <div>
-          <div class="social-item-kw">📸 ${esc(item.keyword)}</div>
-          <div class="social-item-date">${item.date} · ${ig.storyHighlightTitle ? '하이라이트: ' + esc(ig.storyHighlightTitle) : ''}</div>
+          <div class="social-item-kw">📸 ${esc(item.keyword)}${_socialPublishedBadge(pub)}</div>
+          <div class="social-item-date">${item.date} · ${ig.storyHighlightTitle ? '하이라이트: ' + esc(ig.storyHighlightTitle) : ''}${_postUrlLink(item.postUrl)}</div>
         </div>
         <button class="copy-btn" onclick="copyText(${jsonq(captionWithTags)},this)">📋 전체 복사</button>
       </div>
@@ -2484,6 +2512,7 @@ function renderInstagram(social) {
           <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px">⏰ 최적 게시 시간</div>
           <div class="post-times">${(ig.bestPostingTimes||[]).map(t=>`<span class="post-time-chip">${esc(t)}</span>`).join('')}</div>
         </div>
+        ${pub?.url ? `<div style="margin-top:10px"><a href="${esc(pub.url)}" target="_blank" rel="noopener" style="font-size:12px;color:var(--accent)">📸 Instagram에서 보기 →</a></div>` : ''}
       </div>
     </div>`
   }).join('')
@@ -2494,12 +2523,13 @@ function renderThreads(social) {
   el.innerHTML = social.map(item => {
     const th = item.threads
     if (!th) return ''
+    const pub = item.published?.threads
     const allPosts = (th.posts||[]).map(p => p.content).join('\n\n---\n\n')
     return `<div class="social-item">
       <div class="social-item-header">
         <div>
-          <div class="social-item-kw">🧵 ${esc(item.keyword)}</div>
-          <div class="social-item-date">${item.date} · ${th.posts?.length||0}개 스레드</div>
+          <div class="social-item-kw">🧵 ${esc(item.keyword)}${_socialPublishedBadge(pub)}</div>
+          <div class="social-item-date">${item.date} · ${th.posts?.length||0}개 스레드${_postUrlLink(item.postUrl)}</div>
         </div>
         <button class="copy-btn" onclick="copyText(${jsonq(allPosts)},this)">📋 전체 복사</button>
       </div>
@@ -2515,6 +2545,7 @@ function renderThreads(social) {
           <div class="post-times">${(th.bestPostingTimes||[]).map(t=>`<span class="post-time-chip">${esc(t)}</span>`).join('')}</div>
         </div>
         <div style="margin-top:10px"><div class="hashtag-chips">${(th.hashtags||[]).map(h=>`<span class="hashtag-chip">${esc(h)}</span>`).join('')}</div></div>
+        ${pub?.url ? `<div style="margin-top:10px"><a href="${esc(pub.url)}" target="_blank" rel="noopener" style="font-size:12px;color:var(--accent)">🧵 Threads에서 보기 →</a></div>` : ''}
       </div>
     </div>`
   }).join('')
@@ -2525,26 +2556,30 @@ function renderTiktok(social) {
   el.innerHTML = social.map(item => {
     const tt = item.tiktok
     if (!tt) return ''
+    const pub = item.published?.tiktok
     const scriptText = (tt.scenes||[]).map(s => `[${s.time}] ${s.text}`).join('\n\n')
+    const fullScript = tt.fullScript || scriptText
     return `<div class="social-item">
       <div class="social-item-header">
         <div>
-          <div class="social-item-kw">🎵 ${esc(item.keyword)}</div>
-          <div class="social-item-date">${item.date} · ${tt.scenes?.length||0}개 씬</div>
+          <div class="social-item-kw">🎵 ${esc(item.keyword)}${pub?.saved ? '<span style="background:#1e3a5f;color:#93c5fd;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:8px">📁 스크립트 저장됨</span>' : ''}</div>
+          <div class="social-item-date">${item.date} · ${tt.scenes?.length||0}개 씬${_postUrlLink(item.postUrl)}</div>
         </div>
-        <button class="copy-btn" onclick="copyText(${jsonq(scriptText)},this)">📋 스크립트 복사</button>
+        <button class="copy-btn" onclick="copyText(${jsonq(fullScript)},this)">📋 스크립트 복사</button>
       </div>
       <div class="social-item-body">
         <div style="margin-bottom:12px">
           <div style="font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px">🎬 영상 제목</div>
           <div style="background:var(--bg3);border-radius:8px;padding:10px 14px;font-size:13px;font-weight:600">${esc(tt.title||'')}</div>
         </div>
+        ${tt.thumbnailText ? `<div style="margin-bottom:10px;font-size:12px;color:var(--muted)">🖼 썸네일: <strong style="color:var(--text)">${esc(tt.thumbnailText)}</strong></div>` : ''}
         ${tt.backgroundMusic ? `<div style="margin-bottom:12px;font-size:12px;color:var(--muted)">🎵 배경음악: <strong style="color:var(--text)">${esc(tt.backgroundMusic.genre||'')}</strong> — ${esc(tt.backgroundMusic.mood||'')}</div>` : ''}
         ${(tt.scenes||[]).map(s => `
           <div class="tiktok-scene">
             <div class="scene-time">⏱ ${esc(s.time||'')}</div>
             <div class="scene-text">${esc(s.text||'')}</div>
             ${s.direction ? `<div class="scene-dir">📽 ${esc(s.direction)}</div>` : ''}
+            ${s.sound ? `<div style="font-size:11px;color:var(--muted);margin-top:2px">🔊 ${esc(s.sound)}</div>` : ''}
           </div>`).join('')}
         ${tt.commentBait ? `<div style="background:rgba(6,182,212,.1);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:13px;color:var(--accent2)">💬 ${esc(tt.commentBait)}</div>` : ''}
         <div style="margin-top:12px">

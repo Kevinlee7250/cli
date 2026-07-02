@@ -82,7 +82,8 @@ export async function publishToThreads(socialContent, imagePublicUrl = null) {
       if (i < posts.length - 1) await delay(3000)
     }
 
-    const firstPostUrl = `https://www.threads.net/@me/post/${publishedIds[0]}`
+    const handle = config.threads.handle || 'me'
+    const firstPostUrl = `https://www.threads.net/@${handle}/post/${publishedIds[0]}`
     logger.info(`Threads 전체 게시 완료: ${publishedIds.length}개 스레드`)
     return { ids: publishedIds, url: firstPostUrl }
   } catch (err) {

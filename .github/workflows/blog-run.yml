@@ -80,6 +80,13 @@ jobs:
           ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"
           ADSENSE_MODE=auto
           GSC_SITE_URL="${{ secrets.GSC_SITE_URL }}"
+          INSTAGRAM_ACCESS_TOKEN="${{ secrets.INSTAGRAM_ACCESS_TOKEN }}"
+          INSTAGRAM_ACCOUNT_ID="${{ secrets.INSTAGRAM_ACCOUNT_ID }}"
+          THREADS_ACCESS_TOKEN="${{ secrets.THREADS_ACCESS_TOKEN }}"
+          THREADS_USER_ID="${{ secrets.THREADS_USER_ID }}"
+          THREADS_HANDLE="${{ secrets.THREADS_HANDLE }}"
+          IMGBB_API_KEY="${{ secrets.IMGBB_API_KEY }}"
+          SOCIAL_AUTO_PUBLISH="${{ secrets.SOCIAL_AUTO_PUBLISH }}"
           BLOGS_CONFIG=${{ secrets.BLOGS_CONFIG }}
           BLOG_NAME="${{ secrets.BLOG_NAME }}"
           POSTS_PER_RUN="${{ inputs.posts_per_run || '3' }}"

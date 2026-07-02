@@ -27,16 +27,28 @@ export async function publishToInstagram(socialContent, thumbnailPath, imagePubl
     const caption = formatInstagramCaption(socialContent)
 
     // Step 1: 미디어 컨테이너 생성
+    let finalImageUrl = imagePublicUrl
+    if (!finalImageUrl && thumbnailPath) {
+      const imgbbKey = process.env.IMGBB_API_KEY
+      if (imgbbKey) {
+        finalImageUrl = await uploadImageToImgBB(thumbnailPath)
+      } else {
+        logger.warn('IMGBB_API_KEY 미설정 — 이미지 없이 텍스트만 게시합니다.')
+      }
+    }
+
+    const mediaParams = { caption, access_token: config.instagram.accessToken }
+    if (finalImageUrl) {
+      mediaParams.image_url = finalImageUrl
+      mediaParams.media_type = 'IMAGE'
+    } else {
+      mediaParams.media_type = 'TEXT'
+    }
+
     const containerResponse = await axios.post(
       `${BASE_URL}/${config.instagram.accountId}/media`,
       null,
-      {
-        params: {
-          image_url: imagePublicUrl || await uploadImageToImgBB(thumbnailPath),
-          caption,
-          access_token: config.instagram.accessToken,
-        },
-      },
+      { params: mediaParams },
     )
 
     const creationId = containerResponse.data.id

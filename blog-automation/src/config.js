@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 export const config = {
   anthropic: {
     apiKey: process.env.ANTHROPIC_API_KEY,
-    model: 'claude-sonnet-4-6',
+    model: process.env.CLAUDE_MODEL || 'claude-sonnet-4-6',
   },
 
   naver: {
@@ -40,6 +40,7 @@ export const config = {
   threads: {
     accessToken: process.env.THREADS_ACCESS_TOKEN,
     userId: process.env.THREADS_USER_ID,
+    handle: process.env.THREADS_HANDLE || '',
     apiUrl: 'https://graph.threads.net/v1.0',
   },
 

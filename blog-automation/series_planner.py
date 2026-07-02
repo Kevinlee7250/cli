@@ -298,7 +298,7 @@ JSON만 응답:
 # 내비게이션 HTML
 # ─────────────────────────────────────────────
 
-def build_series_nav(series_plan: dict, current_episode: int) -> str:
+def build_series_nav(series_plan: dict, current_episode: int, blog_url: str = "") -> str:
     """시리즈 내비게이션 + 목차 HTML을 생성합니다."""
     episodes = series_plan.get("episodes", [])
     series_title = series_plan.get("series_title", "")
@@ -355,11 +355,14 @@ def build_series_nav(series_plan: dict, current_episode: int) -> str:
             )
         nav_buttons += "</div>"
 
-    index_link = (
-        f'<a href="/search/label/{series_label}" '
-        f'style="font-size:12px;color:#1a73e8;text-decoration:none;">📋 시리즈 전체 보기</a>'
-        if series_label else ""
-    )
+    if series_label:
+        base = blog_url.rstrip("/") if blog_url else ""
+        label_url = f"{base}/search/label/{series_label}" if base else f"/search/label/{series_label}"
+        index_link = (
+            f'<a href="{label_url}" style="font-size:12px;color:#1a73e8;text-decoration:none;">📋 시리즈 전체 보기</a>'
+        )
+    else:
+        index_link = ""
 
     return (
         f'<div style="background:#f0f4ff;border:1px solid #c5d3f7;border-radius:12px;'

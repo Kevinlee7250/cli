@@ -365,7 +365,7 @@ def run_series(
             continue
 
         ep["status"] = "generated"
-        nav_html = build_series_nav(series_plan, ep_num)
+        nav_html = build_series_nav(series_plan, ep_num, blog_url=cfg.get("url", ""))
         post_data["series_nav"] = nav_html
         post_data["series_label"] = series_plan.get("series_label", "")
 

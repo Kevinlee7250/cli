@@ -15,7 +15,8 @@ import logging
 import os
 import re
 import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
 
 import requests
 
@@ -292,17 +293,30 @@ def _naver_realtime_news(
     headlines: list[str] = []
     api_queries = queries if queries is not None else _NAVER_API_QUERIES
 
-    # 1) 네이버 뉴스 카테고리 RSS
+    _EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
+
+    # 1) 네이버 뉴스 카테고리 RSS — pubDate 기준 최신순 수집
     for url, name in _NAVER_RSS_FEEDS:
         try:
             r = requests.get(url, headers=_HEADERS, timeout=10)
             if r.status_code != 200:
                 continue
             root = ET.fromstring(r.content)
-            for item in root.findall(".//item")[:6]:
+            items_with_date: list[tuple[str, datetime]] = []
+            for item in root.findall(".//item"):
                 title = re.sub(r'<[^>]+>', '', item.findtext("title", "")).strip()
-                if title and len(title) >= 5:
-                    headlines.append(title)
+                if not title or len(title) < 5:
+                    continue
+                pub_str = item.findtext("pubDate", "").strip()
+                try:
+                    pub_dt = parsedate_to_datetime(pub_str)
+                except Exception:
+                    pub_dt = _EPOCH
+                items_with_date.append((title, pub_dt))
+            # 최신순 정렬 후 상위 8개
+            items_with_date.sort(key=lambda x: x[1], reverse=True)
+            for title, _ in items_with_date[:8]:
+                headlines.append(title)
             logger.debug(f"Naver RSS [{name}]: {len(headlines)}개 누적")
         except Exception as e:
             logger.debug(f"Naver RSS [{name}] 오류: {e}")
@@ -318,7 +332,7 @@ def _naver_realtime_news(
                 resp = requests.get(
                     "https://openapi.naver.com/v1/search/news.json",
                     headers=api_headers,
-                    params={"query": q, "display": 5, "sort": "date"},
+                    params={"query": q, "display": 10, "sort": "date"},
                     timeout=10,
                 )
                 if resp.status_code == 200:
@@ -346,17 +360,20 @@ def _headlines_to_keywords(headlines: list[str], count: int = 10) -> list[str]:
         if not ANTHROPIC_API_KEY or ANTHROPIC_API_KEY.startswith("sk-ant-xxx"):
             return []
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        now_str = datetime.now().strftime("%Y년 %m월 %d일 %H시")
         headlines_text = "\n".join(f"- {h}" for h in headlines[:25])
         prompt = (
-            f"다음 네이버 실시간 뉴스 헤드라인을 분석해서 블로그 포스트 키워드 {count}개를 추출하세요.\n\n"
+            f"오늘({now_str}) 네이버 최신 뉴스 헤드라인을 분석해서 블로그 포스트 키워드 {count}개를 추출하세요.\n\n"
             "선별 기준:\n"
             "1. AdSense 안전 주제 — 정치·갈등·혐오·선정적 이슈 완전 제외\n"
             "2. 재테크·건강·IT·생활정보·여행·소비·부업 카테고리 우선\n"
-            "3. 지속 검색 가능한 주제 — 일회성 속보는 제외, 관심이 며칠 이상 이어질 내용\n"
+            "3. 검색 시점 기준 최신 이슈 반영 — 지금 사람들이 실제로 찾아볼 만한 주제 우선\n"
+            "   단, 오늘만 반짝하는 단순 사고·사건 속보는 제외하고 며칠간 관심이 이어질 내용 선택\n"
             "4. 경험/후기/방법/비교로 풀 수 있는 각도로 다듬을 것\n"
             "5. 헤드라인 그대로 쓰지 말고 블로그 검색 의도에 맞게 변환:\n"
             "   예) '삼성전자 2분기 실적 발표' → '삼성전자 주가 전망 2026 실적 분석'\n"
-            "   예) '여름 휴가철 항공료 급등' → '여름 항공권 저렴하게 구매하는 방법'\n\n"
+            "   예) '여름 휴가철 항공료 급등' → '여름 항공권 저렴하게 구매하는 방법'\n"
+            "   예) '비트코인 신고가 경신' → '비트코인 지금 사도 될까 2026 투자 판단 기준'\n\n"
             f"헤드라인 목록:\n{headlines_text}\n\n"
             f'JSON 배열만 응답 (설명 없이): ["키워드1", ..., "키워드{count}"]'
         )
@@ -415,7 +432,7 @@ def _naver_drama_news(
                 resp = requests.get(
                     "https://openapi.naver.com/v1/search/news.json",
                     headers=api_headers,
-                    params={"query": q, "display": 5, "sort": "date"},
+                    params={"query": q, "display": 10, "sort": "date"},
                     timeout=10,
                 )
                 if resp.status_code == 200:

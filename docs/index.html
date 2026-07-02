@@ -215,6 +215,14 @@
   .social-tab-btn{padding:10px 22px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;margin-bottom:-1px;}
   .social-tab-btn:hover{color:var(--text);}
   .social-tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .pm-chip{padding:6px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;color:var(--muted);font-size:12px;cursor:pointer;transition:all .15s;}
+  .pm-chip:hover{color:var(--text);}
+  .pm-chip.active{background:rgba(124,106,247,.15);border-color:var(--accent);color:var(--accent);font-weight:700;}
+  .pm-status-published{color:var(--green);font-weight:700;}
+  .pm-status-failed{color:var(--red);font-weight:700;}
+  .pm-status-pending{color:var(--yellow);font-weight:700;}
+  .pm-status-skipped{color:var(--muted);}
+  .pm-status-retry_queued{color:var(--accent2);font-weight:700;}
   .social-content{display:none;}
   .social-content.active{display:block;}
   .social-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:20px;overflow:hidden;}
@@ -475,6 +483,7 @@
     <a data-page="social"><span class="nav-icon">📱</span> 소셜 미디어</a>
     <a data-page="review"><span class="nav-icon">✍️</span> 수동 검토 <span id="review-nav-badge" style="display:none;background:var(--yellow);color:#1a1d27;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
     <a data-page="series"><span class="nav-icon">📚</span> 시리즈 기획 <span id="series-nav-badge" style="display:none;background:var(--accent);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
+    <a data-page="postmgr"><span class="nav-icon">📋</span> 포스트 관리 <span id="pm-fail-badge" style="display:none;background:var(--red);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
     <a data-page="system"><span class="nav-icon">🖥️</span> 시스템 관리 <span id="system-alert-badge" style="display:none;background:var(--red);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">!</span></a>
     <a data-page="config"><span class="nav-icon">⚙️</span> 시스템 정보</a>
   </nav>
@@ -1593,6 +1602,87 @@
   </div>
 </div>
 
+  <!-- ═══ 포스트 관리 ═══ -->
+  <div class="page" id="page-postmgr">
+    <div class="page-title">📋 포스트 관리 <span class="badge purple" id="pm-total-badge">0</span></div>
+
+    <!-- 상태 요약 카드 -->
+    <div class="cards" style="margin-bottom:24px">
+      <div class="card green" style="cursor:pointer" onclick="pmFilter('published')">
+        <div class="label">게시 완료</div>
+        <div class="value" id="pm-published" style="color:var(--green)">-</div>
+        <div class="sub">Blogger 발행됨</div>
+      </div>
+      <div class="card" style="border-color:rgba(248,113,113,.3);cursor:pointer" onclick="pmFilter('failed')">
+        <div class="label">실패</div>
+        <div class="value" id="pm-failed" style="color:var(--red)">-</div>
+        <div class="sub">업로드 오류 (재시도 가능)</div>
+      </div>
+      <div class="card yellow" style="cursor:pointer" onclick="pmFilter('pending')">
+        <div class="label">대기</div>
+        <div class="value" id="pm-pending" style="color:var(--yellow)">-</div>
+        <div class="sub">업로드 예정</div>
+      </div>
+      <div class="card" style="border-color:rgba(100,116,139,.3);cursor:pointer" onclick="pmFilter('skipped')">
+        <div class="label">건너뜀</div>
+        <div class="value" id="pm-skipped" style="color:var(--muted)">-</div>
+        <div class="sub">AdSense 검증 실패 등</div>
+      </div>
+    </div>
+
+    <!-- 재시도 섹션 -->
+    <div id="pm-retry-section" style="display:none;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:var(--radius);padding:16px;margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div>
+          <div style="font-weight:700;color:var(--red);margin-bottom:4px">실패 포스트 재시도</div>
+          <div style="font-size:13px;color:var(--muted)" id="pm-retry-desc">실패한 포스트를 GitHub Actions를 통해 재업로드합니다.</div>
+        </div>
+        <button onclick="pmTriggerRetry()" id="pm-retry-btn"
+          style="padding:10px 20px;background:var(--red);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap">
+          🔄 재시도 실행
+        </button>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--muted)">
+        PAT(GitHub Personal Access Token)가 <span id="pm-pat-status">설정되지 않음</span> 상태입니다.
+        PAT 없이도 GitHub Actions에서 수동으로 <strong>retry</strong> 모드를 선택해 실행할 수 있습니다.
+      </div>
+    </div>
+
+    <!-- 필터 칩 -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      <button class="pm-chip active" onclick="pmFilter('all')" id="pm-chip-all">전체</button>
+      <button class="pm-chip" onclick="pmFilter('published')" id="pm-chip-published">게시 완료</button>
+      <button class="pm-chip" onclick="pmFilter('failed')" id="pm-chip-failed">실패</button>
+      <button class="pm-chip" onclick="pmFilter('pending')" id="pm-chip-pending">대기</button>
+      <button class="pm-chip" onclick="pmFilter('retry_queued')" id="pm-chip-retry_queued">재시도 예약</button>
+      <button class="pm-chip" onclick="pmFilter('skipped')" id="pm-chip-skipped">건너뜀</button>
+    </div>
+
+    <!-- 포스트 테이블 -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>날짜</th>
+            <th>키워드</th>
+            <th>제목</th>
+            <th>상태</th>
+            <th>블로그</th>
+            <th>시도</th>
+            <th>오류</th>
+          </tr>
+        </thead>
+        <tbody id="pm-table-body">
+          <tr><td colspan="7" class="empty">데이터 로딩 중...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="pm-more-btn-wrap" style="text-align:center;margin-top:12px;display:none">
+      <button onclick="pmShowMore()" style="padding:8px 24px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;cursor:pointer">더 보기</button>
+    </div>
+  </div>
+
 <!-- Toast Container -->
 <div id="toast-container"></div>
 
@@ -1606,7 +1696,7 @@ const GH_BRANCH = 'claude/blog-automation-system-KAbtE'
 const CPC_MAP = {법률:3.20,부동산:2.80,금융:2.50,건강:1.80,기술:1.50,교육:1.30,여행:1.20,쇼핑:0.90,일반:1.00}
 
 // ── Data ──────────────────────────────────────────────────────────────────────
-let DATA = { posts: [], runs: [], analytics: {}, meta: {}, social: [], pending: [] }
+let DATA = { posts: [], runs: [], analytics: {}, meta: {}, social: [], pending: [], registry: [] }
 let autoRefreshTimer = null
 let pollTimer = null
 let countdownInterval = null
@@ -1633,7 +1723,7 @@ async function loadAll(silent = false) {
   }
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs] = await Promise.all([
+  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry] = await Promise.all([
     fetch(base + '/posts.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/runs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/analytics.json' + ts).then(r => r.json()).catch(() => ({})),
@@ -1645,8 +1735,9 @@ async function loadAll(silent = false) {
     fetch(base + '/blogs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/learning.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/repairs.json' + ts).then(r => r.json()).catch(() => []),
+    fetch(base + '/post_registry.json' + ts).then(r => r.json()).catch(() => []),
   ])
-  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs }
+  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry }
   const lbl = document.getElementById('last-updated-label')
   if (lbl && meta.exportedAt)
     lbl.textContent = '업데이트: ' + new Date(meta.exportedAt).toLocaleString('ko-KR')
@@ -1698,6 +1789,7 @@ function navTo(page) {
   }
   if (page === 'series') renderSeries()
   if (page === 'system') renderSystemPage()
+  if (page === 'postmgr') renderPostMgr()
 }
 
 // ── Quality grade ──────────────────────────────────────────────────────────────
@@ -1755,6 +1847,15 @@ function renderDashboard() {
   if (seriesBadge) {
     seriesBadge.textContent = series.length
     seriesBadge.style.display = series.length > 0 ? '' : 'none'
+  }
+
+  // Post manager fail badge
+  const registry = DATA.registry || []
+  const failCount = registry.filter(p => p.status === 'failed' || p.status === 'retry_queued').length
+  const pmFailBadge = document.getElementById('pm-fail-badge')
+  if (pmFailBadge) {
+    pmFailBadge.textContent = failCount
+    pmFailBadge.style.display = failCount > 0 ? '' : 'none'
   }
 
   // Last run banner
@@ -5560,6 +5661,140 @@ async function _botAutodiagnose() {
   } catch {
     _botTyping = false
     _renderBotMessages()
+  }
+}
+
+// ── 포스트 관리 ───────────────────────────────────────────────────────────────
+let pmCurrentFilter = 'all'
+let pmShowCount = 50
+
+const PM_STATUS_LABELS = {
+  published: '게시됨', failed: '실패', pending: '대기',
+  skipped: '건너뜀', retry_queued: '재시도 예약', draft: '임시저장',
+}
+
+function _pmStatusBadge(status) {
+  const labels = { published: '✅ 게시됨', failed: '❌ 실패', pending: '⏳ 대기',
+    skipped: '⏭ 건너뜀', retry_queued: '🔄 재시도', draft: '📝 초안' }
+  const label = labels[status] || status
+  return `<span class="pm-status-${status}" style="white-space:nowrap">${label}</span>`
+}
+
+function renderPostMgr() {
+  const registry = DATA.registry || []
+
+  // 요약 카드
+  const summary = { published: 0, failed: 0, pending: 0, skipped: 0, retry_queued: 0 }
+  registry.forEach(p => { if (p.status in summary) summary[p.status]++ })
+
+  document.getElementById('pm-total-badge').textContent = registry.length
+  document.getElementById('pm-published').textContent = summary.published
+  document.getElementById('pm-failed').textContent = summary.failed
+  document.getElementById('pm-pending').textContent = summary.pending
+  document.getElementById('pm-skipped').textContent = summary.skipped
+
+  // 실패 배지 (nav)
+  const failBadge = document.getElementById('pm-fail-badge')
+  const failCount = summary.failed + summary.retry_queued
+  if (failBadge) {
+    failBadge.textContent = failCount
+    failBadge.style.display = failCount > 0 ? 'inline' : 'none'
+  }
+
+  // 재시도 섹션
+  const retrySection = document.getElementById('pm-retry-section')
+  if (retrySection) {
+    retrySection.style.display = failCount > 0 ? 'block' : 'none'
+    const desc = document.getElementById('pm-retry-desc')
+    if (desc) desc.textContent = `실패한 포스트 ${failCount}개를 GitHub Actions를 통해 재업로드합니다.`
+    const patStatus = document.getElementById('pm-pat-status')
+    if (patStatus) {
+      const pat = getPAT()
+      patStatus.textContent = pat ? '설정됨' : '설정되지 않음'
+      patStatus.style.color = pat ? 'var(--green)' : 'var(--red)'
+    }
+  }
+
+  pmRenderTable()
+}
+
+function pmFilter(status) {
+  pmCurrentFilter = status
+  pmShowCount = 50
+  document.querySelectorAll('.pm-chip').forEach(c => {
+    c.classList.toggle('active', c.id === 'pm-chip-' + status || (status === 'all' && c.id === 'pm-chip-all'))
+  })
+  pmRenderTable()
+}
+
+function pmRenderTable() {
+  const registry = DATA.registry || []
+  let list = registry
+  if (pmCurrentFilter !== 'all') {
+    list = registry.filter(p => p.status === pmCurrentFilter)
+  }
+
+  const tbody = document.getElementById('pm-table-body')
+  if (!tbody) return
+
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="7" class="empty">포스트 없음</td></tr>`
+    document.getElementById('pm-more-btn-wrap').style.display = 'none'
+    return
+  }
+
+  const slice = list.slice(0, pmShowCount)
+  tbody.innerHTML = slice.map(p => {
+    const date = (p.createdAt || '').slice(0, 10)
+    const title = p.title ? `<span title="${p.title}">${p.title.slice(0, 30)}${p.title.length > 30 ? '…' : ''}</span>` : '-'
+    const blogLink = p.blogUrl ? `<a href="${p.blogUrl}" target="_blank" style="color:var(--accent2);font-size:12px">↗</a>` : '-'
+    const errTip = p.errorMessage ? `<span title="${p.errorMessage.replace(/"/g,"'")}" style="cursor:help;color:var(--red);font-size:12px">${p.errorMessage.slice(0,30)}${p.errorMessage.length>30?'…':''}</span>` : '-'
+    const blogName = p.blogName || p.blogId || '-'
+    return `<tr>
+      <td style="white-space:nowrap;font-size:12px;color:var(--muted)">${date}</td>
+      <td style="font-size:12px">${p.keyword || '-'}</td>
+      <td style="font-size:12px">${title}</td>
+      <td>${_pmStatusBadge(p.status)}</td>
+      <td style="font-size:12px">${blogLink}<span style="margin-left:4px;font-size:11px;color:var(--muted)">${blogName}</span></td>
+      <td style="text-align:center;font-size:12px">${p.attempts || 1}</td>
+      <td style="font-size:11px">${errTip}</td>
+    </tr>`
+  }).join('')
+
+  const moreWrap = document.getElementById('pm-more-btn-wrap')
+  if (moreWrap) moreWrap.style.display = list.length > pmShowCount ? 'block' : 'none'
+}
+
+function pmShowMore() {
+  pmShowCount += 50
+  pmRenderTable()
+}
+
+async function pmTriggerRetry() {
+  const pat = getPAT()
+  if (!pat) {
+    showToast('PAT를 먼저 설정하세요 (실행 제어 탭)', 'error')
+    navTo('run')
+    return
+  }
+  const btn = document.getElementById('pm-retry-btn')
+  if (btn) { btn.disabled = true; btn.textContent = '실행 중...' }
+  try {
+    const resp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`, {
+      method: 'POST',
+      headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+      body: JSON.stringify({ ref: GH_BRANCH, inputs: { mode: 'retry', posts_per_run: '10' } })
+    })
+    if (resp.ok || resp.status === 204) {
+      showToast('재시도 워크플로우가 실행되었습니다', 'success')
+    } else {
+      const errText = await resp.text()
+      showToast(`실행 실패: ${resp.status} ${errText.slice(0,80)}`, 'error')
+    }
+  } catch (e) {
+    showToast(`오류: ${e.message}`, 'error')
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '🔄 재시도 실행' }
   }
 }
 

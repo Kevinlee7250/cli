@@ -29,6 +29,7 @@ on:
           - review  # 글 생성 후 pending_posts.json에 저장 (수동 검토용)
           - series  # 시리즈 포스트 자동 기획 (keyword 필수)
           - setup   # AdSense 필수 페이지 생성 (개인정보처리방침·블로그 소개)
+          - retry   # 실패한 포스트 재시도
       series_count:
         description: '시리즈 편수 (2~5, series 모드에서만 사용)'
         required: false
@@ -119,7 +120,10 @@ jobs:
             BLOG_ARG="--blog ${{ inputs.blog_id }}"
           fi
 
-          if [ "$MODE" = "setup" ]; then
+          if [ "$MODE" = "retry" ]; then
+            echo "=== 재시도 모드: 실패한 포스트 재업로드 ==="
+            python main.py --retry $BLOG_ARG
+          elif [ "$MODE" = "setup" ]; then
             echo "=== 셋업 모드: AdSense 필수 페이지 생성 + 자동 광고 테마 주입 ==="
             python main.py --setup $BLOG_ARG
           elif [ "$MODE" = "series" ]; then
@@ -162,12 +166,13 @@ jobs:
             docs/data/posts.json docs/data/runs.json docs/data/analytics.json \
             docs/data/meta.json docs/data/pending_posts.json docs/data/series.json \
             docs/data/gsc.json docs/data/blogs.json docs/data/learning.json \
-            docs/data/repairs.json docs/data/social.json \
+            docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
             2>/dev/null || true
           git add \
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
             blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
+            blog-automation/logs/post_registry.json \
             2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"

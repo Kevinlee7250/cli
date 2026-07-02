@@ -507,6 +507,13 @@ def export_dashboard() -> None:
     _export_learning(DOCS_DATA_DIR)
     _export_repairs(DOCS_DATA_DIR)
 
+    # 포스트 레지스트리 내보내기 (post_manager)
+    try:
+        from post_manager import export_for_dashboard as _pm_export
+        _pm_export(DOCS_DATA_DIR)
+    except Exception as _pme:
+        logger.debug(f"포스트 레지스트리 내보내기 생략: {_pme}")
+
     logger.info(f"대시보드 데이터 내보내기 완료 → {DOCS_DATA_DIR}")
     logger.info(f"  포스트: {len(posts)}개 / 실행 이력: {len(runs_export)}개 / 블로그: {len(blogs_export)}개")
 

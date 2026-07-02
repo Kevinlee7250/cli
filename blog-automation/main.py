@@ -66,6 +66,11 @@ from adsense_validator import validate_adsense
 from blogger_uploader import upload_post
 from keyword_collector import get_trending_keywords, _migrate_used_keywords
 from dashboard_exporter import log_run, export_dashboard, save_pending_posts
+from post_manager import (
+    register_post, update_post_status, save_draft, get_failed_posts,
+    retry_failed_posts, export_for_dashboard as pm_export,
+    Status as PostStatus, migrate_from_run_history,
+)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -213,6 +218,18 @@ def run_once(
     completed_posts: list[dict] = []
     error_messages: list[str] = []
 
+    # run_history → post_registry 마이그레이션 (최초 1회)
+    try:
+        from dashboard_exporter import _load_history as _lh
+        _hist = _lh()
+        if _hist:
+            migrate_from_run_history(_hist)
+    except Exception:
+        pass
+
+    _run_number = int(os.getenv("GITHUB_RUN_NUMBER", "0"))
+    _source     = "manual" if (dry_run or review) else "auto"
+
     for i, keyword in enumerate(keywords, 1):
         logger.info(f"\n[{i}/{len(keywords)}] 키워드: '{keyword}'")
 
@@ -240,6 +257,7 @@ def run_once(
         if dry_run or review:
             mode_label = "검토 모드" if review else "테스트 모드"
             logger.info(f"  [{mode_label}] 업로드 건너뜀")
+            register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
             completed_posts.append(post_data)
             success_count += 1
             continue
@@ -254,6 +272,7 @@ def run_once(
                 logger.error(f"  ❌ {msg}")
                 for issue in validation["issues"]:
                     logger.error(f"     🔴 {issue}")
+                register_post(post_data, PostStatus.SKIPPED, blog_config, source=_source, run_number=_run_number)
                 fail_count += 1
                 error_messages.append(msg)
                 continue
@@ -262,16 +281,22 @@ def run_once(
                     f"  ⚠️ AdSense 검토 필요 — pending 저장 (점수: {validation['score']}/100)"
                 )
                 post_data["status"] = "pending"
+                register_post(post_data, PostStatus.PENDING, blog_config, source="manual", run_number=_run_number)
                 completed_posts.append(post_data)
                 save_pending_posts([post_data])
                 success_count += 1
                 continue
+
+        # 업로드 전 레지스트리 등록 (pending) + 초안 저장
+        _post_id = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
+        save_draft(_post_id, post_data)
 
         # Blogger 업로드
         result = upload_post(post_data, blog_config)
         if result:
             url = result.get("url", "")
             post_data["blogUrl"] = url
+            update_post_status(_post_id, PostStatus.PUBLISHED, blog_url=url)
             logger.info(f"  ✅ 업로드 성공: {url}")
 
             # 소셜 미디어 콘텐츠 생성 (업로드 성공 시 항상 실행)
@@ -280,7 +305,6 @@ def run_once(
                 if SOCIAL_AUTO_PUBLISH:
                     social_result = publish_all(post_data, blog_url=url)
                 else:
-                    # 자동 게시 비활성화 — 콘텐츠만 생성
                     social_content = generate_social_content(post_data, blog_url=url)
                     social_result = {"socialContent": social_content}
                     logger.info(f"  📱 소셜 콘텐츠 생성 완료 (자동 게시 비활성, SOCIAL_AUTO_PUBLISH=true 시 게시)")
@@ -296,6 +320,7 @@ def run_once(
             blogger_count += 1
         else:
             msg = f"Blogger 업로드 실패: '{title}'"
+            update_post_status(_post_id, PostStatus.FAILED, error=msg)
             logger.error(f"  ❌ {msg}")
             fail_count += 1
             error_messages.append(msg)
@@ -576,6 +601,12 @@ def main() -> None:
                         help="자동 진단·수리 실행 (auto_repair.py)")
     parser.add_argument("--dry", action="store_true",
                         help="--auto-repair 와 함께 사용: 진단만 하고 실제 수리는 하지 않음")
+    parser.add_argument("--retry", action="store_true",
+                        help="실패한 포스트 재시도 (post_registry의 failed/retry_queued 상태 포스트)")
+    parser.add_argument("--retry-max", type=int, default=10, metavar="N",
+                        help="한 번에 재시도할 최대 포스트 수 (기본값: 10)")
+    parser.add_argument("--retry-age", type=int, default=7, metavar="DAYS",
+                        help="재시도 대상 포스트 최대 보존 일수 (기본값: 7일)")
     args = parser.parse_args()
 
     keywords = None
@@ -592,6 +623,35 @@ def main() -> None:
         health = report["analysis"].get("health_score")
         issues = report.get("issues", [])
         logger.info(f"점검 완료 | 건강점수: {health} | 이슈: {len(issues)}건")
+        return
+
+    if args.retry:
+        logger.info("=== 실패 포스트 재시도 모드 ===")
+        all_blogs = get_blog_configs()
+        if args.blog:
+            target_blogs = [b for b in all_blogs if b.get("id") == args.blog] or all_blogs
+        else:
+            target_blogs = all_blogs
+        if not _check_config():
+            sys.exit(1)
+        total = {"success": 0, "failed": 0, "skipped": 0}
+        for blog_cfg in target_blogs:
+            blog_label = f"[{blog_cfg.get('name', blog_cfg.get('id', ''))}] "
+            logger.info(f"{blog_label}실패 포스트 재시도 시작")
+            counts = retry_failed_posts(
+                blog_config=blog_cfg,
+                max_posts=args.retry_max,
+                max_age_days=args.retry_age,
+            )
+            for k in total:
+                total[k] += counts.get(k, 0)
+        logger.info(
+            f"전체 재시도 완료 — 성공: {total['success']} / 실패: {total['failed']} / 건너뜀: {total['skipped']}"
+        )
+        try:
+            export_dashboard()
+        except Exception as _e:
+            logger.warning(f"대시보드 업데이트 실패 (무시): {_e}")
         return
 
     if args.auto_repair:

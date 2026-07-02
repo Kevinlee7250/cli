@@ -14,11 +14,11 @@ on:
       publish_all:
         description: '모든 pending 포스트 일괄 게시'
         required: false
-        default: 'false'
+        default: 'true'
         type: choice
         options:
-          - 'false'
           - 'true'
+          - 'false'
 
 permissions:
   contents: write

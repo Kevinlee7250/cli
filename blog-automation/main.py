@@ -606,9 +606,9 @@ def main() -> None:
     if args.blog:
         target_blogs = [b for b in all_blogs if b.get("id") == args.blog]
         if not target_blogs:
-            logger.error(f"블로그 ID '{args.blog}'를 BLOGS_CONFIG에서 찾을 수 없습니다.")
-            logger.error(f"사용 가능한 블로그: {[b.get('id') for b in all_blogs]}")
-            sys.exit(1)
+            logger.warning(f"블로그 ID '{args.blog}'를 BLOGS_CONFIG에서 찾을 수 없습니다.")
+            logger.warning(f"사용 가능한 블로그: {[b.get('id') for b in all_blogs]} — 전체 블로그로 실행합니다.")
+            target_blogs = all_blogs
     else:
         target_blogs = all_blogs
 

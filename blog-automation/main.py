@@ -587,8 +587,9 @@ def main() -> None:
         return
 
     if args.setup:
-        logger.info("=== AdSense 필수 페이지 생성 모드 ===")
+        logger.info("=== AdSense 셋업 모드: 필수 페이지 생성 + 자동 광고 테마 주입 ===")
         from page_creator import create_required_pages
+        from blogger_uploader import inject_adsense_to_theme
         from config import BLOGGER_BLOG_ID
         if not BLOGGER_BLOG_ID:
             logger.error("BLOGGER_BLOG_ID 미설정 — .env 확인")
@@ -599,6 +600,18 @@ def main() -> None:
                 logger.info(f"  ✅ {name}: {url}")
             else:
                 logger.error(f"  ❌ {name}: 생성 실패")
+        # AdSense 자동 광고 스크립트를 각 블로그 테마에 주입
+        setup_blogs = get_blog_configs()
+        if args.blog:
+            setup_blogs = [b for b in setup_blogs if b.get("id") == args.blog] or setup_blogs
+        for blog_cfg in setup_blogs:
+            blog_name = blog_cfg.get("name") or blog_cfg.get("id", "")
+            logger.info(f"  AdSense 자동 광고 테마 주입 시도: {blog_name}")
+            ok = inject_adsense_to_theme(blog_cfg)
+            if ok:
+                logger.info(f"  ✅ AdSense 자동 광고 활성화: {blog_name}")
+            else:
+                logger.warning(f"  ⚠️ 테마 주입 실패 — Blogger 관리자에서 수동으로 AdSense 연결 필요: {blog_name}")
         return
 
     # 블로그 목록 결정

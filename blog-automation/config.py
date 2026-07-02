@@ -16,6 +16,8 @@ BLOGGER_REFRESH_TOKEN = os.getenv("GOOGLE_REFRESH_TOKEN", "")
 
 # Google AdSense (광고 수익화)
 ADSENSE_CLIENT_ID = os.getenv("ADSENSE_CLIENT_ID", "ca-pub-XXXXXXXXXXXXXXXXX")
+# ADSENSE_MODE: "auto" = Blogger 자동 광고(테마 스크립트), "manual" = 포스트 내 개별 슬롯
+ADSENSE_MODE = os.getenv("ADSENSE_MODE", "auto")
 _raw_slots = os.getenv("ADSENSE_SLOT_IDS", "")
 ADSENSE_SLOT_IDS = [s.strip() for s in _raw_slots.split(",") if s.strip()] or ["0000000000"]
 
@@ -96,6 +98,7 @@ def _default_blog() -> dict:
         "refresh_token": BLOGGER_REFRESH_TOKEN,
         "adsense_client_id": ADSENSE_CLIENT_ID,
         "adsense_slot_ids": ADSENSE_SLOT_IDS,
+        "adsense_mode": ADSENSE_MODE,
         "language": BLOG_LANGUAGE,
         "post_status": POST_STATUS,
         "enabled": True,
@@ -135,6 +138,7 @@ def get_blog_configs() -> list[dict]:
                         "refresh_token": BLOGGER_REFRESH_TOKEN,
                         "adsense_client_id": b.get("adsense_client_id") or ADSENSE_CLIENT_ID,
                         "adsense_slot_ids": b.get("adsense_slot_ids") or ADSENSE_SLOT_IDS,
+                        "adsense_mode": b.get("adsense_mode") or ADSENSE_MODE,
                         "language": b.get("language", BLOG_LANGUAGE),
                         "post_status": b.get("post_status", POST_STATUS),
                         "enabled": True,

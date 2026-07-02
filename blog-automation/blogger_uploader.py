@@ -16,6 +16,7 @@ from config import (
     POST_STATUS,
     ADSENSE_CLIENT_ID,
     ADSENSE_SLOT_IDS,
+    ADSENSE_MODE,
 )
 
 logger = logging.getLogger(__name__)
@@ -90,8 +91,13 @@ def _get_access_token(blog_config: dict | None = None) -> str | None:
 # ──────────────────────────────────────────────────────────────────────────────
 
 def _ad_unit(slot_index: int, blog_config: dict | None = None) -> str:
-    """반응형 AdSense 광고 유닛 HTML."""
+    """반응형 AdSense 광고 유닛 HTML.
+    auto 모드에서는 빈 문자열 반환 — 광고는 Blogger 테마의 자동 광고 스크립트가 처리.
+    """
     cfg = blog_config or {}
+    mode = cfg.get("adsense_mode") or ADSENSE_MODE
+    if mode == "auto":
+        return ""
     adsense_client = cfg.get("adsense_client_id") or ADSENSE_CLIENT_ID
     adsense_slots = cfg.get("adsense_slot_ids") or ADSENSE_SLOT_IDS
     if not adsense_client or adsense_client == "ca-pub-XXXXXXXXXXXXXXXXX":
@@ -384,6 +390,103 @@ def _sanitize_for_blogger(html: str) -> str:
         r'\1', html, flags=re.IGNORECASE | re.DOTALL
     )
     return html
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# AdSense 자동 광고 — Blogger 테마 주입
+# ──────────────────────────────────────────────────────────────────────────────
+
+_ADSENSE_SCRIPT_MARKER = "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+
+
+def inject_adsense_to_theme(blog_config: dict | None = None) -> bool:
+    """Blogger 테마 <head>에 AdSense 자동 광고 스크립트를 삽입합니다.
+
+    Blogger Templates API (layout / skin)를 순차 시도하고,
+    API가 지원되지 않으면 수동 설치 안내를 로그로 출력합니다.
+
+    반환값: True=성공(또는 이미 존재), False=API 불가(수동 안내 출력됨)
+    """
+    cfg = blog_config or {}
+    token = _get_access_token(cfg)
+    if not token:
+        logger.error("OAuth 토큰 발급 실패 — AdSense 테마 주입 중단")
+        return False
+
+    blog_id = str(cfg.get("blog_id") or BLOGGER_BLOG_ID).strip()
+    pub_id = cfg.get("adsense_client_id") or ADSENSE_CLIENT_ID
+
+    if not pub_id or pub_id == "ca-pub-XXXXXXXXXXXXXXXXX":
+        logger.error("ADSENSE_CLIENT_ID가 설정되지 않았습니다 — GitHub Secrets에 추가하세요")
+        return False
+
+    adsense_script = (
+        f'  <script async src="https://pagead2.googlesyndication.com'
+        f'/pagead/js/adsbygoogle.js?client={pub_id}"'
+        f' crossorigin="anonymous"></script>'
+    )
+
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+
+    for tpl_type in ["layout", "skin"]:
+        url = f"{BLOGGER_API_BASE}/blogs/{blog_id}/templates/{tpl_type}"
+        try:
+            resp = requests.get(url, headers=headers, timeout=15)
+        except requests.exceptions.RequestException as e:
+            logger.debug(f"템플릿 GET 네트워크 오류 ({tpl_type}): {e}")
+            continue
+
+        if resp.status_code != 200:
+            logger.debug(f"템플릿 {tpl_type} GET {resp.status_code} — 다음 시도")
+            continue
+
+        try:
+            tpl = resp.json()
+        except Exception:
+            continue
+
+        # 응답 구조에서 실제 HTML/XML 문자열 추출
+        template_html = tpl.get("template") or tpl.get("skin") or ""
+        if not template_html:
+            continue
+
+        if _ADSENSE_SCRIPT_MARKER in template_html:
+            logger.info("✅ AdSense 자동 광고 스크립트가 이미 Blogger 테마에 존재합니다")
+            return True
+
+        # </head> 직전에 삽입
+        if "</head>" in template_html:
+            new_html = template_html.replace("</head>", f"{adsense_script}\n</head>", 1)
+        else:
+            new_html = adsense_script + "\n" + template_html
+
+        key = "template" if "template" in tpl else "skin"
+        patch_body = {**tpl, key: new_html}
+
+        try:
+            patch = requests.patch(url, headers=headers, json=patch_body, timeout=15)
+        except requests.exceptions.RequestException as e:
+            logger.debug(f"템플릿 PATCH 네트워크 오류 ({tpl_type}): {e}")
+            continue
+
+        if patch.status_code in (200, 201, 204):
+            logger.info(f"✅ Blogger 테마({tpl_type})에 AdSense 자동 광고 스크립트 삽입 완료")
+            return True
+        logger.debug(f"템플릿 PATCH {patch.status_code}: {patch.text[:120]}")
+
+    # API 미지원 → 수동 설치 안내
+    logger.warning(
+        "\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        "⚠️  Blogger API 테마 자동 수정 불가 → 수동 설치 필요\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        "Blogger 관리자 → 테마 → HTML 편집 → </head> 바로 위에 아래 코드 삽입 후 저장:\n\n"
+        f"  {adsense_script}\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    )
+    return False
+
+
 def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None:
     """Blogger API로 포스트를 업로드합니다."""
     if not post_data.get("title") or not post_data.get("content"):

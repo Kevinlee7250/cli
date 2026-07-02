@@ -579,6 +579,9 @@
         </div>
       </div>
       <div class="cards" style="margin-top:-8px">
+        <div class="card" style="border-color:rgba(52,211,153,.3)"><div class="label">블로그 조회수 (30일)</div><div class="value" id="s-pv30" style="color:var(--green)">-</div><div class="sub">Blogger API 실제 집계</div></div>
+        <div class="card" style="border-color:rgba(52,211,153,.3)"><div class="label">블로그 조회수 (7일)</div><div class="value" id="s-pv7" style="color:var(--green)">-</div><div class="sub">최근 7일 조회수</div></div>
+        <div class="card" style="border-color:rgba(52,211,153,.3)"><div class="label">블로그 조회수 (오늘)</div><div class="value" id="s-pv1" style="color:var(--green)">-</div><div class="sub">오늘 조회수</div></div>
         <div class="card" style="border-color:rgba(6,182,212,.3)"><div class="label">이미지 자동 삽입</div><div class="value" id="s-images" style="color:var(--accent2)">-</div><div class="sub">총 삽입된 이미지 수</div></div>
         <div class="card" style="border-color:rgba(52,211,153,.3)"><div class="label">AdSense 슬롯</div><div class="value" style="color:var(--green)">4</div><div class="sub">포스트당 광고 위치</div></div>
         <div class="card" style="border-color:rgba(251,146,60,.3)"><div class="label">구조화 데이터</div><div class="value" style="color:var(--orange)">ON</div><div class="sub">FAQ + Article 스키마</div></div>
@@ -1719,6 +1722,18 @@ function renderDashboard() {
   const totalImages = runs.reduce((s, r) => s + (r.imagesInserted || 0), 0)
   const imgEl = document.getElementById('s-images')
   if (imgEl) imgEl.textContent = totalImages + '개'
+
+  // Blogger pageviews from blogs.json
+  const blogsData = DATA.blogs || []
+  const pv30Total = blogsData.reduce((s, b) => s + (b.pageviews30d || 0), 0)
+  const pv7Total = blogsData.reduce((s, b) => s + (b.pageviews7d || 0), 0)
+  const pv1Total = blogsData.reduce((s, b) => s + (b.pageviews1d || 0), 0)
+  const pv30El = document.getElementById('s-pv30')
+  const pv7El = document.getElementById('s-pv7')
+  const pv1El = document.getElementById('s-pv1')
+  if (pv30El) pv30El.textContent = pv30Total > 0 ? pv30Total.toLocaleString() : '-'
+  if (pv7El) pv7El.textContent = pv7Total > 0 ? pv7Total.toLocaleString() : '-'
+  if (pv1El) pv1El.textContent = pv1Total > 0 ? pv1Total.toLocaleString() : '-'
 
   // Week runs
   const oneWeekAgo = Date.now() - 7 * 24 * 3600 * 1000
@@ -3799,6 +3814,11 @@ function loadBlogList() {
     const statusColor = enabled ? (hasOAuth ? 'var(--green)' : 'var(--yellow)') : 'var(--muted)'
     const statusText = !enabled ? '비활성' : (hasOAuth ? '설정 완료' : 'OAuth 미설정')
     const blogUrl = b.url || ''
+    const hasPageviews = stats.pageviews30d !== undefined
+    const pv30 = hasPageviews ? (stats.pageviews30d || 0).toLocaleString() : '-'
+    const pv7 = hasPageviews ? (stats.pageviews7d || 0).toLocaleString() : '-'
+    const pv1 = hasPageviews ? (stats.pageviews1d || 0).toLocaleString() : '-'
+    const pvColor = hasPageviews ? 'var(--green)' : 'var(--muted)'
     return `<div class="run-panel" style="padding:18px;border-left:3px solid ${statusColor}">
       <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px">
         <span style="font-size:22px;flex-shrink:0">📰</span>
@@ -3809,7 +3829,7 @@ function loadBlogList() {
         </div>
         <span style="padding:3px 8px;background:${statusColor}22;border:1px solid ${statusColor}44;border-radius:6px;font-size:10px;color:${statusColor};white-space:nowrap;flex-shrink:0">${statusText}</span>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px">
         <div style="background:var(--bg3);border-radius:8px;padding:8px;text-align:center">
           <div style="font-size:18px;font-weight:700;color:var(--accent)">${postCount}</div>
           <div style="font-size:10px;color:var(--muted)">포스트</div>
@@ -3821,6 +3841,20 @@ function loadBlogList() {
         <div style="background:var(--bg3);border-radius:8px;padding:8px;text-align:center">
           <div style="font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${lastRun}</div>
           <div style="font-size:10px;color:var(--muted)">마지막</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px">
+        <div style="background:var(--bg3);border-radius:8px;padding:8px;text-align:center;border:1px solid rgba(52,211,153,.15)">
+          <div style="font-size:15px;font-weight:700;color:${pvColor}">${pv30}</div>
+          <div style="font-size:10px;color:var(--muted)">👁 30일 조회</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:8px;padding:8px;text-align:center;border:1px solid rgba(52,211,153,.15)">
+          <div style="font-size:15px;font-weight:700;color:${pvColor}">${pv7}</div>
+          <div style="font-size:10px;color:var(--muted)">👁 7일 조회</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:8px;padding:8px;text-align:center;border:1px solid rgba(52,211,153,.15)">
+          <div style="font-size:15px;font-weight:700;color:${pvColor}">${pv1}</div>
+          <div style="font-size:10px;color:var(--muted)">👁 오늘 조회</div>
         </div>
       </div>
       <div style="display:flex;gap:6px">

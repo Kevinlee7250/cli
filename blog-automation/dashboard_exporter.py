@@ -145,6 +145,18 @@ def log_run(
     logger.info(f"실행 이력 저장 완료 (총 {len(history)}개)")
 
 
+def _load_analytics_summary() -> dict:
+    """docs/data/analytics_summary.json에서 Blogger 실제 조회수 데이터를 로드합니다."""
+    summary_path = os.path.join(DOCS_DATA_DIR, "analytics_summary.json")
+    if os.path.exists(summary_path):
+        try:
+            with open(summary_path, encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, OSError):
+            pass
+    return {}
+
+
 def _export_repairs(docs_dir: str) -> None:
     """auto_repair.py 가 생성한 repair_history.json 을 docs/data/ 로 복사합니다."""
     src = os.path.join(os.path.dirname(__file__), "logs", "repair_history.json")
@@ -405,6 +417,19 @@ def export_dashboard() -> None:
     }
 
     blogs_export = sorted(blog_stats.values(), key=lambda b: b.get("lastRunAt", ""), reverse=True)
+
+    # Blogger 실제 조회수 데이터를 blogs_export에 병합
+    analytics_summary = _load_analytics_summary()
+    if analytics_summary and blogs_export:
+        pv30 = analytics_summary.get("bloggerPageviews30d", 0)
+        pv7 = analytics_summary.get("bloggerPageviews7d", 0)
+        pv1 = analytics_summary.get("bloggerPageviews1d", 0)
+        updated_at = analytics_summary.get("generatedAt", "")
+        for blog in blogs_export:
+            blog["pageviews30d"] = pv30
+            blog["pageviews7d"] = pv7
+            blog["pageviews1d"] = pv1
+            blog["analyticsUpdatedAt"] = updated_at
 
     for name, data in [
         ("posts.json", posts),

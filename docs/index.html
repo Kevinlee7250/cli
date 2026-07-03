@@ -4487,9 +4487,50 @@ function renderModuleStatusGrid() {
   const { posts, runs, meta, pending } = DATA
   const totalImages = (posts||[]).reduce((s,p) => s + (p.imagesInserted||0), 0)
   const avgImages = posts.length ? (totalImages / posts.length).toFixed(1) : 0
-  const hasFaq = (posts||[]).filter(p => (p.faqCount||0) > 0).length
   const lastRun = (runs||[]).slice(-1)[0] || {}
   const pendingCount = (pending||[]).filter(p=>p.status==='pending').length
+
+  // 포스트 관리 통계
+  const registry = DATA.registry || []
+  const regPublished = registry.filter(r=>r.status==='published').length
+  const regFailed    = registry.filter(r=>r.status==='failed'||r.status==='retry_queued').length
+  const regTotal     = registry.length
+
+  // SNS 통계
+  const socialPosts = (posts||[]).filter(p => p.social_instagram || p.social_threads || p.social_tiktok)
+  const snsCount = socialPosts.length
+  const lastSns = socialPosts.slice(-1)[0]
+  const lastSnsDate = lastSns?.timestamp
+    ? new Date(lastSns.timestamp).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})
+    : '없음'
+
+  // GSC 통계
+  const gsc = DATA.gsc || {}
+  const gscRows = gsc.rows || []
+  const gscClicks = gscRows.reduce((s,r)=>s+(r.clicks||0), 0)
+  const gscImpressions = gscRows.reduce((s,r)=>s+(r.impressions||0), 0)
+  const gscUpdated = gsc.updatedAt
+    ? new Date(gsc.updatedAt).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit'})
+    : '없음'
+
+  // 학습 시스템 통계
+  const learning = DATA.learning || []
+  const lastLearn = learning[0] || {}
+  const learnDate = lastLearn.date || lastLearn.timestamp
+    ? new Date(lastLearn.date || lastLearn.timestamp).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit'})
+    : '없음'
+  const learnedKw = (lastLearn.learnedKeywords || []).length
+
+  // 자동 수리 통계
+  const repairs = DATA.repairs || []
+  const lastRepair = repairs[0] || {}
+  const repairDate = lastRepair.timestamp
+    ? new Date(lastRepair.timestamp).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit'})
+    : '없음'
+  const healthScore = lastRepair.health_score ?? null
+  const repairIssues = lastRepair.issues_found ?? 0
+  const repairFixed  = lastRepair.repairs_applied ?? 0
+
   const modules = [
     {
       icon:'🤖', name:'Claude AI 콘텐츠 생성',
@@ -4553,6 +4594,72 @@ function renderModuleStatusGrid() {
         ['최소 간격', '7일 (AUTO_SERIES_MIN_DAYS)'],
         ['편 수', '2~5편 (기본 3편)'],
         ['AI 상투어 제거', '✅ 8개 패턴 금지'],
+      ],
+      status: 'ok',
+    },
+    {
+      icon:'📱', name:'SNS 자동 게시',
+      items:[
+        ['Instagram', '✅ 캡션 + 해시태그 자동 생성'],
+        ['Threads', '✅ 스레드 형식 최적화'],
+        ['TikTok', '✅ 쇼츠 스크립트 생성'],
+        ['SNS 포스트', snsCount+'개 누적'],
+        ['마지막 게시', lastSnsDate],
+      ],
+      status: snsCount > 0 ? 'ok' : 'warn',
+    },
+    {
+      icon:'📊', name:'Google Search Console',
+      items:[
+        ['데이터 소스', 'GSC API (SearchAnalytics)'],
+        ['누적 클릭', gscClicks.toLocaleString()+'회'],
+        ['누적 노출', gscImpressions.toLocaleString()+'회'],
+        ['추적 키워드', gscRows.length+'개'],
+        ['마지막 갱신', gscUpdated],
+      ],
+      status: gscRows.length > 0 ? 'ok' : 'warn',
+    },
+    {
+      icon:'🎓', name:'AI 학습 시스템',
+      items:[
+        ['주기', '매주 자동 실행 (weekly_learning)'],
+        ['학습 키워드', learnedKw ? learnedKw+'개 (최근)' : '데이터 없음'],
+        ['마지막 학습', learnDate],
+        ['성공 패턴', '✅ 고성과 키워드·포맷 학습'],
+        ['실패 패턴', '✅ 저성과 패턴 회피'],
+      ],
+      status: learning.length > 0 ? 'ok' : 'warn',
+    },
+    {
+      icon:'🔧', name:'자동 수리 진단',
+      items:[
+        ['진단 항목', '시스템 상태 종합 점검'],
+        ['헬스 스코어', healthScore !== null ? healthScore+'점' : '데이터 없음'],
+        ['마지막 진단', repairDate],
+        ['발견 이슈', repairIssues+'개'],
+        ['자동 수리', repairFixed+'개 적용'],
+      ],
+      status: healthScore === null ? 'warn' : healthScore >= 80 ? 'ok' : healthScore >= 60 ? 'warn' : 'err',
+    },
+    {
+      icon:'📋', name:'포스트 관리',
+      items:[
+        ['등록 포스트', regTotal+'개'],
+        ['게시 완료', regPublished+'개'],
+        ['실패/재시도', regFailed+'개'],
+        ['재시도 기능', '✅ failed 포스트 자동 재시도'],
+        ['초안 저장', '✅ post_drafts/ 백업'],
+      ],
+      status: regFailed > 3 ? 'warn' : 'ok',
+    },
+    {
+      icon:'🔗', name:'내부 링크 자동화',
+      items:[
+        ['방식', '키워드 유사도 매칭'],
+        ['삽입 위치', '본문 내 자동 삽입'],
+        ['링크 소스', '기존 게시 포스트 목록'],
+        ['중복 방지', '✅ 동일 URL 중복 삽입 방지'],
+        ['앵커 텍스트', '✅ 자연스러운 문맥 추출'],
       ],
       status: 'ok',
     },

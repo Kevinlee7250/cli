@@ -234,7 +234,7 @@ def run_once(
         logger.info(f"\n[{i}/{len(keywords)}] 키워드: '{keyword}'")
 
         # 포스트 생성
-        post_data = generate_post(keyword)
+        post_data = generate_post(keyword, blog_config=cfg)
         if not post_data:
             msg = f"콘텐츠 생성 실패: '{keyword}'"
             logger.error(f"  {msg}")
@@ -401,7 +401,7 @@ def run_series(
             "title": ep.get("title", ""),
         }
 
-        post_data = generate_series_post(ep_keyword, "N/A", series_context)
+        post_data = generate_series_post(ep_keyword, "N/A", series_context, blog_config=blog_config)
         if not post_data:
             logger.error(f"편 {ep_num} 생성 실패 — 건너뜀")
             ep["status"] = "failed"

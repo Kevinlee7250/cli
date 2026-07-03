@@ -120,13 +120,30 @@ _STRUCTURE_GUIDE = {
 }
 
 
-def _build_prompt(keyword: str, traffic: str) -> str:
+def _build_blog_topic_hint(blog_config: dict | None) -> str:
+    """블로그 주제 힌트 문자열을 생성합니다."""
+    if not blog_config:
+        return ""
+    topics = blog_config.get("topics") or []
+    blog_name = blog_config.get("name") or ""
+    if not topics and not blog_name:
+        return ""
+    topic_str = "·".join(topics) if topics else ""
+    if blog_name and topic_str:
+        return f"\n【블로그 주제】 이 블로그({blog_name})는 '{topic_str}' 전문 블로그입니다. 키워드가 여러 방향으로 해석될 수 있다면 이 주제에 맞게 작성하세요."
+    elif topic_str:
+        return f"\n【블로그 주제】 이 블로그는 '{topic_str}' 전문 블로그입니다. 키워드가 여러 방향으로 해석될 수 있다면 이 주제에 맞게 작성하세요."
+    return ""
+
+
+def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
     from datetime import datetime
     now = datetime.now()
     y = now.year
     date_str = now.strftime("%Y년 %m월 %d일")
     article_type = _detect_article_type(keyword)
     structure_guide = _STRUCTURE_GUIDE.get(article_type, _STRUCTURE_GUIDE["analysis"])
+    blog_topic_hint = _build_blog_topic_hint(blog_config)
 
     if BLOG_LANGUAGE == "ko":
         return f"""당신은 30대 중반 직장인입니다. 본업이 따로 있고, 퇴근 후나 주말에 직접 경험하고 공부한 것들을 블로그에 씁니다.
@@ -135,7 +152,7 @@ def _build_prompt(keyword: str, traffic: str) -> str:
 
 【현재 날짜】 {date_str}
 【키워드】 {keyword}
-【아티클 유형】 {article_type}
+【아티클 유형】 {article_type}{blog_topic_hint}
 
 ━━━ 1. 인간적인 목소리 (가장 중요) ━━━
 
@@ -877,7 +894,7 @@ def _validate_sources(sources: list) -> list:
     return valid
 
 
-def _build_series_prompt(keyword: str, traffic: str, series_context: dict) -> str:
+def _build_series_prompt(keyword: str, traffic: str, series_context: dict, blog_config: dict | None = None) -> str:
     """시리즈 포스트용 프롬프트"""
     from datetime import datetime
     now = datetime.now()
@@ -898,6 +915,7 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict) -> st
 
     article_type = _detect_article_type(keyword)
     structure_guide = _STRUCTURE_GUIDE.get(article_type, _STRUCTURE_GUIDE["analysis"])
+    blog_topic_hint = _build_blog_topic_hint(blog_config)
 
     if BLOG_LANGUAGE == "ko":
         return f"""당신은 30대 중반 직장인입니다. 본업이 따로 있고, "{series_title}" 시리즈를 직접 공부하고 경험하면서 편씩 정리해 올리는 중입니다.
@@ -907,7 +925,7 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict) -> st
 【시리즈】 "{series_title}" — 총 {total}편 중 {episode}번째
 【이 편 초점】 {focus}
 【키워드】 {keyword}
-【아티클 유형】 {article_type}
+【아티클 유형】 {article_type}{blog_topic_hint}
 
 ━━━ 시리즈 연결 방식 ━━━
 
@@ -1072,10 +1090,10 @@ JSON only:
 }}"""
 
 
-def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dict | None = None) -> dict | None:
+def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dict | None = None, blog_config: dict | None = None) -> dict | None:
     """시리즈 포스트를 생성합니다."""
     if not series_context:
-        return generate_post(keyword, traffic)
+        return generate_post(keyword, traffic, blog_config)
 
     # episode 는 반드시 int — 기본값 "?" 는 build_series_nav에서 TypeError 유발
     _ep_raw = series_context.get("episode", 1)
@@ -1085,7 +1103,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
         episode = 1
     total = series_context.get("total_episodes", "?")
     logger.info(f"시리즈 포스트 생성: '{keyword}' ({episode}/{total}편)")
-    prompt = _build_series_prompt(keyword, traffic, series_context)
+    prompt = _build_series_prompt(keyword, traffic, series_context, blog_config)
 
     for attempt in range(3):
         try:
@@ -1183,10 +1201,10 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
     return None
 
 
-def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
+def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None = None) -> dict | None:
     """Claude API로 포스트 생성 후 이미지를 자동 삽입합니다. 실패 시 최대 2회 재시도."""
     logger.info(f"포스트 생성 중: '{keyword}'")
-    prompt = _build_prompt(keyword, traffic)
+    prompt = _build_prompt(keyword, traffic, blog_config)
 
     for attempt in range(3):
         try:

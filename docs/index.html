@@ -564,8 +564,8 @@
       </div>
       <div style="text-align:right">
         <div style="font-size:12px;color:var(--muted)">자동 스케줄</div>
-        <div style="font-size:14px;font-weight:600;color:var(--accent);margin-top:4px">07:00 / 19:00 KST</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:2px">매일 2회 자동 실행</div>
+        <div style="font-size:14px;font-weight:600;color:var(--accent);margin-top:4px">07:00 / 12:00 / 19:00 KST</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">매일 3회 자동 실행</div>
       </div>
     </div>
 
@@ -757,10 +757,14 @@
     <!-- 스케줄 정보 -->
     <div class="run-panel" style="margin-top:4px">
       <h3>⏰ 자동 실행 스케줄</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;font-size:14px">
         <div style="background:var(--bg3);border-radius:8px;padding:14px;text-align:center">
           <div style="font-size:24px;font-weight:700;color:var(--accent)">오전 7:00</div>
           <div style="color:var(--muted);font-size:12px;margin-top:4px">매일 KST (UTC 22:00)</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:8px;padding:14px;text-align:center">
+          <div style="font-size:24px;font-weight:700;color:var(--accent)">정오 12:00</div>
+          <div style="color:var(--muted);font-size:12px;margin-top:4px">매일 KST (UTC 03:00)</div>
         </div>
         <div style="background:var(--bg3);border-radius:8px;padding:14px;text-align:center">
           <div style="font-size:24px;font-weight:700;color:var(--accent2)">오후 7:00</div>
@@ -1994,10 +1998,11 @@ function updateCountdown() {
   const kstNow = new Date(utcMs + kstOffset * 60000)
   const h = kstNow.getHours(), m = kstNow.getMinutes(), s = kstNow.getSeconds()
   const nowSec = h * 3600 + m * 60 + s
-  const targets = [7 * 3600, 19 * 3600]
+  const targets = [7 * 3600, 12 * 3600, 19 * 3600]
+  const targetLabels = ['오전 7:00 KST', '정오 12:00 KST', '오후 7:00 KST']
   let nextSec = null, nextLabel = ''
-  for (const t of targets) {
-    if (t > nowSec) { nextSec = t; nextLabel = t === 7*3600 ? '오전 7:00 KST' : '오후 7:00 KST'; break }
+  for (let i = 0; i < targets.length; i++) {
+    if (targets[i] > nowSec) { nextSec = targets[i]; nextLabel = targetLabels[i]; break }
   }
   if (nextSec === null) { nextSec = targets[0] + 24 * 3600; nextLabel = '오전 7:00 KST (내일)' }
   const diff = nextSec - nowSec
@@ -4978,7 +4983,7 @@ function renderSystemHealth() {
   const lastRunMs = lastRun ? new Date(lastRun.runAt || lastRun.savedAt).getTime() : 0
   const hoursSinceRun = lastRunMs ? ((now - lastRunMs) / 3600000).toFixed(1) : null
   const hasErr = lastRun && (lastRun.errors || 0) > 0
-  const runOk = lastRunMs && (now - lastRunMs) < 26 * 3600000 // within 26h schedule
+  const runOk = lastRunMs && (now - lastRunMs) < 13 * 3600000 // within 13h (3x/day schedule)
 
   const items = [
     {

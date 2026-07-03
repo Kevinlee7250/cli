@@ -5971,10 +5971,10 @@ function _botCheckErrors() {
       repairHealthScore: repairScore,
       repairIssues: repairCritical.map(i => `[${i.level}] ${i.message}`),
     }
-    // 심각 오류이고 API 키가 있고 이번 세션에 아직 자동 활성화 안 된 경우 → 봇 자동 실행
+    // 심각 오류이고 API 키 또는 PAT가 있고 이번 세션에 아직 자동 활성화 안 된 경우 → 봇 자동 실행
     const isCritical = errRuns.length >= 3 || hasCriticalRepair
-    const hasKey = !!localStorage.getItem(BOT_KEY_LS)
-    if (isCritical && hasKey && !window._botAutoActivated) {
+    const hasKeyOrPat = !!localStorage.getItem(BOT_KEY_LS) || !!getPAT()
+    if (isCritical && hasKeyOrPat && !window._botAutoActivated) {
       window._botAutoActivated = true
       setTimeout(() => {
         showToast(`⚠️ 오류 ${badgeCount}건 감지 — 시스템봇이 자동 진단을 시작합니다`, 'error')
@@ -5995,7 +5995,7 @@ async function _botAutodiagnose() {
   const ctx = window._botAutoErrorContext
   if (!ctx) return
   const key = localStorage.getItem(BOT_KEY_LS)
-  if (!key) return
+  if (!key && !getPAT()) return
 
   const repairPart = ctx.repairIssues?.length
     ? `\n수리 진단 이슈: ${ctx.repairIssues.join(', ')}\n시스템 건강점수: ${ctx.repairHealthScore}/100`
@@ -6386,17 +6386,24 @@ async function _checkPatWorkflowScope() {
   return _patWorkflowScope
 }
 
-async function _callClaudeViaActions(userMessage) {
+async function _callClaudeViaActions(userMessage, history) {
   const pat = getPAT()
   if (!pat) throw new Error('__no_pat__')
 
   const replyId = Date.now().toString(36) + Math.random().toString(36).slice(2, 6)
+  const recentRuns = (DATA.runs || []).slice(-10).map(r => ({
+    status: r.status, created_at: r.created_at, name: r.name, errors: r.errors || 0
+  }))
+  const latestRepair = (DATA.repairs || [])[0]
   const contextJson = JSON.stringify({
-    runs: (DATA.runs || []).slice(-5).map(r => ({ status: r.status, created_at: r.created_at, name: r.name })),
+    runs: recentRuns,
     posts_count: (DATA.posts || []).length,
-    pending_count: (DATA.pending || []).length,
-    health_score: DATA.repairs?.[0]?.health_score ?? null,
-    series_count: (DATA.series || []).length,
+    pending: (DATA.pending || []).slice(0, 5).map(p => ({ title: p.title, blog: p.blog_id, created_at: p.created_at })),
+    health_score: latestRepair?.health_score ?? null,
+    repair_issues: (latestRepair?.issues || []).filter(i => i.level === 'critical' || i.level === 'high').map(i => `[${i.level}] ${i.message}`),
+    series: (DATA.series || []).filter(s => s.status === 'in_progress').map(s => ({ title: s.keyword, progress: `${s.current_episode}/${s.total_episodes}` })),
+    blogs: (DATA.blogs || []).map(b => ({ id: b.id, name: b.name, enabled: b.enabled })),
+    history: (history || []).slice(-6).map(m => ({ role: m.role, content: m.content.slice(0, 400) })),
   })
 
   const dispResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/bot-reply.yml/dispatches`, {
@@ -6473,7 +6480,7 @@ async function _callClaude(messages) {
   }
 
   // 2차: GitHub Actions 폴백
-  return await _callClaudeViaActions(lastUser)
+  return await _callClaudeViaActions(lastUser, messages)
 }
 
 function _parseActions(text) {
@@ -6551,6 +6558,8 @@ function _botAppendWithChips(role, text, chips) {
       const hasErrors = !!window._botAutoErrorContext
       const errCtx = window._botAutoErrorContext
       const hasKey = !!localStorage.getItem(BOT_KEY_LS)
+      const hasPat = !!getPAT()
+      const canChat = hasKey || hasPat
 
       if (hasErrors) {
         const errCount = (errCtx.errorRuns || 0)
@@ -6560,8 +6569,8 @@ function _botAppendWithChips(role, text, chips) {
           (errCount > 0 ? `• 오류 발생 실행: ${errCount}회 (총 ${errCtx.totalErrors}건)\n` : '') +
           (repairIssueCount > 0 ? `• 시스템 이슈: ${errCtx.repairIssues.join(', ')}\n` : '') +
           `• 건강점수: ${errCtx.repairHealthScore ?? errCtx.healthScore ?? 'N/A'}/100\n\n` +
-          (hasKey ? '아래 버튼을 눌러 자동 진단을 시작하거나 직접 질문하세요.' : '🔑 Anthropic API 키를 먼저 입력하면 자동 진단을 받을 수 있어요.')
-        const chips = hasKey
+          (canChat ? '아래 버튼을 눌러 자동 진단을 시작하거나 직접 질문하세요.' : '🔑 Anthropic API 키를 먼저 입력하면 자동 진단을 받을 수 있어요.')
+        const chips = canChat
           ? [
               { label: '🔧 지금 바로 진단', cmd: '__autodiagnose__' },
               { label: '🔨 자동 수리 실행', cmd: '자동 수리 워크플로우를 실행해줘' },
@@ -6573,8 +6582,8 @@ function _botAppendWithChips(role, text, chips) {
               { label: '💰 수익 분석', cmd: '현재 수익 추정치와 분석을 알려줘' },
             ]
         _botAppendWithChips('assistant', welcomeText, chips)
-        // API 키 있으면 자동으로 진단 시작
-        if (hasKey && window._botAutoActivated) {
+        // API 키 또는 PAT가 있으면 자동으로 진단 시작
+        if (canChat && window._botAutoActivated) {
           setTimeout(_botAutodiagnose, 600)
         }
       } else {
@@ -6602,9 +6611,9 @@ async function sendBotMsg() {
   if (!text) return
 
   const key = localStorage.getItem(BOT_KEY_LS)
-  if (!key) {
+  if (!key && !getPAT()) {
     botShowKeyInput()
-    showToast('먼저 Anthropic API 키를 입력해 주세요', 'warning')
+    showToast('먼저 Anthropic API 키 또는 GitHub PAT를 입력해 주세요', 'warning')
     return
   }
 

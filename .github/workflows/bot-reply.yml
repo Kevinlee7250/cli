@@ -58,14 +58,27 @@ jobs:
             "당신은 블로그 자동화 시스템의 관리봇입니다. Claude Haiku 모델 기반으로 시스템 상태를 분석하고 조언합니다.",
             "응답은 간결하고 실용적으로 한국어로 작성하세요.",
           ]
-          if ctx:
-            system_parts.append(f"\n현재 시스템 상태:\n{json.dumps(ctx, ensure_ascii=False, indent=2)}")
+          ctx_for_system = {k: v for k, v in ctx.items() if k != 'history'}
+          if ctx_for_system:
+            system_parts.append(f"\n현재 시스템 상태:\n{json.dumps(ctx_for_system, ensure_ascii=False, indent=2)}")
+
+          # 대화 히스토리 복원 (있는 경우)
+          history = ctx.get('history') or []
+          messages = []
+          for h in history:
+            role = h.get('role')
+            content = h.get('content', '')
+            if role in ('user', 'assistant') and content:
+              messages.append({'role': role, 'content': content})
+          # 현재 메시지가 히스토리에 이미 포함되어 있지 않으면 추가
+          if not messages or messages[-1].get('content') != user_msg:
+            messages.append({'role': 'user', 'content': user_msg})
 
           response = client.messages.create(
             model="claude-haiku-4-5-20251001",
             max_tokens=1024,
             system="\n".join(system_parts),
-            messages=[{"role": "user", "content": user_msg}]
+            messages=messages
           )
           reply_text = response.content[0].text
 

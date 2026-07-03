@@ -17,7 +17,7 @@ on:
       posts_per_run:
         description: '생성할 포스트 수 (1~5, 키워드 여러 개 입력 시 첫 N개만 처리)'
         required: false
-        default: '3'
+        default: '1'
       mode:
         description: '실행 모드'
         required: true
@@ -91,7 +91,7 @@ jobs:
           SOCIAL_AUTO_PUBLISH="${{ secrets.SOCIAL_AUTO_PUBLISH }}"
           BLOGS_CONFIG=${{ secrets.BLOGS_CONFIG }}
           BLOG_NAME="${{ secrets.BLOG_NAME }}"
-          POSTS_PER_RUN="${{ inputs.posts_per_run || '3' }}"
+          POSTS_PER_RUN="${{ inputs.posts_per_run || '1' }}"
           POST_STATUS="${{ (inputs.mode == 'draft') && 'draft' || 'live' }}"
           BLOG_LANGUAGE=ko
           TREND_COUNTRY=KR

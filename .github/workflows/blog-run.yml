@@ -1,10 +1,11 @@
 name: 블로그 자동화 실행
 
 on:
-  # 매일 오전 7시 + 오후 7시 (KST) = UTC 22:00 / 10:00
+  # 매일 오전 7시 / 정오 12시 / 오후 7시 (KST)
   schedule:
-    - cron: '0 22 * * *'   # 오전 7시 KST
-    - cron: '0 10 * * *'   # 오후 7시 KST
+    - cron: '0 22 * * *'   # 오전  7시 KST (UTC 22:00 전날)
+    - cron: '0  3 * * *'   # 정오 12시 KST (UTC 03:00)
+    - cron: '0 10 * * *'   # 오후  7시 KST (UTC 10:00)
 
   # 수동 실행
   workflow_dispatch:

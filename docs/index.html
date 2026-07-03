@@ -218,6 +218,9 @@
   .pm-chip{padding:6px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;color:var(--muted);font-size:12px;cursor:pointer;transition:all .15s;}
   .pm-chip:hover{color:var(--text);}
   .pm-chip.active{background:rgba(124,106,247,.15);border-color:var(--accent);color:var(--accent);font-weight:700;}
+  .period-btn{padding:6px 14px;background:none;border:none;border-radius:7px;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;}
+  .period-btn:hover{color:var(--text);background:var(--bg3);}
+  .period-btn.active{background:var(--accent);color:#fff;}
   .pm-status-published{color:var(--green);font-weight:700;}
   .pm-status-failed{color:var(--red);font-weight:700;}
   .pm-status-pending{color:var(--yellow);font-weight:700;}
@@ -833,11 +836,30 @@
 
   <!-- ═══ 수익 분석 ═══ -->
   <div class="page" id="page-analytics">
-    <div class="page-title">💰 수익 분석</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px">
+      <div class="page-title" style="margin-bottom:0">💰 수익 분석</div>
+      <!-- 기간 선택 -->
+      <div style="display:flex;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:4px">
+        <button class="period-btn active" id="pb-day"     onclick="setPeriod('day')">일</button>
+        <button class="period-btn"        id="pb-week"    onclick="setPeriod('week')">주</button>
+        <button class="period-btn"        id="pb-month"   onclick="setPeriod('month')">월</button>
+        <button class="period-btn"        id="pb-quarter" onclick="setPeriod('quarter')">분기</button>
+        <button class="period-btn"        id="pb-year"    onclick="setPeriod('year')">년</button>
+      </div>
+    </div>
+
+    <!-- 기간 범위 표시 -->
+    <div id="period-range-label" style="font-size:12px;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px">
+      <span id="period-range-text"></span>
+      <button onclick="shiftPeriod(-1)" style="padding:2px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:12px;cursor:pointer">◀</button>
+      <button onclick="shiftPeriod(1)"  style="padding:2px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:12px;cursor:pointer">▶</button>
+      <button onclick="resetPeriod()" style="padding:2px 8px;background:none;border:none;color:var(--accent);font-size:12px;cursor:pointer;text-decoration:underline">오늘</button>
+    </div>
+
     <div class="cards">
-      <div class="card green"><div class="label">일 예상 수익</div><div class="value" id="a-daily">-</div><div class="sub">AdSense CTR 2.5%</div></div>
-      <div class="card blue"><div class="label">월 예상 수익</div><div class="value" id="a-monthly">-</div><div class="sub">30일 기준</div></div>
-      <div class="card purple"><div class="label">연 예상 수익</div><div class="value" id="a-yearly">-</div><div class="sub">365일 기준</div></div>
+      <div class="card green"><div class="label">일 예상 수익</div><div class="value" id="a-daily">-</div><div class="sub" id="a-daily-sub">AdSense CTR 2.5%</div></div>
+      <div class="card blue"><div class="label">기간 총 포스트</div><div class="value" id="a-period-posts">-</div><div class="sub" id="a-period-posts-sub">선택 기간</div></div>
+      <div class="card purple"><div class="label">기간 총 실행</div><div class="value" id="a-period-runs">-</div><div class="sub" id="a-period-runs-sub">선택 기간</div></div>
       <div class="card yellow"><div class="label">평균 CPC</div><div class="value" id="a-cpc">-</div><div class="sub">클릭당 단가</div></div>
     </div>
 
@@ -918,11 +940,11 @@
     </div>
 
     <div class="section-header">
-      <h2>월별 요약</h2>
+      <h2 id="period-summary-title">기간별 누적 요약</h2>
     </div>
     <div class="table-wrap" style="margin-bottom:24px">
       <table>
-        <thead><tr><th>연월</th><th>실행 횟수</th><th>포스트 수</th><th>평균 일 수익</th><th>월 예상 수익</th></tr></thead>
+        <thead><tr><th id="period-col-label">기간</th><th>실행 횟수</th><th>포스트 수</th><th>Blogger 게시</th><th>평균 일 수익</th><th>기간 예상 수익</th></tr></thead>
         <tbody id="monthly-summary-table"></tbody>
       </table>
     </div>
@@ -2376,49 +2398,204 @@ function updateGoalProgress() {
   document.getElementById('goal-progress-fill').style.width = pct + '%'
 }
 
+// ── 기간 필터 ─────────────────────────────────────────────────────────────────
+let currentPeriod = 'day'    // day | week | month | quarter | year
+let periodOffset  = 0        // 0 = 현재, -1 = 이전, +1 = 다음 (미래는 사용 안 함)
+
+function setPeriod(p) {
+  currentPeriod = p
+  periodOffset  = 0
+  document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'))
+  const btn = document.getElementById('pb-' + p)
+  if (btn) btn.classList.add('active')
+  renderAnalytics()
+}
+
+function shiftPeriod(delta) {
+  periodOffset += delta
+  if (periodOffset > 0) periodOffset = 0   // 미래 방지
+  renderAnalytics()
+}
+
+function resetPeriod() {
+  periodOffset = 0
+  renderAnalytics()
+}
+
+// 기간 범위 계산 (start, end: Date)
+function _periodRange(period, offset) {
+  const now = new Date()
+  let start, end
+
+  if (period === 'day') {
+    const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + offset)
+    start = new Date(d); start.setHours(0,0,0,0)
+    end   = new Date(d); end.setHours(23,59,59,999)
+
+  } else if (period === 'week') {
+    const day = now.getDay()   // 0=일
+    const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - ((day+6)%7) + offset*7)
+    start = new Date(monday); start.setHours(0,0,0,0)
+    end   = new Date(monday.getTime() + 6*24*3600*1000); end.setHours(23,59,59,999)
+
+  } else if (period === 'month') {
+    const y = now.getFullYear(), m = now.getMonth() + offset
+    start = new Date(y, m, 1, 0, 0, 0)
+    end   = new Date(y, m+1, 0, 23, 59, 59, 999)
+
+  } else if (period === 'quarter') {
+    const q = Math.floor(now.getMonth()/3) + offset
+    const qNorm = ((q % 4) + 4) % 4
+    const yOff  = now.getFullYear() + Math.floor(q / 4)
+    start = new Date(yOff, qNorm*3, 1, 0,0,0)
+    end   = new Date(yOff, qNorm*3+3, 0, 23, 59, 59, 999)
+
+  } else {  // year
+    const y = now.getFullYear() + offset
+    start = new Date(y, 0, 1, 0,0,0)
+    end   = new Date(y, 11, 31, 23,59,59,999)
+  }
+
+  return { start, end }
+}
+
+function _periodLabel(period, offset) {
+  const { start, end } = _periodRange(period, offset)
+  const fmt = d => `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`
+  if (period === 'day')     return fmt(start) + (offset === 0 ? ' (오늘)' : '')
+  if (period === 'week')    return `${fmt(start)} ~ ${fmt(end)}` + (offset === 0 ? ' (이번 주)' : '')
+  if (period === 'month')   return `${start.getFullYear()}년 ${start.getMonth()+1}월` + (offset === 0 ? ' (이번 달)' : '')
+  if (period === 'quarter') {
+    const q = Math.floor(start.getMonth()/3)+1
+    return `${start.getFullYear()}년 ${q}분기` + (offset === 0 ? ' (이번 분기)' : '')
+  }
+  return `${start.getFullYear()}년` + (offset === 0 ? ' (올해)' : '')
+}
+
+// 기간 키 생성 (누적 집계 groupBy용)
+function _periodKey(dateStr, period) {
+  const d = new Date(dateStr)
+  if (period === 'day')     return dateStr.slice(0,10)
+  if (period === 'week') {
+    const day = d.getDay()
+    const mon = new Date(d.getFullYear(), d.getMonth(), d.getDate() - ((day+6)%7))
+    return `${mon.getFullYear()}-W${String(Math.ceil(((mon - new Date(mon.getFullYear(),0,1))/86400000 + 1)/7)).padStart(2,'0')}`
+  }
+  if (period === 'month')   return dateStr.slice(0,7)
+  if (period === 'quarter') {
+    const q = Math.floor(d.getMonth()/3)+1
+    return `${d.getFullYear()}-Q${q}`
+  }
+  return String(d.getFullYear())
+}
+
+function _periodKeyLabel(key, period) {
+  if (period === 'day')     return key
+  if (period === 'week')    return key.replace('-W', '년 ') + '주차'
+  if (period === 'month') {
+    const [y,m] = key.split('-')
+    return `${y}년 ${parseInt(m)}월`
+  }
+  if (period === 'quarter') return key.replace('-', '년 ')
+  return key + '년'
+}
+
+// 기간 내 runs 필터
+function _filterByPeriod(runs, period, offset) {
+  const { start, end } = _periodRange(period, offset)
+  return runs.filter(r => {
+    const d = new Date(r.runAt || r.savedAt)
+    return d >= start && d <= end
+  })
+}
+
+// 기간 배수 (평균 일 수익 → 기간 수익으로 환산)
+function _periodMultiplier(period) {
+  return { day: 1, week: 7, month: 30, quarter: 91, year: 365 }[period] || 1
+}
+
 function renderMonthlySummary() {
   const { runs } = DATA
-  const monthMap = {}
+  const colTitles = { day: '날짜', week: '주차', month: '연월', quarter: '분기', year: '연도' }
+  const periodMult = { day: 1, week: 7, month: 30, quarter: 91, year: 365 }
+  const multiplier = periodMult[currentPeriod] || 30
+  const colEl = document.getElementById('period-col-label')
+  if (colEl) colEl.textContent = colTitles[currentPeriod] || '기간'
+  const titleEl = document.getElementById('period-summary-title')
+  if (titleEl) titleEl.textContent = `${colTitles[currentPeriod] || '기간'}별 누적 요약`
+
+  const buckets = {}
   runs.forEach(r => {
-    const d = new Date(r.runAt || r.savedAt)
-    const key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0')
-    if (!monthMap[key]) monthMap[key] = { runs: 0, posts: 0, dailyRevs: [] }
-    monthMap[key].runs++
-    monthMap[key].posts += (r.postsGenerated || 0)
-    if (r.earnings?.estimatedDailyRevenue != null) monthMap[key].dailyRevs.push(r.earnings.estimatedDailyRevenue)
+    const key = _periodKey(r.runAt || r.savedAt, currentPeriod)
+    if (!buckets[key]) buckets[key] = { runs: 0, posts: 0, blogger: 0, dailyRevs: [] }
+    buckets[key].runs++
+    buckets[key].posts   += (r.postsGenerated || 0)
+    buckets[key].blogger += (r.platforms?.blogger || r.bloggerUploaded || 0)
+    if (r.earnings?.estimatedDailyRevenue != null) buckets[key].dailyRevs.push(r.earnings.estimatedDailyRevenue)
   })
-  const rows = Object.entries(monthMap).sort((a,b) => b[0].localeCompare(a[0])).map(([month, d]) => {
+
+  const rows = Object.entries(buckets).sort((a,b) => b[0].localeCompare(a[0])).map(([key, d]) => {
     const avgDaily = d.dailyRevs.length ? d.dailyRevs.reduce((s,v)=>s+v,0)/d.dailyRevs.length : 0
-    const monthEst = avgDaily * 30
+    const periodRev = avgDaily * multiplier
     return `<tr>
-      <td><strong>${month}</strong></td>
+      <td><strong>${_periodKeyLabel(key, currentPeriod)}</strong></td>
       <td>${d.runs}회</td>
       <td>${d.posts}개</td>
+      <td>${d.blogger}개</td>
       <td style="color:var(--green)">$${avgDaily.toFixed(2)}</td>
-      <td style="color:var(--accent);font-weight:700">$${monthEst.toFixed(2)}</td>
+      <td style="color:var(--accent);font-weight:700">$${periodRev.toFixed(2)}</td>
     </tr>`
   }).join('')
-  document.getElementById('monthly-summary-table').innerHTML = rows || '<tr><td colspan="5" class="empty">데이터 없음</td></tr>'
+  document.getElementById('monthly-summary-table').innerHTML = rows || '<tr><td colspan="6" class="empty">데이터 없음</td></tr>'
 }
 
 function renderAnalytics() {
   const { runs } = DATA
-  const last = runs[0]
-  const e = last?.earnings || {}
-  document.getElementById('a-daily').textContent = '$' + (e.estimatedDailyRevenue || 0).toFixed(2)
-  document.getElementById('a-monthly').textContent = '$' + (e.estimatedMonthlyRevenue || 0).toFixed(2)
-  document.getElementById('a-yearly').textContent = '$' + (e.estimatedYearlyRevenue || 0).toFixed(0)
-  document.getElementById('a-cpc').textContent = '$' + (e.avgCPC || 0).toFixed(2)
+
+  // 기간 필터 적용
+  const filteredRuns = _filterByPeriod(runs, currentPeriod, periodOffset)
+
+  // 기간 레이블 업데이트
+  const rangeEl = document.getElementById('period-range-text')
+  if (rangeEl) rangeEl.textContent = _periodLabel(currentPeriod, periodOffset)
+
+  // 요약 카드: 기간 내 데이터 기준
+  const totalPosts   = filteredRuns.reduce((s,r) => s + (r.postsGenerated || 0), 0)
+  const totalRuns    = filteredRuns.length
+  const dailyRevs    = filteredRuns.filter(r => r.earnings?.estimatedDailyRevenue != null).map(r => r.earnings.estimatedDailyRevenue)
+  const avgDaily     = dailyRevs.length ? dailyRevs.reduce((s,v)=>s+v,0)/dailyRevs.length : (runs[0]?.earnings?.estimatedDailyRevenue || 0)
+  const avgCpc       = runs[0]?.earnings?.avgCPC || 0.9
+
+  document.getElementById('a-daily').textContent = '$' + avgDaily.toFixed(2)
+  document.getElementById('a-period-posts').textContent = totalPosts + '개'
+  document.getElementById('a-period-runs').textContent  = totalRuns + '회'
+  document.getElementById('a-cpc').textContent = '$' + avgCpc.toFixed(2)
+
+  // sub 레이블 동적 업데이트
+  const periodNames = { day: '오늘', week: '이번 주', month: '이번 달', quarter: '이번 분기', year: '올해' }
+  const periodName  = periodOffset === 0 ? (periodNames[currentPeriod] || '선택 기간') : '선택 기간'
+  const sub1 = document.getElementById('a-daily-sub')
+  if (sub1) sub1.textContent = `${periodName} 평균 일 수익`
+  const sub2 = document.getElementById('a-period-posts-sub')
+  if (sub2) sub2.textContent = periodName
+  const sub3 = document.getElementById('a-period-runs-sub')
+  if (sub3) sub3.textContent = periodName
+
+  // 실행별 이력 테이블 (기간 내 필터)
+  const displayRuns = filteredRuns.length > 0 ? filteredRuns : runs.slice(0,20)
   document.getElementById('earnings-hist').innerHTML =
     `<table><thead><tr><th>날짜</th><th>키워드</th><th>포스트</th><th>Blogger</th><th>글자수</th><th>일수익</th></tr></thead><tbody>` +
-    runs.slice(0, 20).map(r => `<tr>
+    displayRuns.slice(0,30).map(r => `<tr>
       <td>${new Date(r.runAt||r.savedAt).toLocaleDateString('ko-KR')}</td>
       <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.keywords||[]).join(', ')}</td>
       <td>${r.postsGenerated ?? 0}개</td>
       <td>${r.platforms?.blogger ?? 0}개</td>
       <td>${r.totalWords ? r.totalWords.toLocaleString()+'자' : '-'}</td>
       <td style="color:var(--green);font-weight:700">${r.earnings?.estimatedDailyRevenue != null ? '$'+r.earnings.estimatedDailyRevenue.toFixed(2) : '-'}</td>
-    </tr>`).join('') + '</tbody></table>'
+    </tr>`).join('') +
+    (filteredRuns.length === 0 ? '<tr><td colspan="6" class="empty">선택 기간에 실행 이력 없음</td></tr>' : '') +
+    '</tbody></table>'
+
   updateGoalProgress()
   renderAnalyticsChart()
   renderCumulativeChart()

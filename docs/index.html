@@ -1252,7 +1252,10 @@
           <span style="font-size:22px">🔧</span>
           <div><div style="font-weight:700;font-size:14px">초기 설정</div><div style="font-size:11px;color:var(--muted)">blog-run.yml · setup 모드</div></div>
         </div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">개인정보처리방침 · 블로그 소개 페이지를 Blogger에 자동 생성합니다.</div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.6">개인정보처리방침 · 블로그 소개 페이지를 Blogger에 자동 생성합니다.</div>
+        <select id="wf-setup-blog" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:10px">
+          <option value="">🌐 전체 블로그</option>
+        </select>
         <button class="run-btn" style="width:100%;padding:9px;background:rgba(52,211,153,.12);border-color:rgba(52,211,153,.3);color:var(--green)" onclick="wfSetup()">📄 필수 페이지 생성</button>
         <div id="wf-setup-status" class="status-panel" style="display:none;margin-top:8px;font-size:12px"></div>
       </div>
@@ -4248,6 +4251,7 @@ function loadBlogList() {
   }).join('')
 
   updateBlogsConfigJson()
+  populateSetupBlogSelect()
 }
 
 // ── 모달 열기/닫기 ────────────────────────────────────────────────────────────
@@ -4840,7 +4844,25 @@ async function wfPublishAll() {
 }
 
 function wfSetup() {
-  _wfDispatch('setup', { keyword: '', posts_per_run: '1' }, 'wf-setup-status', null)
+  const blogId = document.getElementById('wf-setup-blog')?.value.trim() || ''
+  const extra = { keyword: '', posts_per_run: '1' }
+  if (blogId) extra.blog_id = blogId
+  const label = blogId
+    ? (getBlogsFromLS().find(b => b.id === blogId)?.name || blogId)
+    : '전체 블로그'
+  const statusEl = document.getElementById('wf-setup-status')
+  if (statusEl) { statusEl.style.display='block'; statusEl.className='status-panel running'; statusEl.innerHTML=`<span class="pulse">⏳</span> ${esc(label)} 설정 요청 중...` }
+  _wfDispatch('setup', extra, 'wf-setup-status', null)
+}
+
+// 초기 설정 블로그 드롭다운 채우기
+function populateSetupBlogSelect() {
+  const sel = document.getElementById('wf-setup-blog')
+  if (!sel) return
+  const blogs = getBlogsFromLS().filter(b => b.enabled !== false)
+  const current = sel.value
+  sel.innerHTML = '<option value="">🌐 전체 블로그</option>' +
+    blogs.map(b => `<option value="${esc(b.id)}"${b.id === current ? ' selected' : ''}>📰 ${esc(b.name || b.id)}</option>`).join('')
 }
 
 function updatePendingInfo() {
@@ -6205,6 +6227,7 @@ async function pmTriggerRetry() {
 // ── Init ──────────────────────────────────────────────────────────────────────
 initDefaultBlogs()        // blog2·blog3 자동 등록 (없으면)
 renderSidebarBlogLinks()  // 사이드바 블로그 링크 동적 렌더
+populateSetupBlogSelect() // 초기 설정 블로그 드롭다운 채우기
 loadAll()
 resetAutoRefresh()
 loadChecklist()

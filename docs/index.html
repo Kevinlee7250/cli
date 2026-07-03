@@ -493,7 +493,7 @@
   <div class="sidebar-footer">
     <a href="https://github.com/kevinlee7250/cli" target="_blank">📦 GitHub 저장소</a>
     <a href="https://github.com/kevinlee7250/cli/actions" target="_blank">🔗 GitHub Actions</a>
-    <a href="https://hoguwhat1.blogspot.com/" target="_blank">🌐 블로그 바로가기</a>
+    <div id="sidebar-blog-links" style="display:contents"><a href="https://hoguwhat1.blogspot.com/" target="_blank">🌐 블로그 바로가기</a></div>
     <button class="refresh-btn" onclick="manualRefresh()">🔄 데이터 새로고침</button>
     <div class="last-updated" id="last-updated-label">로딩 중...</div>
     <div style="font-size:10px;color:var(--border);margin-top:6px" id="auto-refresh-label">5분 자동 갱신</div>
@@ -4131,6 +4131,40 @@ function saveBlogsToLS(arr) {
   localStorage.setItem(BLOGS_LS_KEY, JSON.stringify(arr))
 }
 
+// 신규 블로그 자동 등록 (id·blog_id 기준 중복 방지)
+// blog1 은 사용자가 직접 등록 — 여기서는 blog2·blog3 만 초기 시드
+function initDefaultBlogs() {
+  const seed = [
+    { id: 'blog2', name: 'HOGU 여행,스포츠,연예', blog_id: '8903166932049624994', url: '', language: 'ko', post_status: 'live', enabled: true },
+    { id: 'blog3', name: '금융NEWS',              blog_id: '3612975334194190709', url: '', language: 'ko', post_status: 'live', enabled: true },
+  ]
+  const existing = getBlogsFromLS()
+  const existingIds  = new Set(existing.map(b => b.id))
+  const existingBids = new Set(existing.map(b => b.blog_id).filter(Boolean))
+  let changed = false
+  seed.forEach(def => {
+    if (!existingIds.has(def.id) && !existingBids.has(def.blog_id)) {
+      existing.push(def)
+      changed = true
+    }
+  })
+  if (changed) saveBlogsToLS(existing)
+}
+
+// 사이드바 블로그 링크 동적 렌더
+function renderSidebarBlogLinks() {
+  const container = document.getElementById('sidebar-blog-links')
+  if (!container) return
+  const blogs = getBlogsFromLS().filter(b => b.enabled !== false && b.url)
+  if (!blogs.length) {
+    container.innerHTML = `<a href="https://hoguwhat1.blogspot.com/" target="_blank">🌐 블로그 바로가기</a>`
+    return
+  }
+  container.innerHTML = blogs.map(b =>
+    `<a href="${esc(b.url)}" target="_blank" title="${esc(b.name)}" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">🌐 ${esc(b.name)}</a>`
+  ).join('')
+}
+
 // ── 블로그 카드 목록 렌더 ────────────────────────────────────────────────────
 function loadBlogList() {
   const lsBlogs = getBlogsFromLS()
@@ -6169,6 +6203,8 @@ async function pmTriggerRetry() {
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
+initDefaultBlogs()        // blog2·blog3 자동 등록 (없으면)
+renderSidebarBlogLinks()  // 사이드바 블로그 링크 동적 렌더
 loadAll()
 resetAutoRefresh()
 loadChecklist()

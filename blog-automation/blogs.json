@@ -1,7 +1,7 @@
 [
   {
     "id": "blog1",
-    "name": "",
+    "name": "HOGU What?",
     "blog_id": "",
     "language": "ko",
     "post_status": "live",
@@ -11,12 +11,22 @@
   },
   {
     "id": "blog2",
-    "name": "HOGU 여행,스포츠",
+    "name": "HOGU 여행,스포츠,연예",
     "blog_id": "8903166932049624994",
     "language": "ko",
     "post_status": "live",
     "enabled": true,
-    "topics": ["여행", "스포츠"],
-    "naver_api_queries": ["국내여행 추천 명소", "해외여행 꿀팁", "스포츠 경기 분석", "축구 야구 농구 최신"]
+    "topics": ["여행", "스포츠", "연예", "드라마", "영화"],
+    "naver_api_queries": ["국내여행 추천 명소", "해외여행 꿀팁", "스포츠 경기 분석", "축구 야구 농구 최신", "드라마 영화 연예 뉴스"]
+  },
+  {
+    "id": "blog3",
+    "name": "금융NEWS",
+    "blog_id": "3612975334194190709",
+    "language": "ko",
+    "post_status": "live",
+    "enabled": true,
+    "topics": ["금융", "주식", "ETF", "경제", "부동산", "투자", "금리", "환율"],
+    "naver_api_queries": ["주식 ETF 투자 뉴스", "금융 경제 뉴스", "금리 환율 부동산", "코스피 코스닥 시황"]
   }
 ]

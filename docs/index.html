@@ -6001,6 +6001,9 @@ async function _botAutodiagnose() {
   if (!ctx) return
   const key = localStorage.getItem(BOT_KEY_LS)
   if (!key && !getPAT()) return
+  // 중복 실행 방지 — _botCheckErrors와 botInit이 거의 동시에 예약하는 경우
+  // 두 번 디스패치되던 버그 가드 (진행 중이면 무시)
+  if (_botTyping) return
 
   const repairPart = ctx.repairIssues?.length
     ? `\n수리 진단 이슈: ${ctx.repairIssues.join(', ')}\n시스템 건강점수: ${ctx.repairHealthScore}/100`

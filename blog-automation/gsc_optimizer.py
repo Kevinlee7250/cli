@@ -165,10 +165,14 @@ def match_posts_to_queries(posts: list[dict], queries: list[dict]) -> list[dict]
         q_words = [w for w in query_data["query"].lower().split() if len(w) >= 2]
         if not q_words:
             continue
+        # 쿼리가 수집된 사이트와 같은 블로그의 포스트만 매칭 (블로그 간 교차 오염 방지)
+        q_site = (query_data.get("site_url") or "").rstrip("/")
 
         for post in posts:
             url = post.get("blogUrl", "")
             if not url or url in already_done:
+                continue
+            if q_site and not url.startswith(q_site):
                 continue
 
             keyword_text = (post.get("keyword", "") or "").lower()
@@ -200,14 +204,15 @@ def _blog_id() -> str:
     return os.getenv("BLOGGER_BLOG_ID", "").strip()
 
 
-def get_post_id_by_url(token: str, blog_url: str) -> str | None:
-    """blogUrl 의 path 로 Blogger bypath API 조회 -> post ID 반환"""
+def get_post_id_by_url(token: str, blog_url: str, blog_id: str = "") -> str | None:
+    """blogUrl 의 path 로 Blogger bypath API 조회 -> post ID 반환.
+    blog_id 미지정 시 전역 BLOGGER_BLOG_ID 사용."""
     parsed = re.search(r"blogspot\.com(/.+)", blog_url)
     if not parsed:
         logger.debug(f"blogspot URL 아님, 건너뜀: {blog_url}")
         return None
     path = parsed.group(1).rstrip("/")
-    bid  = _blog_id()
+    bid  = blog_id or _blog_id()
     if not bid:
         return None
     try:
@@ -225,9 +230,9 @@ def get_post_id_by_url(token: str, blog_url: str) -> str | None:
     return None
 
 
-def update_blogger_title(token: str, post_id: str, new_title: str) -> bool:
-    """Blogger PATCH API 로 제목만 업데이트"""
-    bid = _blog_id()
+def update_blogger_title(token: str, post_id: str, new_title: str, blog_id: str = "") -> bool:
+    """Blogger PATCH API 로 제목만 업데이트. blog_id 미지정 시 전역 BLOGGER_BLOG_ID."""
+    bid = blog_id or _blog_id()
     if not bid or not post_id:
         return False
     try:
@@ -352,13 +357,16 @@ def run_optimization(dry_run: bool = False, limit: int = MAX_PER_RUN) -> dict:
         return {"optimized": 0, "skipped": 0, "details": [], "error": "API 키 없음"}
 
     # 1) GSC 저CTR 쿼리 수집 — 모든 블로그의 GSC 사이트 순회 (중복 URL 제거)
+    # site_blog_map: gsc_site_url → Blogger blog_id (제목 PATCH 시 해당 블로그 API 사용)
     site_urls: list[str] = []
+    site_blog_map: dict[str, str] = {}
     try:
         from config import get_blog_configs
         for b in get_blog_configs():
             u = b.get("gsc_site_url", "")
             if u and u not in site_urls:
                 site_urls.append(u)
+                site_blog_map[u.rstrip("/")] = str(b.get("blog_id") or "")
     except Exception as e:
         logger.debug(f"블로그 설정 로드 실패 — 전역 GSC_SITE_URL 사용: {e}")
     if not site_urls:
@@ -369,6 +377,8 @@ def run_optimization(dry_run: bool = False, limit: int = MAX_PER_RUN) -> dict:
         qs = fetch_low_ctr_queries(token, site_url=su)
         if qs:
             logger.info(f"저CTR 쿼리 {len(qs)}개 수집: {su}")
+            for q in qs:
+                q["site_url"] = su  # 매칭·업데이트 시 블로그 구분용
             low_ctr_queries.extend(qs)
     if not low_ctr_queries:
         logger.info("저CTR 쿼리 없음 (모두 CTR >= 3%) — 최적화 불필요")
@@ -426,9 +436,12 @@ def run_optimization(dry_run: bool = False, limit: int = MAX_PER_RUN) -> dict:
             "dry_run":        dry_run,
         }
 
+        # 이 포스트가 속한 블로그의 Blogger ID (쿼리 수집 사이트 기준)
+        target_blog_id = site_blog_map.get((query.get("site_url") or "").rstrip("/"), "")
+
         if not dry_run:
             # 4) Blogger 포스트 ID 조회
-            post_id = get_post_id_by_url(token, url)
+            post_id = get_post_id_by_url(token, url, blog_id=target_blog_id)
             if not post_id:
                 logger.warning("  포스트 ID 조회 실패 — 제목 후보만 저장 (blogspot URL이 아닐 수 있음)")
                 detail["blogger_updated"] = False
@@ -436,7 +449,7 @@ def run_optimization(dry_run: bool = False, limit: int = MAX_PER_RUN) -> dict:
                 skipped += 1
             else:
                 # 5) Blogger 제목 PATCH
-                ok = update_blogger_title(token, post_id, best_title)
+                ok = update_blogger_title(token, post_id, best_title, blog_id=target_blog_id)
                 detail["blogger_updated"] = ok
                 detail["post_id"]         = post_id
                 if ok:

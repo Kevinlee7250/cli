@@ -1168,7 +1168,10 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             else:
                 post_data["sources"] = _validate_sources(post_data["sources"])
 
-            section_queries = _extract_section_queries(content_html, keyword)
+            # 게시 전 팩트체크 — 이미지 삽입 전에 실행 (이미지 HTML 훼손 방지)
+            _fact_check_content(post_data, keyword)
+
+            section_queries = _extract_section_queries(post_data["content"], keyword)
             plain_text = _content_preview(post_data.get("content", ""), chars=600)
             images = fetch_images_for_queries(
                 section_queries,
@@ -1182,9 +1185,6 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                 post_data["images_inserted"] = len(images)
             else:
                 post_data["images_inserted"] = 0
-
-            # 게시 전 팩트체크 (수치·날짜·통계 검증 + 자동 수정)
-            _fact_check_content(post_data, keyword)
 
             # 인라인 스타일 비주얼 디자인 적용 (주제별 컬러 테마)
             post_data["content"] = _apply_design(
@@ -1258,13 +1258,46 @@ def _fact_check_content(post_data: dict, keyword: str) -> None:
         m = re.search(r"\{.*\}", raw, re.DOTALL)
         result = json.loads(m.group()) if m else {"issues": [], "verdict": "pass"}
 
+        def _safe_replace(html_text: str, quote: str, fix: str) -> str | None:
+            """태그 내부(속성/스타일)가 아닌 텍스트 위치에서만 치환합니다.
+            공백·태그 차이로 직접 매칭이 실패하면 공백 유연 정규식으로 재시도.
+            치환 실패 시 None."""
+            if len(quote) < 6:
+                return None  # '100%' 같은 짧은 인용은 스타일 훼손 위험 — 건너뜀
+
+            def _in_tag(pos: int) -> bool:
+                lt = html_text.rfind("<", 0, pos)
+                gt = html_text.rfind(">", 0, pos)
+                return lt > gt  # 직전 '<'가 '>'보다 뒤 = 태그 내부
+
+            # ① 직접 매칭 (태그 밖 첫 위치)
+            start = 0
+            while True:
+                pos = html_text.find(quote, start)
+                if pos == -1:
+                    break
+                if not _in_tag(pos):
+                    return html_text[:pos] + fix + html_text[pos + len(quote):]
+                start = pos + 1
+            # ② 공백 유연 정규식 (plain은 \s+ 정규화되어 있어 HTML과 어긋날 수 있음)
+            pattern = re.escape(quote).replace(r"\ ", r"\s+")
+            for m2 in re.finditer(pattern, html_text):
+                if not _in_tag(m2.start()):
+                    return html_text[:m2.start()] + fix + html_text[m2.end():]
+            return None
+
         applied = 0
+        issue_records = []
         for issue in result.get("issues", [])[:5]:
             quote, fix = issue.get("quote", ""), issue.get("fix", "")
-            # 본문 HTML에 원문이 그대로 있을 때만 안전하게 치환
-            if quote and fix and quote in content_html:
-                content_html = content_html.replace(quote, fix, 1)
-                applied += 1
+            fixed = False
+            if quote and fix:
+                replaced = _safe_replace(content_html, quote, fix)
+                if replaced is not None:
+                    content_html = replaced
+                    applied += 1
+                    fixed = True
+            issue_records.append({"problem": issue.get("problem", ""), "fixed": fixed})
         if applied:
             post_data["content"] = content_html
 
@@ -1273,10 +1306,7 @@ def _fact_check_content(post_data: dict, keyword: str) -> None:
             "verdict": result.get("verdict", "pass"),
             "issues_found": len(result.get("issues", [])),
             "fixes_applied": applied,
-            "issues": [
-                {"problem": i.get("problem", ""), "fixed": bool(i.get("quote", "") and i.get("quote") in plain)}
-                for i in result.get("issues", [])[:5]
-            ],
+            "issues": issue_records,
         }
         if result.get("issues"):
             logger.info(
@@ -1360,6 +1390,9 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                 if not post_data["sources"]:
                     logger.warning("sources 필드: 유효한 출처 없음 — 전부 제거됨")
 
+            # 게시 전 팩트체크 — 이미지 삽입 전에 실행 (이미지 HTML 훼손 방지)
+            _fact_check_content(post_data, keyword)
+
             # 섹션별 이미지 검색 & 삽입 (관련성 검증 포함)
             section_queries = _extract_section_queries(post_data.get("content", ""), keyword)
             logger.info(f"섹션별 이미지 검색: {section_queries}")
@@ -1380,9 +1413,6 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             else:
                 post_data["images_inserted"] = 0
                 logger.warning("글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행")
-
-            # 게시 전 팩트체크 (수치·날짜·통계 검증 + 자동 수정)
-            _fact_check_content(post_data, keyword)
 
             # 인라인 스타일 비주얼 디자인 적용 (주제별 컬러 테마)
             post_data["content"] = _apply_design(

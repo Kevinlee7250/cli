@@ -284,7 +284,7 @@ def run_once(
                 post_data["status"] = "pending"
                 register_post(post_data, PostStatus.PENDING, blog_config, source="manual", run_number=_run_number)
                 completed_posts.append(post_data)
-                save_pending_posts([post_data])
+                save_pending_posts([post_data], blog_config)
                 success_count += 1
                 continue
 

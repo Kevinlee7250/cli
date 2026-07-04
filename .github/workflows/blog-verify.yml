@@ -162,8 +162,13 @@ jobs:
             fi
             TIMESTAMP=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M KST')
             git commit -m "$MSG ($TIMESTAMP)"
-            git pull --rebase --autostash origin claude/blog-automation-system-KAbtE
-            git push origin claude/blog-automation-system-KAbtE
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && break
+              echo "pull+push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
             echo "✅ 커밋 완료"
           fi
 

@@ -202,15 +202,37 @@ def _export_learning(docs_dir: str) -> None:
 
 
 def _export_gsc(docs_dir: str) -> None:
-    """GSC 캐시 데이터를 docs/data/gsc.json으로 내보냅니다."""
+    """GSC 데이터를 docs/data/gsc.json으로 내보냅니다.
+    최상위 필드는 첫 번째 블로그(기존 대시보드 호환), 'sites'에 블로그별 데이터."""
     try:
-        from config import GSC_SITE_URL
-        if not GSC_SITE_URL:
-            return
+        from config import GSC_SITE_URL, get_blog_configs
         from gsc_fetcher import fetch_search_analytics, save_gsc_for_dashboard
-        data = fetch_search_analytics(GSC_SITE_URL)
-        if data:
-            save_gsc_for_dashboard(data, docs_dir)
+
+        # 블로그별 GSC 사이트 (중복 제거, 순서 유지)
+        targets: list[tuple[str, str]] = []  # (blog_id, site_url)
+        seen: set[str] = set()
+        for b in get_blog_configs():
+            u = (b.get("gsc_site_url") or "").strip()
+            if u and u not in seen:
+                seen.add(u)
+                targets.append((b.get("id", ""), u))
+        if not targets and GSC_SITE_URL:
+            targets = [("blog1", GSC_SITE_URL)]
+        if not targets:
+            return
+
+        sites: dict[str, dict] = {}
+        for blog_id, site_url in targets:
+            data = fetch_search_analytics(site_url)
+            if data:
+                sites[blog_id] = data
+        if not sites:
+            return
+
+        # 기존 대시보드 호환: 첫 블로그 데이터를 최상위에 + sites 키 추가
+        primary = next(iter(sites.values()))
+        merged = {**primary, "sites": sites}
+        save_gsc_for_dashboard(merged, docs_dir)
     except Exception as exc:
         logger.debug(f"GSC 내보내기 생략: {exc}")
 
@@ -403,7 +425,10 @@ def export_dashboard() -> None:
             seen_titles.add(title)
             kw = p.get("keyword", "")
             cat = _categorize(kw)
-            post_id = run["date"] + "_" + re.sub(r"[^\w가-힣]", "_", title)[:60]
+            # 60자 잘림으로 다른 제목이 같은 id가 되는 충돌 방지 — 전체 제목 해시 접미사
+            import hashlib
+            _h = hashlib.md5(title.encode()).hexdigest()[:6]
+            post_id = run["date"] + "_" + re.sub(r"[^\w가-힣]", "_", title)[:60] + "_" + _h
             blog_stats[run_blog_id]["postCount"] += 1
             posts.append({
                 "id": post_id,
@@ -442,6 +467,8 @@ def export_dashboard() -> None:
             "imagesInserted": run.get("imagesInserted", 0),
             "totalWords": run.get("totalWords", 0),
             "errors": run["errors"],
+            "blogId": run.get("blogId", "blog1"),
+            "blogName": run.get("blogName", ""),
             "platforms": run.get("platforms", {}),
             "earnings": run.get("earnings", {}),
         }

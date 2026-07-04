@@ -114,16 +114,13 @@ jobs:
           SITEMAP_PATH.write_text("\n".join(xml_lines), encoding="utf-8")
           print(f"✅ sitemap.xml 생성 완료: {len(entries)}개 URL → {SITEMAP_PATH}")
 
-          # robots.txt 생성/업데이트
-          for blog_url in sorted(blog_urls):
-              robots_content = f"""User-agent: *
-Allow: /
-
-Sitemap: {blog_url}/sitemap.xml
-"""
+          # robots.txt 생성/업데이트 (모든 블로그 사이트맵 나열)
           if blog_urls:
-              ROBOTS_PATH.write_text(robots_content, encoding="utf-8")
-              print(f"✅ robots.txt 업데이트 완료")
+              lines = ["User-agent: *", "Allow: /", ""]
+              for blog_url in sorted(blog_urls):
+                  lines.append(f"Sitemap: {blog_url}/sitemap.xml")
+              ROBOTS_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
+              print(f"✅ robots.txt 업데이트 완료 ({len(blog_urls)}개 사이트맵)")
 
           PYEOF
 
@@ -139,7 +136,12 @@ Sitemap: {blog_url}/sitemap.xml
           else
             TIMESTAMP=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M KST')
             git commit -m "chore: 사이트맵 자동 갱신 ($TIMESTAMP)"
-            git pull --rebase --autostash origin claude/blog-automation-system-KAbtE
-            git push origin claude/blog-automation-system-KAbtE
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && break
+              echo "pull+push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
             echo "✅ 커밋 완료"
           fi

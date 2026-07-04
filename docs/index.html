@@ -1785,6 +1785,18 @@ async function loadAll(silent = false) {
     fetch(base + '/post_registry.json' + ts).then(r => r.json()).catch(() => []),
   ])
   DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry }
+
+  // 아카이브 포스트 백그라운드 병합 (posts.json은 최근 300개만 유지 — 초기 로딩 속도 확보)
+  fetch(base + '/posts_archive.json' + ts).then(r => r.ok ? r.json() : []).then(archive => {
+    if (Array.isArray(archive) && archive.length) {
+      const ids = new Set(DATA.posts.map(p => p.id))
+      const older = archive.filter(p => !ids.has(p.id))
+      if (older.length) {
+        DATA.posts = DATA.posts.concat(older)
+        renderDashboard()
+      }
+    }
+  }).catch(() => {})
   const lbl = document.getElementById('last-updated-label')
   if (lbl && meta.exportedAt)
     lbl.textContent = '업데이트: ' + new Date(meta.exportedAt).toLocaleString('ko-KR')

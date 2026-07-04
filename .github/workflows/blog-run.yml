@@ -169,7 +169,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # docs/data/ 는 tracked 파일 (-f: 루트 .gitignore /*  규칙 우회)
           git add -f \
-            docs/data/posts.json docs/data/runs.json docs/data/analytics.json \
+            docs/data/posts.json docs/data/posts_archive.json docs/data/runs.json \
+            docs/data/analytics.json \
             docs/data/meta.json docs/data/pending_posts.json docs/data/series.json \
             docs/data/gsc.json docs/data/blogs.json docs/data/learning.json \
             docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \

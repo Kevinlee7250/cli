@@ -491,8 +491,31 @@ def export_dashboard() -> None:
             blog["pageviews1d"] = pv1
             blog["analyticsUpdatedAt"] = updated_at
 
+    # posts.json 비대화 방지 — 최근 POSTS_EXPORT_LIMIT개만 유지하고
+    # 나머지는 posts_archive.json에 누적 (대시보드가 백그라운드에서 병합 로드)
+    POSTS_EXPORT_LIMIT = 300
+    posts_recent = posts[:POSTS_EXPORT_LIMIT]
+    posts_overflow = posts[POSTS_EXPORT_LIMIT:]
+    if posts_overflow:
+        archive_path = os.path.join(DOCS_DATA_DIR, "posts_archive.json")
+        try:
+            archive = []
+            if os.path.exists(archive_path):
+                with open(archive_path, encoding="utf-8") as f:
+                    archive = json.load(f)
+            seen_ids = {p.get("id") for p in archive}
+            new_items = [p for p in posts_overflow if p.get("id") not in seen_ids]
+            if new_items:
+                archive = new_items + archive
+                with open(archive_path, "w", encoding="utf-8") as f:
+                    json.dump(archive, f, ensure_ascii=False, indent=2)
+                logger.info(f"  아카이브: {len(new_items)}개 이동 (총 {len(archive)}개)")
+        except Exception as _ae:
+            logger.warning(f"posts_archive.json 저장 실패 — posts.json에 전체 유지: {_ae}")
+            posts_recent = posts
+
     for name, data in [
-        ("posts.json", posts),
+        ("posts.json", posts_recent),
         ("runs.json", runs_export),
         ("analytics.json", analytics),
         ("meta.json", meta),

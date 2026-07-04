@@ -5,6 +5,8 @@ Blogger 블로그는 소유 계정이면 자동 검증되므로 별도 확인 �
 
 사용법: python gsc_register.py          # 전체 블로그 등록
         python gsc_register.py --list   # 현재 등록된 사이트 목록만 출력
+
+이 파일이 푸시되면 gsc-register.yml 워크플로우가 자동 실행됩니다.
 """
 
 import logging

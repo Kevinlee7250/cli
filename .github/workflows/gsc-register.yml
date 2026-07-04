@@ -1,0 +1,46 @@
+name: GSC 사이트 등록
+
+on:
+  workflow_dispatch:
+    inputs:
+      list_only:
+        description: '조회만 (등록하지 않음)'
+        type: boolean
+        default: false
+        required: false
+  push:
+    branches: [claude/blog-automation-system-KAbtE]
+    paths:
+      - 'blog-automation/gsc_register.py'
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install requests python-dotenv
+
+      - name: GSC 사이트 등록
+        working-directory: blog-automation
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+        run: |
+          # push 트리거는 조회만 (등록은 workflow_dispatch에서 list_only=false일 때만)
+          if [ "${{ github.event_name }}" = "push" ] || [ "${{ inputs.list_only }}" = "true" ]; then
+            python gsc_register.py --list
+          else
+            python gsc_register.py
+          fi

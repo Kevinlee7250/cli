@@ -8,6 +8,10 @@ on:
         type: boolean
         default: false
         required: false
+  push:
+    branches: [claude/blog-automation-system-KAbtE]
+    paths:
+      - 'blog-automation/gsc_register.py'
 
 jobs:
   register:

@@ -412,3 +412,78 @@ blog-automation/
 | Secrets 관리 | https://github.com/kevinlee7250/cli/settings/secrets/actions |
 | 토큰 갱신 | https://developers.google.com/oauthplayground |
 | 권한 취소 | https://myaccount.google.com/permissions |
+
+---
+
+## 📌 AdSense 승인 후 설정 방법 (승인 대기 중)
+
+AdSense 승인이 나면 아래 두 단계만 하면 즉시 광고가 삽입됩니다. 코드 수정 불필요.
+
+### 1단계 — GitHub Secrets 등록 (전체 블로그 공통)
+
+https://github.com/kevinlee7250/cli/settings/secrets/actions 에서:
+
+| Secret 이름 | 값 | 확인 위치 |
+|------------|-----|----------|
+| `ADSENSE_CLIENT_ID` | `ca-pub-xxxxxxxxxxxxxxxx` | AdSense → 계정 → 계정 정보 |
+| `ADSENSE_SLOT_IDS` | `1234567890,0987654321` (쉼표 구분) | AdSense → 광고 → 광고 단위별 슬롯 ID |
+
+등록 후 다음 자동 실행부터 새 글에 광고 코드가 자동 삽입됩니다.
+`ADSENSE_MODE=auto`(기본값)는 자동 광고, 슬롯 ID를 넣으면 본문 내 배치도 함께 적용됩니다.
+
+### 2단계 (선택) — 블로그별 다른 AdSense 계정 사용 시
+
+`blog-automation/blogs.json`의 해당 블로그 항목에 추가:
+
+```json
+{
+  "id": "blog2",
+  "adsense_client_id": "ca-pub-블로그2전용ID",
+  "adsense_slot_ids": "슬롯1,슬롯2"
+}
+```
+
+블로그별 값이 없으면 1단계의 공통 Secret 값을 사용합니다.
+
+### 확인 방법
+
+- 설정 후 수동 실행: Actions → 블로그 자동화 실행 → Run workflow (mode: test)
+- 로그에서 `adsense_validator` 경고가 사라졌는지 확인
+- auto-repair 건강점수의 "AdSense 미설정" 경고가 해제되면 완료
+
+---
+
+## 📱 소셜 자동 발행 활성화 방법 (현재 비활성)
+
+소셜 콘텐츠(인스타그램 캡션·스레드 시리즈·틱톡 스크립트)는 매 글마다 자동 생성되고
+있지만, 실제 발행은 `SOCIAL_AUTO_PUBLISH`가 꺼져 있어 실행되지 않습니다.
+
+### 활성화 절차
+
+1. GitHub Secrets에 등록:
+
+| Secret | 값 | 비고 |
+|--------|-----|------|
+| `SOCIAL_AUTO_PUBLISH` | `true` | 마스터 스위치 |
+| `INSTAGRAM_ACCESS_TOKEN` | 장기 토큰 | Meta 개발자 콘솔 → Instagram Graph API |
+| `INSTAGRAM_ACCOUNT_ID` | 비즈니스 계정 ID | |
+| `THREADS_ACCESS_TOKEN` | Threads API 토큰 | |
+| `THREADS_USER_ID` / `THREADS_HANDLE` | 사용자 ID / @핸들 | |
+
+2. 인스타그램은 **이미지가 필수**입니다 — 본문 첫 이미지가 자동으로 첨부되므로
+   이미지 파이프라인이 정상 작동하는지 먼저 확인하세요 (포스트당 이미지 1개 이상).
+
+3. 토큰 없이 `SOCIAL_AUTO_PUBLISH=true`만 켜면 해당 플랫폼은 건너뛰고
+   그 사유가 대시보드 소셜 탭에 기록됩니다.
+
+---
+
+## 🚨 실패 알림 (텔레그램) 설정 — 선택
+
+blog-run 실패 시 텔레그램으로 즉시 알림을 받으려면:
+
+1. 텔레그램에서 `@BotFather`에게 `/newbot` → 봇 토큰 발급
+2. 만든 봇과 대화 시작 후 `https://api.telegram.org/bot<토큰>/getUpdates` 접속 → `chat.id` 확인
+3. GitHub Secrets 등록: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`
+
+미설정 시 알림 없이 기존대로 동작합니다 (GitHub Issue 알림은 schedule-monitor가 계속 담당).

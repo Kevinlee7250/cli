@@ -771,15 +771,16 @@ def get_trending_keywords(
                 keyword_sources[kw] = "claude_ai"
         candidates += claude_kws
 
-    # GSC 고성과 카테고리 수집 (GSC_SITE_URL 설정 시)
+    # GSC 고성과 카테고리 수집 — 블로그별 gsc_site_url 우선, 없으면 전역 GSC_SITE_URL
     gsc_high_cats: list[str] = []
     gsc_suggested: list[str] = []
     try:
         from config import GSC_SITE_URL
-        if GSC_SITE_URL:
+        gsc_url = cfg.get("gsc_site_url") or GSC_SITE_URL
+        if gsc_url:
             from gsc_fetcher import get_high_performing_categories, get_gsc_suggested_keywords
-            gsc_high_cats = get_high_performing_categories(GSC_SITE_URL)
-            gsc_suggested = get_gsc_suggested_keywords(GSC_SITE_URL, count=count)
+            gsc_high_cats = get_high_performing_categories(gsc_url)
+            gsc_suggested = get_gsc_suggested_keywords(gsc_url, count=count)
             # GSC 추천 키워드를 후보에 추가
             for kw in gsc_suggested:
                 if kw not in keyword_sources:

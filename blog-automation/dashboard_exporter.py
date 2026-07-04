@@ -112,7 +112,7 @@ def log_run(
         "errorMessages": (error_messages or [])[:20],
         "imagesInserted": total_images,
         "totalWords": total_words,
-        "blogId": cfg.get("id", "default"),
+        "blogId": cfg.get("id", "blog1"),
         "blogName": cfg.get("name", ""),
         "platforms": {
             "blogger": blogger_uploaded,
@@ -128,12 +128,13 @@ def log_run(
                 "contentPreview": r.get("content_preview", ""),
                 "faqCount": len(r.get("faq", [])),
                 "faq": r.get("faq", []),
+                "factCheck": r.get("fact_check"),
                 "sources": r.get("sources", []),
                 "labels": r.get("labels", []),
                 "metaDescription": r.get("meta_description", ""),
                 "adsenseCategory": _categorize(r.get("keyword", "")),
                 "articleType": r.get("article_type", ""),
-                "blogId": cfg.get("id", "default"),
+                "blogId": cfg.get("id", "blog1"),
                 "blogName": cfg.get("name", ""),
                 # 소셜 미디어 콘텐츠 (social_publisher.generate_social_content() 반환값)
                 "socialContent": r.get("socialContent"),
@@ -381,7 +382,7 @@ def export_dashboard() -> None:
     seen_titles: set[str] = set()
     blog_stats: dict[str, dict] = {}
     for run in history:
-        run_blog_id = run.get("blogId", "default")
+        run_blog_id = run.get("blogId", "blog1")
         run_blog_name = run.get("blogName", "")
         if run_blog_id not in blog_stats:
             blog_stats[run_blog_id] = {
@@ -418,7 +419,7 @@ def export_dashboard() -> None:
                 "estimatedCPC": _cpc_for_category(cat),
                 "articleType": p.get("articleType", ""),
                 "trendDirection": "rising",
-                "factCheck": None,
+                "factCheck": p.get("factCheck"),
                 "tags": p.get("labels", [])[:7],
                 "blogUrl": p.get("blogUrl", ""),
                 "metaDescription": p.get("metaDescription", ""),
@@ -553,7 +554,7 @@ def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> 
             "metaDescription": r.get("meta_description", ""),
             "sources": r.get("sources", []),
             "status": "pending",
-            "blogId": cfg.get("id", r.get("blogId", "default")),
+            "blogId": cfg.get("id", r.get("blogId", "blog1")),
             "blogName": cfg.get("name", r.get("blogName", "")),
         })
         logger.info(f"  검토 대기 저장: {title[:60]} ({len(content)}자 HTML)")

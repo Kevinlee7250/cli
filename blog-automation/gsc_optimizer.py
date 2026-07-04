@@ -77,12 +77,13 @@ def _google_token() -> str | None:
 # GSC — 저성과 쿼리 추출
 # ──────────────────────────────────────────────────────────────────────────────
 
-def fetch_low_ctr_queries(token: str, days: int = 30) -> list[dict]:
+def fetch_low_ctr_queries(token: str, days: int = 30, site_url: str = "") -> list[dict]:
     """
     GSC 쿼리 데이터에서 노출 >= IMPRESSION_MIN & CTR < CTR_THRESHOLD% 쿼리를 반환.
     반환 형식: [{"query": str, "impressions": int, "ctr": float, "position": float}, ...]
+    site_url 미지정 시 전역 GSC_SITE_URL을 사용합니다.
     """
-    site_url = os.getenv("GSC_SITE_URL", "")
+    site_url = site_url or os.getenv("GSC_SITE_URL", "")
     if not site_url:
         logger.error("GSC_SITE_URL 환경변수 미설정")
         return []
@@ -350,8 +351,25 @@ def run_optimization(dry_run: bool = False, limit: int = MAX_PER_RUN) -> dict:
     if not client:
         return {"optimized": 0, "skipped": 0, "details": [], "error": "API 키 없음"}
 
-    # 1) GSC 저CTR 쿼리 수집
-    low_ctr_queries = fetch_low_ctr_queries(token)
+    # 1) GSC 저CTR 쿼리 수집 — 모든 블로그의 GSC 사이트 순회 (중복 URL 제거)
+    site_urls: list[str] = []
+    try:
+        from config import get_blog_configs
+        for b in get_blog_configs():
+            u = b.get("gsc_site_url", "")
+            if u and u not in site_urls:
+                site_urls.append(u)
+    except Exception as e:
+        logger.debug(f"블로그 설정 로드 실패 — 전역 GSC_SITE_URL 사용: {e}")
+    if not site_urls:
+        site_urls = [os.getenv("GSC_SITE_URL", "")]
+
+    low_ctr_queries: list[dict] = []
+    for su in site_urls:
+        qs = fetch_low_ctr_queries(token, site_url=su)
+        if qs:
+            logger.info(f"저CTR 쿼리 {len(qs)}개 수집: {su}")
+            low_ctr_queries.extend(qs)
     if not low_ctr_queries:
         logger.info("저CTR 쿼리 없음 (모두 CTR >= 3%) — 최적화 불필요")
         return {"optimized": 0, "skipped": 0, "details": []}

@@ -1,0 +1,35 @@
+name: 블로그 자동화 테스트
+
+on:
+  push:
+    branches: [claude/blog-automation-system-KAbtE]
+    paths:
+      - 'blog-automation/**.py'
+      - 'blog-automation/blogs.json'
+  workflow_dispatch:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: 테스트 실행
+        working-directory: blog-automation
+        run: python -m pytest tests/ -v

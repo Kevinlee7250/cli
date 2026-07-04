@@ -829,11 +829,18 @@ def _extract_section_queries(html: str, keyword: str) -> list[str]:
                     break
             extra_terms = " ".join(extra_parts)
 
-        query = f"{keyword} {heading_clean}".strip()
-        if extra_terms:
-            query = f"{query} {extra_terms}".strip()
-        queries.append(query[:65])
+        # 이미지 검색용 쿼리: 키워드 핵심 명사(최대 2개) + 섹션 핵심어
+        # — 문장형 긴 쿼리는 네이버/DDG에서 결과 0건이 되므로 명사 조합으로 축약
+        from image_fetcher import _core_terms
+        kw_core = " ".join(_core_terms(keyword, 2))
+        heading_core = " ".join(_core_terms(heading_clean, 2))
+        parts = [p for p in (kw_core, heading_core, extra_terms) if p]
+        query = " ".join(dict.fromkeys(" ".join(parts).split()))  # 단어 중복 제거
+        queries.append(query[:50])
 
+    # 첫 쿼리(메인 키워드)도 핵심 명사로 축약
+    from image_fetcher import _core_terms as _ct
+    queries[0] = " ".join(_ct(keyword, 3)) or keyword
     return queries[:4]
 
 
@@ -1176,6 +1183,9 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             else:
                 post_data["images_inserted"] = 0
 
+            # 게시 전 팩트체크 (수치·날짜·통계 검증 + 자동 수정)
+            _fact_check_content(post_data, keyword)
+
             # 인라인 스타일 비주얼 디자인 적용 (주제별 컬러 테마)
             post_data["content"] = _apply_design(
                 post_data["content"], keyword, _detect_article_type(keyword)
@@ -1199,6 +1209,84 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             logger.error(f"시리즈 포스트 생성 오류: {e}", exc_info=True)
             return None
     return None
+
+
+def _fact_check_content(post_data: dict, keyword: str) -> None:
+    """
+    게시 전 팩트체크 — 본문의 수치·날짜·통계·기관명 주장 중 의심스러운 것을
+    Claude로 검증하고, 본문에서 원문이 그대로 발견되는 경우 수정을 적용합니다.
+    결과는 post_data['fact_check']에 기록됩니다. 오류 시 게시를 막지 않습니다.
+    환경변수 FACT_CHECK=false 로 비활성화할 수 있습니다.
+    """
+    if os.getenv("FACT_CHECK", "true").lower() != "true":
+        post_data["fact_check"] = {"checked": False, "reason": "disabled"}
+        return
+    try:
+        content_html = post_data.get("content", "")
+        plain = re.sub(r"<[^>]+>", " ", content_html)
+        plain = re.sub(r"\s+", " ", plain).strip()[:3500]
+        if len(plain) < 300:
+            post_data["fact_check"] = {"checked": False, "reason": "too_short"}
+            return
+
+        from datetime import datetime as _dt
+        today = _dt.now().strftime("%Y년 %m월 %d일")
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        msg = client.messages.create(
+            model=CLAUDE_MODEL,
+            max_tokens=800,
+            system=(
+                f"현재 날짜: {today}. 당신은 블로그 글의 팩트체커입니다. "
+                "본문에서 사실 오류 가능성이 높은 주장만 찾으세요: "
+                "①검증 불가능한 구체적 수치·통계(예: '국민 67%가'), ②잘못된 날짜/연도, "
+                "③존재하지 않는 제도·기관·상품명, ④과장된 단정(예: '무조건', '100%'). "
+                "개인 경험담·주관적 의견은 문제 삼지 마세요. JSON만 응답하세요."
+            ),
+            messages=[{
+                "role": "user",
+                "content": (
+                    f"주제: {keyword}\n본문:\n{plain}\n\n"
+                    '다음 JSON 형식으로만 답하세요:\n'
+                    '{"issues": [{"quote": "본문에서 그대로 복사한 문제 구절(20자 이내)", '
+                    '"problem": "무엇이 문제인지", "fix": "안전하게 고친 표현"}], '
+                    '"verdict": "pass 또는 warn"}\n'
+                    "문제가 없으면 issues를 빈 배열로, verdict를 pass로 하세요. 이슈는 최대 5개."
+                ),
+            }],
+        )
+        raw = msg.content[0].text.strip()
+        m = re.search(r"\{.*\}", raw, re.DOTALL)
+        result = json.loads(m.group()) if m else {"issues": [], "verdict": "pass"}
+
+        applied = 0
+        for issue in result.get("issues", [])[:5]:
+            quote, fix = issue.get("quote", ""), issue.get("fix", "")
+            # 본문 HTML에 원문이 그대로 있을 때만 안전하게 치환
+            if quote and fix and quote in content_html:
+                content_html = content_html.replace(quote, fix, 1)
+                applied += 1
+        if applied:
+            post_data["content"] = content_html
+
+        post_data["fact_check"] = {
+            "checked": True,
+            "verdict": result.get("verdict", "pass"),
+            "issues_found": len(result.get("issues", [])),
+            "fixes_applied": applied,
+            "issues": [
+                {"problem": i.get("problem", ""), "fixed": bool(i.get("quote", "") and i.get("quote") in plain)}
+                for i in result.get("issues", [])[:5]
+            ],
+        }
+        if result.get("issues"):
+            logger.info(
+                f"팩트체크: 이슈 {len(result['issues'])}건 발견, {applied}건 자동 수정 적용"
+            )
+        else:
+            logger.info("팩트체크: 통과")
+    except Exception as e:
+        logger.warning(f"팩트체크 실패 (게시는 계속 진행): {e}")
+        post_data["fact_check"] = {"checked": False, "reason": str(e)[:100]}
 
 
 def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None = None) -> dict | None:
@@ -1292,6 +1380,9 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             else:
                 post_data["images_inserted"] = 0
                 logger.warning("글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행")
+
+            # 게시 전 팩트체크 (수치·날짜·통계 검증 + 자동 수정)
+            _fact_check_content(post_data, keyword)
 
             # 인라인 스타일 비주얼 디자인 적용 (주제별 컬러 테마)
             post_data["content"] = _apply_design(

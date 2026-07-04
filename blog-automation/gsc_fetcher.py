@@ -44,9 +44,17 @@ def _get_access_token() -> str | None:
 # 캐시
 # ─────────────────────────────────────────────
 
-def _load_cache() -> dict | None:
+def _cache_file_for(site_url: str) -> str:
+    """사이트별 캐시 파일 경로 — 멀티블로그에서 캐시가 서로 덮어쓰지 않도록 분리."""
+    import hashlib
+    suffix = hashlib.md5(site_url.encode()).hexdigest()[:8] if site_url else "default"
+    return os.path.join(os.path.dirname(__file__), "logs", f"gsc_cache_{suffix}.json")
+
+
+def _load_cache(site_url: str = "") -> dict | None:
+    path = _cache_file_for(site_url) if site_url else CACHE_FILE
     try:
-        with open(CACHE_FILE, encoding="utf-8") as f:
+        with open(path, encoding="utf-8") as f:
             data = json.load(f)
         fetched = datetime.fromisoformat(data.get("fetched_at", "2000-01-01"))
         if (datetime.now() - fetched).total_seconds() < CACHE_TTL_HOURS * 3600:
@@ -57,9 +65,10 @@ def _load_cache() -> dict | None:
     return None
 
 
-def _save_cache(data: dict) -> None:
-    os.makedirs(os.path.dirname(CACHE_FILE), exist_ok=True)
-    with open(CACHE_FILE, "w", encoding="utf-8") as f:
+def _save_cache(data: dict, site_url: str = "") -> None:
+    path = _cache_file_for(site_url) if site_url else CACHE_FILE
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
@@ -76,7 +85,7 @@ def fetch_search_analytics(site_url: str, days: int = 30, row_limit: int = 100) 
         logger.debug("GSC_SITE_URL 미설정 — GSC 연동 생략")
         return None
 
-    cached = _load_cache()
+    cached = _load_cache(site_url)
     if cached and cached.get("site_url") == site_url:
         return cached
 
@@ -163,7 +172,7 @@ def fetch_search_analytics(site_url: str, days: int = 30, row_limit: int = 100) 
         "total_rows": len(rows),
     }
 
-    _save_cache(result)
+    _save_cache(result, site_url)
     logger.info(f"GSC 데이터 수집 완료: {len(rows)}개 쿼리 / {len(category_performance)}개 카테고리")
     return result
 

@@ -6,7 +6,7 @@ load_dotenv()
 
 # Claude API
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-6")
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
 
 # Google Blogger OAuth2 (기본/단일 블로그)
 BLOGGER_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
@@ -106,7 +106,7 @@ _BLOGS_REGISTRY_FILE = os.path.join(os.path.dirname(__file__), "blogs.json")
 
 def _default_blog() -> dict:
     return {
-        "id": "default",
+        "id": "blog1",
         "name": BLOG_NAME,
         "blog_id": BLOGGER_BLOG_ID,
         "client_id": BLOGGER_CLIENT_ID,
@@ -149,6 +149,7 @@ def _load_registry_configs() -> dict:
                 "post_status": b.get("post_status", POST_STATUS),
                 "topics": b.get("topics", []),
                 "naver_api_queries": b.get("naver_api_queries", []),
+                "gsc_site_url": b.get("gsc_site_url") or GSC_SITE_URL,
                 "enabled": True,
             }
         return result

@@ -18,6 +18,7 @@
 import argparse
 import logging
 import os
+import re
 import sys
 import time
 from datetime import datetime
@@ -303,10 +304,20 @@ def run_once(
             try:
                 from social_publisher import publish_all, generate_social_content
                 if SOCIAL_AUTO_PUBLISH:
-                    social_result = publish_all(post_data, blog_url=url)
+                    # 본문 첫 이미지를 소셜 발행에 사용 (Instagram은 이미지 필수)
+                    _img_m = re.search(r'<img[^>]+src="([^"]+)"', post_data.get("content", ""))
+                    social_result = publish_all(
+                        post_data, blog_url=url,
+                        image_url=_img_m.group(1) if _img_m else None,
+                    )
                 else:
                     social_content = generate_social_content(post_data, blog_url=url)
-                    social_result = {"socialContent": social_content}
+                    # 미발행 사유를 명시적으로 기록 (대시보드에서 '왜 발행 안 됐는지' 확인용)
+                    _skip = {"skipped": True, "reason": "SOCIAL_AUTO_PUBLISH=false"}
+                    social_result = {
+                        "socialContent": social_content,
+                        "instagram": _skip, "threads": _skip, "tiktok": _skip,
+                    }
                     logger.info(f"  📱 소셜 콘텐츠 생성 완료 (자동 게시 비활성, SOCIAL_AUTO_PUBLISH=true 시 게시)")
                 post_data["socialContent"]    = social_result.get("socialContent")
                 post_data["social_instagram"] = social_result.get("instagram")

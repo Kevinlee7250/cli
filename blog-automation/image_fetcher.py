@@ -163,6 +163,38 @@ def _wikimedia_images(keyword: str, count: int) -> list[dict]:
 
 
 # ──────────────────────────────────────────────────────────────────────────────
+# 쿼리 단순화
+# ──────────────────────────────────────────────────────────────────────────────
+
+# 체험담식 키워드의 수식어 — 이미지 검색에 방해만 되는 단어들
+_QUERY_FLUFF = {
+    "실수담", "솔직", "후기", "직접", "처음", "해봤더니", "해봤어요", "몰랐던",
+    "알게", "공개", "현실", "진짜", "갔을", "받아보고", "써봤더니", "저지른",
+    "이야기", "느낀", "겪은", "달랐던", "생각보다", "막상", "저도", "제가",
+    "했을", "안", "것들", "것", "때", "저는", "완벽", "정리", "총정리",
+    "실수들", "실수", "투자할", "혼자", "비슷하면", "이유", "방법", "꿀팁",
+}
+
+
+def _core_terms(text: str, max_terms: int = 3) -> list[str]:
+    """검색 쿼리에서 수식어를 제거하고 핵심 명사만 추출합니다."""
+    words = re.findall(r'[A-Za-z][A-Za-z0-9&]{1,9}|[가-힣]{2,}', text)
+    core = []
+    for w in words:
+        if w in _QUERY_FLUFF or w.lower() in {c.lower() for c in core}:
+            continue
+        core.append(w)
+        if len(core) >= max_terms:
+            break
+    return core
+
+
+def _simplify_query(query: str, max_terms: int = 3) -> str:
+    """긴 체험담식 쿼리를 이미지 검색에 적합한 핵심 명사 조합으로 줄입니다."""
+    return " ".join(_core_terms(query, max_terms))
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 # 통합 검색 & HTML 삽입
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -176,24 +208,61 @@ def _score_title_relevance(img: dict, query: str) -> float:
     return len(query_words & title_words) / len(query_words)
 
 
+def _search_all_sources(
+    query: str,
+    naver_client_id: str,
+    naver_client_secret: str,
+    n_candidates: int,
+) -> list[dict]:
+    """네이버 → DDG → Wikimedia 순으로 검색합니다."""
+    if naver_client_id and naver_client_secret:
+        candidates = _naver_images(query, n_candidates, naver_client_id, naver_client_secret)
+        if candidates:
+            return candidates
+    candidates = _ddg_images(query, n_candidates)
+    if candidates:
+        return candidates
+    return _wikimedia_images(query, n_candidates)
+
+
+# 관련성 최소 임계값 — 이 미만이면 엉뚱한 이미지(Wikimedia 잡음 등)로 판단하고 버림
+_MIN_RELEVANCE = 0.15
+
+
 def _fetch_best_image(
     query: str,
     naver_client_id: str = "",
     naver_client_secret: str = "",
     n_candidates: int = 4,
 ) -> dict | None:
-    """단일 쿼리로 후보 이미지 여러 개를 가져와 제목 관련성이 가장 높은 것을 반환합니다."""
-    candidates: list[dict] = []
-    if naver_client_id and naver_client_secret:
-        candidates = _naver_images(query, n_candidates, naver_client_id, naver_client_secret)
-    if not candidates:
-        candidates = _ddg_images(query, n_candidates)
-    if not candidates:
-        candidates = _wikimedia_images(query, n_candidates)
-    if not candidates:
-        return None
-    # 제목 관련성 점수가 가장 높은 후보 선택 (동점 시 API 기본 순위 존중)
-    return max(candidates, key=lambda img: _score_title_relevance(img, query))
+    """
+    후보 이미지를 가져와 제목 관련성이 가장 높은 것을 반환합니다.
+    긴 체험담식 쿼리는 결과가 없으므로 점진적으로 단순화하며 재시도합니다:
+    ① 원본 쿼리 → ② 핵심 명사 3개 → ③ 핵심 명사 2개
+    관련성이 임계값 미만인 후보만 있으면 None (잡음 이미지 삽입 방지).
+    """
+    attempts = [query]
+    simple3 = _simplify_query(query, 3)
+    simple2 = _simplify_query(query, 2)
+    if simple3 and simple3 != query:
+        attempts.append(simple3)
+    if simple2 and simple2 not in attempts:
+        attempts.append(simple2)
+
+    # 관련성 채점은 항상 단순화된 핵심 명사 기준 (원본 쿼리는 수식어가 많아 점수가 왜곡됨)
+    score_query = simple2 or simple3 or query
+
+    for attempt_q in attempts:
+        candidates = _search_all_sources(
+            attempt_q, naver_client_id, naver_client_secret, n_candidates
+        )
+        if not candidates:
+            continue
+        best = max(candidates, key=lambda img: _score_title_relevance(img, score_query))
+        if _score_title_relevance(best, score_query) >= _MIN_RELEVANCE:
+            return best
+        logger.debug(f"관련성 미달 후보 폐기: '{attempt_q}' → '{best.get('title','')[:30]}'")
+    return None
 
 
 def _filter_relevant_images(
@@ -297,6 +366,16 @@ def fetch_images_for_queries(
 
 
 
+def _safe_caption(img: dict, alt: str) -> str:
+    """캡션 텍스트 결정 — 파일명(확장자 포함)이나 무의미한 제목은 alt로 대체합니다."""
+    title = (img.get("title") or "").strip()
+    if not title or re.search(r'\.(jpe?g|png|webp|svg|gif)$', title, re.I):
+        return alt
+    if len(title) < 4:
+        return alt
+    return title
+
+
 def _make_img_html(img: dict, alt: str, caption: str = "") -> str:
     """이미지 SEO 최적화 HTML 생성."""
     alt_safe = html.escape(alt, quote=True)
@@ -339,7 +418,8 @@ def inject_images_into_content(content: str, images: list[dict], keyword: str) -
     if first_p:
         try:
             idx, img = next(img_iter)
-            img_html = _make_img_html(img, _alt(img, keyword), img.get("title", ""))
+            alt = _alt(img, keyword)
+            img_html = _make_img_html(img, alt, _safe_caption(img, alt))
             content = content[:first_p.end()] + img_html + content[first_p.end():]
         except StopIteration:
             return content
@@ -352,11 +432,8 @@ def inject_images_into_content(content: str, images: list[dict], keyword: str) -
     for pos in insert_positions:
         try:
             idx, img = next(img_iter)
-            img_html = _make_img_html(
-                img,
-                _alt(img, f"{keyword} 관련 이미지 {idx + 1}"),
-                img.get("title", ""),
-            )
+            alt = _alt(img, f"{keyword} 관련 이미지 {idx + 1}")
+            img_html = _make_img_html(img, alt, _safe_caption(img, alt))
             actual_pos = pos + offset
             content = content[:actual_pos] + img_html + content[actual_pos:]
             offset += len(img_html)

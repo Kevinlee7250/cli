@@ -199,20 +199,36 @@ def _get_active_used_set(used_data: dict) -> set[str]:
 # 포스팅 이력 로드
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _load_recent_post_corpus(limit_runs: int = 30) -> list[str]:
+def _load_recent_post_corpus(limit_runs: int = 30, blog_id: str = "") -> list[str]:
     """
     최근 포스팅 이력에서 키워드 + 제목 코퍼스를 수집합니다.
     유사도 비교에 사용됩니다.
+    blog_id가 주어지면 해당 블로그의 이력만 사용합니다 — 주제가 겹치는
+    다른 블로그(예: blog1 재테크 ↔ blog3 금융)가 서로의 키워드를
+    중복으로 차단하지 않도록 하기 위함입니다.
+    과거 default로 기록된 이력은 blog1 소속으로 간주합니다.
     """
     if not os.path.exists(_HISTORY_FILE):
         return []
+
+    def _matches(entry_blog_id: str) -> bool:
+        if not blog_id:
+            return True
+        if entry_blog_id in ("default", ""):
+            return blog_id in ("blog1", "default")
+        return entry_blog_id == blog_id
+
     try:
         with open(_HISTORY_FILE, encoding="utf-8") as f:
             history = json.load(f)
         corpus = []
         for run in history[:limit_runs]:
-            corpus.extend(run.get("keywords", []))
+            run_blog_id = run.get("blogId", "")
+            if _matches(run_blog_id):
+                corpus.extend(run.get("keywords", []))
             for post in run.get("posts", []):
+                if not _matches(post.get("blogId", run_blog_id)):
+                    continue
                 if post.get("keyword"):
                     corpus.append(post["keyword"])
                 if post.get("title"):
@@ -716,9 +732,9 @@ def get_trending_keywords(
     used_data = _load_used_keywords(used_kw_file)
     active_used_set = _get_active_used_set(used_data)
 
-    # 포스팅 이력 코퍼스 (키워드 + 제목)
-    post_corpus = _load_recent_post_corpus()
-    logger.info(f"포스팅 이력 코퍼스: {len(post_corpus)}개 항목 로드 (중복 방지 기준)")
+    # 포스팅 이력 코퍼스 (키워드 + 제목) — 현재 블로그의 이력만
+    post_corpus = _load_recent_post_corpus(blog_id=blog_id)
+    logger.info(f"포스팅 이력 코퍼스: {len(post_corpus)}개 항목 로드 (blog_id={blog_id or '전체'} 중복 방지 기준)")
 
     candidates: list[str] = []
     keyword_sources: dict[str, str] = {}  # 키워드별 수집 출처 추적

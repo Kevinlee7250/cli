@@ -152,7 +152,9 @@ def _load_registry_configs() -> dict:
                 "enabled": True,
             }
         return result
-    except Exception:
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).warning(f"blogs.json 로드 실패 — 레지스트리 블로그 비활성화: {e}")
         return {}
 
 
@@ -172,8 +174,16 @@ def get_blog_configs() -> list[dict]:
     if _BLOGS_CONFIG_LIST:
         merged = dict(registry)  # blogs.json 기반
         for b in _BLOGS_CONFIG_LIST:
-            if b.get("enabled", True) and b.get("id"):
-                merged[b["id"]] = b  # BLOGS_CONFIG 항목이 덮어씀
+            if not b.get("enabled", True):
+                continue
+            # id가 없는 항목은 버리지 않고 blog1로 간주 (OAuth/blog_id 유실 방지)
+            if not b.get("id"):
+                import logging
+                logging.getLogger(__name__).warning(
+                    "BLOGS_CONFIG 항목에 'id'가 없어 'blog1'로 간주합니다 — Secret에 id 필드를 추가하세요."
+                )
+                b = {**b, "id": "blog1"}
+            merged[b["id"]] = b  # BLOGS_CONFIG 항목이 덮어씀
         if merged:
             return list(merged.values())
 

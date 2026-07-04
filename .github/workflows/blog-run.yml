@@ -45,6 +45,11 @@ permissions:
   pages: write
   id-token: write
 
+# 스케줄 실행 중 수동 dispatch가 겹쳐도 동시 실행 방지 (대기 후 순차 실행)
+concurrency:
+  group: blog-run
+  cancel-in-progress: false
+
 jobs:
   run-blog-automation:
     runs-on: ubuntu-latest
@@ -89,7 +94,7 @@ jobs:
           THREADS_HANDLE="${{ secrets.THREADS_HANDLE }}"
           IMGBB_API_KEY="${{ secrets.IMGBB_API_KEY }}"
           SOCIAL_AUTO_PUBLISH="${{ secrets.SOCIAL_AUTO_PUBLISH }}"
-          BLOGS_CONFIG=${{ secrets.BLOGS_CONFIG }}
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
           BLOG_NAME="${{ secrets.BLOG_NAME }}"
           POSTS_PER_RUN="${{ inputs.posts_per_run || '1' }}"
           POST_STATUS="${{ (inputs.mode == 'draft') && 'draft' || 'live' }}"

@@ -28,6 +28,8 @@ concurrency:
 
 jobs:
   deploy:
+    # workflow_run 트리거는 blog-run 성공 시에만 배포 (push/dispatch는 항상 배포)
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

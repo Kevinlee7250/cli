@@ -58,14 +58,27 @@ jobs:
             "당신은 블로그 자동화 시스템의 관리봇입니다. Claude Haiku 모델 기반으로 시스템 상태를 분석하고 조언합니다.",
             "응답은 간결하고 실용적으로 한국어로 작성하세요.",
           ]
-          if ctx:
-            system_parts.append(f"\n현재 시스템 상태:\n{json.dumps(ctx, ensure_ascii=False, indent=2)}")
+          ctx_for_system = {k: v for k, v in ctx.items() if k != 'history'}
+          if ctx_for_system:
+            system_parts.append(f"\n현재 시스템 상태:\n{json.dumps(ctx_for_system, ensure_ascii=False, indent=2)}")
+
+          # 대화 히스토리 복원 (있는 경우)
+          history = ctx.get('history') or []
+          messages = []
+          for h in history:
+            role = h.get('role')
+            content = h.get('content', '')
+            if role in ('user', 'assistant') and content:
+              messages.append({'role': role, 'content': content})
+          # 현재 메시지가 히스토리에 이미 포함되어 있지 않으면 추가
+          if not messages or messages[-1].get('content') != user_msg:
+            messages.append({'role': 'user', 'content': user_msg})
 
           response = client.messages.create(
             model="claude-haiku-4-5-20251001",
             max_tokens=1024,
             system="\n".join(system_parts),
-            messages=[{"role": "user", "content": user_msg}]
+            messages=messages
           )
           reply_text = response.content[0].text
 
@@ -87,11 +100,17 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # bot_reply.json 내용 보존 후 최신 원격 상태로 리셋 (충돌 방지)
+          cp docs/data/bot_reply.json /tmp/bot_reply.json
+          git fetch origin claude/blog-automation-system-KAbtE
+          git reset --hard origin/claude/blog-automation-system-KAbtE
+          cp /tmp/bot_reply.json docs/data/bot_reply.json
           git add -f docs/data/bot_reply.json
           git diff --staged --quiet && echo "변경없음" && exit 0
           git commit -m "🤖 봇 응답 (#${{ github.run_number }})"
           for i in 1 2 3; do
-            git pull --rebase --autostash origin claude/blog-automation-system-KAbtE && break
-            sleep 3
+            git push origin claude/blog-automation-system-KAbtE && break
+            echo "push 재시도 $i/3 — 원격 변경분 반영 후 재시도"
+            git pull --rebase --autostash origin claude/blog-automation-system-KAbtE || true
+            sleep $((i * 2))
           done
-          git push origin claude/blog-automation-system-KAbtE

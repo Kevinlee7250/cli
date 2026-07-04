@@ -1,9 +1,9 @@
 name: 블로그 최적화 (주 1회 — GSC CTR 개선)
 
 on:
-  # 매주 월요일 오전 9시 KST (= UTC 00:00 Monday)
+  # 매주 화요일 오전 9시 KST (= UTC 00:00 Tuesday) — 충돌 해결: blog-analytics(월)과 분리
   schedule:
-    - cron: '0 0 * * 1'
+    - cron: '0 0 * * 2'
 
   # 수동 트리거
   workflow_dispatch:
@@ -92,6 +92,12 @@ jobs:
           else
             TIMESTAMP=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M KST')
             git commit -m "chore: GSC CTR 최적화 제목 업데이트 ($TIMESTAMP)"
-            git push origin claude/blog-automation-system-KAbtE
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && break
+              echo "pull+push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
             echo "커밋 완료"
           fi

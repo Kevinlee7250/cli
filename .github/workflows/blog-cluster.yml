@@ -1,0 +1,58 @@
+name: 링크 클러스터 빌드
+
+on:
+  workflow_dispatch: {}          # 수동 실행
+  schedule:
+    - cron: '0 4 * * 0'         # 매주 일요일 04:00 UTC (KST 13:00) — blog-run 정오(03:00 UTC)와 충돌 회피
+  push:
+    paths:
+      - 'docs/data/posts.json'  # posts.json 변경 시 자동 재빌드
+
+permissions:
+  contents: write
+
+jobs:
+  build-clusters:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: 링크 클러스터 빌드
+        working-directory: blog-automation
+        run: |
+          python related_posts.py --build-clusters
+          echo "✅ 클러스터 빌드 완료"
+
+      - name: link_clusters.json 커밋
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data/link_clusters.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "🔗 링크 클러스터 재빌드 (#${{ github.run_number }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && break
+              echo "pull+push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
+          fi

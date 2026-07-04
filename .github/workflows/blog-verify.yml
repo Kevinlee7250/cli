@@ -1,0 +1,189 @@
+name: 게시 완료글 검증 + 자동 재게시
+
+on:
+  # blog-run.yml 완료 후 자동 실행
+  workflow_run:
+    workflows: ["블로그 자동화 실행"]
+    types: [completed]
+    branches: [claude/blog-automation-system-KAbtE]
+
+  # 수동 실행
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '검증 범위'
+        required: false
+        default: 'recent'
+        type: choice
+        options:
+          - recent        # 최근 25시간 내 게시 포스트
+          - all           # 전체 포스트 재검증
+          - report        # 기존 리포트만 출력
+          - repost_only   # 기존 repost 항목만 즉시 재게시
+      grade:
+        description: '특정 등급만 재검증 (빈칸=전체, S/A/B/C/F)'
+        required: false
+        default: ''
+      no_repost:
+        description: '자동 재게시 비활성화'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      no_issue:
+        description: 'GitHub Issue 생성 안 함'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+permissions:
+  contents: write
+  issues:   write
+
+jobs:
+  verify-and-repost:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    timeout-minutes: 25
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          GSC_SITE_URL="${{ secrets.GSC_SITE_URL }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          BLOG_NAME="${{ secrets.BLOG_NAME }}"
+          ENVEOF
+
+      - name: 로그 디렉토리 생성
+        working-directory: blog-automation
+        run: mkdir -p logs
+
+      # ── Step 1: 검증 실행 ──────────────────────────────────
+      - name: 게시 완료글 검증 실행
+        id: verify
+        working-directory: blog-automation
+        env:
+          GITHUB_TOKEN:      ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF_NAME:   ${{ github.ref_name }}
+          BLOGGER_BLOG_ID:   ${{ secrets.BLOGGER_BLOG_ID }}
+        run: |
+          MODE="${{ inputs.mode || 'recent' }}"
+          GRADE="${{ inputs.grade }}"
+          NO_REPOST="${{ inputs.no_repost || 'false' }}"
+          NO_ISSUE="${{ inputs.no_issue || 'false' }}"
+
+          FLAGS=""
+          case "$MODE" in
+            all)         FLAGS="$FLAGS --all" ;;
+            report)      FLAGS="$FLAGS --report" ;;
+            repost_only) FLAGS="$FLAGS --repost-failed" ;;
+          esac
+          [ -n "$GRADE" ]          && FLAGS="$FLAGS --grade $GRADE"
+          [ "$NO_REPOST" = "true" ] && FLAGS="$FLAGS --no-repost"
+          [ "$NO_ISSUE"  = "true" ] && FLAGS="$FLAGS --no-issue"
+
+          echo "=== 검증 실행: python post_verifier.py $FLAGS ==="
+          python post_verifier.py $FLAGS
+          EXIT_CODE=$?
+          echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+
+          # exit 코드 설명:
+          #   0 = 전원 통과
+          #   1 = warn 항목 존재 (품질 미달)
+          #   2 = repost 항목 존재 (URL 불가 → 재게시 시도)
+          exit 0  # 워크플로우 계속 진행 (결과는 output으로 전달)
+
+      # ── Step 2: 재게시 후 재검증 (repost 발생 시) ──────────
+      - name: 재게시 후 검증 재실행
+        if: ${{ steps.verify.outputs.exit_code == '2' }}
+        working-directory: blog-automation
+        env:
+          GITHUB_TOKEN:      ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF_NAME:   ${{ github.ref_name }}
+          BLOGGER_BLOG_ID:   ${{ secrets.BLOGGER_BLOG_ID }}
+        run: |
+          echo "=== 재게시 완료 후 30초 대기 (Blogger 인덱싱) ==="
+          sleep 30
+          echo "=== 재게시된 포스트 재검증 ==="
+          python post_verifier.py --no-issue --no-repost || true
+
+      # ── Step 3: 결과 커밋 ───────────────────────────────────
+      - name: 검증 결과 커밋 & 푸시
+        if: ${{ inputs.mode != 'report' }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            docs/data/verify_report.json \
+            docs/data/pending_posts.json \
+            2>/dev/null || true
+
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            EXIT="${{ steps.verify.outputs.exit_code }}"
+            if [ "$EXIT" = "2" ]; then
+              MSG="fix: 게시 실패 포스트 자동 재게시 처리"
+            elif [ "$EXIT" = "1" ]; then
+              MSG="chore: 게시 완료글 품질 경고 기록"
+            else
+              MSG="chore: 게시 완료글 검증 결과 업데이트"
+            fi
+            TIMESTAMP=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M KST')
+            git commit -m "$MSG ($TIMESTAMP)"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && break
+              echo "pull+push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
+            echo "✅ 커밋 완료"
+          fi
+
+      # ── Step 4: 요약 출력 ───────────────────────────────────
+      - name: 검증 요약 출력
+        if: always()
+        working-directory: blog-automation
+        run: |
+          python post_verifier.py --report || true
+
+      # ── Step 5: 리포트 아티팩트 ────────────────────────────
+      - name: 검증 리포트 아티팩트 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-report-${{ github.run_number }}
+          path: docs/data/verify_report.json
+          retention-days: 14

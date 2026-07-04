@@ -12,13 +12,13 @@ on:
         required: false
         default: ''
       publish_all:
-        description: '모든 pending/failed 포스트 일괄 게시'
+        description: '모든 pending 포스트 일괄 게시'
         required: false
-        default: 'false'
+        default: 'true'
         type: choice
         options:
-          - 'false'
           - 'true'
+          - 'false'
 
 permissions:
   contents: write
@@ -26,7 +26,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
 
     steps:
       - name: 코드 체크아웃
@@ -58,9 +58,6 @@ jobs:
           POST_STATUS="live"
           LOG_LEVEL=info
           ENVEOF
-          # 환경변수 키 확인 (값 노출 방지)
-          echo "✅ .env 생성 완료"
-          cat .env | grep -o '^[[:space:]]*[^=]*' | tr -d ' '
 
       - name: 포스트 게시
         working-directory: blog-automation
@@ -94,7 +91,13 @@ jobs:
             echo "변경사항 없음 — 커밋 건너뜀"
           else
             git commit -m "✅ 수동 게시 완료 (#${{ github.run_number }})"
-            git push origin claude/blog-automation-system-KAbtE
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && break
+              echo "pull+push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
           fi
 
       - name: 로그 업로드

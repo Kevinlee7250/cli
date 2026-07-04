@@ -54,7 +54,7 @@ jobs:
           GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
           GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
           BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
-          BLOGS_CONFIG=${{ secrets.BLOGS_CONFIG }}
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
           BLOG_NAME="${{ secrets.BLOG_NAME }}"
           ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
           ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"

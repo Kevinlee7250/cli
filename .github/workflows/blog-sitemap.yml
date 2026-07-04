@@ -1,128 +1,147 @@
-name: 🗺️ Sitemap 자동 생성 & GSC 제출
+name: 사이트맵 생성 (블로그 포스트 업데이트 후 자동 실행)
 
 on:
-  schedule:
-    - cron: '0 1 * * *'          # 매일 01:00 UTC (KST 10:00)
+  # blog-run.yml 완료 후 자동 실행 (의존성 체인)
+  workflow_run:
+    workflows: ["블로그 자동화 실행"]
+    types: [completed]
+    branches: [claude/blog-automation-system-KAbtE]
+
+  # 수동 실행
   workflow_dispatch:
-  push:
-    branches: [latest]
-    paths:
-      - 'docs/data/posts.json'   # posts.json 변경 시 자동 실행
 
 permissions:
   contents: write
 
 jobs:
-  sitemap:
+  generate-sitemap:
     runs-on: ubuntu-latest
+    # blog-run이 성공한 경우에만 실행 (실패 시 스킵)
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     timeout-minutes: 10
 
     steps:
-      - name: 코드 체크아웃 (latest)
+      - name: 코드 체크아웃
         uses: actions/checkout@v4
         with:
-          ref: latest
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
+          ref: claude/blog-automation-system-KAbtE
 
-      - name: Python 설치
+      - name: Python 3.11 설정
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Git 설정
+      - name: 사이트맵 생성
         run: |
-          git config user.email "github-actions@github.com"
-          git config user.name "GitHub Actions"
+          python3 << 'PYEOF'
+          import json
+          import re
+          from pathlib import Path
+          from datetime import datetime, timezone
 
-      - name: Sitemap 생성
-        env:
-          GOOGLE_CLIENT_ID:     ${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
-          GSC_SITE_URL:         ${{ secrets.GSC_SITE_URL }}
-          SITEMAP_URL:          https://kevinlee7250.github.io/cli/sitemap.xml
-        run: |
-          cd blog-automation
-          python3 sitemap_generator.py
+          # 설정
+          POSTS_JSON = Path("docs/data/posts.json")
+          SITEMAP_PATH = Path("docs/sitemap.xml")
+          ROBOTS_PATH  = Path("docs/robots.txt")
 
-      - name: latest 브랜치에 sitemap.xml 커밋
-        run: |
-          git add -f docs/sitemap.xml
-          git status --short
-          git diff --cached --quiet && echo "변경 없음 — 커밋 생략" || \
-            git commit -m "🗺️ sitemap.xml 업데이트 — $(date -u +%Y-%m-%d) ($(grep -c '<loc>' docs/sitemap.xml)개 URL)"
-          git push origin latest || true
+          # posts.json 로드
+          if not POSTS_JSON.exists():
+              print("❌ posts.json 없음")
+              exit(0)
 
-      - name: GitHub Pages 브랜치(claude/blog-automation-system-KAbtE)에 sitemap 배포
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          python3 - << 'PYEOF'
-          import json, base64, os, urllib.request, urllib.error
+          posts = json.loads(POSTS_JSON.read_text(encoding="utf-8"))
+          print(f"📄 포스트 수: {len(posts)}")
 
-          TOKEN  = os.environ["GITHUB_TOKEN"]
-          REPO   = "Kevinlee7250/cli"
-          BRANCH = "claude/blog-automation-system-KAbtE"
-          PATH   = "docs/sitemap.xml"
+          # 블로그 URL 수집
+          blog_urls = set()
+          entries = []
 
-          with open(PATH, "rb") as f:
-              raw = f.read()
-          b64 = base64.b64encode(raw).decode()
+          for p in posts:
+              url = p.get("url") or p.get("blogUrl") or p.get("link") or ""
+              if not url or "blogspot.com" not in url:
+                  continue
+              
+              # 블로그 루트 URL 추출
+              match = re.match(r"(https?://[^/]+)", url)
+              if match:
+                  blog_urls.add(match.group(1))
 
-          # 현재 SHA 조회 (업데이트 시 필요)
-          check_url = f"https://api.github.com/repos/{REPO}/contents/{PATH}?ref={BRANCH}"
-          req = urllib.request.Request(check_url, headers={
-              "Authorization": f"token {TOKEN}",
-              "User-Agent": "Python"
-          })
-          sha = ""
-          try:
-              with urllib.request.urlopen(req) as r:
-                  sha = json.load(r).get("sha", "")
-                  print(f"기존 파일 SHA: {sha[:12]}")
-          except urllib.error.HTTPError as e:
-              if e.code == 404:
-                  print("신규 파일 생성")
-              else:
-                  print(f"SHA 조회 실패: {e.code}")
+              # 날짜 파싱
+              pub_date = p.get("publishedAt") or p.get("savedAt") or p.get("createdAt") or ""
+              if len(pub_date) == 14 and pub_date.isdigit():
+                  pub_date = f"{pub_date[:4]}-{pub_date[4:6]}-{pub_date[6:8]}"
+              elif len(pub_date) > 10:
+                  pub_date = pub_date[:10]
 
-          # PUT으로 업로드
-          payload = {
-              "message": f"🗺️ sitemap.xml GitHub Pages 배포",
-              "content": b64,
-              "branch":  BRANCH,
-          }
-          if sha:
-              payload["sha"] = sha
+              # 우선순위 계산 (성적 기반)
+              grade = p.get("grade", "C")
+              priority_map = {"S": "1.0", "A": "0.8", "B": "0.6", "C": "0.5"}
+              priority = priority_map.get(grade, "0.5")
 
-          put_url = f"https://api.github.com/repos/{REPO}/contents/{PATH}"
-          req2 = urllib.request.Request(
-              put_url,
-              data=json.dumps(payload).encode(),
-              method="PUT",
-              headers={
-                  "Authorization":  f"token {TOKEN}",
-                  "Content-Type":   "application/json",
-                  "User-Agent":     "Python",
-              },
-          )
-          try:
-              with urllib.request.urlopen(req2) as r:
-                  result = json.load(r)
-                  print(f"✅ GitHub Pages 배포 성공: {result.get('commit',{}).get('sha','')[:12]}")
-          except urllib.error.HTTPError as e:
-              body = e.read().decode(errors="replace")[:400]
-              print(f"❌ 배포 실패: HTTP {e.code} — {body}")
+              entries.append({
+                  "url": url,
+                  "lastmod": pub_date or datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+                  "priority": priority,
+                  "changefreq": "monthly",
+              })
+
+          # 블로그 루트 URL 추가 (최고 우선순위)
+          for root_url in sorted(blog_urls):
+              entries.insert(0, {
+                  "url": root_url + "/",
+                  "lastmod": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+                  "priority": "1.0",
+                  "changefreq": "daily",
+              })
+
+          # XML 생성
+          xml_lines = [
+              '<?xml version="1.0" encoding="UTF-8"?>',
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+          ]
+          for e in entries:
+              xml_lines += [
+                  "  <url>",
+                  f"    <loc>{e['url']}</loc>",
+                  f"    <lastmod>{e['lastmod']}</lastmod>",
+                  f"    <changefreq>{e['changefreq']}</changefreq>",
+                  f"    <priority>{e['priority']}</priority>",
+                  "  </url>",
+              ]
+          xml_lines.append("</urlset>")
+
+          SITEMAP_PATH.parent.mkdir(parents=True, exist_ok=True)
+          SITEMAP_PATH.write_text("\n".join(xml_lines), encoding="utf-8")
+          print(f"✅ sitemap.xml 생성 완료: {len(entries)}개 URL → {SITEMAP_PATH}")
+
+          # robots.txt 생성/업데이트 (모든 블로그 사이트맵 나열)
+          if blog_urls:
+              lines = ["User-agent: *", "Allow: /", ""]
+              for blog_url in sorted(blog_urls):
+                  lines.append(f"Sitemap: {blog_url}/sitemap.xml")
+              ROBOTS_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
+              print(f"✅ robots.txt 업데이트 완료 ({len(blog_urls)}개 사이트맵)")
+
           PYEOF
 
-      - name: 결과 확인
+      - name: 사이트맵 커밋 & 푸시
         run: |
-          echo "=== sitemap.xml (첫 25줄) ==="
-          head -25 docs/sitemap.xml
-          echo ""
-          echo "=== 총 URL 수 ==="
-          grep -c "<loc>" docs/sitemap.xml
-          echo ""
-          echo "=== GitHub Pages sitemap URL ==="
-          echo "https://kevinlee7250.github.io/cli/sitemap.xml"
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add docs/sitemap.xml docs/robots.txt 2>/dev/null || true
+
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            TIMESTAMP=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M KST')
+            git commit -m "chore: 사이트맵 자동 갱신 ($TIMESTAMP)"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && break
+              echo "pull+push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
+            echo "✅ 커밋 완료"
+          fi

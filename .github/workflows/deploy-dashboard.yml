@@ -24,10 +24,12 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
+    # workflow_run 트리거는 blog-run 성공 시에만 배포 (push/dispatch는 항상 배포)
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -42,10 +44,22 @@ jobs:
       - name: GitHub Pages 설정
         uses: actions/configure-pages@v5
 
+      - name: 대시보드 아티팩트 압축
+        run: |
+          tar --dereference --hard-dereference --directory docs \
+              -cvf /tmp/artifact.tar \
+              --exclude=.git \
+              --exclude=.github \
+              .
+
       - name: 대시보드 아티팩트 업로드
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          path: docs
+          name: github-pages
+          path: /tmp/artifact.tar
+          overwrite: true
+          retention-days: 1
+          if-no-files-found: error
 
       - name: GitHub Pages 배포
         id: deployment

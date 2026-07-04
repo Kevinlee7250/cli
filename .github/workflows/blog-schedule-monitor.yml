@@ -1,0 +1,85 @@
+name: 스케줄 모니터링 (실행 이력 수집 + 실패 알림)
+
+on:
+  # 매일 03:00 KST (= UTC 18:00 전날) — auto-repair(02:00)보다 1시간 후 실행
+  schedule:
+    - cron: '0 18 * * *'
+
+  # 수동 실행
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '실행 모드'
+        required: false
+        default: 'collect'
+        type: choice
+        options:
+          - collect   # 이력 수집 + 실패 감지
+          - report    # 현황 리포트만 출력
+          - test      # 테스트 이슈 생성
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install requests
+
+      - name: 스케줄 모니터 실행
+        working-directory: blog-automation
+        env:
+          GITHUB_TOKEN:      ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF_NAME:   ${{ github.ref_name }}
+        run: |
+          MODE="${{ inputs.mode || 'collect' }}"
+
+          if   [ "$MODE" = "report" ]; then
+            python schedule_manager.py --report
+          elif [ "$MODE" = "test" ]; then
+            python schedule_manager.py --issue-test
+          else
+            python schedule_manager.py
+          fi
+
+      - name: 이력 파일 커밋 & 푸시
+        if: ${{ inputs.mode == '' || inputs.mode == 'collect' }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add docs/data/schedule_history.json 2>/dev/null || true
+
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            TIMESTAMP=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M KST')
+            git commit -m "chore: 스케줄 실행 이력 업데이트 ($TIMESTAMP)"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && break
+              echo "pull+push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
+            echo "✅ 이력 커밋 완료"
+          fi

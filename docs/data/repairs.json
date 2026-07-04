@@ -1,5 +1,32 @@
 [
   {
+    "timestamp": "2026-07-04T11:39:09.297100",
+    "health_score": 93,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "adsense_not_configured",
+        "level": "warning",
+        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "context": {},
+        "fix": null
+      }
+    ],
+    "repairs_applied": 0,
+    "repairs": [
+      {
+        "issue_id": "adsense_not_configured",
+        "issue_level": "warning",
+        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "fix_applied": null,
+        "timestamp": "2026-07-04T11:39:09.297013",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-07-03T23:41:57.206936",
     "health_score": 93,
     "issues_found": 1,

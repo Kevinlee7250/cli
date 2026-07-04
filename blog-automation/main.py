@@ -204,7 +204,7 @@ def run_once(
             f"[자동 시리즈] '{auto_series_keyword}' {AUTO_SERIES_COUNT}편 기획 시작 "
             f"(이후 단독 포스트 {len(remaining)}개)"
         )
-        run_series(auto_series_keyword, AUTO_SERIES_COUNT, series_plan=auto_series_plan)
+        run_series(auto_series_keyword, AUTO_SERIES_COUNT, series_plan=auto_series_plan, blog_config=blog_config)
         keywords = remaining
     else:
         keywords = keywords[:POSTS_PER_RUN]
@@ -530,8 +530,12 @@ def run_scheduled() -> None:
     except (ValueError, IndexError):
         logger.error(f"잘못된 SCHEDULE_CRON 형식: '{SCHEDULE_CRON}'")
         sys.exit(1)
-    schedule.every().day.at(time_str).do(run_once)
-    logger.info(f"스케줄 등록: 매일 {time_str} 실행 (cron: {SCHEDULE_CRON})")
+    def _run_all_blogs() -> None:
+        for blog_cfg in get_blog_configs():
+            run_once(blog_config=blog_cfg)
+
+    schedule.every().day.at(time_str).do(_run_all_blogs)
+    logger.info(f"스케줄 등록: 매일 {time_str} 전체 블로그 실행 (cron: {SCHEDULE_CRON})")
     logger.info("Ctrl+C로 종료")
 
     while True:

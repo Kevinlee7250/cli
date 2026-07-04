@@ -3,7 +3,7 @@ name: 링크 클러스터 빌드
 on:
   workflow_dispatch: {}          # 수동 실행
   schedule:
-    - cron: '0 3 * * 0'         # 매주 일요일 03:00 UTC (KST 12:00)
+    - cron: '0 4 * * 0'         # 매주 일요일 04:00 UTC (KST 13:00) — blog-run 정오(03:00 UTC)와 충돌 회피
   push:
     paths:
       - 'docs/data/posts.json'  # posts.json 변경 시 자동 재빌드
@@ -48,5 +48,11 @@ jobs:
             echo "변경사항 없음 — 커밋 건너뜀"
           else
             git commit -m "🔗 링크 클러스터 재빌드 (#${{ github.run_number }})"
-            git push origin claude/blog-automation-system-KAbtE
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && break
+              echo "pull+push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
           fi

@@ -110,5 +110,7 @@ jobs:
           git commit -m "🤖 봇 응답 (#${{ github.run_number }})"
           for i in 1 2 3; do
             git push origin claude/blog-automation-system-KAbtE && break
+            echo "push 재시도 $i/3 — 원격 변경분 반영 후 재시도"
+            git pull --rebase --autostash origin claude/blog-automation-system-KAbtE || true
             sleep $((i * 2))
           done

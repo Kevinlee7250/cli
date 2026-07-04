@@ -3,7 +3,7 @@
     "version": "1.0",
     "description": "블로그 자동화 스케줄 중앙 설정 파일",
     "timezone": "Asia/Seoul (KST = UTC+9)",
-    "updated_at": "2026-07-02T00:00:00+09:00"
+    "updated_at": "2026-07-04T00:00:00+09:00"
   },
   "schedules": [
     {
@@ -13,6 +13,24 @@
       "cron_utc": "0 22 * * *",
       "cron_kst": "매일 07:00 KST",
       "description": "블로그 포스트 자동 생성 (오전 슬롯)",
+      "category": "content",
+      "priority": 1,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": true,
+      "max_retries": 2,
+      "depends_on": [],
+      "triggers_after": [
+        "blog-sitemap.yml"
+      ]
+    },
+    {
+      "id": "blog-run-noon",
+      "workflow": "blog-run.yml",
+      "slot": "noon",
+      "cron_utc": "0 3 * * *",
+      "cron_kst": "매일 12:00 KST",
+      "description": "블로그 포스트 자동 생성 (정오 슬롯)",
       "category": "content",
       "priority": 1,
       "enabled": true,
@@ -104,8 +122,8 @@
     {
       "id": "blog-cluster-weekly",
       "workflow": "blog-cluster.yml",
-      "cron_utc": "0 3 * * 0",
-      "cron_kst": "매주 일요일 12:00 KST",
+      "cron_utc": "0 4 * * 0",
+      "cron_kst": "매주 일요일 13:00 KST",
       "description": "내부 링크 클러스터 재빌드 (관련 포스트 추천 데이터 갱신)",
       "category": "seo",
       "priority": 4,
@@ -113,7 +131,8 @@
       "timeout_minutes": 10,
       "retry_on_failure": false,
       "max_retries": 0,
-      "depends_on": []
+      "depends_on": [],
+      "conflict_note": "blog-run 정오 슬롯(UTC 03:00)과 충돌 회피를 위해 04:00 UTC로 이동"
     },
     {
       "id": "weekly-learning",

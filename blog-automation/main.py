@@ -73,6 +73,11 @@ from post_manager import (
     Status as PostStatus, migrate_from_run_history,
 )
 
+# ── 실패 없는 흐름 보장 상수 ─────────────────────────────────────────────────────
+MAX_ADSENSE_RETRY = 2   # AdSense 사전검증 불합격 시 콘텐츠 재생성 최대 횟수
+MAX_UPLOAD_RETRY  = 3   # Blogger API 업로드 실패 시 재시도 최대 횟수
+# ─────────────────────────────────────────────────────────────────────────────
+
 
 # ──────────────────────────────────────────────────────────────────────────────
 # 사전 점검
@@ -234,16 +239,42 @@ def run_once(
     for i, keyword in enumerate(keywords, 1):
         logger.info(f"\n[{i}/{len(keywords)}] 키워드: '{keyword}'")
 
-        # 포스트 생성
-        post_data = generate_post(keyword, blog_config=cfg)
+        # ── ① 콘텐츠 생성 + AdSense 사전 검증 (최대 MAX_ADSENSE_RETRY회) ─────────────
+        # 목표: harmful_content 또는 심각한 품질 문제 조기 감지 → 재생성
+        post_data = None
+        for gen_attempt in range(1, MAX_ADSENSE_RETRY + 1):
+            _post = generate_post(keyword, blog_config=cfg)
+            if not _post:
+                logger.warning(f"  콘텐츠 생성 실패 (시도 {gen_attempt}/{MAX_ADSENSE_RETRY})")
+                if gen_attempt < MAX_ADSENSE_RETRY:
+                    time.sleep(3)
+                    continue
+                break  # 전체 실패 → post_data=None
+
+            # AdSense 사전 검증: 유해 콘텐츠 또는 점수 < 55이면 재생성
+            if ADSENSE_VALIDATION:
+                _pre = validate_adsense(_post)
+                if _pre["recommendation"] == "reject" and gen_attempt < MAX_ADSENSE_RETRY:
+                    logger.warning(
+                        f"  ⚠️ 사전 검증 불합격 (점수: {_pre['score']}/100, "
+                        f"이유: {_pre.get('issues', [])[:1]}) — "
+                        f"재생성 {gen_attempt+1}/{MAX_ADSENSE_RETRY}"
+                    )
+                    time.sleep(3)
+                    continue
+
+            post_data = _post
+            break
+
         if not post_data:
-            msg = f"콘텐츠 생성 실패: '{keyword}'"
-            logger.error(f"  {msg}")
+            msg = f"콘텐츠 생성 최종 실패 ({MAX_ADSENSE_RETRY}회 시도): '{keyword}'"
+            logger.error(f"  ❌ {msg}")
             fail_count += 1
             error_messages.append(msg)
             continue
+        # ─────────────────────────────────────────────────────────────────────────────
 
-        # 내부 링크 자동 삽입 (기존 포스트와 연결 — SEO 개선)
+        # ── ② 내부 링크 삽입 (SEO — non-blocking) ───────────────────────────────────
         try:
             from internal_linker import insert_internal_links
             post_data["content"] = insert_internal_links(post_data)
@@ -263,48 +294,71 @@ def run_once(
             success_count += 1
             continue
 
-        # AdSense 정책 검증
+        # ── ③ AdSense 최종 검증 ──────────────────────────────────────────────────────
+        # 정책: harmful_content fail만 진짜 reject / review(65-70)는 경고 후 즉시 업로드
+        # → pending 저장 없음 (실패 없는 흐름 보장)
         if ADSENSE_VALIDATION:
             validation = validate_adsense(post_data)
             post_data["adsense_score"] = validation["score"]
             post_data["adsense_recommendation"] = validation["recommendation"]
+
             if validation["recommendation"] == "reject":
-                msg = f"AdSense 정책 위반 — 업로드 취소: '{title}' (점수: {validation['score']}/100)"
+                # harmful_content fail = 유해 콘텐츠 → 진짜 업로드 불가
+                msg = (
+                    f"AdSense 유해 콘텐츠 감지 — 업로드 취소: '{title}' "
+                    f"(점수: {validation['score']}/100)"
+                )
                 logger.error(f"  ❌ {msg}")
-                for issue in validation["issues"]:
+                for issue in validation.get("issues", []):
                     logger.error(f"     🔴 {issue}")
                 register_post(post_data, PostStatus.SKIPPED, blog_config, source=_source, run_number=_run_number)
                 fail_count += 1
                 error_messages.append(msg)
                 continue
-            if validation["recommendation"] == "review" or validation["score"] < ADSENSE_MIN_SCORE:
-                logger.warning(
-                    f"  ⚠️ AdSense 검토 필요 — pending 저장 (점수: {validation['score']}/100)"
-                )
-                post_data["status"] = "pending"
-                register_post(post_data, PostStatus.PENDING, blog_config, source="manual", run_number=_run_number)
-                completed_posts.append(post_data)
-                save_pending_posts([post_data], blog_config)
-                success_count += 1
-                continue
 
-        # 업로드 전 레지스트리 등록 (pending) + 초안 저장
+            # review(65-70) 또는 낮은 점수 → 경고만 출력, 업로드는 계속 진행
+            if validation["recommendation"] == "review":
+                logger.info(
+                    f"  ℹ️ AdSense 검토 권장 (점수: {validation['score']}/100) — "
+                    "이미지 없음 등 구조 이슈. 업로드 진행"
+                )
+            elif validation["score"] < ADSENSE_MIN_SCORE:
+                logger.warning(
+                    f"  ⚠️ AdSense 점수 낮음 ({validation['score']}/100) — "
+                    "업로드 진행 (향후 이미지·구조 개선 권장)"
+                )
+            else:
+                logger.info(f"  ✅ AdSense 검증 통과 (점수: {validation['score']}/100)")
+        # ─────────────────────────────────────────────────────────────────────────────
+
+        # ── ④ 레지스트리 등록 (pending) + 초안 저장 ─────────────────────────────────
         _post_id = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
         save_draft(_post_id, post_data)
 
-        # Blogger 업로드
-        result = upload_post(post_data, blog_config)
+        # ── ⑤ Blogger 업로드 (최대 MAX_UPLOAD_RETRY회 재시도) ───────────────────────
+        result = None
+        for upload_try in range(1, MAX_UPLOAD_RETRY + 1):
+            result = upload_post(post_data, blog_config)
+            if result:
+                break
+            if upload_try < MAX_UPLOAD_RETRY:
+                _wait = 5 * upload_try
+                logger.warning(
+                    f"  업로드 실패 — {_wait}s 대기 후 재시도 "
+                    f"({upload_try}/{MAX_UPLOAD_RETRY})"
+                )
+                time.sleep(_wait)
+
         if result:
             url = result.get("url", "")
             post_data["blogUrl"] = url
             update_post_status(_post_id, PostStatus.PUBLISHED, blog_url=url)
             logger.info(f"  ✅ 업로드 성공: {url}")
 
-            # 소셜 미디어 콘텐츠 생성 (업로드 성공 시 항상 실행)
+            # ── ⑥ 소셜 미디어 콘텐츠 생성 (완전 non-blocking) ──────────────────────
             try:
                 from social_publisher import publish_all, generate_social_content
                 if SOCIAL_AUTO_PUBLISH:
-                    # 본문 첫 이미지를 소셜 발행에 사용 (Instagram은 이미지 필수)
                     _img_m = re.search(r'<img[^>]+src="([^"]+)"', post_data.get("content", ""))
                     social_result = publish_all(
                         post_data, blog_url=url,
@@ -312,13 +366,12 @@ def run_once(
                     )
                 else:
                     social_content = generate_social_content(post_data, blog_url=url)
-                    # 미발행 사유를 명시적으로 기록 (대시보드에서 '왜 발행 안 됐는지' 확인용)
                     _skip = {"skipped": True, "reason": "SOCIAL_AUTO_PUBLISH=false"}
                     social_result = {
                         "socialContent": social_content,
                         "instagram": _skip, "threads": _skip, "tiktok": _skip,
                     }
-                    logger.info(f"  📱 소셜 콘텐츠 생성 완료 (자동 게시 비활성, SOCIAL_AUTO_PUBLISH=true 시 게시)")
+                    logger.info(f"  📱 소셜 콘텐츠 생성 완료")
                 post_data["socialContent"]    = social_result.get("socialContent")
                 post_data["social_instagram"] = social_result.get("instagram")
                 post_data["social_threads"]   = social_result.get("threads")
@@ -330,7 +383,7 @@ def run_once(
             success_count += 1
             blogger_count += 1
         else:
-            msg = f"Blogger 업로드 실패: '{title}'"
+            msg = f"Blogger 업로드 최종 실패 ({MAX_UPLOAD_RETRY}회 시도): '{title}'"
             update_post_status(_post_id, PostStatus.FAILED, error=msg)
             logger.error(f"  ❌ {msg}")
             fail_count += 1

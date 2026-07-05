@@ -23,6 +23,7 @@ ADSENSE_SLOT_IDS = [s.strip() for s in _raw_slots.split(",") if s.strip()] or ["
 
 # 네이버 이미지 검색 (이미지 자동 첨부)
 NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID", "")
+PIXABAY_API_KEY = os.getenv("PIXABAY_API_KEY", "")   # https://pixabay.com/api/docs/
 NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET", "")
 
 # 블로그 설정
@@ -210,4 +211,5 @@ def get_blog_configs() -> list[dict]:
 
     # 3) 단일 블로그 폴백
     return [_default_blog()]
+
 

@@ -70,6 +70,59 @@ def _ddg_images(keyword: str, count: int) -> list[dict]:
         return []
 
 
+def _pixabay_images(keyword: str, count: int, api_key: str) -> list[dict]:
+    """Pixabay 이미지 검색 API (저작권 무료, 상업적 사용 가능).
+    https://pixabay.com/api/docs/
+    """
+    if not api_key:
+        return []
+    try:
+        # 한국어 키워드 → 영어 단어 우선 추출 (Pixabay는 영문 검색 품질이 높음)
+        import re as _re
+        en_terms = _re.findall(r'[A-Za-z][A-Za-z0-9]{1,}', keyword)
+        query = " ".join(en_terms[:4]) if en_terms else keyword
+
+        r = requests.get(
+            "https://pixabay.com/api/",
+            params={
+                "key": api_key,
+                "q": query,
+                "image_type": "photo",
+                "orientation": "horizontal",
+                "safesearch": "true",
+                "per_page": min(count * 3, 20),
+                "min_width": 400,
+                "lang": "en",
+                "order": "popular",
+            },
+            headers=_HEADERS,
+            timeout=12,
+        )
+        if r.status_code != 200:
+            logger.debug(f"Pixabay API 오류: HTTP {r.status_code}")
+            return []
+        images = []
+        for item in r.json().get("hits", []):
+            img_url = item.get("largeImageURL") or item.get("webformatURL", "")
+            if not img_url:
+                continue
+            images.append({
+                "url": img_url,
+                "title": item.get("tags", keyword).replace(",", " /"),
+                "width": item.get("imageWidth", item.get("webformatWidth", 800)),
+                "height": item.get("imageHeight", item.get("webformatHeight", 450)),
+                "source": "pixabay",
+            })
+            if len(images) >= count:
+                break
+        if images:
+            logger.debug(f"Pixabay 이미지 {len(images)}개 수집: '{query}'")
+        return images
+    except Exception as e:
+        logger.debug(f"Pixabay 이미지 검색 실패: {e}")
+        return []
+
+
 def _naver_images(keyword: str, count: int, client_id: str, client_secret: str) -> list[dict]:
     """네이버 이미지 검색 API."""
     try:
@@ -214,15 +267,24 @@ def _search_all_sources(
     naver_client_id: str,
     naver_client_secret: str,
     n_candidates: int,
+    pixabay_api_key: str = "",
 ) -> list[dict]:
-    """네이버 → DDG → Wikimedia 순으로 검색합니다."""
+    """Pixabay → 네이버 → DDG → Wikimedia 순으로 검색합니다."""
+    # 1순위: Pixabay (저작권 무료, 고품질)
+    if pixabay_api_key:
+        candidates = _pixabay_images(query, n_candidates, pixabay_api_key)
+        if candidates:
+            return candidates
+    # 2순위: 네이버 이미지 API
     if naver_client_id and naver_client_secret:
         candidates = _naver_images(query, n_candidates, naver_client_id, naver_client_secret)
         if candidates:
             return candidates
+    # 3순위: DuckDuckGo
     candidates = _ddg_images(query, n_candidates)
     if candidates:
         return candidates
+    # 4순위: Wikimedia Commons
     return _wikimedia_images(query, n_candidates)
 
 
@@ -235,6 +297,7 @@ def _fetch_best_image(
     naver_client_id: str = "",
     naver_client_secret: str = "",
     n_candidates: int = 4,
+    pixabay_api_key: str = "",
 ) -> dict | None:
     """
     후보 이미지를 가져와 제목 관련성이 가장 높은 것을 반환합니다.
@@ -255,7 +318,8 @@ def _fetch_best_image(
 
     for attempt_q in attempts:
         candidates = _search_all_sources(
-            attempt_q, naver_client_id, naver_client_secret, n_candidates
+            attempt_q, naver_client_id, naver_client_secret, n_candidates,
+            pixabay_api_key=pixabay_api_key,
         )
         if not candidates:
             continue
@@ -343,11 +407,13 @@ def fetch_images_for_queries(
     naver_client_secret: str = "",
     article_plain_text: str = "",
     keyword: str = "",
+    pixabay_api_key: str = "",
 ) -> list[dict]:
-    """섹션별 쿼리 목록에 맞춰 이미지를 검색(후보 4개 중 관련성 최고 선택)하고 Claude로 최종 검증합니다."""
+    """섹션별 쿼리 목록에 맞춰 이미지를 검색(Pixabay → 네이버 → DDG → Wikimedia)하고 Claude로 최종 검증합니다."""
     images = []
     for query in queries:
-        img = _fetch_best_image(query, naver_client_id, naver_client_secret, n_candidates=4)
+        img = _fetch_best_image(query, naver_client_id, naver_client_secret, n_candidates=4,
+                                pixabay_api_key=pixabay_api_key)
         if img:
             img["search_query"] = query
             img["alt_text"] = query if len(query) <= 50 else query[:50].rsplit(" ", 1)[0]

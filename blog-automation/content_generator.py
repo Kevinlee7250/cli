@@ -1177,6 +1177,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                 section_queries,
                 naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
                 naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
+                pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
                 article_plain_text=plain_text,
                 keyword=keyword,
             )
@@ -1401,6 +1402,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                 section_queries,
                 naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
                 naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
+                pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
                 article_plain_text=plain_text,
                 keyword=keyword,
             )
@@ -1453,3 +1455,4 @@ if __name__ == "__main__":
         print(f"이미지: {result.get('images_inserted', 0)}개")
         print(f"FAQ: {len(result.get('faq', []))}개")
         print(f"미리보기: {result.get('content_preview', '')[:100]}")
+

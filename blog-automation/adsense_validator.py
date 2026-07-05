@@ -50,7 +50,7 @@ _MAX_RAW = len(_CHECKS) * _SCORE_MAP["pass"]   # 96
 # 이 항목이 fail이면 점수 관계없이 즉시 reject
 _MANDATORY_PASS = {"harmful_content"}
 
-_THRESHOLD_UPLOAD = 70  # 이미지 없는 경우 대비 70으로 조정 (원래 80)
+_THRESHOLD_UPLOAD = 80  # 80점 이상만 즉시 업로드
 _THRESHOLD_REVIEW = 65
 
 _LABELS_KO = {
@@ -315,4 +315,5 @@ JSON만 응답 (설명 없이):
     except Exception as exc:
         logger.warning(f"AdSense 검증 오류 — 기본 통과 처리: {exc}")
         return _default_pass()
+
 

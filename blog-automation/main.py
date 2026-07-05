@@ -295,15 +295,14 @@ def run_once(
             continue
 
         # ── ③ AdSense 최종 검증 ──────────────────────────────────────────────────────
-        # 정책: harmful_content fail만 진짜 reject / review(65-70)는 경고 후 즉시 업로드
-        # → pending 저장 없음 (실패 없는 흐름 보장)
+        # 정책: harmful_content → reject(skip) / 65-79(review) → pending 저장 / 80+ → 업로드
         if ADSENSE_VALIDATION:
             validation = validate_adsense(post_data)
             post_data["adsense_score"] = validation["score"]
             post_data["adsense_recommendation"] = validation["recommendation"]
 
             if validation["recommendation"] == "reject":
-                # harmful_content fail = 유해 콘텐츠 → 진짜 업로드 불가
+                # harmful_content fail = 유해 콘텐츠 → 업로드 불가
                 msg = (
                     f"AdSense 유해 콘텐츠 감지 — 업로드 취소: '{title}' "
                     f"(점수: {validation['score']}/100)"
@@ -316,19 +315,24 @@ def run_once(
                 error_messages.append(msg)
                 continue
 
-            # review(65-70) 또는 낮은 점수 → 경고만 출력, 업로드는 계속 진행
-            if validation["recommendation"] == "review":
-                logger.info(
-                    f"  ℹ️ AdSense 검토 권장 (점수: {validation['score']}/100) — "
-                    "이미지 없음 등 구조 이슈. 업로드 진행"
+            # review(65-79) 또는 ADSENSE_MIN_SCORE(80) 미달 → pending 저장, 업로드 건너뜀
+            if validation["recommendation"] == "review" or validation["score"] < ADSENSE_MIN_SCORE:
+                msg = (
+                    f"AdSense 기준 미달 — pending 저장: '{title}' "
+                    f"(점수: {validation['score']}/100, 권장: {validation['recommendation']})"
                 )
-            elif validation["score"] < ADSENSE_MIN_SCORE:
-                logger.warning(
-                    f"  ⚠️ AdSense 점수 낮음 ({validation['score']}/100) — "
-                    "업로드 진행 (향후 이미지·구조 개선 권장)"
-                )
-            else:
-                logger.info(f"  ✅ AdSense 검증 통과 (점수: {validation['score']}/100)")
+                logger.warning(f"  ⚠️ {msg}")
+                for issue in validation.get("issues", []):
+                    logger.warning(f"     🟡 {issue}")
+                post_data["status"] = "pending"
+                _pid = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
+                save_draft(_pid, post_data)
+                save_pending_posts([post_data], blog_config)
+                completed_posts.append(post_data)
+                success_count += 1
+                continue
+
+            logger.info(f"  ✅ AdSense 검증 통과 (점수: {validation['score']}/100) — 업로드")
         # ─────────────────────────────────────────────────────────────────────────────
 
         # ── ④ 레지스트리 등록 (pending) + 초안 저장 ─────────────────────────────────
@@ -826,3 +830,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

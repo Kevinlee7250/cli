@@ -9,6 +9,7 @@ import html
 import re
 import logging
 import requests
+from config import claude_text
 
 logger = logging.getLogger(__name__)
 
@@ -278,7 +279,7 @@ def _filter_relevant_images(
         return images
     try:
         import anthropic
-        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
+        from config import claude_text, ANTHROPIC_API_KEY, CLAUDE_MODEL
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
         img_list = "\n".join(
@@ -308,7 +309,7 @@ def _filter_relevant_images(
                 ),
             }],
         )
-        answer = msg.content[0].text.strip()
+        answer = claude_text(msg).strip()
         logger.debug(f"이미지 관련성 평가 결과: {answer}")
 
         # '없음' 변형 처리

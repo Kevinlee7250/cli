@@ -26,6 +26,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 import requests
+from config import claude_text
 
 # ──────────────────────────────────────────────────────────────────────────────
 # 로거 설정
@@ -287,7 +288,7 @@ def expand_keywords_with_claude(
     base = event.get("base_keywords", [])
     try:
         import anthropic
-        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
+        from config import claude_text, ANTHROPIC_API_KEY, CLAUDE_MODEL
         if not ANTHROPIC_API_KEY or ANTHROPIC_API_KEY.startswith("sk-ant-xxx"):
             return base[:count]
 
@@ -313,7 +314,7 @@ def expand_keywords_with_claude(
             max_tokens=300,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         s, e = raw.find("["), raw.rfind("]")
         if s != -1 and e > s:
             kws = json.loads(raw[s : e + 1])

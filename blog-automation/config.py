@@ -101,6 +101,21 @@ if _blogs_config_raw.strip():
 BLOG_NAME = os.getenv("BLOG_NAME", "기본 블로그")
 
 
+def claude_text(message) -> str:
+    """Claude 응답에서 text 블록을 추출합니다.
+
+    claude-sonnet-5부터는 thinking 파라미터를 생략하면 adaptive thinking이
+    기본으로 켜져 응답 첫 블록이 thinking 블록이 됩니다. content[0].text를
+    직접 읽으면 깨지므로 반드시 이 헬퍼로 text 블록을 찾아야 합니다.
+    """
+    for block in getattr(message, "content", None) or []:
+        if getattr(block, "type", "") == "text":
+            text = getattr(block, "text", "")
+            if text:
+                return text
+    return ""
+
+
 _BLOGS_REGISTRY_FILE = os.path.join(os.path.dirname(__file__), "blogs.json")
 
 
@@ -177,11 +192,12 @@ def get_blog_configs() -> list[dict]:
         for b in _BLOGS_CONFIG_LIST:
             if not b.get("enabled", True):
                 continue
-            # id가 없는 항목은 버리지 않고 blog1로 간주 (OAuth/blog_id 유실 방지)
-            if not b.get("id"):
+            # id가 없거나 'default'인 항목은 blog1로 간주
+            # (별개 블로그로 병합되어 blog1이 두 번 실행되는 것 방지)
+            if not b.get("id") or b.get("id") == "default":
                 import logging
                 logging.getLogger(__name__).warning(
-                    "BLOGS_CONFIG 항목에 'id'가 없어 'blog1'로 간주합니다 — Secret에 id 필드를 추가하세요."
+                    f"BLOGS_CONFIG 항목 id={b.get('id')!r} → 'blog1'로 간주합니다 — Secret에 id: \"blog1\"을 설정하세요."
                 )
                 b = {**b, "id": "blog1"}
             merged[b["id"]] = b  # BLOGS_CONFIG 항목이 덮어씀

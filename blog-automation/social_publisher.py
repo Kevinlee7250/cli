@@ -17,7 +17,7 @@ import time
 
 import requests
 
-from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
+from config import claude_text, ANTHROPIC_API_KEY, CLAUDE_MODEL
 
 logger = logging.getLogger(__name__)
 
@@ -175,7 +175,7 @@ def generate_social_content(post_data: dict, blog_url: str = "") -> dict:
             system=system_prompt,
             messages=[{"role": "user", "content": user_prompt}],
         )
-        raw = resp.content[0].text
+        raw = claude_text(resp)
         data = _extract_json(raw)
 
         # bestPostingTimes 기본값 보장

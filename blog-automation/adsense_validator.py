@@ -29,6 +29,7 @@ Google AdSense 정책 자동 검증기 — 8개 항목 점검
 import json
 import logging
 import re
+from config import claude_text
 
 logger = logging.getLogger(__name__)
 
@@ -143,7 +144,7 @@ def validate_adsense(post_data: dict) -> dict:
 
     try:
         import anthropic
-        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
+        from config import claude_text, ANTHROPIC_API_KEY, CLAUDE_MODEL
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
         prompt = f"""Google AdSense 2025 최신 정책 기준으로 다음 블로그 포스트를 8개 항목 검증하세요.
@@ -239,7 +240,7 @@ JSON만 응답 (설명 없이):
             max_tokens=900,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         s, e = raw.find("{"), raw.rfind("}")
         if s == -1 or e <= s:
             logger.warning(f"AdSense 검증 JSON 파싱 실패 — 기본 처리: {raw[:200]}")

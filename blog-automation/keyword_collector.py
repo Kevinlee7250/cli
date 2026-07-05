@@ -19,6 +19,7 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 
 import requests
+from config import claude_text
 
 logger = logging.getLogger(__name__)
 
@@ -372,7 +373,7 @@ def _headlines_to_keywords(headlines: list[str], count: int = 10) -> list[str]:
         return []
     try:
         import anthropic
-        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
+        from config import claude_text, ANTHROPIC_API_KEY, CLAUDE_MODEL
         if not ANTHROPIC_API_KEY or ANTHROPIC_API_KEY.startswith("sk-ant-xxx"):
             return []
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
@@ -398,7 +399,7 @@ def _headlines_to_keywords(headlines: list[str], count: int = 10) -> list[str]:
             max_tokens=400,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         s, e = raw.find('['), raw.rfind(']')
         if s != -1 and e > s:
             kws = json.loads(raw[s:e + 1])
@@ -493,7 +494,7 @@ def extract_drama_titles(headlines: list[str]) -> list[str]:
             max_tokens=100,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         s, e = raw.find('['), raw.rfind(']')
         if s != -1 and e > s:
             titles = json.loads(raw[s:e + 1])
@@ -585,7 +586,7 @@ def _claude_ai_keywords(
             max_tokens=400,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         s, e = raw.find('['), raw.rfind(']')
         if s != -1 and e > s:
             kws = json.loads(raw[s:e + 1])

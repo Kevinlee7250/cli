@@ -9,7 +9,7 @@ import time
 
 import anthropic
 
-from config import ANTHROPIC_API_KEY, CLAUDE_MODEL, BLOG_LANGUAGE
+from config import claude_text, ANTHROPIC_API_KEY, CLAUDE_MODEL, BLOG_LANGUAGE
 from image_fetcher import fetch_images_for_queries, inject_images_into_content
 
 logger = logging.getLogger(__name__)
@@ -1133,12 +1133,12 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                 system=_sys,
                 messages=[{"role": "user", "content": prompt}],
             )
-            if not message.content or not hasattr(message.content[0], "text"):
+            if not claude_text(message):
                 if attempt < 2:
                     time.sleep(2)
                     continue
                 return None
-            raw = message.content[0].text.strip()
+            raw = claude_text(message).strip()
             post_data = _parse_response(raw)
             if post_data is None:
                 if attempt < 2:
@@ -1254,7 +1254,7 @@ def _fact_check_content(post_data: dict, keyword: str) -> None:
                 ),
             }],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         m = re.search(r"\{.*\}", raw, re.DOTALL)
         result = json.loads(m.group()) if m else {"issues": [], "verdict": "pass"}
 
@@ -1348,13 +1348,13 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                 system=_sys,
                 messages=[{"role": "user", "content": prompt}],
             )
-            if not message.content or not hasattr(message.content[0], "text"):
+            if not claude_text(message):
                 logger.error("Claude 응답 형식 오류: text 콘텐츠 없음")
                 if attempt < 2:
                     time.sleep(2)
                     continue
                 return None
-            raw = message.content[0].text.strip()
+            raw = claude_text(message).strip()
             post_data = _parse_response(raw)
 
             if post_data is None:

@@ -9,7 +9,7 @@ from datetime import datetime
 
 import anthropic
 
-from config import ANTHROPIC_API_KEY, CLAUDE_MODEL, BLOG_LANGUAGE
+from config import claude_text, ANTHROPIC_API_KEY, CLAUDE_MODEL, BLOG_LANGUAGE
 
 logger = logging.getLogger(__name__)
 
@@ -58,7 +58,7 @@ def pick_series_keyword(keywords: list[str]) -> str | None:
             max_tokens=10,
             messages=[{"role": "user", "content": prompt}],
         )
-        ans = msg.content[0].text.strip().lower()
+        ans = claude_text(msg).strip().lower()
         if "none" in ans:
             logger.info("시리즈 적합 키워드 없음 — 단독 포스트로 진행")
             return None
@@ -180,7 +180,7 @@ JSON only:
             ),
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         s, e = raw.find("{"), raw.rfind("}")
         if s == -1 or e <= s:
             logger.error(f"시리즈 기획 JSON 파싱 실패: {raw[:300]}")
@@ -267,7 +267,7 @@ JSON만 응답:
             system=f"현재 날짜: {date_str}. JSON만 응답하세요.",
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         s, e = raw.find("{"), raw.rfind("}")
         if s == -1 or e <= s:
             logger.error(f"드라마 시리즈 기획 JSON 파싱 실패: {raw[:300]}")

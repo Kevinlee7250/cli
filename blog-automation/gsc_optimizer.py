@@ -27,6 +27,7 @@ from pathlib import Path
 import anthropic
 import requests
 from dotenv import load_dotenv
+from config import claude_text
 
 load_dotenv()
 
@@ -298,7 +299,7 @@ def generate_improved_titles(
             max_tokens=300,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         match = re.search(r'\[.*?\]', raw, re.DOTALL)
         if match:
             titles = json.loads(match.group(0))
@@ -361,7 +362,7 @@ def run_optimization(dry_run: bool = False, limit: int = MAX_PER_RUN) -> dict:
     site_urls: list[str] = []
     site_blog_map: dict[str, str] = {}
     try:
-        from config import get_blog_configs
+        from config import claude_text, get_blog_configs
         for b in get_blog_configs():
             u = b.get("gsc_site_url", "")
             if u and u not in site_urls:

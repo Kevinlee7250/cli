@@ -17,6 +17,7 @@ import sys
 from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
+from config import claude_text
 
 load_dotenv()
 
@@ -164,7 +165,7 @@ def _analyze_with_claude(summary: dict, api_key: str) -> dict:
         messages=[{"role": "user", "content": prompt}],
     )
 
-    text = resp.content[0].text.strip()
+    text = claude_text(resp).strip()
     # JSON 블록 추출
     for marker in ("```json", "```"):
         if marker in text:
@@ -250,7 +251,7 @@ def _diagnose_system(week_runs: list[dict], summary: dict) -> list[dict]:
 # ── 메인 엔트리 ───────────────────────────────────────────────────────────────
 def run_weekly_check() -> dict:
     """주간 시스템 점검 및 학습 실행."""
-    from config import ANTHROPIC_API_KEY
+    from config import claude_text, ANTHROPIC_API_KEY
 
     logger.info("=" * 60)
     logger.info("주간 시스템 점검 시작")

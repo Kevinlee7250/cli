@@ -59,9 +59,9 @@ SOCIAL_AUTO_PUBLISH = os.getenv("SOCIAL_AUTO_PUBLISH", "false").lower() in ("tru
 # AdSense 정책 자동 검증
 ADSENSE_VALIDATION = os.getenv("ADSENSE_VALIDATION", "true").lower() in ("true", "1", "yes")
 try:
-    ADSENSE_MIN_SCORE = max(0, min(int(os.getenv("ADSENSE_MIN_SCORE", "70").strip()), 100))
+    ADSENSE_MIN_SCORE = max(0, min(int(os.getenv("ADSENSE_MIN_SCORE", "80").strip()), 100))
 except (ValueError, TypeError):
-    ADSENSE_MIN_SCORE = 70
+    ADSENSE_MIN_SCORE = 80
 
 # 시리즈 자동화
 AUTO_SERIES = os.getenv("AUTO_SERIES", "true").lower() in ("true", "1", "yes")
@@ -210,3 +210,4 @@ def get_blog_configs() -> list[dict]:
 
     # 3) 단일 블로그 폴백
     return [_default_blog()]
+

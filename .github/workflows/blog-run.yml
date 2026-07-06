@@ -78,6 +78,7 @@ jobs:
           cat > .env << 'ENVEOF'
           ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
           NAVER_CLIENT_ID="${{ secrets.NAVER_CLIENT_ID }}"
+          PIXABAY_API_KEY="${{ secrets.PIXABAY_API_KEY }}"
           NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}"
           GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
           GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
@@ -168,19 +169,21 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # docs/data/ 는 tracked 파일 (-f: 루트 .gitignore /*  규칙 우회)
-          git add -f \
+          # git add는 존재하지 않는 pathspec이 하나라도 있으면 전체가 실패하므로
+          # 파일별로 존재 확인 후 개별 add (posts_archive.json 등은 조건부 생성)
+          for f in \
             docs/data/posts.json docs/data/posts_archive.json docs/data/runs.json \
             docs/data/analytics.json \
             docs/data/meta.json docs/data/pending_posts.json docs/data/series.json \
             docs/data/gsc.json docs/data/blogs.json docs/data/learning.json \
             docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
-            2>/dev/null || true
-          git add \
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
             blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
-            blog-automation/logs/post_registry.json \
-            2>/dev/null || true
+            blog-automation/logs/post_registry.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
+          true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else
@@ -219,3 +222,4 @@ jobs:
           로그: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
             -d chat_id="$TG_CHAT" -d text="$MSG" > /dev/null && echo "텔레그램 알림 발송 완료" || echo "알림 발송 실패 (무시)"
+

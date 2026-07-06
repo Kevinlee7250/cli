@@ -162,3 +162,205 @@
 2026-07-06 03:36:40,640 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-06 03:36:40,640 [INFO] dashboard_exporter —   포스트: 108개 / 실행 이력: 65개 / 블로그: 3개
 2026-07-06 03:36:40,641 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-06 07:12:22,539 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
+2026-07-06 07:12:22,539 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
+2026-07-06 07:12:22,539 [INFO] main —   - [blog1] HOGU What?
+2026-07-06 07:12:22,539 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
+2026-07-06 07:12:22,539 [INFO] main —   - [blog3] 금융NEWS
+2026-07-06 07:12:22,540 [INFO] main — ============================================================
+2026-07-06 07:12:22,540 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-06 07:12:22
+2026-07-06 07:12:22,540 [INFO] main — ============================================================
+2026-07-06 07:12:22,548 [INFO] keyword_collector — 포스팅 이력 코퍼스: 142개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-06 07:12:22,549 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-06 07:12:23,462 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-06 07:12:23,462 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-06 07:12:30,404 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:12:30,754 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-07-06 07:12:30,755 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-06 07:12:30,759 [INFO] keyword_collector —   [fallback] 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
+2026-07-06 07:12:30,759 [INFO] keyword_collector — 최종 선정 키워드 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
+2026-07-06 07:12:30,759 [INFO] main — 수집된 키워드 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
+2026-07-06 07:12:30,762 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-07-06 07:12:31,121 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-06 07:12:33,279 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:12:33,280 [INFO] main — 단독 포스트 대상 키워드 1개: ['직장인 월 30만원 ETF 투자 솔직 후기']
+2026-07-06 07:12:33,296 [INFO] main — 
+[1/1] 키워드: '직장인 월 30만원 ETF 투자 솔직 후기'
+2026-07-06 07:12:33,296 [INFO] content_generator — 포스트 생성 중: '직장인 월 30만원 ETF 투자 솔직 후기'
+2026-07-06 07:13:32,526 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:13:43,243 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:13:43,244 [INFO] content_generator — 팩트체크: 통과
+2026-07-06 07:13:43,247 [INFO] content_generator — 섹션별 이미지 검색: ['직장인 만원 ETF', '직장인 만원 하필 만원이었냐면요 사실 처음엔', '직장인 만원 기대했던 vs 많이 솔직히', '직장인 만원 의외로 좋았던 이건 진짜']
+2026-07-06 07:13:51,452 [WARNING] image_fetcher — 이미지 없음: '직장인 만원 ETF'
+2026-07-06 07:14:00,787 [WARNING] image_fetcher — 이미지 없음: '직장인 만원 하필 만원이었냐면요 사실 처음엔'
+2026-07-06 07:14:07,672 [WARNING] image_fetcher — 이미지 없음: '직장인 만원 기대했던 vs 많이 솔직히'
+2026-07-06 07:14:13,845 [WARNING] image_fetcher — 이미지 없음: '직장인 만원 의외로 좋았던 이건 진짜'
+2026-07-06 07:14:13,845 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-06 07:14:13,847 [INFO] content_generator — 포스트 생성 완료: '직장인 월 30만원 ETF 투자, 1년 넘게 해보고 쓰는 솔직 후기' (2219자, 이미지 0개)
+2026-07-06 07:14:24,857 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:14:24,866 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '직장인 월 30만원 ETF 투자, 1년 넘게 해보고 쓰는 솔직 '
+2026-07-06 07:14:24,867 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 개수는 충분하나 일부 섹션(기대vs실제 등) 단락이 500자 이상으로 길게 이어짐
+2026-07-06 07:14:24,867 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-06 07:14:24,867 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-06 07:14:24,867 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-06 07:14:24,874 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-06 07:14:24,876 [INFO] internal_linker —   [1/5] '알았어요' -> https://hogugolfntraval.blogspot.com/2026/07/3-2026.html
+2026-07-06 07:14:24,877 [INFO] internal_linker —   [2/5] '2026년' -> https://hoguwhat1.blogspot.com/2026/07/etf-2026_0598100428.h
+2026-07-06 07:14:24,881 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-06 07:14:24,882 [INFO] main —   제목: 직장인 월 30만원 ETF 투자, 1년 넘게 해보고 쓰는 솔직 후기
+2026-07-06 07:14:24,882 [INFO] main —   이미지: 0개 삽입
+2026-07-06 07:14:41,883 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:14:41,884 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '직장인 월 30만원 ETF 투자, 1년 넘게 해보고 쓰는 솔직 '
+2026-07-06 07:14:41,884 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락이 500자 이상으로 길어 가독성이 다소 떨어짐
+2026-07-06 07:14:41,884 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-06 07:14:41,884 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-06 07:14:41,884 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-07-06 07:14:42,055 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-06 07:14:42,058 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-07-06 07:14:42,462 [INFO] blogger_uploader — 업로드 성공: https://hoguwhat1.blogspot.com/2026/07/30-etf-1_02113911497.html
+2026-07-06 07:14:42,468 [INFO] main —   ✅ 업로드 성공: https://hoguwhat1.blogspot.com/2026/07/30-etf-1_02113911497.html
+2026-07-06 07:15:16,290 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:15:16,291 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-06 07:15:16,291 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-06 07:15:16,291 [INFO] main — 
+============================================================
+2026-07-06 07:15:16,292 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-06 07:15:16,292 [INFO] main — ============================================================
+2026-07-06 07:15:16,315 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 66개)
+2026-07-06 07:15:16,334 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-06 07:15:16,352 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-06 07:15:16,353 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
+2026-07-06 07:15:16,638 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-06 07:15:16,952 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-06 07:15:16,954 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-06 07:15:16,956 [INFO] dashboard_exporter —   수리 이력: 34건 내보내기 완료
+2026-07-06 07:15:16,962 [INFO] post_manager —   포스트 레지스트리: 전체 109개 (게시 88 / 실패 18 / 대기 3)
+2026-07-06 07:15:16,962 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-06 07:15:16,962 [INFO] dashboard_exporter —   포스트: 109개 / 실행 이력: 66개 / 블로그: 3개
+2026-07-06 07:15:16,963 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-06 07:15:16,963 [INFO] main — ============================================================
+2026-07-06 07:15:16,963 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-06 07:15:16
+2026-07-06 07:15:16,964 [INFO] main — ============================================================
+2026-07-06 07:15:16,971 [INFO] keyword_collector — 포스팅 이력 코퍼스: 39개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-06 07:15:16,971 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-06 07:15:17,700 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-06 07:15:17,700 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-06 07:15:24,850 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:15:24,852 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-06 07:15:24,853 [INFO] keyword_collector —   [fallback] 2개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개']
+2026-07-06 07:15:24,853 [INFO] keyword_collector — 최종 선정 키워드 2개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개']
+2026-07-06 07:15:24,853 [INFO] main — 수집된 키워드 2개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개']
+2026-07-06 07:15:24,853 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-07-06 07:15:25,228 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-06 07:15:31,705 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:15:31,706 [INFO] main — 단독 포스트 대상 키워드 1개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
+2026-07-06 07:15:31,718 [INFO] main — 
+[1/1] 키워드: '제주도 여행 현지인처럼 즐기는 방법 솔직 후기'
+2026-07-06 07:15:31,718 [INFO] content_generator — 포스트 생성 중: '제주도 여행 현지인처럼 즐기는 방법 솔직 후기'
+2026-07-06 07:16:26,161 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:16:32,071 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:16:32,072 [INFO] content_generator — 팩트체크: 통과
+2026-07-06 07:16:32,073 [INFO] content_generator — 섹션별 이미지 검색: ['제주도 여행 현지인처럼', '제주도 여행 실제로 숨기지 항공권은 김포', '제주도 여행 다녀보니 제일 놀랐던', '제주도 여행 포털엔 나오는 진짜 숙소']
+2026-07-06 07:16:42,006 [WARNING] image_fetcher — 이미지 없음: '제주도 여행 현지인처럼'
+2026-07-06 07:16:55,071 [WARNING] image_fetcher — 이미지 없음: '제주도 여행 실제로 숨기지 항공권은 김포'
+2026-07-06 07:17:16,992 [WARNING] image_fetcher — 이미지 없음: '제주도 여행 다녀보니 제일 놀랐던'
+2026-07-06 07:17:41,116 [WARNING] image_fetcher — 이미지 없음: '제주도 여행 포털엔 나오는 진짜 숙소'
+2026-07-06 07:17:41,116 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-06 07:17:41,117 [INFO] content_generator — 포스트 생성 완료: '제주도 여행 현지인처럼 즐기는 방법, 3박4일 다녀와서 솔직 후기' (1861자, 이미지 0개)
+2026-07-06 07:17:52,843 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:17:52,844 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '제주도 여행 현지인처럼 즐기는 방법, 3박4일 다녀와서 솔직 후'
+2026-07-06 07:17:52,844 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 개인 경험과 구체적 비용 공개는 우수하나 글자 수 1861자로 2000자 미만
+2026-07-06 07:17:52,844 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술은 풍부하나 출처 2개가 본문에 실제로 인용·명시되지 않음
+2026-07-06 07:17:52,844 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 시각적 정보 부재 (텍스트만으로도 정책 위반은 아님)
+2026-07-06 07:17:52,850 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-06 07:17:52,855 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-06 07:17:52,855 [INFO] main —   제목: 제주도 여행 현지인처럼 즐기는 방법, 3박4일 다녀와서 솔직 후기
+2026-07-06 07:17:52,856 [INFO] main —   이미지: 0개 삽입
+2026-07-06 07:18:04,790 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:18:04,792 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '제주도 여행 현지인처럼 즐기는 방법, 3박4일 다녀와서 솔직 후'
+2026-07-06 07:18:04,792 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 실제 경험과 구체적 비용 공개 등 개인 경험이 풍부하나 글자 수가 1861자로 2000자 기준에 미달
+2026-07-06 07:18:04,792 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-06 07:18:04,792 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-06 07:18:04,792 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-06 07:18:04,792 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '제주도 여행 현지인처럼 즐기는 방법, 3박4일 다녀와서 솔직 후기' (점수: 79/100, 권장: review)
+2026-07-06 07:18:04,802 [INFO] dashboard_exporter —   검토 대기 저장: 제주도 여행 현지인처럼 즐기는 방법, 3박4일 다녀와서 솔직 후기 (6807자 HTML)
+2026-07-06 07:18:04,805 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 23개)
+2026-07-06 07:18:04,805 [INFO] main — 
+============================================================
+2026-07-06 07:18:04,805 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-06 07:18:04,805 [INFO] main — ============================================================
+2026-07-06 07:18:04,827 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 67개)
+2026-07-06 07:18:04,846 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-06 07:18:04,863 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-06 07:18:04,864 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
+2026-07-06 07:18:04,865 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-06 07:18:04,866 [INFO] dashboard_exporter —   수리 이력: 34건 내보내기 완료
+2026-07-06 07:18:04,872 [INFO] post_manager —   포스트 레지스트리: 전체 110개 (게시 88 / 실패 18 / 대기 4)
+2026-07-06 07:18:04,872 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-06 07:18:04,872 [INFO] dashboard_exporter —   포스트: 110개 / 실행 이력: 67개 / 블로그: 3개
+2026-07-06 07:18:04,873 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-06 07:18:04,874 [INFO] main — ============================================================
+2026-07-06 07:18:04,874 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-06 07:18:04
+2026-07-06 07:18:04,874 [INFO] main — ============================================================
+2026-07-06 07:18:04,882 [INFO] keyword_collector — 포스팅 이력 코퍼스: 21개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-06 07:18:04,882 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-06 07:18:05,807 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-06 07:18:05,807 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-06 07:18:09,555 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:18:09,556 [INFO] keyword_collector — Claude AI 키워드 생성: 4개
+2026-07-06 07:18:09,556 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-06 07:18:09,557 [INFO] keyword_collector —   [claude_ai] 2개: ['미국 ETF 직접 투자해보니 실수담', '청약 통장 해지 후 후회한 이유']
+2026-07-06 07:18:09,557 [INFO] keyword_collector — 최종 선정 키워드 2개: ['미국 ETF 직접 투자해보니 실수담', '청약 통장 해지 후 후회한 이유']
+2026-07-06 07:18:09,557 [INFO] main — 수집된 키워드 2개: ['미국 ETF 직접 투자해보니 실수담', '청약 통장 해지 후 후회한 이유']
+2026-07-06 07:18:09,558 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-07-06 07:18:09,925 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-06 07:18:11,228 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:18:11,229 [INFO] main — 단독 포스트 대상 키워드 1개: ['미국 ETF 직접 투자해보니 실수담']
+2026-07-06 07:18:11,241 [INFO] main — 
+[1/1] 키워드: '미국 ETF 직접 투자해보니 실수담'
+2026-07-06 07:18:11,241 [INFO] content_generator — 포스트 생성 중: '미국 ETF 직접 투자해보니 실수담'
+2026-07-06 07:19:12,838 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:19:18,521 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:19:18,522 [INFO] content_generator — 팩트체크: 통과
+2026-07-06 07:19:18,523 [INFO] content_generator — 섹션별 이미지 검색: ['미국 ETF 투자해보니', '미국 ETF 환전 타이밍부터 제가 제일', '미국 ETF 배당세 이건 달러 배당이', '미국 ETF 기대했던 vs 적도 처음엔']
+2026-07-06 07:19:28,606 [INFO] image_fetcher — 이미지 수집 성공: '미국 ETF 투자해보니' → 제목='historical stock / securities / certific' (관련성=0.33)
+2026-07-06 07:19:36,532 [INFO] image_fetcher — 이미지 수집 성공: '미국 ETF 환전 타이밍부터 제가 제일' → 제목='historical stock / securities / certific' (관련성=0.17)
+2026-07-06 07:19:45,568 [INFO] image_fetcher — 이미지 수집 성공: '미국 ETF 배당세 이건 달러 배당이' → 제목='historical stock / securities / certific' (관련성=0.17)
+2026-07-06 07:19:48,489 [INFO] image_fetcher — 이미지 수집 성공: '미국 ETF 기대했던 vs 적도 처음엔' → 제목='historical stock / securities / certific' (관련성=0.20)
+2026-07-06 07:19:52,753 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:19:52,755 [INFO] image_fetcher — 이미지 관련성 검증: 4개 제거, 0개 유지
+2026-07-06 07:19:52,755 [INFO] content_generator — 이미지 4개 본문 삽입 완료
+2026-07-06 07:19:52,756 [INFO] content_generator — 포스트 생성 완료: '미국 ETF 직접 투자해보니, 저만 이런 실수 한 거 아니죠? (2026년)' (2175자, 이미지 4개)
+2026-07-06 07:20:04,953 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:20:04,954 [WARNING] adsense_validator — AdSense 검증 JSON 파싱 실패 — 기본 처리: 
+2026-07-06 07:20:04,960 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-06 07:20:04,962 [INFO] internal_linker —   [1/5] '수익률' -> https://hoguwhat1.blogspot.com/2026/06/etf-6-2026.html
+2026-07-06 07:20:04,965 [INFO] internal_linker —   [2/5] '실수담' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0151358717
+2026-07-06 07:20:04,968 [INFO] internal_linker —   [3/5] '투자할' -> https://hoguwhat1.blogspot.com/2026/07/etf-2026_0598100428.h
+2026-07-06 07:20:04,968 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-07-06 07:20:04,968 [INFO] main —   제목: 미국 ETF 직접 투자해보니, 저만 이런 실수 한 거 아니죠? (2026년)
+2026-07-06 07:20:04,969 [INFO] main —   이미지: 4개 삽입
+2026-07-06 07:20:16,814 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 07:20:16,816 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 64/100 — '미국 ETF 직접 투자해보니, 저만 이런 실수 한 거 아니죠? '
+2026-07-06 07:20:16,816 [INFO] adsense_validator —   ⚠️ SEO 최적화: 
+2026-07-06 07:20:16,816 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: 
+2026-07-06 07:20:16,816 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 
+2026-07-06 07:20:16,816 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 
+2026-07-06 07:20:16,816 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-06 07:20:16,816 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-06 07:20:16,816 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-06 07:20:16,816 [ERROR] main —   ❌ AdSense 유해 콘텐츠 감지 — 업로드 취소: '미국 ETF 직접 투자해보니, 저만 이런 실수 한 거 아니죠? (2026년)' (점수: 64/100)
+2026-07-06 07:20:16,822 [INFO] main — 
+============================================================
+2026-07-06 07:20:16,822 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
+2026-07-06 07:20:16,822 [INFO] main — ============================================================
+2026-07-06 07:20:16,889 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 68개)
+2026-07-06 07:20:16,908 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-06 07:20:16,924 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-06 07:20:16,924 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
+2026-07-06 07:20:16,925 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-06 07:20:16,927 [INFO] dashboard_exporter —   수리 이력: 34건 내보내기 완료
+2026-07-06 07:20:16,932 [INFO] post_manager —   포스트 레지스트리: 전체 111개 (게시 88 / 실패 18 / 대기 4)
+2026-07-06 07:20:16,932 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-06 07:20:16,933 [INFO] dashboard_exporter —   포스트: 110개 / 실행 이력: 68개 / 블로그: 3개
+2026-07-06 07:20:16,933 [INFO] main — 대시보드 데이터 업데이트 완료

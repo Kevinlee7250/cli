@@ -230,13 +230,15 @@ def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -
 • "{keyword}"에 대해 이미 인터넷에 넘치는 포괄적 내용 금지
 • "이런 이야기는 처음 봤다"고 느낄 각도: "실패해본 사람 입장에서", "막상 해보니 달랐던 것", "{y}년부터 달라진 점"
 
-━━━ Google AdSense 정책 준수 ━━━
-① 원본성 — 독창적 경험·인사이트, 2500자 이상
+━━━ Google AdSense 정책 준수 (가치 없는 콘텐츠 위반 방지) ━━━
+① 원본성 — 독창적 경험·인사이트 필수. 인터넷에 흔한 정보 나열 금지. 반드시 글쓴이만 아는 구체적 경험·수치·실수 포함
 ② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치, 낚시성 제목 금지
-③ 구조 — H2 4개 이상, 단락 적절한 길이
+③ 구조 — H2 5개 이상, 각 섹션 300자 이상, 단락 적절한 길이
 ④ 유해 금지 — 성인/폭력/혐오/불법 절대 금지. 투자·의료는 면책 표현 필수
-⑤ E-E-A-T — 1인칭 경험, 출처 최소 2개, 균형 잡힌 시각
+⑤ E-E-A-T — 1인칭 경험 구체적 수치·날짜 포함, 출처 최소 3개, 균형 잡힌 시각
+   예: "제가 {y}년에 직접 써보니", "저는 당시 ○만원을 잃었는데", "3개월 해본 결과"
 ⑥ 이미지 — alt 텍스트 포함
+⑦ 분량 4500자 이상 필수 — 이 이하는 'thin content'로 AdSense 거부됨
 
 ━━━ 제목 ━━━
 • 자연스러운 블로그 말투 (기사 제목 X)
@@ -244,9 +246,10 @@ def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -
 • 예: "직접 해봤는데요", "솔직 후기", "저는 이렇게 했어요"
 
 ━━━ 본문 구조 ━━━
-분량: 2800~3500자 완전한 HTML
-H2 섹션: 4~6개 (주제에 따라 자유롭게)
+분량: 4500~6000자 완전한 HTML (Google AdSense 정책상 4000자 미만은 thin content)
+H2 섹션: 5~7개 (주제에 따라 자유롭게)
 도입부·각 섹션·결론 모두 단락(p 태그) 기반
+각 H2 섹션마다 최소 2개 단락 이상, 구체적 사례·수치·경험 반드시 포함
 
 핵심 요약 박스 (첫 번째 h2 바로 앞에 1개):
 <div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>핵심 포인트:</strong> [이 글의 가장 실용적인 핵심을 1~2문장으로]</div>
@@ -992,24 +995,27 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict, blog_
 • 유형별 구조 가이드:
 {structure_guide}
 
-━━━ Google AdSense 2025 정책 준수 (자동 검증 대상) ━━━
-① 원본성·품질 — 독창적 경험·인사이트 필수, 2500자 이상
+━━━ Google AdSense 2025 정책 준수 (가치 없는 콘텐츠 위반 방지) ━━━
+① 원본성·품질 — 독창적 경험·인사이트 필수. 인터넷에 흔한 정보 나열 금지. 글쓴이만 아는 구체적 경험·수치·실수 포함
 ② SEO 최적화 — 키워드 자연 분산, 제목·내용 일치
-③ 구조·가독성 — H2 4개 이상, 단락 적절한 길이, 목차 포함
+③ 구조·가독성 — H2 5개 이상, 각 섹션 300자 이상, 목차 포함
 ④ 광고 배치 — 광고 4개 이하, 콘텐츠 충분, 흐름 방해 금지
 ⑤ 유해·금지 — 성인/폭력/혐오/불법 절대 금지 (위반 시 즉시 거부)
    투자·의료 주장은 반드시 면책 표현 포함
-⑥ E-E-A-T — 1인칭 경험 포함, 출처 최소 2개, 균형 잡힌 시각
+⑥ E-E-A-T — 1인칭 경험 구체적 수치·날짜 포함, 출처 최소 3개, 균형 잡힌 시각
+   예: "제가 {y}년에 직접 써보니", "저는 당시 ○만원 손실", "○개월 해본 결과"
 ⑦ 이미지 — alt 텍스트 모든 이미지에 포함
 ⑧ AI 의심도 — 위 4번 AI 상투어 규칙 철저 준수
+⑨ 분량 4500자 이상 필수 — 이 이하는 'thin content'로 AdSense 거부됨
 
 ━━━ 제목 규칙 ━━━
 • "[{episode}편]"으로 시작
 • 자연스러운 블로그 제목 | {y}년 포함 | 40자 이내
 
 ━━━ 본문 구조 ━━━
-분량: 2800~3500자 완전한 HTML
-H2 섹션: 4~6개 (주제에 따라 자유롭게)
+분량: 4500~6000자 완전한 HTML (Google AdSense 정책상 4000자 미만은 thin content)
+H2 섹션: 5~7개 (주제에 따라 자유롭게)
+각 H2 섹션마다 최소 2개 단락 이상, 구체적 사례·수치·경험 반드시 포함
 
 ━━━ 강조 & 가독성 ━━━
 • 핵심 수치·팩트·행동 지침은 <strong>으로 강조 (문단당 1~2개, 남용 금지)
@@ -1158,12 +1164,15 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             post_data["word_count"] = _word_count(content_html)
             post_data["content_preview"] = _content_preview(content_html)
 
-            if not content_html.strip() or post_data["word_count"] < 100:
+            if not content_html.strip() or post_data["word_count"] < 2500:
                 if attempt < 2:
-                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자) — 재시도")
+                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 2500자) — 재시도 {attempt + 1}/3")
                     time.sleep(2)
                     continue
-                return None
+                if post_data["word_count"] < 500:
+                    logger.error(f"컨텐츠 생성 실패: {post_data['word_count']}자 — thin content 방지를 위해 게시 거부")
+                    return None
+                logger.warning(f"최소 분량 미달({post_data['word_count']}자) — 재시도 소진, 해당 분량으로 진행")
 
             if not isinstance(post_data.get("sources"), list):
                 post_data["sources"] = []
@@ -1380,14 +1389,16 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             post_data["word_count"] = _word_count(content_html)
             post_data["content_preview"] = _content_preview(content_html)
 
-            # 컨텐츠 유효성 검사 (json_repair로 복구됐지만 내용이 비어있는 경우 방지)
-            if not content_html.strip() or post_data["word_count"] < 100:
+            # 컨텐츠 유효성 검사 — AdSense thin content 방지 (최소 2500자)
+            if not content_html.strip() or post_data["word_count"] < 2500:
                 if attempt < 2:
-                    logger.warning(f"컨텐츠 비어있음 또는 너무 짧음({post_data['word_count']}자) — 재시도 {attempt + 1}/3")
+                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 2500자) — 재시도 {attempt + 1}/3")
                     time.sleep(2)
                     continue
-                logger.error("컨텐츠 생성 실패: 유효한 내용 없음")
-                return None
+                if post_data["word_count"] < 500:
+                    logger.error(f"컨텐츠 생성 실패: {post_data['word_count']}자 — thin content 방지를 위해 게시 거부")
+                    return None
+                logger.warning(f"최소 분량 미달({post_data['word_count']}자) — 재시도 소진, 해당 분량으로 진행")
 
             # sources 필드 유효성 검증 (hallucinated URL 필터링)
             if not isinstance(post_data.get("sources"), list):

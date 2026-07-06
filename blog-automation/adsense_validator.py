@@ -164,12 +164,13 @@ def validate_adsense(post_data: dict) -> dict:
 
 ━━━ 검증 항목 ━━━ (각 항목: pass / warn / fail + 한 줄 근거)
 
-1. originality — 원본성 및 품질 (AdSense Valuable Inventory 정책)
+1. originality — 원본성 및 품질 (AdSense Valuable Inventory / 가치 없는 콘텐츠 정책)
    판단 기준:
-   • 독창적 관점·개인 경험이 실제로 포함됐는가?
+   • 독창적 관점·개인 경험이 구체적 수치·날짜·사례와 함께 실제로 포함됐는가?
    • 다른 사이트의 정보를 그대로 나열만 하지 않는가? (thin content 금지)
-   • 글자 수 2000자 미만이면 warn, 1000자 미만이면 fail
-   • 독자에게 실질적 가치를 주는가?
+   • 글자 수 4000자 이상이면 pass, 2500~3999자면 warn, 2500자 미만이면 fail
+   • 독자에게 실질적 가치를 주는가? (인터넷에 이미 넘치는 정보의 재조합이면 fail)
+   • AI가 생성한 일반론 나열인지, 아니면 진짜 경험·인사이트가 담겼는지 판단
 
 2. seo — SEO 최적화
    판단 기준:

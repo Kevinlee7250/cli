@@ -753,8 +753,10 @@ def get_trending_keywords(
         )
         naver_kws = _headlines_to_keywords(naver_headlines, count * 2)
         for kw in naver_kws:
-            keyword_sources[kw] = "naver_realtime"
-        candidates = naver_kws
+            if kw not in keyword_sources:
+                keyword_sources[kw] = "naver_realtime"
+        # season_kws가 이미 candidates에 있으므로 뒤에 추가 (시즌 키워드 보존)
+        candidates = candidates + [kw for kw in naver_kws if kw not in keyword_sources or keyword_sources[kw] == "naver_realtime"]
         logger.info(f"네이버 실시간 뉴스 키워드: {len(naver_kws)}개")
 
     # 1순위: Google Trends RSS

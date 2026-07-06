@@ -69,7 +69,7 @@ from keyword_collector import get_trending_keywords, _migrate_used_keywords
 from dashboard_exporter import log_run, export_dashboard, save_pending_posts
 from post_manager import (
     register_post, update_post_status, save_draft, get_failed_posts,
-    retry_failed_posts, export_for_dashboard as pm_export,
+    retry_failed_posts,
     Status as PostStatus, migrate_from_run_history,
 )
 

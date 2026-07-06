@@ -24,35 +24,6 @@ logger = logging.getLogger(__name__)
 TOKEN_URL = "https://oauth2.googleapis.com/token"
 BLOGGER_API_BASE = "https://www.googleapis.com/blogger/v3"
 
-# Blogger API가 거부하는 HTML 속성 패턴 (INVALID_ARGUMENT 400 원인)
-_BLOGGER_BLOCKED_ATTRS = re.compile(
-    r'\s(?:aria-[\w-]+|itemscope|itemtype|itemprop|itemid|vocab|property|role)'
-    r'(?:=["\'][^"\']*["\']|=[^\s>]*)?',
-    re.IGNORECASE,
-)
-
-
-def _sanitize_for_blogger(html: str) -> str:
-    """Blogger API가 거부하는 속성을 제거합니다.
-
-    제거 대상:
-    - aria-* 속성 (aria-label, aria-describedby 등)
-    - Schema.org 마이크로데이터 속성 (itemscope, itemtype, itemprop, itemid)
-    - role 속성
-    - <script> 태그 (JSON-LD 제외 — AdSense/일반 script만 제거)
-    """
-    # 1) <script> 태그 제거 — JSON-LD(application/ld+json)는 SEO 필수이므로 유지
-    html = re.sub(
-        r'<script(?![^>]*type=["\']application/ld\+json["\'])[^>]*>.*?</script>',
-        '', html, flags=re.DOTALL | re.IGNORECASE
-    )
-    # 2) 차단된 속성 제거 (태그 내부에서만 적용)
-    def _clean_tag(m: re.Match) -> str:
-        return _BLOGGER_BLOCKED_ATTRS.sub('', m.group(0))
-    html = re.sub(r'<[a-zA-Z][^>]*>', _clean_tag, html)
-    return html
-
-
 # ──────────────────────────────────────────────────────────────────────────────
 # OAuth
 # ──────────────────────────────────────────────────────────────────────────────

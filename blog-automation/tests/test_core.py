@@ -136,7 +136,7 @@ def test_min_relevance_blocks_junk():
     """관련성 0 후보만 있으면 _fetch_best_image가 None을 반환해야 한다."""
     import image_fetcher as imf
 
-    def fake_search(query, cid, csec, n):
+    def fake_search(query, cid, csec, n, **kwargs):
         return [{"url": "http://x/ChateauValere.jpg", "title": "Château de Valère", "width": 800, "height": 600}]
 
     orig = imf._search_all_sources

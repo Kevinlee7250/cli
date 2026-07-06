@@ -78,19 +78,29 @@ jobs:
             python auto_repair.py
           fi
 
+      - name: 🔁 실패 포스트 자동 재시도 (최대 5개, 7일 이내)
+        if: ${{ inputs.dry_run != 'true' }}
+        working-directory: blog-automation
+        run: |
+          echo "=== 실패 포스트 재업로드 시도 ==="
+          python main.py --retry --retry-max 5 --retry-age 7 || true
+
       - name: 수리 결과 커밋 & 푸시
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f \
-            docs/data/repairs.json \
+          for f in \
+            docs/data/repairs.json docs/data/pending_posts.json \
+            docs/data/posts.json docs/data/post_registry.json \
             blog-automation/logs/repair_history.json \
             blog-automation/logs/run_history.json \
             blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json \
-            docs/data/pending_posts.json \
-            2>/dev/null || true
+            blog-automation/logs/post_registry.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
+          true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else

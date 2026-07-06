@@ -23,6 +23,13 @@ def _reload_config(monkeypatch, blogs_config_env: str = ""):
     return config
 
 
+def test_adsense_min_score_default_80(monkeypatch):
+    """AdSense 품질 기준 기본값은 80점 (사용자 확정 정책 — 낮추지 말 것)."""
+    monkeypatch.delenv("ADSENSE_MIN_SCORE", raising=False)
+    config = _reload_config(monkeypatch)
+    assert config.ADSENSE_MIN_SCORE == 80
+
+
 def test_merge_env_overrides_registry(monkeypatch):
     """BLOGS_CONFIG의 blog1이 blogs.json의 blog1을 덮어쓴다."""
     env = json.dumps([{"id": "blog1", "name": "ENV블로그", "blog_id": "999", "enabled": True}])

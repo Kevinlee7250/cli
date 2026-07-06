@@ -87,6 +87,7 @@ jobs:
           ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
           ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"
           ADSENSE_MODE=auto
+          ADSENSE_MIN_SCORE=80
           GSC_SITE_URL="${{ secrets.GSC_SITE_URL }}"
           INSTAGRAM_ACCESS_TOKEN="${{ secrets.INSTAGRAM_ACCESS_TOKEN }}"
           INSTAGRAM_ACCOUNT_ID="${{ secrets.INSTAGRAM_ACCOUNT_ID }}"

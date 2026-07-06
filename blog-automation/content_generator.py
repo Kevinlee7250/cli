@@ -10,6 +10,7 @@ import time
 import anthropic
 
 from config import claude_text, claude_generate, ANTHROPIC_API_KEY, CLAUDE_MODEL, BLOG_LANGUAGE
+from coupang_affiliate import inject_affiliate_section
 from image_fetcher import fetch_images_for_queries, inject_images_into_content
 
 logger = logging.getLogger(__name__)
@@ -1193,6 +1194,11 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                 post_data["content"], keyword, _detect_article_type(keyword)
             )
 
+            # 쿠팡파트너스 추천 상품 섹션 삽입 (AdSense 자동 광고와 겹치지 않게 맨 하단 고정)
+            post_data["content"] = inject_affiliate_section(
+                post_data["content"], keyword, blog_config
+            )
+
             logger.info(
                 f"시리즈 포스트 생성 완료: '{post_data.get('title', '?')}' "
                 f"({post_data['word_count']}자, 이미지 {post_data['images_inserted']}개)"
@@ -1420,6 +1426,11 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             # 인라인 스타일 비주얼 디자인 적용 (주제별 컬러 테마)
             post_data["content"] = _apply_design(
                 post_data["content"], keyword, _detect_article_type(keyword)
+            )
+
+            # 쿠팡파트너스 추천 상품 섹션 삽입 (AdSense 자동 광고와 겹치지 않게 맨 하단 고정)
+            post_data["content"] = inject_affiliate_section(
+                post_data["content"], keyword, blog_config
             )
 
             logger.info(

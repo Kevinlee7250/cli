@@ -1378,6 +1378,30 @@
       <pre id="blogs-config-json" style="display:none;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:11px;color:var(--muted);overflow-x:auto;white-space:pre-wrap;word-break:break-all;max-height:260px;overflow-y:auto"></pre>
     </div>
 
+    <!-- ⑨ 쿠팡파트너스 링크 관리 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>🛒 쿠팡파트너스 링크 관리</h2>
+      <div style="display:flex;gap:8px">
+        <button onclick="saveAffiliateToGitHub()" style="padding:6px 14px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:var(--green);font-size:12px;cursor:pointer;font-weight:600">💾 GitHub에 저장</button>
+        <button onclick="openAffiliateModal(-1)" style="padding:6px 14px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.4);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">+ 링크 추가</button>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">
+      등록된 링크는 글 생성 시 키워드와 매칭되어 <strong>글 하단 고정 위치</strong>에 자동 삽입됩니다. AdSense 자동 광고 영역과 겹치지 않습니다.<br>
+      변경 후 <strong>GitHub에 저장</strong>을 눌러야 다음 글 생성에 반영됩니다.
+    </div>
+    <div class="table-wrap" style="margin-bottom:12px">
+      <table>
+        <thead><tr>
+          <th>상품명</th><th>URL</th><th>키워드 태그</th><th>블로그</th><th>상태</th><th>액션</th>
+        </tr></thead>
+        <tbody id="affiliate-table-body">
+          <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px;font-size:13px">등록된 링크가 없습니다. + 링크 추가를 눌러 첫 번째 상품을 등록하세요.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="affiliate-save-status" style="display:none;margin-bottom:20px;font-size:13px;padding:10px 14px;border-radius:8px"></div>
+
   </div>
 
   <!-- ══ 블로그 설정 모달 ══════════════════════════════════════════════════ -->
@@ -1481,6 +1505,48 @@
           <button onclick="closeBlogModal()" style="padding:10px 20px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:13px;cursor:pointer">취소</button>
           <button id="bm-delete-btn" onclick="deleteBlogFromModal()" style="display:none;padding:10px 20px;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.3);border-radius:8px;color:var(--red);font-size:13px;cursor:pointer">삭제</button>
           <button onclick="saveBlogModal()" style="padding:10px 24px;background:var(--accent);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;cursor:pointer">저장</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 쿠팡파트너스 링크 모달 ══════════════════════════════════════════════ -->
+  <div id="affiliate-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9200;align-items:center;justify-content:center;padding:16px">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto">
+      <div style="padding:20px 24px 0;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg2);z-index:1;border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:20px">
+        <div style="font-weight:700;font-size:16px" id="affiliate-modal-title">링크 추가</div>
+        <button onclick="closeAffiliateModal()" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--muted);cursor:pointer;font-size:18px;line-height:1">×</button>
+      </div>
+      <div style="padding:0 24px 24px">
+        <div style="margin-bottom:14px">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">상품명 <span style="color:var(--red)">*</span></label>
+          <input id="am-name" placeholder="예: ETF 투자 입문서" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box">
+        </div>
+        <div style="margin-bottom:14px">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">쿠팡파트너스 URL <span style="color:var(--red)">*</span></label>
+          <input id="am-url" placeholder="https://link.coupang.com/a/..." style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box;font-family:monospace">
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">쿠팡파트너스에서 발급한 트래킹 링크를 입력하세요</div>
+        </div>
+        <div style="margin-bottom:14px">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">키워드 태그 <span style="font-size:11px;color:var(--muted)">(쉼표로 구분, 비워두면 모든 글에 표시)</span></label>
+          <input id="am-keywords" placeholder="ETF, 투자, 주식" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box">
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">글 키워드에 태그가 포함될 때만 삽입됩니다</div>
+        </div>
+        <div style="margin-bottom:14px">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">적용 블로그 <span style="font-size:11px;color:var(--muted)">(쉼표로 구분, 비워두면 전체 블로그)</span></label>
+          <input id="am-blogs" placeholder="blog1, blog2" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box">
+        </div>
+        <div style="margin-bottom:20px">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">상태</label>
+          <select id="am-enabled" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px">
+            <option value="true">✅ 활성</option>
+            <option value="false">⏸ 비활성</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:flex-end">
+          <button id="affiliate-delete-btn" onclick="deleteAffiliateFromModal()" style="display:none;padding:10px 18px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);border-radius:8px;color:var(--red);font-size:13px;cursor:pointer">삭제</button>
+          <button onclick="closeAffiliateModal()" style="padding:10px 18px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:13px;cursor:pointer">취소</button>
+          <button onclick="saveAffiliateModal()" style="padding:10px 24px;background:var(--accent);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:700;cursor:pointer">저장</button>
         </div>
       </div>
     </div>
@@ -4136,6 +4202,7 @@ function renderSystemPage() {
   loadBlogList()
   renderLearningReport()
   renderRepairReport()
+  loadAffiliateLinksFromRepo()
   // GitHub Actions 이력은 PAT 있을 때만 자동 로드
   if (getPAT()) loadSystemRuns()
 }
@@ -4411,6 +4478,175 @@ function copyBlogsConfig() {
     prompt('아래 JSON을 복사하세요:', text)
   })
 }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 쿠팡파트너스 링크 관리
+// ══════════════════════════════════════════════════════════════════════════════
+const AFFILIATE_LS_KEY = 'coupang_affiliate_links'
+let _amEditIdx = -1
+
+function getAffiliateLinks() {
+  try { return JSON.parse(localStorage.getItem(AFFILIATE_LS_KEY) || '[]') } catch { return [] }
+}
+function saveAffiliateLinks(arr) {
+  localStorage.setItem(AFFILIATE_LS_KEY, JSON.stringify(arr))
+}
+
+function renderAffiliateTable() {
+  const tbody = document.getElementById('affiliate-table-body')
+  if (!tbody) return
+  const links = getAffiliateLinks()
+  if (!links.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px;font-size:13px">등록된 링크가 없습니다. + 링크 추가를 눌러 첫 번째 상품을 등록하세요.</td></tr>'
+    return
+  }
+  tbody.innerHTML = links.map((ln, i) => `
+    <tr>
+      <td style="font-weight:600">${_esc(ln.name)}</td>
+      <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+        <a href="${_esc(ln.url)}" target="_blank" rel="noopener" style="color:var(--accent2);font-size:12px">${_esc(ln.url)}</a>
+      </td>
+      <td>${(ln.keywords||[]).map(k=>`<span class="badge blue">${_esc(k)}</span>`).join(' ') || '<span style="color:var(--muted);font-size:11px">전체</span>'}</td>
+      <td>${(ln.blogs||[]).map(b=>`<span class="badge purple">${_esc(b)}</span>`).join(' ') || '<span style="color:var(--muted);font-size:11px">전체</span>'}</td>
+      <td><span class="badge ${ln.enabled!==false?'green':'muted'}">${ln.enabled!==false?'활성':'비활성'}</span></td>
+      <td><button onclick="openAffiliateModal(${i})" style="padding:5px 12px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:12px;cursor:pointer">✏️ 편집</button></td>
+    </tr>`).join('')
+}
+
+function openAffiliateModal(idx) {
+  _amEditIdx = idx
+  const links = getAffiliateLinks()
+  const ln = idx >= 0 ? links[idx] : null
+  document.getElementById('affiliate-modal-title').textContent = idx < 0 ? '링크 추가' : '링크 편집'
+  document.getElementById('am-name').value = ln?.name || ''
+  document.getElementById('am-url').value = ln?.url || ''
+  document.getElementById('am-keywords').value = (ln?.keywords || []).join(', ')
+  document.getElementById('am-blogs').value = (ln?.blogs || []).join(', ')
+  document.getElementById('am-enabled').value = (ln?.enabled !== false) ? 'true' : 'false'
+  const delBtn = document.getElementById('affiliate-delete-btn')
+  if (delBtn) delBtn.style.display = idx >= 0 ? 'block' : 'none'
+  const ov = document.getElementById('affiliate-modal-overlay')
+  ov.style.display = 'flex'
+}
+
+function closeAffiliateModal() {
+  document.getElementById('affiliate-modal-overlay').style.display = 'none'
+}
+
+function saveAffiliateModal() {
+  const name = document.getElementById('am-name').value.trim()
+  const url  = document.getElementById('am-url').value.trim()
+  if (!name) { showToast('상품명을 입력하세요', 'error'); return }
+  if (!url || !url.startsWith('http')) { showToast('올바른 URL을 입력하세요', 'error'); return }
+
+  const kwRaw = document.getElementById('am-keywords').value.trim()
+  const bRaw  = document.getElementById('am-blogs').value.trim()
+  const entry = {
+    id: _amEditIdx >= 0 ? (getAffiliateLinks()[_amEditIdx]?.id || `link-${Date.now()}`) : `link-${Date.now()}`,
+    name,
+    url,
+    keywords: kwRaw ? kwRaw.split(',').map(s=>s.trim()).filter(Boolean) : [],
+    blogs:    bRaw  ? bRaw.split(',').map(s=>s.trim()).filter(Boolean) : [],
+    enabled:  document.getElementById('am-enabled').value !== 'false',
+  }
+  const links = getAffiliateLinks()
+  if (_amEditIdx < 0) links.push(entry)
+  else links[_amEditIdx] = entry
+  saveAffiliateLinks(links)
+  closeAffiliateModal()
+  renderAffiliateTable()
+  showToast(_amEditIdx < 0 ? '링크가 추가되었습니다' : '링크가 수정되었습니다', 'success')
+}
+
+function deleteAffiliateFromModal() {
+  if (_amEditIdx < 0) return
+  const links = getAffiliateLinks()
+  const name = links[_amEditIdx]?.name || ''
+  if (!confirm(`'${name}' 링크를 삭제하시겠습니까?`)) return
+  links.splice(_amEditIdx, 1)
+  saveAffiliateLinks(links)
+  closeAffiliateModal()
+  renderAffiliateTable()
+  showToast('링크가 삭제되었습니다', 'info')
+}
+
+async function saveAffiliateToGitHub() {
+  const pat = getPAT()
+  if (!pat) { showToast('GitHub PAT가 없습니다. 시스템 관리 → API 키 관리에서 설정하세요', 'error'); return }
+  const links = getAffiliateLinks()
+  const content = JSON.stringify(links, null, 2) + '\n'
+  const b64 = btoa(unescape(encodeURIComponent(content)))
+  const path = 'docs/data/affiliate_links.json'
+  const url = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`
+  const statusEl = document.getElementById('affiliate-save-status')
+
+  statusEl.style.display = 'block'
+  statusEl.style.background = 'rgba(251,191,36,.1)'
+  statusEl.style.border = '1px solid rgba(251,191,36,.3)'
+  statusEl.style.color = 'var(--yellow)'
+  statusEl.textContent = '⏳ GitHub에 저장 중...'
+
+  try {
+    // 현재 파일 SHA 조회 (업데이트에 필요)
+    let sha = ''
+    const getRes = await fetch(url + `?ref=${GH_BRANCH}`, {
+      headers: { Authorization: `token ${pat}`, Accept: 'application/vnd.github.v3+json' }
+    })
+    if (getRes.ok) {
+      const d = await getRes.json()
+      sha = d.sha || ''
+    }
+
+    const body = { message: '🔗 쿠팡파트너스 링크 업데이트', content: b64, branch: GH_BRANCH }
+    if (sha) body.sha = sha
+
+    const putRes = await fetch(url, {
+      method: 'PUT',
+      headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github.v3+json' },
+      body: JSON.stringify(body),
+    })
+    if (putRes.ok) {
+      statusEl.style.background = 'rgba(52,211,153,.1)'
+      statusEl.style.border = '1px solid rgba(52,211,153,.3)'
+      statusEl.style.color = 'var(--green)'
+      statusEl.textContent = `✅ GitHub 저장 완료 — docs/data/affiliate_links.json (${links.length}개 링크)`
+      showToast('GitHub에 저장되었습니다', 'success')
+    } else {
+      const err = await putRes.json().catch(() => ({}))
+      throw new Error(err.message || `HTTP ${putRes.status}`)
+    }
+  } catch (e) {
+    statusEl.style.background = 'rgba(248,113,113,.1)'
+    statusEl.style.border = '1px solid rgba(248,113,113,.3)'
+    statusEl.style.color = 'var(--red)'
+    statusEl.textContent = `❌ 저장 실패: ${e.message}`
+    showToast('GitHub 저장 실패: ' + e.message, 'error')
+  }
+}
+
+// 페이지 로드 시 docs/data/affiliate_links.json 을 localStorage로 시드
+async function loadAffiliateLinksFromRepo() {
+  const ls = getAffiliateLinks()
+  if (ls.length > 0) { renderAffiliateTable(); return }   // 로컬 데이터 우선
+  try {
+    const base = window.location.pathname.replace(/\/[^/]*$/, '')
+    const r = await fetch(base + '/data/affiliate_links.json?t=' + Date.now())
+    if (!r.ok) return
+    const data = await r.json()
+    if (Array.isArray(data) && data.length > 0) {
+      saveAffiliateLinks(data)
+    }
+  } catch {}
+  renderAffiliateTable()
+}
+
+function _esc(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+}
+
+document.getElementById('affiliate-modal-overlay')?.addEventListener('click', function(e) {
+  if (e.target === this) closeAffiliateModal()
+})
 
 // ── 블로그별 실행 / 필터 ──────────────────────────────────────────────────────
 function wfRunForBlog(blogId) {

@@ -1,0 +1,164 @@
+2026-07-06 03:29:46,380 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
+2026-07-06 03:29:46,380 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
+2026-07-06 03:29:46,380 [INFO] main —   - [blog1] HOGU What?
+2026-07-06 03:29:46,380 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
+2026-07-06 03:29:46,380 [INFO] main —   - [blog3] 금융NEWS
+2026-07-06 03:29:46,380 [INFO] main — 검토 모드 — pending_posts.json에 저장합니다
+2026-07-06 03:29:46,380 [INFO] main — ============================================================
+2026-07-06 03:29:46,381 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-06 03:29:46
+2026-07-06 03:29:46,381 [INFO] main — ============================================================
+2026-07-06 03:29:46,381 [INFO] main — 수집된 키워드 1개: ['SBS 드라마 김부장']
+2026-07-06 03:29:46,381 [INFO] main — 단독 포스트 대상 키워드 1개: ['SBS 드라마 김부장']
+2026-07-06 03:29:46,392 [INFO] post_manager — run_history 마이그레이션: 105개 포스트 추가
+2026-07-06 03:29:46,392 [INFO] main — 
+[1/1] 키워드: 'SBS 드라마 김부장'
+2026-07-06 03:29:46,392 [INFO] content_generator — 포스트 생성 중: 'SBS 드라마 김부장'
+2026-07-06 03:30:59,295 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:30:59,331 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-07-06 03:31:07,333 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:31:07,334 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
+2026-07-06 03:31:07,338 [INFO] content_generator — 섹션별 이미지 검색: ['SBS 드라마 김부장', 'SBS 드라마 줄거리랑 분위기 김부장은 대기업', 'SBS 드라마 주인공 감정선이 캐릭터는', 'SBS 드라마 장면에서 소름 장면 중에']
+2026-07-06 03:31:07,603 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 김부장' → 제목='bus / bus stop / singapore / government ' (관련성=0.33)
+2026-07-06 03:31:07,884 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 줄거리랑 분위기 김부장은 대기업' → 제목='bus / bus stop / singapore / government ' (관련성=0.17)
+2026-07-06 03:31:08,152 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 주인공 감정선이 캐릭터는' → 제목='bus / bus stop / singapore / government ' (관련성=0.20)
+2026-07-06 03:31:08,376 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 장면에서 소름 장면 중에' → 제목='bus / bus stop / singapore / government ' (관련성=0.17)
+2026-07-06 03:31:09,585 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:31:09,587 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-07-06 03:31:09,587 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-06 03:31:09,589 [INFO] content_generator — 포스트 생성 완료: 'SBS 드라마 김부장 정주행 후기, 회사원이라 더 아팠어요' (2154자, 이미지 0개)
+2026-07-06 03:31:21,475 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:31:21,477 [WARNING] adsense_validator — AdSense 검증 JSON 파싱 실패 — 기본 처리: 
+2026-07-06 03:31:21,487 [INFO] main —   제목: SBS 드라마 김부장 정주행 후기, 회사원이라 더 아팠어요
+2026-07-06 03:31:21,487 [INFO] main —   이미지: 0개 삽입
+2026-07-06 03:31:21,487 [INFO] main —   [검토 모드] 업로드 건너뜀
+2026-07-06 03:31:21,491 [INFO] main — 
+============================================================
+2026-07-06 03:31:21,491 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-06 03:31:21,491 [INFO] main — ============================================================
+2026-07-06 03:31:21,493 [INFO] dashboard_exporter —   검토 대기 저장: SBS 드라마 김부장 정주행 후기, 회사원이라 더 아팠어요 (7800자 HTML)
+2026-07-06 03:31:21,495 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 20개)
+2026-07-06 03:31:21,495 [INFO] main — 검토 대기 포스트 저장 완료
+2026-07-06 03:31:21,514 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 63개)
+2026-07-06 03:31:21,531 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-06 03:31:21,547 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-06 03:31:21,549 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
+2026-07-06 03:31:21,796 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-06 03:31:21,987 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-06 03:31:21,988 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-06 03:31:21,990 [INFO] dashboard_exporter —   수리 이력: 32건 내보내기 완료
+2026-07-06 03:31:21,995 [INFO] post_manager —   포스트 레지스트리: 전체 106개 (게시 87 / 실패 18 / 대기 1)
+2026-07-06 03:31:21,995 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-06 03:31:21,995 [INFO] dashboard_exporter —   포스트: 106개 / 실행 이력: 63개 / 블로그: 3개
+2026-07-06 03:31:21,996 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-06 03:31:21,996 [INFO] main — ============================================================
+2026-07-06 03:31:21,996 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-06 03:31:21
+2026-07-06 03:31:21,996 [INFO] main — ============================================================
+2026-07-06 03:31:21,997 [INFO] main — 수집된 키워드 1개: ['SBS 드라마 김부장']
+2026-07-06 03:31:21,997 [INFO] main — 단독 포스트 대상 키워드 1개: ['SBS 드라마 김부장']
+2026-07-06 03:31:22,005 [INFO] main — 
+[1/1] 키워드: 'SBS 드라마 김부장'
+2026-07-06 03:31:22,005 [INFO] content_generator — 포스트 생성 중: 'SBS 드라마 김부장'
+2026-07-06 03:32:33,708 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:32:33,719 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-07-06 03:32:39,031 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:32:39,032 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-06 03:32:39,033 [INFO] content_generator — 섹션별 이미지 검색: ['SBS 드라마 김부장', 'SBS 드라마 줄거리는 뻔한 테는 김부장은', 'SBS 드라마 캐릭터 부분에서 대사 김부장이', 'SBS 드라마 저만 이렇게 근데']
+2026-07-06 03:32:39,282 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 김부장' → 제목='bus / bus stop / singapore / government ' (관련성=0.33)
+2026-07-06 03:32:39,533 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 줄거리는 뻔한 테는 김부장은' → 제목='bus / bus stop / singapore / government ' (관련성=0.17)
+2026-07-06 03:32:39,763 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 캐릭터 부분에서 대사 김부장이' → 제목='bus / bus stop / singapore / government ' (관련성=0.17)
+2026-07-06 03:32:39,986 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 저만 이렇게 근데' → 제목='bus / bus stop / singapore / government ' (관련성=0.20)
+2026-07-06 03:32:41,143 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:32:41,144 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-07-06 03:32:41,144 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-06 03:32:41,145 [INFO] content_generator — 포스트 생성 완료: 'SBS 김부장 정주행 후기, 직장인이라면 다 공감할걸요' (2118자, 이미지 0개)
+2026-07-06 03:32:53,959 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:32:53,960 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 64/100 — 'SBS 김부장 정주행 후기, 직장인이라면 다 공감할걸요'
+2026-07-06 03:32:53,960 [INFO] adsense_validator —   ⚠️ SEO 최적화: 
+2026-07-06 03:32:53,960 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: 
+2026-07-06 03:32:53,960 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 
+2026-07-06 03:32:53,960 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 
+2026-07-06 03:32:53,961 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-06 03:32:53,961 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-06 03:32:53,961 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-06 03:32:53,961 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 64/100, 이유: []) — 재생성 2/2
+2026-07-06 03:32:56,961 [INFO] content_generator — 포스트 생성 중: 'SBS 드라마 김부장'
+2026-07-06 03:34:01,644 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:34:01,653 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-07-06 03:34:08,071 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:34:08,072 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-06 03:34:08,073 [INFO] content_generator — 섹션별 이미지 검색: ['SBS 드라마 김부장', 'SBS 드라마 보고 나서 사실 저는', 'SBS 드라마 어떤 사람한테 회사에서 중간', 'SBS 드라마 주인공 감정선이랑 주연 배우']
+2026-07-06 03:34:08,362 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 김부장' → 제목='bus / bus stop / singapore / government ' (관련성=0.33)
+2026-07-06 03:34:08,617 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 보고 나서 사실 저는' → 제목='bus / bus stop / singapore / government ' (관련성=0.17)
+2026-07-06 03:34:08,890 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 어떤 사람한테 회사에서 중간' → 제목='bus / bus stop / singapore / government ' (관련성=0.17)
+2026-07-06 03:34:09,137 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 주인공 감정선이랑 주연 배우' → 제목='bus / bus stop / singapore / government ' (관련성=0.17)
+2026-07-06 03:34:10,918 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:34:10,919 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-07-06 03:34:10,919 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-06 03:34:10,920 [INFO] content_generator — 포스트 생성 완료: 'SBS 김부장 정주행 후기, 솔직히 제 감상 남겨봅니다 (2026)' (2029자, 이미지 0개)
+2026-07-06 03:34:24,208 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:34:24,209 [WARNING] adsense_validator — AdSense 검증 JSON 파싱 실패 — 기본 처리: ```json
+{
+  "checks": {
+    "originality":     {"status": "pass", "note": "1인칭 시청 경험과 장단점 구체적
+2026-07-06 03:34:24,215 [INFO] main —   제목: SBS 김부장 정주행 후기, 솔직히 제 감상 남겨봅니다 (2026)
+2026-07-06 03:34:24,215 [INFO] main —   이미지: 0개 삽입
+2026-07-06 03:34:24,215 [INFO] main —   [검토 모드] 업로드 건너뜀
+2026-07-06 03:34:24,219 [INFO] main — 
+============================================================
+2026-07-06 03:34:24,219 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-06 03:34:24,219 [INFO] main — ============================================================
+2026-07-06 03:34:24,220 [INFO] dashboard_exporter —   검토 대기 저장: SBS 김부장 정주행 후기, 솔직히 제 감상 남겨봅니다 (2026) (7267자 HTML)
+2026-07-06 03:34:24,222 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 21개)
+2026-07-06 03:34:24,223 [INFO] main — 검토 대기 포스트 저장 완료
+2026-07-06 03:34:24,241 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 64개)
+2026-07-06 03:34:24,258 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-06 03:34:24,273 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-06 03:34:24,273 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
+2026-07-06 03:34:24,274 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-06 03:34:24,275 [INFO] dashboard_exporter —   수리 이력: 32건 내보내기 완료
+2026-07-06 03:34:24,281 [INFO] post_manager —   포스트 레지스트리: 전체 107개 (게시 87 / 실패 18 / 대기 2)
+2026-07-06 03:34:24,281 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-06 03:34:24,281 [INFO] dashboard_exporter —   포스트: 107개 / 실행 이력: 64개 / 블로그: 3개
+2026-07-06 03:34:24,281 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-06 03:34:24,282 [INFO] main — ============================================================
+2026-07-06 03:34:24,282 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-06 03:34:24
+2026-07-06 03:34:24,282 [INFO] main — ============================================================
+2026-07-06 03:34:24,282 [INFO] main — 수집된 키워드 1개: ['SBS 드라마 김부장']
+2026-07-06 03:34:24,282 [INFO] main — 단독 포스트 대상 키워드 1개: ['SBS 드라마 김부장']
+2026-07-06 03:34:24,290 [INFO] main — 
+[1/1] 키워드: 'SBS 드라마 김부장'
+2026-07-06 03:34:24,290 [INFO] content_generator — 포스트 생성 중: 'SBS 드라마 김부장'
+2026-07-06 03:35:39,451 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:35:44,442 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:35:44,443 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-06 03:35:44,443 [INFO] content_generator — 섹션별 이미지 검색: ['SBS 드라마 김부장', 'SBS 드라마 봤을 솔직한 우리 화를', 'SBS 드라마 김부장이라는 인물 회사에서 정작', 'SBS 드라마 소름 돋았던 제일 인상']
+2026-07-06 03:35:58,839 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 김부장' → 제목='Federation Square (SBS Building).jpg' (관련성=0.33)
+2026-07-06 03:36:06,838 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 봤을 솔직한 우리 화를' → 제목='bus / bus stop / singapore / government ' (관련성=0.17)
+2026-07-06 03:36:13,738 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 김부장이라는 인물 회사에서 정작' → 제목='bus / bus stop / singapore / government ' (관련성=0.17)
+2026-07-06 03:36:20,964 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 소름 돋았던 제일 인상' → 제목='bus / bus stop / singapore / government ' (관련성=0.17)
+2026-07-06 03:36:23,656 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:36:23,657 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-07-06 03:36:23,657 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-06 03:36:23,658 [INFO] content_generator — 포스트 생성 완료: 'SBS 드라마 김부장 보면서 든 직장인 재테크 생각 (2026)' (2255자, 이미지 0개)
+2026-07-06 03:36:40,564 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-06 03:36:40,565 [WARNING] adsense_validator — AdSense 검증 JSON 파싱 실패 — 기본 처리: 
+2026-07-06 03:36:40,573 [INFO] main —   제목: SBS 드라마 김부장 보면서 든 직장인 재테크 생각 (2026)
+2026-07-06 03:36:40,573 [INFO] main —   이미지: 0개 삽입
+2026-07-06 03:36:40,573 [INFO] main —   [검토 모드] 업로드 건너뜀
+2026-07-06 03:36:40,577 [INFO] main — 
+============================================================
+2026-07-06 03:36:40,577 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-06 03:36:40,577 [INFO] main — ============================================================
+2026-07-06 03:36:40,578 [INFO] dashboard_exporter —   검토 대기 저장: SBS 드라마 김부장 보면서 든 직장인 재테크 생각 (2026) (7699자 HTML)
+2026-07-06 03:36:40,580 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 22개)
+2026-07-06 03:36:40,581 [INFO] main — 검토 대기 포스트 저장 완료
+2026-07-06 03:36:40,600 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 65개)
+2026-07-06 03:36:40,617 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-06 03:36:40,632 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-06 03:36:40,633 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
+2026-07-06 03:36:40,633 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-06 03:36:40,634 [INFO] dashboard_exporter —   수리 이력: 32건 내보내기 완료
+2026-07-06 03:36:40,640 [INFO] post_manager —   포스트 레지스트리: 전체 108개 (게시 87 / 실패 18 / 대기 3)
+2026-07-06 03:36:40,640 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-06 03:36:40,640 [INFO] dashboard_exporter —   포스트: 108개 / 실행 이력: 65개 / 블로그: 3개
+2026-07-06 03:36:40,641 [INFO] main — 대시보드 데이터 업데이트 완료

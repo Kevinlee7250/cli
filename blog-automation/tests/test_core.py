@@ -23,6 +23,57 @@ def _reload_config(monkeypatch, blogs_config_env: str = ""):
     return config
 
 
+class _FakeBlock:
+    def __init__(self, type_, text=""):
+        self.type = type_
+        self.text = text
+
+
+class _FakeMessage:
+    def __init__(self, text, stop_reason):
+        self.content = [_FakeBlock("thinking"), _FakeBlock("text", text)]
+        self.stop_reason = stop_reason
+
+
+class _FakeClient:
+    """messages.create 호출마다 준비된 응답을 순서대로 반환."""
+    def __init__(self, responses):
+        self._responses = list(responses)
+        self.calls = []
+        self.messages = self
+
+    def create(self, **kwargs):
+        self.calls.append(kwargs)
+        return self._responses.pop(0)
+
+
+def test_claude_generate_continues_truncated_response():
+    """max_tokens로 잘리면 이어쓰기 요청으로 텍스트를 이어붙인다."""
+    from config import claude_generate
+    client = _FakeClient([
+        _FakeMessage("앞부분", "max_tokens"),
+        _FakeMessage("뒷부분", "end_turn"),
+    ])
+    result = claude_generate(client, model="m", max_tokens=100,
+                             messages=[{"role": "user", "content": "글 써줘"}])
+    assert result == "앞부분뒷부분"
+    # 이어쓰기 요청에 이전 assistant 블록이 그대로 포함되어야 함
+    assert client.calls[1]["messages"][1]["role"] == "assistant"
+
+
+def test_claude_generate_gives_up_when_still_truncated():
+    """이어쓰기 후에도 잘려 있으면 빈 문자열 (잘린 글 게시 방지)."""
+    from config import claude_generate
+    client = _FakeClient([
+        _FakeMessage("A", "max_tokens"),
+        _FakeMessage("B", "max_tokens"),
+        _FakeMessage("C", "max_tokens"),
+    ])
+    result = claude_generate(client, model="m", max_tokens=100, max_continues=2,
+                             messages=[{"role": "user", "content": "글 써줘"}])
+    assert result == ""
+
+
 def test_adsense_min_score_default_80(monkeypatch):
     """AdSense 품질 기준 기본값은 80점 (사용자 확정 정책 — 낮추지 말 것)."""
     monkeypatch.delenv("ADSENSE_MIN_SCORE", raising=False)

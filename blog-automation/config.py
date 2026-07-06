@@ -117,6 +117,40 @@ def claude_text(message) -> str:
     return ""
 
 
+def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
+    """max_tokens로 잘린 응답을 이어쓰기로 완성해 전체 텍스트를 반환합니다.
+
+    claude-sonnet-5는 adaptive thinking이 기본으로 켜져 thinking 토큰도
+    max_tokens 예산에서 차감됩니다. 생각이 길어진 요청은 본문이 중간에
+    잘리며 stop_reason이 "max_tokens"가 됩니다. 잘림을 감지하면 이전
+    응답 블록을 그대로 되돌려주고(같은 모델에서는 thinking 블록을 수정
+    없이 전달해야 함) 끊긴 지점부터 이어쓰게 합니다.
+
+    이어쓰기 후에도 잘려 있으면 빈 문자열을 반환해 호출부의 재시도
+    루프가 처음부터 다시 생성하도록 합니다 (잘린 글 게시 방지).
+    """
+    messages = list(kwargs.pop("messages"))
+    message = client.messages.create(messages=messages, **kwargs)
+    parts = [claude_text(message)]
+    for _ in range(max_continues):
+        if getattr(message, "stop_reason", "") != "max_tokens":
+            break
+        import logging
+        logging.getLogger(__name__).warning("응답이 max_tokens로 잘림 — 이어쓰기 요청")
+        messages = messages + [
+            {"role": "assistant", "content": message.content},
+            {"role": "user", "content": (
+                "응답이 토큰 한도로 잘렸습니다. 끊긴 지점부터 정확히 이어서 계속 작성하세요. "
+                "이미 출력한 내용을 반복하거나 서두를 붙이지 말고, 잘린 문자 바로 다음부터 출력하세요."
+            )},
+        ]
+        message = client.messages.create(messages=messages, **kwargs)
+        parts.append(claude_text(message))
+    if getattr(message, "stop_reason", "") == "max_tokens":
+        return ""
+    return "".join(parts)
+
+
 _BLOGS_REGISTRY_FILE = os.path.join(os.path.dirname(__file__), "blogs.json")
 
 

@@ -9,7 +9,7 @@ import time
 
 import anthropic
 
-from config import claude_text, ANTHROPIC_API_KEY, CLAUDE_MODEL, BLOG_LANGUAGE
+from config import claude_text, claude_generate, ANTHROPIC_API_KEY, CLAUDE_MODEL, BLOG_LANGUAGE
 from image_fetcher import fetch_images_for_queries, inject_images_into_content
 
 logger = logging.getLogger(__name__)
@@ -1126,19 +1126,20 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                 "You are a personal blogger who writes from direct experience. "
                 "Write naturally, like a real person — not an AI report. JSON only."
             )
-            message = _get_client().messages.create(
+            raw = claude_generate(
+                _get_client(),
                 model=CLAUDE_MODEL,
                 max_tokens=16000,
                 temperature=1.0,
                 system=_sys,
                 messages=[{"role": "user", "content": prompt}],
-            )
-            if not claude_text(message):
+            ).strip()
+            if not raw:
+                logger.warning("응답 없음 또는 이어쓰기 후에도 잘림 — 재시도")
                 if attempt < 2:
                     time.sleep(2)
                     continue
                 return None
-            raw = claude_text(message).strip()
             post_data = _parse_response(raw)
             if post_data is None:
                 if attempt < 2:
@@ -1342,20 +1343,20 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                 "For events after your knowledge cutoff, use 'according to recent trends'. "
                 "JSON only."
             )
-            message = _get_client().messages.create(
+            raw = claude_generate(
+                _get_client(),
                 model=CLAUDE_MODEL,
                 max_tokens=16000,
                 temperature=1.0,
                 system=_sys,
                 messages=[{"role": "user", "content": prompt}],
-            )
-            if not claude_text(message):
-                logger.error("Claude 응답 형식 오류: text 콘텐츠 없음")
+            ).strip()
+            if not raw:
+                logger.error("Claude 응답 없음 또는 이어쓰기 후에도 max_tokens로 잘림")
                 if attempt < 2:
                     time.sleep(2)
                     continue
                 return None
-            raw = claude_text(message).strip()
             post_data = _parse_response(raw)
 
             if post_data is None:

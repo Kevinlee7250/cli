@@ -1164,9 +1164,9 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             post_data["word_count"] = _word_count(content_html)
             post_data["content_preview"] = _content_preview(content_html)
 
-            if not content_html.strip() or post_data["word_count"] < 2500:
+            if not content_html.strip() or post_data["word_count"] < 3500:
                 if attempt < 2:
-                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 2500자) — 재시도 {attempt + 1}/3")
+                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 3500자) — 재시도 {attempt + 1}/3")
                     time.sleep(2)
                     continue
                 if post_data["word_count"] < 500:
@@ -1389,10 +1389,10 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             post_data["word_count"] = _word_count(content_html)
             post_data["content_preview"] = _content_preview(content_html)
 
-            # 컨텐츠 유효성 검사 — AdSense thin content 방지 (최소 2500자)
-            if not content_html.strip() or post_data["word_count"] < 2500:
+            # 컨텐츠 유효성 검사 — AdSense thin content 방지 (최소 3500자)
+            if not content_html.strip() or post_data["word_count"] < 3500:
                 if attempt < 2:
-                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 2500자) — 재시도 {attempt + 1}/3")
+                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 3500자) — 재시도 {attempt + 1}/3")
                     time.sleep(2)
                     continue
                 if post_data["word_count"] < 500:

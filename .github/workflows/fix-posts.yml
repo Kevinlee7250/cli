@@ -1,6 +1,12 @@
 name: 🔄 AdSense 미달 포스트 일괄 수정
 
 on:
+  # blog-automation/fix_trigger.json 변경 시 자동 실행 (파라미터는 파일에서 읽음)
+  push:
+    branches: [claude/blog-automation-system-KAbtE]
+    paths:
+      - 'blog-automation/fix_trigger.json'
+
   workflow_dispatch:
     inputs:
       batch_size:
@@ -102,16 +108,26 @@ jobs:
       - name: 🔄 미달 포스트 일괄 수정 실행
         working-directory: blog-automation
         run: |
-          ARGS="--batch-size ${{ inputs.batch_size || '10' }} --min-words 4000"
-          if [ -n "${{ inputs.blog_id }}" ]; then
-            ARGS="$ARGS --blog-id ${{ inputs.blog_id }}"
+          # push 트리거면 fix_trigger.json에서, workflow_dispatch면 inputs에서 파라미터 읽기
+          if [ "${{ github.event_name }}" = "push" ] && [ -f fix_trigger.json ]; then
+            BATCH=$(python3 -c "import json; d=json.load(open('fix_trigger.json')); print(d.get('batch_size',10))")
+            BLOG=$(python3 -c "import json; d=json.load(open('fix_trigger.json')); print(d.get('blog_id',''))")
+            OFFSET=$(python3 -c "import json; d=json.load(open('fix_trigger.json')); print(d.get('offset',0))")
+            DRY=$(python3 -c "import json; d=json.load(open('fix_trigger.json')); print(str(d.get('dry_run',False)).lower())")
+            echo "=== push 트리거: fix_trigger.json에서 파라미터 읽음 ==="
+            cat fix_trigger.json
+          else
+            BATCH="${{ inputs.batch_size || '10' }}"
+            BLOG="${{ inputs.blog_id }}"
+            OFFSET="${{ inputs.offset || '0' }}"
+            DRY="${{ inputs.dry_run || 'false' }}"
           fi
-          if [ "${{ inputs.offset }}" != "0" ] && [ -n "${{ inputs.offset }}" ]; then
-            ARGS="$ARGS --offset ${{ inputs.offset }}"
-          fi
-          if [ "${{ inputs.dry_run }}" = "true" ]; then
-            ARGS="$ARGS --dry-run"
-          fi
+
+          ARGS="--batch-size ${BATCH} --min-words 4000"
+          [ -n "${BLOG}" ] && ARGS="$ARGS --blog-id ${BLOG}"
+          [ "${OFFSET}" != "0" ] && ARGS="$ARGS --offset ${OFFSET}"
+          [ "${DRY}" = "true" ] && ARGS="$ARGS --dry-run"
+
           echo "=== 실행 인수: $ARGS ==="
           python fix_existing_posts.py $ARGS
 

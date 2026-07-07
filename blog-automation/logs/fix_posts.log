@@ -65,3 +65,209 @@
 2026-07-07 04:29:53,640 [INFO] fix_posts — 완료: 성공 0 / 실패 5 / 건너뜀 5 / 전체 10
 2026-07-07 04:29:53,640 [INFO] fix_posts — 누적 수정 완료: 0개 / 전체 미달 84개
 2026-07-07 04:29:53,640 [INFO] fix_posts — 남은 미수정: 84개
+2026-07-07 11:14:25,042 [INFO] fix_posts — AdSense 미달 게시 포스트: 전체 84개 / 미수정 84개
+2026-07-07 11:14:25,042 [INFO] fix_posts — 이번 배치: 10개 (offset=0, batch_size=10)
+2026-07-07 11:14:25,042 [INFO] fix_posts — 
+[1/10] '2026년 재테크 방법 TOP 5 — 몰랐던 수익 비밀 완벽 정리' (0자) — default
+2026-07-07 11:14:25,042 [INFO] fix_posts —   blogId='default' → blog1 폴백 적용
+2026-07-07 11:14:25,510 [WARNING] blogger_uploader — get_post_id_by_url [404] path=/2026/06/2026-top-5.html: {
+  "error": {
+    "code": 404,
+    "message": "Requested entity was not found.",
+    "errors": [
+      {
+        "message": "Requested entity was not found.",
+        "domain": "global",
+        "rea
+2026-07-07 11:14:25,511 [WARNING] fix_posts —   Blogger 포스트 ID 조회 실패: https://hoguwhat1.blogspot.com/2026/06/2026-top-5.html
+2026-07-07 11:14:27,511 [INFO] fix_posts — 
+[2/10] '2026 하반기 아파트 분양 일정 총정리 5가지 핵심 전략' (508자) — default
+2026-07-07 11:14:27,512 [INFO] fix_posts —   blogId='default' → blog1 폴백 적용
+2026-07-07 11:14:28,140 [INFO] fix_posts —   Blogger ID: 2621429606006688968
+2026-07-07 11:14:28,140 [INFO] content_generator — 포스트 생성 중: '2026 하반기 아파트 분양 일정 총정리'
+2026-07-07 11:15:34,598 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:15:34,615 [WARNING] content_generator — 컨텐츠 너무 짧음(2576자, 최소 3500자) — 재시도 1/3
+2026-07-07 11:16:45,080 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:16:45,081 [WARNING] content_generator — 컨텐츠 너무 짧음(2626자, 최소 3500자) — 재시도 2/3
+2026-07-07 11:18:07,809 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:18:07,811 [WARNING] content_generator — 최소 분량 미달(2751자) — 재시도 소진, 해당 분량으로 진행
+2026-07-07 11:18:14,646 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:18:14,647 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
+2026-07-07 11:18:14,649 [INFO] content_generator — 섹션별 이미지 검색: ['하반기 아파트 분양', '하반기 아파트 이걸 다시 작년 이맘때쯤', '하반기 아파트 시장 분위기부터 일단 올해', '하반기 아파트 실제로 청약홈 저는 보통']
+2026-07-07 11:18:16,504 [WARNING] image_fetcher — 이미지 없음: '하반기 아파트 분양'
+2026-07-07 11:18:19,232 [WARNING] image_fetcher — 이미지 없음: '하반기 아파트 이걸 다시 작년 이맘때쯤'
+2026-07-07 11:18:21,756 [WARNING] image_fetcher — 이미지 없음: '하반기 아파트 시장 분위기부터 일단 올해'
+2026-07-07 11:18:22,973 [WARNING] image_fetcher — 이미지 없음: '하반기 아파트 실제로 청약홈 저는 보통'
+2026-07-07 11:18:22,973 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-07 11:18:22,974 [INFO] content_generator — 포스트 생성 완료: '2026 하반기 아파트 분양 일정, 직접 찾아보니 이렇더라고요' (2751자, 이미지 0개)
+2026-07-07 11:18:22,974 [INFO] fix_posts —   새 콘텐츠 생성 완료: 2751자
+2026-07-07 11:18:22,974 [WARNING] fix_posts —   생성 분량 부족 (2751자 < 3000자) — 건너뜀
+2026-07-07 11:18:24,975 [INFO] fix_posts — 
+[3/10] '2026 개인종합자산관리계좌 절세 방법 완벽 정리 TOP 5' (619자) — default
+2026-07-07 11:18:24,975 [INFO] fix_posts —   blogId='default' → blog1 폴백 적용
+2026-07-07 11:18:25,564 [INFO] fix_posts —   Blogger ID: 3827951682702127447
+2026-07-07 11:18:25,564 [INFO] content_generator — 포스트 생성 중: '2026 개인종합자산관리계좌 절세 방법'
+2026-07-07 11:19:36,386 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:19:36,388 [WARNING] content_generator — 컨텐츠 너무 짧음(2765자, 최소 3500자) — 재시도 1/3
+2026-07-07 11:20:52,797 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:20:52,799 [WARNING] content_generator — 컨텐츠 너무 짧음(2770자, 최소 3500자) — 재시도 2/3
+2026-07-07 11:22:03,712 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:22:03,713 [WARNING] content_generator — 최소 분량 미달(2657자) — 재시도 소진, 해당 분량으로 진행
+2026-07-07 11:22:14,814 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:22:14,814 [INFO] content_generator — 팩트체크: 통과
+2026-07-07 11:22:14,815 [INFO] content_generator — 섹션별 이미지 검색: ['개인종합자산관리계좌 절세', '개인종합자산관리계좌 절세 ISA 만들 ETF', '개인종합자산관리계좌 절세 비과세 한도 ISA 만원까지', '개인종합자산관리계좌 절세 연간 만원 ISA']
+2026-07-07 11:22:15,720 [WARNING] image_fetcher — 이미지 없음: '개인종합자산관리계좌 절세'
+2026-07-07 11:22:20,166 [WARNING] image_fetcher — 이미지 없음: '개인종합자산관리계좌 절세 ISA 만들 ETF'
+2026-07-07 11:22:21,519 [WARNING] image_fetcher — 이미지 없음: '개인종합자산관리계좌 절세 비과세 한도 ISA 만원까지'
+2026-07-07 11:22:22,970 [WARNING] image_fetcher — 이미지 없음: '개인종합자산관리계좌 절세 연간 만원 ISA'
+2026-07-07 11:22:22,970 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-07 11:22:22,971 [INFO] content_generator — 포스트 생성 완료: '2026년 ISA 절세, 저는 이렇게 3년 버텨봤습니다' (2657자, 이미지 0개)
+2026-07-07 11:22:22,971 [INFO] fix_posts —   새 콘텐츠 생성 완료: 2657자
+2026-07-07 11:22:22,971 [WARNING] fix_posts —   생성 분량 부족 (2657자 < 3000자) — 건너뜀
+2026-07-07 11:22:24,971 [INFO] fix_posts — 
+[4/10] '주식 처음 시작할 때 저질렀던 5가지 실수, 솔직히 털어놓습니다 (2026년)' (1743자) — blog1
+2026-07-07 11:22:25,528 [WARNING] blogger_uploader — get_post_id_by_url [404] path=/2026/07/5-2026.html: {
+  "error": {
+    "code": 404,
+    "message": "Requested entity was not found.",
+    "errors": [
+      {
+        "message": "Requested entity was not found.",
+        "domain": "global",
+        "rea
+2026-07-07 11:22:25,529 [WARNING] fix_posts —   Blogger 포스트 ID 조회 실패: https://hoguwhat1.blogspot.com/2026/07/5-2026.html
+2026-07-07 11:22:27,530 [INFO] fix_posts — 
+[5/10] '쿠팡파트너스 3개월 직접 해봤더니 현실 공개 (2026년 솔직 후기)' (1791자) — blog1
+2026-07-07 11:22:28,096 [WARNING] blogger_uploader — get_post_id_by_url [404] path=/2026/07/3-2026_01803084361.html: {
+  "error": {
+    "code": 404,
+    "message": "Requested entity was not found.",
+    "errors": [
+      {
+        "message": "Requested entity was not found.",
+        "domain": "global",
+        "rea
+2026-07-07 11:22:28,097 [WARNING] fix_posts —   Blogger 포스트 ID 조회 실패: https://hoguwhat1.blogspot.com/2026/07/3-2026_01803084361.html
+2026-07-07 11:22:30,097 [INFO] fix_posts — 
+[6/10] '직장인 월 30만원 ETF 투자, 1년 넘게 해보고 쓰는 솔직 후기' (2219자) — blog1
+2026-07-07 11:22:30,869 [INFO] fix_posts —   Blogger ID: 2334415369519573574
+2026-07-07 11:22:30,869 [INFO] content_generator — 포스트 생성 중: '직장인 월 30만원 ETF 투자 솔직 후기'
+2026-07-07 11:23:36,497 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:23:36,499 [WARNING] content_generator — 컨텐츠 너무 짧음(2772자, 최소 3500자) — 재시도 1/3
+2026-07-07 11:24:43,436 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:24:43,437 [WARNING] content_generator — 컨텐츠 너무 짧음(2637자, 최소 3500자) — 재시도 2/3
+2026-07-07 11:26:00,704 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:26:00,706 [WARNING] content_generator — 최소 분량 미달(3020자) — 재시도 소진, 해당 분량으로 진행
+2026-07-07 11:26:10,783 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:26:10,784 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-07 11:26:10,785 [INFO] content_generator — 섹션별 이미지 검색: ['직장인 만원 ETF', '직장인 만원 하필 만원이었나 월급에서 만원이면', '직장인 만원 기대했던 vs 보고 시작하기', '직장인 만원 실수했던 부분 진짜 너무']
+2026-07-07 11:26:14,796 [WARNING] image_fetcher — 이미지 없음: '직장인 만원 ETF'
+2026-07-07 11:26:16,967 [WARNING] image_fetcher — 이미지 없음: '직장인 만원 하필 만원이었나 월급에서 만원이면'
+2026-07-07 11:26:18,416 [WARNING] image_fetcher — 이미지 없음: '직장인 만원 기대했던 vs 보고 시작하기'
+2026-07-07 11:26:19,596 [WARNING] image_fetcher — 이미지 없음: '직장인 만원 실수했던 부분 진짜 너무'
+2026-07-07 11:26:19,596 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-07 11:26:19,597 [INFO] content_generator — 포스트 생성 완료: '직장인 월 30만원 ETF 투자, 1년 해보고 솔직히 적어봅니다' (3020자, 이미지 0개)
+2026-07-07 11:26:19,597 [INFO] fix_posts —   새 콘텐츠 생성 완료: 3020자
+2026-07-07 11:26:31,597 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:26:31,598 [WARNING] adsense_validator — AdSense 검증 JSON 파싱 실패 — 기본 처리: 
+2026-07-07 11:26:31,598 [INFO] fix_posts —   AdSense 검증: UPLOAD (75/100)
+2026-07-07 11:26:31,759 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-07 11:26:32,954 [INFO] blogger_uploader — 포스트 업데이트 성공: https://hoguwhat1.blogspot.com/2026/07/30-etf-1_02113911497.html
+2026-07-07 11:26:32,954 [INFO] fix_posts —   ✅ 업데이트 성공: 2219자 → 3020자 | https://hoguwhat1.blogspot.com/2026/07/30-etf-1_02113911497.html
+2026-07-07 11:26:37,955 [INFO] fix_posts — 
+[7/10] '월세 수익 솔직 후기, 세금까지 다 공개합니다 (2026년 직접 경험)' (2383자) — blog3
+2026-07-07 11:26:38,560 [INFO] fix_posts —   Blogger ID: 1565210498724156415
+2026-07-07 11:26:38,560 [INFO] content_generator — 포스트 생성 중: '월세 수익 솔직 후기 세금까지 다 공개'
+2026-07-07 11:27:56,808 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:27:56,809 [WARNING] content_generator — 컨텐츠 너무 짧음(3144자, 최소 3500자) — 재시도 1/3
+2026-07-07 11:29:02,125 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:29:02,126 [WARNING] content_generator — 컨텐츠 너무 짧음(2531자, 최소 3500자) — 재시도 2/3
+2026-07-07 11:30:14,524 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:30:14,526 [WARNING] content_generator — 최소 분량 미달(2660자) — 재시도 소진, 해당 분량으로 진행
+2026-07-07 11:30:25,020 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:30:25,021 [INFO] content_generator — 팩트체크: 통과
+2026-07-07 11:30:25,022 [INFO] content_generator — 섹션별 이미지 검색: ['월세 수익 세금까지', '월세 수익 오피스텔 하나 대출이자 제가', '월세 수익 기대했던 수익률 만원 처음', '월세 수익 세금 신고 임대소득 신고할']
+2026-07-07 11:30:26,727 [WARNING] image_fetcher — 이미지 없음: '월세 수익 세금까지'
+2026-07-07 11:30:28,931 [WARNING] image_fetcher — 이미지 없음: '월세 수익 오피스텔 하나 대출이자 제가'
+2026-07-07 11:30:30,984 [WARNING] image_fetcher — 이미지 없음: '월세 수익 기대했던 수익률 만원 처음'
+2026-07-07 11:30:32,833 [WARNING] image_fetcher — 이미지 없음: '월세 수익 세금 신고 임대소득 신고할'
+2026-07-07 11:30:32,833 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-07 11:30:32,834 [INFO] content_generator — 포스트 생성 완료: '월세 3년 굴려보니, 세금까지 솔직하게 다 까볼게요' (2660자, 이미지 0개)
+2026-07-07 11:30:32,834 [INFO] fix_posts —   새 콘텐츠 생성 완료: 2660자
+2026-07-07 11:30:32,834 [WARNING] fix_posts —   생성 분량 부족 (2660자 < 3000자) — 건너뜀
+2026-07-07 11:30:34,834 [INFO] fix_posts — 
+[8/10] '노션 처음 시작할 때 제가 저질렀던 실수들 (2026년 솔직 후기)' (2386자) — blog2
+2026-07-07 11:30:35,496 [INFO] fix_posts —   Blogger ID: 3688932482507169330
+2026-07-07 11:30:35,496 [INFO] content_generator — 포스트 생성 중: '노션 처음 시작할 때 제일 많이 하는 실수담'
+2026-07-07 11:31:59,101 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:31:59,103 [WARNING] content_generator — 컨텐츠 너무 짧음(2768자, 최소 3500자) — 재시도 1/3
+2026-07-07 11:33:26,250 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:33:26,252 [WARNING] content_generator — 컨텐츠 너무 짧음(2777자, 최소 3500자) — 재시도 2/3
+2026-07-07 11:34:47,253 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:34:47,255 [WARNING] content_generator — 최소 분량 미달(2800자) — 재시도 소진, 해당 분량으로 진행
+2026-07-07 11:34:58,229 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:34:58,229 [INFO] content_generator — 팩트체크: 통과
+2026-07-07 11:34:58,230 [INFO] content_generator — 섹션별 이미지 검색: ['노션 시작할 제일', '노션 시작할 템플릿부터 완벽하게 페이지에 했어요', '노션 시작할 페이지를 너무 밑에 다시', '노션 시작할 모바일 앱을 PC 여행']
+2026-07-07 11:34:59,974 [WARNING] image_fetcher — 이미지 없음: '노션 시작할 제일'
+2026-07-07 11:35:02,183 [WARNING] image_fetcher — 이미지 없음: '노션 시작할 템플릿부터 완벽하게 페이지에 했어요'
+2026-07-07 11:35:04,356 [WARNING] image_fetcher — 이미지 없음: '노션 시작할 페이지를 너무 밑에 다시'
+2026-07-07 11:35:08,956 [WARNING] image_fetcher — 이미지 없음: '노션 시작할 모바일 앱을 PC 여행'
+2026-07-07 11:35:08,956 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-07 11:35:08,956 [INFO] content_generator — 포스트 생성 완료: '노션 처음 시작할 때 제일 많이 하는 실수, 저도 그랬어요 (2026)' (2800자, 이미지 0개)
+2026-07-07 11:35:08,956 [INFO] fix_posts —   새 콘텐츠 생성 완료: 2800자
+2026-07-07 11:35:08,956 [WARNING] fix_posts —   생성 분량 부족 (2800자 < 3000자) — 건너뜀
+2026-07-07 11:35:10,956 [INFO] fix_posts — 
+[9/10] '헬스장 3개월 등록 후 실제 변화, 솔직하게 공개합니다 (2026년)' (2495자) — default
+2026-07-07 11:35:10,957 [INFO] fix_posts —   blogId='default' → blog1 폴백 적용
+2026-07-07 11:35:11,672 [INFO] fix_posts —   Blogger ID: 6553630515121459849
+2026-07-07 11:35:11,672 [INFO] content_generator — 포스트 생성 중: '헬스장 3개월 등록 후 실제 변화 현실 공개'
+2026-07-07 11:36:28,025 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:36:28,041 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-07-07 11:36:28,042 [WARNING] content_generator — 컨텐츠 너무 짧음(2781자, 최소 3500자) — 재시도 1/3
+2026-07-07 11:37:44,900 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:37:44,902 [WARNING] content_generator — 컨텐츠 너무 짧음(2654자, 최소 3500자) — 재시도 2/3
+2026-07-07 11:39:02,144 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:39:02,146 [WARNING] content_generator — 최소 분량 미달(3040자) — 재시도 소진, 해당 분량으로 진행
+2026-07-07 11:39:08,168 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:39:08,168 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-07-07 11:39:08,169 [INFO] content_generator — 섹션별 이미지 검색: ['헬스장 개월 등록', '헬스장 개월 등록할 계산기 처음엔 등록이', '헬스장 개월 솔직히 아무 PT 등록하고', '헬스장 개월 여기서부터 뭔가 PT 차부터는']
+2026-07-07 11:39:09,672 [WARNING] image_fetcher — 이미지 없음: '헬스장 개월 등록'
+2026-07-07 11:39:11,684 [WARNING] image_fetcher — 이미지 없음: '헬스장 개월 등록할 계산기 처음엔 등록이'
+2026-07-07 11:39:15,447 [WARNING] image_fetcher — 이미지 없음: '헬스장 개월 솔직히 아무 PT 등록하고'
+2026-07-07 11:39:16,635 [WARNING] image_fetcher — 이미지 없음: '헬스장 개월 여기서부터 뭔가 PT 차부터는'
+2026-07-07 11:39:16,635 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-07 11:39:16,636 [INFO] content_generator — 포스트 생성 완료: '헬스장 3개월 등록하고 나서 진짜 달라진 것들 (2026년 후기)' (3040자, 이미지 0개)
+2026-07-07 11:39:16,636 [INFO] fix_posts —   새 콘텐츠 생성 완료: 3040자
+2026-07-07 11:39:28,285 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:39:28,286 [WARNING] adsense_validator — AdSense 검증 JSON 파싱 실패 — 기본 처리: 
+2026-07-07 11:39:28,286 [INFO] fix_posts —   AdSense 검증: UPLOAD (75/100)
+2026-07-07 11:39:28,449 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-07 11:39:29,695 [INFO] blogger_uploader — 포스트 업데이트 성공: https://hoguwhat1.blogspot.com/2026/06/3-2026.html
+2026-07-07 11:39:29,695 [INFO] fix_posts —   ✅ 업데이트 성공: 2495자 → 3040자 | https://hoguwhat1.blogspot.com/2026/06/3-2026.html
+2026-07-07 11:39:34,696 [INFO] fix_posts — 
+[10/10] 'AI 툴로 부업 3개월 해봤는데, 수익 현실 솔직하게 공개합니다 (2026)' (2515자) — default
+2026-07-07 11:39:34,696 [INFO] fix_posts —   blogId='default' → blog1 폴백 적용
+2026-07-07 11:39:35,447 [INFO] fix_posts —   Blogger ID: 3766055496819334936
+2026-07-07 11:39:35,448 [INFO] content_generator — 포스트 생성 중: 'AI 툴로 부업 3개월 수익 현실 공개'
+2026-07-07 11:40:52,309 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:40:52,311 [WARNING] content_generator — 컨텐츠 너무 짧음(2816자, 최소 3500자) — 재시도 1/3
+2026-07-07 11:42:15,423 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:42:15,424 [WARNING] content_generator — 컨텐츠 너무 짧음(3064자, 최소 3500자) — 재시도 2/3
+2026-07-07 11:43:31,010 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:43:31,012 [WARNING] content_generator — 최소 분량 미달(2705자) — 재시도 소진, 해당 분량으로 진행
+2026-07-07 11:43:42,136 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 11:43:42,137 [WARNING] content_generator — 팩트체크 실패 (게시는 계속 진행): Expecting ',' delimiter: line 1 column 171 (char 170)
+2026-07-07 11:43:42,137 [INFO] content_generator — 섹션별 이미지 검색: ['AI 툴로 부업', 'AI 툴로 부업을 GPT 만드는', 'AI 툴로 솔직히 원도 GPT 동안', 'AI 툴로 둘째 방향을 GPT']
+2026-07-07 11:43:45,931 [WARNING] image_fetcher — 이미지 없음: 'AI 툴로 부업'
+2026-07-07 11:43:47,667 [WARNING] image_fetcher — 이미지 없음: 'AI 툴로 부업을 GPT 만드는'
+2026-07-07 11:43:49,322 [WARNING] image_fetcher — 이미지 없음: 'AI 툴로 솔직히 원도 GPT 동안'
+2026-07-07 11:43:50,989 [WARNING] image_fetcher — 이미지 없음: 'AI 툴로 둘째 방향을 GPT'
+2026-07-07 11:43:50,989 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-07 11:43:50,990 [INFO] content_generator — 포스트 생성 완료: 'AI 툴로 부업 3개월 해봤습니다, 2026년 수익 솔직 공개' (2705자, 이미지 0개)
+2026-07-07 11:43:50,990 [INFO] fix_posts —   새 콘텐츠 생성 완료: 2705자
+2026-07-07 11:43:50,990 [WARNING] fix_posts —   생성 분량 부족 (2705자 < 3000자) — 건너뜀
+2026-07-07 11:43:52,990 [INFO] fix_posts — 
+============================================================
+2026-07-07 11:43:52,991 [INFO] fix_posts — 완료: 성공 2 / 실패 3 / 건너뜀 5 / 전체 10
+2026-07-07 11:43:52,991 [INFO] fix_posts — 누적 수정 완료: 2개 / 전체 미달 84개
+2026-07-07 11:43:52,991 [INFO] fix_posts — 남은 미수정: 82개

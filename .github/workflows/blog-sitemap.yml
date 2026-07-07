@@ -136,12 +136,14 @@ jobs:
           else
             TIMESTAMP=$(TZ='Asia/Seoul' date '+%Y-%m-%d %H:%M KST')
             git commit -m "chore: 사이트맵 자동 갱신 ($TIMESTAMP)"
+            _push_ok=0
             for i in 1 2 3; do
               git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
                 && git push origin claude/blog-automation-system-KAbtE \
-                && break
+                && { _push_ok=1; break; }
               echo "pull+push 재시도 $i/3..."
               sleep $((i * 3))
             done
+            [ "$_push_ok" = "1" ] || { echo "push 3회 실패 — 종료"; exit 1; }
             echo "✅ 커밋 완료"
           fi

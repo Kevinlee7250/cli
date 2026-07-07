@@ -480,7 +480,6 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
         return None
 
     full_content = _build_full_content(post_data, blog_config)
-    full_content = _sanitize_for_blogger(full_content)  # Blogger API 호환성: nav/aria-*/script 제거
     kw = post_data.get("keyword") or ""
     # None-safe: Claude가 "labels": null 반환해도 안전하게 처리
     raw_labels = post_data.get("labels") or []

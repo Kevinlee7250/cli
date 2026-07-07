@@ -99,16 +99,27 @@ def _diagnose_keyword_exhaustion(used_kw: dict) -> list[dict]:
     issues = []
     if not isinstance(used_kw, dict):
         return issues
-    total = len(used_kw)
-    if total < 100:
-        return issues
-    cutoff = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
-    # used_keywords.json 은 구형(str) 또는 신형(dict {"used_at": ...}) 포맷 모두 지원
-    def _kw_date(v) -> str:
-        if isinstance(v, str): return v
-        if isinstance(v, dict): return v.get("used_at", "9999-99-99")
-        return "9999-99-99"
-    old_count = sum(1 for v in used_kw.values() if _kw_date(v) < cutoff)
+    # 신형 포맷: {"keywords": [...], "entries": [...], "updatedAt": "..."}
+    # 구형 포맷: {keyword_str: date_str, ...}
+    entries = used_kw.get("entries")
+    if isinstance(entries, list):
+        # 신형: entries 리스트에서 keyword/used_at 추출
+        cutoff = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
+        total = len(entries)
+        if total < 100:
+            return issues
+        old_count = sum(1 for e in entries if isinstance(e, dict) and e.get("used_at", "9999-99-99") < cutoff)
+    else:
+        # 구형 포맷 호환
+        total = len(used_kw)
+        if total < 100:
+            return issues
+        cutoff = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
+        def _kw_date(v) -> str:
+            if isinstance(v, str): return v
+            if isinstance(v, dict): return v.get("used_at", "9999-99-99")
+            return "9999-99-99"
+        old_count = sum(1 for v in used_kw.values() if _kw_date(v) < cutoff)
     if old_count > 50:
         issues.append({
             "id": "keyword_pool_exhaustion",
@@ -216,15 +227,25 @@ def _fix_prune_old_keywords(issue: dict) -> dict:
     if not isinstance(used_kw, dict):
         return {"success": False, "detail": "used_keywords.json 형식 오류"}
     cutoff = issue.get("context", {}).get("cutoff", "")
-    before = len(used_kw)
-    # used_keywords.json 은 구형(str) 또는 신형(dict) 포맷 모두 지원
-    def _kw_date(v) -> str:
-        if isinstance(v, str): return v
-        if isinstance(v, dict): return v.get("used_at", "9999-99-99")
-        return "9999-99-99"
-    pruned = {k: v for k, v in used_kw.items() if not (_kw_date(v) < cutoff)}
-    removed = before - len(pruned)
-    _save_json(USED_KW_FILE, pruned)
+    entries = used_kw.get("entries")
+    if isinstance(entries, list):
+        # 신형 포맷: entries 리스트에서 cutoff 미만 항목만 유지
+        before = len(entries)
+        kept = [e for e in entries if not (isinstance(e, dict) and e.get("used_at", "9999-99-99") < cutoff)]
+        removed = before - len(kept)
+        used_kw["entries"] = kept
+        used_kw["keywords"] = [e.get("keyword", "") for e in kept if isinstance(e, dict)]
+        _save_json(USED_KW_FILE, used_kw)
+    else:
+        # 구형 포맷 호환
+        before = len(used_kw)
+        def _kw_date(v) -> str:
+            if isinstance(v, str): return v
+            if isinstance(v, dict): return v.get("used_at", "9999-99-99")
+            return "9999-99-99"
+        pruned = {k: v for k, v in used_kw.items() if not (_kw_date(v) < cutoff)}
+        removed = before - len(pruned)
+        _save_json(USED_KW_FILE, pruned)
     return {
         "success": True,
         "detail": f"키워드 {removed}개 삭제 (90일 경과, 재사용 가능 상태로 전환)",

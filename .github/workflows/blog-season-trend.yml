@@ -67,11 +67,13 @@ jobs:
             echo "변경 없음 — 커밋 생략"
           else
             git commit -m "🌿 시즌 트렌드 예약 키워드 큐 업데이트 ($(date -u +%Y-%m-%d))"
+            _push_ok=0
             for i in 1 2 3; do
               git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
                 && git push origin claude/blog-automation-system-KAbtE \
-                && break
+                && { _push_ok=1; break; }
               echo "pull+push 재시도 $i/3..."
               sleep $((i * 3))
             done
+            [ "$_push_ok" = "1" ] || { echo "push 3회 실패 — 종료"; exit 1; }
           fi

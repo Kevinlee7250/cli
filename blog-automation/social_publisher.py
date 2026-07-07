@@ -73,7 +73,7 @@ def generate_social_content(post_data: dict, blog_url: str = "") -> dict:
     faq       = post_data.get("faq", [])
     category  = post_data.get("adsense_category", "일반")
 
-    faq_preview = "\n".join(f"Q. {q.get('question','')}" for q in faq[:2]) if faq else "없음"
+    faq_preview = "\n".join(f"Q. {q.get('q', q.get('question', ''))}" for q in faq[:2]) if faq else "없음"
     tag_str     = ", ".join(tags[:10]) if tags else keyword
 
     # 카테고리별 해시태그 프리셋

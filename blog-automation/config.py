@@ -6,7 +6,7 @@ load_dotenv()
 
 # Claude API
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5-20251001")
 
 # Google Blogger OAuth2 (기본/단일 블로그)
 BLOGGER_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")

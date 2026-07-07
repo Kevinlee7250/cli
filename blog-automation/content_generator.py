@@ -245,11 +245,17 @@ def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -
 • {y}년 포함 | 40자 이내
 • 예: "직접 해봤는데요", "솔직 후기", "저는 이렇게 했어요"
 
-━━━ 본문 구조 ━━━
+━━━ 본문 구조 (분량 엄수 — 가장 중요) ━━━
 분량: 4500~6000자 완전한 HTML (Google AdSense 정책상 4000자 미만은 thin content)
-H2 섹션: 5~7개 (주제에 따라 자유롭게)
+⚠️ 반드시 지켜야 할 분량 규칙:
+  - H2 섹션 7개 이상 (각 섹션 최소 500자 이상)
+  - 도입부(p 태그) 최소 300자
+  - FAQ 5개 (각 답변 150자 이상)
+  - 결론 섹션 최소 200자
+  - 섹션 합계 = 최소 4500자
 도입부·각 섹션·결론 모두 단락(p 태그) 기반
-각 H2 섹션마다 최소 2개 단락 이상, 구체적 사례·수치·경험 반드시 포함
+각 H2 섹션마다 최소 3개 단락, 구체적 사례·수치·경험 반드시 포함
+⚠️ 분량 부족 시 글이 게시되지 않습니다 — 4500자 미만은 자동 거부됩니다
 
 핵심 요약 박스 (첫 번째 h2 바로 앞에 1개):
 <div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>핵심 포인트:</strong> [이 글의 가장 실용적인 핵심을 1~2문장으로]</div>
@@ -1012,10 +1018,16 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict, blog_
 • "[{episode}편]"으로 시작
 • 자연스러운 블로그 제목 | {y}년 포함 | 40자 이내
 
-━━━ 본문 구조 ━━━
+━━━ 본문 구조 (분량 엄수 — 가장 중요) ━━━
 분량: 4500~6000자 완전한 HTML (Google AdSense 정책상 4000자 미만은 thin content)
-H2 섹션: 5~7개 (주제에 따라 자유롭게)
-각 H2 섹션마다 최소 2개 단락 이상, 구체적 사례·수치·경험 반드시 포함
+⚠️ 반드시 지켜야 할 분량 규칙:
+  - H2 섹션 7개 이상 (각 섹션 최소 500자 이상)
+  - 도입부(p 태그) 최소 300자
+  - FAQ 5개 (각 답변 150자 이상)
+  - 결론 섹션 최소 200자
+  - 섹션 합계 = 최소 4500자
+각 H2 섹션마다 최소 3개 단락, 구체적 사례·수치·경험 반드시 포함
+⚠️ 분량 부족 시 글이 게시되지 않습니다 — 4500자 미만은 자동 거부됩니다
 
 ━━━ 강조 & 가독성 ━━━
 • 핵심 수치·팩트·행동 지침은 <strong>으로 강조 (문단당 1~2개, 남용 금지)
@@ -1119,6 +1131,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
     logger.info(f"시리즈 포스트 생성: '{keyword}' ({episode}/{total}편)")
     prompt = _build_series_prompt(keyword, traffic, series_context, blog_config)
 
+    prev_wc = 0
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
@@ -1133,13 +1146,14 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                 "You are a personal blogger who writes from direct experience. "
                 "Write naturally, like a real person — not an AI report. JSON only."
             )
+            escalation = _retry_escalation_note(attempt, prev_wc)
             raw = claude_generate(
                 _get_client(),
                 model=CLAUDE_MODEL,
-                max_tokens=16000,
+                max_tokens=24000,
                 temperature=1.0,
                 system=_sys,
-                messages=[{"role": "user", "content": prompt}],
+                messages=[{"role": "user", "content": prompt + escalation}],
             ).strip()
             if not raw:
                 logger.warning("응답 없음 또는 이어쓰기 후에도 잘림 — 재시도")
@@ -1164,10 +1178,11 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             post_data["word_count"] = _word_count(content_html)
             post_data["content_preview"] = _content_preview(content_html)
 
-            if not content_html.strip() or post_data["word_count"] < 3500:
+            prev_wc = post_data["word_count"]
+            if not content_html.strip() or post_data["word_count"] < 4000:
                 if attempt < 2:
-                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 3500자) — 재시도 {attempt + 1}/3")
-                    time.sleep(2)
+                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 4000자) — 재시도 {attempt + 1}/3")
+                    time.sleep(3)
                     continue
                 if post_data["word_count"] < 500:
                     logger.error(f"컨텐츠 생성 실패: {post_data['word_count']}자 — thin content 방지를 위해 게시 거부")
@@ -1336,11 +1351,28 @@ def _fact_check_content(post_data: dict, keyword: str) -> None:
         post_data["fact_check"] = {"checked": False, "reason": str(e)[:100]}
 
 
+def _retry_escalation_note(attempt: int, prev_wc: int) -> str:
+    """재시도 시 분량 부족 피드백 메시지를 반환합니다."""
+    if attempt == 0 or prev_wc == 0:
+        return ""
+    return (
+        f"\n\n⚠️⚠️⚠️ [재시도 {attempt}/2] 이전 응답이 {prev_wc}자로 너무 짧았습니다.\n"
+        "이번에는 반드시 다음을 지키세요:\n"
+        f"  - H2 섹션 7개 이상, 각 섹션 최소 500자\n"
+        f"  - 도입부 최소 300자 (경험담으로 풍부하게)\n"
+        f"  - FAQ 각 답변 150자 이상\n"
+        f"  - 전체 content 필드 한국어 텍스트 기준 4500자 이상\n"
+        f"  - 지금 {4500 - prev_wc}자가 더 필요합니다 — 각 섹션을 더 길고 구체적으로 작성하세요\n"
+        "⚠️⚠️⚠️\n"
+    )
+
+
 def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None = None) -> dict | None:
     """Claude API로 포스트 생성 후 이미지를 자동 삽입합니다. 실패 시 최대 2회 재시도."""
     logger.info(f"포스트 생성 중: '{keyword}'")
     prompt = _build_prompt(keyword, traffic, blog_config)
 
+    prev_wc = 0
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
@@ -1358,13 +1390,14 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                 "For events after your knowledge cutoff, use 'according to recent trends'. "
                 "JSON only."
             )
+            escalation = _retry_escalation_note(attempt, prev_wc)
             raw = claude_generate(
                 _get_client(),
                 model=CLAUDE_MODEL,
-                max_tokens=16000,
+                max_tokens=24000,
                 temperature=1.0,
                 system=_sys,
-                messages=[{"role": "user", "content": prompt}],
+                messages=[{"role": "user", "content": prompt + escalation}],
             ).strip()
             if not raw:
                 logger.error("Claude 응답 없음 또는 이어쓰기 후에도 max_tokens로 잘림")
@@ -1389,11 +1422,12 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             post_data["word_count"] = _word_count(content_html)
             post_data["content_preview"] = _content_preview(content_html)
 
-            # 컨텐츠 유효성 검사 — AdSense thin content 방지 (최소 3500자)
-            if not content_html.strip() or post_data["word_count"] < 3500:
+            # 컨텐츠 유효성 검사 — AdSense thin content 방지 (최소 4000자)
+            prev_wc = post_data["word_count"]
+            if not content_html.strip() or post_data["word_count"] < 4000:
                 if attempt < 2:
-                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 3500자) — 재시도 {attempt + 1}/3")
-                    time.sleep(2)
+                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 4000자) — 재시도 {attempt + 1}/3")
+                    time.sleep(3)
                     continue
                 if post_data["word_count"] < 500:
                     logger.error(f"컨텐츠 생성 실패: {post_data['word_count']}자 — thin content 방지를 위해 게시 거부")

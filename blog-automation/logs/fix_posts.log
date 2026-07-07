@@ -271,3 +271,204 @@
 2026-07-07 11:43:52,991 [INFO] fix_posts — 완료: 성공 2 / 실패 3 / 건너뜀 5 / 전체 10
 2026-07-07 11:43:52,991 [INFO] fix_posts — 누적 수정 완료: 2개 / 전체 미달 84개
 2026-07-07 11:43:52,991 [INFO] fix_posts — 남은 미수정: 82개
+2026-07-07 14:44:08,443 [INFO] fix_posts — AdSense 미달 게시 포스트: 전체 84개 / 미수정 82개
+2026-07-07 14:44:08,443 [INFO] fix_posts — 이번 배치: 10개 (offset=0, batch_size=10)
+2026-07-07 14:44:08,443 [INFO] fix_posts — 
+[1/10] '2026년 재테크 방법 TOP 5 — 몰랐던 수익 비밀 완벽 정리' (0자) — default
+2026-07-07 14:44:08,443 [INFO] fix_posts —   blogId='default' → blog1 폴백 적용
+2026-07-07 14:44:08,827 [WARNING] blogger_uploader — get_post_id_by_url [404] path=/2026/06/2026-top-5.html: {
+  "error": {
+    "code": 404,
+    "message": "Requested entity was not found.",
+    "errors": [
+      {
+        "message": "Requested entity was not found.",
+        "domain": "global",
+        "rea
+2026-07-07 14:44:08,828 [WARNING] fix_posts —   Blogger 포스트 ID 조회 실패: https://hoguwhat1.blogspot.com/2026/06/2026-top-5.html
+2026-07-07 14:44:10,828 [INFO] fix_posts — 
+[2/10] '2026 하반기 아파트 분양 일정 총정리 5가지 핵심 전략' (508자) — default
+2026-07-07 14:44:10,828 [INFO] fix_posts —   blogId='default' → blog1 폴백 적용
+2026-07-07 14:44:11,206 [INFO] fix_posts —   Blogger ID: 2621429606006688968
+2026-07-07 14:44:11,207 [INFO] content_generator — 포스트 생성 중: '2026 하반기 아파트 분양 일정 총정리'
+2026-07-07 14:44:11,238 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
+    raw = claude_generate(
+          ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-07 14:44:11,240 [WARNING] fix_posts —   콘텐츠 생성 실패
+2026-07-07 14:44:14,241 [INFO] fix_posts — 
+[3/10] '2026 개인종합자산관리계좌 절세 방법 완벽 정리 TOP 5' (619자) — default
+2026-07-07 14:44:14,241 [INFO] fix_posts —   blogId='default' → blog1 폴백 적용
+2026-07-07 14:44:14,584 [INFO] fix_posts —   Blogger ID: 3827951682702127447
+2026-07-07 14:44:14,585 [INFO] content_generator — 포스트 생성 중: '2026 개인종합자산관리계좌 절세 방법'
+2026-07-07 14:44:14,585 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
+    raw = claude_generate(
+          ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-07 14:44:14,585 [WARNING] fix_posts —   콘텐츠 생성 실패
+2026-07-07 14:44:17,586 [INFO] fix_posts — 
+[4/10] '주식 처음 시작할 때 저질렀던 5가지 실수, 솔직히 털어놓습니다 (2026년)' (1743자) — blog1
+2026-07-07 14:44:17,891 [WARNING] blogger_uploader — get_post_id_by_url [404] path=/2026/07/5-2026.html: {
+  "error": {
+    "code": 404,
+    "message": "Requested entity was not found.",
+    "errors": [
+      {
+        "message": "Requested entity was not found.",
+        "domain": "global",
+        "rea
+2026-07-07 14:44:17,892 [WARNING] fix_posts —   Blogger 포스트 ID 조회 실패: https://hoguwhat1.blogspot.com/2026/07/5-2026.html
+2026-07-07 14:44:19,892 [INFO] fix_posts — 
+[5/10] '쿠팡파트너스 3개월 직접 해봤더니 현실 공개 (2026년 솔직 후기)' (1791자) — blog1
+2026-07-07 14:44:20,216 [WARNING] blogger_uploader — get_post_id_by_url [404] path=/2026/07/3-2026_01803084361.html: {
+  "error": {
+    "code": 404,
+    "message": "Requested entity was not found.",
+    "errors": [
+      {
+        "message": "Requested entity was not found.",
+        "domain": "global",
+        "rea
+2026-07-07 14:44:20,217 [WARNING] fix_posts —   Blogger 포스트 ID 조회 실패: https://hoguwhat1.blogspot.com/2026/07/3-2026_01803084361.html
+2026-07-07 14:44:22,218 [INFO] fix_posts — 
+[6/10] '월세 수익 솔직 후기, 세금까지 다 공개합니다 (2026년 직접 경험)' (2383자) — blog3
+2026-07-07 14:44:22,826 [INFO] fix_posts —   Blogger ID: 1565210498724156415
+2026-07-07 14:44:22,826 [INFO] content_generator — 포스트 생성 중: '월세 수익 솔직 후기 세금까지 다 공개'
+2026-07-07 14:44:22,826 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
+    raw = claude_generate(
+          ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-07 14:44:22,827 [WARNING] fix_posts —   콘텐츠 생성 실패
+2026-07-07 14:44:25,827 [INFO] fix_posts — 
+[7/10] '노션 처음 시작할 때 제가 저질렀던 실수들 (2026년 솔직 후기)' (2386자) — blog2
+2026-07-07 14:44:26,361 [INFO] fix_posts —   Blogger ID: 3688932482507169330
+2026-07-07 14:44:26,361 [INFO] content_generator — 포스트 생성 중: '노션 처음 시작할 때 제일 많이 하는 실수담'
+2026-07-07 14:44:26,361 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
+    raw = claude_generate(
+          ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-07 14:44:26,362 [WARNING] fix_posts —   콘텐츠 생성 실패
+2026-07-07 14:44:29,362 [INFO] fix_posts — 
+[8/10] 'AI 툴로 부업 3개월 해봤는데, 수익 현실 솔직하게 공개합니다 (2026)' (2515자) — default
+2026-07-07 14:44:29,362 [INFO] fix_posts —   blogId='default' → blog1 폴백 적용
+2026-07-07 14:44:29,677 [INFO] fix_posts —   Blogger ID: 3766055496819334936
+2026-07-07 14:44:29,677 [INFO] content_generator — 포스트 생성 중: 'AI 툴로 부업 3개월 수익 현실 공개'
+2026-07-07 14:44:29,677 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
+    raw = claude_generate(
+          ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-07 14:44:29,678 [WARNING] fix_posts —   콘텐츠 생성 실패
+2026-07-07 14:44:32,678 [INFO] fix_posts — 
+[9/10] '야구장 직관 다니면서 배운 폭염 대비 방법, 2026년엔 이렇게 합니다' (2602자) — blog2
+2026-07-07 14:44:33,142 [INFO] fix_posts —   Blogger ID: 7771976896280386951
+2026-07-07 14:44:33,143 [INFO] content_generator — 포스트 생성 중: '폭염 대비 방법'
+2026-07-07 14:44:33,143 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
+    raw = claude_generate(
+          ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-07 14:44:33,143 [WARNING] fix_posts —   콘텐츠 생성 실패
+2026-07-07 14:44:36,143 [INFO] fix_posts — 
+[10/10] '무인도 캠핑 직접 가봤더니 아무도 말 안 해준 것들 (2026 솔직 후기)' (2725자) — blog1
+2026-07-07 14:44:36,471 [INFO] fix_posts —   Blogger ID: 5517716912008753584
+2026-07-07 14:44:36,471 [INFO] content_generator — 포스트 생성 중: '무인도 캠핑 직접 가봤더니 아무도 말 안 해준 것들'
+2026-07-07 14:44:36,471 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
+    raw = claude_generate(
+          ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-07 14:44:36,472 [WARNING] fix_posts —   콘텐츠 생성 실패
+2026-07-07 14:44:39,472 [INFO] fix_posts — 
+============================================================
+2026-07-07 14:44:39,472 [INFO] fix_posts — 완료: 성공 0 / 실패 10 / 건너뜀 0 / 전체 10
+2026-07-07 14:44:39,472 [INFO] fix_posts — 누적 수정 완료: 2개 / 전체 미달 84개
+2026-07-07 14:44:39,472 [INFO] fix_posts — 남은 미수정: 82개

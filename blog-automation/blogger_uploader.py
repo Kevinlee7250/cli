@@ -574,6 +574,90 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
     return None
 
 
+def get_post_id_by_url(blog_url: str, blog_config: dict | None = None) -> str | None:
+    """Blogger 포스트 URL로 숫자 포스트 ID를 조회합니다."""
+    from urllib.parse import urlparse
+    if not blog_url:
+        return None
+    path = urlparse(blog_url).path
+    if not path or path == "/":
+        return None
+
+    cfg = blog_config or {}
+    blog_id = cfg.get("blog_id") or BLOGGER_BLOG_ID
+    access_token = _get_access_token(blog_config)
+    if not access_token:
+        logger.error("get_post_id_by_url: 액세스 토큰 없음")
+        return None
+
+    try:
+        resp = requests.get(
+            f"{BLOGGER_API_BASE}/blogs/{blog_id}/posts/bypath",
+            headers={"Authorization": f"Bearer {access_token}"},
+            params={"path": path},
+            timeout=15,
+        )
+        if resp.status_code == 200:
+            return resp.json().get("id")
+        logger.warning(f"get_post_id_by_url [{resp.status_code}] path={path}: {resp.text[:200]}")
+        return None
+    except requests.exceptions.RequestException as e:
+        logger.error(f"get_post_id_by_url 네트워크 오류: {e}")
+        return None
+
+
+def update_post(blogger_post_id: str, post_data: dict, blog_config: dict | None = None) -> dict | None:
+    """기존 Blogger 포스트 내용을 업데이트합니다 (PUT /posts/{postId})."""
+    cfg = blog_config or {}
+    blog_id = cfg.get("blog_id") or BLOGGER_BLOG_ID
+    access_token = _get_access_token(blog_config)
+    if not access_token:
+        logger.error("update_post: 액세스 토큰 없음")
+        return None
+
+    full_content = _build_full_content(post_data, blog_config)
+
+    kw = post_data.get("keyword") or ""
+    raw_labels = post_data.get("labels") or []
+    if not isinstance(raw_labels, list):
+        raw_labels = []
+
+    def _clean_label(lb: str) -> str:
+        return str(lb).strip()[:200]
+
+    all_labels = list(dict.fromkeys(
+        [_clean_label(kw)] + [_clean_label(lb) for lb in raw_labels]
+    ))
+    all_labels = [lb for lb in all_labels if lb][:5]
+
+    payload = {
+        "title": post_data.get("title", ""),
+        "content": full_content,
+        "labels": all_labels,
+    }
+
+    url = f"{BLOGGER_API_BASE}/blogs/{blog_id}/posts/{blogger_post_id}"
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json",
+    }
+    params = {"fetchBody": "false"}
+
+    try:
+        resp = requests.put(url, json=payload, headers=headers, params=params, timeout=30)
+    except requests.exceptions.RequestException as e:
+        logger.error(f"update_post 네트워크 오류: {e}")
+        return None
+
+    if resp.status_code == 200:
+        result = resp.json()
+        logger.info(f"포스트 업데이트 성공: {result.get('url', blogger_post_id)}")
+        return result
+
+    logger.error(f"update_post 실패 [{resp.status_code}]: {resp.text[:500]}")
+    return None
+
+
 def get_blog_info(blog_config: dict | None = None) -> dict | None:
     cfg = blog_config or {}
     blog_id = cfg.get("blog_id") or BLOGGER_BLOG_ID

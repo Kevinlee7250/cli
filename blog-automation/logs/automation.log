@@ -1,219 +1,3 @@
-2026-07-06 13:45:25,248 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 
-2026-07-06 13:45:25,248 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
-2026-07-06 13:45:25,248 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
-2026-07-06 13:45:25,248 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
-2026-07-06 13:45:25,248 [ERROR] main —   ❌ AdSense 유해 콘텐츠 감지 — 업로드 취소: '에어컨 전기세 절약, 2026년 여름 직접 해보고 느낀 것들' (점수: 64/100)
-2026-07-06 13:45:25,254 [INFO] main — 
-============================================================
-2026-07-06 13:45:25,254 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 1개
-2026-07-06 13:45:25,254 [INFO] main — ============================================================
-2026-07-06 13:45:25,277 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 72개)
-2026-07-06 13:45:25,298 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-06 13:45:25,317 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-06 13:45:25,317 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
-2026-07-06 13:45:25,644 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-06 13:45:25,955 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-06 13:45:25,956 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-06 13:45:25,958 [INFO] dashboard_exporter —   수리 이력: 36건 내보내기 완료
-2026-07-06 13:45:25,964 [INFO] post_manager —   포스트 레지스트리: 전체 115개 (게시 88 / 실패 18 / 대기 6)
-2026-07-06 13:45:25,964 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-06 13:45:25,964 [INFO] dashboard_exporter —   포스트: 112개 / 실행 이력: 72개 / 블로그: 3개
-2026-07-06 13:45:25,965 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-06 13:45:25,965 [INFO] main — ============================================================
-2026-07-06 13:45:25,966 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-06 13:45:25
-2026-07-06 13:45:25,966 [INFO] main — ============================================================
-2026-07-06 13:45:25,973 [INFO] keyword_collector — 포스팅 이력 코퍼스: 45개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-06 13:45:25,973 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드: ['장마 건강 관리', '폭염 대비 방법']
-2026-07-06 13:45:26,547 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
-2026-07-06 13:45:26,547 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-06 13:45:29,861 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:45:29,862 [INFO] keyword_collector — Claude AI 키워드 생성: 4개
-2026-07-06 13:45:29,862 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-06 13:45:29,864 [INFO] keyword_collector —   [season_scheduled] 2개: ['장마 건강 관리', '폭염 대비 방법']
-2026-07-06 13:45:29,864 [INFO] keyword_collector — 최종 선정 키워드 2개: ['장마 건강 관리', '폭염 대비 방법']
-2026-07-06 13:45:29,864 [INFO] main — 수집된 키워드 2개: ['장마 건강 관리', '폭염 대비 방법']
-2026-07-06 13:45:29,864 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
-2026-07-06 13:45:30,141 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
-2026-07-06 13:45:31,255 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:45:31,256 [INFO] main — 단독 포스트 대상 키워드 1개: ['장마 건강 관리']
-2026-07-06 13:45:31,268 [INFO] main — 
-[1/1] 키워드: '장마 건강 관리'
-2026-07-06 13:45:31,268 [INFO] content_generator — 포스트 생성 중: '장마 건강 관리'
-2026-07-06 13:46:44,987 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:46:56,476 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:46:56,477 [WARNING] content_generator — 팩트체크 실패 (게시는 계속 진행): Expecting ',' delimiter: line 1 column 389 (char 388)
-2026-07-06 13:46:56,478 [INFO] content_generator — 섹션별 이미지 검색: ['장마 건강 관리', '장마 건강 여행 놓쳤던 솔직히 저는', '장마 건강 습도랑 컨디션 습도가 여행', '장마 건강 야구장이나 축구장 저는 야구']
-2026-07-06 13:47:04,255 [WARNING] image_fetcher — 이미지 없음: '장마 건강 관리'
-2026-07-06 13:47:14,062 [WARNING] image_fetcher — 이미지 없음: '장마 건강 여행 놓쳤던 솔직히 저는'
-2026-07-06 13:47:23,457 [WARNING] image_fetcher — 이미지 없음: '장마 건강 습도랑 컨디션 습도가 여행'
-2026-07-06 13:47:32,990 [WARNING] image_fetcher — 이미지 없음: '장마 건강 야구장이나 축구장 저는 야구'
-2026-07-06 13:47:32,990 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
-2026-07-06 13:47:32,991 [INFO] content_generator — 포스트 생성 완료: '장마철 여행 다녀와서 개고생한 후기, 2026년엔 이렇게 준비해요' (2654자, 이미지 0개)
-2026-07-06 13:47:43,943 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:47:43,944 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '장마철 여행 다녀와서 개고생한 후기, 2026년엔 이렇게 준비해'
-2026-07-06 13:47:43,945 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 경험(부산 여행, 사직구장, 습도 85%, 20도 설정)은 풍부하나 글자 수 2654자로 warn 구간에 해당
-2026-07-06 13:47:43,945 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 개수는 충분하나 일부 섹션이 500자 이상 이어지는 긴 단락으로 구성됨
-2026-07-06 13:47:43,945 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
-2026-07-06 13:47:43,945 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
-2026-07-06 13:47:43,945 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
-2026-07-06 13:47:43,950 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-06 13:47:43,957 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-07-06 13:47:43,957 [INFO] main —   제목: 장마철 여행 다녀와서 개고생한 후기, 2026년엔 이렇게 준비해요
-2026-07-06 13:47:43,957 [INFO] main —   이미지: 0개 삽입
-2026-07-06 13:47:54,510 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:47:54,512 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '장마철 여행 다녀와서 개고생한 후기, 2026년엔 이렇게 준비해'
-2026-07-06 13:47:54,512 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 개인 경험(부산 여행, 사직구장, 제주도)은 풍부하나 글자 수 2654자로 warn 구간
-2026-07-06 13:47:54,512 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 좋으나 일부 단락이 500자 이상으로 길어 가독성 저하 우려
-2026-07-06 13:47:54,512 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글로 정책 위반은 아니나 warn 처리
-2026-07-06 13:47:54,512 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
-2026-07-06 13:47:54,512 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '장마철 여행 다녀와서 개고생한 후기, 2026년엔 이렇게 준비해요' (점수: 79/100, 권장: review)
-2026-07-06 13:47:54,519 [INFO] dashboard_exporter —   검토 대기 저장: 장마철 여행 다녀와서 개고생한 후기, 2026년엔 이렇게 준비해요 (8803자 HTML)
-2026-07-06 13:47:54,522 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 26개)
-2026-07-06 13:47:54,523 [INFO] main — 
-============================================================
-2026-07-06 13:47:54,523 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-06 13:47:54,523 [INFO] main — ============================================================
-2026-07-06 13:47:54,546 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 73개)
-2026-07-06 13:47:54,565 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-06 13:47:54,583 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-06 13:47:54,584 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
-2026-07-06 13:47:54,584 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-06 13:47:54,586 [INFO] dashboard_exporter —   수리 이력: 36건 내보내기 완료
-2026-07-06 13:47:54,592 [INFO] post_manager —   포스트 레지스트리: 전체 116개 (게시 88 / 실패 18 / 대기 7)
-2026-07-06 13:47:54,593 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-06 13:47:54,593 [INFO] dashboard_exporter —   포스트: 113개 / 실행 이력: 73개 / 블로그: 3개
-2026-07-06 13:47:54,593 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-06 13:47:54,594 [INFO] main — ============================================================
-2026-07-06 13:47:54,594 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-06 13:47:54
-2026-07-06 13:47:54,594 [INFO] main — ============================================================
-2026-07-06 13:47:54,601 [INFO] keyword_collector — 포스팅 이력 코퍼스: 25개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-06 13:47:54,805 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
-2026-07-06 13:47:54,805 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-06 13:48:00,140 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:48:00,142 [INFO] keyword_collector — Claude AI 키워드 생성: 4개
-2026-07-06 13:48:00,142 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-06 13:48:00,143 [INFO] keyword_collector —   [claude_ai] 2개: ['미국ETF 첫 매수 후 겪은 실수담', '청약통장 해지하고 후회한 이유']
-2026-07-06 13:48:00,143 [INFO] keyword_collector — 최종 선정 키워드 2개: ['미국ETF 첫 매수 후 겪은 실수담', '청약통장 해지하고 후회한 이유']
-2026-07-06 13:48:00,143 [INFO] main — 수집된 키워드 2개: ['미국ETF 첫 매수 후 겪은 실수담', '청약통장 해지하고 후회한 이유']
-2026-07-06 13:48:00,143 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
-2026-07-06 13:48:00,158 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
-2026-07-06 13:48:05,789 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:48:05,790 [INFO] main — 단독 포스트 대상 키워드 1개: ['미국ETF 첫 매수 후 겪은 실수담']
-2026-07-06 13:48:05,802 [INFO] main — 
-[1/1] 키워드: '미국ETF 첫 매수 후 겪은 실수담'
-2026-07-06 13:48:05,802 [INFO] content_generator — 포스트 생성 중: '미국ETF 첫 매수 후 겪은 실수담'
-2026-07-06 13:49:20,144 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:49:33,593 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:49:33,594 [INFO] content_generator — 팩트체크: 통과
-2026-07-06 13:49:33,595 [INFO] content_generator — 섹션별 이미지 검색: ['미국 ETF 매수', '미국 ETF 환전부터 삐끗했던 보니 저는', '미국 ETF 시장가 주문으로 당시에 저는', '미국 ETF 배당세랑 양도세 배당 이건']
-2026-07-06 13:49:35,506 [INFO] image_fetcher — 이미지 수집 성공: '미국 ETF 매수' → 제목='historical stock / securities / certific' (관련성=0.33)
-2026-07-06 13:49:37,732 [INFO] image_fetcher — 이미지 수집 성공: '미국 ETF 환전부터 삐끗했던 보니 저는' → 제목='historical stock / securities / certific' (관련성=0.17)
-2026-07-06 13:49:40,007 [INFO] image_fetcher — 이미지 수집 성공: '미국 ETF 시장가 주문으로 당시에 저는' → 제목='historical stock / securities / certific' (관련성=0.17)
-2026-07-06 13:49:41,372 [INFO] image_fetcher — 이미지 수집 성공: '미국 ETF 배당세랑 양도세 배당 이건' → 제목='historical stock / securities / certific' (관련성=0.17)
-2026-07-06 13:49:42,577 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:49:42,578 [INFO] content_generator — 이미지 4개 본문 삽입 완료
-2026-07-06 13:49:42,579 [INFO] content_generator — 포스트 생성 완료: '미국ETF 첫 매수 후 겪은 실수담, 2026년에도 진행형이네요' (2722자, 이미지 4개)
-2026-07-06 13:49:56,187 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:49:56,188 [WARNING] adsense_validator — AdSense 검증 JSON 파싱 실패 — 기본 처리: 
-2026-07-06 13:49:56,221 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-06 13:49:56,224 [INFO] internal_linker —   [1/5] '배당소득세' -> https://hoguasset.blogspot.com/2026/07/1-2026.html
-2026-07-06 13:49:56,229 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-06 13:49:56,229 [INFO] main —   제목: 미국ETF 첫 매수 후 겪은 실수담, 2026년에도 진행형이네요
-2026-07-06 13:49:56,229 [INFO] main —   이미지: 4개 삽입
-2026-07-06 13:50:09,387 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 13:50:09,388 [WARNING] adsense_validator — AdSense 검증 JSON 파싱 실패 — 기본 처리: 
-2026-07-06 13:50:09,388 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '미국ETF 첫 매수 후 겪은 실수담, 2026년에도 진행형이네요' (점수: 75/100, 권장: upload)
-2026-07-06 13:50:09,396 [INFO] dashboard_exporter —   검토 대기 저장: 미국ETF 첫 매수 후 겪은 실수담, 2026년에도 진행형이네요 (12166자 HTML)
-2026-07-06 13:50:09,399 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 27개)
-2026-07-06 13:50:09,399 [INFO] main — 
-============================================================
-2026-07-06 13:50:09,399 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-06 13:50:09,399 [INFO] main — ============================================================
-2026-07-06 13:50:09,422 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 74개)
-2026-07-06 13:50:09,441 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-06 13:50:09,458 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-06 13:50:09,459 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
-2026-07-06 13:50:09,459 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-06 13:50:09,461 [INFO] dashboard_exporter —   수리 이력: 36건 내보내기 완료
-2026-07-06 13:50:09,468 [INFO] post_manager —   포스트 레지스트리: 전체 117개 (게시 88 / 실패 18 / 대기 8)
-2026-07-06 13:50:09,468 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-06 13:50:09,468 [INFO] dashboard_exporter —   포스트: 114개 / 실행 이력: 74개 / 블로그: 3개
-2026-07-06 13:50:09,468 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-06 23:14:37,831 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
-2026-07-06 23:14:37,831 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-07-06 23:14:37,831 [INFO] main —   - [blog1] HOGU What?
-2026-07-06 23:14:37,831 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-07-06 23:14:37,832 [INFO] main —   - [blog3] 금융NEWS
-2026-07-06 23:14:37,832 [INFO] main — ============================================================
-2026-07-06 23:14:37,832 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-06 23:14:37
-2026-07-06 23:14:37,832 [INFO] main — ============================================================
-2026-07-06 23:14:37,840 [INFO] keyword_collector — 포스팅 이력 코퍼스: 90개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-06 23:14:37,840 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
-2026-07-06 23:14:38,638 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
-2026-07-06 23:14:38,638 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-06 23:14:39,335 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-06 23:14:39,336 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-06 23:14:39,338 [INFO] keyword_collector — 최근 사용 제외 4개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁']
-2026-07-06 23:14:39,386 [INFO] keyword_collector —   [fallback] 2개: ['배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
-2026-07-06 23:14:39,386 [INFO] keyword_collector — 최종 선정 키워드 2개: ['배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
-2026-07-06 23:14:39,386 [INFO] main — 수집된 키워드 2개: ['배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
-2026-07-06 23:14:39,389 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 8일 전)
-2026-07-06 23:14:39,539 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
-2026-07-06 23:14:40,878 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 23:14:40,903 [INFO] main — 단독 포스트 대상 키워드 1개: ['배당주 처음 사기 전 내가 몰랐던 것']
-2026-07-06 23:14:40,914 [INFO] main — 
-[1/1] 키워드: '배당주 처음 사기 전 내가 몰랐던 것'
-2026-07-06 23:14:40,914 [INFO] content_generator — 포스트 생성 중: '배당주 처음 사기 전 내가 몰랐던 것'
-2026-07-06 23:15:50,643 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 23:16:01,533 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 23:16:01,534 [INFO] content_generator — 팩트체크: 통과
-2026-07-06 23:16:01,538 [INFO] content_generator — 섹션별 이미지 검색: ['배당주 사기 내가', '배당주 사기 배당락일이 뭔지도 제가 종목은', '배당주 사기 배당소득세 이게 제일 부분이', '배당주 사기 배당컷 당해본 실적이 년에']
-2026-07-06 23:16:02,391 [WARNING] image_fetcher — 이미지 없음: '배당주 사기 내가'
-2026-07-06 23:16:03,571 [WARNING] image_fetcher — 이미지 없음: '배당주 사기 배당락일이 뭔지도 제가 종목은'
-2026-07-06 23:16:07,103 [WARNING] image_fetcher — 이미지 없음: '배당주 사기 배당소득세 이게 제일 부분이'
-2026-07-06 23:16:09,394 [WARNING] image_fetcher — 이미지 없음: '배당주 사기 배당컷 당해본 실적이 년에'
-2026-07-06 23:16:09,395 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
-2026-07-06 23:16:09,397 [INFO] content_generator — 포스트 생성 완료: '배당주 처음 사기 전에 몰랐던 것들, 저는 이래서 후회했어요' (2742자, 이미지 0개)
-2026-07-06 23:16:25,368 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 23:16:25,376 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '배당주 처음 사기 전에 몰랐던 것들, 저는 이래서 후회했어요'
-2026-07-06 23:16:25,376 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 경험담(배당락 당황, 배당컷 사례)은 있으나 글자수 2742자로 4000자 기준에 미달
-2026-07-06 23:16:25,376 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 문단 구분 없이 긴 텍스트 블록이 이어져 가독성 저하
-2026-07-06 23:16:25,376 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
-2026-07-06 23:16:25,376 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
-2026-07-06 23:16:25,376 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
-2026-07-06 23:16:25,385 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-06 23:16:25,388 [INFO] internal_linker —   [1/5] 'ETF' -> https://hoguwhat1.blogspot.com/2026/07/etf-2026_0598100428.h
-2026-07-06 23:16:25,394 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-06 23:16:25,394 [INFO] main —   제목: 배당주 처음 사기 전에 몰랐던 것들, 저는 이래서 후회했어요
-2026-07-06 23:16:25,394 [INFO] main —   이미지: 0개 삽입
-2026-07-06 23:16:36,568 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-06 23:16:36,569 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '배당주 처음 사기 전에 몰랐던 것들, 저는 이래서 후회했어요'
-2026-07-06 23:16:36,569 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 경험·수치(6%, 100만원, 5만760원 등)는 풍부하나 글자 수 2742자로 warn 기준(2500~3999자)에 해당
-2026-07-06 23:16:36,569 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 개수는 충분하나 배당소득세·배당컷 설명 단락이 500자 이상으로 길게 이어짐
-2026-07-06 23:16:36,569 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
-2026-07-06 23:16:36,569 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
-2026-07-06 23:16:36,569 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
-2026-07-06 23:16:36,569 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '배당주 처음 사기 전에 몰랐던 것들, 저는 이래서 후회했어요' (점수: 74/100, 권장: review)
-2026-07-06 23:16:36,578 [INFO] dashboard_exporter —   검토 대기 저장: 배당주 처음 사기 전에 몰랐던 것들, 저는 이래서 후회했어요 (8799자 HTML)
-2026-07-06 23:16:36,581 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 28개)
-2026-07-06 23:16:36,581 [INFO] main — 
-============================================================
-2026-07-06 23:16:36,581 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-06 23:16:36,581 [INFO] main — ============================================================
-2026-07-06 23:16:36,605 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 75개)
-2026-07-06 23:16:36,625 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-06 23:16:36,643 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-06 23:16:36,643 [WARNING] config — BLOGS_CONFIG 항목 id='default' → 'blog1'로 간주합니다 — Secret에 id: "blog1"을 설정하세요.
-2026-07-06 23:16:37,030 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-06 23:16:37,346 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-06 23:16:37,347 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-06 23:16:37,349 [INFO] dashboard_exporter —   수리 이력: 38건 내보내기 완료
-2026-07-06 23:16:37,356 [INFO] post_manager —   포스트 레지스트리: 전체 118개 (게시 88 / 실패 18 / 대기 9)
-2026-07-06 23:16:37,356 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-06 23:16:37,356 [INFO] dashboard_exporter —   포스트: 115개 / 실행 이력: 75개 / 블로그: 3개
-2026-07-06 23:16:37,357 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-06 23:16:37,357 [INFO] main — ============================================================
-2026-07-06 23:16:37,357 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-06 23:16:37
 2026-07-06 23:16:37,357 [INFO] main — ============================================================
 2026-07-06 23:16:37,365 [INFO] keyword_collector — 포스팅 이력 코퍼스: 48개 항목 로드 (blog_id=blog2 중복 방지 기준)
 2026-07-06 23:16:37,365 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
@@ -714,3 +498,255 @@
 2026-07-07 12:40:57,610 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-07 12:40:57,610 [INFO] dashboard_exporter —   포스트: 120개 / 실행 이력: 83개 / 블로그: 3개
 2026-07-07 12:40:57,611 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-07 12:41:30,790 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
+2026-07-07 12:41:30,790 [INFO] main —   - [blog1] HOGU What?
+2026-07-07 12:41:30,790 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
+2026-07-07 12:41:30,790 [INFO] main —   - [blog3] 금융NEWS
+2026-07-07 12:41:30,790 [INFO] main — ============================================================
+2026-07-07 12:41:30,790 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-07 12:41:30
+2026-07-07 12:41:30,791 [INFO] main — ============================================================
+2026-07-07 12:41:30,799 [INFO] keyword_collector — 포스팅 이력 코퍼스: 42개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-07 12:41:30,799 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-07 12:41:31,660 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-07 12:41:31,660 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-07 12:41:32,479 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-07 12:41:32,480 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-07 12:41:32,481 [INFO] keyword_collector — 최근 사용 제외 4개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁']
+2026-07-07 12:41:32,482 [INFO] keyword_collector —   [fallback] 2개: ['아파트 청약 2026년 달라진 점 정리', '전세 사기 직접 겪어본 사람이 알려주는 주의사항']
+2026-07-07 12:41:32,482 [INFO] keyword_collector — 최종 선정 키워드 2개: ['아파트 청약 2026년 달라진 점 정리', '전세 사기 직접 겪어본 사람이 알려주는 주의사항']
+2026-07-07 12:41:32,482 [INFO] main — 수집된 키워드 2개: ['아파트 청약 2026년 달라진 점 정리', '전세 사기 직접 겪어본 사람이 알려주는 주의사항']
+2026-07-07 12:41:32,485 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 8일 전)
+2026-07-07 12:41:32,876 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-07 12:41:34,620 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:41:34,646 [INFO] main — 단독 포스트 대상 키워드 1개: ['아파트 청약 2026년 달라진 점 정리']
+2026-07-07 12:41:34,659 [INFO] main — 
+[1/1] 키워드: '아파트 청약 2026년 달라진 점 정리'
+2026-07-07 12:41:34,659 [INFO] content_generator — 포스트 생성 중: '아파트 청약 2026년 달라진 점 정리'
+2026-07-07 12:42:51,146 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:42:51,148 [WARNING] content_generator — 컨텐츠 너무 짧음(2758자, 최소 3500자) — 재시도 1/3
+2026-07-07 12:44:27,730 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:44:27,732 [WARNING] content_generator — 컨텐츠 너무 짧음(3054자, 최소 3500자) — 재시도 2/3
+2026-07-07 12:45:45,256 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:45:45,257 [WARNING] content_generator — 최소 분량 미달(2723자) — 재시도 소진, 해당 분량으로 진행
+2026-07-07 12:45:56,223 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:45:56,224 [INFO] content_generator — 팩트체크: 통과
+2026-07-07 12:45:56,227 [INFO] content_generator — 섹션별 이미지 검색: ['아파트 청약 달라진', '아파트 청약 청약통장 만원 납입 제가', '아파트 청약 신생아 특별공급 저희는', '아파트 청약 부부 중복청약 단지에 청약을']
+2026-07-07 12:46:00,333 [WARNING] image_fetcher — 이미지 없음: '아파트 청약 달라진'
+2026-07-07 12:46:04,350 [WARNING] image_fetcher — 이미지 없음: '아파트 청약 청약통장 만원 납입 제가'
+2026-07-07 12:46:05,834 [WARNING] image_fetcher — 이미지 없음: '아파트 청약 신생아 특별공급 저희는'
+2026-07-07 12:46:07,108 [WARNING] image_fetcher — 이미지 없음: '아파트 청약 부부 중복청약 단지에 청약을'
+2026-07-07 12:46:07,108 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-07 12:46:07,110 [INFO] content_generator — 포스트 생성 완료: '아파트 청약 2026년 달라진 점, 저는 이렇게 다시 준비했어요' (2723자, 이미지 0개)
+2026-07-07 12:46:18,166 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:46:18,173 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '아파트 청약 2026년 달라진 점, 저는 이렇게 다시 준비했어요'
+2026-07-07 12:46:18,173 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 경험(10만원→25만원, 40대1 경쟁률, 동생 34세 사례)은 풍부하나 글자 수 2723자로 warn 구간에 해당
+2026-07-07 12:46:18,173 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 우수하나 각 섹션 내 단락이 500자 이상으로 길게 이어짐
+2026-07-07 12:46:18,173 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-07 12:46:18,173 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-07 12:46:18,174 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-07 12:46:18,181 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-07 12:46:18,183 [INFO] internal_linker —   [1/5] '특별공급' -> https://hoguwhat1.blogspot.com/2026/06/2026-5_0866591759.htm
+2026-07-07 12:46:18,185 [INFO] internal_linker —   [2/5] '공공분양' -> https://hoguwhat1.blogspot.com/2026/06/2026-5_01039548558.ht
+2026-07-07 12:46:18,186 [INFO] internal_linker —   [3/5] '공공분양' -> https://hoguasset.blogspot.com/2026/07/10-2026.html
+2026-07-07 12:46:18,186 [INFO] internal_linker —   [4/5] '청약통장' -> https://hoguwhat1.blogspot.com/2026/06/10-2026_016662205.htm
+2026-07-07 12:46:18,186 [INFO] internal_linker — 내부 링크 4개 삽입 완료
+2026-07-07 12:46:18,186 [INFO] main —   제목: 아파트 청약 2026년 달라진 점, 저는 이렇게 다시 준비했어요
+2026-07-07 12:46:18,187 [INFO] main —   이미지: 0개 삽입
+2026-07-07 12:46:30,241 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:46:30,242 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — '아파트 청약 2026년 달라진 점, 저는 이렇게 다시 준비했어요'
+2026-07-07 12:46:30,242 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 개인 경험(10만원→25만원, 병역 차감 등)은 풍부하나 글자수 2723자로 4000자 기준에 못 미침
+2026-07-07 12:46:30,242 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 
+2026-07-07 12:46:30,242 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 
+2026-07-07 12:46:30,242 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-07 12:46:30,242 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-07 12:46:30,242 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-07 12:46:30,242 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '아파트 청약 2026년 달라진 점, 저는 이렇게 다시 준비했어요' (점수: 69/100, 권장: review)
+2026-07-07 12:46:30,251 [INFO] dashboard_exporter —   검토 대기 저장: 아파트 청약 2026년 달라진 점, 저는 이렇게 다시 준비했어요 (8797자 HTML)
+2026-07-07 12:46:30,255 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 33개)
+2026-07-07 12:46:30,255 [INFO] main — 
+============================================================
+2026-07-07 12:46:30,255 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-07 12:46:30,255 [INFO] main — ============================================================
+2026-07-07 12:46:30,279 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 84개)
+2026-07-07 12:46:30,302 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-07 12:46:30,320 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-07 12:46:30,644 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-07 12:46:30,963 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-07 12:46:30,964 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-07 12:46:30,966 [INFO] dashboard_exporter —   수리 이력: 40건 내보내기 완료
+2026-07-07 12:46:30,973 [INFO] post_manager —   포스트 레지스트리: 전체 124개 (게시 89 / 실패 18 / 대기 14)
+2026-07-07 12:46:30,973 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-07 12:46:30,973 [INFO] dashboard_exporter —   포스트: 121개 / 실행 이력: 84개 / 블로그: 3개
+2026-07-07 12:46:30,974 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-07 12:46:30,975 [INFO] main — ============================================================
+2026-07-07 12:46:30,975 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-07 12:46:30
+2026-07-07 12:46:30,975 [INFO] main — ============================================================
+2026-07-07 12:46:30,983 [INFO] keyword_collector — 포스팅 이력 코퍼스: 46개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-07 12:46:30,983 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-07 12:46:32,031 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-07 12:46:32,031 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-07 12:46:32,417 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-07 12:46:32,418 [INFO] keyword_collector — 유사 주제 제외 6개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
+2026-07-07 12:46:32,418 [INFO] keyword_collector —   [fallback] 2개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-07-07 12:46:32,419 [INFO] keyword_collector — 최종 선정 키워드 2개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-07-07 12:46:32,419 [INFO] main — 수집된 키워드 2개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-07-07 12:46:32,419 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 8일 전)
+2026-07-07 12:46:32,831 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-07 12:46:34,297 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:46:34,298 [INFO] main — 단독 포스트 대상 키워드 1개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들']
+2026-07-07 12:46:34,310 [INFO] main — 
+[1/1] 키워드: '강원도 캠핑 처음 해봤을 때 몰랐던 것들'
+2026-07-07 12:46:34,310 [INFO] content_generator — 포스트 생성 중: '강원도 캠핑 처음 해봤을 때 몰랐던 것들'
+2026-07-07 12:47:46,824 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:47:46,825 [WARNING] content_generator — 컨텐츠 너무 짧음(2568자, 최소 3500자) — 재시도 1/3
+2026-07-07 12:48:16,328 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:48:16,329 [WARNING] content_generator — 컨텐츠 너무 짧음(184자, 최소 3500자) — 재시도 2/3
+2026-07-07 12:49:25,148 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:49:25,149 [WARNING] content_generator — 최소 분량 미달(2541자) — 재시도 소진, 해당 분량으로 진행
+2026-07-07 12:49:34,976 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:49:34,977 [WARNING] content_generator — 팩트체크 실패 (게시는 계속 진행): Expecting ',' delimiter: line 1 column 144 (char 143)
+2026-07-07 12:49:34,978 [INFO] content_generator — 섹션별 이미지 검색: ['강원도 캠핑 해봤을', '강원도 캠핑 강원도는 도인데 제가 갔던', '강원도 캠핑 계곡 근처는 텐트', '강원도 캠핑 예약 훨씬 전에 제가']
+2026-07-07 12:49:45,651 [WARNING] image_fetcher — 이미지 없음: '강원도 캠핑 해봤을'
+2026-07-07 12:49:51,087 [WARNING] image_fetcher — 이미지 없음: '강원도 캠핑 강원도는 도인데 제가 갔던'
+2026-07-07 12:49:57,963 [WARNING] image_fetcher — 이미지 없음: '강원도 캠핑 계곡 근처는 텐트'
+2026-07-07 12:50:00,572 [WARNING] image_fetcher — 이미지 없음: '강원도 캠핑 예약 훨씬 전에 제가'
+2026-07-07 12:50:00,572 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-07 12:50:00,573 [INFO] content_generator — 포스트 생성 완료: '강원도 캠핑 처음 해봤을 때 몰랐던 것들 (2026 후기)' (2541자, 이미지 0개)
+2026-07-07 12:50:12,725 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:50:12,726 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '강원도 캠핑 처음 해봤을 때 몰랐던 것들 (2026 후기)'
+2026-07-07 12:50:12,726 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 경험담과 수치는 풍부하나 글자 수 2541자로 4000자 기준에 미달
+2026-07-07 12:50:12,726 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개는 충분하나 일부 섹션 단락이 500자 이상으로 길게 이어짐
+2026-07-07 12:50:12,726 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-07 12:50:12,726 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-07 12:50:12,726 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-07 12:50:12,733 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-07 12:50:12,738 [INFO] internal_linker —   [1/5] '수수료' -> https://hoguwhat1.blogspot.com/2026/07/etf-2026.html
+2026-07-07 12:50:12,741 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-07 12:50:12,741 [INFO] main —   제목: 강원도 캠핑 처음 해봤을 때 몰랐던 것들 (2026 후기)
+2026-07-07 12:50:12,741 [INFO] main —   이미지: 0개 삽입
+2026-07-07 12:50:24,055 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:50:24,056 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '강원도 캠핑 처음 해봤을 때 몰랐던 것들 (2026 후기)'
+2026-07-07 12:50:24,057 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 개인 경험(홍천, 8월, 습도 등)은 있으나 글자수 2541자로 2500~3999자 구간에 해당
+2026-07-07 12:50:24,057 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개는 충분하나 일부 섹션이 줄바꿈 없이 500자 이상 이어져 가독성 저하
+2026-07-07 12:50:24,057 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-07 12:50:24,057 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-07 12:50:24,057 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '강원도 캠핑 처음 해봤을 때 몰랐던 것들 (2026 후기)' (점수: 79/100, 권장: review)
+2026-07-07 12:50:24,066 [INFO] dashboard_exporter —   검토 대기 저장: 강원도 캠핑 처음 해봤을 때 몰랐던 것들 (2026 후기) (9116자 HTML)
+2026-07-07 12:50:24,070 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 34개)
+2026-07-07 12:50:24,070 [INFO] main — 
+============================================================
+2026-07-07 12:50:24,070 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-07 12:50:24,070 [INFO] main — ============================================================
+2026-07-07 12:50:24,095 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 85개)
+2026-07-07 12:50:24,117 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-07 12:50:24,134 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-07 12:50:24,135 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-07 12:50:24,137 [INFO] dashboard_exporter —   수리 이력: 40건 내보내기 완료
+2026-07-07 12:50:24,144 [INFO] post_manager —   포스트 레지스트리: 전체 125개 (게시 89 / 실패 18 / 대기 15)
+2026-07-07 12:50:24,144 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-07 12:50:24,144 [INFO] dashboard_exporter —   포스트: 122개 / 실행 이력: 85개 / 블로그: 3개
+2026-07-07 12:50:24,145 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-07 12:50:24,145 [INFO] main — ============================================================
+2026-07-07 12:50:24,145 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-07 12:50:24
+2026-07-07 12:50:24,145 [INFO] main — ============================================================
+2026-07-07 12:50:24,153 [INFO] keyword_collector — 포스팅 이력 코퍼스: 35개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-07 12:50:24,154 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-07 12:50:25,124 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-07 12:50:25,124 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-07 12:50:25,669 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-07 12:50:25,669 [INFO] keyword_collector — 유사 주제 제외 4개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '직장인 월 30만원 ETF 투자 솔직 후기']
+2026-07-07 12:50:25,670 [INFO] keyword_collector —   [season_scheduled] 1개: ['여름 냉방 꿀팁']
+2026-07-07 12:50:25,670 [INFO] keyword_collector —   [fallback] 1개: ['ISA 계좌 3년 직접 써본 결과']
+2026-07-07 12:50:25,670 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여름 냉방 꿀팁', 'ISA 계좌 3년 직접 써본 결과']
+2026-07-07 12:50:25,670 [INFO] main — 수집된 키워드 2개: ['여름 냉방 꿀팁', 'ISA 계좌 3년 직접 써본 결과']
+2026-07-07 12:50:25,670 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 8일 전)
+2026-07-07 12:50:26,237 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-07 12:50:27,440 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:50:27,441 [INFO] main — 단독 포스트 대상 키워드 1개: ['여름 냉방 꿀팁']
+2026-07-07 12:50:27,478 [INFO] main — 
+[1/1] 키워드: '여름 냉방 꿀팁'
+2026-07-07 12:50:27,478 [INFO] content_generator — 포스트 생성 중: '여름 냉방 꿀팁'
+2026-07-07 12:51:48,977 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:51:48,978 [WARNING] content_generator — 컨텐츠 너무 짧음(3227자, 최소 3500자) — 재시도 1/3
+2026-07-07 12:53:07,658 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:53:07,660 [WARNING] content_generator — 컨텐츠 너무 짧음(2845자, 최소 3500자) — 재시도 2/3
+2026-07-07 12:54:14,630 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:54:14,632 [WARNING] content_generator — 최소 분량 미달(2491자) — 재시도 소진, 해당 분량으로 진행
+2026-07-07 12:54:26,578 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:54:26,579 [INFO] content_generator — 팩트체크: 통과
+2026-07-07 12:54:26,580 [INFO] content_generator — 섹션별 이미지 검색: ['여름 냉방', '여름 냉방 처음에 완전히 저는 원래', '여름 냉방 누진세 구간 중에 진짜', '여름 냉방 에너지캐시백 처음엔 대비 한전에서']
+2026-07-07 12:54:27,261 [INFO] image_fetcher — 이미지 수집 성공: '여름 냉방' → 제목='flower / bellflower / flower wallpaper /' (관련성=0.50)
+2026-07-07 12:54:28,808 [INFO] image_fetcher — 이미지 수집 성공: '여름 냉방 처음에 완전히 저는 원래' → 제목='flower / bellflower / flower wallpaper /' (관련성=0.17)
+2026-07-07 12:54:29,236 [INFO] image_fetcher — 이미지 수집 성공: '여름 냉방 누진세 구간 중에 진짜' → 제목='flower / bellflower / flower wallpaper /' (관련성=0.17)
+2026-07-07 12:54:29,799 [INFO] image_fetcher — 이미지 수집 성공: '여름 냉방 에너지캐시백 처음엔 대비 한전에서' → 제목='flower / bellflower / flower wallpaper /' (관련성=0.17)
+2026-07-07 12:54:32,612 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:54:32,613 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-07-07 12:54:32,613 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-07 12:54:32,614 [INFO] content_generator — 포스트 생성 완료: '여름 냉방 꿀팁, 전기요금 고지서 보고 정신 차렸습니다 (2026)' (2491자, 이미지 0개)
+2026-07-07 12:54:44,114 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:54:44,115 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 61/100 — '여름 냉방 꿀팁, 전기요금 고지서 보고 정신 차렸습니다 (202'
+2026-07-07 12:54:44,115 [INFO] adsense_validator —   ❌ 원본성 및 품질: 구체적 수치(412kWh, 12%, 8% 등)로 경험은 드러나지만 글자 수 2491자로 2500자 미만 기준에 미달
+2026-07-07 12:54:44,115 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 문단 구분이 거의 없어 500자 이상 밀집 블록이 다수 존재
+2026-07-07 12:54:44,115 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 
+2026-07-07 12:54:44,115 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-07 12:54:44,116 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-07 12:54:44,116 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-07 12:54:44,116 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 구체적 수치(412kWh, 12%, 8% 등)로 경험은 드러나지만 글자 수 2491자로 2500자 미만 기준에 미달
+2026-07-07 12:54:44,116 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 61/100, 이유: ['[원본성 및 품질] 구체적 수치(412kWh, 12%, 8% 등)로 경험은 드러나지만 글자 수 2491자로 2500자 미만 기준에 미달']) — 재생성 2/2
+2026-07-07 12:54:47,116 [INFO] content_generator — 포스트 생성 중: '여름 냉방 꿀팁'
+2026-07-07 12:56:04,970 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:56:04,972 [WARNING] content_generator — 컨텐츠 너무 짧음(2998자, 최소 3500자) — 재시도 1/3
+2026-07-07 12:57:19,054 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:57:19,055 [WARNING] content_generator — 컨텐츠 너무 짧음(2785자, 최소 3500자) — 재시도 2/3
+2026-07-07 12:58:36,614 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:58:36,615 [WARNING] content_generator — 최소 분량 미달(2626자) — 재시도 소진, 해당 분량으로 진행
+2026-07-07 12:58:48,692 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:58:48,693 [WARNING] content_generator — 팩트체크 실패 (게시는 계속 진행): Expecting ',' delimiter: line 1 column 175 (char 174)
+2026-07-07 12:58:48,694 [INFO] content_generator — 섹션별 이미지 검색: ['여름 냉방', '여름 냉방 전기요금 체계가 꿀팁을 얘기하기', '여름 냉방 재본 에어컨 주는', '여름 냉방 이건 실수했어요 반은 제가']
+2026-07-07 12:58:49,018 [INFO] image_fetcher — 이미지 수집 성공: '여름 냉방' → 제목='flower / bellflower / flower wallpaper /' (관련성=0.50)
+2026-07-07 12:58:49,397 [INFO] image_fetcher — 이미지 수집 성공: '여름 냉방 전기요금 체계가 꿀팁을 얘기하기' → 제목='flower / bellflower / flower wallpaper /' (관련성=0.17)
+2026-07-07 12:58:50,044 [INFO] image_fetcher — 이미지 수집 성공: '여름 냉방 재본 에어컨 주는' → 제목='flower / bellflower / flower wallpaper /' (관련성=0.20)
+2026-07-07 12:58:50,434 [INFO] image_fetcher — 이미지 수집 성공: '여름 냉방 이건 실수했어요 반은 제가' → 제목='flower / bellflower / flower wallpaper /' (관련성=0.17)
+2026-07-07 12:58:51,922 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:58:51,923 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-07-07 12:58:51,923 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-07 12:58:51,924 [INFO] content_generator — 포스트 생성 완료: '여름 냉방 꿀팁, 작년에 전기요금 폭탄 맞고 깨달은 것들 (2026)' (2626자, 이미지 0개)
+2026-07-07 12:59:05,443 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:59:05,444 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 64/100 — '여름 냉방 꿀팁, 작년에 전기요금 폭탄 맞고 깨달은 것들 (20'
+2026-07-07 12:59:05,444 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치·개인 경험(전기요금 18만→32만원, 실험 데이터)은 풍부하나 글자 수 2626자로 4000자 기준 미달
+2026-07-07 12:59:05,444 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개는 우수하나 본문이 마크다운 구분 없이 긴 단락으로 이어져 가독성 저하
+2026-07-07 12:59:05,444 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 
+2026-07-07 12:59:05,444 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 
+2026-07-07 12:59:05,445 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-07 12:59:05,445 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-07 12:59:05,445 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-07 12:59:05,451 [INFO] internal_linker — 내부 링크 후보 3개 발견
+2026-07-07 12:59:05,452 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguwhat1.blogspot.com/2026/06/2026-top-5_0744546263
+2026-07-07 12:59:05,453 [INFO] internal_linker —   [2/5] '2026년' -> https://hoguwhat1.blogspot.com/2026/06/top-5-2026_0951591753
+2026-07-07 12:59:05,455 [INFO] internal_linker —   [3/5] '여름철' -> https://hoguwhat1.blogspot.com/2026/06/2026.html
+2026-07-07 12:59:05,455 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-07-07 12:59:05,455 [INFO] main —   제목: 여름 냉방 꿀팁, 작년에 전기요금 폭탄 맞고 깨달은 것들 (2026)
+2026-07-07 12:59:05,455 [INFO] main —   이미지: 0개 삽입
+2026-07-07 12:59:17,513 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-07 12:59:17,514 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 64/100 — '여름 냉방 꿀팁, 작년에 전기요금 폭탄 맞고 깨달은 것들 (20'
+2026-07-07 12:59:17,514 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치·개인 경험(전기요금 32만원, 210kWh vs 130kWh 등)은 풍부하나 글자수 2626자로 2500~3999자 구간에 해당해 warn
+2026-07-07 12:59:17,514 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: 
+2026-07-07 12:59:17,514 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 
+2026-07-07 12:59:17,514 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 
+2026-07-07 12:59:17,514 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-07 12:59:17,514 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-07 12:59:17,514 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-07 12:59:17,514 [ERROR] main —   ❌ AdSense 유해 콘텐츠 감지 — 업로드 취소: '여름 냉방 꿀팁, 작년에 전기요금 폭탄 맞고 깨달은 것들 (2026)' (점수: 64/100)
+2026-07-07 12:59:17,520 [INFO] main — 
+============================================================
+2026-07-07 12:59:17,520 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
+2026-07-07 12:59:17,520 [INFO] main — ============================================================
+2026-07-07 12:59:17,546 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 86개)
+2026-07-07 12:59:17,568 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-07 12:59:17,586 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-07 12:59:17,587 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-07 12:59:17,589 [INFO] dashboard_exporter —   수리 이력: 40건 내보내기 완료
+2026-07-07 12:59:17,596 [INFO] post_manager —   포스트 레지스트리: 전체 126개 (게시 89 / 실패 18 / 대기 15)
+2026-07-07 12:59:17,596 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-07 12:59:17,596 [INFO] dashboard_exporter —   포스트: 122개 / 실행 이력: 86개 / 블로그: 3개
+2026-07-07 12:59:17,597 [INFO] main — 대시보드 데이터 업데이트 완료

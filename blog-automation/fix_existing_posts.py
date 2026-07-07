@@ -133,6 +133,11 @@ def main() -> None:
         logger.info(f"\n[{processed + 1}/{len(batch)}] '{title}' ({old_wc}자) — {blog_id_key}")
 
         blog_config = blog_configs.get(blog_id_key)
+        if not blog_config and blog_id_key == "default":
+            # 구형 포스트는 blogId="default"로 기록됨 — blog1로 폴백
+            blog_config = blog_configs.get("blog1")
+            if blog_config:
+                logger.info(f"  blogId='default' → blog1 폴백 적용")
         if not blog_config:
             logger.warning(f"  블로그 설정 없음: {blog_id_key} — 건너뜀")
             history["skipped"].append({"post_id": post_id, "reason": "no_blog_config", "at": datetime.now().isoformat()})

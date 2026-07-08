@@ -6223,8 +6223,7 @@ function apiKeyClear(id) {
 function wfRunAutoRepair(dryRun = false) {
   const pat = getPAT()
   if (!pat) { showToast('GitHub PAT가 필요합니다 (실행 제어 탭에서 설정)', 'error'); navTo('run'); return }
-  const owner = 'kevinlee7250', repo = 'cli'
-  fetch(`https://api.github.com/repos/${owner}/${repo}/actions/workflows/auto-repair.yml/dispatches`, {
+  fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/auto-repair.yml/dispatches`, {
     method: 'POST',
     headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ ref: 'claude/blog-automation-system-KAbtE', inputs: { dry_run: dryRun ? 'true' : 'false' } }),
@@ -6332,23 +6331,146 @@ function _botCheckErrors() {
       repairHealthScore: repairScore,
       repairIssues: repairCritical.map(i => `[${i.level}] ${i.message}`),
     }
-    // 심각 오류이고 API 키 또는 PAT가 있고 이번 세션에 아직 자동 활성화 안 된 경우 → 봇 자동 실행
+    // 심각 오류이고 PAT가 있으면 자동 수리 시도, 아니면 봇 진단만
     const isCritical = errRuns.length >= 3 || hasCriticalRepair
-    const hasKeyOrPat = !!localStorage.getItem(BOT_KEY_LS) || !!getPAT()
-    if (isCritical && hasKeyOrPat && !window._botAutoActivated) {
+    const hasPAT = !!getPAT()
+    const hasBotKey = !!localStorage.getItem(BOT_KEY_LS)
+    if (isCritical && !window._botAutoActivated) {
       window._botAutoActivated = true
-      setTimeout(() => {
-        showToast(`⚠️ 오류 ${badgeCount}건 감지 — 시스템봇이 자동 진단을 시작합니다`, 'error')
+      if (hasPAT) {
+        // PAT 있으면 자동 수리 워크플로우 실행
         setTimeout(() => {
-          if (!_botOpen) toggleBot()
-          setTimeout(_botAutodiagnose, 800)
-        }, 1200)
-      }, 1500)
+          showToast(`🔴 심각 오류 ${badgeCount}건 감지 — 자동 수리를 시작합니다`, 'error')
+          setTimeout(() => _botAutoRepair(badgeCount), 1500)
+        }, 1500)
+      } else if (hasBotKey) {
+        // PAT 없으면 봇 진단만
+        setTimeout(() => {
+          showToast(`⚠️ 오류 ${badgeCount}건 감지 — 시스템봇이 자동 진단을 시작합니다`, 'error')
+          setTimeout(() => {
+            if (!_botOpen) toggleBot()
+            setTimeout(_botAutodiagnose, 800)
+          }, 1200)
+        }, 1500)
+      }
     }
   } else {
     if (badge) badge.style.display = 'none'
     window._botAutoErrorContext = null
   }
+}
+
+// ── 봇 자동 수리 실행 + 완료 알림 ────────────────────────────────────────────
+async function _botAutoRepair(errorCount) {
+  const pat = getPAT()
+  if (!pat) { _botAutodiagnose(); return }
+
+  // 1) 수리 워크플로우 디스패치
+  const owner = GH_OWNER, repo = GH_REPO
+  let dispatchOk = false
+  try {
+    const r = await fetch(`https://api.github.com/repos/${owner}/${repo}/actions/workflows/auto-repair.yml/dispatches`, {
+      method: 'POST',
+      headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ref: 'claude/blog-automation-system-KAbtE', inputs: { dry_run: 'false' } }),
+    })
+    dispatchOk = (r.status === 204)
+  } catch { dispatchOk = false }
+
+  if (!dispatchOk) {
+    showToast('자동 수리 워크플로우 실행 실패 — PAT 권한 확인', 'error')
+    if (localStorage.getItem(BOT_KEY_LS)) _botAutodiagnose()
+    return
+  }
+
+  showToast('🔧 자동 수리 워크플로우 시작됨 — 완료 시 알림을 드립니다 (최대 5분)', 'success')
+
+  // 2) 봇 메시지에 수리 시작 알림
+  if (!_botOpen) toggleBot()
+  _botAppend('assistant', `🔴 **심각 오류 ${errorCount}건이 감지되어 자동 수리를 시작했습니다.**\n\n자동 수리 워크플로우가 실행 중입니다. 완료되면 수리 결과를 알려드립니다.\n\n_약 2~3분 소요 예정..._`)
+
+  // 3) 폴링 — 30초 간격, 최대 10회 (5분)
+  const startTime = Date.now()
+  let runId = null
+  for (let poll = 0; poll < 10; poll++) {
+    await new Promise(res => setTimeout(res, 30000))
+
+    try {
+      const runsResp = await fetch(
+        `https://api.github.com/repos/${owner}/${repo}/actions/workflows/auto-repair.yml/runs?per_page=5`,
+        { headers: { Authorization: `token ${pat}` } }
+      )
+      if (!runsResp.ok) continue
+      const runsData = await runsResp.json()
+      const latestRun = (runsData.workflow_runs || []).find(r => {
+        const createdAt = new Date(r.created_at).getTime()
+        return createdAt >= startTime - 10000  // 디스패치 10초 전 이후 실행
+      })
+      if (!latestRun) continue
+      runId = latestRun.id
+      if (latestRun.status === 'completed') {
+        const success = latestRun.conclusion === 'success'
+        // 4) 데이터 새로고침 후 알림
+        await loadData()
+        await new Promise(res => setTimeout(res, 1000))
+
+        const latestRepair = (DATA.repairs || [])[0]
+        const score = latestRepair?.health_score ?? 0
+        const repairsApplied = latestRepair?.repairs_applied ?? 0
+        const issuesFound = latestRepair?.issues_found ?? 0
+        const scoreIcon = score >= 80 ? '✅' : score >= 60 ? '⚠️' : '❌'
+
+        // 5) 배너 알림 표시
+        _showRepairCompleteBanner(success, score, issuesFound, repairsApplied, latestRun.id)
+
+        // 6) 봇 메시지에 수리 결과 추가
+        const resultMsg = success
+          ? `✅ **자동 수리 완료!**\n\n${scoreIcon} 시스템 건강점수: **${score}/100**\n• 발견된 이슈: ${issuesFound}건\n• 수리 완료: ${repairsApplied}건\n\n수리 보고서는 [시스템 관리] 탭에서 확인하실 수 있습니다.`
+          : `⚠️ **자동 수리 워크플로우가 실패했습니다.**\n\n수동으로 [시스템 관리] 탭에서 진단 및 수리를 실행해 주세요.`
+        _botAppend('assistant', resultMsg)
+
+        // 시스템 관리 탭 수리 보고서 갱신
+        renderRepairReport()
+        return
+      }
+    } catch { /* 폴링 오류는 무시하고 재시도 */ }
+  }
+
+  // 타임아웃
+  _botAppend('assistant', `⏱️ **자동 수리 타임아웃** — 워크플로우가 아직 실행 중일 수 있습니다.\n\n[GitHub Actions](https://github.com/${owner}/${repo}/actions) 에서 진행 상황을 확인하거나, [시스템 관리] 탭에서 수동으로 새로고침해 주세요.`)
+}
+
+// ── 수리 완료 배너 ────────────────────────────────────────────────────────────
+function _showRepairCompleteBanner(success, score, issuesFound, repairsApplied, runId) {
+  const existing = document.getElementById('repair-complete-banner')
+  if (existing) existing.remove()
+
+  const scoreColor = score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444'
+  const scoreIcon = score >= 80 ? '✅' : score >= 60 ? '⚠️' : '❌'
+  const banner = document.createElement('div')
+  banner.id = 'repair-complete-banner'
+  banner.style.cssText = `position:fixed;top:72px;left:50%;transform:translateX(-50%);z-index:9999;
+    background:${success ? 'rgba(16,185,129,.15)' : 'rgba(239,68,68,.12)'};
+    border:1px solid ${success ? 'rgba(16,185,129,.4)' : 'rgba(239,68,68,.4)'};
+    border-radius:14px;padding:16px 22px;min-width:320px;max-width:480px;
+    box-shadow:0 8px 32px rgba(0,0,0,.4);backdrop-filter:blur(12px);`
+  banner.innerHTML = `
+    <div style="display:flex;align-items:flex-start;gap:12px">
+      <div style="font-size:24px;line-height:1">${success ? '🔧' : '⚠️'}</div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:14px;margin-bottom:4px">${success ? '자동 수리 완료' : '자동 수리 실패'}</div>
+        ${success ? `<div style="font-size:12px;color:var(--muted);margin-bottom:8px">${scoreIcon} 건강점수 <strong style="color:${scoreColor}">${score}/100</strong> &nbsp;|&nbsp; 이슈 ${issuesFound}건 발견 &nbsp;|&nbsp; ${repairsApplied}건 수리됨</div>` : ''}
+        <div style="display:flex;gap:8px">
+          <button onclick="navTo('system');renderRepairReport();this.closest('#repair-complete-banner').remove()"
+            style="padding:5px 12px;background:rgba(124,106,247,.2);border:1px solid rgba(124,106,247,.4);border-radius:7px;color:var(--accent);font-size:12px;cursor:pointer">📋 수리 보고서 보기</button>
+          <button onclick="this.closest('#repair-complete-banner').remove()"
+            style="padding:5px 10px;background:transparent;border:1px solid var(--border);border-radius:7px;color:var(--muted);font-size:12px;cursor:pointer">닫기</button>
+        </div>
+      </div>
+    </div>`
+  document.body.appendChild(banner)
+  // 30초 후 자동 닫기
+  setTimeout(() => { if (banner.parentNode) banner.remove() }, 30000)
 }
 
 // ── 봇 자동 오류 진단 ─────────────────────────────────────────────────────────

@@ -201,6 +201,70 @@ def _diagnose_log_size() -> list[dict]:
     return issues
 
 
+def _diagnose_json_corruption() -> list[dict]:
+    """주요 JSON 데이터 파일 손상 감지."""
+    issues = []
+    check_map = [
+        (RUN_HISTORY, list),
+        (USED_KW_FILE, dict),
+        (SERIES_FILE, list),
+        (PENDING_FILE, list),
+        (os.path.join(_DOCS, "post_registry.json"), list),
+    ]
+    corrupted = []
+    for path, expected in check_map:
+        if not os.path.exists(path):
+            continue
+        try:
+            with open(path, encoding="utf-8") as f:
+                data = json.load(f)
+            if not isinstance(data, expected):
+                corrupted.append(os.path.basename(path))
+        except (json.JSONDecodeError, OSError):
+            corrupted.append(os.path.basename(path))
+    if corrupted:
+        issues.append({
+            "id": "json_file_corruption",
+            "level": "critical",
+            "message": f"JSON 파일 손상 감지: {', '.join(corrupted)}",
+            "context": {"files": corrupted},
+            "fix": "reset_corrupt_json",
+        })
+    return issues
+
+
+def _diagnose_from_logs() -> list[dict]:
+    """automation.log에서 Python 예외·CRITICAL 오류 감지."""
+    issues = []
+    if not os.path.exists(LOG_FILE):
+        return issues
+    try:
+        with open(LOG_FILE, encoding="utf-8", errors="replace") as f:
+            lines = f.readlines()[-300:]
+        log_tail = "".join(lines)
+        tb_count = log_tail.count("Traceback (most recent call last):")
+        if tb_count > 0:
+            issues.append({
+                "id": "python_exception_in_log",
+                "level": "high",
+                "message": f"최근 로그에서 Python 예외 {tb_count}건 감지 — 코드 자동 수리 대상",
+                "context": {"tb_count": tb_count},
+                "fix": "code_repair_pending",
+            })
+        critical_lines = [l.strip() for l in lines if "[CRITICAL]" in l or ("CRITICAL" in l and "—" in l)]
+        if critical_lines and tb_count == 0:
+            issues.append({
+                "id": "critical_errors_in_log",
+                "level": "warning",
+                "message": f"CRITICAL 오류 {len(critical_lines)}건 감지",
+                "context": {"samples": [l[:120] for l in critical_lines[-3:]]},
+                "fix": "code_repair_pending",
+            })
+    except OSError as e:
+        logger.warning(f"로그 파싱 오류: {e}")
+    return issues
+
+
 def _diagnose_adsense_config() -> list[dict]:
     """AdSense 미설정 감지."""
     issues = []
@@ -371,13 +435,68 @@ def _fix_check_blogger_connection(issue: dict) -> dict:
         return {"success": False, "detail": f"연결 확인 오류: {e}"}
 
 
+def _fix_reset_corrupt_json(issue: dict) -> dict:
+    """손상된 JSON 파일을 안전한 기본값으로 초기화합니다."""
+    files = issue.get("context", {}).get("files", [])
+    if not files:
+        return {"success": False, "detail": "초기화할 파일 목록 없음"}
+
+    defaults = {
+        "run_history.json": [],
+        "used_keywords.json": {},
+        "series.json": [],
+        "pending_posts.json": [],
+        "post_registry.json": [],
+    }
+    reset = []
+    failed = []
+    for fname in files:
+        default_val = defaults.get(fname)
+        if default_val is None:
+            failed.append(fname)
+            continue
+        candidates = [
+            os.path.join(_LOGS, fname),
+            os.path.join(_DOCS, fname),
+        ]
+        for path in candidates:
+            if os.path.exists(path):
+                try:
+                    # 손상 파일 백업
+                    bak = path + ".corrupt_bak"
+                    import shutil
+                    shutil.copy2(path, bak)
+                    _save_json(path, default_val)
+                    reset.append(fname)
+                    break
+                except OSError as e:
+                    failed.append(f"{fname}({e})")
+    if reset:
+        return {
+            "success": True,
+            "detail": f"손상 파일 초기화: {', '.join(reset)} (원본은 .corrupt_bak으로 백업)",
+            "reset": reset,
+        }
+    return {"success": False, "detail": f"초기화 실패: {', '.join(failed)}"}
+
+
+def _fix_code_repair_pending(issue: dict) -> dict:
+    """코드 수리가 code_repair.py 단계에서 처리됨을 기록합니다."""
+    return {
+        "success": None,
+        "detail": "코드 수리는 code_repair.py 워크플로우 스텝에서 처리됩니다.",
+    }
+
+
 _FIX_HANDLERS = {
-    "prune_old_keywords":   _fix_prune_old_keywords,
-    "trim_history":         _fix_trim_history,
-    "reset_stuck_series":   _fix_reset_stuck_series,
-    "expire_old_pending":   _fix_expire_old_pending,
-    "rotate_log":           _fix_rotate_log,
+    "prune_old_keywords":       _fix_prune_old_keywords,
+    "trim_history":             _fix_trim_history,
+    "reset_stuck_series":       _fix_reset_stuck_series,
+    "expire_old_pending":       _fix_expire_old_pending,
+    "rotate_log":               _fix_rotate_log,
     "check_blogger_connection": _fix_check_blogger_connection,
+    "reset_corrupt_json":       _fix_reset_corrupt_json,
+    "code_repair_pending":      _fix_code_repair_pending,
 }
 
 
@@ -407,6 +526,8 @@ def run_auto_repair(dry_run: bool = False) -> dict:
     issues += _diagnose_stale_pending(pending)
     issues += _diagnose_log_size()
     issues += _diagnose_adsense_config()
+    issues += _diagnose_json_corruption()
+    issues += _diagnose_from_logs()
 
     lvl_order = {"critical": 0, "high": 1, "warning": 2, "low": 3}
     issues.sort(key=lambda x: lvl_order.get(x["level"], 9))

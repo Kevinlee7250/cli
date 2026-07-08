@@ -1355,6 +1355,15 @@
       <div style="color:var(--muted);font-size:13px;padding:24px;text-align:center">수리 데이터를 로드 중...</div>
     </div>
 
+    <!-- ⑦-C 코드 자동 수리 리포트 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>🧠 코드 자동 수리 (Claude AI)</h2>
+      <div style="font-size:12px;color:var(--muted)">Python 예외 감지 → Claude가 분석·수정 → 자동 커밋</div>
+    </div>
+    <div id="code-repair-report-wrap" style="margin-bottom:28px">
+      <div style="color:var(--muted);font-size:13px;padding:24px;text-align:center">코드 수리 데이터를 로드 중...</div>
+    </div>
+
     <!-- ⑧ 블로그 관리 -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>📰 블로그 관리</h2>
@@ -1842,7 +1851,7 @@ async function loadAll(silent = false) {
   }
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry] = await Promise.all([
+  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs] = await Promise.all([
     fetch(base + '/posts.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/runs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/analytics.json' + ts).then(r => r.json()).catch(() => ({})),
@@ -1855,8 +1864,9 @@ async function loadAll(silent = false) {
     fetch(base + '/learning.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/repairs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/post_registry.json' + ts).then(r => r.json()).catch(() => []),
+    fetch(base + '/code_repairs.json' + ts).then(r => r.json()).catch(() => []),
   ])
-  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry }
+  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs }
 
   // 아카이브 포스트 백그라운드 병합 (posts.json은 최근 300개만 유지 — 초기 로딩 속도 확보)
   fetch(base + '/posts_archive.json' + ts).then(r => r.ok ? r.json() : []).then(archive => {
@@ -1883,6 +1893,7 @@ async function loadAll(silent = false) {
   populateRunBlogSelect()  // 블로그 선택 드롭다운 갱신
   renderLearningReport()
   renderRepairReport()
+  renderCodeRepairReport()
   _botCheckErrors()    // 봇 오류 자동 감지
   if (!silent) showToast('데이터를 불러왔습니다', 'success')
 }
@@ -4230,6 +4241,7 @@ function renderSystemPage() {
   loadBlogList()
   renderLearningReport()
   renderRepairReport()
+  renderCodeRepairReport()
   loadAffiliateLinksFromRepo()
   // GitHub Actions 이력은 PAT 있을 때만 자동 로드
   if (getPAT()) loadSystemRuns()
@@ -6306,6 +6318,73 @@ function renderRepairReport() {
     </div>`
 }
 
+// ── 코드 수리 리포트 렌더 ─────────────────────────────────────────────────────
+function renderCodeRepairReport() {
+  const wrap = document.getElementById('code-repair-report-wrap')
+  if (!wrap) return
+  const history = DATA.codeRepairs || []
+  if (!history.length) {
+    wrap.innerHTML = `<div style="color:var(--muted);font-size:13px;padding:24px;text-align:center;border:1px dashed var(--border);border-radius:12px">코드 수리 기록 없음 — 자동 수리 워크플로우 실행 후 데이터가 생성됩니다</div>`
+    return
+  }
+  const latest = history[0]
+  const tbFound = latest.tracebacks_found ?? 0
+  const autoFixed = latest.auto_fixed ?? 0
+  const manualReq = latest.manual_required ?? 0
+  const critErrors = latest.critical_errors ?? 0
+  const runAt = latest.timestamp ? new Date(latest.timestamp).toLocaleString('ko-KR') : '알 수 없음'
+  const repairs = latest.repairs || []
+
+  const statusColor = autoFixed > 0 ? 'var(--green)' : tbFound > 0 ? '#f59e0b' : 'var(--muted)'
+  const statusIcon = autoFixed > 0 ? '✅' : tbFound > 0 ? '⚠️' : '🟢'
+
+  const repairRows = repairs.map(r => {
+    const icons = { fixed: '✅', manual_required: '⚠️', skip: '⏭', dry_run: '🔍', no_change: '✓', error: '❌' }
+    const icon = icons[r.result] || '❓'
+    const color = r.result === 'fixed' ? 'var(--green)' : r.result === 'manual_required' ? '#f59e0b' : r.result === 'error' ? 'var(--red)' : 'var(--muted)'
+    return `<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;background:rgba(255,255,255,.03);border-radius:8px;margin-bottom:6px">
+      <span style="font-size:13px;flex:0 0 18px">${icon}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:600;color:${color}">[${r.file || '?'}:${r.line || '?'}] ${r.error || ''}</div>
+        ${r.root_cause ? `<div style="font-size:11px;color:var(--muted);margin-top:1px">원인: ${r.root_cause}</div>` : ''}
+        ${r.detail ? `<div style="font-size:11px;color:var(--muted);margin-top:1px">${r.detail}</div>` : ''}
+        ${r.confidence != null ? `<div style="font-size:10px;color:var(--muted);margin-top:1px">확신도: ${(r.confidence*100).toFixed(0)}%</div>` : ''}
+      </div>
+    </div>`
+  }).join('') || '<div style="color:var(--muted);font-size:12px;padding:8px">분석 결과 없음</div>'
+
+  const historyRows = history.slice(0, 6).map(r => {
+    const t = r.timestamp ? new Date(r.timestamp).toLocaleString('ko-KR') : ''
+    return `<div style="display:flex;align-items:center;gap:12px;padding:6px 10px;border-bottom:1px solid var(--border);font-size:12px">
+      <span style="color:var(--muted);flex:0 0 130px">${t}</span>
+      <span style="color:var(--green);flex:0 0 55px">✅ ${r.auto_fixed ?? 0}건 수정</span>
+      <span style="color:#f59e0b;flex:0 0 60px">⚠️ ${r.manual_required ?? 0}건 수동</span>
+      <span style="flex:1;color:var(--muted)">예외 ${r.tracebacks_found ?? 0}건</span>
+    </div>`
+  }).join('')
+
+  wrap.innerHTML = `
+    <div class="run-panel" style="padding:18px;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+        <div style="font-size:28px">${statusIcon}</div>
+        <div style="flex:1">
+          <div style="display:flex;gap:20px;margin-bottom:8px">
+            <div><div style="font-size:18px;font-weight:700;color:var(--red)">${tbFound}</div><div style="font-size:11px;color:var(--muted)">예외 감지</div></div>
+            <div><div style="font-size:18px;font-weight:700;color:var(--green)">${autoFixed}</div><div style="font-size:11px;color:var(--muted)">자동 수정</div></div>
+            <div><div style="font-size:18px;font-weight:700;color:#f59e0b">${manualReq}</div><div style="font-size:11px;color:var(--muted)">수동 필요</div></div>
+            ${critErrors > 0 ? `<div><div style="font-size:18px;font-weight:700;color:#f59e0b">${critErrors}</div><div style="font-size:11px;color:var(--muted)">CRITICAL</div></div>` : ''}
+          </div>
+          <div style="font-size:11px;color:var(--muted)">${runAt} ${latest.dry_run ? ' · 진단 전용' : ''}</div>
+        </div>
+      </div>
+      ${repairs.length ? `<div style="font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em">분석 결과</div>${repairRows}` : ''}
+    </div>
+    <div class="run-panel" style="padding:0;overflow:hidden">
+      <div style="padding:12px 14px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700">📋 코드 수리 이력 (최근 6회)</div>
+      <div style="padding:4px 0">${historyRows || '<div style="padding:12px 14px;color:var(--muted);font-size:12px">기록 없음</div>'}</div>
+    </div>`
+}
+
 // ── 봇 오류 자동 감지 ─────────────────────────────────────────────────────────
 function _botCheckErrors() {
   const recentRuns = (DATA.runs || []).slice(0, 14)
@@ -6420,17 +6499,26 @@ async function _botAutoRepair(errorCount) {
         const issuesFound = latestRepair?.issues_found ?? 0
         const scoreIcon = score >= 80 ? '✅' : score >= 60 ? '⚠️' : '❌'
 
+        const latestCodeRepair = (DATA.codeRepairs || [])[0]
+        const codeFixed = latestCodeRepair?.auto_fixed ?? 0
+        const codeManual = latestCodeRepair?.manual_required ?? 0
+        const codeTb = latestCodeRepair?.tracebacks_found ?? 0
+
         // 5) 배너 알림 표시
         _showRepairCompleteBanner(success, score, issuesFound, repairsApplied, latestRun.id)
 
         // 6) 봇 메시지에 수리 결과 추가
+        const codeRepairPart = codeTb > 0
+          ? `\n\n**🧠 코드 자동 수리:**\n• Python 예외: ${codeTb}건\n• 자동 수정: ${codeFixed}건${codeManual > 0 ? `\n• 수동 조치 필요: ${codeManual}건` : ''}`
+          : ''
         const resultMsg = success
-          ? `✅ **자동 수리 완료!**\n\n${scoreIcon} 시스템 건강점수: **${score}/100**\n• 발견된 이슈: ${issuesFound}건\n• 수리 완료: ${repairsApplied}건\n\n수리 보고서는 [시스템 관리] 탭에서 확인하실 수 있습니다.`
+          ? `✅ **자동 수리 완료!**\n\n${scoreIcon} 시스템 건강점수: **${score}/100**\n• 발견된 이슈: ${issuesFound}건\n• 수리 완료: ${repairsApplied}건${codeRepairPart}\n\n수리 보고서는 [시스템 관리] 탭에서 확인하실 수 있습니다.`
           : `⚠️ **자동 수리 워크플로우가 실패했습니다.**\n\n수동으로 [시스템 관리] 탭에서 진단 및 수리를 실행해 주세요.`
         _botAppend('assistant', resultMsg)
 
         // 시스템 관리 탭 수리 보고서 갱신
         renderRepairReport()
+        renderCodeRepairReport()
         return
       }
     } catch { /* 폴링 오류는 무시하고 재시도 */ }

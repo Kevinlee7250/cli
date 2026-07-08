@@ -90,6 +90,18 @@ jobs:
           echo "=== 실패 포스트 재업로드 시도 ==="
           python main.py --retry --retry-max 5 --retry-age 7 || true
 
+      - name: 🧠 코드 오류 자동 수리 (Claude AI)
+        working-directory: blog-automation
+        run: |
+          DRY="${{ inputs.dry_run || 'false' }}"
+          if [ "$DRY" = "true" ]; then
+            echo "=== 코드 수리 진단 전용 모드 ==="
+            python code_repair.py --dry
+          else
+            echo "=== 코드 오류 자동 수리 ==="
+            python code_repair.py
+          fi
+
       - name: 수리 결과 커밋 & 푸시
         if: always()
         run: |
@@ -98,11 +110,24 @@ jobs:
           for f in \
             docs/data/repairs.json docs/data/pending_posts.json \
             docs/data/posts.json docs/data/post_registry.json \
+            docs/data/code_repairs.json \
             blog-automation/logs/repair_history.json \
             blog-automation/logs/run_history.json \
             blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json \
-            blog-automation/logs/post_registry.json; do
+            blog-automation/logs/post_registry.json \
+            blog-automation/logs/code_repair.json \
+            blog-automation/content_generator.py \
+            blog-automation/blogger_uploader.py \
+            blog-automation/keyword_collector.py \
+            blog-automation/post_manager.py \
+            blog-automation/adsense_validator.py \
+            blog-automation/main.py \
+            blog-automation/trend_collector.py \
+            blog-automation/image_handler.py \
+            blog-automation/social_publisher.py \
+            blog-automation/fix_existing_posts.py \
+            blog-automation/coupang_affiliate.py; do
             [ -f "$f" ] && git add -f "$f"
           done
           true

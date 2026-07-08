@@ -704,6 +704,12 @@
           </div>
         </div>
         <div class="form-group">
+          <label>블로그 선택</label>
+          <select id="run-blog-id" class="form-select">
+            <option value="">🌐 전체 블로그</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label>실행 모드</label>
           <select id="run-mode" class="form-select" onchange="onRunModeChange()">
             <option value="live">🟢 Live (즉시 게시)</option>
@@ -1873,7 +1879,8 @@ async function loadAll(silent = false) {
   document.getElementById('dashboard-skeleton').style.display = 'none'
   document.getElementById('dashboard-content').style.display = 'block'
   renderDashboard()
-  kwRenderSuggests()   // 추천 키워드 갱신
+  kwRenderSuggests()       // 추천 키워드 갱신
+  populateRunBlogSelect()  // 블로그 선택 드롭다운 갱신
   renderLearningReport()
   renderRepairReport()
   _botCheckErrors()    // 봇 오류 자동 감지
@@ -1900,7 +1907,7 @@ function navTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page))
   if (page === 'posts') { postsCurrentPage = 1; filterPosts() }
   if (page === 'analytics') renderAnalytics()
-  if (page === 'run') { checkPATStatus(); loadGHRuns(); kwRenderSuggests(); renderRunTimeline() }
+  if (page === 'run') { checkPATStatus(); loadGHRuns(); kwRenderSuggests(); renderRunTimeline(); populateRunBlogSelect() }
   if (page === 'social') renderSocial()
   if (page === 'keywords') { renderKeywords(); renderCategoryGap() }
   if (page === 'review') {
@@ -3135,6 +3142,22 @@ function onKwInput(e) {
   }
 }
 
+function populateRunBlogSelect() {
+  const sel = document.getElementById('run-blog-id')
+  if (!sel) return
+  const saved = sel.value  // 현재 선택값 보존
+  const blogs = (DATA.blogs || []).filter(b => b.enabled !== false)
+  // 기본 옵션만 남기고 초기화
+  sel.innerHTML = '<option value="">🌐 전체 블로그</option>'
+  blogs.forEach(b => {
+    const opt = document.createElement('option')
+    opt.value = b.id
+    opt.textContent = `📝 ${b.name || b.id}`
+    sel.appendChild(opt)
+  })
+  if (saved) sel.value = saved  // 이전 선택 복원
+}
+
 function kwSyncPostsCount() {
   const sel = document.getElementById('run-posts')
   if (!sel) return
@@ -3147,20 +3170,25 @@ async function runNow() {
   const keyword = runKeywords.join(', ')
   const mode = document.getElementById('run-mode').value
   const posts = document.getElementById('run-posts').value
+  const blogIdSel = document.getElementById('run-blog-id')
+  const blogId = blogIdSel ? blogIdSel.value : ''
+  const blogLabel = blogIdSel && blogId ? (blogIdSel.options[blogIdSel.selectedIndex]?.text || blogId) : '전체 블로그'
   const btn = document.getElementById('run-btn')
   btn.disabled = true
   btn.className = 'run-btn running'
   btn.textContent = '⏳ 실행 중...'
   showRunStatus('<span class="pulse">⏳</span> GitHub Actions 워크플로우 시작 요청 중...', 'running')
+  const inputs = { keyword, mode, posts_per_run: posts }
+  if (blogId) inputs.blog_id = blogId
   try {
     const resp = await fetch(
       `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`,
       { method: 'POST', headers: { 'Authorization': `Bearer ${pat}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ref: GH_BRANCH, inputs: { keyword, mode, posts_per_run: posts } }) }
+        body: JSON.stringify({ ref: GH_BRANCH, inputs }) }
     )
     if (resp.status === 204) {
       const reviewNote = mode === 'review' ? '<br><span style="color:var(--yellow);font-size:12px">✍️ 완료 후 <a href="#" onclick="navTo(\'review\');return false;" style="color:var(--yellow);font-weight:700">수동 검토 탭</a>에서 포스트를 확인하세요.</span>' : ''
-      showRunStatus(`✅ 워크플로우 시작됨!<br>모드: <strong>${mode}</strong> | 포스트: <strong>${posts}개</strong>${keyword ? ' | 키워드: <strong>' + esc(keyword) + '</strong>' : ''}<br><span style="color:var(--muted);font-size:12px">약 5~10분 후 완료됩니다.</span>${reviewNote}`, 'success')
+      showRunStatus(`✅ 워크플로우 시작됨!<br>블로그: <strong>${esc(blogLabel)}</strong> | 모드: <strong>${mode}</strong> | 포스트: <strong>${posts}개</strong>${keyword ? ' | 키워드: <strong>' + esc(keyword) + '</strong>' : ''}<br><span style="color:var(--muted);font-size:12px">약 5~10분 후 완료됩니다.</span>${reviewNote}`, 'success')
       showToast('워크플로우가 시작됐습니다', 'success')
       setTimeout(() => loadGHRuns(), 5000)
       startPollTimer()

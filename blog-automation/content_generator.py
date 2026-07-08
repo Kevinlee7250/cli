@@ -9,12 +9,18 @@ import time
 
 import anthropic
 
-from config import claude_text, claude_generate, ANTHROPIC_API_KEY, CLAUDE_MODEL, BLOG_LANGUAGE
+from config import (
+    claude_text, claude_generate, gpt_generate,
+    ANTHROPIC_API_KEY, CLAUDE_MODEL,
+    OPENAI_API_KEY, OPENAI_MODEL,
+    AI_PROVIDER, BLOG_LANGUAGE,
+)
 from coupang_affiliate import inject_affiliate_section
 from image_fetcher import fetch_images_for_queries, inject_images_into_content
 
 logger = logging.getLogger(__name__)
 _client: anthropic.Anthropic | None = None
+_openai_client = None  # openai.OpenAI 인스턴스 (지연 초기화)
 
 
 def _get_client() -> anthropic.Anthropic:
@@ -22,6 +28,50 @@ def _get_client() -> anthropic.Anthropic:
     if _client is None:
         _client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
     return _client
+
+
+def _get_openai_client():
+    global _openai_client
+    if _openai_client is None:
+        try:
+            from openai import OpenAI
+            _openai_client = OpenAI(api_key=OPENAI_API_KEY)
+        except ImportError:
+            raise RuntimeError("openai 패키지가 설치되지 않았습니다. pip install openai 를 실행하세요.")
+    return _openai_client
+
+
+def _resolve_ai_provider(blog_config: dict | None) -> str:
+    """블로그별 ai_provider 설정 → 없으면 전역 AI_PROVIDER 사용."""
+    if blog_config:
+        provider = blog_config.get("ai_provider", "").strip().lower()
+        if provider in ("claude", "openai"):
+            return provider
+    return AI_PROVIDER.lower()
+
+
+def _ai_generate(system: str, prompt: str, ai_provider: str) -> str:
+    """ai_provider에 따라 Claude 또는 GPT API를 호출하고 원본 텍스트를 반환합니다."""
+    if ai_provider == "openai":
+        if not OPENAI_API_KEY:
+            raise ValueError("OPENAI_API_KEY가 설정되지 않았습니다.")
+        return gpt_generate(
+            _get_openai_client(),
+            model=OPENAI_MODEL,
+            system=system,
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=8000,
+            temperature=1.0,
+        )
+    # 기본: Claude
+    return claude_generate(
+        _get_client(),
+        model=CLAUDE_MODEL,
+        max_tokens=24000,
+        temperature=1.0,
+        system=system,
+        messages=[{"role": "user", "content": prompt}],
+    )
 
 
 def _detect_article_type(keyword: str) -> str:
@@ -1296,12 +1346,14 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
     logger.info(f"시리즈 포스트 생성: '{keyword}' ({episode}/{total}편)")
     prompt = _build_series_prompt(keyword, traffic, series_context, blog_config)
     is_blog1 = blog_config and blog_config.get("id") == "blog1"
+    ai_provider = _resolve_ai_provider(blog_config)
 
     prev_wc = 0
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
             _now = _dt.now()
+            blog_lang = (blog_config or {}).get("language", BLOG_LANGUAGE)
             if is_blog1:
                 _sys = (
                     f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
@@ -1310,7 +1362,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                     "독자에게 실질적인 도움이 되는 정보를 제공하는 것이 최우선입니다. "
                     "JSON만 응답하세요."
                 )
-            elif BLOG_LANGUAGE == "ko":
+            elif blog_lang == "ko":
                 _sys = (
                     f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
                     "당신은 직접 경험을 바탕으로 솔직하게 글을 쓰는 30대 직장인 블로거입니다. "
@@ -1324,16 +1376,10 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                     "Write naturally, like a real person — not an AI report. JSON only."
                 )
             escalation = _retry_escalation_note(attempt, prev_wc)
-            raw = claude_generate(
-                _get_client(),
-                model=CLAUDE_MODEL,
-                max_tokens=24000,
-                temperature=1.0,
-                system=_sys,
-                messages=[{"role": "user", "content": prompt + escalation}],
-            ).strip()
+            logger.info(f"  AI 제공자: {ai_provider.upper()} (시도 {attempt + 1}/3)")
+            raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
             if not raw:
-                logger.warning("응답 없음 또는 이어쓰기 후에도 잘림 — 재시도")
+                logger.warning(f"{ai_provider.upper()} 응답 없음 — 재시도")
                 if attempt < 2:
                     time.sleep(2)
                     continue
@@ -1553,11 +1599,13 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
     prompt = _build_prompt(keyword, traffic, blog_config)
 
     is_blog1 = blog_config and blog_config.get("id") == "blog1"
+    ai_provider = _resolve_ai_provider(blog_config)
     prev_wc = 0
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
             _now = _dt.now()
+            blog_lang = (blog_config or {}).get("language", BLOG_LANGUAGE)
             if is_blog1:
                 _sys = (
                     f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
@@ -1566,7 +1614,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                     "독자에게 실질적인 도움이 되는 정보를 제공하는 것이 최우선입니다. "
                     "JSON만 응답하세요."
                 )
-            elif BLOG_LANGUAGE == "ko":
+            elif blog_lang == "ko":
                 _sys = (
                     f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
                     "당신은 직접 경험을 바탕으로 솔직하게 글을 쓰는 30대 직장인 블로거입니다. "
@@ -1583,16 +1631,10 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                     "JSON only."
                 )
             escalation = _retry_escalation_note(attempt, prev_wc)
-            raw = claude_generate(
-                _get_client(),
-                model=CLAUDE_MODEL,
-                max_tokens=24000,
-                temperature=1.0,
-                system=_sys,
-                messages=[{"role": "user", "content": prompt + escalation}],
-            ).strip()
+            logger.info(f"  AI 제공자: {ai_provider.upper()} (시도 {attempt + 1}/3)")
+            raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
             if not raw:
-                logger.error("Claude 응답 없음 또는 이어쓰기 후에도 max_tokens로 잘림")
+                logger.error(f"{ai_provider.upper()} 응답 없음 또는 max_tokens로 잘림")
                 if attempt < 2:
                     time.sleep(2)
                     continue

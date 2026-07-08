@@ -8,6 +8,14 @@ load_dotenv()
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
 
+# OpenAI API
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
+
+# AI 제공자 선택 (전역 기본값 — 블로그별 ai_provider 설정으로 재정의 가능)
+# 값: "claude" | "openai"
+AI_PROVIDER = os.getenv("AI_PROVIDER", "claude")
+
 # Google Blogger OAuth2 (기본/단일 블로그)
 BLOGGER_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
 BLOGGER_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "")
@@ -149,6 +157,28 @@ def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
     if getattr(message, "stop_reason", "") == "max_tokens":
         return ""
     return "".join(parts)
+
+
+def gpt_generate(client, *, model: str, system: str, messages: list, max_tokens: int = 8000, temperature: float = 1.0) -> str:
+    """OpenAI ChatCompletion API 호출 — Claude claude_generate()와 동일한 인터페이스.
+
+    system + messages 형식으로 GPT를 호출하고 응답 텍스트를 반환합니다.
+    API 오류 시 빈 문자열을 반환합니다.
+    """
+    import logging
+    _logger = logging.getLogger(__name__)
+    try:
+        msgs = [{"role": "system", "content": system}] + list(messages)
+        resp = client.chat.completions.create(
+            model=model,
+            messages=msgs,
+            max_tokens=max_tokens,
+            temperature=temperature,
+        )
+        return resp.choices[0].message.content or ""
+    except Exception as e:
+        _logger.error(f"OpenAI API 오류: {e}")
+        return ""
 
 
 _BLOGS_REGISTRY_FILE = os.path.join(os.path.dirname(__file__), "blogs.json")

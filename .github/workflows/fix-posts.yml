@@ -65,6 +65,9 @@ jobs:
         run: |
           cat > .env << 'ENVEOF'
           ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
+          OPENAI_MODEL="${{ secrets.OPENAI_MODEL || 'gpt-4o' }}"
+          AI_PROVIDER="${{ secrets.AI_PROVIDER || 'claude' }}"
           GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
           GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
           GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"

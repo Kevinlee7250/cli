@@ -7,208 +7,6 @@
   File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
     raise ValueError(
 ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-2026-07-08 08:13:48,594 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
-2026-07-08 08:13:48,594 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '클로드 AI vs 챗GPT 업무 효율 비교 직접 테스트'
-2026-07-08 08:13:48,594 [INFO] main — 
-============================================================
-2026-07-08 08:13:48,595 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 1개
-2026-07-08 08:13:48,595 [INFO] main — ============================================================
-2026-07-08 08:13:48,641 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 96개)
-2026-07-08 08:13:48,737 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-08 08:13:48,799 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-08 08:13:48,990 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-08 08:13:49,195 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-08 08:13:49,196 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-08 08:13:49,199 [INFO] dashboard_exporter —   수리 이력: 46건 내보내기 완료
-2026-07-08 08:13:49,206 [INFO] post_manager —   포스트 레지스트리: 전체 126개 (게시 89 / 실패 18 / 대기 15)
-2026-07-08 08:13:49,206 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-08 08:13:49,206 [INFO] dashboard_exporter —   포스트: 122개 / 실행 이력: 96개 / 블로그: 3개
-2026-07-08 08:13:49,207 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-08 08:13:49,207 [INFO] main — ============================================================
-2026-07-08 08:13:49,208 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-08 08:13:49
-2026-07-08 08:13:49,208 [INFO] main — ============================================================
-2026-07-08 08:13:49,216 [INFO] keyword_collector — 포스팅 이력 코퍼스: 22개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-08 08:13:49,216 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
-2026-07-08 08:13:49,831 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
-2026-07-08 08:13:49,832 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-08 08:13:50,141 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-08 08:13:50,142 [INFO] keyword_collector — 유사 주제 제외 10개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
-2026-07-08 08:13:50,142 [INFO] keyword_collector —   [fallback] 2개: ['국내 호캉스 가성비 호텔 실제 후기 비교', '남해 여행 봄에 가면 좋은 이유와 준비물']
-2026-07-08 08:13:50,142 [INFO] keyword_collector — 최종 선정 키워드 2개: ['국내 호캉스 가성비 호텔 실제 후기 비교', '남해 여행 봄에 가면 좋은 이유와 준비물']
-2026-07-08 08:13:50,142 [INFO] main — 수집된 키워드 2개: ['국내 호캉스 가성비 호텔 실제 후기 비교', '남해 여행 봄에 가면 좋은 이유와 준비물']
-2026-07-08 08:13:50,142 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 9일 전)
-2026-07-08 08:13:50,540 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
-2026-07-08 08:13:52,157 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-08 08:13:52,158 [INFO] main — 단독 포스트 대상 키워드 1개: ['국내 호캉스 가성비 호텔 실제 후기 비교']
-2026-07-08 08:13:52,170 [INFO] main — 
-[1/1] 키워드: '국내 호캉스 가성비 호텔 실제 후기 비교'
-2026-07-08 08:13:52,170 [INFO] content_generator — 포스트 생성 중: '국내 호캉스 가성비 호텔 실제 후기 비교'
-2026-07-08 08:13:52,171 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1583, in generate_post
-    raw = claude_generate(
-          ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
-    message = client.messages.create(messages=messages, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
-    timeout = self._client._calculate_nonstreaming_timeout(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
-    raise ValueError(
-ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-2026-07-08 08:13:52,171 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-07-08 08:13:55,171 [INFO] content_generator — 포스트 생성 중: '국내 호캉스 가성비 호텔 실제 후기 비교'
-2026-07-08 08:13:55,172 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1583, in generate_post
-    raw = claude_generate(
-          ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
-    message = client.messages.create(messages=messages, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
-    timeout = self._client._calculate_nonstreaming_timeout(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
-    raise ValueError(
-ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-2026-07-08 08:13:55,172 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
-2026-07-08 08:13:55,172 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '국내 호캉스 가성비 호텔 실제 후기 비교'
-2026-07-08 08:13:55,173 [INFO] main — 
-============================================================
-2026-07-08 08:13:55,173 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 1개
-2026-07-08 08:13:55,173 [INFO] main — ============================================================
-2026-07-08 08:13:55,198 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 97개)
-2026-07-08 08:13:55,221 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-08 08:13:55,239 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-08 08:13:55,240 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-08 08:13:55,242 [INFO] dashboard_exporter —   수리 이력: 46건 내보내기 완료
-2026-07-08 08:13:55,249 [INFO] post_manager —   포스트 레지스트리: 전체 126개 (게시 89 / 실패 18 / 대기 15)
-2026-07-08 08:13:55,249 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-08 08:13:55,249 [INFO] dashboard_exporter —   포스트: 122개 / 실행 이력: 97개 / 블로그: 3개
-2026-07-08 08:13:55,250 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-08 08:13:55,251 [INFO] main — ============================================================
-2026-07-08 08:13:55,251 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-08 08:13:55
-2026-07-08 08:13:55,251 [INFO] main — ============================================================
-2026-07-08 08:13:55,259 [INFO] keyword_collector — 포스팅 이력 코퍼스: 18개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-08 08:13:55,260 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
-2026-07-08 08:13:55,677 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
-2026-07-08 08:13:55,677 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-08 08:13:56,124 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-08 08:13:56,125 [INFO] keyword_collector — 유사 주제 제외 8개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁', '직장인 월 30만원 ETF 투자 솔직 후기']
-2026-07-08 08:13:56,125 [INFO] keyword_collector —   [fallback] 2개: ['달러 환전 타이밍 내가 틀린 적 있는 이유', '코인 투자 1년 후 솔직한 이야기']
-2026-07-08 08:13:56,125 [INFO] keyword_collector — 최종 선정 키워드 2개: ['달러 환전 타이밍 내가 틀린 적 있는 이유', '코인 투자 1년 후 솔직한 이야기']
-2026-07-08 08:13:56,125 [INFO] main — 수집된 키워드 2개: ['달러 환전 타이밍 내가 틀린 적 있는 이유', '코인 투자 1년 후 솔직한 이야기']
-2026-07-08 08:13:56,125 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 9일 전)
-2026-07-08 08:13:56,146 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
-2026-07-08 08:13:57,355 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-08 08:13:57,356 [INFO] main — 단독 포스트 대상 키워드 1개: ['달러 환전 타이밍 내가 틀린 적 있는 이유']
-2026-07-08 08:13:57,369 [INFO] main — 
-[1/1] 키워드: '달러 환전 타이밍 내가 틀린 적 있는 이유'
-2026-07-08 08:13:57,369 [INFO] content_generator — 포스트 생성 중: '달러 환전 타이밍 내가 틀린 적 있는 이유'
-2026-07-08 08:13:57,369 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1583, in generate_post
-    raw = claude_generate(
-          ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
-    message = client.messages.create(messages=messages, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
-    timeout = self._client._calculate_nonstreaming_timeout(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
-    raise ValueError(
-ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-2026-07-08 08:13:57,369 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-07-08 08:14:00,370 [INFO] content_generator — 포스트 생성 중: '달러 환전 타이밍 내가 틀린 적 있는 이유'
-2026-07-08 08:14:00,370 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1583, in generate_post
-    raw = claude_generate(
-          ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
-    message = client.messages.create(messages=messages, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
-    timeout = self._client._calculate_nonstreaming_timeout(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
-    raise ValueError(
-ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-2026-07-08 08:14:00,370 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
-2026-07-08 08:14:00,370 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '달러 환전 타이밍 내가 틀린 적 있는 이유'
-2026-07-08 08:14:00,371 [INFO] main — 
-============================================================
-2026-07-08 08:14:00,371 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
-2026-07-08 08:14:00,371 [INFO] main — ============================================================
-2026-07-08 08:14:00,396 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 98개)
-2026-07-08 08:14:00,418 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-08 08:14:00,461 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-08 08:14:00,462 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-08 08:14:00,464 [INFO] dashboard_exporter —   수리 이력: 46건 내보내기 완료
-2026-07-08 08:14:00,471 [INFO] post_manager —   포스트 레지스트리: 전체 126개 (게시 89 / 실패 18 / 대기 15)
-2026-07-08 08:14:00,471 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-08 08:14:00,471 [INFO] dashboard_exporter —   포스트: 122개 / 실행 이력: 98개 / 블로그: 3개
-2026-07-08 08:14:00,472 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-08 09:23:07,005 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-07-08 09:23:07,006 [INFO] main —   - [blog1] HOGU What?
-2026-07-08 09:23:07,006 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-07-08 09:23:07,006 [INFO] main —   - [blog3] 금융NEWS
-2026-07-08 09:23:07,006 [INFO] main — ============================================================
-2026-07-08 09:23:07,006 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-08 09:23:07
-2026-07-08 09:23:07,006 [INFO] main — ============================================================
-2026-07-08 09:23:07,013 [INFO] keyword_collector — 포스팅 이력 코퍼스: 16개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-08 09:23:07,013 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
-2026-07-08 09:23:07,600 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
-2026-07-08 09:23:07,600 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-08 09:23:08,317 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-08 09:23:08,318 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-08 09:23:08,319 [INFO] keyword_collector — 최근 사용 제외 4개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁']
-2026-07-08 09:23:08,319 [INFO] keyword_collector —   [fallback] 2개: ['GLP-1 주사 실제 맞아본 사람 후기', '수면 무호흡증 검사 받아보고 알게 된 것']
-2026-07-08 09:23:08,319 [INFO] keyword_collector — 최종 선정 키워드 2개: ['GLP-1 주사 실제 맞아본 사람 후기', '수면 무호흡증 검사 받아보고 알게 된 것']
-2026-07-08 09:23:08,319 [INFO] main — 수집된 키워드 2개: ['GLP-1 주사 실제 맞아본 사람 후기', '수면 무호흡증 검사 받아보고 알게 된 것']
-2026-07-08 09:23:08,322 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 9일 전)
-2026-07-08 09:23:08,605 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
-2026-07-08 09:23:10,250 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-08 09:23:10,267 [INFO] main — 단독 포스트 대상 키워드 1개: ['GLP-1 주사 실제 맞아본 사람 후기']
-2026-07-08 09:23:10,276 [INFO] main — 
-[1/1] 키워드: 'GLP-1 주사 실제 맞아본 사람 후기'
-2026-07-08 09:23:10,276 [INFO] content_generator — 포스트 생성 중: 'GLP-1 주사 실제 맞아본 사람 후기'
-2026-07-08 09:23:10,277 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-08 09:23:10,290 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1635, in generate_post
-    raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 67, in _ai_generate
-    return claude_generate(
-           ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 141, in claude_generate
-    message = client.messages.create(messages=messages, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
-    timeout = self._client._calculate_nonstreaming_timeout(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
-    raise ValueError(
-ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
 2026-07-08 09:23:10,291 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
 2026-07-08 09:23:13,292 [INFO] content_generator — 포스트 생성 중: 'GLP-1 주사 실제 맞아본 사람 후기'
 2026-07-08 09:23:13,292 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
@@ -700,3 +498,218 @@ ValueError: Streaming is required for operations that may take longer than 10 mi
 2026-07-08 11:58:12,528 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-08 11:58:12,528 [INFO] dashboard_exporter —   포스트: 120개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-08 11:58:12,529 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-08 23:16:51,446 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
+2026-07-08 23:16:51,446 [INFO] main —   - [blog1] HOGU What?
+2026-07-08 23:16:51,446 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
+2026-07-08 23:16:51,447 [INFO] main —   - [blog3] 금융NEWS
+2026-07-08 23:16:51,447 [INFO] main — ============================================================
+2026-07-08 23:16:51,447 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-08 23:16:51
+2026-07-08 23:16:51,447 [INFO] main — ============================================================
+2026-07-08 23:16:51,456 [INFO] keyword_collector — 포스팅 이력 코퍼스: 16개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-08 23:16:51,456 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-08 23:16:52,141 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-08 23:16:52,142 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-08 23:16:53,276 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-08 23:16:53,277 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-08 23:16:53,278 [INFO] keyword_collector — 최근 사용 제외 4개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁']
+2026-07-08 23:16:53,279 [INFO] keyword_collector —   [fallback] 2개: ['상속세 예상보다 많이 나온 이유', '증여세 부모님한테 돈 받을 때 주의사항']
+2026-07-08 23:16:53,279 [INFO] keyword_collector — 최종 선정 키워드 2개: ['상속세 예상보다 많이 나온 이유', '증여세 부모님한테 돈 받을 때 주의사항']
+2026-07-08 23:16:53,279 [INFO] main — 수집된 키워드 2개: ['상속세 예상보다 많이 나온 이유', '증여세 부모님한테 돈 받을 때 주의사항']
+2026-07-08 23:16:53,282 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 10일 전)
+2026-07-08 23:16:53,560 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-08 23:16:54,759 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:16:54,785 [INFO] main — 단독 포스트 대상 키워드 1개: ['상속세 예상보다 많이 나온 이유']
+2026-07-08 23:16:54,797 [INFO] main — 
+[1/1] 키워드: '상속세 예상보다 많이 나온 이유'
+2026-07-08 23:16:54,797 [INFO] content_generator — 포스트 생성 중: '상속세 예상보다 많이 나온 이유'
+2026-07-08 23:16:54,798 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-08 23:16:55,470 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:18:10,922 [WARNING] content_generator — 컨텐츠 너무 짧음(3665자, 최소 4000자) — 재시도 1/3
+2026-07-08 23:18:13,922 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-08 23:18:15,623 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:19:24,160 [WARNING] content_generator — 컨텐츠 너무 짧음(3378자, 최소 4000자) — 재시도 2/3
+2026-07-08 23:19:27,160 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-08 23:19:27,960 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:20:35,865 [WARNING] content_generator — 최소 분량 미달(3204자) — 재시도 소진, 해당 분량으로 진행
+2026-07-08 23:20:47,256 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:20:47,257 [INFO] content_generator — 팩트체크: 통과
+2026-07-08 23:20:47,260 [INFO] content_generator — 섹션별 이미지 검색: ['상속세 예상보다 많이', '상속세 예상보다 주제가 중요한 경우가 상속은', '상속세 예상보다 핵심 개념 계산 구조를', '상속세 예상보다 실제로 확인해야 신고 전에']
+2026-07-08 23:20:48,401 [WARNING] image_fetcher — 이미지 없음: '상속세 예상보다 많이'
+2026-07-08 23:20:49,752 [WARNING] image_fetcher — 이미지 없음: '상속세 예상보다 주제가 중요한 경우가 상속은'
+2026-07-08 23:20:51,585 [WARNING] image_fetcher — 이미지 없음: '상속세 예상보다 핵심 개념 계산 구조를'
+2026-07-08 23:20:53,013 [WARNING] image_fetcher — 이미지 없음: '상속세 예상보다 실제로 확인해야 신고 전에'
+2026-07-08 23:20:53,013 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-08 23:20:53,016 [INFO] content_generator — 포스트 생성 완료: '상속세 예상보다 많이 나온 이유, 2026년 직접 겪고 알았습니다' (3204자, 이미지 0개)
+2026-07-08 23:21:04,310 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:21:04,311 [WARNING] adsense_validator — AdSense 검증 JSON 파싱 실패 — 기본 처리: 
+2026-07-08 23:21:04,319 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-08 23:21:04,322 [INFO] internal_linker —   [1/5] '3개월' -> https://hogugolfntraval.blogspot.com/2026/07/3-2026.html
+2026-07-08 23:21:04,326 [INFO] internal_linker —   [2/5] '6개월' -> https://hoguwhat1.blogspot.com/2026/06/pt-6-2026.html
+2026-07-08 23:21:04,328 [INFO] internal_linker —   [3/5] '6개월' -> https://hoguwhat1.blogspot.com/2026/06/ai-6-2026.html
+2026-07-08 23:21:04,331 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-07-08 23:21:04,331 [INFO] main —   제목: 상속세 예상보다 많이 나온 이유, 2026년 직접 겪고 알았습니다
+2026-07-08 23:21:04,331 [INFO] main —   이미지: 0개 삽입
+2026-07-08 23:21:04,331 [INFO] main —   글자 수: 3204자
+2026-07-08 23:21:04,331 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '상속세 예상보다 많이 나온 이유, 2026년 직접 겪고 알았습니다' (3204자 < 4000자)
+2026-07-08 23:21:04,340 [INFO] dashboard_exporter —   검토 대기 저장: 상속세 예상보다 많이 나온 이유, 2026년 직접 겪고 알았습니다 (14138자 HTML)
+2026-07-08 23:21:04,345 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 38개)
+2026-07-08 23:21:04,345 [INFO] main — 
+============================================================
+2026-07-08 23:21:04,345 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-08 23:21:04,345 [INFO] main — ============================================================
+2026-07-08 23:21:04,368 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-08 23:21:04,390 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-08 23:21:04,408 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-08 23:21:04,784 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-08 23:21:05,167 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-08 23:21:05,168 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-08 23:21:05,171 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-08 23:21:05,178 [INFO] post_manager —   포스트 레지스트리: 전체 130개 (게시 92 / 실패 15 / 대기 19)
+2026-07-08 23:21:05,178 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-08 23:21:05,179 [INFO] dashboard_exporter —   포스트: 120개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-08 23:21:05,179 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-08 23:21:05,180 [INFO] main — ============================================================
+2026-07-08 23:21:05,180 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-08 23:21:05
+2026-07-08 23:21:05,180 [INFO] main — ============================================================
+2026-07-08 23:21:05,188 [INFO] keyword_collector — 포스팅 이력 코퍼스: 15개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-08 23:21:05,188 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-08 23:21:05,949 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-08 23:21:05,949 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-08 23:21:06,415 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-08 23:21:06,415 [INFO] keyword_collector — 유사 주제 제외 1개: ['장마 건강 관리']
+2026-07-08 23:21:06,416 [INFO] keyword_collector —   [season_scheduled] 2개: ['폭염 대비 방법', '에어컨 전기세 절약']
+2026-07-08 23:21:06,416 [INFO] keyword_collector — 최종 선정 키워드 2개: ['폭염 대비 방법', '에어컨 전기세 절약']
+2026-07-08 23:21:06,416 [INFO] main — 수집된 키워드 2개: ['폭염 대비 방법', '에어컨 전기세 절약']
+2026-07-08 23:21:06,416 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 10일 전)
+2026-07-08 23:21:06,691 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-08 23:21:07,849 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:21:07,850 [INFO] main — 단독 포스트 대상 키워드 1개: ['폭염 대비 방법']
+2026-07-08 23:21:07,862 [INFO] main — 
+[1/1] 키워드: '폭염 대비 방법'
+2026-07-08 23:21:07,862 [INFO] content_generator — 포스트 생성 중: '폭염 대비 방법'
+2026-07-08 23:21:07,862 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-08 23:21:08,892 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:22:32,318 [WARNING] content_generator — 컨텐츠 너무 짧음(3295자, 최소 4000자) — 재시도 1/3
+2026-07-08 23:22:35,318 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-08 23:22:36,346 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:24:07,320 [WARNING] content_generator — 컨텐츠 너무 짧음(3439자, 최소 4000자) — 재시도 2/3
+2026-07-08 23:24:10,320 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-08 23:24:11,215 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:25:35,280 [WARNING] content_generator — 최소 분량 미달(3209자) — 재시도 소진, 해당 분량으로 진행
+2026-07-08 23:25:46,871 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:25:46,872 [INFO] content_generator — 팩트체크: 통과
+2026-07-08 23:25:46,873 [INFO] content_generator — 섹션별 이미지 검색: ['폭염 대비', '폭염 대비 야구장에서 제대로 예매할 그날', '폭염 대비 시작할 제일 다들 많이', '폭염 대비 여행 때는 시간이 야구장']
+2026-07-08 23:25:47,070 [WARNING] image_fetcher — 이미지 없음: '폭염 대비'
+2026-07-08 23:25:48,095 [WARNING] image_fetcher — 이미지 없음: '폭염 대비 야구장에서 제대로 예매할 그날'
+2026-07-08 23:25:48,867 [WARNING] image_fetcher — 이미지 없음: '폭염 대비 시작할 제일 다들 많이'
+2026-07-08 23:25:49,979 [WARNING] image_fetcher — 이미지 없음: '폭염 대비 여행 때는 시간이 야구장'
+2026-07-08 23:25:49,979 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-08 23:25:49,979 [INFO] content_generator — 포스트 생성 완료: '야구장 직관 갔다가 폭염에 진짜 죽는 줄 알았던 이야기, 2026 대비법' (3209자, 이미지 0개)
+2026-07-08 23:26:01,701 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:26:01,710 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '야구장 직관 갔다가 폭염에 진짜 죽는 줄 알았던 이야기, 202'
+2026-07-08 23:26:01,710 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 개인 경험은 구체적이고 진솔하나 글자 수가 3209자로 4000자 기준에는 못 미침
+2026-07-08 23:26:01,710 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 9개로 헤딩 수는 충분하나 단락이 길게 이어지는 구간이 많아 가독성 개선 여지 있음
+2026-07-08 23:26:01,710 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 사용 여부가 확인되지 않아 텍스트 전용 글로 판단, 이미지 부재는 warn 처리
+2026-07-08 23:26:01,710 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-08 23:26:01,715 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-08 23:26:01,715 [INFO] internal_linker —   [1/5] '폭염 대비 방법' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0130745006
+2026-07-08 23:26:01,716 [INFO] internal_linker —   [2/5] '2026년' -> https://hoguwhat1.blogspot.com/2026/06/2026-5_01882421696.ht
+2026-07-08 23:26:01,717 [INFO] internal_linker —   [3/5] '2026년' -> https://hoguwhat1.blogspot.com/2026/06/5-2026.html
+2026-07-08 23:26:01,721 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-07-08 23:26:01,721 [INFO] main —   제목: 야구장 직관 갔다가 폭염에 진짜 죽는 줄 알았던 이야기, 2026 대비법
+2026-07-08 23:26:01,721 [INFO] main —   이미지: 0개 삽입
+2026-07-08 23:26:01,721 [INFO] main —   글자 수: 3209자
+2026-07-08 23:26:01,721 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '야구장 직관 갔다가 폭염에 진짜 죽는 줄 알았던 이야기, 2026 대비법' (3209자 < 4000자)
+2026-07-08 23:26:01,729 [INFO] dashboard_exporter —   검토 대기 저장: 야구장 직관 갔다가 폭염에 진짜 죽는 줄 알았던 이야기, 2026 대비법 (10600자 HTML)
+2026-07-08 23:26:01,734 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 39개)
+2026-07-08 23:26:01,734 [INFO] main — 
+============================================================
+2026-07-08 23:26:01,735 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-08 23:26:01,735 [INFO] main — ============================================================
+2026-07-08 23:26:01,757 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-08 23:26:01,779 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-08 23:26:01,796 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-08 23:26:01,797 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-08 23:26:01,800 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-08 23:26:01,807 [INFO] post_manager —   포스트 레지스트리: 전체 131개 (게시 92 / 실패 15 / 대기 20)
+2026-07-08 23:26:01,807 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-08 23:26:01,807 [INFO] dashboard_exporter —   포스트: 119개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-08 23:26:01,807 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-08 23:26:01,808 [INFO] main — ============================================================
+2026-07-08 23:26:01,808 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-08 23:26:01
+2026-07-08 23:26:01,808 [INFO] main — ============================================================
+2026-07-08 23:26:01,839 [INFO] keyword_collector — 포스팅 이력 코퍼스: 13개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-08 23:26:01,839 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드: ['장마 건강 관리', '여름 냉방 꿀팁']
+2026-07-08 23:26:02,388 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-08 23:26:02,389 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-08 23:26:05,651 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:26:05,652 [INFO] keyword_collector — Claude AI 키워드 생성: 4개
+2026-07-08 23:26:05,653 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-08 23:26:05,653 [INFO] keyword_collector — 유사 주제 제외 1개: ['여름 냉방 꿀팁']
+2026-07-08 23:26:05,654 [INFO] keyword_collector —   [season_scheduled] 1개: ['장마 건강 관리']
+2026-07-08 23:26:05,654 [INFO] keyword_collector —   [claude_ai] 1개: ['미국ETF 첫 매수 실수담 공개']
+2026-07-08 23:26:05,654 [INFO] keyword_collector — 최종 선정 키워드 2개: ['장마 건강 관리', '미국ETF 첫 매수 실수담 공개']
+2026-07-08 23:26:05,654 [INFO] main — 수집된 키워드 2개: ['장마 건강 관리', '미국ETF 첫 매수 실수담 공개']
+2026-07-08 23:26:05,654 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 10일 전)
+2026-07-08 23:26:05,942 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-08 23:26:07,067 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:26:07,068 [INFO] main — 단독 포스트 대상 키워드 1개: ['장마 건강 관리']
+2026-07-08 23:26:07,079 [INFO] main — 
+[1/1] 키워드: '장마 건강 관리'
+2026-07-08 23:26:07,079 [INFO] content_generator — 포스트 생성 중: '장마 건강 관리'
+2026-07-08 23:26:07,080 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-08 23:26:08,069 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:27:47,776 [WARNING] content_generator — 컨텐츠 너무 짧음(3461자, 최소 4000자) — 재시도 1/3
+2026-07-08 23:27:50,776 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-08 23:27:51,543 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:29:12,850 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-07-08 23:29:12,851 [WARNING] content_generator — 컨텐츠 너무 짧음(3214자, 최소 4000자) — 재시도 2/3
+2026-07-08 23:29:15,851 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-08 23:29:16,608 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:31:13,470 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:31:13,471 [WARNING] content_generator — 팩트체크 실패 (게시는 계속 진행): Expecting ',' delimiter: line 1 column 308 (char 307)
+2026-07-08 23:31:13,471 [INFO] content_generator — 섹션별 이미지 검색: ['장마 건강 관리', '장마 건강 매년 장마철마다 년에도 솔직히', '장마 건강 장마철 병원비 만원 제가', '장마 건강 실비보험 청구 저는 진료비']
+2026-07-08 23:31:14,438 [WARNING] image_fetcher — 이미지 없음: '장마 건강 관리'
+2026-07-08 23:31:15,633 [WARNING] image_fetcher — 이미지 없음: '장마 건강 매년 장마철마다 년에도 솔직히'
+2026-07-08 23:31:16,354 [WARNING] image_fetcher — 이미지 없음: '장마 건강 장마철 병원비 만원 제가'
+2026-07-08 23:31:17,133 [WARNING] image_fetcher — 이미지 없음: '장마 건강 실비보험 청구 저는 진료비'
+2026-07-08 23:31:17,133 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-08 23:31:17,134 [INFO] content_generator — 포스트 생성 완료: '장마 건강 관리 소홀했다가 병원비만 40만원 날린 이야기' (4219자, 이미지 0개)
+2026-07-08 23:31:28,377 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:31:28,378 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '장마 건강 관리 소홀했다가 병원비만 40만원 날린 이야기'
+2026-07-08 23:31:28,378 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2는 8개로 충분하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 떨어짐
+2026-07-08 23:31:28,378 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 
+2026-07-08 23:31:28,379 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-08 23:31:28,379 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-08 23:31:28,379 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-08 23:31:28,385 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-08 23:31:28,386 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguwhat1.blogspot.com/2026/06/2026-top-5_0744546263
+2026-07-08 23:31:28,391 [INFO] internal_linker —   [2/5] '실제로' -> https://hoguwhat1.blogspot.com/2026/06/2026_0410105439.html
+2026-07-08 23:31:28,392 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-08 23:31:28,393 [INFO] main —   제목: 장마 건강 관리 소홀했다가 병원비만 40만원 날린 이야기
+2026-07-08 23:31:28,393 [INFO] main —   이미지: 0개 삽입
+2026-07-08 23:31:28,393 [INFO] main —   글자 수: 4219자
+2026-07-08 23:31:39,338 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 23:31:39,339 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — '장마 건강 관리 소홀했다가 병원비만 40만원 날린 이야기'
+2026-07-08 23:31:39,339 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: 
+2026-07-08 23:31:39,339 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 
+2026-07-08 23:31:39,339 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 
+2026-07-08 23:31:39,339 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-08 23:31:39,339 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-08 23:31:39,339 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-08 23:31:39,339 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '장마 건강 관리 소홀했다가 병원비만 40만원 날린 이야기' (점수: 69/100, 권장: review)
+2026-07-08 23:31:39,348 [INFO] dashboard_exporter —   검토 대기 저장: 장마 건강 관리 소홀했다가 병원비만 40만원 날린 이야기 (11370자 HTML)
+2026-07-08 23:31:39,353 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 40개)
+2026-07-08 23:31:39,354 [INFO] main — 
+============================================================
+2026-07-08 23:31:39,354 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-08 23:31:39,354 [INFO] main — ============================================================
+2026-07-08 23:31:39,377 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-08 23:31:39,399 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-08 23:31:39,416 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-08 23:31:39,417 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-08 23:31:39,420 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-08 23:31:39,427 [INFO] post_manager —   포스트 레지스트리: 전체 132개 (게시 92 / 실패 15 / 대기 21)
+2026-07-08 23:31:39,427 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-08 23:31:39,427 [INFO] dashboard_exporter —   포스트: 118개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-08 23:31:39,428 [INFO] main — 대시보드 데이터 업데이트 완료

@@ -1,220 +1,3 @@
-2026-07-07 14:47:04,154 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
-2026-07-07 14:47:04,753 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
-2026-07-07 14:47:04,754 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-07 14:47:05,209 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-07 14:47:05,210 [INFO] keyword_collector — 유사 주제 제외 5개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁', '직장인 월 30만원 ETF 투자 솔직 후기']
-2026-07-07 14:47:05,210 [INFO] keyword_collector —   [fallback] 2개: ['ISA 계좌 3년 직접 써본 결과', '배당주 처음 사기 전 내가 몰랐던 것']
-2026-07-07 14:47:05,210 [INFO] keyword_collector — 최종 선정 키워드 2개: ['ISA 계좌 3년 직접 써본 결과', '배당주 처음 사기 전 내가 몰랐던 것']
-2026-07-07 14:47:05,210 [INFO] main — 수집된 키워드 2개: ['ISA 계좌 3년 직접 써본 결과', '배당주 처음 사기 전 내가 몰랐던 것']
-2026-07-07 14:47:05,211 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 9일 전)
-2026-07-07 14:47:05,413 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
-2026-07-07 14:47:06,866 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-07 14:47:06,867 [INFO] main — 단독 포스트 대상 키워드 1개: ['ISA 계좌 3년 직접 써본 결과']
-2026-07-07 14:47:06,878 [INFO] main — 
-[1/1] 키워드: 'ISA 계좌 3년 직접 써본 결과'
-2026-07-07 14:47:06,878 [INFO] content_generator — 포스트 생성 중: 'ISA 계좌 3년 직접 써본 결과'
-2026-07-07 14:47:06,879 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
-    raw = claude_generate(
-          ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
-    message = client.messages.create(messages=messages, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
-    timeout = self._client._calculate_nonstreaming_timeout(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
-    raise ValueError(
-ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-2026-07-07 14:47:06,879 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-07-07 14:47:09,879 [INFO] content_generator — 포스트 생성 중: 'ISA 계좌 3년 직접 써본 결과'
-2026-07-07 14:47:09,880 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
-    raw = claude_generate(
-          ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
-    message = client.messages.create(messages=messages, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
-    timeout = self._client._calculate_nonstreaming_timeout(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
-    raise ValueError(
-ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-2026-07-07 14:47:09,880 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
-2026-07-07 14:47:09,880 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): 'ISA 계좌 3년 직접 써본 결과'
-2026-07-07 14:47:09,880 [INFO] main — 
-============================================================
-2026-07-07 14:47:09,881 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
-2026-07-07 14:47:09,881 [INFO] main — ============================================================
-2026-07-07 14:47:09,905 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 89개)
-2026-07-07 14:47:09,927 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-07 14:47:09,971 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-07 14:47:09,972 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-07 14:47:09,974 [INFO] dashboard_exporter —   수리 이력: 42건 내보내기 완료
-2026-07-07 14:47:09,981 [INFO] post_manager —   포스트 레지스트리: 전체 126개 (게시 89 / 실패 18 / 대기 15)
-2026-07-07 14:47:09,981 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-07 14:47:09,981 [INFO] dashboard_exporter —   포스트: 122개 / 실행 이력: 89개 / 블로그: 3개
-2026-07-07 14:47:09,982 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-07 23:08:15,582 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-07-07 23:08:15,582 [INFO] main —   - [blog1] HOGU What?
-2026-07-07 23:08:15,582 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-07-07 23:08:15,582 [INFO] main —   - [blog3] 금융NEWS
-2026-07-07 23:08:15,582 [INFO] main — ============================================================
-2026-07-07 23:08:15,582 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-07 23:08:15
-2026-07-07 23:08:15,582 [INFO] main — ============================================================
-2026-07-07 23:08:15,591 [INFO] keyword_collector — 포스팅 이력 코퍼스: 28개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-07 23:08:15,591 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
-2026-07-07 23:08:16,272 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
-2026-07-07 23:08:16,272 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-07 23:08:17,185 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-07 23:08:17,185 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-07 23:08:17,187 [INFO] keyword_collector — 최근 사용 제외 4개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁']
-2026-07-07 23:08:17,187 [INFO] keyword_collector —   [fallback] 2개: ['챗GPT 업무에 실제로 쓰면서 달라진 것', 'AI 이미지 생성 직접 써본 무료 툴 비교']
-2026-07-07 23:08:17,187 [INFO] keyword_collector — 최종 선정 키워드 2개: ['챗GPT 업무에 실제로 쓰면서 달라진 것', 'AI 이미지 생성 직접 써본 무료 툴 비교']
-2026-07-07 23:08:17,187 [INFO] main — 수집된 키워드 2개: ['챗GPT 업무에 실제로 쓰면서 달라진 것', 'AI 이미지 생성 직접 써본 무료 툴 비교']
-2026-07-07 23:08:17,190 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 9일 전)
-2026-07-07 23:08:17,595 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
-2026-07-07 23:08:19,064 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-07 23:08:19,090 [INFO] main — 단독 포스트 대상 키워드 1개: ['챗GPT 업무에 실제로 쓰면서 달라진 것']
-2026-07-07 23:08:19,102 [INFO] main — 
-[1/1] 키워드: '챗GPT 업무에 실제로 쓰면서 달라진 것'
-2026-07-07 23:08:19,102 [INFO] content_generator — 포스트 생성 중: '챗GPT 업무에 실제로 쓰면서 달라진 것'
-2026-07-07 23:08:19,120 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
-    raw = claude_generate(
-          ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
-    message = client.messages.create(messages=messages, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
-    timeout = self._client._calculate_nonstreaming_timeout(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
-    raise ValueError(
-ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-2026-07-07 23:08:19,121 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-07-07 23:08:22,122 [INFO] content_generator — 포스트 생성 중: '챗GPT 업무에 실제로 쓰면서 달라진 것'
-2026-07-07 23:08:22,122 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
-    raw = claude_generate(
-          ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
-    message = client.messages.create(messages=messages, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
-    timeout = self._client._calculate_nonstreaming_timeout(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
-    raise ValueError(
-ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-2026-07-07 23:08:22,123 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
-2026-07-07 23:08:22,123 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '챗GPT 업무에 실제로 쓰면서 달라진 것'
-2026-07-07 23:08:22,123 [INFO] main — 
-============================================================
-2026-07-07 23:08:22,123 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 1개
-2026-07-07 23:08:22,123 [INFO] main — ============================================================
-2026-07-07 23:08:22,149 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 90개)
-2026-07-07 23:08:22,171 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-07 23:08:22,189 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-07 23:08:22,549 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-07 23:08:22,914 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-07 23:08:22,916 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-07 23:08:22,918 [INFO] dashboard_exporter —   수리 이력: 44건 내보내기 완료
-2026-07-07 23:08:22,925 [INFO] post_manager —   포스트 레지스트리: 전체 126개 (게시 89 / 실패 18 / 대기 15)
-2026-07-07 23:08:22,925 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-07 23:08:22,925 [INFO] dashboard_exporter —   포스트: 122개 / 실행 이력: 90개 / 블로그: 3개
-2026-07-07 23:08:22,926 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-07 23:08:22,926 [INFO] main — ============================================================
-2026-07-07 23:08:22,926 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-07 23:08:22
-2026-07-07 23:08:22,926 [INFO] main — ============================================================
-2026-07-07 23:08:22,934 [INFO] keyword_collector — 포스팅 이력 코퍼스: 32개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-07 23:08:22,934 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
-2026-07-07 23:08:23,172 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
-2026-07-07 23:08:23,172 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-07 23:08:23,694 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-07 23:08:23,695 [INFO] keyword_collector — 유사 주제 제외 8개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
-2026-07-07 23:08:23,695 [INFO] keyword_collector —   [fallback] 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-07-07 23:08:23,695 [INFO] keyword_collector — 최종 선정 키워드 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-07-07 23:08:23,695 [INFO] main — 수집된 키워드 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-07-07 23:08:23,696 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 9일 전)
-2026-07-07 23:08:23,971 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
-2026-07-07 23:08:25,034 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-07 23:08:25,035 [INFO] main — 단독 포스트 대상 키워드 1개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집']
-2026-07-07 23:08:25,047 [INFO] main — 
-[1/1] 키워드: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-07-07 23:08:25,047 [INFO] content_generator — 포스트 생성 중: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-07-07 23:08:25,047 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
-    raw = claude_generate(
-          ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
-    message = client.messages.create(messages=messages, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
-    timeout = self._client._calculate_nonstreaming_timeout(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
-    raise ValueError(
-ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-2026-07-07 23:08:25,048 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-07-07 23:08:28,048 [INFO] content_generator — 포스트 생성 중: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-07-07 23:08:28,048 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1394, in generate_post
-    raw = claude_generate(
-          ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 133, in claude_generate
-    message = client.messages.create(messages=messages, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
-    timeout = self._client._calculate_nonstreaming_timeout(
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
-    raise ValueError(
-ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
-2026-07-07 23:08:28,049 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
-2026-07-07 23:08:28,049 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-07-07 23:08:28,049 [INFO] main — 
-============================================================
-2026-07-07 23:08:28,049 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 1개
-2026-07-07 23:08:28,049 [INFO] main — ============================================================
-2026-07-07 23:08:28,074 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 91개)
-2026-07-07 23:08:28,096 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-07 23:08:28,114 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-07 23:08:28,115 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-07 23:08:28,117 [INFO] dashboard_exporter —   수리 이력: 44건 내보내기 완료
-2026-07-07 23:08:28,124 [INFO] post_manager —   포스트 레지스트리: 전체 126개 (게시 89 / 실패 18 / 대기 15)
-2026-07-07 23:08:28,124 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-07 23:08:28,124 [INFO] dashboard_exporter —   포스트: 122개 / 실행 이력: 91개 / 블로그: 3개
-2026-07-07 23:08:28,125 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-07 23:08:28,126 [INFO] main — ============================================================
-2026-07-07 23:08:28,126 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-07 23:08:28
-2026-07-07 23:08:28,126 [INFO] main — ============================================================
-2026-07-07 23:08:28,134 [INFO] keyword_collector — 포스팅 이력 코퍼스: 28개 항목 로드 (blog_id=blog3 중복 방지 기준)
 2026-07-07 23:08:28,134 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
 2026-07-07 23:08:28,162 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
 2026-07-07 23:08:28,162 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
@@ -715,3 +498,244 @@ ValueError: Streaming is required for operations that may take longer than 10 mi
 2026-07-08 08:14:00,471 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-08 08:14:00,471 [INFO] dashboard_exporter —   포스트: 122개 / 실행 이력: 98개 / 블로그: 3개
 2026-07-08 08:14:00,472 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-08 09:23:07,005 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
+2026-07-08 09:23:07,006 [INFO] main —   - [blog1] HOGU What?
+2026-07-08 09:23:07,006 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
+2026-07-08 09:23:07,006 [INFO] main —   - [blog3] 금융NEWS
+2026-07-08 09:23:07,006 [INFO] main — ============================================================
+2026-07-08 09:23:07,006 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-08 09:23:07
+2026-07-08 09:23:07,006 [INFO] main — ============================================================
+2026-07-08 09:23:07,013 [INFO] keyword_collector — 포스팅 이력 코퍼스: 16개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-08 09:23:07,013 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-08 09:23:07,600 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-08 09:23:07,600 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-08 09:23:08,317 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-08 09:23:08,318 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-08 09:23:08,319 [INFO] keyword_collector — 최근 사용 제외 4개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁']
+2026-07-08 09:23:08,319 [INFO] keyword_collector —   [fallback] 2개: ['GLP-1 주사 실제 맞아본 사람 후기', '수면 무호흡증 검사 받아보고 알게 된 것']
+2026-07-08 09:23:08,319 [INFO] keyword_collector — 최종 선정 키워드 2개: ['GLP-1 주사 실제 맞아본 사람 후기', '수면 무호흡증 검사 받아보고 알게 된 것']
+2026-07-08 09:23:08,319 [INFO] main — 수집된 키워드 2개: ['GLP-1 주사 실제 맞아본 사람 후기', '수면 무호흡증 검사 받아보고 알게 된 것']
+2026-07-08 09:23:08,322 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 9일 전)
+2026-07-08 09:23:08,605 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-08 09:23:10,250 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 09:23:10,267 [INFO] main — 단독 포스트 대상 키워드 1개: ['GLP-1 주사 실제 맞아본 사람 후기']
+2026-07-08 09:23:10,276 [INFO] main — 
+[1/1] 키워드: 'GLP-1 주사 실제 맞아본 사람 후기'
+2026-07-08 09:23:10,276 [INFO] content_generator — 포스트 생성 중: 'GLP-1 주사 실제 맞아본 사람 후기'
+2026-07-08 09:23:10,277 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-08 09:23:10,290 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1635, in generate_post
+    raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 67, in _ai_generate
+    return claude_generate(
+           ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 141, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-08 09:23:10,291 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
+2026-07-08 09:23:13,292 [INFO] content_generator — 포스트 생성 중: 'GLP-1 주사 실제 맞아본 사람 후기'
+2026-07-08 09:23:13,292 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-08 09:23:13,292 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1635, in generate_post
+    raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 67, in _ai_generate
+    return claude_generate(
+           ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 141, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-08 09:23:13,293 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
+2026-07-08 09:23:13,293 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): 'GLP-1 주사 실제 맞아본 사람 후기'
+2026-07-08 09:23:13,293 [INFO] main — 
+============================================================
+2026-07-08 09:23:13,293 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 1개
+2026-07-08 09:23:13,293 [INFO] main — ============================================================
+2026-07-08 09:23:13,314 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 99개)
+2026-07-08 09:23:13,332 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-08 09:23:13,347 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-08 09:23:13,682 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-08 09:23:14,004 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-08 09:23:14,005 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-08 09:23:14,007 [INFO] dashboard_exporter —   수리 이력: 47건 내보내기 완료
+2026-07-08 09:23:14,013 [INFO] post_manager —   포스트 레지스트리: 전체 126개 (게시 89 / 실패 18 / 대기 15)
+2026-07-08 09:23:14,013 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-08 09:23:14,013 [INFO] dashboard_exporter —   포스트: 122개 / 실행 이력: 99개 / 블로그: 3개
+2026-07-08 09:23:14,014 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-08 09:23:14,014 [INFO] main — ============================================================
+2026-07-08 09:23:14,014 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-08 09:23:14
+2026-07-08 09:23:14,014 [INFO] main — ============================================================
+2026-07-08 09:23:14,021 [INFO] keyword_collector — 포스팅 이력 코퍼스: 20개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-08 09:23:14,021 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-08 09:23:14,503 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-08 09:23:14,503 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-08 09:23:14,954 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-08 09:23:14,955 [INFO] keyword_collector — 유사 주제 제외 10개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁', '부산 1박2일 혼자 여행 현실 비용 공개']
+2026-07-08 09:23:14,955 [INFO] keyword_collector —   [fallback] 2개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '남해 여행 봄에 가면 좋은 이유와 준비물']
+2026-07-08 09:23:14,955 [INFO] keyword_collector — 최종 선정 키워드 2개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '남해 여행 봄에 가면 좋은 이유와 준비물']
+2026-07-08 09:23:14,955 [INFO] main — 수집된 키워드 2개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '남해 여행 봄에 가면 좋은 이유와 준비물']
+2026-07-08 09:23:14,955 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 9일 전)
+2026-07-08 09:23:15,106 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-08 09:23:16,387 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 09:23:16,387 [INFO] main — 단독 포스트 대상 키워드 1개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
+2026-07-08 09:23:16,398 [INFO] main — 
+[1/1] 키워드: '제주도 여행 현지인처럼 즐기는 방법 솔직 후기'
+2026-07-08 09:23:16,398 [INFO] content_generator — 포스트 생성 중: '제주도 여행 현지인처럼 즐기는 방법 솔직 후기'
+2026-07-08 09:23:16,398 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-08 09:23:16,398 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1635, in generate_post
+    raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 67, in _ai_generate
+    return claude_generate(
+           ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 141, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-08 09:23:16,398 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
+2026-07-08 09:23:19,399 [INFO] content_generator — 포스트 생성 중: '제주도 여행 현지인처럼 즐기는 방법 솔직 후기'
+2026-07-08 09:23:19,399 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-08 09:23:19,399 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1635, in generate_post
+    raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 67, in _ai_generate
+    return claude_generate(
+           ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 141, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-08 09:23:19,399 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
+2026-07-08 09:23:19,400 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '제주도 여행 현지인처럼 즐기는 방법 솔직 후기'
+2026-07-08 09:23:19,400 [INFO] main — 
+============================================================
+2026-07-08 09:23:19,400 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 1개
+2026-07-08 09:23:19,400 [INFO] main — ============================================================
+2026-07-08 09:23:19,420 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-08 09:23:19,438 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-08 09:23:19,452 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-08 09:23:19,453 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-08 09:23:19,455 [INFO] dashboard_exporter —   수리 이력: 47건 내보내기 완료
+2026-07-08 09:23:19,460 [INFO] post_manager —   포스트 레지스트리: 전체 126개 (게시 89 / 실패 18 / 대기 15)
+2026-07-08 09:23:19,460 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-08 09:23:19,460 [INFO] dashboard_exporter —   포스트: 122개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-08 09:23:19,461 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-08 09:23:19,461 [INFO] main — ============================================================
+2026-07-08 09:23:19,461 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-08 09:23:19
+2026-07-08 09:23:19,461 [INFO] main — ============================================================
+2026-07-08 09:23:19,468 [INFO] keyword_collector — 포스팅 이력 코퍼스: 18개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-08 09:23:19,468 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-08 09:23:19,500 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-08 09:23:19,500 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-08 09:23:19,740 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-08 09:23:19,740 [INFO] keyword_collector — 유사 주제 제외 9개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁', '직장인 월 30만원 ETF 투자 솔직 후기']
+2026-07-08 09:23:19,741 [INFO] keyword_collector —   [fallback] 2개: ['코인 투자 1년 후 솔직한 이야기', '종합소득세 처음 신고할 때 가장 헷갈렸던 것']
+2026-07-08 09:23:19,741 [INFO] keyword_collector — 최종 선정 키워드 2개: ['코인 투자 1년 후 솔직한 이야기', '종합소득세 처음 신고할 때 가장 헷갈렸던 것']
+2026-07-08 09:23:19,741 [INFO] main — 수집된 키워드 2개: ['코인 투자 1년 후 솔직한 이야기', '종합소득세 처음 신고할 때 가장 헷갈렸던 것']
+2026-07-08 09:23:19,741 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 9일 전)
+2026-07-08 09:23:19,926 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-08 09:23:22,018 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-08 09:23:22,019 [INFO] main — 단독 포스트 대상 키워드 1개: ['코인 투자 1년 후 솔직한 이야기']
+2026-07-08 09:23:22,030 [INFO] main — 
+[1/1] 키워드: '코인 투자 1년 후 솔직한 이야기'
+2026-07-08 09:23:22,030 [INFO] content_generator — 포스트 생성 중: '코인 투자 1년 후 솔직한 이야기'
+2026-07-08 09:23:22,030 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-08 09:23:22,030 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1635, in generate_post
+    raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 67, in _ai_generate
+    return claude_generate(
+           ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 141, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-08 09:23:22,030 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
+2026-07-08 09:23:25,031 [INFO] content_generator — 포스트 생성 중: '코인 투자 1년 후 솔직한 이야기'
+2026-07-08 09:23:25,031 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-08 09:23:25,031 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+Traceback (most recent call last):
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 1635, in generate_post
+    raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 67, in _ai_generate
+    return claude_generate(
+           ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cli/cli/blog-automation/config.py", line 141, in claude_generate
+    message = client.messages.create(messages=messages, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/resources/messages/messages.py", line 1031, in create
+    timeout = self._client._calculate_nonstreaming_timeout(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.15/x64/lib/python3.11/site-packages/anthropic/_base_client.py", line 775, in _calculate_nonstreaming_timeout
+    raise ValueError(
+ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details
+2026-07-08 09:23:25,032 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
+2026-07-08 09:23:25,032 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '코인 투자 1년 후 솔직한 이야기'
+2026-07-08 09:23:25,032 [INFO] main — 
+============================================================
+2026-07-08 09:23:25,032 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
+2026-07-08 09:23:25,032 [INFO] main — ============================================================
+2026-07-08 09:23:25,053 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-08 09:23:25,071 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
+2026-07-08 09:23:25,115 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-08 09:23:25,116 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-08 09:23:25,118 [INFO] dashboard_exporter —   수리 이력: 47건 내보내기 완료
+2026-07-08 09:23:25,123 [INFO] post_manager —   포스트 레지스트리: 전체 126개 (게시 89 / 실패 18 / 대기 15)
+2026-07-08 09:23:25,123 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-08 09:23:25,123 [INFO] dashboard_exporter —   포스트: 121개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-08 09:23:25,124 [INFO] main — 대시보드 데이터 업데이트 완료

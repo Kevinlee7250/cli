@@ -283,8 +283,22 @@ def run_once(
 
         title = post_data.get("title", "?")
         images = post_data.get("images_inserted", 0)
+        word_count = post_data.get("word_count", 0)
         logger.info(f"  제목: {title}")
         logger.info(f"  이미지: {images}개 삽입")
+        logger.info(f"  글자 수: {word_count}자")
+
+        # 4000자 미달 → pending 저장 (thin content 업로드 방지)
+        if not (dry_run or review) and word_count < 4000:
+            msg = f"글자 수 미달 — pending 저장: '{title}' ({word_count}자 < 4000자)"
+            logger.warning(f"  ⚠️ {msg}")
+            post_data["status"] = "pending"
+            _pid = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
+            save_draft(_pid, post_data)
+            save_pending_posts([post_data], blog_config)
+            completed_posts.append(post_data)
+            success_count += 1
+            continue
 
         if dry_run or review:
             mode_label = "검토 모드" if review else "테스트 모드"

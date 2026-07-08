@@ -84,17 +84,17 @@ def _count_h2(html: str) -> int:
 
 
 def _default_pass() -> dict:
-    """API 오류 시 warn 수준 기본 결과를 반환합니다."""
+    """API 오류 시 warn 수준 기본 결과를 반환합니다. score=65(review)로 업로드를 막습니다."""
     return {
         "pass": True,
-        "score": 75,
-        "recommendation": "upload",
+        "score": 65,
+        "recommendation": "review",
         "checks": {
             k: {"status": "warn", "label": _LABELS_KO[k], "note": "검증 생략 (API 오류)", "icon": "⚠️"}
             for k in _CHECKS
         },
         "issues": [],
-        "warnings": ["AdSense 검증이 API 오류로 생략됐습니다."],
+        "warnings": ["AdSense 검증이 API 오류로 생략됐습니다. 검토 후 수동 업로드 필요합니다."],
     }
 
 

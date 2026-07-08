@@ -175,8 +175,8 @@ def main() -> None:
         new_wc = new_post_data.get("word_count", 0)
         logger.info(f"  새 콘텐츠 생성 완료: {new_wc}자")
 
-        if new_wc < 3000:
-            logger.warning(f"  생성 분량 부족 ({new_wc}자 < 3000자) — 건너뜀")
+        if new_wc < 4000:
+            logger.warning(f"  생성 분량 부족 ({new_wc}자 < 4000자) — 건너뜀")
             history["skipped"].append({"post_id": post_id, "reason": f"too_short_{new_wc}", "at": datetime.now().isoformat()})
             skipped += 1
             processed += 1
@@ -192,6 +192,14 @@ def main() -> None:
         if rec == "reject":
             logger.warning(f"  AdSense 검증 REJECT — 건너뜀")
             history["skipped"].append({"post_id": post_id, "reason": f"adsense_reject_{score}", "at": datetime.now().isoformat()})
+            skipped += 1
+            processed += 1
+            time.sleep(2)
+            continue
+
+        if score < 80:
+            logger.warning(f"  AdSense 점수 미달 ({score}/100 < 80) — 건너뜀")
+            history["skipped"].append({"post_id": post_id, "reason": f"adsense_score_{score}", "at": datetime.now().isoformat()})
             skipped += 1
             processed += 1
             time.sleep(2)

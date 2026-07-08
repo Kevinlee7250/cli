@@ -5783,7 +5783,7 @@ const _API_KEYS = [
     keys: [
       { id: 'oai_key',   label: 'OPENAI_API_KEY',  hint: 'sk-...',       lsKey: OPENAI_KEY_LS,      secret: 'OPENAI_API_KEY',  scope: 'GPT 글 작성 AI — AI_PROVIDER=openai 설정 시 사용', testFn: 'apiKeyTestOpenAI' },
       { id: 'oai_model', label: 'OPENAI_MODEL',     hint: 'gpt-4o',       lsKey: 'openai_model_local', secret: 'OPENAI_MODEL',   scope: '기본값: gpt-4o (gpt-4o-mini, gpt-4-turbo 등)' },
-      { id: 'ai_provider', label: 'AI_PROVIDER',    hint: 'claude 또는 openai', lsKey: 'ai_provider_local', secret: 'AI_PROVIDER', scope: '전역 AI 제공자 선택 — 블로그별 ai_provider로 재정의 가능' },
+      { id: 'ai_provider', label: 'AI_PROVIDER',    hint: 'claude 또는 openai', lsKey: 'ai_provider_local', secret: 'AI_PROVIDER', scope: '전역 AI 제공자 선택 — 블로그별 ai_provider로 재정의 가능', toggle: ['claude', 'openai'] },
     ]
   },
   {
@@ -5819,6 +5819,39 @@ function renderApiKeyManager() {
   wrap.innerHTML = _API_KEYS.map(group => {
     const rows = group.keys.map(k => {
       const val = k.lsKey ? (localStorage.getItem(k.lsKey) || '') : ''
+
+      // ── 토글 스위치 타입 ──────────────────────────────────────────────────
+      if (k.toggle) {
+        const current = val || k.toggle[0]
+        const secretBadge = `<span style="font-size:10px;background:rgba(124,106,247,.15);color:var(--accent);border:1px solid rgba(124,106,247,.3);border-radius:4px;padding:1px 5px;margin-left:4px">Secret</span>`
+        const lsBadge = `<span style="font-size:10px;background:rgba(52,211,153,.1);color:var(--green);border:1px solid rgba(52,211,153,.25);border-radius:4px;padding:1px 5px;margin-left:4px">Local</span>`
+        const icons = { claude: '🤖', openai: '⚡' }
+        const pillBtns = k.toggle.map(opt => {
+          const active = current === opt
+          return `<button onclick="aiProviderSet('${opt}')"
+            style="padding:6px 18px;border-radius:20px;font-size:12px;font-weight:${active?'700':'500'};
+            cursor:pointer;transition:all .18s;
+            background:${active ? (opt==='claude' ? 'rgba(124,106,247,.35)' : 'rgba(52,211,153,.25)') : 'transparent'};
+            border:1.5px solid ${active ? (opt==='claude' ? 'rgba(124,106,247,.7)' : 'rgba(52,211,153,.6)') : 'var(--border)'};
+            color:${active ? (opt==='claude' ? 'var(--accent)' : 'var(--green)') : 'var(--muted)'}"
+          >${icons[opt]||''} ${opt.charAt(0).toUpperCase()+opt.slice(1)}</button>`
+        }).join('')
+        const saveBtn = hasPAT
+          ? `<button onclick="aiProviderSaveSecret()" style="padding:5px 12px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.3);border-radius:6px;color:var(--accent);font-size:11px;cursor:pointer">☁️ GitHub에 저장</button>`
+          : ''
+        return `<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--border);flex-wrap:wrap" id="apirow-${k.id}">
+          <div style="flex:0 0 200px;min-width:140px">
+            <div style="font-size:12px;font-weight:600;font-family:monospace">${k.label}${secretBadge}${lsBadge}</div>
+            ${k.scope ? `<div style="font-size:10px;color:var(--muted);margin-top:2px">${k.scope}</div>` : ''}
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;flex:1">
+            <div style="display:flex;gap:4px;background:var(--bg3);border:1px solid var(--border);border-radius:22px;padding:3px">${pillBtns}</div>
+            ${saveBtn}
+          </div>
+        </div>`
+      }
+
+      // ── 일반 행 ───────────────────────────────────────────────────────────
       const isSet = !!val
       const statusHtml = isSet
         ? `<span style="color:var(--green);font-size:12px;font-weight:600">✅ 설정됨</span><span style="font-size:11px;color:var(--muted);margin-left:6px;font-family:monospace">${_apiKeyMask(val)}</span>`
@@ -5857,6 +5890,39 @@ function renderApiKeyManager() {
       ${rows}
     </div>`
   }).join('')
+}
+
+function aiProviderSet(value) {
+  localStorage.setItem('ai_provider_local', value)
+  renderApiKeyManager()
+  showToast(`AI 제공자 → ${value === 'claude' ? '🤖 Claude' : '⚡ OpenAI'}`, 'success')
+}
+
+async function aiProviderSaveSecret() {
+  const value = localStorage.getItem('ai_provider_local') || 'claude'
+  const pat = getPAT()
+  if (!pat) { showToast('GitHub PAT가 필요합니다 — 실행 제어 탭에서 PAT를 먼저 설정하세요', 'error'); return }
+  try {
+    const pkResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/secrets/public-key`, {
+      headers: { Authorization: `Bearer ${pat}`, Accept: 'application/vnd.github.v3+json' }
+    })
+    if (!pkResp.ok) throw new Error(`공개키 조회 실패 (${pkResp.status})`)
+    const { key: pubKey, key_id } = await pkResp.json()
+    await _loadNacl()
+    const encryptedB64 = _sealBox(value, pubKey)
+    const upResp = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/secrets/AI_PROVIDER`, {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${pat}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ encrypted_value: encryptedB64, key_id })
+    })
+    if (upResp.ok || upResp.status === 204) {
+      showToast(`✅ AI_PROVIDER Secret → ${value} 저장 완료`, 'success')
+    } else {
+      throw new Error(`Secret 업데이트 실패 (${upResp.status})`)
+    }
+  } catch (e) {
+    showToast('저장 오류: ' + e.message, 'error')
+  }
 }
 
 function apiKeyRefreshStatus() {

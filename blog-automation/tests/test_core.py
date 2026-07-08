@@ -35,16 +35,37 @@ class _FakeMessage:
         self.stop_reason = stop_reason
 
 
+class _FakeStream:
+    """client.messages.stream() 컨텍스트 매니저 스텁."""
+    def __init__(self, message):
+        self._message = message
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        pass
+
+    def get_final_message(self):
+        return self._message
+
+
+class _FakeMessages:
+    """client.messages 네임스페이스 — stream()과 calls 모두 지원."""
+    def __init__(self, owner):
+        self._owner = owner
+
+    def stream(self, **kwargs):
+        self._owner.calls.append(kwargs)
+        return _FakeStream(self._owner._responses.pop(0))
+
+
 class _FakeClient:
-    """messages.create 호출마다 준비된 응답을 순서대로 반환."""
+    """messages.stream 호출마다 준비된 응답을 순서대로 반환."""
     def __init__(self, responses):
         self._responses = list(responses)
         self.calls = []
-        self.messages = self
-
-    def create(self, **kwargs):
-        self.calls.append(kwargs)
-        return self._responses.pop(0)
+        self.messages = _FakeMessages(self)
 
 
 def test_claude_generate_continues_truncated_response():

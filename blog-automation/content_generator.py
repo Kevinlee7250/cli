@@ -151,7 +151,7 @@ def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = N
         disclaimer = "이 글은 개인적인 경험과 정보 공유 목적이며, 특정 상품의 매수·매도 추천이 아닙니다. 투자 판단과 책임은 본인에게 있습니다."
     elif any(w in kw_lower for w in _HEALTH_KW):
         disclaimer = "이 글은 일반적인 정보 공유 목적이며, 진단이나 치료를 대신하지 않습니다. 증상이 있거나 건강 수치가 걱정된다면 의료 전문가와 상담하시기 바랍니다."
-    elif any(w in kw_lower for w in {"법", "계약", "소송", "판결", "권리", "임대차", "약관", "분쟁"}):
+    elif any(w in kw_lower for w in {"법률", "민법", "형법", "법원", "계약", "소송", "판결", "권리", "임대차", "약관", "분쟁"}):
         disclaimer = "이 글은 일반적인 정보 제공 목적이며, 법률 자문이 아닙니다. 중요한 계약이나 분쟁은 전문가 상담을 권장합니다."
     else:
         disclaimer = "이 글은 개인적인 경험과 정보 정리를 바탕으로 작성되었습니다. 상황에 따라 결과가 다를 수 있으니 본인에게 맞게 참고하시기 바랍니다."
@@ -1342,6 +1342,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             if post_data is None:
                 if attempt < 2:
                     logger.warning(f"JSON 파싱 실패 — 재시도 {attempt + 1}/3")
+                    prev_wc = -1  # 파싱 실패 센티널
                     time.sleep(2)
                     continue
                 return None
@@ -1530,16 +1531,18 @@ def _fact_check_content(post_data: dict, keyword: str) -> None:
 
 def _retry_escalation_note(attempt: int, prev_wc: int) -> str:
     """재시도 시 분량 부족 피드백 메시지를 반환합니다."""
-    if attempt == 0 or prev_wc == 0:
+    if attempt == 0 or prev_wc <= 0:
         return ""
+    needed = max(0, 4000 - prev_wc)
+    needed_str = f"지금 {needed}자가 더 필요합니다 — 각 섹션을 더 길고 구체적으로 작성하세요\n" if needed > 0 else "분량은 충분하지만 구조를 개선하세요\n"
     return (
         f"\n\n⚠️⚠️⚠️ [재시도 {attempt}/2] 이전 응답이 {prev_wc}자로 너무 짧았습니다.\n"
         "이번에는 반드시 다음을 지키세요:\n"
         f"  - H2 섹션 7개 이상, 각 섹션 최소 500자\n"
         f"  - 도입부 최소 300자 (경험담으로 풍부하게)\n"
         f"  - FAQ 각 답변 150자 이상\n"
-        f"  - 전체 content 필드 한국어 텍스트 기준 4500자 이상\n"
-        f"  - 지금 {4500 - prev_wc}자가 더 필요합니다 — 각 섹션을 더 길고 구체적으로 작성하세요\n"
+        f"  - 전체 content 필드 한국어 텍스트 기준 4000자 이상\n"
+        f"  - {needed_str}"
         "⚠️⚠️⚠️\n"
     )
 
@@ -1599,6 +1602,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             if post_data is None:
                 if attempt < 2:
                     logger.warning(f"JSON 파싱 실패 — 재시도 {attempt + 1}/3")
+                    prev_wc = -1  # 파싱 실패 센티널 — escalation note 생략 구분용
                     time.sleep(2)
                     continue
                 return None

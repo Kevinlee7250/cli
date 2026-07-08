@@ -61,11 +61,18 @@ def save_registry(registry: list[dict]) -> None:
     # 최신순 정렬 후 MAX_REGISTRY 개 유지
     registry.sort(key=lambda p: p.get("createdAt", ""), reverse=True)
     registry = registry[:MAX_REGISTRY]
+    tmp_path = REGISTRY_FILE + ".tmp"
     try:
-        with open(REGISTRY_FILE, "w", encoding="utf-8") as f:
+        with open(tmp_path, "w", encoding="utf-8") as f:
             json.dump(registry, f, ensure_ascii=False, indent=2)
+        os.replace(tmp_path, REGISTRY_FILE)  # 원자적 교체 — 중간 크래시 시 기존 파일 보존
     except OSError as e:
         logger.error(f"레지스트리 저장 실패: {e}")
+        if os.path.exists(tmp_path):
+            try:
+                os.remove(tmp_path)
+            except OSError:
+                pass
 
 
 # ─── 포스트 ID 생성 ──────────────────────────────────────────────────────────

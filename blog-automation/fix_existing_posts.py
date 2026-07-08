@@ -35,7 +35,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger("fix_posts")
 
-from config import get_blog_configs
+from config import get_blog_configs, ADSENSE_MIN_SCORE
 from content_generator import generate_post
 from blogger_uploader import get_post_id_by_url, update_post
 from adsense_validator import validate_adsense
@@ -194,14 +194,16 @@ def main() -> None:
             history["skipped"].append({"post_id": post_id, "reason": f"adsense_reject_{score}", "at": datetime.now().isoformat()})
             skipped += 1
             processed += 1
+            _save_fix_history(history)
             time.sleep(2)
             continue
 
-        if score < 80:
-            logger.warning(f"  AdSense 점수 미달 ({score}/100 < 80) — 건너뜀")
+        if rec == "review" or score < ADSENSE_MIN_SCORE:
+            logger.warning(f"  AdSense 점수 미달 ({score}/100 < {ADSENSE_MIN_SCORE}) — 건너뜀")
             history["skipped"].append({"post_id": post_id, "reason": f"adsense_score_{score}", "at": datetime.now().isoformat()})
             skipped += 1
             processed += 1
+            _save_fix_history(history)
             time.sleep(2)
             continue
 

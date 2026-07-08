@@ -510,6 +510,17 @@ def run_series(
             save_series(series_plan)
             continue
 
+        # 4000자 미달 → pending 저장 (thin content 업로드 방지)
+        series_wc = post_data.get("word_count", 0)
+        if series_wc < 4000:
+            logger.warning(f"  ⚠️ [편 {ep_num}] 글자 수 미달 ({series_wc}자 < 4000자) — pending 저장")
+            post_data["status"] = "pending"
+            pending_list.append(post_data)
+            ep["status"] = "pending_review"
+            generated_posts.append(post_data)
+            save_series(series_plan)
+            continue
+
         # AdSense 정책 검증
         if ADSENSE_VALIDATION:
             validation = validate_adsense(post_data)

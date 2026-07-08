@@ -650,7 +650,11 @@ def update_post(blogger_post_id: str, post_data: dict, blog_config: dict | None 
         return None
 
     if resp.status_code == 200:
-        result = resp.json()
+        try:
+            result = resp.json()
+        except Exception as e:
+            logger.error(f"update_post 응답 파싱 오류: {e} — body: {resp.text[:200]}")
+            return None
         logger.info(f"포스트 업데이트 성공: {result.get('url', blogger_post_id)}")
         return result
 

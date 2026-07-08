@@ -853,16 +853,20 @@ def get_trending_keywords(
     if rejected_similar:
         logger.info(f"유사 주제 제외 {len(rejected_similar)}개: {rejected_similar[:5]}")
 
-    # 그래도 부족하면 유사도 기준을 낮춰서 재시도
+    # 그래도 부족하면 유사도 기준을 낮춰서 재시도 (유사도 검사는 완화된 임계값으로 재실행)
     result_set = set(result)
     if len(result) < count:
         logger.warning(f"선정 키워드 부족 ({len(result)}/{count}) — 유사도 기준 완화하여 재시도")
+        relaxed_corpus = list(session_corpus)
         for kw in candidates:
             kw = kw.strip()
             if not kw or kw in result_set or kw in active_used_set:
                 continue
+            if _is_too_similar(kw, relaxed_corpus, threshold=0.6):  # 완화된 기준 0.6 (기본 0.5보다 높음)
+                continue
             result.append(kw)
             result_set.add(kw)
+            relaxed_corpus.append(kw)
             if len(result) >= count:
                 break
 

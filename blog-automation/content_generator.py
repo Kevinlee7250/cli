@@ -137,7 +137,172 @@ def _build_blog_topic_hint(blog_config: dict | None) -> str:
     return ""
 
 
+def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
+    """blog1 (HOGU What?) 전용 프롬프트 — 생활 실험형 정보 블로그, AdSense 최적화"""
+    from datetime import datetime
+    now = datetime.now()
+    y = now.year
+    date_str = now.strftime("%Y년 %m월 %d일")
+    article_type = _detect_article_type(keyword)
+    blog_topic_hint = _build_blog_topic_hint(blog_config)
+
+    kw_lower = keyword.lower()
+    if any(w in kw_lower for w in _FINANCE_KW):
+        disclaimer = "이 글은 개인적인 경험과 정보 공유 목적이며, 특정 상품의 매수·매도 추천이 아닙니다. 투자 판단과 책임은 본인에게 있습니다."
+    elif any(w in kw_lower for w in _HEALTH_KW):
+        disclaimer = "이 글은 일반적인 정보 공유 목적이며, 진단이나 치료를 대신하지 않습니다. 증상이 있거나 건강 수치가 걱정된다면 의료 전문가와 상담하시기 바랍니다."
+    elif any(w in kw_lower for w in {"법", "계약", "소송", "판결", "권리", "임대차", "약관", "분쟁"}):
+        disclaimer = "이 글은 일반적인 정보 제공 목적이며, 법률 자문이 아닙니다. 중요한 계약이나 분쟁은 전문가 상담을 권장합니다."
+    else:
+        disclaimer = "이 글은 개인적인 경험과 정보 정리를 바탕으로 작성되었습니다. 상황에 따라 결과가 다를 수 있으니 본인에게 맞게 참고하시기 바랍니다."
+
+    return f"""당신은 구글 애드센스 승인 기준을 잘 이해하는 전문 블로그 작가이자 SEO 콘텐츠 에디터입니다.
+
+아래 조건에 맞춰 구글 애드센스 승인 가능성을 높일 수 있는 고품질 블로그 글을 작성해주세요.
+
+【블로그 기본 방향】
+- 블로그명: HOGU What? (직장인과 일반인을 위한 생활 실험형 정보 블로그)
+- 주요 카테고리: 재테크 / AI 활용 / 건강관리 / 여행·생활후기 / 생활정보
+- 글쓴이: 40~50대 직장인, 직접 경험하고 공부한 것을 정리해 올리는 블로거
+- 글의 톤: 친근하지만 신뢰감 있게, 과장 없이, 중년 남성 블로거가 직접 경험을 정리해주는 느낌
+
+【현재 날짜】 {date_str}
+【키워드】 {keyword}
+【아티클 유형】 {article_type}{blog_topic_hint}
+
+━━━ 글의 핵심 원칙 ━━━
+
+1. 검색엔진만을 위한 글이 아니라 실제 독자에게 도움이 되는 글
+2. 단순 정보 요약이 아니라 경험, 비교, 체크리스트, 실수 사례, 실제 활용 팁 포함
+3. 과장된 표현, 낚시성 제목, 근거 없는 수익·건강·효과 보장 절대 금지
+4. 동일한 문장 반복 금지, 키워드 억지 반복 금지
+5. AI가 대량 생성한 것처럼 보이지 않도록 자연스럽고 사람다운 문체
+6. 광고 문구, 광고 영역, 배너 자리, 클릭 유도 문구 절대 넣지 않기
+7. 독자가 읽고 바로 실행할 수 있도록 구체적인 방법 제공
+
+━━━ 절대 사용하지 말아야 할 표현 ━━━
+
+✗ "알아보겠습니다" / "살펴보겠습니다" / "정리해드리겠습니다" / "소개해드리겠습니다"
+✗ "다음과 같습니다" / "아래와 같이" / "해당 " (관공서 문체)
+✗ "이처럼" / "정리하자면" / "결론적으로" / "이를 통해 알 수 있듯이"
+✗ "중요한 것은 바로" / "앞서 언급했듯이" / "다시 한번 강조하지만"
+✗ "또한" / "더불어" / "아울러" (합산 3회 초과 금지)
+✗ "충격", "무조건", "100%", "완벽 보장", "누구나 월 얼마"
+✗ "광고 영역", "여기에 광고 삽입", "배너 클릭", "수익 보장", "확실히 돈 번다"
+✗ 출처 없는 통계, 타 블로그 문장 복사, 의미 없는 키워드 반복
+
+━━━ 문체 조건 ━━━
+
+• 문장은 너무 길지 않게 (30자 이내 위주)
+• 딱딱한 백과사전식 문체 금지
+• "~입니다" 중심의 신뢰감 있는 문체
+• 지나친 감탄사나 홍보성 문구 금지
+• 같은 표현 반복 금지
+• 소제목, 표, 목록을 적절히 사용
+• 이모지는 💡(팁 1~2개), ⚠️(주의 1~2개)만. H2 제목 이모지 금지
+
+━━━ 제목 조건 ━━━
+
+• 과장형 제목 금지: "충격", "무조건", "100%", "완벽 보장", "누구나 월 얼마" 금지
+• {y}년 포함 | 40자 이내
+• 독자가 얻을 수 있는 이익이 분명하게 보이도록
+• 예: "직접 해봤는데요", "솔직 후기", "저는 이렇게 했어요"
+
+━━━ 본문 구조 (반드시 이 순서와 형식으로 작성) ━━━
+
+⚠️ 분량: 최소 4000자 이상, 목표 4500자 수준 (4000자 미만은 AdSense thin content로 거부됨)
+⚠️ 각 H2 섹션마다 최소 500자 이상 작성 — 단락(p 태그) 3개 이상, 구체적 사례·수치·경험 포함
+
+도입부 (p 태그, 300자 이상):
+독자가 왜 이 글을 읽어야 하는지 설명. 개인적인 문제의식이나 실제 상황 자연스럽게 제시.
+"요즘 많은 사람들이…" 같은 흔한 문장으로 시작하지 말 것.
+
+핵심 요약 박스 (도입부 바로 아래):
+<div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>핵심 포인트:</strong> [이 글의 가장 실용적인 핵심을 1~2문장으로]</div>
+
+H2: 이 주제가 중요한 이유 (500자 이상)
+- 독자가 실제로 겪는 문제를 설명
+- 단순 정의보다 현실적인 상황 중심으로 작성
+
+H2: 핵심 개념 쉽게 이해하기 (500자 이상)
+- 초보자도 이해할 수 있게 설명
+- 어려운 용어는 쉽게 풀어서 설명
+- 필요한 경우 표로 정리
+
+H2: 실제로 확인해야 할 체크리스트 (500자 이상)
+- 독자가 바로 점검할 수 있는 항목 5~7개 제공
+- 각 항목마다 왜 중요한지 설명
+
+H2: 직접 해보거나 비교해본 관점 (500자 이상)
+- 개인 경험처럼 구체적으로 작성
+- 비용, 시간, 장단점, 시행착오, 주의점 포함
+- 경험 정보 부족 시 "실제 적용 시 확인할 부분"으로 정리
+
+H2: 초보자가 자주 하는 실수 (500자 이상)
+- 최소 4가지 이상
+- 실수를 피하는 방법까지 함께 제시
+
+H2: 상황별 추천 방법 (500자 이상)
+- 초보자 / 시간이 부족한 사람 / 비용을 아끼고 싶은 사람 / 장기적으로 관리하려는 사람 등으로 구분해 제안
+
+H2: 마무리 (300자 이상)
+- 글 전체 요약
+- 독자가 오늘 바로 할 수 있는 첫 행동 1~3개 제시
+- 과도한 수익, 치료, 성공 보장 표현 금지
+
+같은 블로그 내 관련 글 연결 (마무리 안 또는 바로 아래에 자연스럽게):
+같은 블로그 안에서 연결하면 좋은 관련 글 주제 3개를 자연스럽게 언급하세요.
+예: "ETF 투자 입문 글을 따로 정리해뒀으니 참고하시면 좋을 것 같습니다."
+형식: <a href="#">관련 글 제목</a> (href는 # 그대로)
+
+글 하단 안내 문구 (content 맨 마지막에 포함):
+<p style="background:#f8fafc;border-left:4px solid #94a3b8;padding:12px 18px;margin:2em 0 0;border-radius:0 8px 8px 0;color:#64748b;font-size:0.9em;line-height:1.7;">{disclaimer}</p>
+
+━━━ FAQ (자주 묻는 질문) ━━━
+실제 검색자가 궁금해할 질문 3~5개. 답변은 짧고 명확하게. 근거 없는 단정 금지.
+<h2>자주 묻는 질문</h2>
+<h3>Q. 질문</h3>
+<p>답변</p>
+(3~5쌍)
+
+━━━ Google AdSense 정책 준수 ━━━
+① 원본성 — 독창적 경험·인사이트 필수. 인터넷에 흔한 정보 나열 금지
+② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치, 낚시성 제목 금지
+③ E-E-A-T — 1인칭 경험, 구체적 수치·날짜 포함, 출처 최소 2개, 균형 잡힌 시각
+④ 유해 금지 — 성인/폭력/혐오/불법 절대 금지. 투자·의료는 면책 표현 필수
+⑤ 분량 4000자 이상 필수 — 미달 시 자동 거부
+
+━━━ 출처 사용 원칙 ━━━
+• 건강, 금융, 법률, 정책, 세금 관련 내용은 공식기관 또는 신뢰 가능한 자료 바탕
+• 출처를 모르면 "확인 필요", "상황에 따라 다를 수 있음"으로 표현
+• 실존 URL만 사용 (2~6개)
+
+━━━ SEO ━━━
+키워드 10~14회 | LSI 키워드 | 라벨 10개 | meta_description 120~160자
+
+JSON만 응답 (마크다운 없이):
+{{
+  "title": "...",
+  "content": "<완전한 HTML>",
+  "labels": ["태그1","태그2","태그3","태그4","태그5","태그6","태그7","태그8","태그9","태그10"],
+  "meta_description": "...",
+  "faq": [
+    {{"q": "질문1", "a": "답변1"}},
+    {{"q": "질문2", "a": "답변2"}},
+    {{"q": "질문3", "a": "답변3"}}
+  ],
+  "sources": [
+    {{"title": "출처명1", "url": "https://실제URL"}},
+    {{"title": "출처명2", "url": "https://실제URL"}}
+  ]
+}}"""
+
+
 def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
+    # blog1 (HOGU What?) 전용 프롬프트
+    if blog_config and blog_config.get("id") == "blog1":
+        return _build_blog1_prompt(keyword, traffic, blog_config)
+
     from datetime import datetime
     now = datetime.now()
     y = now.year
@@ -1130,22 +1295,34 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
     total = series_context.get("total_episodes", "?")
     logger.info(f"시리즈 포스트 생성: '{keyword}' ({episode}/{total}편)")
     prompt = _build_series_prompt(keyword, traffic, series_context, blog_config)
+    is_blog1 = blog_config and blog_config.get("id") == "blog1"
 
     prev_wc = 0
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
             _now = _dt.now()
-            _sys = (
-                f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
-                "당신은 직접 경험을 바탕으로 솔직하게 글을 쓰는 30대 직장인 블로거입니다. "
-                "AI가 쓴 것처럼 보이지 않게, 사람 냄새 나는 자연스러운 한국어 블로그 글을 씁니다. "
-                "JSON만 응답하세요."
-                if BLOG_LANGUAGE == "ko" else
-                f"Current date: {_now.strftime('%B %d, %Y')}. "
-                "You are a personal blogger who writes from direct experience. "
-                "Write naturally, like a real person — not an AI report. JSON only."
-            )
+            if is_blog1:
+                _sys = (
+                    f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
+                    "당신은 40~50대 직장인 블로거입니다. 직접 경험하고 공부한 것들을 솔직하게 정리해 올립니다. "
+                    "구글 애드센스 정책을 완전히 준수하며, AI가 쓴 것처럼 보이지 않는 자연스러운 한국어 문체로 작성합니다. "
+                    "독자에게 실질적인 도움이 되는 정보를 제공하는 것이 최우선입니다. "
+                    "JSON만 응답하세요."
+                )
+            elif BLOG_LANGUAGE == "ko":
+                _sys = (
+                    f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
+                    "당신은 직접 경험을 바탕으로 솔직하게 글을 쓰는 30대 직장인 블로거입니다. "
+                    "AI가 쓴 것처럼 보이지 않게, 사람 냄새 나는 자연스러운 한국어 블로그 글을 씁니다. "
+                    "JSON만 응답하세요."
+                )
+            else:
+                _sys = (
+                    f"Current date: {_now.strftime('%B %d, %Y')}. "
+                    "You are a personal blogger who writes from direct experience. "
+                    "Write naturally, like a real person — not an AI report. JSON only."
+                )
             escalation = _retry_escalation_note(attempt, prev_wc)
             raw = claude_generate(
                 _get_client(),
@@ -1372,24 +1549,36 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
     logger.info(f"포스트 생성 중: '{keyword}'")
     prompt = _build_prompt(keyword, traffic, blog_config)
 
+    is_blog1 = blog_config and blog_config.get("id") == "blog1"
     prev_wc = 0
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
             _now = _dt.now()
-            _sys = (
-                f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
-                "당신은 직접 경험을 바탕으로 솔직하게 글을 쓰는 30대 직장인 블로거입니다. "
-                "AI가 쓴 것처럼 보이지 않게, 사람 냄새 나는 자연스러운 한국어 블로그 글을 씁니다. "
-                "지식 학습 시점 이후의 사건은 '최근 동향에 따르면' 등으로 처리하세요. "
-                "JSON만 응답하세요."
-                if BLOG_LANGUAGE == "ko" else
-                f"Current date: {_now.strftime('%B %d, %Y')}. "
-                "You are a personal blogger who writes from direct experience. "
-                "Write naturally, like a real person — not an AI report. "
-                "For events after your knowledge cutoff, use 'according to recent trends'. "
-                "JSON only."
-            )
+            if is_blog1:
+                _sys = (
+                    f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
+                    "당신은 40~50대 직장인 블로거입니다. 직접 경험하고 공부한 것들을 솔직하게 정리해 올립니다. "
+                    "구글 애드센스 정책을 완전히 준수하며, AI가 쓴 것처럼 보이지 않는 자연스러운 한국어 문체로 작성합니다. "
+                    "독자에게 실질적인 도움이 되는 정보를 제공하는 것이 최우선입니다. "
+                    "JSON만 응답하세요."
+                )
+            elif BLOG_LANGUAGE == "ko":
+                _sys = (
+                    f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
+                    "당신은 직접 경험을 바탕으로 솔직하게 글을 쓰는 30대 직장인 블로거입니다. "
+                    "AI가 쓴 것처럼 보이지 않게, 사람 냄새 나는 자연스러운 한국어 블로그 글을 씁니다. "
+                    "지식 학습 시점 이후의 사건은 '최근 동향에 따르면' 등으로 처리하세요. "
+                    "JSON만 응답하세요."
+                )
+            else:
+                _sys = (
+                    f"Current date: {_now.strftime('%B %d, %Y')}. "
+                    "You are a personal blogger who writes from direct experience. "
+                    "Write naturally, like a real person — not an AI report. "
+                    "For events after your knowledge cutoff, use 'according to recent trends'. "
+                    "JSON only."
+                )
             escalation = _retry_escalation_note(attempt, prev_wc)
             raw = claude_generate(
                 _get_client(),

@@ -136,15 +136,25 @@ def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
 
     이어쓰기 후에도 잘려 있으면 빈 문자열을 반환해 호출부의 재시도
     루프가 처음부터 다시 생성하도록 합니다 (잘린 글 게시 방지).
+
+    streaming 사용 이유: claude-sonnet-5 + adaptive thinking 조합은 응답에
+    10분 이상 걸릴 수 있어 Anthropic SDK가 non-streaming 호출을 거부합니다.
+    stream.get_final_message()는 Message 객체를 그대로 반환하므로 기존 로직과
+    완전히 호환됩니다.
     """
+    import logging as _logging
+    _log = _logging.getLogger(__name__)
+
     messages = list(kwargs.pop("messages"))
-    message = client.messages.create(messages=messages, **kwargs)
+
+    with client.messages.stream(messages=messages, **kwargs) as stream:
+        message = stream.get_final_message()
     parts = [claude_text(message)]
+
     for _ in range(max_continues):
         if getattr(message, "stop_reason", "") != "max_tokens":
             break
-        import logging
-        logging.getLogger(__name__).warning("응답이 max_tokens로 잘림 — 이어쓰기 요청")
+        _log.warning("응답이 max_tokens로 잘림 — 이어쓰기 요청")
         messages = messages + [
             {"role": "assistant", "content": message.content},
             {"role": "user", "content": (
@@ -152,8 +162,10 @@ def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
                 "이미 출력한 내용을 반복하거나 서두를 붙이지 말고, 잘린 문자 바로 다음부터 출력하세요."
             )},
         ]
-        message = client.messages.create(messages=messages, **kwargs)
+        with client.messages.stream(messages=messages, **kwargs) as stream:
+            message = stream.get_final_message()
         parts.append(claude_text(message))
+
     if getattr(message, "stop_reason", "") == "max_tokens":
         return ""
     return "".join(parts)

@@ -1,5 +1,25 @@
 [
   {
+    "timestamp": "2026-07-09T07:12:58.953250",
+    "tracebacks_found": 1,
+    "critical_errors": 0,
+    "critical_samples": [],
+    "repairs": [
+      {
+        "error": "ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details",
+        "file": "content_generator.py",
+        "line": "1635",
+        "timestamp": "2026-07-09T07:12:58.089806",
+        "dry_run": false,
+        "result": "error",
+        "detail": "Claude API 오류"
+      }
+    ],
+    "auto_fixed": 0,
+    "manual_required": 0,
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-07-09T06:12:14.464543",
     "tracebacks_found": 1,
     "critical_errors": 0,

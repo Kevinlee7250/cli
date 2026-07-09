@@ -450,6 +450,15 @@ def run_once(
             except Exception as _se:
                 logger.warning(f"  ⚠️ 소셜 콘텐츠 생성 실패 (무시): {_se}")
 
+            # ── ⑦ 씨앗 댓글 (완전 non-blocking — 업로드 성공에 영향 없음) ────────────
+            try:
+                from comment_manager import seed_new_post as _seed_post
+                _blogger_post_id = result.get("id", "")
+                post_data["_blogger_post_id"] = _blogger_post_id
+                _seed_post(post_data, blog_config or {}, blogger_post_id=_blogger_post_id)
+            except Exception as _cm_e:
+                logger.debug(f"  씨앗 댓글 건너뜀 (무시): {_cm_e}")
+
             completed_posts.append(post_data)
             success_count += 1
             blogger_count += 1

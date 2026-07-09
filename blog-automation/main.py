@@ -343,22 +343,61 @@ def run_once(
                 error_messages.append(msg)
                 continue
 
-            # review(65-79) 또는 ADSENSE_MIN_SCORE(80) 미달 → pending 저장, 업로드 건너뜀
+            # review(65-79) 또는 ADSENSE_MIN_SCORE(80) 미달 → 자동 수정 1회 시도 후 재검증
             if validation["recommendation"] == "review" or validation["score"] < ADSENSE_MIN_SCORE:
-                msg = (
-                    f"AdSense 기준 미달 — pending 저장: '{title}' "
-                    f"(점수: {validation['score']}/100, 권장: {validation['recommendation']})"
+                logger.warning(
+                    f"  ⚠️ AdSense 기준 미달 (점수: {validation['score']}/100, "
+                    f"권장: {validation['recommendation']}) — 자동 수정 시도"
                 )
-                logger.warning(f"  ⚠️ {msg}")
                 for issue in validation.get("issues", []):
-                    logger.warning(f"     🟡 {issue}")
-                post_data["status"] = "pending"
-                _pid = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
-                save_draft(_pid, post_data)
-                save_pending_posts([post_data], blog_config)
-                completed_posts.append(post_data)
-                success_count += 1
-                continue
+                    logger.warning(f"     🔴 {issue}")
+                for warn in validation.get("warnings", [])[:3]:
+                    logger.warning(f"     🟡 {warn}")
+
+                # ── 자동 수정 (Claude가 지적 항목 개선) ───────────────────────
+                try:
+                    from adsense_validator import fix_adsense_issues
+                    fixed = fix_adsense_issues(post_data, validation)
+                    if fixed:
+                        logger.info("  🔧 자동 수정 완료 — 재검증 시작")
+                        re_val = validate_adsense(fixed)
+                        if re_val["score"] >= ADSENSE_MIN_SCORE and re_val["recommendation"] != "reject":
+                            logger.info(
+                                f"  ✅ 자동 수정 후 AdSense 통과 "
+                                f"(점수: {validation['score']} → {re_val['score']}/100)"
+                            )
+                            post_data = fixed
+                            post_data["adsense_score"] = re_val["score"]
+                            post_data["adsense_recommendation"] = re_val["recommendation"]
+                            validation = re_val
+                            # 통과했으므로 아래 업로드 단계로 진행
+                        else:
+                            logger.warning(
+                                f"  ⚠️ 자동 수정 후에도 기준 미달 "
+                                f"(점수: {re_val['score']}/100) — pending 저장"
+                            )
+                            post_data = fixed  # 그래도 수정본 저장
+                            post_data["adsense_score"] = re_val["score"]
+                            validation = re_val
+                    else:
+                        logger.warning("  ⚠️ 자동 수정 불가 — pending 저장")
+                except Exception as _fe:
+                    logger.warning(f"  ⚠️ 자동 수정 오류 (무시): {_fe}")
+
+                # 재검증 후에도 기준 미달이면 pending 저장
+                if validation["recommendation"] != "upload" or validation["score"] < ADSENSE_MIN_SCORE:
+                    msg = (
+                        f"AdSense 기준 미달 — pending 저장: '{title}' "
+                        f"(점수: {validation['score']}/100, 권장: {validation['recommendation']})"
+                    )
+                    logger.warning(f"  ⚠️ {msg}")
+                    post_data["status"] = "pending"
+                    _pid = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
+                    save_draft(_pid, post_data)
+                    save_pending_posts([post_data], blog_config)
+                    completed_posts.append(post_data)
+                    success_count += 1
+                    continue
 
             logger.info(f"  ✅ AdSense 검증 통과 (점수: {validation['score']}/100) — 업로드")
         # ─────────────────────────────────────────────────────────────────────────────

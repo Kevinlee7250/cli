@@ -1,0 +1,105 @@
+name: 📋 AdSense 정책 자동 업데이트
+
+on:
+  # 매주 월요일 오전 7시 KST (UTC 일요일 22:00)
+  schedule:
+    - cron: '0 22 * * 0'
+
+  # 수동 실행
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '7일 미경과 시에도 강제 업데이트'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+      dry_run:
+        description: '크롤링만 (저장 안 함)'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+concurrency:
+  group: adsense-policy-update
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update-policies:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          CLAUDE_MODEL="${{ secrets.CLAUDE_MODEL }}"
+          ENVEOF
+
+      - name: 로그 디렉토리 생성
+        run: mkdir -p blog-automation/logs docs/data
+
+      - name: 📋 AdSense 정책 업데이트
+        working-directory: blog-automation
+        run: |
+          FORCE="${{ inputs.force || 'false' }}"
+          DRY="${{ inputs.dry_run || 'false' }}"
+          ARGS=""
+          [ "$FORCE" = "true" ] && ARGS="$ARGS --force"
+          [ "$DRY"   = "true" ] && ARGS="$ARGS --dry"
+          python adsense_policy_updater.py $ARGS
+
+      - name: 결과 커밋 & 푸시
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for f in \
+            blog-automation/logs/adsense_policies.json \
+            docs/data/adsense_policies.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "📋 AdSense 정책 업데이트 (#${{ github.run_number }})"
+            _push_ok=0
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && { _push_ok=1; break; }
+              echo "push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
+            [ "$_push_ok" = "1" ] || { echo "push 실패"; exit 1; }
+          fi
+
+      - name: 정책 업데이트 결과 아티팩트
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: adsense-policy-${{ github.run_number }}
+          path: blog-automation/logs/adsense_policies.json
+          retention-days: 90

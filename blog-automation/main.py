@@ -302,9 +302,9 @@ def run_once(
         logger.info(f"  이미지: {images}개 삽입")
         logger.info(f"  글자 수: {word_count}자")
 
-        # 4000자 미달 → pending 저장 (thin content 업로드 방지)
-        if not (dry_run or review) and word_count < 4000:
-            msg = f"글자 수 미달 — pending 저장: '{title}' ({word_count}자 < 4000자)"
+        # 2500자 미달 → pending 저장 (thin content 업로드 방지)
+        if not (dry_run or review) and word_count < 2500:
+            msg = f"글자 수 미달 — pending 저장: '{title}' ({word_count}자 < 2500자)"
             logger.warning(f"  ⚠️ {msg}")
             post_data["status"] = "pending"
             _pid = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)

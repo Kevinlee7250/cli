@@ -260,8 +260,10 @@ def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = N
 
 ━━━ 본문 구조 (반드시 이 순서와 형식으로 작성) ━━━
 
-⚠️ 분량: 최소 4000자 이상, 목표 4500자 수준 (4000자 미만은 AdSense thin content로 거부됨)
-⚠️ 각 H2 섹션마다 최소 500자 이상 작성 — 단락(p 태그) 3개 이상, 구체적 사례·수치·경험 포함
+⚠️ 분량: 최소 2,500자 이상(공백 제외), 목표 3,000자 수준
+⚠️ 각 H2 섹션마다 최소 500자 이상 작성(공백 제외) — 단락(p 태그) 3개 이상, 구체적 사례·수치·경험 포함
+⚠️ 제목(title)과 H2 소제목들의 주제가 반드시 일치해야 함 — 제목에서 약속한 내용이 소제목에 구체적으로 포함될 것
+⚠️ 이미지는 글 내용과 가장 관련 있는 대표 이미지 1장만 삽입
 
 도입부 (p 태그, 300자 이상):
 독자가 왜 이 글을 읽어야 하는지 설명. 개인적인 문제의식이나 실제 상황 자연스럽게 제시.
@@ -320,7 +322,7 @@ H2: 마무리 (300자 이상)
 ② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치, 낚시성 제목 금지
 ③ E-E-A-T — 1인칭 경험, 구체적 수치·날짜 포함, 출처 최소 2개, 균형 잡힌 시각
 ④ 유해 금지 — 성인/폭력/혐오/불법 절대 금지. 투자·의료는 면책 표현 필수
-⑤ 분량 4000자 이상 필수 — 미달 시 자동 거부
+⑤ 분량 2,500자 이상(공백 제외) 필수 — 미달 시 자동 거부
 
 ━━━ 출처 사용 원칙 ━━━
 • 건강, 금융, 법률, 정책, 세금 관련 내용은 공식기관 또는 신뢰 가능한 자료 바탕
@@ -573,9 +575,11 @@ Natural blog style | Include {y} | Under 65 chars
 Trigger curiosity or recognition ("I tested this", "Honest review", "What I wish I knew")
 
 ━━━ CONTENT STRUCTURE ━━━
-Length: 2800-3500 chars, complete HTML
-H2 sections: 4-6 (based on topic, not a fixed count)
+Length: 2500-3200 chars (excluding whitespace), complete HTML
+H2 sections: 4-6 (based on topic, not a fixed count) — each section ≥500 chars (excluding whitespace)
 All sections paragraph-based (p tags)
+Title and H2 subheadings must align: every H2 should directly address the topic promised in the title
+One image only: the most relevant single image for the article (alt text required)
 
 Key summary box: Insert this HTML exactly, immediately before the first <h2> in the body:
 <div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>Key takeaway:</strong> [The single most practical insight from this article in 1-2 sentences]</div>
@@ -1403,9 +1407,9 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             post_data["content_preview"] = _content_preview(content_html)
 
             prev_wc = post_data["word_count"]
-            if not content_html.strip() or post_data["word_count"] < 4000:
+            if not content_html.strip() or post_data["word_count"] < 2500:
                 if attempt < 2:
-                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 4000자) — 재시도 {attempt + 1}/3")
+                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 2500자) — 재시도 {attempt + 1}/3")
                     time.sleep(3)
                     continue
                 if post_data["word_count"] < 500:
@@ -1424,13 +1428,14 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             section_queries = _extract_section_queries(post_data["content"], keyword)
             plain_text = _content_preview(post_data.get("content", ""), chars=600)
             images = fetch_images_for_queries(
-                section_queries,
+                section_queries[:1],
                 naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
                 naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
                 pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
                 article_plain_text=plain_text,
                 keyword=keyword,
             )
+            images = images[:1]
             if images:
                 post_data["content"] = inject_images_into_content(post_data["content"], images, keyword)
                 post_data["images_inserted"] = len(images)
@@ -1579,15 +1584,15 @@ def _retry_escalation_note(attempt: int, prev_wc: int) -> str:
     """재시도 시 분량 부족 피드백 메시지를 반환합니다."""
     if attempt == 0 or prev_wc <= 0:
         return ""
-    needed = max(0, 4000 - prev_wc)
+    needed = max(0, 2500 - prev_wc)
     needed_str = f"지금 {needed}자가 더 필요합니다 — 각 섹션을 더 길고 구체적으로 작성하세요\n" if needed > 0 else "분량은 충분하지만 구조를 개선하세요\n"
     return (
         f"\n\n⚠️⚠️⚠️ [재시도 {attempt}/2] 이전 응답이 {prev_wc}자로 너무 짧았습니다.\n"
         "이번에는 반드시 다음을 지키세요:\n"
-        f"  - H2 섹션 7개 이상, 각 섹션 최소 500자\n"
+        f"  - H2 섹션마다 최소 500자(공백 제외)\n"
         f"  - 도입부 최소 300자 (경험담으로 풍부하게)\n"
         f"  - FAQ 각 답변 150자 이상\n"
-        f"  - 전체 content 필드 한국어 텍스트 기준 4000자 이상\n"
+        f"  - 전체 content 필드 텍스트 기준 2500자 이상(공백 제외)\n"
         f"  - {needed_str}"
         "⚠️⚠️⚠️\n"
     )
@@ -1657,11 +1662,11 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             post_data["word_count"] = _word_count(content_html)
             post_data["content_preview"] = _content_preview(content_html)
 
-            # 컨텐츠 유효성 검사 — AdSense thin content 방지 (최소 4000자)
+            # 컨텐츠 유효성 검사 — AdSense thin content 방지 (최소 2500자)
             prev_wc = post_data["word_count"]
-            if not content_html.strip() or post_data["word_count"] < 4000:
+            if not content_html.strip() or post_data["word_count"] < 2500:
                 if attempt < 2:
-                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 4000자) — 재시도 {attempt + 1}/3")
+                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 2500자) — 재시도 {attempt + 1}/3")
                     time.sleep(3)
                     continue
                 if post_data["word_count"] < 500:
@@ -1681,18 +1686,19 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             # 게시 전 팩트체크 — 이미지 삽입 전에 실행 (이미지 HTML 훼손 방지)
             _fact_check_content(post_data, keyword)
 
-            # 섹션별 이미지 검색 & 삽입 (관련성 검증 포함)
+            # 섹션별 이미지 검색 & 삽입 (관련성 검증 포함) — 1장만
             section_queries = _extract_section_queries(post_data.get("content", ""), keyword)
-            logger.info(f"섹션별 이미지 검색: {section_queries}")
+            logger.info(f"섹션별 이미지 검색: {section_queries[:1]}")
             plain_text = _content_preview(post_data.get("content", ""), chars=600)
             images = fetch_images_for_queries(
-                section_queries,
+                section_queries[:1],
                 naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
                 naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
                 pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
                 article_plain_text=plain_text,
                 keyword=keyword,
             )
+            images = images[:1]
             if images:
                 post_data["content"] = inject_images_into_content(
                     post_data["content"], images, keyword

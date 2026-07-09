@@ -129,6 +129,20 @@ def run_once(
     logger.info(f"{blog_label}블로그 자동화 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     logger.info("=" * 60)
 
+    # 수동 키워드가 있으면 포스팅 이력 대비 유사도 사전 점검 (경고만, 차단 없음)
+    if keywords:
+        try:
+            from keyword_collector import _load_recent_post_corpus, _is_too_similar
+            _corpus = _load_recent_post_corpus(blog_id=cfg.get("id", ""))
+            for _kw in keywords:
+                if _is_too_similar(_kw, _corpus):
+                    logger.warning(
+                        f"  ⚠️ 수동 키워드 '{_kw}'는 최근 포스팅 이력과 유사합니다 — "
+                        "제목이 중복되면 업로드 단계에서 차단됩니다."
+                    )
+        except Exception as _ke:
+            logger.debug(f"수동 키워드 유사도 점검 실패 (무시): {_ke}")
+
     # 키워드 수집 (자동 시리즈를 위해 여유분 +1개 더 수집)
     if not keywords:
         collect_count = POSTS_PER_RUN + (1 if AUTO_SERIES and not dry_run and not review else 0)

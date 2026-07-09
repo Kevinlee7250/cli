@@ -479,6 +479,21 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
     if not access_token:
         return None
 
+    # 업로드 직전 제목 중복 검사 — 동일/유사 제목이 이미 게시된 경우 차단
+    _title = post_data.get("title", "")
+    _blog_cfg_id = cfg.get("id", "")
+    try:
+        from post_manager import find_duplicate_post
+        _dup = find_duplicate_post(_title, blog_id=_blog_cfg_id)
+        if _dup:
+            logger.error(
+                f"❌ 중복 포스트 감지 — 업로드 차단: '{_title[:60]}'\n"
+                f"   기존 포스트: '{_dup.get('title', '')[:60]}' ({_dup.get('blogUrl', '')})"
+            )
+            return None
+    except Exception as _de:
+        logger.debug(f"중복 검사 오류 (무시): {_de}")
+
     full_content = _build_full_content(post_data, blog_config)
     kw = post_data.get("keyword") or ""
     # None-safe: Claude가 "labels": null 반환해도 안전하게 처리

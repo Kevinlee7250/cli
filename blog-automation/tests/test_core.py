@@ -236,3 +236,67 @@ def test_categorize():
     assert _categorize("ETF 투자 방법") == "금융"
     assert _categorize("제주 여행 코스") == "여행"
     assert _categorize("아무 관련 없는 주제") == "일반"
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# post_manager — 제목 중복 감지
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _make_registry(entries: list[dict], tmp_path, monkeypatch):
+    """임시 post_registry.json을 생성하고 post_manager에 주입합니다."""
+    import post_manager as pm
+    reg_file = tmp_path / "post_registry.json"
+    reg_file.write_text(json.dumps(entries), encoding="utf-8")
+    monkeypatch.setattr(pm, "REGISTRY_FILE", str(reg_file))
+    return pm
+
+
+def test_find_duplicate_exact_match(tmp_path, monkeypatch):
+    """완전히 동일한 제목은 중복으로 감지된다."""
+    pm = _make_registry(
+        [{"post_id": "x", "title": "ETF 투자 방법", "status": "published", "blogId": "blog1"}],
+        tmp_path, monkeypatch,
+    )
+    dup = pm.find_duplicate_post("ETF 투자 방법", blog_id="blog1")
+    assert dup is not None
+    assert dup["post_id"] == "x"
+
+
+def test_find_duplicate_similar_title(tmp_path, monkeypatch):
+    """단어 겹침이 60% 이상인 유사 제목도 중복으로 감지된다."""
+    pm = _make_registry(
+        [{"post_id": "y", "title": "ETF 투자 처음 입문 주의사항 정리", "status": "published", "blogId": "blog1"}],
+        tmp_path, monkeypatch,
+    )
+    dup = pm.find_duplicate_post("ETF 투자 처음 입문 주의사항", blog_id="blog1")
+    assert dup is not None
+
+
+def test_find_duplicate_different_blog_no_match(tmp_path, monkeypatch):
+    """다른 블로그의 동일 제목은 중복으로 잡지 않는다."""
+    pm = _make_registry(
+        [{"post_id": "z", "title": "ETF 투자 방법", "status": "published", "blogId": "blog2"}],
+        tmp_path, monkeypatch,
+    )
+    dup = pm.find_duplicate_post("ETF 투자 방법", blog_id="blog1")
+    assert dup is None
+
+
+def test_find_duplicate_pending_not_blocked(tmp_path, monkeypatch):
+    """pending 상태 포스트는 기본 필터(published)에 걸리지 않는다."""
+    pm = _make_registry(
+        [{"post_id": "p", "title": "ETF 투자 방법", "status": "pending", "blogId": "blog1"}],
+        tmp_path, monkeypatch,
+    )
+    dup = pm.find_duplicate_post("ETF 투자 방법", blog_id="blog1")
+    assert dup is None
+
+
+def test_find_duplicate_no_match(tmp_path, monkeypatch):
+    """주제가 완전히 다른 제목은 중복으로 판단하지 않는다."""
+    pm = _make_registry(
+        [{"post_id": "q", "title": "제주도 여행 코스 추천", "status": "published", "blogId": "blog1"}],
+        tmp_path, monkeypatch,
+    )
+    dup = pm.find_duplicate_post("ETF 투자 방법 완전 정리", blog_id="blog1")
+    assert dup is None

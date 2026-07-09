@@ -199,6 +199,60 @@ def delete_draft(post_id: str) -> None:
         pass
 
 
+# ─── 제목 중복 검사 ──────────────────────────────────────────────────────────
+
+def _tokenize_title(text: str) -> set:
+    """제목을 단어 토큰 집합으로 변환합니다 (2자+ 한글, 2자+ 영문)."""
+    return {w for w in re.findall(r'[가-힣]{2,}|[a-zA-Z]{2,}', text.lower()) if w}
+
+
+def _title_similarity(a: str, b: str) -> float:
+    """두 제목의 Jaccard 단어 겹침 비율을 반환합니다."""
+    ta, tb = _tokenize_title(a), _tokenize_title(b)
+    if not ta or not tb:
+        return 1.0 if a.strip() == b.strip() else 0.0
+    return len(ta & tb) / len(ta | tb)
+
+
+# 제목 유사도 임계값 (0.6 이상이면 중복으로 판단)
+_TITLE_DEDUP_THRESHOLD = 0.6
+
+
+def find_duplicate_post(
+    title: str,
+    blog_id: str = "",
+    status_filter: tuple = (Status.PUBLISHED,),
+) -> dict | None:
+    """레지스트리에서 동일하거나 유사한 제목의 기존 포스트를 반환합니다.
+
+    title: 검사할 새 제목
+    blog_id: 같은 블로그 내에서만 비교 (빈 문자열이면 전체 비교)
+    status_filter: 비교 대상 상태 (기본: published 포스트만)
+
+    Returns:
+        중복 포스트 dict 또는 None
+    """
+    registry = load_registry()
+    cand = title.strip().lower()
+    status_set = set(status_filter)
+
+    for entry in registry:
+        if entry.get("status") not in status_set:
+            continue
+        if blog_id and entry.get("blogId") not in ("", "default", blog_id):
+            continue
+        existing = (entry.get("title") or "").strip().lower()
+        if not existing:
+            continue
+        # 완전 일치 또는 한쪽이 다른 쪽을 포함
+        if cand == existing or cand in existing or existing in cand:
+            return entry
+        # 단어 겹침 유사도
+        if _title_similarity(cand, existing) >= _TITLE_DEDUP_THRESHOLD:
+            return entry
+    return None
+
+
 # ─── 조회 ────────────────────────────────────────────────────────────────────
 
 def get_posts_by_status(
@@ -321,6 +375,18 @@ def retry_failed_posts(
                 counts["failed"] += 1
                 update_post_status(post_id, Status.FAILED, error="재생성 실패")
                 continue
+
+        # 업로드 전 제목 중복 검사 — 다른 경로로 이미 게시됐을 수 있음
+        dup = find_duplicate_post(title, blog_id=cfg.get("id", ""))
+        if dup:
+            logger.warning(
+                f"  ⚠️ 재시도 건너뜀 — 유사 제목이 이미 게시됨: "
+                f"'{dup.get('title', '')[:60]}' ({dup.get('blogUrl', '')})"
+            )
+            update_post_status(post_id, Status.SKIPPED, error="중복 제목 — 재시도 건너뜀")
+            delete_draft(post_id)
+            counts["skipped"] += 1
+            continue
 
         # 업로드 시도
         update_post_status(post_id, Status.RETRY_QUEUED)

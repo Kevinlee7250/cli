@@ -1,247 +1,3 @@
-2026-07-10 05:58:36,326 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
-2026-07-10 05:58:36,328 [INFO] content_generator — 포스트 생성 완료: '소지섭 주연 드라마 깁부장, 직장인이 본 솔직 리뷰 (2026)' (2799자, 이미지 0개)
-2026-07-10 05:58:37,369 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 05:58:48,990 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-10 05:58:50,184 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 05:58:57,175 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '소지섭 주연 드라마 깁부장, 직장인이 본 솔직 리뷰 (2026)'
-2026-07-10 05:58:57,175 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2799자로 warn 구간이며 개인 경험(편성 시간 헛걸음, 아이와 시청 중 등급 문제)은 있으나 분량이 다소 부족함
-2026-07-10 05:58:57,175 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개는 충분하나 핵심개념·체크리스트 등 일부 단락이 500자 이상으로 길게 이어짐
-2026-07-10 05:58:57,176 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술은 풍부하나 본문 내 출처 인용 표기가 명시적으로 드러나지 않음
-2026-07-10 05:58:57,176 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글로 정책상 warn 처리
-2026-07-10 05:58:57,176 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·목록화 패턴과 '💡 핵심 포인트' 같은 정형화된 요약 문구가 일부 존재
-2026-07-10 05:58:57,183 [INFO] main —   제목: 소지섭 주연 드라마 깁부장, 직장인이 본 솔직 리뷰 (2026)
-2026-07-10 05:58:57,183 [INFO] main —   이미지: 0개 삽입
-2026-07-10 05:58:57,183 [INFO] main —   글자 수: 2799자
-2026-07-10 05:58:57,183 [INFO] main —   [검토 모드] 업로드 건너뜀
-2026-07-10 05:58:57,189 [INFO] main — 
-============================================================
-2026-07-10 05:58:57,189 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-10 05:58:57,189 [INFO] main — ============================================================
-2026-07-10 05:58:57,194 [INFO] dashboard_exporter —   검토 대기 저장: 소지섭 주연 드라마 깁부장, 직장인이 본 솔직 리뷰 (2026) (10675자 HTML)
-2026-07-10 05:58:57,199 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 41개)
-2026-07-10 05:58:57,199 [INFO] main — 검토 대기 포스트 저장 완료
-2026-07-10 05:58:57,227 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-10 05:58:57,254 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-10 05:58:57,275 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-10 05:58:57,486 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-10 05:58:57,781 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-10 05:58:58,001 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-10 05:58:58,002 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-10 05:58:58,005 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-10 05:58:58,013 [INFO] post_manager —   포스트 레지스트리: 전체 142개 (게시 101 / 실패 15 / 대기 22)
-2026-07-10 05:58:58,013 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-10 05:58:58,013 [INFO] dashboard_exporter —   포스트: 117개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-10 05:58:58,014 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-10 05:58:58,015 [INFO] main — ============================================================
-2026-07-10 05:58:58,015 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-10 05:58:58
-2026-07-10 05:58:58,015 [INFO] main — ============================================================
-2026-07-10 05:58:58,026 [INFO] main — 수집된 키워드 1개: ['소지섭 주연 드라마 깁부장']
-2026-07-10 05:58:58,026 [INFO] main — 단독 포스트 대상 키워드 1개: ['소지섭 주연 드라마 깁부장']
-2026-07-10 05:58:58,039 [INFO] main — 
-[1/1] 키워드: '소지섭 주연 드라마 깁부장'
-2026-07-10 05:58:58,039 [INFO] content_generator — 포스트 생성 중: '소지섭 주연 드라마 깁부장'
-2026-07-10 05:58:58,039 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-10 05:58:59,901 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:00:02,498 [WARNING] content_generator — 컨텐츠 너무 짧음(1973자, 최소 2500자) — 재시도 1/3
-2026-07-10 06:00:05,498 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-10 06:00:06,359 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:01:09,645 [WARNING] content_generator — 컨텐츠 너무 짧음(2017자, 최소 2500자) — 재시도 2/3
-2026-07-10 06:01:12,646 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-10 06:01:13,921 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:02:13,473 [WARNING] content_generator — 최소 분량 미달(2076자) — 재시도 소진, 해당 분량으로 진행
-2026-07-10 06:02:19,764 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:02:19,765 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
-2026-07-10 06:02:19,766 [INFO] content_generator — 섹션별 이미지 검색: ['소지섭 주연 드라마']
-2026-07-10 06:02:21,950 [WARNING] image_fetcher — 이미지 없음: '소지섭 주연 드라마'
-2026-07-10 06:02:21,950 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
-2026-07-10 06:02:21,951 [INFO] content_generator — 포스트 생성 완료: '소지섭 주연 드라마 깁부장, 직접 정주행하고 남기는 솔직 후기' (2076자, 이미지 0개)
-2026-07-10 06:02:26,111 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:02:37,956 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-10 06:02:39,705 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:02:51,817 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-10 06:02:53,857 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:03:01,312 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 59/100 — '소지섭 주연 드라마 깁부장, 직접 정주행하고 남기는 솔직 후기'
-2026-07-10 06:03:01,312 [INFO] adsense_validator —   ❌ 원본성 및 품질: 글자 수 2076자로 2500자 미달이며, 미완성 placeholder 문구(예: '기재이었고', '기재 사이로')가 남아있어 품질이 낮음
-2026-07-10 06:03:01,312 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 미래 시점 방영 정보 및 미완성 placeholder 문구로 사실 확인 불가한 서술이 포함되어 정보 신뢰성 문제 있음
-2026-07-10 06:03:01,312 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술은 있으나 핵심 정보(회차수·화질 등)가 '기재 예정' 상태로 남아 신뢰성 저하
-2026-07-10 06:03:01,312 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 및 alt 텍스트 정보 없음
-2026-07-10 06:03:01,312 [INFO] adsense_validator —   ❌ AI 생성 의심도: '기재이었고', '기재 사이로' 등 템플릿이 채워지지 않은 AI 생성 잔재 문장이 다수 발견됨
-2026-07-10 06:03:01,312 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 글자 수 2076자로 2500자 미달이며, 미완성 placeholder 문구(예: '기재이었고', '기재 사이로')가 남아있어 품질이 낮음
-2026-07-10 06:03:01,312 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '기재이었고', '기재 사이로' 등 템플릿이 채워지지 않은 AI 생성 잔재 문장이 다수 발견됨
-2026-07-10 06:03:01,312 [WARNING] adsense_validator —   🔴 본문에 '기재이었고', '기재 사이로', '기재되는 걸로 확인했고' 등 미완성 템플릿 placeholder 문구가 남아있어 즉시 수정 필요
-2026-07-10 06:03:01,313 [WARNING] adsense_validator —   🔴 글자 수 2076자로 AdSense 가치 있는 콘텐츠 기준(2500자 이상) 미달
-2026-07-10 06:03:01,313 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 59/100, 이유: ["[원본성 및 품질] 글자 수 2076자로 2500자 미달이며, 미완성 placeholder 문구(예: '기재이었고', '기재 사이로')가 남아있어 품질이 낮음"]) — 재생성 2/2
-2026-07-10 06:03:04,313 [INFO] content_generator — 포스트 생성 중: '소지섭 주연 드라마 깁부장'
-2026-07-10 06:03:04,313 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-10 06:03:06,038 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:04:10,689 [WARNING] content_generator — 컨텐츠 너무 짧음(2098자, 최소 2500자) — 재시도 1/3
-2026-07-10 06:04:13,690 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-10 06:04:15,079 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:05:22,518 [WARNING] content_generator — 컨텐츠 너무 짧음(2412자, 최소 2500자) — 재시도 2/3
-2026-07-10 06:05:25,518 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-10 06:05:28,092 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:06:28,298 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-07-10 06:06:28,298 [WARNING] content_generator — 최소 분량 미달(2166자) — 재시도 소진, 해당 분량으로 진행
-2026-07-10 06:06:38,149 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:06:38,150 [WARNING] content_generator — 팩트체크 실패 (게시는 계속 진행): Expecting ',' delimiter: line 1 column 435 (char 434)
-2026-07-10 06:06:38,151 [INFO] content_generator — 섹션별 이미지 검색: ['소지섭 주연 드라마']
-2026-07-10 06:06:38,699 [WARNING] image_fetcher — 이미지 없음: '소지섭 주연 드라마'
-2026-07-10 06:06:38,699 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
-2026-07-10 06:06:38,700 [INFO] content_generator — 포스트 생성 완료: '소지섭 주연 드라마 '깁부장' 정주행 후기 - 직접 본 소감 솔직하게 (2026년 7월 기준)' (2166자, 이미지 0개)
-2026-07-10 06:06:39,527 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:06:49,209 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-10 06:06:50,027 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:06:53,880 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 77/100 — '소지섭 주연 드라마 '깁부장' 정주행 후기 - 직접 본 소감 솔'
-2026-07-10 06:06:53,880 [INFO] adsense_validator —   ❌ 원본성 및 품질: 글자 수 2166자로 2500자 미만 기준에 미달, 개인 경험은 풍부하나 분량 부족
-2026-07-10 06:06:53,880 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험은 풍부하나 본문 내 출처 인용이 명시적으로 드러나지 않음
-2026-07-10 06:06:53,880 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가하며 텍스트만으로 구성된 것으로 보임
-2026-07-10 06:06:53,880 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 글자 수 2166자로 2500자 미만 기준에 미달, 개인 경험은 풍부하나 분량 부족
-2026-07-10 06:06:53,880 [WARNING] adsense_validator —   🔴 글자 수가 2500자 미만으로 originality 기준 미달
-2026-07-10 06:06:53,886 [INFO] main —   제목: 소지섭 주연 드라마 '깁부장' 정주행 후기 - 직접 본 소감 솔직하게 (2026년 7월 기준)
-2026-07-10 06:06:53,886 [INFO] main —   이미지: 0개 삽입
-2026-07-10 06:06:53,886 [INFO] main —   글자 수: 2166자
-2026-07-10 06:06:53,886 [INFO] main —   [검토 모드] 업로드 건너뜀
-2026-07-10 06:06:53,892 [INFO] main — 
-============================================================
-2026-07-10 06:06:53,893 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-10 06:06:53,893 [INFO] main — ============================================================
-2026-07-10 06:06:53,896 [INFO] dashboard_exporter —   검토 대기 저장: 소지섭 주연 드라마 '깁부장' 정주행 후기 - 직접 본 소감 솔직하게 (2026년 7월 기준) (5026자 HTML)
-2026-07-10 06:06:53,902 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 42개)
-2026-07-10 06:06:53,903 [INFO] main — 검토 대기 포스트 저장 완료
-2026-07-10 06:06:53,934 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-10 06:06:53,957 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-10 06:06:54,012 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-10 06:06:54,198 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-10 06:06:54,200 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-10 06:06:54,203 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-10 06:06:54,211 [INFO] post_manager —   포스트 레지스트리: 전체 143개 (게시 101 / 실패 15 / 대기 23)
-2026-07-10 06:06:54,211 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-10 06:06:54,211 [INFO] dashboard_exporter —   포스트: 117개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-10 06:06:54,212 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-10 06:06:54,213 [INFO] main — ============================================================
-2026-07-10 06:06:54,213 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-10 06:06:54
-2026-07-10 06:06:54,213 [INFO] main — ============================================================
-2026-07-10 06:06:54,222 [INFO] main — 수집된 키워드 1개: ['소지섭 주연 드라마 깁부장']
-2026-07-10 06:06:54,223 [INFO] main — 단독 포스트 대상 키워드 1개: ['소지섭 주연 드라마 깁부장']
-2026-07-10 06:06:54,234 [INFO] main — 
-[1/1] 키워드: '소지섭 주연 드라마 깁부장'
-2026-07-10 06:06:54,234 [INFO] content_generator — 포스트 생성 중: '소지섭 주연 드라마 깁부장'
-2026-07-10 06:06:54,234 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-10 06:06:55,597 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:08:08,162 [WARNING] content_generator — 컨텐츠 너무 짧음(2022자, 최소 2500자) — 재시도 1/3
-2026-07-10 06:08:11,162 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-10 06:08:12,578 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:09:18,709 [WARNING] content_generator — 컨텐츠 너무 짧음(1946자, 최소 2500자) — 재시도 2/3
-2026-07-10 06:09:21,710 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-10 06:09:22,643 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:10:43,931 [WARNING] content_generator — 최소 분량 미달(2357자) — 재시도 소진, 해당 분량으로 진행
-2026-07-10 06:10:51,639 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:10:51,640 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-07-10 06:10:51,641 [INFO] content_generator — 섹션별 이미지 검색: ['소지섭 주연 드라마']
-2026-07-10 06:11:09,297 [WARNING] image_fetcher — 이미지 없음: '소지섭 주연 드라마'
-2026-07-10 06:11:09,297 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
-2026-07-10 06:11:09,297 [INFO] content_generator — 포스트 생성 완료: '소지섭 주연 드라마 '김부장'으로 본 40대 직장인 재테크·퇴직연금 체크포인트' (2357자, 이미지 0개)
-2026-07-10 06:11:10,133 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:11:23,431 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-10 06:11:24,225 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:11:33,603 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-10 06:11:34,484 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:11:35,514 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 54/100 — '소지섭 주연 드라마 '김부장'으로 본 40대 직장인 재테크·퇴직'
-2026-07-10 06:11:35,514 [INFO] adsense_validator —   ❌ 원본성 및 품질: 2357자로 2500자 미만 기준 미달이며, 본문 도입부에 '실제 방영/공개된 드라마인지 확인 후 명시하거나... 수정'이라는 편집 지시문이 그대로 노출되어 원본성 심각히 훼손됨
-2026-07-10 06:11:35,514 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드 '깁부장'이 오타성 표기로 제목·본문에 혼재되어 부자연스러우며 검색 의도 매칭이 애매함
-2026-07-10 06:11:35,515 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 도입부 단락이 500자 이상으로 길게 이어짐
-2026-07-10 06:11:35,515 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술은 있으나 출처 4개가 본문에 명시적으로 인용되지 않고 편집 지시문 노출로 신뢰도 저하
-2026-07-10 06:11:35,515 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급 없음(이미지 부재 자체는 fail 아님)
-2026-07-10 06:11:35,515 [INFO] adsense_validator —   ❌ AI 생성 의심도: 본문에 '가상의 예시임을 밝히는 표현으로 수정' 등 AI 편집 지시문이 그대로 삽입되어 명백한 미완성/AI 생성 흔적 노출
-2026-07-10 06:11:35,515 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 2357자로 2500자 미만 기준 미달이며, 본문 도입부에 '실제 방영/공개된 드라마인지 확인 후 명시하거나... 수정'이라는 편집 지시문이 그대로 노출되어 원본성 심각히 훼손됨
-2026-07-10 06:11:35,515 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 본문에 '가상의 예시임을 밝히는 표현으로 수정' 등 AI 편집 지시문이 그대로 삽입되어 명백한 미완성/AI 생성 흔적 노출
-2026-07-10 06:11:35,515 [WARNING] adsense_validator —   🔴 본문 도입부에 편집 지시문('실제 방영/공개된 드라마인지 확인 후 명시하거나, 가상의 예시임을 밝히는 표현으로 수정')이 그대로 노출되어 즉시 삭제 및 재작성 필요
-2026-07-10 06:11:35,515 [WARNING] adsense_validator —   🔴 글자 수 2357자로 originality 기준(2500자 미만 fail) 미달, 콘텐츠 분량 확충 필요
-2026-07-10 06:11:35,515 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 54/100, 이유: ["[원본성 및 품질] 2357자로 2500자 미만 기준 미달이며, 본문 도입부에 '실제 방영/공개된 드라마인지 확인 후 명시하거나... 수정'이라는 편집 지시문이 그대로 노출되어 원본성 심각히 훼손됨"]) — 재생성 2/2
-2026-07-10 06:11:38,515 [INFO] content_generator — 포스트 생성 중: '소지섭 주연 드라마 깁부장'
-2026-07-10 06:11:38,515 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-10 06:11:39,247 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:13:07,279 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:13:07,280 [INFO] content_generator — 팩트체크: 통과
-2026-07-10 06:13:07,281 [INFO] content_generator — 섹션별 이미지 검색: ['소지섭 주연 드라마']
-2026-07-10 06:13:08,548 [WARNING] image_fetcher — 이미지 없음: '소지섭 주연 드라마'
-2026-07-10 06:13:08,548 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
-2026-07-10 06:13:08,549 [INFO] content_generator — 포스트 생성 완료: '소지섭 주연 드라마 '깁부장'으로 보는 직장인 부장 승진, 연봉·세금 변화 총정리' (2693자, 이미지 0개)
-2026-07-10 06:13:09,713 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:13:20,429 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-10 06:13:21,367 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:13:32,238 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '소지섭 주연 드라마 '깁부장'으로 보는 직장인 부장 승진, 연봉'
-2026-07-10 06:13:32,238 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2693자로 warn 구간이며 개인 경험 언급은 있으나 세금 정보는 대부분 일반론 재조합 수준
-2026-07-10 06:13:32,238 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드가 20회 미만이나 문단마다 부자연스럽게 반복 삽입되어 키워드 스터핑처럼 읽힘
-2026-07-10 06:13:32,238 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 개수는 충분하나 본문이 줄바꿈 없이 긴 단일 블록으로 이어져 가독성이 떨어짐
-2026-07-10 06:13:32,238 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 언급 없음 — 정책상 fail 아닌 warn 처리
-2026-07-10 06:13:32,238 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 동일 키워드구를 문단마다 기계적으로 반복 삽입하는 패턴이 AI 생성 특유의 스타일로 보임
-2026-07-10 06:13:32,244 [INFO] main —   제목: 소지섭 주연 드라마 '깁부장'으로 보는 직장인 부장 승진, 연봉·세금 변화 총정리
-2026-07-10 06:13:32,244 [INFO] main —   이미지: 0개 삽입
-2026-07-10 06:13:32,244 [INFO] main —   글자 수: 2693자
-2026-07-10 06:13:32,245 [INFO] main —   [검토 모드] 업로드 건너뜀
-2026-07-10 06:13:32,251 [INFO] main — 
-============================================================
-2026-07-10 06:13:32,251 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-10 06:13:32,251 [INFO] main — ============================================================
-2026-07-10 06:13:32,255 [INFO] dashboard_exporter —   검토 대기 저장: 소지섭 주연 드라마 '깁부장'으로 보는 직장인 부장 승진, 연봉·세금 변화 총정리 (9925자 HTML)
-2026-07-10 06:13:32,261 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 43개)
-2026-07-10 06:13:32,261 [INFO] main — 검토 대기 포스트 저장 완료
-2026-07-10 06:13:32,297 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-10 06:13:32,321 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-10 06:13:32,340 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-10 06:13:32,524 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-10 06:13:32,525 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-10 06:13:32,529 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-10 06:13:32,537 [INFO] post_manager —   포스트 레지스트리: 전체 144개 (게시 101 / 실패 15 / 대기 24)
-2026-07-10 06:13:32,537 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-10 06:13:32,537 [INFO] dashboard_exporter —   포스트: 118개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-10 06:13:32,538 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-10 06:44:18,049 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-07-10 06:44:18,049 [INFO] main —   - [blog1] HOGU What?
-2026-07-10 06:44:18,049 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-07-10 06:44:18,049 [INFO] main —   - [blog3] 금융NEWS
-2026-07-10 06:44:18,049 [INFO] main — ============================================================
-2026-07-10 06:44:18,049 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-10 06:44:18
-2026-07-10 06:44:18,049 [INFO] main — ============================================================
-2026-07-10 06:44:18,059 [INFO] keyword_collector — 포스팅 이력 코퍼스: 22개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-10 06:44:18,059 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
-2026-07-10 06:44:19,065 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
-2026-07-10 06:44:19,065 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-10 06:44:19,683 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-10 06:44:19,821 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-10 06:44:19,823 [INFO] keyword_collector — 최근 사용 제외 4개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁']
-2026-07-10 06:44:19,823 [INFO] keyword_collector —   [fallback] 2개: ['전기차 첫 구매 후 6개월 솔직 후기', '중고차 직거래 실패담과 주의사항']
-2026-07-10 06:44:19,823 [INFO] keyword_collector — 최종 선정 키워드 2개: ['전기차 첫 구매 후 6개월 솔직 후기', '중고차 직거래 실패담과 주의사항']
-2026-07-10 06:44:19,823 [INFO] main — 수집된 키워드 2개: ['전기차 첫 구매 후 6개월 솔직 후기', '중고차 직거래 실패담과 주의사항']
-2026-07-10 06:44:19,827 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 11일 전)
-2026-07-10 06:44:20,597 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
-2026-07-10 06:44:21,850 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:44:21,876 [INFO] main — 단독 포스트 대상 키워드 1개: ['전기차 첫 구매 후 6개월 솔직 후기']
-2026-07-10 06:44:21,889 [INFO] main — 
-[1/1] 키워드: '전기차 첫 구매 후 6개월 솔직 후기'
-2026-07-10 06:44:21,889 [INFO] content_generator — 포스트 생성 중: '전기차 첫 구매 후 6개월 솔직 후기'
-2026-07-10 06:44:21,890 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-10 06:44:22,810 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:45:52,134 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:45:52,135 [INFO] content_generator — 팩트체크: 통과
-2026-07-10 06:45:52,139 [INFO] content_generator — 섹션별 이미지 검색: ['전기차 구매 개월']
-2026-07-10 06:46:06,005 [WARNING] image_fetcher — 이미지 없음: '전기차 구매 개월'
-2026-07-10 06:46:06,006 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
-2026-07-10 06:46:06,008 [INFO] content_generator — 포스트 생성 완료: '전기차 첫 구매 후 6개월 솔직 후기, 2026년 유지비 정리' (3119자, 이미지 0개)
-2026-07-10 06:46:08,211 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:46:20,223 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-10 06:46:22,734 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:46:28,236 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '전기차 첫 구매 후 6개월 솔직 후기, 2026년 유지비 정리'
-2026-07-10 06:46:28,236 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치와 경험(32km 출퇴근, 48만원 충전비, 280km 겨울주행 등)은 우수하나 글자 수 3119자로 4000자 기준에 못 미침
-2026-07-10 06:46:28,236 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 저작권 위반은 없으나 시각자료 부재로 warn
-2026-07-10 06:46:28,243 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-10 06:46:28,255 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-07-10 06:46:28,255 [INFO] main —   제목: 전기차 첫 구매 후 6개월 솔직 후기, 2026년 유지비 정리
-2026-07-10 06:46:28,255 [INFO] main —   이미지: 0개 삽입
-2026-07-10 06:46:28,255 [INFO] main —   글자 수: 3119자
-2026-07-10 06:46:30,270 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:46:42,400 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
 2026-07-10 06:46:52,850 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-10 06:47:01,395 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '전기차 첫 구매 후 6개월 솔직 후기, 2026년 유지비 정리'
 2026-07-10 06:47:01,395 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치·경험은 풍부하나 글자 수 3119자로 4000자 기준에는 못 미침
@@ -742,3 +498,64 @@
 2026-07-10 12:44:01,981 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-10 12:44:01,981 [INFO] dashboard_exporter —   포스트: 117개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-10 12:44:01,982 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-10 12:44:32,490 [INFO] main — 검토 모드 — pending_posts.json에 저장합니다
+2026-07-10 12:44:32,490 [INFO] main — ============================================================
+2026-07-10 12:44:32,490 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-10 12:44:32
+2026-07-10 12:44:32,490 [INFO] main — ============================================================
+2026-07-10 12:44:32,499 [INFO] keyword_collector — 포스팅 이력 코퍼스: 26개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-10 12:44:32,499 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-10 12:44:33,237 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-10 12:44:33,237 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-10 12:44:34,080 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-10 12:44:34,331 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-10 12:44:34,333 [INFO] keyword_collector — 최근 사용 제외 4개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁']
+2026-07-10 12:44:34,334 [INFO] keyword_collector —   [fallback] 1개: ['파이썬 독학 3개월 후 실제 쓸 수 있는 것들']
+2026-07-10 12:44:34,334 [INFO] keyword_collector — 최종 선정 키워드 1개: ['파이썬 독학 3개월 후 실제 쓸 수 있는 것들']
+2026-07-10 12:44:34,334 [INFO] main — 수집된 키워드 1개: ['파이썬 독학 3개월 후 실제 쓸 수 있는 것들']
+2026-07-10 12:44:34,334 [INFO] main — 단독 포스트 대상 키워드 1개: ['파이썬 독학 3개월 후 실제 쓸 수 있는 것들']
+2026-07-10 12:44:34,348 [INFO] main — 
+[1/1] 키워드: '파이썬 독학 3개월 후 실제 쓸 수 있는 것들'
+2026-07-10 12:44:34,348 [INFO] content_generator — 포스트 생성 중: '파이썬 독학 3개월 후 실제 쓸 수 있는 것들'
+2026-07-10 12:44:34,348 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-10 12:44:40,402 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 12:45:53,370 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 12:45:53,378 [INFO] content_generator — 팩트체크: 통과
+2026-07-10 12:45:53,381 [INFO] content_generator — 섹션별 이미지 검색: ['파이썬 독학 개월']
+2026-07-10 12:45:53,726 [WARNING] image_fetcher — 이미지 없음: '파이썬 독학 개월'
+2026-07-10 12:45:53,726 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-10 12:45:53,728 [INFO] content_generator — 포스트 생성 완료: '파이썬 독학 3개월, 실제로 뭘 할 수 있었는지 2026년 후기' (3196자, 이미지 0개)
+2026-07-10 12:45:54,400 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 12:46:05,433 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 12:46:06,154 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 12:46:16,652 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 12:46:17,384 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 12:46:20,721 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '파이썬 독학 3개월, 실제로 뭘 할 수 있었는지 2026년 후기'
+2026-07-10 12:46:20,721 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 개인 경험은 풍부하나 글자 수가 3196자로 4000자 기준에 미달
+2026-07-10 12:46:20,721 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없으나 저작권 위반은 아니므로 정책상 warn 처리
+2026-07-10 12:46:20,729 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-10 12:46:20,731 [INFO] internal_linker —   [1/5] '솔직하게' -> https://hoguwhat1.blogspot.com/2026/06/3-2026.html
+2026-07-10 12:46:20,733 [INFO] internal_linker —   [2/5] '직장인이' -> https://www.hoguwhat.com/2026/07/blog-post.html
+2026-07-10 12:46:20,741 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-10 12:46:20,741 [INFO] main —   제목: 파이썬 독학 3개월, 실제로 뭘 할 수 있었는지 2026년 후기
+2026-07-10 12:46:20,741 [INFO] main —   이미지: 0개 삽입
+2026-07-10 12:46:20,741 [INFO] main —   글자 수: 3196자
+2026-07-10 12:46:20,741 [INFO] main —   [검토 모드] 업로드 건너뜀
+2026-07-10 12:46:20,747 [INFO] main — 
+============================================================
+2026-07-10 12:46:20,747 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-10 12:46:20,747 [INFO] main — ============================================================
+2026-07-10 12:46:20,753 [INFO] dashboard_exporter —   검토 대기 저장: 파이썬 독학 3개월, 실제로 뭘 할 수 있었는지 2026년 후기 (14138자 HTML)
+2026-07-10 12:46:20,759 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 48개)
+2026-07-10 12:46:20,760 [INFO] main — 검토 대기 포스트 저장 완료
+2026-07-10 12:46:20,787 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-10 12:46:20,813 [INFO] dashboard_exporter —   시리즈: 4개 내보내기 완료
+2026-07-10 12:46:20,832 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-10 12:46:21,097 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-10 12:46:21,400 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-10 12:46:21,891 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-10 12:46:21,892 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-10 12:46:21,895 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-10 12:46:21,904 [INFO] post_manager —   포스트 레지스트리: 전체 153개 (게시 105 / 실패 17 / 대기 27)
+2026-07-10 12:46:21,904 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-10 12:46:21,904 [INFO] dashboard_exporter —   포스트: 116개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-10 12:46:21,905 [INFO] main — 대시보드 데이터 업데이트 완료

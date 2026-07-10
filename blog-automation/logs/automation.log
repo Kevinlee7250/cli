@@ -1,64 +1,3 @@
-2026-07-10 06:46:52,850 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:47:01,395 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '전기차 첫 구매 후 6개월 솔직 후기, 2026년 유지비 정리'
-2026-07-10 06:47:01,395 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치·경험은 풍부하나 글자 수 3119자로 4000자 기준에는 못 미침
-2026-07-10 06:47:01,395 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개는 양호하나 500자 이상의 긴 단락이 3곳 이상 존재함
-2026-07-10 06:47:01,396 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되지 않아 가독성·SEO 측면에서 보완 필요
-2026-07-10 06:47:01,396 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·표·실수 나열 등 전형적 AI 템플릿 패턴이 반복적으로 사용됨
-2026-07-10 06:47:01,396 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-07-10 06:47:01,396 [WARNING] main —      🟡 [원본성 및 품질] 구체적 수치·경험은 풍부하나 글자 수 3119자로 4000자 기준에는 못 미침
-2026-07-10 06:47:01,396 [WARNING] main —      🟡 [구조 및 가독성] H2 8개는 양호하나 500자 이상의 긴 단락이 3곳 이상 존재함
-2026-07-10 06:47:01,396 [WARNING] main —      🟡 [이미지 정책] 이미지가 전혀 포함되지 않아 가독성·SEO 측면에서 보완 필요
-2026-07-10 06:47:01,396 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-07-10 06:47:03,677 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:48:21,802 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-10 06:48:24,820 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:48:59,267 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3119자 → 4530자 (+1411자)
-2026-07-10 06:48:59,267 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-10 06:49:00,165 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:49:11,367 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-10 06:49:12,144 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:49:18,848 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '전기차 첫 구매 후 6개월 솔직 후기, 2026년 유지비 정리'
-2026-07-10 06:49:18,849 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 좋으나 체크리스트·비교 섹션 일부 단락이 500자를 넘어 다소 길게 이어짐
-2026-07-10 06:49:18,849 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 삽입 흔적이 없어 SEO·가독성 측면에서 보완 필요
-2026-07-10 06:49:18,849 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-07-10 06:49:18,849 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-07-10 06:49:20,909 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:50:43,484 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-10 06:50:45,661 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:52:00,091 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-10 06:52:02,324 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:52:29,809 [WARNING] final_editor —   ⚠️ 3차 최종 편집 건너뜀 (무시): Expecting value: line 1 column 1 (char 0)
-2026-07-10 06:52:29,915 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-10 06:52:29,915 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-07-10 06:52:30,458 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/6-2026_01603096756.html
-2026-07-10 06:52:30,465 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/6-2026_01603096756.html
-2026-07-10 06:53:05,915 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:53:05,916 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-10 06:53:05,916 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-10 06:53:05,925 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '전기차 첫 구매 후 6개월 솔직 후기, 2026년 유지비 정리'
-2026-07-10 06:53:06,584 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-10 06:53:09,971 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리자면, 겨울철엔 출발 전 미리 예약충전이나 완속충전 상태에서 배터리 프리컨디셔닝(예열) 기능을 써주시면 주행거리 감소를 조금...
-2026-07-10 06:56:10,264 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-07-10 06:56:10,265 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-10 06:56:10,265 [INFO] main — 
-============================================================
-2026-07-10 06:56:10,265 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-10 06:56:10,265 [INFO] main — ============================================================
-2026-07-10 06:56:10,297 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-10 06:56:10,321 [INFO] dashboard_exporter —   시리즈: 3개 내보내기 완료
-2026-07-10 06:56:10,340 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-10 06:56:10,498 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-10 06:56:10,678 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-10 06:56:10,852 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-10 06:56:10,853 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-10 06:56:10,856 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
 2026-07-10 06:56:10,864 [INFO] post_manager —   포스트 레지스트리: 전체 145개 (게시 102 / 실패 15 / 대기 24)
 2026-07-10 06:56:10,864 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-10 06:56:10,864 [INFO] dashboard_exporter —   포스트: 117개 / 실행 이력: 100개 / 블로그: 3개
@@ -559,3 +498,353 @@
 2026-07-10 12:46:21,904 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-10 12:46:21,904 [INFO] dashboard_exporter —   포스트: 116개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-10 12:46:21,905 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-10 23:05:20,527 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
+2026-07-10 23:05:20,527 [INFO] main —   - [blog1] HOGU What?
+2026-07-10 23:05:20,527 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
+2026-07-10 23:05:20,527 [INFO] main —   - [blog3] 금융NEWS
+2026-07-10 23:05:20,528 [INFO] main — ============================================================
+2026-07-10 23:05:20,528 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-10 23:05:20
+2026-07-10 23:05:20,528 [INFO] main — ============================================================
+2026-07-10 23:05:20,539 [INFO] keyword_collector — 포스팅 이력 코퍼스: 29개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-10 23:05:20,539 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
+2026-07-10 23:05:21,310 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-10 23:05:21,310 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-10 23:05:21,950 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-10 23:05:22,220 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-10 23:05:22,222 [INFO] keyword_collector — 최근 사용 제외 4개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁']
+2026-07-10 23:05:22,223 [WARNING] keyword_collector — 선정 키워드 부족 (1/2) — 유사도 기준 완화하여 재시도
+2026-07-10 23:05:22,223 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (1/2) — 이전 사용 키워드 일부 허용
+2026-07-10 23:05:22,224 [INFO] keyword_collector —   [fallback] 1개: ['이직 성공하고 나서 후회한 것 3가지']
+2026-07-10 23:05:22,224 [INFO] keyword_collector —   [season_scheduled] 1개: ['장마 건강 관리']
+2026-07-10 23:05:22,224 [INFO] keyword_collector — 최종 선정 키워드 2개: ['이직 성공하고 나서 후회한 것 3가지', '장마 건강 관리']
+2026-07-10 23:05:22,224 [INFO] main — 수집된 키워드 2개: ['이직 성공하고 나서 후회한 것 3가지', '장마 건강 관리']
+2026-07-10 23:05:22,228 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 12일 전)
+2026-07-10 23:05:22,385 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 0개
+2026-07-10 23:05:23,717 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:05:23,742 [INFO] main — 단독 포스트 대상 키워드 1개: ['이직 성공하고 나서 후회한 것 3가지']
+2026-07-10 23:05:23,755 [INFO] main — 
+[1/1] 키워드: '이직 성공하고 나서 후회한 것 3가지'
+2026-07-10 23:05:23,755 [INFO] content_generator — 포스트 생성 중: '이직 성공하고 나서 후회한 것 3가지'
+2026-07-10 23:05:23,755 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-10 23:05:25,341 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:06:47,519 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:06:47,520 [INFO] content_generator — 팩트체크: 통과
+2026-07-10 23:06:47,523 [INFO] content_generator — 섹션별 이미지 검색: ['이직 성공하고 나서']
+2026-07-10 23:06:48,003 [WARNING] image_fetcher — 이미지 없음: '이직 성공하고 나서'
+2026-07-10 23:06:48,003 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-10 23:06:48,005 [INFO] content_generator — 포스트 생성 완료: '이직 성공하고 나서 후회한 것 3가지, 2026년 솔직 후기' (3017자, 이미지 0개)
+2026-07-10 23:06:48,808 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:07:00,037 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:07:01,074 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:07:07,983 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 64/100 — '이직 성공하고 나서 후회한 것 3가지, 2026년 솔직 후기'
+2026-07-10 23:07:07,983 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치·경험(2023년 5월 이직, 16%→4% 실수령 증가, 연차 21→11일 등)은 우수하나 글자 수 3017자로 warn 구간
+2026-07-10 23:07:07,983 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 개수는 충분하나 도입부 등 500자 이상단락이 여러 개 존재해 가독성 저하 우려
+2026-07-10 23:07:07,983 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 
+2026-07-10 23:07:07,983 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 
+2026-07-10 23:07:07,983 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-10 23:07:07,983 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-07-10 23:07:07,983 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-10 23:07:07,983 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 64/100, 이유: []) — 재생성 2/2
+2026-07-10 23:07:10,984 [INFO] content_generator — 포스트 생성 중: '이직 성공하고 나서 후회한 것 3가지'
+2026-07-10 23:07:10,984 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-10 23:07:12,588 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:08:20,022 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:08:20,023 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-07-10 23:08:20,024 [INFO] content_generator — 섹션별 이미지 검색: ['이직 성공하고 나서']
+2026-07-10 23:08:20,597 [WARNING] image_fetcher — 이미지 없음: '이직 성공하고 나서'
+2026-07-10 23:08:20,597 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-10 23:08:20,598 [INFO] content_generator — 포스트 생성 완료: '이직 성공하고 나서 후회한 것 3가지, 2026년 직장인 솔직 후기' (2654자, 이미지 0개)
+2026-07-10 23:08:21,591 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:08:32,473 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:08:33,180 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:08:43,541 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:08:44,231 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:08:45,893 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '이직 성공하고 나서 후회한 것 3가지, 2026년 직장인 솔직 '
+2026-07-10 23:08:45,893 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 2654자로 warn 구간이며, 구체적 수치(400만원, 200만원, 연봉 4800/5200만원)는 있으나 정보 자체는 이직 관련 일반적 조언과 유사함
+2026-07-10 23:08:45,893 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 pass 기준이나, 단락 구분 없이 텍스트가 밀집되어 가독성이 떨어짐
+2026-07-10 23:08:45,893 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험과 수치는 있으나 본문 내 출처 3개가 어디에 인용됐는지 명시되지 않음
+2026-07-10 23:08:45,893 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없는 텍스트 전용 글로 정책 위반은 아니나 SEO·가독성 측면에서 warn
+2026-07-10 23:08:45,893 [INFO] adsense_validator —   ❌ AI 생성 의심도: '제 주변 40대 제 주변 몇몇 동료들은 이라고 개인적 경험임을 명확히 표현' 등 AI 생성 프롬프트 지시문이 본문에 그대로 노출된 명백한 오류
+2026-07-10 23:08:45,893 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '제 주변 40대 제 주변 몇몇 동료들은 이라고 개인적 경험임을 명확히 표현' 등 AI 생성 프롬프트 지시문이 본문에 그대로 노출된 명백한 오류
+2026-07-10 23:08:45,893 [WARNING] adsense_validator —   🔴 본문 중 '이라고 개인적 경험임을 명확히 표현'과 같은 AI 프롬프트/지시문이 그대로 노출되어 즉시 수정 필요
+2026-07-10 23:08:45,893 [WARNING] adsense_validator —   🔴 출처 3개가 본문에 인용 링크나 명시적 언급 없이 존재하여 E-E-A-T 신뢰도 저하
+2026-07-10 23:08:45,901 [INFO] internal_linker — 내부 링크 후보 2개 발견
+2026-07-10 23:08:45,905 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-10 23:08:45,905 [INFO] main —   제목: 이직 성공하고 나서 후회한 것 3가지, 2026년 직장인 솔직 후기
+2026-07-10 23:08:45,905 [INFO] main —   이미지: 0개 삽입
+2026-07-10 23:08:45,905 [INFO] main —   글자 수: 2654자
+2026-07-10 23:08:46,635 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:08:58,278 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:08:59,540 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:09:09,675 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:09:11,484 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:09:12,635 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 77/100 — '이직 성공하고 나서 후회한 것 3가지, 2026년 직장인 솔직 '
+2026-07-10 23:09:12,635 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치(400만원, 200만원, 왕복 40분 등)는 있으나 글자 수 2654자로 warn 구간이며 일부 문장이 어색하게 반복됨
+2026-07-10 23:09:12,635 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 확인되지 않아 SEO/가독성 측면에서 보완 필요(정책 위반은 아님)
+2026-07-10 23:09:12,635 [INFO] adsense_validator —   ❌ AI 생성 의심도: '제 주변 40대 제 주변 몇몇 동료들은 이라고 개인적 경험임을 명확히 표현'과 같이 프롬프트 지시문이 본문에 그대로 노출된 명백한 AI 생성 흔적 발견
+2026-07-10 23:09:12,636 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '제 주변 40대 제 주변 몇몇 동료들은 이라고 개인적 경험임을 명확히 표현'과 같이 프롬프트 지시문이 본문에 그대로 노출된 명백한 AI 생성 흔적 발견
+2026-07-10 23:09:12,636 [WARNING] adsense_validator —   🔴 본문 중 '제 주변 40대 제 주변 몇몇 동료들은 이라고 개인적 경험임을 명확히 표현' 문장은 AI 프롬프트 지시가 그대로 삽입된 것으로 보이며 즉시 삭제·수정 필요
+2026-07-10 23:09:12,636 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 77/100, 권장: review) — 자동 수정 시도
+2026-07-10 23:09:12,636 [WARNING] main —      🔴 [AI 생성 의심도] '제 주변 40대 제 주변 몇몇 동료들은 이라고 개인적 경험임을 명확히 표현'과 같이 프롬프트 지시문이 본문에 그대로 노출된 명백한 AI 생성 흔적 발견
+2026-07-10 23:09:12,636 [WARNING] main —      🔴 본문 중 '제 주변 40대 제 주변 몇몇 동료들은 이라고 개인적 경험임을 명확히 표현' 문장은 AI 프롬프트 지시가 그대로 삽입된 것으로 보이며 즉시 삭제·수정 필요
+2026-07-10 23:09:12,636 [WARNING] main —      🟡 [원본성 및 품질] 구체적 수치(400만원, 200만원, 왕복 40분 등)는 있으나 글자 수 2654자로 warn 구간이며 일부 문장이 어색하게 반복됨
+2026-07-10 23:09:12,636 [WARNING] main —      🟡 [이미지 정책] 본문에 이미지가 확인되지 않아 SEO/가독성 측면에서 보완 필요(정책 위반은 아님)
+2026-07-10 23:09:12,636 [WARNING] main —      🟡 글자 수를 4000자 이상으로 확대하여 originality 점수를 pass로 개선
+2026-07-10 23:09:12,636 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 77/100, fail: 1개, warn: 2개
+2026-07-10 23:09:13,485 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:10:17,706 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2654자 → 2960자 (+306자)
+2026-07-10 23:10:17,706 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-10 23:10:18,590 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:10:29,380 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:10:30,398 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:10:36,398 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '이직 성공하고 나서 후회한 것 3가지, 2026년 직장인 솔직 '
+2026-07-10 23:10:36,398 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치·개인 경험은 풍부하나 글자 수 2960자로 2500~3999자 구간(warn) 기준에 해당
+2026-07-10 23:10:36,398 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 적절하나 '핵심 개념', '비교 관점' 등 일부 단락이 500자 이상으로 길게 이어짐
+2026-07-10 23:10:36,398 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되지 않아 SEO·가독성 측면에서 보완 필요
+2026-07-10 23:10:36,398 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '핵심 개념', '초보자가 자주 하는 실수', '상황별 추천 방법' 등 전형적 AI 템플릿 구조 반복 패턴 존재
+2026-07-10 23:10:36,398 [WARNING] main —   ⚠️ 자동 수정 후에도 기준 미달 (점수: 79/100) — pending 저장
+2026-07-10 23:10:36,399 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '이직 성공하고 나서 후회한 것 3가지, 2026년 직장인 솔직 후기' (점수: 79/100, 권장: review)
+2026-07-10 23:10:36,411 [INFO] dashboard_exporter —   검토 대기 저장: 이직 성공하고 나서 후회한 것 3가지, 2026년 직장인 솔직 후기 (8979자 HTML)
+2026-07-10 23:10:36,418 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 49개)
+2026-07-10 23:10:36,418 [INFO] main — 
+============================================================
+2026-07-10 23:10:36,418 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-10 23:10:36,418 [INFO] main — ============================================================
+2026-07-10 23:10:36,448 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-10 23:10:36,471 [INFO] dashboard_exporter —   시리즈: 4개 내보내기 완료
+2026-07-10 23:10:36,489 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-10 23:10:36,783 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-10 23:10:37,121 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-10 23:10:37,469 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-10 23:10:37,470 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-10 23:10:37,473 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-10 23:10:37,482 [INFO] post_manager —   포스트 레지스트리: 전체 154개 (게시 105 / 실패 17 / 대기 28)
+2026-07-10 23:10:37,482 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-10 23:10:37,482 [INFO] dashboard_exporter —   포스트: 116개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-10 23:10:37,483 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-10 23:10:37,483 [INFO] main — ============================================================
+2026-07-10 23:10:37,484 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-10 23:10:37
+2026-07-10 23:10:37,484 [INFO] main — ============================================================
+2026-07-10 23:10:37,492 [INFO] keyword_collector — 포스팅 이력 코퍼스: 25개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-10 23:10:37,493 [INFO] keyword_collector — 시즌 예약 키워드 3개 로드: ['폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁']
+2026-07-10 23:10:38,182 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-10 23:10:38,182 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-10 23:10:43,675 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:10:43,676 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-10 23:10:43,677 [INFO] keyword_collector — 유사 주제 제외 7개: ['폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개']
+2026-07-10 23:10:43,678 [INFO] keyword_collector —   [fallback] 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
+2026-07-10 23:10:43,678 [INFO] keyword_collector — 최종 선정 키워드 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
+2026-07-10 23:10:43,678 [INFO] main — 수집된 키워드 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
+2026-07-10 23:10:43,678 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 12일 전)
+2026-07-10 23:10:44,803 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:10:44,804 [INFO] main — 단독 포스트 대상 키워드 1개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집']
+2026-07-10 23:10:44,818 [INFO] main — 
+[1/1] 키워드: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
+2026-07-10 23:10:44,818 [INFO] content_generator — 포스트 생성 중: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
+2026-07-10 23:10:44,818 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-10 23:10:45,507 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:11:57,162 [WARNING] content_generator — 컨텐츠 너무 짧음(2429자, 최소 2500자) — 재시도 1/3
+2026-07-10 23:12:00,163 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-10 23:12:00,887 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:13:04,948 [WARNING] content_generator — 컨텐츠 너무 짧음(2271자, 최소 2500자) — 재시도 2/3
+2026-07-10 23:13:07,949 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-10 23:13:08,703 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:14:24,580 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:14:24,581 [INFO] content_generator — 팩트체크: 통과
+2026-07-10 23:14:24,581 [INFO] content_generator — 섹션별 이미지 검색: ['전주 한옥마을 사람']
+2026-07-10 23:14:24,942 [INFO] image_fetcher — 이미지 수집 성공: '전주 한옥마을 사람' → 제목='출사스타그램 / 여행스타그램 / 일상스타그램 / 꽃스타그램 / 여행 / ' (관련성=0.33)
+2026-07-10 23:14:26,603 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:14:26,603 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-07-10 23:14:26,604 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-10 23:14:26,604 [INFO] content_generator — 포스트 생성 완료: '전주 한옥마을 사람 적은 시간대와 숨은 맛집, 5월 연휴 직접 가본 후기' (2503자, 이미지 0개)
+2026-07-10 23:14:27,684 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:14:38,636 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:14:40,615 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:14:48,979 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '전주 한옥마을 사람 적은 시간대와 숨은 맛집, 5월 연휴 직접 '
+2026-07-10 23:14:48,979 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 시간대·가격·경험담은 훌륭하지만 글자 수가 2503자로 2500~3999자 구간에 해당해 분량 기준상 warn
+2026-07-10 23:14:48,980 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 개수는 충분하나 본문이 섹션별로 500자 이상의 긴 단락으로 이어져 가독성 저하 우려
+2026-07-10 23:14:48,980 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 언급이 없어 텍스트만으로 구성됨, 정책 위반은 아니나 가독성·SEO 측면에서 이미지 추가 권장
+2026-07-10 23:14:48,980 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 전반적으로 경험 기반 서술이나 '정리하면', '결론적으로' 류의 요약형 문구가 반복돼 일부 정형화된 패턴 존재
+2026-07-10 23:14:48,986 [INFO] internal_linker — 내부 링크 후보 1개 발견
+2026-07-10 23:14:48,987 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-10 23:14:48,987 [INFO] main —   제목: 전주 한옥마을 사람 적은 시간대와 숨은 맛집, 5월 연휴 직접 가본 후기
+2026-07-10 23:14:48,987 [INFO] main —   이미지: 0개 삽입
+2026-07-10 23:14:48,987 [INFO] main —   글자 수: 2503자
+2026-07-10 23:14:49,778 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:15:01,025 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:15:01,709 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:15:10,331 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '전주 한옥마을 사람 적은 시간대와 숨은 맛집, 5월 연휴 직접 '
+2026-07-10 23:15:10,331 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 시간대·가격·개인 경험이 담겼으나 글자 수 2503자로 4000자 기준에 못 미침
+2026-07-10 23:15:10,331 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 pass 기준이나 맛집·비교 섹션 등 일부 단락이 500자 이상으로 길게 이어짐
+2026-07-10 23:15:10,331 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험과 구체적 날짜·수치는 충실하나 출처 2개 외 근거 제시가 제한적이고 2026년 미래 날짜 표기로 신뢰성에 의문 여지
+2026-07-10 23:15:10,331 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부가 확인되지 않아 SEO·가독성 측면에서 보완 필요
+2026-07-10 23:15:10,331 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 각 섹션마다 '장점 나열 후 단점 지적'하는 정형화된 패턴이 반복되어 다소 템플릿화된 인상
+2026-07-10 23:15:10,331 [WARNING] adsense_validator —   🔴 본문에 2026년 5월/7월이라는 미래 날짜가 '작년', '기준'으로 언급되어 시점 논리 오류 발생 — 발행 시점과 방문 시점 정합성 확인 필요
+2026-07-10 23:15:10,331 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-07-10 23:15:10,331 [WARNING] main —      🔴 본문에 2026년 5월/7월이라는 미래 날짜가 '작년', '기준'으로 언급되어 시점 논리 오류 발생 — 발행 시점과 방문 시점 정합성 확인 필요
+2026-07-10 23:15:10,331 [WARNING] main —      🟡 [원본성 및 품질] 구체적 시간대·가격·개인 경험이 담겼으나 글자 수 2503자로 4000자 기준에 못 미침
+2026-07-10 23:15:10,331 [WARNING] main —      🟡 [구조 및 가독성] H2 6개는 pass 기준이나 맛집·비교 섹션 등 일부 단락이 500자 이상으로 길게 이어짐
+2026-07-10 23:15:10,331 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 경험과 구체적 날짜·수치는 충실하나 출처 2개 외 근거 제시가 제한적이고 2026년 미래 날짜 표기로 신뢰성에 의문 여지
+2026-07-10 23:15:10,332 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-07-10 23:15:11,133 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:16:34,452 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:16:35,283 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:17:01,026 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2503자 → 4580자 (+2077자)
+2026-07-10 23:17:01,026 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-10 23:17:02,109 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:17:14,453 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:17:15,259 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:17:24,686 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '전주 한옥마을 사람 적은 시간대와 숨은 맛집, 5월 연휴 직접 '
+2026-07-10 23:17:24,686 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 양호하나 소제목 사이 서술형 단락이 500자 이상으로 길게 이어지는 구간이 있음
+2026-07-10 23:17:24,686 [INFO] adsense_validator —   ⚠️ 이미지 정책: 직접 촬영 이미지로 저작권 우려는 적으나 alt 텍스트 여부 확인 불가
+2026-07-10 23:17:24,686 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '정리하면' 등 자동요약 문구와 목록화(글머리 정리) 패턴이 반복적으로 나타남
+2026-07-10 23:17:24,686 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
+2026-07-10 23:17:24,686 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-07-10 23:17:25,412 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:18:43,133 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:18:44,175 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:19:10,730 [INFO] final_editor —   ✏️ 제목 최종 교정: '전주 한옥마을 사람 적은 시간대와 숨은 맛집, 5월 연휴 직접 가본 후기' → '전주 한옥마을 사람 적은 시간대와 숨은 맛집 후기'
+2026-07-10 23:19:10,730 [INFO] final_editor —   ✏️ 메타 설명 교정 (88자)
+2026-07-10 23:19:10,730 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 잘려있던 본문(비용 정리·추천 대상 섹션)을 완성하고, 요약박스·목차·표 2개·개인경험메모·주의사항·FAQ 6개·결론·작성자메모·내부링크·참고자료를 추가해 발행 가능한 형태로 정리했습니다. 모든 문단을 2~4문장 이내로 재구성했습니다.
+2026-07-10 23:19:10,925 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-10 23:19:10,925 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-07-10 23:19:11,785 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/blog-post.html
+2026-07-10 23:19:11,793 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/blog-post.html
+2026-07-10 23:19:49,315 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:19:49,316 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-10 23:19:49,316 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-10 23:19:49,325 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '전주 한옥마을 사람 적은 시간대와 숨은 맛집 후기'
+2026-07-10 23:19:50,228 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:19:54,223 [INFO] comment_manager —   생성된 댓글: 덧붙이자면 오전 7시대에 가실 거면 주차가 은근 변수예요! 한옥마을 주변 공영주차장이 그 시간엔 한산한데, 9시 넘어가면 순식간에 만차 되더라고...
+2026-07-10 23:22:54,601 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-10 23:22:54,602 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-10 23:22:54,602 [INFO] main — 
+============================================================
+2026-07-10 23:22:54,602 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-10 23:22:54,602 [INFO] main — ============================================================
+2026-07-10 23:22:54,631 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-10 23:22:54,681 [INFO] dashboard_exporter —   시리즈: 4개 내보내기 완료
+2026-07-10 23:22:54,700 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-10 23:22:54,995 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-10 23:22:54,997 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-10 23:22:55,000 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-10 23:22:55,009 [INFO] post_manager —   포스트 레지스트리: 전체 155개 (게시 106 / 실패 17 / 대기 28)
+2026-07-10 23:22:55,009 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-10 23:22:55,009 [INFO] dashboard_exporter —   포스트: 116개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-10 23:22:55,010 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-10 23:22:55,011 [INFO] main — ============================================================
+2026-07-10 23:22:55,011 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-10 23:22:55
+2026-07-10 23:22:55,011 [INFO] main — ============================================================
+2026-07-10 23:22:55,020 [INFO] keyword_collector — 포스팅 이력 코퍼스: 29개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-10 23:22:55,020 [INFO] keyword_collector — 시즌 예약 키워드 3개 로드: ['폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁']
+2026-07-10 23:22:55,694 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 0개
+2026-07-10 23:22:55,694 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-10 23:22:56,103 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-10 23:22:56,103 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-10 23:22:56,104 [INFO] keyword_collector — 유사 주제 제외 5개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁', '코스피 코스닥 2026 하반기 전망 핵심 정리']
+2026-07-10 23:22:56,104 [INFO] keyword_collector —   [fallback] 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-10 23:22:56,104 [INFO] keyword_collector — 최종 선정 키워드 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-10 23:22:56,104 [INFO] main — 수집된 키워드 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-10 23:22:56,104 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
+2026-07-10 23:22:56,104 [INFO] main — 단독 포스트 대상 키워드 1개: ['미국 연준 금리 결정 한국 증시 영향 분석']
+2026-07-10 23:22:56,117 [INFO] main — 
+[1/1] 키워드: '미국 연준 금리 결정 한국 증시 영향 분석'
+2026-07-10 23:22:56,117 [INFO] content_generator — 포스트 생성 중: '미국 연준 금리 결정 한국 증시 영향 분석'
+2026-07-10 23:22:56,117 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-10 23:22:56,922 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:24:16,447 [ERROR] content_generator — JSON 복구 후 dict가 아닌 타입 반환: <class 'list'>
+2026-07-10 23:24:16,447 [WARNING] content_generator — JSON 파싱 실패 — 재시도 1/3
+2026-07-10 23:24:18,447 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-10 23:24:19,800 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:25:39,151 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:25:39,152 [INFO] content_generator — 팩트체크: 통과
+2026-07-10 23:25:39,152 [INFO] content_generator — 섹션별 이미지 검색: ['미국 연준 금리']
+2026-07-10 23:25:39,988 [WARNING] image_fetcher — 이미지 없음: '미국 연준 금리'
+2026-07-10 23:25:39,989 [WARNING] content_generator — 글 내용과 맞는 이미지 없음 — 텍스트만으로 업로드 진행
+2026-07-10 23:25:39,989 [INFO] content_generator — 포스트 생성 완료: '미국 연준 금리 결정, 한국 증시에는 어떤 영향을 줄까? (2026년 7월 기준 실전 정리)' (2854자, 이미지 0개)
+2026-07-10 23:25:40,733 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:25:51,229 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:25:53,221 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:25:57,899 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '미국 연준 금리 결정, 한국 증시에는 어떤 영향을 줄까? (20'
+2026-07-10 23:25:57,899 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 2854자로 warn 구간이며, 개인 경험 서술은 있으나 전반적으로 일반론적 정보 재구성 비중이 큼
+2026-07-10 23:25:57,899 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험은 있으나 출처가 '여러 외신과 경제지'처럼 구체적 출처명 없이 모호하게 언급되어 신뢰성 신호가 약함
+2026-07-10 23:25:57,900 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 SEO 및 가독성 측면에서 보완 필요
+2026-07-10 23:25:57,900 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 첫째·둘째·셋째 나열 패턴과 표 형식이 반복되어 정형화된 AI 서술 느낌이 일부 나타남
+2026-07-10 23:25:57,905 [INFO] internal_linker — 내부 링크 후보 1개 발견
+2026-07-10 23:25:57,906 [INFO] internal_linker —   [1/5] '주택담보대출' -> https://hoguasset.blogspot.com/2026/07/1-2026_02026356980.ht
+2026-07-10 23:25:57,906 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-10 23:25:57,906 [INFO] main —   제목: 미국 연준 금리 결정, 한국 증시에는 어떤 영향을 줄까? (2026년 7월 기준 실전 정리)
+2026-07-10 23:25:57,906 [INFO] main —   이미지: 0개 삽입
+2026-07-10 23:25:57,906 [INFO] main —   글자 수: 2854자
+2026-07-10 23:25:58,773 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:26:09,795 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:26:10,533 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:26:18,587 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '미국 연준 금리 결정, 한국 증시에는 어떤 영향을 줄까? (20'
+2026-07-10 23:26:18,587 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2854자로 warn 구간이며 개인 경험 서술은 있으나 대부분 일반적 정보 재구성에 가까움
+2026-07-10 23:26:18,587 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술은 있으나 출처가 '여러 외신과 국내 경제지'처럼 모호하게 언급되어 구체적 인용 부족
+2026-07-10 23:26:18,587 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글로, 정책 위반은 아니나 가독성·SEO 보완 필요
+2026-07-10 23:26:18,587 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 첫째·둘째·셋째 식 목록화와 정형화된 비교표 패턴이 반복되어 일부 기계적 구성 흔적이 보임
+2026-07-10 23:26:18,587 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-07-10 23:26:18,588 [WARNING] main —      🟡 [원본성 및 품질] 2854자로 warn 구간이며 개인 경험 서술은 있으나 대부분 일반적 정보 재구성에 가까움
+2026-07-10 23:26:18,588 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 경험 서술은 있으나 출처가 '여러 외신과 국내 경제지'처럼 모호하게 언급되어 구체적 인용 부족
+2026-07-10 23:26:18,588 [WARNING] main —      🟡 [이미지 정책] 이미지가 포함되지 않은 텍스트 전용 글로, 정책 위반은 아니나 가독성·SEO 보완 필요
+2026-07-10 23:26:18,588 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-07-10 23:26:19,286 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:27:38,969 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:27:40,299 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:27:55,560 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2854자 → 4499자 (+1645자)
+2026-07-10 23:27:55,560 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-10 23:27:57,330 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:28:09,244 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:28:09,969 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:28:17,638 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '미국 연준 금리 결정, 한국 증시에는 어떤 영향을 줄까? (20'
+2026-07-10 23:28:17,638 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 개수는 충분하나 표 이후 설명부 등 500자 이상의 긴 단락이 다수 존재
+2026-07-10 23:28:17,638 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 없이 텍스트 도식 설명만 존재, 저작권 위반은 없으나 이미지 부재로 warn
+2026-07-10 23:28:17,638 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
+2026-07-10 23:28:17,638 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-07-10 23:28:19,069 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:29:36,673 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-10 23:29:37,637 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:30:32,144 [INFO] final_editor —   ✏️ 제목 최종 교정: '미국 연준 금리 결정, 한국 증시에는 어떤 영향을 줄까? (2026년 7월 기준 실전 정리)' → '미국 연준 금리 결정, 한국 증시 영향 총정리 (2026.7)'
+2026-07-10 23:30:32,144 [INFO] final_editor —   ✏️ 메타 설명 교정 (103자)
+2026-07-10 23:30:32,144 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 잘려있던 본문을 완성하고 요약박스·목차·비교표 2개·개인경험메모 2건·주의사항·FAQ 6개·작성자메모·내부링크를 추가했으며, 모든 문단을 2~4문장 내로 재구성해 모바일 가독성을 높였습니다.
+2026-07-10 23:30:32,338 [INFO] related_posts — 관련 포스트 2개 섹션 생성
+2026-07-10 23:30:32,338 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-07-10 23:30:33,391 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/20267.html
+2026-07-10 23:30:33,399 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/20267.html
+2026-07-10 23:31:07,666 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:31:07,667 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-10 23:31:07,667 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-10 23:31:07,667 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '미국 연준 금리 결정, 한국 증시 영향 총정리 (2026.7)'
+2026-07-10 23:31:08,736 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-10 23:31:12,590 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리자면, FOMC 발표 시각(한국 시간 새벽 3시경)에 실시간으로 반응하기보다는 다음 날 오전 국내 증시 개장 후 외국인·기관...
+2026-07-10 23:34:12,984 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-10 23:34:12,985 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (2개)
+2026-07-10 23:34:12,986 [INFO] main — 
+============================================================
+2026-07-10 23:34:12,986 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-10 23:34:12,986 [INFO] main — ============================================================
+2026-07-10 23:34:13,015 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-10 23:34:13,038 [INFO] dashboard_exporter —   시리즈: 4개 내보내기 완료
+2026-07-10 23:34:13,057 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-10 23:34:13,350 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-10 23:34:13,352 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-10 23:34:13,355 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-10 23:34:13,363 [INFO] post_manager —   포스트 레지스트리: 전체 156개 (게시 107 / 실패 17 / 대기 28)
+2026-07-10 23:34:13,363 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-10 23:34:13,363 [INFO] dashboard_exporter —   포스트: 114개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-10 23:34:13,364 [INFO] main — 대시보드 데이터 업데이트 완료

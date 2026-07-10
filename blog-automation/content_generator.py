@@ -30,6 +30,78 @@ def _get_client() -> anthropic.Anthropic:
     return _client
 
 
+def _fetch_drama_references(keyword: str) -> str:
+    """
+    드라마·영화 키워드에 대한 실제 리뷰·반응 데이터를 네이버 블로그/뉴스 API로 수집합니다.
+    수집된 내용은 Claude 프롬프트에 참고 자료로 주입됩니다.
+    API 키가 없거나 실패하면 빈 문자열을 반환합니다.
+    """
+    import requests as _req
+    naver_id = os.getenv("NAVER_CLIENT_ID", "")
+    naver_secret = os.getenv("NAVER_CLIENT_SECRET", "")
+    if not naver_id or not naver_secret:
+        return ""
+
+    headers = {
+        "X-Naver-Client-Id": naver_id,
+        "X-Naver-Client-Secret": naver_secret,
+    }
+    snippets: list[str] = []
+
+    # 블로그 리뷰 수집 (최신순 5개)
+    try:
+        r = _req.get(
+            "https://openapi.naver.com/v1/search/blog.json",
+            headers=headers,
+            params={"query": keyword + " 리뷰", "display": 5, "sort": "date"},
+            timeout=8,
+        )
+        if r.status_code == 200:
+            for item in r.json().get("items", []):
+                title = re.sub(r"<[^>]+>", "", item.get("title", "")).strip()
+                desc = re.sub(r"<[^>]+>", "", item.get("description", "")).strip()
+                if title and desc:
+                    snippets.append(f"[블로그 리뷰] {title}: {desc}")
+    except Exception:
+        pass
+
+    # 뉴스 수집 (최신 5개)
+    try:
+        r = _req.get(
+            "https://openapi.naver.com/v1/search/news.json",
+            headers=headers,
+            params={"query": keyword, "display": 5, "sort": "date"},
+            timeout=8,
+        )
+        if r.status_code == 200:
+            for item in r.json().get("items", []):
+                title = re.sub(r"<[^>]+>", "", item.get("title", "")).strip()
+                desc = re.sub(r"<[^>]+>", "", item.get("description", "")).strip()
+                if title and desc:
+                    snippets.append(f"[뉴스] {title}: {desc}")
+    except Exception:
+        pass
+
+    if not snippets:
+        return ""
+
+    lines = "\n".join(f"- {s}" for s in snippets[:8])
+    return f"""
+━━━ 실제 시청자·관객 반응 참고 자료 (네이버 최신 검색 결과) ━━━
+
+아래는 이 작품에 대한 실제 블로그 리뷰와 뉴스 요약입니다.
+반드시 이 내용을 참고해서 실제 시청자 반응과 평가를 글에 자연스럽게 녹여주세요.
+단, 아래 내용을 그대로 복사하지 말고, 개인 시청 경험과 결합해 재구성하세요.
+
+{lines}
+
+위 참고 자료를 바탕으로:
+- 실제 시청자들이 공통적으로 언급하는 장면·배우·스토리 포인트를 글에 포함할 것
+- 호불호가 갈리는 요소가 있다면 양쪽 시각 모두 언급할 것
+- 수치(시청률, 박스오피스 순위, 별점 등)가 언급된 경우 글에 반영할 것
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
+
+
 def _get_openai_client():
     global _openai_client
     if _openai_client is None:
@@ -77,9 +149,10 @@ def _ai_generate(system: str, prompt: str, ai_provider: str) -> str:
 def _detect_article_type(keyword: str) -> str:
     """키워드 기반 아티클 유형 감지"""
     kw = keyword.lower()
-    # 드라마 리뷰 — 가장 먼저 체크 (리뷰 타입과 겹치지 않게)
-    if any(w in kw for w in ["드라마", "시즌", "넷플릭스", "티빙", "쿠팡플레이", "ott", "왓챠",
-                              "결말 해석", "등장인물", "ost 추천", "명장면"]):
+    # 드라마·영화 리뷰 — 가장 먼저 체크 (리뷰 타입과 겹치지 않게)
+    if any(w in kw for w in ["드라마", "영화", "시즌", "넷플릭스", "티빙", "쿠팡플레이", "ott", "왓챠",
+                              "결말 해석", "등장인물", "ost 추천", "명장면", "영화 리뷰", "영화 후기",
+                              "박스오피스", "개봉"]):
         return "drama_review"
     # 여행 가이드
     if any(w in kw for w in ["여행", "관광", "투어", "코스", "명소", "숙소", "호텔", "맛집",
@@ -195,6 +268,13 @@ def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = N
     date_str = now.strftime("%Y년 %m월 %d일")
     article_type = _detect_article_type(keyword)
     blog_topic_hint = _build_blog_topic_hint(blog_config)
+
+    # 드라마·영화 리뷰일 때 실제 시청자 반응·리뷰 데이터 수집
+    drama_ref_section = ""
+    if article_type == "drama_review":
+        drama_ref_section = _fetch_drama_references(keyword)
+        if drama_ref_section:
+            logger.info(f"드라마/영화 참고 리뷰 데이터 수집 완료: '{keyword}'")
 
     kw_lower = keyword.lower()
     if any(w in kw_lower for w in _FINANCE_KW):
@@ -363,7 +443,7 @@ H2: 마무리 (300자 이상)
 
 ━━━ SEO ━━━
 키워드 10~14회 | LSI 키워드 | 라벨 10개 | meta_description 120~160자
-
+{drama_ref_section}
 JSON만 응답 (마크다운 없이):
 {{
   "title": "...",
@@ -1483,6 +1563,13 @@ def _build_series_prompt_general(keyword: str, traffic: str, series_context: dic
     structure_guide = _STRUCTURE_GUIDE.get(article_type, _STRUCTURE_GUIDE["analysis"])
     blog_topic_hint = _build_blog_topic_hint(blog_config)
 
+    # 드라마·영화 시리즈일 때 실제 리뷰 데이터 수집
+    drama_ref_section = ""
+    if article_type == "drama_review":
+        drama_ref_section = _fetch_drama_references(keyword)
+        if drama_ref_section:
+            logger.info(f"[시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '{keyword}'")
+
     if BLOG_LANGUAGE == "ko":
         return f"""당신은 30대 중반 직장인입니다. 본업이 따로 있고, "{series_title}" 시리즈를 직접 공부하고 경험하면서 편씩 정리해 올리는 중입니다.
 글쓰기 전문가가 아니라 완벽하지 않아도 됩니다. 구글 AdSense 정책을 완전히 준수합니다.
@@ -1595,7 +1682,7 @@ h2 "자주 묻는 질문" + 5개 / 구체적이고 실질적인 질문·답변
 • 실존하는 공신력 있는 URL만
 • 확인 불가 통계는 출처 생략
 • 최소 2개, 최대 6개
-
+{drama_ref_section}
 JSON만 응답 (마크다운 없이):
 {{
   "title": "[{episode}편] ...",

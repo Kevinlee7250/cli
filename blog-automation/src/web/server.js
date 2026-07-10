@@ -214,6 +214,14 @@ app.get('/api/social/:id', (req, res) => {
   res.json(data)
 })
 
+// ── API: GSC ──────────────────────────────────────────────────────────────────
+
+app.get('/api/gsc', (req, res) => {
+  const data = readJSON(join(DOCS_DATA, 'gsc.json'))
+  if (!data) return res.status(404).json({ error: 'GSC 데이터 없음' })
+  res.json(data)
+})
+
 // ── API: Run History & Analytics ──────────────────────────────────────────────
 
 app.get('/api/runs', (req, res) => {
@@ -260,21 +268,23 @@ app.get('/api/run/status', (req, res) => {
 
 app.post('/api/run', (req, res) => {
   if (runningProcess) return res.status(409).json({ error: '이미 실행 중입니다' })
-  const { mode = 'publish' } = req.body
-  const args = mode === 'draft' ? ['--draft'] : mode === 'preview' ? ['--preview'] : []
+  const { mode = 'publish', blogId = '' } = req.body
 
-  runningProcess = spawn('node', ['src/index.js', ...args], {
+  // mode 매핑: publish→--once, draft→--once --review, preview→--once --test
+  const pyArgs = ['main.py', '--once']
+  if (mode === 'draft') pyArgs.push('--review')
+  if (mode === 'preview') pyArgs.push('--test')
+  if (blogId) pyArgs.push('--blog', blogId)
+
+  runningProcess = spawn('python3', pyArgs, {
     cwd: ROOT, env: { ...process.env },
   })
 
-  let output = ''
-  runningProcess.stdout.on('data', d => { output += d })
-  runningProcess.stderr.on('data', d => { output += d })
-  runningProcess.on('close', code => {
-    runningProcess = null
-  })
+  runningProcess.stdout.on('data', () => {})
+  runningProcess.stderr.on('data', () => {})
+  runningProcess.on('close', () => { runningProcess = null })
 
-  res.json({ started: true, mode })
+  res.json({ started: true, mode, blogId })
 })
 
 app.get('/api/run/stream', (req, res) => {

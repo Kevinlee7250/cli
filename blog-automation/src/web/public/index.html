@@ -279,6 +279,7 @@
     <a data-page="posts"><span class="icon">📝</span> 포스트 목록</a>
     <a data-page="social"><span class="icon">📱</span> SNS 콘텐츠</a>
     <a data-page="analytics"><span class="icon">💰</span> 수익 분석</a>
+    <a data-page="gsc"><span class="icon">🔍</span> 검색 성과</a>
     <a data-page="logs"><span class="icon">🪵</span> 로그 뷰어</a>
     <a data-page="config"><span class="icon">⚙️</span> 설정</a>
   </nav>
@@ -376,6 +377,10 @@
         <option value="review">⭐ 리뷰</option>
         <option value="comparison">⚖️ 비교</option>
         <option value="analysis">📊 분석</option>
+        <option value="it_review">💻 IT리뷰</option>
+        <option value="tech_news">📡 IT뉴스</option>
+        <option value="finance_news">📈 금융뉴스</option>
+        <option value="government_policy">🏛 정부지원</option>
       </select>
     </div>
     <div class="post-grid" id="posts-grid"></div>
@@ -421,6 +426,31 @@
           <tr><td>쇼핑</td><td><span class="badge muted">$0.90</span></td><td>할인, 세일, 패션</td></tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <!-- GSC -->
+  <div class="page" id="page-gsc">
+    <div class="page-title">🔍 검색 성과 (Google Search Console)</div>
+    <div class="cards" id="gsc-summary-cards" style="margin-bottom:28px"></div>
+    <div id="gsc-blog-tabs" style="margin-bottom:20px"></div>
+    <div id="gsc-queries-section">
+      <div class="section-header"><h2>인기 검색어</h2><span class="badge muted" id="gsc-date-range">-</span></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>검색어</th><th>클릭</th><th>노출</th><th>CTR</th><th>평균 순위</th></tr></thead>
+          <tbody id="gsc-queries-table"></tbody>
+        </table>
+      </div>
+    </div>
+    <div style="margin-top:28px">
+      <div class="section-header"><h2>카테고리별 성과</h2></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>카테고리</th><th>클릭</th><th>노출</th><th>CTR</th></tr></thead>
+          <tbody id="gsc-category-table"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -511,6 +541,15 @@ let allBlogs = []
 let runEventSource = null
 let isRunning = false
 let selectedBlog = ''
+let gscData = null
+let gscActiveBlog = ''
+
+// ── Blog color helper ─────────────────────────────────────────────────────────
+function blogColor(id) {
+  if (id === 'blog2') return 'sky'
+  if (id === 'blog3') return 'green'
+  return 'purple'
+}
 
 // ── Navigation ────────────────────────────────────────────────────────────────
 document.querySelectorAll('nav a').forEach(a => {
@@ -524,6 +563,7 @@ function navTo(page) {
   if (page === 'pending') loadPendingPosts()
   if (page === 'social') loadSocial()
   if (page === 'analytics') loadAnalytics()
+  if (page === 'gsc') loadGsc()
   if (page === 'logs') loadLogs()
   if (page === 'config') loadConfig()
   if (page === 'run') initRunPage()
@@ -546,10 +586,19 @@ function onBlogFilter() {
   selectedBlog = document.getElementById('blog-selector').value
   const pf = document.getElementById('post-blog-filter')
   if (pf) pf.value = selectedBlog
+
+  // 사이드바 실행 버튼 라벨 업데이트
+  const blog = allBlogs.find(b => b.id === selectedBlog)
+  const label = document.getElementById('sidebar-run-label')
+  if (label && !isRunning) {
+    label.textContent = blog ? `▶ ${blog.name} 실행` : '▶ 즉시 실행'
+  }
+
   // 현재 활성 페이지 새로고침
   const activePage = document.querySelector('.page.active')?.id?.replace('page-','')
   if (activePage === 'dashboard') loadDashboard()
   if (activePage === 'posts') filterPosts()
+  if (activePage === 'analytics') loadAnalytics()
 }
 
 // ── Dashboard ─────────────────────────────────────────────────────────────────
@@ -587,7 +636,7 @@ async function loadDashboard() {
   const blogCards = document.getElementById('blog-stat-cards')
   if (blogCards && blogs.length) {
     blogCards.innerHTML = blogs.map(b => `
-      <div class="card ${b.id==='blog2'?'blue':'purple'}" style="cursor:pointer" onclick="document.getElementById('blog-selector').value='${b.id}';onBlogFilter()">
+      <div class="card ${blogColor(b.id)}" style="cursor:pointer" onclick="document.getElementById('blog-selector').value='${b.id}';onBlogFilter()">
         <div class="label">${b.name || b.id}</div>
         <div class="value">${b.postCount || 0}<span style="font-size:14px;color:var(--muted)"> 포스트</span></div>
         <div class="sub">실행 ${b.runCount || 0}회 · ${b.lastRunAt ? new Date(b.lastRunAt).toLocaleDateString('ko-KR') : '미실행'}</div>
@@ -600,7 +649,7 @@ async function loadDashboard() {
   tbody.innerHTML = filteredRuns.slice(0, 10).map(r => `
     <tr>
       <td>${new Date(r.runAt).toLocaleString('ko-KR')}</td>
-      <td><span class="badge ${r.blogId==='blog2'?'sky':'purple'}" style="font-size:10px">${r.blogName||r.blogId||'기본'}</span></td>
+      <td><span class="badge ${blogColor(r.blogId)}" style="font-size:10px">${r.blogName||r.blogId||'기본'}</span></td>
       <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.keywords||[]).join(', ')}</td>
       <td>${r.postsGenerated || 0}개</td>
       <td>${r.platforms?.blogger || 0}개</td>
@@ -645,6 +694,8 @@ function articleTypeLabel(t) {
     drama_review: ['purple','🎭 드라마'], how_to: ['blue','📖 방법'],
     review: ['yellow','⭐ 리뷰'], comparison: ['orange','⚖️ 비교'],
     explainer: ['muted','💡 설명'], analysis: ['muted','📊 분석'],
+    it_review: ['sky','💻 IT리뷰'], tech_news: ['blue','📡 IT뉴스'],
+    finance_news: ['green','📈 금융뉴스'], government_policy: ['green','🏛 정부지원'],
   }
   return map[t] || null
 }
@@ -661,7 +712,7 @@ function postCardHTML(p) {
     ? '<span class="badge red">❌ 거절</span>'
     : p.blogUrl ? '<span class="badge green">✅ 게시됨</span>' : ''
   const cardClass = p.publishStatus === 'pending' ? 'post-card pending' : p.publishStatus === 'rejected' ? 'post-card rejected' : 'post-card'
-  const blogBadge = p.blogName ? `<span class="badge ${p.blogId==='blog2'?'sky':'muted'}" style="font-size:10px">${p.blogName}</span>` : ''
+  const blogBadge = p.blogName ? `<span class="badge ${blogColor(p.blogId)}" style="font-size:10px">${p.blogName}</span>` : ''
   const atInfo = articleTypeLabel(p.articleType)
   const atBadge = atInfo ? `<span class="badge ${atInfo[0]}" style="font-size:10px">${atInfo[1]}</span>` : ''
   return `<div class="${cardClass}" onclick="openPost('${encodeURIComponent(p.id)}')">
@@ -821,23 +872,124 @@ async function loadAnalytics() {
     fetch('/api/analytics').then(r => r.json()),
     fetch('/api/runs').then(r => r.json()),
   ])
-  const lastRun = runs[0]
-  const earnings = lastRun?.earnings || {}
-  document.getElementById('an-daily').textContent = '$' + (earnings.estimatedDailyRevenue || 0).toFixed(2)
-  document.getElementById('an-monthly').textContent = '$' + (earnings.estimatedMonthlyRevenue || 0).toFixed(2)
-  document.getElementById('an-yearly').textContent = '$' + (earnings.estimatedYearlyRevenue || 0).toFixed(0)
-  document.getElementById('an-cpc').textContent = '$' + (earnings.avgCPC || 0).toFixed(2)
+
+  // 전체 실행 누적 집계 (마지막 1건이 아닌 전체)
+  const filteredRuns = selectedBlog ? runs.filter(r => r.blogId === selectedBlog) : runs
+  const totalDaily = filteredRuns.reduce((s, r) => s + (r.earnings?.estimatedDailyRevenue || 0), 0) / Math.max(filteredRuns.length, 1)
+  const cpcList = filteredRuns.filter(r => r.earnings?.avgCPC).map(r => r.earnings.avgCPC)
+  const avgCpc = cpcList.length ? cpcList.reduce((a, b) => a + b, 0) / cpcList.length : (analytics.avgCPC || 0)
+
+  document.getElementById('an-daily').textContent = '$' + totalDaily.toFixed(2)
+  document.getElementById('an-monthly').textContent = '$' + (totalDaily * 30).toFixed(2)
+  document.getElementById('an-yearly').textContent = '$' + (totalDaily * 365).toFixed(0)
+  document.getElementById('an-cpc').textContent = '$' + avgCpc.toFixed(2)
 
   const hist = document.getElementById('earnings-history')
-  hist.innerHTML = runs.slice(0, 15).map(r => `
+  hist.innerHTML = filteredRuns.slice(0, 15).map(r => `
     <div class="earnings-row">
       <div>
-        <div style="font-size:13px;font-weight:600">${new Date(r.runAt).toLocaleDateString('ko-KR')}</div>
-        <div style="font-size:12px;color:var(--muted)">${(r.keywords||[]).join(', ')} · ${r.postsGenerated}개 생성 · Blogger ${r.platforms?.blogger||0}개</div>
+        <div style="font-size:13px;font-weight:600">
+          ${new Date(r.runAt).toLocaleDateString('ko-KR')}
+          ${r.blogName ? `<span class="badge ${blogColor(r.blogId)}" style="font-size:10px;margin-left:6px">${r.blogName}</span>` : ''}
+        </div>
+        <div style="font-size:12px;color:var(--muted)">${(r.keywords||[]).join(', ')} · ${r.postsGenerated||0}개 생성 · Blogger ${r.platforms?.blogger||0}개</div>
       </div>
       <div class="earnings-value">$${(r.earnings?.estimatedDailyRevenue||0).toFixed(2)}<span style="font-size:11px;color:var(--muted)">/일</span></div>
     </div>
   `).join('') || '<div class="empty">데이터 없음</div>'
+}
+
+// ── GSC ───────────────────────────────────────────────────────────────────────
+async function loadGsc() {
+  const data = await fetch('/api/gsc').then(r => r.json()).catch(() => null)
+  if (!data) {
+    document.getElementById('gsc-summary-cards').innerHTML = '<div class="empty"><div class="icon">🔍</div>GSC 데이터 없음</div>'
+    return
+  }
+  gscData = data
+
+  // 멀티블로그 탭
+  const sites = data.sites || {}
+  const blogIds = Object.keys(sites)
+  const tabsEl = document.getElementById('gsc-blog-tabs')
+  if (blogIds.length > 1) {
+    tabsEl.innerHTML = `<div class="sns-tabs">
+      <div class="sns-tab active" onclick="switchGscBlog('', this)">전체</div>
+      ${blogIds.map(id => {
+        const blog = allBlogs.find(b => b.id === id) || {}
+        return `<div class="sns-tab" onclick="switchGscBlog('${id}', this)">${blog.name || id}</div>`
+      }).join('')}
+    </div>`
+  } else tabsEl.innerHTML = ''
+
+  gscActiveBlog = ''
+  renderGsc(data)
+}
+
+function switchGscBlog(blogId, el) {
+  el.parentElement.querySelectorAll('.sns-tab').forEach(t => t.classList.remove('active'))
+  el.classList.add('active')
+  gscActiveBlog = blogId
+  if (blogId && gscData?.sites?.[blogId]) {
+    renderGsc(gscData.sites[blogId])
+  } else {
+    renderGsc(gscData)
+  }
+}
+
+function renderGsc(d) {
+  const dateRange = d.date_range
+  document.getElementById('gsc-date-range').textContent =
+    dateRange ? `${dateRange.start} ~ ${dateRange.end}` : '-'
+
+  // 요약 카드
+  const queries = d.top_queries || []
+  const totalClicks = queries.reduce((s, q) => s + (q.clicks || 0), 0)
+  const totalImpr = queries.reduce((s, q) => s + (q.impressions || 0), 0)
+  const avgCtr = totalImpr ? (totalClicks / totalImpr * 100).toFixed(1) : '0.0'
+  const avgPos = queries.length
+    ? (queries.reduce((s, q) => s + (q.position || 0), 0) / queries.length).toFixed(1)
+    : '-'
+
+  document.getElementById('gsc-summary-cards').innerHTML = `
+    <div class="card blue"><div class="label">총 클릭수</div><div class="value">${totalClicks.toLocaleString()}</div><div class="sub">최근 30일</div></div>
+    <div class="card purple"><div class="label">총 노출수</div><div class="value">${totalImpr.toLocaleString()}</div><div class="sub">최근 30일</div></div>
+    <div class="card green"><div class="label">평균 CTR</div><div class="value">${avgCtr}%</div><div class="sub">클릭률</div></div>
+    <div class="card yellow"><div class="label">평균 순위</div><div class="value">${avgPos}</div><div class="sub">검색 결과 위치</div></div>
+  `
+
+  // 인기 검색어 테이블
+  const tbody = document.getElementById('gsc-queries-table')
+  if (!queries.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty">데이터 없음 (GSC 연결 또는 색인 대기 중)</td></tr>'
+  } else {
+    tbody.innerHTML = queries.slice(0, 20).map(q => `
+      <tr>
+        <td style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escHtml(q.query || '')}</td>
+        <td><span class="rising">${(q.clicks||0).toLocaleString()}</span></td>
+        <td>${(q.impressions||0).toLocaleString()}</td>
+        <td>${q.ctr ? (q.ctr * 100).toFixed(1) + '%' : '-'}</td>
+        <td>${q.position ? q.position.toFixed(1) : '-'}</td>
+      </tr>
+    `).join('')
+  }
+
+  // 카테고리별 성과
+  const cats = d.category_performance || {}
+  const catRows = Object.entries(cats)
+  const catTbody = document.getElementById('gsc-category-table')
+  if (!catRows.length) {
+    catTbody.innerHTML = '<tr><td colspan="4" class="empty">카테고리 데이터 없음</td></tr>'
+  } else {
+    catTbody.innerHTML = catRows.map(([cat, v]) => `
+      <tr>
+        <td>${escHtml(cat)}</td>
+        <td>${(v.clicks||0).toLocaleString()}</td>
+        <td>${(v.impressions||0).toLocaleString()}</td>
+        <td>${v.ctr ? (v.ctr * 100).toFixed(1) + '%' : '-'}</td>
+      </tr>
+    `).join('')
+  }
 }
 
 // ── Logs ──────────────────────────────────────────────────────────────────────
@@ -918,7 +1070,12 @@ function clearLog() { const box = document.getElementById('log-box'); if (box) b
 async function startRun(mode) {
   if (isRunning) return
   clearLog()
-  await fetch('/api/run', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ mode }) })
+  const blogId = selectedBlog || ''
+  await fetch('/api/run', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ mode, blogId }),
+  })
   updateRunStatus(true)
 }
 async function stopRun() {

@@ -237,6 +237,52 @@ _FALLBACK_KEYWORDS_BLOG2_IT = [
     "블로그 SEO 직접 적용해보고 검색 순위 변화 정리",
 ]
 
+_FALLBACK_KEYWORDS_BLOG3 = [
+    # 📈 금융 뉴스·시장 동향
+    "코스피 코스닥 2026 하반기 전망 핵심 정리",
+    "미국 연준 금리 결정 한국 증시 영향 분석",
+    "원달러 환율 급등락 원인과 개인투자자 대응법",
+    "2026 금융시장 주요 이슈 직장인이 알아야 할 것",
+    "삼성전자 주가 전망 2026 실적과 주주 환원 분석",
+    "ETF 시장 최신 동향 새로 나온 상품 정리",
+    "채권 금리 상승 시대 개인 투자 전략 변화",
+    "국내외 부동산 시장 2026 금리 변화와 전망",
+    # 🏦 은행·대출·예적금
+    "2026 주요 은행 적금 금리 비교 가장 높은 곳",
+    "주택담보대출 금리 변동 2026 갈아타기 해야 할까",
+    "청년 전세자금 대출 조건과 한도 2026 최신 정리",
+    "ISA 계좌 2026 개편 내용 무엇이 달라졌나",
+    "파킹통장 금리 비교 2026 최신 순위",
+    "신용대출 금리 낮추는 방법 직접 알아본 결과",
+    "예금자보호 한도 상향 2026 내용과 활용법",
+    # 🏛️ 정부 지원 시책·복지
+    "2026 정부 지원금 총정리 놓치면 아까운 것들",
+    "청년도약계좌 가입 조건과 혜택 2026 최신 정리",
+    "청년희망적금 만기 후 다음 단계 정부 지원 정리",
+    "소상공인 정부 지원금 2026 신청 방법과 조건",
+    "근로장려금 자녀장려금 2026 신청 기간과 금액",
+    "국민취업지원제도 2026 달라진 내용과 신청법",
+    "에너지 바우처 2026 대상자 신청 방법 정리",
+    "기초생활수급자 조건 2026 변경 내용 핵심 정리",
+    "중소기업 재직자 우대 저축 공제 2026 가입 조건",
+    "주거급여 신청 조건과 금액 2026 최신 정리",
+    "출산지원금 2026 지방별 금액 차이와 신청법",
+    "육아휴직 급여 2026 인상 내용과 신청 방법",
+    "실업급여 2026 수급 조건 계산법 직접 정리",
+    "국민연금 2026 개편 내용 노후 대비 어떻게 바뀌나",
+    # 💰 세금·절세
+    "연말정산 2026 달라진 공제 항목 핵심 정리",
+    "종합소득세 신고 2026 직장인 부업 신고 방법",
+    "증여세 부모에게 받을 때 2026 공제 한도 정리",
+    "양도소득세 2026 부동산 절세 방법 핵심 정리",
+    "건강보험료 2026 직장인 지역가입자 달라진 점",
+    # 📊 경제 정책·제도 변화
+    "2026 최저임금 인상 소상공인 직장인 영향 분석",
+    "청년 주택 공급 정책 2026 달라진 내용 정리",
+    "금융투자소득세 2026 최종 결정 내용 정리",
+    "가계부채 관리 대책 2026 대출 규제 변화 정리",
+]
+
 _FALLBACK_KEYWORDS_EN = [
     # Finance — experience angle
     "what I learned after 1 year of dividend investing", "honest ETF investing review after 3 years",
@@ -911,11 +957,15 @@ def get_trending_keywords(
     # 3순위: 고정 폴백 (미사용 키워드 우선 + GSC 고성과 카테고리 먼저)
     _BLOG1_TOPICS = {"여행", "스포츠", "드라마", "영화", "연예", "k-pop", "kpop"}
     _BLOG2_IT_TOPICS = {"it", "ai", "기술", "스마트폰", "앱", "테크", "tech"}
+    _BLOG3_FIN_TOPICS = {"금융", "경제", "정부지원", "세금", "복지", "시책", "뉴스", "news"}
     is_blog1 = blog_id in ("blog1", "default") and bool(
         topics and _BLOG1_TOPICS.intersection(set(t.lower() for t in topics))
     )
     is_blog2_it = blog_id == "blog2" and bool(
         topics and _BLOG2_IT_TOPICS.intersection(set(t.lower() for t in topics))
+    )
+    is_blog3_fin = blog_id == "blog3" and bool(
+        topics and _BLOG3_FIN_TOPICS.intersection(set(t.lower() for t in topics))
     )
     _TRAVEL_SPORTS_TOPICS = {"여행", "스포츠", "travel", "sports"}
     is_travel_sports = bool(topics and _TRAVEL_SPORTS_TOPICS.intersection(set(t.lower() for t in topics)))
@@ -923,6 +973,8 @@ def get_trending_keywords(
         fallback = _FALLBACK_KEYWORDS_BLOG1
     elif is_blog2_it:
         fallback = _FALLBACK_KEYWORDS_BLOG2_IT
+    elif is_blog3_fin:
+        fallback = _FALLBACK_KEYWORDS_BLOG3
     elif is_travel_sports:
         fallback = _FALLBACK_KEYWORDS_TRAVEL_SPORTS
     elif language == "ko":

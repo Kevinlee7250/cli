@@ -283,6 +283,110 @@ _FALLBACK_KEYWORDS_BLOG3 = [
     "가계부채 관리 대책 2026 대출 규제 변화 정리",
 ]
 
+# ──────────────────────────────────────────────────────────────────────────────
+# 블로그별 고CPC 키워드 (주제에 녹아든 고수익 키워드)
+# 전략: 블로그 주제와 고CPC 카테고리(보험·대출·법률·부동산 등)를 자연스럽게 결합
+# 실행당 HIGH_CPC_PER_RUN 개를 기존 트렌드 키워드 사이에 주입
+# ──────────────────────────────────────────────────────────────────────────────
+
+# 실행당 고CPC 키워드 삽입 수 (기본 1개 — 환경변수로 조정 가능)
+import os as _os
+_HIGH_CPC_PER_RUN = max(0, int(_os.getenv("HIGH_CPC_PER_RUN", "1")))
+
+_HIGH_CPC_KEYWORDS_BLOG1 = [
+    # ✈️ 여행 × 보험·금융 (CPC $1.8~2.5)
+    "해외여행 실비보험 필요한지 직접 비교해봤더니",
+    "여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기",
+    "항공권 취소·지연 보상 직접 청구해보니 알게 된 것",
+    "해외여행 환전 수수료 0% 방법 직접 비교 정리",
+    "제주도 렌터카 보험 옵션 실제로 필요한 것만 고르기",
+    "패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것",
+    # ✈️ 여행 × 법률 (CPC $2.8~3.2)
+    "해외에서 사고 났을 때 대사관 신고 직접 경험한 과정",
+    "여행 중 물건 도난 경찰서 신고 후 보험 청구 방법",
+    # 🏆 스포츠 × 건강·보험 (CPC $1.6~2.0)
+    "스포츠 상해보험 직접 가입해봤더니 알게 된 차이",
+    "골프 입문자 골프보험 필요한지 직접 알아본 결과",
+    "마라톤 훈련 중 무릎 부상 병원 치료비와 재활 과정",
+    "헬스장 부상 사고 보상 받기 직접 경험한 방법",
+    "스포츠 손상 체외충격파 치료 실제 비용과 효과",
+    # 🎬 드라마·연예 × OTT·쇼핑 (CPC $1.2~1.5)
+    "넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교",
+    "아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁",
+    "OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택",
+    "음원 스트리밍 멜론 vs 지니 vs 유튜브뮤직 요금 비교",
+    "드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인",
+    # 🌏 해외여행 × 부동산·교육 (CPC $1.8~2.5)
+    "제주 한 달 살기 실제 생활비와 숙소 비용 공개",
+    "동남아 한 달 살기 집 구하는 방법과 계약 주의사항",
+    "해외 어학연수 비용 현실적으로 얼마나 드나",
+    "미국 워킹홀리데이 보험과 계좌 개설 직접 준비 과정",
+]
+
+_HIGH_CPC_KEYWORDS_BLOG2_IT_HCP = [
+    # 💻 IT × AI 구독·비용 (CPC $1.8~2.5)
+    "챗GPT Plus vs Claude Pro 직접 써본 업무 효율 비교",
+    "AI 구독 서비스 월 비용 줄이는 방법 직접 정리",
+    "Copilot vs 챗GPT 코딩 실무에서 어떤 게 더 나을까",
+    "생성형 AI 기업 요금제 선택 가이드 직접 비교",
+    # 💻 IT × 보안 (CPC $2.0~3.0)
+    "VPN 추천 2026 보안·속도·가격 직접 테스트 결과",
+    "랜섬웨어 감염 대응 직접 겪어본 복구 과정 공개",
+    "개인정보 유출 확인 방법과 대처 직접 해봤더니",
+    "비밀번호 관리 앱 직접 써본 1Password vs Bitwarden 비교",
+    "공공 와이파이 보안 위험 실제로 테스트해봤더니",
+    # 💻 IT × 보험·법률 (CPC $2.0~3.2)
+    "사이버보험 소기업 가입 필요한지 직접 알아본 결과",
+    "스마트폰 파손보험 제조사 vs 통신사 직접 비교 정리",
+    "전자서명 법적 효력 직접 확인하면서 알게 된 것",
+    # 💻 IT × 금융·쇼핑 (CPC $1.5~2.0)
+    "크레딧카드 IT 혜택 최강자 2026 직접 비교 정리",
+    "노트북 구매 리스 vs 현금 구매 직접 계산해봤더니",
+    "중고 스마트폰 직거래 사기 예방 직접 경험한 방법",
+    "클라우드 저장소 월 비용 비교 Google vs iCloud vs OneDrive",
+    # 💻 IT × 교육·자격증 (CPC $1.5~2.0)
+    "정보처리기사 독학 합격 실제 공부 시간과 방법",
+    "AWS 자격증 취득 비용과 준비 과정 직접 정리",
+    "컴퓨터활용능력 1급 독학 현실적인 합격 전략",
+    "AI 관련 자격증 2026 취업에 실제로 도움 되는 것",
+    # 💻 IT × 부업·수익화 (CPC $1.5~2.5)
+    "IT 프리랜서 세금 신고 처음 할 때 실수한 것",
+    "앱 개발 외주 첫 계약서 주의사항 직접 경험 정리",
+    "유튜브 채널 수익화 신청 조건 직접 맞춰보면서 알게 된 것",
+]
+
+_HIGH_CPC_KEYWORDS_BLOG3_HCP = [
+    # 📈 금융 × 대출 (CPC $2.5~3.0) — 이미 높은 CPC이나 구체성 강화
+    "주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교",
+    "전세대출 DSR 규제 이후 한도 얼마나 줄었나 직접 계산",
+    "신용대출 한도 늘리는 방법 직접 시도해봤더니",
+    "카드론 vs 마이너스통장 금리 비교 직접 계산한 결과",
+    "대출 이자 절감 중도상환 vs 금리 갈아타기 직접 비교",
+    # 📈 금융 × 보험 (CPC $2.0~2.8)
+    "실손보험 청구 처음 해봤을 때 몰랐던 것들",
+    "종신보험 해지환급금 직접 계산해보고 결정한 이유",
+    "암보험 갱신형 vs 비갱신형 직접 비교해봤더니",
+    "운전자보험 꼭 필요한지 직접 비교 분석한 결과",
+    "저출생 시대 어린이보험 가입 체크리스트 직접 정리",
+    # 📈 금융 × 부동산 (CPC $2.5~3.0)
+    "청약통장 1순위 조건 2026 달라진 점 직접 정리",
+    "특별공급 청약 자격 직접 확인했더니 놓친 항목들",
+    "분양가 상한제 아파트 프리미엄 실제로 얼마나 붙나",
+    "재건축 조합원 입주권 매수 전 직접 알아본 주의사항",
+    "갭투자 리스크 직접 경험한 사람이 알려주는 현실",
+    # 📈 금융 × 세금·법률 (CPC $2.8~3.5)
+    "상속세 절세 사전 증여 2026 기준 직접 정리",
+    "부모님 집 증여 vs 상속 세금 계산 직접 비교",
+    "프리랜서 종합소득세 절세 경비 처리 직접 정리",
+    "법인 설립 개인사업자 세금 차이 직접 계산해봤더니",
+    "양도세 비과세 요건 2026 직접 확인한 체크리스트",
+    # 📈 금융 × 노후·연금 (CPC $2.0~2.5)
+    "퇴직연금 DC형 직접 운용 1년 수익률 솔직 공개",
+    "개인연금 세액공제 최대한 받는 방법 직접 정리",
+    "국민연금 임의가입 직접 해보고 알게 된 장단점",
+    "연금저축 vs IRP 노후 준비 직접 비교 분석",
+]
+
 _FALLBACK_KEYWORDS_EN = [
     # Finance — experience angle
     "what I learned after 1 year of dividend investing", "honest ETF investing review after 3 years",
@@ -902,6 +1006,20 @@ def get_trending_keywords(
     candidates: list[str] = []
     keyword_sources: dict[str, str] = {}  # 키워드별 수집 출처 추적
 
+    # 블로그 유형 식별 (고CPC 주입 및 폴백 선택에 공통 사용)
+    _BLOG1_TOPICS = {"여행", "스포츠", "드라마", "영화", "연예", "k-pop", "kpop"}
+    _BLOG2_IT_TOPICS = {"it", "ai", "기술", "스마트폰", "앱", "테크", "tech"}
+    _BLOG3_FIN_TOPICS = {"금융", "경제", "정부지원", "세금", "복지", "시책", "뉴스", "news"}
+    is_blog1 = blog_id in ("blog1", "default") and bool(
+        topics and _BLOG1_TOPICS.intersection(set(t.lower() for t in topics))
+    )
+    is_blog2_it = blog_id == "blog2" and bool(
+        topics and _BLOG2_IT_TOPICS.intersection(set(t.lower() for t in topics))
+    )
+    is_blog3_fin = blog_id == "blog3" and bool(
+        topics and _BLOG3_FIN_TOPICS.intersection(set(t.lower() for t in topics))
+    )
+
     # -1순위: 시즌 예약 키워드 (trend_scheduler.py가 2주 전 생성한 큐)
     season_kws = _load_scheduled_keywords()
     for kw in season_kws:
@@ -927,6 +1045,25 @@ def get_trending_keywords(
         if kw not in keyword_sources:
             keyword_sources[kw] = "google_trends"
     candidates = candidates + [kw for kw in trends_kws if kw not in keyword_sources or keyword_sources[kw] != "naver_realtime"]
+
+    # 1.5순위: 블로그별 고CPC 키워드 주입
+    if _HIGH_CPC_PER_RUN > 0:
+        if is_blog1:
+            hcp_pool = _HIGH_CPC_KEYWORDS_BLOG1
+        elif is_blog2_it:
+            hcp_pool = _HIGH_CPC_KEYWORDS_BLOG2_IT_HCP
+        elif is_blog3_fin:
+            hcp_pool = _HIGH_CPC_KEYWORDS_BLOG3_HCP
+        else:
+            hcp_pool = []
+        if hcp_pool:
+            unused_hcp = [kw for kw in hcp_pool if kw not in active_used_set]
+            inject_hcp = (unused_hcp if unused_hcp else hcp_pool)[:_HIGH_CPC_PER_RUN]
+            for kw in inject_hcp:
+                if kw not in keyword_sources:
+                    keyword_sources[kw] = "high_cpc"
+            candidates = inject_hcp + candidates
+            logger.info(f"고CPC 키워드 {len(inject_hcp)}개 주입 (blog_id={blog_id or '전체'}): {inject_hcp}")
 
     # 2순위: Claude AI (결과 부족 시)
     if len(candidates) < count * 2:
@@ -955,18 +1092,6 @@ def get_trending_keywords(
         logger.debug(f"GSC 연동 생략: {e}")
 
     # 3순위: 고정 폴백 (미사용 키워드 우선 + GSC 고성과 카테고리 먼저)
-    _BLOG1_TOPICS = {"여행", "스포츠", "드라마", "영화", "연예", "k-pop", "kpop"}
-    _BLOG2_IT_TOPICS = {"it", "ai", "기술", "스마트폰", "앱", "테크", "tech"}
-    _BLOG3_FIN_TOPICS = {"금융", "경제", "정부지원", "세금", "복지", "시책", "뉴스", "news"}
-    is_blog1 = blog_id in ("blog1", "default") and bool(
-        topics and _BLOG1_TOPICS.intersection(set(t.lower() for t in topics))
-    )
-    is_blog2_it = blog_id == "blog2" and bool(
-        topics and _BLOG2_IT_TOPICS.intersection(set(t.lower() for t in topics))
-    )
-    is_blog3_fin = blog_id == "blog3" and bool(
-        topics and _BLOG3_FIN_TOPICS.intersection(set(t.lower() for t in topics))
-    )
     _TRAVEL_SPORTS_TOPICS = {"여행", "스포츠", "travel", "sports"}
     is_travel_sports = bool(topics and _TRAVEL_SPORTS_TOPICS.intersection(set(t.lower() for t in topics)))
     if is_blog1:

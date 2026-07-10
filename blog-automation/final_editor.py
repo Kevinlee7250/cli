@@ -1,12 +1,17 @@
 """
-최종 편집기 (Publishing Editor) — 업로드 직전 품질 마무리
+3차 최종 발행 편집기 (Publishing Editor)
 
-AdSense 검증을 통과한 글에 대해 Claude로 최종 편집을 수행합니다:
-  1. 제목 ↔ H2 소제목 주제 정합성 교정
-  2. 문체 일관성·어색한 문장 정리
-  3. SEO 체크리스트 최종 점검 (키워드 밀도, meta_description 길이)
+AdSense 검증·자동수정을 통과한 글을 Blogger에 바로 업로드 가능한
+최종 발행본으로 다듬습니다.
 
-원본 내용의 80% 이상을 유지하며, 구조·사실은 변경하지 않습니다.
+수행 작업:
+  1. 최종 SEO 제목 / 메타 설명 / URL 슬러그 정리
+  2. 본문 구조 재편 (요약 박스·목차·표·개인메모·주의사항·FAQ·결론·작성자메모·참고자료·내부링크)
+  3. 이미지 alt text 목록 생성 (2~4개 제안)
+  4. 발행 전 체크리스트 생성
+  5. 카테고리·태그 추천
+
+원본 내용의 80% 이상을 유지하며 사실·수치를 변경하지 않습니다.
 오류 발생 시 원본 post_data를 그대로 반환 (게시 차단 없음).
 """
 
@@ -18,92 +23,210 @@ from config import claude_generate, CLAUDE_MODEL
 
 logger = logging.getLogger(__name__)
 
+_NEEDS_WARNING = {
+    "finance": {"재테크", "투자", "주식", "etf", "펀드", "부동산", "연금", "보험",
+                "절세", "대출", "금리", "채권", "코인", "암호화폐"},
+    "health":  {"건강", "다이어트", "운동", "영양", "질병", "증상", "의약", "치료",
+                "수면", "혈압", "혈당", "비만", "면역"},
+    "legal":   {"법률", "계약", "소송", "판결", "임대차", "세금", "세무", "약관", "분쟁"},
+}
 
-def _strip_html(html: str, max_chars: int = 3000) -> str:
+
+def _needs_warning(keyword: str) -> str:
+    kw = keyword.lower()
+    for cat, kws in _NEEDS_WARNING.items():
+        if any(w in kw for w in kws):
+            return cat
+    return ""
+
+
+def _strip_html(html: str, max_chars: int = 3500) -> str:
     text = re.sub(r"<[^>]+>", " ", html)
     text = re.sub(r"\s+", " ", text).strip()
     return text[:max_chars]
 
 
 def _extract_h2s(html: str) -> list[str]:
-    return re.findall(r"<h2[^>]*>(.*?)</h2>", html, re.IGNORECASE | re.DOTALL)
+    return [re.sub(r"<[^>]+>", "", h).strip()
+            for h in re.findall(r"<h2[^>]*>(.*?)</h2>", html, re.IGNORECASE | re.DOTALL)]
 
 
-def _clean_tag(text: str) -> str:
-    return re.sub(r"<[^>]+>", "", text).strip()
+def _extract_sources(post_data: dict) -> str:
+    sources = post_data.get("sources") or []
+    if not sources:
+        return "(없음)"
+    return "\n".join(f"- {s.get('title','')}: {s.get('url','')}" for s in sources)
 
 
 def polish_post(post_data: dict) -> dict:
     """
-    업로드 직전 최종 편집을 수행합니다.
+    3차 최종 발행 편집을 수행합니다.
     수정된 post_data를 반환합니다. 실패 시 원본을 반환합니다.
     """
-    title = post_data.get("title", "").strip()
-    content = post_data.get("content", "")
+    title    = post_data.get("title", "").strip()
+    content  = post_data.get("content", "")
     meta_desc = post_data.get("meta_description", "")
-    keyword = post_data.get("keyword", "")
-    word_count = post_data.get("word_count", 0)
-
-    if not title or not content:
-        logger.debug("final_editor: title 또는 content 없음 — 건너뜀")
-        return post_data
-
-    h2_list = [_clean_tag(h) for h in _extract_h2s(content)]
-    plain_text = _strip_html(content)
-    orig_len = len(re.sub(r"\s+", "", plain_text))
+    keyword  = post_data.get("keyword", "")
+    labels   = post_data.get("labels") or []
+    sources_str = _extract_sources(post_data)
+    blog_name   = post_data.get("_blog_name", "")
+    h2_list  = _extract_h2s(content)
+    plain    = _strip_html(content)
+    warning_cat = _needs_warning(keyword)
 
     h2_block = "\n".join(f"  - {h}" for h in h2_list) if h2_list else "  (H2 없음)"
-    meta_len_note = f"{len(meta_desc)}자" if meta_desc else "없음"
+    tags_hint = ", ".join(labels[:5]) if labels else "(없음)"
 
-    prompt = f"""당신은 한국어 블로그 최종 편집자입니다.
-아래 글을 업로드 직전 마지막으로 다듬어 주세요.
+    warning_note = ""
+    if warning_cat == "finance":
+        warning_note = "투자·금융 주제 → ⚠️ 주의사항 섹션 필수 포함"
+    elif warning_cat == "health":
+        warning_note = "건강·의료 주제 → ⚠️ 주의사항 섹션 필수 포함"
+    elif warning_cat == "legal":
+        warning_note = "법률·세무 주제 → ⚠️ 주의사항 섹션 필수 포함"
 
-=== 현재 글 정보 ===
-제목: {title}
-키워드: {keyword}
-글자 수(공백제외): {word_count}자
-meta_description({meta_len_note}): {meta_desc}
+    prompt = f"""당신은 블로그 글을 실제 발행 가능한 형태로 정리하는 "3차 최종 발행 편집 Agent"입니다.
 
-=== H2 소제목 목록 ===
+2차 품질 검수를 통과한 글을 Blogger에 바로 업로드할 수 있는 최종 발행본으로 다듬어 주세요.
+새 글을 처음부터 쓰는 것이 아니라, 완료된 글을 발행 품질로 편집하는 것입니다.
+
+━━━━━━━━━━━━━━━━━━━━
+[입력 정보]
+
+- 블로그명: {blog_name or "개인 블로그"}
+- 주요 키워드: {keyword}
+- 현재 제목: {title}
+- 현재 태그: {tags_hint}
+- 블로그 플랫폼: Blogger
+- 문체: 친근하고 신뢰감 있는 한국어 블로그 문체
+- H2 소제목 목록:
 {h2_block}
+- 참고 자료:
+{sources_str}
+{f"- 특이 사항: {warning_note}" if warning_note else ""}
 
-=== 본문 (HTML, 앞 3000자) ===
-{plain_text}
+[2차 개선 완료 본문 (앞 3,500자)]
+{plain}
 
-=== 편집 지침 (중요도 순) ===
+━━━━━━━━━━━━━━━━━━━━
+[최종 편집 목표]
 
-① 제목 ↔ 소제목 정합성
-   - 제목에서 독자에게 약속한 내용이 H2에 반드시 포함되어야 합니다
-   - 제목과 무관한 H2가 있으면 제목 취지에 맞게 소제목 텍스트를 수정하세요
-   - H2 순서는 유지하되 텍스트만 교정합니다
+1. 제목·메타 설명·URL 슬러그가 정리되어 있다 (제목 30~45자, 메타 120~160자)
+2. 본문 구조가 자연스럽고 읽기 쉽다
+3. 모바일에서 문단이 길지 않다 (한 문단 2~4문장 이내)
+4. 요약 박스·목차·표·개인경험메모·주의사항·FAQ·결론·작성자메모·내부링크 포함
+5. 이미지 alt text가 구체적이다
+6. AdSense 승인에 불리한 문구, 광고 클릭 유도 문구, 저작권 침해 문장이 없다
+7. 실제 발행자가 복사해 바로 업로드할 수 있다
 
-② 문체 일관성
-   - "~입니다" 체 통일 (반말·격식체 혼용 금지)
-   - 같은 문장 구조 반복(예: "~하세요. ~하세요. ~하세요.") 변환
-   - AI 투 표현 제거: "살펴보겠습니다", "정리해드리겠습니다", "다음과 같습니다"
+━━━━━━━━━━━━━━━━━━━━
+[본문 편집 규칙]
 
-③ SEO 최종 점검
-   - 키워드 "{keyword}"가 본문에 10~14회 자연스럽게 포함되어 있는지 확인
-   - meta_description이 100~160자 사이인지 확인하고 벗어나면 수정
-   - 제목 40자 이내인지 확인
+소제목:
+- H2는 명확하게, H3는 구체적으로 — 소제목만 봐도 흐름이 이해되어야 함
 
-④ 절대 변경 금지
-   - 수치·날짜·출처·사실 관계
-   - HTML 구조 (div, img, a 태그 등)
-   - 원본 분량의 80% 이상 유지
+요약 박스 (도입부 직후):
+<div style="background:#f0fdf4;border-left:5px solid #16a34a;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#14532d;font-size:0.96em;line-height:1.9;">
+✅ <strong>핵심 요약</strong><br>
+• 대상: [누구에게 유용한가]<br>
+• 핵심 내용: [한 줄 요약]<br>
+• 비용/조건: [있다면]<br>
+• 장점: [주요 장점]<br>
+• 주의할 점: [한 줄]<br>
+• 결론: [한 줄 결론]
+</div>
 
-수정 후 반드시 아래 JSON만 출력하세요 (마크다운 없이):
+표 (본문 중간 최소 1개):
+<table style="width:100%;border-collapse:collapse;margin:1.5em 0;">
+<tr style="background:#f1f5f9;"><th style="border:1px solid #cbd5e1;padding:10px;">항목</th><th>내용</th><th>체크 포인트</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:10px;">...</td><td>...</td><td>...</td></tr>
+</table>
+
+개인 경험 메모 (본문 중간 또는 결론 전):
+<div style="background:#fefce8;border-left:4px solid #ca8a04;padding:14px 20px;margin:1.5em 0;border-radius:0 8px 8px 0;color:#713f12;font-size:0.95em;line-height:1.8;">
+📌 <strong>개인 경험 메모</strong><br>
+[4~6문장. 직접 경험이 없으면 "공개 자료와 공식 정보를 바탕으로 정리했습니다"로 표시]
+</div>
+
+주의사항 ({"건강·금융·법률 주제이므로 반드시 포함" if warning_note else "필요 시 포함"}):
+<div style="background:#fff7ed;border-left:4px solid #ea580c;padding:14px 20px;margin:1.5em 0;border-radius:0 8px 8px 0;color:#7c2d12;font-size:0.9em;line-height:1.7;">
+⚠️ <strong>주의사항</strong><br>
+이 글은 일반적인 정보와 개인적인 경험을 바탕으로 작성한 글입니다. 개인의 상황, 건강 상태, 재정 상태, 거주 지역, 이용 조건에 따라 결과가 달라질 수 있습니다. 중요한 결정을 하기 전에는 공식 기관, 전문가, 해당 서비스 제공처의 최신 안내를 확인하는 것이 좋습니다.
+</div>
+
+FAQ (4~6개, h3 형식):
+<h2>자주 묻는 질문</h2>
+<h3>Q1. 질문</h3><p>답변 (2~4문장)</p>
+...
+
+결론 (추천/비추천 대상 구분, 과장 없이):
+<h2>마무리</h2>
+<p>...</p>
+
+작성자 메모 (글 하단):
+<p style="background:#f8fafc;border-left:4px solid #94a3b8;padding:12px 18px;margin:2em 0 0;border-radius:0 8px 8px 0;color:#64748b;font-size:0.9em;line-height:1.7;">
+✍️ <strong>작성자 메모</strong><br>
+이 글은 실제 경험, 공개 자료, 공식 정보를 바탕으로 작성했습니다. 블로그 운영자는 생활정보, AI 활용, 여행, 건강관리, 재테크 관련 정보를 직접 조사하고 초보자도 이해하기 쉽게 정리하는 것을 목표로 합니다.
+</p>
+
+내부 링크 (글 하단):
+<div style="background:#f1f5f9;padding:14px 20px;margin:2em 0;border-radius:8px;">
+<strong>📎 함께 읽으면 좋은 글</strong><br>
+<a href="#">관련 글 제목 1</a> /
+<a href="#">관련 글 제목 2</a> /
+<a href="#">관련 글 제목 3</a>
+</div>
+
+━━━━━━━━━━━━━━━━━━━━
+[이미지 규칙]
+
+본문에 이미지 2~4개를 제안합니다 (실제 삽입 X, 위치와 alt만 명시).
+alt text는 구체적으로 — "이미지"처럼 쓰지 말 것.
+좋은 예: "{keyword} 관련 체크리스트를 정리한 블로그 대표 이미지"
+
+━━━━━━━━━━━━━━━━━━━━
+[출력 형식 — 반드시 JSON만 출력 (마크다운 코드 블록 없이)]
+
 {{
-  "title": "수정된 제목 (변경 없으면 원본 그대로)",
-  "h2_fixes": [
-    {{"original": "원래 소제목", "revised": "수정된 소제목"}}
+  "seo_title": "최종 SEO 제목 (30~45자, 키워드 포함, 과장 없음)",
+  "meta_description": "최종 메타 설명 (120~160자)",
+  "url_slug": "recommended-url-slug-in-english",
+  "category": "카테고리 1개 (건강관리/생활정보/AI활용/여행/재테크/맛집/블로그운영 중 선택)",
+  "tags": ["태그1","태그2","태그3","태그4","태그5"],
+  "representative_image": {{
+    "position": "글 최상단",
+    "description": "대표 이미지 설명",
+    "style": "추천 스타일",
+    "alt": "구체적인 alt text",
+    "filename": "recommended-filename.jpg"
+  }},
+  "content": "<Blogger에 바로 붙여넣기 가능한 완전한 HTML 본문>",
+  "image_list": [
+    {{"position": "삽입 위치", "description": "이미지 설명", "alt": "alt text", "filename": "파일명.jpg"}},
+    {{"position": "삽입 위치", "description": "이미지 설명", "alt": "alt text", "filename": "파일명.jpg"}}
   ],
-  "meta_description": "수정된 meta_description (변경 없으면 원본 그대로)",
+  "internal_links": ["관련 글 제목 1", "관련 글 제목 2", "관련 글 제목 3"],
+  "references": [{{"name": "기관명", "note": "참고 내용"}}],
+  "checklist": {{
+    "title_matches_intent": true,
+    "meta_120_160": true,
+    "slug_clean": true,
+    "intro_starts_with_reader_concern": true,
+    "summary_box_present": true,
+    "table_present": true,
+    "faq_4_plus": true,
+    "warning_if_needed": true,
+    "author_memo_present": true,
+    "references_present": true,
+    "internal_links_present": true,
+    "alt_text_specific": true,
+    "no_ad_cta": true,
+    "no_exaggeration": true,
+    "no_ai_phrases": true,
+    "mobile_friendly_paragraphs": true
+  }},
   "changes_summary": "변경 요약 1~2줄"
-}}
-
-h2_fixes는 실제로 변경된 항목만 포함하세요. 변경 없으면 빈 배열 [].
-"""
+}}"""
 
     try:
         import anthropic
@@ -111,11 +234,10 @@ h2_fixes는 실제로 변경된 항목만 포함하세요. 변경 없으면 빈 
         raw = claude_generate(
             client,
             model=CLAUDE_MODEL,
-            max_tokens=2000,
+            max_tokens=8000,
             messages=[{"role": "user", "content": prompt}],
         )
 
-        # JSON 파싱
         raw = raw.strip()
         if raw.startswith("```"):
             raw = re.sub(r"^```[a-z]*\n?", "", raw)
@@ -124,48 +246,53 @@ h2_fixes는 실제로 변경된 항목만 포함하세요. 변경 없으면 빈 
 
         changed = False
 
-        # 제목 업데이트
-        new_title = (result.get("title") or "").strip()
+        # 제목
+        new_title = (result.get("seo_title") or "").strip()
         if new_title and new_title != title:
             post_data["title"] = new_title
-            logger.info(f"  ✏️ 제목 교정: '{title}' → '{new_title}'")
+            logger.info(f"  ✏️ 제목 최종 교정: '{title}' → '{new_title}'")
             changed = True
 
-        # H2 소제목 교정 (HTML 내 직접 치환)
-        h2_fixes: list[dict] = result.get("h2_fixes") or []
-        for fix in h2_fixes:
-            orig_h2 = (fix.get("original") or "").strip()
-            rev_h2 = (fix.get("revised") or "").strip()
-            if orig_h2 and rev_h2 and orig_h2 != rev_h2:
-                # 태그 내 텍스트만 교체 (태그 속성 보존)
-                content = re.sub(
-                    rf"(<h2[^>]*>)\s*{re.escape(orig_h2)}\s*(</h2>)",
-                    rf"\g<1>{rev_h2}\g<2>",
-                    content,
-                    flags=re.IGNORECASE,
-                )
-                logger.info(f"  ✏️ H2 교정: '{orig_h2}' → '{rev_h2}'")
-                changed = True
+        # 본문
+        new_content = (result.get("content") or "").strip()
+        if new_content and len(new_content) >= len(content) * 0.7:
+            post_data["content"] = new_content
+            changed = True
 
-        if changed:
-            post_data["content"] = content
-
-        # meta_description 업데이트
+        # 메타 설명
         new_meta = (result.get("meta_description") or "").strip()
         if new_meta and new_meta != meta_desc:
             post_data["meta_description"] = new_meta
-            logger.info(f"  ✏️ meta_description 교정 ({len(new_meta)}자)")
+            logger.info(f"  ✏️ 메타 설명 교정 ({len(new_meta)}자)")
             changed = True
 
-        summary = result.get("changes_summary", "변경 없음")
-        if changed:
-            logger.info(f"  ✅ 최종 편집 완료 — {summary}")
-        else:
-            logger.info("  ✅ 최종 편집 검토 완료 — 수정 없음")
+        # 태그
+        new_tags = [t for t in (result.get("tags") or []) if isinstance(t, str)]
+        if new_tags:
+            post_data["labels"] = new_tags
+            changed = True
 
-        post_data["final_edit_applied"] = changed
+        # 추가 필드 저장 (Blogger 업로드에는 영향 없음)
+        post_data["url_slug"]             = result.get("url_slug", "")
+        post_data["category"]             = result.get("category", "")
+        post_data["representative_image"] = result.get("representative_image", {})
+        post_data["image_list"]           = result.get("image_list", [])
+        post_data["internal_links"]       = result.get("internal_links", [])
+        post_data["references"]           = result.get("references", [])
+        post_data["publish_checklist"]    = result.get("checklist", {})
+        post_data["final_edit_applied"]   = changed
+
+        summary = result.get("changes_summary", "")
+        logger.info(f"  ✅ 3차 최종 편집 완료 — {summary}")
+
+        # 체크리스트 요약 로그
+        checklist = result.get("checklist") or {}
+        fails = [k for k, v in checklist.items() if v is False]
+        if fails:
+            logger.warning(f"  ⚠️ 발행 전 체크리스트 미충족 항목: {', '.join(fails)}")
+
         return post_data
 
     except Exception as e:
-        logger.warning(f"  ⚠️ 최종 편집 건너뜀 (무시): {e}")
+        logger.warning(f"  ⚠️ 3차 최종 편집 건너뜀 (무시): {e}")
         return post_data

@@ -402,6 +402,14 @@ def run_once(
             logger.info(f"  ✅ AdSense 검증 통과 (점수: {validation['score']}/100) — 업로드")
         # ─────────────────────────────────────────────────────────────────────────────
 
+        # ── ③.5 최종 편집 (제목↔소제목 정합성·문체·SEO 마무리) ────────────────────
+        try:
+            from final_editor import polish_post
+            post_data = polish_post(post_data)
+        except Exception as _fe:
+            logger.debug(f"  최종 편집 건너뜀 (무시): {_fe}")
+        # ─────────────────────────────────────────────────────────────────────────────
+
         # ── ④ 레지스트리 등록 (pending) + 초안 저장 ─────────────────────────────────
         _post_id = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
         save_draft(_post_id, post_data)
@@ -572,10 +580,10 @@ def run_series(
             save_series(series_plan)
             continue
 
-        # 4000자 미달 → pending 저장 (thin content 업로드 방지)
+        # 2500자 미달 → pending 저장 (thin content 업로드 방지)
         series_wc = post_data.get("word_count", 0)
-        if series_wc < 4000:
-            logger.warning(f"  ⚠️ [편 {ep_num}] 글자 수 미달 ({series_wc}자 < 4000자) — pending 저장")
+        if series_wc < 2500:
+            logger.warning(f"  ⚠️ [편 {ep_num}] 글자 수 미달 ({series_wc}자 < 2500자) — pending 저장")
             post_data["status"] = "pending"
             pending_list.append(post_data)
             ep["status"] = "pending_review"
@@ -607,6 +615,13 @@ def run_series(
                 generated_posts.append(post_data)
                 save_series(series_plan)
                 continue
+
+        # ── 최종 편집 (제목↔소제목 정합성·문체·SEO 마무리) ──────────────────────
+        try:
+            from final_editor import polish_post
+            post_data = polish_post(post_data)
+        except Exception as _fe:
+            logger.debug(f"  최종 편집 건너뜀 (무시): {_fe}")
 
         result = upload_post(post_data, blog_config)
         if result:

@@ -188,6 +188,55 @@ _FALLBACK_KEYWORDS_BLOG1 = [
     "K-POP 스트리밍 음원 성적 분석과 팬덤 반응 정리",
 ]
 
+_FALLBACK_KEYWORDS_BLOG2_IT = [
+    # 🤖 AI·생성형 AI
+    "챗GPT 최신 업데이트 달라진 기능 직접 써봤더니",
+    "클로드 AI vs 챗GPT 2026 실무 활용 솔직 비교",
+    "AI 이미지 생성 무료 툴 5가지 직접 테스트 결과",
+    "생성형 AI 업무 자동화 실제로 시간 얼마나 줄었나",
+    "AI 코딩 어시스턴트 GitHub Copilot 3개월 써본 후기",
+    "구글 제미나이 실제 사용해보니 챗GPT와 다른 점",
+    "AI 동영상 생성 툴 최신 비교 실제 결과물 품질은",
+    "노코드 AI 앱 빌더 직접 만들어본 솔직 후기",
+    # 📱 스마트폰·가전
+    "갤럭시 S26 vs 아이폰 17 실사용 비교 어떤 걸 살까",
+    "아이폰 17 국내 출시 가격과 달라진 기능 정리",
+    "갤럭시 폴드 처음 사용하면서 불편했던 것들",
+    "애플워치 vs 갤럭시워치 건강 기능 직접 비교",
+    "무선 이어폰 에어팟 vs 갤럭시버즈 솔직 비교 후기",
+    "태블릿 아이패드 vs 갤럭시탭 어느 걸 사야 할까",
+    "스마트홈 기기 입문 처음 설치하면서 실수한 것들",
+    # 💻 PC·노트북
+    "맥북 에어 M4 처음 써본 윈도우 유저 솔직 후기",
+    "게이밍 노트북 100만원대 직접 써보고 추천하는 이유",
+    "SSD 업그레이드 직접 해봤더니 속도 얼마나 빨라졌나",
+    "윈도우11 업그레이드 실제로 해보니 달라진 점",
+    # 🌐 앱·서비스·플랫폼
+    "유튜브 프리미엄 1년 써본 솔직 후기 돈 값 하나",
+    "노션 AI 3개월 써보고 업무가 달라진 것들",
+    "챗GPT 플러스 vs 무료 버전 실제 차이 직접 비교",
+    "넷플릭스 vs 유튜브 OTT 요금제 2026 비교 정리",
+    "쿠팡 로켓배송 실제로 몇 시간 만에 오나 테스트해봤더니",
+    "카카오페이 vs 네이버페이 어떤 게 더 혜택 좋을까",
+    # 🔒 보안·개인정보
+    "개인정보 유출 확인하는 방법과 대처법 직접 해봤더니",
+    "VPN 무료 vs 유료 직접 써보고 추천하는 이유",
+    "스미싱 피싱 최신 수법과 실제로 당할 뻔한 경험",
+    "패스키 비밀번호 없는 로그인 직접 설정해보니",
+    # ⚡ IT 트렌드·최신 뉴스
+    "2026 IT 트렌드 직장인이 알아야 할 기술 변화",
+    "애플 구글 삼성 최신 발표 내용 핵심만 정리",
+    "전기차 자율주행 2026 실제 수준은 어디까지 왔나",
+    "메타버스 현실은 어떤가 2026 실제 사용 사례 정리",
+    "양자컴퓨터 일반인이 알아야 할 것만 쉽게 정리",
+    "5G 6G 차이와 실생활 변화 직접 체감해보니",
+    # 🛠️ IT 활용 실전 팁
+    "구글 드라이브 활용법 몰랐던 기능 써보고 놀란 것들",
+    "엑셀 대신 구글 시트 쓰면서 달라진 업무 효율",
+    "유튜브 쇼츠 AI 자동화 직접 만들어봤더니 구독자 변화",
+    "블로그 SEO 직접 적용해보고 검색 순위 변화 정리",
+]
+
 _FALLBACK_KEYWORDS_EN = [
     # Finance — experience angle
     "what I learned after 1 year of dividend investing", "honest ETF investing review after 3 years",
@@ -861,13 +910,19 @@ def get_trending_keywords(
 
     # 3순위: 고정 폴백 (미사용 키워드 우선 + GSC 고성과 카테고리 먼저)
     _BLOG1_TOPICS = {"여행", "스포츠", "드라마", "영화", "연예", "k-pop", "kpop"}
+    _BLOG2_IT_TOPICS = {"it", "ai", "기술", "스마트폰", "앱", "테크", "tech"}
     is_blog1 = blog_id in ("blog1", "default") and bool(
         topics and _BLOG1_TOPICS.intersection(set(t.lower() for t in topics))
+    )
+    is_blog2_it = blog_id == "blog2" and bool(
+        topics and _BLOG2_IT_TOPICS.intersection(set(t.lower() for t in topics))
     )
     _TRAVEL_SPORTS_TOPICS = {"여행", "스포츠", "travel", "sports"}
     is_travel_sports = bool(topics and _TRAVEL_SPORTS_TOPICS.intersection(set(t.lower() for t in topics)))
     if is_blog1:
         fallback = _FALLBACK_KEYWORDS_BLOG1
+    elif is_blog2_it:
+        fallback = _FALLBACK_KEYWORDS_BLOG2_IT
     elif is_travel_sports:
         fallback = _FALLBACK_KEYWORDS_TRAVEL_SPORTS
     elif language == "ko":

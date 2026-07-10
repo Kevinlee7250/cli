@@ -1432,7 +1432,36 @@ def _validate_sources(sources: list) -> list:
 
 
 def _build_series_prompt(keyword: str, traffic: str, series_context: dict, blog_config: dict | None = None) -> str:
-    """시리즈 포스트용 프롬프트"""
+    """시리즈 포스트용 프롬프트 — 블로그 주제별 분기"""
+    from datetime import datetime
+    blog_id = (blog_config or {}).get("id", "")
+    if blog_id == "blog2":
+        return _build_series_prompt_it(keyword, traffic, series_context, blog_config)
+    if blog_id == "blog3":
+        return _build_series_prompt_finance(keyword, traffic, series_context, blog_config)
+    # blog1 또는 미지정 — 기존 개인 경험 스타일
+    return _build_series_prompt_general(keyword, traffic, series_context, blog_config)
+
+
+def _series_common_vars(keyword: str, series_context: dict):
+    """시리즈 프롬프트 공통 변수를 반환합니다."""
+    from datetime import datetime
+    now = datetime.now()
+    series_title = series_context.get("series_title", "")
+    episode = series_context.get("episode", 1)
+    total = series_context.get("total_episodes", 1)
+    focus = series_context.get("focus", "")
+    title_hint = series_context.get("title", "")
+    series_label = series_context.get("series_label", "")
+    all_eps = series_context.get("episodes", [])
+    other_eps = [ep for ep in all_eps if ep.get("episode") != episode]
+    other_list = "\n".join([f"  • {ep['episode']}편: {ep.get('title', '')}" for ep in other_eps])
+    return (now.year, now.strftime("%Y년 %m월 %d일"),
+            series_title, episode, total, focus, title_hint, series_label, other_list)
+
+
+def _build_series_prompt_general(keyword: str, traffic: str, series_context: dict, blog_config: dict | None = None) -> str:
+    """blog1 / 기본 — 여행·스포츠·드라마·연예 시리즈 프롬프트 (개인 경험 스타일)"""
     from datetime import datetime
     now = datetime.now()
     y = now.year
@@ -1633,6 +1662,152 @@ JSON only:
   "meta_description": "...",
   "faq": [{{"q":"...","a":"..."}},...],
   "sources": [{{"title":"...","url":"..."}}]
+}}"""
+
+
+# ── blog2 IT 시리즈 프롬프트 ──────────────────────────────────────────────────
+
+def _build_series_prompt_it(keyword: str, traffic: str, series_context: dict, blog_config: dict | None = None) -> str:
+    """blog2 IT 시리즈 전용 프롬프트 — 직접 테스트한 IT 사용자 관점"""
+    from datetime import datetime
+    now = datetime.now()
+    y, date_str = now.year, now.strftime("%Y년 %m월 %d일")
+    series_title = series_context.get("series_title", "")
+    episode = series_context.get("episode", 1)
+    total = series_context.get("total_episodes", 1)
+    focus = series_context.get("focus", "")
+    title_hint = series_context.get("title", "")
+    series_label = series_context.get("series_label", "")
+    all_eps = series_context.get("episodes", [])
+    other_list = "\n".join(
+        [f"  • {ep['episode']}편: {ep.get('title', '')}"
+         for ep in all_eps if ep.get("episode") != episode]
+    )
+    return f"""당신은 IT 기기와 앱을 직접 테스트해보는 30대 직장인입니다.
+"{series_title}" 시리즈를 직접 써보고 경험한 내용을 편씩 정리해 올리는 중입니다.
+광고·홍보 느낌은 절대 없어야 합니다. 불편한 점도 솔직하게 작성하세요.
+
+【현재 날짜】 {date_str}
+【시리즈】 "{series_title}" — 총 {total}편 중 {episode}번째
+【이 편 초점】 {focus}
+【키워드】 {keyword}
+
+━━━ 시리즈 연결 방식 ━━━
+다른 편 목록:
+{other_list}
+
+• 도입부: 이 기술/제품을 왜 써보게 됐는지 또는 이전 편과의 연결 자연스럽게 언급
+• 본문에서 다른 편을 1~2회 언급 ("1편에서 초기 설정 얘기했는데", "다음 편에서 비교해볼게요")
+• 이 편만 읽어도 완결되는 독립적 글
+• 제목 힌트 "{title_hint}"를 더 구체적이고 IT 검색에 적합하게 다듬어 사용
+
+━━━ IT 블로그 글쓰기 원칙 ━━━
+
+• 직접 테스트한 수치·결과 제시 (배터리 몇 분, 속도 몇 Mbps, 처리 시간 등)
+• 장점 3개 언급 시 반드시 단점·아쉬운 점 1개 이상 포함
+• 타 제품/서비스와 구체적 비교 환영 (단, 공정하게)
+• "광고 아님" 느낌 주는 표현: "직접 써봤더니", "제가 느낀 건", "솔직히 말하면"
+• 공식 사이트 또는 제조사 발표 수치 인용 시 출처 명시
+
+━━━ 절대 쓰지 말아야 할 표현 ━━━
+✗ "최고의 제품입니다" / "강력 추천" / "놀라운 성능"
+✗ "혁신적인" / "게임 체인저" (과장 표현)
+✗ "알아보겠습니다" / "살펴보겠습니다" / "정리해드리겠습니다"
+
+━━━ 글 구조 ━━━
+• H2 소제목 4~6개 (각 500자 이상, 공백 제외)
+• 도입: 테스트 배경·동기 (200자)
+• 요약 박스: 이 편 핵심 테스트 결과 3줄 (HTML 박스)
+• 본문: 테스트 과정·결과·비교
+• 이미지 1장 (테스트 화면 또는 제품 관련 이미지)
+• FAQ 3개 (실제 IT 사용자가 궁금해하는 질문)
+• 결론: 이 제품/기술의 추천 대상 명확히
+
+⚠️ 분량: 최소 2,500자 이상(공백 제외)
+⚠️ 투자 조언·수익 보장 표현 사용 금지
+⚠️ HTML만 출력, 마크다운 사용 금지
+
+다음 JSON 형식으로만 응답하세요:
+{{
+  "title": "제목 (40자 이내, IT 검색 최적화, {y}년 포함 권장)",
+  "content": "<완성된 HTML 본문>",
+  "labels": ["{series_label}","IT","AI","스마트폰","앱","기술","테크","리뷰","사용기","비교"],
+  "meta_description": "검색 결과 요약 (155자 이내, 직접 테스트 강조)",
+  "faq": [{{"q":"IT 사용자 질문","a":"직접 경험 기반 답변"}}],
+  "sources": [{{"title":"제조사 또는 공식 발표 출처","url":"https://..."}}]
+}}"""
+
+
+# ── blog3 금융 시리즈 프롬프트 ────────────────────────────────────────────────
+
+def _build_series_prompt_finance(keyword: str, traffic: str, series_context: dict, blog_config: dict | None = None) -> str:
+    """blog3 금융·정부지원 시리즈 전용 프롬프트 — 개인 경험 기반 실용 금융 정보"""
+    from datetime import datetime
+    now = datetime.now()
+    y, date_str = now.year, now.strftime("%Y년 %m월 %d일")
+    series_title = series_context.get("series_title", "")
+    episode = series_context.get("episode", 1)
+    total = series_context.get("total_episodes", 1)
+    focus = series_context.get("focus", "")
+    title_hint = series_context.get("title", "")
+    series_label = series_context.get("series_label", "")
+    all_eps = series_context.get("episodes", [])
+    other_list = "\n".join(
+        [f"  • {ep['episode']}편: {ep.get('title', '')}"
+         for ep in all_eps if ep.get("episode") != episode]
+    )
+    return f"""당신은 금융과 정부지원 정책을 직접 공부하고 신청해본 30대 직장인입니다.
+"{series_title}" 시리즈를 직접 경험한 내용을 편씩 정리해 올리는 중입니다.
+투자 전문가가 아니라 완벽하지 않아도 됩니다. 구글 AdSense 정책을 완전히 준수합니다.
+
+【현재 날짜】 {date_str}
+【시리즈】 "{series_title}" — 총 {total}편 중 {episode}번째
+【이 편 초점】 {focus}
+【키워드】 {keyword}
+
+━━━ 시리즈 연결 방식 ━━━
+다른 편 목록:
+{other_list}
+
+• 도입부: 이 금융/정책 주제를 알아보게 된 계기 또는 이전 편 흐름 자연스럽게 언급
+• 본문에서 다른 편을 1~2회 언급 ("1편에서 자격 조건 얘기했는데", "다음 편에서 신청 과정 알려드릴게요")
+• 이 편만 읽어도 완결되는 독립적 글
+• 제목 힌트 "{title_hint}"를 더 구체적이고 금융 검색에 적합하게 다듬어 사용
+
+━━━ 금융 블로그 글쓰기 원칙 ━━━
+
+• 공신력 있는 출처 필수 인용 (기획재정부·금융위원회·국세청·금융감독원·복지로·고용24)
+• 금액·날짜·자격 조건 등 수치는 반드시 출처와 함께 제시
+• 독자가 바로 활용할 수 있는 단계별 가이드 포함
+• "저도 처음엔 몰랐는데", "직접 신청해보니" 등 개인 경험 언급으로 공감대 형성
+
+━━━ 절대 쓰지 말아야 할 표현 ━━━
+✗ "투자를 권유합니다" / "수익이 보장됩니다" / "반드시 오릅니다"
+✗ 특정 금융상품·주식 매수·매도 유도 표현
+✗ "알아보겠습니다" / "살펴보겠습니다" / "정리해드리겠습니다"
+
+━━━ 글 구조 ━━━
+• H2 소제목 4~6개 (각 500자 이상, 공백 제외)
+• 도입: 이 정보를 알아보게 된 실생활 계기 (200자)
+• 요약 박스: 이 편 핵심 정보 3줄 (HTML 박스, ⚠️ 투자 조언 아님 명시)
+• 본문: 자격 조건·신청 방법·주의사항·실계산 예시
+• 이미지 1장 (금융 관련)
+• 면책 문구: "본 글은 개인적인 경험과 공개된 정보를 바탕으로 작성된 것으로, 전문적인 금융 조언이 아닙니다. 중요한 금융 결정은 전문가와 상담하시기 바랍니다."
+• FAQ 3개 (독자가 실제로 궁금해하는 자격·신청 관련 질문)
+• 결론: 이 제도의 대상자와 주의사항 명확히
+
+⚠️ 분량: 최소 2,500자 이상(공백 제외)
+⚠️ 투자 권유·수익 보장 표현 절대 금지
+⚠️ HTML만 출력, 마크다운 사용 금지
+
+다음 JSON 형식으로만 응답하세요:
+{{
+  "title": "제목 (40자 이내, 금융 검색 최적화, {y}년 기준 포함 권장)",
+  "content": "<완성된 HTML 본문 + 면책 문구 포함>",
+  "labels": ["{series_label}","금융","경제","정부지원","세금","절세","재테크","복지","시책","정책"],
+  "meta_description": "검색 결과 요약 (155자 이내, 실용 정보 강조, 투자 조언 아님 명시)",
+  "faq": [{{"q":"독자 금융 질문","a":"공신력 있는 정보 기반 답변"}}],
+  "sources": [{{"title":"기획재정부·금융위 등 공식 출처명","url":"https://..."}}]
 }}"""
 
 

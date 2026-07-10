@@ -180,9 +180,9 @@ def run_once(
 
     if AUTO_SERIES and not dry_run and not review:
         from series_planner import get_last_series_date, pick_series_keyword, plan_drama_series
-        from keyword_collector import _naver_drama_news, extract_drama_titles
+        blog_id = cfg.get("id", "")
 
-        last_date = get_last_series_date()
+        last_date = get_last_series_date(blog_id=blog_id)
         days_elapsed = (datetime.now() - last_date).days if last_date else AUTO_SERIES_MIN_DAYS + 1
 
         if days_elapsed >= AUTO_SERIES_MIN_DAYS:
@@ -191,25 +191,27 @@ def run_once(
                 f"(마지막 시리즈: {'없음' if not last_date else f'{days_elapsed}일 전'})"
             )
 
-            # ① 인기 드라마 탐지 — 트렌드 키워드보다 우선
-            drama_headlines = _naver_drama_news(
-                os.getenv("NAVER_CLIENT_ID", ""),
-                os.getenv("NAVER_CLIENT_SECRET", ""),
-            )
-            drama_titles = extract_drama_titles(drama_headlines)
+            # ① blog1 전용 — 인기 드라마 탐지 (여행·스포츠·드라마·연예 블로그)
+            if blog_id in ("blog1", ""):
+                from keyword_collector import _naver_drama_news, extract_drama_titles
+                drama_headlines = _naver_drama_news(
+                    os.getenv("NAVER_CLIENT_ID", ""),
+                    os.getenv("NAVER_CLIENT_SECRET", ""),
+                )
+                drama_titles = extract_drama_titles(drama_headlines)
+                if drama_titles:
+                    drama_name = drama_titles[0]
+                    logger.info(f"[자동 드라마 시리즈] '{drama_name}' 감지 — 리뷰 시리즈 기획 시작")
+                    auto_series_plan = plan_drama_series(drama_name, AUTO_SERIES_COUNT)
+                    if auto_series_plan:
+                        auto_series_plan["blog_id"] = blog_id
+                        auto_series_keyword = drama_name
+                    else:
+                        logger.warning("드라마 시리즈 기획 실패 — 일반 트렌드 시리즈로 폴백")
 
-            if drama_titles:
-                drama_name = drama_titles[0]
-                logger.info(f"[자동 드라마 시리즈] '{drama_name}' 감지 — 리뷰 시리즈 기획 시작")
-                auto_series_plan = plan_drama_series(drama_name, AUTO_SERIES_COUNT)
-                if auto_series_plan:
-                    auto_series_keyword = drama_name
-                else:
-                    logger.warning("드라마 시리즈 기획 실패 — 일반 트렌드 시리즈로 폴백")
-
-            # ② 드라마 없음 또는 기획 실패 → 일반 트렌드 키워드 중 시리즈 선정
+            # ② 드라마 미탐지 / blog2 / blog3 → 블로그 주제에 맞는 키워드 선정
             if not auto_series_keyword:
-                auto_series_keyword = pick_series_keyword(keywords)
+                auto_series_keyword = pick_series_keyword(keywords, blog_config=blog_config)
 
         else:
             logger.info(
@@ -517,7 +519,7 @@ def run_series(
     blog_config: dict | None = None,
 ) -> None:
     """시리즈 포스트를 순서대로 기획·생성·게시합니다."""
-    from series_planner import plan_series, build_series_nav, save_series
+    from series_planner import plan_series, build_series_nav, save_series, save_series_with_blog
 
     cfg = blog_config or {}
     blog_label = f"[{cfg.get('name', '기본')}] " if cfg.get("name") else ""
@@ -527,10 +529,14 @@ def run_series(
     logger.info("=" * 60)
 
     if series_plan is None:
-        series_plan = plan_series(keyword, count)
+        series_plan = plan_series(keyword, count, blog_config=blog_config)
     if not series_plan:
         logger.error("시리즈 기획 실패 — 종료")
         return
+    # blog_id 태깅 보장
+    if cfg.get("id") and not series_plan.get("blog_id"):
+        series_plan["blog_id"] = cfg["id"]
+        series_plan["blog_name"] = cfg.get("name", "")
     save_series(series_plan)
     logger.info(f"시리즈 기획 완료: '{series_plan.get('series_title')}'")
     for ep in series_plan.get("episodes", []):

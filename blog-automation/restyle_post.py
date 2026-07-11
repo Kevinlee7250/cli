@@ -208,7 +208,9 @@ def restyle(blog_url: str) -> int:
     post_id = post.get("id", "")
     title   = post.get("title", "")
     content = post.get("content", "")
-    labels  = [l.get("name", "") for l in post.get("labels", [])]
+    labels  = post.get("labels", [])
+    if labels and isinstance(labels[0], dict):
+        labels = [l.get("name", "") for l in labels]
 
     logger.info(f"포스트 조회 성공: [{post_id}] {title}")
     logger.info(f"현재 HTML 길이: {len(content)} chars")

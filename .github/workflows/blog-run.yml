@@ -77,6 +77,9 @@ jobs:
         run: |
           cat > .env << 'ENVEOF'
           ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
+          OPENAI_MODEL="${{ secrets.OPENAI_MODEL || 'gpt-4o' }}"
+          AI_PROVIDER="${{ secrets.AI_PROVIDER || 'claude' }}"
           NAVER_CLIENT_ID="${{ secrets.NAVER_CLIENT_ID }}"
           PIXABAY_API_KEY="${{ secrets.PIXABAY_API_KEY }}"
           NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}"
@@ -169,9 +172,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # docs/data/ 는 tracked 파일 (-f: 루트 .gitignore /*  규칙 우회)
-          # git add는 존재하지 않는 pathspec이 하나라도 있으면 전체가 실패하므로
-          # 파일별로 존재 확인 후 개별 add (posts_archive.json 등은 조건부 생성)
           for f in \
             docs/data/posts.json docs/data/posts_archive.json docs/data/runs.json \
             docs/data/analytics.json \
@@ -189,7 +189,6 @@ jobs:
             echo "변경사항 없음 — 커밋 건너뜀"
           else
             git commit -m "📊 대시보드 데이터 업데이트 (#${{ github.run_number }})"
-            # 충돌 없이 rebase 후 push (최대 3회 재시도)
             for i in 1 2 3; do
               git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
                 && git push origin claude/blog-automation-system-KAbtE \
@@ -207,7 +206,6 @@ jobs:
           path: blog-automation/logs/
           retention-days: 7
 
-      # 실패 시 텔레그램 알림 (TELEGRAM_BOT_TOKEN·TELEGRAM_CHAT_ID Secret 설정 시에만 발송)
       - name: 실패 알림 (텔레그램)
         if: failure()
         env:
@@ -223,4 +221,3 @@ jobs:
           로그: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
             -d chat_id="$TG_CHAT" -d text="$MSG" > /dev/null && echo "텔레그램 알림 발송 완료" || echo "알림 발송 실패 (무시)"
-

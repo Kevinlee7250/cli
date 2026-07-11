@@ -1,5 +1,56 @@
 [
   {
+    "timestamp": "2026-07-11T12:56:39.052780",
+    "health_score": 63,
+    "issues_found": 2,
+    "issues": [
+      {
+        "id": "consecutive_upload_failures",
+        "level": "critical",
+        "message": "최근 4회 연속 업로드 실패 (0건 업로드)",
+        "context": {
+          "fail_count": 4,
+          "recent_dates": [
+            "2026-07-11",
+            "2026-07-11",
+            "2026-07-11",
+            "2026-07-11"
+          ]
+        },
+        "fix": "check_blogger_connection"
+      },
+      {
+        "id": "adsense_not_configured",
+        "level": "warning",
+        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "context": {},
+        "fix": null
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "consecutive_upload_failures",
+        "issue_level": "critical",
+        "issue_message": "최근 4회 연속 업로드 실패 (0건 업로드)",
+        "fix_applied": "check_blogger_connection",
+        "timestamp": "2026-07-11T12:56:38.654212",
+        "success": true,
+        "detail": "Blogger 연결 정상: HOGU What? (https://www.hoguwhat.com/) — 업로드 파라미터 문제 가능성"
+      },
+      {
+        "issue_id": "adsense_not_configured",
+        "issue_level": "warning",
+        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "fix_applied": null,
+        "timestamp": "2026-07-11T12:56:39.052670",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-07-11T12:44:33.284808",
     "health_score": 93,
     "issues_found": 1,
@@ -2138,58 +2189,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-08T09:34:56.789133",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-08T09:23:58.567015",
-    "health_score": 63,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "consecutive_upload_failures",
-        "level": "critical",
-        "message": "최근 5회 연속 업로드 실패 (0건 업로드)",
-        "context": {
-          "fail_count": 5,
-          "recent_dates": [
-            "2026-07-08",
-            "2026-07-08",
-            "2026-07-08",
-            "2026-07-08",
-            "2026-07-08"
-          ]
-        },
-        "fix": "check_blogger_connection"
-      },
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "consecutive_upload_failures",
-        "issue_level": "critical",
-        "issue_message": "최근 5회 연속 업로드 실패 (0건 업로드)",
-        "fix_applied": "check_blogger_connection",
-        "timestamp": "2026-07-08T09:23:57.857957",
-        "success": true,
-        "detail": "Blogger 연결 정상: HOGU What? (https://hoguwhat1.blogspot.com/) — 업로드 파라미터 문제 가능성"
-      },
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-08T09:23:58.566912",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

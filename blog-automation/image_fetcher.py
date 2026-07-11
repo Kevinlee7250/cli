@@ -77,10 +77,13 @@ def _pixabay_images(keyword: str, count: int, api_key: str) -> list[dict]:
     if not api_key:
         return []
     try:
-        # 한국어 키워드 → 영어 단어 우선 추출 (Pixabay는 영문 검색 품질이 높음)
-        import re as _re
-        en_terms = _re.findall(r'[A-Za-z][A-Za-z0-9]{1,}', keyword)
-        query = " ".join(en_terms[:4]) if en_terms else keyword
+        # 한국어 키워드 → 영어로 변환 (Pixabay는 영문 검색 품질이 높음)
+        en_terms = re.findall(r'[A-Za-z][A-Za-z0-9]{1,}', keyword)
+        if en_terms:
+            query = " ".join(en_terms[:4])
+        else:
+            # 순수 한국어: _ko_to_en_query로 영어 변환
+            query = _ko_to_en_query(keyword) or keyword
 
         r = requests.get(
             "https://pixabay.com/api/",
@@ -292,6 +295,52 @@ def _search_all_sources(
 _MIN_RELEVANCE = 0.15
 
 
+def _is_korean_query(text: str) -> bool:
+    """쿼리 단어 중 한글 비율이 50% 이상이면 한국어 쿼리로 판정합니다."""
+    words = re.findall(r'[가-힣]{2,}|[A-Za-z]{2,}', text)
+    if not words:
+        return False
+    ko = sum(1 for w in words if re.search(r'[가-힣]', w))
+    return ko / len(words) >= 0.5
+
+
+def _ko_to_en_query(query: str) -> str:
+    """한국어 핵심 명사를 기반으로 Pixabay/DDG용 영어 쿼리를 생성합니다.
+    단순 영단어 추출이 없으면 범용 카테고리어로 대체합니다."""
+    # 영어 단어가 있으면 우선 사용
+    en_words = re.findall(r'[A-Za-z][A-Za-z0-9]{2,}', query)
+    if en_words:
+        return " ".join(en_words[:3])
+
+    # 한국어 → 영어 범용 매핑 (이미지 검색 친화적 카테고리)
+    _KO_EN = {
+        "건강": "health", "의료": "healthcare", "운동": "exercise", "다이어트": "diet",
+        "투자": "investment", "주식": "stock market", "ETF": "ETF", "금융": "finance",
+        "부동산": "real estate", "경제": "economy", "재테크": "personal finance",
+        "여행": "travel", "관광": "tourism", "맛집": "restaurant", "숙소": "hotel",
+        "독서": "reading books", "책": "books", "교육": "education", "학습": "learning",
+        "요리": "cooking", "음식": "food", "카페": "cafe", "커피": "coffee",
+        "패션": "fashion", "뷰티": "beauty", "화장": "makeup", "스킨케어": "skincare",
+        "육아": "parenting", "아이": "child", "가족": "family",
+        "여름": "summer", "봄": "spring", "가을": "autumn", "겨울": "winter",
+        "장마": "rainy season", "폭염": "heat wave", "날씨": "weather",
+        "캠프": "camp", "캠핑": "camping", "등산": "hiking", "자전거": "cycling",
+        "스포츠": "sports", "축구": "soccer", "야구": "baseball", "테니스": "tennis",
+        "드라마": "drama", "영화": "movie", "음악": "music", "공연": "concert",
+        "취업": "job", "직장": "workplace", "창업": "startup", "부업": "side job",
+        "세금": "tax", "연금": "pension", "보험": "insurance", "대출": "loan",
+        "AI": "artificial intelligence", "기술": "technology", "스마트폰": "smartphone",
+    }
+    ko_words = re.findall(r'[가-힣]{2,}', query)
+    en_terms = []
+    for w in ko_words:
+        if w in _KO_EN:
+            en_terms.append(_KO_EN[w])
+        if len(en_terms) >= 2:
+            break
+    return " ".join(en_terms) if en_terms else "lifestyle blog"
+
+
 def _fetch_best_image(
     query: str,
     naver_client_id: str = "",
@@ -303,8 +352,11 @@ def _fetch_best_image(
     후보 이미지를 가져와 제목 관련성이 가장 높은 것을 반환합니다.
     긴 체험담식 쿼리는 결과가 없으므로 점진적으로 단순화하며 재시도합니다:
     ① 원본 쿼리 → ② 핵심 명사 3개 → ③ 핵심 명사 2개
-    관련성이 임계값 미만인 후보만 있으면 None (잡음 이미지 삽입 방지).
+    한국어 쿼리는 영어 변환 쿼리도 추가 시도.
+    관련성 임계값 미달 시에도 후보가 있으면 최상위 이미지를 반환합니다
+    (Claude _filter_relevant_images에서 최종 필터링).
     """
+    is_korean = _is_korean_query(query)
     attempts = [query]
     simple3 = _simplify_query(query, 3)
     simple2 = _simplify_query(query, 2)
@@ -313,9 +365,16 @@ def _fetch_best_image(
     if simple2 and simple2 not in attempts:
         attempts.append(simple2)
 
-    # 관련성 채점은 항상 단순화된 핵심 명사 기준 (원본 쿼리는 수식어가 많아 점수가 왜곡됨)
+    # 한국어 쿼리: 영어 변환 버전도 시도 (Pixabay/DDG/Wikimedia 결과 개선)
+    if is_korean:
+        en_q = _ko_to_en_query(query)
+        if en_q and en_q not in attempts:
+            attempts.append(en_q)
+
+    # 관련성 채점은 항상 단순화된 핵심 명사 기준
     score_query = simple2 or simple3 or query
 
+    best_fallback = None  # 임계값 미달이라도 후보가 있으면 보관
     for attempt_q in attempts:
         candidates = _search_all_sources(
             attempt_q, naver_client_id, naver_client_secret, n_candidates,
@@ -324,9 +383,18 @@ def _fetch_best_image(
         if not candidates:
             continue
         best = max(candidates, key=lambda img: _score_title_relevance(img, score_query))
-        if _score_title_relevance(best, score_query) >= _MIN_RELEVANCE:
+        score = _score_title_relevance(best, score_query)
+        if score >= _MIN_RELEVANCE:
             return best
-        logger.debug(f"관련성 미달 후보 폐기: '{attempt_q}' → '{best.get('title','')[:30]}'")
+        logger.debug(f"관련성 미달 후보 보관: '{attempt_q}' → '{best.get('title','')[:30]}' (score={score:.2f})")
+        if best_fallback is None:
+            best_fallback = best
+
+    # 임계값을 넘는 이미지가 없어도 후보가 있으면 최상위 반환
+    # (Claude _filter_relevant_images가 최종 필터링 담당)
+    if best_fallback:
+        logger.debug(f"관련성 미달 폴백 이미지 사용: '{best_fallback.get('title','')[:40]}'")
+        return best_fallback
     return None
 
 

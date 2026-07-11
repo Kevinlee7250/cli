@@ -1,337 +1,3 @@
-2026-07-11 12:10:39,661 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '에어컨 전기세 절약, 2026년 여름엔 이 정부 지원 제도까지 '
-2026-07-11 12:10:39,661 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 2518자로 4000자 미달이며 개인 경험은 한 문장 수준에 그쳐 정보 재조합 성격이 강함
-2026-07-11 12:10:39,661 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 충분하나 일부 단락(지원대상 상세, 신청방법 등)이 500자 이상으로 길게 이어짐
-2026-07-11 12:10:39,661 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 alt 텍스트 판단 불가하나 저작권 위반 요소는 없음
-2026-07-11 12:10:39,661 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 표 항목 내 '~로 수정' 같은 반복적 교정 문구와 단계별 나열 패턴이 AI 편집 흔적을 드러냄
-2026-07-11 12:10:39,667 [INFO] internal_linker — 내부 링크 후보 3개 발견
-2026-07-11 12:10:39,670 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-07-11 12:10:39,670 [INFO] main —   제목: 에어컨 전기세 절약, 2026년 여름엔 이 정부 지원 제도까지 챙기세요
-2026-07-11 12:10:39,671 [INFO] main —   이미지: 0개 삽입
-2026-07-11 12:10:39,671 [INFO] main —   글자 수: 2518자
-2026-07-11 12:10:40,480 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:10:50,740 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 12:10:51,396 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:11:01,501 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 12:11:05,417 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:11:09,086 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '에어컨 전기세 절약, 2026년 여름엔 이 정부 지원 제도까지 '
-2026-07-11 12:11:09,086 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2518자로 warn 임계값 최소치이며, 개인 경험 언급은 있으나 제도 설명이 대부분 일반 정보 재조합 수준
-2026-07-11 12:11:09,086 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 개수는 충분하나 표 내용이 문장으로 풀어써져 일부 단락이 500자 이상으로 길어짐
-2026-07-11 12:11:09,086 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 개인 경험 서술과 출처 4개는 있으나 본문에 '확인 필요로 수정' 등 편집 흔적이 남아 신뢰도를 저해함
-2026-07-11 12:11:09,086 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 SEO·가독성 측면에서 보완 필요(저작권 위반은 없음)
-2026-07-11 12:11:09,087 [INFO] adsense_validator —   ❌ AI 생성 의심도: '~로 수정', '확인 필요로 수정' 등 AI 초안 편집 지시문이 그대로 노출되어 미검수 AI 생성 흔적이 뚜렷함
-2026-07-11 12:11:09,087 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '~로 수정', '확인 필요로 수정' 등 AI 초안 편집 지시문이 그대로 노출되어 미검수 AI 생성 흔적이 뚜렷함
-2026-07-11 12:11:09,087 [WARNING] adsense_validator —   🔴 본문 중 '가구원 수별 차등으로 수정', '정확한 금액은 공식 발표 자료 확인 필요로 수정' 등 AI 편집 메모가 그대로 남아있어 즉시 삭제 및 재검수 필요
-2026-07-11 12:11:09,087 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
-2026-07-11 12:11:09,087 [WARNING] main —      🔴 [AI 생성 의심도] '~로 수정', '확인 필요로 수정' 등 AI 초안 편집 지시문이 그대로 노출되어 미검수 AI 생성 흔적이 뚜렷함
-2026-07-11 12:11:09,087 [WARNING] main —      🔴 본문 중 '가구원 수별 차등으로 수정', '정확한 금액은 공식 발표 자료 확인 필요로 수정' 등 AI 편집 메모가 그대로 남아있어 즉시 삭제 및 재검수 필요
-2026-07-11 12:11:09,087 [WARNING] main —      🟡 [원본성 및 품질] 2518자로 warn 임계값 최소치이며, 개인 경험 언급은 있으나 제도 설명이 대부분 일반 정보 재조합 수준
-2026-07-11 12:11:09,087 [WARNING] main —      🟡 [구조 및 가독성] H2 8개로 개수는 충분하나 표 내용이 문장으로 풀어써져 일부 단락이 500자 이상으로 길어짐
-2026-07-11 12:11:09,087 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 개인 경험 서술과 출처 4개는 있으나 본문에 '확인 필요로 수정' 등 편집 흔적이 남아 신뢰도를 저해함
-2026-07-11 12:11:09,087 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
-2026-07-11 12:11:09,889 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:12:26,328 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 12:12:27,107 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:12:39,594 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2518자 → 4353자 (+1835자)
-2026-07-11 12:12:39,594 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-11 12:12:40,329 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:12:51,187 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 12:12:51,850 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:12:57,757 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — '에어컨 전기세 절약, 2026년 여름엔 이 정부 지원 제도까지 '
-2026-07-11 12:12:57,757 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 양호하나 '신청 방법 단계별 안내' 등 일부 단락이 500자 이상 길게 이어짐
-2026-07-11 12:12:57,757 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 
-2026-07-11 12:12:57,757 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 
-2026-07-11 12:12:57,757 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
-2026-07-11 12:12:57,757 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
-2026-07-11 12:12:57,757 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
-2026-07-11 12:12:57,757 [WARNING] main —   ⚠️ 자동 수정 후에도 기준 미달 (점수: 69/100) — pending 저장
-2026-07-11 12:12:57,757 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '에어컨 전기세 절약, 2026년 여름엔 이 정부 지원 제도까지 챙기세요' (점수: 69/100, 권장: review)
-2026-07-11 12:12:57,771 [INFO] dashboard_exporter —   검토 대기 저장: 에어컨 전기세 절약, 2026년 여름엔 이 정부 지원 제도까지 챙기세요 (10417자 HTML)
-2026-07-11 12:12:57,778 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 55개)
-2026-07-11 12:12:57,778 [INFO] main — 
-============================================================
-2026-07-11 12:12:57,778 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-11 12:12:57,778 [INFO] main — ============================================================
-2026-07-11 12:12:57,808 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-11 12:12:57,833 [INFO] dashboard_exporter —   시리즈: 4개 내보내기 완료
-2026-07-11 12:12:57,852 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-11 12:12:58,120 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-11 12:12:58,122 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-11 12:12:58,125 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-11 12:12:58,134 [INFO] post_manager —   포스트 레지스트리: 전체 171개 (게시 118 / 실패 15 / 대기 34)
-2026-07-11 12:12:58,134 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-11 12:12:58,134 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-11 12:12:58,135 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-11 12:14:00,780 [INFO] main — === AdSense 셋업 모드: 필수 페이지 생성 + 자동 광고 테마 주입 ===
-2026-07-11 12:14:00,783 [INFO] main — 
-── HOGU 여행,스포츠,연예 필수 페이지 생성 ──
-2026-07-11 12:14:00,783 [INFO] page_creator — 페이지 생성 대상: HOGU 여행,스포츠,연예 (id=8903166932049624994, theme=lifestyle)
-2026-07-11 12:14:01,384 [INFO] page_creator — 기존 Blogger 페이지 4개 확인
-2026-07-11 12:14:02,158 [INFO] page_creator — 페이지 업데이트 완료: 개인정보처리방침 → https://hogugolfntraval.blogspot.com/p/blog-page.html
-2026-07-11 12:14:02,926 [INFO] page_creator — 페이지 업데이트 완료: 블로그 소개 → https://hogugolfntraval.blogspot.com/p/blog-page_03.html
-2026-07-11 12:14:02,927 [INFO] main —   ✅ privacy_policy: https://hogugolfntraval.blogspot.com/p/blog-page.html
-2026-07-11 12:14:02,927 [INFO] main —   ✅ about: https://hogugolfntraval.blogspot.com/p/blog-page_03.html
-2026-07-11 12:14:02,927 [INFO] main —   AdSense 자동 광고 테마 주입 시도: HOGU 여행,스포츠,연예
-2026-07-11 12:14:03,084 [ERROR] blogger_uploader — ADSENSE_CLIENT_ID가 설정되지 않았습니다 — GitHub Secrets에 추가하세요
-2026-07-11 12:14:03,084 [WARNING] main —   ⚠️ 테마 주입 실패 — Blogger 관리자에서 수동으로 AdSense 연결 필요: HOGU 여행,스포츠,연예
-2026-07-11 12:43:56,361 [INFO] main — === AdSense 셋업 모드: 필수 페이지 생성 + 자동 광고 테마 주입 ===
-2026-07-11 12:43:56,363 [INFO] main — 
-── HOGU 여행,스포츠,연예 필수 페이지 생성 ──
-2026-07-11 12:43:56,363 [INFO] page_creator — 페이지 생성 대상: HOGU 여행,스포츠,연예 (id=8903166932049624994, theme=lifestyle)
-2026-07-11 12:43:56,856 [INFO] page_creator — 기존 Blogger 페이지 4개 확인
-2026-07-11 12:43:57,943 [INFO] page_creator — 페이지 업데이트 완료: 개인정보처리방침 → https://hogugolfntraval.blogspot.com/p/blog-page.html
-2026-07-11 12:43:58,888 [INFO] page_creator — 페이지 업데이트 완료: 블로그 소개 → https://hogugolfntraval.blogspot.com/p/blog-page_03.html
-2026-07-11 12:43:58,889 [INFO] main —   ✅ privacy_policy: https://hogugolfntraval.blogspot.com/p/blog-page.html
-2026-07-11 12:43:58,889 [INFO] main —   ✅ about: https://hogugolfntraval.blogspot.com/p/blog-page_03.html
-2026-07-11 12:43:58,889 [INFO] main —   AdSense 자동 광고 테마 주입 시도: HOGU 여행,스포츠,연예
-2026-07-11 12:43:59,026 [ERROR] blogger_uploader — ADSENSE_CLIENT_ID가 설정되지 않았습니다 — GitHub Secrets에 추가하세요
-2026-07-11 12:43:59,026 [WARNING] main —   ⚠️ 테마 주입 실패 — Blogger 관리자에서 수동으로 AdSense 연결 필요: HOGU 여행,스포츠,연예
-2026-07-11 12:49:29,464 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-07-11 12:49:29,464 [INFO] main —   - [blog1] HOGU What?
-2026-07-11 12:49:29,464 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-07-11 12:49:29,465 [INFO] main —   - [blog3] 금융NEWS
-2026-07-11 12:49:29,465 [INFO] main — 테스트 모드 — 업로드 없이 글만 생성합니다
-2026-07-11 12:49:29,465 [INFO] main — ============================================================
-2026-07-11 12:49:29,465 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-11 12:49:29
-2026-07-11 12:49:29,465 [INFO] main — ============================================================
-2026-07-11 12:49:29,475 [INFO] keyword_collector — 포스팅 이력 코퍼스: 30개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-11 12:49:29,475 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
-2026-07-11 12:49:32,826 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-11 12:49:39,143 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:49:39,169 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 2개
-2026-07-11 12:49:39,169 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 2개
-2026-07-11 12:49:39,950 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-11 12:49:40,105 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-11 12:49:40,106 [INFO] keyword_collector — 폴백 키워드 전체 재사용 (30일 사이클 완료)
-2026-07-11 12:49:40,107 [INFO] keyword_collector — 최근 사용 제외 8개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁', '여름방학 자녀 교육']
-2026-07-11 12:49:40,108 [INFO] keyword_collector —   [naver_realtime] 1개: ['청약통장 vs 적금 목돈 마련 재테크 비교']
-2026-07-11 12:49:40,108 [INFO] keyword_collector — 최종 선정 키워드 1개: ['청약통장 vs 적금 목돈 마련 재테크 비교']
-2026-07-11 12:49:40,108 [INFO] main — 수집된 키워드 1개: ['청약통장 vs 적금 목돈 마련 재테크 비교']
-2026-07-11 12:49:40,108 [INFO] main — 단독 포스트 대상 키워드 1개: ['청약통장 vs 적금 목돈 마련 재테크 비교']
-2026-07-11 12:49:40,122 [INFO] main — 
-[1/1] 키워드: '청약통장 vs 적금 목돈 마련 재테크 비교'
-2026-07-11 12:49:40,122 [INFO] content_generator — 포스트 생성 중: '청약통장 vs 적금 목돈 마련 재테크 비교'
-2026-07-11 12:49:40,122 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-11 12:49:41,085 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:51:00,523 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:51:07,816 [INFO] content_generator — 팩트체크: 통과
-2026-07-11 12:51:07,819 [INFO] content_generator — 섹션별 이미지 검색: ['청약통장 vs 적금']
-2026-07-11 12:51:10,615 [INFO] image_fetcher — 이미지 수집 성공: '청약통장 vs 적금' → 제목='istanbul / nature / sea / sun / reflecti' (관련성=0.00)
-2026-07-11 12:51:10,615 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-11 12:51:10,618 [INFO] content_generator — 포스트 생성 완료: '청약통장 vs 적금, 목돈 마련 뭐가 나을까 (2026년 비교)' (3143자, 이미지 1개)
-2026-07-11 12:51:12,331 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:51:23,881 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 12:51:24,759 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:51:34,694 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 12:51:35,702 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:51:39,139 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '청약통장 vs 적금, 목돈 마련 뭐가 나을까 (2026년 비교)'
-2026-07-11 12:51:39,139 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2016/2021년 개인 경험 등 구체성은 있으나 글자 수 3143자로 warn 구간(2500~3999자)에 해당
-2026-07-11 12:51:39,139 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 양호하나 본문 중 'istanbul/nature/sea...' 등 이미지 alt로 추정되는 불필요한 텍스트가 삽입되어 가독성 저해
-2026-07-11 12:51:39,139 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 없음 및 본문에 이미지 관련 키워드 텍스트가 잘못 삽입된 흔적 있어 정리 필요
-2026-07-11 12:51:39,139 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 첫째~넷째 나열식 구조와 '정리하면' 같은 요약 문구가 반복되어 다소 정형화된 패턴 보임
-2026-07-11 12:51:39,139 [WARNING] adsense_validator —   🔴 본문 중 'istanbul / nature / sea / sun / reflection / that / sunset / sky / sunrise / vs ship' 등 이미지 alt 텍스트로 추정되는 무의미한 문구가 본문에 그대로 노출되어 있어 즉시 삭제 및 정리 필요
-2026-07-11 12:51:39,145 [INFO] internal_linker — 내부 링크 후보 2개 발견
-2026-07-11 12:51:39,147 [INFO] internal_linker —   [1/5] '주택청약' -> https://hoguasset.blogspot.com/2026/07/10-2026.html
-2026-07-11 12:51:39,149 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-11 12:51:39,149 [INFO] main —   제목: 청약통장 vs 적금, 목돈 마련 뭐가 나을까 (2026년 비교)
-2026-07-11 12:51:39,149 [INFO] main —   이미지: 1개 삽입
-2026-07-11 12:51:39,149 [INFO] main —   글자 수: 3143자
-2026-07-11 12:51:39,149 [INFO] main —   [테스트 모드] 업로드 건너뜀
-2026-07-11 12:51:39,156 [INFO] main — 
-============================================================
-2026-07-11 12:51:39,156 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-11 12:51:39,156 [INFO] main — ============================================================
-2026-07-11 12:51:39,188 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-11 12:51:39,209 [INFO] dashboard_exporter —   시리즈: 4개 내보내기 완료
-2026-07-11 12:51:39,228 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-11 12:51:39,392 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-11 12:51:39,603 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-11 12:51:39,799 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-11 12:51:39,800 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-11 12:51:39,803 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-11 12:51:39,813 [INFO] post_manager —   포스트 레지스트리: 전체 172개 (게시 118 / 실패 15 / 대기 35)
-2026-07-11 12:51:39,813 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-11 12:51:39,813 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-11 12:51:39,813 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-11 12:51:39,814 [INFO] main — ============================================================
-2026-07-11 12:51:39,814 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-11 12:51:39
-2026-07-11 12:51:39,814 [INFO] main — ============================================================
-2026-07-11 12:51:39,823 [INFO] keyword_collector — 포스팅 이력 코퍼스: 27개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-11 12:51:39,823 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
-2026-07-11 12:51:43,816 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 50개
-2026-07-11 12:51:46,518 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:51:46,519 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 2개
-2026-07-11 12:51:46,519 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 2개
-2026-07-11 12:51:46,947 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-11 12:51:46,948 [INFO] keyword_collector — 유사 주제 제외 4개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁']
-2026-07-11 12:51:46,948 [INFO] keyword_collector —   [season_scheduled] 1개: ['여름방학 자녀 교육']
-2026-07-11 12:51:46,949 [INFO] keyword_collector — 최종 선정 키워드 1개: ['여름방학 자녀 교육']
-2026-07-11 12:51:46,949 [INFO] main — 수집된 키워드 1개: ['여름방학 자녀 교육']
-2026-07-11 12:51:46,949 [INFO] main — 단독 포스트 대상 키워드 1개: ['여름방학 자녀 교육']
-2026-07-11 12:51:46,962 [INFO] main — 
-[1/1] 키워드: '여름방학 자녀 교육'
-2026-07-11 12:51:46,962 [INFO] content_generator — 포스트 생성 중: '여름방학 자녀 교육'
-2026-07-11 12:51:46,962 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-11 12:51:47,841 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:53:14,745 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-07-11 12:53:15,498 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:53:26,054 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 12:53:26,808 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:53:30,691 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-07-11 12:53:30,692 [INFO] content_generator — 섹션별 이미지 검색: ['여름방학 자녀 교육']
-2026-07-11 12:53:31,974 [INFO] image_fetcher — 이미지 수집 성공: '여름방학 자녀 교육' → 제목='library / books / bookcases / bookshelve' (관련성=0.00)
-2026-07-11 12:53:31,974 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-11 12:53:31,975 [INFO] content_generator — 포스트 생성 완료: '여름방학 자녀 교육, 학원 대신 체험여행으로 채워본 3주 후기' (2709자, 이미지 1개)
-2026-07-11 12:53:32,719 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:53:43,499 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 12:53:44,255 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:53:52,323 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '여름방학 자녀 교육, 학원 대신 체험여행으로 채워본 3주 후기'
-2026-07-11 12:53:52,323 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 날짜·비용·경험이 풍부하나 글자수 2709자로 warn 기준(2500~3999자) 해당
-2026-07-11 12:53:52,323 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드가 문단마다 반복돼 다소 부자연스러운 밀집도를 보임
-2026-07-11 12:53:52,323 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 양호하나 단락 구분 없이 긴 문장 블록이 이어져 가독성 저하
-2026-07-11 12:53:52,323 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 실제 이미지 없이 스톡 사진 태그만 존재, alt 텍스트 확인 불가
-2026-07-11 12:53:52,323 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약 박스 등 정형화된 AI 블로그 패턴이 일부 감지됨
-2026-07-11 12:53:52,328 [INFO] main —   제목: 여름방학 자녀 교육, 학원 대신 체험여행으로 채워본 3주 후기
-2026-07-11 12:53:52,328 [INFO] main —   이미지: 1개 삽입
-2026-07-11 12:53:52,328 [INFO] main —   글자 수: 2709자
-2026-07-11 12:53:52,328 [INFO] main —   [테스트 모드] 업로드 건너뜀
-2026-07-11 12:53:52,335 [INFO] main — 
-============================================================
-2026-07-11 12:53:52,335 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-11 12:53:52,335 [INFO] main — ============================================================
-2026-07-11 12:53:52,364 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-11 12:53:52,385 [INFO] dashboard_exporter —   시리즈: 4개 내보내기 완료
-2026-07-11 12:53:52,430 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-11 12:53:52,629 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-11 12:53:52,631 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-11 12:53:52,633 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-11 12:53:52,643 [INFO] post_manager —   포스트 레지스트리: 전체 173개 (게시 118 / 실패 15 / 대기 36)
-2026-07-11 12:53:52,643 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-11 12:53:52,643 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-11 12:53:52,644 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-11 12:53:52,645 [INFO] main — ============================================================
-2026-07-11 12:53:52,645 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-11 12:53:52
-2026-07-11 12:53:52,645 [INFO] main — ============================================================
-2026-07-11 12:53:52,654 [INFO] keyword_collector — 포스팅 이력 코퍼스: 31개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-11 12:53:52,655 [INFO] keyword_collector — 시즌 예약 키워드 7개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
-2026-07-11 12:53:55,298 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-11 12:54:01,774 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:54:01,775 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 2개
-2026-07-11 12:54:01,775 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 2개
-2026-07-11 12:54:02,293 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-11 12:54:02,293 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-11 12:54:02,294 [INFO] keyword_collector — 유사 주제 제외 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-11 12:54:02,295 [INFO] keyword_collector —   [season_scheduled] 1개: ['장마 건강 관리']
-2026-07-11 12:54:02,295 [INFO] keyword_collector — 최종 선정 키워드 1개: ['장마 건강 관리']
-2026-07-11 12:54:02,295 [INFO] main — 수집된 키워드 1개: ['장마 건강 관리']
-2026-07-11 12:54:02,295 [INFO] main — 단독 포스트 대상 키워드 1개: ['장마 건강 관리']
-2026-07-11 12:54:02,309 [INFO] main — 
-[1/1] 키워드: '장마 건강 관리'
-2026-07-11 12:54:02,309 [INFO] content_generator — 포스트 생성 중: '장마 건강 관리'
-2026-07-11 12:54:02,309 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-11 12:54:03,146 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:55:21,640 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:55:31,322 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 12:55:31,967 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:55:33,264 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-07-11 12:55:33,264 [INFO] content_generator — 섹션별 이미지 검색: ['장마 건강 관리']
-2026-07-11 12:55:35,243 [INFO] image_fetcher — 이미지 수집 성공: '장마 건강 관리' → 제목='marguerite / white petals / blossom / fl' (관련성=0.00)
-2026-07-11 12:55:35,243 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-11 12:55:35,244 [INFO] content_generator — 포스트 생성 완료: '장마철 건강 관리, 병원비 폭탄 막는 실손보험·건강보험 활용법 (2026년 최신)' (3162자, 이미지 1개)
-2026-07-11 12:55:36,154 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:55:48,003 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 12:55:48,769 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:55:58,879 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 12:55:59,584 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 12:56:01,427 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '장마철 건강 관리, 병원비 폭탄 막는 실손보험·건강보험 활용법 '
-2026-07-11 12:56:01,427 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3162자로 기준 미달 구간이며 개인 경험 1건 외 대부분 일반 정보 재구성
-2026-07-11 12:56:01,427 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개는 양호하나 본인부담상한제 등 일부 단락이 500자 이상으로 과도하게 김
-2026-07-11 12:56:01,427 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 alt 텍스트가 키워드 나열식 스팸성 태그로 구성되어 저작권·품질 우려
-2026-07-11 12:56:01,427 [INFO] adsense_validator —   ❌ AI 생성 의심도: '~라고 표현', '~라고 안내' 등 프롬프트 지시문이 본문에 그대로 노출되어 AI 생성 흔적이 뚜렷함
-2026-07-11 12:56:01,427 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '~라고 표현', '~라고 안내' 등 프롬프트 지시문이 본문에 그대로 노출되어 AI 생성 흔적이 뚜렷함
-2026-07-11 12:56:01,428 [WARNING] adsense_validator —   🔴 본문 중 '정산 시기는 매년 다를 수 있으니 공단 공지를 확인하라고 표현', '자기부담률이 다르니 증권을 확인하라고 표현' 등 AI 프롬프트 지시문이 그대로 텍스트에 노출되어 즉시 수정 필요
-2026-07-11 12:56:01,428 [WARNING] adsense_validator —   🔴 이미지 alt 텍스트가 'marguerite / white petals / blossom...' 등 무관한 키워드 나열로 되어 있어 교체 또는 정상 alt 텍스트로 수정 필요
-2026-07-11 12:56:01,431 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-11 12:56:01,431 [INFO] internal_linker —   [1/5] '장마 건강 관리' -> https://www.hoguwhat.com/2026/07/40_01256264918.html
-2026-07-11 12:56:01,432 [INFO] internal_linker —   [2/5] '장마 건강 관리' -> https://www.hoguwhat.com/2026/07/40.html
-2026-07-11 12:56:01,432 [INFO] internal_linker —   [3/5] '국민건강보험' -> https://hoguwhat1.blogspot.com/2026/07/2026_01979867157.html
-2026-07-11 12:56:01,433 [INFO] internal_linker —   [4/5] '건강보험공단' -> https://hoguwhat1.blogspot.com/2026/07/2026_0895078644.html
-2026-07-11 12:56:01,435 [INFO] internal_linker —   [5/5] '나왔을' -> https://hoguwhat1.blogspot.com/2026/06/2026_0410105439.html
-2026-07-11 12:56:01,435 [INFO] internal_linker — 내부 링크 5개 삽입 완료
-2026-07-11 12:56:01,435 [INFO] main —   제목: 장마철 건강 관리, 병원비 폭탄 막는 실손보험·건강보험 활용법 (2026년 최신)
-2026-07-11 12:56:01,435 [INFO] main —   이미지: 1개 삽입
-2026-07-11 12:56:01,435 [INFO] main —   글자 수: 3162자
-2026-07-11 12:56:01,435 [INFO] main —   [테스트 모드] 업로드 건너뜀
-2026-07-11 12:56:01,442 [INFO] main — 
-============================================================
-2026-07-11 12:56:01,442 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-11 12:56:01,442 [INFO] main — ============================================================
-2026-07-11 12:56:01,470 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-11 12:56:01,493 [INFO] dashboard_exporter —   시리즈: 4개 내보내기 완료
-2026-07-11 12:56:01,510 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-11 12:56:01,683 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-11 12:56:01,685 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-11 12:56:01,688 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-11 12:56:01,697 [INFO] post_manager —   포스트 레지스트리: 전체 174개 (게시 118 / 실패 15 / 대기 37)
-2026-07-11 12:56:01,697 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-11 12:56:01,697 [INFO] dashboard_exporter —   포스트: 100개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-11 12:56:01,698 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-11 14:10:40,793 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-07-11 14:10:40,794 [INFO] main —   - [blog1] HOGU What?
-2026-07-11 14:10:40,794 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-07-11 14:10:40,794 [INFO] main —   - [blog3] 금융NEWS
-2026-07-11 14:10:40,794 [INFO] main — 테스트 모드 — 업로드 없이 글만 생성합니다
-2026-07-11 14:10:40,794 [INFO] main — ============================================================
-2026-07-11 14:10:40,794 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-11 14:10:40
-2026-07-11 14:10:40,794 [INFO] main — ============================================================
-2026-07-11 14:10:40,804 [INFO] keyword_collector — 포스팅 이력 코퍼스: 30개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-11 14:10:40,804 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약']...
-2026-07-11 14:10:44,823 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-11 14:10:50,744 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 14:10:50,765 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-11 14:10:51,598 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-11 14:10:51,852 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-11 14:10:51,853 [INFO] keyword_collector — 폴백 키워드 전체 재사용 (30일 사이클 완료)
-2026-07-11 14:10:51,854 [INFO] keyword_collector — 최근 사용 제외 46개: ['장마 건강 관리', '폭염 대비 방법', '에어컨 전기세 절약', '여름 냉방 꿀팁', '여름방학 자녀 교육']
-2026-07-11 14:10:51,854 [WARNING] keyword_collector — 선정 키워드 부족 (0/1) — 유사도 기준 완화하여 재시도
-2026-07-11 14:10:51,854 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (0/1) — 이전 사용 키워드 일부 허용
-2026-07-11 14:10:51,855 [INFO] keyword_collector —   [season_scheduled] 1개: ['장마 건강 관리']
-2026-07-11 14:10:51,855 [INFO] keyword_collector — 최종 선정 키워드 1개: ['장마 건강 관리']
-2026-07-11 14:10:51,855 [INFO] main — 수집된 키워드 1개: ['장마 건강 관리']
-2026-07-11 14:10:51,855 [INFO] main — 단독 포스트 대상 키워드 1개: ['장마 건강 관리']
-2026-07-11 14:10:51,869 [INFO] main — 
-[1/1] 키워드: '장마 건강 관리'
-2026-07-11 14:10:51,869 [INFO] content_generator — 포스트 생성 중: '장마 건강 관리'
-2026-07-11 14:10:51,869 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-11 14:10:52,613 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 14:11:56,816 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 14:12:05,513 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 14:12:06,161 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 14:12:07,515 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-07-11 14:12:07,518 [INFO] content_generator — 섹션별 이미지 검색: ['장마 건강 관리']
-2026-07-11 14:12:09,701 [INFO] image_fetcher — 이미지 수집 성공: '장마 건강 관리' → 제목='marguerite / white petals / blossom / fl' (관련성=0.00)
-2026-07-11 14:12:09,701 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-11 14:12:09,703 [INFO] content_generator — 포스트 생성 완료: '2026년 장마 건강 관리, 저는 이렇게 대비하고 있습니다' (2753자, 이미지 1개)
-2026-07-11 14:12:10,451 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 14:12:21,665 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 14:12:22,508 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 14:12:32,322 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 14:12:33,042 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 14:12:38,341 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '2026년 장마 건강 관리, 저는 이렇게 대비하고 있습니다'
-2026-07-11 14:12:38,341 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 개인 경험(제습기 구매가, 도시락 준비 등)은 있으나 2753자로 분량 기준 미달이며 템플릿 잔여 문구가 품질을 떨어뜨림
-2026-07-11 14:12:38,342 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험은 풍부하나 본문에 실제 출처 인용·링크가 확인되지 않음
-2026-07-11 14:12:38,342 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 대신 스톡사진 키워드 나열이 본문에 그대로 노출되어 alt 텍스트 처리 미흡
-2026-07-11 14:12:38,342 [INFO] adsense_validator —   ❌ AI 생성 의심도: '~정도로 일반화' 등 AI 프롬프트/템플릿 지시문이 문장 그대로 남아있어 미편집 흔적이 뚜렷함
-2026-07-11 14:12:38,342 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '~정도로 일반화' 등 AI 프롬프트/템플릿 지시문이 문장 그대로 남아있어 미편집 흔적이 뚜렷함
-2026-07-11 14:12:38,342 [WARNING] adsense_validator —   🔴 본문 중 '부서 동료 여러 명이' 정도로 일반화, '~정도로 일반화고 나와 있습니다' 등 AI 템플릿 지시문이 그대로 노출되어 즉시 삭제 및 재작성 필요
-2026-07-11 14:12:38,342 [WARNING] adsense_validator —   🔴 이미지 자리에 스톡사진 키워드 나열(marguerite / white petals / blossom 등)이 본문에 그대로 삽입되어 있어 제거 필요
-2026-07-11 14:12:38,342 [WARNING] adsense_validator —   🔴 '2개 출처 포함'이라 명시했으나 본문 내 실제 출처 링크·인용 표기가 없어 확인 불가
-2026-07-11 14:12:38,349 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-11 14:12:38,351 [INFO] internal_linker —   [1/5] '체크리스트' -> https://www.hoguwhat.com/2026/07/40_01256264918.html
-2026-07-11 14:12:38,353 [INFO] internal_linker —   [2/5] '직장인이' -> https://www.hoguwhat.com/2026/07/40.html
-2026-07-11 14:12:38,358 [INFO] internal_linker —   [3/5] '실제로' -> https://hoguwhat1.blogspot.com/2026/06/2026_0410105439.html
-2026-07-11 14:12:38,358 [INFO] internal_linker — 내부 링크 3개 삽입 완료
-2026-07-11 14:12:38,358 [INFO] main —   제목: 2026년 장마 건강 관리, 저는 이렇게 대비하고 있습니다
-2026-07-11 14:12:38,359 [INFO] main —   이미지: 1개 삽입
 2026-07-11 14:12:38,359 [INFO] main —   글자 수: 2753자
 2026-07-11 14:12:38,359 [INFO] main —   [테스트 모드] 업로드 건너뜀
 2026-07-11 14:12:38,365 [INFO] main — 
@@ -832,3 +498,301 @@
 2026-07-11 14:54:31,315 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-11 14:54:31,315 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-11 14:54:31,316 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-11 15:05:19,809 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
+2026-07-11 15:05:19,809 [INFO] main —   - [blog1] HOGU What?
+2026-07-11 15:05:19,809 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
+2026-07-11 15:05:19,809 [INFO] main —   - [blog3] 금융NEWS
+2026-07-11 15:05:19,809 [INFO] main — ============================================================
+2026-07-11 15:05:19,810 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-11 15:05:19
+2026-07-11 15:05:19,810 [INFO] main — ============================================================
+2026-07-11 15:05:19,819 [INFO] main — 수집된 키워드 1개: ['간헐적 단식']
+2026-07-11 15:05:19,823 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
+2026-07-11 15:05:19,824 [INFO] main — 단독 포스트 대상 키워드 1개: ['간헐적 단식']
+2026-07-11 15:05:19,836 [INFO] main — 
+[1/1] 키워드: '간헐적 단식'
+2026-07-11 15:05:19,836 [INFO] content_generator — 포스트 생성 중: '간헐적 단식'
+2026-07-11 15:05:19,836 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-11 15:05:20,690 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:06:27,311 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:06:35,614 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 0건 자동 수정 적용
+2026-07-11 15:06:35,618 [INFO] content_generator — 섹션별 이미지 검색: ['간헐적 단식']
+2026-07-11 15:06:49,109 [INFO] image_fetcher — 이미지 수집 성공: '간헐적 단식' → 제목=''SBS 스페셜' 간헐적 단식 방법 2.0, 효과적 다이어트 'TRF 시' (관련성=0.50)
+2026-07-11 15:06:49,109 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-11 15:06:49,111 [INFO] content_generator — 포스트 생성 완료: '간헐적 단식 6개월 직접 해본 후기, 2026년 현실 점검' (2843자, 이미지 1개)
+2026-07-11 15:06:49,845 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:07:01,350 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:07:02,100 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:07:09,712 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '간헐적 단식 6개월 직접 해본 후기, 2026년 현실 점검'
+2026-07-11 15:07:09,712 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 개인 경험(2.3kg, 8만원, 2025.12~2026.5 등)는 풍부하나 글자 수 2843자로 4000자 기준 미달
+2026-07-11 15:07:09,712 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 없는 텍스트 전용 글로 정책 위반은 아니나 가독성/SEO 보완 필요
+2026-07-11 15:07:09,719 [INFO] main —   제목: 간헐적 단식 6개월 직접 해본 후기, 2026년 현실 점검
+2026-07-11 15:07:09,719 [INFO] main —   이미지: 1개 삽입
+2026-07-11 15:07:09,719 [INFO] main —   글자 수: 2843자
+2026-07-11 15:07:10,734 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:07:21,148 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:07:22,539 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:07:27,871 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '간헐적 단식 6개월 직접 해본 후기, 2026년 현실 점검'
+2026-07-11 15:07:27,871 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 날짜·수치(2.3kg, 8만원, 2025.12~2026.5)는 있으나 글자 수 2843자로 4000자 기준에 못 미침
+2026-07-11 15:07:27,871 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 양호하나 '이 주제가 중요한 이유' 등 일부 단락이 500자 이상으로 다소 김
+2026-07-11 15:07:27,871 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음, 텍스트만으로 구성되어 이미지 부재로 warn 처리
+2026-07-11 15:07:27,871 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-07-11 15:07:28,602 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:08:43,977 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:08:44,880 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:08:50,222 [INFO] final_editor —   ✏️ 메타 설명 교정 (92자)
+2026-07-11 15:08:50,222 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 잘려있던 FAQ와 결론을 완성하고, 요약박스·목차·표·개인경험메모·주의사항·작성자메모·내부링크를 규칙에 맞춰 추가했으며 모든 문단을 2~4문장 이내로 재구성했습니다.
+2026-07-11 15:08:50,337 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-11 15:08:50,337 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-07-11 15:08:50,942 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/6-2026_01253378129.html
+2026-07-11 15:08:50,950 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/6-2026_01253378129.html
+2026-07-11 15:09:26,214 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:09:26,222 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-11 15:09:26,222 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-11 15:09:26,231 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '간헐적 단식 6개월 직접 해본 후기, 2026년 현실 점검'
+2026-07-11 15:09:27,076 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:09:30,367 [INFO] comment_manager —   생성된 댓글: 글 잘 읽었습니다. 하나 팁 드리자면, 공복 시간에 물만 마시는 것보다 탄산수나 블랙커피를 곁들이면 허기짐이 확실히 덜하더라고요. 특히 초반 2...
+2026-07-11 15:12:30,597 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-11 15:12:30,598 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-11 15:12:30,598 [INFO] main — 
+============================================================
+2026-07-11 15:12:30,598 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-11 15:12:30,598 [INFO] main — ============================================================
+2026-07-11 15:12:30,629 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-11 15:12:30,650 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-11 15:12:30,668 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-11 15:12:30,970 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-11 15:12:31,301 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-11 15:12:31,495 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-11 15:12:31,496 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-11 15:12:31,499 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-11 15:12:31,510 [INFO] post_manager —   포스트 레지스트리: 전체 183개 (게시 120 / 실패 18 / 대기 41)
+2026-07-11 15:12:31,510 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-11 15:12:31,510 [INFO] dashboard_exporter —   포스트: 89개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-11 15:12:31,510 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-11 15:12:31,511 [INFO] main — ============================================================
+2026-07-11 15:12:31,511 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-11 15:12:31
+2026-07-11 15:12:31,511 [INFO] main — ============================================================
+2026-07-11 15:12:31,520 [INFO] main — 수집된 키워드 1개: ['간헐적 단식']
+2026-07-11 15:12:31,520 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 13일 전)
+2026-07-11 15:12:33,521 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:12:33,522 [INFO] main — 단독 포스트 대상 키워드 1개: ['간헐적 단식']
+2026-07-11 15:12:33,535 [INFO] main — 
+[1/1] 키워드: '간헐적 단식'
+2026-07-11 15:12:33,535 [INFO] content_generator — 포스트 생성 중: '간헐적 단식'
+2026-07-11 15:12:33,535 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-11 15:12:34,273 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:13:48,366 [WARNING] content_generator — 컨텐츠 너무 짧음(2223자, 최소 2500자) — 재시도 1/3
+2026-07-11 15:13:51,366 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-11 15:13:52,071 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:15:18,902 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:15:27,753 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:15:29,136 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:15:30,474 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-07-11 15:15:30,475 [INFO] content_generator — 섹션별 이미지 검색: ['간헐적 단식']
+2026-07-11 15:15:31,309 [INFO] image_fetcher — 이미지 수집 성공: '간헐적 단식' → 제목='business / woman / people / shooting / f' (관련성=0.50)
+2026-07-11 15:15:31,310 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-11 15:15:31,310 [INFO] content_generator — 포스트 생성 완료: '간헐적 단식 한 달 직접 해본 솔직 후기 (16:8 방식, 체중 변화 공개)' (2624자, 이미지 1개)
+2026-07-11 15:15:32,380 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:15:43,249 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:15:44,020 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:15:53,434 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:15:54,243 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:15:55,389 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '간헐적 단식 한 달 직접 해본 솔직 후기 (16:8 방식, 체중'
+2026-07-11 15:15:55,389 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치와 경험은 있으나 2624자로 2500~3999자 구간에 해당해 분량 기준 미달
+2026-07-11 15:15:55,390 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 개수는 충분하나 일부 단락이 500자 이상으로 길어 가독성 저하
+2026-07-11 15:15:55,390 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급 없음 — 부재 자체는 fail 아니며 warn 처리
+2026-07-11 15:15:55,390 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 일부 문장에 편집 흔적('일반화하여 표현', '완화')이 남아 부자연스러운 구간 존재
+2026-07-11 15:15:55,394 [INFO] internal_linker — 내부 링크 후보 1개 발견
+2026-07-11 15:15:55,395 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-11 15:15:55,395 [INFO] main —   제목: 간헐적 단식 한 달 직접 해본 솔직 후기 (16:8 방식, 체중 변화 공개)
+2026-07-11 15:15:55,395 [INFO] main —   이미지: 1개 삽입
+2026-07-11 15:15:55,395 [INFO] main —   글자 수: 2624자
+2026-07-11 15:15:56,139 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:16:07,181 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:16:08,057 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:16:18,391 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:16:19,431 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:16:22,146 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '간헐적 단식 한 달 직접 해본 솔직 후기 (16:8 방식, 체중'
+2026-07-11 15:16:22,146 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치(78.4→74.1kg)와 경험은 있으나 2624자로 4000자 기준에 못 미침
+2026-07-11 15:16:22,146 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 개수는 충분하나 각 섹션 단락이 500자 이상으로 길어 가독성 저하
+2026-07-11 15:16:22,146 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험은 풍부하나 '여러 의료 정보에 따르면' 등 출처 표기가 모호하고 링크·구체적 출처 불명확
+2026-07-11 15:16:22,146 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 SEO·가독성 측면에서 보완 필요(치명적 위반은 아님)
+2026-07-11 15:16:22,147 [INFO] adsense_validator —   ❌ AI 생성 의심도: '출처 없이 일반화하여 표현', '식으로 완화' 등 편집 흔적으로 보이는 부자연스러운 삽입 문구가 본문에 그대로 노출되어 AI 가공 의심이 높음
+2026-07-11 15:16:22,147 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '출처 없이 일반화하여 표현', '식으로 완화' 등 편집 흔적으로 보이는 부자연스러운 삽입 문구가 본문에 그대로 노출되어 AI 가공 의심이 높음
+2026-07-11 15:16:22,147 [WARNING] adsense_validator —   🔴 본문 내 '출처 없이 일반화하여 표현', '식으로 완화' 등 편집/검수 메모로 추정되는 문구가 삭제되지 않고 그대로 노출되어 있어 즉시 수정 필요
+2026-07-11 15:16:22,147 [WARNING] adsense_validator —   🔴 출처 2개가 있다고 명시되었으나 본문에서 실제 출처명·링크가 명확히 드러나지 않아 검증 불가능
+2026-07-11 15:16:22,147 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
+2026-07-11 15:16:22,147 [WARNING] main —      🔴 [AI 생성 의심도] '출처 없이 일반화하여 표현', '식으로 완화' 등 편집 흔적으로 보이는 부자연스러운 삽입 문구가 본문에 그대로 노출되어 AI 가공 의심이 높음
+2026-07-11 15:16:22,147 [WARNING] main —      🔴 본문 내 '출처 없이 일반화하여 표현', '식으로 완화' 등 편집/검수 메모로 추정되는 문구가 삭제되지 않고 그대로 노출되어 있어 즉시 수정 필요
+2026-07-11 15:16:22,147 [WARNING] main —      🔴 출처 2개가 있다고 명시되었으나 본문에서 실제 출처명·링크가 명확히 드러나지 않아 검증 불가능
+2026-07-11 15:16:22,147 [WARNING] main —      🟡 [원본성 및 품질] 구체적 수치(78.4→74.1kg)와 경험은 있으나 2624자로 4000자 기준에 못 미침
+2026-07-11 15:16:22,147 [WARNING] main —      🟡 [구조 및 가독성] H2 6개로 개수는 충분하나 각 섹션 단락이 500자 이상으로 길어 가독성 저하
+2026-07-11 15:16:22,147 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 경험은 풍부하나 '여러 의료 정보에 따르면' 등 출처 표기가 모호하고 링크·구체적 출처 불명확
+2026-07-11 15:16:22,147 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
+2026-07-11 15:16:22,841 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:17:46,604 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:17:48,012 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:18:30,097 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2624자 → 3656자 (+1032자)
+2026-07-11 15:18:30,097 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-11 15:18:31,099 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:18:38,219 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '간헐적 단식 한 달 직접 해본 솔직 후기 (16:8 방식, 체중'
+2026-07-11 15:18:38,219 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 날짜·체중·수치 등 실경험은 풍부하나 글자 수 3656자로 4000자 기준 미달
+2026-07-11 15:18:38,219 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 양호하나 단락 길이가 매우 길어 500자 이상 단락이 다수 존재
+2026-07-11 15:18:38,219 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 언급(체중 기록 사진) 있으나 본문 내 이미지 정책 확인 불가로 보수적 warn
+2026-07-11 15:18:38,219 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 84/100)
+2026-07-11 15:18:38,219 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-07-11 15:18:38,919 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:19:59,482 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:20:00,549 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:20:18,267 [INFO] final_editor —   ✏️ 제목 최종 교정: '간헐적 단식 한 달 직접 해본 솔직 후기 (16:8 방식, 체중 변화 공개)' → '간헐적 단식 6주 직접 해본 솔직 후기, 16:8 체중 변화 공개'
+2026-07-11 15:20:18,267 [INFO] final_editor —   ✏️ 메타 설명 교정 (87자)
+2026-07-11 15:20:18,267 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 요약 박스·목차·비교표·개인경험메모·주의사항·FAQ·작성자메모·내부링크를 추가하고 긴 문단을 2~4문장 단위로 분할했으며, 미완성 결론 문장을 자연스럽게 마무리했습니다.
+2026-07-11 15:20:18,382 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-11 15:20:18,382 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-07-11 15:20:19,761 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/6-168.html
+2026-07-11 15:20:19,770 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/6-168.html
+2026-07-11 15:20:53,219 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:20:53,221 [ERROR] social_publisher — 소셜 콘텐츠 생성 실패: 응답에서 JSON을 찾을 수 없습니다
+2026-07-11 15:20:53,221 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-11 15:20:53,221 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '간헐적 단식 6주 직접 해본 솔직 후기, 16:8 체중 변화 공개'
+2026-07-11 15:20:54,840 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:20:57,741 [INFO] comment_manager —   생성된 댓글: 공복 시간 동안 커피 외에 탄산수를 활용하시는 것도 추천드려요. 포만감 유지에 은근히 도움 되고 두통 완화에도 효과가 있더라고요. 그리고 첫 식...
+2026-07-11 15:23:57,896 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-11 15:23:57,897 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (2개)
+2026-07-11 15:23:57,897 [INFO] main — 
+============================================================
+2026-07-11 15:23:57,897 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-11 15:23:57,897 [INFO] main — ============================================================
+2026-07-11 15:23:57,925 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-11 15:23:57,944 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-11 15:23:57,991 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-11 15:23:58,168 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-11 15:23:58,169 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-11 15:23:58,172 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-11 15:23:58,182 [INFO] post_manager —   포스트 레지스트리: 전체 184개 (게시 121 / 실패 18 / 대기 41)
+2026-07-11 15:23:58,183 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-11 15:23:58,183 [INFO] dashboard_exporter —   포스트: 87개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-11 15:23:58,183 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-11 15:23:58,184 [INFO] main — ============================================================
+2026-07-11 15:23:58,185 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-11 15:23:58
+2026-07-11 15:23:58,185 [INFO] main — ============================================================
+2026-07-11 15:23:58,193 [INFO] main — 수집된 키워드 1개: ['간헐적 단식']
+2026-07-11 15:23:58,193 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
+2026-07-11 15:23:58,193 [INFO] main — 단독 포스트 대상 키워드 1개: ['간헐적 단식']
+2026-07-11 15:23:58,205 [INFO] main — 
+[1/1] 키워드: '간헐적 단식'
+2026-07-11 15:23:58,205 [INFO] content_generator — 포스트 생성 중: '간헐적 단식'
+2026-07-11 15:23:58,205 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-11 15:23:59,083 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:25:27,101 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:25:36,753 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:25:38,419 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:25:41,183 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-07-11 15:25:41,184 [INFO] content_generator — 섹션별 이미지 검색: ['간헐적 단식']
+2026-07-11 15:25:45,664 [INFO] image_fetcher — 이미지 수집 성공: '간헐적 단식' → 제목='business / woman / people / shooting / f' (관련성=0.50)
+2026-07-11 15:25:45,664 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-11 15:25:45,665 [INFO] content_generator — 포스트 생성 완료: '간헐적 단식, 다이어트만 하지 마세요…재테크에도 통합니다 (2026년 무지출 챌린지 & 적금 금리 총정리)' (2966자, 이미지 1개)
+2026-07-11 15:25:46,499 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:25:59,076 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:25:59,823 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:26:10,486 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:26:11,505 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:26:16,264 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 45/100 — '간헐적 단식, 다이어트만 하지 마세요…재테크에도 통합니다 (20'
+2026-07-11 15:26:16,264 [INFO] adsense_validator —   ❌ 원본성 및 품질: 개인 경험 서술은 있으나 본문 중간에 '구체적 조사 출처를 명시하거나 해당 문장 삭제', '정확한 공식 기준 확인 필요' 등 미완성 편집 지시문이 그대로 노출되어 발행 불가 수준의 품질 문제.
+2026-07-11 15:26:16,264 [INFO] adsense_validator —   ❌ 유해/금지 콘텐츠: 청년도약계좌 정부기여금 한도·햇살론 유스 한도 등 금융 정보가 '확인 필요' 상태로 미검증인 채 노출되어 허위·부정확 정보 유포 위험이 있음.
+2026-07-11 15:26:16,264 [INFO] adsense_validator —   ❌ E-E-A-T 신뢰도: 1인칭 경험 서술은 있으나 '금융위원회 자료에 따르면 청년도약계좌 구체적 조사 출처를 명시하거나 해당 문장 삭제 결과도 있었습니다' 등 출처 인용이 미완성 상태로 남아 신뢰성이 심각히 훼손됨.
+2026-07-11 15:26:16,264 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 없어 이미지 부재로 판단되며, 텍스트만으로도 정책 통과는 가능하나 가독성·SEO 측면에서 보완 권장.
+2026-07-11 15:26:16,265 [INFO] adsense_validator —   ❌ AI 생성 의심도: 본문에 AI 생성/편집 과정에서 남은 지시문('~삭제', '~확인 필요', '~수정')이 그대로 노출되어 명백한 미완성 AI 생성 흔적이 확인됨.
+2026-07-11 15:26:16,265 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 개인 경험 서술은 있으나 본문 중간에 '구체적 조사 출처를 명시하거나 해당 문장 삭제', '정확한 공식 기준 확인 필요' 등 미완성 편집 지시문이 그대로 노출되어 발행 불가 수준의 품질 문제.
+2026-07-11 15:26:16,265 [WARNING] adsense_validator —   🔴 [유해/금지 콘텐츠] 청년도약계좌 정부기여금 한도·햇살론 유스 한도 등 금융 정보가 '확인 필요' 상태로 미검증인 채 노출되어 허위·부정확 정보 유포 위험이 있음.
+2026-07-11 15:26:16,265 [WARNING] adsense_validator —   🔴 [E-E-A-T 신뢰도] 1인칭 경험 서술은 있으나 '금융위원회 자료에 따르면 청년도약계좌 구체적 조사 출처를 명시하거나 해당 문장 삭제 결과도 있었습니다' 등 출처 인용이 미완성 상태로 남아 신뢰성이 심각히 훼손됨.
+2026-07-11 15:26:16,265 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 본문에 AI 생성/편집 과정에서 남은 지시문('~삭제', '~확인 필요', '~수정')이 그대로 노출되어 명백한 미완성 AI 생성 흔적이 확인됨.
+2026-07-11 15:26:16,265 [WARNING] adsense_validator —   🔴 본문에 편집 지시문('구체적 조사 출처를 명시하거나 해당 문장 삭제', '정확한 공식 기준 확인 필요', '정확한 한도는 서민금융진흥원 공식 자료로 확인 후 기재', '새출발기금 관련 내용을 삭제하거나 정확한 명칭으로 수정' 등)이 그대로 발행되어 즉시 삭제 및 재검수 필요
+2026-07-11 15:26:16,265 [WARNING] adsense_validator —   🔴 청년도약계좌·햇살론 유스 등 정부 지원 저축 상품의 자격 요건·한도·기여금정보가 미검증 상태로 게재되어 금융소비자에게 혼란을 줄 수 있으므로 공식 자료로 재확인 후 정확한 수치로 교체 필요
+2026-07-11 15:26:16,265 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 45/100, 이유: ["[원본성 및 품질] 개인 경험 서술은 있으나 본문 중간에 '구체적 조사 출처를 명시하거나 해당 문장 삭제', '정확한 공식 기준 확인 필요' 등 미완성 편집 지시문이 그대로 노출되어 발행 불가 수준의 품질 문제."]) — 재생성 2/2
+2026-07-11 15:26:19,265 [INFO] content_generator — 포스트 생성 중: '간헐적 단식'
+2026-07-11 15:26:19,265 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-11 15:26:20,023 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:27:52,324 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:27:57,943 [INFO] content_generator — 팩트체크: 통과
+2026-07-11 15:27:57,944 [INFO] content_generator — 섹션별 이미지 검색: ['간헐적 단식']
+2026-07-11 15:27:58,437 [INFO] image_fetcher — 이미지 수집 성공: '간헐적 단식' → 제목='business / woman / people / shooting / f' (관련성=0.50)
+2026-07-11 15:27:58,437 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-11 15:27:58,438 [INFO] content_generator — 포스트 생성 완료: '간헐적 단식처럼 소비도 쉬어가기? '무지출 챌린지'로 돈 모으는 현실적인 방법' (3075자, 이미지 1개)
+2026-07-11 15:27:59,741 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:28:11,008 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:28:11,984 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:28:17,775 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '간헐적 단식처럼 소비도 쉬어가기? '무지출 챌린지'로 돈 모으는'
+2026-07-11 15:28:17,775 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 6개월 실천 경험 등 개인 사례는 있으나 글자수 3075자로 4000자 기준에 미달
+2026-07-11 15:28:17,775 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개는 양호하나 '왜 지금 주목받나' 등 일부 섹션이 500자 이상의 긴 단락으로 구성됨
+2026-07-11 15:28:17,775 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되어 있지 않음
+2026-07-11 15:28:17,775 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 단계별 목록과 표 형식이 반복되며 정형화된 안내 문구 패턴이 다수 발견됨
+2026-07-11 15:28:17,779 [INFO] internal_linker — 내부 링크 후보 2개 발견
+2026-07-11 15:28:17,781 [INFO] internal_linker —   [1/5] '16:8' -> https://hogugolfntraval.blogspot.com/2026/07/6-168.html
+2026-07-11 15:28:17,782 [INFO] internal_linker —   [2/5] '2026년' -> https://www.hoguwhat.com/2026/07/6-2026_01253378129.html
+2026-07-11 15:28:17,782 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-11 15:28:17,782 [INFO] main —   제목: 간헐적 단식처럼 소비도 쉬어가기? '무지출 챌린지'로 돈 모으는 현실적인 방법
+2026-07-11 15:28:17,782 [INFO] main —   이미지: 1개 삽입
+2026-07-11 15:28:17,782 [INFO] main —   글자 수: 3075자
+2026-07-11 15:28:18,663 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:28:30,093 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:28:31,587 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:28:36,172 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '간헐적 단식처럼 소비도 쉬어가기? '무지출 챌린지'로 돈 모으는'
+2026-07-11 15:28:36,172 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 3075자로 warn 구간이며 개인 경험(16:8, 6개월 실천)은 있으나 일반 정보 재조합 비중이 높음
+2026-07-11 15:28:36,172 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 포함되지 않아 SEO·가독성 측면에서 보완 필요
+2026-07-11 15:28:36,172 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-07-11 15:28:36,835 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:29:55,118 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:29:56,748 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:31:07,490 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-11 15:31:08,616 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:31:13,994 [INFO] final_editor —   ✏️ 제목 최종 교정: '간헐적 단식처럼 소비도 쉬어가기? '무지출 챌린지'로 돈 모으는 현실적인 방법' → '간헐적 단식처럼 소비도 쉬어가는 무지출 챌린지'
+2026-07-11 15:31:13,994 [INFO] final_editor —   ✏️ 메타 설명 교정 (96자)
+2026-07-11 15:31:13,994 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 재정리하고, 목차·요약박스·개인경험메모·주의사항박스·FAQ 6개·작성자메모·내부링크·이미지 3종을 추가해 발행 가능한 형태로 완성했습니다. 긴 문단을 2~4문장 단위로 분리하고 표 2개를 유지해 모바일 가독성을 높였습니다.
+2026-07-11 15:31:14,105 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-11 15:31:14,106 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-07-11 15:31:15,025 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/blog-post_12.html
+2026-07-11 15:31:15,034 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/blog-post_12.html
+2026-07-11 15:31:49,969 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:31:49,970 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-11 15:31:49,970 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-11 15:31:49,970 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '간헐적 단식처럼 소비도 쉬어가는 무지출 챌린지'
+2026-07-11 15:31:51,639 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-11 15:31:55,996 [INFO] comment_manager —   생성된 댓글: 간헐적 단식도 처음엔 공복 시간에 배고픔 신호랑 그냥 습관적 식욕을 구분하는 게 관건이잖아요, 무지출 챌린지도 똑같더라고요. 무지출 날에 뭔가 ...
+2026-07-11 15:34:56,219 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-11 15:34:56,221 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (3개)
+2026-07-11 15:34:56,221 [INFO] main — 
+============================================================
+2026-07-11 15:34:56,221 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-11 15:34:56,221 [INFO] main — ============================================================
+2026-07-11 15:34:56,248 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-11 15:34:56,268 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-11 15:34:56,284 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-11 15:34:56,442 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-11 15:34:56,443 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-11 15:34:56,446 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-11 15:34:56,456 [INFO] post_manager —   포스트 레지스트리: 전체 185개 (게시 122 / 실패 18 / 대기 41)
+2026-07-11 15:34:56,456 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-11 15:34:56,456 [INFO] dashboard_exporter —   포스트: 85개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-11 15:34:56,457 [INFO] main — 대시보드 데이터 업데이트 완료

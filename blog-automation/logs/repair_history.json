@@ -1,5 +1,55 @@
 [
   {
+    "timestamp": "2026-07-11T03:21:09.265325",
+    "health_score": 63,
+    "issues_found": 2,
+    "issues": [
+      {
+        "id": "consecutive_upload_failures",
+        "level": "critical",
+        "message": "최근 3회 연속 업로드 실패 (0건 업로드)",
+        "context": {
+          "fail_count": 3,
+          "recent_dates": [
+            "2026-07-11",
+            "2026-07-11",
+            "2026-07-11"
+          ]
+        },
+        "fix": "check_blogger_connection"
+      },
+      {
+        "id": "adsense_not_configured",
+        "level": "warning",
+        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "context": {},
+        "fix": null
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "consecutive_upload_failures",
+        "issue_level": "critical",
+        "issue_message": "최근 3회 연속 업로드 실패 (0건 업로드)",
+        "fix_applied": "check_blogger_connection",
+        "timestamp": "2026-07-11T03:21:08.523969",
+        "success": true,
+        "detail": "Blogger 연결 정상: HOGU What? (https://www.hoguwhat.com/) — 업로드 파라미터 문제 가능성"
+      },
+      {
+        "issue_id": "adsense_not_configured",
+        "issue_level": "warning",
+        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "fix_applied": null,
+        "timestamp": "2026-07-11T03:21:09.265267",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-07-10T23:34:47.568400",
     "health_score": 93,
     "issues_found": 1,
@@ -2358,52 +2408,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-05T12:45:49.964857",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-05T11:38:10.044046",
-    "health_score": 78,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "schedule_stalled",
-        "level": "high",
-        "message": "마지막 실행이 36시간 전 — 스케줄 중단 의심",
-        "context": {
-          "last_run": "2026-07-03T23:41:27.159575",
-          "hours_ago": 35.9
-        },
-        "fix": null
-      },
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 0,
-    "repairs": [
-      {
-        "issue_id": "schedule_stalled",
-        "issue_level": "high",
-        "issue_message": "마지막 실행이 36시간 전 — 스케줄 중단 의심",
-        "fix_applied": null,
-        "timestamp": "2026-07-05T11:38:10.043885",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      },
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-05T11:38:10.043972",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

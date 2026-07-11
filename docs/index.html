@@ -1798,10 +1798,11 @@
             <th>블로그</th>
             <th>시도</th>
             <th>오류</th>
+            <th>액션</th>
           </tr>
         </thead>
         <tbody id="pm-table-body">
-          <tr><td colspan="7" class="empty">데이터 로딩 중...</td></tr>
+          <tr><td colspan="8" class="empty">데이터 로딩 중...</td></tr>
         </tbody>
       </table>
     </div>
@@ -6801,7 +6802,7 @@ function pmRenderTable() {
   if (!tbody) return
 
   if (!list.length) {
-    tbody.innerHTML = `<tr><td colspan="7" class="empty">포스트 없음</td></tr>`
+    tbody.innerHTML = `<tr><td colspan="8" class="empty">포스트 없음</td></tr>`
     document.getElementById('pm-more-btn-wrap').style.display = 'none'
     return
   }
@@ -6810,12 +6811,15 @@ function pmRenderTable() {
   tbody.innerHTML = slice.map(p => {
     const date     = (p.createdAt || '').slice(0, 10)
     const titleTxt = p.title || '-'
-    const title    = `<span title="${titleTxt.replace(/"/g,"'")}">${titleTxt.slice(0,32)}${titleTxt.length > 32 ? '…' : ''}</span>`
+    const safeTitle = titleTxt.replace(/"/g,"'").replace(/`/g,"'")
+    const title    = `<span title="${safeTitle}">${titleTxt.slice(0,32)}${titleTxt.length > 32 ? '…' : ''}</span>`
     const blogLink = p.blogUrl ? `<a href="${p.blogUrl}" target="_blank" style="color:var(--accent2);font-size:12px;margin-right:4px">↗</a>` : ''
     const blogName = p.blogName || p.blogId || '-'
     const errTip   = p.errorMessage
       ? `<span title="${p.errorMessage.replace(/"/g,"'")}" style="cursor:help;color:var(--red);font-size:11px">${p.errorMessage.slice(0,28)}${p.errorMessage.length>28?'…':''}</span>`
       : '-'
+    const pid = p.post_id || ''
+    const actionBtns = _pmActionBtns(pid, p.status, safeTitle)
     return `<tr>
       <td style="white-space:nowrap;font-size:12px;color:var(--muted)">${date}</td>
       <td style="font-size:12px">${p.keyword || '-'}</td>
@@ -6824,6 +6828,7 @@ function pmRenderTable() {
       <td style="font-size:12px">${blogLink}<span style="font-size:11px;color:var(--muted)">${blogName}</span></td>
       <td style="text-align:center;font-size:12px">${p.attempts || 1}</td>
       <td style="font-size:11px">${errTip}</td>
+      <td style="white-space:nowrap">${actionBtns}</td>
     </tr>`
   }).join('')
 
@@ -6834,6 +6839,72 @@ function pmRenderTable() {
 function pmShowMore() {
   pmShowCount += 50
   pmRenderTable()
+}
+
+// 상태별 액션 버튼 HTML 반환
+function _pmActionBtns(postId, status, safeTitle) {
+  if (!postId) return '-'
+  const s = {
+    base: 'border:none;border-radius:5px;font-size:11px;font-weight:600;padding:3px 8px;cursor:pointer;margin:1px 2px;transition:opacity .15s',
+    pub:  'background:var(--accent);color:#fff',
+    arc:  'background:var(--bg3);border:1px solid var(--border)!important;color:var(--text2)',
+    del:  'background:rgba(248,113,113,.15);color:var(--red)',
+    rst:  'background:rgba(52,211,153,.15);color:var(--green)',
+  }
+  const btn = (action, label, style) =>
+    `<button style="${s.base};${style}" onclick="pmActionPost('${postId}','${action}','${safeTitle}')">${label}</button>`
+
+  switch (status) {
+    case 'pending':
+      return btn('publish','발행',s.pub) + btn('archive','보관',s.arc) + btn('delete','삭제',s.del)
+    case 'failed':
+      return btn('publish','재발행',s.pub) + btn('archive','보관',s.arc) + btn('delete','삭제',s.del)
+    case 'retry_queued':
+      return btn('archive','보관',s.arc) + btn('delete','삭제',s.del)
+    case 'draft':
+      return btn('publish','발행',s.pub) + btn('delete','삭제',s.del)
+    case 'skipped':
+      return btn('restore','복원',s.rst) + btn('delete','삭제',s.del)
+    case 'published':
+      return btn('delete','삭제',s.del)
+    default:
+      return btn('delete','삭제',s.del)
+  }
+}
+
+async function pmActionPost(postId, action, postTitle) {
+  const labels = { publish: '발행', archive: '보관', delete: '삭제', restore: '복원' }
+  const label = labels[action] || action
+  if (!confirm(`"${postTitle.slice(0, 40)}${postTitle.length > 40 ? '…' : ''}" 포스트를 ${label}하시겠습니까?`)) return
+  const pat = getPAT()
+  if (!pat) {
+    showToast('PAT(개인 액세스 토큰)를 먼저 설정하세요 (실행 제어 탭)', 'error')
+    navTo('run')
+    return
+  }
+  showToast(`${label} 요청 중...`, 'info')
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/post-action.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `token ${pat}`,
+          'Content-Type': 'application/json',
+          Accept: 'application/vnd.github+json',
+        },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: { action, post_id: postId } }),
+      }
+    )
+    if (resp.ok || resp.status === 204) {
+      showToast(`${label} 워크플로우가 실행됐습니다. 완료 후 새로고침하세요.`, 'success')
+    } else {
+      const errText = await resp.text()
+      showToast(`실행 실패 (${resp.status}): ${errText.slice(0, 80)}`, 'error')
+    }
+  } catch (e) {
+    showToast(`오류: ${e.message}`, 'error')
+  }
 }
 
 async function pmTriggerRetry() {

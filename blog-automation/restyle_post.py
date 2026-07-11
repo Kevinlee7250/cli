@@ -123,11 +123,12 @@ def _get_blog_config(blog_url: str) -> dict:
     if raw:
         try:
             for b in json.loads(raw):
-                home = b.get("home_url", "").lower().strip("/")
-                if domain in home or home in domain:
+                # BLOGS_CONFIG 필드: 'url' (대시보드 saveBlogModal 기준)
+                home = b.get("url", "").lower().strip("/")
+                if home and (domain in home or home in domain):
                     return b
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error(f"BLOGS_CONFIG 파싱 오류: {e}")
     return {}
 
 
@@ -154,9 +155,9 @@ def _get_post_by_url(blog_url: str, blog_config: dict) -> dict | None:
     """URL에 해당하는 Blogger 포스트 전체 데이터를 반환합니다."""
     from urllib.parse import urlparse
     path = urlparse(blog_url).path
-    blog_id = blog_config.get("blog_id", "")
+    blog_id = blog_config.get("blog_id") or os.getenv("BLOGGER_BLOG_ID", "")
     if not blog_id:
-        logger.error("blog_id가 없습니다.")
+        logger.error("blog_id가 없습니다. BLOGS_CONFIG 또는 BLOGGER_BLOG_ID를 확인하세요.")
         return None
     access_token = _get_access_token(blog_config)
     if not access_token:
@@ -212,7 +213,7 @@ def restyle(blog_url: str) -> int:
     logger.info(f"교체된 CSS 패턴: {changed_count}개")
 
     # Blogger API PUT
-    blog_id      = blog_config.get("blog_id", "")
+    blog_id      = blog_config.get("blog_id") or os.getenv("BLOGGER_BLOG_ID", "")
     access_token = _get_access_token(blog_config)
     if not access_token:
         logger.error("액세스 토큰 없음 — 업데이트 실패")

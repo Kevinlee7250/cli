@@ -1390,7 +1390,41 @@
       <div style="color:var(--muted);font-size:13px;padding:24px;text-align:center">코드 수리 데이터를 로드 중...</div>
     </div>
 
-    <!-- ⑧ 블로그 관리 -->
+    <!-- ⑧ Google Drive 백업 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>☁️ Google Drive 백업</h2>
+      <div style="display:flex;gap:8px">
+        <button onclick="backupRunNow(false)" style="padding:6px 14px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:var(--green);font-size:12px;cursor:pointer;font-weight:600">☁️ 지금 백업</button>
+        <button onclick="backupRunNow(true)" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 Dry-run</button>
+        <button onclick="backupRefreshStatus()" style="padding:6px 14px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer">🔄 상태 새로고침</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:28px" id="backup-status-grid">
+      <!-- filled by backupRefreshStatus() -->
+      <div class="run-panel" style="padding:18px">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">마지막 백업</div>
+        <div id="backup-last-time" style="font-size:14px;font-weight:600">로드 중...</div>
+        <div id="backup-last-file" style="font-size:11px;color:var(--muted);margin-top:4px"></div>
+      </div>
+      <div class="run-panel" style="padding:18px">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">백업 파일 크기</div>
+        <div id="backup-last-size" style="font-size:14px;font-weight:600">—</div>
+        <div id="backup-last-count" style="font-size:11px;color:var(--muted);margin-top:4px"></div>
+      </div>
+      <div class="run-panel" style="padding:18px">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">저장 위치</div>
+        <div style="font-size:13px;font-weight:600">Google Drive</div>
+        <a id="backup-drive-link" href="https://drive.google.com/drive/folders/1VCWoy9901A0rCnjO9ilHagwuIKgB2uda" target="_blank" rel="noopener" style="font-size:11px;color:var(--accent2);margin-top:4px;display:block;text-overflow:ellipsis;overflow:hidden;white-space:nowrap">폴더 열기 →</a>
+      </div>
+      <div class="run-panel" style="padding:18px">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">자동 실행 일정</div>
+        <div style="font-size:13px;font-weight:600">매일 오전 3:00 KST</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">cron: 0 18 * * * (UTC)</div>
+      </div>
+    </div>
+    <div id="backup-run-status" class="status-panel" style="display:none;margin-bottom:28px;font-size:13px"></div>
+
+    <!-- ⑨ 블로그 관리 -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>📰 블로그 관리</h2>
       <div style="display:flex;gap:8px">
@@ -4425,6 +4459,7 @@ function renderSystemPage() {
   renderLearningReport()
   renderRepairReport()
   renderCodeRepairReport()
+  backupRefreshStatus()
   loadAffiliateLinksFromRepo()
   // GitHub Actions 이력은 PAT 있을 때만 자동 로드
   if (getPAT()) loadSystemRuns()
@@ -4476,6 +4511,68 @@ function renderSidebarBlogLinks() {
 }
 
 // ── 블로그 카드 목록 렌더 ────────────────────────────────────────────────────
+// ── Google Drive 백업 ────────────────────────────────────────────────────────
+
+function backupRefreshStatus() {
+  const meta = DATA.meta || {}
+  const timeEl   = document.getElementById('backup-last-time')
+  const fileEl   = document.getElementById('backup-last-file')
+  const sizeEl   = document.getElementById('backup-last-size')
+  const countEl  = document.getElementById('backup-last-count')
+  const linkEl   = document.getElementById('backup-drive-link')
+  if (!timeEl) return
+
+  if (meta.lastBackupAt) {
+    const d = new Date(meta.lastBackupAt)
+    timeEl.textContent  = d.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })
+    fileEl.textContent  = meta.lastBackupFileName || ''
+    sizeEl.textContent  = meta.lastBackupSizeKB != null ? `${meta.lastBackupSizeKB} KB` : '—'
+    countEl.textContent = meta.lastBackupFileCount != null ? `파일 ${meta.lastBackupFileCount}개 압축` : ''
+    if (meta.lastBackupFolderId) {
+      linkEl.href = `https://drive.google.com/drive/folders/${meta.lastBackupFolderId}`
+    }
+  } else {
+    timeEl.textContent  = '아직 백업 없음'
+    fileEl.textContent  = ''
+    sizeEl.textContent  = '—'
+    countEl.textContent = ''
+  }
+}
+
+async function backupRunNow(dryRun = false) {
+  const pat = getPAT()
+  if (!pat) { showToast('PAT를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
+  const label = dryRun ? 'Dry-run' : '백업'
+  if (!dryRun && !confirm('Google Drive에 지금 바로 백업하시겠습니까?')) return
+  const statusEl = document.getElementById('backup-run-status')
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = `⏳ ${label} 워크플로우 요청 중...` }
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/backup.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: { dry_run: dryRun ? 'true' : 'false' } })
+      }
+    )
+    if (resp.ok || resp.status === 204) {
+      const msg = dryRun
+        ? '🔍 Dry-run 워크플로우가 실행됐습니다. Actions 탭에서 파일 목록을 확인하세요.'
+        : '☁️ 백업 워크플로우가 실행됐습니다. 완료 후 이 페이지를 새로고침하면 상태가 업데이트됩니다.'
+      showToast(msg, 'success')
+      if (statusEl) statusEl.textContent = `✅ ${msg}`
+    } else {
+      const errText = await resp.text().catch(() => '')
+      const msg = `실행 실패: ${resp.status} ${errText.slice(0, 80)}`
+      showToast(msg, 'error')
+      if (statusEl) statusEl.textContent = `❌ ${msg}`
+    }
+  } catch (e) {
+    showToast(`오류: ${e.message}`, 'error')
+    if (statusEl) statusEl.textContent = `❌ 오류: ${e.message}`
+  }
+}
+
 function loadBlogList() {
   const lsBlogs = getBlogsFromLS()
   const statsMap = {}

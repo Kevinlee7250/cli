@@ -11,6 +11,14 @@ on:
           - '1_get_url'
           - '2_exchange_code'
         default: '1_get_url'
+      scope:
+        description: 'OAuth 스코프 선택'
+        required: true
+        type: choice
+        options:
+          - 'blogger+gsc'
+          - 'drive'
+        default: 'blogger+gsc'
       auth_code:
         description: '[2단계] Google에서 받은 인증 코드 (1단계 URL 방문 후 입력)'
         required: false
@@ -34,20 +42,32 @@ jobs:
         if: ${{ inputs.step == '1_get_url' }}
         env:
           CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          SCOPE_CHOICE: ${{ inputs.scope }}
         run: |
           python3 - <<'PYEOF'
           import os, urllib.parse
-          client_id = os.environ["CLIENT_ID"]
+          client_id    = os.environ["CLIENT_ID"]
+          scope_choice = os.environ.get("SCOPE_CHOICE", "blogger+gsc")
+
+          if scope_choice == "drive":
+              scope = "https://www.googleapis.com/auth/drive.file"
+              scope_label = "Google Drive (drive.file)"
+          else:
+              scope = "https://www.googleapis.com/auth/blogger https://www.googleapis.com/auth/webmasters"
+              scope_label = "Blogger + Search Console"
+
           params = {
-              "client_id": client_id,
-              "redirect_uri": "urn:ietf:wg:oauth:2.0:oob",
+              "client_id":     client_id,
+              "redirect_uri":  "urn:ietf:wg:oauth:2.0:oob",
               "response_type": "code",
-              "scope": "https://www.googleapis.com/auth/blogger https://www.googleapis.com/auth/webmasters",
-              "access_type": "offline",
-              "prompt": "consent",
+              "scope":         scope,
+              "access_type":   "offline",
+              "prompt":        "consent",
           }
           url = "https://accounts.google.com/o/oauth2/auth?" + urllib.parse.urlencode(params)
           print("=" * 60)
+          print(f"스코프: {scope_label}")
+          print()
           print("아래 URL을 브라우저에서 열고 Google 계정으로 로그인하세요:")
           print()
           print(url)
@@ -64,6 +84,7 @@ jobs:
           CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           AUTH_CODE: ${{ inputs.auth_code }}
+          SCOPE_CHOICE: ${{ inputs.scope }}
         run: |
           python3 - <<'PYEOF'
           import os, requests
@@ -71,6 +92,7 @@ jobs:
           client_id     = os.environ["CLIENT_ID"]
           client_secret = os.environ["CLIENT_SECRET"]
           auth_code     = os.environ["AUTH_CODE"].strip()
+          scope_choice  = os.environ.get("SCOPE_CHOICE", "blogger+gsc")
 
           if not auth_code:
               print("❌ auth_code 가 비어 있습니다. 1단계 URL을 먼저 방문하세요.")
@@ -91,14 +113,21 @@ jobs:
               exit(1)
 
           refresh_token = data["refresh_token"]
+
+          if scope_choice == "drive":
+              secret_name = "GOOGLE_DRIVE_REFRESH_TOKEN"
+              save_hint   = "1. GitHub Secrets → GOOGLE_DRIVE_REFRESH_TOKEN 에 저장\n2. 백업 워크플로우(backup.yml)가 이 토큰을 사용합니다."
+          else:
+              secret_name = "GOOGLE_REFRESH_TOKEN"
+              save_hint   = "1. GitHub Secrets → GOOGLE_REFRESH_TOKEN 에 업데이트\n2. 대시보드 OAuth 설정 → GOOGLE_REFRESH_TOKEN 에 입력"
+
           print("=" * 60)
           print("✅ Refresh Token 발급 성공!")
           print()
-          print("GOOGLE_REFRESH_TOKEN 값:")
+          print(f"{secret_name} 값:")
           print(refresh_token)
           print()
           print("=" * 60)
           print("이 값을 복사해서:")
-          print("1. GitHub Secrets → GOOGLE_REFRESH_TOKEN 에 업데이트")
-          print("2. 대시보드 OAuth 설정 → GOOGLE_REFRESH_TOKEN 에 입력")
+          print(save_hint)
           PYEOF

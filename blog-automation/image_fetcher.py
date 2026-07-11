@@ -28,12 +28,12 @@ _HEADERS = {
 def _ddg_images(keyword: str, count: int) -> list[dict]:
     """DuckDuckGo 이미지 검색 (API 키 불필요)."""
     try:
-        # 1단계: vqd 토큰 획득
+        # 1단계: vqd 토큰 획득 (CI 환경에서 bot-detection으로 자주 실패 → 타임아웃 단축)
         r = requests.get(
             "https://duckduckgo.com/",
             params={"q": keyword, "iax": "images", "ia": "images"},
             headers=_HEADERS,
-            timeout=12,
+            timeout=6,
         )
         vqd = (re.search(r'vqd="([^"]+)"', r.text) or
                re.search(r"vqd='([^']+)'", r.text) or
@@ -492,8 +492,9 @@ def fetch_images_for_queries(
         if img:
             images.append(img)
 
-    # Claude로 최종 관련성 검증 (article_plain_text 제공 시)
-    if images and article_plain_text:
+    # Claude로 최종 관련성 검증 (article_plain_text 제공 시, 이미지 2개 이상일 때만)
+    # 이미지가 1개뿐이면 Claude 필터를 거치지 않음 — 유일한 후보를 "없음" 판정으로 제거 방지
+    if images and article_plain_text and len(images) >= 2:
         images = _filter_relevant_images(images, keyword or queries[0], article_plain_text)
 
     return images

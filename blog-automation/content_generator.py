@@ -292,13 +292,12 @@ def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = N
 
 【블로그 기본 방향】
 - 블로그명: HOGU What? (직장인과 일반인을 위한 생활 실험형 정보 블로그)
-- 주요 카테고리 (아래 5개 중 키워드와 가장 맞는 카테고리로 작성):
+- 주요 카테고리 (아래 4개 중 키워드와 가장 맞는 카테고리로 작성):
   ✈️ 국내 여행 — 숨겨진 명소·맛집·숙소 솔직 후기
   🌏 해외 여행 — 항공권·호텔·패키지 정보 및 현지 체험
-  🏆 스포츠 이슈 — 선수 이적·대회 소식·랭킹 업데이트
   🎬 드라마·영화 — 국내외 인기 작품 리뷰 및 등장인물 분석
   🎵 연예·K-POP — 아이돌·배우 소식, 음반·공연 정보
-- 글쓴이: 40~50대 직장인, 직접 여행하고 경기 보고 드라마 보면서 경험한 것을 솔직하게 올리는 블로거
+- 글쓴이: 40~50대 직장인, 직접 여행하고 드라마 보고 연예 소식 챙기면서 경험한 것을 솔직하게 올리는 블로거
 - 글의 톤: 친근하지만 신뢰감 있게, 과장 없이, 직접 경험한 사람처럼 구체적으로
 
 【현재 날짜】 {date_str}
@@ -316,11 +315,6 @@ def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = N
 - 항공권 실제 구매가·예약 타이밍 언급
 - 호텔 위치별 장단점, 실제 체크인 후기
 - 현지에서만 알 수 있는 정보 (교통·물가·환전 팁 등)
-
-🏆 스포츠 이슈 글이라면:
-- 선수 최근 성적 수치·날짜 명시
-- 팬 입장에서의 기대감·실망감 솔직히 표현
-- 대회 일정·결과·랭킹 등 구체적 데이터 포함
 
 🎬 드라마·영화 글이라면:
 - 스포일러 수위 명시 (스포 없는 리뷰 / 결말 포함 리뷰)
@@ -1541,7 +1535,7 @@ def _series_common_vars(keyword: str, series_context: dict):
 
 
 def _build_series_prompt_general(keyword: str, traffic: str, series_context: dict, blog_config: dict | None = None) -> str:
-    """blog1 / 기본 — 여행·스포츠·드라마·연예 시리즈 프롬프트 (개인 경험 스타일)"""
+    """blog1 / 기본 — 여행·드라마·연예·K-POP 시리즈 프롬프트 (개인 경험 스타일)"""
     from datetime import datetime
     now = datetime.now()
     y = now.year

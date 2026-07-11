@@ -18,7 +18,7 @@ _MAX_SERIES = 50
 
 # 블로그별 주제 맵
 _BLOG_TOPIC_MAP = {
-    "blog1": {"label": "여행·스포츠·드라마·연예", "topics": ["여행", "스포츠", "드라마", "영화", "연예", "K-POP"]},
+    "blog1": {"label": "여행·드라마·연예·K-POP", "topics": ["여행", "드라마", "영화", "연예", "K-POP"]},
     "blog2": {"label": "IT·AI·기술", "topics": ["IT", "AI", "기술", "스마트폰", "앱", "테크"]},
     "blog3": {"label": "금융·경제·정부지원", "topics": ["금융", "경제", "정부지원", "세금", "복지", "시책"]},
 }
@@ -166,18 +166,18 @@ def _call_claude_plan(prompt: str, system: str) -> dict | None:
 
 
 # ─────────────────────────────────────────────
-# 기획 — blog1 (여행·스포츠·드라마·연예)
+# 기획 — blog1 (여행·드라마·연예·K-POP)
 # ─────────────────────────────────────────────
 
 def _plan_blog1_series(keyword: str, count: int, blog_config: dict | None = None) -> dict | None:
-    """blog1용 시리즈 기획 — 여행·스포츠·드라마·연예 주제, 개인 경험 공유 스타일."""
+    """blog1용 시리즈 기획 — 여행·드라마·연예·K-POP 주제, 개인 경험 공유 스타일."""
     now = datetime.now()
     y = now.year
     date_str = now.strftime("%Y년 %m월 %d일")
     prompt = f"""오늘: {date_str}
 주제 키워드: {keyword}
 시리즈 편수: {count}편
-블로그 주제: 여행, 스포츠, 드라마, 영화, 연예, K-POP
+블로그 주제: 여행, 드라마, 영화, 연예, K-POP
 
 이 주제로 {count}편짜리 블로그 시리즈를 기획하세요.
 글쓰기 방향: 정보 나열이 아닌 '직접 경험하고 공부한 사람의 인사이트 공유' 스타일.

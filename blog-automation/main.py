@@ -191,7 +191,7 @@ def run_once(
                 f"(마지막 시리즈: {'없음' if not last_date else f'{days_elapsed}일 전'})"
             )
 
-            # ① blog1 전용 — 인기 드라마 탐지 (여행·스포츠·드라마·연예 블로그)
+            # ① blog1 전용 — 인기 드라마 탐지 (여행·드라마·연예·K-POP 블로그)
             if blog_id in ("blog1", ""):
                 from keyword_collector import _naver_drama_news, extract_drama_titles
                 drama_headlines = _naver_drama_news(

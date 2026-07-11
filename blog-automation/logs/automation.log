@@ -1,15 +1,3 @@
-2026-07-11 11:32:15,978 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 정보없음 확인, 저작권 위반은 없으나 이미지 부재로 warn 처리
-2026-07-11 11:32:15,979 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-07-11 11:32:15,979 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-07-11 11:32:16,658 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 11:33:31,572 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-11 11:33:32,408 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-11 11:33:45,889 [INFO] final_editor —   ✏️ 제목 최종 교정: '에어컨 전기세 절약, 여름휴가 앞두고 진짜 효과 있는 방법만 정리해봤습니다' → '에어컨 전기세 절약, 26도+써큘레이터 직접 테스트 결과'
-2026-07-11 11:33:45,889 [INFO] final_editor —   ✏️ 메타 설명 교정 (109자)
-2026-07-11 11:33:45,889 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 발행 규격에 맞게 정리하고, 목차·요약박스·표 2개·개인경험메모·주의사항·FAQ 6개·작성자메모·내부링크를 추가했으며 모든 문단을 2~4문장으로 재구성했습니다.
-2026-07-11 11:33:46,073 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-11 11:33:46,073 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-07-11 11:33:47,101 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/26.html
 2026-07-11 11:33:47,108 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/26.html
 2026-07-11 11:34:20,662 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-11 11:34:20,662 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
@@ -510,3 +498,15 @@
 2026-07-11 12:14:02,927 [INFO] main —   AdSense 자동 광고 테마 주입 시도: HOGU 여행,스포츠,연예
 2026-07-11 12:14:03,084 [ERROR] blogger_uploader — ADSENSE_CLIENT_ID가 설정되지 않았습니다 — GitHub Secrets에 추가하세요
 2026-07-11 12:14:03,084 [WARNING] main —   ⚠️ 테마 주입 실패 — Blogger 관리자에서 수동으로 AdSense 연결 필요: HOGU 여행,스포츠,연예
+2026-07-11 12:43:56,361 [INFO] main — === AdSense 셋업 모드: 필수 페이지 생성 + 자동 광고 테마 주입 ===
+2026-07-11 12:43:56,363 [INFO] main — 
+── HOGU 여행,스포츠,연예 필수 페이지 생성 ──
+2026-07-11 12:43:56,363 [INFO] page_creator — 페이지 생성 대상: HOGU 여행,스포츠,연예 (id=8903166932049624994, theme=lifestyle)
+2026-07-11 12:43:56,856 [INFO] page_creator — 기존 Blogger 페이지 4개 확인
+2026-07-11 12:43:57,943 [INFO] page_creator — 페이지 업데이트 완료: 개인정보처리방침 → https://hogugolfntraval.blogspot.com/p/blog-page.html
+2026-07-11 12:43:58,888 [INFO] page_creator — 페이지 업데이트 완료: 블로그 소개 → https://hogugolfntraval.blogspot.com/p/blog-page_03.html
+2026-07-11 12:43:58,889 [INFO] main —   ✅ privacy_policy: https://hogugolfntraval.blogspot.com/p/blog-page.html
+2026-07-11 12:43:58,889 [INFO] main —   ✅ about: https://hogugolfntraval.blogspot.com/p/blog-page_03.html
+2026-07-11 12:43:58,889 [INFO] main —   AdSense 자동 광고 테마 주입 시도: HOGU 여행,스포츠,연예
+2026-07-11 12:43:59,026 [ERROR] blogger_uploader — ADSENSE_CLIENT_ID가 설정되지 않았습니다 — GitHub Secrets에 추가하세요
+2026-07-11 12:43:59,026 [WARNING] main —   ⚠️ 테마 주입 실패 — Blogger 관리자에서 수동으로 AdSense 연결 필요: HOGU 여행,스포츠,연예

@@ -2049,10 +2049,12 @@ def _fact_check_content(post_data: dict, keyword: str) -> None:
 
         from datetime import datetime as _dt
         today = _dt.now().strftime("%Y년 %m월 %d일")
-        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-        msg = client.messages.create(
+        fc_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        raw = claude_generate(
+            fc_client,
             model=CLAUDE_MODEL,
             max_tokens=800,
+            max_continues=1,
             system=(
                 f"현재 날짜: {today}. 당신은 블로그 글의 팩트체커입니다. "
                 "본문에서 사실 오류 가능성이 높은 주장만 찾으세요: "
@@ -2072,9 +2074,9 @@ def _fact_check_content(post_data: dict, keyword: str) -> None:
                 ),
             }],
         )
-        raw = claude_text(msg).strip()
-        m = re.search(r"\{.*\}", raw, re.DOTALL)
-        result = json.loads(m.group()) if m else {"issues": [], "verdict": "pass"}
+        raw = raw.strip()
+        parsed = _parse_response(raw)
+        result = parsed if parsed and "issues" in parsed else {"issues": [], "verdict": "pass"}
 
         def _safe_replace(html_text: str, quote: str, fix: str) -> str | None:
             """태그 내부(속성/스타일)가 아닌 텍스트 위치에서만 치환합니다.

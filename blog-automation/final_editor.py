@@ -242,7 +242,14 @@ alt text는 구체적으로 — "이미지"처럼 쓰지 말 것.
         if raw.startswith("```"):
             raw = re.sub(r"^```[a-z]*\n?", "", raw)
             raw = re.sub(r"\n?```$", "", raw)
-        result = json.loads(raw)
+        try:
+            result = json.loads(raw)
+        except json.JSONDecodeError:
+            try:
+                from json_repair import repair_json
+                result = json.loads(repair_json(raw))
+            except Exception:
+                raise
 
         changed = False
 

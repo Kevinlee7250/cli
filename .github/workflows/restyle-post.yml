@@ -38,17 +38,6 @@ jobs:
         working-directory: blog-automation
         run: pip install -r requirements.txt
 
-      - name: .env 파일 생성
-        working-directory: blog-automation
-        run: |
-          cat > .env << 'ENVEOF'
-          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
-          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
-          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
-          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
-          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
-          ENVEOF
-
       - name: 대상 URL 결정
         id: url
         run: |
@@ -60,13 +49,19 @@ jobs:
 
       - name: 🎨 디자인 원복 실행
         working-directory: blog-automation
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+          BLOGGER_BLOG_ID: ${{ secrets.BLOGGER_BLOG_ID }}
+          BLOGS_CONFIG: ${{ secrets.BLOGS_CONFIG }}
         run: |
           TARGET="${{ steps.url.outputs.target }}"
           echo "=== 대상 URL: $TARGET ==="
           python restyle_post.py --blog-url "$TARGET"
 
       - name: 트리거 파일 삭제 (push 트리거 시)
-        if: github.event_name == 'push'
+        if: success() && github.event_name == 'push'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

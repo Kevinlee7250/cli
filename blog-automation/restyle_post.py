@@ -184,9 +184,22 @@ def _apply_style_replacements(html: str) -> str:
 def restyle(blog_url: str) -> int:
     logger.info(f"=== 디자인 원복 시작: {blog_url} ===")
 
+    # 환경변수 상태 진단
+    has_client_id     = bool(os.getenv("GOOGLE_CLIENT_ID"))
+    has_client_secret = bool(os.getenv("GOOGLE_CLIENT_SECRET"))
+    has_refresh_token = bool(os.getenv("GOOGLE_REFRESH_TOKEN"))
+    has_blogger_id    = bool(os.getenv("BLOGGER_BLOG_ID"))
+    has_blogs_config  = bool(os.getenv("BLOGS_CONFIG"))
+    logger.info(
+        f"환경변수 상태: CLIENT_ID={has_client_id} SECRET={has_client_secret} "
+        f"REFRESH={has_refresh_token} BLOGGER_ID={has_blogger_id} BLOGS_CONFIG={has_blogs_config}"
+    )
+
     blog_config = _get_blog_config(blog_url)
     if not blog_config:
         logger.warning("BLOGS_CONFIG에서 블로그 설정을 찾지 못했습니다. 기본 환경변수를 사용합니다.")
+    else:
+        logger.info(f"블로그 설정 확인: id={blog_config.get('id')} blog_id={blog_config.get('blog_id')}")
 
     post = _get_post_by_url(blog_url, blog_config)
     if not post:

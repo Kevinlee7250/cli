@@ -256,8 +256,13 @@ def _simplify_query(query: str, max_terms: int = 3) -> str:
 # ──────────────────────────────────────────────────────────────────────────────
 
 def _score_title_relevance(img: dict, query: str) -> float:
-    """이미지 제목·URL과 쿼리 단어의 겹침 비율 (0~1). 관련성 순위 정렬에 사용."""
+    """이미지 제목·URL과 쿼리 단어의 겹침 비율 (0~1). 관련성 순위 정렬에 사용.
+    한국어 쿼리는 영어 번역 단어도 포함해 영어 이미지 제목과 매칭합니다."""
     query_words = set(re.findall(r'[가-힣]{2,}|[A-Za-z]{3,}', query.lower()))
+    # 한국어 쿼리인 경우 Pixabay/DDG 영어 이미지와의 관련성 채점을 위해 번역 단어 추가
+    if _is_korean_query(query):
+        en_q = _ko_to_en_query(query)
+        query_words |= set(re.findall(r'[A-Za-z]{3,}', en_q.lower()))
     if not query_words:
         return 0.0
     haystack = (img.get("title", "") + " " + img.get("url", "")).lower()
@@ -330,6 +335,11 @@ def _ko_to_en_query(query: str) -> str:
         "취업": "job", "직장": "workplace", "창업": "startup", "부업": "side job",
         "세금": "tax", "연금": "pension", "보험": "insurance", "대출": "loan",
         "AI": "artificial intelligence", "기술": "technology", "스마트폰": "smartphone",
+        "방학": "school vacation", "대비": "preparation", "관리": "management",
+        "절약": "saving money", "절세": "tax saving", "공부": "studying",
+        "노후": "retirement", "임신": "pregnancy", "출산": "childbirth",
+        "정책": "policy", "지원": "support", "혜택": "benefit", "신청": "application",
+        "이사": "moving house", "전세": "rental housing", "청약": "housing subscription",
     }
     ko_words = re.findall(r'[가-힣]{2,}', query)
     en_terms = []
@@ -503,11 +513,14 @@ def fetch_images_for_queries(
 
 
 def _safe_caption(img: dict, alt: str) -> str:
-    """캡션 텍스트 결정 — 파일명(확장자 포함)이나 무의미한 제목은 alt로 대체합니다."""
+    """캡션 텍스트 결정 — 파일명·Pixabay 태그 나열·무의미한 제목은 alt로 대체합니다."""
     title = (img.get("title") or "").strip()
     if not title or re.search(r'\.(jpe?g|png|webp|svg|gif)$', title, re.I):
         return alt
     if len(title) < 4:
+        return alt
+    # Pixabay 태그 형식 감지: "word / word / word ..." (슬래시 2개 이상 → 태그 나열)
+    if len(re.findall(r'\s*/\s*', title)) >= 2:
         return alt
     return title
 

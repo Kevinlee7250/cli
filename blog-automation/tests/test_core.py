@@ -209,6 +209,9 @@ def test_safe_caption_rejects_filenames():
     assert _safe_caption({"title": "MetabolismoLipidiE.png"}, "대체텍스트") == "대체텍스트"
     assert _safe_caption({"title": ""}, "대체텍스트") == "대체텍스트"
     assert _safe_caption({"title": "서울 야경 사진"}, "대체텍스트") == "서울 야경 사진"
+    # Pixabay 태그 나열 형식 (슬래시 2개 이상) → alt로 대체
+    assert _safe_caption({"title": "marguerite / white petals / blossom / fl"}, "대체텍스트") == "대체텍스트"
+    assert _safe_caption({"title": "heat wave / flower wallpaper / beautiful"}, "대체텍스트") == "대체텍스트"
 
 
 def test_min_relevance_returns_fallback():

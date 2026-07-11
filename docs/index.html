@@ -2627,34 +2627,35 @@ function _postCardActionBtns(reg, title) {
   if (!reg) return ''
   const pid = reg.post_id
   if (!pid) return ''
-  const safe = (title || '').replace(/'/g,"'").replace(/`/g,"'")
+  const safePid = esc(pid)
+  const safeT   = esc(title || '')
   const st = reg.status
   if (st === 'published') return ''
   let html = ''
   if (st === 'pending' || st === 'failed' || st === 'draft')
-    html += `<button class="card-act-btn pub" onclick="postsActionPost('${pid}','publish','${safe}')">발행</button>`
+    html += `<button class="card-act-btn pub" data-pid="${safePid}" data-act="publish" data-ttl="${safeT}" onclick="postsActionPost(this.dataset.pid,this.dataset.act,this.dataset.ttl)">발행</button>`
   if (st === 'skipped')
-    html += `<button class="card-act-btn rst" onclick="postsActionPost('${pid}','restore','${safe}')">복원</button>`
-  html += `<button class="card-act-btn del" onclick="postsActionPost('${pid}','delete','${safe}')">삭제</button>`
+    html += `<button class="card-act-btn rst" data-pid="${safePid}" data-act="restore" data-ttl="${safeT}" onclick="postsActionPost(this.dataset.pid,this.dataset.act,this.dataset.ttl)">복원</button>`
+  html += `<button class="card-act-btn del" data-pid="${safePid}" data-act="delete" data-ttl="${safeT}" onclick="postsActionPost(this.dataset.pid,this.dataset.act,this.dataset.ttl)">삭제</button>`
   return html
 }
 
 function _postModalActionBtns(reg, title, blogUrl) {
-  const safe = (title || '').replace(/'/g,"'").replace(/`/g,"'").slice(0,60)
   if (!reg || !reg.post_id) {
-    // registry에 없지만 blogUrl도 없는 경우 → 상태 미확인
     if (!blogUrl) return `<span style="font-size:12px;color:var(--muted)">레지스트리 정보 없음 — 포스트 관리 탭에서 확인하세요</span>`
     return ''
   }
-  const pid = reg.post_id
+  const pid    = reg.post_id
+  const safePid = esc(pid)
+  const safeT  = esc((title || '').slice(0, 60))
   const st = reg.status
   let html = `<span style="font-size:12px;color:var(--muted);margin-right:auto">레지스트리 상태: ${_postStatusInlineBadge(st) || st}</span>`
   if (st === 'pending' || st === 'failed' || st === 'draft')
-    html += `<button class="modal-act-btn pub" onclick="closeModal();postsActionPost('${pid}','publish','${safe}')">📤 발행하기</button>`
+    html += `<button class="modal-act-btn pub" data-pid="${safePid}" data-act="publish" data-ttl="${safeT}" onclick="closeModal();postsActionPost(this.dataset.pid,this.dataset.act,this.dataset.ttl)">📤 발행하기</button>`
   if (st === 'skipped')
-    html += `<button class="modal-act-btn rst" onclick="closeModal();postsActionPost('${pid}','restore','${safe}')">🔄 복원 (대기로)</button>`
+    html += `<button class="modal-act-btn rst" data-pid="${safePid}" data-act="restore" data-ttl="${safeT}" onclick="closeModal();postsActionPost(this.dataset.pid,this.dataset.act,this.dataset.ttl)">🔄 복원 (대기로)</button>`
   if (st !== 'published')
-    html += `<button class="modal-act-btn del" onclick="closeModal();postsActionPost('${pid}','delete','${safe}')">🗑 삭제</button>`
+    html += `<button class="modal-act-btn del" data-pid="${safePid}" data-act="delete" data-ttl="${safeT}" onclick="closeModal();postsActionPost(this.dataset.pid,this.dataset.act,this.dataset.ttl)">🗑 삭제</button>`
   return html
 }
 
@@ -7090,7 +7091,7 @@ function pmRenderTable() {
   tbody.innerHTML = slice.map(p => {
     const date     = (p.createdAt || '').slice(0, 10)
     const titleTxt = p.title || '-'
-    const safeTitle = titleTxt.replace(/"/g,"'").replace(/`/g,"'")
+    const safeTitle = titleTxt
     const title    = `<span title="${safeTitle}">${titleTxt.slice(0,32)}${titleTxt.length > 32 ? '…' : ''}</span>`
     const blogLink = p.blogUrl ? `<a href="${p.blogUrl}" target="_blank" style="color:var(--accent2);font-size:12px;margin-right:4px">↗</a>` : ''
     const blogName = p.blogName || p.blogId || '-'
@@ -7131,7 +7132,7 @@ function _pmActionBtns(postId, status, safeTitle) {
     rst:  'background:rgba(52,211,153,.15);color:var(--green)',
   }
   const btn = (action, label, style) =>
-    `<button style="${s.base};${style}" onclick="pmActionPost('${postId}','${action}','${safeTitle}')">${label}</button>`
+    `<button style="${s.base};${style}" data-pid="${esc(postId)}" data-act="${action}" data-ttl="${esc(safeTitle)}" onclick="pmActionPost(this.dataset.pid,this.dataset.act,this.dataset.ttl)">${label}</button>`
 
   switch (status) {
     case 'pending':

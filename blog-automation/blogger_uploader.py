@@ -198,17 +198,19 @@ def _build_toc(html: str) -> str:
     for slug, inner in headings:
         clean = re.sub(r'<[^>]+>', '', inner).strip()
         items.append(
-            f'<li><a href="#{slug}" style="color:#1d4ed8;text-decoration:none;font-weight:500;">'
+            f'<li><a href="#{slug}" style="color:#4a90e2;text-decoration:none;">'
             f'{clean}</a></li>'
         )
 
-    return (
-        '<div style="background:#eff6ff;border-left:5px solid #2563eb;border-radius:0 12px 12px 0;'
-        'padding:20px 24px;margin:2em 0;">'
-        '<p style="font-weight:800;font-size:15px;margin:0 0 12px;color:#1e3a8a;">📋 목차</p>'
-        f'<ol style="margin:0;padding-left:22px;line-height:2.1;color:#374151;">{"".join(items)}</ol>'
-        '</div>\n'
-    )
+    return f"""
+<div style="background:#f8f9fa;border-left:4px solid #4a90e2;border-radius:8px;
+padding:20px 24px;margin:2em 0;max-width:680px;">
+  <p style="font-weight:700;font-size:16px;margin:0 0 12px;">📋 목차</p>
+  <ol style="margin:0;padding-left:20px;line-height:2;">
+    {"".join(items)}
+  </ol>
+</div>
+"""
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -244,18 +246,17 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
     from urllib.parse import quote as _url_quote
     tag_links = "".join(
         f'<a href="/search/label/{_url_quote(label, safe="")}" '
-        f'style="display:inline-block;margin:4px 3px;padding:6px 16px;'
-        f'background:#eff6ff;border-radius:20px;text-decoration:none;'
-        f'color:#1d4ed8;font-size:13px;font-weight:500;border:1px solid #bfdbfe;">{label}</a>'
+        f'style="display:inline-block;margin:4px;padding:5px 14px;'
+        f'background:#e8f0fe;border-radius:20px;text-decoration:none;'
+        f'color:#1a73e8;font-size:13px;">{label}</a>'
         for label in labels[:10]
     )
-    tag_section = (
-        '<div style="margin:2.5em 0;padding:20px 24px;'
-        'background:#f8fafc;border-radius:12px;border:1px solid #e5e7eb;">'
-        '<p style="font-weight:700;margin:0 0 12px;color:#374151;">🏷️ 관련 태그</p>'
-        f'<div>{tag_links}</div>'
-        '</div>\n'
-    )
+    tag_section = f"""
+<div style="margin:2.5em 0;padding:20px;background:#f8f9fa;border-radius:10px;">
+  <p style="font-weight:700;margin:0 0 10px;">🏷️ 관련 태그</p>
+  <div>{tag_links}</div>
+</div>
+"""
 
     # ⑤ 출처 섹션
     sources = post_data.get("sources", [])
@@ -264,15 +265,15 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
         source_items = "".join(
             f'<li style="margin:6px 0;">'
             f'<a href="{s.get("url", "#")}" target="_blank" rel="nofollow noopener" '
-            f'style="color:#1d4ed8;text-decoration:none;">'
+            f'style="color:#1a73e8;text-decoration:none;">'
             f'{s.get("title", s.get("url", ""))}</a></li>'
             for s in sources
         )
         sources_section = (
-            '<div style="margin:2.5em 0;padding:20px 24px;'
-            'background:#f8fafc;border-radius:12px;border:1px solid #e5e7eb;">'
-            '<p style="font-weight:700;font-size:15px;margin:0 0 12px;color:#374151;">📚 참고 자료</p>'
-            f'<ul style="margin:0;padding-left:22px;line-height:2;font-size:14px;color:#374151;">{source_items}</ul>'
+            '<div style="margin:2.5em 0;padding:20px 24px;background:#f1f3f4;'
+            'border-radius:10px;border-left:4px solid #5f6368;">'
+            '<p style="font-weight:700;font-size:15px;margin:0 0 10px;">📚 참고 자료</p>'
+            f'<ul style="margin:0;padding-left:20px;line-height:1.9;font-size:14px;">{source_items}</ul>'
             '</div>'
         )
 
@@ -284,22 +285,20 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
         logger.warning(f'related_section 생성 실패: {_rp_e}')
         related_section = ''
 
-    footer = (
-        '<div style="margin-top:3em;padding:18px 22px;'
-        'background:#fffbeb;border-radius:0 12px 12px 0;'
-        'border-left:4px solid #d97706;">'
-        '<p style="font-size:13px;color:#78350f;margin:0;line-height:1.8;">'
-        '📌 이 글이 도움이 됐다면 북마크 &amp; 공유해주세요!<br>'
-        '⚠️ 투자·의료·법률 등 전문 분야는 반드시 전문가와 상담하세요.'
-        '</p>'
-        '</div>\n'
-    )
+    footer = """
+<div style="margin-top:3em;padding:18px 20px;background:#fff3cd;border-radius:10px;
+border-left:4px solid #ffc107;">
+  <p style="font-size:13px;color:#666;margin:0;">
+    📌 이 글이 도움이 됐다면 북마크 &amp; 공유해주세요!<br>
+    ⚠️ 투자·의료·법률 등 전문 분야는 반드시 전문가와 상담하세요.
+  </p>
+</div>
+"""
 
     return (
         generate_all_schemas(post_data, blog_config)
-        + '<div class="blog-post" style="max-width:780px;margin:0 auto;padding:8px 4px;'
-          'font-family:\'Noto Sans KR\',\'Apple SD Gothic Neo\',\'맑은 고딕\',sans-serif;'
-          'font-size:16px;line-height:1.9;color:#374151;word-break:keep-all;">'
+        + '<div class="blog-post" style="max-width:800px;margin:0 auto;'
+          'font-family:\'Noto Sans KR\',sans-serif;line-height:1.9;color:#222;">'
         + series_nav           # ⑦ 시리즈 내비게이션 (상단)
         + html
         + series_nav           # ⑧ 시리즈 내비게이션 (하단 — 읽은 후 다음 편 유도)

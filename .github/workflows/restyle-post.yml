@@ -1,0 +1,51 @@
+name: 🎨 포스트 디자인 원복
+
+on:
+  workflow_dispatch:
+    inputs:
+      blog_url:
+        description: '디자인을 원복할 Blogger 포스트 URL'
+        required: true
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  restyle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          ENVEOF
+
+      - name: 🎨 디자인 원복 실행
+        working-directory: blog-automation
+        run: |
+          echo "=== 대상 URL: ${{ inputs.blog_url }} ==="
+          python restyle_post.py --blog-url "${{ inputs.blog_url }}"

@@ -7,9 +7,14 @@ on:
         description: '디자인을 원복할 Blogger 포스트 URL'
         required: true
         default: ''
+  push:
+    branches:
+      - claude/blog-automation-system-KAbtE
+    paths:
+      - '.github/restyle-trigger.txt'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   restyle:
@@ -44,8 +49,29 @@ jobs:
           BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
           ENVEOF
 
+      - name: 대상 URL 결정
+        id: url
+        run: |
+          if [ -n "${{ inputs.blog_url }}" ]; then
+            echo "target=${{ inputs.blog_url }}" >> $GITHUB_OUTPUT
+          else
+            echo "target=$(cat .github/restyle-trigger.txt | tr -d '[:space:]')" >> $GITHUB_OUTPUT
+          fi
+
       - name: 🎨 디자인 원복 실행
         working-directory: blog-automation
         run: |
-          echo "=== 대상 URL: ${{ inputs.blog_url }} ==="
-          python restyle_post.py --blog-url "${{ inputs.blog_url }}"
+          TARGET="${{ steps.url.outputs.target }}"
+          echo "=== 대상 URL: $TARGET ==="
+          python restyle_post.py --blog-url "$TARGET"
+
+      - name: 트리거 파일 삭제 (push 트리거 시)
+        if: github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git rm -f .github/restyle-trigger.txt 2>/dev/null || true
+          if ! git diff --staged --quiet; then
+            git commit -m "🧹 restyle-trigger.txt 정리"
+            git push origin claude/blog-automation-system-KAbtE
+          fi

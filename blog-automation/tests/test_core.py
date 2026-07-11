@@ -211,18 +211,23 @@ def test_safe_caption_rejects_filenames():
     assert _safe_caption({"title": "서울 야경 사진"}, "대체텍스트") == "서울 야경 사진"
 
 
-def test_min_relevance_blocks_junk():
-    """관련성 0 후보만 있으면 _fetch_best_image가 None을 반환해야 한다."""
+def test_min_relevance_returns_fallback():
+    """관련성 0 후보만 있어도 _fetch_best_image는 최상위 후보를 폴백으로 반환한다.
+    최종 품질 게이트는 _filter_relevant_images(Claude)가 담당한다."""
     import image_fetcher as imf
 
+    junk = {"url": "http://x/ChateauValere.jpg", "title": "Château de Valère", "width": 800, "height": 600}
+
     def fake_search(query, cid, csec, n, **kwargs):
-        return [{"url": "http://x/ChateauValere.jpg", "title": "Château de Valère", "width": 800, "height": 600}]
+        return [junk]
 
     orig = imf._search_all_sources
     imf._search_all_sources = fake_search
     try:
         result = imf._fetch_best_image("프리랜서 종합소득세 신고")
-        assert result is None
+        # 폴백 반환: 관련성 미달이라도 후보가 있으면 반환 (Claude가 최종 필터링)
+        assert result is not None
+        assert result["url"] == junk["url"]
     finally:
         imf._search_all_sources = orig
 

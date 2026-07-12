@@ -45,7 +45,7 @@ jobs:
           cache: 'pip'
 
       - name: 의존성 설치
-        run: pip install -q requests python-dotenv
+        run: pip install -q requests python-dotenv anthropic
 
       - name: .env 파일 생성
         run: |

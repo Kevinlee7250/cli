@@ -70,7 +70,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # 수집 결과 임시 저장
           cp docs/data/trending_keywords.json /tmp/trending_keywords.json
-          # latest 브랜치로 전환
+          # 로컬 수정 폐기 후 latest 브랜치로 전환 (전환 거부 방지)
+          git checkout -- docs/data/trending_keywords.json 2>/dev/null || true
           git fetch origin latest
           git checkout -B _push-tmp origin/latest
           cp /tmp/trending_keywords.json docs/data/trending_keywords.json

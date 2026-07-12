@@ -1,0 +1,84 @@
+name: 키워드 트렌드 수집
+
+on:
+  # 3시간마다 자동 수집 (KST 기준 오전 2시·5시·8시·11시·14시·17시·20시·23시)
+  schedule:
+    - cron: '0 17 * * *'  # 02:00 KST
+    - cron: '0 20 * * *'  # 05:00 KST
+    - cron: '0 23 * * *'  # 08:00 KST
+    - cron: '0  2 * * *'  # 11:00 KST
+    - cron: '0  5 * * *'  # 14:00 KST
+    - cron: '0  8 * * *'  # 17:00 KST
+    - cron: '0 11 * * *'  # 20:00 KST
+    - cron: '0 14 * * *'  # 23:00 KST
+
+  # 대시보드에서 수동 실행 (PAT + workflow_dispatch)
+  workflow_dispatch:
+    inputs:
+      force_ai:
+        description: 'Claude AI 키워드 추천도 포함 (true/false)'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect-keywords
+  cancel-in-progress: true
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    name: collect-trending-keywords
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: latest
+          fetch-depth: 1
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 의존성 설치
+        run: pip install -q requests python-dotenv anthropic pytrends
+
+      - name: .env 파일 생성
+        run: |
+          cat > blog-automation/.env << 'ENVEOF'
+          ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
+          NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}
+          ENVEOF
+
+      - name: 트렌드 키워드 수집
+        working-directory: blog-automation
+        run: |
+          python trending_collector.py --output ../docs/data/trending_keywords.json
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+
+      - name: 변경 커밋 & 푸시
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data/trending_keywords.json
+          if git diff --cached --quiet; then
+            echo "변경 없음 — 커밋 건너뜀"
+          else
+            git commit -m "chore: 트렌드 키워드 자동 수집 ($(date +'%Y-%m-%d %H:%M KST' -d '+9 hours'))"
+            # 최대 4회 재시도
+            for i in 1 2 3 4; do
+              git push origin latest && break
+              echo "Push 실패 $i/4 — ${i}0초 후 재시도"
+              sleep $((i * 10))
+              git pull --rebase origin latest || true
+            done
+          fi

@@ -487,22 +487,38 @@
   #bot-send{padding:9px 14px;background:var(--accent);border:none;border-radius:10px;color:#fff;font-size:16px;cursor:pointer;transition:opacity .15s;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
   #bot-send:hover{opacity:.85;}
   #bot-send:disabled{opacity:.4;cursor:default;}
-  /* ── 키워드 수집 검토 패널 ── */
-  .kw-collect-btn{padding:5px 13px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;color:var(--muted);font-size:12px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px;}
-  .kw-collect-btn:hover,.kw-collect-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(124,106,247,.1);}
-  .kw-collect-panel{margin-top:10px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg2);}
-  .kw-collect-tab{padding:5px 12px;font-size:12px;border:none;background:none;color:var(--muted);cursor:pointer;border-radius:6px;transition:all .12s;}
-  .kw-collect-tab.active{background:rgba(124,106,247,.15);color:var(--accent);font-weight:600;}
-  .kw-collect-item{display:flex;align-items:center;gap:9px;padding:7px 4px;border-bottom:1px solid var(--border);cursor:pointer;border-radius:6px;transition:background .1s;}
-  .kw-collect-item:last-child{border-bottom:none;}
-  .kw-collect-item:hover{background:var(--bg3);}
-  .kw-collect-item input[type=checkbox]{width:15px;height:15px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;}
-  .kw-collect-item label{flex:1;font-size:13px;color:var(--text);cursor:pointer;line-height:1.3;}
-  .kw-collect-badge{padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap;flex-shrink:0;}
+  /* ── 키워드 수집 센터 ── */
+  .kw-center{margin-top:9px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg2);}
+  .kw-center-header{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:var(--bg3);border-bottom:1px solid var(--border);flex-wrap:wrap;gap:5px;}
+  .kw-src-tabs{display:flex;gap:3px;flex-wrap:wrap;}
+  .kw-src-tab{padding:4px 11px;font-size:12px;border:none;background:none;color:var(--muted);cursor:pointer;border-radius:6px;transition:all .12s;font-weight:500;}
+  .kw-src-tab.active{background:rgba(124,106,247,.18);color:var(--accent);font-weight:600;}
+  .kw-src-tab:hover:not(.active){background:rgba(255,255,255,.05);color:var(--text);}
+  .kw-center-meta{display:flex;align-items:center;gap:6px;white-space:nowrap;}
+  .kw-collect-now-btn{padding:3px 9px;font-size:11px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;transition:all .15s;}
+  .kw-collect-now-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .kw-collect-now-btn:disabled{opacity:.4;cursor:default;}
+  .kw-source-list{max-height:230px;overflow-y:auto;padding:4px 8px;}
+  .kw-source-item{display:flex;align-items:center;gap:7px;padding:6px 4px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;border-radius:5px;transition:background .1s;}
+  .kw-source-item:last-child{border-bottom:none;}
+  .kw-source-item:hover{background:var(--bg3);}
+  .kw-source-item.added{opacity:.45;pointer-events:none;}
+  .kw-source-item input[type=checkbox]{width:14px;height:14px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;}
+  .kw-source-label{flex:1;font-size:13px;color:var(--text);cursor:pointer;line-height:1.3;}
+  .kw-source-rank{font-size:10px;color:var(--muted);min-width:18px;text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0;}
+  .kw-src-badge{padding:2px 6px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap;flex-shrink:0;}
+  .kw-badge-rt{background:rgba(248,113,113,.18);color:#f87171;}
+  .kw-badge-news{background:rgba(251,191,36,.15);color:var(--yellow);}
+  .kw-badge-cpc{background:rgba(52,211,153,.15);color:var(--green);}
   .kw-badge-ai{background:rgba(124,106,247,.18);color:var(--accent);}
-  .kw-badge-trend{background:rgba(52,211,153,.15);color:var(--green);}
-  .kw-badge-default{background:var(--bg3);color:var(--muted);}
-  .kw-collect-empty{padding:20px;text-align:center;color:var(--muted);font-size:13px;}
+  .kw-badge-def{background:var(--bg3);color:var(--muted);}
+  .kw-traffic{font-size:10px;color:#f87171;font-weight:700;flex-shrink:0;}
+  .kw-center-footer{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-top:1px solid var(--border);background:var(--bg3);flex-wrap:wrap;gap:5px;}
+  .kw-foot-btn{padding:3px 8px;font-size:11px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;transition:all .12s;}
+  .kw-foot-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .kw-add-src-btn{padding:4px 13px;font-size:12px;background:var(--accent);border:none;border-radius:6px;color:#fff;font-weight:600;cursor:pointer;transition:opacity .15s;}
+  .kw-add-src-btn:hover{opacity:.85;}
+  .kw-collect-empty{padding:18px;text-align:center;color:var(--muted);font-size:13px;}
 </style>
 </head>
 <body>
@@ -724,35 +740,55 @@
       <div class="form-row">
         <div class="form-group" style="flex:1;min-width:260px;max-width:100%">
           <label>키워드 <span style="font-weight:400;color:var(--muted)">(비우면 트렌드 자동 수집 · 최대 5개)</span></label>
+
+          <!-- 선택된 키워드 칩 + 직접 입력 -->
           <div class="kw-chips-box" id="kw-chips-box" onclick="document.getElementById('kw-type-input').focus()">
             <span id="kw-chips-list"></span>
             <input id="kw-type-input" class="kw-type-input"
-              placeholder="키워드 입력 후 Enter 또는 , (쉼표)"
+              placeholder="직접 입력 또는 아래에서 선택"
               onkeydown="onKwKeydown(event)" oninput="onKwInput(event)">
           </div>
-          <div style="margin-top:7px">
-            <div style="font-size:11px;color:var(--muted);margin-bottom:5px">💡 추천 키워드 (클릭으로 추가):</div>
-            <div class="kw-suggest-row" id="kw-suggest-row">
-              <span style="font-size:12px;color:var(--muted)">데이터 로딩 중...</span>
-            </div>
-          </div>
-          <!-- 키워드 수집 & 검토 -->
-          <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
-            <button class="kw-collect-btn" id="kw-collect-toggle-btn" onclick="kwToggleCollectPanel()">🔍 키워드 수집 목록 검토</button>
-            <span id="kw-collect-count-label" style="font-size:11px;color:var(--muted)"></span>
-          </div>
-          <div id="kw-collect-panel" class="kw-collect-panel" style="display:none">
-            <!-- 탭 & 선택 제어 -->
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:6px">
-              <div id="kw-collect-tabs" style="display:flex;gap:4px"></div>
-              <div style="display:flex;gap:6px">
-                <button onclick="kwCollectSelectAll()" style="padding:4px 10px;font-size:12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);cursor:pointer">전체선택</button>
-                <button onclick="kwCollectClearAll()" style="padding:4px 10px;font-size:12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);cursor:pointer">선택해제</button>
-                <button onclick="kwAddSelected()" style="padding:4px 12px;font-size:12px;background:var(--accent);border:none;border-radius:6px;color:#fff;cursor:pointer;font-weight:600" id="kw-add-selected-btn">→ 선택 추가</button>
+
+          <!-- 키워드 수집 센터 -->
+          <div class="kw-center">
+            <!-- 탭 헤더 -->
+            <div class="kw-center-header">
+              <div class="kw-src-tabs" id="kw-src-tabs">
+                <button class="kw-src-tab active" onclick="kwSwitchSource('realtime')">🔴 실시간</button>
+                <button class="kw-src-tab" onclick="kwSwitchSource('news')">📰 뉴스이슈</button>
+                <button class="kw-src-tab" onclick="kwSwitchSource('highcpc')">⭐ 고CPC</button>
+                <button class="kw-src-tab" onclick="kwSwitchSource('ai')">🧠 AI추천</button>
+              </div>
+              <div class="kw-center-meta">
+                <span id="kw-collected-at" style="font-size:11px;color:var(--muted)">-</span>
+                <button onclick="kwTriggerCollect()" id="kw-collect-now-btn" class="kw-collect-now-btn" title="GitHub Actions로 즉시 트렌드 수집">🔄 수집</button>
               </div>
             </div>
-            <!-- 목록 -->
-            <div id="kw-collect-list" style="max-height:220px;overflow-y:auto;padding:6px 12px"></div>
+            <!-- 소스 목록 -->
+            <div id="kw-source-list" class="kw-source-list">
+              <div class="kw-collect-empty">데이터 로딩 중...</div>
+            </div>
+            <!-- 액션 바 -->
+            <div class="kw-center-footer">
+              <div style="display:flex;gap:4px;flex-wrap:wrap">
+                <button onclick="kwSourceSelectAll()" class="kw-foot-btn">전체선택</button>
+                <button onclick="kwSourceSelectTop(3)" class="kw-foot-btn">상위 3개</button>
+                <button onclick="kwSourceSelectTop(5)" class="kw-foot-btn">상위 5개</button>
+                <button onclick="kwSourceSelectClear()" class="kw-foot-btn">해제</button>
+              </div>
+              <div style="display:flex;align-items:center;gap:7px">
+                <span id="kw-source-sel-count" style="font-size:12px;color:var(--muted)">0개 선택</span>
+                <button onclick="kwAddFromSource()" class="kw-add-src-btn">→ 추가</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 빠른 추천 칩 -->
+          <div style="margin-top:7px">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">💡 빠른 추가:</div>
+            <div class="kw-suggest-row" id="kw-suggest-row">
+              <span style="font-size:12px;color:var(--muted)">로딩 중...</span>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -1949,7 +1985,7 @@ async function loadAll(silent = false) {
   }
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs] = await Promise.all([
+  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending] = await Promise.all([
     fetch(base + '/posts.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/runs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/analytics.json' + ts).then(r => r.json()).catch(() => ({})),
@@ -1963,8 +1999,9 @@ async function loadAll(silent = false) {
     fetch(base + '/repairs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/post_registry.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/code_repairs.json' + ts).then(r => r.json()).catch(() => []),
+    fetch(base + '/trending_keywords.json' + ts).then(r => r.json()).catch(() => null),
   ])
-  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs }
+  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending }
 
   // 아카이브 포스트 백그라운드 병합 (posts.json은 최근 300개만 유지 — 초기 로딩 속도 확보)
   fetch(base + '/posts_archive.json' + ts).then(r => r.ok ? r.json() : []).then(archive => {
@@ -2016,7 +2053,7 @@ function navTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page))
   if (page === 'posts') { postsCurrentPage = 1; filterPosts() }
   if (page === 'analytics') renderAnalytics()
-  if (page === 'run') { checkPATStatus(); loadGHRuns(); kwRenderSuggests(); renderRunTimeline(); populateRunBlogSelect() }
+  if (page === 'run') { checkPATStatus(); loadGHRuns(); kwRenderSuggests(); renderRunTimeline(); populateRunBlogSelect(); kwUpdateCollectedAt(); kwRenderSourceList() }
   if (page === 'social') renderSocial()
   if (page === 'keywords') { renderKeywords(); renderCategoryGap() }
   if (page === 'review') {
@@ -3371,9 +3408,7 @@ function kwRender() {
   const inp = document.getElementById('kw-type-input')
   if (inp) inp.placeholder = runKeywords.length ? '' : '키워드 입력 후 Enter 또는 , (쉼표)'
   kwRenderSuggests()
-  // 검토 패널이 열려있으면 상태 반영
-  const panel = document.getElementById('kw-collect-panel')
-  if (panel && panel.style.display !== 'none') kwRenderCollectPanel()
+  kwRenderSourceList()
 }
 
 function kwRenderSuggests() {
@@ -3430,103 +3465,98 @@ function kwSyncPostsCount() {
   sel.value = runKeywords.length > 0 ? String(Math.min(runKeywords.length, 5)) : '3'
 }
 
-// ── 키워드 수집 & 검토 패널 ────────────────────────────────────────────────────
-let _collectTab = 'all'  // 현재 탭: all | ai | trend | default
+// ── 키워드 수집 센터 ────────────────────────────────────────────────────────────
+let _kwCurrentSource = 'realtime'
 
-function _buildCollectPool() {
-  // 소스별 후보 수집
-  const aiKws   = (DATA.learning?.[0]?.analysis?.recommended_keywords || [])
-                    .map(k => ({ kw: k.trim(), src: 'ai' }))
-  const trendKws = [...new Set(
-      (DATA.runs || []).slice(0, 20).flatMap(r => r.keywords || []).filter(Boolean)
-    )].filter(k => !aiKws.some(a => a.kw === k))
-    .map(k => ({ kw: k.trim(), src: 'trend' }))
-  const defaultKws = SUGGEST_KW_DEFAULT
-    .filter(k => !aiKws.some(a => a.kw === k) && !trendKws.some(t => t.kw === k))
-    .map(k => ({ kw: k, src: 'default' }))
-  return [...aiKws, ...trendKws, ...defaultKws]
+function kwSwitchSource(src) {
+  _kwCurrentSource = src
+  document.querySelectorAll('.kw-src-tab').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes("'" + src + "'"))
+  })
+  kwRenderSourceList()
 }
 
-function kwToggleCollectPanel() {
-  const panel = document.getElementById('kw-collect-panel')
-  const btn = document.getElementById('kw-collect-toggle-btn')
-  if (!panel) return
-  const isOpen = panel.style.display !== 'none'
-  if (isOpen) {
-    panel.style.display = 'none'
-    btn.classList.remove('active')
-  } else {
-    panel.style.display = 'block'
-    btn.classList.add('active')
-    kwRenderCollectPanel()
-  }
-}
-
-function kwRenderCollectPanel() {
-  const pool = _buildCollectPool()
-  const counts = {
-    all: pool.length,
-    ai: pool.filter(x => x.src === 'ai').length,
-    trend: pool.filter(x => x.src === 'trend').length,
-    default: pool.filter(x => x.src === 'default').length,
-  }
-  // 카운트 레이블 업데이트
-  const lbl = document.getElementById('kw-collect-count-label')
-  if (lbl) lbl.textContent = `총 ${counts.all}개 후보`
-
-  // 탭 렌더링
-  const tabs = document.getElementById('kw-collect-tabs')
-  if (tabs) {
-    tabs.innerHTML = [
-      { id: 'all',     label: `전체 ${counts.all}` },
-      { id: 'ai',      label: `🧠 AI ${counts.ai}` },
-      { id: 'trend',   label: `📊 트렌드 ${counts.trend}` },
-      { id: 'default', label: `💡 기본 ${counts.default}` },
-    ].map(t =>
-      `<button class="kw-collect-tab${_collectTab === t.id ? ' active' : ''}"
-        onclick="kwCollectSwitchTab('${t.id}')">${t.label}</button>`
-    ).join('')
-  }
-
-  // 목록 렌더링 (현재 탭 필터 적용)
-  const filtered = _collectTab === 'all' ? pool : pool.filter(x => x.src === _collectTab)
-  const list = document.getElementById('kw-collect-list')
+function kwRenderSourceList() {
+  const list = document.getElementById('kw-source-list')
   if (!list) return
-  if (!filtered.length) {
-    list.innerHTML = '<div class="kw-collect-empty">해당 소스의 키워드가 없습니다</div>'
+  const trending = DATA.trending
+  if (!trending) {
+    list.innerHTML = '<div class="kw-collect-empty">데이터 없음 — 🔄 수집 버튼을 눌러주세요</div>'
+    kwUpdateSelCount()
     return
   }
-  const badges = { ai: ['AI 추천', 'kw-badge-ai'], trend: ['최근 트렌드', 'kw-badge-trend'], default: ['기본 추천', 'kw-badge-default'] }
-  list.innerHTML = filtered.map((x, i) => {
-    const alreadyAdded = runKeywords.includes(x.kw)
-    const [label, cls] = badges[x.src]
-    const dimStyle = alreadyAdded ? 'opacity:.5' : ''
-    const clickHandler = alreadyAdded ? '' : `onclick="var cb=document.getElementById('kcc-${i}');cb.checked=!cb.checked"`
-    return `<div class="kw-collect-item" style="${dimStyle}" ${clickHandler}>
-      <input type="checkbox" id="kcc-${i}" data-kw="${esc(x.kw)}"${alreadyAdded ? ' disabled checked' : ''} onclick="event.stopPropagation()">
-      <label for="kcc-${i}" onclick="event.stopPropagation()">${esc(x.kw)}${alreadyAdded ? ' <span style="font-size:11px">(추가됨)</span>' : ''}</label>
-      <span class="kw-collect-badge ${cls}">${label}</span>
+  const src = _kwCurrentSource
+  let items = []
+  const badgeMap = {
+    realtime: ['실시간', 'kw-badge-rt'],
+    news:     ['뉴스', 'kw-badge-news'],
+    highcpc:  ['고CPC', 'kw-badge-cpc'],
+    ai:       ['AI추천', 'kw-badge-ai'],
+  }
+  if (src === 'realtime') {
+    items = (trending.sources?.googleTrends || []).map(x => ({
+      kw: x.keyword, meta: x.traffic ? `#${x.rank} · ${x.traffic}` : `#${x.rank}`
+    }))
+  } else if (src === 'news') {
+    items = (trending.sources?.naverNews || []).map(x => ({
+      kw: x.keyword || x.headline, meta: x.category || ''
+    }))
+  } else if (src === 'highcpc') {
+    items = (trending.sources?.highCPC || []).map(x => ({
+      kw: x.keyword, meta: x.cpc_range || x.label || ''
+    }))
+  } else if (src === 'ai') {
+    items = (trending.sources?.aiRecommended || []).map(x => ({
+      kw: x.keyword, meta: 'AI 추천'
+    }))
+  }
+  if (!items.length) {
+    list.innerHTML = '<div class="kw-collect-empty">이 소스의 키워드가 없습니다 — 🔄 수집을 실행해보세요</div>'
+    kwUpdateSelCount()
+    return
+  }
+  const [badgeLabel, badgeCls] = badgeMap[src] || ['', '']
+  list.innerHTML = items.map((x, i) => {
+    if (!x.kw) return ''
+    const already = runKeywords.includes(x.kw)
+    return `<div class="kw-source-item${already ? ' added' : ''}" onclick="if(!${already}){var c=document.getElementById('kwsi-${i}');c.checked=!c.checked;kwUpdateSelCount()}">
+      <input type="checkbox" id="kwsi-${i}" data-kw="${esc(x.kw)}"${already ? ' disabled checked' : ''} onclick="event.stopPropagation();kwUpdateSelCount()">
+      <label for="kwsi-${i}" onclick="event.stopPropagation()" style="flex:1;cursor:pointer;${already?'opacity:.55':''}">
+        ${esc(x.kw)}${already ? ' <span style="font-size:10px;color:var(--muted)">(추가됨)</span>' : ''}
+      </label>
+      ${x.meta ? `<span style="font-size:10px;color:var(--muted);white-space:nowrap">${esc(x.meta)}</span>` : ''}
+      <span class="kw-src-badge ${badgeCls}">${badgeLabel}</span>
     </div>`
-  }).join('')
+  }).filter(Boolean).join('')
+  kwUpdateSelCount()
 }
 
-function kwCollectSwitchTab(tabId) {
-  _collectTab = tabId
-  kwRenderCollectPanel()
+function kwUpdateSelCount() {
+  const cnt = document.querySelectorAll('#kw-source-list input[type=checkbox]:checked:not(:disabled)').length
+  const el = document.getElementById('kw-source-sel-count')
+  if (el) el.textContent = `${cnt}개 선택`
 }
 
-function kwCollectSelectAll() {
-  document.querySelectorAll('#kw-collect-list input[type=checkbox]:not(:disabled)')
-    .forEach(cb => cb.checked = true)
+function kwSourceSelectAll() {
+  document.querySelectorAll('#kw-source-list input[type=checkbox]:not(:disabled)')
+    .forEach(cb => { cb.checked = true })
+  kwUpdateSelCount()
 }
 
-function kwCollectClearAll() {
-  document.querySelectorAll('#kw-collect-list input[type=checkbox]:not(:disabled)')
-    .forEach(cb => cb.checked = false)
+function kwSourceSelectTop(n) {
+  const cbs = [...document.querySelectorAll('#kw-source-list input[type=checkbox]:not(:disabled)')]
+  cbs.forEach((cb, i) => { cb.checked = i < n })
+  kwUpdateSelCount()
 }
 
-function kwAddSelected() {
-  const checked = [...document.querySelectorAll('#kw-collect-list input[type=checkbox]:checked:not(:disabled)')]
+function kwSourceSelectClear() {
+  document.querySelectorAll('#kw-source-list input[type=checkbox]:not(:disabled)')
+    .forEach(cb => { cb.checked = false })
+  kwUpdateSelCount()
+}
+
+function kwAddFromSource() {
+  const checked = [...document.querySelectorAll('#kw-source-list input[type=checkbox]:checked:not(:disabled)')]
     .map(cb => cb.dataset.kw).filter(Boolean)
   if (!checked.length) { showToast('선택된 키워드가 없습니다', 'info'); return }
   let added = 0
@@ -3536,8 +3566,42 @@ function kwAddSelected() {
   }
   kwRender()
   kwSyncPostsCount()
-  kwRenderCollectPanel()
   if (added > 0) showToast(`${added}개 키워드가 추가됐습니다`, 'success')
+}
+
+async function kwTriggerCollect() {
+  const pat = getPAT()
+  if (!pat) { showToast('PAT를 먼저 설정하세요', 'error'); return }
+  const btn = document.getElementById('kw-collect-now-btn')
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ 수집 중...' }
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/collect-keywords.yml/dispatches`,
+      { method: 'POST',
+        headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+        body: JSON.stringify({ ref: GH_BRANCH }) }
+    )
+    if (resp.ok || resp.status === 204) {
+      showToast('키워드 수집 워크플로우가 시작됐습니다. 약 1~2분 후 새로고침하세요.', 'success')
+    } else {
+      showToast(`수집 실패: HTTP ${resp.status}`, 'error')
+    }
+  } catch (e) {
+    showToast(`오류: ${e.message}`, 'error')
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '🔄 수집' }
+  }
+}
+
+function kwUpdateCollectedAt() {
+  const el = document.getElementById('kw-collected-at')
+  if (!el) return
+  const ts = DATA.trending?.collectedAt
+  if (!ts) { el.textContent = '수집 전'; return }
+  const diffMin = Math.round((Date.now() - new Date(ts).getTime()) / 60000)
+  if (diffMin < 1) el.textContent = '방금 수집'
+  else if (diffMin < 60) el.textContent = `${diffMin}분 전 수집`
+  else el.textContent = `${Math.floor(diffMin / 60)}시간 전 수집`
 }
 
 async function runNow() {

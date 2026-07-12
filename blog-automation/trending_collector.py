@@ -260,13 +260,18 @@ def _generate_ai_keywords(count: int = 10) -> list[dict]:
             f"4. 최근 사용한 키워드와 중복 금지: {used_text}\n\n"
             f'JSON 배열만 응답 (설명 없이): ["키워드1", ..., "키워드{count}"]'
         )
+        # adaptive thinking 모델은 thinking이 max_tokens를 소모하므로 여유 확보
         msg = client.messages.create(
             model=model,
-            max_tokens=500,
+            max_tokens=4000,
             messages=[{"role": "user", "content": prompt}],
         )
         raw = "".join(b.text for b in msg.content if getattr(b, "type", "") == "text").strip()
         s, e = raw.find("["), raw.rfind("]")
+        if s == -1 or e <= s:
+            logger.warning(
+                f"AI 키워드 응답 파싱 실패 (stop={msg.stop_reason}): {raw[:200]!r}"
+            )
         if s != -1 and e > s:
             kws = json.loads(raw[s:e + 1])
             if isinstance(kws, list):

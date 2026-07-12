@@ -487,6 +487,22 @@
   #bot-send{padding:9px 14px;background:var(--accent);border:none;border-radius:10px;color:#fff;font-size:16px;cursor:pointer;transition:opacity .15s;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
   #bot-send:hover{opacity:.85;}
   #bot-send:disabled{opacity:.4;cursor:default;}
+  /* ── 키워드 수집 검토 패널 ── */
+  .kw-collect-btn{padding:5px 13px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;color:var(--muted);font-size:12px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px;}
+  .kw-collect-btn:hover,.kw-collect-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(124,106,247,.1);}
+  .kw-collect-panel{margin-top:10px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg2);}
+  .kw-collect-tab{padding:5px 12px;font-size:12px;border:none;background:none;color:var(--muted);cursor:pointer;border-radius:6px;transition:all .12s;}
+  .kw-collect-tab.active{background:rgba(124,106,247,.15);color:var(--accent);font-weight:600;}
+  .kw-collect-item{display:flex;align-items:center;gap:9px;padding:7px 4px;border-bottom:1px solid var(--border);cursor:pointer;border-radius:6px;transition:background .1s;}
+  .kw-collect-item:last-child{border-bottom:none;}
+  .kw-collect-item:hover{background:var(--bg3);}
+  .kw-collect-item input[type=checkbox]{width:15px;height:15px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;}
+  .kw-collect-item label{flex:1;font-size:13px;color:var(--text);cursor:pointer;line-height:1.3;}
+  .kw-collect-badge{padding:2px 7px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap;flex-shrink:0;}
+  .kw-badge-ai{background:rgba(124,106,247,.18);color:var(--accent);}
+  .kw-badge-trend{background:rgba(52,211,153,.15);color:var(--green);}
+  .kw-badge-default{background:var(--bg3);color:var(--muted);}
+  .kw-collect-empty{padding:20px;text-align:center;color:var(--muted);font-size:13px;}
 </style>
 </head>
 <body>
@@ -719,6 +735,24 @@
             <div class="kw-suggest-row" id="kw-suggest-row">
               <span style="font-size:12px;color:var(--muted)">데이터 로딩 중...</span>
             </div>
+          </div>
+          <!-- 키워드 수집 & 검토 -->
+          <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
+            <button class="kw-collect-btn" id="kw-collect-toggle-btn" onclick="kwToggleCollectPanel()">🔍 키워드 수집 목록 검토</button>
+            <span id="kw-collect-count-label" style="font-size:11px;color:var(--muted)"></span>
+          </div>
+          <div id="kw-collect-panel" class="kw-collect-panel" style="display:none">
+            <!-- 탭 & 선택 제어 -->
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:6px">
+              <div id="kw-collect-tabs" style="display:flex;gap:4px"></div>
+              <div style="display:flex;gap:6px">
+                <button onclick="kwCollectSelectAll()" style="padding:4px 10px;font-size:12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);cursor:pointer">전체선택</button>
+                <button onclick="kwCollectClearAll()" style="padding:4px 10px;font-size:12px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);cursor:pointer">선택해제</button>
+                <button onclick="kwAddSelected()" style="padding:4px 12px;font-size:12px;background:var(--accent);border:none;border-radius:6px;color:#fff;cursor:pointer;font-weight:600" id="kw-add-selected-btn">→ 선택 추가</button>
+              </div>
+            </div>
+            <!-- 목록 -->
+            <div id="kw-collect-list" style="max-height:220px;overflow-y:auto;padding:6px 12px"></div>
           </div>
         </div>
         <div class="form-group">
@@ -3337,6 +3371,9 @@ function kwRender() {
   const inp = document.getElementById('kw-type-input')
   if (inp) inp.placeholder = runKeywords.length ? '' : '키워드 입력 후 Enter 또는 , (쉼표)'
   kwRenderSuggests()
+  // 검토 패널이 열려있으면 상태 반영
+  const panel = document.getElementById('kw-collect-panel')
+  if (panel && panel.style.display !== 'none') kwRenderCollectPanel()
 }
 
 function kwRenderSuggests() {
@@ -3391,6 +3428,116 @@ function kwSyncPostsCount() {
   const sel = document.getElementById('run-posts')
   if (!sel) return
   sel.value = runKeywords.length > 0 ? String(Math.min(runKeywords.length, 5)) : '3'
+}
+
+// ── 키워드 수집 & 검토 패널 ────────────────────────────────────────────────────
+let _collectTab = 'all'  // 현재 탭: all | ai | trend | default
+
+function _buildCollectPool() {
+  // 소스별 후보 수집
+  const aiKws   = (DATA.learning?.[0]?.analysis?.recommended_keywords || [])
+                    .map(k => ({ kw: k.trim(), src: 'ai' }))
+  const trendKws = [...new Set(
+      (DATA.runs || []).slice(0, 20).flatMap(r => r.keywords || []).filter(Boolean)
+    )].filter(k => !aiKws.some(a => a.kw === k))
+    .map(k => ({ kw: k.trim(), src: 'trend' }))
+  const defaultKws = SUGGEST_KW_DEFAULT
+    .filter(k => !aiKws.some(a => a.kw === k) && !trendKws.some(t => t.kw === k))
+    .map(k => ({ kw: k, src: 'default' }))
+  return [...aiKws, ...trendKws, ...defaultKws]
+}
+
+function kwToggleCollectPanel() {
+  const panel = document.getElementById('kw-collect-panel')
+  const btn = document.getElementById('kw-collect-toggle-btn')
+  if (!panel) return
+  const isOpen = panel.style.display !== 'none'
+  if (isOpen) {
+    panel.style.display = 'none'
+    btn.classList.remove('active')
+  } else {
+    panel.style.display = 'block'
+    btn.classList.add('active')
+    kwRenderCollectPanel()
+  }
+}
+
+function kwRenderCollectPanel() {
+  const pool = _buildCollectPool()
+  const counts = {
+    all: pool.length,
+    ai: pool.filter(x => x.src === 'ai').length,
+    trend: pool.filter(x => x.src === 'trend').length,
+    default: pool.filter(x => x.src === 'default').length,
+  }
+  // 카운트 레이블 업데이트
+  const lbl = document.getElementById('kw-collect-count-label')
+  if (lbl) lbl.textContent = `총 ${counts.all}개 후보`
+
+  // 탭 렌더링
+  const tabs = document.getElementById('kw-collect-tabs')
+  if (tabs) {
+    tabs.innerHTML = [
+      { id: 'all',     label: `전체 ${counts.all}` },
+      { id: 'ai',      label: `🧠 AI ${counts.ai}` },
+      { id: 'trend',   label: `📊 트렌드 ${counts.trend}` },
+      { id: 'default', label: `💡 기본 ${counts.default}` },
+    ].map(t =>
+      `<button class="kw-collect-tab${_collectTab === t.id ? ' active' : ''}"
+        onclick="kwCollectSwitchTab('${t.id}')">${t.label}</button>`
+    ).join('')
+  }
+
+  // 목록 렌더링 (현재 탭 필터 적용)
+  const filtered = _collectTab === 'all' ? pool : pool.filter(x => x.src === _collectTab)
+  const list = document.getElementById('kw-collect-list')
+  if (!list) return
+  if (!filtered.length) {
+    list.innerHTML = '<div class="kw-collect-empty">해당 소스의 키워드가 없습니다</div>'
+    return
+  }
+  const badges = { ai: ['AI 추천', 'kw-badge-ai'], trend: ['최근 트렌드', 'kw-badge-trend'], default: ['기본 추천', 'kw-badge-default'] }
+  list.innerHTML = filtered.map((x, i) => {
+    const alreadyAdded = runKeywords.includes(x.kw)
+    const [label, cls] = badges[x.src]
+    const dimStyle = alreadyAdded ? 'opacity:.5' : ''
+    const clickHandler = alreadyAdded ? '' : `onclick="var cb=document.getElementById('kcc-${i}');cb.checked=!cb.checked"`
+    return `<div class="kw-collect-item" style="${dimStyle}" ${clickHandler}>
+      <input type="checkbox" id="kcc-${i}" data-kw="${esc(x.kw)}"${alreadyAdded ? ' disabled checked' : ''} onclick="event.stopPropagation()">
+      <label for="kcc-${i}" onclick="event.stopPropagation()">${esc(x.kw)}${alreadyAdded ? ' <span style="font-size:11px">(추가됨)</span>' : ''}</label>
+      <span class="kw-collect-badge ${cls}">${label}</span>
+    </div>`
+  }).join('')
+}
+
+function kwCollectSwitchTab(tabId) {
+  _collectTab = tabId
+  kwRenderCollectPanel()
+}
+
+function kwCollectSelectAll() {
+  document.querySelectorAll('#kw-collect-list input[type=checkbox]:not(:disabled)')
+    .forEach(cb => cb.checked = true)
+}
+
+function kwCollectClearAll() {
+  document.querySelectorAll('#kw-collect-list input[type=checkbox]:not(:disabled)')
+    .forEach(cb => cb.checked = false)
+}
+
+function kwAddSelected() {
+  const checked = [...document.querySelectorAll('#kw-collect-list input[type=checkbox]:checked:not(:disabled)')]
+    .map(cb => cb.dataset.kw).filter(Boolean)
+  if (!checked.length) { showToast('선택된 키워드가 없습니다', 'info'); return }
+  let added = 0
+  for (const kw of checked) {
+    if (runKeywords.length >= 5) { showToast('키워드는 최대 5개까지 추가 가능합니다', 'error'); break }
+    if (!runKeywords.includes(kw)) { runKeywords.push(kw); added++ }
+  }
+  kwRender()
+  kwSyncPostsCount()
+  kwRenderCollectPanel()
+  if (added > 0) showToast(`${added}개 키워드가 추가됐습니다`, 'success')
 }
 
 async function runNow() {

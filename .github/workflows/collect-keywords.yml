@@ -36,7 +36,6 @@ jobs:
       - name: 코드 체크아웃
         uses: actions/checkout@v4
         with:
-          ref: latest
           fetch-depth: 1
 
       - name: Python 3.11 설정
@@ -46,7 +45,7 @@ jobs:
           cache: 'pip'
 
       - name: 의존성 설치
-        run: pip install -q requests python-dotenv anthropic pytrends
+        run: pip install -q requests python-dotenv
 
       - name: .env 파일 생성
         run: |
@@ -65,18 +64,23 @@ jobs:
           NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
 
-      - name: 변경 커밋 & 푸시
+      - name: 변경 커밋 & 푸시 (latest 브랜치)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # 수집 결과 임시 저장
+          cp docs/data/trending_keywords.json /tmp/trending_keywords.json
+          # latest 브랜치로 전환
+          git fetch origin latest
+          git checkout -B _push-tmp origin/latest
+          cp /tmp/trending_keywords.json docs/data/trending_keywords.json
           git add docs/data/trending_keywords.json
           if git diff --cached --quiet; then
             echo "변경 없음 — 커밋 건너뜀"
           else
             git commit -m "chore: 트렌드 키워드 자동 수집 ($(date +'%Y-%m-%d %H:%M KST' -d '+9 hours'))"
-            # 최대 4회 재시도
             for i in 1 2 3 4; do
-              git push origin latest && break
+              git push origin HEAD:latest && break
               echo "Push 실패 $i/4 — ${i}0초 후 재시도"
               sleep $((i * 10))
               git pull --rebase origin latest || true

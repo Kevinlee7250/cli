@@ -22,6 +22,7 @@ on:
 
 permissions:
   contents: write
+  actions: write  # 수집 후 Pages 배포 워크플로우 dispatch용
 
 concurrency:
   group: collect-keywords
@@ -64,16 +65,19 @@ jobs:
           NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
 
-      - name: 변경 커밋 & 푸시 (latest 브랜치)
+      # Pages는 claude/blog-automation-system-KAbtE 브랜치의 docs/에서 배포되므로
+      # 수집 데이터도 해당 브랜치에 커밋해야 대시보드에 반영됨
+      - name: 변경 커밋 & 푸시 (대시보드 브랜치)
+        env:
+          DASH_BRANCH: claude/blog-automation-system-KAbtE
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # 수집 결과 임시 저장
+          # 수집 결과 임시 저장 후 로컬 수정 폐기 (브랜치 전환 거부 방지)
           cp docs/data/trending_keywords.json /tmp/trending_keywords.json
-          # 로컬 수정 폐기 후 latest 브랜치로 전환 (전환 거부 방지)
           git checkout -- docs/data/trending_keywords.json 2>/dev/null || true
-          git fetch origin latest
-          git checkout -B _push-tmp origin/latest
+          git fetch origin "$DASH_BRANCH"
+          git checkout -B _push-tmp "origin/$DASH_BRANCH"
           cp /tmp/trending_keywords.json docs/data/trending_keywords.json
           git add -f docs/data/trending_keywords.json
           if git diff --cached --quiet; then
@@ -81,9 +85,22 @@ jobs:
           else
             git commit -m "chore: 트렌드 키워드 자동 수집 ($(date +'%Y-%m-%d %H:%M KST' -d '+9 hours'))"
             for i in 1 2 3 4; do
-              git push origin HEAD:latest && break
+              git push origin "HEAD:$DASH_BRANCH" && break
               echo "Push 실패 $i/4 — ${i}0초 후 재시도"
               sleep $((i * 10))
-              git pull --rebase origin latest || true
+              git pull --rebase origin "$DASH_BRANCH" || true
             done
           fi
+
+      # GITHUB_TOKEN 푸시는 push 트리거를 발동시키지 않으므로 배포를 직접 dispatch
+      - name: Pages 배포 트리거
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -sf -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/deploy-dashboard.yml/dispatches" \
+            -d '{"ref": "claude/blog-automation-system-KAbtE"}' \
+            && echo "배포 워크플로우 dispatch 완료" \
+            || echo "배포 dispatch 실패 — 다음 push 트리거에서 반영됨"

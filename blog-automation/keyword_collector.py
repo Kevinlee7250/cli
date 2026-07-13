@@ -856,13 +856,12 @@ def _claude_ai_keywords(
 # 시즌 예약 키워드 로드 (trend_scheduler.py가 생성한 큐)
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _load_scheduled_keywords(today: datetime | None = None) -> list[str]:
+def _load_scheduled_keywords(today: datetime | None = None, blog_id: str = "") -> list[str]:
     """
     logs/scheduled_keywords.json 큐에서 오늘 포스팅을 시작할 시즌 예약 키워드를 로드합니다.
     - scheduledFor <= 오늘 이면서 consumed=False 인 항목만 반환
+    - blog_id가 주어지면 해당 블로그 전용(blog_id 일치) 또는 공용(blog_id 빈값) 항목만 반환
     - 우선순위(priority) → trendScore 순으로 정렬
-    - 소비 표시(consumed=True)는 keyword_collector가 실제 사용 후 main.py에서 처리하거나
-      get_trending_keywords()가 result에 포함되면 자동 마킹
     """
     if today is None:
         today = datetime.now()
@@ -876,16 +875,23 @@ def _load_scheduled_keywords(today: datetime | None = None) -> list[str]:
             data = json.load(f)
 
         queue = data.get("queue", [])
-        eligible = [
-            item for item in queue
-            if not item.get("consumed", False)
-            and item.get("scheduledFor", "9999-99-99") <= today_str
-        ]
+        eligible = []
+        for item in queue:
+            if item.get("consumed", False):
+                continue
+            if item.get("scheduledFor", "9999-99-99") > today_str:
+                continue
+            # blog_id 필터: 큐 항목의 blog_id가 빈값(공용)이거나 현재 블로그와 일치할 때만 포함
+            item_blog = item.get("blog_id", "")
+            if blog_id and item_blog and item_blog != blog_id:
+                continue
+            eligible.append(item)
+
         # 우선순위(낮을수록 높음) → trendScore 내림차순 정렬
         eligible.sort(key=lambda x: (x.get("priority", 9), -x.get("trendScore", 1.0)))
         result = [item["keyword"] for item in eligible]
         if result:
-            logger.info(f"시즌 예약 키워드 {len(result)}개 로드: {result[:3]}{'...' if len(result)>3 else ''}")
+            logger.info(f"시즌 예약 키워드 {len(result)}개 로드 (blog={blog_id or '공용'}): {result[:3]}{'...' if len(result)>3 else ''}")
         return result
     except Exception as exc:
         logger.debug(f"scheduled_keywords.json 로드 실패: {exc}")
@@ -1002,7 +1008,7 @@ def get_trending_keywords(
     )
 
     # -1순위: 시즌 예약 키워드 (trend_scheduler.py가 2주 전 생성한 큐)
-    season_kws = _load_scheduled_keywords()
+    season_kws = _load_scheduled_keywords(blog_id=blog_id)
     for kw in season_kws:
         keyword_sources[kw] = "season_scheduled"
     candidates = season_kws[:]  # 최상단에 배치

@@ -45,12 +45,28 @@ _DIR = os.path.dirname(__file__)
 _SCHEDULED_KW_FILE = os.path.join(_DIR, "logs", "scheduled_keywords.json")
 _USED_KW_FILE = os.path.join(_DIR, "logs", "used_keywords.json")
 
+# category → blog_id 매핑
+# travel/drama/kpop/entertainment → blog1 (HOGU What? — 여행·드라마·연예·K-POP)
+# sports → blog2 (HOGU 여행,스포츠,연예)
+# finance → blog3 (금융NEWS)
+# life/health/general → "" (모든 블로그 공용)
+_CATEGORY_BLOG_MAP: dict[str, str] = {
+    "travel":        "blog1",
+    "drama":         "blog1",
+    "kpop":          "blog1",
+    "entertainment": "blog1",
+    "sports":        "blog2",
+    "finance":       "blog3",
+    "life":          "",
+    "health":        "",
+}
+
 # ──────────────────────────────────────────────────────────────────────────────
 # 한국 연간 시즌 이벤트 캘린더
 # - month / day: 이벤트 기준일 (음력 이벤트는 평균 양력 날짜 사용)
 # - lead_days: 며칠 전부터 포스트 예약 시작
 # - base_keywords: Claude 확장의 씨앗 키워드
-# - category: 주제 분류 (finance / travel / life / health)
+# - category: 주제 분류 (finance / travel / life / health / drama / kpop)
 # ──────────────────────────────────────────────────────────────────────────────
 SEASONAL_EVENTS = [
     # ── 1월 ──────────────────────────────────────────────────────────────────
@@ -229,6 +245,80 @@ SEASONAL_EVENTS = [
         "lead_days": 10,
         "base_keywords": ["연말 모임 장소", "한 해 마무리 여행", "연말 결산 재테크", "새해맞이 명소"],
         "category": "life",
+    },
+    # ── 드라마·영화 시즌 (blog1) ────────────────────────────────────────────────
+    {
+        "month": 1, "day": 10, "name": "겨울드라마시즌",
+        "lead_days": 7,
+        "base_keywords": ["1월 신작 드라마 추천", "겨울 드라마 순위", "OTT 신작 드라마 리뷰"],
+        "category": "drama",
+    },
+    {
+        "month": 4, "day": 1, "name": "봄드라마시즌",
+        "lead_days": 7,
+        "base_keywords": ["4월 신작 드라마 추천", "봄 드라마 시청률 순위", "넷플릭스 4월 신작"],
+        "category": "drama",
+    },
+    {
+        "month": 7, "day": 1, "name": "여름드라마시즌",
+        "lead_days": 7,
+        "base_keywords": ["7월 신작 드라마 추천", "여름 드라마 순위", "OTT 여름 신작 리뷰"],
+        "category": "drama",
+    },
+    {
+        "month": 9, "day": 15, "name": "추석특선영화",
+        "lead_days": 7,
+        "base_keywords": ["추석 특선 영화 추천", "명절 TV 영화 편성표", "추석 연휴 볼만한 영화"],
+        "category": "drama",
+    },
+    {
+        "month": 10, "day": 1, "name": "가을드라마시즌",
+        "lead_days": 7,
+        "base_keywords": ["10월 신작 드라마 추천", "가을 드라마 시청률", "OTT 10월 신작"],
+        "category": "drama",
+    },
+    {
+        "month": 12, "day": 15, "name": "연말영화시즌",
+        "lead_days": 14,
+        "base_keywords": ["연말 개봉 영화 추천", "12월 극장 영화 순위", "겨울 방학 볼 만한 영화"],
+        "category": "drama",
+    },
+    # ── K-POP·연예 시즌 (blog1) ─────────────────────────────────────────────────
+    {
+        "month": 1, "day": 15, "name": "신년아이돌컴백",
+        "lead_days": 10,
+        "base_keywords": ["1월 아이돌 컴백 일정", "신년 K-POP 신보 추천", "1월 음반 발매 예정"],
+        "category": "kpop",
+    },
+    {
+        "month": 3, "day": 1, "name": "봄컴백시즌",
+        "lead_days": 14,
+        "base_keywords": ["봄 K-POP 컴백 일정", "3월 아이돌 신보", "봄 음악 차트 예상"],
+        "category": "kpop",
+    },
+    {
+        "month": 5, "day": 1, "name": "황금연휴콘서트",
+        "lead_days": 21,
+        "base_keywords": ["5월 콘서트 일정", "황금연휴 공연 추천", "K-POP 콘서트 티케팅 팁"],
+        "category": "kpop",
+    },
+    {
+        "month": 7, "day": 1, "name": "여름컴백시즌",
+        "lead_days": 14,
+        "base_keywords": ["여름 K-POP 컴백", "7월 아이돌 신보", "여름 음악 차트 분석"],
+        "category": "kpop",
+    },
+    {
+        "month": 9, "day": 1, "name": "가을컴백시즌",
+        "lead_days": 14,
+        "base_keywords": ["가을 K-POP 컴백 일정", "9월 아이돌 신보", "연말 앨범 사전 분석"],
+        "category": "kpop",
+    },
+    {
+        "month": 11, "day": 1, "name": "연말시상식시즌",
+        "lead_days": 21,
+        "base_keywords": ["MAMA 시상식 예상 수상자", "멜론뮤직어워드 2026", "연말 K-POP 시상식 일정"],
+        "category": "kpop",
     },
 ]
 
@@ -539,6 +629,7 @@ def run_scheduler(
                 "event_date": ev["event_date"],
                 "scheduledFor": ev["start_date"],
                 "category": ev["category"],
+                "blog_id": _CATEGORY_BLOG_MAP.get(ev["category"], ""),
                 "priority": 1 if ev["days_until_start"] <= 3 else 2,
                 "datalabRatio": 1.0,   # 아래에서 업데이트
                 "pytrendsRatio": 1.0,  # 아래에서 업데이트

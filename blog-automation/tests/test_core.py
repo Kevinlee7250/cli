@@ -385,3 +385,65 @@ def test_find_duplicate_no_match(tmp_path, monkeypatch):
     )
     dup = pm.find_duplicate_post("ETF 투자 방법 완전 정리", blog_id="blog1")
     assert dup is None
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 자료 조사 엔진 — 자료팩 생성·검증·프롬프트 주입
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_format_evidence_without_pack_bans_fabricated_numbers():
+    """자료팩이 없으면 임의 수치·날짜·정책 작성 금지 폴백 규칙이 들어간다."""
+    from evidence_builder import format_evidence_for_prompt
+    block = format_evidence_for_prompt(None)
+    assert "임의로 만들어 쓰지 마세요" in block
+    assert "자료팩 없음" in block
+
+
+def test_format_evidence_with_pack_injects_facts():
+    """검증된 사실이 자료팩 블록에 출처와 함께 포함된다."""
+    from evidence_builder import format_evidence_for_prompt
+    pack = {"keyword": "ISA", "facts": [
+        {"claim": "2026년 납입 한도 4천만원", "source_title": "기재부 보도자료",
+         "source_url": "https://moef.go.kr/a", "published_at": "2026-01-02", "verified": True},
+        {"claim": "미검증 사실", "source_title": "x", "source_url": "https://x.com/1",
+         "published_at": "", "verified": False},
+    ]}
+    block = format_evidence_for_prompt(pack)
+    assert "2026년 납입 한도 4천만원" in block
+    assert "https://moef.go.kr/a" in block
+    assert "미검증 사실" not in block  # verified 사실이 있으면 그것만 사용
+    assert "자료팩에 있는 것만 사용" in block
+
+
+def test_validate_pack_sets_verified(monkeypatch):
+    """URL 접근 가능 여부에 따라 verified가 설정된다 (네트워크 모킹)."""
+    import source_validator as sv
+    monkeypatch.setattr(sv, "_url_alive", lambda url, timeout=8: "good" in url)
+    pack = {"facts": [
+        {"claim": "a", "source_url": "https://good.example/1", "verified": False},
+        {"claim": "b", "source_url": "https://dead.example/1", "verified": False},
+    ]}
+    result = sv.validate_pack(pack)
+    assert result["facts"][0]["verified"] is True
+    assert result["facts"][1]["verified"] is False
+
+
+def test_merge_evidence_prioritizes_verified_sources():
+    """자료팩 검증 출처가 sources 앞쪽에 병합되고 evidence 통계가 기록된다."""
+    from content_generator import _merge_evidence
+    post = {"sources": [{"title": "모델 생성 출처", "url": "https://model.example"}]}
+    pack = {"facts": [
+        {"claim": "a", "source_title": "공식", "source_url": "https://gov.example", "verified": True},
+        {"claim": "b", "source_title": "미검증", "source_url": "https://un.example", "verified": False},
+    ]}
+    _merge_evidence(post, pack)
+    assert post["sources"][0]["url"] == "https://gov.example"
+    assert any(s["url"] == "https://model.example" for s in post["sources"])
+    assert post["evidence"] == {"used": True, "facts": 2, "verified": 1}
+
+
+def test_merge_evidence_without_pack():
+    from content_generator import _merge_evidence
+    post = {"sources": []}
+    _merge_evidence(post, None)
+    assert post["evidence"]["used"] is False

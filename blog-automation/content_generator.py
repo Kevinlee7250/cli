@@ -2006,7 +2006,10 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
         episode = 1
     total = series_context.get("total_episodes", "?")
     logger.info(f"시리즈 포스트 생성: '{keyword}' ({episode}/{total}편)")
-    prompt = _build_series_prompt(keyword, traffic, series_context, blog_config)
+    # 글 작성 전 자료 조사 — 검증된 자료팩만 사실 근거로 사용
+    from evidence_builder import format_evidence_for_prompt
+    evidence_pack = _run_research(keyword)
+    prompt = _build_series_prompt(keyword, traffic, series_context, blog_config) + format_evidence_for_prompt(evidence_pack)
     is_blog1 = blog_config and blog_config.get("id") == "blog1"
     ai_provider = _resolve_ai_provider(blog_config)
 
@@ -2083,8 +2086,11 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             else:
                 post_data["sources"] = _validate_sources(post_data["sources"])
 
+            # 자료팩 출처를 sources에 병합 (검증된 출처 우선)
+            _merge_evidence(post_data, evidence_pack)
+
             # 게시 전 팩트체크 — 이미지 삽입 전에 실행 (이미지 HTML 훼손 방지)
-            _fact_check_content(post_data, keyword)
+            _fact_check_content(post_data, keyword, evidence_pack)
 
             section_queries = _extract_section_queries(post_data["content"], keyword)
             plain_text = _content_preview(post_data.get("content", ""), chars=600)
@@ -2133,7 +2139,27 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
     return None
 
 
-def _fact_check_content(post_data: dict, keyword: str) -> None:
+def _merge_evidence(post_data: dict, evidence_pack: dict | None) -> None:
+    """자료팩의 검증된 출처를 post_data sources 앞쪽에 병합하고 통계를 기록합니다."""
+    if not evidence_pack:
+        post_data["evidence"] = {"used": False, "facts": 0, "verified": 0}
+        return
+    facts = evidence_pack.get("facts") or []
+    verified = [f for f in facts if f.get("verified")]
+    ev_sources = []
+    seen = set()
+    for f in (verified or facts):
+        url = f.get("source_url", "")
+        if url and url not in seen:
+            seen.add(url)
+            ev_sources.append({"title": f.get("source_title") or url, "url": url})
+    existing = [s for s in (post_data.get("sources") or [])
+                if isinstance(s, dict) and s.get("url") not in seen]
+    post_data["sources"] = (ev_sources + existing)[:6]
+    post_data["evidence"] = {"used": True, "facts": len(facts), "verified": len(verified)}
+
+
+def _fact_check_content(post_data: dict, keyword: str, evidence_pack: dict | None = None) -> None:
     """
     게시 전 팩트체크 — 본문의 수치·날짜·통계·기관명 주장 중 의심스러운 것을
     Claude로 검증하고, 본문에서 원문이 그대로 발견되는 경우 수정을 적용합니다.
@@ -2168,6 +2194,16 @@ def _fact_check_content(post_data: dict, keyword: str) -> None:
                 "'치료를 받아봤다', '실제 수익 공개') — 조사형 표현으로 교체하세요. "
             )
 
+        # 자료팩이 있으면 팩트체커가 그 기준으로 수치·날짜를 대조
+        pack_rule = ""
+        pack_facts = (evidence_pack or {}).get("facts") or []
+        if pack_facts:
+            facts_brief = " / ".join(f.get("claim", "")[:80] for f in pack_facts[:8])
+            pack_rule = (
+                "⑥검증된 자료팩과 모순되거나 자료팩에 없는 구체적 수치·정책 내용. "
+                f"자료팩: {facts_brief} "
+            )
+
         fc_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
         raw = claude_generate(
             fc_client,
@@ -2179,7 +2215,7 @@ def _fact_check_content(post_data: dict, keyword: str) -> None:
                 "본문에서 사실 오류 가능성이 높은 주장만 찾으세요: "
                 "①검증 불가능한 구체적 수치·통계(예: '국민 67%가'), ②잘못된 날짜/연도, "
                 "③존재하지 않는 제도·기관·상품명, ④과장된 단정(예: '무조건', '100%'), "
-                + exp_rule +
+                + exp_rule + pack_rule +
                 "의견·판단형 1인칭('개인적으로는', '제 생각에는')은 문제 삼지 마세요. JSON만 응답하세요."
             ),
             messages=[{
@@ -2277,10 +2313,40 @@ def _retry_escalation_note(attempt: int, prev_wc: int) -> str:
     )
 
 
+def _run_research(keyword: str) -> dict | None:
+    """글 작성 전 자료 조사 파이프라인 실행 → 검증된 자료팩 반환.
+
+    RESEARCH_ENGINE=false로 비활성화 가능. 실패해도 글 생성은 계속되며,
+    자료팩이 없으면 프롬프트에 '검증 불가 수치 작성 금지' 폴백 규칙이 들어갑니다.
+    """
+    if os.getenv("RESEARCH_ENGINE", "true").strip().lower() not in ("true", "1", "yes"):
+        return None
+    try:
+        from research_collector import collect_research
+        from evidence_builder import build_evidence_pack, save_evidence_pack
+        from source_validator import validate_pack
+        research = collect_research(keyword)
+        if not research.get("materials"):
+            return None
+        pack = build_evidence_pack(research)
+        if not pack.get("facts"):
+            return None
+        pack = validate_pack(pack)
+        save_evidence_pack(pack)
+        return pack
+    except Exception as exc:
+        logger.warning(f"자료 조사 실패 (글 생성은 계속): {exc}")
+        return None
+
+
 def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None = None) -> dict | None:
     """Claude API로 포스트 생성 후 이미지를 자동 삽입합니다. 실패 시 최대 2회 재시도."""
     logger.info(f"포스트 생성 중: '{keyword}'")
-    prompt = _build_prompt(keyword, traffic, blog_config)
+
+    # 글 작성 전 자료 조사 — 검증된 자료팩만 사실 근거로 사용
+    from evidence_builder import format_evidence_for_prompt
+    evidence_pack = _run_research(keyword)
+    prompt = _build_prompt(keyword, traffic, blog_config) + format_evidence_for_prompt(evidence_pack)
 
     is_blog1 = blog_config and blog_config.get("id") == "blog1"
     ai_provider = _resolve_ai_provider(blog_config)
@@ -2365,8 +2431,11 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                 if not post_data["sources"]:
                     logger.warning("sources 필드: 유효한 출처 없음 — 전부 제거됨")
 
+            # 자료팩 출처를 sources에 병합 (검증된 출처 우선)
+            _merge_evidence(post_data, evidence_pack)
+
             # 게시 전 팩트체크 — 이미지 삽입 전에 실행 (이미지 HTML 훼손 방지)
-            _fact_check_content(post_data, keyword)
+            _fact_check_content(post_data, keyword, evidence_pack)
 
             # 섹션별 이미지 검색 & 삽입 (관련성 검증 포함) — 1장만
             section_queries = _extract_section_queries(post_data.get("content", ""), keyword)

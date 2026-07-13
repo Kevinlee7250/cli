@@ -16,6 +16,7 @@ blog-automation/schema_generator.py
 """
 
 import json
+import os
 import re
 from datetime import datetime, timezone
 
@@ -45,7 +46,9 @@ def _detect_types(post_data: dict) -> set[str]:
 
     types: set[str] = {"BlogPosting", "BreadcrumbList"}
 
-    if faq:
+    # FAQPage 구조화 데이터 자동 생성 비활성화 — Article·Breadcrumb 중심
+    # (대량 생성형 콘텐츠 패턴 방지; FAQ_SCHEMA=true로 재활성화 가능)
+    if faq and os.getenv("FAQ_SCHEMA", "false").strip().lower() in ("true", "1", "yes"):
         types.add("FAQPage")
     if any(k in text for k in _HOWTO_KEYWORDS):
         types.add("HowTo")

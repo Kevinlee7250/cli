@@ -516,3 +516,59 @@ def test_format_evidence_requires_ab_grade_for_critical_facts():
     assert "세율 15% 인하" not in block          # 중요 + D등급 → 제외
     assert "비대면으로 가능" in block            # 비중요 + D등급 → 포함
     assert "[등급 A]" in block
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 글 유형별 구조 재설계 — 유형 감지·구조 변주·FAQ 스키마
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_detect_new_article_types():
+    """투자형·뉴스해설 유형이 감지된다."""
+    from content_generator import _detect_article_type
+    assert _detect_article_type("삼성전자 주가 전망") == "investment"
+    assert _detect_article_type("2026 최저임금 인상 발표") == "news_analysis"
+    assert _detect_article_type("ISA 계좌 개설 방법") == "how_to"
+
+
+def test_structure_guide_has_all_types():
+    """모든 유형에 권장 구조가 정의되어 있다."""
+    from content_generator import _STRUCTURE_GUIDE, _detect_article_type
+    for t in ["how_to", "review", "comparison", "explainer", "analysis",
+              "investment", "news_analysis", "drama_review", "travel_guide", "sports_review"]:
+        assert t in _STRUCTURE_GUIDE, f"{t} 구조 없음"
+    assert "준비 → 단계" in _STRUCTURE_GUIDE["how_to"] or "준비:" in _STRUCTURE_GUIDE["how_to"]
+    assert "시나리오" in _STRUCTURE_GUIDE["investment"]
+    assert "향후 관찰점" in _STRUCTURE_GUIDE["news_analysis"]
+
+
+def test_structure_variation_deterministic_but_diverse():
+    """같은 키워드는 같은 변주, 다른 키워드들은 서로 다른 변주가 나온다."""
+    from content_generator import _structure_variation
+    a1 = _structure_variation("ISA 계좌 개설")
+    a2 = _structure_variation("ISA 계좌 개설")
+    assert a1 == a2  # 재시도 시 일관성
+    assert "구조 변주" in a1
+    # 여러 키워드에서 H2 개수·도입부 스타일이 다양하게 분포하는지
+    variations = {_structure_variation(f"키워드{i}") for i in range(12)}
+    assert len(variations) >= 4
+
+
+def test_faq_schema_disabled_by_default(monkeypatch):
+    """FAQPage 구조화 데이터는 기본 비활성 — Article·Breadcrumb 중심."""
+    monkeypatch.delenv("FAQ_SCHEMA", raising=False)
+    import importlib
+    import schema_generator as sg
+    importlib.reload(sg)
+    types = sg._detect_types({
+        "title": "테스트", "keyword": "테스트",
+        "faq": [{"q": "질문", "a": "답변"}],
+    })
+    assert "FAQPage" not in types
+    assert "BlogPosting" in types and "BreadcrumbList" in types
+    # 환경변수로 재활성화 가능
+    monkeypatch.setenv("FAQ_SCHEMA", "true")
+    types2 = sg._detect_types({
+        "title": "테스트", "keyword": "테스트",
+        "faq": [{"q": "질문", "a": "답변"}],
+    })
+    assert "FAQPage" in types2

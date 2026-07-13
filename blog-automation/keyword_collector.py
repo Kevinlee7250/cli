@@ -988,7 +988,7 @@ def get_trending_keywords(
     keyword_sources: dict[str, str] = {}  # 키워드별 수집 출처 추적
 
     # 블로그 유형 식별 (고CPC 주입 및 폴백 선택에 공통 사용)
-    _BLOG1_TOPICS = {"여행", "드라마", "영화", "연예", "k-pop", "kpop"}
+    _BLOG1_TOPICS = {"여행", "국내여행", "해외여행", "드라마", "영화", "연예", "k-pop", "kpop"}
     _BLOG2_IT_TOPICS = {"it", "ai", "기술", "스마트폰", "앱", "테크", "tech"}
     _BLOG3_FIN_TOPICS = {"금융", "경제", "정부지원", "세금", "복지", "시책", "뉴스", "news"}
     is_blog1 = blog_id in ("blog1", "default") and bool(

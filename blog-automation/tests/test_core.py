@@ -572,3 +572,41 @@ def test_faq_schema_disabled_by_default(monkeypatch):
         "faq": [{"q": "질문", "a": "답변"}],
     })
     assert "FAQPage" in types2
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# post_lifecycle — 게시 후 성과 추적 상태 판정
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_lifecycle_due_checks():
+    """경과일 기준 도래한 자동 작업 목록 (7/14/30/60/90)."""
+    from post_lifecycle import due_checks
+    assert due_checks(3) == []
+    assert due_checks(7) == ["색인 여부 확인"]
+    assert due_checks(35) == ["색인 여부 확인", "첫 노출·검색어 확인", "제목·도입부·CTR 평가"]
+    assert len(due_checks(100)) == 5
+    assert due_checks(None) == []
+
+
+def test_lifecycle_status_transitions():
+    """상태 판정: 신규→색인 대기→성장 중→최적화/업데이트/통합/우수."""
+    from post_lifecycle import evaluate_status
+    zero = {"clicks": 0, "impressions": 0, "ctr": 0.0}
+    assert evaluate_status(3, zero, None) == "신규"
+    assert evaluate_status(10, zero, None) == "색인 대기"
+    assert evaluate_status(95, zero, None) == "통합 후보"          # 90일+ 노출 없음
+    assert evaluate_status(20, {"clicks": 2, "impressions": 50, "ctr": 4.0}, None) == "성장 중"
+    assert evaluate_status(40, {"clicks": 1, "impressions": 200, "ctr": 0.5}, None) == "최적화 필요"
+    # 60일+ 클릭 하락 → 업데이트 필요
+    assert evaluate_status(65, {"clicks": 3, "impressions": 100, "ctr": 3.0},
+                           {"clicks": 10}) == "업데이트 필요"
+    # 성과 우수는 경과일 무관 최우선
+    assert evaluate_status(65, {"clicks": 50, "impressions": 1000, "ctr": 5.0},
+                           {"clicks": 60}) == "성과 우수"
+    assert evaluate_status(95, {"clicks": 5, "impressions": 3, "ctr": 2.0}, None) == "통합 후보"
+
+
+def test_lifecycle_model_cost_estimate():
+    from post_lifecycle import estimate_model_cost
+    cost = estimate_model_cost(3000)
+    assert 0 < cost < 1  # 3천 자 글 → 1달러 미만 근사치

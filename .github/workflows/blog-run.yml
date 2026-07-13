@@ -185,7 +185,8 @@ jobs:
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
             blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
-            blog-automation/logs/post_registry.json; do
+            blog-automation/logs/post_registry.json \
+            blog-automation/logs/scheduled_keywords.json; do
             [ -f "$f" ] && git add -f "$f"
           done
           true

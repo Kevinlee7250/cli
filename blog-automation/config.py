@@ -194,6 +194,24 @@ def gpt_generate(client, *, model: str, system: str, messages: list, max_tokens:
 
 
 _BLOGS_REGISTRY_FILE = os.path.join(os.path.dirname(__file__), "blogs.json")
+_AUTHOR_PROFILE_FILE = os.path.join(os.path.dirname(__file__), "author_profile.json")
+
+
+def get_author_profile() -> dict:
+    """author_profile.json 로드 — 실제 저자 정보와 경험 목록.
+
+    파일이 없거나 파싱에 실패하면 {} 반환 (모든 글이 조사·분석형으로 작성됨).
+    """
+    if not os.path.exists(_AUTHOR_PROFILE_FILE):
+        return {}
+    try:
+        with open(_AUTHOR_PROFILE_FILE, encoding="utf-8") as f:
+            profile = json.load(f)
+        return profile if isinstance(profile, dict) else {}
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).warning(f"author_profile.json 로드 실패: {e}")
+        return {}
 
 
 def _default_blog() -> dict:

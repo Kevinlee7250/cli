@@ -236,6 +236,63 @@ def test_min_relevance_returns_fallback():
 
 
 # ──────────────────────────────────────────────────────────────────────────────
+# content_generator — 가짜 체험담 방지 (경험 기반 1인칭 게이팅)
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _write_author_profile(tmp_path, monkeypatch, experiences):
+    """임시 author_profile.json을 만들어 config에 주입합니다."""
+    import config
+    profile_file = tmp_path / "author_profile.json"
+    profile_file.write_text(
+        json.dumps({"name": "마린파파", "experiences": experiences}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(config, "_AUTHOR_PROFILE_FILE", str(profile_file))
+
+
+def test_match_experience_ignores_examples(tmp_path, monkeypatch):
+    """'예: ' 접두 항목은 템플릿 예시이므로 매칭되지 않는다."""
+    from content_generator import _match_experience
+    _write_author_profile(tmp_path, monkeypatch, [
+        {"topics": ["예: ISA 계좌"], "blogs": ["blog1"], "summary": "예시"},
+    ])
+    assert _match_experience("ISA 계좌 개설 방법", "blog1") is None
+
+
+def test_match_experience_topic_and_blog_filter(tmp_path, monkeypatch):
+    """실제 topics는 부분 일치로 매칭되고, blogs 필터가 적용된다."""
+    from content_generator import _match_experience
+    _write_author_profile(tmp_path, monkeypatch, [
+        {"topics": ["ISA 계좌"], "blogs": ["blog1"], "summary": "2023년부터 운용 중"},
+    ])
+    hit = _match_experience("ISA 계좌 수익률 정리", "blog1")
+    assert hit is not None and hit["summary"] == "2023년부터 운용 중"
+    assert _match_experience("ISA 계좌 수익률 정리", "blog2") is None
+    assert _match_experience("제주 여행 코스", "blog1") is None
+
+
+def test_style_block_without_experience_bans_fake_claims(tmp_path, monkeypatch):
+    """경험 자료가 없으면 조사형 지시 + 경험 주장 금지 문구가 포함된다."""
+    from content_generator import _experience_style_block
+    _write_author_profile(tmp_path, monkeypatch, [])
+    block = _experience_style_block("전세 보증금 반환", "blog1")
+    assert "조사·분석형" in block
+    assert "직접 사용해봤습니다" in block  # 금지 예시 명시
+    assert "실제 수익을 공개합니다" in block
+
+
+def test_style_block_with_experience_injects_material(tmp_path, monkeypatch):
+    """경험 자료가 있으면 자료가 주입되고 범위 제한 경고가 포함된다."""
+    from content_generator import _experience_style_block
+    _write_author_profile(tmp_path, monkeypatch, [
+        {"topics": ["ISA 계좌"], "blogs": [], "summary": "2023년부터 ISA 운용", "detail": "연 수익률 기록 있음"},
+    ])
+    block = _experience_style_block("ISA 계좌 후기", "blog1")
+    assert "2023년부터 ISA 운용" in block
+    assert "지어내지 마세요" in block
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 # dashboard_exporter — blogId 폴백
 # ──────────────────────────────────────────────────────────────────────────────
 

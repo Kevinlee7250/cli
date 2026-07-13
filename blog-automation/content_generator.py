@@ -177,28 +177,28 @@ def _detect_article_type(keyword: str) -> str:
 # 유형별 구조 가이드
 _STRUCTURE_GUIDE = {
     "how_to": """
-- 도입부: 나도 처음엔 이걸 몰라서 고생했다는 실제 경험 언급
-- 본문: "직접 해보니 이랬어요" 식의 경험 기반 단계별 설명
-- 섹션 제목: 실제로 하다 보면 마주치는 상황 중심 (예: "처음 시작할 때 가장 헷갈렸던 것")
-- 중간에 "근데 사실 이게 제일 중요해요" 같은 사적인 코멘트 포함
-- 마지막: 내가 해보고 느낀 솔직한 총평""",
+- 도입부: 처음 하는 사람이 흔히 겪는 어려움이나 헷갈리는 지점 언급
+- 본문: 단계별 설명 — 각 단계에서 확인해야 할 것과 흔한 실수 사례 포함
+- 섹션 제목: 실제로 하다 보면 마주치는 상황 중심 (예: "처음 시작할 때 가장 헷갈리는 것")
+- 중간에 "근데 사실 이게 제일 중요해요" 같은 코멘트로 완급 조절
+- 마지막: 조사한 내용을 바탕으로 한 명확한 총평""",
 
     "review": """
-- 도입부: 왜 직접 써봤는지 계기 설명 (광고 아님, 진짜 써본 것)
-- 본문: 장점 → 단점 → 의외로 좋았던 점 → 이런 사람에게 맞다/안 맞다
-- "기대했던 것 vs 실제로 써보니" 대비 구조 포함
-- 솔직한 불만이나 아쉬운 점도 명확히 표현
-- 마지막: 재구매/재사용 의향 + 어떤 독자에게 추천""",
+- 도입부: 왜 이 제품/서비스가 관심을 받는지 계기 설명 (광고 아님)
+- 본문: 장점 → 단점 → 의외의 포인트 → 이런 사람에게 맞다/안 맞다
+- "공식 스펙·홍보 내용 vs 이용자들이 말하는 실제 사용감" 대비 구조 포함
+- 이용자 후기에서 공통적으로 나오는 불만이나 아쉬운 점도 명확히 전달
+- 마지막: 후기·평가를 종합한 추천 기준 + 어떤 독자에게 맞는지""",
 
     "comparison": """
-- 도입부: 나도 어떤 걸 선택해야 할지 고민해봤던 상황 공유
-- 본문: 직접 비교해본 기준 설명 → 항목별 비교 → 상황별 추천
-- "처음엔 A가 나을 것 같았는데 실제론 B가 더 좋더라" 식의 반전 포함
+- 도입부: 독자가 어떤 걸 선택해야 할지 고민하는 상황 공유
+- 본문: 비교 기준 설명 → 항목별 비교 → 상황별 추천
+- "언뜻 보면 A가 나아 보이지만 자료를 보면 B가 유리한 경우" 식의 반전 포함
 - 표(table)나 항목 비교 위주의 구조 (독자가 빠르게 파악할 수 있게)
-- 결론: "나라면 이런 상황엔 A, 저런 상황엔 B를 선택할 것" 같은 개인 의견""",
+- 결론: "저라면 이런 상황엔 A, 저런 상황엔 B를 선택하겠습니다" 같은 의견 (경험 주장 아님)""",
 
     "explainer": """
-- 도입부: 이 개념을 처음 접했을 때 내가 어떻게 이해했는지
+- 도입부: 이 개념을 처음 접하는 사람이 헷갈리기 쉬운 지점 짚기
 - 본문: 쉬운 비유 → 핵심 개념 → 실생활 적용 사례
 - "어렵게 생각할 필요 없고요" 같은 독자와의 거리감 좁히는 표현 사용
 - 전문 용어가 나오면 반드시 바로 아래에 쉬운 말로 풀어 설명
@@ -212,34 +212,34 @@ _STRUCTURE_GUIDE = {
 - 마지막: "결국 핵심은 이거예요" 식의 짧고 명확한 결론""",
 
     "drama_review": """
-- 도입부: 이 드라마를 보게 된 계기와 첫 화 보고 나서의 솔직한 첫인상 (광고 아닌 진짜 시청자 감상)
+- 도입부: 이 작품이 왜 화제인지 + 시청자 반응의 전반적 분위기 소개
 - 본문 구성 (편의 focus에 따라 선택):
   • 소개 편: 줄거리 요약(스포 최소화) + 장르·분위기 소개 + 어떤 사람에게 맞는지
-  • 인물 편: 주인공 감정선·성장 + 조연 캐릭터 분석 + 배우 연기력 솔직 평가 + 케미
-  • 명장면 편: 인상 깊었던 장면·대사 + "이 장면에서 진짜 소름 돋았어요" 같은 구체적 감상
-  • 결말 편: 결말 총평(스포 주의 경고 포함) + OST 추천 + 비슷한 드라마 추천 + 별점
-- 감상 표현은 독자와 함께 이야기하는 구어체: "저는 이 부분에서 울었어요", "이건 좀 아쉬웠거든요"
-- 과도한 칭찬이나 홍보성 표현 금지 — 아쉬운 점도 솔직하게
+  • 인물 편: 주인공 감정선·성장 + 조연 캐릭터 분석 + 배우 연기에 대한 시청자 평가 + 케미
+  • 명장면 편: 화제가 된 장면·대사 + "시청자들 사이에서 가장 회자되는 장면" 같은 반응 기반 소개
+  • 결말 편: 결말 총평(스포 주의 경고 포함) + OST 추천 + 비슷한 드라마 추천 + 평점 반응
+- 감상 표현은 시청자 반응·평점 데이터를 근거로: "이 장면에서 울었다는 반응이 많았어요", "호불호가 갈린 부분은"
+- 과도한 칭찬이나 홍보성 표현 금지 — 아쉽다는 평가도 솔직하게 전달
 - 마지막: "이런 취향이면 강추 / 이런 취향이면 비추" 식의 명확한 추천 기준""",
 
     "travel_guide": """
-- 도입부: 이 여행지를 선택하게 된 계기 + 출발 전 기대했던 것과 현실 비교 예고
+- 도입부: 이 여행지가 왜 주목받는지 + 기대와 현실이 다를 수 있는 지점 예고
 - 본문 구성:
-  • 실제 여행 경비 공개 (교통·숙소·식비·관광비 항목별 현실 숫자)
-  • 현지에서 직접 해보고 "이건 몰랐던 것" 또는 "이건 생각보다 좋았던 것"
-  • 숨은 명소·맛집 — 포털에 안 나오는 로컬 스팟 위주
-  • 가면 안 되는 시간대·시즌 또는 주의사항 (경험 기반)
-- "유명 블로그에서 추천한 곳인데 실제로 가보니..." 같은 반전 경험 포함
+  • 예상 여행 경비 정리 (공개된 가격 자료 기준 — 교통·숙소·식비·관광비 항목별)
+  • 여행자 후기에서 공통적으로 언급되는 "몰랐던 것" / "생각보다 좋았던 것"
+  • 숨은 명소·맛집 — 포털 상위 노출이 아닌 로컬 후기 기반 스팟 위주
+  • 피해야 할 시간대·시즌 또는 주의사항 (후기·공식 정보 기반)
+- "유명 블로그에서 추천한 곳인데 실제 방문 후기는 갈린다" 같은 반전 정보 포함
 - 마지막: 이 여행지가 어떤 사람에게 맞는지 명확한 추천 기준""",
 
     "sports_review": """
-- 도입부: 이 경기/선수/팀을 응원·관심 갖게 된 계기 (팬 시점 or 분석가 시점)
+- 도입부: 이 경기/선수/팀이 왜 주목받는지 (팬 시점 or 분석가 시점)
 - 본문 구성:
   • 최근 성적·경기 결과 요약 (수치 기반 — 득점·순위·승률 등)
-  • 핵심 포인트 분석: "이 부분이 승패를 갈랐다고 생각해요"
+  • 핵심 포인트 분석: "이 부분이 승패를 갈랐다고 생각해요" (의견임을 명확히)
   • 선수·전술·팀 운영 관련 솔직한 평가 (과도한 찬양 금지)
   • 앞으로의 전망 — 명확한 개인 의견 포함 ("제 예상엔...")
-- 직관 경험이 있으면 분위기·관람 팁 추가
+- 관람 팁은 공개된 후기·안내 정보 기반으로 정리
 - 마지막: 이 팀/선수/종목에 처음 관심 갖는 독자에게 입문 팁""",
 }
 
@@ -258,6 +258,80 @@ def _build_blog_topic_hint(blog_config: dict | None) -> str:
     elif topic_str:
         return f"\n【블로그 주제】 이 블로그는 '{topic_str}' 전문 블로그입니다. 키워드가 여러 방향으로 해석될 수 있다면 이 주제에 맞게 작성하세요."
     return ""
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 가짜 체험담 방지 — 실제 경험 자료(author_profile.json)가 있을 때만 1인칭 경험 허용
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _match_experience(keyword: str, blog_id: str = "") -> dict | None:
+    """author_profile.json의 experiences에서 키워드·블로그가 일치하는 실제 경험 반환.
+
+    '예: '로 시작하는 topics 항목은 템플릿 예시이므로 무시합니다.
+    """
+    try:
+        from config import get_author_profile
+        profile = get_author_profile()
+    except Exception:
+        return None
+    kw_words = set(re.findall(r"[가-힣]{2,}|[A-Za-z]{2,}", keyword.lower()))
+    if not kw_words:
+        return None
+    for exp in profile.get("experiences", []) or []:
+        if not isinstance(exp, dict):
+            continue
+        blogs = exp.get("blogs") or []
+        if blog_id and blogs and blog_id not in blogs:
+            continue
+        for topic in exp.get("topics", []) or []:
+            topic = str(topic).strip()
+            if not topic or topic.startswith("예:"):
+                continue
+            topic_words = set(re.findall(r"[가-힣]{2,}|[A-Za-z]{2,}", topic.lower()))
+            if topic_words and (topic_words & kw_words):
+                return exp
+    return None
+
+
+def _author_name() -> str:
+    """author_profile.json의 저자 필명 (없으면 빈 문자열)."""
+    try:
+        from config import get_author_profile
+        return str(get_author_profile().get("name", "")).strip()
+    except Exception:
+        return ""
+
+
+def _experience_style_block(keyword: str, blog_id: str = "") -> str:
+    """경험 자료 유무에 따라 1인칭 경험 허용/조사형 문체 지시 블록을 생성합니다."""
+    name = _author_name()
+    name_line = f"\n글쓴이 필명: {name} (글에서 자신을 지칭할 일이 있으면 이 필명 사용)" if name else ""
+    exp = _match_experience(keyword, blog_id)
+    if exp:
+        summary = str(exp.get("summary", "")).strip()
+        detail = str(exp.get("detail", "")).strip()
+        material = summary + (f"\n{detail}" if detail else "")
+        return f"""
+━━━ 실제 경험 자료 (1인칭 경험 표현 허용) ━━━{name_line}
+아래는 글쓴이의 실제 경험 자료입니다. 이 범위 안에서만 1인칭 경험 표현("직접 해보니", "제가 써본 결과" 등)을 사용하세요.
+{material}
+⚠️ 위 자료에 없는 경험(기간·수치·결과 등)은 절대 지어내지 마세요. 자료 범위를 벗어나는 내용은 조사·분석형으로 서술하세요."""
+    return f"""
+━━━ 문체 필수 규칙: 조사·분석형 (가짜 체험담 금지) ━━━{name_line}
+이 주제에 대한 글쓴이의 실제 경험 자료가 없습니다. 아래 규칙을 반드시 지키세요.
+
+✗ 경험 주장 1인칭 전면 금지:
+  "직접 사용해봤습니다" / "직접 다녀왔습니다" / "몇 달 동안 투자해봤습니다" /
+  "치료를 받아봤습니다" / "실제 수익을 공개합니다" / "제가 써보니" /
+  "직접 해보니" / "제 경험상" 등 실제로 하지 않은 경험을 한 것처럼 쓰는 표현 전부
+
+✓ 대신 조사·분석형 문체 사용:
+  "자료를 조사해보니" / "이용자들의 후기를 종합하면" / "공식 발표 기준으로는" /
+  "~라고 합니다" / "전문가들은 ~라고 설명합니다" / "실제 사례들을 보면"
+
+✓ 의견·계획성 1인칭은 허용:
+  "개인적으로는 ~가 나아 보입니다" / "저라면 ~부터 확인하겠습니다" / "제 생각에는"
+  (경험을 했다는 주장이 아닌 의견·판단임이 분명한 표현만)"""
 
 
 def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
@@ -297,8 +371,8 @@ def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = N
   🌏 해외 여행 — 항공권·호텔·패키지 정보 및 현지 체험
   🎬 드라마·영화 — 국내외 인기 작품 리뷰 및 등장인물 분석
   🎵 연예·K-POP — 아이돌·배우 소식, 음반·공연 정보
-- 글쓴이: 40~50대 직장인, 직접 여행하고 드라마 보고 연예 소식 챙기면서 경험한 것을 솔직하게 올리는 블로거
-- 글의 톤: 친근하지만 신뢰감 있게, 과장 없이, 직접 경험한 사람처럼 구체적으로
+- 글쓴이: 여행·드라마·연예 정보를 깊이 조사하고 후기를 종합해 정리하는 블로거
+- 글의 톤: 친근하지만 신뢰감 있게, 과장 없이, 구체적인 자료·후기 기반으로
 
 【현재 날짜】 {date_str}
 【키워드】 {keyword}
@@ -307,14 +381,14 @@ def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = N
 ━━━ 카테고리별 글쓰기 핵심 가이드 ━━━
 
 ✈️ 국내 여행 글이라면:
-- 직접 다녀온 것처럼 구체적 장소명·음식명·숙소명 언급
+- 구체적 장소명·음식명·숙소명 언급 (공개 정보·방문자 후기 기반)
 - 가격, 영업시간, 주차, 줄서는 시간 등 실용 정보 포함
-- "여기는 별로였다", "이건 기대 이하였다" 같은 솔직한 평가 필수
+- "후기를 보면 여기는 평가가 갈린다", "기대 이하라는 반응도 있다" 같은 솔직한 평가 전달 필수
 
 🌏 해외 여행 글이라면:
-- 항공권 실제 구매가·예약 타이밍 언급
-- 호텔 위치별 장단점, 실제 체크인 후기
-- 현지에서만 알 수 있는 정보 (교통·물가·환전 팁 등)
+- 항공권 시세·예약 타이밍 언급 (공개 가격 자료 기준)
+- 호텔 위치별 장단점, 투숙객 후기 종합
+- 여행자들이 공통적으로 강조하는 정보 (교통·물가·환전 팁 등)
 
 🎬 드라마·영화 글이라면:
 - 스포일러 수위 명시 (스포 없는 리뷰 / 결말 포함 리뷰)
@@ -323,7 +397,7 @@ def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = N
 
 🎵 연예·K-POP 글이라면:
 - 음반명·발매일·수록곡 등 정확한 정보
-- 콘서트·팬미팅 현장 분위기나 티켓팅 경험
+- 콘서트·팬미팅 현장 분위기나 티켓팅 팁 (참석자 후기 종합)
 - 팬덤 반응과 음원 성적 데이터 포함
 
 ━━━ 글의 핵심 원칙 ━━━
@@ -362,7 +436,7 @@ def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = N
 • 과장형 제목 금지: "충격", "무조건", "100%", "완벽 보장", "누구나 월 얼마" 금지
 • {y}년 포함 | 40자 이내
 • 독자가 얻을 수 있는 이익이 분명하게 보이도록
-• 예: "직접 해봤는데요", "솔직 후기", "저는 이렇게 했어요"
+• 예: "조사해보니 이렇습니다", "후기 총정리", "핵심만 정리했습니다"
 
 ━━━ 본문 구조 (반드시 이 순서와 형식으로 작성) ━━━
 
@@ -391,7 +465,7 @@ H2: 실제로 확인해야 할 체크리스트 (500자 이상)
 - 독자가 바로 점검할 수 있는 항목 5~7개 제공
 - 각 항목마다 왜 중요한지 설명
 
-H2: 직접 해보거나 비교해본 관점 (500자 이상)
+H2: 자료·후기를 비교해본 관점 (500자 이상)
 - 개인 경험처럼 구체적으로 작성
 - 비용, 시간, 장단점, 시행착오, 주의점 포함
 - 경험 정보 부족 시 "실제 적용 시 확인할 부분"으로 정리
@@ -477,7 +551,7 @@ def _build_blog2_prompt(keyword: str, traffic: str, blog_config: dict | None = N
   🌐 앱·서비스·플랫폼 — 최신 서비스 직접 사용 후기
   🔒 보안·개인정보 — 최신 보안 이슈와 대처법
   ⚡ IT 트렌드 — 최신 기술 뉴스 쉽게 정리
-- 글쓴이: 새 기기 나오면 직접 사서 써보고, AI 툴도 직접 테스트해보는 IT 덕후
+- 글쓴이: 새 기기와 AI 툴 소식을 깊이 조사하고 리뷰·벤치마크를 종합해 정리하는 IT 덕후
 - 글의 톤: 친근하고 솔직하게, 장단점 모두 쓰고, 광고성 문구 일절 없이
 
 【현재 날짜】 {date_str}
@@ -485,10 +559,10 @@ def _build_blog2_prompt(keyword: str, traffic: str, blog_config: dict | None = N
 
 ━━━ 글의 핵심 원칙 ━━━
 
-1. 반드시 직접 써본 것처럼 구체적으로 — 버전명·날짜·가격·실제 경험 포함
+1. 공개된 스펙·가격·이용자 후기를 구체적으로 — 버전명·날짜·가격 포함
 2. "좋다"가 아니라 "뭐가 좋다" — 수치와 구체적 상황으로 설명
 3. 단점도 솔직하게 — "이 부분은 아쉬웠다", "이건 불편했다" 반드시 포함
-4. AI 정보 나열 금지 — 직접 테스트한 결과, 실제 변화, 체감 차이 중심
+4. AI 정보 나열 금지 — 벤치마크·리뷰 데이터, 이용자들이 말하는 체감 차이 중심
 5. 광고·협찬 느낌 나는 표현 절대 금지 ("최고의", "강력 추천", "무조건 사세요" 금지)
 6. 최신 정보 기준 명시 — "{y}년 {now.month}월 기준", "현재 버전 기준" 등 날짜 명기
 
@@ -531,17 +605,17 @@ def _build_blog2_prompt(keyword: str, traffic: str, blog_config: dict | None = N
 
 도입부 (300자 이상):
 직접 이 제품/서비스/기술을 쓰게 된 계기나 상황으로 시작.
-"요즘 유행하는~"이 아니라 "저는 이런 상황에서 직접 써봤는데요"로 시작.
+"요즘 유행하는~"이 아니라 "이런 상황이라면 이 제품이 궁금해지실 텐데요"처럼 구체적 상황으로 시작.
 
 핵심 요약 박스 (도입부 바로 아래):
 <div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>핵심 요약:</strong> [이 글의 결론을 한두 문장으로]</div>
 
 H2 섹션 (5~7개, 각 500자 이상):
 - 스펙·기능 소개 (객관적 정보)
-- 직접 써본 장점 (구체적 상황)
+- 이용자 후기 기반 장점 (구체적 상황)
 - 솔직한 단점 (반드시 포함)
 - 가격·구매 정보 ({y}년 기준)
-- 비교 대상이 있다면 직접 비교
+- 비교 대상이 있다면 항목별 비교
 - 어떤 사람에게 추천/비추천
 
 마무리 (300자 이상):
@@ -549,7 +623,7 @@ H2 섹션 (5~7개, 각 500자 이상):
 "이런 분은 사세요 / 이런 분은 좀 더 기다리세요" 형식.
 
 ━━━ Google AdSense 정책 준수 ━━━
-① 원본성 — 직접 테스트·사용한 경험 기반. 타 리뷰 요약 금지
+① 원본성 — 스펙·벤치마크·이용자 후기를 직접 분석·비교한 내용 기반. 타 리뷰 단순 복사 금지
 ② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치
 ③ E-E-A-T — 구체적 수치·날짜·버전 포함, 출처 최소 2개
 ④ 유해 금지 — 불법 소프트웨어·해킹·저작권 침해 관련 내용 금지
@@ -602,7 +676,7 @@ def _build_blog3_prompt(keyword: str, traffic: str, blog_config: dict | None = N
   🏛️ 정부 지원 시책 — 보조금·장려금·대출 지원·복지 제도 정리
   💰 세금·절세 — 연말정산·종합소득세·증여·양도세 실전 정리
   📊 경제 정책 — 최저임금·부동산 정책·금융 규제 변화 분석
-- 글쓴이: 금융 뉴스를 매일 챙기고, 정부 지원 제도를 직접 신청해본 경험이 있는 40대 직장인
+- 글쓴이: 금융 뉴스를 매일 챙기고 정부 지원 제도를 깊이 조사해 정리하는 블로거
 - 글의 톤: 쉽고 명확하게, 복잡한 내용은 표로 정리, 독자가 바로 신청·활용할 수 있게
 
 【현재 날짜】 {date_str}
@@ -718,17 +792,21 @@ JSON만 응답 (마크다운 없이):
 
 
 def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
+    blog_id = (blog_config or {}).get("id", "")
+    # 실제 경험 자료 유무에 따른 문체 규칙 (모든 블로그 공통 — 가짜 체험담 방지)
+    style_block = _experience_style_block(keyword, blog_id)
+
     # blog1 (HOGU What?) 전용 프롬프트
-    if blog_config and blog_config.get("id") == "blog1":
-        return _build_blog1_prompt(keyword, traffic, blog_config)
+    if blog_id == "blog1":
+        return _build_blog1_prompt(keyword, traffic, blog_config) + style_block
 
     # blog2 (HOGU IT) 전용 프롬프트
-    if blog_config and blog_config.get("id") == "blog2":
-        return _build_blog2_prompt(keyword, traffic, blog_config)
+    if blog_id == "blog2":
+        return _build_blog2_prompt(keyword, traffic, blog_config) + style_block
 
     # blog3 (금융NEWS) 전용 프롬프트
-    if blog_config and blog_config.get("id") == "blog3":
-        return _build_blog3_prompt(keyword, traffic, blog_config)
+    if blog_id == "blog3":
+        return _build_blog3_prompt(keyword, traffic, blog_config) + style_block
 
     from datetime import datetime
     now = datetime.now()
@@ -739,8 +817,8 @@ def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -
     blog_topic_hint = _build_blog_topic_hint(blog_config)
 
     if BLOG_LANGUAGE == "ko":
-        return f"""당신은 30대 중반 직장인입니다. 본업이 따로 있고, 퇴근 후나 주말에 직접 경험하고 공부한 것들을 블로그에 씁니다.
-글쓰기 전문가가 아니라 완벽하지 않아도 됩니다. 중요한 건 진짜처럼 들리는 것입니다.
+        return f"""당신은 관심 있는 주제를 깊이 조사하고 공부해서 블로그에 정리하는 블로거입니다.
+글쓰기 전문가가 아니라 완벽하지 않아도 됩니다. 중요한 건 신뢰할 수 있고 자연스럽게 읽히는 것입니다.
 구글 AdSense 정책을 완전히 준수합니다.
 
 【현재 날짜】 {date_str}
@@ -749,8 +827,9 @@ def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -
 
 ━━━ 1. 인간적인 목소리 (가장 중요) ━━━
 
-• "저는", "제가", "제 경험상", "솔직히" 등 1인칭을 자연스럽게 사용
-• 도입부: 이 주제를 쓰게 된 계기나 직접 겪은 상황으로 시작 (정보 나열 X)
+• "저는", "제가", "솔직히", "개인적으로는" 등 의견·판단형 1인칭을 자연스럽게 사용
+  (단, 하지 않은 경험을 한 것처럼 쓰는 표현은 아래 문체 필수 규칙을 따를 것)
+• 도입부: 이 주제를 다루게 된 계기나 독자가 겪는 상황으로 시작 (정보 나열 X)
 • 본문 어딘가에 확신이 없는 순간도 표현: "이게 맞는 건지 저도 100% 확신하진 못하지만요",
   "근데 저만 이렇게 느끼는 건지 모르겠어요" 같은 표현 1~2회
 • 독자에게 말 걸기: "혹시 이런 경험 있으세요?", "저만 그랬던 건 아니겠죠?" 1~2회
@@ -827,15 +906,15 @@ def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -
 ② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치, 낚시성 제목 금지
 ③ 구조 — H2 5개 이상, 각 섹션 300자 이상, 단락 적절한 길이
 ④ 유해 금지 — 성인/폭력/혐오/불법 절대 금지. 투자·의료는 면책 표현 필수
-⑤ E-E-A-T — 1인칭 경험 구체적 수치·날짜 포함, 출처 최소 3개, 균형 잡힌 시각
-   예: "제가 {y}년에 직접 써보니", "저는 당시 ○만원을 잃었는데", "3개월 해본 결과"
+⑤ E-E-A-T — 구체적 수치·날짜·출처 포함 (최소 3개), 균형 잡힌 시각
+   예: "{y}년 공식 발표 기준으로", "이용자 후기를 종합하면", "3개월 이용 후기들을 보면"
 ⑥ 이미지 — alt 텍스트 포함
 ⑦ 분량 4500자 이상 필수 — 이 이하는 'thin content'로 AdSense 거부됨
 
 ━━━ 제목 ━━━
 • 자연스러운 블로그 말투 (기사 제목 X)
 • {y}년 포함 | 40자 이내
-• 예: "직접 해봤는데요", "솔직 후기", "저는 이렇게 했어요"
+• 예: "조사해보니 이렇습니다", "후기 총정리", "핵심만 정리했습니다"
 
 ━━━ 본문 구조 (분량 엄수 — 가장 중요) ━━━
 분량: 4500~6000자 완전한 HTML (Google AdSense 정책상 4000자 미만은 thin content)
@@ -891,13 +970,13 @@ JSON만 응답 (마크다운 없이):
     {{"title": "출처명1", "url": "https://실제URL"}},
     {{"title": "출처명2", "url": "https://실제URL"}}
   ]
-}}"""
+}}""" + style_block
 
     # English prompt (E-E-A-T focused)
     date_str_en = now.strftime("%B %d, %Y")
     article_type_en = article_type
-    return f"""You are a personal blogger in your 30s who writes about finance, health, and everyday life.
-You share what you've personally experienced, researched, and honestly thought about — not just information gathered from web searches.
+    return f"""You are a blogger who writes about finance, health, and everyday life.
+You share what you've thoroughly researched and honestly thought about — never fabricate personal experiences.
 You strictly follow Google AdSense content policies and prioritize genuine value to readers.
 
 【Date】 {date_str_en}
@@ -907,14 +986,15 @@ You strictly follow Google AdSense content policies and prioritize genuine value
 ━━━ CORE WRITING PRINCIPLES ━━━
 
 1. Human Voice (most important)
-• Use first person naturally: "I've tried", "In my experience", "Personally I think"
-• Opening must include a personal anecdote or why you got interested in this topic
+• Use opinion-style first person naturally: "Personally I think", "If I had to choose"
+• Never claim experiences you did not have ("I've tried", "I visited") — write research-based instead
+• Opening must explain why this topic matters to readers right now
 • At least 1 genuine aside in the body: "Honestly though", "Here's what surprised me", "I didn't expect this"
 
 2. Break Template Structure
 • NEVER use formulaic structures like "5 Methods", "3 Mistakes to Avoid" for every post
 • H2 headings should reflect real questions or situations readers face
-  ✗ "✅ TOP 5 Investment Methods" → ✓ "What I Actually Did With $300/Month in ETFs"
+  ✗ "✅ TOP 5 Investment Methods" → ✓ "What $300/Month in ETFs Actually Looks Like"
 • Structure follows the topic naturally, not a fixed template
 
 3. Natural Blog Writing
@@ -928,7 +1008,7 @@ You strictly follow Google AdSense content policies and prioritize genuine value
 • Auto-summary phrases banned — "In summary", "To conclude", "As we can see", "This shows that"
   → AI signature closers. Move naturally into the next point or embed the conclusion in the paragraph.
 • Excessive neutrality banned — don't end every sentence with "can be", "may be", "is considered"
-  ✗ "This approach can be effective." → ✓ "Honestly, I'd pick this over the alternatives."
+  ✗ "This approach can be effective." → ✓ "Honestly, I'd pick this over the alternatives." (opinion, not a fabricated experience)
 • Same-length sentence repetition banned — mix short (5-8 words), medium (12-18), and long (25+) sentences
   Vary sentence endings too: questions, em dashes, fragments for emphasis.
 • Overly smooth structure banned — not every H2 should follow "definition → benefits → warnings → summary"
@@ -939,15 +1019,15 @@ You strictly follow Google AdSense content policies and prioritize genuine value
 • Formal/report tone banned — "This paper examines", "It is evident that", "The aforementioned"
   → Blog voice: "Here's what I found", "Turns out", "Here's the thing"
 • Cliché phrases banned — no more than 1 use of "important", "essential", "critical", "must"
-  → Replace with specific experience: "Skip this and you'll regret it — learned that the hard way"
+  → Replace with specific, concrete detail: "Skip this and most users end up redoing the whole setup"
 
 5. Niche Angle
 • Find a specific angle other articles aren't covering well
-• Example angles: "from a beginner's perspective after failing twice", "what changed in {y}", "the part no one talks about"
+• Example angles: "from a complete beginner's perspective", "what changed in {y}", "the part no one talks about"
 
 ━━━ TITLE ━━━
 Natural blog style | Include {y} | Under 65 chars
-Trigger curiosity or recognition ("I tested this", "Honest review", "What I wish I knew")
+Trigger curiosity or recognition ("Everything you need to know", "Honest breakdown", "What most guides miss")
 
 ━━━ CONTENT STRUCTURE ━━━
 Length: 2500-3200 chars (excluding whitespace), complete HTML
@@ -999,7 +1079,7 @@ JSON only (no markdown):
     {{"title": "Source 1", "url": "https://real-url"}},
     {{"title": "Source 2", "url": "https://real-url"}}
   ]
-}}"""
+}}""" + style_block
 
 
 def _apply_style_to_tag(html: str, tag: str, style: str) -> str:
@@ -1509,12 +1589,14 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict, blog_
     """시리즈 포스트용 프롬프트 — 블로그 주제별 분기"""
     from datetime import datetime
     blog_id = (blog_config or {}).get("id", "")
+    # 실제 경험 자료 유무에 따른 문체 규칙 (가짜 체험담 방지)
+    style_block = _experience_style_block(keyword, blog_id)
     if blog_id == "blog2":
-        return _build_series_prompt_it(keyword, traffic, series_context, blog_config)
+        return _build_series_prompt_it(keyword, traffic, series_context, blog_config) + style_block
     if blog_id == "blog3":
-        return _build_series_prompt_finance(keyword, traffic, series_context, blog_config)
-    # blog1 또는 미지정 — 기존 개인 경험 스타일
-    return _build_series_prompt_general(keyword, traffic, series_context, blog_config)
+        return _build_series_prompt_finance(keyword, traffic, series_context, blog_config) + style_block
+    # blog1 또는 미지정
+    return _build_series_prompt_general(keyword, traffic, series_context, blog_config) + style_block
 
 
 def _series_common_vars(keyword: str, series_context: dict):
@@ -1565,7 +1647,7 @@ def _build_series_prompt_general(keyword: str, traffic: str, series_context: dic
             logger.info(f"[시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '{keyword}'")
 
     if BLOG_LANGUAGE == "ko":
-        return f"""당신은 30대 중반 직장인입니다. 본업이 따로 있고, "{series_title}" 시리즈를 직접 공부하고 경험하면서 편씩 정리해 올리는 중입니다.
+        return f"""당신은 "{series_title}" 시리즈를 깊이 공부하고 조사하면서 한 편씩 정리해 올리는 블로거입니다.
 글쓰기 전문가가 아니라 완벽하지 않아도 됩니다. 구글 AdSense 정책을 완전히 준수합니다.
 
 【현재 날짜】 {date_str}
@@ -1638,8 +1720,8 @@ def _build_series_prompt_general(keyword: str, traffic: str, series_context: dic
 ④ 광고 배치 — 광고 4개 이하, 콘텐츠 충분, 흐름 방해 금지
 ⑤ 유해·금지 — 성인/폭력/혐오/불법 절대 금지 (위반 시 즉시 거부)
    투자·의료 주장은 반드시 면책 표현 포함
-⑥ E-E-A-T — 1인칭 경험 구체적 수치·날짜 포함, 출처 최소 3개, 균형 잡힌 시각
-   예: "제가 {y}년에 직접 써보니", "저는 당시 ○만원 손실", "○개월 해본 결과"
+⑥ E-E-A-T — 구체적 수치·날짜·출처 포함 (최소 3개), 균형 잡힌 시각
+   예: "{y}년 공식 발표 기준으로", "이용자 후기를 종합하면", "○개월 이용 후기들을 보면"
 ⑦ 이미지 — alt 텍스트 모든 이미지에 포함
 ⑧ AI 의심도 — 위 4번 AI 상투어 규칙 철저 준수
 ⑨ 분량 4500자 이상 필수 — 이 이하는 'thin content'로 AdSense 거부됨
@@ -1749,7 +1831,7 @@ JSON only:
 # ── blog2 IT 시리즈 프롬프트 ──────────────────────────────────────────────────
 
 def _build_series_prompt_it(keyword: str, traffic: str, series_context: dict, blog_config: dict | None = None) -> str:
-    """blog2 IT 시리즈 전용 프롬프트 — 직접 테스트한 IT 사용자 관점"""
+    """blog2 IT 시리즈 전용 프롬프트 — 리뷰·벤치마크 종합 분석 관점"""
     from datetime import datetime
     now = datetime.now()
     y, date_str = now.year, now.strftime("%Y년 %m월 %d일")
@@ -1764,8 +1846,8 @@ def _build_series_prompt_it(keyword: str, traffic: str, series_context: dict, bl
         [f"  • {ep['episode']}편: {ep.get('title', '')}"
          for ep in all_eps if ep.get("episode") != episode]
     )
-    return f"""당신은 IT 기기와 앱을 직접 테스트해보는 30대 직장인입니다.
-"{series_title}" 시리즈를 직접 써보고 경험한 내용을 편씩 정리해 올리는 중입니다.
+    return f"""당신은 IT 기기와 앱 정보를 깊이 조사하고 리뷰를 종합해 정리하는 블로거입니다.
+"{series_title}" 시리즈를 조사한 내용 기준으로 한 편씩 정리해 올리는 중입니다.
 광고·홍보 느낌은 절대 없어야 합니다. 불편한 점도 솔직하게 작성하세요.
 
 【현재 날짜】 {date_str}
@@ -1784,10 +1866,10 @@ def _build_series_prompt_it(keyword: str, traffic: str, series_context: dict, bl
 
 ━━━ IT 블로그 글쓰기 원칙 ━━━
 
-• 직접 테스트한 수치·결과 제시 (배터리 몇 분, 속도 몇 Mbps, 처리 시간 등)
+• 공개된 벤치마크·리뷰 수치 제시 (배터리 몇 분, 속도 몇 Mbps, 처리 시간 등 — 출처 기반)
 • 장점 3개 언급 시 반드시 단점·아쉬운 점 1개 이상 포함
 • 타 제품/서비스와 구체적 비교 환영 (단, 공정하게)
-• "광고 아님" 느낌 주는 표현: "직접 써봤더니", "제가 느낀 건", "솔직히 말하면"
+• "광고 아님" 느낌 주는 표현: "후기들을 보면", "개인적으로는", "솔직히 말하면"
 • 공식 사이트 또는 제조사 발표 수치 인용 시 출처 명시
 
 ━━━ 절대 쓰지 말아야 할 표현 ━━━
@@ -1813,8 +1895,8 @@ def _build_series_prompt_it(keyword: str, traffic: str, series_context: dict, bl
   "title": "제목 (40자 이내, IT 검색 최적화, {y}년 포함 권장)",
   "content": "<완성된 HTML 본문>",
   "labels": ["{series_label}","IT","AI","스마트폰","앱","기술","테크","리뷰","사용기","비교"],
-  "meta_description": "검색 결과 요약 (155자 이내, 직접 테스트 강조)",
-  "faq": [{{"q":"IT 사용자 질문","a":"직접 경험 기반 답변"}}],
+  "meta_description": "검색 결과 요약 (155자 이내, 구체적 정보 강조)",
+  "faq": [{{"q":"IT 사용자 질문","a":"조사 자료 기반 답변"}}],
   "sources": [{{"title":"제조사 또는 공식 발표 출처","url":"https://..."}}]
 }}"""
 
@@ -1837,8 +1919,8 @@ def _build_series_prompt_finance(keyword: str, traffic: str, series_context: dic
         [f"  • {ep['episode']}편: {ep.get('title', '')}"
          for ep in all_eps if ep.get("episode") != episode]
     )
-    return f"""당신은 금융과 정부지원 정책을 직접 공부하고 신청해본 30대 직장인입니다.
-"{series_title}" 시리즈를 직접 경험한 내용을 편씩 정리해 올리는 중입니다.
+    return f"""당신은 금융과 정부지원 정책을 깊이 공부하고 조사해 정리하는 블로거입니다.
+"{series_title}" 시리즈를 조사한 내용 기준으로 한 편씩 정리해 올리는 중입니다.
 투자 전문가가 아니라 완벽하지 않아도 됩니다. 구글 AdSense 정책을 완전히 준수합니다.
 
 【현재 날짜】 {date_str}
@@ -1860,7 +1942,7 @@ def _build_series_prompt_finance(keyword: str, traffic: str, series_context: dic
 • 공신력 있는 출처 필수 인용 (기획재정부·금융위원회·국세청·금융감독원·복지로·고용24)
 • 금액·날짜·자격 조건 등 수치는 반드시 출처와 함께 제시
 • 독자가 바로 활용할 수 있는 단계별 가이드 포함
-• "저도 처음엔 몰랐는데", "직접 신청해보니" 등 개인 경험 언급으로 공감대 형성
+• "처음엔 헷갈리기 쉬운데", "신청자 후기를 보면" 등 독자 상황 공감 표현 사용
 
 ━━━ 절대 쓰지 말아야 할 표현 ━━━
 ✗ "투자를 권유합니다" / "수익이 보장됩니다" / "반드시 오릅니다"
@@ -1918,7 +2000,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             if is_blog1:
                 _sys = (
                     f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
-                    "당신은 40~50대 직장인 블로거입니다. 직접 경험하고 공부한 것들을 솔직하게 정리해 올립니다. "
+                    "당신은 관심 주제를 깊이 조사하고 공부해서 솔직하게 정리해 올리는 블로거입니다. 하지 않은 경험을 한 것처럼 쓰지 않습니다. "
                     "구글 애드센스 정책을 완전히 준수하며, AI가 쓴 것처럼 보이지 않는 자연스러운 한국어 문체로 작성합니다. "
                     "독자에게 실질적인 도움이 되는 정보를 제공하는 것이 최우선입니다. "
                     "JSON만 응답하세요."
@@ -1926,14 +2008,14 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             elif blog_lang == "ko":
                 _sys = (
                     f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
-                    "당신은 직접 경험을 바탕으로 솔직하게 글을 쓰는 30대 직장인 블로거입니다. "
+                    "당신은 신뢰할 수 있는 정보를 조사·정리해 솔직하게 글을 쓰는 블로거입니다. 하지 않은 경험을 한 것처럼 쓰지 않습니다. "
                     "AI가 쓴 것처럼 보이지 않게, 사람 냄새 나는 자연스러운 한국어 블로그 글을 씁니다. "
                     "JSON만 응답하세요."
                 )
             else:
                 _sys = (
                     f"Current date: {_now.strftime('%B %d, %Y')}. "
-                    "You are a personal blogger who writes from direct experience. "
+                    "You are a blogger who writes well-researched, trustworthy posts. Never fabricate personal experiences. "
                     "Write naturally, like a real person — not an AI report. JSON only."
                 )
             escalation = _retry_escalation_note(attempt, prev_wc)
@@ -2049,6 +2131,21 @@ def _fact_check_content(post_data: dict, keyword: str) -> None:
 
         from datetime import datetime as _dt
         today = _dt.now().strftime("%Y년 %m월 %d일")
+
+        # 실제 경험 자료가 있으면 그 범위 내 경험담은 허용, 없으면 체험 주장도 검사 대상
+        exp = _match_experience(keyword)
+        post_data["experience_used"] = bool(exp)
+        if exp:
+            exp_rule = (
+                "⑤글쓴이의 실제 경험 자료 범위를 벗어난 1인칭 체험 주장. "
+                f"실제 경험 자료: {str(exp.get('summary', ''))[:200]} — 이 범위 안의 경험담은 허용하세요. "
+            )
+        else:
+            exp_rule = (
+                "⑤근거 자료 없는 1인칭 체험 주장(예: '직접 써봤다', '다녀왔다', '투자해봤다', "
+                "'치료를 받아봤다', '실제 수익 공개') — 조사형 표현으로 교체하세요. "
+            )
+
         fc_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
         raw = claude_generate(
             fc_client,
@@ -2059,8 +2156,9 @@ def _fact_check_content(post_data: dict, keyword: str) -> None:
                 f"현재 날짜: {today}. 당신은 블로그 글의 팩트체커입니다. "
                 "본문에서 사실 오류 가능성이 높은 주장만 찾으세요: "
                 "①검증 불가능한 구체적 수치·통계(예: '국민 67%가'), ②잘못된 날짜/연도, "
-                "③존재하지 않는 제도·기관·상품명, ④과장된 단정(예: '무조건', '100%'). "
-                "개인 경험담·주관적 의견은 문제 삼지 마세요. JSON만 응답하세요."
+                "③존재하지 않는 제도·기관·상품명, ④과장된 단정(예: '무조건', '100%'), "
+                + exp_rule +
+                "의견·판단형 1인칭('개인적으로는', '제 생각에는')은 문제 삼지 마세요. JSON만 응답하세요."
             ),
             messages=[{
                 "role": "user",
@@ -2173,7 +2271,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             if is_blog1:
                 _sys = (
                     f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
-                    "당신은 40~50대 직장인 블로거입니다. 직접 경험하고 공부한 것들을 솔직하게 정리해 올립니다. "
+                    "당신은 관심 주제를 깊이 조사하고 공부해서 솔직하게 정리해 올리는 블로거입니다. 하지 않은 경험을 한 것처럼 쓰지 않습니다. "
                     "구글 애드센스 정책을 완전히 준수하며, AI가 쓴 것처럼 보이지 않는 자연스러운 한국어 문체로 작성합니다. "
                     "독자에게 실질적인 도움이 되는 정보를 제공하는 것이 최우선입니다. "
                     "JSON만 응답하세요."
@@ -2181,7 +2279,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             elif blog_lang == "ko":
                 _sys = (
                     f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
-                    "당신은 직접 경험을 바탕으로 솔직하게 글을 쓰는 30대 직장인 블로거입니다. "
+                    "당신은 신뢰할 수 있는 정보를 조사·정리해 솔직하게 글을 쓰는 블로거입니다. 하지 않은 경험을 한 것처럼 쓰지 않습니다. "
                     "AI가 쓴 것처럼 보이지 않게, 사람 냄새 나는 자연스러운 한국어 블로그 글을 씁니다. "
                     "지식 학습 시점 이후의 사건은 '최근 동향에 따르면' 등으로 처리하세요. "
                     "JSON만 응답하세요."
@@ -2189,7 +2287,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             else:
                 _sys = (
                     f"Current date: {_now.strftime('%B %d, %Y')}. "
-                    "You are a personal blogger who writes from direct experience. "
+                    "You are a blogger who writes well-researched, trustworthy posts. Never fabricate personal experiences. "
                     "Write naturally, like a real person — not an AI report. "
                     "For events after your knowledge cutoff, use 'according to recent trends'. "
                     "JSON only."

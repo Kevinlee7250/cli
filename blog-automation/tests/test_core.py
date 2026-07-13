@@ -610,3 +610,67 @@ def test_lifecycle_model_cost_estimate():
     from post_lifecycle import estimate_model_cost
     cost = estimate_model_cost(3000)
     assert 0 < cost < 1  # 3천 자 글 → 1달러 미만 근사치
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# title_ab_tracker — 제목 A/B 개선·복구
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _setup_ab(tmp_path, monkeypatch):
+    import title_ab_tracker as ab
+    monkeypatch.setattr(ab, "CHANGES_FILE", tmp_path / "title_changes.json")
+    monkeypatch.setattr(ab, "FIX_HISTORY_FILE", tmp_path / "fix_history.json")
+    monkeypatch.setattr(ab, "DASHBOARD_FILE", tmp_path / "dash_title_changes.json")
+    return ab
+
+
+def test_ab_record_and_guard(tmp_path, monkeypatch):
+    """변경 전 제목·날짜·원인이 저장되고, 28일간 동시 변경 가드가 걸린다."""
+    ab = _setup_ab(tmp_path, monkeypatch)
+    ab.record_title_change("https://x.blogspot.com/p/1", "옛 제목", "새 제목",
+                           "저CTR 검색어 'isa' (CTR 1.0%)",
+                           {"ctr": 1.0, "position": 12.0, "impressions": 100, "clicks": 1})
+    recs = ab.load_changes()
+    assert recs[0]["old_title"] == "옛 제목" and recs[0]["changed_at"]
+    assert recs[0]["reason"].startswith("저CTR")
+    assert ab.title_changed_recently("https://x.blogspot.com/p/1") is True
+    assert ab.title_changed_recently("https://x.blogspot.com/p/other") is False
+
+
+def test_ab_body_edit_guard(tmp_path, monkeypatch):
+    """최근 본문 수정 이력이 있으면 body_edited_recently=True."""
+    import json as _json
+    from datetime import datetime, timezone
+    ab = _setup_ab(tmp_path, monkeypatch)
+    (tmp_path / "fix_history.json").write_text(_json.dumps({
+        "fixed": [{"url": "https://x.blogspot.com/p/2",
+                   "at": datetime.now(timezone.utc).isoformat()}]
+    }), encoding="utf-8")
+    assert ab.body_edited_recently("https://x.blogspot.com/p/2") is True
+    assert ab.body_edited_recently("https://x.blogspot.com/p/9") is False
+
+
+def test_ab_evaluate_suggests_rollback(tmp_path, monkeypatch):
+    """28일 후 CTR·순위 모두 하락하면 복원 제안, 상승하면 improved."""
+    import json as _json
+    from datetime import datetime, timezone, timedelta
+    ab = _setup_ab(tmp_path, monkeypatch)
+    old_ts = (datetime.now(timezone.utc) - timedelta(days=30)).isoformat()
+    (tmp_path / "title_changes.json").write_text(_json.dumps([
+        {"blogUrl": "https://x.com/a", "old_title": "o", "new_title": "n",
+         "changed_at": old_ts, "reason": "r", "restored": False,
+         "baseline": {"ctr": 3.0, "position": 8.0}, "after": None},
+        {"blogUrl": "https://x.com/b", "old_title": "o2", "new_title": "n2",
+         "changed_at": old_ts, "reason": "r", "restored": False,
+         "baseline": {"ctr": 1.0, "position": 20.0}, "after": None},
+    ]), encoding="utf-8")
+    n = ab.evaluate_changes({
+        "https://x.com/a": {"ctr": 1.5, "position": 15.0, "impressions": 50, "clicks": 1},
+        "https://x.com/b": {"ctr": 4.0, "position": 6.0, "impressions": 300, "clicks": 12},
+    })
+    assert n == 2
+    recs = ab.load_changes()
+    assert recs[0]["verdict"] == "declined" and recs[0]["rollback_suggested"] is True
+    assert recs[1]["verdict"] == "improved" and recs[1]["rollback_suggested"] is False
+    # 완료 기준: 변경 전후 성과가 기록되어 표시 가능
+    assert recs[0]["after"]["ctr"] == 1.5 and recs[0]["baseline"]["ctr"] == 3.0

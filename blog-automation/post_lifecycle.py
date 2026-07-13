@@ -253,6 +253,15 @@ def run() -> dict:
     else:
         logger.warning("GSC 토큰 없음 — 노출·클릭 데이터 없이 경과일 기준으로만 판정")
 
+    # 제목 A/B: 변경 후 28일 지난 건 전후 비교 → 하락 시 복원 제안
+    try:
+        from title_ab_tracker import evaluate_changes
+        n = evaluate_changes(page_metrics)
+        if n:
+            logger.info(f"제목 A/B 평가 완료: {n}건")
+    except Exception as exc:
+        logger.warning(f"제목 A/B 평가 실패: {exc}")
+
     results = []
     status_count: dict[str, int] = {}
     for p in published:

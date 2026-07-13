@@ -132,6 +132,18 @@ def main() -> None:
 
         logger.info(f"\n[{processed + 1}/{len(batch)}] '{title}' ({old_wc}자) — {blog_id_key}")
 
+        # 제목 A/B 테스트 진행 중이면 본문 수정 금지 (제목·본문 동시 변경 방지)
+        try:
+            from title_ab_tracker import title_changed_recently
+            if title_changed_recently(blog_url):
+                logger.info("  제목 A/B 테스트 진행 중 (28일 미경과) — 본문 수정 건너뜀")
+                history["skipped"].append({"post_id": post_id, "reason": "title_ab_in_progress", "at": datetime.now().isoformat()})
+                skipped += 1
+                processed += 1
+                continue
+        except Exception:
+            pass
+
         blog_config = blog_configs.get(blog_id_key)
         if not blog_config and blog_id_key == "default":
             # 구형 포스트는 blogId="default"로 기록됨 — blog1로 폴백

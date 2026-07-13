@@ -1985,7 +1985,7 @@ async function loadAll(silent = false) {
   }
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle] = await Promise.all([
+  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges] = await Promise.all([
     fetch(base + '/posts.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/runs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/analytics.json' + ts).then(r => r.json()).catch(() => ({})),
@@ -2001,8 +2001,9 @@ async function loadAll(silent = false) {
     fetch(base + '/code_repairs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/trending_keywords.json' + ts).then(r => r.json()).catch(() => null),
     fetch(base + '/lifecycle.json' + ts).then(r => r.json()).catch(() => null),
+    fetch(base + '/title_changes.json' + ts).then(r => r.json()).catch(() => null),
   ])
-  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle }
+  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges }
 
   // 아카이브 포스트 백그라운드 병합 (posts.json은 최근 300개만 유지 — 초기 로딩 속도 확보)
   fetch(base + '/posts_archive.json' + ts).then(r => r.ok ? r.json() : []).then(archive => {
@@ -2562,6 +2563,32 @@ function _lifecycleBadge(p) {
   return `<span class="badge" style="${style}" title="${esc(tip)}">${esc(e.status)}${days}</span>`
 }
 
+// ── 제목 A/B 변경 전후 성과 (title_changes.json) ───────────────────────────────
+function _titleABBadge(p) {
+  const tc = DATA.titleChanges
+  if (!tc || !tc.changes) return ''
+  const url = (p.blogUrl || '').replace(/\/$/, '')
+  if (!url) return ''
+  const recs = tc.changes.filter(c => (c.blogUrl || '').replace(/\/$/, '') === url)
+  if (!recs.length) return ''
+  const c = recs[recs.length - 1]
+  const date = (c.changed_at || '').slice(0, 10)
+  if (c.restored) {
+    return `<span class="badge" style="background:rgba(148,163,184,.15);color:#94a3b8" title="제목 복원됨 (${date} 변경분)">↩ 제목 복원됨</span>`
+  }
+  if (!c.after) {
+    return `<span class="badge" style="background:rgba(124,106,247,.14);color:var(--accent)" title="변경 전: ${esc(c.old_title || '')}\n원인: ${esc(c.reason || '')}\n28일 후 전후 비교 예정">🧪 제목 A/B 중 (${date})</span>`
+  }
+  const b = c.baseline || {}, a = c.after || {}
+  const tip = `변경 전: ${esc(c.old_title || '')}\n원인: ${esc(c.reason || '')}\nCTR ${b.ctr ?? '-'}% → ${a.ctr ?? '-'}% | 순위 ${b.position ?? '-'} → ${a.position ?? '-'}`
+  if (c.rollback_suggested) {
+    return `<span class="badge" style="background:rgba(248,113,113,.18);color:#f87171" title="${tip}">⚠ 제목 복원 제안 (CTR ${b.ctr}→${a.ctr}%)</span>`
+  }
+  const good = c.verdict === 'improved'
+  const style = good ? 'background:rgba(52,211,153,.14);color:#34d399' : 'background:rgba(148,163,184,.15);color:#94a3b8'
+  return `<span class="badge" style="${style}" title="${tip}">${good ? '📈' : '↔'} 제목변경 CTR ${b.ctr ?? '-'}→${a.ctr ?? '-'}%</span>`
+}
+
 function postListRowHTML(p) {
   const catIcon = {금융:'💰',부동산:'🏠',건강:'💊',기술:'💻',여행:'✈️',교육:'📚',쇼핑:'🛍️',법률:'⚖️'}
   const reg = _lookupReg(p)
@@ -2580,6 +2607,7 @@ function postListRowHTML(p) {
         ${p.imagesInserted > 0 ? `<span class="img-pill">🖼 ${p.imagesInserted}</span>` : ''}
         ${stBadge}
         ${_lifecycleBadge(p)}
+        ${_titleABBadge(p)}
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:6px;flex-shrink:0" onclick="event.stopPropagation()">
@@ -2616,6 +2644,7 @@ function postCardHTML(p) {
         ${p.imagesInserted > 0 ? `<span class="img-pill">🖼 ${p.imagesInserted}</span>` : ''}
         ${p.hasToc ? `<span class="toc-pill">📋 TOC</span>` : ''}
         ${_lifecycleBadge(p)}
+        ${_titleABBadge(p)}
         ${p.adSlots ? `<span class="ad-pill">📢 ${p.adSlots}</span>` : ''}
         ${wc}
         ${blogLink}

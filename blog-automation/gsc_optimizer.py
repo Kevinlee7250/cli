@@ -407,6 +407,20 @@ def run_optimization(dry_run: bool = False, limit: int = MAX_PER_RUN) -> dict:
         logger.info(f"\n[{idx}/{len(candidates)}] {title[:50]}...")
         logger.info(f"  검색어: '{query['query']}' | 노출: {query['impressions']} | CTR: {query['ctr']}%")
 
+        # 제목·본문 동시 변경 금지 + 진행 중인 A/B 테스트 보호 (28일)
+        try:
+            from title_ab_tracker import body_edited_recently, title_changed_recently
+            if body_edited_recently(url):
+                logger.info("  최근 28일 내 본문 수정됨 — 동시 변경 방지로 건너뜀")
+                skipped += 1
+                continue
+            if title_changed_recently(url):
+                logger.info("  제목 A/B 테스트 진행 중 (28일 미경과) — 건너뜀")
+                skipped += 1
+                continue
+        except Exception:
+            pass
+
         # 3) Claude로 개선 제목 생성
         new_titles = generate_improved_titles(
             client,
@@ -455,6 +469,18 @@ def run_optimization(dry_run: bool = False, limit: int = MAX_PER_RUN) -> dict:
                 detail["post_id"]         = post_id
                 if ok:
                     _update_posts_json(url, best_title)
+                    # A/B 추적: 변경 전 제목·날짜·원인·기준 성과 기록
+                    try:
+                        from title_ab_tracker import record_title_change
+                        record_title_change(
+                            blog_url=url, old_title=title, new_title=best_title,
+                            reason=f"저CTR 검색어 '{query['query']}' (CTR {query['ctr']}%)",
+                            baseline={"ctr": query["ctr"], "position": query["position"],
+                                      "impressions": query["impressions"],
+                                      "clicks": query.get("clicks", 0)},
+                        )
+                    except Exception as _abe:
+                        logger.warning(f"  A/B 기록 실패: {_abe}")
                     optimized += 1
                 else:
                     skipped += 1

@@ -1,0 +1,78 @@
+name: 게시 후 성과 추적
+
+on:
+  # 매일 오전 8시 KST (23:00 UTC)
+  schedule:
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write  # 추적 후 Pages 배포 워크플로우 dispatch용
+
+concurrency:
+  group: post-lifecycle
+  cancel-in-progress: true
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    name: track-post-lifecycle
+
+    steps:
+      - name: 코드 체크아웃 (대시보드 브랜치)
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+          fetch-depth: 1
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 의존성 설치
+        run: pip install -q requests python-dotenv
+
+      - name: 생애주기 추적 실행
+        working-directory: blog-automation
+        run: python post_lifecycle.py
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+          GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
+          BLOGS_CONFIG: ${{ secrets.BLOGS_CONFIG }}
+
+      - name: 변경 커밋 & 푸시 (대시보드 브랜치)
+        env:
+          DASH_BRANCH: claude/blog-automation-system-KAbtE
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f docs/data/lifecycle.json
+          git add blog-automation/logs/lifecycle_history.json || true
+          if git diff --cached --quiet; then
+            echo "변경 없음 — 커밋 건너뜀"
+          else
+            git commit -m "chore: 게시 후 성과 추적 ($(date +'%Y-%m-%d' -d '+9 hours'))"
+            for i in 1 2 3 4; do
+              git push origin "HEAD:$DASH_BRANCH" && break
+              echo "Push 실패 $i/4 — ${i}0초 후 재시도"
+              sleep $((i * 10))
+              git pull --rebase origin "$DASH_BRANCH" || true
+            done
+          fi
+
+      # GITHUB_TOKEN 푸시는 push 트리거를 발동시키지 않으므로 배포를 직접 dispatch
+      - name: Pages 배포 트리거
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -sf -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/deploy-dashboard.yml/dispatches" \
+            -d '{"ref": "claude/blog-automation-system-KAbtE"}' \
+            && echo "배포 dispatch 완료" || echo "배포 dispatch 실패 — 다음 배포에서 반영"

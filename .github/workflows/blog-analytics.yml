@@ -79,13 +79,15 @@ jobs:
             echo "변경 없음 — 커밋 생략"
           else
             git commit -m "📊 블로그 성과 분석 업데이트 — $(date -u +%Y-%m-%d) (S/A/B/C 등급 + 실수익 계산)"
+            _push_ok=0
             for i in 1 2 3; do
               git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
                 && git push origin claude/blog-automation-system-KAbtE \
-                && break
+                && { _push_ok=1; break; }
               echo "pull+push 재시도 $i/3..."
               sleep $((i * 3))
             done
+            [ "$_push_ok" = "1" ] || { echo "push 3회 실패 — 종료"; exit 1; }
           fi
 
       - name: Print grade summary

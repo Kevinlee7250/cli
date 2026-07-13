@@ -1164,6 +1164,25 @@ _SPORTS_KW  = {"축구","야구","농구","테니스","골프","k리그","kbo","
                "손흥민","류현진","경기","승리","패배","득점","순위","직관"}
 
 
+_LEGAL_KW = {"법률", "민법", "형법", "법원", "계약", "소송", "판결", "권리",
+             "임대차", "약관", "분쟁", "상속", "이혼", "고소", "변호사"}
+
+
+def _assess_risk_level(keyword: str) -> str:
+    """키워드의 YMYL(돈·건강·법률) 위험도를 분류합니다.
+
+    high   — 금융·투자 / 건강·의료 / 법률 (잘못된 정보가 독자에게 실질 피해)
+    medium — 그 외 정보성 주제 (구매 결정·생활 정보 등)
+    low    — 여행·드라마·연예·스포츠 등 엔터테인먼트
+    """
+    kw = keyword.lower()
+    if any(w in kw for w in _FINANCE_KW | _HEALTH_KW | _LEGAL_KW):
+        return "high"
+    if any(w in kw for w in _DRAMA_KW | _TRAVEL_KW | _SPORTS_KW):
+        return "low"
+    return "medium"
+
+
 def _detect_theme(keyword: str, article_type: str) -> dict:
     """키워드·아티클 유형으로 최적 컬러 테마를 반환합니다."""
     kw = keyword.lower()
@@ -2038,6 +2057,9 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
 
             post_data["keyword"] = keyword
             post_data["article_type"] = _detect_article_type(keyword)
+            post_data["risk_level"] = _assess_risk_level(keyword)
+            # 표준 스키마: tags는 labels의 별칭 (내부 링크·대시보드 공용)
+            post_data["tags"] = list(post_data.get("labels", []) or [])
             post_data["series_id"] = series_context.get("series_id", "")
             post_data["episode"] = episode
 
@@ -2313,6 +2335,9 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
 
             post_data["keyword"] = keyword
             post_data["article_type"] = _detect_article_type(keyword)
+            post_data["risk_level"] = _assess_risk_level(keyword)
+            # 표준 스키마: tags는 labels의 별칭 (내부 링크·대시보드 공용)
+            post_data["tags"] = list(post_data.get("labels", []) or [])
 
             # 글자 수 및 미리보기 추가
             content_html = post_data.get("content", "")

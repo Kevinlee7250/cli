@@ -97,9 +97,15 @@ def _build_summary(week_runs: list[dict]) -> dict:
         return "일반"
 
     cat_count: dict[str, int] = {}
+    type_count: dict[str, int] = {}
+    risk_count: dict[str, int] = {}
     for p in all_posts:
         cat = p.get("adsenseCategory") or _cat_from_keyword(p.get("keyword", ""))
         cat_count[cat] = cat_count.get(cat, 0) + 1
+        at = p.get("articleType") or "unknown"
+        type_count[at] = type_count.get(at, 0) + 1
+        rl = p.get("riskLevel") or "unknown"
+        risk_count[rl] = risk_count.get(rl, 0) + 1
 
     cpc_map = {
         "법률": 3.2, "부동산": 2.8, "금융": 2.5, "건강": 1.8,
@@ -115,6 +121,8 @@ def _build_summary(week_runs: list[dict]) -> dict:
         "error_rate_pct": round(total_errors / max(total_posts, 1) * 100, 1),
         "unique_keywords": list(set(all_keywords))[:30],
         "category_distribution": dict(cat_count),
+        "article_type_distribution": dict(type_count),
+        "risk_level_distribution": dict(risk_count),
         "top_categories_by_revenue": [c[0] for c in top_cats[:3]],
         "avg_word_count": round(sum(p.get("wordCount", 0) for p in all_posts) / max(len(all_posts), 1)),
         "avg_images": round(sum(p.get("imagesInserted", 0) for p in all_posts) / max(len(all_posts), 1), 1),

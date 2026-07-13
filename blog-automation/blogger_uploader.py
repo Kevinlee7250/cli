@@ -495,8 +495,8 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
 
     full_content = _build_full_content(post_data, blog_config)
     kw = post_data.get("keyword") or ""
-    # None-safe: Claude가 "labels": null 반환해도 안전하게 처리
-    raw_labels = post_data.get("labels") or []
+    # None-safe: Claude가 "labels": null 반환해도 안전하게 처리 (표준 스키마 tags 폴백)
+    raw_labels = post_data.get("labels") or post_data.get("tags") or []
     if not isinstance(raw_labels, list):
         raw_labels = []
 
@@ -509,6 +509,9 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
 
     blog_name = cfg.get("name", "")
     logger.debug(f"업로드 레이블 ({len(labels)}개): {labels[:5]}{'…' if len(labels)>5 else ''}")
+    risk = post_data.get("risk_level", "")
+    if risk == "high":
+        logger.info(f"⚠️ 고위험(YMYL) 주제 업로드: '{post_data.get('keyword', '')}' — 면책·팩트체크 확인 권장")
     logger.info(f"업로드 대상 블로그: {blog_name or '기본'} (blog_id={blog_id})")
 
     payload = {

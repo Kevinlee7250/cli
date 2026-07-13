@@ -303,6 +303,26 @@ def test_categorize():
     assert _categorize("아무 관련 없는 주제") == "일반"
 
 
+def test_assess_risk_level():
+    """YMYL 위험도 분류: 금융·건강·법률=high, 엔터·여행=low, 그 외=medium."""
+    from content_generator import _assess_risk_level
+    assert _assess_risk_level("ETF 투자 방법") == "high"
+    assert _assess_risk_level("당뇨 식단 관리") == "high"
+    assert _assess_risk_level("전세 계약 주의사항") == "high"
+    assert _assess_risk_level("제주 여행 코스") == "low"
+    assert _assess_risk_level("넷플릭스 드라마 추천") == "low"
+    assert _assess_risk_level("노션 사용법 정리") == "medium"
+
+
+def test_score_relevance_article_type_bonus():
+    """같은 articleType 후보는 관련도 점수 +1 보너스를 받는다."""
+    from internal_linker import _score_relevance
+    cand = {"tags": ["ETF"], "keyword": "etf 투자", "articleType": "how_to"}
+    base = _score_relevance(cand, {"ETF"}, "etf 투자")
+    boosted = _score_relevance(cand, {"ETF"}, "etf 투자", current_article_type="how_to")
+    assert boosted == base + 1
+
+
 # ──────────────────────────────────────────────────────────────────────────────
 # post_manager — 제목 중복 감지
 # ──────────────────────────────────────────────────────────────────────────────

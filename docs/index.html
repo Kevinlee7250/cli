@@ -1160,54 +1160,15 @@
       </div>
     </div>
 
-    <!-- Publish Mode Toggle -->
+    <!-- Publish Mode (서버 게시 고정 — 보안 정책) -->
     <div class="run-panel" style="margin-bottom:24px">
-      <h3>📡 게시 방식 선택</h3>
-      <div style="display:flex;gap:0;margin-bottom:16px;border:1px solid var(--border);border-radius:8px;overflow:hidden">
-        <button id="mode-actions-btn" onclick="setPublishMode('actions')"
-          style="flex:1;padding:12px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s">
-          🔒 서버 게시 (GitHub Actions)<br><span style="font-size:11px;font-weight:400;opacity:.85">기존 GitHub Secrets 사용 · OAuth 입력 불필요</span>
-        </button>
-        <button id="mode-direct-btn" onclick="setPublishMode('direct')"
-          style="flex:1;padding:12px;background:var(--bg3);color:var(--muted);border:none;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s">
-          🌐 브라우저 직접 게시<br><span style="font-size:11px;font-weight:400">OAuth 자격증명 별도 입력 필요</span>
-        </button>
+      <h3>📡 게시 방식</h3>
+      <div style="font-size:13px;color:var(--muted);line-height:1.7">
+        🔒 <strong>서버 게시 (GitHub Actions)</strong>: PAT로 워크플로우를 트리거하며, Blogger 자격증명은
+        GitHub Secrets에서만 사용됩니다.<br>
+        <span style="color:var(--yellow)">⚠️ 보안 정책: 브라우저 직접 게시는 제거되었습니다 — Google client_secret·refresh_token 같은
+        장기 인증 토큰을 브라우저에 저장하지 않습니다.</span>
       </div>
-      <div id="publish-mode-desc" style="font-size:13px;color:var(--muted);line-height:1.7">
-        🔒 <strong>서버 게시</strong>: PAT로 GitHub Actions 워크플로우를 트리거합니다. 이미 등록된 GitHub Secrets(GOOGLE_REFRESH_TOKEN 등)을 그대로 사용하므로 별도 OAuth 설정이 필요 없습니다.
-      </div>
-    </div>
-
-    <!-- Direct Publish OAuth Settings (숨김 기본) -->
-    <div id="oauth-settings-panel" style="display:none;margin-bottom:24px" class="run-panel">
-      <h3>🔑 직접 게시용 Google OAuth 설정</h3>
-      <div class="warn-box">⚠️ 아래 정보는 브라우저 localStorage에만 저장됩니다. 서버나 GitHub에 전송되지 않습니다.</div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>GOOGLE_CLIENT_ID</label>
-          <input type="text" class="form-input" id="oauth-client-id" placeholder="123456789-xxx.apps.googleusercontent.com">
-        </div>
-        <div class="form-group">
-          <label>GOOGLE_CLIENT_SECRET</label>
-          <input type="password" class="form-input" id="oauth-client-secret" placeholder="GOCSPX-xxx">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>GOOGLE_REFRESH_TOKEN</label>
-          <input type="password" class="form-input" style="min-width:320px" id="oauth-refresh-token" placeholder="1//04xxx...">
-        </div>
-        <div class="form-group">
-          <label>BLOGGER_BLOG_ID</label>
-          <input type="text" class="form-input" id="oauth-blog-id" placeholder="123456789012345678">
-        </div>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button class="run-btn" onclick="saveOAuthSettings()">💾 저장</button>
-        <button style="padding:11px 20px;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:14px;cursor:pointer;font-weight:600" onclick="clearOAuthSettings()">🗑 초기화</button>
-        <button style="padding:11px 20px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:14px;cursor:pointer;font-weight:600" onclick="testOAuthToken()">🔄 토큰 테스트</button>
-      </div>
-      <div id="oauth-test-result" class="status-panel" style="margin-top:12px;display:none"></div>
     </div>
 
     <!-- Pending Posts -->
@@ -1983,6 +1944,7 @@ async function loadAll(silent = false) {
     document.getElementById('dashboard-skeleton').style.display = 'grid'
     document.getElementById('dashboard-content').style.display = 'none'
   }
+  purgeLegacyOAuthStorage()  // 보안: 과거 저장된 장기 토큰 제거
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
   const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges] = await Promise.all([
@@ -2059,8 +2021,6 @@ function navTo(page) {
   if (page === 'social') renderSocial()
   if (page === 'keywords') { renderKeywords(); renderCategoryGap() }
   if (page === 'review') {
-    setPublishMode(publishMode)
-    loadOAuthSettings()
     loadPendingPosts(true)   // silent: no toast on tab open
     renderUsedKeywords()
     rvKwRender()
@@ -3834,26 +3794,17 @@ function onRvKwInput(e) {
 // ── Review Tab ────────────────────────────────────────────────────────────────
 let pendingPosts = []
 let sessionPublished = []
-let publishMode = localStorage.getItem('publish_mode') || 'actions'  // 'actions' | 'direct'
+// 보안 정책: 브라우저 직접 게시 제거 — 서버 게시(GitHub Actions) 고정.
+// Google client_secret·refresh_token 같은 장기 토큰은 브라우저에 저장하지 않습니다.
+const publishMode = 'actions'
 
-function setPublishMode(mode) {
-  publishMode = mode
-  localStorage.setItem('publish_mode', mode)
-  const actBtn = document.getElementById('mode-actions-btn')
-  const dirBtn = document.getElementById('mode-direct-btn')
-  const oauthPanel = document.getElementById('oauth-settings-panel')
-  const desc = document.getElementById('publish-mode-desc')
-  if (mode === 'actions') {
-    if (actBtn) { actBtn.style.background = 'var(--accent)'; actBtn.style.color = '#fff' }
-    if (dirBtn) { dirBtn.style.background = 'var(--bg3)'; dirBtn.style.color = 'var(--muted)' }
-    if (oauthPanel) oauthPanel.style.display = 'none'
-    if (desc) desc.innerHTML = '🔒 <strong>서버 게시</strong>: PAT로 GitHub Actions 워크플로우를 트리거합니다. 이미 등록된 GitHub Secrets(GOOGLE_REFRESH_TOKEN 등)을 그대로 사용하므로 별도 OAuth 설정이 필요 없습니다.'
-  } else {
-    if (actBtn) { actBtn.style.background = 'var(--bg3)'; actBtn.style.color = 'var(--muted)' }
-    if (dirBtn) { dirBtn.style.background = 'var(--accent)'; dirBtn.style.color = '#fff' }
-    if (oauthPanel) oauthPanel.style.display = 'block'
-    if (desc) desc.innerHTML = '🌐 <strong>브라우저 직접 게시</strong>: 브라우저에서 Blogger API를 직접 호출합니다. 아래 OAuth 자격증명 설정이 필요합니다.'
-  }
+function setPublishMode() { /* 서버 게시 고정 — 하위 호환용 no-op */ }
+
+function purgeLegacyOAuthStorage() {
+  // 과거 버전이 localStorage에 남긴 장기 인증 토큰 제거 (1회 마이그레이션)
+  // client_id·blog_id는 비밀이 아니므로 유지 (GitHub Secrets 동기화 UI 표시용)
+  ;['oauth_client_secret','oauth_refresh_token','publish_mode']
+    .forEach(k => localStorage.removeItem(k))
 }
 
 function updatePendingBadge() {
@@ -3914,65 +3865,6 @@ async function runReview() {
     showToast('네트워크 오류', 'error')
   } finally {
     btn.disabled = false; btn.className = 'run-btn'; btn.textContent = '✍️ Review 실행'
-  }
-}
-
-function saveOAuthSettings() {
-  const fields = {oauth_client_id:'oauth-client-id',oauth_client_secret:'oauth-client-secret',oauth_refresh_token:'oauth-refresh-token',oauth_blog_id:'oauth-blog-id'}
-  Object.entries(fields).forEach(([k,id]) => {
-    const v = document.getElementById(id)?.value.trim() || ''
-    if (v) localStorage.setItem(k, v)
-    else localStorage.removeItem(k)
-  })
-  showToast('OAuth 설정이 저장됐습니다', 'success')
-}
-
-function clearOAuthSettings() {
-  ['oauth_client_id','oauth_client_secret','oauth_refresh_token','oauth_blog_id'].forEach(k => localStorage.removeItem(k))
-  ;['oauth-client-id','oauth-client-secret','oauth-refresh-token','oauth-blog-id'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.value = ''
-  })
-  showToast('OAuth 설정이 초기화됐습니다', 'info')
-}
-
-function loadOAuthSettings() {
-  const map = {oauth_client_id:'oauth-client-id',oauth_client_secret:'oauth-client-secret',oauth_refresh_token:'oauth-refresh-token',oauth_blog_id:'oauth-blog-id'}
-  Object.entries(map).forEach(([k, id]) => {
-    const el = document.getElementById(id)
-    if (el) el.value = localStorage.getItem(k) || ''
-  })
-}
-
-async function getAccessToken() {
-  const clientId = localStorage.getItem('oauth_client_id')
-  const clientSecret = localStorage.getItem('oauth_client_secret')
-  const refreshToken = localStorage.getItem('oauth_refresh_token')
-  if (!clientId || !clientSecret || !refreshToken)
-    throw new Error('OAuth 설정이 없습니다. 위의 설정 패널에서 입력 후 저장하세요.')
-  const resp = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ client_id: clientId, client_secret: clientSecret, refresh_token: refreshToken, grant_type: 'refresh_token' })
-  })
-  const data = await resp.json()
-  if (!data.access_token) throw new Error(data.error_description || 'access_token 획득 실패')
-  return data.access_token
-}
-
-async function testOAuthToken() {
-  const resultEl = document.getElementById('oauth-test-result')
-  resultEl.style.display = 'block'
-  resultEl.className = 'status-panel running'
-  resultEl.innerHTML = '<span class="pulse">⏳ 토큰 테스트 중...</span>'
-  try {
-    const token = await getAccessToken()
-    resultEl.className = 'status-panel success'
-    resultEl.innerHTML = '✅ 토큰 정상! (access_token: ' + token.substring(0, 20) + '...)'
-    showToast('토큰이 정상입니다', 'success')
-  } catch (err) {
-    resultEl.className = 'status-panel error'
-    resultEl.innerHTML = '❌ ' + esc(err.message)
-    showToast('토큰 오류: ' + err.message, 'error')
   }
 }
 
@@ -4087,11 +3979,7 @@ function skipPost(id) {
 }
 
 async function publishPost(id) {
-  if (publishMode === 'actions') {
-    await publishPostViaActions(id)
-  } else {
-    await publishPostDirect(id)
-  }
+  await publishPostViaActions(id)  // 보안 정책: 서버 게시 고정
 }
 
 async function publishPostViaActions(id) {
@@ -4176,47 +4064,6 @@ function _sanitizeBloggerContent(html) {
     cleaned = '<div style="max-width:780px;margin:0 auto;padding:8px 4px;font-family:\'Noto Sans KR\',\'Apple SD Gothic Neo\',sans-serif;font-size:16px;line-height:1.9;color:#374151;word-break:keep-all;">' + cleaned + '</div>'
   }
   return cleaned
-}
-
-async function publishPostDirect(id) {
-  const post = pendingPosts.find(p => p.id === id)
-  if (!post) return
-  const blogId = (localStorage.getItem('oauth_blog_id') || '').trim()
-  if (!blogId) { showToast('BLOGGER_BLOG_ID를 설정하세요', 'error'); return }
-  const safeId = id.replace(/[^a-zA-Z0-9_-]/g, '_')
-  const statusEl = document.getElementById('rstatus-' + safeId)
-  if (statusEl) { statusEl.style.display = 'block'; statusEl.className = 'status-panel running'; statusEl.innerHTML = '<span class="pulse">⏳ 직접 게시 중...</span>' }
-  try {
-    const accessToken = await getAccessToken()
-    const sanitizedContent = _sanitizeBloggerContent(post.content)
-    const cleanLabels = (post.labels || []).filter(l => l && typeof l === 'string' && l.trim())
-    const resp = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts`, {
-      method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: post.title, content: sanitizedContent, labels: cleanLabels })
-    })
-    const result = await resp.json()
-    if (resp.ok && result.url) {
-      if (statusEl) { statusEl.className = 'status-panel success'; statusEl.innerHTML = `✅ 게시 성공! <a href="${esc(result.url)}" target="_blank" style="color:var(--accent2)">${esc(result.url)}</a>` }
-      const ids = JSON.parse(localStorage.getItem('published_post_ids') || '[]')
-      ids.push(id); localStorage.setItem('published_post_ids', JSON.stringify(ids))
-      sessionPublished.push(id)
-      document.getElementById('review-published-count').textContent = sessionPublished.length
-      document.getElementById('review-pending-count').textContent = Math.max(0, parseInt(document.getElementById('review-pending-count').textContent) - 1)
-      showToast('포스트가 게시됐습니다! 🎉', 'success')
-    } else {
-      const apiErr = result.error || {}
-      const violations = (apiErr.details || [])
-        .flatMap(d => d.fieldViolations || [])
-        .map(v => `[${v.field}] ${v.description}`)
-        .join(', ')
-      const detail = violations ? ` (${violations})` : ` (HTTP ${resp.status})`
-      throw new Error((apiErr.message || '게시 실패') + detail)
-    }
-  } catch (err) {
-    if (statusEl) { statusEl.className = 'status-panel error'; statusEl.innerHTML = '❌ ' + esc(err.message) }
-    showToast('게시 실패: ' + err.message, 'error')
-  }
 }
 
 // ── Series ────────────────────────────────────────────────────────────────────
@@ -4525,11 +4372,7 @@ async function serEpApprove() {
   if (approveBtn) { approveBtn.disabled = true; approveBtn.textContent = '⏳ 게시 중...' }
 
   try {
-    if (publishMode === 'direct') {
-      await _serEpPublishDirect(postId, statusEl)
-    } else {
-      await _serEpPublishViaActions(postId, statusEl)
-    }
+    await _serEpPublishViaActions(postId, statusEl)  // 보안 정책: 서버 게시 고정
   } catch (e) {
     statusEl.className = 'status-panel error'
     statusEl.textContent = '❌ ' + e.message
@@ -4554,31 +4397,6 @@ async function _serEpPublishViaActions(postId, statusEl) {
   } else {
     const err = await resp.json().catch(() => ({}))
     throw new Error(`HTTP ${resp.status}: ${err.message || ''}`)
-  }
-}
-
-async function _serEpPublishDirect(postId, statusEl) {
-  const post = (DATA.pending || []).find(p => p.id === postId)
-  if (!post) throw new Error('포스트 데이터를 찾을 수 없습니다')
-  const blogId = localStorage.getItem('oauth_blog_id')
-  if (!blogId) throw new Error('BLOGGER_BLOG_ID를 설정하세요 (수동 검토 탭 → 설정)')
-  const accessToken = await getAccessToken()
-  const resp = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts/`, {
-    method: 'POST',
-    headers: { Authorization: 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title: post.title, content: post.content, labels: post.labels || [] })
-  })
-  const result = await resp.json()
-  if (resp.ok && result.url) {
-    statusEl.className = 'status-panel success'
-    statusEl.innerHTML = `✅ 게시 성공! <a href="${esc(result.url)}" target="_blank" style="color:var(--accent2)">${esc(result.url)}</a>`
-    showToast('시리즈 에피소드 게시 완료!', 'success')
-    const approveBtn = document.getElementById('ser-ep-approve-btn')
-    if (approveBtn) { approveBtn.textContent = '✅ 게시됨'; approveBtn.disabled = true }
-    // 데이터 새로고침
-    setTimeout(() => loadAll(true), 3000)
-  } else {
-    throw new Error(result.error?.message || `HTTP ${resp.status}`)
   }
 }
 
@@ -4622,16 +4440,7 @@ async function retrySeriesEp(srIdx, epIdx) {
     return
   }
 
-  // 직접 게시 모드
-  const isDirect = publishMode !== 'actions'
-  if (isDirect) {
-    const blogId = localStorage.getItem('oauth_blog_id')
-    if (!blogId) { showToast('BLOGGER_BLOG_ID 설정이 필요합니다 (수동 검토 탭 → OAuth 설정)', 'error'); return }
-    const hasOAuth = localStorage.getItem('oauth_refresh_token')
-    if (!hasOAuth) { showToast('Google OAuth 설정이 필요합니다 (수동 검토 탭 → OAuth 설정)', 'error'); return }
-  } else {
-    if (!getPAT()) { showToast('PAT가 없습니다. 실행 제어 탭에서 설정하세요.', 'error'); return }
-  }
+  if (!getPAT()) { showToast('PAT가 없습니다. 실행 제어 탭에서 설정하세요.', 'error'); return }
 
   if (!confirm(`[${ep.episode}편] "${ep.title}"\n\n${isDirect ? '직접 Blogger에 게시' : 'GitHub Actions로 게시'}합니다. 계속하시겠습니까?`)) return
 
@@ -4647,11 +4456,7 @@ async function retrySeriesEp(srIdx, epIdx) {
   const statusEl = document.getElementById(`ser-retry-status-${srIdx}-${epIdx}`) || { className: '', innerHTML: '' }
 
   try {
-    if (isDirect) {
-      await _serEpPublishDirect(post.id, statusEl)
-    } else {
-      await _serEpPublishViaActions(post.id, statusEl)
-    }
+    await _serEpPublishViaActions(post.id, statusEl)  // 보안 정책: 서버 게시 고정
     if (cell) cell.innerHTML = '<span style="color:var(--green);font-size:12px;font-weight:700">✅ 게시 완료</span>'
   } catch (err) {
     if (btn) { btn.disabled = false; btn.textContent = '🔄 재시도' }
@@ -5740,12 +5545,9 @@ function sysCheckOAuth() {
 
 async function sysTestOAuth() {
   const el = document.getElementById('sys-oauth-test-result')
-  if (el) { el.style.display='block'; el.style.color='var(--muted)'; el.textContent='⏳ 테스트 중...' }
-  try {
-    const token = await getAccessToken()
-    if (el) { el.style.color='var(--green)'; el.textContent='✅ OAuth 토큰 정상' }
-  } catch (e) {
-    if (el) { el.style.color='var(--red)'; el.textContent='❌ ' + e.message }
+  if (el) {
+    el.style.display = 'block'; el.style.color = 'var(--muted)'
+    el.textContent = 'ℹ️ 브라우저 OAuth는 보안 정책으로 제거됨 — 토큰은 GitHub Secrets에서만 사용됩니다 (get-oauth-token.yml로 발급 확인)'
   }
 }
 
@@ -6342,8 +6144,8 @@ const _API_KEYS = [
     group: 'Google / Blogger',
     keys: [
       { id: 'g_client_id',  label: 'GOOGLE_CLIENT_ID',      hint: '310114...apps.googleusercontent.com', lsKey: 'oauth_client_id',     secret: 'GOOGLE_CLIENT_ID' },
-      { id: 'g_secret',     label: 'GOOGLE_CLIENT_SECRET',   hint: 'GOCSPX-...',                          lsKey: 'oauth_client_secret',  secret: 'GOOGLE_CLIENT_SECRET' },
-      { id: 'g_refresh',    label: 'GOOGLE_REFRESH_TOKEN',   hint: '1//0...',                             lsKey: 'oauth_refresh_token',  secret: 'GOOGLE_REFRESH_TOKEN' },
+      { id: 'g_secret',     label: 'GOOGLE_CLIENT_SECRET',   hint: 'GOCSPX-...',  lsKey: null, secret: 'GOOGLE_CLIENT_SECRET', secretOnly: true },
+      { id: 'g_refresh',    label: 'GOOGLE_REFRESH_TOKEN',   hint: '1//0...',     lsKey: null, secret: 'GOOGLE_REFRESH_TOKEN', secretOnly: true },
       { id: 'g_blog_id',    label: 'BLOGGER_BLOG_ID',        hint: '47825991...',                         lsKey: 'oauth_blog_id',        secret: 'BLOGGER_BLOG_ID' },
     ]
   },

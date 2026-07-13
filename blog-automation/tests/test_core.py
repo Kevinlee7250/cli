@@ -674,3 +674,28 @@ def test_ab_evaluate_suggests_rollback(tmp_path, monkeypatch):
     assert recs[1]["verdict"] == "improved" and recs[1]["rollback_suggested"] is False
     # 완료 기준: 변경 전후 성과가 기록되어 표시 가능
     assert recs[0]["after"]["ctr"] == 1.5 and recs[0]["baseline"]["ctr"] == 3.0
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# auto_repair — 수리 전 백업 + 자동 롤백
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_auto_repair_backup_and_rollback(tmp_path, monkeypatch):
+    """수리 전 백업이 생성되고, 파일 손상 시 백업에서 자동 복원된다."""
+    import auto_repair as ar
+    data_file = tmp_path / "run_history.json"
+    data_file.write_text('[{"ok": true}]', encoding="utf-8")
+    monkeypatch.setattr(ar, "_BACKUP_ROOT", str(tmp_path / "backups"))
+    monkeypatch.setattr(ar, "_MANAGED_DATA_FILES", [str(data_file)])
+
+    backup_dir = ar._backup_data_files()
+    assert os.path.exists(os.path.join(backup_dir, "run_history.json"))
+
+    # 파일 손상 시뮬레이션 → 롤백
+    data_file.write_text('{"broken": ', encoding="utf-8")
+    rolled = ar._validate_and_rollback(backup_dir)
+    assert rolled == ["run_history.json"]
+    assert json.loads(data_file.read_text(encoding="utf-8")) == [{"ok": True}]
+
+    # 정상 파일은 롤백하지 않음
+    assert ar._validate_and_rollback(backup_dir) == []

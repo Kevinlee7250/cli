@@ -502,6 +502,60 @@ _FIX_HANDLERS = {
 
 # ── 메인 ──────────────────────────────────────────────────────────────────────
 
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 수리 전 백업 + 문제 발생 시 자동 롤백
+# ──────────────────────────────────────────────────────────────────────────────
+
+_BACKUP_ROOT = os.path.join(_LOGS, "repair_backups")
+_MANAGED_DATA_FILES = [RUN_HISTORY, USED_KW_FILE, SERIES_FILE, PENDING_FILE]
+
+
+def _backup_data_files() -> str:
+    """수리 대상 데이터 파일을 타임스탬프 디렉터리에 백업하고 경로를 반환합니다."""
+    import shutil
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_dir = os.path.join(_BACKUP_ROOT, ts)
+    os.makedirs(backup_dir, exist_ok=True)
+    for path in _MANAGED_DATA_FILES:
+        if os.path.exists(path):
+            shutil.copy2(path, os.path.join(backup_dir, os.path.basename(path)))
+    # 오래된 백업 정리 (최근 10개 유지)
+    try:
+        dirs = sorted(os.listdir(_BACKUP_ROOT))
+        for old in dirs[:-10]:
+            shutil.rmtree(os.path.join(_BACKUP_ROOT, old), ignore_errors=True)
+    except Exception:
+        pass
+    logger.info(f"[AutoRepair] 수리 전 백업 완료 → {backup_dir}")
+    return backup_dir
+
+
+def _validate_and_rollback(backup_dir: str) -> list[str]:
+    """수리 후 데이터 파일을 검증하고, 손상된 파일은 백업에서 자동 복원합니다.
+
+    Returns: 롤백된 파일 이름 목록
+    """
+    import shutil
+    rolled_back = []
+    for path in _MANAGED_DATA_FILES:
+        if not os.path.exists(path):
+            continue
+        try:
+            with open(path, encoding="utf-8") as f:
+                json.load(f)
+        except Exception as exc:
+            name = os.path.basename(path)
+            src_file = os.path.join(backup_dir, name)
+            if os.path.exists(src_file):
+                shutil.copy2(src_file, path)
+                rolled_back.append(name)
+                logger.error(f"[AutoRepair] ⛑ {name} 손상 감지 ({exc}) → 백업에서 자동 롤백")
+            else:
+                logger.error(f"[AutoRepair] {name} 손상 감지했으나 백업 없음: {exc}")
+    return rolled_back
+
+
 def run_auto_repair(dry_run: bool = False) -> dict:
     """자동 진단·수리를 실행하고 결과 dict를 반환합니다."""
     os.makedirs(_LOGS, exist_ok=True)
@@ -536,6 +590,14 @@ def run_auto_repair(dry_run: bool = False) -> dict:
     for iss in issues:
         icon = {"critical": "🔴", "high": "🟠", "warning": "🟡", "low": "🔵"}.get(iss["level"], "⚪")
         logger.info(f"  {icon} [{iss['level'].upper()}] {iss['message']}")
+
+    # ── 수리 전 백업 (문제 발생 시 자동 롤백용) ─────────────────────────────────
+    backup_dir = ""
+    if not dry_run and any(i.get("fix") for i in issues):
+        try:
+            backup_dir = _backup_data_files()
+        except Exception as _be:
+            logger.warning(f"[AutoRepair] 백업 실패 (수리는 계속): {_be}")
 
     # ── 수리 ─────────────────────────────────────────────────────────────────
     repairs: list[dict] = []
@@ -573,6 +635,21 @@ def run_auto_repair(dry_run: bool = False) -> dict:
         except Exception as e:
             logger.error(f"  ❌ [{issue['id']}] 수리 오류: {e}")
             repairs.append({**base, "success": False, "detail": f"수리 중 예외: {e}"})
+
+    # ── 수리 후 검증 — 손상 시 백업에서 자동 롤백 ─────────────────────────────
+    rolled_back: list[str] = []
+    if backup_dir:
+        rolled_back = _validate_and_rollback(backup_dir)
+        if rolled_back:
+            repairs.append({
+                "issue_id": "post_repair_validation",
+                "issue_level": "critical",
+                "issue_message": f"수리 후 파일 손상 감지 → 자동 롤백: {', '.join(rolled_back)}",
+                "fix_applied": "rollback_from_backup",
+                "success": True,
+                "detail": f"백업 {os.path.basename(backup_dir)}에서 복원",
+                "timestamp": datetime.now().isoformat(),
+            })
 
     # ── 건강 점수 계산 ────────────────────────────────────────────────────────
     score = 100

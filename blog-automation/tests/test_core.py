@@ -416,9 +416,11 @@ def test_format_evidence_with_pack_injects_facts():
 
 
 def test_validate_pack_sets_verified(monkeypatch):
-    """URL 접근 가능 여부에 따라 verified가 설정된다 (네트워크 모킹)."""
+    """접속 가능 여부에 따라 verified가 설정된다 (네트워크 모킹)."""
     import source_validator as sv
-    monkeypatch.setattr(sv, "_url_alive", lambda url, timeout=8: "good" in url)
+    monkeypatch.setattr(sv, "_fetch_page", lambda url, timeout=10: {
+        "ok": "good" in url, "text": "본문", "published_at": "", "publisher": ""})
+    monkeypatch.setattr(sv, "_verify_claims_with_claude", lambda facts, p: [])
     pack = {"facts": [
         {"claim": "a", "source_url": "https://good.example/1", "verified": False},
         {"claim": "b", "source_url": "https://dead.example/1", "verified": False},
@@ -447,3 +449,70 @@ def test_merge_evidence_without_pack():
     post = {"sources": []}
     _merge_evidence(post, None)
     assert post["evidence"]["used"] is False
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# source_validator — 출처 신뢰도 등급·최신성·주장 대조
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_grade_source():
+    """도메인 기반 A/B/C/D 등급 분류."""
+    from source_validator import grade_source
+    assert grade_source("https://www.moef.go.kr/press/1") == "A"
+    assert grade_source("https://www.yna.co.kr/view/AKR123") == "B"
+    assert grade_source("https://www.snu.ac.kr/research") == "B"
+    assert grade_source("https://www.etnews.com/2026") == "C"
+    assert grade_source("https://blog.naver.com/someone/1") == "D"
+    assert grade_source("not-a-url") == "X"
+
+
+def test_is_stale():
+    from source_validator import is_stale
+    assert is_stale("2020-01-01", max_age_days=730) is True
+    from datetime import datetime, timezone
+    recent = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    assert is_stale(recent, max_age_days=730) is False
+    assert is_stale("", max_age_days=730) is False  # 날짜 불명은 통과
+
+
+def test_validate_pack_excludes_dead_and_unsupported(monkeypatch):
+    """접속 불가(X) / 내용 불일치는 제외, 나머지는 등급과 함께 통과."""
+    import source_validator as sv
+    pages = {
+        "https://moef.go.kr/ok": {"ok": True, "text": "납입 한도 4천만원", "published_at": "2026-01-05", "publisher": "기획재정부"},
+        "https://dead.example/x": {"ok": False, "text": "", "published_at": "", "publisher": ""},
+        "https://yna.co.kr/wrong": {"ok": True, "text": "무관한 내용", "published_at": "2026-02-01", "publisher": "연합뉴스"},
+    }
+    monkeypatch.setattr(sv, "_fetch_page", lambda url, timeout=10: pages[url])
+    monkeypatch.setattr(sv, "_verify_claims_with_claude", lambda facts, p: [
+        {"index": 0, "supported": True, "conflicts_with": []},
+        {"index": 2, "supported": False, "conflicts_with": []},
+    ])
+    pack = {"facts": [
+        {"claim": "한도 4천만원", "source_url": "https://moef.go.kr/ok"},
+        {"claim": "접속 불가 출처", "source_url": "https://dead.example/x"},
+        {"claim": "내용 불일치", "source_url": "https://yna.co.kr/wrong"},
+    ]}
+    result = sv.validate_pack(pack)
+    f0, f1, f2 = result["facts"]
+    assert f0["verified"] is True and f0["grade"] == "A" and f0["publisher"] == "기획재정부"
+    assert f1["verified"] is False and f1["grade"] == "X"
+    assert f2["verified"] is False and f2["grade"] == "X"  # 내용 불일치 → 제외
+
+
+def test_format_evidence_requires_ab_grade_for_critical_facts():
+    """중요 수치·정책 사실은 A/B 등급 출처가 있어야 자료팩 블록에 포함된다."""
+    from evidence_builder import format_evidence_for_prompt
+    pack = {"keyword": "ISA", "facts": [
+        {"claim": "납입 한도 4천만원으로 변경", "source_title": "기재부", "grade": "A",
+         "source_url": "https://moef.go.kr/1", "published_at": "2026-01-01", "verified": True},
+        {"claim": "세율 15% 인하 예정", "source_title": "개인 블로그", "grade": "D",
+         "source_url": "https://blog.naver.com/x", "published_at": "", "verified": True},
+        {"claim": "가입 절차는 비대면으로 가능", "source_title": "블로그", "grade": "D",
+         "source_url": "https://blog.naver.com/y", "published_at": "", "verified": True},
+    ]}
+    block = format_evidence_for_prompt(pack)
+    assert "납입 한도 4천만원" in block          # 중요 + A등급 → 포함
+    assert "세율 15% 인하" not in block          # 중요 + D등급 → 제외
+    assert "비대면으로 가능" in block            # 비중요 + D등급 → 포함
+    assert "[등급 A]" in block

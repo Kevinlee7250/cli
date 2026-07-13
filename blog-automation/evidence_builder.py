@@ -117,14 +117,35 @@ def save_evidence_pack(pack: dict) -> str:
         return ""
 
 
+_CRITICAL_WORDS = ("한도", "정책", "변경", "시행", "세율", "금리", "지원금",
+                   "보조금", "요금", "가격", "수수료", "%", "원", "개정", "법")
+
+
+def _is_critical(claim: str) -> bool:
+    """중요 사실(수치·정책) 여부 — A/B 등급 출처가 필요합니다."""
+    return bool(re.search(r"\d", claim)) or any(w in claim for w in _CRITICAL_WORDS)
+
+
 def format_evidence_for_prompt(pack: dict | None) -> str:
     """자료팩을 글 작성 프롬프트 블록으로 변환합니다.
 
-    자료팩이 없으면 '검증 불가 수치 작성 금지' 폴백 규칙을 반환합니다.
+    완료 기준: 중요한 수치·정책 사실은 A/B 등급 출처가 있는 것만 사용.
+    C/D 등급 출처뿐인 중요 사실은 제외되고, 자료팩이 없으면
+    '검증 불가 수치 작성 금지' 폴백 규칙을 반환합니다.
     """
     facts = (pack or {}).get("facts") or []
     verified = [f for f in facts if f.get("verified")]
-    usable = verified if verified else facts
+    pool = verified if verified else facts
+    # 중요 수치·정책 사실은 A/B 등급 출처만 인정 (등급 정보 없으면 통과 — 구버전 팩 호환)
+    usable, dropped_critical = [], 0
+    for f in pool:
+        grade = f.get("grade", "")
+        if grade and grade not in ("A", "B") and _is_critical(f.get("claim", "")):
+            dropped_critical += 1
+            continue
+        usable.append(f)
+    if dropped_critical:
+        logger.info(f"자료팩: 중요 사실 {dropped_critical}개 제외 (A/B 등급 출처 없음)")
     if not usable:
         return """
 ━━━ 사실 작성 규칙 (자료팩 없음) ━━━
@@ -136,8 +157,11 @@ def format_evidence_for_prompt(pack: dict | None) -> str:
     lines = []
     for i, f in enumerate(usable, 1):
         pub = f" ({f['published_at']})" if f.get("published_at") else ""
+        grade = f" [등급 {f['grade']}]" if f.get("grade") else ""
+        stale = " ⚠️오래된 자료 — 최신 여부 언급 필요" if f.get("stale") else ""
         lines.append(
-            f"{i}. {f['claim']}\n   출처: {f.get('source_title', '')}{pub} — {f.get('source_url', '')}"
+            f"{i}. {f['claim']}{stale}\n"
+            f"   출처{grade}: {f.get('source_title', '')}{pub} — {f.get('source_url', '')}"
         )
     facts_text = "\n".join(lines)
     return f"""

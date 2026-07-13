@@ -1,5 +1,14 @@
 [
   {
+    "timestamp": "2026-07-13T18:28:51.100707",
+    "tracebacks_found": 0,
+    "critical_errors": 4,
+    "repairs": [],
+    "auto_fixed": 0,
+    "manual_required": 0,
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-07-13T08:56:28.786883",
     "tracebacks_found": 0,
     "critical_errors": 0,
@@ -346,66 +355,6 @@
         "file": "content_generator.py",
         "line": "1635",
         "timestamp": "2026-07-08T10:58:09.434192",
-        "dry_run": false,
-        "result": "error",
-        "detail": "Claude API 오류"
-      }
-    ],
-    "auto_fixed": 0,
-    "manual_required": 0,
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-08T10:43:59.024177",
-    "tracebacks_found": 5,
-    "critical_errors": 8,
-    "critical_samples": [
-      "2026-07-08 10:13:35,905 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details",
-      "2026-07-08 10:13:38,908 [ERROR] content_generator — 포스트 생성 오류: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details",
-      "2026-07-08 10:13:38,909 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '면역력 영양제 직접 먹어본 솔직 리뷰'"
-    ],
-    "repairs": [
-      {
-        "error": "ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details",
-        "file": "content_generator.py",
-        "line": "1635",
-        "timestamp": "2026-07-08T10:43:56.941389",
-        "dry_run": false,
-        "result": "error",
-        "detail": "Claude API 오류"
-      },
-      {
-        "error": "ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details",
-        "file": "content_generator.py",
-        "line": "1635",
-        "timestamp": "2026-07-08T10:43:57.829319",
-        "dry_run": false,
-        "result": "error",
-        "detail": "Claude API 오류"
-      },
-      {
-        "error": "ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details",
-        "file": "content_generator.py",
-        "line": "1635",
-        "timestamp": "2026-07-08T10:43:58.172712",
-        "dry_run": false,
-        "result": "error",
-        "detail": "Claude API 오류"
-      },
-      {
-        "error": "ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details",
-        "file": "content_generator.py",
-        "line": "1635",
-        "timestamp": "2026-07-08T10:43:58.396401",
-        "dry_run": false,
-        "result": "error",
-        "detail": "Claude API 오류"
-      },
-      {
-        "error": "ValueError: Streaming is required for operations that may take longer than 10 minutes. See https://github.com/anthropics/anthropic-sdk-python#long-requests for more details",
-        "file": "content_generator.py",
-        "line": "1635",
-        "timestamp": "2026-07-08T10:43:58.801150",
         "dry_run": false,
         "result": "error",
         "detail": "Claude API 오류"

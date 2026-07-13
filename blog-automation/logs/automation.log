@@ -1,352 +1,3 @@
-2026-07-13 06:28:34,433 [INFO] keyword_collector — 최종 선정 키워드 2개: ['에어컨 전기세 절약', '방학 동안 할 일 저렴하게 즐기는 방법']
-2026-07-13 06:28:34,434 [INFO] main — 수집된 키워드 2개: ['에어컨 전기세 절약', '방학 동안 할 일 저렴하게 즐기는 방법']
-2026-07-13 06:28:34,434 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-07-13 06:28:34,434 [INFO] main — 단독 포스트 대상 키워드 1개: ['에어컨 전기세 절약']
-2026-07-13 06:28:34,446 [INFO] main — 
-[1/1] 키워드: '에어컨 전기세 절약'
-2026-07-13 06:28:34,446 [INFO] content_generator — 포스트 생성 중: '에어컨 전기세 절약'
-2026-07-13 06:28:34,446 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-13 06:28:35,157 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:29:02,632 [WARNING] content_generator — 컨텐츠 너무 짧음(261자, 최소 2500자) — 재시도 1/3
-2026-07-13 06:29:05,633 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-13 06:29:06,469 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:30:19,080 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:30:28,136 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 06:30:28,842 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:30:31,132 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-07-13 06:30:31,133 [INFO] content_generator — 섹션별 이미지 검색: ['에어컨 전기세 절약']
-2026-07-13 06:30:31,504 [INFO] image_fetcher — 이미지 수집 성공: '에어컨 전기세 절약' → 제목='business / woman / people / shooting / f' (관련성=0.00)
-2026-07-13 06:30:31,505 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-13 06:30:31,505 [INFO] content_generator — 포스트 생성 완료: '에어컨 전기세 절약, 이번 여름엔 '한전 에너지캐시백'으로 돈 아끼는 법' (2674자, 이미지 1개)
-2026-07-13 06:30:32,276 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:30:43,343 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 06:30:44,780 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:30:50,158 [WARNING] adsense_validator — AdSense 검증 JSON 파싱 실패 — 기본 처리: 롬프트 지시문이 그대로 노출되어 있어 즉시 수정 필요 (예: '정책에 따라 달라질 수 있으니 한전 공지사항을 확인하라는 식으로 표현'이 3회 반복 노출됨)"],
-  "suggestions": [
-    "본문 내 플레이스홀더성 문구('~라는 식으로 표현')를 실제 정보로 교체할 것",
-    "긴 단락을 소제목이나 리스트로 나누어 가독성 개선",
-    "
-2026-07-13 06:30:50,163 [INFO] internal_linker — 내부 링크 후보 3개 발견
-2026-07-13 06:30:50,167 [INFO] internal_linker —   [1/5] '누진제' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0144069409
-2026-07-13 06:30:50,167 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-13 06:30:50,167 [INFO] main —   제목: 에어컨 전기세 절약, 이번 여름엔 '한전 에너지캐시백'으로 돈 아끼는 법
-2026-07-13 06:30:50,167 [INFO] main —   이미지: 1개 삽입
-2026-07-13 06:30:50,167 [INFO] main —   글자 수: 2674자
-2026-07-13 06:30:51,095 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:31:02,276 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 06:31:03,585 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:31:12,166 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '에어컨 전기세 절약, 이번 여름엔 '한전 에너지캐시백'으로 돈 '
-2026-07-13 06:31:12,166 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2674자로 글자수 기준 warn 구간이며 개인경험은 있으나 정보 재구성 비중이 높음
-2026-07-13 06:31:12,166 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개는 충분하나 일부 단락이 500자 이상으로 길어 가독성 저하
-2026-07-13 06:31:12,166 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개와 개인경험은 있으나 '~라는 식으로 표현' 같은 미편집 문구가 신뢰도를 저하시킴
-2026-07-13 06:31:12,167 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없어 저작권 문제는 없으나 가독성·SEO 측면에서 warn
-2026-07-13 06:31:12,167 [INFO] adsense_validator —   ❌ AI 생성 의심도: '표현을 지급받을 수 있습니다', '표현 시 지급 방식' 등 AI 프롬프트 지시문이 본문에 그대로 노출됨
-2026-07-13 06:31:12,167 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '표현을 지급받을 수 있습니다', '표현 시 지급 방식' 등 AI 프롬프트 지시문이 본문에 그대로 노출됨
-2026-07-13 06:31:12,167 [WARNING] adsense_validator —   🔴 본문 중 '~라는 식으로 표현' 등 AI 생성 과정의 메타 지시문이 그대로 노출되어 즉시 수정 필요
-2026-07-13 06:31:12,167 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
-2026-07-13 06:31:12,167 [WARNING] main —      🔴 [AI 생성 의심도] '표현을 지급받을 수 있습니다', '표현 시 지급 방식' 등 AI 프롬프트 지시문이 본문에 그대로 노출됨
-2026-07-13 06:31:12,167 [WARNING] main —      🔴 본문 중 '~라는 식으로 표현' 등 AI 생성 과정의 메타 지시문이 그대로 노출되어 즉시 수정 필요
-2026-07-13 06:31:12,167 [WARNING] main —      🟡 [원본성 및 품질] 2674자로 글자수 기준 warn 구간이며 개인경험은 있으나 정보 재구성 비중이 높음
-2026-07-13 06:31:12,167 [WARNING] main —      🟡 [구조 및 가독성] H2 8개는 충분하나 일부 단락이 500자 이상으로 길어 가독성 저하
-2026-07-13 06:31:12,167 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3개와 개인경험은 있으나 '~라는 식으로 표현' 같은 미편집 문구가 신뢰도를 저하시킴
-2026-07-13 06:31:12,167 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
-2026-07-13 06:31:14,039 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:32:28,899 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 06:32:30,453 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:32:55,944 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2674자 → 3910자 (+1236자)
-2026-07-13 06:32:55,944 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-13 06:32:56,709 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:33:07,356 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 06:33:08,215 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:33:10,357 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '에어컨 전기세 절약, 이번 여름엔 '한전 에너지캐시백'으로 돈 '
-2026-07-13 06:33:10,357 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 날짜·수치(7월21일, 34평, 21만원, 42kWh 등)와 개인 경험이 잘 담겼으나 글자 수가 3910자로 4000자 기준에 살짝 못 미침
-2026-07-13 06:33:10,357 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급이 없어 삽입 여부 불명확, 저작권 위반은 없으나 이미지 부재로 warn
-2026-07-13 06:33:10,357 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 90/100)
-2026-07-13 06:33:10,357 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-07-13 06:33:11,057 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:34:27,417 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 06:34:29,746 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:34:43,030 [INFO] final_editor —   ✏️ 제목 최종 교정: '에어컨 전기세 절약, 이번 여름엔 '한전 에너지캐시백'으로 돈 아끼는 법' → '에어컨 전기세 절약법, 한전 에너지캐시백 신청 후기'
-2026-07-13 06:34:43,030 [INFO] final_editor —   ✏️ 메타 설명 교정 (95자)
-2026-07-13 06:34:43,030 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 목차·요약박스·표 2개·개인경험메모·주의사항·FAQ 5개·작성자메모·내부링크를 추가하고, 모든 문단을 2~4문장으로 재구성해 모바일 가독성을 높였으며 끊긴 본문을 자연스럽게 마무리했습니다.
-2026-07-13 06:34:43,130 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-13 06:34:43,130 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-07-13 06:34:44,301 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/blog-post_13.html
-2026-07-13 06:34:44,310 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/blog-post_13.html
-2026-07-13 06:35:16,799 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:35:16,800 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-13 06:35:16,800 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-13 06:35:16,800 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '에어컨 전기세 절약법, 한전 에너지캐시백 신청 후기'
-2026-07-13 06:35:17,572 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 06:35:21,188 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리자면, 에너지캐시백은 한전 앱(스마트한전)에서 매달 실시간으로 예상 절감량과 예상 캐시백을 미리 확인할 수 있어요. 이걸 보...
-2026-07-13 06:38:21,398 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-07-13 06:38:21,399 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (2개)
-2026-07-13 06:38:21,400 [INFO] main — 
-============================================================
-2026-07-13 06:38:21,400 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-13 06:38:21,400 [INFO] main — ============================================================
-2026-07-13 06:38:21,426 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-13 06:38:21,445 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-13 06:38:21,463 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-13 06:38:21,607 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-13 06:38:21,609 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-13 06:38:21,611 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-13 06:38:21,622 [INFO] post_manager —   포스트 레지스트리: 전체 205개 (게시 137 / 실패 15 / 대기 46)
-2026-07-13 06:38:21,623 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-13 06:38:21,623 [INFO] dashboard_exporter —   포스트: 81개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-13 06:38:21,623 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-13 08:15:44,562 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-07-13 08:15:44,562 [INFO] main —   - [blog1] HOGU What?
-2026-07-13 08:15:44,562 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-07-13 08:15:44,562 [INFO] main —   - [blog3] 금융NEWS
-2026-07-13 08:15:44,563 [INFO] main — ============================================================
-2026-07-13 08:15:44,563 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-13 08:15:44
-2026-07-13 08:15:44,563 [INFO] main — ============================================================
-2026-07-13 08:15:44,570 [INFO] main — 수집된 키워드 1개: ['삼성 노조 호남 반도체 투자 반대']
-2026-07-13 08:15:44,573 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-07-13 08:15:44,573 [INFO] main — 단독 포스트 대상 키워드 1개: ['삼성 노조 호남 반도체 투자 반대']
-2026-07-13 08:15:44,583 [INFO] main — 
-[1/1] 키워드: '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:15:44,583 [INFO] content_generator — 포스트 생성 중: '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:15:55,348 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:15:55,367 [INFO] research_collector — 검색 의도: 삼성 노조가 호남 지역 반도체 투자에 반대한다는 이슈의 사실관계와 배경을 확인하려는 의도
-2026-07-13 08:16:05,511 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:16:26,122 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:16:26,123 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:16:51,950 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:16:51,951 [INFO] source_validator — 출처 검증: 8/8개 통과, 등급 분포 {'B': 8}
-2026-07-13 08:16:51,953 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-13 08:16:53,731 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:18:15,824 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-07-13 08:18:16,977 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:18:26,389 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:18:27,171 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:18:32,103 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
-2026-07-13 08:18:32,106 [INFO] content_generator — 섹션별 이미지 검색: ['삼성 노조 호남']
-2026-07-13 08:18:32,464 [INFO] image_fetcher — 이미지 수집 성공: '삼성 노조 호남' → 제목='business / woman / people / shooting / f' (관련성=0.40)
-2026-07-13 08:18:32,464 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-13 08:18:32,466 [INFO] content_generator — 포스트 생성 완료: '삼성 노조 호남 반도체 투자 반대, 2026년 쟁점 총정리' (2920자, 이미지 1개)
-2026-07-13 08:18:34,944 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:18:46,196 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:18:47,466 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:18:57,419 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:18:58,259 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:19:03,210 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 61/100 — '삼성 노조 호남 반도체 투자 반대, 2026년 쟁점 총정리'
-2026-07-13 08:19:03,210 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2920자로 warn 구간이며 개인 경험 없이 공개 정보 재구성 위주 콘텐츠임
-2026-07-13 08:19:03,210 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드가 부자연스럽게 삽입된 구간(예: '삼성 노조 호남 💡 핵심 포인트')이 있어 자연스러움이 떨어짐
-2026-07-13 08:19:03,210 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 단락 구분 없이 긴 텍스트 블록이 이어져 가독성이 떨어짐
-2026-07-13 08:19:03,210 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 6개는 언급되나 1인칭 경험이나 전문가 인용이 부재함
-2026-07-13 08:19:03,210 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 SEO 및 가독성 측면에서 warn 처리
-2026-07-13 08:19:03,210 [INFO] adsense_validator —   ❌ AI 생성 의심도: '표현으로 수정', '조사형 표현으로 수정' 등 편집 지시 문구가 본문에 그대로 노출되어 AI 미검수 흔적이 명확함
-2026-07-13 08:19:03,211 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '표현으로 수정', '조사형 표현으로 수정' 등 편집 지시 문구가 본문에 그대로 노출되어 AI 미검수 흔적이 명확함
-2026-07-13 08:19:03,211 [WARNING] adsense_validator —   🔴 '표현으로 수정', '조사형 표현으로 수정' 등 편집 지시 문구가 본문에 그대로 노출되어 있어 즉시 삭제 및 재검수 필요
-2026-07-13 08:19:03,211 [WARNING] adsense_validator —   🔴 '삼성 노조 호남 💡 핵심 포인트' 등 부자연스러운 키워드 삽입 구문 정리 필요
-2026-07-13 08:19:03,211 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 61/100, 이유: ["[AI 생성 의심도] '표현으로 수정', '조사형 표현으로 수정' 등 편집 지시 문구가 본문에 그대로 노출되어 AI 미검수 흔적이 명확함"]) — 재생성 2/2
-2026-07-13 08:19:06,211 [INFO] content_generator — 포스트 생성 중: '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:19:16,708 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:19:16,709 [INFO] research_collector — 검색 의도: 삼성 노조가 호남 지역 반도체 투자에 반대한다는 이슈의 사실관계와 배경을 파악하려는 의도
-2026-07-13 08:19:25,010 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:19:45,112 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:19:45,113 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:20:01,612 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:20:01,613 [INFO] source_validator — 출처 검증: 8/8개 통과, 등급 분포 {'B': 7, 'C': 1}
-2026-07-13 08:20:01,614 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-07-13 08:20:01,614 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-13 08:20:02,618 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:21:15,776 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:21:23,993 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-07-13 08:21:23,993 [INFO] content_generator — 섹션별 이미지 검색: ['삼성 노조 호남']
-2026-07-13 08:21:26,042 [INFO] image_fetcher — 이미지 수집 성공: '삼성 노조 호남' → 제목='business / woman / people / shooting / f' (관련성=0.40)
-2026-07-13 08:21:26,042 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-13 08:21:26,043 [INFO] content_generator — 포스트 생성 완료: '삼성 노조 호남 반도체 투자 반대, 투자자가 봐야 할 포인트' (2667자, 이미지 1개)
-2026-07-13 08:21:26,859 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:21:37,379 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:21:38,292 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:21:45,310 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '삼성 노조 호남 반도체 투자 반대, 투자자가 봐야 할 포인트'
-2026-07-13 08:21:45,310 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 2667자로 기준 미달 구간이며, 구체적 수치(84%, 7월13일)는 있으나 대부분 기사 재구성 성격이 강함
-2026-07-13 08:21:45,310 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 충족하나 확인 항목 표 부분과 자료 종합 단락이 500자 이상으로 길어 가독성 저하
-2026-07-13 08:21:45,310 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술은 있으나 본문 내 출처 인용이 명시적으로 드러나지 않음
-2026-07-13 08:21:45,310 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글로 저작권 위반은 없으나 가독성 측면에서 보완 필요
-2026-07-13 08:21:45,310 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '정리하면' 등 자동요약 어구와 표 형태의 항목 나열 패턴이 AI 생성 특유의 구조를 보임
-2026-07-13 08:21:45,315 [INFO] internal_linker — 내부 링크 후보 1개 발견
-2026-07-13 08:21:45,316 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguasset.blogspot.com/2026/07/2026_01523211003.html
-2026-07-13 08:21:45,316 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-13 08:21:45,316 [INFO] main —   제목: 삼성 노조 호남 반도체 투자 반대, 투자자가 봐야 할 포인트
-2026-07-13 08:21:45,316 [INFO] main —   이미지: 1개 삽입
-2026-07-13 08:21:45,316 [INFO] main —   글자 수: 2667자
-2026-07-13 08:21:46,238 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:21:56,103 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:21:56,908 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:22:01,734 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '삼성 노조 호남 반도체 투자 반대, 투자자가 봐야 할 포인트'
-2026-07-13 08:22:01,734 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 날짜·수치(84%, 7월 13일 등)와 개인 경험 서술이 있으나 글자 수가 2667자로 2500~3999자 구간에 해당해 warn
-2026-07-13 08:22:01,734 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글로 정책 위반은 아니나 가독성·SEO 측면에서 warn
-2026-07-13 08:22:01,734 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '정리하면' 등 자동요약 문구와 표 형태의 항목 나열 패턴이 다소 기계적으로 느껴짐
-2026-07-13 08:22:01,734 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-13 08:22:03,043 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:23:19,281 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:23:21,244 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:23:32,920 [INFO] final_editor —   ✏️ 제목 최종 교정: '삼성 노조 호남 반도체 투자 반대, 투자자가 봐야 할 포인트' → '삼성 노조 호남 반도체 투자 반대, 투자자 체크포인트'
-2026-07-13 08:23:32,920 [INFO] final_editor —   ✏️ 메타 설명 교정 (88자)
-2026-07-13 08:23:32,920 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 목차·요약박스·표·개인경험메모·주의사항·FAQ 5개·작성자메모·내부링크 박스를 추가하고, 긴 문단을 2~4문장 단위로 분리해 모바일 가독성을 높였습니다. 이미지 3곳 위치와 구체적 alt 텍스트를 제안했습니다.
-2026-07-13 08:23:33,059 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '삼성 노조 호남 반도체 투자 반대' — 면책·팩트체크 확인 권장
-2026-07-13 08:23:33,059 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-07-13 08:23:34,167 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_13.html
-2026-07-13 08:23:34,175 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_13.html
-2026-07-13 08:24:06,230 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:24:06,231 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-13 08:24:06,231 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-13 08:24:06,238 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '삼성 노조 호남 반도체 투자 반대, 투자자 체크포인트'
-2026-07-13 08:24:07,928 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:24:11,811 [INFO] comment_manager —   생성된 댓글: 글 쓰면서 개인적으로 궁금했던 부분인데, 이런 노사 갈등 이슈가 나올 때는 주가 반응 자체보다 '외국인·기관 수급이 흔들리는지'를 같이 보시는 ...
-2026-07-13 08:27:12,017 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-07-13 08:27:12,018 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-13 08:27:12,018 [INFO] main — 
-============================================================
-2026-07-13 08:27:12,018 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-13 08:27:12,018 [INFO] main — ============================================================
-2026-07-13 08:27:12,038 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-13 08:27:12,053 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-13 08:27:12,066 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-13 08:27:12,303 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-13 08:27:12,605 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-13 08:27:12,905 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-13 08:27:12,906 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-13 08:27:12,908 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-13 08:27:12,918 [INFO] post_manager —   포스트 레지스트리: 전체 206개 (게시 138 / 실패 15 / 대기 46)
-2026-07-13 08:27:12,918 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-13 08:27:12,918 [INFO] dashboard_exporter —   포스트: 82개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-13 08:27:12,919 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-13 08:27:12,920 [INFO] main — ============================================================
-2026-07-13 08:27:12,920 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-13 08:27:12
-2026-07-13 08:27:12,920 [INFO] main — ============================================================
-2026-07-13 08:27:12,927 [INFO] main — 수집된 키워드 1개: ['삼성 노조 호남 반도체 투자 반대']
-2026-07-13 08:27:12,928 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 14일 전)
-2026-07-13 08:27:14,512 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:27:14,513 [INFO] main — 단독 포스트 대상 키워드 1개: ['삼성 노조 호남 반도체 투자 반대']
-2026-07-13 08:27:14,523 [INFO] main — 
-[1/1] 키워드: '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:27:14,524 [INFO] content_generator — 포스트 생성 중: '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:27:22,582 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:27:22,583 [INFO] research_collector — 검색 의도: 삼성 노조가 호남 지역 반도체 투자에 반대하는 이유와 배경 확인
-2026-07-13 08:27:32,903 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:27:58,334 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:27:58,335 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:28:24,281 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:28:24,282 [INFO] source_validator — 출처 검증: 6/8개 통과, 등급 분포 {'B': 6, 'X': 2}
-2026-07-13 08:28:24,283 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-13 08:28:25,147 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:29:31,129 [WARNING] content_generator — 컨텐츠 너무 짧음(2349자, 최소 2500자) — 재시도 1/3
-2026-07-13 08:29:34,129 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-13 08:29:35,017 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:30:36,546 [WARNING] content_generator — 컨텐츠 너무 짧음(2291자, 최소 2500자) — 재시도 2/3
-2026-07-13 08:30:39,546 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-13 08:30:40,494 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:31:41,477 [WARNING] content_generator — 최소 분량 미달(2495자) — 재시도 소진, 해당 분량으로 진행
-2026-07-13 08:31:44,215 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:31:54,596 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:31:56,251 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:31:58,815 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-07-13 08:31:58,816 [INFO] content_generator — 섹션별 이미지 검색: ['삼성 노조 호남']
-2026-07-13 08:31:59,092 [INFO] image_fetcher — 이미지 수집 성공: '삼성 노조 호남' → 제목='business / woman / people / shooting / f' (관련성=0.40)
-2026-07-13 08:31:59,092 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-13 08:31:59,093 [INFO] content_generator — 포스트 생성 완료: '삼성전자 노조, 호남 반도체 메가프로젝트에 왜 반대했을까 (2026년 7월 기준)' (2495자, 이미지 1개)
-2026-07-13 08:31:59,888 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:32:11,534 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:32:12,292 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:32:19,236 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 61/100 — '삼성전자 노조, 호남 반도체 메가프로젝트에 왜 반대했을까 (20'
-2026-07-13 08:32:19,236 [INFO] adsense_validator —   ❌ 원본성 및 품질: 본문이 2495자로 기준선 2500자에 미달하며 대부분 사실 나열 중심으로 개인 경험적 통찰이 제한적
-2026-07-13 08:32:19,236 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개로 기준 충족하나 각 섹션 내 단락이 매우 길게 이어져 가독성이 떨어짐
-2026-07-13 08:32:19,236 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 
-2026-07-13 08:32:19,236 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 호기심 서술과 출처 3개는 있으나 실질적 직접 경험이나 전문성 신호는 약함
-2026-07-13 08:32:19,236 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 SEO 및 가독성 측면에서 보완 필요
-2026-07-13 08:32:19,236 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 💡 요약 박스, '정리하면' 등 정형화된 요약 문구와 격식체 문장이 반복되어 AI 생성 패턴이 감지됨
-2026-07-13 08:32:19,236 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 본문이 2495자로 기준선 2500자에 미달하며 대부분 사실 나열 중심으로 개인 경험적 통찰이 제한적
-2026-07-13 08:32:19,237 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 61/100, 이유: ['[원본성 및 품질] 본문이 2495자로 기준선 2500자에 미달하며 대부분 사실 나열 중심으로 개인 경험적 통찰이 제한적']) — 재생성 2/2
-2026-07-13 08:32:22,237 [INFO] content_generator — 포스트 생성 중: '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:32:30,167 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:32:30,168 [INFO] research_collector — 검색 의도: 삼성 노조가 호남(광주/전북 등) 반도체 투자에 반대한다는 주장의 사실 여부와 배경을 확인하려는 의도
-2026-07-13 08:32:39,148 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:32:58,769 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:32:58,769 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '삼성 노조 호남 반도체 투자 반대'
-2026-07-13 08:33:14,832 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:33:14,833 [INFO] source_validator — 출처 검증: 6/8개 통과, 등급 분포 {'B': 6, 'X': 2}
-2026-07-13 08:33:14,833 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-13 08:33:15,696 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:34:16,883 [WARNING] content_generator — 컨텐츠 너무 짧음(2190자, 최소 2500자) — 재시도 1/3
-2026-07-13 08:34:19,883 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-13 08:34:23,508 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:35:49,560 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:35:59,125 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:35:59,963 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:36:04,732 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-07-13 08:36:04,733 [INFO] content_generator — 섹션별 이미지 검색: ['삼성 노조 호남']
-2026-07-13 08:36:06,581 [INFO] image_fetcher — 이미지 수집 성공: '삼성 노조 호남' → 제목='business / woman / people / shooting / f' (관련성=0.40)
-2026-07-13 08:36:06,581 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-13 08:36:06,581 [INFO] content_generator — 포스트 생성 완료: '삼성전자 노조 호남 반도체 투자 반대, 왜 이런 입장이 나왔나 (2026년 7월 기준)' (3041자, 이미지 1개)
-2026-07-13 08:36:07,538 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:36:19,003 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:36:20,257 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:36:26,552 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '삼성전자 노조 호남 반도체 투자 반대, 왜 이런 입장이 나왔나 '
-2026-07-13 08:36:26,552 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 3041자로 기준 미달이며 개인 경험 언급은 있으나 대부분 보도 재구성 위주
-2026-07-13 08:36:26,552 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 일부 단락이 500자 이상으로 길게 이어짐
-2026-07-13 08:36:26,552 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술은 있으나 출처가 '관련 보도', '언론 보도' 등으로 모호하게 인용됨
-2026-07-13 08:36:26,552 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 SEO 및 가독성 측면에서 보완 필요
-2026-07-13 08:36:26,552 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약 박스, '정리해보면' 등 정형화된 AI 서술 패턴이 일부 확인됨
-2026-07-13 08:36:26,555 [INFO] internal_linker — 내부 링크 후보 2개 발견
-2026-07-13 08:36:26,556 [INFO] internal_linker —   [1/5] '삼성 노조' -> https://www.hoguwhat.com/2026/07/blog-post_13.html
-2026-07-13 08:36:26,557 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-13 08:36:26,557 [INFO] main —   제목: 삼성전자 노조 호남 반도체 투자 반대, 왜 이런 입장이 나왔나 (2026년 7월 기준)
-2026-07-13 08:36:26,557 [INFO] main —   이미지: 1개 삽입
-2026-07-13 08:36:26,557 [INFO] main —   글자 수: 3041자
-2026-07-13 08:36:27,521 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:36:38,097 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:36:38,898 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:36:42,560 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '삼성전자 노조 호남 반도체 투자 반대, 왜 이런 입장이 나왔나 '
-2026-07-13 08:36:42,561 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3041자로 글자수 기준 warn 구간이며 개인 경험 언급은 있으나 대부분 뉴스 요약·재구성 수준
-2026-07-13 08:36:42,561 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 문단 구분 없이 500자 이상 통짜 문단이 다수 존재
-2026-07-13 08:36:42,561 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 저작권 위반은 없으나 가독성 측면에서 보완 필요
-2026-07-13 08:36:42,561 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 정형화된 '~습니다' 종결과 '정리해보면' 등 요약 패턴이 반복되어 AI 생성 톤이 다소 느껴짐
-2026-07-13 08:36:42,561 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-07-13 08:36:42,561 [WARNING] main —      🟡 [원본성 및 품질] 3041자로 글자수 기준 warn 구간이며 개인 경험 언급은 있으나 대부분 뉴스 요약·재구성 수준
-2026-07-13 08:36:42,561 [WARNING] main —      🟡 [구조 및 가독성] H2 5개는 적절하나 문단 구분 없이 500자 이상 통짜 문단이 다수 존재
-2026-07-13 08:36:42,561 [WARNING] main —      🟡 [이미지 정책] 이미지가 전혀 없어 저작권 위반은 없으나 가독성 측면에서 보완 필요
-2026-07-13 08:36:42,561 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-07-13 08:36:43,579 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:37:52,952 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3041자 → 4158자 (+1117자)
-2026-07-13 08:37:52,953 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-13 08:37:54,068 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:38:05,278 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:38:06,055 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:38:11,945 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '삼성전자 노조 호남 반도체 투자 반대, 왜 이런 입장이 나왔나 '
-2026-07-13 08:38:11,945 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 충분하나 '노조가 짚은 전력·인프라 문제' 등 일부 단락이 500자 이상으로 길게 이어짐
-2026-07-13 08:38:11,945 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부가 확인되지 않아 정책상 warn 처리
-2026-07-13 08:38:11,945 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 개인적 경험 서술은 있으나 '~한 셈입니다', '~로 보입니다' 등 정형화된 문어체 패턴이 반복됨
-2026-07-13 08:38:11,945 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
-2026-07-13 08:38:11,945 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-13 08:38:12,922 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:39:28,042 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 08:39:29,245 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 08:40:23,635 [INFO] final_editor —   ✏️ 제목 최종 교정: '삼성전자 노조 호남 반도체 투자 반대, 왜 이런 입장이 나왔나 (2026년 7월 기준)' → '삼성전자 노조 호남 반도체 투자 반대, 배경과 쟁점 정리'
-2026-07-13 08:40:23,635 [INFO] final_editor —   ✏️ 메타 설명 교정 (115자)
-2026-07-13 08:40:23,635 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 정리하고 요약박스, 목차, 표, 개인경험메모, 주의사항, FAQ, 작성자메모, 내부링크를 추가해 발행 가능한 형태로 완성했으며 문단을 짧게 나눠 모바일 가독성을 높였습니다.
-2026-07-13 08:40:23,755 [INFO] related_posts — 관련 포스트 1개 섹션 생성
-2026-07-13 08:40:23,755 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '삼성 노조 호남 반도체 투자 반대' — 면책·팩트체크 확인 권장
-2026-07-13 08:40:23,755 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-07-13 08:40:24,867 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/blog-post_13.html
 2026-07-13 08:40:24,875 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/blog-post_13.html
 2026-07-13 08:40:53,335 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-13 08:40:53,336 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
@@ -847,3 +498,361 @@
 2026-07-13 12:55:11,915 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-13 12:55:11,915 [INFO] dashboard_exporter —   포스트: 82개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-13 12:55:11,915 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-13 23:02:16,691 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
+2026-07-13 23:02:16,691 [INFO] main —   - [blog1] HOGU What?
+2026-07-13 23:02:16,691 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
+2026-07-13 23:02:16,691 [INFO] main —   - [blog3] 금융NEWS
+2026-07-13 23:02:16,691 [INFO] main — ============================================================
+2026-07-13 23:02:16,691 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-13 23:02:16
+2026-07-13 23:02:16,691 [INFO] main — ============================================================
+2026-07-13 23:02:16,698 [INFO] keyword_collector — 포스팅 이력 코퍼스: 35개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-13 23:02:20,458 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-13 23:02:25,016 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:02:25,031 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-13 23:02:25,031 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-13 23:02:25,458 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기']
+2026-07-13 23:02:25,743 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-13 23:02:26,087 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-13 23:02:26,090 [INFO] keyword_collector —   [high_cpc] 1개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기']
+2026-07-13 23:02:26,090 [INFO] keyword_collector —   [naver_realtime] 1개: ['전국 치킨 맛집 여행지도 추천 코스']
+2026-07-13 23:02:26,090 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기', '전국 치킨 맛집 여행지도 추천 코스']
+2026-07-13 23:02:26,090 [INFO] main — 수집된 키워드 2개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기', '전국 치킨 맛집 여행지도 추천 코스']
+2026-07-13 23:02:26,092 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
+2026-07-13 23:02:26,092 [INFO] main — 단독 포스트 대상 키워드 1개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기']
+2026-07-13 23:02:26,102 [INFO] main — 
+[1/1] 키워드: '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-07-13 23:02:26,102 [INFO] content_generator — 포스트 생성 중: '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-07-13 23:02:33,082 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:02:33,082 [INFO] research_collector — 검색 의도: 여행자보험 가입의 필요성과 실제 보상 사례를 통해 가입 여부를 판단하고자 함
+2026-07-13 23:02:47,211 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-07-13 23:03:11,979 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:03:11,980 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-07-13 23:03:27,131 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:03:27,134 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'A': 1, 'X': 1, 'C': 2, 'B': 1}
+2026-07-13 23:03:27,135 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-07-13 23:03:27,135 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-13 23:03:27,888 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:04:47,870 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:04:59,130 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:05:01,047 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:05:02,818 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-13 23:05:02,820 [INFO] content_generator — 섹션별 이미지 검색: ['여행자보험 가입 해야']
+2026-07-13 23:05:03,174 [INFO] image_fetcher — 이미지 수집 성공: '여행자보험 가입 해야' → 제목='business / woman / people / shooting / f' (관련성=0.40)
+2026-07-13 23:05:03,174 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-13 23:05:03,176 [INFO] content_generator — 포스트 생성 완료: '여행자보험 꼭 필요할까, 2026년 가입 전 점검 포인트' (2864자, 이미지 1개)
+2026-07-13 23:05:03,870 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:05:15,424 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:05:16,094 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:05:23,986 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 59/100 — '여행자보험 꼭 필요할까, 2026년 가입 전 점검 포인트'
+2026-07-13 23:05:23,986 [INFO] adsense_validator —   ❌ 원본성 및 품질: 실제 경험담이나 구체적 수치·날짜 없이 '이용자 후기 종합', '자료에서 확인' 식 일반론만 재구성됨
+2026-07-13 23:05:23,986 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: 
+2026-07-13 23:05:23,986 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개는 인용됐으나 1인칭 직접 경험이나 구체적 사례 제시가 부족함
+2026-07-13 23:05:23,986 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 시각적 보완 부족(저작권 위반은 아님)
+2026-07-13 23:05:23,986 [INFO] adsense_validator —   ❌ AI 생성 의심도: 동일 키워드 문구 반복, 격식체·요약형 표현 패턴이 두드러져 AI 생성 의심
+2026-07-13 23:05:23,986 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 실제 경험담이나 구체적 수치·날짜 없이 '이용자 후기 종합', '자료에서 확인' 식 일반론만 재구성됨
+2026-07-13 23:05:23,986 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 동일 키워드 문구 반복, 격식체·요약형 표현 패턴이 두드러져 AI 생성 의심
+2026-07-13 23:05:23,986 [WARNING] adsense_validator —   🔴 실제 개인 경험이나 구체적 보상 사례(날짜, 금액 등)가 없어 제목의 '실제 보상 경험 후기' 주장과 본문 내용이 불일치함
+2026-07-13 23:05:23,986 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 59/100, 이유: ["[원본성 및 품질] 실제 경험담이나 구체적 수치·날짜 없이 '이용자 후기 종합', '자료에서 확인' 식 일반론만 재구성됨"]) — 재생성 2/2
+2026-07-13 23:05:26,986 [INFO] content_generator — 포스트 생성 중: '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-07-13 23:05:33,599 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:05:33,600 [INFO] research_collector — 검색 의도: 여행자보험 가입 필요성과 실제 보상 사례를 통해 가입 여부를 결정하고자 하는 정보 탐색
+2026-07-13 23:05:45,303 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-07-13 23:06:07,409 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:06:07,410 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-07-13 23:06:30,360 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:06:30,361 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'B': 1, 'D': 3, 'X': 2}
+2026-07-13 23:06:30,362 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
+2026-07-13 23:06:30,362 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-13 23:06:32,178 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:07:49,312 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:07:59,778 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:08:00,447 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:08:01,213 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-13 23:08:01,214 [INFO] content_generator — 섹션별 이미지 검색: ['여행자보험 가입 해야']
+2026-07-13 23:08:01,440 [INFO] image_fetcher — 이미지 수집 성공: '여행자보험 가입 해야' → 제목='business / woman / people / shooting / f' (관련성=0.40)
+2026-07-13 23:08:01,440 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-13 23:08:01,441 [INFO] content_generator — 포스트 생성 완료: '여행자보험 가입 꼭 해야 할까, 2026년 실제 보상 사례로 확인했습니다' (2707자, 이미지 1개)
+2026-07-13 23:08:02,170 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:08:14,384 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:08:15,108 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:08:25,411 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:08:26,208 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:08:31,686 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 59/100 — '여행자보험 가입 꼭 해야 할까, 2026년 실제 보상 사례로 확'
+2026-07-13 23:08:31,686 [INFO] adsense_validator —   ❌ 원본성 및 품질: 출처 표현을 수정하라는 AI 편집 지시문이 본문에 그대로 노출되어 원본성·품질에 심각한 결함이 있음
+2026-07-13 23:08:31,686 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2는 6개로 충분하나 본문이 단락 구분 없이 이어져 500자 이상 블록이 다수 존재함
+2026-07-13 23:08:31,686 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: '한 언론 보도에 따르면' 식의 모호한 인용만 있고 실제 출처 링크나 구체적 개인 경험 서술이 부족함
+2026-07-13 23:08:31,686 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 없어 저작권 위반은 없으나 시각자료 부재로 가독성·SEO 측면에서 보완 필요
+2026-07-13 23:08:31,686 [INFO] adsense_validator —   ❌ AI 생성 의심도: AI 편집 지시문('~로 수정,')이 그대로 남아있어 AI 생성 원고를 검수 없이 게시한 정황이 뚜렷함
+2026-07-13 23:08:31,686 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 출처 표현을 수정하라는 AI 편집 지시문이 본문에 그대로 노출되어 원본성·품질에 심각한 결함이 있음
+2026-07-13 23:08:31,686 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] AI 편집 지시문('~로 수정,')이 그대로 남아있어 AI 생성 원고를 검수 없이 게시한 정황이 뚜렷함
+2026-07-13 23:08:31,687 [WARNING] adsense_validator —   🔴 본문 중간에 'AI에게 내린 수정 지시문'이 그대로 노출되어 있어 발행 전 검수가 이루어지지 않은 것으로 보이며, 즉시 해당 문장을 삭제하고 전체 원고를 재검수해야 함
+2026-07-13 23:08:31,693 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-13 23:08:31,694 [INFO] internal_linker —   [1/5] '여행지' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_547.h
+2026-07-13 23:08:31,699 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-13 23:08:31,699 [INFO] main —   제목: 여행자보험 가입 꼭 해야 할까, 2026년 실제 보상 사례로 확인했습니다
+2026-07-13 23:08:31,699 [INFO] main —   이미지: 1개 삽입
+2026-07-13 23:08:31,699 [INFO] main —   글자 수: 2707자
+2026-07-13 23:08:32,527 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:08:46,018 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:08:46,712 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:08:57,130 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:09:02,813 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:09:08,242 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '여행자보험 가입 꼭 해야 할까, 2026년 실제 보상 사례로 확'
+2026-07-13 23:09:08,242 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2707자로 warn 구간이며 구체적 개인 경험·수치보다 일반 정보 재구성이 많음
+2026-07-13 23:09:08,242 [INFO] adsense_validator —   ⚠️ SEO 최적화: '여행자보험 가입' 문구가 다소 기계적으로 반복되나 제목-본문 일치는 양호
+2026-07-13 23:09:08,242 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 표현이 '한 언론 보도'로 모호하고 개인 경험보다 일반론 위주 서술
+2026-07-13 23:09:08,242 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없어 저작권 위반은 없으나 가독성·SEO 측면에서 보완 필요
+2026-07-13 23:09:08,242 [INFO] adsense_validator —   ❌ AI 생성 의심도: 본문 중 '~로 수정'과 같은 편집 지시문이 그대로 노출되어 미검수 AI 초안 게재 흔적이 뚜렷함
+2026-07-13 23:09:08,242 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 본문 중 '~로 수정'과 같은 편집 지시문이 그대로 노출되어 미검수 AI 초안 게재 흔적이 뚜렷함
+2026-07-13 23:09:08,242 [WARNING] adsense_validator —   🔴 본문 중 '한 언론 보도에 따르면과 같이 출처를 일반적으로 표현하는 것이 안전함로 수정' 등 편집 지시 문구가 그대로 노출되어 있어 즉시 삭제 및 전체 재검수 필요
+2026-07-13 23:09:08,242 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
+2026-07-13 23:09:08,242 [WARNING] main —      🔴 [AI 생성 의심도] 본문 중 '~로 수정'과 같은 편집 지시문이 그대로 노출되어 미검수 AI 초안 게재 흔적이 뚜렷함
+2026-07-13 23:09:08,242 [WARNING] main —      🔴 본문 중 '한 언론 보도에 따르면과 같이 출처를 일반적으로 표현하는 것이 안전함로 수정' 등 편집 지시 문구가 그대로 노출되어 있어 즉시 삭제 및 전체 재검수 필요
+2026-07-13 23:09:08,242 [WARNING] main —      🟡 [원본성 및 품질] 2707자로 warn 구간이며 구체적 개인 경험·수치보다 일반 정보 재구성이 많음
+2026-07-13 23:09:08,242 [WARNING] main —      🟡 [SEO 최적화] '여행자보험 가입' 문구가 다소 기계적으로 반복되나 제목-본문 일치는 양호
+2026-07-13 23:09:08,242 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 표현이 '한 언론 보도'로 모호하고 개인 경험보다 일반론 위주 서술
+2026-07-13 23:09:08,242 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
+2026-07-13 23:09:10,204 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:10:16,051 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2707자 → 3255자 (+548자)
+2026-07-13 23:10:16,051 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-13 23:10:17,918 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:10:28,863 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:10:30,764 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:10:36,046 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '여행자보험 가입 꼭 해야 할까, 2026년 실제 보상 사례로 확'
+2026-07-13 23:10:36,046 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 경험(지연 4시간, 영수증 3만8천원 등)은 우수하나 글자 수 3255자로 4000자 기준 미달
+2026-07-13 23:10:36,046 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 기준 충족하나 단락 구분이 불명확하고 500자 이상 긴 단락이 다수 존재
+2026-07-13 23:10:36,046 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가하나 저작권 위반은 없어 기본 warn 처리
+2026-07-13 23:10:36,046 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 84/100)
+2026-07-13 23:10:36,046 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-07-13 23:10:37,985 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:11:52,200 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:11:53,941 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:12:12,848 [INFO] final_editor —   ✏️ 제목 최종 교정: '여행자보험 가입 꼭 해야 할까, 2026년 실제 보상 사례로 확인했습니다' → '여행자보험 가입 꼭 해야 할까? 실제 보상 경험으로 알아본 후기'
+2026-07-13 23:12:12,849 [INFO] final_editor —   ✏️ 메타 설명 교정 (81자)
+2026-07-13 23:12:12,849 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 요약박스·목차·표 2개·개인경험메모·주의사항·FAQ 5개·작성자메모·내부링크를 추가하고 긴 문단을 2~4문장 단위로 분리해 발행 형식에 맞게 편집함.
+2026-07-13 23:12:13,029 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-07-13 23:12:13,511 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_14.html
+2026-07-13 23:12:13,518 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_14.html
+2026-07-13 23:12:45,017 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:12:45,019 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-13 23:12:45,019 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-13 23:12:45,024 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '여행자보험 가입 꼭 해야 할까? 실제 보상 경험으로 알아본 후기'
+2026-07-13 23:12:46,918 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:12:49,786 [INFO] comment_manager —   생성된 댓글: 글 잘 읽었습니다! 하나 덧붙이면, 지연 관련 청구할 땐 항공사에서 발급해주는 '지연 확인서(Delay Certificate)'를 꼭 받아두시는...
+2026-07-13 23:15:50,016 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-13 23:15:50,017 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-13 23:15:50,017 [INFO] main — 
+============================================================
+2026-07-13 23:15:50,018 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-13 23:15:50,018 [INFO] main — ============================================================
+2026-07-13 23:15:50,036 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-13 23:15:50,047 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-13 23:15:50,057 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-13 23:15:50,312 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-13 23:15:50,689 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-13 23:15:51,047 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-13 23:15:51,048 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-13 23:15:51,050 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-13 23:15:51,057 [INFO] post_manager —   포스트 레지스트리: 전체 212개 (게시 142 / 실패 15 / 대기 47)
+2026-07-13 23:15:51,057 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-13 23:15:51,058 [INFO] dashboard_exporter —   포스트: 82개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-13 23:15:51,058 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-13 23:15:51,059 [INFO] main — ============================================================
+2026-07-13 23:15:51,059 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-13 23:15:51
+2026-07-13 23:15:51,059 [INFO] main — ============================================================
+2026-07-13 23:15:51,064 [INFO] keyword_collector — 포스팅 이력 코퍼스: 24개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-13 23:15:56,414 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 50개
+2026-07-13 23:16:01,386 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:16:01,387 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-13 23:16:01,387 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-13 23:16:01,775 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-13 23:16:01,775 [INFO] keyword_collector — 유사 주제 제외 2개: ['여름 국내 피서지 추천 2026 계곡 바다 숲', '장마철 실내 여행지 추천 코스']
+2026-07-13 23:16:01,775 [INFO] keyword_collector —   [naver_realtime] 2개: ['여행 빈 캐리어 꿀팁 짐싸기 노하우', '캐시워크 앱테크로 용돈 버는 방법']
+2026-07-13 23:16:01,775 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여행 빈 캐리어 꿀팁 짐싸기 노하우', '캐시워크 앱테크로 용돈 버는 방법']
+2026-07-13 23:16:01,776 [INFO] main — 수집된 키워드 2개: ['여행 빈 캐리어 꿀팁 짐싸기 노하우', '캐시워크 앱테크로 용돈 버는 방법']
+2026-07-13 23:16:01,776 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 15일 전)
+2026-07-13 23:16:02,962 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:16:02,963 [INFO] main — 단독 포스트 대상 키워드 1개: ['여행 빈 캐리어 꿀팁 짐싸기 노하우']
+2026-07-13 23:16:02,971 [INFO] main — 
+[1/1] 키워드: '여행 빈 캐리어 꿀팁 짐싸기 노하우'
+2026-07-13 23:16:02,971 [INFO] content_generator — 포스트 생성 중: '여행 빈 캐리어 꿀팁 짐싸기 노하우'
+2026-07-13 23:16:10,144 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:16:10,145 [INFO] research_collector — 검색 의도: 여행 갈 때 캐리어를 효율적으로 싸는 방법과 빈 공간 활용 꿀팁을 찾는 의도
+2026-07-13 23:16:33,339 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '여행 빈 캐리어 꿀팁 짐싸기 노하우'
+2026-07-13 23:16:52,700 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:16:52,700 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '여행 빈 캐리어 꿀팁 짐싸기 노하우'
+2026-07-13 23:17:18,437 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:17:18,438 [INFO] source_validator — 출처 검증: 6/8개 통과, 등급 분포 {'X': 2, 'D': 4, 'C': 2}
+2026-07-13 23:17:18,439 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-13 23:17:19,223 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:18:25,433 [WARNING] content_generator — 컨텐츠 너무 짧음(2226자, 최소 2500자) — 재시도 1/3
+2026-07-13 23:18:28,434 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-13 23:18:30,317 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:19:30,319 [WARNING] content_generator — 컨텐츠 너무 짧음(2377자, 최소 2500자) — 재시도 2/3
+2026-07-13 23:19:33,320 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-13 23:19:34,042 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:20:54,103 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:21:02,985 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:21:03,859 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:21:08,034 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-07-13 23:21:08,035 [INFO] content_generator — 섹션별 이미지 검색: ['여행 캐리어 짐싸기']
+2026-07-13 23:21:08,344 [INFO] image_fetcher — 이미지 수집 성공: '여행 캐리어 짐싸기' → 제목='fantasy / to travel / travel / vacations' (관련성=0.25)
+2026-07-13 23:21:08,344 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-13 23:21:08,345 [INFO] content_generator — 포스트 생성 완료: '빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리' (3053자, 이미지 1개)
+2026-07-13 23:21:09,196 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:21:21,593 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:21:22,389 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:21:28,055 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리'
+2026-07-13 23:21:28,055 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수 3053자로 기준 범위(2500~3999)에 해당하며, 대부분 타 매체 팁 재정리 위주로 개인 경험 비중이 낮음
+2026-07-13 23:21:28,055 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락이 500자 이상으로```
+길어 가독성이 다소 떨어짐
+2026-07-13 23:21:28,055 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글임
+2026-07-13 23:21:28,055 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~로 알려진', '~라고 합니다' 등 정형화된 인용 패턴이 반복돼 AI 생성 특유의 문체가 다소 드러남
+2026-07-13 23:21:28,059 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-13 23:21:28,061 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-13 23:21:28,061 [INFO] main —   제목: 빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리
+2026-07-13 23:21:28,061 [INFO] main —   이미지: 1개 삽입
+2026-07-13 23:21:28,061 [INFO] main —   글자 수: 3053자
+2026-07-13 23:21:28,780 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:21:40,961 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:21:41,731 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:21:47,764 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리'
+2026-07-13 23:21:47,764 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3053자로 기준 충족하나 버즈피드·코리아헤럴드·GS칼텍스 등 기존 자료 재정리 위주이며 개인 경험은 짧은 감상 수준에 그침
+2026-07-13 23:21:47,764 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 각 섹션 내 단락이500자 이상으로 길게 이어져 가독성이 다소 떨어짐
+2026-07-13 23:21:47,764 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3곳 인용과 균형 잡힌 시각은 있으나 1인칭 실제 경험 사례가 구체적이지 않음
+2026-07-13 23:21:47,764 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 저작권 문제는 없으나 시각 자료 부재로 가독성 보완 필요
+2026-07-13 23:21:47,764 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다만', '개인적으로는' 등 유사 전환구가 반복되며 설명 패턴이 다소 정형화되어 있음
+2026-07-13 23:21:47,764 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-07-13 23:21:47,764 [WARNING] main —      🟡 [원본성 및 품질] 3053자로 기준 충족하나 버즈피드·코리아헤럴드·GS칼텍스 등 기존 자료 재정리 위주이며 개인 경험은 짧은 감상 수준에 그침
+2026-07-13 23:21:47,764 [WARNING] main —      🟡 [구조 및 가독성] H2 5개는 적절하나 각 섹션 내 단락이500자 이상으로 길게 이어져 가독성이 다소 떨어짐
+2026-07-13 23:21:47,764 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3곳 인용과 균형 잡힌 시각은 있으나 1인칭 실제 경험 사례가 구체적이지 않음
+2026-07-13 23:21:47,764 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-07-13 23:21:48,475 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:22:58,078 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3053자 → 4292자 (+1239자)
+2026-07-13 23:22:58,078 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-13 23:23:01,033 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:23:13,488 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:23:14,311 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:23:20,719 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리'
+2026-07-13 23:23:20,719 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 개인 경험(프라하, 방콕 사례)은 있으나 버즈피드·코리아헤럴드 등 기존 자료재인용 위주 구성으로 재조합 성격이 강함
+2026-07-13 23:23:20,719 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 각 섹션 단락이 500자 이상으로 길어 가독성 저하
+2026-07-13 23:23:20,719 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 언급이 없어 저작권 위반은 아니나 이미지 부재로 warn
+2026-07-13 23:23:20,719 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 경험담-팁소개-출처-비판적시각 구조가 섹션마다 반복되어 다소 정형화된 패턴
+2026-07-13 23:23:20,719 [WARNING] main —   ⚠️ 자동 수정 후에도 기준 미달 (점수: 79/100) — pending 저장
+2026-07-13 23:23:20,719 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리' (점수: 79/100, 권장: review)
+2026-07-13 23:23:20,732 [INFO] dashboard_exporter —   검토 대기 저장: 빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리 (7738자 HTML)
+2026-07-13 23:23:20,738 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 65개)
+2026-07-13 23:23:20,738 [INFO] main — 
+============================================================
+2026-07-13 23:23:20,738 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-13 23:23:20,738 [INFO] main — ============================================================
+2026-07-13 23:23:20,754 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-13 23:23:20,792 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-13 23:23:20,802 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-13 23:23:21,270 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-13 23:23:21,271 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-13 23:23:21,273 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-13 23:23:21,280 [INFO] post_manager —   포스트 레지스트리: 전체 213개 (게시 142 / 실패 15 / 대기 48)
+2026-07-13 23:23:21,280 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-13 23:23:21,280 [INFO] dashboard_exporter —   포스트: 83개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-13 23:23:21,281 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-13 23:23:21,282 [INFO] main — ============================================================
+2026-07-13 23:23:21,282 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-13 23:23:21
+2026-07-13 23:23:21,282 [INFO] main — ============================================================
+2026-07-13 23:23:21,287 [INFO] keyword_collector — 포스팅 이력 코퍼스: 20개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-13 23:23:25,467 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-13 23:23:31,368 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:23:31,369 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-13 23:23:31,369 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-13 23:23:31,938 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-13 23:23:31,938 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-13 23:23:31,939 [INFO] keyword_collector —   [high_cpc] 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-13 23:23:31,939 [INFO] keyword_collector —   [naver_realtime] 1개: ['금리 인상기 대출 갈아타기 전략 2026']
+2026-07-13 23:23:31,939 [INFO] keyword_collector — 최종 선정 키워드 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '금리 인상기 대출 갈아타기 전략 2026']
+2026-07-13 23:23:31,939 [INFO] main — 수집된 키워드 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '금리 인상기 대출 갈아타기 전략 2026']
+2026-07-13 23:23:31,939 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-07-13 23:23:31,939 [INFO] main — 단독 포스트 대상 키워드 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-13 23:23:31,947 [INFO] main — 
+[1/1] 키워드: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
+2026-07-13 23:23:31,947 [INFO] content_generator — 포스트 생성 중: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
+2026-07-13 23:23:46,927 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:23:46,927 [INFO] research_collector — 검색 의도: 2026년 기준 주택담보대출 금리가 가장 낮은 은행을 실제 방문 비교 후기를 통해 확인하려는 의도
+2026-07-13 23:24:01,201 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
+2026-07-13 23:24:24,009 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:24:24,010 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
+2026-07-13 23:24:55,112 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:24:55,113 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'A': 4, 'X': 2}
+2026-07-13 23:24:55,114 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-13 23:24:56,856 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:26:19,452 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:26:29,404 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:26:30,103 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:26:33,530 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-07-13 23:26:33,530 [INFO] content_generator — 섹션별 이미지 검색: ['주택담보대출 금리 최저']
+2026-07-13 23:26:33,897 [INFO] image_fetcher — 이미지 수집 성공: '주택담보대출 금리 최저' → 제목='business / woman / people / shooting / f' (관련성=0.40)
+2026-07-13 23:26:33,898 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-13 23:26:33,898 [INFO] content_generator — 포스트 생성 완료: '주택담보대출 금리 최저 은행 2026, 발품 비교 전에 꼭 확인할 것들' (3093자, 이미지 1개)
+2026-07-13 23:26:34,894 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:26:43,364 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '주택담보대출 금리 최저 은행 2026, 발품 비교 전에 꼭 확인'
+2026-07-13 23:26:43,365 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3093자로 warn 구간이며, 일반론적 정보 재조합 위주로 개인 고유 경험(구체적 은행명·수치)은 부족함
+2026-07-13 23:26:43,365 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 '개인적으로는' 수준의 1인칭 경험이 얕고 저자 전문성 신호가 약함
+2026-07-13 23:26:43,365 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 존재 여부 확인 불가하나 본문 내 이미지 언급 없어 부재로 판단, 정책상 fail 아님
+2026-07-13 23:26:43,365 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~로 알려져 있습니다', '~로 언급됩니다' 등 전형적 AI식 완곡 표현과 나열형 문장이 반복됨
+2026-07-13 23:26:43,368 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-13 23:26:43,369 [INFO] internal_linker —   [1/5] '금융감독원' -> https://hoguasset.blogspot.com/2026/07/2026-3_01593905138.ht
+2026-07-13 23:26:43,370 [INFO] internal_linker —   [2/5] '2026년' -> https://hogugolfntraval.blogspot.com/2026/07/2026-7.html
+2026-07-13 23:26:43,371 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-13 23:26:43,371 [INFO] main —   제목: 주택담보대출 금리 최저 은행 2026, 발품 비교 전에 꼭 확인할 것들
+2026-07-13 23:26:43,371 [INFO] main —   이미지: 1개 삽입
+2026-07-13 23:26:43,371 [INFO] main —   글자 수: 3093자
+2026-07-13 23:26:44,159 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:26:52,805 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '주택담보대출 금리 최저 은행 2026, 발품 비교 전에 꼭 확인'
+2026-07-13 23:26:52,805 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3093자로 warn 구간이며 일반론적 정보 재구성 위주로 개인 고유 경험 데이터가 부족함
+2026-07-13 23:26:52,805 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 광고 슬롯 0개로 수익화 요소 전무, 콘텐츠는 있으나 광고 배치 자체가 없음
+2026-07-13 23:26:52,805 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 인용은 있으나 '개인적으로는' 문구 외 1인칭 경험 서술이 얕고 저자 전문성 신호 약함
+2026-07-13 23:26:52,805 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 언급이 없어 이미지 부재로 판단됨
+2026-07-13 23:26:52,805 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 일부 이용자 후기 표현이 어색하게 삽입되고 '~것으로 알려져 있다' 등 전형적 AI 완충 문구 반복
+2026-07-13 23:26:52,805 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-07-13 23:26:52,805 [WARNING] main —      🟡 [원본성 및 품질] 3093자로 warn 구간이며 일반론적 정보 재구성 위주로 개인 고유 경험 데이터가 부족함
+2026-07-13 23:26:52,805 [WARNING] main —      🟡 [광고 배치 적합성] 광고 슬롯 0개로 수익화 요소 전무, 콘텐츠는 있으나 광고 배치 자체가 없음
+2026-07-13 23:26:52,805 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 인용은 있으나 '개인적으로는' 문구 외 1인칭 경험 서술이 얕고 저자 전문성 신호 약함
+2026-07-13 23:26:52,805 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-07-13 23:26:53,591 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:28:07,811 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:28:08,719 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:28:21,186 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3093자 → 5024자 (+1931자)
+2026-07-13 23:28:21,186 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-13 23:28:23,026 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:28:35,247 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-13 23:28:37,501 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-13 23:28:48,041 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 77/100 — '주택담보대출 금리 최저 은행 2026, 발품 비교 전에 꼭 확인'
+2026-07-13 23:28:48,041 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 500자 이상의 긴 단락이 3개 이상 존재해 가독성 저하
+2026-07-13 23:28:48,041 [INFO] adsense_validator —   ❌ 광고 배치 적합성: 5024자 분량에 광고 슬롯 9개는 과도하며 콘텐츠 흐름을 방해할 수 있는 밀도
+2026-07-13 23:28:48,041 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 제공되지 않아 이미지 부재로 판단, 저작권 위반은 없으나 SEO/가독성 측면에서 보완 필요
+2026-07-13 23:28:48,041 [WARNING] adsense_validator —   🔴 [광고 배치 적합성] 5024자 분량에 광고 슬롯 9개는 과도하며 콘텐츠 흐름을 방해할 수 있는 밀도
+2026-07-13 23:28:48,042 [WARNING] adsense_validator —   🔴 광고 슬롯 9개는 콘텐츠 길이 대비 과도하여 AdSense 정책상 사용자 경험 저해 우려로 즉시 축소 필요
+2026-07-13 23:28:48,042 [WARNING] main —   ⚠️ 자동 수정 후에도 기준 미달 (점수: 77/100) — pending 저장
+2026-07-13 23:28:48,042 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '주택담보대출 금리 최저 은행 2026, 발품 비교 전에 꼭 확인할 것들' (점수: 77/100, 권장: review)
+2026-07-13 23:28:48,055 [INFO] dashboard_exporter —   검토 대기 저장: 주택담보대출 금리 최저 은행 2026, 발품 비교 전에 꼭 확인할 것들 (10755자 HTML)
+2026-07-13 23:28:48,061 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 66개)
+2026-07-13 23:28:48,062 [INFO] main — 
+============================================================
+2026-07-13 23:28:48,062 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-13 23:28:48,062 [INFO] main — ============================================================
+2026-07-13 23:28:48,077 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-13 23:28:48,088 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-13 23:28:48,098 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-13 23:28:48,476 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-13 23:28:48,477 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-13 23:28:48,479 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-13 23:28:48,486 [INFO] post_manager —   포스트 레지스트리: 전체 214개 (게시 142 / 실패 15 / 대기 49)
+2026-07-13 23:28:48,486 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-13 23:28:48,486 [INFO] dashboard_exporter —   포스트: 84개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-13 23:28:48,487 [INFO] main — 대시보드 데이터 업데이트 완료

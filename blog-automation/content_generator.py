@@ -149,14 +149,19 @@ def _ai_generate(system: str, prompt: str, ai_provider: str) -> str:
 def _detect_article_type(keyword: str) -> str:
     """키워드 기반 아티클 유형 감지"""
     kw = keyword.lower()
-    # 드라마·영화 리뷰 — 가장 먼저 체크 (리뷰 타입과 겹치지 않게)
-    if any(w in kw for w in ["드라마", "영화", "시즌", "넷플릭스", "티빙", "쿠팡플레이", "ott", "왓챠",
+    # K-POP·연예 — 드라마보다 먼저 체크 (아이돌·컴백·시상식 등)
+    if any(w in kw for w in ["아이돌", "컴백", "k-pop", "kpop", "k pop", "음반", "신보",
+                              "팬미팅", "콘서트 티켓", "티케팅", "시상식", "mama", "멜론어워드",
+                              "초동", "음원 차트", "걸그룹", "보이그룹", "데뷔"]):
+        return "kpop_review"
+    # 드라마·영화 리뷰
+    if any(w in kw for w in ["드라마", "영화", "넷플릭스", "티빙", "쿠팡플레이", "ott", "왓챠",
                               "결말 해석", "등장인물", "ost 추천", "명장면", "영화 리뷰", "영화 후기",
                               "박스오피스", "개봉"]):
         return "drama_review"
     # 여행 가이드
     if any(w in kw for w in ["여행", "관광", "투어", "코스", "명소", "숙소", "호텔", "맛집",
-                              "공항", "비자", "패키지", "자유여행", "배낭", "현지"]):
+                              "공항", "항공권", "항공", "비자", "패키지", "자유여행", "배낭", "현지"]):
         return "travel_guide"
     # 투자형 — 종목·시장 분석
     if any(w in kw for w in ["주가", "투자", "종목", "시장 전망", "매수", "매도", "포트폴리오",
@@ -267,6 +272,17 @@ _STRUCTURE_GUIDE = {
   • 앞으로의 전망 — 명확한 개인 의견 포함 ("제 예상엔...")
 - 관람 팁은 공개된 후기·안내 정보 기반으로 정리
 - 마지막: 이 팀/선수/종목에 처음 관심 갖는 독자에게 입문 팁""",
+
+    "kpop_review": """
+- 도입부: 이 아이돌/음반/이벤트가 왜 화제인지 + 팬덤 반응 전반 분위기 소개
+- 본문 구성 (주제에 따라 선택):
+  • 컴백/신보 편: 음반명·발매일·수록곡 소개 + 타이틀곡 분위기·가사 포인트 + 초동·음원 성적
+  • 콘서트/팬미팅 편: 공연 구성·세트리스트 + 티케팅 경쟁률·꿀팁 + 참석자 반응 종합
+  • 시상식 편: 후보·수상 결과 + 수상 소감·화제 장면 + 팬덤 반응
+  • 소식/근황 편: 최근 활동 정리 + 공식 발표 vs 팬덤 반응 구분
+- 팬덤 용어·약어는 처음 등장 시 간단히 설명 (입문자도 읽을 수 있게)
+- 과도한 찬양·홍보성 표현 금지 — 아쉬운 평가도 솔직하게
+- 마지막: 이 아티스트를 처음 접하는 독자를 위한 입문 추천 콘텐츠""",
 }
 
 
@@ -406,12 +422,13 @@ def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = N
     article_type = _detect_article_type(keyword)
     blog_topic_hint = _build_blog_topic_hint(blog_config)
 
-    # 드라마·영화 리뷰일 때 실제 시청자 반응·리뷰 데이터 수집
+    # 드라마·영화·K-POP 리뷰일 때 실제 반응·리뷰 데이터 수집
     drama_ref_section = ""
-    if article_type == "drama_review":
+    if article_type in ("drama_review", "kpop_review"):
         drama_ref_section = _fetch_drama_references(keyword)
         if drama_ref_section:
-            logger.info(f"드라마/영화 참고 리뷰 데이터 수집 완료: '{keyword}'")
+            label = "K-POP" if article_type == "kpop_review" else "드라마/영화"
+            logger.info(f"{label} 참고 데이터 수집 완료: '{keyword}'")
 
     kw_lower = keyword.lower()
     if any(w in kw_lower for w in _FINANCE_KW):
@@ -1210,10 +1227,12 @@ _HEALTH_KW  = {"건강","다이어트","운동","의료","병원","영양","질�
                "헬스","요가","필라테스","수면","스트레스","피부","탈모","체중",
                "면역","혈압","당뇨","근육","칼로리","단백질","식단","비타민"}
 _DRAMA_KW   = {"드라마","영화","넷플릭스","티빙","쿠팡플레이","왓챠","ott","음악",
-               "연예","아이돌","가수","배우","예능","웹툰","애니","시즌","결말"}
+               "연예","아이돌","가수","배우","예능","웹툰","애니","시즌","결말",
+               "k-pop","kpop","컴백","신보","음반","팬미팅","시상식","mama",
+               "초동","걸그룹","보이그룹","데뷔","티케팅"}
 _TRAVEL_KW  = {"여행","관광","투어","코스","명소","숙소","호텔","맛집","공항",
                "비자","패키지","자유여행","배낭","현지","국내여행","해외여행",
-               "제주","부산","오사카","방콕","다낭","유럽","괌","하와이"}
+               "항공권","항공","제주","부산","오사카","방콕","다낭","유럽","괌","하와이"}
 _SPORTS_KW  = {"축구","야구","농구","테니스","골프","k리그","kbo","nba","epl","선수",
                "감독","스포츠","마라톤","트레킹","등산","러닝","수영","자전거",
                "손흥민","류현진","경기","승리","패배","득점","순위","직관"}
@@ -2551,7 +2570,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    result = generate_post("재테크 방법", "100K+")
+    result = generate_post("제주도 숨겨진 명소 솔직 후기", "100K+")
     if result:
         print(f"제목: {result['title']}")
         print(f"라벨: {result['labels']}")

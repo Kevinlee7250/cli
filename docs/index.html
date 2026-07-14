@@ -536,6 +536,7 @@
     <a data-page="social"><span class="nav-icon">📱</span> 소셜 미디어</a>
     <a data-page="review"><span class="nav-icon">✍️</span> 수동 검토 <span id="review-nav-badge" style="display:none;background:var(--yellow);color:#1a1d27;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
     <a data-page="series"><span class="nav-icon">📚</span> 시리즈 기획 <span id="series-nav-badge" style="display:none;background:var(--accent);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
+    <a data-page="thumbnail"><span class="nav-icon">🖼️</span> 썸네일 생성</a>
     <a data-page="postmgr"><span class="nav-icon">📋</span> 포스트 관리 <span id="pm-fail-badge" style="display:none;background:var(--red);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
     <a data-page="system"><span class="nav-icon">🖥️</span> 시스템 관리 <span id="system-alert-badge" style="display:none;background:var(--red);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">!</span></a>
     <a data-page="config"><span class="nav-icon">⚙️</span> 시스템 정보</a>
@@ -1713,6 +1714,47 @@
   </div>
 
   <!-- ═══ 시스템 정보 ═══ -->
+  <!-- ═══ 썸네일 생성 ═══ -->
+  <div class="page" id="page-thumbnail">
+    <div class="page-title">🖼️ 썸네일 생성</div>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:20px">
+      포스트 제목으로 1200×630 썸네일 카드를 만듭니다. 글작성 파이프라인의 자동 폴백 썸네일과 동일한 디자인입니다.
+    </p>
+    <div style="display:grid;grid-template-columns:minmax(280px,380px) 1fr;gap:24px;align-items:start">
+      <div class="card" style="padding:20px">
+        <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:6px">포스트 제목</label>
+        <input id="thumb-title" type="text" placeholder="예: 제주도 숨겨진 명소 5곳 솔직 후기"
+          style="width:100%;padding:10px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;margin-bottom:14px"
+          oninput="thumbRender()">
+        <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:6px">테마 (자동 = 제목에서 감지)</label>
+        <select id="thumb-theme" onchange="thumbRender()"
+          style="width:100%;padding:10px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;margin-bottom:14px">
+          <option value="auto">🔍 자동 감지</option>
+          <option value="travel">✈️ 여행</option>
+          <option value="drama">🎬 드라마·영화</option>
+          <option value="kpop">🎵 K-POP·연예</option>
+          <option value="finance">📈 금융·투자</option>
+          <option value="sports">⚽ 스포츠</option>
+          <option value="health">💪 건강</option>
+          <option value="default">📝 기본</option>
+        </select>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="qa-btn qa-primary" onclick="thumbDownloadPNG()" style="flex:1">⬇️ PNG 다운로드</button>
+          <button class="qa-btn" onclick="thumbDownloadSVG()" style="flex:1">⬇️ SVG 다운로드</button>
+        </div>
+        <button class="qa-btn qa-blue" onclick="thumbCopyHTML()" style="width:100%;margin-top:8px">📋 삽입용 HTML 복사</button>
+        <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.7">
+          💡 PNG는 Blogger·인스타그램 업로드용, HTML은 data URI 방식으로 본문에 직접 붙여넣기 가능합니다.
+        </p>
+      </div>
+      <div class="card" style="padding:20px;text-align:center">
+        <div id="thumb-preview" style="max-width:640px;margin:0 auto">
+          <p style="color:var(--muted);padding:60px 0">제목을 입력하면 미리보기가 표시됩니다</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="page" id="page-config">
     <div class="page-title">⚙️ 시스템 정보</div>
     <div class="cards" style="margin-bottom:24px">
@@ -2030,6 +2072,99 @@ function navTo(page) {
   if (page === 'series') renderSeries()
   if (page === 'system') renderSystemPage()
   if (page === 'postmgr') renderPostMgr()
+  if (page === 'thumbnail') thumbRender()
+}
+
+// ── 썸네일 생성 (blog-automation/image_fetcher.py generate_title_thumbnail과 동일 디자인) ──
+const THUMB_THEMES = {
+  travel:  { kws: ['여행','관광','명소','숙소','호텔','맛집','항공','제주','투어','휴양'], c1:'#0369a1', c2:'#0ea5e9', accent:'#e0f2fe', emoji:'✈️' },
+  drama:   { kws: ['드라마','영화','넷플릭스','ott','결말','출연진','배우'], c1:'#6d28d9', c2:'#a78bfa', accent:'#f3e8ff', emoji:'🎬' },
+  kpop:    { kws: ['아이돌','컴백','k-pop','kpop','음반','신곡','콘서트','걸그룹','보이그룹','월드투어','팬덤'], c1:'#be185d', c2:'#f472b6', accent:'#fce7f3', emoji:'🎵' },
+  finance: { kws: ['투자','주식','etf','금융','경제','금리','환율','부동산','재테크','세금'], c1:'#1d4ed8', c2:'#3b82f6', accent:'#dbeafe', emoji:'📈' },
+  sports:  { kws: ['축구','야구','농구','골프','스포츠','경기','선수','손흥민'], c1:'#dc2626', c2:'#f87171', accent:'#fee2e2', emoji:'⚽' },
+  health:  { kws: ['건강','다이어트','운동','의료','영양','식단'], c1:'#047857', c2:'#34d399', accent:'#d1fae5', emoji:'💪' },
+  default: { kws: [], c1:'#1e3a8a', c2:'#60a5fa', accent:'#dbeafe', emoji:'📝' },
+}
+function thumbDetectTheme(title) {
+  const t = title.toLowerCase()
+  for (const [name, th] of Object.entries(THUMB_THEMES))
+    if (th.kws.some(w => t.includes(w))) return th
+  return THUMB_THEMES.default
+}
+function thumbWrapTitle(title, maxChars = 13, maxLines = 3) {
+  const words = title.split(/\s+/).filter(Boolean)
+  const lines = []; let cur = ''
+  for (const w of words) {
+    const cand = (cur + ' ' + w).trim()
+    if (cand.length <= maxChars || !cur) cur = cand
+    else { lines.push(cur); cur = w }
+    if (lines.length === maxLines) break
+  }
+  if (cur && lines.length < maxLines) lines.push(cur)
+  if (lines.length === maxLines && words.join(' ').length > lines.join(' ').length)
+    lines[maxLines-1] = lines[maxLines-1].slice(0, maxChars-1) + '…'
+  return lines.length ? lines : [title.slice(0, maxChars)]
+}
+function thumbBuildSVG(title) {
+  const sel = document.getElementById('thumb-theme').value
+  const th = sel === 'auto' ? thumbDetectTheme(title) : THUMB_THEMES[sel]
+  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+  const lines = thumbWrapTitle(title)
+  const lineH = 78, startY = 340 - (lines.length * lineH) / 2 + 56
+  const tspans = lines.map((l,i) =>
+    `<text x="600" y="${startY + i*lineH}" text-anchor="middle" font-family="'Noto Sans KR','Apple SD Gothic Neo',sans-serif" font-size="56" font-weight="800" fill="#ffffff">${esc(l)}</text>`).join('')
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${th.c1}"/><stop offset="1" stop-color="${th.c2}"/></linearGradient></defs>
+<rect width="1200" height="630" fill="url(#bg)"/>
+<circle cx="1080" cy="90" r="180" fill="${th.accent}" opacity="0.13"/>
+<circle cx="110" cy="560" r="140" fill="${th.accent}" opacity="0.10"/>
+<text x="600" y="150" text-anchor="middle" font-size="72">${th.emoji}</text>
+${tspans}
+<rect x="500" y="${startY + lines.length*lineH + 10}" width="200" height="5" rx="2.5" fill="${th.accent}" opacity="0.85"/>
+</svg>`
+}
+function thumbDataURI() {
+  const title = document.getElementById('thumb-title').value.trim()
+  if (!title) return null
+  return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(thumbBuildSVG(title))))
+}
+function thumbRender() {
+  const uri = thumbDataURI()
+  const box = document.getElementById('thumb-preview')
+  box.innerHTML = uri
+    ? `<img src="${uri}" style="width:100%;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.3)">`
+    : '<p style="color:var(--muted);padding:60px 0">제목을 입력하면 미리보기가 표시됩니다</p>'
+}
+function thumbFileName(ext) {
+  const t = document.getElementById('thumb-title').value.trim()
+  return 'thumbnail-' + t.slice(0, 24).replace(/[^\w가-힣]+/g, '-').replace(/^-|-$/g, '') + '.' + ext
+}
+function thumbDownloadSVG() {
+  const title = document.getElementById('thumb-title').value.trim()
+  if (!title) return showToast('제목을 먼저 입력하세요', 'warn')
+  const blob = new Blob([thumbBuildSVG(title)], { type: 'image/svg+xml' })
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: thumbFileName('svg') })
+  a.click(); URL.revokeObjectURL(a.href)
+}
+function thumbDownloadPNG() {
+  const uri = thumbDataURI()
+  if (!uri) return showToast('제목을 먼저 입력하세요', 'warn')
+  const img = new Image()
+  img.onload = () => {
+    const cv = Object.assign(document.createElement('canvas'), { width: 1200, height: 630 })
+    cv.getContext('2d').drawImage(img, 0, 0, 1200, 630)
+    const a = Object.assign(document.createElement('a'), { href: cv.toDataURL('image/png'), download: thumbFileName('png') })
+    a.click()
+  }
+  img.src = uri
+}
+function thumbCopyHTML() {
+  const uri = thumbDataURI()
+  if (!uri) return showToast('제목을 먼저 입력하세요', 'warn')
+  const title = document.getElementById('thumb-title').value.trim()
+  const esc = s => s.replace(/"/g, '&quot;')
+  const html = `<figure style="margin:2.5em auto;text-align:center;max-width:720px;">\n  <img src="${uri}" alt="${esc(title)}" title="${esc(title)}" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 3px 14px rgba(0,0,0,0.13);display:block;margin:0 auto;" loading="lazy" decoding="async" width="720"/>\n</figure>`
+  navigator.clipboard.writeText(html).then(() => showToast('삽입용 HTML 복사 완료 ✅'))
 }
 
 // ── Quality grade ──────────────────────────────────────────────────────────────

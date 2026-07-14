@@ -1760,6 +1760,25 @@
           현재 입력한 제목·테마가 그대로 사용됩니다 (제목이 비어 있으면 포스트 제목 사용).<br>
           수동 삽입은 위의 "삽입용 HTML 복사" 후 Blogger 편집기 HTML 보기에 붙여넣으세요.
         </p>
+
+        <hr style="border:none;border-top:1px solid var(--border);margin:18px 0">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">🔄 발행 글 이미지 교체</div>
+        <p style="font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+          위에서 선택한 포스트(🟢게시됨만 가능)의 N번째 이미지를 교체합니다. 레이아웃은 유지하고 이미지·캡션만 바뀝니다.
+        </p>
+        <div style="display:flex;gap:8px;margin-bottom:10px">
+          <div style="flex:0 0 90px">
+            <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:6px">이미지 번호</label>
+            <input id="thumb-replace-index" type="number" min="1" value="1"
+              style="width:100%;padding:10px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px">
+          </div>
+          <div style="flex:1">
+            <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:6px">새 이미지 검색어 (비워두면 생성 썸네일로 교체)</label>
+            <input id="thumb-replace-query" type="text" placeholder="예: 제주 협재해수욕장"
+              style="width:100%;padding:10px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px">
+          </div>
+        </div>
+        <button class="qa-btn qa-yellow" onclick="thumbReplaceImage()" style="width:100%">🔄 이미지 교체 (워크플로 실행)</button>
       <div class="card" style="padding:20px;text-align:center">
         <div id="thumb-preview" style="max-width:640px;margin:0 auto">
           <p style="color:var(--muted);padding:60px 0">제목을 입력하면 미리보기가 표시됩니다</p>
@@ -2216,6 +2235,40 @@ async function thumbInsertToPost() {
     )
     if (resp.ok || resp.status === 204) {
       showToast('🖼️ 썸네일 삽입 워크플로가 실행됐습니다. 1~2분 후 반영됩니다.', 'success')
+    } else {
+      showToast(`실행 실패 (${resp.status}): ${(await resp.text()).slice(0,80)}`, 'error')
+    }
+  } catch (e) { showToast(`오류: ${e.message}`, 'error') }
+}
+async function thumbReplaceImage() {
+  const postId = document.getElementById('thumb-post-select').value
+  if (!postId) return showToast('대상 포스트를 선택하세요', 'warn')
+  const p = (DATA.registry || []).find(x => x.post_id === postId)
+  if (!p || p.status !== 'published') return showToast('발행된(🟢게시됨) 포스트만 이미지 교체가 가능합니다', 'warn')
+  const pat = getPAT()
+  if (!pat) { showToast('PAT(개인 액세스 토큰)를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
+  const idx = Math.max(1, parseInt(document.getElementById('thumb-replace-index').value) || 1)
+  const query = document.getElementById('thumb-replace-query').value.trim()
+  const srcLabel = query ? `검색 이미지("${query}")` : '생성 썸네일'
+  if (!confirm(`"${(p.title || postId).slice(0,40)}"의 ${idx}번째 이미지를 ${srcLabel}(으)로 교체할까요?\nBlogger에 즉시 반영됩니다.`)) return
+  const thumbTitle = document.getElementById('thumb-title').value.trim()
+  const themeSel = document.getElementById('thumb-theme').value
+  showToast('이미지 교체 워크플로 실행 중...', 'info')
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/post-action.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: {
+          action: 'replace_image', post_id: postId,
+          image_index: String(idx), image_query: query,
+          thumb_title: thumbTitle, thumb_theme: themeSel === 'auto' ? '' : themeSel,
+        } }),
+      }
+    )
+    if (resp.ok || resp.status === 204) {
+      showToast('🔄 이미지 교체 워크플로가 실행됐습니다. 1~2분 후 반영됩니다.', 'success')
     } else {
       showToast(`실행 실패 (${resp.status}): ${(await resp.text()).slice(0,80)}`, 'error')
     }

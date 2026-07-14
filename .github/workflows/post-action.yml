@@ -13,6 +13,7 @@ on:
           - delete    # 포스트 삭제 (registry에서 제거)
           - restore   # 보관 포스트 복원 (status → pending)
           - insert_thumbnail  # 생성 썸네일을 포스트에 삽입 (게시글은 즉시 반영)
+          - replace_image     # 발행 글의 N번째 이미지를 교체 (검색 이미지 또는 생성 썸네일)
       post_id:
         description: '포스트 ID (post_registry의 post_id 값)'
         required: true
@@ -22,7 +23,15 @@ on:
         required: false
         default: ''
       thumb_theme:
-        description: '썸네일 테마 (insert_thumbnail 전용: travel/drama/kpop/finance/sports/health/default, 비워두면 자동 감지)'
+        description: '썸네일 테마 (insert_thumbnail·replace_image: travel/drama/kpop/finance/sports/health/default, 비워두면 자동 감지)'
+        required: false
+        default: ''
+      image_index:
+        description: '교체할 이미지 번호 (replace_image 전용, 1=첫 번째)'
+        required: false
+        default: '1'
+      image_query:
+        description: '교체용 이미지 검색어 (replace_image 전용, 비워두면 생성 썸네일로 교체)'
         required: false
         default: ''
 
@@ -60,6 +69,10 @@ jobs:
         run: |
           cat > .env << 'ENVEOF'
           ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          NAVER_CLIENT_ID="${{ secrets.NAVER_CLIENT_ID }}"
+          NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}"
+          PIXABAY_API_KEY="${{ secrets.PIXABAY_API_KEY }}"
+          IMGBB_API_KEY="${{ secrets.IMGBB_API_KEY }}"
           GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
           GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
           GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
@@ -97,6 +110,11 @@ jobs:
           if [ "$ACTION" = "insert_thumbnail" ]; then
             python manage_post.py --action "$ACTION" --post-id "$POST_ID" \
               --thumb-title "${{ inputs.thumb_title }}" --thumb-theme "${{ inputs.thumb_theme }}"
+          elif [ "$ACTION" = "replace_image" ]; then
+            python manage_post.py --action "$ACTION" --post-id "$POST_ID" \
+              --image-index "${{ inputs.image_index || '1' }}" \
+              --image-query "${{ inputs.image_query }}" \
+              --thumb-title "${{ inputs.thumb_title }}" --thumb-theme "${{ inputs.thumb_theme }}"
           else
             python manage_post.py --action "$ACTION" --post-id "$POST_ID"
           fi
@@ -118,7 +136,7 @@ jobs:
           else
             ACTION="${{ inputs.action }}"
             POST_ID="${{ inputs.post_id }}"
-            EMOJI_MAP='{"publish":"✅","archive":"📦","delete":"🗑","restore":"🔄","insert_thumbnail":"🖼"}'
+            EMOJI_MAP='{"publish":"✅","archive":"📦","delete":"🗑","restore":"🔄","insert_thumbnail":"🖼","replace_image":"🔄"}'
             EMOJI=$(python3 -c "import json,sys; m=json.loads('$EMOJI_MAP'); print(m.get('$ACTION','📋'))" 2>/dev/null || echo "📋")
             git commit -m "$EMOJI 포스트 $ACTION: ${POST_ID:0:40} (#${{ github.run_number }})"
             _push_ok=0

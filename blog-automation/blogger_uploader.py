@@ -69,7 +69,7 @@ def _ad_unit(slot_index: int, blog_config: dict | None = None) -> str:
     slot_id = adsense_slots[slot_index % len(adsense_slots)] if adsense_slots else "0000000000"
     return f"""
 <!-- AdSense 광고 슬롯 {slot_index + 1} -->
-<div style="margin:2em auto;text-align:center;max-width:728px;overflow:hidden;">
+<div style="margin:2.4em auto;text-align:center;max-width:728px;overflow:hidden;border-top:1px solid #ede9fe;border-bottom:1px solid #ede9fe;padding:1.2em 0;">
   <ins class="adsbygoogle"
     style="display:block;width:100%;min-height:100px;"
     data-ad-client="{adsense_client}"
@@ -92,7 +92,7 @@ def _inject_ads(html: str, blog_config: dict | None = None) -> str:
     # 슬롯 1: 목차 div 이후 첫 번째 </p> 뒤 (목차 내부 삽입 방지)
     # </ol> 을 기준으로 목차 끝 위치를 잡는다 — 내부 </div> 오인 방지
     ad0 = _ad_unit(0, blog_config)
-    toc_pos = html.find('📋 목차')
+    toc_pos = html.find('목차')
     if toc_pos != -1:
         ol_end = html.lower().find('</ol>', toc_pos)
         search_start = ol_end + 5 if ol_end != -1 else 0
@@ -191,15 +191,16 @@ def _build_toc(html: str) -> str:
     for slug, inner in headings:
         clean = re.sub(r'<[^>]+>', '', inner).strip()
         items.append(
-            f'<li><a href="#{slug}" style="color:#1d4ed8;text-decoration:none;font-weight:500;">'
+            f'<li style="margin:2px 0;">'
+            f'<a href="#{slug}" style="color:#7c3aed;text-decoration:none;font-weight:500;font-size:14px;">'
             f'{clean}</a></li>'
         )
 
     return (
-        '<div style="background:#eff6ff;border-left:5px solid #2563eb;border-radius:0 12px 12px 0;'
-        'padding:20px 24px;margin:2em 0;">'
-        '<p style="font-weight:800;font-size:15px;margin:0 0 12px;color:#1e3a8a;">📋 목차</p>'
-        f'<ol style="margin:0;padding-left:22px;line-height:2.1;color:#374151;">{"".join(items)}</ol>'
+        '<div style="border-left:3px solid #7c3aed;padding:14px 20px;margin:2em 0;">'
+        '<p style="font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;'
+        'margin:0 0 10px;color:#7c3aed;">목차</p>'
+        f'<ol style="margin:0;padding-left:18px;line-height:1;color:#374151;">{"".join(items)}</ol>'
         '</div>\n'
     )
 
@@ -233,15 +234,15 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
     # ④ 태그 클라우드 (내부 링크 효과)
     tag_links = "".join(
         f'<a href="/search/label/{label}" '
-        f'style="display:inline-block;margin:4px 3px;padding:6px 16px;'
-        f'background:#eff6ff;border-radius:20px;text-decoration:none;'
-        f'color:#1d4ed8;font-size:13px;font-weight:500;border:1px solid #bfdbfe;">{label}</a>'
+        f'style="display:inline-block;margin:4px 3px;padding:5px 14px;'
+        f'background:#f5f3ff;border-radius:20px;text-decoration:none;'
+        f'color:#7c3aed;font-size:12px;font-weight:600;letter-spacing:.01em;">{label}</a>'
         for label in labels[:10]
     )
     tag_section = (
-        '<div style="margin:2.5em 0;padding:20px 24px;'
-        'background:#f8fafc;border-radius:12px;border:1px solid #e5e7eb;">'
-        '<p style="font-weight:700;margin:0 0 12px;color:#374151;">🏷️ 관련 태그</p>'
+        '<div style="margin:2.8em 0 0;padding-top:1.6em;border-top:1px solid #ede9fe;">'
+        '<p style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;'
+        'color:#7c3aed;margin:0 0 10px;">관련 태그</p>'
         f'<div>{tag_links}</div>'
         '</div>\n'
     )
@@ -251,38 +252,55 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
     sources_section = ""
     if sources:
         source_items = "".join(
-            f'<li style="margin:6px 0;">'
+            f'<li style="margin:5px 0;">'
             f'<a href="{s.get("url", "#")}" target="_blank" rel="nofollow noopener" '
-            f'style="color:#1d4ed8;text-decoration:none;">'
+            f'style="color:#7c3aed;text-decoration:none;font-size:13px;">'
             f'{s.get("title", s.get("url", ""))}</a></li>'
             for s in sources
         )
         sources_section = (
-            '<div style="margin:2.5em 0;padding:20px 24px;'
-            'background:#f8fafc;border-radius:12px;border:1px solid #e5e7eb;">'
-            '<p style="font-weight:700;font-size:15px;margin:0 0 12px;color:#374151;">📚 참고 자료</p>'
-            f'<ul style="margin:0;padding-left:22px;line-height:2;font-size:14px;color:#374151;">{source_items}</ul>'
+            '<div style="margin:2em 0;padding-top:1.4em;border-top:1px solid #ede9fe;">'
+            '<p style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;'
+            'color:#9ca3af;margin:0 0 10px;">참고 자료</p>'
+            f'<ul style="margin:0;padding-left:18px;line-height:2;color:#6b7280;">{source_items}</ul>'
             '</div>'
         )
 
-    # ⑥ 면책조항 + 소셜 공유 유도
+    # ⑥ 면책조항
     footer = (
-        '<div style="margin-top:3em;padding:18px 22px;'
-        'background:#fffbeb;border-radius:0 12px 12px 0;'
-        'border-left:4px solid #d97706;">'
-        '<p style="font-size:13px;color:#78350f;margin:0;line-height:1.8;">'
-        '📌 이 글이 도움이 됐다면 북마크 &amp; 공유해주세요!<br>'
-        '⚠️ 투자·의료·법률 등 전문 분야는 반드시 전문가와 상담하세요.'
-        '</p>'
-        '</div>\n'
+        '<p style="margin-top:2.4em;padding-top:1.2em;border-top:1px solid #ede9fe;'
+        'font-size:12px;color:#9ca3af;line-height:1.8;">'
+        '이 글이 도움이 됐다면 북마크 &amp; 공유해주세요. '
+        '투자·의료·법률 등 전문 분야는 반드시 전문가와 상담하세요.'
+        '</p>\n'
+    )
+
+    # 포스트 공통 CSS (H2·H3·p·a 스타일 + 도시적 보라 테마)
+    post_css = (
+        '<style>'
+        '.bp-wrap{max-width:760px;margin:0 auto;padding:8px 4px;'
+        'font-family:"Noto Sans KR","Apple SD Gothic Neo","맑은 고딕",sans-serif;'
+        'font-size:16px;line-height:1.9;color:#1f1f2e;word-break:keep-all;}'
+        '.bp-wrap h2{font-size:1.35rem;font-weight:800;color:#0f0f14;'
+        'margin:2.2em 0 .7em;letter-spacing:-.02em;line-height:1.3;}'
+        '.bp-wrap h3{font-size:1.05rem;font-weight:700;color:#1f1f2e;'
+        'margin:1.8em 0 .5em;letter-spacing:-.01em;}'
+        '.bp-wrap p{margin:0 0 1.1em;color:#374151;}'
+        '.bp-wrap a{color:#7c3aed;text-decoration:none;}'
+        '.bp-wrap a:hover{text-decoration:underline;}'
+        '.bp-wrap blockquote{border-left:3px solid #7c3aed;margin:1.6em 0;'
+        'padding:.6em 1.2em;color:#6b7280;font-style:normal;}'
+        '.bp-wrap code{background:#f5f3ff;color:#5b21b6;padding:2px 6px;'
+        'border-radius:4px;font-size:.88em;}'
+        '.bp-wrap strong{color:#0f0f14;font-weight:700;}'
+        '</style>'
     )
 
     return (
         _article_schema(post_data)
         + _faq_schema(faq)
-        + '<div class="blog-post" style="max-width:780px;margin:0 auto;padding:8px 4px;'
-          'font-family:\'Noto Sans KR\',\'Apple SD Gothic Neo\',\'맑은 고딕\',sans-serif;'
-          'font-size:16px;line-height:1.9;color:#374151;word-break:keep-all;">'
+        + post_css
+        + '<div class="bp-wrap">'
         + series_nav           # ⑦ 시리즈 내비게이션 (상단)
         + html
         + series_nav           # ⑧ 시리즈 내비게이션 (하단 — 읽은 후 다음 편 유도)

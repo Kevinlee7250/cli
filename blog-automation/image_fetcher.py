@@ -489,14 +489,40 @@ def fetch_images_for_queries(
 ) -> list[dict]:
     """섹션별 쿼리 목록에 맞춰 이미지를 검색(Pixabay → 네이버 → DDG → Wikimedia)하고 Claude로 최종 검증합니다."""
     images = []
+    seen_urls: set[str] = set()
     for query in queries:
-        img = _fetch_best_image(query, naver_client_id, naver_client_secret, n_candidates=4,
+        img = _fetch_best_image(query, naver_client_id, naver_client_secret, n_candidates=6,
                                 pixabay_api_key=pixabay_api_key)
         if img:
-            img["search_query"] = query
-            img["alt_text"] = query if len(query) <= 50 else query[:50].rsplit(" ", 1)[0]
-            score = _score_title_relevance(img, query)
-            logger.info(f"이미지 수집 성공: '{query}' → 제목='{img.get('title','')[:40]}' (관련성={score:.2f})")
+            url = img.get("url", "")
+            if url in seen_urls:
+                logger.debug(f"중복 이미지 건너뜀: '{query}' → {url[:60]}")
+                # 같은 쿼리로 후보를 더 요청해 다른 이미지 탐색
+                candidates = _search_all_sources(
+                    _simplify_query(query, 2) or query,
+                    naver_client_id, naver_client_secret, 8,
+                    pixabay_api_key=pixabay_api_key,
+                )
+                alt_img = next(
+                    (c for c in candidates if c.get("url", "") not in seen_urls),
+                    None,
+                )
+                if alt_img:
+                    img = alt_img
+                    img["search_query"] = query
+                    img["alt_text"] = query if len(query) <= 50 else query[:50].rsplit(" ", 1)[0]
+                    url = img.get("url", "")
+                    score = _score_title_relevance(img, query)
+                    logger.info(f"대체 이미지 수집: '{query}' → 제목='{img.get('title','')[:40]}' (관련성={score:.2f})")
+                else:
+                    logger.warning(f"중복 대체 이미지 없음: '{query}' — 건너뜀")
+                    img = None
+            if img:
+                img["search_query"] = query
+                img["alt_text"] = query if len(query) <= 50 else query[:50].rsplit(" ", 1)[0]
+                score = _score_title_relevance(img, query)
+                logger.info(f"이미지 수집 성공: '{query}' → 제목='{img.get('title','')[:40]}' (관련성={score:.2f})")
+                seen_urls.add(img.get("url", ""))
         else:
             logger.warning(f"이미지 없음: '{query}'")
         if img:

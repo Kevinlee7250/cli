@@ -2177,6 +2177,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                 pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
                 article_plain_text=plain_text,
                 keyword=keyword,
+                title=post_data.get("title", ""),
             )
             images = images[:1]
             if images:
@@ -2524,6 +2525,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                 pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
                 article_plain_text=plain_text,
                 keyword=keyword,
+                title=post_data.get("title", ""),
             )
             images = images[:1]
             if images:

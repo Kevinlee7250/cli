@@ -5,7 +5,9 @@
 - Wikimedia Commons (폴백)
 """
 
+import base64
 import html
+import os
 import re
 import logging
 import requests
@@ -479,6 +481,131 @@ def _filter_relevant_images(
         return images
 
 
+# ──────────────────────────────────────────────────────────────────────────────
+# 제목 기반 썸네일 자동 생성 (이미지 검색 전부 실패 시 폴백)
+# ──────────────────────────────────────────────────────────────────────────────
+
+# 주제별 그라디언트·이모지 (content_generator 테마와 톤 일치 — 순환 임포트 방지 위해 자체 정의)
+_THUMB_THEMES = [
+    # (감지 키워드, 그라디언트 시작, 끝, 액센트, 이모지)
+    ({"여행", "관광", "명소", "숙소", "호텔", "맛집", "항공", "제주", "투어", "휴양"},
+     "#0369a1", "#0ea5e9", "#e0f2fe", "✈️"),
+    ({"드라마", "영화", "넷플릭스", "ott", "결말", "출연진", "배우"},
+     "#6d28d9", "#a78bfa", "#f3e8ff", "🎬"),
+    ({"아이돌", "컴백", "k-pop", "kpop", "음반", "신곡", "콘서트", "걸그룹", "보이그룹", "월드투어", "팬덤"},
+     "#be185d", "#f472b6", "#fce7f3", "🎵"),
+    ({"투자", "주식", "etf", "금융", "경제", "금리", "환율", "부동산", "재테크", "세금"},
+     "#1d4ed8", "#3b82f6", "#dbeafe", "📈"),
+    ({"축구", "야구", "농구", "골프", "스포츠", "경기", "선수", "손흥민"},
+     "#dc2626", "#f87171", "#fee2e2", "⚽"),
+    ({"건강", "다이어트", "운동", "의료", "영양", "식단"},
+     "#047857", "#34d399", "#d1fae5", "💪"),
+]
+_THUMB_DEFAULT = ("#1e3a8a", "#60a5fa", "#dbeafe", "📝")
+
+
+def _thumb_theme(text: str) -> tuple[str, str, str, str]:
+    t = text.lower()
+    for kws, c1, c2, accent, emoji in _THUMB_THEMES:
+        if any(w in t for w in kws):
+            return c1, c2, accent, emoji
+    return _THUMB_DEFAULT
+
+
+def _wrap_title(title: str, max_chars: int = 13, max_lines: int = 3) -> list[str]:
+    """제목을 단어 단위로 줄바꿈합니다 (한 줄 max_chars자, 최대 max_lines줄)."""
+    words = title.split()
+    lines: list[str] = []
+    cur = ""
+    for w in words:
+        cand = f"{cur} {w}".strip()
+        if len(cand) <= max_chars or not cur:
+            cur = cand
+        else:
+            lines.append(cur)
+            cur = w
+        if len(lines) == max_lines:
+            break
+    if cur and len(lines) < max_lines:
+        lines.append(cur)
+    # 넘친 마지막 줄 말줄임
+    if lines and (len(lines) == max_lines and len(" ".join(words)) > sum(len(l) for l in lines) + len(lines) - 1):
+        last = lines[-1]
+        lines[-1] = (last[:max_chars - 1] + "…") if len(last) > max_chars else last + "…"
+    return lines or [title[:max_chars]]
+
+
+def _upload_to_imgbb(svg_bytes: bytes) -> str:
+    """SVG를 imgbb에 업로드해 공개 URL을 반환합니다. 실패 시 빈 문자열."""
+    api_key = os.getenv("IMGBB_API_KEY", "")
+    if not api_key:
+        return ""
+    try:
+        r = requests.post(
+            "https://api.imgbb.com/1/upload",
+            data={"key": api_key, "image": base64.b64encode(svg_bytes).decode()},
+            timeout=15,
+        )
+        if r.status_code == 200:
+            return r.json().get("data", {}).get("url", "")
+    except Exception as e:
+        logger.debug(f"imgbb 업로드 실패: {e}")
+    return ""
+
+
+def generate_title_thumbnail(title: str, keyword: str = "") -> dict | None:
+    """
+    제목 기반 SVG 썸네일 카드를 생성합니다 (이미지 검색 전부 실패 시 폴백).
+    - 주제별 그라디언트 배경 + 카테고리 이모지 + 제목 텍스트
+    - IMGBB_API_KEY 설정 시 공개 URL 업로드, 아니면 data URI로 본문에 직접 임베드
+    """
+    text = (title or keyword or "").strip()
+    if not text:
+        return None
+    c1, c2, accent, emoji = _thumb_theme(f"{title} {keyword}")
+    lines = _wrap_title(text)
+
+    line_h = 78
+    total_h = len(lines) * line_h
+    start_y = 340 - total_h // 2 + 56
+    tspans = "".join(
+        f'<text x="600" y="{start_y + i * line_h}" text-anchor="middle" '
+        f'font-family="\'Noto Sans KR\',\'Apple SD Gothic Neo\',sans-serif" '
+        f'font-size="56" font-weight="800" fill="#ffffff">{html.escape(l)}</text>'
+        for i, l in enumerate(lines)
+    )
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="{c1}"/><stop offset="1" stop-color="{c2}"/>
+  </linearGradient>
+</defs>
+<rect width="1200" height="630" fill="url(#bg)"/>
+<circle cx="1080" cy="90" r="180" fill="{accent}" opacity="0.13"/>
+<circle cx="110" cy="560" r="140" fill="{accent}" opacity="0.10"/>
+<text x="600" y="150" text-anchor="middle" font-size="72">{emoji}</text>
+{tspans}
+<rect x="500" y="{start_y + len(lines) * line_h + 10}" width="200" height="5" rx="2.5" fill="{accent}" opacity="0.85"/>
+</svg>"""
+    svg_bytes = svg.encode("utf-8")
+
+    url = _upload_to_imgbb(svg_bytes)
+    if not url:
+        url = "data:image/svg+xml;base64," + base64.b64encode(svg_bytes).decode()
+
+    logger.info(f"제목 썸네일 생성: '{text[:30]}' ({'imgbb' if url.startswith('http') else 'data URI'}, {len(svg_bytes)}B)")
+    return {
+        "url": url,
+        "title": text,
+        "width": 1200,
+        "height": 630,
+        "source": "generated_thumbnail",
+        "generated": True,
+        "alt_text": text if len(text) <= 50 else text[:50].rsplit(" ", 1)[0],
+        "search_query": keyword or text,
+    }
+
+
 def fetch_images_for_queries(
     queries: list[str],
     naver_client_id: str = "",
@@ -486,8 +613,10 @@ def fetch_images_for_queries(
     article_plain_text: str = "",
     keyword: str = "",
     pixabay_api_key: str = "",
+    title: str = "",
 ) -> list[dict]:
-    """섹션별 쿼리 목록에 맞춰 이미지를 검색(Pixabay → 네이버 → DDG → Wikimedia)하고 Claude로 최종 검증합니다."""
+    """섹션별 쿼리 목록에 맞춰 이미지를 검색(Pixabay → 네이버 → DDG → Wikimedia)하고 Claude로 최종 검증합니다.
+    모든 검색이 실패하면 제목 기반 SVG 썸네일을 생성해 대체합니다 (title 제공 시)."""
     images = []
     seen_urls: set[str] = set()
     for query in queries:
@@ -532,6 +661,12 @@ def fetch_images_for_queries(
     # 이미지가 1개뿐이면 Claude 필터를 거치지 않음 — 유일한 후보를 "없음" 판정으로 제거 방지
     if images and article_plain_text and len(images) >= 2:
         images = _filter_relevant_images(images, keyword or queries[0], article_plain_text)
+
+    # 최종 폴백: 이미지가 하나도 없으면 제목 기반 썸네일 생성
+    if not images and (title or keyword):
+        thumb = generate_title_thumbnail(title, keyword)
+        if thumb:
+            images.append(thumb)
 
     return images
 

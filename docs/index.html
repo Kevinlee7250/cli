@@ -1742,11 +1742,24 @@
           <button class="qa-btn qa-primary" onclick="thumbDownloadPNG()" style="flex:1">⬇️ PNG 다운로드</button>
           <button class="qa-btn" onclick="thumbDownloadSVG()" style="flex:1">⬇️ SVG 다운로드</button>
         </div>
-        <button class="qa-btn qa-blue" onclick="thumbCopyHTML()" style="width:100%;margin-top:8px">📋 삽입용 HTML 복사</button>
+        <button class="qa-btn qa-blue" onclick="thumbCopyHTML()" style="width:100%;margin-top:8px">📋 삽입용 HTML 복사 (수동 삽입)</button>
         <p style="font-size:11px;color:var(--muted);margin-top:12px;line-height:1.7">
           💡 PNG는 Blogger·인스타그램 업로드용, HTML은 data URI 방식으로 본문에 직접 붙여넣기 가능합니다.
         </p>
-      </div>
+
+        <hr style="border:none;border-top:1px solid var(--border);margin:18px 0">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">📌 작성된 글에 삽입</div>
+        <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:6px">대상 포스트</label>
+        <select id="thumb-post-select" onchange="thumbPostSelected()"
+          style="width:100%;padding:10px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;margin-bottom:10px">
+          <option value="">— 포스트 선택 —</option>
+        </select>
+        <button class="qa-btn qa-green" onclick="thumbInsertToPost()" style="width:100%">🚀 자동 삽입 (워크플로 실행)</button>
+        <p style="font-size:11px;color:var(--muted);margin-top:10px;line-height:1.7">
+          게시된 글은 Blogger에 즉시 반영되고, 미발행(검토 대기) 글은 초안에 삽입돼 발행 시 반영됩니다.
+          현재 입력한 제목·테마가 그대로 사용됩니다 (제목이 비어 있으면 포스트 제목 사용).<br>
+          수동 삽입은 위의 "삽입용 HTML 복사" 후 Blogger 편집기 HTML 보기에 붙여넣으세요.
+        </p>
       <div class="card" style="padding:20px;text-align:center">
         <div id="thumb-preview" style="max-width:640px;margin:0 auto">
           <p style="color:var(--muted);padding:60px 0">제목을 입력하면 미리보기가 표시됩니다</p>
@@ -2072,7 +2085,7 @@ function navTo(page) {
   if (page === 'series') renderSeries()
   if (page === 'system') renderSystemPage()
   if (page === 'postmgr') renderPostMgr()
-  if (page === 'thumbnail') thumbRender()
+  if (page === 'thumbnail') { thumbPopulatePosts(); thumbRender() }
 }
 
 // ── 썸네일 생성 (blog-automation/image_fetcher.py generate_title_thumbnail과 동일 디자인) ──
@@ -2157,6 +2170,56 @@ function thumbDownloadPNG() {
     a.click()
   }
   img.src = uri
+}
+function thumbPopulatePosts() {
+  const sel = document.getElementById('thumb-post-select')
+  if (!sel) return
+  const cur = sel.value
+  const posts = (DATA.registry || []).filter(p => ['published','pending','pending_review','failed'].includes(p.status))
+  sel.innerHTML = '<option value="">— 포스트 선택 —</option>' + posts.map(p => {
+    const st = p.status === 'published' ? '🟢게시됨' : '🟡미발행'
+    const t = (p.title || p.keyword || p.post_id).slice(0, 42)
+    return `<option value="${p.post_id}">[${st}] ${t}</option>`
+  }).join('')
+  if (cur) sel.value = cur
+}
+function thumbPostSelected() {
+  const id = document.getElementById('thumb-post-select').value
+  const p = (DATA.registry || []).find(x => x.post_id === id)
+  if (p) {
+    document.getElementById('thumb-title').value = p.title || p.keyword || ''
+    thumbRender()
+  }
+}
+async function thumbInsertToPost() {
+  const postId = document.getElementById('thumb-post-select').value
+  if (!postId) return showToast('대상 포스트를 선택하세요', 'warn')
+  const pat = getPAT()
+  if (!pat) { showToast('PAT(개인 액세스 토큰)를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
+  const p = (DATA.registry || []).find(x => x.post_id === postId)
+  const isPub = p && p.status === 'published'
+  if (!confirm(`"${(p?.title || postId).slice(0,40)}"에 썸네일을 삽입할까요?\n${isPub ? '게시된 글이므로 Blogger에 즉시 반영됩니다.' : '초안에 삽입되며 발행 시 반영됩니다.'}`)) return
+  const thumbTitle = document.getElementById('thumb-title').value.trim()
+  const themeSel = document.getElementById('thumb-theme').value
+  showToast('썸네일 삽입 워크플로 실행 중...', 'info')
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/post-action.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: {
+          action: 'insert_thumbnail', post_id: postId,
+          thumb_title: thumbTitle, thumb_theme: themeSel === 'auto' ? '' : themeSel,
+        } }),
+      }
+    )
+    if (resp.ok || resp.status === 204) {
+      showToast('🖼️ 썸네일 삽입 워크플로가 실행됐습니다. 1~2분 후 반영됩니다.', 'success')
+    } else {
+      showToast(`실행 실패 (${resp.status}): ${(await resp.text()).slice(0,80)}`, 'error')
+    }
+  } catch (e) { showToast(`오류: ${e.message}`, 'error') }
 }
 function thumbCopyHTML() {
   const uri = thumbDataURI()

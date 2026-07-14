@@ -156,11 +156,143 @@ def action_publish(post_id: str) -> int:
         return 1
 
 
+def _insert_thumbnail_html(content: str, img_html: str) -> str:
+    """썸네일 figure를 본문 첫 </p> 바로 뒤에 삽입합니다 (없으면 맨 앞)."""
+    import re
+    m = re.search(r'</p>', content, re.IGNORECASE)
+    if m:
+        return content[:m.end()] + img_html + content[m.end():]
+    return img_html + content
+
+
+def action_insert_thumbnail(post_id: str, thumb_title: str = "", thumb_theme: str = "") -> int:
+    """포스트에 제목 기반 썸네일을 삽입합니다.
+    - published: Blogger API로 게시글 본문을 가져와 삽입 후 업데이트 (자동 삽입)
+    - pending/draft: 초안 content에 삽입 저장 → 발행 시 반영
+    """
+    from image_fetcher import generate_title_thumbnail, _make_img_html
+
+    registry = _load_registry()
+    entry = next((p for p in registry if p.get("post_id") == post_id), None)
+    if not entry:
+        logger.error(f"포스트를 찾을 수 없습니다: {post_id}")
+        return 1
+
+    title = thumb_title or entry.get("title") or entry.get("keyword", "")
+    thumb = generate_title_thumbnail(title, entry.get("keyword", ""), theme=thumb_theme)
+    if not thumb:
+        logger.error("썸네일 생성 실패 (제목 없음)")
+        return 1
+    alt = thumb.get("alt_text", title)
+    img_html = _make_img_html(thumb, alt, "")
+    _DUP_MARKERS = ("data:image/svg+xml", "generated_thumbnail")
+
+    status = entry.get("status", "")
+    blog_url = entry.get("blogUrl", "")
+
+    # ── 게시된 포스트: Blogger에서 본문 가져와 삽입 후 업데이트 ──
+    if status == "published" and blog_url:
+        import requests as _rq
+        from blogger_uploader import (
+            _get_access_token, get_post_id_by_url, BLOGGER_API_BASE, BLOGGER_BLOG_ID,
+        )
+
+        # 블로그 config 탐색
+        blog_config = None
+        raw = os.getenv("BLOGS_CONFIG", "")
+        if raw:
+            try:
+                blogs = json.loads(raw)
+                blog_config = next((b for b in blogs if b.get("id") == entry.get("blogId")), None)
+            except Exception:
+                pass
+
+        bp_id = get_post_id_by_url(blog_url, blog_config)
+        if not bp_id:
+            logger.error(f"Blogger 포스트 ID 조회 실패: {blog_url}")
+            return 1
+
+        cfg = blog_config or {}
+        blogger_blog_id = cfg.get("blog_id") or BLOGGER_BLOG_ID
+        token = _get_access_token(blog_config)
+        if not token:
+            logger.error("Blogger 액세스 토큰 없음")
+            return 1
+
+        r = _rq.get(
+            f"{BLOGGER_API_BASE}/blogs/{blogger_blog_id}/posts/{bp_id}",
+            headers={"Authorization": f"Bearer {token}"}, timeout=20,
+        )
+        if r.status_code != 200:
+            logger.error(f"게시글 조회 실패 [{r.status_code}]: {r.text[:200]}")
+            return 1
+        content = r.json().get("content", "")
+
+        if any(mk in content for mk in _DUP_MARKERS):
+            logger.warning("이미 생성 썸네일이 삽입된 포스트입니다 — 중복 삽입 건너뜀")
+            return 0
+
+        new_content = _insert_thumbnail_html(content, img_html)
+        pr = _rq.patch(
+            f"{BLOGGER_API_BASE}/blogs/{blogger_blog_id}/posts/{bp_id}",
+            headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+            json={"content": new_content}, timeout=30,
+        )
+        if pr.status_code == 200:
+            logger.info(f"✅ 게시글에 썸네일 삽입 완료: {blog_url}")
+            return 0
+        logger.error(f"게시글 업데이트 실패 [{pr.status_code}]: {pr.text[:300]}")
+        return 1
+
+    # ── 미발행 포스트: 초안/pending content에 삽입 ──
+    from post_manager import load_draft, save_draft
+    post_data = load_draft(post_id)
+    source = "draft"
+    if not post_data:
+        pending_path = os.path.join(DOCS_DATA, "pending_posts.json")
+        if os.path.exists(pending_path):
+            try:
+                with open(pending_path, encoding="utf-8") as f:
+                    pending = json.load(f)
+                for item in pending:
+                    if item.get("id") == post_id or item.get("post_id") == post_id:
+                        post_data, source = item, "pending"
+                        break
+            except Exception:
+                pass
+    if not post_data:
+        logger.error(f"포스트 콘텐츠를 찾을 수 없습니다 (초안/pending 없음): {post_id}")
+        return 1
+
+    content = post_data.get("content", "")
+    if any(mk in content for mk in _DUP_MARKERS):
+        logger.warning("이미 생성 썸네일이 삽입된 초안입니다 — 중복 삽입 건너뜀")
+        return 0
+    post_data["content"] = _insert_thumbnail_html(content, img_html)
+    post_data["images_inserted"] = post_data.get("images_inserted", 0) + 1
+
+    if source == "draft":
+        save_draft(post_id, post_data)
+    else:
+        with open(pending_path, "w", encoding="utf-8") as f:
+            json.dump(pending, f, ensure_ascii=False, indent=2)
+    logger.info(f"✅ 초안({source})에 썸네일 삽입 완료 — 발행 시 반영됩니다: {post_id}")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="포스트 단건 관리")
-    parser.add_argument("--action", required=True, choices=["publish", "archive", "delete", "restore"])
+    parser.add_argument("--action", required=True,
+                        choices=["publish", "archive", "delete", "restore", "insert_thumbnail"])
     parser.add_argument("--post-id", required=True, dest="post_id")
+    parser.add_argument("--thumb-title", default="", dest="thumb_title",
+                        help="썸네일 제목 (기본: 포스트 제목)")
+    parser.add_argument("--thumb-theme", default="", dest="thumb_theme",
+                        help="테마 (travel/drama/kpop/finance/sports/health/default, 기본: 자동 감지)")
     args = parser.parse_args()
+
+    if args.action == "insert_thumbnail":
+        return action_insert_thumbnail(args.post_id, args.thumb_title, args.thumb_theme)
 
     dispatch = {
         "publish": action_publish,

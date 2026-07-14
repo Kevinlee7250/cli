@@ -503,8 +503,16 @@ _THUMB_THEMES = [
 ]
 _THUMB_DEFAULT = ("#1e3a8a", "#60a5fa", "#dbeafe", "📝")
 
+# 대시보드 테마 선택값 → _THUMB_THEMES 인덱스 (순서 일치)
+_THUMB_THEME_NAMES = ["travel", "drama", "kpop", "finance", "sports", "health"]
 
-def _thumb_theme(text: str) -> tuple[str, str, str, str]:
+
+def _thumb_theme(text: str, theme_name: str = "") -> tuple[str, str, str, str]:
+    if theme_name and theme_name in _THUMB_THEME_NAMES:
+        _, c1, c2, accent, emoji = _THUMB_THEMES[_THUMB_THEME_NAMES.index(theme_name)]
+        return c1, c2, accent, emoji
+    if theme_name == "default":
+        return _THUMB_DEFAULT
     t = text.lower()
     for kws, c1, c2, accent, emoji in _THUMB_THEMES:
         if any(w in t for w in kws):
@@ -553,7 +561,7 @@ def _upload_to_imgbb(svg_bytes: bytes) -> str:
     return ""
 
 
-def generate_title_thumbnail(title: str, keyword: str = "") -> dict | None:
+def generate_title_thumbnail(title: str, keyword: str = "", theme: str = "") -> dict | None:
     """
     제목 기반 SVG 썸네일 카드를 생성합니다 (이미지 검색 전부 실패 시 폴백).
     - 주제별 그라디언트 배경 + 카테고리 이모지 + 제목 텍스트
@@ -562,7 +570,7 @@ def generate_title_thumbnail(title: str, keyword: str = "") -> dict | None:
     text = (title or keyword or "").strip()
     if not text:
         return None
-    c1, c2, accent, emoji = _thumb_theme(f"{title} {keyword}")
+    c1, c2, accent, emoji = _thumb_theme(f"{title} {keyword}", theme_name=theme)
     lines = _wrap_title(text)
 
     line_h = 78

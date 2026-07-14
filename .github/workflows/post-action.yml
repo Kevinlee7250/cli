@@ -12,9 +12,18 @@ on:
           - archive   # 포스트 보관 (status → skipped)
           - delete    # 포스트 삭제 (registry에서 제거)
           - restore   # 보관 포스트 복원 (status → pending)
+          - insert_thumbnail  # 생성 썸네일을 포스트에 삽입 (게시글은 즉시 반영)
       post_id:
         description: '포스트 ID (post_registry의 post_id 값)'
         required: true
+        default: ''
+      thumb_title:
+        description: '썸네일 제목 (insert_thumbnail 전용, 비워두면 포스트 제목 사용)'
+        required: false
+        default: ''
+      thumb_theme:
+        description: '썸네일 테마 (insert_thumbnail 전용: travel/drama/kpop/finance/sports/health/default, 비워두면 자동 감지)'
+        required: false
         default: ''
 
 permissions:
@@ -85,7 +94,12 @@ jobs:
           ACTION="${{ inputs.action }}"
           POST_ID="${{ inputs.post_id }}"
           echo "=== 액션: $ACTION | 포스트: $POST_ID ==="
-          python manage_post.py --action "$ACTION" --post-id "$POST_ID"
+          if [ "$ACTION" = "insert_thumbnail" ]; then
+            python manage_post.py --action "$ACTION" --post-id "$POST_ID" \
+              --thumb-title "${{ inputs.thumb_title }}" --thumb-theme "${{ inputs.thumb_theme }}"
+          else
+            python manage_post.py --action "$ACTION" --post-id "$POST_ID"
+          fi
 
       - name: 변경사항 커밋 및 푸시
         if: always()
@@ -96,13 +110,15 @@ jobs:
           # 변경 가능한 파일 스테이징
           git add -f docs/data/post_registry.json 2>/dev/null || true
           git add -f blog-automation/logs/post_registry.json 2>/dev/null || true
+          git add -f blog-automation/logs/post_drafts/ 2>/dev/null || true
+          git add -f docs/data/pending_posts.json 2>/dev/null || true
 
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else
             ACTION="${{ inputs.action }}"
             POST_ID="${{ inputs.post_id }}"
-            EMOJI_MAP='{"publish":"✅","archive":"📦","delete":"🗑","restore":"🔄"}'
+            EMOJI_MAP='{"publish":"✅","archive":"📦","delete":"🗑","restore":"🔄","insert_thumbnail":"🖼"}'
             EMOJI=$(python3 -c "import json,sys; m=json.loads('$EMOJI_MAP'); print(m.get('$ACTION','📋'))" 2>/dev/null || echo "📋")
             git commit -m "$EMOJI 포스트 $ACTION: ${POST_ID:0:40} (#${{ github.run_number }})"
             _push_ok=0

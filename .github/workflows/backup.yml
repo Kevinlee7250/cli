@@ -1,0 +1,114 @@
+name: ☁️ Google Drive 자동 백업
+
+on:
+  # 매일 오전 3시 KST (UTC 18:00 전날)
+  schedule:
+    - cron: '0 18 * * *'
+
+  # 수동 실행
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '업로드 없이 파일 목록만 확인 (dry-run)'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+      folder_id:
+        description: 'Drive 폴더 ID (비워두면 기본값 사용)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          FOLDER_ID="${{ inputs.folder_id }}"
+          if [ -z "$FOLDER_ID" ]; then
+            FOLDER_ID="1VCWoy9901A0rCnjO9ilHagwuIKgB2uda"
+          fi
+          cat > .env << ENVEOF
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_DRIVE_REFRESH_TOKEN="${{ secrets.GOOGLE_DRIVE_REFRESH_TOKEN }}"
+          GOOGLE_DRIVE_FOLDER_ID="${FOLDER_ID}"
+          BACKUP_KEEP_COUNT="30"
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: 로그 디렉토리 생성
+        working-directory: blog-automation
+        run: mkdir -p logs
+
+      - name: 레지스트리 동기화
+        working-directory: blog-automation
+        run: |
+          if [ -f ../docs/data/post_registry.json ]; then
+            cp ../docs/data/post_registry.json logs/post_registry.json
+          fi
+
+      - name: ☁️ Google Drive 백업 실행
+        working-directory: blog-automation
+        run: |
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="--dry-run"
+            echo "=== DRY RUN 모드 ==="
+          fi
+          python backup_to_drive.py $ARGS
+
+      - name: meta.json 커밋 (백업 시각 기록)
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f docs/data/meta.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "변경사항 없음"
+          else
+            git commit -m "☁️ Google Drive 백업 완료 (#${{ github.run_number }})"
+            _ok=0
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && { _ok=1; break; }
+              sleep $((i * 3))
+            done
+            [ "$_ok" = "1" ] || echo "push 재시도 실패 — 백업 자체는 성공"
+          fi
+
+      - name: 백업 로그 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backup-log-${{ github.run_number }}
+          path: blog-automation/logs/
+          retention-days: 7

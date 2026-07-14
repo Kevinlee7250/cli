@@ -150,9 +150,10 @@ def _detect_article_type(keyword: str) -> str:
     """키워드 기반 아티클 유형 감지"""
     kw = keyword.lower()
     # K-POP·연예 — 드라마보다 먼저 체크 (아이돌·컴백·시상식 등)
-    if any(w in kw for w in ["아이돌", "컴백", "k-pop", "kpop", "k pop", "음반", "신보",
+    if any(w in kw for w in ["아이돌", "컴백", "k-pop", "kpop", "k pop", "음반", "신보", "신곡",
                               "팬미팅", "콘서트 티켓", "티케팅", "시상식", "mama", "멜론어워드",
-                              "초동", "음원 차트", "걸그룹", "보이그룹", "데뷔"]):
+                              "초동", "음원 차트", "걸그룹", "보이그룹", "데뷔",
+                              "월드투어", "내한공연", "팬덤"]):
         return "kpop_review"
     # 드라마·영화 리뷰
     if any(w in kw for w in ["드라마", "영화", "넷플릭스", "티빙", "쿠팡플레이", "ott", "왓챠",
@@ -1229,8 +1230,8 @@ _HEALTH_KW  = {"건강","다이어트","운동","의료","병원","영양","질�
                "면역","혈압","당뇨","근육","칼로리","단백질","식단","비타민"}
 _DRAMA_KW   = {"드라마","영화","넷플릭스","티빙","쿠팡플레이","왓챠","ott","음악",
                "연예","아이돌","가수","배우","예능","웹툰","애니","시즌","결말",
-               "k-pop","kpop","컴백","신보","음반","팬미팅","시상식","mama",
-               "초동","걸그룹","보이그룹","데뷔","티케팅"}
+               "k-pop","kpop","컴백","신보","신곡","음반","팬미팅","시상식","mama",
+               "초동","걸그룹","보이그룹","데뷔","티케팅","월드투어","내한공연","팬덤"}
 _TRAVEL_KW  = {"여행","관광","투어","코스","명소","숙소","호텔","맛집","공항",
                "비자","패키지","자유여행","배낭","현지","국내여행","해외여행",
                "항공권","항공","제주","부산","오사카","방콕","다낭","유럽","괌","하와이"}
@@ -1265,7 +1266,7 @@ def _detect_theme(keyword: str, article_type: str) -> dict:
         return _THEMES["finance"]
     if any(w in kw for w in _HEALTH_KW):
         return _THEMES["health"]
-    if any(w in kw for w in _DRAMA_KW) or article_type == "drama_review":
+    if any(w in kw for w in _DRAMA_KW) or article_type in ("drama_review", "kpop_review"):
         return _THEMES["drama"]
     if any(w in kw for w in _TRAVEL_KW) or article_type == "travel_guide":
         return _THEMES["travel"]

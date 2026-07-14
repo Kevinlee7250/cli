@@ -184,6 +184,11 @@ def main() -> None:
             time.sleep(3)
             continue
 
+        # 기존 포스트의 라벨을 새 콘텐츠에 병합 (검색 유입 카테고리 유지)
+        if labels:
+            merged = list(dict.fromkeys(labels + new_post_data.get("labels", [])))
+            new_post_data["labels"] = merged[:20]  # Blogger 라벨 최대 20개
+
         new_wc = new_post_data.get("word_count", 0)
         logger.info(f"  새 콘텐츠 생성 완료: {new_wc}자")
 

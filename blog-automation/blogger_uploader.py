@@ -187,13 +187,17 @@ def _build_toc(html: str) -> str:
     if len(headings) < 2:
         return ""
 
+    # 목차 번호 색상: 바이올렛·블루·틸·앰버 순환
+    toc_colors = ['#7c3aed', '#2563eb', '#0d9488', '#d97706']
+
     items = []
     for i, (slug, inner) in enumerate(headings, 1):
         clean = re.sub(r'<[^>]+>', '', inner).strip()
+        color = toc_colors[(i - 1) % len(toc_colors)]
         items.append(
             f'<li style="display:flex;align-items:baseline;gap:10px;padding:7px 0;'
             f'border-bottom:1px solid #f3f0ff;">'
-            f'<span style="flex-shrink:0;width:20px;height:20px;background:#7c3aed;'
+            f'<span style="flex-shrink:0;width:20px;height:20px;background:{color};'
             f'border-radius:50%;font-size:10px;font-weight:800;color:#fff;'
             f'display:inline-flex;align-items:center;justify-content:center;'
             f'position:relative;top:1px;">{i}</span>'
@@ -237,13 +241,20 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
     # ③ AdSense 광고 삽입
     html = _inject_ads(html, blog_config)
 
-    # ④ 태그 클라우드 (내부 링크 효과)
+    # ④ 태그 클라우드 — 색상 순환 (바이올렛·블루·틸·앰버·로즈)
+    tag_styles = [
+        ('background:#f5f3ff;color:#7c3aed;',),
+        ('background:#eff6ff;color:#2563eb;',),
+        ('background:#f0fdfa;color:#0d9488;',),
+        ('background:#fffbeb;color:#d97706;',),
+        ('background:#fff1f2;color:#e11d48;',),
+    ]
     tag_links = "".join(
         f'<a href="/search/label/{label}" '
         f'style="display:inline-block;margin:4px 3px;padding:6px 16px;'
-        f'background:#f5f3ff;border-radius:20px;text-decoration:none;'
-        f'color:#7c3aed;font-size:12px;font-weight:600;letter-spacing:.01em;">{label}</a>'
-        for label in labels[:10]
+        f'border-radius:20px;text-decoration:none;font-size:12px;font-weight:600;'
+        f'letter-spacing:.01em;{tag_styles[i % len(tag_styles)][0]}">{label}</a>'
+        for i, label in enumerate(labels[:10])
     )
     tag_section = (
         '<div style="margin:3em 0 0;padding-top:1.8em;border-top:1px solid #ede9fe;">'
@@ -272,52 +283,58 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
             '</div>'
         )
 
-    # ⑥ CTA + 면책조항
+    # ⑥ CTA + 면책조항 — 로즈 포인트 CTA
     footer = (
-        '<div style="margin-top:2.8em;padding:24px 28px;background:#faf9ff;'
-        'border-radius:12px;border:1.5px solid #ede9fe;">'
+        '<div style="margin-top:2.8em;padding:24px 28px;'
+        'background:linear-gradient(135deg,#faf9ff 0%,#fff1f2 100%);'
+        'border-radius:12px;border:1.5px solid #fecdd3;">'
+        '<p style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;'
+        'color:#e11d48;margin:0 0 8px;">도움이 됐나요?</p>'
         '<p style="font-size:15px;font-weight:800;color:#0f0f14;margin:0 0 6px;">'
-        '이 글이 도움이 됐나요?</p>'
+        '북마크하고 공유해주세요!</p>'
         '<p style="font-size:13px;color:#6b7280;margin:0 0 14px;line-height:1.7;">'
-        '북마크하고 주변에 공유해주시면 더 좋은 글로 보답하겠습니다.</p>'
+        '더 좋은 정보로 보답하겠습니다. 구독하면 새 글을 바로 받아보실 수 있습니다.</p>'
         '<p style="font-size:11px;color:#9ca3af;margin:0;line-height:1.8;">'
         '투자·의료·법률 등 전문 분야는 반드시 전문가와 상담하세요.</p>'
         '</div>\n'
     )
 
-    # 포스트 공통 CSS — 눈길을 끌고 체류 시간을 높이는 바이올렛 테마
+    # 포스트 공통 CSS — 다색 팔레트 도시 테마
+    # 바이올렛(H2) · 틸(인용) · 앰버(하이라이트) · 블루(링크/H3) · 로즈(레이블)
     post_css = (
         '<style>'
         '.bp-wrap{max-width:760px;margin:0 auto;padding:8px 4px;'
         'font-family:"Noto Sans KR","Apple SD Gothic Neo","맑은 고딕",sans-serif;'
-        'font-size:16px;line-height:1.9;color:#1f1f2e;word-break:keep-all;}'
-        # H2: 번호 카운터 + 굵고 임팩트 있는 섹션 제목
-        '.bp-wrap{counter-reset:h2-counter;}'
+        'font-size:16px;line-height:1.9;color:#1f1f2e;word-break:keep-all;'
+        'counter-reset:h2-counter;}'
+        # H2: 바이올렛 번호 뱃지
         '.bp-wrap h2{font-size:1.45rem;font-weight:800;color:#0f0f14;'
         'margin:2.6em 0 .8em;letter-spacing:-.025em;line-height:1.25;'
         'display:flex;align-items:center;gap:12px;}'
-        '.bp-wrap h2::before{counter-increment:h2-counter;'
-        'content:counter(h2-counter);'
+        '.bp-wrap h2::before{counter-increment:h2-counter;content:counter(h2-counter);'
         'flex-shrink:0;width:32px;height:32px;background:#7c3aed;'
         'border-radius:8px;font-size:13px;font-weight:800;color:#fff;'
         'display:inline-flex;align-items:center;justify-content:center;}'
-        '.bp-wrap h3{font-size:1.08rem;font-weight:700;color:#1f1f2e;'
+        # H3: 블루 왼쪽 선
+        '.bp-wrap h3{font-size:1.08rem;font-weight:700;color:#1e3a8a;'
         'margin:1.8em 0 .5em;letter-spacing:-.01em;padding-left:14px;'
-        'border-left:3px solid #c4b5fd;}'
+        'border-left:3px solid #3b82f6;}'
         '.bp-wrap p{margin:0 0 1.15em;color:#374151;}'
-        '.bp-wrap a{color:#7c3aed;text-decoration:none;font-weight:500;}'
-        '.bp-wrap a:hover{text-decoration:underline;}'
-        # blockquote: 풀쿼트 스타일 — 독자 시선을 끄는 강조 박스
-        '.bp-wrap blockquote{background:#faf9ff;border:none;border-left:4px solid #7c3aed;'
+        # 링크: 블루
+        '.bp-wrap a{color:#2563eb;text-decoration:none;font-weight:500;}'
+        '.bp-wrap a:hover{color:#1d4ed8;text-decoration:underline;}'
+        # blockquote: 틸 — 인용·전문가 의견 강조
+        '.bp-wrap blockquote{background:#f0fdfa;border:none;border-left:4px solid #0d9488;'
         'margin:2em 0;padding:18px 22px;border-radius:0 10px 10px 0;'
-        'font-size:1.05rem;font-weight:600;color:#2e1065;line-height:1.7;font-style:normal;}'
+        'font-size:1.05rem;font-weight:600;color:#134e4a;line-height:1.7;font-style:normal;}'
+        # code: 바이올렛 틴트
         '.bp-wrap code{background:#f5f3ff;color:#5b21b6;padding:2px 7px;'
         'border-radius:4px;font-size:.88em;font-weight:600;}'
         '.bp-wrap strong{color:#0f0f14;font-weight:700;}'
-        # 핵심 문장 강조용 mark 태그 지원
-        '.bp-wrap mark{background:linear-gradient(180deg,transparent 55%,#ddd6fe 55%);'
+        # mark: 앰버 형광펜
+        '.bp-wrap mark{background:linear-gradient(180deg,transparent 52%,#fde68a 52%);'
         'color:inherit;padding:0 2px;}'
-        # 구분선
+        # 구분선: 라벤더
         '.bp-wrap hr{border:none;border-top:1px solid #ede9fe;margin:2.4em 0;}'
         '</style>'
     )

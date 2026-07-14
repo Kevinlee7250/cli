@@ -1,410 +1,3 @@
-2026-07-13 12:42:40,375 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다만', '이런 이유로' 등 유사 전환구가 반복되고 출처 불확실 문구 패턴이 기계적으로 되풀이됨
-2026-07-13 12:42:40,375 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
-2026-07-13 12:42:40,375 [WARNING] main —      🟡 [원본성 및 품질] 글자 수 2855자로 warn 구간이며, 출처 불명확한 일반 정보 재조합이 많고 개인 경험은 짧게만 언급됨
-2026-07-13 12:42:40,375 [WARNING] main —      🟡 [구조 및 가독성] H2 6개는 양호하나 브릭캠퍼스·플로우하우스 설명 단락이 500자 이상으로 다소 길게 이어짐
-2026-07-13 12:42:40,375 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 개인 의견은 일부 있으나 '정확한 출처·시점은 확인 필요' 식 불확실한 인용이 반복되어 신뢰도 신호가 약함
-2026-07-13 12:42:40,375 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
-2026-07-13 12:42:42,778 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:44:11,652 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 12:44:13,794 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:44:30,234 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2855자 → 4665자 (+1810자)
-2026-07-13 12:44:30,234 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-13 12:44:31,297 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:44:43,248 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 12:44:44,177 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:44:48,755 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '장마철 실내 여행지 추천 코스, 비 와도 알찬 하루 만드는 법'
-2026-07-13 12:44:48,755 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 적절하나 브릭캠퍼스·플로우하우스 문단이 500자 이상으로 길게 이어짐
-2026-07-13 12:44:48,755 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 언급이 없어 삽입 여부 확인 필요
-2026-07-13 12:44:48,755 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트형 소제목과 정형화된 문장 패턴이 반복되어 AI 생성 느낌이 일부 있음
-2026-07-13 12:44:48,755 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
-2026-07-13 12:44:48,755 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-13 12:44:49,507 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:46:04,279 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 12:46:06,103 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:47:17,773 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 12:47:19,097 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:47:23,430 [INFO] final_editor —   ✏️ 제목 최종 교정: '장마철 실내 여행지 추천 코스, 비 와도 알찬 하루 만드는 법' → '장마철 실내 여행지 추천 코스, 비 와도 알찬 하루 만들기'
-2026-07-13 12:47:23,430 [INFO] final_editor —   ✏️ 메타 설명 교정 (131자)
-2026-07-13 12:47:23,430 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 목차·요약박스·표·개인경험메모·주의사항·FAQ·결론·작성자메모·내부링크를 모두 추가하고 긴 문단을 2~4문장 단위로 分할했으며, 제목·메타설명·슬러그를 SEO 기준에 맞게 정리했습니다.
-2026-07-13 12:47:23,625 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-13 12:47:23,625 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-07-13 12:47:24,647 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/blog-post_547.html
-2026-07-13 12:47:24,657 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/blog-post_547.html
-2026-07-13 12:47:58,680 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:47:58,681 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-13 12:47:58,681 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-13 12:47:58,690 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '장마철 실내 여행지 추천 코스, 비 와도 알찬 하루 만들기'
-2026-07-13 12:48:00,034 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:48:03,795 [INFO] comment_manager —   생성된 댓글: 장마철엔 실내 시설도 사람이 몰려서 특히 주말엔 브릭캠퍼스 같은 곳은 오픈런 아니면 대기줄이 꽤 길더라고요. 그리고 플로우 하우스처럼 체험형은 ...
-2026-07-13 12:51:04,161 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-07-13 12:51:04,162 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-13 12:51:04,163 [INFO] main — 
-============================================================
-2026-07-13 12:51:04,163 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-13 12:51:04,163 [INFO] main — ============================================================
-2026-07-13 12:51:04,188 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-13 12:51:04,236 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-13 12:51:04,252 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-13 12:51:04,551 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-13 12:51:04,552 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-13 12:51:04,555 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-13 12:51:04,566 [INFO] post_manager —   포스트 레지스트리: 전체 210개 (게시 141 / 실패 15 / 대기 47)
-2026-07-13 12:51:04,566 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-13 12:51:04,566 [INFO] dashboard_exporter —   포스트: 83개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-13 12:51:04,567 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-13 12:51:04,568 [INFO] main — ============================================================
-2026-07-13 12:51:04,568 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-13 12:51:04
-2026-07-13 12:51:04,568 [INFO] main — ============================================================
-2026-07-13 12:51:04,576 [INFO] keyword_collector — 포스팅 이력 코퍼스: 22개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-13 12:51:07,622 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-13 12:51:13,782 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:51:13,783 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-13 12:51:14,244 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-13 12:51:16,761 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:51:16,762 [INFO] keyword_collector — Claude AI 키워드 생성: 4개
-2026-07-13 12:51:16,762 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-13 12:51:16,763 [INFO] keyword_collector — 유사 주제 제외 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-13 12:51:16,763 [INFO] keyword_collector —   [claude_ai] 2개: ['ETF 첫 매수 후 실수담 공개', '미국 주식 직접 투자해봤더니']
-2026-07-13 12:51:16,763 [INFO] keyword_collector — 최종 선정 키워드 2개: ['ETF 첫 매수 후 실수담 공개', '미국 주식 직접 투자해봤더니']
-2026-07-13 12:51:16,763 [INFO] main — 수집된 키워드 2개: ['ETF 첫 매수 후 실수담 공개', '미국 주식 직접 투자해봤더니']
-2026-07-13 12:51:16,764 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-07-13 12:51:16,764 [INFO] main — 단독 포스트 대상 키워드 1개: ['ETF 첫 매수 후 실수담 공개']
-2026-07-13 12:51:16,778 [INFO] main — 
-[1/1] 키워드: 'ETF 첫 매수 후 실수담 공개'
-2026-07-13 12:51:16,778 [INFO] content_generator — 포스트 생성 중: 'ETF 첫 매수 후 실수담 공개'
-2026-07-13 12:51:25,444 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:51:25,445 [INFO] research_collector — 검색 의도: ETF를 처음 매수한 초보자가 흔히 겪는 실수와 그로 인한 손실 사례를 확인하고 참고하려는 의도
-2026-07-13 12:51:34,145 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — 'ETF 첫 매수 후 실수담 공개'
-2026-07-13 12:51:49,124 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:51:49,125 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — 'ETF 첫 매수 후 실수담 공개'
-2026-07-13 12:52:07,577 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:52:07,578 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'B': 1, 'C': 2, 'X': 2}
-2026-07-13 12:52:07,579 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-13 12:52:08,407 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:53:27,121 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:53:36,444 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 12:53:37,277 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:53:40,538 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-07-13 12:53:40,539 [INFO] content_generator — 섹션별 이미지 검색: ['ETF 매수']
-2026-07-13 12:53:49,638 [INFO] image_fetcher — 이미지 수집 성공: 'ETF 매수' → 제목='historical stock / securities / certific' (관련성=0.50)
-2026-07-13 12:53:49,638 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-13 12:53:49,639 [INFO] content_generator — 포스트 생성 완료: 'ETF 첫 매수 후 실수담 공개, 초보 투자자들이 자주 겪는 3가지 함정' (3023자, 이미지 1개)
-2026-07-13 12:53:51,844 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:54:05,117 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 12:54:06,895 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:54:18,004 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 12:54:19,762 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:54:31,972 [WARNING] adsense_validator — AdSense 검증 JSON 파싱 실패 — 기본 처리: 
-2026-07-13 12:54:31,976 [INFO] internal_linker — 내부 링크 후보 4개 발견
-2026-07-13 12:54:31,982 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-07-13 12:54:31,982 [INFO] main —   제목: ETF 첫 매수 후 실수담 공개, 초보 투자자들이 자주 겪는 3가지 함정
-2026-07-13 12:54:31,982 [INFO] main —   이미지: 1개 삽입
-2026-07-13 12:54:31,982 [INFO] main —   글자 수: 3023자
-2026-07-13 12:54:34,249 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:54:47,452 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 12:54:49,744 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:55:01,500 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 12:55:03,692 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 12:55:11,540 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 61/100 — 'ETF 첫 매수 후 실수담 공개, 초보 투자자들이 자주 겪는 3'
-2026-07-13 12:55:11,540 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 3023자로 warn 구간이며, SpaceX ETF 사례 등 구체성은 있으나 상당 부분이 일반론 재조합에 가까움
-2026-07-13 12:55:11,540 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개는 양호하나 문단 구분이 거의 없어 500자 이상 블록이 다수 존재
-2026-07-13 12:55:11,540 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 투자 손실 가능성에 면책성 언급은 있으나 일부 문장에 '정도로 수정/표현 완화' 등 편집 잔재로 정보 신뢰성 훼손 우려
-2026-07-13 12:55:11,540 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 전문가 인터뷰·출처 3건은 있으나 '실수담' 제목과 달리 1인칭 경험 서술이 부재
-2026-07-13 12:55:11,540 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 저작권 위반은 없으나 시각 자료 부재로 warn
-2026-07-13 12:55:11,540 [INFO] adsense_validator —   ❌ AI 생성 의심도: '정도로 표현 완화', '정도로 수정' 등 AI 편집 지시문 잔재와 중복 서술이 그대로 노출되어 있음
-2026-07-13 12:55:11,541 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '정도로 표현 완화', '정도로 수정' 등 AI 편집 지시문 잔재와 중복 서술이 그대로 노출되어 있음
-2026-07-13 12:55:11,541 [WARNING] adsense_validator —   🔴 본문 중 '~는 정도로 표현 완화는 사례가 자주 언급됩니다', '~정도로 수정 업계의 관심을 모았습니다' 등 문장이 편집 과정의 프롬프트/지시문이 그대로 남아있는 형태로 노출되어 있어 즉시 수정 필요
-2026-07-13 12:55:11,541 [WARNING] adsense_validator —   🔴 동일 문장 내 '국내 증권사가 해외 초대형 IPO 인수단에 참여해 국내 증권사가 해외 대형 IPO 인수단에 참여한' 등 중복·비문이 존재
-2026-07-13 12:55:11,541 [ERROR] main —   ❌ AdSense 유해 콘텐츠 감지 — 업로드 취소: 'ETF 첫 매수 후 실수담 공개, 초보 투자자들이 자주 겪는 3가지 함정' (점수: 61/100)
-2026-07-13 12:55:11,541 [ERROR] main —      🔴 [AI 생성 의심도] '정도로 표현 완화', '정도로 수정' 등 AI 편집 지시문 잔재와 중복 서술이 그대로 노출되어 있음
-2026-07-13 12:55:11,541 [ERROR] main —      🔴 본문 중 '~는 정도로 표현 완화는 사례가 자주 언급됩니다', '~정도로 수정 업계의 관심을 모았습니다' 등 문장이 편집 과정의 프롬프트/지시문이 그대로 남아있는 형태로 노출되어 있어 즉시 수정 필요
-2026-07-13 12:55:11,541 [ERROR] main —      🔴 동일 문장 내 '국내 증권사가 해외 초대형 IPO 인수단에 참여해 국내 증권사가 해외 대형 IPO 인수단에 참여한' 등 중복·비문이 존재
-2026-07-13 12:55:11,549 [INFO] main — 
-============================================================
-2026-07-13 12:55:11,549 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
-2026-07-13 12:55:11,550 [INFO] main — ============================================================
-2026-07-13 12:55:11,577 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-13 12:55:11,596 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-13 12:55:11,612 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-13 12:55:11,899 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-13 12:55:11,901 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-13 12:55:11,903 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-13 12:55:11,915 [INFO] post_manager —   포스트 레지스트리: 전체 211개 (게시 141 / 실패 15 / 대기 47)
-2026-07-13 12:55:11,915 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-13 12:55:11,915 [INFO] dashboard_exporter —   포스트: 82개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-13 12:55:11,915 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-13 23:02:16,691 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-07-13 23:02:16,691 [INFO] main —   - [blog1] HOGU What?
-2026-07-13 23:02:16,691 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-07-13 23:02:16,691 [INFO] main —   - [blog3] 금융NEWS
-2026-07-13 23:02:16,691 [INFO] main — ============================================================
-2026-07-13 23:02:16,691 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-13 23:02:16
-2026-07-13 23:02:16,691 [INFO] main — ============================================================
-2026-07-13 23:02:16,698 [INFO] keyword_collector — 포스팅 이력 코퍼스: 35개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-13 23:02:20,458 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-13 23:02:25,016 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:02:25,031 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-13 23:02:25,031 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-13 23:02:25,458 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기']
-2026-07-13 23:02:25,743 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-13 23:02:26,087 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-13 23:02:26,090 [INFO] keyword_collector —   [high_cpc] 1개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기']
-2026-07-13 23:02:26,090 [INFO] keyword_collector —   [naver_realtime] 1개: ['전국 치킨 맛집 여행지도 추천 코스']
-2026-07-13 23:02:26,090 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기', '전국 치킨 맛집 여행지도 추천 코스']
-2026-07-13 23:02:26,090 [INFO] main — 수집된 키워드 2개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기', '전국 치킨 맛집 여행지도 추천 코스']
-2026-07-13 23:02:26,092 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-07-13 23:02:26,092 [INFO] main — 단독 포스트 대상 키워드 1개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기']
-2026-07-13 23:02:26,102 [INFO] main — 
-[1/1] 키워드: '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
-2026-07-13 23:02:26,102 [INFO] content_generator — 포스트 생성 중: '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
-2026-07-13 23:02:33,082 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:02:33,082 [INFO] research_collector — 검색 의도: 여행자보험 가입의 필요성과 실제 보상 사례를 통해 가입 여부를 판단하고자 함
-2026-07-13 23:02:47,211 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
-2026-07-13 23:03:11,979 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:03:11,980 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
-2026-07-13 23:03:27,131 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:03:27,134 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'A': 1, 'X': 1, 'C': 2, 'B': 1}
-2026-07-13 23:03:27,135 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
-2026-07-13 23:03:27,135 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-13 23:03:27,888 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:04:47,870 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:04:59,130 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:05:01,047 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:05:02,818 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-07-13 23:05:02,820 [INFO] content_generator — 섹션별 이미지 검색: ['여행자보험 가입 해야']
-2026-07-13 23:05:03,174 [INFO] image_fetcher — 이미지 수집 성공: '여행자보험 가입 해야' → 제목='business / woman / people / shooting / f' (관련성=0.40)
-2026-07-13 23:05:03,174 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-13 23:05:03,176 [INFO] content_generator — 포스트 생성 완료: '여행자보험 꼭 필요할까, 2026년 가입 전 점검 포인트' (2864자, 이미지 1개)
-2026-07-13 23:05:03,870 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:05:15,424 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:05:16,094 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:05:23,986 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 59/100 — '여행자보험 꼭 필요할까, 2026년 가입 전 점검 포인트'
-2026-07-13 23:05:23,986 [INFO] adsense_validator —   ❌ 원본성 및 품질: 실제 경험담이나 구체적 수치·날짜 없이 '이용자 후기 종합', '자료에서 확인' 식 일반론만 재구성됨
-2026-07-13 23:05:23,986 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: 
-2026-07-13 23:05:23,986 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개는 인용됐으나 1인칭 직접 경험이나 구체적 사례 제시가 부족함
-2026-07-13 23:05:23,986 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 시각적 보완 부족(저작권 위반은 아님)
-2026-07-13 23:05:23,986 [INFO] adsense_validator —   ❌ AI 생성 의심도: 동일 키워드 문구 반복, 격식체·요약형 표현 패턴이 두드러져 AI 생성 의심
-2026-07-13 23:05:23,986 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 실제 경험담이나 구체적 수치·날짜 없이 '이용자 후기 종합', '자료에서 확인' 식 일반론만 재구성됨
-2026-07-13 23:05:23,986 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 동일 키워드 문구 반복, 격식체·요약형 표현 패턴이 두드러져 AI 생성 의심
-2026-07-13 23:05:23,986 [WARNING] adsense_validator —   🔴 실제 개인 경험이나 구체적 보상 사례(날짜, 금액 등)가 없어 제목의 '실제 보상 경험 후기' 주장과 본문 내용이 불일치함
-2026-07-13 23:05:23,986 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 59/100, 이유: ["[원본성 및 품질] 실제 경험담이나 구체적 수치·날짜 없이 '이용자 후기 종합', '자료에서 확인' 식 일반론만 재구성됨"]) — 재생성 2/2
-2026-07-13 23:05:26,986 [INFO] content_generator — 포스트 생성 중: '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
-2026-07-13 23:05:33,599 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:05:33,600 [INFO] research_collector — 검색 의도: 여행자보험 가입 필요성과 실제 보상 사례를 통해 가입 여부를 결정하고자 하는 정보 탐색
-2026-07-13 23:05:45,303 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
-2026-07-13 23:06:07,409 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:06:07,410 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
-2026-07-13 23:06:30,360 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:06:30,361 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'B': 1, 'D': 3, 'X': 2}
-2026-07-13 23:06:30,362 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-07-13 23:06:30,362 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-13 23:06:32,178 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:07:49,312 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:07:59,778 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:08:00,447 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:08:01,213 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-07-13 23:08:01,214 [INFO] content_generator — 섹션별 이미지 검색: ['여행자보험 가입 해야']
-2026-07-13 23:08:01,440 [INFO] image_fetcher — 이미지 수집 성공: '여행자보험 가입 해야' → 제목='business / woman / people / shooting / f' (관련성=0.40)
-2026-07-13 23:08:01,440 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-13 23:08:01,441 [INFO] content_generator — 포스트 생성 완료: '여행자보험 가입 꼭 해야 할까, 2026년 실제 보상 사례로 확인했습니다' (2707자, 이미지 1개)
-2026-07-13 23:08:02,170 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:08:14,384 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:08:15,108 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:08:25,411 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:08:26,208 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:08:31,686 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 59/100 — '여행자보험 가입 꼭 해야 할까, 2026년 실제 보상 사례로 확'
-2026-07-13 23:08:31,686 [INFO] adsense_validator —   ❌ 원본성 및 품질: 출처 표현을 수정하라는 AI 편집 지시문이 본문에 그대로 노출되어 원본성·품질에 심각한 결함이 있음
-2026-07-13 23:08:31,686 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2는 6개로 충분하나 본문이 단락 구분 없이 이어져 500자 이상 블록이 다수 존재함
-2026-07-13 23:08:31,686 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: '한 언론 보도에 따르면' 식의 모호한 인용만 있고 실제 출처 링크나 구체적 개인 경험 서술이 부족함
-2026-07-13 23:08:31,686 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 없어 저작권 위반은 없으나 시각자료 부재로 가독성·SEO 측면에서 보완 필요
-2026-07-13 23:08:31,686 [INFO] adsense_validator —   ❌ AI 생성 의심도: AI 편집 지시문('~로 수정,')이 그대로 남아있어 AI 생성 원고를 검수 없이 게시한 정황이 뚜렷함
-2026-07-13 23:08:31,686 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 출처 표현을 수정하라는 AI 편집 지시문이 본문에 그대로 노출되어 원본성·품질에 심각한 결함이 있음
-2026-07-13 23:08:31,686 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] AI 편집 지시문('~로 수정,')이 그대로 남아있어 AI 생성 원고를 검수 없이 게시한 정황이 뚜렷함
-2026-07-13 23:08:31,687 [WARNING] adsense_validator —   🔴 본문 중간에 'AI에게 내린 수정 지시문'이 그대로 노출되어 있어 발행 전 검수가 이루어지지 않은 것으로 보이며, 즉시 해당 문장을 삭제하고 전체 원고를 재검수해야 함
-2026-07-13 23:08:31,693 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-13 23:08:31,694 [INFO] internal_linker —   [1/5] '여행지' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_547.h
-2026-07-13 23:08:31,699 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-13 23:08:31,699 [INFO] main —   제목: 여행자보험 가입 꼭 해야 할까, 2026년 실제 보상 사례로 확인했습니다
-2026-07-13 23:08:31,699 [INFO] main —   이미지: 1개 삽입
-2026-07-13 23:08:31,699 [INFO] main —   글자 수: 2707자
-2026-07-13 23:08:32,527 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:08:46,018 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:08:46,712 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:08:57,130 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:09:02,813 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:09:08,242 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '여행자보험 가입 꼭 해야 할까, 2026년 실제 보상 사례로 확'
-2026-07-13 23:09:08,242 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2707자로 warn 구간이며 구체적 개인 경험·수치보다 일반 정보 재구성이 많음
-2026-07-13 23:09:08,242 [INFO] adsense_validator —   ⚠️ SEO 최적화: '여행자보험 가입' 문구가 다소 기계적으로 반복되나 제목-본문 일치는 양호
-2026-07-13 23:09:08,242 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 표현이 '한 언론 보도'로 모호하고 개인 경험보다 일반론 위주 서술
-2026-07-13 23:09:08,242 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없어 저작권 위반은 없으나 가독성·SEO 측면에서 보완 필요
-2026-07-13 23:09:08,242 [INFO] adsense_validator —   ❌ AI 생성 의심도: 본문 중 '~로 수정'과 같은 편집 지시문이 그대로 노출되어 미검수 AI 초안 게재 흔적이 뚜렷함
-2026-07-13 23:09:08,242 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 본문 중 '~로 수정'과 같은 편집 지시문이 그대로 노출되어 미검수 AI 초안 게재 흔적이 뚜렷함
-2026-07-13 23:09:08,242 [WARNING] adsense_validator —   🔴 본문 중 '한 언론 보도에 따르면과 같이 출처를 일반적으로 표현하는 것이 안전함로 수정' 등 편집 지시 문구가 그대로 노출되어 있어 즉시 삭제 및 전체 재검수 필요
-2026-07-13 23:09:08,242 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
-2026-07-13 23:09:08,242 [WARNING] main —      🔴 [AI 생성 의심도] 본문 중 '~로 수정'과 같은 편집 지시문이 그대로 노출되어 미검수 AI 초안 게재 흔적이 뚜렷함
-2026-07-13 23:09:08,242 [WARNING] main —      🔴 본문 중 '한 언론 보도에 따르면과 같이 출처를 일반적으로 표현하는 것이 안전함로 수정' 등 편집 지시 문구가 그대로 노출되어 있어 즉시 삭제 및 전체 재검수 필요
-2026-07-13 23:09:08,242 [WARNING] main —      🟡 [원본성 및 품질] 2707자로 warn 구간이며 구체적 개인 경험·수치보다 일반 정보 재구성이 많음
-2026-07-13 23:09:08,242 [WARNING] main —      🟡 [SEO 최적화] '여행자보험 가입' 문구가 다소 기계적으로 반복되나 제목-본문 일치는 양호
-2026-07-13 23:09:08,242 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 표현이 '한 언론 보도'로 모호하고 개인 경험보다 일반론 위주 서술
-2026-07-13 23:09:08,242 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
-2026-07-13 23:09:10,204 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:10:16,051 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2707자 → 3255자 (+548자)
-2026-07-13 23:10:16,051 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-13 23:10:17,918 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:10:28,863 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:10:30,764 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:10:36,046 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '여행자보험 가입 꼭 해야 할까, 2026년 실제 보상 사례로 확'
-2026-07-13 23:10:36,046 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 경험(지연 4시간, 영수증 3만8천원 등)은 우수하나 글자 수 3255자로 4000자 기준 미달
-2026-07-13 23:10:36,046 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 기준 충족하나 단락 구분이 불명확하고 500자 이상 긴 단락이 다수 존재
-2026-07-13 23:10:36,046 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가하나 저작권 위반은 없어 기본 warn 처리
-2026-07-13 23:10:36,046 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 84/100)
-2026-07-13 23:10:36,046 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-13 23:10:37,985 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:11:52,200 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:11:53,941 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:12:12,848 [INFO] final_editor —   ✏️ 제목 최종 교정: '여행자보험 가입 꼭 해야 할까, 2026년 실제 보상 사례로 확인했습니다' → '여행자보험 가입 꼭 해야 할까? 실제 보상 경험으로 알아본 후기'
-2026-07-13 23:12:12,849 [INFO] final_editor —   ✏️ 메타 설명 교정 (81자)
-2026-07-13 23:12:12,849 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 요약박스·목차·표 2개·개인경험메모·주의사항·FAQ 5개·작성자메모·내부링크를 추가하고 긴 문단을 2~4문장 단위로 분리해 발행 형식에 맞게 편집함.
-2026-07-13 23:12:13,029 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-07-13 23:12:13,511 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_14.html
-2026-07-13 23:12:13,518 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_14.html
-2026-07-13 23:12:45,017 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:12:45,019 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-13 23:12:45,019 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-13 23:12:45,024 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '여행자보험 가입 꼭 해야 할까? 실제 보상 경험으로 알아본 후기'
-2026-07-13 23:12:46,918 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:12:49,786 [INFO] comment_manager —   생성된 댓글: 글 잘 읽었습니다! 하나 덧붙이면, 지연 관련 청구할 땐 항공사에서 발급해주는 '지연 확인서(Delay Certificate)'를 꼭 받아두시는...
-2026-07-13 23:15:50,016 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-07-13 23:15:50,017 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-13 23:15:50,017 [INFO] main — 
-============================================================
-2026-07-13 23:15:50,018 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-13 23:15:50,018 [INFO] main — ============================================================
-2026-07-13 23:15:50,036 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-13 23:15:50,047 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-13 23:15:50,057 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-13 23:15:50,312 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-13 23:15:50,689 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-13 23:15:51,047 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-13 23:15:51,048 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-13 23:15:51,050 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-13 23:15:51,057 [INFO] post_manager —   포스트 레지스트리: 전체 212개 (게시 142 / 실패 15 / 대기 47)
-2026-07-13 23:15:51,057 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-13 23:15:51,058 [INFO] dashboard_exporter —   포스트: 82개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-13 23:15:51,058 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-13 23:15:51,059 [INFO] main — ============================================================
-2026-07-13 23:15:51,059 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-13 23:15:51
-2026-07-13 23:15:51,059 [INFO] main — ============================================================
-2026-07-13 23:15:51,064 [INFO] keyword_collector — 포스팅 이력 코퍼스: 24개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-13 23:15:56,414 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 50개
-2026-07-13 23:16:01,386 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:16:01,387 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-13 23:16:01,387 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-13 23:16:01,775 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-13 23:16:01,775 [INFO] keyword_collector — 유사 주제 제외 2개: ['여름 국내 피서지 추천 2026 계곡 바다 숲', '장마철 실내 여행지 추천 코스']
-2026-07-13 23:16:01,775 [INFO] keyword_collector —   [naver_realtime] 2개: ['여행 빈 캐리어 꿀팁 짐싸기 노하우', '캐시워크 앱테크로 용돈 버는 방법']
-2026-07-13 23:16:01,775 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여행 빈 캐리어 꿀팁 짐싸기 노하우', '캐시워크 앱테크로 용돈 버는 방법']
-2026-07-13 23:16:01,776 [INFO] main — 수집된 키워드 2개: ['여행 빈 캐리어 꿀팁 짐싸기 노하우', '캐시워크 앱테크로 용돈 버는 방법']
-2026-07-13 23:16:01,776 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 15일 전)
-2026-07-13 23:16:02,962 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:16:02,963 [INFO] main — 단독 포스트 대상 키워드 1개: ['여행 빈 캐리어 꿀팁 짐싸기 노하우']
-2026-07-13 23:16:02,971 [INFO] main — 
-[1/1] 키워드: '여행 빈 캐리어 꿀팁 짐싸기 노하우'
-2026-07-13 23:16:02,971 [INFO] content_generator — 포스트 생성 중: '여행 빈 캐리어 꿀팁 짐싸기 노하우'
-2026-07-13 23:16:10,144 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:16:10,145 [INFO] research_collector — 검색 의도: 여행 갈 때 캐리어를 효율적으로 싸는 방법과 빈 공간 활용 꿀팁을 찾는 의도
-2026-07-13 23:16:33,339 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '여행 빈 캐리어 꿀팁 짐싸기 노하우'
-2026-07-13 23:16:52,700 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:16:52,700 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '여행 빈 캐리어 꿀팁 짐싸기 노하우'
-2026-07-13 23:17:18,437 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:17:18,438 [INFO] source_validator — 출처 검증: 6/8개 통과, 등급 분포 {'X': 2, 'D': 4, 'C': 2}
-2026-07-13 23:17:18,439 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-13 23:17:19,223 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:18:25,433 [WARNING] content_generator — 컨텐츠 너무 짧음(2226자, 최소 2500자) — 재시도 1/3
-2026-07-13 23:18:28,434 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-13 23:18:30,317 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:19:30,319 [WARNING] content_generator — 컨텐츠 너무 짧음(2377자, 최소 2500자) — 재시도 2/3
-2026-07-13 23:19:33,320 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-13 23:19:34,042 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:20:54,103 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:21:02,985 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:21:03,859 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:21:08,034 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-07-13 23:21:08,035 [INFO] content_generator — 섹션별 이미지 검색: ['여행 캐리어 짐싸기']
-2026-07-13 23:21:08,344 [INFO] image_fetcher — 이미지 수집 성공: '여행 캐리어 짐싸기' → 제목='fantasy / to travel / travel / vacations' (관련성=0.25)
-2026-07-13 23:21:08,344 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-13 23:21:08,345 [INFO] content_generator — 포스트 생성 완료: '빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리' (3053자, 이미지 1개)
-2026-07-13 23:21:09,196 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:21:21,593 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:21:22,389 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:21:28,055 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리'
-2026-07-13 23:21:28,055 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수 3053자로 기준 범위(2500~3999)에 해당하며, 대부분 타 매체 팁 재정리 위주로 개인 경험 비중이 낮음
-2026-07-13 23:21:28,055 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락이 500자 이상으로```
-길어 가독성이 다소 떨어짐
-2026-07-13 23:21:28,055 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글임
-2026-07-13 23:21:28,055 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~로 알려진', '~라고 합니다' 등 정형화된 인용 패턴이 반복돼 AI 생성 특유의 문체가 다소 드러남
-2026-07-13 23:21:28,059 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-13 23:21:28,061 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-07-13 23:21:28,061 [INFO] main —   제목: 빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리
-2026-07-13 23:21:28,061 [INFO] main —   이미지: 1개 삽입
-2026-07-13 23:21:28,061 [INFO] main —   글자 수: 3053자
-2026-07-13 23:21:28,780 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:21:40,961 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:21:41,731 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:21:47,764 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리'
-2026-07-13 23:21:47,764 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3053자로 기준 충족하나 버즈피드·코리아헤럴드·GS칼텍스 등 기존 자료 재정리 위주이며 개인 경험은 짧은 감상 수준에 그침
-2026-07-13 23:21:47,764 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 각 섹션 내 단락이500자 이상으로 길게 이어져 가독성이 다소 떨어짐
-2026-07-13 23:21:47,764 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3곳 인용과 균형 잡힌 시각은 있으나 1인칭 실제 경험 사례가 구체적이지 않음
-2026-07-13 23:21:47,764 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 저작권 문제는 없으나 시각 자료 부재로 가독성 보완 필요
-2026-07-13 23:21:47,764 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다만', '개인적으로는' 등 유사 전환구가 반복되며 설명 패턴이 다소 정형화되어 있음
-2026-07-13 23:21:47,764 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
-2026-07-13 23:21:47,764 [WARNING] main —      🟡 [원본성 및 품질] 3053자로 기준 충족하나 버즈피드·코리아헤럴드·GS칼텍스 등 기존 자료 재정리 위주이며 개인 경험은 짧은 감상 수준에 그침
-2026-07-13 23:21:47,764 [WARNING] main —      🟡 [구조 및 가독성] H2 5개는 적절하나 각 섹션 내 단락이500자 이상으로 길게 이어져 가독성이 다소 떨어짐
-2026-07-13 23:21:47,764 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3곳 인용과 균형 잡힌 시각은 있으나 1인칭 실제 경험 사례가 구체적이지 않음
-2026-07-13 23:21:47,764 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
-2026-07-13 23:21:48,475 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:22:58,078 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3053자 → 4292자 (+1239자)
-2026-07-13 23:22:58,078 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-13 23:23:01,033 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:23:13,488 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-13 23:23:14,311 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-13 23:23:20,719 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리'
-2026-07-13 23:23:20,719 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 개인 경험(프라하, 방콕 사례)은 있으나 버즈피드·코리아헤럴드 등 기존 자료재인용 위주 구성으로 재조합 성격이 강함
-2026-07-13 23:23:20,719 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 각 섹션 단락이 500자 이상으로 길어 가독성 저하
-2026-07-13 23:23:20,719 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 언급이 없어 저작권 위반은 아니나 이미지 부재로 warn
-2026-07-13 23:23:20,719 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 경험담-팁소개-출처-비판적시각 구조가 섹션마다 반복되어 다소 정형화된 패턴
-2026-07-13 23:23:20,719 [WARNING] main —   ⚠️ 자동 수정 후에도 기준 미달 (점수: 79/100) — pending 저장
-2026-07-13 23:23:20,719 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리' (점수: 79/100, 권장: review)
-2026-07-13 23:23:20,732 [INFO] dashboard_exporter —   검토 대기 저장: 빈 캐리어 짐싸기 노하우, 자료로 검증한 여행 준비 꿀팁 정리 (7738자 HTML)
-2026-07-13 23:23:20,738 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 65개)
-2026-07-13 23:23:20,738 [INFO] main — 
-============================================================
-2026-07-13 23:23:20,738 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-13 23:23:20,738 [INFO] main — ============================================================
-2026-07-13 23:23:20,754 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-13 23:23:20,792 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-13 23:23:20,802 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-13 23:23:21,270 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-13 23:23:21,271 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-13 23:23:21,273 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-13 23:23:21,280 [INFO] post_manager —   포스트 레지스트리: 전체 213개 (게시 142 / 실패 15 / 대기 48)
-2026-07-13 23:23:21,280 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-13 23:23:21,280 [INFO] dashboard_exporter —   포스트: 83개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-13 23:23:21,281 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-07-13 23:23:21,282 [INFO] main — ============================================================
 2026-07-13 23:23:21,282 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-13 23:23:21
 2026-07-13 23:23:21,282 [INFO] main — ============================================================
@@ -905,3 +498,341 @@
 2026-07-14 06:06:39,951 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-14 06:06:39,951 [INFO] dashboard_exporter —   포스트: 87개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-14 06:06:39,952 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-14 07:32:25,743 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
+2026-07-14 07:32:25,743 [INFO] main —   - [blog1] HOGU What?
+2026-07-14 07:32:25,743 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
+2026-07-14 07:32:25,743 [INFO] main —   - [blog3] 금융NEWS
+2026-07-14 07:32:25,743 [INFO] main — ============================================================
+2026-07-14 07:32:25,743 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-14 07:32:25
+2026-07-14 07:32:25,743 [INFO] main — ============================================================
+2026-07-14 07:32:25,751 [INFO] main — 수집된 키워드 1개: ['온열질환 예방법과 응급처치 총정리']
+2026-07-14 07:32:25,753 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
+2026-07-14 07:32:25,753 [INFO] main — 단독 포스트 대상 키워드 1개: ['온열질환 예방법과 응급처치 총정리']
+2026-07-14 07:32:25,762 [INFO] main — 
+[1/1] 키워드: '온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:32:25,762 [INFO] content_generator — 포스트 생성 중: '온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:32:36,548 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:32:36,564 [INFO] research_collector — 검색 의도: 온열질환의 종류별 증상과 예방수칙, 응급처치 방법을 정확하게 알고 싶은 검색자의 실용적 정보 요구
+2026-07-14 07:32:51,618 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:33:07,314 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:33:07,315 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:33:29,811 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:33:29,812 [INFO] source_validator — 출처 검증: 1/8개 통과, 등급 분포 {'X': 7, 'B': 1}
+2026-07-14 07:33:29,813 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-14 07:33:30,709 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:35:14,907 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:35:23,805 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-07-14 07:35:23,808 [INFO] content_generator — 섹션별 이미지 검색: ['온열질환 예방법과 응급처치']
+2026-07-14 07:35:24,037 [INFO] image_fetcher — 이미지 수집 성공: '온열질환 예방법과 응급처치' → 제목='business / woman / people / shooting / f' (관련성=0.40)
+2026-07-14 07:35:24,037 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-14 07:35:24,039 [INFO] content_generator — 포스트 생성 완료: '여름 여행 온열질환 예방법과 응급처치 2026년 총정리' (3244자, 이미지 1개)
+2026-07-14 07:35:24,813 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:35:36,947 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:35:38,083 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:35:44,110 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '여름 여행 온열질환 예방법과 응급처치 2026년 총정리'
+2026-07-14 07:35:44,110 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3244자로 기준 미달 구간이며 커뮤니티 후기 인용 중심으로 개인 실경험 사례가 부족함
+2026-07-14 07:35:44,110 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락(도입부, 후기 분석 단락)이 500자 이상으로 길게 이어짐
+2026-07-14 07:35:44,110 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용은 있으나 질병관리청 자료 최신성 불확실 명시 및 1인칭 직접 경험 부족으로 전문성 신호 약함
+2026-07-14 07:35:44,110 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되지 않아 가독성·SEO 측면에서 보완 필요
+2026-07-14 07:35:44,110 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~것으로 보입니다', '~습니다' 반복의 격식체 문장과 정형화된 요약식 서술 패턴이 다수 나타남
+2026-07-14 07:35:44,114 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-14 07:35:44,116 [INFO] internal_linker —   [1/5] '만족도' -> https://hogugolfntraval.blogspot.com/2026/07/2025.html
+2026-07-14 07:35:44,120 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-14 07:35:44,120 [INFO] main —   제목: 여름 여행 온열질환 예방법과 응급처치 2026년 총정리
+2026-07-14 07:35:44,120 [INFO] main —   이미지: 1개 삽입
+2026-07-14 07:35:44,120 [INFO] main —   글자 수: 3244자
+2026-07-14 07:35:44,859 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:35:56,677 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:35:57,503 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:36:06,571 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '여름 여행 온열질환 예방법과 응급처치 2026년 총정리'
+2026-07-14 07:36:06,571 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3244자로 글자 수 기준 warn 구간이며, 커뮤니티 후기 인용 위주로 필자 본인의 직접 경험·구체적 수치가 부족함
+2026-07-14 07:36:06,571 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개는 충분하나 일부 단락(왜 방심하면 안 되나, 자료와 후기로 본 관점)이 500자 이상으로 길어 가독성이 다소 떨어짐
+2026-07-14 07:36:06,571 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개를 인용했으나 1인칭 직접 경험이 없고 질병관리청 자료도 '최신 개정 여부 확인 필요'로 불확실성이 남아있음
+2026-07-14 07:36:06,571 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되지 않아 저작권 위반은 없으나 가독성·SEO 측면에서 보완 필요
+2026-07-14 07:36:06,571 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트 등 목록화 패턴과 '~것으로 보입니다', '~는 편입니다' 같은 정형화된 서술이 반복되고 '가능합니다합니다' 등 오타 흔적이 AI 생성 의심을 높임
+2026-07-14 07:36:06,571 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-07-14 07:36:06,571 [WARNING] main —      🟡 [원본성 및 품질] 3244자로 글자 수 기준 warn 구간이며, 커뮤니티 후기 인용 위주로 필자 본인의 직접 경험·구체적 수치가 부족함
+2026-07-14 07:36:06,571 [WARNING] main —      🟡 [구조 및 가독성] H2 7개는 충분하나 일부 단락(왜 방심하면 안 되나, 자료와 후기로 본 관점)이 500자 이상으로 길어 가독성이 다소 떨어짐
+2026-07-14 07:36:06,571 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 2개를 인용했으나 1인칭 직접 경험이 없고 질병관리청 자료도 '최신 개정 여부 확인 필요'로 불확실성이 남아있음
+2026-07-14 07:36:06,571 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-07-14 07:36:08,741 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:37:31,674 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:37:33,553 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:38:13,012 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3244자 → 4235자 (+991자)
+2026-07-14 07:38:13,012 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-14 07:38:14,883 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:38:26,326 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:38:27,860 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:38:36,960 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '여름 여행 온열질환 예방법과 응급처치 2026년 총정리'
+2026-07-14 07:38:36,960 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 저작권 위반은 없으나 시각 자료 부재로 warn 처리
+2026-07-14 07:38:36,960 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 95/100)
+2026-07-14 07:38:36,960 [INFO] main —   ✅ AdSense 검증 통과 (점수: 95/100) — 업로드
+2026-07-14 07:38:37,798 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:39:58,946 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:39:59,968 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:40:22,212 [INFO] final_editor —   ✏️ 제목 최종 교정: '여름 여행 온열질환 예방법과 응급처치 2026년 총정리' → '2026년 여름 여행 온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:40:22,212 [INFO] final_editor —   ✏️ 메타 설명 교정 (87자)
+2026-07-14 07:40:22,212 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목을 30자로 조정하고 목차·요약박스·표·개인경험메모·주의사항·FAQ 6개·작성자메모·내부링크를 추가했으며, 모든 문단을 2~4문장 이내로 재구성해 모바일 가독성을 높였습니다.
+2026-07-14 07:40:22,338 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-14 07:40:22,338 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-07-14 07:40:22,871 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/2026_01036540498.html
+2026-07-14 07:40:22,878 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/2026_01036540498.html
+2026-07-14 07:40:59,952 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:40:59,953 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-14 07:40:59,953 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-14 07:40:59,958 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '2026년 여름 여행 온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:41:01,290 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:41:04,241 [INFO] comment_manager —   생성된 댓글: 덧붙이자면, 여행 전날 물을 미리 많이 마셔두는 것도 도움이 됩니다. 당일 아침부터 급하게 수분 섭취하는 것보다 전날 저녁부터 조금씩 나눠 마셔...
+2026-07-14 07:44:04,532 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-14 07:44:04,533 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-14 07:44:04,533 [INFO] main — 
+============================================================
+2026-07-14 07:44:04,533 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-14 07:44:04,533 [INFO] main — ============================================================
+2026-07-14 07:44:04,554 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-14 07:44:04,566 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-14 07:44:04,576 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-14 07:44:05,001 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-14 07:44:05,506 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-14 07:44:05,836 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-14 07:44:05,837 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-14 07:44:05,839 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-14 07:44:05,847 [INFO] post_manager —   포스트 레지스트리: 전체 218개 (게시 146 / 실패 15 / 대기 49)
+2026-07-14 07:44:05,847 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-14 07:44:05,847 [INFO] dashboard_exporter —   포스트: 88개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-14 07:44:05,848 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-14 07:44:05,849 [INFO] main — ============================================================
+2026-07-14 07:44:05,849 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-14 07:44:05
+2026-07-14 07:44:05,849 [INFO] main — ============================================================
+2026-07-14 07:44:05,854 [INFO] main — 수집된 키워드 1개: ['온열질환 예방법과 응급처치 총정리']
+2026-07-14 07:44:05,854 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 15일 전)
+2026-07-14 07:44:08,864 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:44:08,865 [INFO] main — 단독 포스트 대상 키워드 1개: ['온열질환 예방법과 응급처치 총정리']
+2026-07-14 07:44:08,873 [INFO] main — 
+[1/1] 키워드: '온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:44:08,873 [INFO] content_generator — 포스트 생성 중: '온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:44:15,954 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:44:15,955 [INFO] research_collector — 검색 의도: 여름철 온열질환의 종류와 예방법, 발생 시 응급처치 방법을 알고 싶어하는 검색 의도
+2026-07-14 07:44:30,650 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:44:44,137 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:44:44,138 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:45:05,247 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:45:05,248 [INFO] source_validator — 출처 검증: 0/5개 통과, 등급 분포 {'X': 5}
+2026-07-14 07:45:05,248 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
+2026-07-14 07:45:05,248 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-14 07:45:06,037 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:46:28,563 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:46:38,355 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:46:39,063 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:46:41,193 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-07-14 07:46:41,193 [INFO] content_generator — 섹션별 이미지 검색: ['온열질환 예방법과 응급처치']
+2026-07-14 07:46:41,432 [INFO] image_fetcher — 이미지 수집 성공: '온열질환 예방법과 응급처치' → 제목='business / woman / people / shooting / f' (관련성=0.40)
+2026-07-14 07:46:41,432 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-14 07:46:41,432 [INFO] content_generator — 포스트 생성 완료: '여름 직관·여행 필수 상식, 온열질환 예방법과 응급처치 총정리' (2683자, 이미지 1개)
+2026-07-14 07:46:42,701 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:46:55,355 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:46:56,096 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:47:07,350 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:47:08,802 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:47:09,278 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '여름 직관·여행 필수 상식, 온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:47:09,278 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2683자로 기준 범위(2500~3999자)에 해당하나 개인 경험이 구체성 없이 일반화되어 재구성 콘텐츠에 가까움
+2026-07-14 07:47:09,278 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 헤딩 수는 충분하나 일부 단락이 500자 이상으로 길어 가독성 저하
+2026-07-14 07:47:09,278 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 질병관리청 출처 인용은 있으나 개인 경험은 '커뮤니티 후기' 등 모호한 근거에 의존
+2026-07-14 07:47:09,278 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 저작권 위반은 없으나 가독성·SEO 측면에서 보완 필요
+2026-07-14 07:47:09,278 [INFO] adsense_validator —   ❌ AI 생성 의심도: 본문 내 동일 문장 중복 오류('그늘로 옮기고 수분을 보충했는데도' 등)가 발견되어 AI 생성 흔적이 뚜렷함
+2026-07-14 07:47:09,279 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 본문 내 동일 문장 중복 오류('그늘로 옮기고 수분을 보충했는데도' 등)가 발견되어 AI 생성 흔적이 뚜렷함
+2026-07-14 07:47:09,279 [WARNING] adsense_validator —   🔴 본문 내 문장 중복 오류('종종 목격했다는 후기가 온라인 커뮤니티에 종종 목격했다는...', '그늘로 옮기고 수분을 보충했는데도 그늘로 옮기고 수분을 보충했는데도...') 수정 필요
+2026-07-14 07:47:09,282 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-14 07:47:09,284 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-14 07:47:09,284 [INFO] main —   제목: 여름 직관·여행 필수 상식, 온열질환 예방법과 응급처치 총정리
+2026-07-14 07:47:09,284 [INFO] main —   이미지: 1개 삽입
+2026-07-14 07:47:09,284 [INFO] main —   글자 수: 2683자
+2026-07-14 07:47:10,256 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:47:22,074 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:47:23,019 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:47:32,107 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:47:33,001 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:47:36,986 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '여름 직관·여행 필수 상식, 온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:47:36,987 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2683자로 분량 기준은 충족하나 커뮤니티 후기 재구성 위주이며 구체적 날짜·수치 기반 1차 경험은 부족함
+2026-07-14 07:47:36,987 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 양호하나 일부 단락이 500자 이상으로 길고 문장 중복 오류로 가독성 저하
+2026-07-14 07:47:36,987 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 질병관리청 인용은 있으나 개인 경험은 모호한 커뮤니티 후기 인용에 의존해 전문성 신호가 약함
+2026-07-14 07:47:36,987 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 저작권 위반은 없으나 SEO·가독성 측면에서 보완 필요
+2026-07-14 07:47:36,987 [INFO] adsense_validator —   ❌ AI 생성 의심도: 동일 문장이 반복 삽입되는 명백한 편집오류가 발견되어 AI 생성 흔적이 뚜렷함
+2026-07-14 07:47:36,987 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 동일 문장이 반복 삽입되는 명백한 편집오류가 발견되어 AI 생성 흔적이 뚜렷함
+2026-07-14 07:47:36,987 [WARNING] adsense_validator —   🔴 본문 내 문장 중복 오류 존재 (예: '목격했다는 후기가 온라인 커뮤니티에 종종 목격했다는 후기가...', '그늘로 옮기고 수분을 보충했는데도 그늘로 옮기고 수분을 보충했는데도...') — 반드시 수정 필요
+2026-07-14 07:47:36,987 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
+2026-07-14 07:47:36,987 [WARNING] main —      🔴 [AI 생성 의심도] 동일 문장이 반복 삽입되는 명백한 편집오류가 발견되어 AI 생성 흔적이 뚜렷함
+2026-07-14 07:47:36,987 [WARNING] main —      🔴 본문 내 문장 중복 오류 존재 (예: '목격했다는 후기가 온라인 커뮤니티에 종종 목격했다는 후기가...', '그늘로 옮기고 수분을 보충했는데도 그늘로 옮기고 수분을 보충했는데도...') — 반드시 수정 필요
+2026-07-14 07:47:36,987 [WARNING] main —      🟡 [원본성 및 품질] 2683자로 분량 기준은 충족하나 커뮤니티 후기 재구성 위주이며 구체적 날짜·수치 기반 1차 경험은 부족함
+2026-07-14 07:47:36,987 [WARNING] main —      🟡 [구조 및 가독성] H2 6개는 양호하나 일부 단락이 500자 이상으로 길고 문장 중복 오류로 가독성 저하
+2026-07-14 07:47:36,987 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 질병관리청 인용은 있으나 개인 경험은 모호한 커뮤니티 후기 인용에 의존해 전문성 신호가 약함
+2026-07-14 07:47:36,987 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
+2026-07-14 07:47:38,171 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:48:58,340 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2683자 → 4151자 (+1468자)
+2026-07-14 07:48:58,341 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-14 07:49:00,622 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:49:13,246 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:49:14,062 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:49:18,337 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '여름 직관·여행 필수 상식, 온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:49:18,337 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 양호하나 도입부와 일부 단락이 500자 이상으로 길어 가독성이 다소 떨어짐
+2026-07-14 07:49:18,337 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급이 없어 부재로 판단되나 저작권 위반은 없음
+2026-07-14 07:49:18,337 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 90/100)
+2026-07-14 07:49:18,337 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-07-14 07:49:19,677 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:50:37,361 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:50:38,268 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:51:30,658 [INFO] final_editor —   ✏️ 제목 최종 교정: '여름 직관·여행 필수 상식, 온열질환 예방법과 응급처치 총정리' → '여름 직관·여행 온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:51:30,658 [INFO] final_editor —   ✏️ 메타 설명 교정 (127자)
+2026-07-14 07:51:30,658 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 요약 박스·목차·표·개인경험메모·주의사항·FAQ·작성자메모·내부링크를 추가하고 문단을 2~4문장 단위로 재구성했으며, 제목·메타설명·슬러그를 발행 기준에 맞게 정리했습니다.
+2026-07-14 07:51:30,804 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-14 07:51:30,804 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-07-14 07:51:31,801 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/blog-post_14.html
+2026-07-14 07:51:31,808 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/blog-post_14.html
+2026-07-14 07:52:15,434 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:52:15,435 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-14 07:52:15,435 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-14 07:52:15,435 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '여름 직관·여행 온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:52:17,282 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:52:21,536 [INFO] comment_manager —   생성된 댓글: 직관 가실 때 얼린 물병 하나 챙겨가시는 것도 은근 꿀팁이에요. 시간 지나면서 살짝 녹아 시원한 물 마실 수 있고, 목이나 손목에 대면 체온 낮...
+2026-07-14 07:55:21,790 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-14 07:55:21,791 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (2개)
+2026-07-14 07:55:21,791 [INFO] main — 
+============================================================
+2026-07-14 07:55:21,791 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-14 07:55:21,791 [INFO] main — ============================================================
+2026-07-14 07:55:21,811 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-14 07:55:21,848 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-14 07:55:21,858 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-14 07:55:22,303 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-14 07:55:22,304 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-14 07:55:22,306 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-14 07:55:22,313 [INFO] post_manager —   포스트 레지스트리: 전체 219개 (게시 147 / 실패 15 / 대기 49)
+2026-07-14 07:55:22,314 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-14 07:55:22,314 [INFO] dashboard_exporter —   포스트: 89개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-14 07:55:22,314 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-14 07:55:22,315 [INFO] main — ============================================================
+2026-07-14 07:55:22,315 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-14 07:55:22
+2026-07-14 07:55:22,315 [INFO] main — ============================================================
+2026-07-14 07:55:22,320 [INFO] main — 수집된 키워드 1개: ['온열질환 예방법과 응급처치 총정리']
+2026-07-14 07:55:22,320 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-07-14 07:55:22,320 [INFO] main — 단독 포스트 대상 키워드 1개: ['온열질환 예방법과 응급처치 총정리']
+2026-07-14 07:55:22,327 [INFO] main — 
+[1/1] 키워드: '온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:55:22,327 [INFO] content_generator — 포스트 생성 중: '온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:55:29,081 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:55:29,082 [INFO] research_collector — 검색 의도: 온열질환(열사병, 열탈진 등)의 예방법과 발생 시 응급처치 방법을 정확히 알고 싶은 검색 의도
+2026-07-14 07:55:43,830 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:55:55,952 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:55:55,952 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '온열질환 예방법과 응급처치 총정리'
+2026-07-14 07:56:07,302 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:56:07,303 [INFO] source_validator — 출처 검증: 1/4개 통과, 등급 분포 {'X': 3, 'A': 1}
+2026-07-14 07:56:07,304 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-14 07:56:08,055 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:57:56,647 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:58:06,469 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:58:07,217 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:58:09,930 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-14 07:58:09,930 [INFO] content_generator — 섹션별 이미지 검색: ['온열질환 예방법과 응급처치']
+2026-07-14 07:58:10,137 [INFO] image_fetcher — 이미지 수집 성공: '온열질환 예방법과 응급처치' → 제목='business / woman / people / shooting / f' (관련성=0.40)
+2026-07-14 07:58:10,137 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-14 07:58:10,138 [INFO] content_generator — 포스트 생성 완료: '폭염철 온열질환 예방법과 응급처치, 그리고 병원비까지 챙기는 법' (2872자, 이미지 1개)
+2026-07-14 07:58:11,773 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:58:23,519 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:58:24,190 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:58:32,695 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '폭염철 온열질환 예방법과 응급처치, 그리고 병원비까지 챙기는 법'
+2026-07-14 07:58:32,695 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2872자로 최소 기준은 충족하나 질병관리청 매뉴얼 등 공개 정보 재구성 위주로 개인 경험·독자적 사례 부족
+2026-07-14 07:58:32,695 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 양호하나 일부 단락(폭염특보 서두, 예방수칙 설명부)이 500자 이상으로 길어 가독성 저하
+2026-07-14 07:58:32,695 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 질병관리청·한국에너지공단 등 출처 인용은 있으나 1인칭 경험이나 저자 전문성 신호 부족
+2026-07-14 07:58:32,695 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입이 확인되지 않아 저작권 위반은 없으나 시각자료 부재로 warn
+2026-07-14 07:58:32,695 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 표·목록 형식과 '다만', '따라서' 등 정형화된 보고서체가 반복돼 AI 생성 느낌이 다소 있음
+2026-07-14 07:58:32,699 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-14 07:58:32,700 [INFO] internal_linker —   [1/5] '2026년' -> https://www.hoguwhat.com/2026/07/2026_01036540498.html
+2026-07-14 07:58:32,701 [INFO] internal_linker —   [2/5] '줄이는' -> https://hoguasset.blogspot.com/2026/07/2026_01815789503.html
+2026-07-14 07:58:32,703 [INFO] internal_linker —   [3/5] '에너지바우처' -> https://hoguasset.blogspot.com/2026/07/blog-post_13.html
+2026-07-14 07:58:32,703 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-07-14 07:58:32,703 [INFO] main —   제목: 폭염철 온열질환 예방법과 응급처치, 그리고 병원비까지 챙기는 법
+2026-07-14 07:58:32,703 [INFO] main —   이미지: 1개 삽입
+2026-07-14 07:58:32,703 [INFO] main —   글자 수: 2872자
+2026-07-14 07:58:33,523 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:58:45,133 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 07:58:45,861 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 07:58:54,659 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '폭염철 온열질환 예방법과 응급처치, 그리고 병원비까지 챙기는 법'
+2026-07-14 07:58:54,659 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수 2872자로 기준 충족하나 개인 경험·구체적 사례 없이 공식 정보 재구성에 그침
+2026-07-14 07:58:54,659 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어짐
+2026-07-14 07:58:54,659 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 질병관리청 등 출처 인용은 있으나 1인칭 경험 서술 부재
+2026-07-14 07:58:54,659 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 저작권 문제는 없으나 가독성·SEO 측면에서 보완 필요
+2026-07-14 07:58:54,659 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 정형화된 문어체와 '~것이 중요합니다' 류의 반복 표현으로 AI 생성 패턴이 감지됨
+2026-07-14 07:58:54,659 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-07-14 07:58:54,659 [WARNING] main —      🟡 [원본성 및 품질] 글자수 2872자로 기준 충족하나 개인 경험·구체적 사례 없이 공식 정보 재구성에 그침
+2026-07-14 07:58:54,659 [WARNING] main —      🟡 [구조 및 가독성] H2 6개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어짐
+2026-07-14 07:58:54,659 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 질병관리청 등 출처 인용은 있으나 1인칭 경험 서술 부재
+2026-07-14 07:58:54,659 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-07-14 07:58:55,512 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 08:00:16,458 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 08:00:18,057 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 08:00:36,217 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2872자 → 4235자 (+1363자)
+2026-07-14 08:00:36,218 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-14 08:00:37,017 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 08:00:48,786 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 08:00:49,583 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 08:00:56,497 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '폭염철 온열질환 예방법과 응급처치, 그리고 병원비까지 챙기는 법'
+2026-07-14 08:00:56,497 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락(정부지원 제도, 예방수칙 설명 등)이 500자 이상으로 길게 이어짐
+2026-07-14 08:00:56,497 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글로 정책 위반은 없으나 가독성·SEO 측면에서 이미지 추가 권장
+2026-07-14 08:00:56,497 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 개인 경험과 자연스러운 어투가 있으나 표·번호목록·정형화된 설명 패턴이 반복되어 부분적으로 AI 생성 느낌이 남
+2026-07-14 08:00:56,497 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
+2026-07-14 08:00:56,497 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-07-14 08:00:57,823 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 08:02:17,458 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 08:02:18,461 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 08:02:49,767 [INFO] final_editor —   ✏️ 제목 최종 교정: '폭염철 온열질환 예방법과 응급처치, 그리고 병원비까지 챙기는 법' → '폭염철 온열질환 예방법과 응급처치, 병원비까지 챙기기'
+2026-07-14 08:02:49,767 [INFO] final_editor —   ✏️ 메타 설명 교정 (75자)
+2026-07-14 08:02:49,767 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 언론사 톤(금융NEWS 언급)을 개인 블로그 문체로 수정하고, 목차·요약박스·표 2종·개인경험메모·주의사항·FAQ 6개·작성자메모·내부링크를 추가해 발행 가능한 형태로 구조화했습니다. 실손보험 단락의 잘린 문장을 자연스럽게 이어 완성했습니다.
+2026-07-14 08:02:49,917 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-14 08:02:49,917 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-07-14 08:02:50,659 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/blog-post_14.html
+2026-07-14 08:02:50,666 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/blog-post_14.html
+2026-07-14 08:03:23,368 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 08:03:23,369 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-14 08:03:23,369 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-14 08:03:23,369 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '폭염철 온열질환 예방법과 응급처치, 병원비까지 챙기기'
+2026-07-14 08:03:24,728 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 08:03:29,036 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-14 08:03:30,720 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-14 08:03:32,491 [INFO] comment_manager —   생성된 댓글: 글에서 다룬 것 외에 하나 더 팁을 드리자면, 목이 마르다고 느낄 땐 이미 몸속 수분이 꽤 빠져나간 상태라고 하더라고요. 그래서 야외활동 중에는...
+2026-07-14 08:06:32,711 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-14 08:06:32,712 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (3개)
+2026-07-14 08:06:32,713 [INFO] main — 
+============================================================
+2026-07-14 08:06:32,713 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-14 08:06:32,713 [INFO] main — ============================================================
+2026-07-14 08:06:32,742 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-14 08:06:32,756 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-14 08:06:32,767 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-14 08:06:33,050 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-14 08:06:33,051 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-14 08:06:33,052 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-14 08:06:33,060 [INFO] post_manager —   포스트 레지스트리: 전체 220개 (게시 148 / 실패 15 / 대기 49)
+2026-07-14 08:06:33,060 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-14 08:06:33,060 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-14 08:06:33,061 [INFO] main — 대시보드 데이터 업데이트 완료

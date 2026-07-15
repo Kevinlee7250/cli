@@ -1422,6 +1422,20 @@
       <div style="color:var(--muted);font-size:13px;padding:24px;text-align:center">코드 수리 데이터를 로드 중...</div>
     </div>
 
+    <!-- ⑦.5 중복 목차 정리 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>🧹 중복 목차 정리</h2>
+      <div style="display:flex;gap:8px">
+        <button onclick="fixTocRunNow(false)" style="padding:6px 14px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);border-radius:8px;color:var(--yellow);font-size:12px;cursor:pointer;font-weight:600">🧹 지금 정리</button>
+        <button onclick="fixTocRunNow(true)" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 미리보기</button>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.7">
+      발행된 전체 글을 스캔해 목차가 2개 이상인 글에서 중복 목차를 제거합니다 (첫 번째 목차만 유지, 본문 내용은 변경 없음).
+      미리보기는 수정 없이 대상 글만 로그로 보여줍니다 — 결과는 Actions 탭의 "🧹 중복 목차 정리" 워크플로 로그에서 확인하세요.
+    </p>
+    <div id="fixtoc-run-status" style="display:none;font-size:12px;color:var(--muted);margin-bottom:24px"></div>
+
     <!-- ⑧ Google Drive 백업 -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>☁️ Google Drive 백업</h2>
@@ -4864,6 +4878,40 @@ function backupRefreshStatus() {
     fileEl.textContent  = ''
     sizeEl.textContent  = '—'
     countEl.textContent = ''
+  }
+}
+
+async function fixTocRunNow(dryRun = false) {
+  const pat = getPAT()
+  if (!pat) { showToast('PAT를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
+  const label = dryRun ? '미리보기' : '중복 목차 정리'
+  if (!dryRun && !confirm('발행된 전체 글을 스캔해 중복 목차를 제거합니다.\n(목차 1개만 유지, 본문 내용 변경 없음) 진행할까요?')) return
+  const statusEl = document.getElementById('fixtoc-run-status')
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = `⏳ ${label} 워크플로 요청 중...` }
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/fix-duplicate-toc.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: { dry_run: dryRun ? 'true' : 'false' } })
+      }
+    )
+    if (resp.ok || resp.status === 204) {
+      const msg = dryRun
+        ? '🔍 미리보기 워크플로가 실행됐습니다. Actions 로그에서 대상 글 목록을 확인하세요.'
+        : '🧹 중복 목차 정리 워크플로가 실행됐습니다. 완료까지 수 분 걸릴 수 있습니다.'
+      showToast(msg, 'success')
+      if (statusEl) statusEl.textContent = `✅ ${msg}`
+    } else {
+      const errText = await resp.text().catch(() => '')
+      const msg = `실행 실패: ${resp.status} ${errText.slice(0, 80)}`
+      showToast(msg, 'error')
+      if (statusEl) statusEl.textContent = `❌ ${msg}`
+    }
+  } catch (e) {
+    showToast(`오류: ${e.message}`, 'error')
+    if (statusEl) statusEl.textContent = `❌ 오류: ${e.message}`
   }
 }
 

@@ -1,0 +1,70 @@
+name: 🧹 중복 목차 정리 (발행 글 일괄)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '미리보기만 (실제 수정 없음)'
+        type: boolean
+        required: false
+        default: false
+      blog_id:
+        description: '특정 블로그 ID (비워두면 전체 블로그)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fix-duplicate-toc
+  cancel-in-progress: false
+
+jobs:
+  fix-toc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: 중복 목차 스캔 및 정리
+        working-directory: blog-automation
+        run: |
+          mkdir -p logs
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="--dry-run"
+            echo "=== 미리보기 모드 (실제 수정 없음) ==="
+          fi
+          if [ -n "${{ inputs.blog_id }}" ]; then
+            ARGS="$ARGS --blog ${{ inputs.blog_id }}"
+          fi
+          python fix_duplicate_toc.py $ARGS

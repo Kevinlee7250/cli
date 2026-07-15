@@ -1,130 +1,3 @@
-2026-07-15 05:35:41,801 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 05:35:42,554 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:35:49,531 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것 (202'
-2026-07-15 05:35:49,531 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 일부 단락이 500자 이상으로 길게 이어져 가독성 저하
-2026-07-15 05:35:49,531 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 요소가 확인되지 않아 저작권 문제는 없으나 가독성·SEO 측면에서 보완 필요
-2026-07-15 05:35:49,531 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 포인트 박스·체크리스트 나열 등 정형화된 AI 블로그 패턴이 일부 보이나 개인 경험 서술로 완화됨
-2026-07-15 05:35:49,531 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
-2026-07-15 05:35:49,531 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-15 05:35:50,574 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:36:36,984 [INFO] final_editor —   ✏️ 제목 최종 교정: '패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것 (2026)' → '패키지여행 계약서 환불 조항 직접 확인하고 알게 된 것'
-2026-07-15 05:36:36,984 [INFO] final_editor —   ✏️ 메타 설명 교정 (124자)
-2026-07-15 05:36:36,984 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목에서 연도 표기(2026)를 제거해 과장 요소를 없애고, 메타 설명을 120~160자 범위로 재작성했습니다. 긴 문단을 2~4문장 단위로 분리하고 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모·내부 링크 구조를 모두 배치했습니다.
-2026-07-15 05:36:37,091 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-15 05:36:37,091 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것' — 면책·팩트체크 확인 권장
-2026-07-15 05:36:37,091 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-07-15 05:36:37,604 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_571.html
-2026-07-15 05:36:37,614 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_571.html
-2026-07-15 05:37:09,823 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:37:09,824 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-15 05:37:09,825 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-15 05:37:09,833 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '패키지여행 계약서 환불 조항 직접 확인하고 알게 된 것'
-2026-07-15 05:37:10,606 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:37:13,408 [INFO] comment_manager —   생성된 댓글: 계약서에 특약이 있다면 서명 전에 "이 부분이 표준약관과 다른 이유"를 상담원에게 직접 물어보고, 가능하면 그 설명을 문자나 녹취로 남겨두는 것...
-2026-07-15 05:40:13,610 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-07-15 05:40:13,611 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-15 05:40:13,612 [INFO] main — 
-============================================================
-2026-07-15 05:40:13,612 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-15 05:40:13,612 [INFO] main — ============================================================
-2026-07-15 05:40:13,644 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-15 05:40:13,667 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-15 05:40:13,687 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-15 05:40:13,840 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-15 05:40:14,092 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-15 05:40:14,297 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-15 05:40:14,298 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-15 05:40:14,301 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-15 05:40:14,313 [INFO] post_manager —   포스트 레지스트리: 전체 227개 (게시 141 / 실패 15 / 대기 49)
-2026-07-15 05:40:14,313 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-15 05:40:14,313 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-15 05:40:14,314 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-15 05:40:14,315 [INFO] main — ============================================================
-2026-07-15 05:40:14,315 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-15 05:40:14
-2026-07-15 05:40:14,316 [INFO] main — ============================================================
-2026-07-15 05:40:14,325 [INFO] keyword_collector — 포스팅 이력 코퍼스: 25개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-15 05:40:19,787 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 50개
-2026-07-15 05:40:22,573 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:40:22,574 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-15 05:40:22,574 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-15 05:40:23,103 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-15 05:40:23,103 [INFO] keyword_collector —   [naver_realtime] 2개: ['국내 소도시 여행지 추천 단양 영양 부산', '해외여행 전 건강 체크리스트 길거리 음료 주의사항']
-2026-07-15 05:40:23,103 [INFO] keyword_collector — 최종 선정 키워드 2개: ['국내 소도시 여행지 추천 단양 영양 부산', '해외여행 전 건강 체크리스트 길거리 음료 주의사항']
-2026-07-15 05:40:23,103 [INFO] main — 수집된 키워드 2개: ['국내 소도시 여행지 추천 단양 영양 부산', '해외여행 전 건강 체크리스트 길거리 음료 주의사항']
-2026-07-15 05:40:23,104 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 16일 전)
-2026-07-15 05:40:26,554 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:40:26,555 [INFO] main — 단독 포스트 대상 키워드 1개: ['국내 소도시 여행지 추천 단양 영양 부산']
-2026-07-15 05:40:26,570 [INFO] main — 
-[1/1] 키워드: '국내 소도시 여행지 추천 단양 영양 부산'
-2026-07-15 05:40:26,571 [INFO] content_generator — 포스트 생성 중: '국내 소도시 여행지 추천 단양 영양 부산'
-2026-07-15 05:40:36,392 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:40:36,392 [INFO] research_collector — 검색 의도: 단양, 영양 등 국내 소도시와 부산을 함께 묶어 여행지로 추천하는 정보를 찾는 의도
-2026-07-15 05:40:48,537 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '국내 소도시 여행지 추천 단양 영양 부산'
-2026-07-15 05:41:05,934 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:41:05,935 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '국내 소도시 여행지 추천 단양 영양 부산'
-2026-07-15 05:41:16,430 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:41:16,431 [INFO] source_validator — 출처 검증: 0/6개 통과, 등급 분포 {'X': 6}
-2026-07-15 05:41:16,432 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
-2026-07-15 05:41:16,432 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-15 05:41:17,227 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:42:32,599 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:42:42,281 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 05:42:43,106 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:42:45,002 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-07-15 05:42:45,003 [INFO] content_generator — 섹션별 이미지 검색: ['국내 소도시 여행지']
-2026-07-15 05:42:45,195 [INFO] image_fetcher — 이미지 수집 성공: '국내 소도시 여행지' → 제목='business / woman / people / shooting / f' (관련성=0.40)
-2026-07-15 05:42:45,195 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-15 05:42:45,196 [INFO] content_generator — 포스트 생성 완료: '국내 소도시 여행지 추천, 단양·영양·부산을 비교해서 짚어봤다' (2546자, 이미지 1개)
-2026-07-15 05:42:45,884 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:42:56,417 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 05:42:57,146 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:43:04,220 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — '국내 소도시 여행지 추천, 단양·영양·부산을 비교해서 짚어봤다'
-2026-07-15 05:43:04,220 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2546자로 글자수 기준 warn 구간이며, 직접 경험 없이 언론 보도·관광정보 재조합 위주로 구성됨
-2026-07-15 05:43:04,220 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 단양·영양 설명 단락이 500자 이상으로 길게 이어짐
-2026-07-15 05:43:04,220 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 성인·폭력·불법 등 유해 콘텐츠 없고 면책 조항이 포함되어 과장된 주장도 완화됨
-2026-07-15 05:43:04,220 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 방문 경험이 없다고 명시하며 출처 시점 불명확 표현이 반복되어 신뢰 신호가 약함
-2026-07-15 05:43:04,220 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되지 않아 정책 위반은 아니나 가독성·SEO 측면에서 보완 필요
-2026-07-15 05:43:04,220 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '정확한 보도 시점은 확인되지 않으며' 등 유사 문구가 반복되고 다만·개인적으로는 표현이 패턴화됨
-2026-07-15 05:43:04,224 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-15 05:43:04,226 [INFO] internal_linker —   [1/5] '다녀온' -> https://hogugolfntraval.blogspot.com/2026/07/12-2026-7.html
-2026-07-15 05:43:04,230 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-15 05:43:04,230 [INFO] main —   제목: 국내 소도시 여행지 추천, 단양·영양·부산을 비교해서 짚어봤다
-2026-07-15 05:43:04,230 [INFO] main —   이미지: 1개 삽입
-2026-07-15 05:43:04,230 [INFO] main —   글자 수: 2546자
-2026-07-15 05:43:05,445 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:43:17,553 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 05:43:18,349 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:43:26,108 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '국내 소도시 여행지 추천, 단양·영양·부산을 비교해서 짚어봤다'
-2026-07-15 05:43:26,108 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2546자로 2500~3999자 구간에 해당하며 직접 경험 없이 공식 자료·언론 보도 재구성 위주로 구성됨
-2026-07-15 05:43:26,108 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 단락 구분 없이 긴 문장```json
-이 이어지는 부분(500자 이상 단락)이 다수 존재해 가독성이 떨어짐
-2026-07-15 05:43:26,108 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 인용은 있으나 직접 경험 부재 및 '정확한 시점 확인 불가' 표현이 반복돼 신뢰도가 약화됨
-2026-07-15 05:43:26,108 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 언급이 전혀 없어 이미지 부재 상태
-2026-07-15 05:43:26,109 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 정리형 문구와 유사한 문장 구조 반복이 눈에 띄어 AI 생성 패턴 의심 소지 있음
-2026-07-15 05:43:26,109 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
-2026-07-15 05:43:26,109 [WARNING] main —      🟡 [원본성 및 품질] 2546자로 2500~3999자 구간에 해당하며 직접 경험 없이 공식 자료·언론 보도 재구성 위주로 구성됨
-2026-07-15 05:43:26,109 [WARNING] main —      🟡 [구조 및 가독성] H2 7개로 구조는 양호하나 단락 구분 없이 긴 문장```json
-이 이어지는 부분(500자 이상 단락)이 다수 존재해 가독성이 떨어짐
-2026-07-15 05:43:26,109 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3개 인용은 있으나 직접 경험 부재 및 '정확한 시점 확인 불가' 표현이 반복돼 신뢰도가 약화됨
-2026-07-15 05:43:26,109 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
-2026-07-15 05:43:27,061 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:44:32,558 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2546자 → 3030자 (+484자)
-2026-07-15 05:44:32,558 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-15 05:44:33,383 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 05:44:40,160 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '국내 소도시 여행지 추천, 단양·영양·부산을 비교해서 짚어봤다'
-2026-07-15 05:44:40,160 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 날짜·경험이 담겼으나 글자수 3030자로 4000자 미만이라 warn
-2026-07-15 05:44:40,160 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 양호하나 일부 단락이 500자 이상으로 길게 이어짐
-2026-07-15 05:44:40,160 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 언급은 있으나 출처·alt 정보 불명확, 이미지 유무 확인 필요
-2026-07-15 05:44:40,160 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
-2026-07-15 05:44:40,160 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-15 05:44:41,079 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-15 05:45:59,213 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
 2026-07-15 05:46:00,183 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-15 05:46:15,933 [INFO] final_editor —   ✏️ 제목 최종 교정: '국내 소도시 여행지 추천, 단양·영양·부산을 비교해서 짚어봤다' → '국내 소도시 여행지 추천, 단양·영양·부산 실제 방문 비교'
@@ -625,3 +498,138 @@
 2026-07-15 11:57:18,842 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-15 11:57:18,842 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-15 11:57:18,844 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-15 23:04:03,928 [INFO] main — ============================================================
+2026-07-15 23:04:03,928 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-15 23:04:03
+2026-07-15 23:04:03,928 [INFO] main — ============================================================
+2026-07-15 23:04:03,939 [INFO] keyword_collector — 포스팅 이력 코퍼스: 30개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-15 23:04:07,562 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-15 23:04:15,022 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:04:15,048 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-15 23:04:15,048 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-15 23:04:15,455 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법']
+2026-07-15 23:04:15,678 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-15 23:04:15,874 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-15 23:04:15,877 [INFO] keyword_collector —   [high_cpc] 1개: ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법']
+2026-07-15 23:04:15,877 [INFO] keyword_collector —   [naver_realtime] 1개: ['장마철 국내 여행지 추천 코스']
+2026-07-15 23:04:15,877 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법', '장마철 국내 여행지 추천 코스']
+2026-07-15 23:04:15,877 [INFO] main — 수집된 키워드 2개: ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법', '장마철 국내 여행지 추천 코스']
+2026-07-15 23:04:15,881 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-07-15 23:04:15,881 [INFO] main — 단독 포스트 대상 키워드 1개: ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법']
+2026-07-15 23:04:15,897 [INFO] main — 
+[1/1] 키워드: '여행 중 물건 도난 경찰서 신고 후 보험 청구 방법'
+2026-07-15 23:04:15,897 [INFO] content_generator — 포스트 생성 중: '여행 중 물건 도난 경찰서 신고 후 보험 청구 방법'
+2026-07-15 23:04:23,346 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:04:23,347 [INFO] research_collector — 검색 의도: 해외/국내 여행 중 도난 사고 발생 시 경찰서 신고 절차와 여행자보험 청구 방법을 알고 싶은 실용 정보 검색
+2026-07-15 23:04:34,482 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '여행 중 물건 도난 경찰서 신고 후 보험 청구 방법'
+2026-07-15 23:04:52,757 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:04:52,758 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '여행 중 물건 도난 경찰서 신고 후 보험 청구 방법'
+2026-07-15 23:05:15,366 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:05:15,369 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'C': 4, 'X': 3}
+2026-07-15 23:05:15,371 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-07-15 23:05:15,371 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-15 23:05:16,872 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:06:34,699 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:06:42,746 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-15 23:06:43,722 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:06:44,845 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-07-15 23:06:44,848 [INFO] content_generator — 섹션별 이미지 검색: ['여행 물건 도난']
+2026-07-15 23:06:45,183 [INFO] image_fetcher — 이미지 수집 성공: '여행 물건 도난' → 제목='fantasy / to travel / travel / vacations' (관련성=0.25)
+2026-07-15 23:06:45,184 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-15 23:06:45,186 [INFO] content_generator — 포스트 생성 완료: '여행 중 도난 당했다면? 경찰서 신고부터 보험 청구까지 정리 (2026)' (2772자, 이미지 1개)
+2026-07-15 23:06:46,049 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:06:57,154 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-15 23:06:57,919 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:07:07,458 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-15 23:07:13,460 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:07:15,306 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '여행 중 도난 당했다면? 경찰서 신고부터 보험 청구까지 정리 ('
+2026-07-15 23:07:15,306 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2772자로 warn 구간이며 개인 경험 대신 후기·자료 재구성 위주로 구체적 수치나 날짜 사례 부족
+2026-07-15 23:07:15,306 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 '실제 상황을 가정해 본 신고와 청구 흐름' 등 500자 이상 단락이 다수 존재
+2026-07-15 23:07:15,306 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 인용되나 1인칭 직접 경험 서술이 없고 '일부 후기에 따르면' 식 간접 인용에 의존
+2026-07-15 23:07:15,306 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 포함되지 않아 저작권 위반은 없으나 이미지 부재로 warn 처리
+2026-07-15 23:07:15,306 [INFO] adsense_validator —   ❌ AI 생성 의심도: '등 조사형 표현으로 변경', '등으로 완화' 등 편집 지시 메모가 본문에 그대로 노출되어 AI 편집 흔적이 명백함
+2026-07-15 23:07:15,306 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '등 조사형 표현으로 변경', '등으로 완화' 등 편집 지시 메모가 본문에 그대로 노출되어 AI 편집 흔적이 명백함
+2026-07-15 23:07:15,306 [WARNING] adsense_validator —   🔴 본문 내 '등 조사형 표현으로 변경', '등으로 완화' 같은 AI 프롬프트/편집 지시문이 그대로 노출되어 있어 즉시 삭제 및 재작성 필요
+2026-07-15 23:07:15,313 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-15 23:07:15,314 [INFO] internal_linker —   [1/5] '여행자보험 가입' -> https://www.hoguwhat.com/2026/07/blog-post_14.html
+2026-07-15 23:07:15,316 [INFO] internal_linker —   [2/5] '여행 준비' -> https://www.hoguwhat.com/2026/07/0.html
+2026-07-15 23:07:15,318 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-15 23:07:15,318 [INFO] main —   제목: 여행 중 도난 당했다면? 경찰서 신고부터 보험 청구까지 정리 (2026)
+2026-07-15 23:07:15,318 [INFO] main —   이미지: 1개 삽입
+2026-07-15 23:07:15,319 [INFO] main —   글자 수: 2772자
+2026-07-15 23:07:19,153 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:07:30,282 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-15 23:07:31,257 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:07:41,336 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-15 23:07:46,091 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:07:47,660 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '여행 중 도난 당했다면? 경찰서 신고부터 보험 청구까지 정리 ('
+2026-07-15 23:07:47,661 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2772자로 글자수 기준은 warn 구간이며, '가상의 시나리오'로 명시된 가공 사례뿐 실제 경험담이 없어 정보 재조합에 가까움
+2026-07-15 23:07:47,661 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락(신고 흐름, 서류 안내 부분)이 500자 이상으로 길게 이어짐
+2026-07-15 23:07:47,661 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개는 있으나 '일부 후기', '관련 자료' 등 모호한 인용과 가상 시나리오로 실제 경험 기반 신뢰도가 약함
+2026-07-15 23:07:47,661 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 콘텐츠로 정책상 warn 처리
+2026-07-15 23:07:47,661 [INFO] adsense_validator —   ❌ AI 생성 의심도: '조사형 표현으로 변경', '완화' 등 편집 지시문이 그대로 본문에 노출되어 AI 생성·편집 흔적이 명백히 드러남
+2026-07-15 23:07:47,661 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '조사형 표현으로 변경', '완화' 등 편집 지시문이 그대로 본문에 노출되어 AI 생성·편집 흔적이 명백히 드러남
+2026-07-15 23:07:47,661 [WARNING] adsense_validator —   🔴 본문에 '조사형 표현으로 변경', '완화' 등 프롬프트/편집 지시문이 그대로 노출되어 있어 발행 전 반드시 제거 필요
+2026-07-15 23:07:47,661 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
+2026-07-15 23:07:47,661 [WARNING] main —      🔴 [AI 생성 의심도] '조사형 표현으로 변경', '완화' 등 편집 지시문이 그대로 본문에 노출되어 AI 생성·편집 흔적이 명백히 드러남
+2026-07-15 23:07:47,661 [WARNING] main —      🔴 본문에 '조사형 표현으로 변경', '완화' 등 프롬프트/편집 지시문이 그대로 노출되어 있어 발행 전 반드시 제거 필요
+2026-07-15 23:07:47,661 [WARNING] main —      🟡 [원본성 및 품질] 2772자로 글자수 기준은 warn 구간이며, '가상의 시나리오'로 명시된 가공 사례뿐 실제 경험담이 없어 정보 재조합에 가까움
+2026-07-15 23:07:47,661 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 구조는 양호하나 일부 단락(신고 흐름, 서류 안내 부분)이 500자 이상으로 길게 이어짐
+2026-07-15 23:07:47,661 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3개는 있으나 '일부 후기', '관련 자료' 등 모호한 인용과 가상 시나리오로 실제 경험 기반 신뢰도가 약함
+2026-07-15 23:07:47,661 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
+2026-07-15 23:07:56,941 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:09:17,189 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-15 23:09:18,107 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:09:27,199 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2772자 → 3748자 (+976자)
+2026-07-15 23:09:27,199 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-15 23:09:28,394 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:09:38,374 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-15 23:09:39,706 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:09:43,939 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '여행 중 도난 당했다면? 경찰서 신고부터 보험 청구까지 정리 ('
+2026-07-15 23:09:43,939 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 경험(바르셀로나 배낭 도난, 32만원 현금, 87만원 보험금)은 훌륭하나 글자 수 3748자로 4000자 기준에 미달
+2026-07-15 23:09:43,939 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 기준 충족하나 일부 단락이 500자 이상으로 길어 가독성 저하 우려
+2026-07-15 23:09:43,939 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 포함되지 않아 저작권 위반은 없으나 이미지 부재로 warn
+2026-07-15 23:09:43,939 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 84/100)
+2026-07-15 23:09:43,939 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-07-15 23:09:44,681 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:11:04,854 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-15 23:11:05,724 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:11:31,292 [INFO] final_editor —   ✏️ 제목 최종 교정: '여행 중 도난 당했다면? 경찰서 신고부터 보험 청구까지 정리 (2026)' → '여행 중 물건 도난, 경찰서 신고부터 보험 청구까지 총정리'
+2026-07-15 23:11:31,292 [INFO] final_editor —   ✏️ 메타 설명 교정 (88자)
+2026-07-15 23:11:31,292 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고 요약박스·표·개인경험메모·주의사항·FAQ·작성자메모·내부링크를 표준 형식에 맞춰 추가했습니다. 미완성으로 끊긴 결론부를 자연스럽게 마무리하고 이미지 4곳의 위치와 구체적 alt 텍스트를 지정했습니다.
+2026-07-15 23:11:31,433 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-15 23:11:31,433 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-07-15 23:11:32,567 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_16.html
+2026-07-15 23:11:32,577 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_16.html
+2026-07-15 23:12:07,386 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:12:07,387 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-15 23:12:07,387 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-15 23:12:07,396 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '여행 중 물건 도난, 경찰서 신고부터 보험 청구까지 총정리'
+2026-07-15 23:12:12,205 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:12:16,331 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-15 23:12:17,042 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-15 23:12:19,766 [INFO] comment_manager —   생성된 댓글: 경찰서 신고서 받으실 때 팁 하나 더 드리자면, 신고서가 영어나 한국어로 안 나오는 나라도 많아서 나중에 보험 청구할 때 번역 공증이 필요할 수...
+2026-07-15 23:15:20,110 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-15 23:15:20,112 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-15 23:15:20,112 [INFO] main — 
+============================================================
+2026-07-15 23:15:20,112 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-15 23:15:20,112 [INFO] main — ============================================================
+2026-07-15 23:15:20,143 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-15 23:15:20,166 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-15 23:15:20,185 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-15 23:15:20,405 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-15 23:15:20,713 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-15 23:15:20,959 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-15 23:15:20,960 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-15 23:15:20,963 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-15 23:15:20,976 [INFO] post_manager —   포스트 레지스트리: 전체 233개 (게시 146 / 실패 15 / 대기 50)
+2026-07-15 23:15:20,976 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-15 23:15:20,976 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-15 23:15:20,977 [INFO] main — 대시보드 데이터 업데이트 완료

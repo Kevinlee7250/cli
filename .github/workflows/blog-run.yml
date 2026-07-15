@@ -36,7 +36,7 @@ on:
         required: false
         default: '4'
       blog_id:
-        description: '특정 블로그 ID (BLOGS_CONFIG의 id 값; 비워두면 모든 블로그 실행)'
+        description: '특정 블로그 ID (blog1 / blog2 / blog3; 비워두면 세 블로그 순차 실행)'
         required: false
         default: ''
 
@@ -50,10 +50,26 @@ concurrency:
   group: blog-run
   cancel-in-progress: false
 
+# ──────────────────────────────────────────────────────────────
+# 공통 스텝을 YAML anchor로 정의 (각 job이 참조)
+# ──────────────────────────────────────────────────────────────
+# GitHub Actions는 top-level anchor를 지원하지 않으므로
+# 각 job에 스텝을 직접 작성합니다.
+# ──────────────────────────────────────────────────────────────
+
 jobs:
-  run-blog-automation:
+
+  # ────────────────────────────────────────────────────────────
+  # Job 1: blog1 게시
+  # ────────────────────────────────────────────────────────────
+  publish-blog1:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    # 스케줄이거나 blog_id 미지정(전체 순차)이거나 blog1 명시 지정일 때 실행
+    if: >
+      github.event_name == 'schedule' ||
+      inputs.blog_id == '' ||
+      inputs.blog_id == 'blog1'
 
     steps:
       - name: 코드 체크아웃
@@ -113,53 +129,47 @@ jobs:
         working-directory: blog-automation
         run: |
           mkdir -p logs
-          # 로그 파일 500줄 이상이면 마지막 500줄만 보존 (git 용량 관리)
           if [ -f logs/automation.log ] && [ "$(wc -l < logs/automation.log)" -gt 500 ]; then
             tail -n 500 logs/automation.log > logs/automation.log.tmp && mv logs/automation.log.tmp logs/automation.log
           fi
 
-      - name: 블로그 자동화 실행
+      - name: blog1 게시
         working-directory: blog-automation
         run: |
           MODE="${{ inputs.mode || 'live' }}"
           KEYWORD="${{ inputs.keyword }}"
-
           SERIES_COUNT="${{ inputs.series_count || '4' }}"
-
-          BLOG_ARG=""
-          if [ -n "${{ inputs.blog_id }}" ]; then
-            BLOG_ARG="--blog ${{ inputs.blog_id }}"
-          fi
+          BLOG_ARG="--blog blog1"
 
           if [ "$MODE" = "retry" ]; then
-            echo "=== 재시도 모드: 실패한 포스트 재업로드 ==="
+            echo "=== blog1 재시도 모드 ==="
             python main.py --retry $BLOG_ARG
           elif [ "$MODE" = "setup" ]; then
-            echo "=== 셋업 모드: AdSense 필수 페이지 생성 + 자동 광고 테마 주입 ==="
+            echo "=== blog1 셋업 모드 ==="
             python main.py --setup $BLOG_ARG
           elif [ "$MODE" = "series" ]; then
-            echo "=== 시리즈 모드: 주제를 ${SERIES_COUNT}편으로 분할 ==="
+            echo "=== blog1 시리즈 모드 ==="
             if [ -z "$KEYWORD" ]; then
               echo "❌ 시리즈 모드는 keyword 입력이 필수입니다"
               exit 1
             fi
             python main.py --series --series-count "$SERIES_COUNT" --keyword "$KEYWORD" $BLOG_ARG
           elif [ "$MODE" = "test" ]; then
-            echo "=== 테스트 모드: 업로드 없이 글만 생성 ==="
+            echo "=== blog1 테스트 모드 ==="
             if [ -n "$KEYWORD" ]; then
               python main.py --test --keyword "$KEYWORD" $BLOG_ARG
             else
               python main.py --test $BLOG_ARG
             fi
           elif [ "$MODE" = "review" ]; then
-            echo "=== 검토 모드: pending_posts.json에 저장 ==="
+            echo "=== blog1 검토 모드 ==="
             if [ -n "$KEYWORD" ]; then
               python main.py --review --keyword "$KEYWORD" $BLOG_ARG
             else
               python main.py --review $BLOG_ARG
             fi
           else
-            echo "=== 실행 모드: $MODE ==="
+            echo "=== blog1 실행 모드: $MODE ==="
             if [ -n "$KEYWORD" ]; then
               python main.py --once --keyword "$KEYWORD" $BLOG_ARG
             else
@@ -167,14 +177,188 @@ jobs:
             fi
           fi
 
-      - name: 대시보드 데이터 커밋 & 푸시
+      - name: 대시보드 데이터 커밋 & 푸시 (blog1)
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # docs/data/ 는 tracked 파일 (-f: 루트 .gitignore /*  규칙 우회)
-          # git add는 존재하지 않는 pathspec이 하나라도 있으면 전체가 실패하므로
-          # 파일별로 존재 확인 후 개별 add (posts_archive.json 등은 조건부 생성)
+          for f in \
+            docs/data/posts.json docs/data/posts_archive.json docs/data/runs.json \
+            docs/data/analytics.json \
+            docs/data/meta.json docs/data/pending_posts.json docs/data/series.json \
+            docs/data/gsc.json docs/data/blogs.json docs/data/learning.json \
+            docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
+            docs/data/affiliate_links.json \
+            blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
+            blog-automation/logs/series.json blog-automation/logs/learning.json \
+            blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
+            blog-automation/logs/post_registry.json \
+            blog-automation/logs/scheduled_keywords.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "📊 blog1 게시 완료 (#${{ github.run_number }})"
+            _push_ok=0
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && { _push_ok=1; break; }
+              echo "push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
+            [ "$_push_ok" = "1" ] || { echo "push 3회 실패 — 종료"; exit 1; }
+          fi
+
+      - name: 로그 업로드 (blog1)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: automation-logs-blog1-${{ github.run_number }}
+          path: blog-automation/logs/
+          retention-days: 7
+
+      - name: 실패 알림 — blog1 (텔레그램)
+        if: failure()
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then
+            echo "텔레그램 미설정 — 알림 건너뜀"
+            exit 0
+          fi
+          MSG="🚨 blog1 게시 실패 (#${{ github.run_number }})
+          모드: ${{ inputs.mode || 'schedule' }}
+          로그: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            -d chat_id="$TG_CHAT" -d text="$MSG" > /dev/null && echo "알림 발송" || echo "알림 실패(무시)"
+
+  # ────────────────────────────────────────────────────────────
+  # Job 2: blog2 게시 — blog1 완료 후 실행
+  # ────────────────────────────────────────────────────────────
+  publish-blog2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [publish-blog1]
+    # blog1이 성공했거나(순차), blog1이 스킵됐거나(blog2 단독 지정), blog2를 명시 지정한 경우
+    if: >
+      always() &&
+      (needs.publish-blog1.result == 'success' || needs.publish-blog1.result == 'skipped') &&
+      (github.event_name == 'schedule' || inputs.blog_id == '' || inputs.blog_id == 'blog2')
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
+          OPENAI_MODEL="${{ secrets.OPENAI_MODEL || 'gpt-4o' }}"
+          AI_PROVIDER="${{ secrets.AI_PROVIDER || 'claude' }}"
+          NAVER_CLIENT_ID="${{ secrets.NAVER_CLIENT_ID }}"
+          PIXABAY_API_KEY="${{ secrets.PIXABAY_API_KEY }}"
+          NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
+          ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"
+          ADSENSE_MODE=auto
+          ADSENSE_MIN_SCORE=80
+          GSC_SITE_URL="${{ secrets.GSC_SITE_URL }}"
+          INSTAGRAM_ACCESS_TOKEN="${{ secrets.INSTAGRAM_ACCESS_TOKEN }}"
+          INSTAGRAM_ACCOUNT_ID="${{ secrets.INSTAGRAM_ACCOUNT_ID }}"
+          THREADS_ACCESS_TOKEN="${{ secrets.THREADS_ACCESS_TOKEN }}"
+          THREADS_USER_ID="${{ secrets.THREADS_USER_ID }}"
+          THREADS_HANDLE="${{ secrets.THREADS_HANDLE }}"
+          IMGBB_API_KEY="${{ secrets.IMGBB_API_KEY }}"
+          SOCIAL_AUTO_PUBLISH="${{ secrets.SOCIAL_AUTO_PUBLISH }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          BLOG_NAME="${{ secrets.BLOG_NAME }}"
+          POSTS_PER_RUN="${{ inputs.posts_per_run || '1' }}"
+          POST_STATUS="${{ (inputs.mode == 'draft') && 'draft' || 'live' }}"
+          BLOG_LANGUAGE=ko
+          TREND_COUNTRY=KR
+          LOG_LEVEL=info
+          LOG_FILE=./logs/automation.log
+          ENVEOF
+
+      - name: 로그 디렉토리 생성
+        working-directory: blog-automation
+        run: |
+          mkdir -p logs
+          if [ -f logs/automation.log ] && [ "$(wc -l < logs/automation.log)" -gt 500 ]; then
+            tail -n 500 logs/automation.log > logs/automation.log.tmp && mv logs/automation.log.tmp logs/automation.log
+          fi
+
+      - name: blog2 게시
+        working-directory: blog-automation
+        run: |
+          MODE="${{ inputs.mode || 'live' }}"
+          KEYWORD="${{ inputs.keyword }}"
+          SERIES_COUNT="${{ inputs.series_count || '4' }}"
+          BLOG_ARG="--blog blog2"
+
+          if [ "$MODE" = "retry" ]; then
+            echo "=== blog2 재시도 모드 ==="
+            python main.py --retry $BLOG_ARG
+          elif [ "$MODE" = "setup" ]; then
+            echo "=== blog2 셋업 모드 ==="
+            python main.py --setup $BLOG_ARG
+          elif [ "$MODE" = "series" ]; then
+            echo "=== blog2 시리즈 모드 ==="
+            if [ -z "$KEYWORD" ]; then
+              echo "❌ 시리즈 모드는 keyword 입력이 필수입니다"
+              exit 1
+            fi
+            python main.py --series --series-count "$SERIES_COUNT" --keyword "$KEYWORD" $BLOG_ARG
+          elif [ "$MODE" = "test" ]; then
+            echo "=== blog2 테스트 모드 ==="
+            if [ -n "$KEYWORD" ]; then
+              python main.py --test --keyword "$KEYWORD" $BLOG_ARG
+            else
+              python main.py --test $BLOG_ARG
+            fi
+          elif [ "$MODE" = "review" ]; then
+            echo "=== blog2 검토 모드 ==="
+            if [ -n "$KEYWORD" ]; then
+              python main.py --review --keyword "$KEYWORD" $BLOG_ARG
+            else
+              python main.py --review $BLOG_ARG
+            fi
+          else
+            echo "=== blog2 실행 모드: $MODE ==="
+            if [ -n "$KEYWORD" ]; then
+              python main.py --once --keyword "$KEYWORD" $BLOG_ARG
+            else
+              python main.py --once $BLOG_ARG
+            fi
+          fi
+
+      - name: 대시보드 데이터 커밋 & 푸시 (blog2)
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           for f in \
             docs/data/posts.json docs/data/posts_archive.json docs/data/runs.json \
             docs/data/analytics.json \
@@ -188,45 +372,217 @@ jobs:
             blog-automation/logs/post_registry.json; do
             [ -f "$f" ] && git add -f "$f"
           done
-          true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else
-            git commit -m "📊 대시보드 데이터 업데이트 (#${{ github.run_number }})"
-            # 충돌 없이 rebase 후 push (최대 3회 재시도)
+            git commit -m "📊 blog2 게시 완료 (#${{ github.run_number }})"
             _push_ok=0
             for i in 1 2 3; do
               git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
                 && git push origin claude/blog-automation-system-KAbtE \
                 && { _push_ok=1; break; }
-              echo "pull+push 재시도 $i/3..."
+              echo "push 재시도 $i/3..."
               sleep $((i * 3))
             done
             [ "$_push_ok" = "1" ] || { echo "push 3회 실패 — 종료"; exit 1; }
           fi
 
-      - name: 로그 업로드 (아티팩트)
+      - name: 로그 업로드 (blog2)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: automation-logs-${{ github.run_number }}
+          name: automation-logs-blog2-${{ github.run_number }}
           path: blog-automation/logs/
           retention-days: 7
 
-      # 실패 시 텔레그램 알림 (TELEGRAM_BOT_TOKEN·TELEGRAM_CHAT_ID Secret 설정 시에만 발송)
-      - name: 실패 알림 (텔레그램)
+      - name: 실패 알림 — blog2 (텔레그램)
         if: failure()
         env:
           TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then
-            echo "텔레그램 미설정 — 알림 건너뜀 (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID Secret 필요)"
+            echo "텔레그램 미설정 — 알림 건너뜀"
             exit 0
           fi
-          MSG="🚨 블로그 자동화 실패 (#${{ github.run_number }})
+          MSG="🚨 blog2 게시 실패 (#${{ github.run_number }})
           모드: ${{ inputs.mode || 'schedule' }}
           로그: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
-            -d chat_id="$TG_CHAT" -d text="$MSG" > /dev/null && echo "텔레그램 알림 발송 완료" || echo "알림 발송 실패 (무시)"
+            -d chat_id="$TG_CHAT" -d text="$MSG" > /dev/null && echo "알림 발송" || echo "알림 실패(무시)"
 
+  # ────────────────────────────────────────────────────────────
+  # Job 3: blog3 게시 — blog2 완료 후 실행
+  # ────────────────────────────────────────────────────────────
+  publish-blog3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    needs: [publish-blog2]
+    # blog2가 성공했거나(순차), blog2가 스킵됐거나(blog3 단독 지정), blog3을 명시 지정한 경우
+    if: >
+      always() &&
+      (needs.publish-blog2.result == 'success' || needs.publish-blog2.result == 'skipped') &&
+      (github.event_name == 'schedule' || inputs.blog_id == '' || inputs.blog_id == 'blog3')
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
+          OPENAI_MODEL="${{ secrets.OPENAI_MODEL || 'gpt-4o' }}"
+          AI_PROVIDER="${{ secrets.AI_PROVIDER || 'claude' }}"
+          NAVER_CLIENT_ID="${{ secrets.NAVER_CLIENT_ID }}"
+          PIXABAY_API_KEY="${{ secrets.PIXABAY_API_KEY }}"
+          NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
+          ADSENSE_SLOT_IDS="${{ secrets.ADSENSE_SLOT_IDS }}"
+          ADSENSE_MODE=auto
+          ADSENSE_MIN_SCORE=80
+          GSC_SITE_URL="${{ secrets.GSC_SITE_URL }}"
+          INSTAGRAM_ACCESS_TOKEN="${{ secrets.INSTAGRAM_ACCESS_TOKEN }}"
+          INSTAGRAM_ACCOUNT_ID="${{ secrets.INSTAGRAM_ACCOUNT_ID }}"
+          THREADS_ACCESS_TOKEN="${{ secrets.THREADS_ACCESS_TOKEN }}"
+          THREADS_USER_ID="${{ secrets.THREADS_USER_ID }}"
+          THREADS_HANDLE="${{ secrets.THREADS_HANDLE }}"
+          IMGBB_API_KEY="${{ secrets.IMGBB_API_KEY }}"
+          SOCIAL_AUTO_PUBLISH="${{ secrets.SOCIAL_AUTO_PUBLISH }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          BLOG_NAME="${{ secrets.BLOG_NAME }}"
+          POSTS_PER_RUN="${{ inputs.posts_per_run || '1' }}"
+          POST_STATUS="${{ (inputs.mode == 'draft') && 'draft' || 'live' }}"
+          BLOG_LANGUAGE=ko
+          TREND_COUNTRY=KR
+          LOG_LEVEL=info
+          LOG_FILE=./logs/automation.log
+          ENVEOF
+
+      - name: 로그 디렉토리 생성
+        working-directory: blog-automation
+        run: |
+          mkdir -p logs
+          if [ -f logs/automation.log ] && [ "$(wc -l < logs/automation.log)" -gt 500 ]; then
+            tail -n 500 logs/automation.log > logs/automation.log.tmp && mv logs/automation.log.tmp logs/automation.log
+          fi
+
+      - name: blog3 게시
+        working-directory: blog-automation
+        run: |
+          MODE="${{ inputs.mode || 'live' }}"
+          KEYWORD="${{ inputs.keyword }}"
+          SERIES_COUNT="${{ inputs.series_count || '4' }}"
+          BLOG_ARG="--blog blog3"
+
+          if [ "$MODE" = "retry" ]; then
+            echo "=== blog3 재시도 모드 ==="
+            python main.py --retry $BLOG_ARG
+          elif [ "$MODE" = "setup" ]; then
+            echo "=== blog3 셋업 모드 ==="
+            python main.py --setup $BLOG_ARG
+          elif [ "$MODE" = "series" ]; then
+            echo "=== blog3 시리즈 모드 ==="
+            if [ -z "$KEYWORD" ]; then
+              echo "❌ 시리즈 모드는 keyword 입력이 필수입니다"
+              exit 1
+            fi
+            python main.py --series --series-count "$SERIES_COUNT" --keyword "$KEYWORD" $BLOG_ARG
+          elif [ "$MODE" = "test" ]; then
+            echo "=== blog3 테스트 모드 ==="
+            if [ -n "$KEYWORD" ]; then
+              python main.py --test --keyword "$KEYWORD" $BLOG_ARG
+            else
+              python main.py --test $BLOG_ARG
+            fi
+          elif [ "$MODE" = "review" ]; then
+            echo "=== blog3 검토 모드 ==="
+            if [ -n "$KEYWORD" ]; then
+              python main.py --review --keyword "$KEYWORD" $BLOG_ARG
+            else
+              python main.py --review $BLOG_ARG
+            fi
+          else
+            echo "=== blog3 실행 모드: $MODE ==="
+            if [ -n "$KEYWORD" ]; then
+              python main.py --once --keyword "$KEYWORD" $BLOG_ARG
+            else
+              python main.py --once $BLOG_ARG
+            fi
+          fi
+
+      - name: 대시보드 데이터 커밋 & 푸시 (blog3)
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for f in \
+            docs/data/posts.json docs/data/posts_archive.json docs/data/runs.json \
+            docs/data/analytics.json \
+            docs/data/meta.json docs/data/pending_posts.json docs/data/series.json \
+            docs/data/gsc.json docs/data/blogs.json docs/data/learning.json \
+            docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
+            docs/data/affiliate_links.json \
+            blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
+            blog-automation/logs/series.json blog-automation/logs/learning.json \
+            blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
+            blog-automation/logs/post_registry.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "📊 blog3 게시 완료 (#${{ github.run_number }})"
+            _push_ok=0
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && { _push_ok=1; break; }
+              echo "push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
+            [ "$_push_ok" = "1" ] || { echo "push 3회 실패 — 종료"; exit 1; }
+          fi
+
+      - name: 로그 업로드 (blog3)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: automation-logs-blog3-${{ github.run_number }}
+          path: blog-automation/logs/
+          retention-days: 7
+
+      - name: 실패 알림 — blog3 (텔레그램)
+        if: failure()
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then
+            echo "텔레그램 미설정 — 알림 건너뜀"
+            exit 0
+          fi
+          MSG="🚨 blog3 게시 실패 (#${{ github.run_number }})
+          모드: ${{ inputs.mode || 'schedule' }}
+          로그: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            -d chat_id="$TG_CHAT" -d text="$MSG" > /dev/null && echo "알림 발송" || echo "알림 실패(무시)"

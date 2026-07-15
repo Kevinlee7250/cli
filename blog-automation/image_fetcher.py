@@ -671,9 +671,22 @@ def fetch_images_for_queries(
         images = _filter_relevant_images(images, keyword or queries[0], article_plain_text)
 
     # 최종 폴백: 이미지가 하나도 없으면 제목 기반 썸네일 생성
+    # + 글 내용과 관련된 실제 이미지도 함께 검색해 첨부
     if not images and (title or keyword):
         thumb = generate_title_thumbnail(title, keyword)
         if thumb:
+            # 실제 사진 이미지 추가 검색 (썸네일과 함께 제공)
+            search_kw = keyword or title or ""
+            simple_q = _simplify_query(search_kw, 2) or search_kw
+            real_img = _fetch_best_image(
+                simple_q, naver_client_id, naver_client_secret,
+                n_candidates=6, pixabay_api_key=pixabay_api_key,
+            )
+            if real_img:
+                real_img["search_query"] = simple_q
+                real_img["alt_text"] = simple_q if len(simple_q) <= 50 else simple_q[:50].rsplit(" ", 1)[0]
+                logger.info(f"썸네일 폴백 + 관련 이미지 추가: '{real_img.get('title','')[:40]}'")
+                images.append(real_img)
             images.append(thumb)
 
     return images

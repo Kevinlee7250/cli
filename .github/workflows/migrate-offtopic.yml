@@ -1,0 +1,90 @@
+name: 📦 blog1 구주제 글 이전·보관
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '분류 결과만 확인 (실제 변경 없음)'
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: migrate-offtopic
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: 레지스트리 동기화
+        run: |
+          if [ -f docs/data/post_registry.json ]; then
+            mkdir -p blog-automation/logs
+            cp docs/data/post_registry.json blog-automation/logs/post_registry.json
+          fi
+
+      - name: 구주제 글 이전·보관 실행
+        working-directory: blog-automation
+        run: |
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" != "false" ]; then
+            ARGS="--dry-run"
+            echo "=== 분류 미리보기 모드 (변경 없음) ==="
+          fi
+          python migrate_offtopic.py $ARGS
+
+      - name: 결과 커밋
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for f in docs/data/offtopic_migration.json docs/data/post_registry.json \
+                   blog-automation/logs/post_registry.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
+          true
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "📦 blog1 구주제 글 정리 결과 (#${{ github.run_number }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE && break
+              sleep $((i * 3))
+            done
+          fi

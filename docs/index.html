@@ -1422,6 +1422,22 @@
       <div style="color:var(--muted);font-size:13px;padding:24px;text-align:center">코드 수리 데이터를 로드 중...</div>
     </div>
 
+    <!-- ⑦.3 blog1 구주제 글 정리 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>📦 blog1 구주제 글 정리</h2>
+      <div style="display:flex;gap:8px">
+        <button onclick="migrateOfftopicRun(false)" style="padding:6px 14px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.3);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">📦 지금 정리</button>
+        <button onclick="migrateOfftopicRun(true)" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 분류 미리보기</button>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.7">
+      blog1(여행·드라마·K-POP 개편)에 남은 구주제 글을 정리합니다:
+      금융·투자 글은 blog3(금융NEWS)로 이전(blog3 발행 후 blog1 원본 draft 전환),
+      건강·생활·IT 등은 draft로 보관(Blogger 관리자에서 복원 가능), 애매한 글은 리포트만.
+      결과: docs/data/offtopic_migration.json
+    </p>
+    <div id="offtopic-run-status" style="display:none;font-size:12px;color:var(--muted);margin-bottom:24px"></div>
+
     <!-- ⑦.4 AdSense 승인 감사 -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>🔎 AdSense 승인 감사</h2>
@@ -4898,6 +4914,38 @@ function backupRefreshStatus() {
     fileEl.textContent  = ''
     sizeEl.textContent  = '—'
     countEl.textContent = ''
+  }
+}
+
+async function migrateOfftopicRun(dryRun = false) {
+  const pat = getPAT()
+  if (!pat) { showToast('PAT를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
+  const label = dryRun ? '분류 미리보기' : '구주제 글 정리'
+  if (!dryRun && !confirm('blog1의 구주제 글을 정리합니다:\n· 금융·투자 글 → blog3로 이전 (원본은 draft 전환)\n· 건강·생활·IT 글 → draft 보관\n진행할까요? (Blogger 관리자에서 draft 복원 가능)')) return
+  const statusEl = document.getElementById('offtopic-run-status')
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = `⏳ ${label} 워크플로 요청 중...` }
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/migrate-offtopic.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: { dry_run: dryRun ? 'true' : 'false' } })
+      }
+    )
+    if (resp.ok || resp.status === 204) {
+      const msg = `📦 ${label} 워크플로가 실행됐습니다. Actions 로그와 리포트에서 결과를 확인하세요.`
+      showToast(msg, 'success')
+      if (statusEl) statusEl.textContent = `✅ ${msg}`
+    } else {
+      const errText = await resp.text().catch(() => '')
+      const msg = `실행 실패: ${resp.status} ${errText.slice(0, 80)}`
+      showToast(msg, 'error')
+      if (statusEl) statusEl.textContent = `❌ ${msg}`
+    }
+  } catch (e) {
+    showToast(`오류: ${e.message}`, 'error')
+    if (statusEl) statusEl.textContent = `❌ 오류: ${e.message}`
   }
 }
 

@@ -1,0 +1,85 @@
+name: 🔎 AdSense 승인 감사·보완
+
+on:
+  workflow_dispatch:
+    inputs:
+      blog_id:
+        description: '블로그 ID (blog1/blog2/blog3/all)'
+        required: false
+        default: 'blog1'
+      dry_run:
+        description: '검사만 (실제 수정 없음)'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: adsense-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          IMGBB_API_KEY="${{ secrets.IMGBB_API_KEY }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: AdSense 감사·보완 실행
+        working-directory: blog-automation
+        run: |
+          mkdir -p logs
+          ARGS="--blog ${{ inputs.blog_id || 'blog1' }}"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+            echo "=== 검사 전용 모드 (수정 없음) ==="
+          fi
+          python adsense_audit.py $ARGS
+
+      - name: 감사 리포트 커밋
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          [ -f docs/data/adsense_audit.json ] && git add -f docs/data/adsense_audit.json
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "🔎 AdSense 감사 리포트 (#${{ github.run_number }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE && break
+              sleep $((i * 3))
+            done
+          fi

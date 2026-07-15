@@ -188,6 +188,26 @@ def _add_h2_ids(html: str) -> str:
     return re.sub(r'<h2([^>]*)>(.*?)</h2>', replacer, html, flags=re.IGNORECASE | re.DOTALL)
 
 
+def _strip_model_toc(html: str) -> str:
+    """AI가 본문에 직접 생성한 목차 블록을 제거합니다 (자동 목차와 중복 방지).
+    패턴: '목차'/'📋 목차' 제목(h2·h3·p·strong) + 바로 뒤따르는 ol/ul 목록."""
+    # ① 제목 + 목록 (div 래핑 여부 무관하게 내부 쌍 제거)
+    pattern = (
+        r'<(h[23]|p|div)[^>]*>\s*(?:<strong[^>]*>\s*)?(?:📋\s*)?목차\s*(?::)?\s*'
+        r'(?:</strong>\s*)?</\1>\s*<(ol|ul)[^>]*>.*?</\2>'
+    )
+    before = html
+    html = re.sub(pattern, '', html, flags=re.IGNORECASE | re.DOTALL)
+    # ② 자동 목차 형식(📋 목차 div 박스)이 이미 본문에 있으면 통째로 제거 후 재생성
+    html = re.sub(
+        r'<div[^>]*>\s*<p[^>]*>\s*📋\s*목차\s*</p>\s*<ol[^>]*>.*?</ol>\s*</div>',
+        '', html, flags=re.IGNORECASE | re.DOTALL,
+    )
+    if html != before:
+        logger.info("본문 내 기존 목차 블록 제거 (자동 목차와 중복 방지)")
+    return html
+
+
 def _build_toc(html: str) -> str:
     """H2 태그를 파싱해 목차 HTML을 생성합니다."""
     headings = re.findall(r'<h2[^>]*id="([^"]+)"[^>]*>(.*?)</h2>', html, re.IGNORECASE | re.DOTALL)
@@ -226,6 +246,9 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
 
     # ① Blogger가 거부하는 속성 사전 제거 (aria-*, itemscope, itemtype 등)
     html = _sanitize_for_blogger(html)
+
+    # ①.5 본문에 이미 있는 목차 제거 — 자동 목차와 중복 방지
+    html = _strip_model_toc(html)
 
     # ② H2에 id 부여 (중복 slug 방지 포함)
     html = _add_h2_ids(html)

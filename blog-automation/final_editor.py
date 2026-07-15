@@ -6,7 +6,7 @@ AdSense 검증·자동수정을 통과한 글을 Blogger에 바로 업로드 가
 
 수행 작업:
   1. 최종 SEO 제목 / 메타 설명 / URL 슬러그 정리
-  2. 본문 구조 재편 (요약 박스·목차·표·개인메모·주의사항·FAQ·결론·작성자메모·참고자료·내부링크)
+  2. 발행 메타데이터 최종 교정 (제목·메타 설명·태그·슬러그) — 본문 HTML은 변경하지 않음
   3. 이미지 alt text 목록 생성 (2~4개 제안)
   4. 발행 전 체크리스트 생성
   5. 카테고리·태그 추천
@@ -114,7 +114,7 @@ def polish_post(post_data: dict) -> dict:
 1. 제목·메타 설명·URL 슬러그가 정리되어 있다 (제목 30~45자, 메타 120~160자)
 2. 본문 구조가 자연스럽고 읽기 쉽다
 3. 모바일에서 문단이 길지 않다 (한 문단 2~4문장 이내)
-4. 요약 박스·목차·표·개인경험메모·주의사항·FAQ·결론·작성자메모·내부링크 포함
+4. 기존 요소(요약 박스·표·FAQ·이미지) 확인 — 목차는 업로드 시 자동 삽입되므로 본문에 목차를 만들지 말 것
 5. 이미지 alt text가 구체적이다
 6. AdSense 승인에 불리한 문구, 광고 클릭 유도 문구, 저작권 침해 문장이 없다
 7. 실제 발행자가 복사해 바로 업로드할 수 있다
@@ -200,7 +200,6 @@ alt text는 구체적으로 — "이미지"처럼 쓰지 말 것.
     "alt": "구체적인 alt text",
     "filename": "recommended-filename.jpg"
   }},
-  "content": "<Blogger에 바로 붙여넣기 가능한 완전한 HTML 본문>",
   "image_list": [
     {{"position": "삽입 위치", "description": "이미지 설명", "alt": "alt text", "filename": "파일명.jpg"}},
     {{"position": "삽입 위치", "description": "이미지 설명", "alt": "alt text", "filename": "파일명.jpg"}}
@@ -260,11 +259,10 @@ alt text는 구체적으로 — "이미지"처럼 쓰지 말 것.
             logger.info(f"  ✏️ 제목 최종 교정: '{title}' → '{new_title}'")
             changed = True
 
-        # 본문
-        new_content = (result.get("content") or "").strip()
-        if new_content and len(new_content) >= len(content) * 0.7:
-            post_data["content"] = new_content
-            changed = True
+        # 본문은 교체하지 않음 — polish_post는 HTML이 제거된 순수 텍스트만 입력받으므로
+        # 재작성 본문을 적용하면 이미 삽입된 이미지·테마 디자인이 유실되고
+        # 목차·요약박스가 중복 생성됨 (목차는 업로드 시 자동 삽입).
+        # 제목·메타·태그 등 메타데이터 수준의 최종 교정만 반영한다.
 
         # 메타 설명
         new_meta = (result.get("meta_description") or "").strip()

@@ -218,6 +218,11 @@ def main() -> int:
         _write_backup_meta(zip_name, file_id, folder_id, len(files), size_kb)
         logger.info("=== 백업 완료 ===")
         return 0
+    except ValueError as e:
+        # 인증 정보 미설정 — Secret 미등록 상태이므로 경고 후 정상 종료
+        logger.warning(f"백업 건너뜀 (인증 정보 미설정): {e}")
+        logger.warning("GOOGLE_DRIVE_REFRESH_TOKEN Secret을 등록하면 자동 백업이 활성화됩니다.")
+        return 0
     except Exception as e:
         logger.error(f"백업 실패: {e}", exc_info=True)
         return 1

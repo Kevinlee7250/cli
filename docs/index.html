@@ -1422,6 +1422,26 @@
       <div style="color:var(--muted);font-size:13px;padding:24px;text-align:center">코드 수리 데이터를 로드 중...</div>
     </div>
 
+    <!-- ⑦.4 AdSense 승인 감사 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>🔎 AdSense 승인 감사</h2>
+      <div style="display:flex;gap:8px;align-items:center">
+        <select id="audit-blog-select" style="padding:6px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
+          <option value="blog1">blog1 (HOGU What?)</option>
+          <option value="blog2">blog2</option>
+          <option value="blog3">blog3</option>
+          <option value="all">전체 블로그</option>
+        </select>
+        <button onclick="adsenseAuditRun(false)" style="padding:6px 14px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:var(--green);font-size:12px;cursor:pointer;font-weight:600">🔎 감사+자동보완</button>
+        <button onclick="adsenseAuditRun(true)" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 검사만</button>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.7">
+      발행 글 전체를 AdSense 정책 기준으로 검사합니다: 글자수·이미지·alt·목차 중복·YMYL 면책 문구·FAQ·출처·낚시성 제목.
+      이미지 삽입 / alt 채움 / 중복 목차 제거 / 면책 문구는 자동 보완되고, 나머지는 리포트(docs/data/adsense_audit.json)로 저장됩니다.
+    </p>
+    <div id="audit-run-status" style="display:none;font-size:12px;color:var(--muted);margin-bottom:24px"></div>
+
     <!-- ⑦.5 중복 목차 정리 -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>🧹 중복 목차 정리</h2>
@@ -4878,6 +4898,39 @@ function backupRefreshStatus() {
     fileEl.textContent  = ''
     sizeEl.textContent  = '—'
     countEl.textContent = ''
+  }
+}
+
+async function adsenseAuditRun(dryRun = false) {
+  const pat = getPAT()
+  if (!pat) { showToast('PAT를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
+  const blogId = document.getElementById('audit-blog-select').value
+  const label = dryRun ? '검사' : '감사+자동보완'
+  if (!dryRun && !confirm(`[${blogId}] 발행 글을 스캔해 부족한 항목(이미지·alt·면책 문구·중복 목차)을 자동 보완합니다. 진행할까요?`)) return
+  const statusEl = document.getElementById('audit-run-status')
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = `⏳ ${label} 워크플로 요청 중...` }
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/adsense-audit.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: { blog_id: blogId, dry_run: dryRun ? 'true' : 'false' } })
+      }
+    )
+    if (resp.ok || resp.status === 204) {
+      const msg = `🔎 ${label} 워크플로가 실행됐습니다. 완료 후 Actions 로그와 감사 리포트를 확인하세요.`
+      showToast(msg, 'success')
+      if (statusEl) statusEl.textContent = `✅ ${msg}`
+    } else {
+      const errText = await resp.text().catch(() => '')
+      const msg = `실행 실패: ${resp.status} ${errText.slice(0, 80)}`
+      showToast(msg, 'error')
+      if (statusEl) statusEl.textContent = `❌ ${msg}`
+    }
+  } catch (e) {
+    showToast(`오류: ${e.message}`, 'error')
+    if (statusEl) statusEl.textContent = `❌ 오류: ${e.message}`
   }
 }
 

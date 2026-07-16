@@ -4858,7 +4858,8 @@ async function loadAiUsage() {
 
   let data = null
   try {
-    const r = await fetch(`docs/data/ai_usage.json?t=${Date.now()}`)
+    const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
+    const r = await fetch(`${base}/ai_usage.json?t=${Date.now()}`)
     if (r.ok) data = await r.json()
   } catch {}
 

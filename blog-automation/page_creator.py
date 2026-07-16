@@ -415,13 +415,13 @@ def setup_ads_txt(blog_cfg: dict | None = None) -> None:
     from config import ADSENSE_CLIENT_ID
     adsense_id = (blog_cfg or {}).get("adsense_client_id") or ADSENSE_CLIENT_ID
 
-    # Publisher ID 추출
-    pub_id = adsense_id.replace("ca-", "") if adsense_id.startswith("ca-pub-") else adsense_id
+    # Publisher ID 추출 — ads.txt 표준은 "ca-" 접두사 없는 pub-XXXX 형식
+    pub_id = adsense_id.removeprefix("ca-")
     if "XXXXXXXXX" in pub_id or not adsense_id:
         logger.warning("ADSENSE_CLIENT_ID가 설정되지 않아 ads.txt를 생성할 수 없습니다")
         return
 
-    ads_txt_line = f"google.com, {adsense_id}, DIRECT, f08c47fec0942fa0"
+    ads_txt_line = f"google.com, {pub_id}, DIRECT, f08c47fec0942fa0"
 
     logger.info("=" * 60)
     logger.info("📄 ads.txt 설정 안내")

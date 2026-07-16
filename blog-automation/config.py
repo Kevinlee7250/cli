@@ -135,6 +135,9 @@ def claude_text(message) -> str:
 def _record_token_usage(model: str, input_tokens: int, output_tokens: int) -> None:
     """토큰 사용량을 logs/ai_usage.json에 누적 기록합니다."""
     import datetime
+    import sys
+    if "pytest" in sys.modules:  # 테스트의 mock 호출이 실사용 통계를 오염시키지 않도록
+        return
     usage_file = os.path.join(os.path.dirname(__file__), "logs", "ai_usage.json")
     os.makedirs(os.path.dirname(usage_file), exist_ok=True)
     try:

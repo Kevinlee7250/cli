@@ -1,59 +1,3 @@
-2026-07-15 23:28:09,613 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '코스피 코스닥 2026 하반기 전망, 반도체 쏠림 속 핵심만 정'
-2026-07-15 23:28:09,613 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2948자로 2500~3999자 구간에 해당하며, 개인 경험 서술이 일부 있으나 증권가 전망 재정리 위주로 독창성은 제한적
-2026-07-15 23:28:09,613 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 표와 서술이 섞인 500자 이상 단락이 존재해 가독성이 다소 떨어짐
-2026-07-15 23:28:09,613 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 인사이트와 출처 4개가 언급되나 본문 내 출처 인용이 명시적으로 드러나지 않음
-2026-07-15 23:28:09,613 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글로 저작권 위반은 없으나 이미지 부재로 warn
-2026-07-15 23:28:09,613 [INFO] adsense_validator —   ❌ AI 생성 의심도: 본문에 편집 흔적(취소선 텍스트 '대신' 표현)이 그대로 노출되어 AI 생성 및 편집 오류가 명확히 드러남
-2026-07-15 23:28:09,613 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 본문에 편집 흔적(취소선 텍스트 '대신' 표현)이 그대로 노출되어 AI 생성 및 편집 오류가 명확히 드러남
-2026-07-15 23:28:09,614 [WARNING] adsense_validator —   🔴 본문 중 '실제로 6월 중순 시점 분석에서도" 대신 "이전 시점 분석에서도' 부분에 편집 흔적이 그대로 남아 있어 즉시 수정 필요
-2026-07-15 23:28:09,622 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-15 23:28:09,628 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-07-15 23:28:09,629 [INFO] main —   제목: 코스피 코스닥 2026 하반기 전망, 반도체 쏠림 속 핵심만 정리
-2026-07-15 23:28:09,629 [INFO] main —   이미지: 1개 삽입
-2026-07-15 23:28:09,629 [INFO] main —   글자 수: 2948자
-2026-07-15 23:28:11,856 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:28:24,158 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:28:26,726 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:28:34,912 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '코스피 코스닥 2026 하반기 전망, 반도체 쏠림 속 핵심만 정'
-2026-07-15 23:28:34,912 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2948자로 글자수 기준 warn 구간이며, 수치·표는 있으나 대부분 증권사 자료 재정리로 개인 경험적 인사이트는 '개인적으로는' 한 문장 정도로 부족함
-2026-07-15 23:28:34,912 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 헤딩 수는 양호하나 일부 단락(반도체 쏠림 설명 부분 등)이500자를 넘어 가독성이 다소 떨어짐
-2026-07-15 23:28:34,913 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용과 균형 잡힌 시각은 있으나 1인칭 직접 경험 서술이 매우 제한적임
-2026-07-15 23:28:34,913 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 내용이 없어 저작권 위반은 아니나 이미지 부재로 warn 처리
-2026-07-15 23:28:34,913 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '지금까지 살펴본 내용을 정리하면' 등 자동요약 문구와 다소 격식체 서술 패턴이 반복적으로 나타남
-2026-07-15 23:28:34,913 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
-2026-07-15 23:28:34,913 [WARNING] main —      🟡 [원본성 및 품질] 2948자로 글자수 기준 warn 구간이며, 수치·표는 있으나 대부분 증권사 자료 재정리로 개인 경험적 인사이트는 '개인적으로는' 한 문장 정도로 부족함
-2026-07-15 23:28:34,913 [WARNING] main —      🟡 [구조 및 가독성] H2 6개로 헤딩 수는 양호하나 일부 단락(반도체 쏠림 설명 부분 등)이500자를 넘어 가독성이 다소 떨어짐
-2026-07-15 23:28:34,913 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 4개 인용과 균형 잡힌 시각은 있으나 1인칭 직접 경험 서술이 매우 제한적임
-2026-07-15 23:28:34,913 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
-2026-07-15 23:28:36,673 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:29:58,065 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:29:59,757 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:30:19,947 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2948자 → 4515자 (+1567자)
-2026-07-15 23:30:19,947 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-15 23:30:20,722 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:30:31,898 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:30:32,688 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:30:41,209 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '코스피 코스닥 2026 하반기 전망, 반도체 쏠림 속 핵심만 정'
-2026-07-15 23:30:41,209 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개 확보로 pass 기준 충족하나, 일부 단락(증권사 밴드 설명, 반도체 쏠림 리스크 부분)이 500자 이상으로 길게 이어짐
-2026-07-15 23:30:41,209 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 확인되지 않아 SEO·가독성 측면에서 warn (저작권 위반은 없음)
-2026-07-15 23:30:41,209 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 90/100)
-2026-07-15 23:30:41,209 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-07-15 23:30:44,520 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:31:43,515 [INFO] final_editor —   ✏️ 제목 최종 교정: '코스피 코스닥 2026 하반기 전망, 반도체 쏠림 속 핵심만 정리' → '코스피 코스닥 2026 하반기 전망, 반도체 쏠림 핵심 정리'
-2026-07-15 23:31:43,515 [INFO] final_editor —   ✏️ 메타 설명 교정 (131자)
-2026-07-15 23:31:43,516 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 정리하고, 문단을 모바일 친화적으로 2~4문장 단위로 재구성했으며 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모·내부 링크를 모두 배치했습니다. 이미지 4개의 삽입 위치와 구체적 alt 텍스트를 새로 제안했습니다.
-2026-07-15 23:31:43,654 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-15 23:31:43,655 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-07-15 23:31:44,439 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/2026_0555618339.html
-2026-07-15 23:31:44,449 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/2026_0555618339.html
-2026-07-15 23:32:20,249 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:32:20,251 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-15 23:32:20,251 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-15 23:32:20,260 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '코스피 코스닥 2026 하반기 전망, 반도체 쏠림 핵심 정리'
-2026-07-15 23:32:22,272 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:32:27,328 [INFO] comment_manager —   생성된 댓글: 글 잘 읽었습니다. 반도체 쏠림이 걱정되신다면 코스피200 대신 '코스피200 동일가중' ETF를 함께 보시는 것도 방법인데, 상위 종목 비중을...
-2026-07-15 23:35:27,581 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
 <html lang=en>
   <meta charset=utf-8>
   <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
@@ -554,3 +498,62 @@
 2026-07-16 11:40:59,830 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-16 11:40:59,830 [INFO] dashboard_exporter —   포스트: 93개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-16 11:40:59,831 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-16 23:03:59,608 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
+2026-07-16 23:04:00,359 [INFO] main — ============================================================
+2026-07-16 23:04:00,360 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-16 23:04:00
+2026-07-16 23:04:00,360 [INFO] main — ============================================================
+2026-07-16 23:04:00,370 [INFO] keyword_collector — 포스팅 이력 코퍼스: 28개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-16 23:04:05,357 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-16 23:04:05,548 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:04:05,549 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-16 23:04:05,943 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택']
+2026-07-16 23:04:06,089 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:04:06,253 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-16 23:04:06,390 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-16 23:04:06,393 [INFO] keyword_collector —   [high_cpc] 1개: ['OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택']
+2026-07-16 23:04:06,393 [INFO] keyword_collector —   [fallback] 1개: ['서울 근교 당일치기 숨은 명소 계절별 추천']
+2026-07-16 23:04:06,393 [INFO] keyword_collector — 최종 선정 키워드 2개: ['OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택', '서울 근교 당일치기 숨은 명소 계절별 추천']
+2026-07-16 23:04:06,393 [INFO] main — 수집된 키워드 2개: ['OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택', '서울 근교 당일치기 숨은 명소 계절별 추천']
+2026-07-16 23:04:06,397 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
+2026-07-16 23:04:06,397 [INFO] main — 단독 포스트 대상 키워드 1개: ['OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택']
+2026-07-16 23:04:06,413 [INFO] main — 
+[1/1] 키워드: 'OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택'
+2026-07-16 23:04:06,413 [INFO] content_generator — 포스트 생성 중: 'OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택'
+2026-07-16 23:04:06,564 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:04:06,564 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6a9LDuaBESUyRydVjEJ'}
+2026-07-16 23:04:12,779 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — 'OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택'
+2026-07-16 23:04:12,958 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:04:12,958 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6a9oahWQUA3fAWB7ZqC'}
+2026-07-16 23:04:14,417 [INFO] content_generator — 드라마/영화 참고 데이터 수집 완료: 'OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택'
+2026-07-16 23:04:14,417 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-16 23:04:14,582 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:04:14,583 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6a9vVBGXdDBKeWJ9GRE'}
+2026-07-16 23:04:14,583 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
+2026-07-16 23:04:17,583 [INFO] content_generator — 포스트 생성 중: 'OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택'
+2026-07-16 23:04:17,722 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:04:17,726 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aA9yYbiZuniwok2HCP'}
+2026-07-16 23:04:22,129 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — 'OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택'
+2026-07-16 23:04:22,319 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:04:22,320 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aAVSKcxwSwuU2wBi3g'}
+2026-07-16 23:04:23,947 [INFO] content_generator — 드라마/영화 참고 데이터 수집 완료: 'OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택'
+2026-07-16 23:04:23,947 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-16 23:04:24,203 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:04:24,204 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aAd5homsUwhJJiAKof'}
+2026-07-16 23:04:24,204 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
+2026-07-16 23:04:24,204 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): 'OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택'
+2026-07-16 23:04:24,204 [INFO] main — 
+============================================================
+2026-07-16 23:04:24,204 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 1개
+2026-07-16 23:04:24,204 [INFO] main — ============================================================
+2026-07-16 23:04:24,237 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-16 23:04:24,259 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-16 23:04:24,279 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-16 23:04:24,423 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-16 23:04:24,660 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-16 23:04:24,964 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-16 23:04:24,966 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-16 23:04:24,968 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-16 23:04:24,981 [INFO] post_manager —   포스트 레지스트리: 전체 237개 (게시 148 / 실패 15 / 대기 52)
+2026-07-16 23:04:24,981 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-16 23:04:24,981 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-16 23:04:24,982 [INFO] main — 대시보드 데이터 업데이트 완료

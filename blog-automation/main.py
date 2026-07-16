@@ -846,8 +846,8 @@ def main() -> None:
         return
 
     if args.setup:
-        logger.info("=== AdSense 셋업 모드: 필수 페이지 생성 + 자동 광고 테마 주입 ===")
-        from page_creator import create_required_pages
+        logger.info("=== AdSense 셋업 모드: 필수 페이지 생성 + 자동 광고 테마 주입 + ads.txt ===")
+        from page_creator import create_required_pages, setup_ads_txt
         from blogger_uploader import inject_adsense_to_theme
 
         setup_blogs = get_blog_configs()
@@ -876,6 +876,10 @@ def main() -> None:
                 logger.info(f"  ✅ AdSense 자동 광고 활성화: {blog_name}")
             else:
                 logger.warning(f"  ⚠️ 테마 주입 실패 — Blogger 관리자에서 수동으로 AdSense 연결 필요: {blog_name}")
+
+        # ads.txt 설정 가이드 출력 (블로그별 1회만)
+        first_blog = setup_blogs[0] if setup_blogs else None
+        setup_ads_txt(first_blog)
         return
 
     # 블로그 목록 결정

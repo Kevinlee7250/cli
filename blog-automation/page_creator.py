@@ -2,10 +2,12 @@
 Blogger 정적 페이지 생성 모듈
 - Privacy Policy (개인정보처리방침)
 - About (블로그 소개)
+- ads.txt 설정 가이드 출력
 
 AdSense 심사 필수 요건:
 1. 개인정보처리방침 — 쿠키/광고/데이터 수집 고지
 2. About 페이지 — E-E-A-T 입증 (작성자 신뢰성)
+3. ads.txt — AdSense 승인/수익화 필수
 """
 
 import json
@@ -400,6 +402,55 @@ def create_required_pages(blog_cfg: dict | None = None) -> dict:
     return results
 
 
+ADS_TXT_CONTENT = "google.com, pub-9745019342711860, DIRECT, f08c47fec0942fa0"
+
+
+def setup_ads_txt(blog_cfg: dict | None = None) -> None:
+    """ads.txt 등록 가이드를 출력하고 설정 상태를 검증합니다.
+
+    Blogger API는 ads.txt 직접 설정을 지원하지 않습니다.
+    커스텀 도메인 Blogger 블로그는 Blogger 관리자 설정에서 직접 등록해야 합니다.
+    GitHub Pages 블로그는 docs/ads.txt에 자동 포함됩니다.
+    """
+    from config import ADSENSE_CLIENT_ID
+    adsense_id = (blog_cfg or {}).get("adsense_client_id") or ADSENSE_CLIENT_ID
+
+    # Publisher ID 추출
+    pub_id = adsense_id.replace("ca-", "") if adsense_id.startswith("ca-pub-") else adsense_id
+    if "XXXXXXXXX" in pub_id or not adsense_id:
+        logger.warning("ADSENSE_CLIENT_ID가 설정되지 않아 ads.txt를 생성할 수 없습니다")
+        return
+
+    ads_txt_line = f"google.com, {adsense_id}, DIRECT, f08c47fec0942fa0"
+
+    logger.info("=" * 60)
+    logger.info("📄 ads.txt 설정 안내")
+    logger.info("=" * 60)
+    logger.info(f"등록할 내용: {ads_txt_line}")
+    logger.info("")
+    logger.info("【Blogger 커스텀 도메인 블로그】")
+    logger.info("  1. Blogger 관리자 → 설정 → 수익창출")
+    logger.info("  2. '커스텀 ads.txt' 사용 → 사용 설정")
+    logger.info(f"  3. 아래 내용 붙여넣기:")
+    logger.info(f"     {ads_txt_line}")
+    logger.info("  4. 저장 후 AdSense에서 '확인' 버튼 클릭")
+    logger.info("")
+    logger.info("【GitHub Pages 사이트】")
+    logger.info("  docs/ads.txt 파일에 자동 포함됩니다.")
+    logger.info("=" * 60)
+
+    # docs/ads.txt도 최신 상태로 업데이트
+    import os
+    docs_ads = os.path.join(os.path.dirname(__file__), "..", "docs", "ads.txt")
+    docs_ads = os.path.normpath(docs_ads)
+    try:
+        with open(docs_ads, "w", encoding="utf-8") as f:
+            f.write(ads_txt_line + "\n")
+        logger.info(f"docs/ads.txt 업데이트 완료: {docs_ads}")
+    except Exception as e:
+        logger.warning(f"docs/ads.txt 업데이트 실패: {e}")
+
+
 if __name__ == "__main__":
     import logging as _logging
     _logging.basicConfig(level=_logging.INFO, format="%(levelname)s %(message)s")
@@ -407,3 +458,5 @@ if __name__ == "__main__":
     print("\n=== 생성된 페이지 ===")
     for k, v in urls.items():
         print(f"  {k}: {v or '실패'}")
+    print()
+    setup_ads_txt()

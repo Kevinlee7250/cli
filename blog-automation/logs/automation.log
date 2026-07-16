@@ -1,59 +1,3 @@
-2026-07-15 23:24:08,207 [INFO] main — 
-============================================================
-2026-07-15 23:24:08,207 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-15 23:24:08,207 [INFO] main — ============================================================
-2026-07-15 23:24:08,238 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-15 23:24:08,263 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-15 23:24:08,283 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-15 23:24:08,616 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-15 23:24:09,244 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-15 23:24:09,245 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-15 23:24:09,248 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-15 23:24:09,260 [INFO] post_manager —   포스트 레지스트리: 전체 234개 (게시 146 / 실패 15 / 대기 51)
-2026-07-15 23:24:09,260 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-15 23:24:09,261 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-15 23:24:09,262 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-15 23:24:41,750 [INFO] main — ============================================================
-2026-07-15 23:24:41,750 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-15 23:24:41
-2026-07-15 23:24:41,750 [INFO] main — ============================================================
-2026-07-15 23:24:41,761 [INFO] keyword_collector — 포스팅 이력 코퍼스: 26개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-15 23:24:45,773 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-15 23:24:51,342 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:24:51,368 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-15 23:24:51,831 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-15 23:24:57,799 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:24:58,117 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-15 23:24:58,118 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-15 23:24:58,119 [INFO] keyword_collector — 유사 주제 제외 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-15 23:24:58,119 [INFO] keyword_collector —   [fallback] 2개: ['코스피 코스닥 2026 하반기 전망 핵심 정리', '미국 연준 금리 결정 한국 증시 영향 분석']
-2026-07-15 23:24:58,120 [INFO] keyword_collector — 최종 선정 키워드 2개: ['코스피 코스닥 2026 하반기 전망 핵심 정리', '미국 연준 금리 결정 한국 증시 영향 분석']
-2026-07-15 23:24:58,120 [INFO] main — 수집된 키워드 2개: ['코스피 코스닥 2026 하반기 전망 핵심 정리', '미국 연준 금리 결정 한국 증시 영향 분석']
-2026-07-15 23:24:58,124 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-07-15 23:24:58,124 [INFO] main — 단독 포스트 대상 키워드 1개: ['코스피 코스닥 2026 하반기 전망 핵심 정리']
-2026-07-15 23:24:58,140 [INFO] main — 
-[1/1] 키워드: '코스피 코스닥 2026 하반기 전망 핵심 정리'
-2026-07-15 23:24:58,140 [INFO] content_generator — 포스트 생성 중: '코스피 코스닥 2026 하반기 전망 핵심 정리'
-2026-07-15 23:25:08,083 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:25:08,084 [INFO] research_collector — 검색 의도: 2026년 하반기 코스피·코스닥 지수 전망과 주요 이슈를 파악하고 투자 판단에 참고하려는 검색 의도
-2026-07-15 23:25:20,695 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 6개) — '코스피 코스닥 2026 하반기 전망 핵심 정리'
-2026-07-15 23:25:36,905 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:25:36,906 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '코스피 코스닥 2026 하반기 전망 핵심 정리'
-2026-07-15 23:26:07,610 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:26:07,611 [INFO] source_validator — 출처 검증: 5/8개 통과, 등급 분포 {'B': 5, 'X': 3}
-2026-07-15 23:26:07,613 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-15 23:26:08,371 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:27:22,791 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:27:32,846 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:27:36,396 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:27:41,161 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-07-15 23:27:41,161 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-07-15 23:27:41,165 [INFO] content_generator — 섹션별 이미지 검색: ['코스피 코스닥 하반기']
-2026-07-15 23:27:41,444 [INFO] image_fetcher — 이미지 수집 성공: '코스피 코스닥 하반기' → 제목='business / woman / people / shooting / f' (관련성=0.40)
-2026-07-15 23:27:41,444 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-15 23:27:41,446 [INFO] content_generator — 포스트 생성 완료: '코스피 코스닥 2026 하반기 전망, 반도체 쏠림 속 핵심만 정리' (2948자, 이미지 1개)
-2026-07-15 23:27:43,680 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:27:57,477 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:27:59,830 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-15 23:28:09,613 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '코스피 코스닥 2026 하반기 전망, 반도체 쏠림 속 핵심만 정'
 2026-07-15 23:28:09,613 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2948자로 2500~3999자 구간에 해당하며, 개인 경험 서술이 일부 있으나 증권가 전망 재정리 위주로 독창성은 제한적
 2026-07-15 23:28:09,613 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 표와 서술이 섞인 500자 이상 단락이 존재해 가독성이 다소 떨어짐
@@ -554,3 +498,59 @@
 2026-07-16 11:39:59,674 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-16 11:39:59,674 [INFO] dashboard_exporter —   포스트: 94개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-16 11:39:59,675 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-16 11:40:35,432 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
+2026-07-16 11:40:36,413 [INFO] main — ============================================================
+2026-07-16 11:40:36,413 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-16 11:40:36
+2026-07-16 11:40:36,413 [INFO] main — ============================================================
+2026-07-16 11:40:36,422 [INFO] keyword_collector — 포스팅 이력 코퍼스: 24개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-16 11:40:40,819 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-16 11:40:41,002 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:40:41,002 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-16 11:40:41,492 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-16 11:40:41,846 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:40:42,214 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-16 11:40:42,215 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-16 11:40:42,216 [INFO] keyword_collector — 유사 주제 제외 3개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리', '미국 연준 금리 결정 한국 증시 영향 분석']
+2026-07-16 11:40:42,216 [INFO] keyword_collector —   [fallback] 2개: ['원달러 환율 급등락 원인과 개인투자자 대응법', '2026 금융시장 주요 이슈 직장인이 알아야 할 것']
+2026-07-16 11:40:42,216 [INFO] keyword_collector — 최종 선정 키워드 2개: ['원달러 환율 급등락 원인과 개인투자자 대응법', '2026 금융시장 주요 이슈 직장인이 알아야 할 것']
+2026-07-16 11:40:42,216 [INFO] main — 수집된 키워드 2개: ['원달러 환율 급등락 원인과 개인투자자 대응법', '2026 금융시장 주요 이슈 직장인이 알아야 할 것']
+2026-07-16 11:40:42,221 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
+2026-07-16 11:40:42,221 [INFO] main — 단독 포스트 대상 키워드 1개: ['원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-16 11:40:42,236 [INFO] main — 
+[1/1] 키워드: '원달러 환율 급등락 원인과 개인투자자 대응법'
+2026-07-16 11:40:42,236 [INFO] content_generator — 포스트 생성 중: '원달러 환율 급등락 원인과 개인투자자 대응법'
+2026-07-16 11:40:42,506 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:40:42,506 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5g2jz9z6nfFTM8jhfaR'}
+2026-07-16 11:40:49,314 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '원달러 환율 급등락 원인과 개인투자자 대응법'
+2026-07-16 11:40:49,563 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:40:49,564 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5g3G4QggYca3WgcAfUM'}
+2026-07-16 11:40:49,565 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-16 11:40:50,097 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:40:50,098 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5g3HAPfGAWG5G4KxTFP'}
+2026-07-16 11:40:50,098 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
+2026-07-16 11:40:53,098 [INFO] content_generator — 포스트 생성 중: '원달러 환율 급등락 원인과 개인투자자 대응법'
+2026-07-16 11:40:53,343 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:40:53,344 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5g3YPva7N7BfauXukeU'}
+2026-07-16 11:40:58,846 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '원달러 환율 급등락 원인과 개인투자자 대응법'
+2026-07-16 11:40:58,988 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:40:58,989 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5g3xoN5ZeNsfBJZiTBc'}
+2026-07-16 11:40:58,989 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-16 11:40:59,173 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:40:59,173 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5g3yM6nZy12pTUpfHeV'}
+2026-07-16 11:40:59,174 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
+2026-07-16 11:40:59,174 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '원달러 환율 급등락 원인과 개인투자자 대응법'
+2026-07-16 11:40:59,174 [INFO] main — 
+============================================================
+2026-07-16 11:40:59,174 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
+2026-07-16 11:40:59,174 [INFO] main — ============================================================
+2026-07-16 11:40:59,211 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-16 11:40:59,235 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-16 11:40:59,255 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-16 11:40:59,504 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-16 11:40:59,813 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-16 11:40:59,814 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-16 11:40:59,817 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-16 11:40:59,830 [INFO] post_manager —   포스트 레지스트리: 전체 237개 (게시 148 / 실패 15 / 대기 52)
+2026-07-16 11:40:59,830 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-16 11:40:59,830 [INFO] dashboard_exporter —   포스트: 93개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-16 11:40:59,831 [INFO] main — 대시보드 데이터 업데이트 완료

@@ -1,92 +1,3 @@
-2026-07-15 23:05:15,366 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:05:15,369 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'C': 4, 'X': 3}
-2026-07-15 23:05:15,371 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
-2026-07-15 23:05:15,371 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-15 23:05:16,872 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:06:34,699 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:06:42,746 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:06:43,722 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:06:44,845 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-07-15 23:06:44,848 [INFO] content_generator — 섹션별 이미지 검색: ['여행 물건 도난']
-2026-07-15 23:06:45,183 [INFO] image_fetcher — 이미지 수집 성공: '여행 물건 도난' → 제목='fantasy / to travel / travel / vacations' (관련성=0.25)
-2026-07-15 23:06:45,184 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-15 23:06:45,186 [INFO] content_generator — 포스트 생성 완료: '여행 중 도난 당했다면? 경찰서 신고부터 보험 청구까지 정리 (2026)' (2772자, 이미지 1개)
-2026-07-15 23:06:46,049 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:06:57,154 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:06:57,919 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:07:07,458 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:07:13,460 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:07:15,306 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '여행 중 도난 당했다면? 경찰서 신고부터 보험 청구까지 정리 ('
-2026-07-15 23:07:15,306 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2772자로 warn 구간이며 개인 경험 대신 후기·자료 재구성 위주로 구체적 수치나 날짜 사례 부족
-2026-07-15 23:07:15,306 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 '실제 상황을 가정해 본 신고와 청구 흐름' 등 500자 이상 단락이 다수 존재
-2026-07-15 23:07:15,306 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 인용되나 1인칭 직접 경험 서술이 없고 '일부 후기에 따르면' 식 간접 인용에 의존
-2026-07-15 23:07:15,306 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 포함되지 않아 저작권 위반은 없으나 이미지 부재로 warn 처리
-2026-07-15 23:07:15,306 [INFO] adsense_validator —   ❌ AI 생성 의심도: '등 조사형 표현으로 변경', '등으로 완화' 등 편집 지시 메모가 본문에 그대로 노출되어 AI 편집 흔적이 명백함
-2026-07-15 23:07:15,306 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '등 조사형 표현으로 변경', '등으로 완화' 등 편집 지시 메모가 본문에 그대로 노출되어 AI 편집 흔적이 명백함
-2026-07-15 23:07:15,306 [WARNING] adsense_validator —   🔴 본문 내 '등 조사형 표현으로 변경', '등으로 완화' 같은 AI 프롬프트/편집 지시문이 그대로 노출되어 있어 즉시 삭제 및 재작성 필요
-2026-07-15 23:07:15,313 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-15 23:07:15,314 [INFO] internal_linker —   [1/5] '여행자보험 가입' -> https://www.hoguwhat.com/2026/07/blog-post_14.html
-2026-07-15 23:07:15,316 [INFO] internal_linker —   [2/5] '여행 준비' -> https://www.hoguwhat.com/2026/07/0.html
-2026-07-15 23:07:15,318 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-15 23:07:15,318 [INFO] main —   제목: 여행 중 도난 당했다면? 경찰서 신고부터 보험 청구까지 정리 (2026)
-2026-07-15 23:07:15,318 [INFO] main —   이미지: 1개 삽입
-2026-07-15 23:07:15,319 [INFO] main —   글자 수: 2772자
-2026-07-15 23:07:19,153 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:07:30,282 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:07:31,257 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:07:41,336 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:07:46,091 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:07:47,660 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '여행 중 도난 당했다면? 경찰서 신고부터 보험 청구까지 정리 ('
-2026-07-15 23:07:47,661 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2772자로 글자수 기준은 warn 구간이며, '가상의 시나리오'로 명시된 가공 사례뿐 실제 경험담이 없어 정보 재조합에 가까움
-2026-07-15 23:07:47,661 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락(신고 흐름, 서류 안내 부분)이 500자 이상으로 길게 이어짐
-2026-07-15 23:07:47,661 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개는 있으나 '일부 후기', '관련 자료' 등 모호한 인용과 가상 시나리오로 실제 경험 기반 신뢰도가 약함
-2026-07-15 23:07:47,661 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 콘텐츠로 정책상 warn 처리
-2026-07-15 23:07:47,661 [INFO] adsense_validator —   ❌ AI 생성 의심도: '조사형 표현으로 변경', '완화' 등 편집 지시문이 그대로 본문에 노출되어 AI 생성·편집 흔적이 명백히 드러남
-2026-07-15 23:07:47,661 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '조사형 표현으로 변경', '완화' 등 편집 지시문이 그대로 본문에 노출되어 AI 생성·편집 흔적이 명백히 드러남
-2026-07-15 23:07:47,661 [WARNING] adsense_validator —   🔴 본문에 '조사형 표현으로 변경', '완화' 등 프롬프트/편집 지시문이 그대로 노출되어 있어 발행 전 반드시 제거 필요
-2026-07-15 23:07:47,661 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
-2026-07-15 23:07:47,661 [WARNING] main —      🔴 [AI 생성 의심도] '조사형 표현으로 변경', '완화' 등 편집 지시문이 그대로 본문에 노출되어 AI 생성·편집 흔적이 명백히 드러남
-2026-07-15 23:07:47,661 [WARNING] main —      🔴 본문에 '조사형 표현으로 변경', '완화' 등 프롬프트/편집 지시문이 그대로 노출되어 있어 발행 전 반드시 제거 필요
-2026-07-15 23:07:47,661 [WARNING] main —      🟡 [원본성 및 품질] 2772자로 글자수 기준은 warn 구간이며, '가상의 시나리오'로 명시된 가공 사례뿐 실제 경험담이 없어 정보 재조합에 가까움
-2026-07-15 23:07:47,661 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 구조는 양호하나 일부 단락(신고 흐름, 서류 안내 부분)이 500자 이상으로 길게 이어짐
-2026-07-15 23:07:47,661 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3개는 있으나 '일부 후기', '관련 자료' 등 모호한 인용과 가상 시나리오로 실제 경험 기반 신뢰도가 약함
-2026-07-15 23:07:47,661 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
-2026-07-15 23:07:56,941 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:09:17,189 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:09:18,107 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:09:27,199 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2772자 → 3748자 (+976자)
-2026-07-15 23:09:27,199 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-15 23:09:28,394 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:09:38,374 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:09:39,706 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:09:43,939 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '여행 중 도난 당했다면? 경찰서 신고부터 보험 청구까지 정리 ('
-2026-07-15 23:09:43,939 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 경험(바르셀로나 배낭 도난, 32만원 현금, 87만원 보험금)은 훌륭하나 글자 수 3748자로 4000자 기준에 미달
-2026-07-15 23:09:43,939 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 기준 충족하나 일부 단락이 500자 이상으로 길어 가독성 저하 우려
-2026-07-15 23:09:43,939 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 포함되지 않아 저작권 위반은 없으나 이미지 부재로 warn
-2026-07-15 23:09:43,939 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 84/100)
-2026-07-15 23:09:43,939 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-15 23:09:44,681 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:11:04,854 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:11:05,724 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:11:31,292 [INFO] final_editor —   ✏️ 제목 최종 교정: '여행 중 도난 당했다면? 경찰서 신고부터 보험 청구까지 정리 (2026)' → '여행 중 물건 도난, 경찰서 신고부터 보험 청구까지 총정리'
-2026-07-15 23:11:31,292 [INFO] final_editor —   ✏️ 메타 설명 교정 (88자)
-2026-07-15 23:11:31,292 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고 요약박스·표·개인경험메모·주의사항·FAQ·작성자메모·내부링크를 표준 형식에 맞춰 추가했습니다. 미완성으로 끊긴 결론부를 자연스럽게 마무리하고 이미지 4곳의 위치와 구체적 alt 텍스트를 지정했습니다.
-2026-07-15 23:11:31,433 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-15 23:11:31,433 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-07-15 23:11:32,567 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_16.html
-2026-07-15 23:11:32,577 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_16.html
-2026-07-15 23:12:07,386 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:12:07,387 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-15 23:12:07,387 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-15 23:12:07,396 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '여행 중 물건 도난, 경찰서 신고부터 보험 청구까지 총정리'
-2026-07-15 23:12:12,205 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:12:16,331 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-15 23:12:17,042 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:12:19,766 [INFO] comment_manager —   생성된 댓글: 경찰서 신고서 받으실 때 팁 하나 더 드리자면, 신고서가 영어나 한국어로 안 나오는 나라도 많아서 나중에 보험 청구할 때 번역 공증이 필요할 수...
-2026-07-15 23:15:20,110 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
   <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
   <title>Error 404 (Not Found)!!1</title>
   <style>
@@ -587,3 +498,59 @@
 2026-07-16 05:57:15,468 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-16 05:57:15,468 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-16 05:57:15,469 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-16 05:57:46,074 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
+2026-07-16 05:57:47,166 [INFO] main — ============================================================
+2026-07-16 05:57:47,166 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-16 05:57:47
+2026-07-16 05:57:47,166 [INFO] main — ============================================================
+2026-07-16 05:57:47,177 [INFO] keyword_collector — 포스팅 이력 코퍼스: 26개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-16 05:57:51,922 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-16 05:57:52,097 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 05:57:52,098 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-16 05:57:52,564 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-16 05:57:52,689 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 05:57:52,937 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-16 05:57:52,937 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-16 05:57:52,939 [INFO] keyword_collector — 유사 주제 제외 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리']
+2026-07-16 05:57:52,939 [INFO] keyword_collector —   [fallback] 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-16 05:57:52,939 [INFO] keyword_collector — 최종 선정 키워드 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-16 05:57:52,939 [INFO] main — 수집된 키워드 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-16 05:57:52,943 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
+2026-07-16 05:57:52,943 [INFO] main — 단독 포스트 대상 키워드 1개: ['미국 연준 금리 결정 한국 증시 영향 분석']
+2026-07-16 05:57:52,957 [INFO] main — 
+[1/1] 키워드: '미국 연준 금리 결정 한국 증시 영향 분석'
+2026-07-16 05:57:52,957 [INFO] content_generator — 포스트 생성 중: '미국 연준 금리 결정 한국 증시 영향 분석'
+2026-07-16 05:57:53,108 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 05:57:53,109 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5DtVFPEj4EN6J26qwnR'}
+2026-07-16 05:58:04,471 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '미국 연준 금리 결정 한국 증시 영향 분석'
+2026-07-16 05:58:04,616 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 05:58:04,616 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5DuLUpD3yhLXyrJSTLA'}
+2026-07-16 05:58:04,617 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-16 05:58:04,782 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 05:58:04,783 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5DuMETUDRmpirLQUaS9'}
+2026-07-16 05:58:04,783 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
+2026-07-16 05:58:07,783 [INFO] content_generator — 포스트 생성 중: '미국 연준 금리 결정 한국 증시 영향 분석'
+2026-07-16 05:58:07,915 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 05:58:07,916 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5DuadcGjXDRjTL4BWFR'}
+2026-07-16 05:58:15,180 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '미국 연준 금리 결정 한국 증시 영향 분석'
+2026-07-16 05:58:15,314 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 05:58:15,314 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5Dv8F8wePqewQbJDinh'}
+2026-07-16 05:58:15,315 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-16 05:58:15,441 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 05:58:15,442 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5Dv8ktudXGafUWWhev5'}
+2026-07-16 05:58:15,442 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
+2026-07-16 05:58:15,442 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '미국 연준 금리 결정 한국 증시 영향 분석'
+2026-07-16 05:58:15,442 [INFO] main — 
+============================================================
+2026-07-16 05:58:15,442 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
+2026-07-16 05:58:15,442 [INFO] main — ============================================================
+2026-07-16 05:58:15,477 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-16 05:58:15,500 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-16 05:58:15,519 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-16 05:58:15,658 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-16 05:58:15,996 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-16 05:58:15,998 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-16 05:58:16,000 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-16 05:58:16,013 [INFO] post_manager —   포스트 레지스트리: 전체 237개 (게시 148 / 실패 15 / 대기 52)
+2026-07-16 05:58:16,014 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-16 05:58:16,014 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-16 05:58:16,015 [INFO] main — 대시보드 데이터 업데이트 완료

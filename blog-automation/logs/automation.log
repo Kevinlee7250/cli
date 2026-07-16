@@ -1,62 +1,3 @@
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-07-15 23:35:27,582 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-15 23:35:27,582 [INFO] main — 
-============================================================
-2026-07-15 23:35:27,583 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-15 23:35:27,583 [INFO] main — ============================================================
-2026-07-15 23:35:27,615 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-15 23:35:27,640 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-15 23:35:27,659 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-15 23:35:27,920 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-15 23:35:28,456 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-15 23:35:28,457 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-15 23:35:28,459 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-15 23:35:28,472 [INFO] post_manager —   포스트 레지스트리: 전체 235개 (게시 147 / 실패 15 / 대기 51)
-2026-07-15 23:35:28,472 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-15 23:35:28,472 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-15 23:35:28,473 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-16 05:39:14,726 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
-2026-07-16 05:39:15,475 [INFO] main — ============================================================
-2026-07-16 05:39:15,475 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-16 05:39:15
-2026-07-16 05:39:15,475 [INFO] main — ============================================================
-2026-07-16 05:39:15,485 [INFO] keyword_collector — 포스팅 이력 코퍼스: 30개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-16 05:39:18,953 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-16 05:39:25,086 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-16 05:39:25,111 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-16 05:39:25,418 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교']
-2026-07-16 05:39:30,612 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-16 05:39:30,927 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-16 05:39:31,198 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-16 05:39:31,200 [INFO] keyword_collector —   [high_cpc] 1개: ['넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교']
-2026-07-16 05:39:31,200 [INFO] keyword_collector —   [fallback] 1개: ['부산 골목 맛집 관광객 없는 진짜 맛집 직접 가봤더니']
-2026-07-16 05:39:31,200 [INFO] keyword_collector — 최종 선정 키워드 2개: ['넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교', '부산 골목 맛집 관광객 없는 진짜 맛집 직접 가봤더니']
-2026-07-16 05:39:31,200 [INFO] main — 수집된 키워드 2개: ['넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교', '부산 골목 맛집 관광객 없는 진짜 맛집 직접 가봤더니']
-2026-07-16 05:39:31,205 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
-2026-07-16 05:39:31,205 [INFO] main — 단독 포스트 대상 키워드 1개: ['넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교']
-2026-07-16 05:39:31,222 [INFO] main — 
-[1/1] 키워드: '넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교'
-2026-07-16 05:39:31,222 [INFO] content_generator — 포스트 생성 중: '넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교'
-2026-07-16 05:39:41,618 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-16 05:39:41,619 [INFO] research_collector — 검색 의도: 넷플릭스, 티빙, 웨이브의 구독료와 콘텐츠를 비교해 가장 가성비 좋은 OTT 서비스를 선택하려는 의도
-2026-07-16 05:39:50,561 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교'
-2026-07-16 05:40:07,596 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-16 05:40:07,597 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교'
-2026-07-16 05:40:18,167 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-16 05:40:18,168 [INFO] source_validator — 출처 검증: 2/4개 통과, 등급 분포 {'X': 2, 'B': 1, 'D': 1}
-2026-07-16 05:40:19,433 [INFO] content_generator — 드라마/영화 참고 데이터 수집 완료: '넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교'
-2026-07-16 05:40:19,433 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-07-16 05:40:19,433 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-16 05:40:20,214 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-16 05:41:46,589 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-07-16 05:41:47,289 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-16 05:41:56,176 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-16 05:41:59,171 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-16 05:42:04,449 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
 2026-07-16 05:42:04,452 [INFO] content_generator — 섹션별 이미지 검색: ['넷플릭스 vs 티빙']
 2026-07-16 05:42:05,129 [INFO] image_fetcher — 이미지 수집 성공: '넷플릭스 vs 티빙' → 제목='business / woman / people / shooting / f' (관련성=0.50)
 2026-07-16 05:42:05,129 [INFO] content_generator — 이미지 1개 본문 삽입 완료
@@ -557,3 +498,59 @@
 2026-07-16 23:04:24,981 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-16 23:04:24,981 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-16 23:04:24,982 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-16 23:04:59,194 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
+2026-07-16 23:05:00,163 [INFO] main — ============================================================
+2026-07-16 23:05:00,163 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-16 23:05:00
+2026-07-16 23:05:00,163 [INFO] main — ============================================================
+2026-07-16 23:05:00,172 [INFO] keyword_collector — 포스팅 이력 코퍼스: 26개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-16 23:05:04,156 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 50개
+2026-07-16 23:05:04,336 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:05:04,337 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-16 23:05:04,884 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:05:05,360 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-16 23:05:05,361 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-16 23:05:05,362 [INFO] keyword_collector — 유사 주제 제외 4개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개', '강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-07-16 23:05:05,363 [INFO] keyword_collector —   [fallback] 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
+2026-07-16 23:05:05,363 [INFO] keyword_collector — 최종 선정 키워드 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
+2026-07-16 23:05:05,363 [INFO] main — 수집된 키워드 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
+2026-07-16 23:05:05,367 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 18일 전)
+2026-07-16 23:05:05,514 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:05:05,515 [INFO] main — 단독 포스트 대상 키워드 1개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집']
+2026-07-16 23:05:05,531 [INFO] main — 
+[1/1] 키워드: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
+2026-07-16 23:05:05,531 [INFO] content_generator — 포스트 생성 중: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
+2026-07-16 23:05:05,677 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:05:05,678 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aDh1RYbzT1Y12Z2SpY'}
+2026-07-16 23:05:12,220 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 1개) — '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
+2026-07-16 23:05:12,818 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:05:12,818 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aECJoGZNR9WfVd897t'}
+2026-07-16 23:05:12,820 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-16 23:05:12,977 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:05:12,978 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aEE8vxMadevSGT2VaW'}
+2026-07-16 23:05:12,978 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
+2026-07-16 23:05:15,978 [INFO] content_generator — 포스트 생성 중: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
+2026-07-16 23:05:16,199 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:05:16,199 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aETi12Rv5fzw6Viwgb'}
+2026-07-16 23:05:21,999 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 1개) — '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
+2026-07-16 23:05:22,348 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:05:22,349 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aEuW3CS2BcMZgcoihR'}
+2026-07-16 23:05:22,349 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-16 23:05:22,492 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 23:05:22,492 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aEvsdyaqccBZxgQ9ae'}
+2026-07-16 23:05:22,493 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
+2026-07-16 23:05:22,493 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
+2026-07-16 23:05:22,493 [INFO] main — 
+============================================================
+2026-07-16 23:05:22,493 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 1개
+2026-07-16 23:05:22,493 [INFO] main — ============================================================
+2026-07-16 23:05:22,524 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-16 23:05:22,546 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-16 23:05:22,564 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-16 23:05:22,843 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-16 23:05:23,340 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-16 23:05:23,341 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-16 23:05:23,344 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-16 23:05:23,357 [INFO] post_manager —   포스트 레지스트리: 전체 237개 (게시 148 / 실패 15 / 대기 52)
+2026-07-16 23:05:23,357 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-16 23:05:23,357 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-16 23:05:23,358 [INFO] main — 대시보드 데이터 업데이트 완료

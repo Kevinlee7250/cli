@@ -1,8 +1,11 @@
 import json
+import logging
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
+_cfg_log = logging.getLogger(__name__)
 
 # Claude API
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
@@ -24,6 +27,8 @@ BLOGGER_REFRESH_TOKEN = os.getenv("GOOGLE_REFRESH_TOKEN", "")
 
 # Google AdSense (광고 수익화)
 ADSENSE_CLIENT_ID = os.getenv("ADSENSE_CLIENT_ID", "ca-pub-XXXXXXXXXXXXXXXXX")
+if ADSENSE_CLIENT_ID == "ca-pub-XXXXXXXXXXXXXXXXX":
+    _cfg_log.warning("ADSENSE_CLIENT_ID가 설정되지 않아 플레이스홀더 값이 사용됩니다 — AdSense 광고가 올바르게 표시되지 않습니다")
 # ADSENSE_MODE: "auto" = Blogger 자동 광고(테마 스크립트), "manual" = 포스트 내 개별 슬롯
 ADSENSE_MODE = os.getenv("ADSENSE_MODE", "auto")
 _raw_slots = os.getenv("ADSENSE_SLOT_IDS", "")
@@ -102,8 +107,10 @@ if _blogs_config_raw.strip():
     try:
         _BLOGS_CONFIG_LIST = json.loads(_blogs_config_raw)
         if not isinstance(_BLOGS_CONFIG_LIST, list):
+            _cfg_log.warning("BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다")
             _BLOGS_CONFIG_LIST = []
-    except (json.JSONDecodeError, ValueError):
+    except (json.JSONDecodeError, ValueError) as _e:
+        _cfg_log.warning(f"BLOGS_CONFIG JSON 파싱 실패 ({_e}) — 다중 블로그 설정이 무시됩니다")
         _BLOGS_CONFIG_LIST = []
 
 # 기본 블로그 이름 (BLOGS_CONFIG 미사용 시 단일 블로그 이름)

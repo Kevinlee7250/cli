@@ -1,59 +1,3 @@
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-07-15 23:15:20,112 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-15 23:15:20,112 [INFO] main — 
-============================================================
-2026-07-15 23:15:20,112 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-15 23:15:20,112 [INFO] main — ============================================================
-2026-07-15 23:15:20,143 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-15 23:15:20,166 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-15 23:15:20,185 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-15 23:15:20,405 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-15 23:15:20,713 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-15 23:15:20,959 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-15 23:15:20,960 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-15 23:15:20,963 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-15 23:15:20,976 [INFO] post_manager —   포스트 레지스트리: 전체 233개 (게시 146 / 실패 15 / 대기 50)
-2026-07-15 23:15:20,976 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-15 23:15:20,976 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-15 23:15:20,977 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-15 23:15:57,032 [INFO] main — ============================================================
-2026-07-15 23:15:57,033 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-15 23:15:57
-2026-07-15 23:15:57,033 [INFO] main — ============================================================
-2026-07-15 23:15:57,043 [INFO] keyword_collector — 포스팅 이력 코퍼스: 28개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-15 23:16:02,070 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 50개
-2026-07-15 23:16:05,757 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:16:05,780 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-15 23:16:05,780 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-15 23:16:06,447 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-15 23:16:06,448 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-15 23:16:06,450 [INFO] keyword_collector —   [naver_realtime] 2개: ['여름 휴가철 해외여행 식중독 예방 체크리스트', '국내 실속 여행지 단양 코스 추천']
-2026-07-15 23:16:06,450 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여름 휴가철 해외여행 식중독 예방 체크리스트', '국내 실속 여행지 단양 코스 추천']
-2026-07-15 23:16:06,450 [INFO] main — 수집된 키워드 2개: ['여름 휴가철 해외여행 식중독 예방 체크리스트', '국내 실속 여행지 단양 코스 추천']
-2026-07-15 23:16:06,454 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 17일 전)
-2026-07-15 23:16:07,978 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:16:07,979 [INFO] main — 단독 포스트 대상 키워드 1개: ['여름 휴가철 해외여행 식중독 예방 체크리스트']
-2026-07-15 23:16:08,003 [INFO] main — 
-[1/1] 키워드: '여름 휴가철 해외여행 식중독 예방 체크리스트'
-2026-07-15 23:16:08,003 [INFO] content_generator — 포스트 생성 중: '여름 휴가철 해외여행 식중독 예방 체크리스트'
-2026-07-15 23:16:16,218 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:16:16,219 [INFO] research_collector — 검색 의도: 여름 휴가철 해외여행 시 식중독을 예방하기 위한 실용적인 체크리스트와 정보를 찾는 의도
-2026-07-15 23:16:54,796 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 6개) — '여름 휴가철 해외여행 식중독 예방 체크리스트'
-2026-07-15 23:17:14,694 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:17:14,695 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '여름 휴가철 해외여행 식중독 예방 체크리스트'
-2026-07-15 23:18:02,527 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:18:02,528 [INFO] source_validator — 출처 검증: 0/6개 통과, 등급 분포 {'X': 6}
-2026-07-15 23:18:02,530 [INFO] evidence_builder — 자료팩: 중요 사실 6개 제외 (A/B 등급 출처 없음)
-2026-07-15 23:18:02,530 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-15 23:18:04,264 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:19:09,501 [WARNING] content_generator — 컨텐츠 너무 짧음(2149자, 최소 2500자) — 재시도 1/3
-2026-07-15 23:19:12,502 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-15 23:19:14,444 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-15 23:20:18,146 [WARNING] content_generator — 컨텐츠 너무 짧음(2381자, 최소 2500자) — 재시도 2/3
-2026-07-15 23:20:21,146 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-15 23:20:21,966 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-15 23:21:37,008 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-15 23:21:47,234 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
 2026-07-15 23:21:51,129 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
@@ -554,3 +498,62 @@
 2026-07-16 05:58:16,014 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-16 05:58:16,014 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-16 05:58:16,015 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-16 11:38:39,084 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
+2026-07-16 11:38:40,242 [INFO] main — ============================================================
+2026-07-16 11:38:40,242 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-16 11:38:40
+2026-07-16 11:38:40,242 [INFO] main — ============================================================
+2026-07-16 11:38:40,250 [INFO] keyword_collector — 포스팅 이력 코퍼스: 30개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-16 11:38:44,067 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-16 11:38:44,313 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:38:44,313 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-16 11:38:44,676 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
+2026-07-16 11:38:44,872 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:38:45,092 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-16 11:38:45,282 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-16 11:38:45,284 [INFO] keyword_collector —   [high_cpc] 1개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
+2026-07-16 11:38:45,284 [INFO] keyword_collector —   [fallback] 1개: ['강릉 여행 숙소 가성비 최고였던 곳과 실망한 곳 비교']
+2026-07-16 11:38:45,284 [INFO] keyword_collector — 최종 선정 키워드 2개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁', '강릉 여행 숙소 가성비 최고였던 곳과 실망한 곳 비교']
+2026-07-16 11:38:45,284 [INFO] main — 수집된 키워드 2개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁', '강릉 여행 숙소 가성비 최고였던 곳과 실망한 곳 비교']
+2026-07-16 11:38:45,288 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-07-16 11:38:45,288 [INFO] main — 단독 포스트 대상 키워드 1개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
+2026-07-16 11:38:45,299 [INFO] main — 
+[1/1] 키워드: '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
+2026-07-16 11:38:45,299 [INFO] content_generator — 포스트 생성 중: '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
+2026-07-16 11:38:45,470 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:38:45,471 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5ft7v1wed85GZTD4E9c'}
+2026-07-16 11:38:51,398 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
+2026-07-16 11:38:51,552 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:38:51,552 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5ftZwgxfPPbF1dG5Af3'}
+2026-07-16 11:38:52,571 [INFO] content_generator — K-POP 참고 데이터 수집 완료: '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
+2026-07-16 11:38:52,571 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-16 11:38:53,420 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:38:53,420 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5ftfBx8Bf8FAgsJhvLx'}
+2026-07-16 11:38:53,420 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
+2026-07-16 11:38:56,421 [INFO] content_generator — 포스트 생성 중: '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
+2026-07-16 11:38:56,593 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:38:56,594 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5ftwUEtGDkc22Ljnmdz'}
+2026-07-16 11:39:02,104 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
+2026-07-16 11:39:02,296 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:39:02,296 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5fuMqCZUvn6kVyVnNVE'}
+2026-07-16 11:39:03,508 [INFO] content_generator — K-POP 참고 데이터 수집 완료: '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
+2026-07-16 11:39:03,508 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-16 11:39:03,673 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-16 11:39:03,673 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5fuTjAUjqw281kxRjTM'}
+2026-07-16 11:39:03,673 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
+2026-07-16 11:39:03,673 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
+2026-07-16 11:39:03,673 [INFO] main — 
+============================================================
+2026-07-16 11:39:03,673 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 1개
+2026-07-16 11:39:03,673 [INFO] main — ============================================================
+2026-07-16 11:39:03,702 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-16 11:39:03,721 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-16 11:39:03,737 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-16 11:39:03,922 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-16 11:39:04,204 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-16 11:39:04,458 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-16 11:39:04,459 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-16 11:39:04,461 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-16 11:39:04,471 [INFO] post_manager —   포스트 레지스트리: 전체 237개 (게시 148 / 실패 15 / 대기 52)
+2026-07-16 11:39:04,472 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-16 11:39:04,472 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-16 11:39:04,472 [INFO] main — 대시보드 데이터 업데이트 완료

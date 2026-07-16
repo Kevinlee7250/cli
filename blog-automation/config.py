@@ -132,6 +132,58 @@ def claude_text(message) -> str:
     return ""
 
 
+def _record_token_usage(model: str, input_tokens: int, output_tokens: int) -> None:
+    """토큰 사용량을 logs/ai_usage.json에 누적 기록합니다."""
+    import datetime
+    usage_file = os.path.join(os.path.dirname(__file__), "logs", "ai_usage.json")
+    os.makedirs(os.path.dirname(usage_file), exist_ok=True)
+    try:
+        with open(usage_file, encoding="utf-8") as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        data = {"daily": {}, "monthly": {}, "total": {"input_tokens": 0, "output_tokens": 0, "calls": 0}, "model": model}
+
+    now = datetime.datetime.utcnow()
+    day_key = now.strftime("%Y-%m-%d")
+    month_key = now.strftime("%Y-%m")
+
+    for scope_key, scope in [("daily", day_key), ("monthly", month_key)]:
+        bucket = data[scope_key].setdefault(scope, {"input_tokens": 0, "output_tokens": 0, "calls": 0})
+        bucket["input_tokens"] += input_tokens
+        bucket["output_tokens"] += output_tokens
+        bucket["calls"] += 1
+        bucket["model"] = model
+
+    total = data.setdefault("total", {"input_tokens": 0, "output_tokens": 0, "calls": 0})
+    total["input_tokens"] += input_tokens
+    total["output_tokens"] += output_tokens
+    total["calls"] += 1
+    data["model"] = model
+    data["last_updated"] = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    # 오래된 일별 데이터 정리 (90일 초과)
+    cutoff = (now - datetime.timedelta(days=90)).strftime("%Y-%m-%d")
+    data["daily"] = {k: v for k, v in data["daily"].items() if k >= cutoff}
+
+    try:
+        with open(usage_file, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        _cfg_log.warning(f"ai_usage.json 저장 실패: {e}")
+
+
+def export_ai_usage_to_docs() -> None:
+    """logs/ai_usage.json을 docs/data/ai_usage.json으로 복사합니다."""
+    import shutil
+    src = os.path.join(os.path.dirname(__file__), "logs", "ai_usage.json")
+    dst = os.path.join(os.path.dirname(__file__), "..", "docs", "data", "ai_usage.json")
+    dst = os.path.normpath(dst)
+    if not os.path.exists(src):
+        return
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    shutil.copy2(src, dst)
+
+
 def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
     """max_tokens로 잘린 응답을 이어쓰기로 완성해 전체 텍스트를 반환합니다.
 
@@ -153,9 +205,15 @@ def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
     _log = _logging.getLogger(__name__)
 
     messages = list(kwargs.pop("messages"))
+    model = kwargs.get("model", CLAUDE_MODEL)
 
     with client.messages.stream(messages=messages, **kwargs) as stream:
         message = stream.get_final_message()
+
+    usage = getattr(message, "usage", None)
+    total_in = getattr(usage, "input_tokens", 0) or 0
+    total_out = getattr(usage, "output_tokens", 0) or 0
+
     parts = [claude_text(message)]
 
     for _ in range(max_continues):
@@ -171,7 +229,15 @@ def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
         ]
         with client.messages.stream(messages=messages, **kwargs) as stream:
             message = stream.get_final_message()
+        usage = getattr(message, "usage", None)
+        total_in += getattr(usage, "input_tokens", 0) or 0
+        total_out += getattr(usage, "output_tokens", 0) or 0
         parts.append(claude_text(message))
+
+    try:
+        _record_token_usage(model, total_in, total_out)
+    except Exception as e:
+        _log.warning(f"토큰 사용량 기록 실패: {e}")
 
     if getattr(message, "stop_reason", "") == "max_tokens":
         return ""

@@ -1422,6 +1422,25 @@
       <div style="color:var(--muted);font-size:13px;padding:24px;text-align:center">코드 수리 데이터를 로드 중...</div>
     </div>
 
+    <!-- ⑦.D AI 토큰 사용량 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>🤖 AI 토큰 사용량</h2>
+      <button onclick="loadAiUsage()" style="padding:6px 14px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.3);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">🔄 새로고침</button>
+    </div>
+    <div id="ai-usage-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:12px">
+      <div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>
+      <div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>
+      <div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>
+      <div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>
+    </div>
+    <div id="ai-usage-daily-wrap" style="margin-bottom:8px"></div>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:4px;line-height:1.6">
+      * 비용 추정: Sonnet 5 기준 입력 $3.00/백만 토큰, 출력 $15.00/백만 토큰 (2026-08-31까지 입력 $2.00/출력 $10.00 프로모션).
+      실제 잔액은 <a href="https://console.anthropic.com/settings/billing" target="_blank" rel="noopener" style="color:var(--accent2)">Anthropic Console →</a> 에서 확인하세요.
+    </p>
+    <div id="ai-usage-notice" style="display:none;font-size:12px;color:var(--muted);padding:16px;text-align:center;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:28px"></div>
+    <div style="margin-bottom:28px"></div>
+
     <!-- ⑦.3 blog1 구주제 글 정리 -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>📦 blog1 구주제 글 정리</h2>
@@ -4825,6 +4844,103 @@ function wfSetSeries(n) {
   })
 }
 
+// ── AI 토큰 사용량 ───────────────────────────────────────────────────────────
+async function loadAiUsage() {
+  const grid    = document.getElementById('ai-usage-grid')
+  const daily   = document.getElementById('ai-usage-daily-wrap')
+  const notice  = document.getElementById('ai-usage-notice')
+  if (!grid) return
+
+  // 로딩 스켈레톤
+  grid.innerHTML = [1,2,3,4].map(() =>
+    `<div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>`
+  ).join('')
+
+  let data = null
+  try {
+    const r = await fetch(`docs/data/ai_usage.json?t=${Date.now()}`)
+    if (r.ok) data = await r.json()
+  } catch {}
+
+  if (!data) {
+    grid.innerHTML = ''
+    notice.style.display = 'block'
+    notice.textContent = '아직 사용 데이터가 없습니다. 블로그 자동화가 실행된 후 표시됩니다.'
+    return
+  }
+  notice.style.display = 'none'
+
+  // 가격 (Sonnet 5 — 프로모션 2026-08-31까지)
+  const today = new Date().toISOString().slice(0, 10)
+  const promo = today <= '2026-08-31'
+  const inPrice  = promo ? 2.0 : 3.0   // $ per 1M input tokens
+  const outPrice = promo ? 10.0 : 15.0  // $ per 1M output tokens
+
+  const dayKey   = today
+  const monthKey = today.slice(0, 7)
+  const tod  = (data.daily   || {})[dayKey]   || {input_tokens:0, output_tokens:0, calls:0}
+  const mon  = (data.monthly || {})[monthKey] || {input_tokens:0, output_tokens:0, calls:0}
+  const tot  = data.total || {input_tokens:0, output_tokens:0, calls:0}
+  const model = data.model || 'claude-sonnet-5'
+
+  function fmtTok(n) {
+    if (n >= 1e6) return (n/1e6).toFixed(2) + 'M'
+    if (n >= 1e3) return (n/1e3).toFixed(1) + 'K'
+    return String(n)
+  }
+  function fmtCost(inp, out) {
+    const c = inp/1e6*inPrice + out/1e6*outPrice
+    return c < 0.01 ? '< $0.01' : '$' + c.toFixed(3)
+  }
+
+  const cards = [
+    { label: '오늘 입력 토큰',  val: fmtTok(tod.input_tokens),  sub: `출력 ${fmtTok(tod.output_tokens)} · ${tod.calls||0}회 호출` },
+    { label: '오늘 추정 비용',  val: fmtCost(tod.input_tokens, tod.output_tokens), sub: model + (promo ? ' (프로모션 가격)' : '') },
+    { label: '이번 달 총 토큰', val: fmtTok(mon.input_tokens + mon.output_tokens), sub: `입력 ${fmtTok(mon.input_tokens)} + 출력 ${fmtTok(mon.output_tokens)}` },
+    { label: '이번 달 추정 비용', val: fmtCost(mon.input_tokens, mon.output_tokens), sub: `총 ${mon.calls||0}회 API 호출` },
+  ]
+
+  grid.innerHTML = cards.map(c => `
+    <div class="run-panel" style="padding:16px">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">${c.label}</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text)">${c.val}</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">${c.sub}</div>
+    </div>
+  `).join('')
+
+  // 최근 7일 일별 테이블
+  const dayEntries = Object.entries(data.daily || {})
+    .sort((a,b) => b[0].localeCompare(a[0]))
+    .slice(0, 7)
+
+  if (dayEntries.length) {
+    const rows = dayEntries.map(([d, v]) => {
+      const cost = fmtCost(v.input_tokens||0, v.output_tokens||0)
+      return `<tr>
+        <td>${d}</td>
+        <td>${fmtTok(v.input_tokens||0)}</td>
+        <td>${fmtTok(v.output_tokens||0)}</td>
+        <td>${v.calls||0}회</td>
+        <td>${cost}</td>
+      </tr>`
+    }).join('')
+    daily.innerHTML = `
+      <div class="table-wrap" style="margin-bottom:12px">
+        <table>
+          <thead><tr><th>날짜</th><th>입력 토큰</th><th>출력 토큰</th><th>호출</th><th>추정 비용</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`
+  } else {
+    daily.innerHTML = ''
+  }
+
+  const updEl = document.createElement('p')
+  updEl.style.cssText = 'font-size:11px;color:var(--muted);margin-bottom:4px'
+  updEl.textContent = `마지막 갱신: ${(data.last_updated||'').replace('T',' ').replace('Z',' UTC')}`
+  daily.appendChild(updEl)
+}
+
 function renderSystemPage() {
   sysCheckPAT()
   sysCheckOAuth()
@@ -4839,6 +4955,7 @@ function renderSystemPage() {
   renderCodeRepairReport()
   backupRefreshStatus()
   loadAffiliateLinksFromRepo()
+  loadAiUsage()
   // GitHub Actions 이력은 PAT 있을 때만 자동 로드
   if (getPAT()) loadSystemRuns()
 }

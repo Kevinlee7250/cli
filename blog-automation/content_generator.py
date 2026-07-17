@@ -1933,7 +1933,7 @@ def _build_series_prompt_it(keyword: str, traffic: str, series_context: dict, bl
     """blog2 IT 시리즈 전용 프롬프트 — 리뷰·벤치마크 종합 분석 관점"""
     from datetime import datetime
     now = datetime.now()
-    y, date_str = now.year, now.strftime("%Y년 %m월 %d일")
+    date_str = now.strftime("%Y년 %m월 %d일")
     series_title = series_context.get("series_title", "")
     episode = series_context.get("episode", 1)
     total = series_context.get("total_episodes", 1)
@@ -2006,7 +2006,7 @@ def _build_series_prompt_finance(keyword: str, traffic: str, series_context: dic
     """blog3 금융·정부지원 시리즈 전용 프롬프트 — 개인 경험 기반 실용 금융 정보"""
     from datetime import datetime
     now = datetime.now()
-    y, date_str = now.year, now.strftime("%Y년 %m월 %d일")
+    date_str = now.strftime("%Y년 %m월 %d일")
     series_title = series_context.get("series_title", "")
     episode = series_context.get("episode", 1)
     total = series_context.get("total_episodes", 1)

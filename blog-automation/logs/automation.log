@@ -1,133 +1,3 @@
-2026-07-16 23:04:24,982 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-16 23:04:59,194 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
-2026-07-16 23:05:00,163 [INFO] main — ============================================================
-2026-07-16 23:05:00,163 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-16 23:05:00
-2026-07-16 23:05:00,163 [INFO] main — ============================================================
-2026-07-16 23:05:00,172 [INFO] keyword_collector — 포스팅 이력 코퍼스: 26개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-16 23:05:04,156 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 50개
-2026-07-16 23:05:04,336 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:05:04,337 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-16 23:05:04,884 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:05:05,360 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-16 23:05:05,361 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-16 23:05:05,362 [INFO] keyword_collector — 유사 주제 제외 4개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개', '강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
-2026-07-16 23:05:05,363 [INFO] keyword_collector —   [fallback] 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-07-16 23:05:05,363 [INFO] keyword_collector — 최종 선정 키워드 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-07-16 23:05:05,363 [INFO] main — 수집된 키워드 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-07-16 23:05:05,367 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 18일 전)
-2026-07-16 23:05:05,514 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:05:05,515 [INFO] main — 단독 포스트 대상 키워드 1개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집']
-2026-07-16 23:05:05,531 [INFO] main — 
-[1/1] 키워드: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-07-16 23:05:05,531 [INFO] content_generator — 포스트 생성 중: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-07-16 23:05:05,677 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:05:05,678 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aDh1RYbzT1Y12Z2SpY'}
-2026-07-16 23:05:12,220 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 1개) — '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-07-16 23:05:12,818 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:05:12,818 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aECJoGZNR9WfVd897t'}
-2026-07-16 23:05:12,820 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-16 23:05:12,977 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:05:12,978 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aEE8vxMadevSGT2VaW'}
-2026-07-16 23:05:12,978 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-07-16 23:05:15,978 [INFO] content_generator — 포스트 생성 중: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-07-16 23:05:16,199 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:05:16,199 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aETi12Rv5fzw6Viwgb'}
-2026-07-16 23:05:21,999 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 1개) — '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-07-16 23:05:22,348 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:05:22,349 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aEuW3CS2BcMZgcoihR'}
-2026-07-16 23:05:22,349 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-16 23:05:22,492 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:05:22,492 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aEvsdyaqccBZxgQ9ae'}
-2026-07-16 23:05:22,493 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
-2026-07-16 23:05:22,493 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-07-16 23:05:22,493 [INFO] main — 
-============================================================
-2026-07-16 23:05:22,493 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 1개
-2026-07-16 23:05:22,493 [INFO] main — ============================================================
-2026-07-16 23:05:22,524 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-16 23:05:22,546 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-16 23:05:22,564 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-16 23:05:22,843 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-16 23:05:23,340 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-16 23:05:23,341 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-16 23:05:23,344 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-16 23:05:23,357 [INFO] post_manager —   포스트 레지스트리: 전체 237개 (게시 148 / 실패 15 / 대기 52)
-2026-07-16 23:05:23,357 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-16 23:05:23,357 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-16 23:05:23,358 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-16 23:05:56,319 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
-2026-07-16 23:05:57,036 [INFO] main — ============================================================
-2026-07-16 23:05:57,036 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-16 23:05:57
-2026-07-16 23:05:57,036 [INFO] main — ============================================================
-2026-07-16 23:05:57,045 [INFO] keyword_collector — 포스팅 이력 코퍼스: 24개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-16 23:06:01,259 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-16 23:06:01,570 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:06:01,571 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-16 23:06:01,940 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-16 23:06:02,052 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:06:02,431 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-16 23:06:02,432 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-16 23:06:02,433 [INFO] keyword_collector — 유사 주제 제외 4개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리', '미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
-2026-07-16 23:06:02,434 [INFO] keyword_collector —   [fallback] 2개: ['2026 금융시장 주요 이슈 직장인이 알아야 할 것', '삼성전자 주가 전망 2026 실적과 주주 환원 분석']
-2026-07-16 23:06:02,434 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 금융시장 주요 이슈 직장인이 알아야 할 것', '삼성전자 주가 전망 2026 실적과 주주 환원 분석']
-2026-07-16 23:06:02,434 [INFO] main — 수집된 키워드 2개: ['2026 금융시장 주요 이슈 직장인이 알아야 할 것', '삼성전자 주가 전망 2026 실적과 주주 환원 분석']
-2026-07-16 23:06:02,437 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
-2026-07-16 23:06:02,437 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 금융시장 주요 이슈 직장인이 알아야 할 것']
-2026-07-16 23:06:02,451 [INFO] main — 
-[1/1] 키워드: '2026 금융시장 주요 이슈 직장인이 알아야 할 것'
-2026-07-16 23:06:02,451 [INFO] content_generator — 포스트 생성 중: '2026 금융시장 주요 이슈 직장인이 알아야 할 것'
-2026-07-16 23:06:02,594 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:06:02,595 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aHtLvJ8cDQrdXepX4n'}
-2026-07-16 23:06:10,244 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '2026 금융시장 주요 이슈 직장인이 알아야 할 것'
-2026-07-16 23:06:10,355 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:06:10,356 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aJTbuzCVLUSVoEgmjG'}
-2026-07-16 23:06:10,356 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-16 23:06:10,519 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:06:10,520 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aJUC8s5Kx6ycGapxgt'}
-2026-07-16 23:06:10,520 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-07-16 23:06:13,520 [INFO] content_generator — 포스트 생성 중: '2026 금융시장 주요 이슈 직장인이 알아야 할 것'
-2026-07-16 23:06:13,699 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:06:13,704 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aJhcnAShyCNpWSbHuj'}
-2026-07-16 23:06:19,083 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '2026 금융시장 주요 이슈 직장인이 알아야 할 것'
-2026-07-16 23:06:19,192 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:06:19,192 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aK7PWuooZ11u4X4SMx'}
-2026-07-16 23:06:19,193 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-16 23:06:19,304 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 23:06:19,304 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd6aK7r3yZFmgxT6MdKwv'}
-2026-07-16 23:06:19,305 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
-2026-07-16 23:06:19,305 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '2026 금융시장 주요 이슈 직장인이 알아야 할 것'
-2026-07-16 23:06:19,305 [INFO] main — 
-============================================================
-2026-07-16 23:06:19,305 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
-2026-07-16 23:06:19,305 [INFO] main — ============================================================
-2026-07-16 23:06:19,334 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-16 23:06:19,354 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-16 23:06:19,371 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-16 23:06:19,805 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-16 23:06:20,269 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-16 23:06:20,270 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-16 23:06:20,273 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-16 23:06:20,285 [INFO] post_manager —   포스트 레지스트리: 전체 237개 (게시 148 / 실패 15 / 대기 52)
-2026-07-16 23:06:20,285 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-16 23:06:20,285 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-16 23:06:20,286 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-17 05:41:44,072 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
-2026-07-17 05:41:45,203 [INFO] main — ============================================================
-2026-07-17 05:41:45,204 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-17 05:41:45
-2026-07-17 05:41:45,204 [INFO] main — ============================================================
-2026-07-17 05:41:45,214 [INFO] keyword_collector — 포스팅 이력 코퍼스: 26개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-17 05:41:49,429 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-17 05:41:49,649 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-17 05:41:49,650 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-17 05:41:50,091 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['음원 스트리밍 멜론 vs 지니 vs 유튜브뮤직 요금 비교']
-2026-07-17 05:41:50,203 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-17 05:41:50,470 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-17 05:41:50,726 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-17 05:41:50,730 [INFO] keyword_collector —   [high_cpc] 1개: ['음원 스트리밍 멜론 vs 지니 vs 유튜브뮤직 요금 비교']
-2026-07-17 05:41:50,730 [INFO] keyword_collector —   [fallback] 1개: ['경주 빠지면 후회하는 야경 명소 직접 다녀온 후기']
-2026-07-17 05:41:50,730 [INFO] keyword_collector — 최종 선정 키워드 2개: ['음원 스트리밍 멜론 vs 지니 vs 유튜브뮤직 요금 비교', '경주 빠지면 후회하는 야경 명소 직접 다녀온 후기']
-2026-07-17 05:41:50,730 [INFO] main — 수집된 키워드 2개: ['음원 스트리밍 멜론 vs 지니 vs 유튜브뮤직 요금 비교', '경주 빠지면 후회하는 야경 명소 직접 다녀온 후기']
-2026-07-17 05:41:50,736 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
 2026-07-17 05:41:50,737 [INFO] main — 단독 포스트 대상 키워드 1개: ['음원 스트리밍 멜론 vs 지니 vs 유튜브뮤직 요금 비교']
 2026-07-17 05:41:50,753 [INFO] main — 
 [1/1] 키워드: '음원 스트리밍 멜론 vs 지니 vs 유튜브뮤직 요금 비교'
@@ -628,3 +498,129 @@
 2026-07-17 11:40:57,991 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-17 11:40:57,991 [INFO] dashboard_exporter —   포스트: 85개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-17 11:40:57,992 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-17 11:41:29,379 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
+2026-07-17 11:41:29,836 [INFO] main — ============================================================
+2026-07-17 11:41:29,837 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-17 11:41:29
+2026-07-17 11:41:29,837 [INFO] main — ============================================================
+2026-07-17 11:41:29,843 [INFO] keyword_collector — 포스팅 이력 코퍼스: 20개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-17 11:41:33,219 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-17 11:41:37,014 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:41:37,027 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-17 11:41:37,027 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-17 11:41:37,571 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-17 11:41:37,830 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-17 11:41:37,830 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-17 11:41:37,831 [INFO] keyword_collector — 유사 주제 제외 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-17 11:41:37,831 [INFO] keyword_collector —   [naver_realtime] 2개: ['레버리지 ETF 투자 규칙 변경 2026 총정리', '코스피 변동성 대응 분할매수 투자 전략']
+2026-07-17 11:41:37,831 [INFO] keyword_collector — 최종 선정 키워드 2개: ['레버리지 ETF 투자 규칙 변경 2026 총정리', '코스피 변동성 대응 분할매수 투자 전략']
+2026-07-17 11:41:37,831 [INFO] main — 수집된 키워드 2개: ['레버리지 ETF 투자 규칙 변경 2026 총정리', '코스피 변동성 대응 분할매수 투자 전략']
+2026-07-17 11:41:37,834 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-07-17 11:41:40,134 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:41:40,134 [INFO] main — 단독 포스트 대상 키워드 1개: ['레버리지 ETF 투자 규칙 변경 2026 총정리']
+2026-07-17 11:41:40,147 [INFO] main — 
+[1/1] 키워드: '레버리지 ETF 투자 규칙 변경 2026 총정리'
+2026-07-17 11:41:40,147 [INFO] content_generator — 포스트 생성 중: '레버리지 ETF 투자 규칙 변경 2026 총정리'
+2026-07-17 11:41:50,240 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:41:50,240 [INFO] research_collector — 검색 의도: 2026년부터 적용되는 레버리지 ETF 관련 투자 규칙 변경사항을 정확히 파악하고 싶은 검색자의 의도
+2026-07-17 11:42:08,719 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '레버리지 ETF 투자 규칙 변경 2026 총정리'
+2026-07-17 11:42:32,065 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:42:32,066 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '레버리지 ETF 투자 규칙 변경 2026 총정리'
+2026-07-17 11:42:54,609 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:42:54,610 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'X': 2, 'B': 2, 'C': 1}
+2026-07-17 11:42:54,611 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-07-17 11:42:54,611 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-17 11:42:55,581 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:44:16,855 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:44:27,147 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 11:44:27,952 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:44:31,296 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-07-17 11:44:31,297 [INFO] content_generator — 제목 기반 이미지 검색: '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레버리지 ETF 도입 이후 뭐가 달라지나'
+2026-07-17 11:44:31,544 [INFO] image_fetcher — 이미지 수집 성공: '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레버리지 ETF 도입 이후 뭐가 달라지나' → 제목='historical stock / securities / certific' (관련성=0.09)
+2026-07-17 11:44:31,544 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-17 11:44:31,545 [INFO] content_generator — 포스트 생성 완료: '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레버리지 ETF 도입 이후 뭐가 달라지나' (3345자, 이미지 1개)
+2026-07-17 11:44:32,751 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:44:43,765 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 11:44:45,050 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:44:52,337 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레'
+2026-07-17 11:44:52,337 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3345자로 2500~3999자 warn 구간이며, 공식 발표 재구성 위주로 개인 경험은 '개인적으로는' 한 문장 정도에 그침
+2026-07-17 11:44:52,337 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가하며 이미지 없는 텍스트형 글로 판단됨
+2026-07-17 11:44:52,337 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 첫째·둘째·셋째식 나열과 '아울러' 사용, 문장 중복 오류('밝힌 바 있습니다하겠다는...')로 AI 생성 흔적 존재
+2026-07-17 11:44:52,337 [WARNING] adsense_validator —   🔴 본문 중 '밝힌 바 있습니다하겠다는 방침도 밝힌 바 있습니다' 문장이 중복·오류 상태로 즉시 수정 필요
+2026-07-17 11:44:52,344 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-17 11:44:52,345 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguasset.blogspot.com/2026/07/etf-2026_01246396645.
+2026-07-17 11:44:52,346 [INFO] internal_linker —   [2/5] '투자하는' -> https://hoguasset.blogspot.com/2026/07/etf-5.html
+2026-07-17 11:44:52,348 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-17 11:44:52,348 [INFO] main —   제목: 레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레버리지 ETF 도입 이후 뭐가 달라지나
+2026-07-17 11:44:52,348 [INFO] main —   이미지: 1개 삽입
+2026-07-17 11:44:52,348 [INFO] main —   글자 수: 3345자
+2026-07-17 11:44:53,530 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:45:05,388 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 11:45:06,619 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:45:16,704 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 77/100 — '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레'
+2026-07-17 11:45:16,704 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3345자로 글자 수 기준 warn 구간이며, 공식 발표 재정리 위주로 개인 인사이트는 일부에 그침
+2026-07-17 11:45:16,704 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 SEO·가독성 측면에서 warn 처리
+2026-07-17 11:45:16,704 [INFO] adsense_validator —   ❌ AI 생성 의심도: 본문 중 동일 문장이 반복·중복 삽입된 명백한 생성 오류('밝힌 바 있습니다이는...하겠다는 방침도 밝힌 바 있습니다.')가 발견됨
+2026-07-17 11:45:16,704 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 본문 중 동일 문장이 반복·중복 삽입된 명백한 생성 오류('밝힌 바 있습니다이는...하겠다는 방침도 밝힌 바 있습니다.')가 발견됨
+2026-07-17 11:45:16,704 [WARNING] adsense_validator —   🔴 본문 중 '빚투' 관련 문단에서 문장이 중복·깨져서 출력됨(생성 오류로 즉시 수정 필요)
+2026-07-17 11:45:16,704 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 77/100, 권장: review) — 자동 수정 시도
+2026-07-17 11:45:16,704 [WARNING] main —      🔴 [AI 생성 의심도] 본문 중 동일 문장이 반복·중복 삽입된 명백한 생성 오류('밝힌 바 있습니다이는...하겠다는 방침도 밝힌 바 있습니다.')가 발견됨
+2026-07-17 11:45:16,704 [WARNING] main —      🔴 본문 중 '빚투' 관련 문단에서 문장이 중복·깨져서 출력됨(생성 오류로 즉시 수정 필요)
+2026-07-17 11:45:16,704 [WARNING] main —      🟡 [원본성 및 품질] 3345자로 글자 수 기준 warn 구간이며, 공식 발표 재정리 위주로 개인 인사이트는 일부에 그침
+2026-07-17 11:45:16,704 [WARNING] main —      🟡 [이미지 정책] 이미지가 전혀 없어 SEO·가독성 측면에서 warn 처리
+2026-07-17 11:45:16,704 [WARNING] main —      🟡 글자 수를 4000자 이상으로 늘려 원본성 점수를 개선할 것
+2026-07-17 11:45:16,704 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 77/100, fail: 1개, warn: 2개
+2026-07-17 11:45:18,807 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:46:33,699 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 11:46:34,909 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:46:44,848 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3345자 → 4019자 (+674자)
+2026-07-17 11:46:44,848 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-17 11:46:47,331 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:46:58,082 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 11:46:59,780 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:47:06,838 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레'
+2026-07-17 11:47:06,838 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 기준 충족하나 첫 섹션이 줄바꿈 없이 500자 이상 이어지는 단락으로 가독성이 떨어짐
+2026-07-17 11:47:06,838 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가하며 본문 내 이미지 언급 없어 이미지 부재로 판단
+2026-07-17 11:47:06,838 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 첫째·둘째·셋째식 나열과 표 정리 패턴이 있어 다소 정형화된 구성이 보임
+2026-07-17 11:47:06,838 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 77 → 84/100)
+2026-07-17 11:47:06,838 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-07-17 11:47:07,956 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:48:20,706 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 11:48:21,567 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:48:59,591 [INFO] final_editor —   ✏️ 제목 최종 교정: '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레버리지 ETF 도입 이후 뭐가 달라지나' → '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 ETF 핵심 정리'
+2026-07-17 11:48:59,591 [INFO] final_editor —   ✏️ 메타 설명 교정 (92자)
+2026-07-17 11:48:59,591 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고, 표·요약박스·개인경험메모·주의사항·FAQ·작성자메모·내부링크를 추가해 Blogger 발행 형식에 맞게 재구성했습니다.
+2026-07-17 11:48:59,731 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-17 11:48:59,731 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '레버리지 ETF 투자 규칙 변경 2026 총정리' — 면책·팩트체크 확인 권장
+2026-07-17 11:48:59,731 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-07-17 11:49:00,590 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/etf-2026-etf.html
+2026-07-17 11:49:00,596 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/etf-2026-etf.html
+2026-07-17 11:49:34,062 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:49:34,063 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-17 11:49:34,063 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-17 11:49:34,069 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 ETF 핵심 정리'
+2026-07-17 11:49:35,815 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:49:41,028 [INFO] comment_manager —   생성된 댓글: 단일종목 레버리지 ETF는 개별 종목 특성상 실적 발표나 이슈 하나에도 지수형보다 훨씬 크게 흔들릴 수 있어서, 투자 전에 그 종목의 과거 변동...
+2026-07-17 11:52:41,329 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-17 11:52:41,329 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-17 11:52:41,329 [INFO] main — 
+============================================================
+2026-07-17 11:52:41,329 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-17 11:52:41,330 [INFO] main — ============================================================
+2026-07-17 11:52:41,350 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-17 11:52:41,364 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-17 11:52:41,376 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-17 11:52:41,619 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-17 11:52:41,843 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-17 11:52:41,844 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-17 11:52:41,845 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-17 11:52:41,853 [INFO] post_manager —   포스트 레지스트리: 전체 241개 (게시 152 / 실패 15 / 대기 52)
+2026-07-17 11:52:41,853 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-17 11:52:41,853 [INFO] dashboard_exporter —   포스트: 86개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-17 11:52:41,854 [INFO] main — 대시보드 데이터 업데이트 완료

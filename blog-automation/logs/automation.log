@@ -1,96 +1,3 @@
-2026-07-16 11:38:45,284 [INFO] keyword_collector —   [high_cpc] 1개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
-2026-07-16 11:38:45,284 [INFO] keyword_collector —   [fallback] 1개: ['강릉 여행 숙소 가성비 최고였던 곳과 실망한 곳 비교']
-2026-07-16 11:38:45,284 [INFO] keyword_collector — 최종 선정 키워드 2개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁', '강릉 여행 숙소 가성비 최고였던 곳과 실망한 곳 비교']
-2026-07-16 11:38:45,284 [INFO] main — 수집된 키워드 2개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁', '강릉 여행 숙소 가성비 최고였던 곳과 실망한 곳 비교']
-2026-07-16 11:38:45,288 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
-2026-07-16 11:38:45,288 [INFO] main — 단독 포스트 대상 키워드 1개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
-2026-07-16 11:38:45,299 [INFO] main — 
-[1/1] 키워드: '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
-2026-07-16 11:38:45,299 [INFO] content_generator — 포스트 생성 중: '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
-2026-07-16 11:38:45,470 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:38:45,471 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5ft7v1wed85GZTD4E9c'}
-2026-07-16 11:38:51,398 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
-2026-07-16 11:38:51,552 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:38:51,552 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5ftZwgxfPPbF1dG5Af3'}
-2026-07-16 11:38:52,571 [INFO] content_generator — K-POP 참고 데이터 수집 완료: '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
-2026-07-16 11:38:52,571 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-16 11:38:53,420 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:38:53,420 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5ftfBx8Bf8FAgsJhvLx'}
-2026-07-16 11:38:53,420 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-07-16 11:38:56,421 [INFO] content_generator — 포스트 생성 중: '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
-2026-07-16 11:38:56,593 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:38:56,594 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5ftwUEtGDkc22Ljnmdz'}
-2026-07-16 11:39:02,104 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
-2026-07-16 11:39:02,296 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:39:02,296 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5fuMqCZUvn6kVyVnNVE'}
-2026-07-16 11:39:03,508 [INFO] content_generator — K-POP 참고 데이터 수집 완료: '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
-2026-07-16 11:39:03,508 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-16 11:39:03,673 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:39:03,673 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5fuTjAUjqw281kxRjTM'}
-2026-07-16 11:39:03,673 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
-2026-07-16 11:39:03,673 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
-2026-07-16 11:39:03,673 [INFO] main — 
-============================================================
-2026-07-16 11:39:03,673 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 1개
-2026-07-16 11:39:03,673 [INFO] main — ============================================================
-2026-07-16 11:39:03,702 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-16 11:39:03,721 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-16 11:39:03,737 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-16 11:39:03,922 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-16 11:39:04,204 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-16 11:39:04,458 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-16 11:39:04,459 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-16 11:39:04,461 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-16 11:39:04,471 [INFO] post_manager —   포스트 레지스트리: 전체 237개 (게시 148 / 실패 15 / 대기 52)
-2026-07-16 11:39:04,472 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-16 11:39:04,472 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-16 11:39:04,472 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-16 11:39:34,907 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
-2026-07-16 11:39:35,829 [INFO] main — ============================================================
-2026-07-16 11:39:35,829 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-16 11:39:35
-2026-07-16 11:39:35,829 [INFO] main — ============================================================
-2026-07-16 11:39:35,839 [INFO] keyword_collector — 포스팅 이력 코퍼스: 28개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-16 11:39:41,313 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 50개
-2026-07-16 11:39:41,488 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:39:41,489 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-16 11:39:41,946 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:39:42,166 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-16 11:39:42,167 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-16 11:39:42,168 [INFO] keyword_collector — 유사 주제 제외 3개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개', '강원도 캠핑 처음 해봤을 때 몰랐던 것들']
-2026-07-16 11:39:42,169 [INFO] keyword_collector —   [fallback] 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
-2026-07-16 11:39:42,169 [INFO] keyword_collector — 최종 선정 키워드 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
-2026-07-16 11:39:42,169 [INFO] main — 수집된 키워드 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
-2026-07-16 11:39:42,173 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 17일 전)
-2026-07-16 11:39:42,312 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:39:42,313 [INFO] main — 단독 포스트 대상 키워드 1개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
-2026-07-16 11:39:42,329 [INFO] main — 
-[1/1] 키워드: '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-16 11:39:42,329 [INFO] content_generator — 포스트 생성 중: '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-16 11:39:42,483 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:39:42,484 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5fxKhJ8P9JttmBt6gMW'}
-2026-07-16 11:39:49,296 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-16 11:39:49,452 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:39:49,453 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5fxqXB3VfJ6q5umd7V4'}
-2026-07-16 11:39:49,454 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-16 11:39:49,590 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:39:49,590 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5fxr5uHtVAWLHVCoJNQ'}
-2026-07-16 11:39:49,590 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-07-16 11:39:52,591 [INFO] content_generator — 포스트 생성 중: '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-16 11:39:52,738 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:39:52,738 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5fy5Yn1oM9FpfBh6TUd'}
-2026-07-16 11:39:58,363 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-16 11:39:58,609 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:39:58,609 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5fyWCbn4h37CWrmBy5H'}
-2026-07-16 11:39:58,610 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-16 11:39:59,242 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:39:59,243 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5fyYdhEkpGQLsaKUtvv'}
-2026-07-16 11:39:59,243 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
-2026-07-16 11:39:59,243 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-16 11:39:59,243 [INFO] main — 
-============================================================
-2026-07-16 11:39:59,243 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 1개
-2026-07-16 11:39:59,243 [INFO] main — ============================================================
-2026-07-16 11:39:59,277 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
 2026-07-16 11:39:59,300 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
 2026-07-16 11:39:59,319 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
 2026-07-16 11:39:59,457 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
@@ -591,3 +498,127 @@
 2026-07-17 10:36:09,694 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-17 10:36:09,694 [INFO] dashboard_exporter —   포스트: 87개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-17 10:36:09,695 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-17 11:19:58,058 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
+2026-07-17 11:19:58,889 [INFO] main — ============================================================
+2026-07-17 11:19:58,889 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-17 11:19:58
+2026-07-17 11:19:58,889 [INFO] main — ============================================================
+2026-07-17 11:19:58,900 [INFO] keyword_collector — 포스팅 이력 코퍼스: 21개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-17 11:20:03,869 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-17 11:20:10,385 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:20:10,411 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-17 11:20:10,793 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인']
+2026-07-17 11:20:14,014 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:20:14,015 [INFO] keyword_collector — Claude AI 키워드 생성: 4개
+2026-07-17 11:20:14,258 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-17 11:20:14,467 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-17 11:20:14,470 [INFO] keyword_collector —   [high_cpc] 1개: ['드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인']
+2026-07-17 11:20:14,470 [INFO] keyword_collector —   [claude_ai] 1개: ['제주 흑돼지 맛집 직접 가봤더니 실망']
+2026-07-17 11:20:14,470 [INFO] keyword_collector — 최종 선정 키워드 2개: ['드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인', '제주 흑돼지 맛집 직접 가봤더니 실망']
+2026-07-17 11:20:14,470 [INFO] main — 수집된 키워드 2개: ['드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인', '제주 흑돼지 맛집 직접 가봤더니 실망']
+2026-07-17 11:20:14,474 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
+2026-07-17 11:20:14,474 [INFO] main — 단독 포스트 대상 키워드 1개: ['드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인']
+2026-07-17 11:20:14,491 [INFO] main — 
+[1/1] 키워드: '드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인'
+2026-07-17 11:20:14,492 [INFO] content_generator — 포스트 생성 중: '드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인'
+2026-07-17 11:20:22,705 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:20:22,706 [INFO] research_collector — 검색 의도: 드라마 OST를 유튜브 영상에 사용할 때 저작권 문제없이 사용 가능한지 직접 확인하는 방법을 알고 싶음
+2026-07-17 11:20:35,677 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인'
+2026-07-17 11:20:49,497 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:20:49,498 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인'
+2026-07-17 11:20:55,293 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:20:55,293 [INFO] source_validator — 출처 검증: 2/5개 통과, 등급 분포 {'X': 3, 'D': 1, 'C': 1}
+2026-07-17 11:20:57,130 [INFO] content_generator — 드라마/영화 참고 데이터 수집 완료: '드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인'
+2026-07-17 11:20:57,131 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-07-17 11:20:57,131 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-17 11:20:57,959 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:22:11,244 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:22:21,781 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 11:22:23,116 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:22:31,664 [INFO] content_generator — 팩트체크: 통과
+2026-07-17 11:22:31,665 [INFO] content_generator — 제목 기반 이미지 검색: '드라마 OST 유튜브 사용 저작권 직접 확인법'
+2026-07-17 11:22:31,807 [INFO] image_fetcher — 이미지 수집 성공: '드라마 OST 유튜브 사용 저작권 직접 확인법' → 제목='beach / sea / waves / sandy beach / whit' (관련성=0.14)
+2026-07-17 11:22:31,807 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-17 11:22:31,810 [INFO] content_generator — 포스트 생성 완료: '드라마 OST 유튜브 사용 저작권 직접 확인법' (3342자, 이미지 1개)
+2026-07-17 11:22:33,882 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:22:47,223 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 11:22:48,805 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:22:55,187 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '드라마 OST 유튜브 사용 저작권 직접 확인법'
+2026-07-17 11:22:55,187 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3342자로 기준치 미달이며 개인 경험(마린파파)은 언급만 되고 구체적 수치·사례 없이 일반론 재구성에 가까움
+2026-07-17 11:22:55,187 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 언급은 있으나 구체적 경험담 부족, 출처 5개는 있으나 본문에 명시적 인용 표시 미확인
+2026-07-17 11:22:55,187 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 SEO 및 가독성 측면에서 보완 필요
+2026-07-17 11:22:55,188 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·표 형식과 정형화된 문장 패턴이 반복되어 AI 생성 특유의 구조가 다소 드러남
+2026-07-17 11:22:55,196 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-17 11:22:55,198 [INFO] internal_linker —   [1/5] '콘텐츠' -> https://www.hoguwhat.com/2026/07/vs-vs.html
+2026-07-17 11:22:55,204 [INFO] internal_linker —   [2/5] '체크리스트' -> https://www.hoguwhat.com/2026/07/blog-post_619.html
+2026-07-17 11:22:55,205 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-17 11:22:55,205 [INFO] main —   제목: 드라마 OST 유튜브 사용 저작권 직접 확인법
+2026-07-17 11:22:55,205 [INFO] main —   이미지: 1개 삽입
+2026-07-17 11:22:55,205 [INFO] main —   글자 수: 3342자
+2026-07-17 11:22:56,251 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:23:06,877 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 11:23:07,706 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:23:11,841 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '드라마 OST 유튜브 사용 저작권 직접 확인법'
+2026-07-17 11:23:11,841 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3342자로 기준 미달 구간이며 개인 경험 서술이 '마린파파도 조사하며' 정도로 얕고 일반론 재조합 성격이 강함
+2026-07-17 11:23:11,841 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술이 피상적이고 출처 5개가 본문 내 명시적 인용으로 연결되지 않음
+2026-07-17 11:23:11,841 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되지 않아 저작권 위반은 없으나 SEO·가독성 측면에서 보완필요
+2026-07-17 11:23:11,841 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트식 나열 패턴이 반복되고 문체가 다소 정형화되어 AI 생성 느낌이 있음
+2026-07-17 11:23:11,841 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-07-17 11:23:11,841 [WARNING] main —      🟡 [원본성 및 품질] 3342자로 기준 미달 구간이며 개인 경험 서술이 '마린파파도 조사하며' 정도로 얕고 일반론 재조합 성격이 강함
+2026-07-17 11:23:11,841 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 경험 서술이 피상적이고 출처 5개가 본문 내 명시적 인용으로 연결되지 않음
+2026-07-17 11:23:11,842 [WARNING] main —      🟡 [이미지 정책] 이미지가 전혀 포함되지 않아 저작권 위반은 없으나 SEO·가독성 측면에서 보완필요
+2026-07-17 11:23:11,842 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-07-17 11:23:12,609 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:24:28,809 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 11:24:29,682 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:24:54,357 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3342자 → 4106자 (+764자)
+2026-07-17 11:24:54,357 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-17 11:24:55,385 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:25:05,871 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 11:25:06,627 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:25:11,427 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '드라마 OST 유튜브 사용 저작권 직접 확인법'
+2026-07-17 11:25:11,427 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-07-17 11:25:11,427 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 삽입 여부가 확인되지 않아 이미지 부재로 인한 warn
+2026-07-17 11:25:11,427 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트식 나열과 마린파파 3인칭 서술 반복 패턴이 다소 정형화되어 AI 생성 느낌이 일부 감지됨
+2026-07-17 11:25:11,427 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
+2026-07-17 11:25:11,427 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-07-17 11:25:12,201 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:26:04,404 [INFO] final_editor —   ✏️ 제목 최종 교정: '드라마 OST 유튜브 사용 저작권 직접 확인법' → '드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인법'
+2026-07-17 11:26:04,405 [INFO] final_editor —   ✏️ 메타 설명 교정 (113자)
+2026-07-17 11:26:04,405 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞춰 정리하고, 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모·내부 링크를 추가해 발행 형식을 완성했습니다. 긴 문단을 2~4문장 단위로 분리하고 이미지 위치와 구체적인 alt 텍스트를 제안했습니다.
+2026-07-17 11:26:04,501 [INFO] related_posts — 관련 포스트 2개 섹션 생성
+2026-07-17 11:26:04,501 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-07-17 11:26:05,081 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/ost.html
+2026-07-17 11:26:05,092 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/ost.html
+2026-07-17 11:26:38,200 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:26:38,201 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-17 11:26:38,201 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-17 11:26:38,210 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인법'
+2026-07-17 11:26:39,072 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:26:43,394 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 11:26:44,836 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 11:26:45,636 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리자면, 유튜브 스튜디오에 영상을 업로드하면(비공개로 해두셔도) 몇 분 안에 자동으로 콘텐츠 ID 매칭 결과를 보여주는데, 여...
+2026-07-17 11:29:45,824 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-17 11:29:45,826 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-17 11:29:45,826 [INFO] main — 
+============================================================
+2026-07-17 11:29:45,826 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-17 11:29:45,826 [INFO] main — ============================================================
+2026-07-17 11:29:45,855 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-17 11:29:45,879 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-17 11:29:45,899 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-17 11:29:46,051 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-17 11:29:46,207 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-17 11:29:46,366 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-17 11:29:46,367 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-17 11:29:46,370 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-17 11:29:46,383 [INFO] post_manager —   포스트 레지스트리: 전체 239개 (게시 150 / 실패 15 / 대기 52)
+2026-07-17 11:29:46,383 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-17 11:29:46,383 [INFO] dashboard_exporter —   포스트: 87개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-17 11:29:46,384 [INFO] main — 대시보드 데이터 업데이트 완료

@@ -74,13 +74,26 @@ jobs:
           if not messages or messages[-1].get('content') != user_msg:
             messages.append({'role': 'user', 'content': user_msg})
 
-          response = client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=1024,
-            system="\n".join(system_parts),
-            messages=messages
-          )
-          reply_text = response.content[0].text
+          try:
+            response = client.messages.create(
+              model="claude-haiku-4-5-20251001",
+              max_tokens=1024,
+              system="\n".join(system_parts),
+              messages=messages
+            )
+            reply_text = response.content[0].text
+            error_flag = None
+          except Exception as api_err:
+            err_str = str(api_err)
+            if "usage limits" in err_str or "rate_limit" in err_str or "overloaded" in err_str:
+              reply_text = (
+                "⚠️ API 사용 한도에 도달했습니다. 다음 달 초(08/01 UTC)에 자동으로 복구됩니다.\n"
+                "그 전까지 대시보드 기능은 정상 동작하지만 AI 응답은 일시 중단됩니다."
+              )
+              error_flag = "api_limit"
+              print(f"[WARN] API 한도 초과 — 대체 메시지 사용: {err_str}")
+            else:
+              raise
 
           # docs/data/bot_reply.json 저장
           os.makedirs("docs/data", exist_ok=True)
@@ -89,11 +102,13 @@ jobs:
             "message": user_msg,
             "reply": reply_text,
             "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
-            "model": "claude-haiku-4-5-20251001"
+            "model": "claude-haiku-4-5-20251001",
           }
+          if error_flag:
+            result["error"] = error_flag
           with open("docs/data/bot_reply.json", "w", encoding="utf-8") as f:
             json.dump(result, f, ensure_ascii=False, indent=2)
-          print(f"✅ 응답 생성 완료 (reply_id={reply_id})")
+          print(f"✅ 응답 저장 완료 (reply_id={reply_id})")
           PYEOF
 
       - name: 응답 커밋 & 푸시

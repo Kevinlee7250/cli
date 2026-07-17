@@ -513,12 +513,14 @@ def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = N
 • 소제목, 표, 목록을 적절히 사용
 • 이모지는 💡(팁 1~2개), ⚠️(주의 1~2개)만. H2 제목 이모지 금지
 
-━━━ 제목 조건 ━━━
+━━━ 제목 조건 (간결 + 임팩트) ━━━
 
-• 과장형 제목 금지: "충격", "무조건", "100%", "완벽 보장", "누구나 월 얼마" 금지
-• {y}년 포함 | 40자 이내
-• 독자가 얻을 수 있는 이익이 분명하게 보이도록
-• 예: "조사해보니 이렇습니다", "후기 총정리", "핵심만 정리했습니다"
+• 28자 이내 — 짧을수록 좋음. 조사·군더더기·중언부언 제거
+• 핵심 키워드를 제목 맨 앞에 배치, 독자 이익이 한눈에 보이게
+• 숫자·구체성으로 임팩트: 예 "국민연금 30% 더 받는 법", "제주 3박4일 40만원 코스"
+• "~해보니", "~하는 법", "~총정리" 같은 완결형 어미로 마무리
+• 과장형 금지: "충격", "무조건", "100%", "완벽 보장", "누구나 월 얼마" 금지
+• {y}년은 연도가 중요한 정보성 주제에만 포함 (필수 아님)
 
 ━━━ 본문 구조 (반드시 이 순서와 형식으로 작성) ━━━
 
@@ -989,10 +991,11 @@ def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -
 ⑥ 이미지 — alt 텍스트 포함
 ⑦ 분량 4500자 이상 필수 — 이 이하는 'thin content'로 AdSense 거부됨
 
-━━━ 제목 ━━━
-• 자연스러운 블로그 말투 (기사 제목 X)
-• {y}년 포함 | 40자 이내
-• 예: "조사해보니 이렇습니다", "후기 총정리", "핵심만 정리했습니다"
+━━━ 제목 (간결 + 임팩트) ━━━
+• 28자 이내 — 짧을수록 좋음. 조사·군더더기 제거, 핵심 키워드 맨 앞 배치
+• 숫자·구체성으로 임팩트: 예 "국민연금 30% 더 받는 법", "제주 3박4일 40만원 코스"
+• 자연스러운 블로그 말투 (기사 제목 X), 과장·낚시 금지
+• {y}년은 연도가 중요한 정보성 주제에만 포함 (필수 아님)
 
 ━━━ 본문 구조 (분량 엄수 — 가장 중요) ━━━
 분량: 4500~6000자 완전한 HTML (Google AdSense 정책상 4000자 미만은 thin content)
@@ -1101,9 +1104,10 @@ You strictly follow Google AdSense content policies and prioritize genuine value
 • Find a specific angle other articles aren't covering well
 • Example angles: "from a complete beginner's perspective", "what changed in {y}", "the part no one talks about"
 
-━━━ TITLE ━━━
-Natural blog style | Include {y} | Under 65 chars
-Trigger curiosity or recognition ("Everything you need to know", "Honest breakdown", "What most guides miss")
+━━━ TITLE (concise + high-impact) ━━━
+Under 50 chars — shorter is better; cut filler words, lead with the core keyword
+Use numbers and specifics for impact ("5 settings that double battery life")
+Natural blog style, no clickbait; include {y} only when the year matters
 
 ━━━ CONTENT STRUCTURE ━━━
 Length: 2500-3200 chars (excluding whitespace), complete HTML
@@ -1823,7 +1827,7 @@ def _build_series_prompt_general(keyword: str, traffic: str, series_context: dic
 
 ━━━ 제목 규칙 ━━━
 • "[{episode}편]"으로 시작
-• 자연스러운 블로그 제목 | {y}년 포함 | 40자 이내
+• 간결하고 임팩트 있게: 접두어 제외 28자 이내, 핵심 키워드 앞 배치, 군더더기 제거
 
 ━━━ 본문 구조 (분량 엄수 — 가장 중요) ━━━
 분량: 4500~6000자 완전한 HTML (Google AdSense 정책상 4000자 미만은 thin content)
@@ -1987,7 +1991,7 @@ def _build_series_prompt_it(keyword: str, traffic: str, series_context: dict, bl
 
 다음 JSON 형식으로만 응답하세요:
 {{
-  "title": "제목 (40자 이내, IT 검색 최적화, {y}년 포함 권장)",
+  "title": "제목 (28자 이내 간결·임팩트, 핵심 키워드 앞 배치, IT 검색 최적화)",
   "content": "<완성된 HTML 본문>",
   "labels": ["{series_label}","IT","AI","스마트폰","앱","기술","테크","리뷰","사용기","비교"],
   "meta_description": "검색 결과 요약 (155자 이내, 구체적 정보 강조)",
@@ -2060,7 +2064,7 @@ def _build_series_prompt_finance(keyword: str, traffic: str, series_context: dic
 
 다음 JSON 형식으로만 응답하세요:
 {{
-  "title": "제목 (40자 이내, 금융 검색 최적화, {y}년 기준 포함 권장)",
+  "title": "제목 (28자 이내 간결·임팩트, 핵심 키워드 앞 배치, 금융 검색 최적화)",
   "content": "<완성된 HTML 본문 + 면책 문구 포함>",
   "labels": ["{series_label}","금융","경제","정부지원","세금","절세","재테크","복지","시책","정책"],
   "meta_description": "검색 결과 요약 (155자 이내, 실용 정보 강조, 투자 조언 아님 명시)",
@@ -2168,10 +2172,11 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             # 게시 전 팩트체크 — 이미지 삽입 전에 실행 (이미지 HTML 훼손 방지)
             _fact_check_content(post_data, keyword, evidence_pack)
 
-            section_queries = _extract_section_queries(post_data["content"], keyword)
+            # 글 작성 완료 후 최종 제목 기반 대표 이미지 검색 — 1장만
+            final_title = (post_data.get("title") or "").strip() or keyword
             plain_text = _content_preview(post_data.get("content", ""), chars=600)
             images = fetch_images_for_queries(
-                section_queries[:1],
+                [final_title],
                 naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
                 naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
                 pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
@@ -2514,12 +2519,12 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             # 게시 전 팩트체크 — 이미지 삽입 전에 실행 (이미지 HTML 훼손 방지)
             _fact_check_content(post_data, keyword, evidence_pack)
 
-            # 섹션별 이미지 검색 & 삽입 (관련성 검증 포함) — 1장만
-            section_queries = _extract_section_queries(post_data.get("content", ""), keyword)
-            logger.info(f"섹션별 이미지 검색: {section_queries[:1]}")
+            # 글 작성 완료 후 최종 제목 기반 대표 이미지 검색 & 삽입 — 1장만
+            final_title = (post_data.get("title") or "").strip() or keyword
+            logger.info(f"제목 기반 이미지 검색: '{final_title}'")
             plain_text = _content_preview(post_data.get("content", ""), chars=600)
             images = fetch_images_for_queries(
-                section_queries[:1],
+                [final_title],
                 naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
                 naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
                 pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),

@@ -95,6 +95,81 @@ def test_claude_generate_gives_up_when_still_truncated():
     assert result == ""
 
 
+class _LimitErrorMessages:
+    """stream() 호출 시 Anthropic 사용 한도 오류를 던지는 가짜 messages."""
+    def stream(self, **kwargs):
+        raise RuntimeError(
+            "Error code: 400 - You have reached your specified API usage limits. "
+            "You will regain access on 2026-08-01 at 00:00 UTC."
+        )
+
+
+class _LimitErrorClient:
+    def __init__(self):
+        self.messages = _LimitErrorMessages()
+
+
+def test_claude_generate_falls_back_to_openai_on_usage_limit(monkeypatch):
+    """Claude 사용 한도 오류 시 OpenAI 폴백을 호출하고 플래그를 세운다."""
+    import config
+    monkeypatch.setattr(config, "_claude_limit_hit", False)
+    called = {}
+    def fake_fallback(system, messages, max_tokens, temperature):
+        called["args"] = (system, messages, max_tokens, temperature)
+        return "GPT 폴백 결과"
+    monkeypatch.setattr(config, "_openai_fallback", fake_fallback)
+
+    result = config.claude_generate(
+        _LimitErrorClient(), model="m", max_tokens=100, system="시스템",
+        messages=[{"role": "user", "content": "글 써줘"}])
+    assert result == "GPT 폴백 결과"
+    assert called["args"][0] == "시스템"
+    assert config._claude_limit_hit is True
+
+
+def test_claude_generate_skips_claude_after_limit_hit(monkeypatch):
+    """한도 도달 이후 호출은 Claude를 건너뛰고 바로 폴백한다."""
+    import config
+    monkeypatch.setattr(config, "_claude_limit_hit", True)
+    monkeypatch.setattr(config, "_openai_fallback", lambda *a: "바로 폴백")
+    client = _FakeClient([_FakeMessage("Claude 응답", "end_turn")])
+    result = config.claude_generate(client, model="m", max_tokens=100,
+                                    messages=[{"role": "user", "content": "x"}])
+    assert result == "바로 폴백"
+    assert client.calls == []  # Claude API 호출 자체가 없어야 함
+
+
+def test_claude_generate_reraises_non_limit_errors(monkeypatch):
+    """한도 오류가 아닌 예외는 그대로 전파한다 (기존 재시도 로직 유지)."""
+    import config, pytest as _pytest
+    monkeypatch.setattr(config, "_claude_limit_hit", False)
+
+    class _OtherErrorMessages:
+        def stream(self, **kwargs):
+            raise RuntimeError("Error code: 529 - overloaded")
+
+    class _OtherErrorClient:
+        messages = _OtherErrorMessages()
+
+    with _pytest.raises(RuntimeError, match="overloaded"):
+        config.claude_generate(_OtherErrorClient(), model="m", max_tokens=100,
+                               messages=[{"role": "user", "content": "x"}])
+    assert config._claude_limit_hit is False
+
+
+def test_messages_to_text_flattens_content_blocks():
+    """Claude content 블록 리스트가 OpenAI 평문 형식으로 변환된다."""
+    from config import _messages_to_text
+    msgs = [
+        {"role": "user", "content": "질문"},
+        {"role": "assistant", "content": [{"type": "thinking", "thinking": "..."},
+                                          {"type": "text", "text": "답변"}]},
+    ]
+    out = _messages_to_text(msgs)
+    assert out == [{"role": "user", "content": "질문"},
+                   {"role": "assistant", "content": "답변"}]
+
+
 def test_adsense_min_score_default_80(monkeypatch):
     """AdSense 품질 기준 기본값은 80점 (사용자 확정 정책 — 낮추지 말 것)."""
     monkeypatch.delenv("ADSENSE_MIN_SCORE", raising=False)

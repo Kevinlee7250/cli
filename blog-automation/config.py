@@ -187,6 +187,55 @@ def export_ai_usage_to_docs() -> None:
     shutil.copy2(src, dst)
 
 
+# Claude 사용 한도 도달 여부 (프로세스 내 공유) — 한 번 감지되면
+# 같은 실행의 나머지 호출은 Claude를 건너뛰고 바로 OpenAI 폴백으로 갑니다.
+_claude_limit_hit = False
+
+
+def _is_usage_limit_error(e: Exception) -> bool:
+    """Anthropic 사용 한도 오류 판별 (월 지출 한도 도달 시 400으로 반환됨)."""
+    msg = str(e).lower()
+    return "usage limits" in msg or "regain access" in msg
+
+
+def _messages_to_text(messages: list) -> list[dict]:
+    """Claude 메시지를 OpenAI 형식으로 변환 (content 블록 리스트 → 평문)."""
+    converted = []
+    for m in messages:
+        content = m.get("content", "") if isinstance(m, dict) else ""
+        role = m.get("role", "user") if isinstance(m, dict) else "user"
+        if isinstance(content, list):
+            content = "".join(
+                getattr(b, "text", "") or (b.get("text", "") if isinstance(b, dict) else "")
+                for b in content
+                if getattr(b, "type", None) == "text" or (isinstance(b, dict) and b.get("type") == "text")
+            )
+        converted.append({"role": role, "content": content})
+    return converted
+
+
+def _openai_fallback(system: str, messages: list, max_tokens: int, temperature: float) -> str:
+    """Claude 한도 도달 시 OpenAI로 동일 요청을 수행합니다. 미설정 시 빈 문자열."""
+    if not OPENAI_API_KEY:
+        _cfg_log.error("Claude 사용 한도 도달 + OPENAI_API_KEY 미설정 — 폴백 불가")
+        return ""
+    try:
+        from openai import OpenAI
+    except ImportError:
+        _cfg_log.error("Claude 사용 한도 도달 + openai 패키지 미설치 — 폴백 불가")
+        return ""
+    _cfg_log.warning(f"Claude 사용 한도 도달 — OpenAI({OPENAI_MODEL})로 자동 폴백")
+    client = OpenAI(api_key=OPENAI_API_KEY)
+    return gpt_generate(
+        client,
+        model=OPENAI_MODEL,
+        system=system,
+        messages=_messages_to_text(messages),
+        max_tokens=min(max_tokens, 16000),  # gpt-4o 출력 한도 16384 이내
+        temperature=temperature,
+    )
+
+
 def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
     """max_tokens로 잘린 응답을 이어쓰기로 완성해 전체 텍스트를 반환합니다.
 
@@ -203,15 +252,33 @@ def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
     10분 이상 걸릴 수 있어 Anthropic SDK가 non-streaming 호출을 거부합니다.
     stream.get_final_message()는 Message 객체를 그대로 반환하므로 기존 로직과
     완전히 호환됩니다.
+
+    Anthropic 사용 한도(월 지출 한도) 오류가 감지되면 OpenAI로 자동 폴백하며,
+    이후 같은 프로세스의 모든 호출은 Claude를 건너뛰고 바로 OpenAI를 사용합니다.
     """
     import logging as _logging
+    global _claude_limit_hit
     _log = _logging.getLogger(__name__)
 
     messages = list(kwargs.pop("messages"))
     model = kwargs.get("model", CLAUDE_MODEL)
+    _fb_args = (
+        kwargs.get("system", ""), messages,
+        kwargs.get("max_tokens", 8000), kwargs.get("temperature", 1.0),
+    )
 
-    with client.messages.stream(messages=messages, **kwargs) as stream:
-        message = stream.get_final_message()
+    # 이번 실행에서 이미 한도 도달 확인됨 → Claude 호출 없이 바로 폴백
+    if _claude_limit_hit:
+        return _openai_fallback(*_fb_args)
+
+    try:
+        with client.messages.stream(messages=messages, **kwargs) as stream:
+            message = stream.get_final_message()
+    except Exception as e:
+        if _is_usage_limit_error(e):
+            _claude_limit_hit = True
+            return _openai_fallback(*_fb_args)
+        raise
 
     usage = getattr(message, "usage", None)
     total_in = getattr(usage, "input_tokens", 0) or 0
@@ -230,8 +297,15 @@ def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
                 "이미 출력한 내용을 반복하거나 서두를 붙이지 말고, 잘린 문자 바로 다음부터 출력하세요."
             )},
         ]
-        with client.messages.stream(messages=messages, **kwargs) as stream:
-            message = stream.get_final_message()
+        try:
+            with client.messages.stream(messages=messages, **kwargs) as stream:
+                message = stream.get_final_message()
+        except Exception as e:
+            if _is_usage_limit_error(e):
+                # 이어쓰기 도중 한도 도달 — 부분 결과를 버리고 OpenAI로 전체 재생성
+                _claude_limit_hit = True
+                return _openai_fallback(*_fb_args)
+            raise
         usage = getattr(message, "usage", None)
         total_in += getattr(usage, "input_tokens", 0) or 0
         total_out += getattr(usage, "output_tokens", 0) or 0

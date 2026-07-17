@@ -1,60 +1,3 @@
-2026-07-16 05:57:52,937 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-16 05:57:52,939 [INFO] keyword_collector — 유사 주제 제외 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리']
-2026-07-16 05:57:52,939 [INFO] keyword_collector —   [fallback] 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
-2026-07-16 05:57:52,939 [INFO] keyword_collector — 최종 선정 키워드 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
-2026-07-16 05:57:52,939 [INFO] main — 수집된 키워드 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
-2026-07-16 05:57:52,943 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-07-16 05:57:52,943 [INFO] main — 단독 포스트 대상 키워드 1개: ['미국 연준 금리 결정 한국 증시 영향 분석']
-2026-07-16 05:57:52,957 [INFO] main — 
-[1/1] 키워드: '미국 연준 금리 결정 한국 증시 영향 분석'
-2026-07-16 05:57:52,957 [INFO] content_generator — 포스트 생성 중: '미국 연준 금리 결정 한국 증시 영향 분석'
-2026-07-16 05:57:53,108 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 05:57:53,109 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5DtVFPEj4EN6J26qwnR'}
-2026-07-16 05:58:04,471 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '미국 연준 금리 결정 한국 증시 영향 분석'
-2026-07-16 05:58:04,616 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 05:58:04,616 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5DuLUpD3yhLXyrJSTLA'}
-2026-07-16 05:58:04,617 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-16 05:58:04,782 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 05:58:04,783 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5DuMETUDRmpirLQUaS9'}
-2026-07-16 05:58:04,783 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-07-16 05:58:07,783 [INFO] content_generator — 포스트 생성 중: '미국 연준 금리 결정 한국 증시 영향 분석'
-2026-07-16 05:58:07,915 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 05:58:07,916 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5DuadcGjXDRjTL4BWFR'}
-2026-07-16 05:58:15,180 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '미국 연준 금리 결정 한국 증시 영향 분석'
-2026-07-16 05:58:15,314 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 05:58:15,314 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5Dv8F8wePqewQbJDinh'}
-2026-07-16 05:58:15,315 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-16 05:58:15,441 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 05:58:15,442 [ERROR] content_generator — Claude API 오류: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cd5Dv8ktudXGafUWWhev5'}
-2026-07-16 05:58:15,442 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
-2026-07-16 05:58:15,442 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '미국 연준 금리 결정 한국 증시 영향 분석'
-2026-07-16 05:58:15,442 [INFO] main — 
-============================================================
-2026-07-16 05:58:15,442 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
-2026-07-16 05:58:15,442 [INFO] main — ============================================================
-2026-07-16 05:58:15,477 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-16 05:58:15,500 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-16 05:58:15,519 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-16 05:58:15,658 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-16 05:58:15,996 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-16 05:58:15,998 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-16 05:58:16,000 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-16 05:58:16,013 [INFO] post_manager —   포스트 레지스트리: 전체 237개 (게시 148 / 실패 15 / 대기 52)
-2026-07-16 05:58:16,014 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-16 05:58:16,014 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-16 05:58:16,015 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-16 11:38:39,084 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
-2026-07-16 11:38:40,242 [INFO] main — ============================================================
-2026-07-16 11:38:40,242 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-16 11:38:40
-2026-07-16 11:38:40,242 [INFO] main — ============================================================
-2026-07-16 11:38:40,250 [INFO] keyword_collector — 포스팅 이력 코퍼스: 30개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-16 11:38:44,067 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-16 11:38:44,313 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:38:44,313 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-16 11:38:44,676 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
-2026-07-16 11:38:44,872 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-16 11:38:45,092 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-16 11:38:45,282 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
 2026-07-16 11:38:45,284 [INFO] keyword_collector —   [high_cpc] 1개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
 2026-07-16 11:38:45,284 [INFO] keyword_collector —   [fallback] 1개: ['강릉 여행 숙소 가성비 최고였던 곳과 실망한 곳 비교']
 2026-07-16 11:38:45,284 [INFO] keyword_collector — 최종 선정 키워드 2개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁', '강릉 여행 숙소 가성비 최고였던 곳과 실망한 곳 비교']
@@ -555,3 +498,96 @@
 2026-07-17 05:44:00,294 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-17 05:44:00,294 [INFO] dashboard_exporter —   포스트: 87개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-17 05:44:00,295 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-17 10:26:21,014 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
+2026-07-17 10:26:21,732 [INFO] main — ============================================================
+2026-07-17 10:26:21,732 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-17 10:26:21
+2026-07-17 10:26:21,732 [INFO] main — ============================================================
+2026-07-17 10:26:21,742 [INFO] main — 수집된 키워드 1개: ['최태원 SK 하이닉스 가만히 갖고 있으면']
+2026-07-17 10:26:21,746 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-07-17 10:26:23,575 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:26:23,597 [INFO] main — 단독 포스트 대상 키워드 1개: ['최태원 SK 하이닉스 가만히 갖고 있으면']
+2026-07-17 10:26:23,611 [INFO] main — 
+[1/1] 키워드: '최태원 SK 하이닉스 가만히 갖고 있으면'
+2026-07-17 10:26:23,611 [INFO] content_generator — 포스트 생성 중: '최태원 SK 하이닉스 가만히 갖고 있으면'
+2026-07-17 10:26:32,629 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:26:32,630 [INFO] research_collector — 검색 의도: 최태원 SK 회장이 SK 하이닉스 주식 또는 사업과 관련해 '가만히 갖고 있으면'이라는 발언을 한 맥락과 정
+2026-07-17 10:26:44,965 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '최태원 SK 하이닉스 가만히 갖고 있으면'
+2026-07-17 10:27:01,868 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:27:01,869 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '최태원 SK 하이닉스 가만히 갖고 있으면'
+2026-07-17 10:27:19,907 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:27:19,908 [INFO] source_validator — 출처 검증: 6/7개 통과, 등급 분포 {'B': 6, 'X': 1}
+2026-07-17 10:27:19,910 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-17 10:27:21,102 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:28:20,919 [WARNING] content_generator — 컨텐츠 너무 짧음(2423자, 최소 2500자) — 재시도 1/3
+2026-07-17 10:28:23,919 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-17 10:28:24,765 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:29:36,137 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:29:45,755 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 10:29:46,738 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:29:51,473 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-17 10:29:51,473 [INFO] content_generator — 제목 기반 이미지 검색: '최태원 "SK하이닉스 가만히 갖고 있으면 된다" 발언, 진짜 의미는?'
+2026-07-17 10:29:52,120 [INFO] image_fetcher — 이미지 수집 성공: '최태원 "SK하이닉스 가만히 갖고 있으면 된다" 발언, 진짜 의미는?' → 제목='business / woman / people / shooting / f' (관련성=0.18)
+2026-07-17 10:29:52,121 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-17 10:29:52,122 [INFO] content_generator — 포스트 생성 완료: '최태원 "SK하이닉스 가만히 갖고 있으면 된다" 발언, 진짜 의미는?' (2864자, 이미지 1개)
+2026-07-17 10:29:53,048 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:30:03,875 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 10:30:07,097 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:30:09,908 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '최태원 "SK하이닉스 가만히 갖고 있으면 된다" 발언, 진짜 의'
+2026-07-17 10:30:09,908 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2864자로 분량 기준 통과 하한이나, 언론 보도 재구성 위주로 개인 경험 요소는 제한적
+2026-07-17 10:30:09,908 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 기준 충족하나 일부 단락이 500자 이상으로 길게 이어짐
+2026-07-17 10:30:09,908 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 저작권 위반은 없으나 가독성 측면에서 보완 필요
+2026-07-17 10:30:09,908 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-07-17 10:30:09,917 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-17 10:30:09,920 [INFO] internal_linker —   [1/5] '실제로' -> https://www.hoguwhat.com/2026/07/blog-post_15.html
+2026-07-17 10:30:09,923 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-17 10:30:09,923 [INFO] main —   제목: 최태원 "SK하이닉스 가만히 갖고 있으면 된다" 발언, 진짜 의미는?
+2026-07-17 10:30:09,923 [INFO] main —   이미지: 1개 삽입
+2026-07-17 10:30:09,923 [INFO] main —   글자 수: 2864자
+2026-07-17 10:30:11,050 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:30:21,487 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 10:30:22,389 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:30:26,928 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '최태원 "SK하이닉스 가만히 갖고 있으면 된다" 발언, 진짜 의'
+2026-07-17 10:30:26,928 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2864자로 warn 구간이며 개인 의견은 일부 있으나 보도 내용 재구성이 중심
+2026-07-17 10:30:26,928 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 없어 가독성 및 SEO 측면에서 보완 필요
+2026-07-17 10:30:26,928 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-07-17 10:30:28,096 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:31:40,295 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-17 10:31:41,199 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:32:32,275 [INFO] final_editor —   ✏️ 제목 최종 교정: '최태원 "SK하이닉스 가만히 갖고 있으면 된다" 발언, 진짜 의미는?' → '최태원 "SK하이닉스 가만히 갖고 있으면 된다" 발언 의미'
+2026-07-17 10:32:32,275 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
+2026-07-17 10:32:32,275 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 미완성이던 결말부(체크리스트, 결론, FAQ, 마무리)를 완성하고, 요약박스·표·개인경험메모·주의사항·FAQ·작성자메모·내부링크 등 발행 표준 요소를 모두 삽입했으며, 긴 문단을 2~4문장 단위로 재구성했습니다.
+2026-07-17 10:32:32,383 [INFO] related_posts — 관련 포스트 1개 섹션 생성
+2026-07-17 10:32:32,383 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-07-17 10:32:33,490 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/sk_01429231754.html
+2026-07-17 10:32:33,501 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/sk_01429231754.html
+2026-07-17 10:33:04,395 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:33:04,396 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-17 10:33:04,396 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-17 10:33:04,405 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '최태원 "SK하이닉스 가만히 갖고 있으면 된다" 발언 의미'
+2026-07-17 10:33:05,682 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-17 10:33:08,723 [INFO] comment_manager —   생성된 댓글: 총수 발언에 기대는 것도 좋지만, 이런 경우엔 분할매수나 적립식 투자로 접근하면 심리적 부담이 훨씬 줄어들더라고요. 특히 "가만히 갖고 있으라"...
+2026-07-17 10:36:08,885 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-07-17 10:36:08,887 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-17 10:36:08,887 [INFO] main — 
+============================================================
+2026-07-17 10:36:08,887 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-17 10:36:08,887 [INFO] main — ============================================================
+2026-07-17 10:36:08,917 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-17 10:36:08,938 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-17 10:36:08,957 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-17 10:36:09,219 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-17 10:36:09,484 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-17 10:36:09,677 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-17 10:36:09,678 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-17 10:36:09,681 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-17 10:36:09,694 [INFO] post_manager —   포스트 레지스트리: 전체 238개 (게시 149 / 실패 15 / 대기 52)
+2026-07-17 10:36:09,694 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-17 10:36:09,694 [INFO] dashboard_exporter —   포스트: 87개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-17 10:36:09,695 [INFO] main — 대시보드 데이터 업데이트 완료

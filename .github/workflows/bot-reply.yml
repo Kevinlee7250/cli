@@ -31,12 +31,13 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: anthropic 설치
-        run: pip install anthropic -q
+      - name: anthropic·openai 설치
+        run: pip install anthropic openai -q
 
-      - name: Claude 응답 생성
+      - name: Claude 응답 생성 (한도 시 OpenAI 폴백)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           USER_MESSAGE: ${{ inputs.message }}
           REPLY_ID: ${{ inputs.reply_id }}
           CONTEXT_JSON: ${{ inputs.context_json }}
@@ -74,6 +75,21 @@ jobs:
           if not messages or messages[-1].get('content') != user_msg:
             messages.append({'role': 'user', 'content': user_msg})
 
+          def _openai_reply(system_text, msgs):
+            """Claude 한도 도달 시 OpenAI 폴백. 키 없으면 None."""
+            oa_key = os.environ.get("OPENAI_API_KEY", "").strip()
+            if not oa_key:
+              return None
+            from openai import OpenAI
+            oa = OpenAI(api_key=oa_key)
+            resp = oa.chat.completions.create(
+              model="gpt-4o-mini",
+              max_tokens=1024,
+              messages=[{"role": "system", "content": system_text}] + msgs,
+            )
+            return resp.choices[0].message.content or ""
+
+          model_used = "claude-haiku-4-5-20251001"
           try:
             response = client.messages.create(
               model="claude-haiku-4-5-20251001",
@@ -86,12 +102,22 @@ jobs:
           except Exception as api_err:
             err_str = str(api_err)
             if "usage limits" in err_str or "rate_limit" in err_str or "overloaded" in err_str:
-              reply_text = (
-                "⚠️ API 사용 한도에 도달했습니다. 다음 달 초(08/01 UTC)에 자동으로 복구됩니다.\n"
-                "그 전까지 대시보드 기능은 정상 동작하지만 AI 응답은 일시 중단됩니다."
-              )
-              error_flag = "api_limit"
-              print(f"[WARN] API 한도 초과 — 대체 메시지 사용: {err_str}")
+              print(f"[WARN] Claude 한도/과부하 — OpenAI 폴백 시도: {err_str}")
+              try:
+                fallback = _openai_reply("\n".join(system_parts), messages)
+              except Exception as oa_err:
+                print(f"[WARN] OpenAI 폴백도 실패: {oa_err}")
+                fallback = None
+              if fallback:
+                reply_text = fallback
+                error_flag = None
+                model_used = "gpt-4o-mini (Claude 한도 폴백)"
+              else:
+                reply_text = (
+                  "⚠️ API 사용 한도에 도달했습니다. 다음 달 초(08/01 UTC)에 자동으로 복구됩니다.\n"
+                  "OPENAI_API_KEY Secret을 설정하면 한도 기간에도 GPT로 응답할 수 있습니다."
+                )
+                error_flag = "api_limit"
             else:
               raise
 
@@ -102,7 +128,7 @@ jobs:
             "message": user_msg,
             "reply": reply_text,
             "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
-            "model": "claude-haiku-4-5-20251001",
+            "model": model_used,
           }
           if error_flag:
             result["error"] = error_flag

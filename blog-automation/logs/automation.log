@@ -1,127 +1,3 @@
-🌱 씨앗 댓글 작성: '2026년 여름 휴가철 인기 여행지 추천, 서울·부산 트렌드'
-2026-07-17 11:37:53,223 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:37:57,052 [INFO] comment_manager —   생성된 댓글: 덧붙이자면, 성수기엔 항공권보다 렌터카나 공항 리무진버스 예약이 더 먼저 마감되는 경우가 많더라고요. 특히 부산은 김해공항에서 해운대·광안리 쪽...
-2026-07-17 11:40:57,260 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-07-17 11:40:57,261 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-17 11:40:57,262 [INFO] main — 
-============================================================
-2026-07-17 11:40:57,262 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-17 11:40:57,262 [INFO] main — ============================================================
-2026-07-17 11:40:57,295 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-17 11:40:57,314 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
-2026-07-17 11:40:57,330 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-17 11:40:57,678 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-17 11:40:57,974 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-17 11:40:57,976 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-17 11:40:57,978 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-17 11:40:57,991 [INFO] post_manager —   포스트 레지스트리: 전체 240개 (게시 151 / 실패 15 / 대기 52)
-2026-07-17 11:40:57,991 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-17 11:40:57,991 [INFO] dashboard_exporter —   포스트: 85개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-17 11:40:57,992 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-17 11:41:29,379 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
-2026-07-17 11:41:29,836 [INFO] main — ============================================================
-2026-07-17 11:41:29,837 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-17 11:41:29
-2026-07-17 11:41:29,837 [INFO] main — ============================================================
-2026-07-17 11:41:29,843 [INFO] keyword_collector — 포스팅 이력 코퍼스: 20개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-17 11:41:33,219 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-17 11:41:37,014 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:41:37,027 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-17 11:41:37,027 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-17 11:41:37,571 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-17 11:41:37,830 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-17 11:41:37,830 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-17 11:41:37,831 [INFO] keyword_collector — 유사 주제 제외 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-17 11:41:37,831 [INFO] keyword_collector —   [naver_realtime] 2개: ['레버리지 ETF 투자 규칙 변경 2026 총정리', '코스피 변동성 대응 분할매수 투자 전략']
-2026-07-17 11:41:37,831 [INFO] keyword_collector — 최종 선정 키워드 2개: ['레버리지 ETF 투자 규칙 변경 2026 총정리', '코스피 변동성 대응 분할매수 투자 전략']
-2026-07-17 11:41:37,831 [INFO] main — 수집된 키워드 2개: ['레버리지 ETF 투자 규칙 변경 2026 총정리', '코스피 변동성 대응 분할매수 투자 전략']
-2026-07-17 11:41:37,834 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
-2026-07-17 11:41:40,134 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:41:40,134 [INFO] main — 단독 포스트 대상 키워드 1개: ['레버리지 ETF 투자 규칙 변경 2026 총정리']
-2026-07-17 11:41:40,147 [INFO] main — 
-[1/1] 키워드: '레버리지 ETF 투자 규칙 변경 2026 총정리'
-2026-07-17 11:41:40,147 [INFO] content_generator — 포스트 생성 중: '레버리지 ETF 투자 규칙 변경 2026 총정리'
-2026-07-17 11:41:50,240 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:41:50,240 [INFO] research_collector — 검색 의도: 2026년부터 적용되는 레버리지 ETF 관련 투자 규칙 변경사항을 정확히 파악하고 싶은 검색자의 의도
-2026-07-17 11:42:08,719 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '레버리지 ETF 투자 규칙 변경 2026 총정리'
-2026-07-17 11:42:32,065 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:42:32,066 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '레버리지 ETF 투자 규칙 변경 2026 총정리'
-2026-07-17 11:42:54,609 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:42:54,610 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'X': 2, 'B': 2, 'C': 1}
-2026-07-17 11:42:54,611 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-07-17 11:42:54,611 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-17 11:42:55,581 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:44:16,855 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:44:27,147 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-17 11:44:27,952 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:44:31,296 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-07-17 11:44:31,297 [INFO] content_generator — 제목 기반 이미지 검색: '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레버리지 ETF 도입 이후 뭐가 달라지나'
-2026-07-17 11:44:31,544 [INFO] image_fetcher — 이미지 수집 성공: '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레버리지 ETF 도입 이후 뭐가 달라지나' → 제목='historical stock / securities / certific' (관련성=0.09)
-2026-07-17 11:44:31,544 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-17 11:44:31,545 [INFO] content_generator — 포스트 생성 완료: '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레버리지 ETF 도입 이후 뭐가 달라지나' (3345자, 이미지 1개)
-2026-07-17 11:44:32,751 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:44:43,765 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-17 11:44:45,050 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:44:52,337 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레'
-2026-07-17 11:44:52,337 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3345자로 2500~3999자 warn 구간이며, 공식 발표 재구성 위주로 개인 경험은 '개인적으로는' 한 문장 정도에 그침
-2026-07-17 11:44:52,337 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가하며 이미지 없는 텍스트형 글로 판단됨
-2026-07-17 11:44:52,337 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 첫째·둘째·셋째식 나열과 '아울러' 사용, 문장 중복 오류('밝힌 바 있습니다하겠다는...')로 AI 생성 흔적 존재
-2026-07-17 11:44:52,337 [WARNING] adsense_validator —   🔴 본문 중 '밝힌 바 있습니다하겠다는 방침도 밝힌 바 있습니다' 문장이 중복·오류 상태로 즉시 수정 필요
-2026-07-17 11:44:52,344 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-17 11:44:52,345 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguasset.blogspot.com/2026/07/etf-2026_01246396645.
-2026-07-17 11:44:52,346 [INFO] internal_linker —   [2/5] '투자하는' -> https://hoguasset.blogspot.com/2026/07/etf-5.html
-2026-07-17 11:44:52,348 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-17 11:44:52,348 [INFO] main —   제목: 레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레버리지 ETF 도입 이후 뭐가 달라지나
-2026-07-17 11:44:52,348 [INFO] main —   이미지: 1개 삽입
-2026-07-17 11:44:52,348 [INFO] main —   글자 수: 3345자
-2026-07-17 11:44:53,530 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:45:05,388 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-17 11:45:06,619 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:45:16,704 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 77/100 — '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레'
-2026-07-17 11:45:16,704 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3345자로 글자 수 기준 warn 구간이며, 공식 발표 재정리 위주로 개인 인사이트는 일부에 그침
-2026-07-17 11:45:16,704 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 SEO·가독성 측면에서 warn 처리
-2026-07-17 11:45:16,704 [INFO] adsense_validator —   ❌ AI 생성 의심도: 본문 중 동일 문장이 반복·중복 삽입된 명백한 생성 오류('밝힌 바 있습니다이는...하겠다는 방침도 밝힌 바 있습니다.')가 발견됨
-2026-07-17 11:45:16,704 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 본문 중 동일 문장이 반복·중복 삽입된 명백한 생성 오류('밝힌 바 있습니다이는...하겠다는 방침도 밝힌 바 있습니다.')가 발견됨
-2026-07-17 11:45:16,704 [WARNING] adsense_validator —   🔴 본문 중 '빚투' 관련 문단에서 문장이 중복·깨져서 출력됨(생성 오류로 즉시 수정 필요)
-2026-07-17 11:45:16,704 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 77/100, 권장: review) — 자동 수정 시도
-2026-07-17 11:45:16,704 [WARNING] main —      🔴 [AI 생성 의심도] 본문 중 동일 문장이 반복·중복 삽입된 명백한 생성 오류('밝힌 바 있습니다이는...하겠다는 방침도 밝힌 바 있습니다.')가 발견됨
-2026-07-17 11:45:16,704 [WARNING] main —      🔴 본문 중 '빚투' 관련 문단에서 문장이 중복·깨져서 출력됨(생성 오류로 즉시 수정 필요)
-2026-07-17 11:45:16,704 [WARNING] main —      🟡 [원본성 및 품질] 3345자로 글자 수 기준 warn 구간이며, 공식 발표 재정리 위주로 개인 인사이트는 일부에 그침
-2026-07-17 11:45:16,704 [WARNING] main —      🟡 [이미지 정책] 이미지가 전혀 없어 SEO·가독성 측면에서 warn 처리
-2026-07-17 11:45:16,704 [WARNING] main —      🟡 글자 수를 4000자 이상으로 늘려 원본성 점수를 개선할 것
-2026-07-17 11:45:16,704 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 77/100, fail: 1개, warn: 2개
-2026-07-17 11:45:18,807 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:46:33,699 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-17 11:46:34,909 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:46:44,848 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3345자 → 4019자 (+674자)
-2026-07-17 11:46:44,848 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-17 11:46:47,331 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:46:58,082 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-17 11:46:59,780 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:47:06,838 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레'
-2026-07-17 11:47:06,838 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 기준 충족하나 첫 섹션이 줄바꿈 없이 500자 이상 이어지는 단락으로 가독성이 떨어짐
-2026-07-17 11:47:06,838 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가하며 본문 내 이미지 언급 없어 이미지 부재로 판단
-2026-07-17 11:47:06,838 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 첫째·둘째·셋째식 나열과 표 정리 패턴이 있어 다소 정형화된 구성이 보임
-2026-07-17 11:47:06,838 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 77 → 84/100)
-2026-07-17 11:47:06,838 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-17 11:47:07,956 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:48:20,706 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-17 11:48:21,567 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:48:59,591 [INFO] final_editor —   ✏️ 제목 최종 교정: '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 레버리지 ETF 도입 이후 뭐가 달라지나' → '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 ETF 핵심 정리'
-2026-07-17 11:48:59,591 [INFO] final_editor —   ✏️ 메타 설명 교정 (92자)
-2026-07-17 11:48:59,591 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고, 표·요약박스·개인경험메모·주의사항·FAQ·작성자메모·내부링크를 추가해 Blogger 발행 형식에 맞게 재구성했습니다.
-2026-07-17 11:48:59,731 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-17 11:48:59,731 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '레버리지 ETF 투자 규칙 변경 2026 총정리' — 면책·팩트체크 확인 권장
-2026-07-17 11:48:59,731 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-07-17 11:49:00,590 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/etf-2026-etf.html
-2026-07-17 11:49:00,596 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/etf-2026-etf.html
-2026-07-17 11:49:34,062 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-17 11:49:34,063 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
 2026-07-17 11:49:34,063 [INFO] main —   📱 소셜 콘텐츠 생성 완료
 2026-07-17 11:49:34,069 [INFO] comment_manager — 
 🌱 씨앗 댓글 작성: '레버리지 ETF 투자 규칙 변경 2026 총정리 - 단일종목 ETF 핵심 정리'
@@ -622,3 +498,106 @@
 2026-07-18 05:36:27,220 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-18 05:36:27,221 [INFO] dashboard_exporter —   포스트: 84개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-18 05:36:27,221 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-18 05:37:01,841 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
+2026-07-18 05:37:03,275 [INFO] main — ============================================================
+2026-07-18 05:37:03,275 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-18 05:37:03
+2026-07-18 05:37:03,275 [INFO] main — ============================================================
+2026-07-18 05:37:03,284 [INFO] keyword_collector — 포스팅 이력 코퍼스: 19개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-18 05:37:08,061 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 50개
+2026-07-18 05:37:13,745 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:37:13,767 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-18 05:37:19,952 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:37:20,457 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-18 05:37:20,458 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-18 05:37:20,460 [INFO] keyword_collector — 유사 주제 제외 5개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
+2026-07-18 05:37:20,460 [INFO] keyword_collector —   [fallback] 2개: ['부산 1박2일 혼자 여행 현실 비용 공개', '국내 호캉스 가성비 호텔 실제 후기 비교']
+2026-07-18 05:37:20,460 [INFO] keyword_collector — 최종 선정 키워드 2개: ['부산 1박2일 혼자 여행 현실 비용 공개', '국내 호캉스 가성비 호텔 실제 후기 비교']
+2026-07-18 05:37:20,460 [INFO] main — 수집된 키워드 2개: ['부산 1박2일 혼자 여행 현실 비용 공개', '국내 호캉스 가성비 호텔 실제 후기 비교']
+2026-07-18 05:37:20,464 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 19일 전)
+2026-07-18 05:37:21,664 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:37:21,665 [INFO] main — 단독 포스트 대상 키워드 1개: ['부산 1박2일 혼자 여행 현실 비용 공개']
+2026-07-18 05:37:21,685 [INFO] main — 
+[1/1] 키워드: '부산 1박2일 혼자 여행 현실 비용 공개'
+2026-07-18 05:37:21,685 [INFO] content_generator — 포스트 생성 중: '부산 1박2일 혼자 여행 현실 비용 공개'
+2026-07-18 05:37:27,269 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:37:27,270 [INFO] research_collector — 검색 의도: 부산 1박2일 혼자 여행 시 실제 소요되는 총 비용과 세부 내역을 알고 싶음
+2026-07-18 05:37:52,499 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '부산 1박2일 혼자 여행 현실 비용 공개'
+2026-07-18 05:38:06,029 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:38:06,030 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '부산 1박2일 혼자 여행 현실 비용 공개'
+2026-07-18 05:38:22,346 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:38:22,347 [INFO] source_validator — 출처 검증: 1/5개 통과, 등급 분포 {'X': 4, 'C': 1}
+2026-07-18 05:38:22,349 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-07-18 05:38:22,349 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-18 05:38:23,174 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:39:27,490 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:39:28,763 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-18 05:39:28,763 [INFO] content_generator — 제목 기반 이미지 검색: '부산 1박2일 혼자 여행 현실 비용 공개, 실제로 얼마나 들까'
+2026-07-18 05:39:28,956 [INFO] image_fetcher — 이미지 수집 성공: '부산 1박2일 혼자 여행 현실 비용 공개, 실제로 얼마나 들까' → 제목='fantasy / to travel / travel / vacations' (관련성=0.10)
+2026-07-18 05:39:28,957 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-18 05:39:28,958 [INFO] content_generator — 포스트 생성 완료: '부산 1박2일 혼자 여행 현실 비용 공개, 실제로 얼마나 들까' (2585자, 이미지 1개)
+2026-07-18 05:39:29,726 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:39:40,946 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-18 05:39:41,697 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:39:50,292 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '부산 1박2일 혼자 여행 현실 비용 공개, 실제로 얼마나 들까'
+2026-07-18 05:39:50,293 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2585자로 글자수 기준 warn 구간이며 구체적 수치·실제 지출 사례 없이 커뮤니티 후기를 일반화한 재조합 콘텐츠
+2026-07-18 05:39:50,293 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 단락 구분 없이 이어지는 500자 이상 긴 문단이 다수 존재
+2026-07-18 05:39:50,293 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 필자명(마린파파)과 출처 언급은 있으나 1인칭 실제 경험·구체적 날짜/영수증 없이 후기 인용 위주로 신뢰성 신호 약함
+2026-07-18 05:39:50,293 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되지 않아 텍스트만으로 구성됨
+2026-07-18 05:39:50,293 [INFO] adsense_validator —   ❌ AI 생성 의심도: '정확한 ~ 확인하는 것이 가장 정확합니다' 등 동일 문구가 반복되고 전형적 AI 요약체 패턴이 다수 발견됨
+2026-07-18 05:39:50,293 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '정확한 ~ 확인하는 것이 가장 정확합니다' 등 동일 문구가 반복되고 전형적 AI 요약체 패턴이 다수 발견됨
+2026-07-18 05:39:50,293 [WARNING] adsense_validator —   🔴 AI 생성 의심 문구(동일 표현 반복)가 다수 발견되어 품질 저하 우려
+2026-07-18 05:39:50,299 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-18 05:39:50,301 [INFO] internal_linker —   [1/5] '즐기는' -> https://hogugolfntraval.blogspot.com/2026/07/202607.html
+2026-07-18 05:39:50,302 [INFO] internal_linker —   [2/5] '휴가철' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0159774743
+2026-07-18 05:39:50,304 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-18 05:39:50,304 [INFO] main —   제목: 부산 1박2일 혼자 여행 현실 비용 공개, 실제로 얼마나 들까
+2026-07-18 05:39:50,304 [INFO] main —   이미지: 1개 삽입
+2026-07-18 05:39:50,304 [INFO] main —   글자 수: 2585자
+2026-07-18 05:39:51,189 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:40:03,534 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-18 05:40:04,566 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:40:12,506 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '부산 1박2일 혼자 여행 현실 비용 공개, 실제로 얼마나 들까'
+2026-07-18 05:40:12,506 [INFO] adsense_validator —   ❌ 원본성 및 품질: 구체적 금액·수치 없이 '공식 요금 확인하세요'만 반복하는 일반론 재조합으로 실질적 정보 가치 부족
+2026-07-18 05:40:12,506 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 각 섹션 단락이 500자 이상으로 길어 가독성 다소 저하
+2026-07-18 05:40:12,506 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 언급은 있으나 실제 직접 방문 경험 대신 후기·커뮤니티 종합에 의존
+2026-07-18 05:40:12,506 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 시각적 가독성·SEO 보완 필요
+2026-07-18 05:40:12,506 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 점이 후기에서 공통적으로 나타납니다', '확인하는 것이 가장 정확합니다' 등 정형화된 문구 반복 패턴
+2026-07-18 05:40:12,506 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 구체적 금액·수치 없이 '공식 요금 확인하세요'만 반복하는 일반론 재조합으로 실질적 정보 가치 부족
+2026-07-18 05:40:12,506 [WARNING] adsense_validator —   🔴 구체적인 실제 비용 수치(교통비·숙박비·식비 등 원 단위 금액)가 전혀 제시되지 않아 제목의 '현실 비용 공개'와 본문 내용이 불일치함
+2026-07-18 05:40:12,506 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
+2026-07-18 05:40:12,506 [WARNING] main —      🔴 [원본성 및 품질] 구체적 금액·수치 없이 '공식 요금 확인하세요'만 반복하는 일반론 재조합으로 실질적 정보 가치 부족
+2026-07-18 05:40:12,506 [WARNING] main —      🔴 구체적인 실제 비용 수치(교통비·숙박비·식비 등 원 단위 금액)가 전혀 제시되지 않아 제목의 '현실 비용 공개'와 본문 내용이 불일치함
+2026-07-18 05:40:12,506 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 구조는 양호하나 각 섹션 단락이 500자 이상으로 길어 가독성 다소 저하
+2026-07-18 05:40:12,506 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 언급은 있으나 실제 직접 방문 경험 대신 후기·커뮤니티 종합에 의존
+2026-07-18 05:40:12,506 [WARNING] main —      🟡 [이미지 정책] 이미지가 전혀 없어 시각적 가독성·SEO 보완 필요
+2026-07-18 05:40:12,507 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
+2026-07-18 05:40:13,381 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:41:11,406 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2585자 → 2775자 (+190자)
+2026-07-18 05:41:11,406 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-18 05:41:12,394 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:41:23,277 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-18 05:41:24,074 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-18 05:41:30,643 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '부산 1박2일 혼자 여행 현실 비용 공개, 실제로 얼마나 들까'
+2026-07-18 05:41:30,643 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치·개인 경험은 풍부하나 글자 수 2775자로 4000자 기준에는 미달
+2026-07-18 05:41:30,643 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 충분하나 각 섹션 내 단락 구성이 500자 이상으로 길어 가독성이 다소 떨어짐
+2026-07-18 05:41:30,643 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 포함되지 않아 저작권 위반은 없으나 시각 자료 부재
+2026-07-18 05:41:30,643 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 전 문장이 '~습니다'체로 단조롭고 '정리하면' 등 자동요약형 문구가 반복됨
+2026-07-18 05:41:30,643 [WARNING] main —   ⚠️ 자동 수정 후에도 기준 미달 (점수: 79/100) — pending 저장
+2026-07-18 05:41:30,643 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '부산 1박2일 혼자 여행 현실 비용 공개, 실제로 얼마나 들까' (점수: 79/100, 권장: review)
+2026-07-18 05:41:30,662 [INFO] dashboard_exporter —   검토 대기 저장: 부산 1박2일 혼자 여행 현실 비용 공개, 실제로 얼마나 들까 (6081자 HTML)
+2026-07-18 05:41:30,673 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 71개)
+2026-07-18 05:41:30,673 [INFO] main — 
+============================================================
+2026-07-18 05:41:30,673 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-18 05:41:30,673 [INFO] main — ============================================================
+2026-07-18 05:41:30,702 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-18 05:41:30,726 [INFO] dashboard_exporter —   시리즈: 5개 내보내기 완료
+2026-07-18 05:41:30,745 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-18 05:41:31,015 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-18 05:41:31,353 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-18 05:41:31,354 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-18 05:41:31,357 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-18 05:41:31,370 [INFO] post_manager —   포스트 레지스트리: 전체 246개 (게시 153 / 실패 16 / 대기 54)
+2026-07-18 05:41:31,371 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-18 05:41:31,371 [INFO] dashboard_exporter —   포스트: 84개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-18 05:41:31,371 [INFO] main — 대시보드 데이터 업데이트 완료

@@ -1,117 +1,3 @@
-2026-07-18 11:23:03,703 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:23:12,557 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-07-18 11:23:15,699 [INFO] image_fetcher — 이미지 수집 성공: '삼성전자 2026 실적 전망, 공시로 직접 확인' → 제목='business / woman / people / shooting / f' (관련성=0.25)
-2026-07-18 11:23:15,701 [INFO] content_generator — 시리즈 포스트 생성 완료: '삼성전자 2026 실적 전망, 공시로 직접 확인' (3169자, 이미지 1개)
-2026-07-18 11:23:16,838 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:23:26,693 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-18 11:23:27,422 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:23:36,214 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '삼성전자 2026 실적 전망, 공시로 직접 확인'
-2026-07-18 11:23:36,214 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 개인 경험 서술은 있으나 글자 수 3169자로 2500~3999자 구간이며 정보구성 상당 부분이 뉴스 재구성에 가까움
-2026-07-18 11:23:36,214 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가하나 텍스트만으로도 정책 통과 가능하여 warn 처리
-2026-07-18 11:23:36,214 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '매출은 전년 동기 대비 매출은 전년 동기 대비' 등 중복·오류 문장이 AI 생성 흔적으로 의심됨
-2026-07-18 11:23:36,214 [WARNING] adsense_validator —   🔴 본문 중 '매출은 전년 동기 대비 매출은 전년 동기 대비 크게 증가한 것으로 보입니다로' 문장이 중복·비문 상태로 즉시 수정 필요
-2026-07-18 11:23:37,368 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:24:57,518 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-18 11:24:58,716 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:26:12,647 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-18 11:26:14,479 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:26:28,553 [INFO] final_editor —   ✏️ 제목 최종 교정: '삼성전자 2026 실적 전망, 공시로 직접 확인' → '삼성전자 2026 실적 전망과 주가, 공시로 직접 확인하기'
-2026-07-18 11:26:28,554 [INFO] final_editor —   ✏️ 메타 설명 교정 (100자)
-2026-07-18 11:26:28,554 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 정리하고 중복·비문 문장을 수정했으며, 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모·내부 링크를 추가해 발행 형식을 완성했습니다.
-2026-07-18 11:26:28,718 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-18 11:26:28,718 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-07-18 11:26:29,555 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/2026_0978502205.html
-2026-07-18 11:26:29,556 [INFO] main —   ✅ 편 1 업로드 완료: https://hoguasset.blogspot.com/2026/07/2026_0978502205.html
-2026-07-18 11:26:32,557 [INFO] main — 
---- [2/3편] '삼성전자 배당금 자사주 소각 2026' 생성 중 ---
-2026-07-18 11:26:32,557 [INFO] content_generator — 시리즈 포스트 생성: '삼성전자 배당금 자사주 소각 2026' (2/3편)
-2026-07-18 11:26:43,095 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:26:43,096 [INFO] research_collector — 검색 의도: 삼성전자의 2026년 배당금 지급 계획과 자사주 소각 정책에 대한 구체적 정보를 알고 싶어함
-2026-07-18 11:26:52,076 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '삼성전자 배당금 자사주 소각 2026'
-2026-07-18 11:27:07,852 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:27:07,853 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '삼성전자 배당금 자사주 소각 2026'
-2026-07-18 11:27:25,151 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:27:25,152 [INFO] source_validator — 출처 검증: 6/7개 통과, 등급 분포 {'B': 6, 'X': 1}
-2026-07-18 11:27:25,152 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-18 11:27:25,996 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:28:32,077 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:28:40,955 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-18 11:28:41,796 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:28:45,586 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-07-18 11:28:45,947 [INFO] image_fetcher — 이미지 수집 성공: '[2편] 삼성전자 배당금 자사주 소각 2026 총정리' → 제목='business / woman / people / shooting / f' (관련성=0.29)
-2026-07-18 11:28:45,948 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 삼성전자 배당금 자사주 소각 2026 총정리' (3161자, 이미지 1개)
-2026-07-18 11:28:46,798 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:28:58,836 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-18 11:28:59,560 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:29:08,500 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '[2편] 삼성전자 배당금 자사주 소각 2026 총정리'
-2026-07-18 11:29:08,500 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3161자로 분량 기준은 충족하나 대부분 기사 재정리이며 개인 경험·독창적 인사이트는 부족함
-2026-07-18 11:29:08,500 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 계산·정책 설명 단락이 500자 이상으로 길어 가독성 저하
-2026-07-18 11:29:08,500 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 인용은 있으나 저자의 전문성·1인칭 경험 근거가 약함
-2026-07-18 11:29:08,501 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 SEO·가독성 측면에서 보완 필요
-2026-07-18 11:29:08,501 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 정확한 수치는 공시 확인 필요 등 동일 문구 반복과 요약형 전개가 AI 생성 패턴을 시사함
-2026-07-18 11:29:08,501 [WARNING] main —   ⚠️ [편 2] AdSense 검토 필요 — pending 저장 (점수: 74/100)
-2026-07-18 11:29:08,502 [INFO] main — 
---- [3/3편] '삼성전자 실적발표 공시 분석 방법' 생성 중 ---
-2026-07-18 11:29:08,502 [INFO] content_generator — 시리즈 포스트 생성: '삼성전자 실적발표 공시 분석 방법' (3/3편)
-2026-07-18 11:29:16,174 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:29:16,175 [INFO] research_collector — 검색 의도: 삼성전자의 분기/연간 실적발표 공시 자료를 어떻게 찾고 분석하는지 방법을 알고 싶은 검색 의도
-2026-07-18 11:29:28,436 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '삼성전자 실적발표 공시 분석 방법'
-2026-07-18 11:29:42,246 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:29:42,247 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '삼성전자 실적발표 공시 분석 방법'
-2026-07-18 11:29:49,518 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:29:49,519 [INFO] source_validator — 출처 검증: 1/4개 통과, 등급 분포 {'D': 1, 'X': 3}
-2026-07-18 11:29:49,520 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-07-18 11:29:49,520 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-18 11:29:50,338 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:31:02,234 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:31:05,420 [INFO] content_generator — 팩트체크: 통과
-2026-07-18 11:31:05,727 [INFO] image_fetcher — 이미지 수집 성공: '삼성전자 실적공시 직접 읽는 법과 함정' → 제목='business / woman / people / shooting / f' (관련성=0.25)
-2026-07-18 11:31:05,727 [INFO] content_generator — 시리즈 포스트 생성 완료: '삼성전자 실적공시 직접 읽는 법과 함정' (3286자, 이미지 1개)
-2026-07-18 11:31:06,725 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:31:19,104 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-18 11:31:19,891 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:31:30,053 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-18 11:31:31,181 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-18 11:31:32,390 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — '삼성전자 실적공시 직접 읽는 법과 함정'
-2026-07-18 11:31:32,390 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3286자로 기준 통과하나 조사 자료 재구성 위주이며 개인 경험·구체 사례 부족
-2026-07-18 11:31:32,390 [INFO] adsense_validator —   ⚠️ SEO 최적화: 본문 키워드 배치는 자연스러우나 레이블에 세금·절세·정부지원 등 본문과 무관한 태그가 포함되어 스팸 신호 우려
-2026-07-18 11:31:32,390 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 개수는 pass 기준이나 각 섹션 단락이 500자 이상으로 길어 가독성 저하
-2026-07-18 11:31:32,390 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 직접 경험 서술이 약하고 '전문가들이 설명한다'는 간접 인용에 의존
-2026-07-18 11:31:32,390 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되지 않아 저작권 위반은 없으나 가독성·SEO 측면에서 보완 필요
-2026-07-18 11:31:32,390 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라고 조사 과정에서 설명합니다', '~로 언급됩니다' 등 유사 문형이 반복되어 AI 생성 패턴 의심
-2026-07-18 11:31:32,390 [WARNING] adsense_validator —   🔴 레이블에 포함된 '정부지원, 세금, 절세'가 본문 내용과 전혀 관련 없어 태그 스팸으로 오인될 소지 있음
-2026-07-18 11:31:32,390 [WARNING] main —   ⚠️ [편 3] AdSense 검토 필요 — pending 저장 (점수: 69/100)
-2026-07-18 11:31:32,405 [INFO] dashboard_exporter —   검토 대기 저장: [2편] 삼성전자 배당금 자사주 소각 2026 총정리 (8282자 HTML)
-2026-07-18 11:31:32,406 [INFO] dashboard_exporter —   검토 대기 저장: 삼성전자 실적공시 직접 읽는 법과 함정 (7282자 HTML)
-2026-07-18 11:31:32,416 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 2개 추가 (총 74개)
-2026-07-18 11:31:32,447 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-18 11:31:32,471 [INFO] dashboard_exporter —   시리즈: 6개 내보내기 완료
-2026-07-18 11:31:32,492 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-18 11:31:32,895 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-18 11:31:33,237 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-18 11:31:33,238 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-18 11:31:33,241 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-18 11:31:33,254 [INFO] post_manager —   포스트 레지스트리: 전체 249개 (게시 155 / 실패 16 / 대기 55)
-2026-07-18 11:31:33,254 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-18 11:31:33,254 [INFO] dashboard_exporter —   포스트: 86개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-18 11:31:33,255 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-18 11:31:33,255 [INFO] main — 
-============================================================
-2026-07-18 11:31:33,255 [INFO] main — [금융NEWS] 시리즈 완료: 1/3편 성공
-2026-07-18 11:31:33,255 [INFO] main — ============================================================
-2026-07-18 11:31:33,256 [INFO] main — 단독 포스트 대상 키워드 0개: []
-2026-07-18 11:31:33,276 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
-2026-07-18 11:31:33,276 [INFO] main — 
-============================================================
-2026-07-18 11:31:33,276 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 0개
-2026-07-18 11:31:33,276 [INFO] main — ============================================================
-2026-07-18 11:31:33,307 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-18 11:31:33,329 [INFO] dashboard_exporter —   시리즈: 6개 내보내기 완료
-2026-07-18 11:31:33,391 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-18 11:31:33,392 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-18 11:31:33,395 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-18 11:31:33,409 [INFO] post_manager —   포스트 레지스트리: 전체 252개 (게시 156 / 실패 18 / 대기 55)
-2026-07-18 11:31:33,410 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-18 11:31:33,410 [INFO] dashboard_exporter —   포스트: 85개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-18 11:31:33,411 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-07-18 22:57:17,967 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
@@ -612,3 +498,122 @@
 2026-07-19 06:01:59,035 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-19 06:01:59,035 [INFO] dashboard_exporter —   포스트: 86개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-19 06:01:59,036 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-19 06:02:29,585 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
+2026-07-19 06:02:30,944 [INFO] main — ============================================================
+2026-07-19 06:02:30,944 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-19 06:02:30
+2026-07-19 06:02:30,944 [INFO] main — ============================================================
+2026-07-19 06:02:30,954 [INFO] keyword_collector — 포스팅 이력 코퍼스: 19개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-19 06:02:36,508 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 50개
+2026-07-19 06:02:44,383 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:02:44,419 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-19 06:02:44,419 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-19 06:02:45,030 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-19 06:02:45,030 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-19 06:02:45,032 [INFO] keyword_collector —   [naver_realtime] 2개: ['여름 휴가 숙소 예약 비교 에어비앤비 야놀자 여기어때', '해외여행 전 건강 체크리스트 길거리 음료 얼음 주의사항']
+2026-07-19 06:02:45,032 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여름 휴가 숙소 예약 비교 에어비앤비 야놀자 여기어때', '해외여행 전 건강 체크리스트 길거리 음료 얼음 주의사항']
+2026-07-19 06:02:45,032 [INFO] main — 수집된 키워드 2개: ['여름 휴가 숙소 예약 비교 에어비앤비 야놀자 여기어때', '해외여행 전 건강 체크리스트 길거리 음료 얼음 주의사항']
+2026-07-19 06:02:45,036 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 20일 전)
+2026-07-19 06:02:50,198 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:02:50,199 [INFO] series_planner — 시리즈 적합 키워드 없음 — 단독 포스트로 진행
+2026-07-19 06:02:50,199 [INFO] main — 단독 포스트 대상 키워드 1개: ['여름 휴가 숙소 예약 비교 에어비앤비 야놀자 여기어때']
+2026-07-19 06:02:50,217 [INFO] main — 
+[1/1] 키워드: '여름 휴가 숙소 예약 비교 에어비앤비 야놀자 여기어때'
+2026-07-19 06:02:50,217 [INFO] content_generator — 포스트 생성 중: '여름 휴가 숙소 예약 비교 에어비앤비 야놀자 여기어때'
+2026-07-19 06:03:03,376 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:03:03,377 [INFO] research_collector — 검색 의도: 여름 휴가 숙소를 예약할 때 에어비앤비, 야놀자, 여기어때 세 플랫폼의 요금·정책·장단점을 비교해 최적의 예
+2026-07-19 06:03:12,526 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '여름 휴가 숙소 예약 비교 에어비앤비 야놀자 여기어때'
+2026-07-19 06:03:42,230 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:03:42,231 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '여름 휴가 숙소 예약 비교 에어비앤비 야놀자 여기어때'
+2026-07-19 06:04:15,189 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:04:15,190 [WARNING] source_validator — 주장-출처 대조 실패: Expecting ',' delimiter: line 2 column 56 (char 69)
+2026-07-19 06:04:15,190 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'X': 2, 'B': 3, 'C': 2}
+2026-07-19 06:04:15,192 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-07-19 06:04:15,192 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-19 06:04:15,930 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:05:13,705 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:05:34,877 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
+2026-07-19 06:05:34,877 [INFO] content_generator — 제목 기반 이미지 검색: '여름 휴가 숙소 예약, 에어비앤비·야놀자·여기어때 뭐가 다른가 (2026년 7월 기준 비교)'
+2026-07-19 06:05:35,046 [INFO] image_fetcher — 이미지 수집 성공: '여름 휴가 숙소 예약, 에어비앤비·야놀자·여기어때 뭐가 다른가 (2026년 7월 기준 비교)' → 제목='window / house / nature / inside / wood ' (관련성=0.15)
+2026-07-19 06:05:35,046 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-19 06:05:35,048 [INFO] content_generator — 포스트 생성 완료: '여름 휴가 숙소 예약, 에어비앤비·야놀자·여기어때 뭐가 다른가 (2026년 7월 기준 비교)' (2530자, 이미지 1개)
+2026-07-19 06:05:36,201 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:05:59,627 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-19 06:06:00,480 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:06:04,192 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 59/100 — '여름 휴가 숙소 예약, 에어비앤비·야놀자·여기어때 뭐가 다른가 '
+2026-07-19 06:06:04,192 [INFO] adsense_validator —   ❌ 원본성 및 품질: 본문 중 '(정확한 수치는 확인 필요)' 같은 미완성 플레이스홀더와 문장이 깨진 채 중복 삽입된 부분이 있어 편집이 완료되지 않은 저품질 콘텐츠로 보임
+2026-07-19 06:06:04,192 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 단락 구분 없이 긴 문장 블록이 이어져 가독성이 떨어짐
+2026-07-19 06:06:04,192 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술과 출처 언급은 있으나 일부 통계(제주 독채민박 증가율 등)가 검증되지 않은 채 모호하게 남아있음
+2026-07-19 06:06:04,192 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 저작권 문제는 없으나 시각자료 부재로 warn
+2026-07-19 06:06:04,192 [INFO] adsense_validator —   ❌ AI 생성 의심도: 문장이 겹치거나 깨진 채 남아있는 부분('되어 있어 상대적으로 예측 가능한 편입니다'류 중복)이 AI 생성 후 미검수 흔적으로 나타남
+2026-07-19 06:06:04,192 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 본문 중 '(정확한 수치는 확인 필요)' 같은 미완성 플레이스홀더와 문장이 깨진 채 중복 삽입된 부분이 있어 편집이 완료되지 않은 저품질 콘텐츠로 보임
+2026-07-19 06:06:04,192 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 문장이 겹치거나 깨진 채 남아있는 부분('되어 있어 상대적으로 예측 가능한 편입니다'류 중복)이 AI 생성 후 미검수 흔적으로 나타남
+2026-07-19 06:06:04,192 [WARNING] adsense_validator —   🔴 본문 중 '(정확한 수치는 확인 필요)' 등 미완성 플레이스홀더 텍스트가 그대로 노출됨
+2026-07-19 06:06:04,192 [WARNING] adsense_validator —   🔴 일부 문장이 중복·병합되어 문법적으로 깨진 상태로 남아있음 (예: '되어 있어 상대적으로 예측 가능한 편입니다되어 있어...')
+2026-07-19 06:06:04,192 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 59/100, 이유: ["[원본성 및 품질] 본문 중 '(정확한 수치는 확인 필요)' 같은 미완성 플레이스홀더와 문장이 깨진 채 중복 삽입된 부분이 있어 편집이 완료되지 않은 저품질 콘텐츠로 보임"]) — 재생성 2/2
+2026-07-19 06:06:07,193 [INFO] content_generator — 포스트 생성 중: '여름 휴가 숙소 예약 비교 에어비앤비 야놀자 여기어때'
+2026-07-19 06:06:16,212 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:06:16,214 [INFO] research_collector — 검색 의도: 여름 휴가철 숙소 예약 시 에어비앤비·야놀자·여기어때 3개 플랫폼의 가격, 혜택, 이용 조건을 비교하여 최적
+2026-07-19 06:06:29,647 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '여름 휴가 숙소 예약 비교 에어비앤비 야놀자 여기어때'
+2026-07-19 06:06:47,643 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:06:47,645 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '여름 휴가 숙소 예약 비교 에어비앤비 야놀자 여기어때'
+2026-07-19 06:06:59,145 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:06:59,146 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'B': 2, 'X': 3, 'D': 1, 'C': 1}
+2026-07-19 06:06:59,147 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-07-19 06:06:59,147 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-19 06:06:59,884 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:07:56,685 [WARNING] content_generator — 컨텐츠 너무 짧음(2468자, 최소 2500자) — 재시도 1/3
+2026-07-19 06:07:59,686 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-19 06:08:00,377 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:08:57,537 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:09:13,426 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
+2026-07-19 06:09:13,426 [INFO] content_generator — 제목 기반 이미지 검색: '여름 휴가 숙소, 에어비앤비 vs 야놀자 vs 여기어때 뭐가 나을까 따져봤습니다'
+2026-07-19 06:09:13,709 [INFO] image_fetcher — 이미지 수집 성공: '여름 휴가 숙소, 에어비앤비 vs 야놀자 vs 여기어때 뭐가 나을까 따져봤습니다' → 제목='window / house / nature / inside / wood ' (관련성=0.18)
+2026-07-19 06:09:13,709 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-19 06:09:13,709 [INFO] content_generator — 포스트 생성 완료: '여름 휴가 숙소, 에어비앤비 vs 야놀자 vs 여기어때 뭐가 나을까 따져봤습니다' (2560자, 이미지 1개)
+2026-07-19 06:09:14,497 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:09:38,122 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-19 06:09:39,774 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:09:41,724 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '여름 휴가 숙소, 에어비앤비 vs 야놀자 vs 여기어때 뭐가 나'
+2026-07-19 06:09:41,724 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 통계(2058→1469명, 541곳/3134실)는 있으나 2560자로 분량 기준 warn 구간이며 전반적으로 일반론 재조합에 가까움
+2026-07-19 06:09:41,724 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 pass 조건이나 실제 본문이 구분 없이 장문 단락으로 이어져 가독성이 떨어짐
+2026-07-19 06:09:41,724 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 개인 경험 언급과 출처 3개는 있으나 통계 수치에 '~로 완화/수정' 같은 편집 메모가 그대로 남아 신뢰도를 저해함
+2026-07-19 06:09:41,724 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 SEO·가독성 측면에서 보완 필요(저작권 위반은 없음)
+2026-07-19 06:09:41,724 [INFO] adsense_validator —   ❌ AI 생성 의심도: '전년 대비 크게 늘었다는 등으로 완화', '~로 수정' 같은 AI 편집 과정의 메타 주석이 본문에 그대로 노출되어 있음
+2026-07-19 06:09:41,724 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '전년 대비 크게 늘었다는 등으로 완화', '~로 수정' 같은 AI 편집 과정의 메타 주석이 본문에 그대로 노출되어 있음
+2026-07-19 06:09:41,724 [WARNING] adsense_validator —   🔴 본문 곳곳에 '~로 완화', '~로 수정'과 같은 AI 편집 메타 주석이 그대로 남아 있어 즉시 제거 및 검수 필요
+2026-07-19 06:09:41,724 [WARNING] adsense_validator —   🔴 제주 숙소 수치(541곳/3134실, 증가율)의 출처와 정확성 재확인 필요 (모호한 표현으로 완화된 흔적 있음)
+2026-07-19 06:09:41,730 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-19 06:09:41,732 [INFO] internal_linker —   [1/5] '휴가철' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0159774743
+2026-07-19 06:09:41,732 [INFO] internal_linker —   [2/5] '수수료' -> https://www.hoguwhat.com/2026/07/0.html
+2026-07-19 06:09:41,735 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-19 06:09:41,735 [INFO] main —   제목: 여름 휴가 숙소, 에어비앤비 vs 야놀자 vs 여기어때 뭐가 나을까 따져봤습니다
+2026-07-19 06:09:41,735 [INFO] main —   이미지: 1개 삽입
+2026-07-19 06:09:41,735 [INFO] main —   글자 수: 2560자
+2026-07-19 06:09:42,928 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 06:10:05,412 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 61/100 — '여름 휴가 숙소, 에어비앤비 vs 야놀자 vs 여기어때 뭐가 나'
+2026-07-19 06:10:05,412 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2560자로 warn 구간이며, 통계 인용은 있으나 '완화/수정'같은 편집 흔적이 그대로 남아 재조합 인상이 강함
+2026-07-19 06:10:05,413 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 본문이 단락 구분 없이 이어져 500자 이상 블록이 다수 존재
+2026-07-19 06:10:05,413 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 통계 수치 서술에 '완화/수정' 편집 잔여 표현이 남아 있어 정확성 검증 필요
+2026-07-19 06:10:05,413 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 개인 의견과 3개 출처는 있으나 편집 흔적으로 신뢰도 신호가 훼손됨
+2026-07-19 06:10:05,413 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음(부재 자체는 fail 아님)
+2026-07-19 06:10:05,413 [INFO] adsense_validator —   ❌ AI 생성 의심도: '로 완화', '로 수정' 등 AI 편집 지시문이 본문에 그대로 노출되어 명백한 AI 생성/미검수 흔적
+2026-07-19 06:10:05,413 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '로 완화', '로 수정' 등 AI 편집 지시문이 본문에 그대로 노출되어 명백한 AI 생성/미검수 흔적
+2026-07-19 06:10:05,413 [WARNING] adsense_validator —   🔴 본문 내 '전년 대비 크게 늘었다는 등으로 완화', '이중가격 관련 민원도 제기되고 있다로 수정' 등 AI 편집 지시문이 그대로 노출됨 — 반드시 제거 및 재검수 필요
+2026-07-19 06:10:05,413 [ERROR] main —   ❌ AdSense 유해 콘텐츠 감지 — 업로드 취소: '여름 휴가 숙소, 에어비앤비 vs 야놀자 vs 여기어때 뭐가 나을까 따져봤습니다' (점수: 61/100)
+2026-07-19 06:10:05,413 [ERROR] main —      🔴 [AI 생성 의심도] '로 완화', '로 수정' 등 AI 편집 지시문이 본문에 그대로 노출되어 명백한 AI 생성/미검수 흔적
+2026-07-19 06:10:05,413 [ERROR] main —      🔴 본문 내 '전년 대비 크게 늘었다는 등으로 완화', '이중가격 관련 민원도 제기되고 있다로 수정' 등 AI 편집 지시문이 그대로 노출됨 — 반드시 제거 및 재검수 필요
+2026-07-19 06:10:05,424 [INFO] main — 
+============================================================
+2026-07-19 06:10:05,424 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 1개
+2026-07-19 06:10:05,424 [INFO] main — ============================================================
+2026-07-19 06:10:05,454 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-19 06:10:05,475 [INFO] dashboard_exporter —   시리즈: 7개 내보내기 완료
+2026-07-19 06:10:05,494 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-19 06:10:05,948 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-19 06:10:06,172 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-19 06:10:06,173 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-19 06:10:06,175 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-19 06:10:06,189 [INFO] post_manager —   포스트 레지스트리: 전체 259개 (게시 161 / 실패 17 / 대기 56)
+2026-07-19 06:10:06,189 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-19 06:10:06,190 [INFO] dashboard_exporter —   포스트: 85개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-19 06:10:06,190 [INFO] main — 대시보드 데이터 업데이트 완료

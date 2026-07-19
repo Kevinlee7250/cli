@@ -32,9 +32,22 @@ on:
           - setup   # AdSense 필수 페이지 생성 (개인정보처리방침·블로그 소개)
           - retry   # 실패한 포스트 재시도
       series_count:
-        description: '시리즈 편수 (2~5, series 모드에서만 사용)'
+        description: '시리즈 편수 (2~5, 드라마 회차별 리뷰는 1~8)'
         required: false
         default: '4'
+      series_type:
+        description: '시리즈 유형 (series 모드 전용)'
+        required: false
+        default: 'auto'
+        type: choice
+        options:
+          - auto            # 블로그별 자동 기획
+          - drama           # 드라마 테마형 리뷰 (첫인상·인물·명장면·총평)
+          - drama_episodes  # 드라마 회차별 리뷰 (매 화 1편, keyword=드라마명)
+      start_episode:
+        description: '회차별 리뷰 시작 회차 (drama_episodes 전용)'
+        required: false
+        default: '1'
       blog_id:
         description: '특정 블로그 ID (blog1 / blog2 / blog3; 비워두면 세 블로그 순차 실행)'
         required: false
@@ -153,7 +166,9 @@ jobs:
               echo "❌ 시리즈 모드는 keyword 입력이 필수입니다"
               exit 1
             fi
-            python main.py --series --series-count "$SERIES_COUNT" --keyword "$KEYWORD" $BLOG_ARG
+            python main.py --series --series-count "$SERIES_COUNT" --keyword "$KEYWORD" \
+              --series-type "${{ inputs.series_type || 'auto' }}" \
+              --start-episode "${{ inputs.start_episode || '1' }}" $BLOG_ARG
           elif [ "$MODE" = "test" ]; then
             echo "=== blog1 테스트 모드 ==="
             if [ -n "$KEYWORD" ]; then
@@ -335,7 +350,9 @@ jobs:
               echo "❌ 시리즈 모드는 keyword 입력이 필수입니다"
               exit 1
             fi
-            python main.py --series --series-count "$SERIES_COUNT" --keyword "$KEYWORD" $BLOG_ARG
+            python main.py --series --series-count "$SERIES_COUNT" --keyword "$KEYWORD" \
+              --series-type "${{ inputs.series_type || 'auto' }}" \
+              --start-episode "${{ inputs.start_episode || '1' }}" $BLOG_ARG
           elif [ "$MODE" = "test" ]; then
             echo "=== blog2 테스트 모드 ==="
             if [ -n "$KEYWORD" ]; then
@@ -516,7 +533,9 @@ jobs:
               echo "❌ 시리즈 모드는 keyword 입력이 필수입니다"
               exit 1
             fi
-            python main.py --series --series-count "$SERIES_COUNT" --keyword "$KEYWORD" $BLOG_ARG
+            python main.py --series --series-count "$SERIES_COUNT" --keyword "$KEYWORD" \
+              --series-type "${{ inputs.series_type || 'auto' }}" \
+              --start-episode "${{ inputs.start_episode || '1' }}" $BLOG_ARG
           elif [ "$MODE" = "test" ]; then
             echo "=== blog3 테스트 모드 ==="
             if [ -n "$KEYWORD" ]; then

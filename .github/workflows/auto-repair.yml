@@ -130,6 +130,7 @@ jobs:
             blog-automation/coupang_affiliate.py; do
             [ -f "$f" ] && git add -f "$f"
           done
+          git add -f blog-automation/logs/post_drafts/ 2>/dev/null || true
           true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"

@@ -2092,6 +2092,125 @@ const GH_BRANCH = 'claude/blog-automation-system-KAbtE'
 
 const CPC_MAP = {법률:3.20,부동산:2.80,금융:2.50,건강:1.80,기술:1.50,교육:1.30,여행:1.20,쇼핑:0.90,일반:1.00}
 
+// ── 워크플로 실행 상태 추적 ───────────────────────────────────────────────────
+// 대시보드의 모든 dispatch 호출을 가로채 실행 중 → 완료 상태를 위젯으로 표시
+const WF_LABELS = {
+  'blog-run.yml': '📝 포스트 생성', 'post-action.yml': '📋 포스트 액션',
+  'manual-publish.yml': '🚀 수동 게시', 'auto-repair.yml': '🔧 자동 수리',
+  'backup.yml': '☁️ Drive 백업', 'adsense-audit.yml': '🔎 AdSense 감사',
+  'fix-duplicate-toc.yml': '🧹 중복 목차 정리', 'fix-duplicate-images.yml': '🖼️ 중복 이미지 교체',
+  'migrate-offtopic.yml': '📦 구주제 글 정리', 'weekly-learning.yml': '🧠 주간 학습',
+  'bot-reply.yml': '🤖 관리봇 응답', 'collect-keywords.yml': '🔑 키워드 수집',
+  'restyle-post.yml': '🎨 글 리스타일', 'fix-posts.yml': '🔧 글 일괄 보정',
+  'blog-comment-automation.yml': '💬 댓글 자동화', 'adsense-policy-update.yml': '📐 정책 업데이트',
+  'gsc-register.yml': '🔍 GSC 등록', 'post-lifecycle.yml': '📈 생애주기 추적',
+}
+let _wfTracks = []   // {id, file, label, startTs, status, conclusion, runUrl, done}
+let _wfPollTimer = null
+
+function _wfTrackStart(file) {
+  const label = WF_LABELS[file] || file.replace('.yml', '')
+  _wfTracks.push({
+    id: Date.now() + Math.random().toString(36).slice(2, 6),
+    file, label, startTs: Date.now(), status: 'dispatched',
+    conclusion: null, runUrl: '', done: false,
+  })
+  _wfRenderTracker()
+  if (!_wfPollTimer) _wfPollTimer = setInterval(_wfPollAll, 7000)
+}
+
+async function _wfPollAll() {
+  const pat = getPAT()
+  const active = _wfTracks.filter(t => !t.done)
+  if (!active.length) { clearInterval(_wfPollTimer); _wfPollTimer = null; return }
+  if (!pat) return
+  // 같은 파일은 한 번만 조회
+  const byFile = {}
+  active.forEach(t => (byFile[t.file] = byFile[t.file] || []).push(t))
+  for (const [file, tracks] of Object.entries(byFile)) {
+    try {
+      const r = await fetch(
+        `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${file}/runs?branch=${encodeURIComponent(GH_BRANCH)}&per_page=5`,
+        { headers: { Authorization: `Bearer ${pat}`, Accept: 'application/vnd.github+json' } })
+      if (!r.ok) continue
+      const runs = (await r.json()).workflow_runs || []
+      for (const t of tracks) {
+        // dispatch 직전 30초 이후 생성된 가장 오래된(=해당 dispatch) 런 매칭
+        const match = runs
+          .filter(x => new Date(x.created_at).getTime() >= t.startTs - 30000)
+          .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))[0]
+        if (!match) {
+          // 3분 넘게 런이 안 보이면 추적 종료
+          if (Date.now() - t.startTs > 180000) { t.done = true; t.status = 'lost' }
+          continue
+        }
+        t.runUrl = match.html_url
+        t.status = match.status            // queued | in_progress | completed
+        if (match.status === 'completed') {
+          t.conclusion = match.conclusion  // success | failure | cancelled
+          if (!t.done) {
+            t.done = true
+            const ok = match.conclusion === 'success'
+            showToast(`${t.label} ${ok ? '✅ 실행 완료' : '❌ 실패 (' + (match.conclusion || '?') + ')'}`, ok ? 'success' : 'error')
+            setTimeout(() => { _wfTracks = _wfTracks.filter(x => x.id !== t.id); _wfRenderTracker() }, 30000)
+          }
+        }
+      }
+    } catch (_) {}
+  }
+  _wfRenderTracker()
+}
+
+function _wfRenderTracker() {
+  let el = document.getElementById('wf-tracker')
+  if (!_wfTracks.length) { if (el) el.remove(); return }
+  if (!el) {
+    el = document.createElement('div')
+    el.id = 'wf-tracker'
+    el.style.cssText =
+      'position:fixed;bottom:18px;left:18px;z-index:9000;background:var(--bg2);' +
+      'border:1px solid var(--border);border-radius:12px;padding:12px 16px;' +
+      'box-shadow:0 8px 28px rgba(0,0,0,.4);font-size:12px;max-width:320px;min-width:240px'
+    document.body.appendChild(el)
+  }
+  const rows = _wfTracks.map(t => {
+    let icon, text, color
+    if (t.status === 'dispatched' || t.status === 'queued') { icon = '⏳'; text = '대기 중'; color = 'var(--yellow)' }
+    else if (t.status === 'in_progress') { icon = '🔄'; text = '실행 중'; color = 'var(--accent2)' }
+    else if (t.status === 'lost') { icon = '❓'; text = '런 확인 불가'; color = 'var(--muted)' }
+    else if (t.conclusion === 'success') { icon = '✅'; text = '실행 완료'; color = 'var(--green)' }
+    else { icon = '❌'; text = `실패 (${t.conclusion || '?'})`; color = 'var(--red)' }
+    const elapsed = Math.round((Date.now() - t.startTs) / 1000)
+    const elapsedStr = elapsed >= 60 ? `${Math.floor(elapsed / 60)}분 ${elapsed % 60}초` : `${elapsed}초`
+    const link = t.runUrl ? ` <a href="${t.runUrl}" target="_blank" rel="noopener" style="color:var(--accent2)">로그 →</a>` : ''
+    return `<div style="display:flex;align-items:center;gap:8px;padding:4px 0">
+      <span>${icon}</span>
+      <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.label}</span>
+      <span style="color:${color};font-weight:600;white-space:nowrap">${text}</span>
+      <span style="color:var(--muted);font-size:11px;white-space:nowrap">${elapsedStr}${link}</span>
+    </div>`
+  }).join('')
+  el.innerHTML =
+    `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <strong style="font-size:12px">⚙️ 워크플로 실행 상태</strong>
+      <button onclick="_wfTracks=[];_wfRenderTracker()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0 2px">✕</button>
+    </div>` + rows
+}
+
+// dispatch fetch 가로채기 — 성공한 워크플로 실행을 자동 추적
+;(function () {
+  const origFetch = window.fetch.bind(window)
+  window.fetch = async function (url, opts) {
+    const resp = await origFetch(url, opts)
+    try {
+      const u = typeof url === 'string' ? url : (url && url.url) || ''
+      const m = u.match(/\/actions\/workflows\/([^/]+)\/dispatches$/)
+      if (m && (resp.ok || resp.status === 204)) _wfTrackStart(m[1])
+    } catch (_) {}
+    return resp
+  }
+})()
+
 // ── Data ──────────────────────────────────────────────────────────────────────
 let DATA = { posts: [], runs: [], analytics: {}, meta: {}, social: [], pending: [], registry: [] }
 let autoRefreshTimer = null

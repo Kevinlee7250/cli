@@ -624,12 +624,179 @@ def action_remove_image(post_id: str, image_index: int = 1) -> int:
     return 0
 
 
+def _plan_images_with_ai(title: str, plain_text: str, h2_titles: list[str],
+                         sections_without_img: list[int], max_images: int) -> list[dict]:
+    """글을 읽고 어떤 섹션에 어떤 이미지를 넣을지 AI가 계획합니다.
+
+    Returns: [{"h2_index": int, "query": str}] — h2_index는 1-based (0=도입부 뒤).
+    실패 시 빈 리스트 (호출부에서 휴리스틱 폴백).
+    """
+    import anthropic
+    from config import claude_generate, ANTHROPIC_API_KEY, CLAUDE_MODEL
+
+    h2_list = "\n".join(
+        f"  {i+1}. {t}" + ("" if (i + 1) in sections_without_img else " (이미 이미지 있음)")
+        for i, t in enumerate(h2_titles)
+    )
+    try:
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        raw = claude_generate(
+            client, model=CLAUDE_MODEL, max_tokens=2000,
+            system=(
+                "당신은 블로그 이미지 편집자입니다. 글을 읽고 시각 자료가 가장 도움이 될 "
+                "섹션을 고르고, 이미지 검색에 적합한 짧은 검색어(핵심 명사 2~3개)를 제안하세요. "
+                "'이미 이미지 있음' 섹션은 제외하세요. JSON만 응답하세요."
+            ),
+            messages=[{"role": "user", "content": (
+                f"제목: {title}\n\nH2 섹션 목록:\n{h2_list}\n\n"
+                f"본문 요약:\n{plain_text[:2500]}\n\n"
+                f"최대 {max_images}개 계획. JSON 형식:\n"
+                '{"images": [{"h2_index": 섹션번호(0=도입부), "query": "검색어"}]}'
+            )}],
+        ).strip()
+        m = __import__("re").search(r"\{.*\}", raw, __import__("re").DOTALL)
+        if not m:
+            return []
+        plan = json.loads(m.group(0)).get("images", [])
+        return [p for p in plan
+                if isinstance(p, dict) and p.get("query", "").strip()][:max_images]
+    except Exception as e:
+        logger.warning(f"AI 이미지 계획 실패 — 휴리스틱 폴백 사용: {e}")
+        return []
+
+
+def action_auto_images(post_id: str, max_images: int = 2) -> int:
+    """발행 글을 분석해 이미지를 자동 검색·생성·첨부합니다 (Blogger 즉시 반영).
+
+    1) 본문의 H2 섹션 중 이미지가 없는 섹션 파악
+    2) AI가 글을 읽고 섹션별 이미지 검색어 계획 (실패 시 섹션 제목 휴리스틱)
+    3) 검색(Pixabay→네이버→DDG→Wikimedia) → 실패 시 제목 기반 생성 썸네일
+    4) 해당 섹션 앞에 삽입 (이미 이미지가 있는 섹션은 건너뜀)
+    """
+    import re as _re
+    from image_fetcher import (
+        _fetch_best_image, _make_img_html, _safe_caption,
+        _simplify_query, generate_title_thumbnail,
+    )
+
+    entry = _get_published_entry(post_id)
+    if not entry:
+        return 1
+    ctx, content = _fetch_published_content(entry)
+    if not ctx or not content:
+        return 1
+
+    title = entry.get("title") or entry.get("keyword", "")
+
+    # ── 섹션 구조 분석 ──
+    h2_matches = list(_re.finditer(r'<h2[^>]*>(.*?)</h2>', content, _re.IGNORECASE | _re.DOTALL))
+    h2_titles = [_re.sub(r'<[^>]+>', '', m.group(1)).strip()[:60] for m in h2_matches]
+
+    def _section_span(i: int) -> tuple[int, int]:
+        start = h2_matches[i].start()
+        end = h2_matches[i + 1].start() if i + 1 < len(h2_matches) else len(content)
+        return start, end
+
+    intro_end = h2_matches[0].start() if h2_matches else len(content)
+    intro_has_img = '<img' in content[:intro_end].lower()
+    sections_without_img = [
+        i + 1 for i in range(len(h2_matches))
+        if '<img' not in content[slice(*_section_span(i))].lower()
+    ]
+    total_imgs = len(_re.findall(r'<img\b', content, _re.IGNORECASE))
+    logger.info(
+        f"본문 분석: H2 {len(h2_matches)}개, 이미지 {total_imgs}개, "
+        f"이미지 없는 섹션 {len(sections_without_img)}개, 도입부 이미지 {'있음' if intro_has_img else '없음'}"
+    )
+    if not sections_without_img and intro_has_img:
+        logger.info("모든 섹션에 이미지가 이미 있습니다 — 추가 없이 종료")
+        return 0
+
+    # ── AI 계획 (실패 시 휴리스틱: 이미지 없는 섹션 제목에서 검색어 추출) ──
+    plain = _re.sub(r'\s+', ' ', _re.sub(r'<[^>]+>', ' ', content)).strip()
+    plan = _plan_images_with_ai(title, plain, h2_titles, sections_without_img, max_images)
+    if not plan:
+        plan = []
+        if not intro_has_img:
+            plan.append({"h2_index": 0, "query": _simplify_query(title, 2) or title})
+        for idx in sections_without_img:
+            q = _simplify_query(f"{title} {h2_titles[idx - 1]}", 3) or h2_titles[idx - 1]
+            plan.append({"h2_index": idx, "query": q})
+        plan = plan[:max_images]
+        logger.info(f"휴리스틱 계획 사용: {[(p['h2_index'], p['query']) for p in plan]}")
+    else:
+        logger.info(f"AI 계획: {[(p.get('h2_index'), p.get('query')) for p in plan]}")
+
+    # ── 계획 실행: 검색 → 폴백 썸네일 → 삽입 ──
+    inserted = 0
+    for item in plan:
+        if inserted >= max_images:
+            break
+        try:
+            h2_index = int(item.get("h2_index", 0))
+        except (TypeError, ValueError):
+            h2_index = 0
+        query = str(item.get("query", "")).strip()
+        if not query:
+            continue
+        if h2_index < 0 or h2_index > len(h2_matches):
+            h2_index = 0
+
+        img = _fetch_best_image(
+            query,
+            naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
+            naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
+            n_candidates=6,
+            pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
+        )
+        if not img:
+            img = generate_title_thumbnail(query if len(query) >= 6 else title,
+                                           entry.get("keyword", ""))
+            if not img:
+                logger.warning(f"이미지 확보 실패 (검색·생성 모두): '{query}' — 건너뜀")
+                continue
+            logger.info(f"검색 실패 → 생성 썸네일 사용: '{query}'")
+
+        alt = query[:50]
+        img_html = _make_img_html(img, alt, _safe_caption(img, alt))
+
+        # 삽입 직전에 현재 content 기준으로 대상 위치 재계산 (누적 삽입 반영)
+        cur_h2 = list(_re.finditer(r'<h2', content, _re.IGNORECASE))
+        if h2_index >= 1 and h2_index <= len(cur_h2):
+            span_start = cur_h2[h2_index - 1].start()
+            span_end = cur_h2[h2_index].start() if h2_index < len(cur_h2) else len(content)
+            if '<img' in content[span_start:span_end].lower():
+                logger.info(f"{h2_index}번째 섹션에 이미 이미지 있음 — 건너뜀")
+                continue
+            pos = span_start
+        else:
+            head = content[:cur_h2[0].start()] if cur_h2 else content
+            if '<img' in head.lower():
+                logger.info("도입부에 이미 이미지 있음 — 건너뜀")
+                continue
+            fp = _re.search(r'</p>', content, _re.IGNORECASE)
+            pos = fp.end() if fp else 0
+
+        content = content[:pos] + img_html + content[pos:]
+        inserted += 1
+        where = f"{h2_index}번째 H2 앞" if h2_index >= 1 else "도입부 뒤"
+        logger.info(f"🖼 이미지 삽입 ({where}): '{query}' → {img.get('title','')[:40]}")
+
+    if not inserted:
+        logger.warning("삽입된 이미지가 없습니다 — 변경 없이 종료")
+        return 0
+    if not _patch_published_content(ctx, content):
+        return 1
+    logger.info(f"✅ 자동 이미지 첨부 완료: {inserted}개 — {entry.get('blogUrl','')}")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="포스트 단건 관리")
     parser.add_argument("--action", required=True,
                         choices=["publish", "archive", "delete", "restore",
                                  "insert_thumbnail", "replace_image",
-                                 "improve", "add_image", "remove_image"])
+                                 "improve", "add_image", "remove_image", "auto_images"])
     parser.add_argument("--post-id", required=True, dest="post_id")
     parser.add_argument("--thumb-title", default="", dest="thumb_title",
                         help="썸네일 제목 (기본: 포스트 제목)")
@@ -641,6 +808,8 @@ def main() -> int:
                         help="교체용 이미지 검색어 (비워두면 생성 썸네일로 교체, replace_image 전용)")
     parser.add_argument("--improve-request", default="", dest="improve_request",
                         help="AI 보완 요청 내용 (improve 전용, 비워두면 기본 보완)")
+    parser.add_argument("--max-images", type=int, default=2, dest="max_images",
+                        help="자동 첨부할 최대 이미지 수 (auto_images 전용, 1~4)")
     args = parser.parse_args()
 
     if args.action == "insert_thumbnail":
@@ -655,6 +824,8 @@ def main() -> int:
                                 args.thumb_title, args.thumb_theme)
     if args.action == "remove_image":
         return action_remove_image(args.post_id, args.image_index)
+    if args.action == "auto_images":
+        return action_auto_images(args.post_id, max(1, min(args.max_images, 4)))
 
     dispatch = {
         "publish": action_publish,

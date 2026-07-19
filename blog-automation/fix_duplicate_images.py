@@ -143,7 +143,7 @@ def _iter_posts(blog_id: str, token: str):
 
 def _find_replacement_image(title: str, keyword: str = "") -> dict | None:
     """글 제목 기반 새 이미지 확보 — 검색(기사용 회피) 실패 시 생성 썸네일."""
-    from image_fetcher import _fetch_best_image, _simplify_query, generate_title_thumbnail
+    from image_fetcher import _fetch_best_image, _simplify_query, generate_fallback_image
 
     query = _simplify_query(title, 3) or title
     img = _fetch_best_image(
@@ -156,9 +156,10 @@ def _find_replacement_image(title: str, keyword: str = "") -> dict | None:
     if img:
         img["alt_text"] = query[:50]
         return img
-    thumb = generate_title_thumbnail(title, keyword)
+    thumb = generate_fallback_image(title, keyword)
     if thumb:
-        logger.info(f"    검색 실패 → 생성 썸네일 사용: '{title[:40]}'")
+        kind = "AI 생성 이미지" if thumb.get("source") == "ai_generated" else "생성 썸네일"
+        logger.info(f"    검색 실패 → {kind} 사용: '{title[:40]}'")
     return thumb
 
 

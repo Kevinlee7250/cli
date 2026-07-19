@@ -627,6 +627,73 @@ def _upload_to_imgbb(svg_bytes: bytes) -> str:
     return ""
 
 
+def _generate_ai_image(topic: str) -> dict | None:
+    """검색 실패 시 AI(OpenAI 이미지 모델)로 주제 이미지를 생성합니다.
+
+    생성 이미지는 ImgBB에 업로드해 공개 URL로 반환합니다.
+    - AI_IMAGE_FALLBACK=false 로 비활성화 가능 (기본 활성)
+    - OPENAI_API_KEY·IMGBB_API_KEY 둘 다 필요 (없으면 None → SVG 썸네일로)
+    - 초상권·저작권 안전: 실존 인물·텍스트·워터마크 금지 프롬프트
+    """
+    if os.getenv("AI_IMAGE_FALLBACK", "true").strip().lower() not in ("true", "1", "yes"):
+        return None
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        return None
+    if not os.getenv("IMGBB_API_KEY", "").strip():
+        logger.info("IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백")
+        return None
+    topic = (topic or "").strip()
+    if not topic:
+        return None
+    try:
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key)
+        model = os.getenv("OPENAI_IMAGE_MODEL", "gpt-image-1")
+        prompt = (
+            f"Clean, modern blog header illustration about: {topic}. "
+            "Soft gradients, flat design with subtle depth, warm inviting colors. "
+            "Strictly NO text, NO letters, NO watermark, NO logos, "
+            "NO real or recognizable people or celebrity likenesses."
+        )
+        resp = client.images.generate(model=model, prompt=prompt, size="1536x1024", n=1)
+        data = resp.data[0]
+        b64 = getattr(data, "b64_json", None)
+        if b64:
+            img_bytes = base64.b64decode(b64)
+        else:
+            src_url = getattr(data, "url", None)
+            if not src_url:
+                return None
+            img_bytes = requests.get(src_url, timeout=30).content
+        url = _upload_to_imgbb(img_bytes)
+        if not url:
+            logger.warning("AI 이미지 ImgBB 업로드 실패 — SVG 썸네일로 폴백")
+            return None
+        logger.info(f"🎨 AI 이미지 생성·업로드 완료: '{topic[:40]}' → {url[:70]}")
+        return {
+            "url": url,
+            "title": topic,
+            "width": 1536,
+            "height": 1024,
+            "source": "ai_generated",
+        }
+    except Exception as e:
+        logger.warning(f"AI 이미지 생성 실패 ({type(e).__name__}): {str(e)[:120]} — SVG 썸네일로 폴백")
+        return None
+
+
+def generate_fallback_image(title: str, keyword: str = "", theme: str = "") -> dict | None:
+    """검색 전부 실패 시 폴백 이미지: ① AI 생성 이미지 → ② SVG 제목 썸네일."""
+    topic = (title or keyword or "").strip()
+    img = _generate_ai_image(topic)
+    if img:
+        img["alt_text"] = topic[:50]
+        img["search_query"] = topic
+        return img
+    return generate_title_thumbnail(title, keyword, theme=theme)
+
+
 def generate_title_thumbnail(title: str, keyword: str = "", theme: str = "") -> dict | None:
     """
     제목 기반 SVG 썸네일 카드를 생성합니다 (이미지 검색 전부 실패 시 폴백).
@@ -739,7 +806,7 @@ def fetch_images_for_queries(
     # 최종 폴백: 이미지가 하나도 없으면 제목 기반 썸네일 생성
     # + 글 내용과 관련된 실제 이미지도 함께 검색해 첨부
     if not images and (title or keyword):
-        thumb = generate_title_thumbnail(title, keyword)
+        thumb = generate_fallback_image(title, keyword)
         if thumb:
             # 실제 사진 이미지 추가 검색 (썸네일과 함께 제공)
             search_kw = keyword or title or ""

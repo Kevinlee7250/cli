@@ -680,7 +680,7 @@ def action_auto_images(post_id: str, max_images: int = 2) -> int:
     import re as _re
     from image_fetcher import (
         _fetch_best_image, _make_img_html, _safe_caption,
-        _simplify_query, generate_title_thumbnail,
+        _simplify_query, generate_fallback_image,
     )
 
     entry = _get_published_entry(post_id)
@@ -755,8 +755,8 @@ def action_auto_images(post_id: str, max_images: int = 2) -> int:
             pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
         )
         if not img:
-            img = generate_title_thumbnail(query if len(query) >= 6 else title,
-                                           entry.get("keyword", ""))
+            img = generate_fallback_image(query if len(query) >= 6 else title,
+                                          entry.get("keyword", ""))
             if not img:
                 logger.warning(f"이미지 확보 실패 (검색·생성 모두): '{query}' — 건너뜀")
                 continue

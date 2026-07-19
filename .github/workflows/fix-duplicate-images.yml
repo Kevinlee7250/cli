@@ -47,6 +47,7 @@ jobs:
         run: |
           cat > .env << 'ENVEOF'
           ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
           NAVER_CLIENT_ID="${{ secrets.NAVER_CLIENT_ID }}"
           NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}"
           PIXABAY_API_KEY="${{ secrets.PIXABAY_API_KEY }}"

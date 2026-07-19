@@ -69,6 +69,23 @@ def generate_shorts_thumbnail(title: str, keyword: str = "") -> str:
 # 스크립트 생성
 # ──────────────────────────────────────────────────────────────────────────────
 
+def _repair_json(client, bad_json: str) -> dict | None:
+    """손상된 JSON을 Claude에게 수정 요청합니다."""
+    from config import claude_generate, CLAUDE_MODEL
+    try:
+        fixed = claude_generate(
+            client, model=CLAUDE_MODEL, max_tokens=4000,
+            system="JSON 전문가입니다. 손상된 JSON을 완전히 유효한 JSON으로 수정해 JSON만 출력하세요. 설명·마크다운 없이 JSON만.",
+            messages=[{"role": "user", "content": f"손상된 JSON:\n{bad_json[:3000]}"}],
+        ).strip()
+        m = re.search(r"\{.*\}", fixed, re.DOTALL)
+        if m:
+            return json.loads(m.group(0))
+    except Exception as e:
+        logger.warning(f"JSON 수정 재시도 실패: {e}")
+    return None
+
+
 def generate_shorts_script(title: str, content_html: str, keyword: str = "",
                            blog_url: str = "") -> dict | None:
     """글 내용을 60초 쇼츠 스크립트로 변환합니다 (Claude, 한도 시 OpenAI 폴백)."""
@@ -84,7 +101,7 @@ def generate_shorts_script(title: str, content_html: str, keyword: str = "",
     try:
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
         raw = claude_generate(
-            client, model=CLAUDE_MODEL, max_tokens=4000,
+            client, model=CLAUDE_MODEL, max_tokens=6000,
             system=(
                 "당신은 조회수 잘 나오는 유튜브 쇼츠 대본 작가입니다. "
                 "블로그 글을 60초 세로 영상 대본으로 변환하세요. 규칙:\n"
@@ -108,7 +125,14 @@ def generate_shorts_script(title: str, content_html: str, keyword: str = "",
         if not m:
             logger.error(f"스크립트 JSON 파싱 실패: {raw[:200]}")
             return None
-        script = json.loads(m.group(0))
+        try:
+            script = json.loads(m.group(0))
+        except json.JSONDecodeError as je:
+            logger.warning(f"JSON 파싱 오류 ({je}) — 수정 재시도")
+            script = _repair_json(client, m.group(0))
+            if not script:
+                logger.error("JSON 수정 재시도도 실패 — 스크립트 생성 불가")
+                return None
         if blog_url:
             script["caption"] = (script.get("caption") or "").replace("{URL}", blog_url)
         return script

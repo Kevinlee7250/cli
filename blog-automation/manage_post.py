@@ -415,6 +415,8 @@ def action_replace_image(
         json={"content": new_content}, timeout=30,
     )
     if pr.status_code == 200:
+        from image_fetcher import mark_images_used
+        mark_images_used([new_img.get("url", "")])
         src_type = "검색 이미지" if image_query.strip() else "생성 썸네일"
         logger.info(
             f"✅ 이미지 교체 완료 ({image_index}/{len(img_tags)}번째 → {src_type}): "
@@ -586,6 +588,8 @@ def action_add_image(post_id: str, image_query: str = "", image_index: int = 0,
 
     if not _patch_published_content(ctx, new_content):
         return 1
+    from image_fetcher import mark_images_used
+    mark_images_used([new_img.get("url", "")])
     where = f"{image_index}번째 H2 앞" if image_index >= 1 else "도입부 뒤"
     logger.info(f"✅ 이미지 추가 완료 ({where}): {entry.get('blogUrl','')}")
     return 0
@@ -729,6 +733,7 @@ def action_auto_images(post_id: str, max_images: int = 2) -> int:
 
     # ── 계획 실행: 검색 → 폴백 썸네일 → 삽입 ──
     inserted = 0
+    inserted_urls: list[str] = []
     for item in plan:
         if inserted >= max_images:
             break
@@ -779,6 +784,7 @@ def action_auto_images(post_id: str, max_images: int = 2) -> int:
 
         content = content[:pos] + img_html + content[pos:]
         inserted += 1
+        inserted_urls.append(img.get("url", ""))
         where = f"{h2_index}번째 H2 앞" if h2_index >= 1 else "도입부 뒤"
         logger.info(f"🖼 이미지 삽입 ({where}): '{query}' → {img.get('title','')[:40]}")
 
@@ -787,6 +793,8 @@ def action_auto_images(post_id: str, max_images: int = 2) -> int:
         return 0
     if not _patch_published_content(ctx, content):
         return 1
+    from image_fetcher import mark_images_used
+    mark_images_used(inserted_urls)
     logger.info(f"✅ 자동 이미지 첨부 완료: {inserted}개 — {entry.get('blogUrl','')}")
     return 0
 

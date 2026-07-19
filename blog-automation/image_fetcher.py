@@ -7,6 +7,7 @@
 
 import base64
 import html
+import json
 import os
 import re
 import logging
@@ -84,8 +85,10 @@ def _pixabay_images(keyword: str, count: int, api_key: str) -> list[dict]:
         if en_terms:
             query = " ".join(en_terms[:4])
         else:
-            # 순수 한국어: _ko_to_en_query로 영어 변환
-            query = _ko_to_en_query(keyword) or keyword
+            # 순수 한국어: 영어 변환 실패 시 Pixabay 건너뜀 (네이버가 한국어 담당)
+            query = _ko_to_en_query(keyword)
+            if not query:
+                return []
 
         r = requests.get(
             "https://pixabay.com/api/",
@@ -369,7 +372,45 @@ def _ko_to_en_query(query: str) -> str:
             en_terms.append(_KO_EN[w])
         if len(en_terms) >= 2:
             break
-    return " ".join(en_terms) if en_terms else "lifestyle blog"
+    # 매핑되는 단어가 없으면 빈 문자열 — 범용어("lifestyle blog" 등)로 검색하면
+    # 주제와 무관한 동일 인기 이미지가 모든 글에 반복 첨부되므로 검색을 건너뛴다
+    return " ".join(en_terms)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 글 간 이미지 중복 방지 — 이미 사용한 이미지 URL을 기록·회피
+# ──────────────────────────────────────────────────────────────────────────────
+
+_USED_IMAGES_FILE = os.path.join(os.path.dirname(__file__), "logs", "used_images.json")
+_USED_IMAGES_MAX = 1000  # 최근 N개만 유지
+
+
+def _load_used_images() -> set[str]:
+    try:
+        with open(_USED_IMAGES_FILE, encoding="utf-8") as f:
+            return set(json.load(f).get("urls", []))
+    except (FileNotFoundError, json.JSONDecodeError, OSError):
+        return set()
+
+
+def mark_images_used(urls: list[str]) -> None:
+    """삽입된 이미지 URL을 기록해 이후 글에서 같은 이미지를 피하게 합니다.
+    (data URI 생성 썸네일은 글마다 고유하므로 기록 제외)"""
+    real = [u for u in urls if u and not u.startswith("data:")]
+    if not real:
+        return
+    try:
+        try:
+            with open(_USED_IMAGES_FILE, encoding="utf-8") as f:
+                existing = json.load(f).get("urls", [])
+        except (FileNotFoundError, json.JSONDecodeError, OSError):
+            existing = []
+        merged = existing + [u for u in real if u not in existing]
+        os.makedirs(os.path.dirname(_USED_IMAGES_FILE), exist_ok=True)
+        with open(_USED_IMAGES_FILE, "w", encoding="utf-8") as f:
+            json.dump({"urls": merged[-_USED_IMAGES_MAX:]}, f, ensure_ascii=False, indent=1)
+    except Exception as e:
+        logger.warning(f"used_images.json 기록 실패: {e}")
 
 
 def _fetch_best_image(
@@ -405,12 +446,18 @@ def _fetch_best_image(
     # 관련성 채점은 항상 단순화된 핵심 명사 기준
     score_query = simple2 or simple3 or query
 
+    used_urls = _load_used_images()  # 이전 글들에서 이미 쓴 이미지 회피
     best_fallback = None  # 임계값 미달이라도 후보가 있으면 보관
     for attempt_q in attempts:
         candidates = _search_all_sources(
             attempt_q, naver_client_id, naver_client_secret, n_candidates,
             pixabay_api_key=pixabay_api_key,
         )
+        fresh = [c for c in candidates if c.get("url", "") not in used_urls]
+        if candidates and not fresh:
+            logger.debug(f"후보 전부 기사용 이미지: '{attempt_q}' — 다음 쿼리 시도")
+            continue
+        candidates = fresh
         if not candidates:
             continue
         best = max(candidates, key=lambda img: _score_title_relevance(img, score_query))
@@ -757,6 +804,9 @@ def inject_images_into_content(content: str, images: list[dict], keyword: str) -
     """
     if not images:
         return content
+
+    # 글 간 중복 방지: 삽입되는 이미지 URL 기록
+    mark_images_used([img.get("url", "") for img in images])
 
     img_iter = iter(enumerate(images))
 

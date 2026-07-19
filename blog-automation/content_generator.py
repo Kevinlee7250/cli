@@ -2312,6 +2312,8 @@ def _fact_check_content(post_data: dict, keyword: str, evidence_pack: dict | Non
                     '{"issues": [{"quote": "본문에서 그대로 복사한 문제 구절(20자 이내)", '
                     '"problem": "무엇이 문제인지", "fix": "안전하게 고친 표현"}], '
                     '"verdict": "pass 또는 warn"}\n'
+                    '⚠️ fix는 본문에 그대로 들어갈 완성된 대체 문구여야 합니다. '
+                    '"~로 수정", "~등으로 완화", "~하세요" 같은 편집 지시문은 절대 금지.\n'
                     "문제가 없으면 issues를 빈 배열로, verdict를 pass로 하세요. 이슈는 최대 5개."
                 ),
             }],
@@ -2357,11 +2359,24 @@ def _fact_check_content(post_data: dict, keyword: str, evidence_pack: dict | Non
                     return html_text[:m2.start()] + fix + html_text[m2.end():]
             return None
 
+        def _is_edit_instruction(fix_text: str) -> bool:
+            """fix가 대체 문구가 아닌 편집 지시문인지 판별합니다.
+            (본문에 지시문이 그대로 삽입되는 사고 방지 — 2026-07-19 실제 발생)"""
+            t = fix_text.strip()
+            if re.search(r'(하세요|해야\s*합니다|필요합니다|바랍니다)\s*[.!]?$', t):
+                return True
+            # "~로 수정", "~등으로 완화", "~로 교체/변경/삭제" 형태로 끝나는 지시문
+            return bool(re.search(r'(으로|로)\s*(수정|완화|교체|변경|삭제|대체)\s*[.!]?$', t))
+
         applied = 0
         issue_records = []
         for issue in result.get("issues", [])[:5]:
             quote, fix = issue.get("quote", ""), issue.get("fix", "")
             fixed = False
+            if fix and _is_edit_instruction(fix):
+                logger.warning(f"팩트체크 fix가 지시문 형태 — 적용 건너뜀: '{fix[:50]}'")
+                issue_records.append({"problem": issue.get("problem", ""), "fixed": False})
+                continue
             if quote and fix:
                 replaced = _safe_replace(content_html, quote, fix)
                 if replaced is not None:

@@ -197,6 +197,10 @@ jobs:
         working-directory: blog-automation
         run: python -c "from config import export_ai_usage_to_docs; export_ai_usage_to_docs()" || true
 
+      - name: 구글 색인 요청 — 사이트맵 제출 (blog1)
+        working-directory: blog-automation
+        run: python gsc_indexing.py --submit --blog blog1 || true
+
       - name: 대시보드 데이터 커밋 & 푸시 (blog1)
         if: always()
         run: |
@@ -383,6 +387,10 @@ jobs:
         working-directory: blog-automation
         run: python -c "from config import export_ai_usage_to_docs; export_ai_usage_to_docs()" || true
 
+      - name: 구글 색인 요청 — 사이트맵 제출 (blog2)
+        working-directory: blog-automation
+        run: python gsc_indexing.py --submit --blog blog2 || true
+
       - name: 대시보드 데이터 커밋 & 푸시 (blog2)
         if: always()
         run: |
@@ -566,6 +574,10 @@ jobs:
         if: always()
         working-directory: blog-automation
         run: python -c "from config import export_ai_usage_to_docs; export_ai_usage_to_docs()" || true
+
+      - name: 구글 색인 요청 — 사이트맵 제출 (blog3)
+        working-directory: blog-automation
+        run: python gsc_indexing.py --submit --blog blog3 || true
 
       - name: 대시보드 데이터 커밋 & 푸시 (blog3)
         if: always()

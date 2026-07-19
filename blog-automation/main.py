@@ -586,10 +586,12 @@ def run_series(
             save_series(series_plan)
             continue
 
-        # 2500자 미달 → pending 저장 (thin content 업로드 방지)
+        # 분량 미달 → pending 저장 (thin content 업로드 방지)
+        # 드라마 회차별 리뷰는 단일 회차 주제 특성상 기준 완화 (2000자)
+        series_min_wc = 2000 if series_plan.get("type") == "drama_episode_review" else 2500
         series_wc = post_data.get("word_count", 0)
-        if series_wc < 2500:
-            logger.warning(f"  ⚠️ [편 {ep_num}] 글자 수 미달 ({series_wc}자 < 2500자) — pending 저장")
+        if series_wc < series_min_wc:
+            logger.warning(f"  ⚠️ [편 {ep_num}] 글자 수 미달 ({series_wc}자 < {series_min_wc}자) — pending 저장")
             post_data["status"] = "pending"
             pending_list.append(post_data)
             ep["status"] = "pending_review"

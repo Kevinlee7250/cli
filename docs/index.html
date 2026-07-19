@@ -1295,6 +1295,12 @@
           <option value="drama">🎬 드라마 리뷰 (첫인상·인물·명장면·총평)</option>
           <option value="drama_episodes">📺 드라마 회차별 리뷰 (매 화 1편)</option>
         </select>
+        <select id="wf-series-blog" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:8px">
+          <option value="">🌐 전체 블로그 (3곳 모두 실행 — 주의)</option>
+          <option value="blog1">blog1 (HOGU What?)</option>
+          <option value="blog2">blog2 (HOGU 여행,스포츠,연예)</option>
+          <option value="blog3">blog3 (금융NEWS)</option>
+        </select>
         <div id="wf-series-start-wrap" style="display:none;gap:6px;margin-bottom:8px;align-items:center">
           <span style="font-size:12px;color:var(--muted);white-space:nowrap">시작 회차:</span>
           <input id="wf-series-start" type="number" min="1" max="100" value="1" style="width:70px;padding:6px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
@@ -6302,6 +6308,7 @@ function wfRunLive() {
 function wfSeriesTypeChanged() {
   const type = document.getElementById('wf-series-type')?.value || 'auto'
   const isEp = type === 'drama_episodes'
+  const isDrama = type === 'drama' || isEp
   const startWrap = document.getElementById('wf-series-start-wrap')
   if (startWrap) startWrap.style.display = isEp ? 'flex' : 'none'
   // 회차별 리뷰는 6·8편 버튼도 노출 (최대 8회차)
@@ -6309,6 +6316,9 @@ function wfSeriesTypeChanged() {
   if (b6) b6.style.display = isEp ? '' : 'none'
   if (b8) b8.style.display = isEp ? '' : 'none'
   if (!isEp && _wfSeriesCount > 5) wfSetSeries(4)
+  // 드라마 유형 선택 시 대상 블로그를 blog2(연예)로 자동 추천
+  const blogSel = document.getElementById('wf-series-blog')
+  if (isDrama && blogSel && !blogSel.value) blogSel.value = 'blog2'
 }
 
 function wfRunSeries() {
@@ -6318,7 +6328,9 @@ function wfRunSeries() {
     showToast(type === 'auto' ? '시리즈 키워드를 입력하세요' : '드라마 제목을 입력하세요', 'error')
     return
   }
-  const inputs = { keyword: kw, series_count: String(_wfSeriesCount), series_type: type }
+  const blogId = document.getElementById('wf-series-blog')?.value || ''
+  if (!blogId && !confirm('대상 블로그가 "전체"입니다.\n같은 시리즈가 3개 블로그 모두에 생성됩니다 (총 편수 × 3).\n계속할까요?')) return
+  const inputs = { keyword: kw, series_count: String(_wfSeriesCount), series_type: type, blog_id: blogId }
   if (type === 'drama_episodes') {
     inputs.start_episode = String(Math.max(1, parseInt(document.getElementById('wf-series-start')?.value) || 1))
   }

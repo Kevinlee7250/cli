@@ -2090,6 +2090,26 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
     from evidence_builder import format_evidence_for_prompt
     evidence_pack = _run_research(keyword)
     prompt = _build_series_prompt(keyword, traffic, series_context, blog_config) + format_evidence_for_prompt(evidence_pack)
+
+    # 드라마 회차별 리뷰: 단일 회차 주제라 분량이 짧아지기 쉬움 —
+    # 리뷰 구조 가이드를 추가하고 최소 분량 기준을 완화 (2000자, thin content 방지선 유지)
+    is_drama_ep = (series_context or {}).get("type") == "drama_episode_review"
+    min_wc = 2000 if is_drama_ep else 2500
+    if is_drama_ep:
+        drama_ep_num = series_context.get("drama_episode") or episode
+        prompt += f"""
+
+━━━ 드라마 회차 리뷰 구조 (분량 확보 — 반드시 이 요소들을 모두 포함) ━━━
+이 글은 드라마 {drama_ep_num}화 하나만 깊게 다루는 회차 리뷰입니다:
+• 도입: 이번 화를 본 직후의 한 줄 감상 + 스포일러 주의 안내
+• H2: {drama_ep_num}화 줄거리 핵심 정리 (600자 이상 — 장면 순서대로 구체적으로)
+• H2: 명장면 TOP 3 — 각 장면의 상황·연출·의미를 하나씩 (600자 이상)
+• H2: 명대사와 배우 연기 — 인상적인 대사 인용 + 연기 디테일 평가 (400자 이상)
+• H2: 시청자 반응·화제 포인트 — 자료팩의 기사·반응 근거 활용 (400자 이상)
+• H2: 다음 화 예상 포인트 — 떡밥·복선 정리 (300자 이상)
+• 라벨(labels)은 드라마·리뷰 관련으로만: ["드라마리뷰","{keyword}","드라마"] 등 (금융·경제 등 무관 라벨 금지)
+⚠️ 총 분량 3000자 이상 목표, 최소 2500자"""
+
     is_blog1 = blog_config and blog_config.get("id") == "blog1"
     ai_provider = _resolve_ai_provider(blog_config)
 
@@ -2151,9 +2171,9 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             post_data["content_preview"] = _content_preview(content_html)
 
             prev_wc = post_data["word_count"]
-            if not content_html.strip() or post_data["word_count"] < 2500:
+            if not content_html.strip() or post_data["word_count"] < min_wc:
                 if attempt < 2:
-                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 2500자) — 재시도 {attempt + 1}/3")
+                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 {min_wc}자) — 재시도 {attempt + 1}/3")
                     time.sleep(3)
                     continue
                 if post_data["word_count"] < 500:

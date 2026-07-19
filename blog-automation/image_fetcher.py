@@ -840,4 +840,9 @@ def inject_images_into_content(content: str, images: list[dict], keyword: str) -
         except StopIteration:
             break
 
+    # ③ H2 슬롯이 부족해 남은 이미지: 본문 끝에 배치 (버리지 않음)
+    for idx, img in img_iter:
+        alt = _alt(img, f"{keyword} 관련 이미지 {idx + 1}")
+        content = content + _make_img_html(img, alt, _safe_caption(img, alt))
+
     return content

@@ -296,6 +296,22 @@ def test_strip_josa_preserves_nouns():
     assert _strip_josa("제주의") == "제주"
 
 
+def test_inject_images_no_loss_when_few_h2():
+    """H2 슬롯이 부족해도 이미지가 유실되지 않는다 (남는 것은 본문 끝 배치)."""
+    import image_fetcher as imf
+    imgs = [{"url": f"http://x/{i}.jpg", "title": f"t{i}", "alt_text": f"a{i}"} for i in range(3)]
+    short = "<p>도입</p><h2>A</h2><p>1</p><h2>B</h2><p>2</p>"  # H2 2개 → 슬롯 1개
+    out = imf.inject_images_into_content(short, imgs, "키워드")
+    assert out.count("<figure") == 3
+
+
+def test_max_images_per_post_constant():
+    """글당 이미지 정책 상수: 최소 1 / 최대 3."""
+    import content_generator as cg
+    assert cg._MIN_IMAGES_PER_POST == 1
+    assert cg._MAX_IMAGES_PER_POST == 3
+
+
 def test_safe_caption_rejects_filenames():
     from image_fetcher import _safe_caption
     assert _safe_caption({"title": "MetabolismoLipidiE.png"}, "대체텍스트") == "대체텍스트"

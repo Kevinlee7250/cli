@@ -2073,6 +2073,49 @@ def _build_series_prompt_finance(keyword: str, traffic: str, series_context: dic
 }}"""
 
 
+# 글당 이미지 정책: 최소 1장 (폴백 SVG 썸네일로 보장) / 최대 3장
+_MIN_IMAGES_PER_POST = 1
+_MAX_IMAGES_PER_POST = 3
+
+
+def _collect_post_images(post_data: dict, keyword: str) -> list[dict]:
+    """글 작성 완료 후 이미지를 수집합니다 (최소 1장, 최대 3장).
+
+    1순위: 최종 제목 기반 대표 이미지
+    2·3순위: H2 섹션 기반 이미지 (제목 쿼리와 다른 각도)
+    전부 실패 시 fetch_images_for_queries의 폴백(SVG 썸네일)이 최소 1장 보장.
+    """
+    final_title = (post_data.get("title") or "").strip() or keyword
+
+    # 검색 쿼리 구성: 제목 1개 + 섹션 쿼리 최대 2개 (중복 각도 제거)
+    queries = [final_title]
+    try:
+        for q in _extract_section_queries(post_data.get("content", ""), keyword):
+            if len(queries) >= _MAX_IMAGES_PER_POST:
+                break
+            if q and q not in queries:
+                queries.append(q)
+    except Exception as e:
+        logger.debug(f"섹션 쿼리 추출 실패 (제목 쿼리만 사용): {e}")
+
+    plain_text = _content_preview(post_data.get("content", ""), chars=600)
+    images = fetch_images_for_queries(
+        queries[:_MAX_IMAGES_PER_POST],
+        naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
+        naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
+        pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
+        article_plain_text=plain_text,
+        keyword=keyword,
+        title=post_data.get("title", ""),
+    )
+    images = images[:_MAX_IMAGES_PER_POST]
+    if len(images) < _MIN_IMAGES_PER_POST:
+        logger.warning(f"이미지 최소 개수({_MIN_IMAGES_PER_POST}장) 미달: {len(images)}장 — 텍스트만으로 진행")
+    else:
+        logger.info(f"이미지 {len(images)}장 수집 완료 (최소 {_MIN_IMAGES_PER_POST} / 최대 {_MAX_IMAGES_PER_POST})")
+    return images
+
+
 def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dict | None = None, blog_config: dict | None = None) -> dict | None:
     """시리즈 포스트를 생성합니다."""
     if not series_context:
@@ -2217,21 +2260,8 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             # 게시 전 팩트체크 — 이미지 삽입 전에 실행 (이미지 HTML 훼손 방지)
             _fact_check_content(post_data, keyword, evidence_pack)
 
-            # 글 작성 완료 후 최종 제목 기반 대표 이미지 검색 — 1장만
-            final_title = (post_data.get("title") or "").strip() or keyword
-            plain_text = _content_preview(post_data.get("content", ""), chars=600)
-            images = fetch_images_for_queries(
-                [final_title],
-                naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
-                naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
-                pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
-                article_plain_text=plain_text,
-                keyword=keyword,
-                title=post_data.get("title", ""),
-            )
-            # 폴백(SVG 썸네일 + 관련 사진)은 2장 유지, 일반 검색 결과는 1장만
-            has_thumb = any((i.get("url") or "").startswith("data:image/svg") for i in images)
-            images = images[:2] if has_thumb else images[:1]
+            # 글 작성 완료 후 이미지 수집·삽입 (최소 1장 / 최대 3장)
+            images = _collect_post_images(post_data, keyword)
             if images:
                 post_data["content"] = inject_images_into_content(post_data["content"], images, keyword)
                 post_data["images_inserted"] = len(images)
@@ -2610,22 +2640,8 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             # 게시 전 팩트체크 — 이미지 삽입 전에 실행 (이미지 HTML 훼손 방지)
             _fact_check_content(post_data, keyword, evidence_pack)
 
-            # 글 작성 완료 후 최종 제목 기반 대표 이미지 검색 & 삽입 — 1장만
-            final_title = (post_data.get("title") or "").strip() or keyword
-            logger.info(f"제목 기반 이미지 검색: '{final_title}'")
-            plain_text = _content_preview(post_data.get("content", ""), chars=600)
-            images = fetch_images_for_queries(
-                [final_title],
-                naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
-                naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
-                pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
-                article_plain_text=plain_text,
-                keyword=keyword,
-                title=post_data.get("title", ""),
-            )
-            # 폴백(SVG 썸네일 + 관련 사진)은 2장 유지, 일반 검색 결과는 1장만
-            has_thumb = any((i.get("url") or "").startswith("data:image/svg") for i in images)
-            images = images[:2] if has_thumb else images[:1]
+            # 글 작성 완료 후 이미지 수집·삽입 (최소 1장 / 최대 3장)
+            images = _collect_post_images(post_data, keyword)
             if images:
                 post_data["content"] = inject_images_into_content(
                     post_data["content"], images, keyword

@@ -28,11 +28,8 @@ BLOGGER_API_BASE = "https://www.googleapis.com/blogger/v3"
 # OAuth
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _get_access_token(blog_config: dict | None = None) -> str | None:
-    cfg = blog_config or {}
-    client_id = cfg.get("client_id") or BLOGGER_CLIENT_ID
-    client_secret = cfg.get("client_secret") or BLOGGER_CLIENT_SECRET
-    refresh_token = cfg.get("refresh_token") or BLOGGER_REFRESH_TOKEN
+def _request_token(client_id: str, client_secret: str, refresh_token: str):
+    """토큰 발급 요청 — (access_token|None, response_text)."""
     try:
         resp = requests.post(TOKEN_URL, data={
             "client_id": client_id,
@@ -42,18 +39,49 @@ def _get_access_token(blog_config: dict | None = None) -> str | None:
         }, timeout=15)
     except requests.exceptions.RequestException as e:
         logger.error(f"토큰 요청 네트워크 오류: {e}")
-        return None
+        return None, str(e)
     if resp.status_code == 200:
         try:
             token = resp.json().get("access_token")
             if token:
-                return token
+                return token, ""
         except json.JSONDecodeError as e:
             logger.error(f"토큰 응답 JSON 파싱 실패: {e}")
-            return None
-    logger.error(f"토큰 발급 실패: {resp.status_code} {resp.text[:200]}")
-    if "invalid_grant" in resp.text:
+            return None, str(e)
+    return None, f"{resp.status_code} {resp.text[:200]}"
+
+
+def _get_access_token(blog_config: dict | None = None) -> str | None:
+    cfg = blog_config or {}
+    client_id = cfg.get("client_id") or BLOGGER_CLIENT_ID
+    client_secret = cfg.get("client_secret") or BLOGGER_CLIENT_SECRET
+    refresh_token = cfg.get("refresh_token") or BLOGGER_REFRESH_TOKEN
+
+    token, err = _request_token(client_id, client_secret, refresh_token)
+    if token:
+        return token
+    logger.error(f"토큰 발급 실패: {err}")
+
+    # 블로그별 크리덴셜이 잘못된 경우(invalid_client 등) 기본 GOOGLE_* Secret으로 폴백
+    # — BLOGS_CONFIG에 자리표시자·오타가 들어가도 업로드가 멈추지 않도록
+    used_custom = bool(cfg.get("client_id") or cfg.get("client_secret") or cfg.get("refresh_token"))
+    if used_custom and BLOGGER_CLIENT_ID and BLOGGER_REFRESH_TOKEN:
+        logger.warning(
+            f"[{cfg.get('id', '?')}] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도"
+        )
+        token, err2 = _request_token(BLOGGER_CLIENT_ID, BLOGGER_CLIENT_SECRET, BLOGGER_REFRESH_TOKEN)
+        if token:
+            logger.warning(
+                "⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 "
+                "client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)"
+            )
+            return token
+        logger.error(f"기본 크리덴셜도 실패: {err2}")
+
+    if "invalid_grant" in err:
         logger.error("💡 해결: blog-automation/get_refresh_token.py 실행 후 GOOGLE_REFRESH_TOKEN Secret을 새 토큰으로 교체하세요.")
+    if "invalid_client" in err:
+        logger.error("💡 해결: BLOGS_CONFIG Secret의 client_id/client_secret가 Google Cloud Console의 OAuth 클라이언트 값과 일치하는지 확인하세요.")
     return None
 
 

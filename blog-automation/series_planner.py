@@ -5,7 +5,7 @@ import logging
 import os
 import re
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 import anthropic
 
@@ -538,7 +538,7 @@ def fetch_drama_broadcast_info(drama_name: str) -> dict | None:
 _KO_WEEKDAYS = {"월": 0, "화": 1, "수": 2, "목": 3, "금": 4, "토": 5, "일": 6}
 
 
-def _estimate_air_dates(broadcast_info: dict | None, start_ep: int, end_ep: int) -> dict[int, "date"]:
+def _estimate_air_dates(broadcast_info: dict | None, start_ep: int, end_ep: int) -> dict[int, date]:
     """미방영 회차의 방영일을 편성 요일 기준으로 추정합니다.
 
     latest_aired_episode 다음 회차부터 내일 이후의 편성 요일에 순서대로 배정.

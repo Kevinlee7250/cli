@@ -557,6 +557,7 @@ def run_series(
             "episode": ep_num,
             "focus": ep.get("focus", ""),
             "title": ep.get("title", ""),
+            "drama_episode": ep.get("drama_episode"),  # 회차별 리뷰: 실제 드라마 회차
         }
 
         post_data = generate_series_post(ep_keyword, "N/A", series_context, blog_config=blog_config)

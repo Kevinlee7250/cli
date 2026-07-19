@@ -2096,18 +2096,43 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
     is_drama_ep = (series_context or {}).get("type") == "drama_episode_review"
     min_wc = 2000 if is_drama_ep else 2500
     if is_drama_ep:
+        # ── 방영 후 자료 게이트: 실제 방영 자료가 없으면 생성 자체를 거부 ──
+        # (미방영 회차를 상상으로 리뷰하는 '예상 시나리오' 작성 방지)
+        _facts = (evidence_pack or {}).get("facts") or []
+        if len(_facts) < 2:
+            logger.error(
+                f"'{keyword}' 방영 후 자료 부족 ({len(_facts)}건) — "
+                f"예상 시나리오 리뷰 방지를 위해 이 회차 생성을 건너뜁니다 "
+                f"(미방영이거나 아직 기사·반응이 없는 회차)"
+            )
+            return None
+
         drama_ep_num = series_context.get("drama_episode") or episode
+        binfo = series_context.get("broadcast_info") or {}
+        binfo_line = ""
+        if binfo:
+            binfo_line = (
+                f"\n확인된 편성 정보: {binfo.get('platform') or '?'} | "
+                f"총 {binfo.get('total_episodes') or '?'}부작 | {binfo.get('air_schedule') or ''} | "
+                f"현재 {binfo.get('latest_aired_episode') or '?'}화까지 방영됨"
+            )
         prompt += f"""
 
 ━━━ 드라마 회차 리뷰 구조 (분량 확보 — 반드시 이 요소들을 모두 포함) ━━━
-이 글은 드라마 {drama_ep_num}화 하나만 깊게 다루는 회차 리뷰입니다:
+이 글은 이미 방영된 드라마 {drama_ep_num}화의 회차 리뷰입니다.{binfo_line}
 • 도입: 이번 화를 본 직후의 한 줄 감상 + 스포일러 주의 안내
 • H2: {drama_ep_num}화 줄거리 핵심 정리 (600자 이상 — 장면 순서대로 구체적으로)
 • H2: 명장면 TOP 3 — 각 장면의 상황·연출·의미를 하나씩 (600자 이상)
 • H2: 명대사와 배우 연기 — 인상적인 대사 인용 + 연기 디테일 평가 (400자 이상)
 • H2: 시청자 반응·화제 포인트 — 자료팩의 기사·반응 근거 활용 (400자 이상)
-• H2: 다음 화 예상 포인트 — 떡밥·복선 정리 (300자 이상)
+• H2: 다음 화 예상 포인트 — 자료팩에서 확인되는 떡밥·복선만 정리 (300자 이상)
 • 라벨(labels)은 드라마·리뷰 관련으로만: ["드라마리뷰","{keyword}","드라마"] 등 (금융·경제 등 무관 라벨 금지)
+
+⚠️⚠️ 절대 규칙 — 예상 시나리오 금지:
+• 줄거리·장면·대사·전개는 반드시 위 자료팩(방영 후 기사·반응)에서 확인되는 내용만 쓰세요
+• 자료팩에 없는 장면·대사·결말을 상상해서 만들지 마세요 — 확인 안 되는 부분은
+  "이번 화에서는 ~한 전개가 화제였다" 수준으로 자료 범위 안에서만 서술
+• 자료가 부족한 섹션은 억지로 채우지 말고 배우·작품 배경 등 확인된 정보로 대체
 ⚠️ 총 분량 3000자 이상 목표, 최소 2500자"""
 
     is_blog1 = blog_config and blog_config.get("id") == "blog1"

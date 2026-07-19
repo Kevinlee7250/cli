@@ -456,6 +456,85 @@ JSON만 응답:
         return None
 
 
+def fetch_drama_broadcast_info(drama_name: str) -> dict | None:
+    """방송사·넷플릭스 등 공개 정보를 검색해 드라마 방영 정보를 확인합니다.
+
+    네이버 뉴스·웹 검색 스니펫을 수집한 뒤 Claude로 구조화 추출:
+      {"total_episodes": 총 부작 수|null, "air_schedule": "토·일 21:50" 등,
+       "latest_aired_episode": 현재까지 방영된 회차|null,
+       "first_air_date": "YYYY-MM-DD"|null, "platform": "SBS/넷플릭스 등",
+       "confidence": "high"|"low"}
+    검색·추출 실패 시 None (호출부에서 자료 게이트로 2차 방어).
+    """
+    import os as _os
+    import requests as _rq
+
+    cid = _os.getenv("NAVER_CLIENT_ID", "")
+    csec = _os.getenv("NAVER_CLIENT_SECRET", "")
+    if not cid or not csec:
+        logger.warning("NAVER API 키 없음 — 방영 정보 조회 건너뜀")
+        return None
+
+    snippets = []
+    headers = {"X-Naver-Client-Id": cid, "X-Naver-Client-Secret": csec}
+    for endpoint, query in [
+        ("news", f"{drama_name} 몇부작 방영"),
+        ("news", f"{drama_name} 최신 회차 시청률"),
+        ("webkr", f"{drama_name} 편성 방영시간 부작"),
+    ]:
+        try:
+            r = _rq.get(
+                f"https://openapi.naver.com/v1/search/{endpoint}.json",
+                params={"query": query, "display": 5, "sort": "date" if endpoint == "news" else "sim"},
+                headers=headers, timeout=8,
+            )
+            if r.status_code == 200:
+                for item in r.json().get("items", []):
+                    t = re.sub(r"<[^>]+>", "", item.get("title", ""))
+                    d = re.sub(r"<[^>]+>", "", item.get("description", ""))
+                    date = item.get("pubDate", "")[:16]
+                    snippets.append(f"[{date}] {t} — {d}")
+        except Exception as e:
+            logger.debug(f"방영 정보 검색 실패({endpoint}): {e}")
+
+    if not snippets:
+        logger.warning(f"'{drama_name}' 방영 정보 검색 결과 없음")
+        return None
+
+    try:
+        from config import claude_generate
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        today = datetime.now().strftime("%Y년 %m월 %d일 (%A)")
+        raw = claude_generate(
+            client, model=CLAUDE_MODEL, max_tokens=1500,
+            system=(
+                f"현재 날짜: {today}. 당신은 드라마 편성 정보 분석가입니다. "
+                "검색 스니펫에서 확인되는 사실만 사용하고, 확인 안 되는 값은 null로 두세요. "
+                "latest_aired_episode는 스니펫의 기사 날짜와 회차 언급, 방영 요일로 "
+                "'현재 날짜 기준 이미 방영된 회차'를 판단하세요. JSON만 응답."
+            ),
+            messages=[{"role": "user", "content": (
+                f"드라마: {drama_name}\n\n검색 결과:\n" + "\n".join(snippets[:15]) +
+                '\n\nJSON: {"total_episodes": n|null, "air_schedule": "요일·시간"|null, '
+                '"latest_aired_episode": n|null, "first_air_date": "YYYY-MM-DD"|null, '
+                '"platform": "방송사/플랫폼"|null, "confidence": "high|low"}'
+            )}],
+        ).strip()
+        m = re.search(r"\{.*\}", raw, re.DOTALL)
+        if not m:
+            return None
+        info = json.loads(m.group(0))
+        logger.info(
+            f"📡 '{drama_name}' 방영 정보: {info.get('platform') or '?'} | "
+            f"총 {info.get('total_episodes') or '?'}부작 | {info.get('air_schedule') or '편성 미확인'} | "
+            f"현재 {info.get('latest_aired_episode') or '?'}화까지 방영 (신뢰도 {info.get('confidence','low')})"
+        )
+        return info
+    except Exception as e:
+        logger.warning(f"방영 정보 추출 실패: {e}")
+        return None
+
+
 def plan_drama_episode_series(drama_name: str, count: int = 4, start_episode: int = 1) -> dict | None:
     """드라마 회차별 리뷰 시리즈를 기획합니다 — 시리즈 N편 = 드라마 N화 리뷰.
 
@@ -476,6 +555,39 @@ def plan_drama_episode_series(drama_name: str, count: int = 4, start_episode: in
         return None
     count = max(1, min(count, 8))
     start_episode = max(1, min(start_episode, 100))
+
+    # ── 방영 정보 확인 — 미방영 회차의 '예상 시나리오 리뷰' 방지 ──
+    broadcast_info = fetch_drama_broadcast_info(drama_name)
+    if broadcast_info:
+        latest = broadcast_info.get("latest_aired_episode")
+        total = broadcast_info.get("total_episodes")
+        # 총 부작 수를 넘는 회차 제거
+        if isinstance(total, int) and total > 0:
+            if start_episode > total:
+                logger.error(f"시작 회차 {start_episode}화가 총 {total}부작을 초과 — 기획 중단")
+                return None
+            count = min(count, total - start_episode + 1)
+        # 아직 방영되지 않은 회차 제거
+        if isinstance(latest, int) and latest > 0:
+            if start_episode > latest:
+                logger.error(
+                    f"'{drama_name}' {start_episode}화는 아직 방영 전입니다 "
+                    f"(현재 {latest}화까지 방영) — 예상 리뷰 방지를 위해 기획 중단"
+                )
+                return None
+            end_req = start_episode + count - 1
+            if end_req > latest:
+                trimmed = latest - start_episode + 1
+                logger.warning(
+                    f"⚠️ {latest + 1}~{end_req}화는 아직 방영 전 — "
+                    f"방영 완료된 {start_episode}~{latest}화 {trimmed}편으로 축소"
+                )
+                count = trimmed
+    else:
+        logger.warning(
+            "방영 정보를 확인하지 못했습니다 — 각 회차 생성 시 방영 후 자료 유무를 "
+            "검사해 자료 없는 회차는 자동으로 건너뜁니다"
+        )
 
     episodes = []
     for i in range(count):
@@ -510,6 +622,7 @@ def plan_drama_episode_series(drama_name: str, count: int = 4, start_episode: in
         "status": "planned",
         "type": "drama_episode_review",
         "start_episode": start_episode,
+        "broadcast_info": broadcast_info or {},
     }
     logger.info(
         f"드라마 회차 리뷰 시리즈 기획 완료: '{plan['series_title']}' "

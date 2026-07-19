@@ -216,6 +216,8 @@ jobs:
             blog-automation/logs/scheduled_keywords.json; do
             [ -f "$f" ] && git add -f "$f"
           done
+          # 초안 디렉토리: 업로드 실패 시 재시도용 파일 보존
+          git add -f blog-automation/logs/post_drafts/ 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else
@@ -399,6 +401,7 @@ jobs:
             blog-automation/logs/post_registry.json blog-automation/logs/ai_usage.json blog-automation/logs/used_images.json; do
             [ -f "$f" ] && git add -f "$f"
           done
+          git add -f blog-automation/logs/post_drafts/ 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else
@@ -582,6 +585,7 @@ jobs:
             blog-automation/logs/post_registry.json blog-automation/logs/ai_usage.json blog-automation/logs/used_images.json; do
             [ -f "$f" ] && git add -f "$f"
           done
+          git add -f blog-automation/logs/post_drafts/ 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else

@@ -2184,7 +2184,9 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                 keyword=keyword,
                 title=post_data.get("title", ""),
             )
-            images = images[:1]
+            # 폴백(SVG 썸네일 + 관련 사진)은 2장 유지, 일반 검색 결과는 1장만
+            has_thumb = any((i.get("url") or "").startswith("data:image/svg") for i in images)
+            images = images[:2] if has_thumb else images[:1]
             if images:
                 post_data["content"] = inject_images_into_content(post_data["content"], images, keyword)
                 post_data["images_inserted"] = len(images)
@@ -2532,7 +2534,9 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                 keyword=keyword,
                 title=post_data.get("title", ""),
             )
-            images = images[:1]
+            # 폴백(SVG 썸네일 + 관련 사진)은 2장 유지, 일반 검색 결과는 1장만
+            has_thumb = any((i.get("url") or "").startswith("data:image/svg") for i in images)
+            images = images[:2] if has_thumb else images[:1]
             if images:
                 post_data["content"] = inject_images_into_content(
                     post_data["content"], images, keyword

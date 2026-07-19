@@ -279,6 +279,23 @@ def test_simplify_query_keeps_acronyms():
     assert "ETF" in q
 
 
+def test_simplify_query_impact_title_style():
+    """간결·임팩트형 제목에서 조사·단위어·수식어가 제거된다."""
+    from image_fetcher import _simplify_query
+    assert _simplify_query("국민연금 30% 더 받는 법", 2) == "국민연금"
+    assert _simplify_query("제주 3박4일 40만원 코스", 2) == "제주 코스"
+    assert _simplify_query("ETF 초보가 가장 많이 하는 실수 5가지", 2) == "ETF 초보"
+
+
+def test_strip_josa_preserves_nouns():
+    """조사 제거가 명사 일부를 오절단하지 않는다."""
+    from image_fetcher import _strip_josa
+    assert _strip_josa("초보가") == "초보"
+    assert _strip_josa("고속도로") == "고속도로"   # '로'는 조사 목록에서 제외
+    assert _strip_josa("회의") == "회의"           # 어근 1자면 유지
+    assert _strip_josa("제주의") == "제주"
+
+
 def test_safe_caption_rejects_filenames():
     from image_fetcher import _safe_caption
     assert _safe_caption({"title": "MetabolismoLipidiE.png"}, "대체텍스트") == "대체텍스트"

@@ -232,7 +232,24 @@ _QUERY_FLUFF = {
     "이야기", "느낀", "겪은", "달랐던", "생각보다", "막상", "저도", "제가",
     "했을", "안", "것들", "것", "때", "저는", "완벽", "정리", "총정리",
     "실수들", "실수", "투자할", "혼자", "비슷하면", "이유", "방법", "꿀팁",
+    # 간결·임팩트형 제목에서 자주 나오는 수식어·동사형
+    "받는", "하는", "되는", "가장", "많이", "바로", "지금", "해보니",
+    "비교해보니", "써보니", "가본", "다녀온", "추천", "기준", "이내",
+    # 숫자에서 분리된 단위어 (예: "40만원" → "만원")
+    "만원", "천원", "억원", "원대", "가지", "개월", "주일", "박일",
 }
+
+# 단어 끝 조사 — 떼어내고 남은 어근이 2자 이상이면 어근을 사용 (예: "초보가" → "초보")
+# 로·에 등은 명사 일부인 경우가 많아 제외 (예: "고속도로")
+_TRAILING_JOSA = ("가", "은", "는", "을", "를", "의")
+
+
+def _strip_josa(word: str) -> str:
+    """한국어 단어 끝의 조사를 제거합니다 (어근 2자 이상 유지될 때만)."""
+    for j in _TRAILING_JOSA:
+        if word.endswith(j) and len(word) - len(j) >= 2:
+            return word[: -len(j)]
+    return word
 
 
 def _core_terms(text: str, max_terms: int = 3) -> list[str]:
@@ -240,6 +257,8 @@ def _core_terms(text: str, max_terms: int = 3) -> list[str]:
     words = re.findall(r'[A-Za-z][A-Za-z0-9&]{1,9}|[가-힣]{2,}', text)
     core = []
     for w in words:
+        if re.search(r'[가-힣]', w):
+            w = _strip_josa(w)
         if w in _QUERY_FLUFF or w.lower() in {c.lower() for c in core}:
             continue
         core.append(w)

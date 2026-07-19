@@ -1193,7 +1193,22 @@
       <div class="card blue"><div class="label">전체 시리즈</div><div class="value" id="series-total-count">0</div><div class="sub">기획된 시리즈 수</div></div>
       <div class="card green"><div class="label">완료 편수</div><div class="value" id="series-done-eps">0</div><div class="sub">업로드 완료된 편</div></div>
       <div class="card yellow"><div class="label">진행 중</div><div class="value" id="series-active-count">0</div><div class="sub">partial / planned</div></div>
-      <div class="card purple"><div class="label">체류 시간 효과</div><div class="value" style="font-size:14px;color:var(--accent)">+3~5배</div><div class="sub">시리즈 연속 읽기 유도</div></div>
+      <div class="card purple"><div class="label">발행 예약</div><div class="value" id="series-scheduled-count">0</div><div class="sub">방영 대기 회차 리뷰</div></div>
+    </div>
+
+    <!-- 발행 예약 현황 -->
+    <div id="series-schedule-panel" style="display:none;margin-bottom:20px">
+      <div class="section-header" style="margin-bottom:10px"><h2>📅 발행 예약 현황</h2></div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+        미방영 회차는 방영일 익일 아침(8시 KST)에 자동으로 리뷰가 작성·게시됩니다.
+        방영 직후 기사가 부족하면 다음 날로 자동 재예약됩니다 (최대 7회).
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>시리즈</th><th>회차</th><th>방영 예정</th><th>작성 예약일</th><th>상태</th></tr></thead>
+          <tbody id="series-schedule-body"></tbody>
+        </table>
+      </div>
     </div>
     <!-- Series Create Form -->
     <div class="series-create-panel">
@@ -4750,6 +4765,39 @@ function renderSeries() {
   if (totalEl) totalEl.textContent = series.length
   if (doneEl) doneEl.textContent = doneEps + '/' + totalEps + '편'
   if (activeEl) activeEl.textContent = active
+
+  // 발행 예약 현황 (드라마 회차별 리뷰의 scheduled 편)
+  const scheduled = []
+  series.forEach(sr => (sr.episodes || []).forEach(e => {
+    if (e.status === 'scheduled') scheduled.push({ sr, e })
+  }))
+  const schedCntEl = document.getElementById('series-scheduled-count')
+  if (schedCntEl) schedCntEl.textContent = scheduled.length
+  const schedPanel = document.getElementById('series-schedule-panel')
+  const schedBody = document.getElementById('series-schedule-body')
+  if (schedPanel && schedBody) {
+    if (!scheduled.length) {
+      schedPanel.style.display = 'none'
+    } else {
+      schedPanel.style.display = 'block'
+      const today = new Date().toISOString().slice(0, 10)
+      scheduled.sort((a, b) => (a.e.scheduled_date || '9999') < (b.e.scheduled_date || '9999') ? -1 : 1)
+      schedBody.innerHTML = scheduled.map(({ sr, e }) => {
+        const due = e.scheduled_date && e.scheduled_date <= today
+        const attempts = e.schedule_attempts || 0
+        const statusHtml = due
+          ? `<span style="color:var(--yellow);font-weight:600">⏳ 오늘 처리 예정${attempts ? ` (재시도 ${attempts}회)` : ''}</span>`
+          : `<span style="color:var(--accent2)">📅 예약됨</span>`
+        return `<tr>
+          <td style="font-size:12px">${esc((sr.series_title || sr.keyword || '').slice(0, 30))}</td>
+          <td style="font-size:12px;white-space:nowrap">${e.drama_episode || e.episode}화</td>
+          <td style="font-size:12px;white-space:nowrap">${e.air_date || '미정'}</td>
+          <td style="font-size:12px;white-space:nowrap">${e.scheduled_date || '방영 확인 시'}</td>
+          <td>${statusHtml}</td>
+        </tr>`
+      }).join('')
+    }
+  }
 
   // nav badge
   const badge = document.getElementById('series-nav-badge')

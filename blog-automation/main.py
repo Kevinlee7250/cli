@@ -510,6 +510,57 @@ def run_once(
 # 시리즈 모드
 # ──────────────────────────────────────────────────────────────────────────────
 
+def process_scheduled_series() -> None:
+    """발행 예약된 시리즈 편을 처리합니다 (매일 스케줄 실행용).
+
+    logs/series.json에서 status=scheduled인 편 중 예약일이 오늘 이하인 것을
+    찾아 run_series로 이어서 생성·게시합니다. run_series는 이미 처리된 편과
+    예약일 미도래 편을 건너뛰므로 안전하게 재실행됩니다.
+    자료 부족(방영 직후) 시 다음 날로 자동 재예약됩니다.
+    """
+    from datetime import date as _date
+    from series_planner import load_series
+
+    today = _date.today().isoformat()
+    all_series = load_series()
+    blogs = {b.get("id"): b for b in get_blog_configs()}
+
+    due_plans = []
+    for plan in all_series:
+        eps = plan.get("episodes", [])
+        due = [
+            e for e in eps
+            if e.get("status") == "scheduled"
+            and (not e.get("scheduled_date") or e["scheduled_date"] <= today)
+        ]
+        waiting = [e for e in eps if e.get("status") == "scheduled"]
+        if due:
+            due_plans.append((plan, due))
+        elif waiting:
+            nxt = min((e.get("scheduled_date") or "미정") for e in waiting)
+            logger.info(
+                f"⏳ '{plan.get('series_title','?')}' 예약 {len(waiting)}편 대기 중 (다음 {nxt})"
+            )
+
+    if not due_plans:
+        logger.info("오늘 처리할 발행 예약 편이 없습니다")
+        return
+
+    for plan, due in due_plans:
+        cfg = blogs.get(plan.get("blog_id"))
+        logger.info("=" * 60)
+        logger.info(
+            f"📅 예약 처리: '{plan.get('series_title','?')}' — "
+            f"오늘 도래 {len(due)}편 ({', '.join(str(e.get('drama_episode') or e.get('episode')) + '화' for e in due)})"
+        )
+        run_series(
+            plan.get("keyword", ""),
+            plan.get("total_episodes", len(plan.get("episodes", []))),
+            series_plan=plan,
+            blog_config=cfg,
+        )
+
+
 def run_series(
     keyword: str,
     count: int = 4,
@@ -546,9 +597,27 @@ def run_series(
     pending_list: list[dict] = []
     episodes = series_plan.get("episodes", [])
 
+    from datetime import date as _date
+    today_str = _date.today().isoformat()
+
     for ep_idx, ep in enumerate(episodes):
         ep_num = ep["episode"]
         ep_keyword = ep.get("search_keyword", keyword)
+
+        # 이미 처리된 편은 건너뜀 (재실행·예약 처리 시 중복 방지)
+        if ep.get("status") in ("done", "pending_review"):
+            logger.info(f"--- [{ep_num}/{len(episodes)}편] 이미 처리됨({ep['status']}) — 건너뜀 ---")
+            continue
+        # 발행 예약 편: 예약일 전이면 건너뜀 (매일 예약 처리기가 도래 시 생성)
+        if ep.get("status") == "scheduled":
+            sched = ep.get("scheduled_date")
+            if sched and sched > today_str:
+                logger.info(
+                    f"--- [{ep_num}/{len(episodes)}편] 📅 발행 예약 "
+                    f"(방영 {ep.get('air_date','?')} → {sched} 작성 예정) — 건너뜀 ---"
+                )
+                continue
+            logger.info(f"--- [{ep_num}/{len(episodes)}편] 📅 예약일 도래 — 생성 시도 ---")
 
         logger.info(f"\n--- [{ep_num}/{len(episodes)}편] '{ep_keyword}' 생성 중 ---")
 
@@ -562,8 +631,24 @@ def run_series(
 
         post_data = generate_series_post(ep_keyword, "N/A", series_context, blog_config=blog_config)
         if not post_data:
-            logger.error(f"편 {ep_num} 생성 실패 — 건너뜀")
-            ep["status"] = "failed"
+            if ep.get("scheduled_date") or ep.get("air_date"):
+                # 예약 편: 자료 부족(방영 직후 기사 미집계 등) — 다음 날 재시도
+                from datetime import timedelta as _td
+                attempts = ep.get("schedule_attempts", 0) + 1
+                ep["schedule_attempts"] = attempts
+                if attempts >= 7:
+                    logger.error(f"편 {ep_num} 예약 생성 7회 실패 — failed 처리")
+                    ep["status"] = "failed"
+                else:
+                    ep["status"] = "scheduled"
+                    ep["scheduled_date"] = (_date.today() + _td(days=1)).isoformat()
+                    logger.warning(
+                        f"편 {ep_num} 방영 후 자료 부족 — {ep['scheduled_date']}로 재예약 "
+                        f"(시도 {attempts}/7)"
+                    )
+            else:
+                logger.error(f"편 {ep_num} 생성 실패 — 건너뜀")
+                ep["status"] = "failed"
             save_series(series_plan)
             continue
 
@@ -650,8 +735,12 @@ def run_series(
         if ep_idx < len(episodes) - 1:
             time.sleep(3)
 
+    has_scheduled = any(ep.get("status") == "scheduled" for ep in episodes)
     all_done = all(ep.get("status") in ("done", "pending_review") for ep in episodes)
-    series_plan["status"] = "completed" if all_done else "partial"
+    if has_scheduled:
+        series_plan["status"] = "scheduled_wait"  # 예약 편 대기 중 — 매일 예약 처리기가 이어감
+    else:
+        series_plan["status"] = "completed" if all_done else "partial"
     save_series(series_plan)
 
     uploaded = sum(1 for ep in episodes if ep.get("status") == "done")
@@ -780,6 +869,8 @@ def main() -> None:
                         help="시리즈 유형: auto=블로그별 자동, drama=드라마 테마형 리뷰(첫인상·인물·총평), drama_episodes=드라마 회차별 리뷰(매 화 1편)")
     parser.add_argument("--start-episode", type=int, default=1, dest="start_episode", metavar="N",
                         help="드라마 회차별 리뷰 시작 회차 (drama_episodes 전용, 기본 1화)")
+    parser.add_argument("--process-scheduled-series", action="store_true", dest="process_scheduled",
+                        help="발행 예약된 시리즈 편 처리 — 예약일이 된 회차를 생성·게시 (매일 스케줄용)")
     parser.add_argument("--setup", action="store_true", help="AdSense 심사 필수 페이지 생성 (개인정보처리방침·블로그 소개)")
     parser.add_argument("--blog", type=str, default="", metavar="BLOG_ID",
                         help="특정 블로그 ID만 실행 (BLOGS_CONFIG의 id 값; 기본값: 모든 블로그)")
@@ -905,6 +996,12 @@ def main() -> None:
         logger.info(f"다중 블로그 모드: {len(target_blogs)}개 블로그 순차 실행")
         for b in target_blogs:
             logger.info(f"  - [{b.get('id')}] {b.get('name', '')}")
+
+    if getattr(args, "process_scheduled", False):
+        if not _check_config():
+            sys.exit(1)
+        process_scheduled_series()
+        return
 
     if args.series:
         if not keywords:

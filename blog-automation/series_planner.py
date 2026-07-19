@@ -5,7 +5,7 @@ import logging
 import os
 import re
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import anthropic
 
@@ -535,6 +535,42 @@ def fetch_drama_broadcast_info(drama_name: str) -> dict | None:
         return None
 
 
+_KO_WEEKDAYS = {"월": 0, "화": 1, "수": 2, "목": 3, "금": 4, "토": 5, "일": 6}
+
+
+def _estimate_air_dates(broadcast_info: dict | None, start_ep: int, end_ep: int) -> dict[int, "date"]:
+    """미방영 회차의 방영일을 편성 요일 기준으로 추정합니다.
+
+    latest_aired_episode 다음 회차부터 내일 이후의 편성 요일에 순서대로 배정.
+    편성 요일을 모르면 빈 dict (예약일 없이 '방영 확인 시' 처리).
+    """
+    from datetime import date as _date
+
+    if not broadcast_info:
+        return {}
+    latest = broadcast_info.get("latest_aired_episode")
+    schedule = broadcast_info.get("air_schedule") or ""
+    if not isinstance(latest, int) or latest <= 0:
+        return {}
+    air_days = sorted({_KO_WEEKDAYS[ch] for ch in schedule if ch in _KO_WEEKDAYS})
+    if not air_days:
+        return {}
+
+    result: dict[int, _date] = {}
+    ep = latest + 1
+    d = _date.today() + timedelta(days=1)
+    # 최대 120일까지 탐색 (주 1~2회 편성 × 8회차 커버)
+    for _ in range(120):
+        if ep > end_ep:
+            break
+        if d.weekday() in air_days:
+            if ep >= start_ep:
+                result[ep] = d
+            ep += 1
+        d += timedelta(days=1)
+    return result
+
+
 def plan_drama_episode_series(drama_name: str, count: int = 4, start_episode: int = 1) -> dict | None:
     """드라마 회차별 리뷰 시리즈를 기획합니다 — 시리즈 N편 = 드라마 N화 리뷰.
 
@@ -556,43 +592,32 @@ def plan_drama_episode_series(drama_name: str, count: int = 4, start_episode: in
     count = max(1, min(count, 8))
     start_episode = max(1, min(start_episode, 100))
 
-    # ── 방영 정보 확인 — 미방영 회차의 '예상 시나리오 리뷰' 방지 ──
+    # ── 방영 정보 확인 — 미방영 회차는 방영일 익일로 '발행 예약' ──
     broadcast_info = fetch_drama_broadcast_info(drama_name)
+    latest = None
     if broadcast_info:
         latest = broadcast_info.get("latest_aired_episode")
         total = broadcast_info.get("total_episodes")
-        # 총 부작 수를 넘는 회차 제거
+        # 총 부작 수를 넘는 회차는 존재하지 않으므로 제외
         if isinstance(total, int) and total > 0:
             if start_episode > total:
                 logger.error(f"시작 회차 {start_episode}화가 총 {total}부작을 초과 — 기획 중단")
                 return None
             count = min(count, total - start_episode + 1)
-        # 아직 방영되지 않은 회차 제거
-        if isinstance(latest, int) and latest > 0:
-            if start_episode > latest:
-                logger.error(
-                    f"'{drama_name}' {start_episode}화는 아직 방영 전입니다 "
-                    f"(현재 {latest}화까지 방영) — 예상 리뷰 방지를 위해 기획 중단"
-                )
-                return None
-            end_req = start_episode + count - 1
-            if end_req > latest:
-                trimmed = latest - start_episode + 1
-                logger.warning(
-                    f"⚠️ {latest + 1}~{end_req}화는 아직 방영 전 — "
-                    f"방영 완료된 {start_episode}~{latest}화 {trimmed}편으로 축소"
-                )
-                count = trimmed
     else:
         logger.warning(
-            "방영 정보를 확인하지 못했습니다 — 각 회차 생성 시 방영 후 자료 유무를 "
-            "검사해 자료 없는 회차는 자동으로 건너뜁니다"
+            "방영 정보를 확인하지 못했습니다 — 전 회차를 즉시 생성 대상으로 두되, "
+            "생성 시 방영 후 자료가 없는 회차는 자동으로 다음 날로 미뤄집니다"
         )
 
+    # 미방영 회차의 방영일 추정 → 예약일(방영 익일) 계산
+    air_dates = _estimate_air_dates(broadcast_info, start_episode, start_episode + count - 1)
+
     episodes = []
+    scheduled_cnt = 0
     for i in range(count):
         n = start_episode + i
-        episodes.append({
+        ep = {
             "episode": i + 1,             # 시리즈 내 순번
             "drama_episode": n,           # 실제 드라마 회차
             "title": f"[{n}화] {drama_name} {n}화 리뷰 — 줄거리·명장면 정리",
@@ -604,7 +629,19 @@ def plan_drama_episode_series(drama_name: str, count: int = 4, start_episode: in
             "status": "pending",
             "post_id": None,
             "blogger_url": None,
-        })
+        }
+        # 미방영 회차 → 예약 상태 (방영일 익일에 매일 예약 처리기가 생성·게시)
+        if isinstance(latest, int) and latest > 0 and n > latest:
+            air = air_dates.get(n)
+            ep["status"] = "scheduled"
+            ep["air_date"] = air.isoformat() if air else None
+            ep["scheduled_date"] = (air + timedelta(days=1)).isoformat() if air else None
+            scheduled_cnt += 1
+            logger.info(
+                f"  📅 {n}화: 미방영 — 발행 예약 "
+                f"(방영 예정 {ep['air_date'] or '미정'} → 작성 {ep['scheduled_date'] or '방영 확인 시'})"
+            )
+        episodes.append(ep)
 
     end_ep = start_episode + count - 1
     ep_range = f"{start_episode}화" if count == 1 else f"{start_episode}~{end_ep}화"

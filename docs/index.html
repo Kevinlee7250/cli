@@ -1289,13 +1289,25 @@
           <div><div style="font-weight:700;font-size:14px">시리즈 기획</div><div style="font-size:11px;color:var(--muted)">blog-run.yml · series 모드</div></div>
           <span id="wf-series-dot" style="margin-left:auto;width:10px;height:10px;border-radius:50%;background:var(--muted)"></span>
         </div>
-        <input id="wf-series-kw" placeholder="시리즈 키워드" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:8px;box-sizing:border-box">
+        <input id="wf-series-kw" placeholder="시리즈 키워드 (드라마 유형은 드라마 제목)" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:8px;box-sizing:border-box">
+        <select id="wf-series-type" onchange="wfSeriesTypeChanged()" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:8px">
+          <option value="auto">📚 일반 시리즈 (블로그별 자동 기획)</option>
+          <option value="drama">🎬 드라마 리뷰 (첫인상·인물·명장면·총평)</option>
+          <option value="drama_episodes">📺 드라마 회차별 리뷰 (매 화 1편)</option>
+        </select>
+        <div id="wf-series-start-wrap" style="display:none;gap:6px;margin-bottom:8px;align-items:center">
+          <span style="font-size:12px;color:var(--muted);white-space:nowrap">시작 회차:</span>
+          <input id="wf-series-start" type="number" min="1" max="100" value="1" style="width:70px;padding:6px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
+          <span style="font-size:11px;color:var(--muted)">화부터 편 수만큼 리뷰</span>
+        </div>
         <div style="display:flex;gap:6px;margin-bottom:10px">
           <span style="font-size:12px;color:var(--muted);align-self:center">편 수:</span>
           <button onclick="wfSetSeries(2)" id="wfs-2" class="sort-btn">2편</button>
           <button onclick="wfSetSeries(3)" id="wfs-3" class="sort-btn active">3편</button>
           <button onclick="wfSetSeries(4)" id="wfs-4" class="sort-btn">4편</button>
           <button onclick="wfSetSeries(5)" id="wfs-5" class="sort-btn">5편</button>
+          <button onclick="wfSetSeries(6)" id="wfs-6" class="sort-btn" style="display:none">6편</button>
+          <button onclick="wfSetSeries(8)" id="wfs-8" class="sort-btn" style="display:none">8편</button>
         </div>
         <button class="run-btn" style="width:100%;padding:9px" onclick="wfRunSeries()">▶ 시리즈 실행</button>
         <div id="wf-series-status" class="status-panel" style="display:none;margin-top:8px;font-size:12px"></div>
@@ -6287,10 +6299,30 @@ function wfRunLive() {
   _wfDispatch(mode, { keyword: kw, posts_per_run: count }, 'wf-live-status', 'wf-live-dot')
 }
 
+function wfSeriesTypeChanged() {
+  const type = document.getElementById('wf-series-type')?.value || 'auto'
+  const isEp = type === 'drama_episodes'
+  const startWrap = document.getElementById('wf-series-start-wrap')
+  if (startWrap) startWrap.style.display = isEp ? 'flex' : 'none'
+  // 회차별 리뷰는 6·8편 버튼도 노출 (최대 8회차)
+  const b6 = document.getElementById('wfs-6'), b8 = document.getElementById('wfs-8')
+  if (b6) b6.style.display = isEp ? '' : 'none'
+  if (b8) b8.style.display = isEp ? '' : 'none'
+  if (!isEp && _wfSeriesCount > 5) wfSetSeries(4)
+}
+
 function wfRunSeries() {
   const kw = document.getElementById('wf-series-kw')?.value.trim() || ''
-  if (!kw) { showToast('시리즈 키워드를 입력하세요', 'error'); return }
-  _wfDispatch('series', { keyword: kw, series_count: String(_wfSeriesCount) }, 'wf-series-status', 'wf-series-dot')
+  const type = document.getElementById('wf-series-type')?.value || 'auto'
+  if (!kw) {
+    showToast(type === 'auto' ? '시리즈 키워드를 입력하세요' : '드라마 제목을 입력하세요', 'error')
+    return
+  }
+  const inputs = { keyword: kw, series_count: String(_wfSeriesCount), series_type: type }
+  if (type === 'drama_episodes') {
+    inputs.start_episode = String(Math.max(1, parseInt(document.getElementById('wf-series-start')?.value) || 1))
+  }
+  _wfDispatch('series', inputs, 'wf-series-status', 'wf-series-dot')
 }
 
 async function wfPublishAll() {

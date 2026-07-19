@@ -456,6 +456,68 @@ JSON만 응답:
         return None
 
 
+def plan_drama_episode_series(drama_name: str, count: int = 4, start_episode: int = 1) -> dict | None:
+    """드라마 회차별 리뷰 시리즈를 기획합니다 — 시리즈 N편 = 드라마 N화 리뷰.
+
+    plan_drama_series(테마형: 첫인상→인물→명장면→총평)와 달리, 방영 회차를
+    하나씩 따라가며 매 화 리뷰를 작성합니다 (줄거리·명장면·연기·다음 화 포인트).
+    각 편의 search_keyword가 '드라마명 N화'이므로 자료 수집기가 해당 회차
+    기사·반응을 수집해 글의 근거로 사용합니다.
+
+    Args:
+        drama_name: 드라마 제목
+        count: 리뷰할 회차 수 (1~8)
+        start_episode: 시작 회차 (예: 5 → 5화부터 count개)
+    기획은 결정적(템플릿)이라 API 비용·실패 없이 항상 성공합니다.
+    """
+    drama_name = (drama_name or "").strip()
+    if not drama_name:
+        logger.error("드라마 회차 리뷰: 드라마 이름이 비어 있습니다")
+        return None
+    count = max(1, min(count, 8))
+    start_episode = max(1, min(start_episode, 100))
+
+    episodes = []
+    for i in range(count):
+        n = start_episode + i
+        episodes.append({
+            "episode": i + 1,             # 시리즈 내 순번
+            "drama_episode": n,           # 실제 드라마 회차
+            "title": f"[{n}화] {drama_name} {n}화 리뷰 — 줄거리·명장면 정리",
+            "focus": (
+                f"{drama_name} {n}화 리뷰: 줄거리 핵심 요약(스포 주의 안내 포함), "
+                f"명장면·명대사, 배우 연기 평가, 다음 화 예상 포인트"
+            ),
+            "search_keyword": f"{drama_name} {n}화 리뷰",
+            "status": "pending",
+            "post_id": None,
+            "blogger_url": None,
+        })
+
+    end_ep = start_episode + count - 1
+    ep_range = f"{start_episode}화" if count == 1 else f"{start_episode}~{end_ep}화"
+    plan = {
+        "series_id": str(uuid.uuid4())[:8],
+        "series_title": f"{drama_name} 회차별 리뷰 ({ep_range})",
+        "series_label": "드라마리뷰",
+        "drama_label": re.sub(r"[^가-힣a-zA-Z0-9]", "-", drama_name),
+        "series_description": f"직접 시청한 {drama_name} {ep_range} 회차별 솔직 리뷰",
+        "drama_name": drama_name,
+        "keyword": drama_name,
+        "episodes": episodes,
+        "total_episodes": len(episodes),
+        "created_at": datetime.now().isoformat(),
+        "status": "planned",
+        "type": "drama_episode_review",
+        "start_episode": start_episode,
+    }
+    logger.info(
+        f"드라마 회차 리뷰 시리즈 기획 완료: '{plan['series_title']}' "
+        f"{count}편 ({ep_range})"
+    )
+    return plan
+
+
 # ─────────────────────────────────────────────
 # 내비게이션 HTML
 # ─────────────────────────────────────────────

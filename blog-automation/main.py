@@ -771,7 +771,12 @@ def main() -> None:
     parser.add_argument("--keyword", type=str, help="특정 키워드로 실행 (쉼표로 복수 지정)")
     parser.add_argument("--interactive", "-i", action="store_true", help="키워드 직접 입력 후 즉시 실행")
     parser.add_argument("--series", action="store_true", help="시리즈 모드 — 주제를 N편으로 분할 기획·생성·게시 (--keyword 필수)")
-    parser.add_argument("--series-count", type=int, default=4, metavar="N", help="시리즈 편수 (2~5, 기본값 4)")
+    parser.add_argument("--series-count", type=int, default=4, metavar="N", help="시리즈 편수 (2~5, 회차별 리뷰는 1~8, 기본값 4)")
+    parser.add_argument("--series-type", default="auto", dest="series_type",
+                        choices=["auto", "drama", "drama_episodes"],
+                        help="시리즈 유형: auto=블로그별 자동, drama=드라마 테마형 리뷰(첫인상·인물·총평), drama_episodes=드라마 회차별 리뷰(매 화 1편)")
+    parser.add_argument("--start-episode", type=int, default=1, dest="start_episode", metavar="N",
+                        help="드라마 회차별 리뷰 시작 회차 (drama_episodes 전용, 기본 1화)")
     parser.add_argument("--setup", action="store_true", help="AdSense 심사 필수 페이지 생성 (개인정보처리방침·블로그 소개)")
     parser.add_argument("--blog", type=str, default="", metavar="BLOG_ID",
                         help="특정 블로그 ID만 실행 (BLOGS_CONFIG의 id 값; 기본값: 모든 블로그)")
@@ -903,19 +908,42 @@ def main() -> None:
             logger.error("시리즈 모드는 --keyword 가 필수입니다 (예: --series --keyword '재테크 완전정복')")
             sys.exit(1)
         series_kw = keywords[0]
-        series_count = max(2, min(getattr(args, "series_count", 4), 5))
+        series_type = getattr(args, "series_type", "auto")
+        # 회차별 리뷰는 최대 8편(8회차)까지 허용, 나머지 유형은 기존 2~5편 유지
+        if series_type == "drama_episodes":
+            series_count = max(1, min(getattr(args, "series_count", 4), 8))
+        else:
+            series_count = max(2, min(getattr(args, "series_count", 4), 5))
         skip_blogger = args.test or args.review
         if not _check_config(skip_blogger=skip_blogger):
             sys.exit(1)
+
+        # 시리즈 유형별 사전 기획 (auto는 run_series 내부의 블로그별 기획 사용)
+        def _make_pre_plan():
+            if series_type == "drama":
+                from series_planner import plan_drama_series
+                logger.info(f"[드라마 리뷰 시리즈] '{series_kw}' 테마형 기획")
+                return plan_drama_series(series_kw, series_count)
+            if series_type == "drama_episodes":
+                from series_planner import plan_drama_episode_series
+                start_ep = max(1, getattr(args, "start_episode", 1))
+                logger.info(f"[드라마 회차별 리뷰] '{series_kw}' {start_ep}화부터 {series_count}편")
+                return plan_drama_episode_series(series_kw, series_count, start_ep)
+            return None
+
         for blog_cfg in target_blogs:
+            pre_plan = _make_pre_plan()
+            if series_type != "auto" and not pre_plan:
+                logger.error("시리즈 사전 기획 실패 — 종료")
+                sys.exit(1)
             if args.test:
                 logger.info(f"[시리즈 테스트] '{series_kw}' {series_count}편 — 업로드 없이 생성만")
-                run_series(series_kw, series_count, dry_run=True, blog_config=blog_cfg)
+                run_series(series_kw, series_count, dry_run=True, series_plan=pre_plan, blog_config=blog_cfg)
             elif args.review:
                 logger.info(f"[시리즈 검토] '{series_kw}' {series_count}편 — pending에 저장")
-                run_series(series_kw, series_count, review=True, blog_config=blog_cfg)
+                run_series(series_kw, series_count, review=True, series_plan=pre_plan, blog_config=blog_cfg)
             else:
-                run_series(series_kw, series_count, blog_config=blog_cfg)
+                run_series(series_kw, series_count, series_plan=pre_plan, blog_config=blog_cfg)
         return
 
     if not _check_config(skip_blogger=(args.test or args.review)):

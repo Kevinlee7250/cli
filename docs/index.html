@@ -3162,7 +3162,9 @@ function setPostsStatusFilter(st) {
 async function postsActionPost(postId, action, postTitle) {
   const labels = { publish:'발행', archive:'보관', delete:'삭제', restore:'복원' }
   const label = labels[action] || action
-  if (!confirm(`"${postTitle.slice(0,40)}${postTitle.length>40?'…':''}" 포스트를 ${label}하시겠습니까?`)) return
+  const delNote = action === 'delete'
+    ? '\n(관리 목록에서만 제거됩니다 — Blogger에 게시된 글은 삭제되지 않습니다)' : ''
+  if (!confirm(`"${postTitle.slice(0,40)}${postTitle.length>40?'…':''}" 포스트를 ${label}하시겠습니까?${delNote}`)) return
   const pat = getPAT()
   if (!pat) { showToast('PAT(개인 액세스 토큰)를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
   showToast(`${label} 요청 중...`, 'info')
@@ -7801,9 +7803,12 @@ function _pmActionBtns(postId, status, safeTitle) {
     arc:  'background:var(--bg3);border:1px solid var(--border)!important;color:var(--text2)',
     del:  'background:rgba(248,113,113,.15);color:var(--red)',
     rst:  'background:rgba(52,211,153,.15);color:var(--green)',
+    mng:  'background:rgba(124,106,247,.15);color:var(--accent)',
   }
   const btn = (action, label, style) =>
     `<button style="${s.base};${style}" data-pid="${esc(postId)}" data-act="${action}" data-ttl="${esc(safeTitle)}" onclick="pmActionPost(this.dataset.pid,this.dataset.act,this.dataset.ttl)">${label}</button>`
+  const mngBtn =
+    `<button style="${s.base};${s.mng}" data-pid="${esc(postId)}" data-ttl="${esc(safeTitle)}" onclick="postEditMenu(this.dataset.pid,this.dataset.ttl)" title="AI 보완·이미지 관리">✨ 관리</button>`
 
   switch (status) {
     case 'pending':
@@ -7817,7 +7822,7 @@ function _pmActionBtns(postId, status, safeTitle) {
     case 'skipped':
       return btn('restore','복원',s.rst) + btn('delete','삭제',s.del)
     case 'published':
-      return btn('delete','삭제',s.del)
+      return mngBtn + btn('delete','삭제',s.del)
     default:
       return btn('delete','삭제',s.del)
   }
@@ -7826,7 +7831,9 @@ function _pmActionBtns(postId, status, safeTitle) {
 async function pmActionPost(postId, action, postTitle) {
   const labels = { publish: '발행', archive: '보관', delete: '삭제', restore: '복원' }
   const label = labels[action] || action
-  if (!confirm(`"${postTitle.slice(0, 40)}${postTitle.length > 40 ? '…' : ''}" 포스트를 ${label}하시겠습니까?`)) return
+  const delNote = action === 'delete'
+    ? '\n(관리 목록에서만 제거됩니다 — Blogger에 게시된 글은 삭제되지 않습니다)' : ''
+  if (!confirm(`"${postTitle.slice(0, 40)}${postTitle.length > 40 ? '…' : ''}" 포스트를 ${label}하시겠습니까?${delNote}`)) return
   const pat = getPAT()
   if (!pat) {
     showToast('PAT(개인 액세스 토큰)를 먼저 설정하세요 (실행 제어 탭)', 'error')

@@ -1491,6 +1491,22 @@
     </p>
     <div id="fixtoc-run-status" style="display:none;font-size:12px;color:var(--muted);margin-bottom:24px"></div>
 
+    <!-- ⑦.6 중복 이미지 교체 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>🖼️ 중복 이미지 교체</h2>
+      <div style="display:flex;gap:8px">
+        <button onclick="fixDupImagesRun(false)" style="padding:6px 14px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.3);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">🖼️ 지금 교체</button>
+        <button onclick="fixDupImagesRun(true)" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 미리보기</button>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.7">
+      발행된 전체 글을 스캔해 두 글 이상에 사용된 중복 이미지를 찾고, 가장 오래된 글 1곳만 유지한 뒤
+      나머지 글의 이미지를 글 제목 기반 새 이미지로 자동 교체합니다 (검색 실패 시 생성 썸네일).
+      기존 이미지 전체가 중복 방지 목록에 등록되어 이후 새 글이 같은 이미지를 재사용하지 않습니다.
+      결과: docs/data/duplicate_images.json
+    </p>
+    <div id="fiximg-run-status" style="display:none;font-size:12px;color:var(--muted);margin-bottom:24px"></div>
+
     <!-- ⑧ Google Drive 백업 -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>☁️ Google Drive 백업</h2>
@@ -5232,6 +5248,40 @@ async function adsenseAuditRun(dryRun = false) {
   } catch (e) {
     showToast(`오류: ${e.message}`, 'error')
     if (statusEl) statusEl.textContent = `❌ 오류: ${e.message}`
+  }
+}
+
+async function fixDupImagesRun(dryRun = false) {
+  const pat = getPAT()
+  if (!pat) { showToast('PAT를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
+  const label = dryRun ? '미리보기' : '중복 이미지 교체'
+  if (!dryRun && !confirm('발행된 전체 글을 스캔해 중복 이미지를 새 이미지로 교체합니다.\n(가장 오래된 글 1곳만 유지, Blogger에 즉시 반영) 진행할까요?')) return
+  const statusEl = document.getElementById('fiximg-run-status')
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = `⏳ ${label} 워크플로 요청 중...` }
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/fix-duplicate-images.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: { dry_run: dryRun ? 'true' : 'false' } })
+      }
+    )
+    if (resp.ok || resp.status === 204) {
+      const msg = dryRun
+        ? '🔍 미리보기 워크플로가 실행됐습니다. Actions 로그와 duplicate_images.json에서 대상을 확인하세요.'
+        : '🖼️ 중복 이미지 교체 워크플로가 실행됐습니다. 완료까지 수 분 걸릴 수 있습니다.'
+      showToast(msg, 'success')
+      if (statusEl) statusEl.textContent = `✅ ${msg}`
+    } else {
+      const errText = await resp.text().catch(() => '')
+      const msg = `실행 실패: ${resp.status} ${errText.slice(0, 80)}`
+      showToast(msg, 'error')
+      if (statusEl) statusEl.textContent = `❌ ${msg}`
+    }
+  } catch (e) {
+    showToast(`오류: ${e.message}`, 'error')
+    if (statusEl) statusEl.textContent = `❌ ${e.message}`
   }
 }
 

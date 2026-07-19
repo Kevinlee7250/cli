@@ -3042,7 +3042,8 @@ function _postCardActionBtns(reg, title) {
   const safePid = esc(pid)
   const safeT   = esc(title || '')
   const st = reg.status
-  if (st === 'published') return ''
+  if (st === 'published')
+    return `<button class="card-act-btn" data-pid="${safePid}" data-ttl="${safeT}" onclick="postEditMenu(this.dataset.pid,this.dataset.ttl)" title="AI 보완·이미지 관리">✨ 관리</button>`
   let html = ''
   if (st === 'pending' || st === 'failed' || st === 'draft')
     html += `<button class="card-act-btn pub" data-pid="${safePid}" data-act="publish" data-ttl="${safeT}" onclick="postsActionPost(this.dataset.pid,this.dataset.act,this.dataset.ttl)">발행</button>`
@@ -3068,7 +3069,85 @@ function _postModalActionBtns(reg, title, blogUrl) {
     html += `<button class="modal-act-btn rst" data-pid="${safePid}" data-act="restore" data-ttl="${safeT}" onclick="closeModal();postsActionPost(this.dataset.pid,this.dataset.act,this.dataset.ttl)">🔄 복원 (대기로)</button>`
   if (st !== 'published')
     html += `<button class="modal-act-btn del" data-pid="${safePid}" data-act="delete" data-ttl="${safeT}" onclick="closeModal();postsActionPost(this.dataset.pid,this.dataset.act,this.dataset.ttl)">🗑 삭제</button>`
+  if (st === 'published')
+    html += `<button class="modal-act-btn" data-pid="${safePid}" data-ttl="${safeT}" onclick="closeModal();postEditMenu(this.dataset.pid,this.dataset.ttl)">✨ 보완·이미지 관리</button>`
   return html
+}
+
+// ── 발행 글 수정·보완 & 이미지 관리 ──────────────────────────────────────────
+async function _dispatchPostAction(inputs, doneMsg) {
+  const pat = getPAT()
+  if (!pat) { showToast('PAT(개인 액세스 토큰)를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
+  showToast('워크플로 실행 요청 중...', 'info')
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/post-action.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs }),
+      }
+    )
+    if (resp.ok || resp.status === 204) showToast(doneMsg, 'success')
+    else showToast(`실행 실패 (${resp.status}): ${(await resp.text()).slice(0, 80)}`, 'error')
+  } catch (e) { showToast(`오류: ${e.message}`, 'error') }
+}
+
+function postEditMenu(postId, postTitle) {
+  const t = (postTitle || postId).slice(0, 40)
+  const choice = prompt(
+    `"${t}" 발행 글 관리 — 번호를 입력하세요:\n\n` +
+    `1. ✨ AI 수정·보완 (분량·최신성·가독성)\n` +
+    `2. ✨ AI 수정·보완 (직접 요청 입력)\n` +
+    `3. 🖼 이미지 추가 (검색 또는 썸네일)\n` +
+    `4. 🔄 이미지 교체\n` +
+    `5. ➖ 이미지 제거\n\n` +
+    `※ 모든 변경은 Blogger에 즉시 반영됩니다 (1~2분 소요)`, '1')
+  if (!choice) return
+
+  if (choice === '1' || choice === '2') {
+    let req = ''
+    if (choice === '2') {
+      req = prompt('보완 요청 내용을 입력하세요\n(예: "최신 2026년 기준으로 정보 업데이트하고 FAQ 2개 추가")', '')
+      if (req === null) return
+    }
+    if (!confirm(`"${t}"을(를) AI로 보완할까요?\n${req ? '요청: ' + req.slice(0, 60) : '기본 보완: 분량·최신성·가독성'}`)) return
+    _dispatchPostAction(
+      { action: 'improve', post_id: postId, improve_request: req || '' },
+      '✨ AI 보완 워크플로가 실행됐습니다. 2~5분 후 블로그에서 확인하세요.')
+    return
+  }
+
+  if (choice === '3') {
+    const query = prompt('이미지 검색어 (비워두면 제목 기반 생성 썸네일 사용)', '')
+    if (query === null) return
+    const posStr = prompt('삽입 위치 — 0: 도입부 바로 뒤, N: N번째 소제목(H2) 앞', '0')
+    if (posStr === null) return
+    _dispatchPostAction(
+      { action: 'add_image', post_id: postId, image_query: query.trim(), image_index: String(parseInt(posStr) || 0) },
+      '🖼 이미지 추가 워크플로가 실행됐습니다. 1~2분 후 반영됩니다.')
+    return
+  }
+
+  if (choice === '4') {
+    const idxStr = prompt('교체할 이미지 번호 (1 = 첫 번째)', '1')
+    if (idxStr === null) return
+    const query = prompt('새 이미지 검색어 (비워두면 생성 썸네일로 교체)', '')
+    if (query === null) return
+    _dispatchPostAction(
+      { action: 'replace_image', post_id: postId, image_index: String(Math.max(1, parseInt(idxStr) || 1)), image_query: query.trim() },
+      '🔄 이미지 교체 워크플로가 실행됐습니다. 1~2분 후 반영됩니다.')
+    return
+  }
+
+  if (choice === '5') {
+    const idxStr = prompt('제거할 이미지 번호 (1 = 첫 번째)', '1')
+    if (idxStr === null) return
+    if (!confirm(`${idxStr}번째 이미지를 제거할까요? 되돌릴 수 없습니다.`)) return
+    _dispatchPostAction(
+      { action: 'remove_image', post_id: postId, image_index: String(Math.max(1, parseInt(idxStr) || 1)) },
+      '➖ 이미지 제거 워크플로가 실행됐습니다. 1~2분 후 반영됩니다.')
+  }
 }
 
 function setPostsStatusFilter(st) {

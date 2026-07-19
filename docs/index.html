@@ -1106,6 +1106,25 @@
     <div id="social-instagram" class="social-content active"></div>
     <div id="social-threads" class="social-content"></div>
     <div id="social-tiktok" class="social-content"></div>
+
+    <!-- 유튜브 쇼츠 스크립트 -->
+    <div class="section-header" style="margin:28px 0 12px">
+      <h2>🎬 유튜브 쇼츠/릴스 스크립트</h2>
+      <div style="display:flex;gap:8px;align-items:center">
+        <select id="shorts-post-select" style="max-width:280px;padding:6px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
+          <option value="">최근 발행 글 자동 선택</option>
+        </select>
+        <button onclick="shortsGenerate()" style="padding:6px 14px;background:rgba(248,113,113,.15);border:1px solid rgba(248,113,113,.35);border-radius:8px;color:var(--red);font-size:12px;cursor:pointer;font-weight:600">🎬 스크립트 생성</button>
+        <button onclick="loadShortsScripts()" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔄</button>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">
+      발행 글을 60초 쇼츠 대본(훅·장면별 내레이션·화면 지시·CTA)과 9:16 세로 썸네일로 변환합니다.
+      대본·캡션을 복사해 촬영·편집에 사용하세요.
+    </p>
+    <div id="shorts-list" style="margin-bottom:24px">
+      <div style="color:var(--muted);font-size:13px;padding:20px;text-align:center;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)">생성된 스크립트가 없습니다 — 위에서 생성해 보세요.</div>
+    </div>
   </div>
 
   <!-- ═══ 수동 검토 ═══ -->
@@ -2150,6 +2169,8 @@ const WF_LABELS = {
   'restyle-post.yml': '🎨 글 리스타일', 'fix-posts.yml': '🔧 글 일괄 보정',
   'blog-comment-automation.yml': '💬 댓글 자동화', 'adsense-policy-update.yml': '📐 정책 업데이트',
   'gsc-register.yml': '🔍 GSC 등록', 'post-lifecycle.yml': '📈 생애주기 추적',
+  'series-schedule.yml': '📅 시리즈 예약 처리', 'gsc-indexing.yml': '🔍 구글 색인 점검',
+  'shorts-generate.yml': '🎬 쇼츠 스크립트 생성',
 }
 let _wfTracks = []   // {id, file, label, startTs, status, conclusion, runUrl, done}
 let _wfPollTimer = null
@@ -3772,7 +3793,86 @@ function switchSocialTab(tab) {
   document.getElementById('social-' + tab).classList.add('active')
 }
 
+// ── 유튜브 쇼츠 스크립트 ─────────────────────────────────────────────────────
+function _shortsFillPostSelect() {
+  const sel = document.getElementById('shorts-post-select')
+  if (!sel || sel.options.length > 1) return
+  const pubs = (DATA.registry || []).filter(p => p.status === 'published' && p.blogUrl).slice(0, 40)
+  pubs.forEach(p => {
+    const o = document.createElement('option')
+    o.value = p.post_id
+    o.textContent = (p.title || p.keyword || p.post_id).slice(0, 45)
+    sel.appendChild(o)
+  })
+}
+
+async function shortsGenerate() {
+  const pat = getPAT()
+  if (!pat) { showToast('PAT를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
+  const postId = document.getElementById('shorts-post-select')?.value || ''
+  const label = postId ? '선택한 글' : '최근 발행 글 1건'
+  if (!confirm(`${label}의 쇼츠 스크립트를 생성할까요? (1~2분 소요)`)) return
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/shorts-generate.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github+json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs: { post_id: postId, latest_count: '1' } }),
+      }
+    )
+    if (resp.ok || resp.status === 204) showToast('🎬 스크립트 생성 워크플로가 실행됐습니다. 완료 후 🔄를 누르세요.', 'success')
+    else showToast(`실행 실패 (${resp.status})`, 'error')
+  } catch (e) { showToast(`오류: ${e.message}`, 'error') }
+}
+
+async function loadShortsScripts() {
+  const wrap = document.getElementById('shorts-list')
+  if (!wrap) return
+  let data = null
+  try {
+    const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
+    const r = await fetch(`${base}/shorts_scripts.json?t=${Date.now()}`)
+    if (r.ok) data = await r.json()
+  } catch {}
+  if (!Array.isArray(data) || !data.length) {
+    wrap.innerHTML = `<div style="color:var(--muted);font-size:13px;padding:20px;text-align:center;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)">생성된 스크립트가 없습니다 — 위에서 생성해 보세요.</div>`
+    return
+  }
+  wrap.innerHTML = data.slice(0, 10).map((s, i) => {
+    const scenes = (s.scenes || []).map(sc =>
+      `<div style="display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span style="color:var(--accent2);font-size:11px;white-space:nowrap;min-width:52px">${esc(sc.time || '')}</span>
+        <div style="flex:1"><div style="font-size:13px">${esc(sc.voice || '')}</div>
+        <div style="font-size:11px;color:var(--muted)">🎥 ${esc(sc.visual || '')}</div></div>
+      </div>`).join('')
+    const fullScript = [s.hook, ...(s.scenes || []).map(sc => sc.voice), s.cta].filter(Boolean).join('\n')
+    const caption = `${s.caption || ''}\n${(s.hashtags || []).join(' ')}`
+    return `<div class="run-panel" style="padding:16px;margin-bottom:14px">
+      <div style="display:flex;gap:14px">
+        <img src="${s.thumbnail || ''}" alt="썸네일" style="width:90px;height:160px;border-radius:8px;object-fit:cover;flex-shrink:0">
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:700;font-size:14px;margin-bottom:4px">${esc(s.video_title || s.title || '')}</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:8px">${esc((s.created_at || '').slice(0, 10))} · <a href="${esc(s.blog_url || '#')}" target="_blank" rel="noopener" style="color:var(--accent2)">원본 글 →</a></div>
+          <div style="font-size:13px;color:var(--yellow);margin-bottom:8px">🪝 ${esc(s.hook || '')}</div>
+          <details><summary style="cursor:pointer;font-size:12px;color:var(--accent)">장면별 대본 보기 (${(s.scenes || []).length}장면)</summary>
+            <div style="margin-top:8px">${scenes}
+            <div style="font-size:13px;color:var(--green);padding-top:6px">📢 ${esc(s.cta || '')}</div></div>
+          </details>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="card-act-btn" data-txt="${esc(fullScript)}" onclick="navigator.clipboard.writeText(this.dataset.txt).then(()=>showToast('대본 복사 완료 ✅'))">📋 대본 복사</button>
+            <button class="card-act-btn" data-txt="${esc(caption)}" onclick="navigator.clipboard.writeText(this.dataset.txt).then(()=>showToast('캡션 복사 완료 ✅'))">📋 캡션+태그 복사</button>
+            <a href="${s.thumbnail || '#'}" download="shorts_thumb_${i}.svg" class="card-act-btn" style="text-decoration:none;display:inline-flex;align-items:center">⬇ 썸네일</a>
+          </div>
+        </div>
+      </div>
+    </div>`
+  }).join('')
+}
+
 function renderSocial() {
+  _shortsFillPostSelect()
+  loadShortsScripts()
   const { social } = DATA
   if (!social.length) {
     ['instagram','threads','tiktok'].forEach(t => {

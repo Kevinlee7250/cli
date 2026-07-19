@@ -2376,10 +2376,22 @@ def _fact_check_content(post_data: dict, keyword: str, evidence_pack: dict | Non
             return
         result = parsed
 
+        def _makes_glitch(html_text: str, pos: int, end: int, fix: str) -> bool:
+            """치환 결과가 중복 문구 글리치를 만드는지 검사합니다.
+            (예: '화제성 지표에서 화제성 지표에서', '~같습니다해보셔도 좋을 것 같습니다'
+             — quote가 문장 일부만 매칭되고 fix에 주변 문맥이 포함된 경우 발생)"""
+            candidate = html_text[:pos] + fix + html_text[end:]
+            # 삽입 지점 주변 창에서 10자 이상 인접 반복 감지 (원본에 없던 것만)
+            w_start, w_end = max(0, pos - 20), pos + len(fix) + 40
+            new_win = candidate[w_start:w_end]
+            old_win = html_text[max(0, pos - 20):end + 40]
+            dup = re.search(r'(\S[^<>]{5,}?)\s*\1', new_win)
+            return bool(dup and not re.search(re.escape(dup.group(1)) + r'\s*' + re.escape(dup.group(1)), old_win))
+
         def _safe_replace(html_text: str, quote: str, fix: str) -> str | None:
             """태그 내부(속성/스타일)가 아닌 텍스트 위치에서만 치환합니다.
             공백·태그 차이로 직접 매칭이 실패하면 공백 유연 정규식으로 재시도.
-            치환 실패 시 None."""
+            치환 실패·중복 글리치 발생 시 None."""
             if len(quote) < 6:
                 return None  # '100%' 같은 짧은 인용은 스타일 훼손 위험 — 건너뜀
 
@@ -2395,12 +2407,18 @@ def _fact_check_content(post_data: dict, keyword: str, evidence_pack: dict | Non
                 if pos == -1:
                     break
                 if not _in_tag(pos):
+                    if _makes_glitch(html_text, pos, pos + len(quote), fix):
+                        logger.warning(f"팩트체크 치환이 중복 문구 생성 — 건너뜀: '{fix[:40]}'")
+                        return None
                     return html_text[:pos] + fix + html_text[pos + len(quote):]
                 start = pos + 1
             # ② 공백 유연 정규식 (plain은 \s+ 정규화되어 있어 HTML과 어긋날 수 있음)
             pattern = re.escape(quote).replace(r"\ ", r"\s+")
             for m2 in re.finditer(pattern, html_text):
                 if not _in_tag(m2.start()):
+                    if _makes_glitch(html_text, m2.start(), m2.end(), fix):
+                        logger.warning(f"팩트체크 치환이 중복 문구 생성 — 건너뜀: '{fix[:40]}'")
+                        return None
                     return html_text[:m2.start()] + fix + html_text[m2.end():]
             return None
 

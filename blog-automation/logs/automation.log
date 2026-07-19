@@ -1,121 +1,3 @@
-  "error_description": "The OAuth client was not found."
-}
-2026-07-19 11:16:40,846 [ERROR] main —   ❌ Blogger 업로드 최종 실패 (3회 시도): '1인가구 N잡러 부업 수익 ETF 투자 노하우'
-2026-07-19 11:16:40,846 [INFO] main — 
-============================================================
-2026-07-19 11:16:40,846 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 1개
-2026-07-19 11:16:40,846 [INFO] main — ============================================================
-2026-07-19 11:16:40,876 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-19 11:16:40,901 [INFO] dashboard_exporter —   시리즈: 10개 내보내기 완료
-2026-07-19 11:16:40,920 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-19 11:16:40,921 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-19 11:16:40,923 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-19 11:16:40,938 [INFO] post_manager —   포스트 레지스트리: 전체 273개 (게시 162 / 실패 30 / 대기 56)
-2026-07-19 11:16:40,938 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-19 11:16:40,938 [INFO] dashboard_exporter —   포스트: 93개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-19 11:16:40,939 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-19 11:17:10,587 [INFO] main — ============================================================
-2026-07-19 11:17:10,587 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-19 11:17:10
-2026-07-19 11:17:10,587 [INFO] main — ============================================================
-2026-07-19 11:17:10,595 [INFO] keyword_collector — 포스팅 이력 코퍼스: 25개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-19 11:17:14,658 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-19 11:17:27,066 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 11:17:27,084 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-19 11:17:27,084 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-19 11:17:27,760 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-19 11:17:27,761 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-19 11:17:27,762 [INFO] keyword_collector —   [naver_realtime] 2개: ['1인가구 재테크 예적금에서 주식 ETF로 갈아타는 방법', 'N잡러 부업으로 부수입 만들고 투자하는 법']
-2026-07-19 11:17:27,762 [INFO] keyword_collector — 최종 선정 키워드 2개: ['1인가구 재테크 예적금에서 주식 ETF로 갈아타는 방법', 'N잡러 부업으로 부수입 만들고 투자하는 법']
-2026-07-19 11:17:27,762 [INFO] main — 수집된 키워드 2개: ['1인가구 재테크 예적금에서 주식 ETF로 갈아타는 방법', 'N잡러 부업으로 부수입 만들고 투자하는 법']
-2026-07-19 11:17:27,766 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
-2026-07-19 11:17:27,766 [INFO] main — 단독 포스트 대상 키워드 1개: ['1인가구 재테크 예적금에서 주식 ETF로 갈아타는 방법']
-2026-07-19 11:17:27,781 [INFO] main — 
-[1/1] 키워드: '1인가구 재테크 예적금에서 주식 ETF로 갈아타는 방법'
-2026-07-19 11:17:27,781 [INFO] content_generator — 포스트 생성 중: '1인가구 재테크 예적금에서 주식 ETF로 갈아타는 방법'
-2026-07-19 11:17:36,945 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 11:17:36,946 [INFO] research_collector — 검색 의도: 1인가구가 예적금 중심 자산에서 주식 ETF 투자로 전환하는 구체적 방법과 주의사항을 알고 싶어함
-2026-07-19 11:17:48,033 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '1인가구 재테크 예적금에서 주식 ETF로 갈아타는 방법'
-2026-07-19 11:18:02,626 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 11:18:02,627 [INFO] evidence_builder — 자료팩 생성: 사실 3개 — '1인가구 재테크 예적금에서 주식 ETF로 갈아타는 방법'
-2026-07-19 11:18:19,486 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 11:18:19,488 [INFO] source_validator — 출처 검증: 2/3개 통과, 등급 분포 {'B': 2, 'X': 1}
-2026-07-19 11:18:19,490 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-19 11:18:20,323 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 11:19:25,801 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 11:19:40,131 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-07-19 11:19:40,131 [INFO] content_generator — 제목 기반 이미지 검색: '1인가구 재테크, 예적금에서 ETF로 갈아타는 방법과 현실적인 체크포인트'
-2026-07-19 11:19:40,398 [INFO] image_fetcher — 이미지 수집 성공: '1인가구 재테크, 예적금에서 ETF로 갈아타는 방법과 현실적인 체크포인트' → 제목='historical stock / securities / certific' (관련성=0.12)
-2026-07-19 11:19:40,399 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-19 11:19:40,400 [INFO] content_generator — 포스트 생성 완료: '1인가구 재테크, 예적금에서 ETF로 갈아타는 방법과 현실적인 체크포인트' (2820자, 이미지 1개)
-2026-07-19 11:19:41,550 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 11:20:02,919 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '1인가구 재테크, 예적금에서 ETF로 갈아타는 방법과 현실적인 '
-2026-07-19 11:20:02,919 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2820자로 분량은 기준 충족이나 인터뷰·기사 재구성 위주이며 필자 개인 투자 경험은 부족함
-2026-07-19 11:20:02,919 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 충족하나 문단 구분 없이 500자 이상 길게 이어지는 블록이 다수 존재
-2026-07-19 11:20:02,919 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용은 있으나 필자의 직접 투자 경험보다 자료 조사·요약 중심 서술
-2026-07-19 11:20:02,919 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 저작권 위반은 없으나 가독성·SEO 측면에서 보완 필요
-2026-07-19 11:20:02,919 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 게 전문가들의 공통된 조언' 식의 유사 문장 패턴이 반복되어 AI 생성 느낌이 남음
-2026-07-19 11:20:02,927 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-19 11:20:02,928 [INFO] internal_linker —   [1/5] '갈아타기' -> https://hoguasset.blogspot.com/2026/07/1-etf.html
-2026-07-19 11:20:02,931 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-19 11:20:02,931 [INFO] main —   제목: 1인가구 재테크, 예적금에서 ETF로 갈아타는 방법과 현실적인 체크포인트
-2026-07-19 11:20:02,931 [INFO] main —   이미지: 1개 삽입
-2026-07-19 11:20:02,931 [INFO] main —   글자 수: 2820자
-2026-07-19 11:20:05,105 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 11:20:25,873 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '1인가구 재테크, 예적금에서 ETF로 갈아타는 방법과 현실적인 '
-2026-07-19 11:20:25,873 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 2820자로 기준 범위 내이나 뉴스·인터뷰 재구성 위주로 독창적 개인 경험 데이터가 얕음
-2026-07-19 11:20:25,873 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 충족하나 각 섹션 내 문단이 500자 이상으로 길게 이어져 가독성이 떨어짐
-2026-07-19 11:20:25,873 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 서술과 출처 인용은 있으나 인터뷰 인용문에 문법 오류('소개됩니다고 소개됩니다')가 있어 신뢰도 신호가 약함
-2026-07-19 11:20:25,873 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글
-2026-07-19 11:20:25,873 [INFO] adsense_validator —   ❌ AI 생성 의심도: '~라는 게 공통적으로 나오는 조언/이야기입니다' 류 템플릿 문구 반복과 인터뷰 인용부 어색한 중복 표현이 AI 생성 흔적을 강하게 시사함
-2026-07-19 11:20:25,873 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '~라는 게 공통적으로 나오는 조언/이야기입니다' 류 템플릿 문구 반복과 인터뷰 인용부 어색한 중복 표현이 AI 생성 흔적을 강하게 시사함
-2026-07-19 11:20:25,873 [WARNING] adsense_validator —   🔴 인터뷰 인용문에 '소개됩니다고 소개됩니다'와 같은 명백한 문법 오류가 있어 신뢰성과 AI 생성 의심을 동시에 유발함
-2026-07-19 11:20:25,873 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
-2026-07-19 11:20:25,873 [WARNING] main —      🔴 [AI 생성 의심도] '~라는 게 공통적으로 나오는 조언/이야기입니다' 류 템플릿 문구 반복과 인터뷰 인용부 어색한 중복 표현이 AI 생성 흔적을 강하게 시사함
-2026-07-19 11:20:25,873 [WARNING] main —      🔴 인터뷰 인용문에 '소개됩니다고 소개됩니다'와 같은 명백한 문법 오류가 있어 신뢰성과 AI 생성 의심을 동시에 유발함
-2026-07-19 11:20:25,873 [WARNING] main —      🟡 [원본성 및 품질] 글자 수 2820자로 기준 범위 내이나 뉴스·인터뷰 재구성 위주로 독창적 개인 경험 데이터가 얕음
-2026-07-19 11:20:25,873 [WARNING] main —      🟡 [구조 및 가독성] H2 4개는 충족하나 각 섹션 내 문단이 500자 이상으로 길게 이어져 가독성이 떨어짐
-2026-07-19 11:20:25,873 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 서술과 출처 인용은 있으나 인터뷰 인용문에 문법 오류('소개됩니다고 소개됩니다')가 있어 신뢰도 신호가 약함
-2026-07-19 11:20:25,874 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
-2026-07-19 11:20:26,805 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 11:21:36,837 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2820자 → 3921자 (+1101자)
-2026-07-19 11:21:36,837 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-19 11:21:38,428 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 11:21:57,246 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '1인가구 재테크, 예적금에서 ETF로 갈아타는 방법과 현실적인 '
-2026-07-19 11:21:57,246 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 날짜·금액·경험담(2023년 청년희망적금 해지, 520만원 CMA 등)은 우수하나 글자수 3921자로 4000자 기준에 못 미쳐 warn
-2026-07-19 11:21:57,246 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 충족하나 500자 이상 단락이 3개 이상 존재해 가독성 저하 우려
-2026-07-19 11:21:57,246 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 사용 여부가 확인되지 않아 부재로 간주, 저작권 위반은 없으나 warn 처리
-2026-07-19 11:21:57,246 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 84/100)
-2026-07-19 11:21:57,246 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-19 11:21:58,132 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 11:23:18,709 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-19 11:23:20,073 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 11:23:51,701 [INFO] final_editor —   ✏️ 제목 최종 교정: '1인가구 재테크, 예적금에서 ETF로 갈아타는 방법과 현실적인 체크포인트' → '1인가구 재테크 예적금에서 ETF로 갈아타는 방법과 체크포인트'
-2026-07-19 11:23:51,701 [INFO] final_editor —   ✏️ 메타 설명 교정 (93자)
-2026-07-19 11:23:51,701 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분할하고, 요약 박스·비교표·개인 경험 메모·주의사항·FAQ·작성자 메모·내부 링크를 표준 형식으로 추가했습니다. 제목·메타설명·슬러그를 SEO 기준에 맞게 재정리하고 이미지 3컷의 위치와 alt 텍스트를 구체화했습니다.
-2026-07-19 11:23:51,814 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-19 11:23:51,815 [WARNING] main —   업로드 실패 — 5s 대기 후 재시도 (1/3)
-2026-07-19 11:23:56,911 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-19 11:23:56,912 [WARNING] main —   업로드 실패 — 10s 대기 후 재시도 (2/3)
-2026-07-19 11:24:07,011 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-19 11:24:07,020 [ERROR] main —   ❌ Blogger 업로드 최종 실패 (3회 시도): '1인가구 재테크, 예적금에서 ETF로 갈아타는 방법과 현실적인 체크포인트'
-2026-07-19 11:24:07,020 [INFO] main — 
-============================================================
-2026-07-19 11:24:07,020 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 1개
-2026-07-19 11:24:07,021 [INFO] main — ============================================================
-2026-07-19 11:24:07,043 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-19 11:24:07,061 [INFO] dashboard_exporter —   시리즈: 10개 내보내기 완료
-2026-07-19 11:24:07,076 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-19 11:24:07,076 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-19 11:24:07,078 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
 2026-07-19 11:24:07,089 [INFO] post_manager —   포스트 레지스트리: 전체 274개 (게시 162 / 실패 31 / 대기 56)
 2026-07-19 11:24:07,089 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-19 11:24:07,089 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
@@ -616,3 +498,131 @@
 2026-07-19 23:08:52,460 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-19 23:08:52,460 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-19 23:08:52,461 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-19 23:09:24,605 [INFO] main — ============================================================
+2026-07-19 23:09:24,605 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-19 23:09:24
+2026-07-19 23:09:24,605 [INFO] main — ============================================================
+2026-07-19 23:09:24,615 [INFO] keyword_collector — 포스팅 이력 코퍼스: 27개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-19 23:09:29,191 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-19 23:09:33,231 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:09:33,252 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-19 23:09:33,252 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-19 23:09:33,990 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-07-19 23:09:33,990 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-19 23:09:33,992 [INFO] keyword_collector —   [naver_realtime] 2개: ['1인 가구 재테크 방법 예적금 대신 투자 시작하기', '반도체 주가 저점 매수 타이밍 2026 투자 전략']
+2026-07-19 23:09:33,992 [INFO] keyword_collector — 최종 선정 키워드 2개: ['1인 가구 재테크 방법 예적금 대신 투자 시작하기', '반도체 주가 저점 매수 타이밍 2026 투자 전략']
+2026-07-19 23:09:33,992 [INFO] main — 수집된 키워드 2개: ['1인 가구 재테크 방법 예적금 대신 투자 시작하기', '반도체 주가 저점 매수 타이밍 2026 투자 전략']
+2026-07-19 23:09:33,998 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
+2026-07-19 23:09:33,998 [INFO] main — 단독 포스트 대상 키워드 1개: ['1인 가구 재테크 방법 예적금 대신 투자 시작하기']
+2026-07-19 23:09:34,017 [INFO] main — 
+[1/1] 키워드: '1인 가구 재테크 방법 예적금 대신 투자 시작하기'
+2026-07-19 23:09:34,017 [INFO] content_generator — 포스트 생성 중: '1인 가구 재테크 방법 예적금 대신 투자 시작하기'
+2026-07-19 23:09:40,367 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:09:40,368 [INFO] research_collector — 검색 의도: 1인 가구가 예적금 대신 시작할 수 있는 투자 방법과 절차를 알고 싶어함
+2026-07-19 23:10:13,593 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 6개) — '1인 가구 재테크 방법 예적금 대신 투자 시작하기'
+2026-07-19 23:10:31,065 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:10:31,066 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '1인 가구 재테크 방법 예적금 대신 투자 시작하기'
+2026-07-19 23:11:14,502 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:11:14,503 [INFO] source_validator — 출처 검증: 3/7개 통과, 등급 분포 {'B': 3, 'X': 4}
+2026-07-19 23:11:14,505 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-19 23:11:17,191 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:12:17,551 [WARNING] content_generator — 컨텐츠 너무 짧음(2456자, 최소 2500자) — 재시도 1/3
+2026-07-19 23:12:20,551 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-19 23:12:21,221 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:13:17,522 [WARNING] content_generator — 컨텐츠 너무 짧음(2441자, 최소 2500자) — 재시도 2/3
+2026-07-19 23:13:20,522 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-19 23:13:21,446 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:14:20,034 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:14:32,666 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-07-19 23:14:32,821 [INFO] image_fetcher — 이미지 수집 성공: '1인 가구 재테크 방법, 예적금 대신 투자 시작하기 전에 확인할 것들' → 제목='savings / piggy / bank / money / coin / ' (관련성=0.15)
+2026-07-19 23:14:32,969 [INFO] image_fetcher — 이미지 수집 성공: '가구 재테크 예적금' → 제목='savings / piggy / bank / money / coin / ' (관련성=0.40)
+2026-07-19 23:14:33,394 [INFO] image_fetcher — 이미지 수집 성공: '가구 재테크 예적금만으로 부족하다 S&P500 상반기' → 제목='savings / piggy / bank / money / coin / ' (관련성=0.00)
+2026-07-19 23:14:34,458 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:14:34,459 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-19 23:14:34,460 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-19 23:14:34,462 [INFO] content_generator — 포스트 생성 완료: '1인 가구 재테크 방법, 예적금 대신 투자 시작하기 전에 확인할 것들' (2580자, 이미지 3개)
+2026-07-19 23:14:35,118 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:14:54,098 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '1인 가구 재테크 방법, 예적금 대신 투자 시작하기 전에 확인할'
+2026-07-19 23:14:54,098 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수 2580자로 기준 충족하나 통계 재조합 위주이며 개인 경험·독창적 인사이트가 부족함
+2026-07-19 23:14:54,098 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개로 개수는 충족하나 단락 구분 없이 이어지는 긴 블록이 다수 존재
+2026-07-19 23:14:54,098 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 2개 출처 인용은 있으나 1인칭 경험 서술과 저자 전문성 신호가 부재함
+2026-07-19 23:14:54,098 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되지 않아 가독성·SEO 측면에서 보완 필요
+2026-07-19 23:14:54,098 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~다고 합니다', '~라 할 수 있습니다' 반복 및 문장 중복 오류로 AI 생성 흔적이 감지됨
+2026-07-19 23:14:54,098 [WARNING] adsense_validator —   🔴 '이른바 M7 종목군은 오히려 부진한 흐름을 보였다고 합니다을 기록했다고 합니다' 문장에 중복·비문 오류 존재, 수정 필요
+2026-07-19 23:14:54,104 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-19 23:14:54,105 [INFO] internal_linker —   [1/5] '투자하는' -> https://www.hoguwhat.com/2026/07/2026-1.html
+2026-07-19 23:14:54,107 [INFO] internal_linker —   [2/5] 'ETF' -> https://hoguasset.blogspot.com/2026/07/1-etf.html
+2026-07-19 23:14:54,108 [INFO] internal_linker —   [3/5] '안전하게' -> https://hoguasset.blogspot.com/2026/07/etf-5.html
+2026-07-19 23:14:54,109 [INFO] internal_linker —   [4/5] 'ETF' -> https://hoguasset.blogspot.com/2026/07/etf-2026-etf.html
+2026-07-19 23:14:54,109 [INFO] internal_linker —   [5/5] '금융위원회' -> https://hoguasset.blogspot.com/2026/07/etf-2026_01246396645.
+2026-07-19 23:14:54,110 [INFO] internal_linker — 내부 링크 5개 삽입 완료
+2026-07-19 23:14:54,110 [INFO] main —   제목: 1인 가구 재테크 방법, 예적금 대신 투자 시작하기 전에 확인할 것들
+2026-07-19 23:14:54,110 [INFO] main —   이미지: 3개 삽입
+2026-07-19 23:14:54,110 [INFO] main —   글자 수: 2580자
+2026-07-19 23:14:54,787 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:15:12,733 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '1인 가구 재테크 방법, 예적금 대신 투자 시작하기 전에 확인할'
+2026-07-19 23:15:12,733 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 수치 인용은 풍부하나 개인 경험 서술 없이 통계 재조합 위주라 독창성이 약함
+2026-07-19 23:15:12,734 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2는 4개로 충족하나 단락이 매우 길게 이어져 가독성이 떨어짐
+2026-07-19 23:15:12,734 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2건 인용은 있으나 1인칭 경험이나 저자 전문성 신호가 부족함
+2026-07-19 23:15:12,734 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글로 정책 위반은 아니나 개선 여지 있음
+2026-07-19 23:15:12,734 [INFO] adsense_validator —   ❌ AI 생성 의심도: '보였다고 합니다을 기록했다고 합니다' 같은 문법 오류와 획일적 보고체 문장이 AI 생성 흔적을 강하게 시사함
+2026-07-19 23:15:12,734 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '보였다고 합니다을 기록했다고 합니다' 같은 문법 오류와 획일적 보고체 문장이 AI 생성 흔적을 강하게 시사함
+2026-07-19 23:15:12,734 [WARNING] adsense_validator —   🔴 본문 중 '~보였다고 합니다을 기록했다고 합니다'와 같은 문법 오류가 있어 AI 생성 흔적이 뚜렷하게 드러남 — 수정 필요
+2026-07-19 23:15:12,734 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
+2026-07-19 23:15:12,734 [WARNING] main —      🔴 [AI 생성 의심도] '보였다고 합니다을 기록했다고 합니다' 같은 문법 오류와 획일적 보고체 문장이 AI 생성 흔적을 강하게 시사함
+2026-07-19 23:15:12,734 [WARNING] main —      🔴 본문 중 '~보였다고 합니다을 기록했다고 합니다'와 같은 문법 오류가 있어 AI 생성 흔적이 뚜렷하게 드러남 — 수정 필요
+2026-07-19 23:15:12,734 [WARNING] main —      🟡 [원본성 및 품질] 수치 인용은 풍부하나 개인 경험 서술 없이 통계 재조합 위주라 독창성이 약함
+2026-07-19 23:15:12,734 [WARNING] main —      🟡 [구조 및 가독성] H2는 4개로 충족하나 단락이 매우 길게 이어져 가독성이 떨어짐
+2026-07-19 23:15:12,734 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 2건 인용은 있으나 1인칭 경험이나 저자 전문성 신호가 부족함
+2026-07-19 23:15:12,734 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
+2026-07-19 23:15:13,457 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:16:21,859 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2580자 → 3595자 (+1015자)
+2026-07-19 23:16:21,859 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-19 23:16:22,581 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:16:40,985 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '1인 가구 재테크 방법, 예적금 대신 투자 시작하기 전에 확인할'
+2026-07-19 23:16:40,985 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 기준 충족하나 본문 단락이 문단 구분 없이 길게 이어져 500자 이상 블록이 다수 존재해 가독성 저하 우려
+2026-07-19 23:16:40,986 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부가 확인되지 않아 이미지 부재로 판단, 텍스트만으로도 정책 통과는 가능하나 가독성 보완 필요
+2026-07-19 23:16:40,986 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 90/100)
+2026-07-19 23:16:40,986 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-07-19 23:16:41,689 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:18:01,124 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-19 23:18:02,388 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:18:19,685 [INFO] final_editor —   ✏️ 제목 최종 교정: '1인 가구 재테크 방법, 예적금 대신 투자 시작하기 전에 확인할 것들' → '1인 가구 재테크 방법, 예적금 대신 투자 시작 전 체크리스트'
+2026-07-19 23:18:19,685 [INFO] final_editor —   ✏️ 메타 설명 교정 (98자)
+2026-07-19 23:18:19,685 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 문단을 2~4문장 단위로 잘게 나누고, 정책형 통장·예적금·투자 비교표와 개인 경험 메모, 주의사항, FAQ 5개를 추가해 발행 형태로 정리했습니다. 불필요하게 반복되던 키워드 나열 문구를 제거하고 제목·메타·슬러그·이미지 alt를 최종 정리했습니다.
+2026-07-19 23:18:19,772 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-19 23:18:19,772 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-07-19 23:18:19,844 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-07-19 23:18:19,856 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-19 23:18:19,857 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '1인 가구 재테크 방법 예적금 대신 투자 시작하기' — 면책·팩트체크 확인 권장
+2026-07-19 23:18:19,857 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-07-19 23:18:20,858 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/1.html
+2026-07-19 23:18:20,870 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/1.html
+2026-07-19 23:18:53,782 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:18:53,783 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-19 23:18:53,783 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-19 23:18:53,792 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '1인 가구 재테크 방법, 예적금 대신 투자 시작 전 체크리스트'
+2026-07-19 23:18:54,520 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 23:18:57,827 [INFO] comment_manager —   생성된 댓글: 글 잘 읽었습니다! 하나 더 팁을 드리자면, 투자 시작하실 때 CMA 계좌를 파킹 통장처럼 활용하시는 것도 추천드려요. 비상금이나 아직 투자처를...
+2026-07-19 23:21:57,888 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-19 23:21:57,888 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-07-19 23:21:57,889 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-19 23:21:57,889 [INFO] main — 
+============================================================
+2026-07-19 23:21:57,889 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-19 23:21:57,889 [INFO] main — ============================================================
+2026-07-19 23:21:57,921 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-19 23:21:57,945 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-19 23:21:57,963 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-19 23:21:57,964 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-19 23:21:57,966 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-19 23:21:57,981 [INFO] post_manager —   포스트 레지스트리: 전체 280개 (게시 180 / 실패 15 / 대기 59)
+2026-07-19 23:21:57,981 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-19 23:21:57,981 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-19 23:21:57,982 [INFO] main — 대시보드 데이터 업데이트 완료

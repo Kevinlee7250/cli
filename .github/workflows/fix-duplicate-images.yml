@@ -1,9 +1,6 @@
 name: 🖼️ 중복 이미지 교체 (발행 글 일괄)
 
 on:
-  push:
-    branches: [claude/blog-automation-system-KAbtE]
-    paths: ['.github/fix-images-trigger']
   workflow_dispatch:
     inputs:
       dry_run:

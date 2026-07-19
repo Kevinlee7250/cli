@@ -1,0 +1,89 @@
+name: 🎬 쇼츠 스크립트 생성
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_id:
+        description: '발행 글 post_id (비워두면 latest_count 기준 자동 선택)'
+        required: false
+        default: ''
+      latest_count:
+        description: '스크립트 없는 최근 발행 글 N건 생성 (post_id 없을 때)'
+        required: false
+        default: '1'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shorts-generate
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: 레지스트리 동기화
+        working-directory: blog-automation
+        run: |
+          mkdir -p logs
+          [ -f ../docs/data/post_registry.json ] && cp ../docs/data/post_registry.json logs/post_registry.json || true
+
+      - name: 스크립트 생성
+        working-directory: blog-automation
+        run: |
+          if [ -n "${{ inputs.post_id }}" ]; then
+            python shorts_generator.py --post-id "${{ inputs.post_id }}"
+          else
+            python shorts_generator.py --latest "${{ inputs.latest_count || '1' }}"
+          fi
+
+      - name: 결과 커밋 & 푸시
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f docs/data/shorts_scripts.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "🎬 쇼츠 스크립트 생성 (#${{ github.run_number }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE && break
+              echo "push 재시도 $i/3..."
+              sleep $((i * 2))
+            done
+          fi

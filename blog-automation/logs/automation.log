@@ -1,92 +1,3 @@
-2026-07-19 10:18:20,193 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:18:20,194 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — 'SBS 드라마 김부장 10화 리뷰'
-2026-07-19 10:18:49,803 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:18:49,804 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'X': 2, 'D': 3, 'B': 1}
-2026-07-19 10:18:49,804 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-07-19 10:18:49,805 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-19 10:18:50,601 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:19:57,812 [WARNING] content_generator — 컨텐츠 너무 짧음(2302자, 최소 2500자) — 재시도 1/3
-2026-07-19 10:20:00,812 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-19 10:20:01,487 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:21:00,289 [WARNING] content_generator — 컨텐츠 너무 짧음(2175자, 최소 2500자) — 재시도 2/3
-2026-07-19 10:21:03,289 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-19 10:21:04,145 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:22:06,815 [WARNING] content_generator — 최소 분량 미달(2391자) — 재시도 소진, 해당 분량으로 진행
-2026-07-19 10:22:07,888 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:22:30,062 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
-2026-07-19 10:22:31,074 [INFO] image_fetcher — 이미지 수집 성공: '[10화] 김부장 리뷰, 웹툰 조회수 30배 이유' → 제목='ㅅㅂ 이거 김부장 174화 브금 아니냐 ㅋㅋ - 박태준 유니버스 마이너 ' (관련성=0.20)
-2026-07-19 10:22:31,075 [INFO] content_generator — 시리즈 포스트 생성 완료: '[10화] 김부장 리뷰, 웹툰 조회수 30배 이유' (2391자, 이미지 1개)
-2026-07-19 10:22:31,075 [WARNING] main —   ⚠️ [편 4] 글자 수 미달 (2391자 < 2500자) — pending 저장
-2026-07-19 10:22:31,087 [INFO] dashboard_exporter —   검토 대기 저장: [7화] SBS 김부장 리뷰, 명대사·전개 총정리 (4723자 HTML)
-2026-07-19 10:22:31,087 [INFO] dashboard_exporter —   검토 대기 저장: SBS 김부장 8화 리뷰? JTBC 작품과 헷갈리는 이유 (6370자 HTML)
-2026-07-19 10:22:31,087 [INFO] dashboard_exporter —   검토 대기 저장: SBS 김부장 9화 리뷰: 남실장 액션 관전포인트 (5949자 HTML)
-2026-07-19 10:22:31,087 [INFO] dashboard_exporter —   검토 대기 저장: [10화] 김부장 리뷰, 웹툰 조회수 30배 이유 (5376자 HTML)
-2026-07-19 10:22:31,098 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 4개 추가 (총 85개)
-2026-07-19 10:22:31,124 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-19 10:22:31,144 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-19 10:22:31,159 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-19 10:22:31,596 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-19 10:22:31,597 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-19 10:22:31,599 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-19 10:22:31,611 [INFO] post_manager —   포스트 레지스트리: 전체 260개 (게시 162 / 실패 17 / 대기 56)
-2026-07-19 10:22:31,611 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-19 10:22:31,611 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-19 10:22:31,612 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-19 10:22:31,612 [INFO] main — 
-============================================================
-2026-07-19 10:22:31,612 [INFO] main — [HOGU 여행,스포츠,연예] 시리즈 완료: 0/4편 성공
-2026-07-19 10:22:31,612 [INFO] main — ============================================================
-2026-07-19 10:23:03,189 [INFO] main — [드라마 회차별 리뷰] 'SBS 드라마 김부장' 7화부터 4편
-2026-07-19 10:23:03,191 [INFO] series_planner — 드라마 회차 리뷰 시리즈 기획 완료: 'SBS 드라마 김부장 회차별 리뷰 (7~10화)' 4편 (7~10화)
-2026-07-19 10:23:03,191 [INFO] main — ============================================================
-2026-07-19 10:23:03,191 [INFO] main — [금융NEWS] 시리즈 모드 시작: 'SBS 드라마 김부장' 4편
-2026-07-19 10:23:03,191 [INFO] main — ============================================================
-2026-07-19 10:23:03,192 [INFO] main — 시리즈 기획 완료: 'SBS 드라마 김부장 회차별 리뷰 (7~10화)'
-2026-07-19 10:23:03,192 [INFO] main —   편 1: [7화] SBS 드라마 김부장 7화 리뷰 — 줄거리·명장면 정리
-2026-07-19 10:23:03,192 [INFO] main —   편 2: [8화] SBS 드라마 김부장 8화 리뷰 — 줄거리·명장면 정리
-2026-07-19 10:23:03,192 [INFO] main —   편 3: [9화] SBS 드라마 김부장 9화 리뷰 — 줄거리·명장면 정리
-2026-07-19 10:23:03,192 [INFO] main —   편 4: [10화] SBS 드라마 김부장 10화 리뷰 — 줄거리·명장면 정리
-2026-07-19 10:23:03,192 [INFO] main — 
---- [1/4편] 'SBS 드라마 김부장 7화 리뷰' 생성 중 ---
-2026-07-19 10:23:03,192 [INFO] content_generator — 시리즈 포스트 생성: 'SBS 드라마 김부장 7화 리뷰' (1/4편)
-2026-07-19 10:23:12,067 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:23:12,097 [INFO] research_collector — 검색 의도: SBS 드라마 '김부장' 7화의 줄거리, 주요 장면, 시청률 등 구체적 정보를 확인하려는 의도
-2026-07-19 10:23:20,803 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — 'SBS 드라마 김부장 7화 리뷰'
-2026-07-19 10:23:37,633 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:23:37,635 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — 'SBS 드라마 김부장 7화 리뷰'
-2026-07-19 10:23:49,030 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:23:49,031 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'C': 3, 'D': 1, 'X': 3}
-2026-07-19 10:23:49,033 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-07-19 10:23:49,033 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-19 10:23:56,193 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:25:09,842 [WARNING] content_generator — 컨텐츠 너무 짧음(2289자, 최소 2500자) — 재시도 1/3
-2026-07-19 10:25:12,842 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-19 10:25:13,645 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:26:15,003 [WARNING] content_generator — 컨텐츠 너무 짧음(2248자, 최소 2500자) — 재시도 2/3
-2026-07-19 10:26:18,003 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-19 10:26:18,839 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:27:43,599 [WARNING] content_generator — 최소 분량 미달(2375자) — 재시도 소진, 해당 분량으로 진행
-2026-07-19 10:27:45,371 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:27:52,343 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-07-19 10:27:52,503 [INFO] image_fetcher — 이미지 수집 성공: '[7화] SBS 김부장 리뷰: 인물관계·관전포인트' → 제목='bus / bus stop / singapore / government ' (관련성=0.20)
-2026-07-19 10:27:52,505 [INFO] content_generator — 시리즈 포스트 생성 완료: '[7화] SBS 김부장 리뷰: 인물관계·관전포인트' (2375자, 이미지 1개)
-2026-07-19 10:27:52,505 [WARNING] main —   ⚠️ [편 1] 글자 수 미달 (2375자 < 2500자) — pending 저장
-2026-07-19 10:27:52,506 [INFO] main — 
---- [2/4편] 'SBS 드라마 김부장 8화 리뷰' 생성 중 ---
-2026-07-19 10:27:52,506 [INFO] content_generator — 시리즈 포스트 생성: 'SBS 드라마 김부장 8화 리뷰' (2/4편)
-2026-07-19 10:27:57,909 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:27:57,911 [INFO] research_collector — 검색 의도: SBS 드라마 '김부장' 8화의 줄거리, 주요 사건, 등장인물 반응 등을 확인하고 리뷰하려는 의도
-2026-07-19 10:28:07,754 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — 'SBS 드라마 김부장 8화 리뷰'
-2026-07-19 10:28:26,854 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:28:26,855 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — 'SBS 드라마 김부장 8화 리뷰'
-2026-07-19 10:28:32,412 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:28:32,413 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'C': 3, 'X': 3}
-2026-07-19 10:28:32,414 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-07-19 10:28:32,414 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-19 10:28:33,049 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 10:29:44,817 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-07-19 10:29:44,818 [WARNING] content_generator — 컨텐츠 너무 짧음(2293자, 최소 2500자) — 재시도 1/3
-2026-07-19 10:29:47,818 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
 2026-07-19 10:29:48,974 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-19 10:31:06,324 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-19 10:31:22,014 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
@@ -587,3 +498,65 @@
 ============================================================
 2026-07-19 12:13:33,668 [INFO] main — [HOGU What?] 시리즈 완료: 0/4편 성공
 2026-07-19 12:13:33,668 [INFO] main — ============================================================
+2026-07-19 12:44:08,512 [INFO] main — 검토 모드 — pending_posts.json에 저장합니다
+2026-07-19 12:44:08,512 [INFO] main — ============================================================
+2026-07-19 12:44:08,513 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-19 12:44:08
+2026-07-19 12:44:08,513 [INFO] main — ============================================================
+2026-07-19 12:44:08,523 [WARNING] main —   ⚠️ 수동 키워드 'SBS 드라마 김부장 회차별 리뷰'는 최근 포스팅 이력과 유사합니다 — 제목이 중복되면 업로드 단계에서 차단됩니다.
+2026-07-19 12:44:08,523 [INFO] main — 수집된 키워드 1개: ['SBS 드라마 김부장 회차별 리뷰']
+2026-07-19 12:44:08,523 [INFO] main — 단독 포스트 대상 키워드 1개: ['SBS 드라마 김부장 회차별 리뷰']
+2026-07-19 12:44:08,544 [INFO] post_manager — run_history 마이그레이션: 8개 포스트 추가
+2026-07-19 12:44:08,545 [INFO] main — 
+[1/1] 키워드: 'SBS 드라마 김부장 회차별 리뷰'
+2026-07-19 12:44:08,545 [INFO] content_generator — 포스트 생성 중: 'SBS 드라마 김부장 회차별 리뷰'
+2026-07-19 12:44:19,669 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 12:44:19,698 [INFO] research_collector — 검색 의도: SBS 드라마 '김부장'의 각 회차별 줄거리, 주요 사건, 등장인물 관계 등을 확인하고 리뷰 콘텐츠를 작성하
+2026-07-19 12:44:29,006 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — 'SBS 드라마 김부장 회차별 리뷰'
+2026-07-19 12:44:46,491 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 12:44:46,493 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — 'SBS 드라마 김부장 회차별 리뷰'
+2026-07-19 12:44:50,866 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 12:44:50,867 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'B': 4, 'X': 3}
+2026-07-19 12:44:52,566 [INFO] content_generator — 드라마/영화 참고 데이터 수집 완료: 'SBS 드라마 김부장 회차별 리뷰'
+2026-07-19 12:44:52,566 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-19 12:44:53,393 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 12:46:25,384 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 12:46:38,265 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
+2026-07-19 12:46:38,265 [INFO] content_generator — 제목 기반 이미지 검색: 'SBS 김부장 회차별 리뷰, 7회 시청률 25.5% 이유'
+2026-07-19 12:46:38,960 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 김부장 회차별 리뷰, 7회 시청률 25.5% 이유' → 제목='bus / bus stop / singapore / government ' (관련성=0.17)
+2026-07-19 12:46:38,961 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-19 12:46:38,963 [INFO] content_generator — 포스트 생성 완료: 'SBS 김부장 회차별 리뷰, 7회 시청률 25.5% 이유' (2977자, 이미지 1개)
+2026-07-19 12:46:39,688 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 12:47:02,379 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — 'SBS 김부장 회차별 리뷰, 7회 시청률 25.5% 이유'
+2026-07-19 12:47:02,380 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2977자로 warn 범위이며 시청률 수치 등 구체 정보는 있으나 온라인 후기 재구성 위주로 독창적 경험 비중이 낮음
+2026-07-19 12:47:02,380 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 충분하나 '7회와 8회', '시청자 반응' 등 500자 이상 단락이 다수 존재
+2026-07-19 12:47:02,380 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 감상은 있으나 출처 인용이 본문에 명확히 드러나지 않고 저자 전문성 신호 약함
+2026-07-19 12:47:02,380 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 확인되지 않음(저작권 위반은 없으나 이미지 부재)
+2026-07-19 12:47:02,380 [INFO] adsense_validator —   ❌ AI 생성 의심도: '장면에서에서', '나왔습니다으로', '점도라는 점도' 등 중복·깨진 문장이 다수 발견되어 기계적 생성/스티칭 흔적이 뚜렷함
+2026-07-19 12:47:02,380 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '장면에서에서', '나왔습니다으로', '점도라는 점도' 등 중복·깨진 문장이 다수 발견되어 기계적 생성/스티칭 흔적이 뚜렷함
+2026-07-19 12:47:02,380 [WARNING] adsense_validator —   🔴 본문 중 '성한수의 성격을 보여주는 장면에서에서', '반전이라는 평가가 나왔습니다으로 마무리되는데', 'SBS 드라마 출연이 오랜만이라는 점도라는 점도' 등 중복·비문 표현이 다수 발견되어 즉시 수정 필요
+2026-07-19 12:47:02,387 [INFO] internal_linker — 내부 링크 후보 3개 발견
+2026-07-19 12:47:02,389 [INFO] internal_linker —   [1/5] '등장인물' -> https://www.hoguwhat.com/2026/07/2.html
+2026-07-19 12:47:02,390 [INFO] internal_linker —   [2/5] '드라마' -> https://www.hoguwhat.com/2026/07/ost.html
+2026-07-19 12:47:02,391 [INFO] internal_linker —   [3/5] '넷플릭스' -> https://www.hoguwhat.com/2026/07/vs-vs.html
+2026-07-19 12:47:02,391 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-07-19 12:47:02,391 [INFO] main —   제목: SBS 김부장 회차별 리뷰, 7회 시청률 25.5% 이유
+2026-07-19 12:47:02,392 [INFO] main —   이미지: 1개 삽입
+2026-07-19 12:47:02,392 [INFO] main —   글자 수: 2977자
+2026-07-19 12:47:02,392 [INFO] main —   [검토 모드] 업로드 건너뜀
+2026-07-19 12:47:02,403 [INFO] main — 
+============================================================
+2026-07-19 12:47:02,403 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-19 12:47:02,403 [INFO] main — ============================================================
+2026-07-19 12:47:02,412 [INFO] dashboard_exporter —   검토 대기 저장: SBS 김부장 회차별 리뷰, 7회 시청률 25.5% 이유 (11222자 HTML)
+2026-07-19 12:47:02,423 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 82개)
+2026-07-19 12:47:02,424 [INFO] main — 검토 대기 포스트 저장 완료
+2026-07-19 12:47:02,454 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-19 12:47:02,473 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-19 12:47:02,489 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-19 12:47:03,440 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-07-19 12:47:03,441 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-19 12:47:03,443 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-19 12:47:03,457 [INFO] post_manager —   포스트 레지스트리: 전체 276개 (게시 162 / 실패 32 / 대기 57)
+2026-07-19 12:47:03,457 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-19 12:47:03,457 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-19 12:47:03,458 [INFO] main — 대시보드 데이터 업데이트 완료

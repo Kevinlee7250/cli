@@ -456,7 +456,7 @@ def _filter_relevant_images(
 
         msg = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=200,
+            max_tokens=1000,
             messages=[{
                 "role": "user",
                 "content": (

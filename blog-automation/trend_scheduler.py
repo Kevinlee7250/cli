@@ -401,7 +401,7 @@ def expand_keywords_with_claude(
         )
         msg = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=300,
+            max_tokens=1200,
             messages=[{"role": "user", "content": prompt}],
         )
         raw = claude_text(msg).strip()

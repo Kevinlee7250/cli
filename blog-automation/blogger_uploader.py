@@ -146,22 +146,6 @@ def _article_schema(post_data: dict) -> str:
     return f'<script type="application/ld+json">{json.dumps(schema, ensure_ascii=False)}</script>\n'
 
 
-def _faq_schema(faq: list[dict]) -> str:
-    if not faq:
-        return ""
-    schema = {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": item.get("q", ""),
-                "acceptedAnswer": {"@type": "Answer", "text": item.get("a", "")},
-            }
-            for item in faq
-        ],
-    }
-    return f'<script type="application/ld+json">{json.dumps(schema, ensure_ascii=False)}</script>\n'
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -240,7 +224,6 @@ padding:20px 24px;margin:2em 0;max-width:680px;">
 def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str:
     """SEO 완전 최적화 HTML을 구성합니다."""
     html = post_data.get("content", "")
-    faq = post_data.get("faq", [])
     labels = post_data.get("labels", [])
     series_nav = post_data.get("series_nav", "")  # 시리즈 내비게이션 HTML
 

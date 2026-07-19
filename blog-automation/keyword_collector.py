@@ -643,7 +643,7 @@ def _headlines_to_keywords(headlines: list[str], count: int = 10) -> list[str]:
         )
         msg = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=400,
+            max_tokens=1200,
             messages=[{"role": "user", "content": prompt}],
         )
         raw = claude_text(msg).strip()
@@ -738,7 +738,7 @@ def extract_drama_titles(headlines: list[str]) -> list[str]:
         )
         msg = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=100,
+            max_tokens=1000,
             messages=[{"role": "user", "content": prompt}],
         )
         raw = claude_text(msg).strip()
@@ -830,7 +830,7 @@ def _claude_ai_keywords(
             )
         msg = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=400,
+            max_tokens=1200,
             messages=[{"role": "user", "content": prompt}],
         )
         raw = claude_text(msg).strip()

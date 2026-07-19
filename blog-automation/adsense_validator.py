@@ -253,7 +253,7 @@ JSON만 응답 (설명 없이):
         raw = claude_generate(
             client,
             model=CLAUDE_MODEL,
-            max_tokens=900,
+            max_tokens=2000,
             messages=[{"role": "user", "content": prompt}],
         ).strip()
         s, e = raw.find("{"), raw.rfind("}")

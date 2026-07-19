@@ -77,7 +77,7 @@ def pick_series_keyword(keywords: list[str], blog_config: dict | None = None) ->
         )
         msg = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=10,
+            max_tokens=1000,
             messages=[{"role": "user", "content": prompt}],
         )
         ans = claude_text(msg).strip().lower()

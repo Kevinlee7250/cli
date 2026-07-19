@@ -2289,10 +2289,12 @@ def _fact_check_content(post_data: dict, keyword: str, evidence_pack: dict | Non
             )
 
         fc_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        # max_tokens에 adaptive thinking 토큰도 포함되므로 여유 있게 잡아야
+        # 응답 잘림(→ 빈 문자열 → 팩트체크 무력화)을 방지할 수 있음
         raw = claude_generate(
             fc_client,
             model=CLAUDE_MODEL,
-            max_tokens=800,
+            max_tokens=4000,
             max_continues=1,
             system=(
                 f"현재 날짜: {today}. 당신은 블로그 글의 팩트체커입니다. "
@@ -2315,8 +2317,17 @@ def _fact_check_content(post_data: dict, keyword: str, evidence_pack: dict | Non
             }],
         )
         raw = raw.strip()
+        if not raw:
+            # 응답이 잘렸거나 비어 있음 — '통과'로 위장하지 않고 미검증으로 기록
+            logger.warning("팩트체크 응답 비어있음 (토큰 잘림 추정) — 미검증으로 기록, 게시는 계속")
+            post_data["fact_check"] = {"checked": False, "reason": "empty_response"}
+            return
         parsed = _parse_response(raw)
-        result = parsed if parsed and "issues" in parsed else {"issues": [], "verdict": "pass"}
+        if not parsed or "issues" not in parsed:
+            logger.warning("팩트체크 응답 파싱 실패 — 미검증으로 기록, 게시는 계속")
+            post_data["fact_check"] = {"checked": False, "reason": "parse_failed"}
+            return
+        result = parsed
 
         def _safe_replace(html_text: str, quote: str, fix: str) -> str | None:
             """태그 내부(속성/스타일)가 아닌 텍스트 위치에서만 치환합니다.

@@ -269,7 +269,7 @@ def generate_seed_comment(post_data: dict) -> str:
 
 댓글 내용만 출력하세요 (따옴표·설명 없이):"""
 
-    text = _call_claude(prompt, max_tokens=300)
+    text = _call_claude(prompt, max_tokens=1200)
     return text
 
 
@@ -309,7 +309,7 @@ def generate_reply(post_data: dict, comment: dict) -> str:
 
 답변 내용만 출력하세요 (따옴표·설명 없이):"""
 
-    text = _call_claude(prompt, max_tokens=400)
+    text = _call_claude(prompt, max_tokens=1200)
     return text
 
 

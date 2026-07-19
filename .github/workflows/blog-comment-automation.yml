@@ -1,0 +1,139 @@
+name: 💬 블로그 댓글 자동화
+
+on:
+  # 매 4시간마다 실행 (하루 6회)
+  schedule:
+    - cron: '0 */4 * * *'
+
+  # 블로그 자동화 실행 완료 후 연계 실행 (씨앗 댓글)
+  workflow_run:
+    workflows: ["블로그 자동화 실행"]
+    types: [completed]
+    branches: [claude/blog-automation-system-KAbtE]
+
+  # 수동 실행
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '실행 모드'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all       # 씨앗 댓글 + 자동 답변
+          - seed      # 씨앗 댓글만
+          - reply     # 자동 답변만
+      hours:
+        description: '대상 시간 범위 (시간)'
+        required: false
+        default: '6'
+      dry_run:
+        description: '생성만 (게시 안 함)'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+concurrency:
+  group: blog-comment-automation
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  comment-automation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          CLAUDE_MODEL="${{ secrets.CLAUDE_MODEL }}"
+          ENVEOF
+
+      - name: 로그 디렉토리 생성
+        run: mkdir -p blog-automation/logs docs/data
+
+      - name: 🌱 씨앗 댓글 작성
+        if: ${{ inputs.mode == 'all' || inputs.mode == 'seed' || inputs.mode == '' }}
+        working-directory: blog-automation
+        run: |
+          HOURS="${{ inputs.hours || '25' }}"
+          DRY="${{ inputs.dry_run || 'false' }}"
+          ARGS="--seed --hours $HOURS"
+          [ "$DRY" = "true" ] && ARGS="$ARGS --dry"
+          echo "=== 씨앗 댓글 (최근 ${HOURS}시간 게시 포스트 대상) ==="
+          python comment_manager.py $ARGS || true
+
+      - name: 💬 독자 댓글 자동 답변
+        if: ${{ inputs.mode == 'all' || inputs.mode == 'reply' || inputs.mode == '' }}
+        working-directory: blog-automation
+        run: |
+          HOURS="${{ inputs.hours || '6' }}"
+          DRY="${{ inputs.dry_run || 'false' }}"
+          ARGS="--reply --hours $HOURS"
+          [ "$DRY" = "true" ] && ARGS="$ARGS --dry"
+          echo "=== 독자 댓글 자동 답변 (최근 ${HOURS}시간 댓글 대상) ==="
+          python comment_manager.py $ARGS || true
+
+      - name: 📊 댓글 현황 출력
+        working-directory: blog-automation
+        run: python comment_manager.py --status || true
+
+      - name: 결과 커밋 & 푸시
+        if: ${{ inputs.dry_run != 'true' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for f in \
+            blog-automation/logs/comment_history.json \
+            docs/data/pending_comments.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "💬 댓글 자동화 (#${{ github.run_number }})"
+            _push_ok=0
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE \
+                && { _push_ok=1; break; }
+              echo "push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
+            [ "$_push_ok" = "1" ] || echo "push 실패 (무시)"
+          fi
+
+      - name: 댓글 이력 아티팩트
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: comment-history-${{ github.run_number }}
+          path: blog-automation/logs/comment_history.json
+          retention-days: 30

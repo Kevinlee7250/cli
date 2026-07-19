@@ -53,7 +53,7 @@ jobs:
         run: |
           FOLDER_ID="${{ inputs.folder_id }}"
           if [ -z "$FOLDER_ID" ]; then
-            FOLDER_ID="1VCWoy9901A0rCnjO9ilHagwuIKgB2uda"
+            FOLDER_ID="1UP_nWB1d-mupsGeNdPGPAP2wUuusDKkD"
           fi
           cat > .env << ENVEOF
           GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"

@@ -1,0 +1,79 @@
+name: 🔍 구글 색인 점검 (사이트맵 제출 + 색인 상태)
+
+on:
+  # 매일 오전 9시 KST (UTC 00:00)
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      inspect_count:
+        description: '색인 검사할 최근 글 수 (기본 20)'
+        required: false
+        default: '20'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gsc-indexing
+  cancel-in-progress: false
+
+jobs:
+  gsc-indexing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          GSC_SITE_URL="${{ secrets.GSC_SITE_URL }}"
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: 사이트맵 제출 + 색인 상태 검사
+        working-directory: blog-automation
+        run: |
+          mkdir -p logs
+          python gsc_indexing.py --submit
+          python gsc_indexing.py --inspect "${{ inputs.inspect_count || '20' }}"
+
+      - name: 리포트 커밋 & 푸시
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f docs/data/index_status.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 건너뜀"
+          else
+            git commit -m "🔍 구글 색인 상태 리포트 (#${{ github.run_number }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE && break
+              echo "push 재시도 $i/3..."
+              sleep $((i * 2))
+            done
+          fi

@@ -1524,6 +1524,19 @@
     </p>
     <div id="fixtoc-run-status" style="display:none;font-size:12px;color:var(--muted);margin-bottom:24px"></div>
 
+    <!-- ⑦.55 구글 색인 현황 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>🔍 구글 색인 현황</h2>
+      <button onclick="loadIndexStatus()" style="padding:6px 14px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer;font-weight:600">🔄 새로고침</button>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.7">
+      발행 직후 사이트맵이 GSC에 자동 재제출되고(blog-run), 매일 오전 9시 최근 글 20건의 색인 상태를 검사합니다.
+      결과: docs/data/index_status.json
+    </p>
+    <div id="index-status-wrap" style="margin-bottom:28px">
+      <div style="color:var(--muted);font-size:13px;padding:16px;text-align:center;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)">색인 데이터를 로드하려면 새로고침을 누르세요. 첫 리포트는 다음 색인 점검 실행 후 생성됩니다.</div>
+    </div>
+
     <!-- ⑦.6 중복 이미지 교체 -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>🖼️ 중복 이미지 교체</h2>
@@ -5180,6 +5193,43 @@ function wfSetSeries(n) {
   })
 }
 
+// ── 구글 색인 현황 ───────────────────────────────────────────────────────────
+async function loadIndexStatus() {
+  const wrap = document.getElementById('index-status-wrap')
+  if (!wrap) return
+  let data = null
+  try {
+    const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
+    const r = await fetch(`${base}/index_status.json?t=${Date.now()}`)
+    if (r.ok) data = await r.json()
+  } catch {}
+  if (!data || !data.items) {
+    wrap.innerHTML = `<div style="color:var(--muted);font-size:13px;padding:16px;text-align:center;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)">아직 색인 리포트가 없습니다 — 다음 색인 점검(매일 오전 9시) 후 표시됩니다.</div>`
+    return
+  }
+  const rows = (data.items || []).map(it => {
+    const mark = it.verdict === 'indexed' ? '🟢 색인됨' : it.verdict === 'not_indexed' ? '🟡 미색인' : '⚪ 확인불가'
+    return `<tr>
+      <td style="font-size:12px"><a href="${esc(it.url)}" target="_blank" rel="noopener" style="color:var(--text)">${esc(it.title || '')}</a></td>
+      <td style="font-size:12px;white-space:nowrap">${esc(it.blog || '')}</td>
+      <td style="white-space:nowrap">${mark}</td>
+      <td style="font-size:11px;color:var(--muted)">${esc(it.coverage || '')}</td>
+      <td style="font-size:11px;color:var(--muted);white-space:nowrap">${esc(it.last_crawl || '-')}</td>
+    </tr>`
+  }).join('')
+  wrap.innerHTML = `
+    <div style="display:flex;gap:14px;margin-bottom:10px;font-size:13px">
+      <span style="color:var(--green);font-weight:700">🟢 색인됨 ${data.indexed ?? 0}</span>
+      <span style="color:var(--yellow);font-weight:700">🟡 미색인 ${data.not_indexed ?? 0}</span>
+      <span style="color:var(--muted)">⚪ 확인불가 ${data.unknown ?? 0}</span>
+      <span style="margin-left:auto;color:var(--muted);font-size:11px">검사: ${(data.checked_at || '').slice(0, 16).replace('T', ' ')} UTC</span>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>제목</th><th>블로그</th><th>상태</th><th>상세</th><th>마지막 크롤</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`
+}
+
 // ── AI 토큰 사용량 ───────────────────────────────────────────────────────────
 async function loadAiUsage() {
   const grid    = document.getElementById('ai-usage-grid')
@@ -5293,6 +5343,7 @@ function renderSystemPage() {
   backupRefreshStatus()
   loadAffiliateLinksFromRepo()
   loadAiUsage()
+  loadIndexStatus()
   // GitHub Actions 이력은 PAT 있을 때만 자동 로드
   if (getPAT()) loadSystemRuns()
 }

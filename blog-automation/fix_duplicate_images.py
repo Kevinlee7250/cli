@@ -41,6 +41,69 @@ _IMG_TAG_RE = re.compile(r'<img\b[^>]*>', re.IGNORECASE)
 _SRC_RE = re.compile(r'src="([^"]+)"', re.IGNORECASE)
 
 
+def _fetch_dhash(url: str) -> int | None:
+    """이미지를 내려받아 dHash(64비트 지각 해시)를 계산합니다.
+
+    같은 사진이 서로 다른 사이트에 호스팅돼 URL이 달라도 감지할 수 있습니다.
+    Pillow 미설치·다운로드 실패 시 None (URL 비교만 사용).
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        return None
+    import io
+    try:
+        r = requests.get(url, timeout=6, stream=True,
+                         headers={"User-Agent": "Mozilla/5.0"})
+        if r.status_code != 200:
+            return None
+        data = r.raw.read(3 * 1024 * 1024)  # 최대 3MB
+        img = Image.open(io.BytesIO(data)).convert("L").resize((9, 8))
+        px = list(img.getdata())
+        bits = 0
+        for row in range(8):
+            for col in range(8):
+                bits = (bits << 1) | (1 if px[row * 9 + col] > px[row * 9 + col + 1] else 0)
+        return bits
+    except Exception:
+        return None
+
+
+def _hamming(a: int, b: int) -> int:
+    return bin(a ^ b).count("1")
+
+
+# dHash 해밍 거리가 이 값 이하이면 같은 이미지로 판정 (0=완전 동일)
+_DHASH_THRESHOLD = 6
+
+
+def _cluster_urls(urls: list[str], hashes: dict[str, int | None]) -> list[list[str]]:
+    """같은 이미지(동일 URL 또는 dHash 유사)를 클러스터로 묶습니다."""
+    parent = {u: u for u in urls}
+
+    def find(u):
+        while parent[u] != u:
+            parent[u] = parent[parent[u]]
+            u = parent[u]
+        return u
+
+    def union(a, b):
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[rb] = ra
+
+    hashed = [(u, h) for u, h in hashes.items() if h is not None]
+    for i in range(len(hashed)):
+        for j in range(i + 1, len(hashed)):
+            if _hamming(hashed[i][1], hashed[j][1]) <= _DHASH_THRESHOLD:
+                union(hashed[i][0], hashed[j][0])
+
+    clusters: dict[str, list[str]] = {}
+    for u in urls:
+        clusters.setdefault(find(u), []).append(u)
+    return list(clusters.values())
+
+
 def _extract_image_urls(content: str) -> list[str]:
     """본문에서 외부 이미지 URL 목록 추출 (data URI 생성 썸네일 제외)."""
     urls = []
@@ -145,23 +208,45 @@ def scan_and_fix(blogs: list[dict], dry_run: bool) -> dict:
                     {"blog": cfg, "blog_id": blog_id, "token": token, "post": post})
                 all_urls.append(url)
 
-    dup_urls = {u: posts for u, posts in usage.items() if len(posts) >= 2}
-    logger.info(
-        f"스캔 완료: 글 {scanned}건, 이미지 URL {len(usage)}종, "
-        f"중복 사용 이미지 {len(dup_urls)}종"
-    )
+    logger.info(f"스캔 완료: 글 {scanned}건, 이미지 URL {len(usage)}종")
 
-    # ── 교체 계획: 가장 오래된 글(목록 마지막)만 유지, 나머지 교체 ──
+    # ── 이미지 내용 지문(dHash) 계산 — 다른 URL의 같은 사진도 감지 ──
+    from concurrent.futures import ThreadPoolExecutor
+    url_list = list(usage.keys())
+    logger.info(f"이미지 지문 계산 중 ({len(url_list)}개 다운로드)...")
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        hash_results = list(pool.map(_fetch_dhash, url_list))
+    hashes = dict(zip(url_list, hash_results))
+    hashed_count = sum(1 for h in hashes.values() if h is not None)
+    logger.info(f"지문 계산 완료: {hashed_count}/{len(url_list)}개 성공")
+
+    clusters = _cluster_urls(url_list, hashes)
+    dup_clusters = [
+        c for c in clusters
+        if sum(len(usage[u]) for u in c) >= 2 and (
+            len(c) >= 2 or any(len(usage[u]) >= 2 for u in c))
+    ]
+    logger.info(f"중복 이미지 클러스터: {len(dup_clusters)}종 "
+                f"(URL 동일 + 내용 동일 포함)")
+
+    # ── 교체 계획: 클러스터마다 가장 오래된 글 1곳만 유지, 나머지 교체 ──
     # post_key → {"blog_id","token","post","dup_urls":[...]}
     plans: dict[str, dict] = {}
-    for url, entries in dup_urls.items():
-        keep = entries[-1]  # Blogger 목록은 최신순 → 마지막이 가장 오래된 글
+    for cluster in dup_clusters:
+        entries = [(u, e) for u in cluster for e in usage[u]]
+        # published(ISO) 기준 가장 오래된 글 유지
+        entries.sort(key=lambda x: x[1]["post"].get("published", ""))
+        keep_url, keep = entries[0]
         logger.info(
-            f"🔁 중복 이미지 ({len(entries)}곳): {url[:70]}\n"
+            f"🔁 중복 이미지 클러스터 (URL {len(cluster)}종 / 글 {len(entries)}곳): {keep_url[:70]}\n"
             f"    유지: '{keep['post'].get('title','')[:40]}'"
         )
-        for e in entries[:-1]:
+        seen_posts = {f"{keep['blog_id']}:{keep['post']['id']}"}
+        for url, e in entries[1:]:
             key = f"{e['blog_id']}:{e['post']['id']}"
+            if key in seen_posts:
+                continue  # 같은 글은 한 번만 (post 내 중복 url은 개별 처리)
+            seen_posts.add(key)
             plan = plans.setdefault(key, {**e, "dup_urls": []})
             plan["dup_urls"].append(url)
             logger.info(f"    교체 대상: '{e['post'].get('title','')[:40]}'")
@@ -224,7 +309,7 @@ def scan_and_fix(blogs: list[dict], dry_run: bool) -> dict:
         "run_at": datetime.now(timezone.utc).isoformat(),
         "dry_run": dry_run,
         "scanned_posts": scanned,
-        "duplicate_images": len(dup_urls),
+        "duplicate_images": len(dup_clusters),
         "posts_fixed": fixed,
         "posts_failed": failed,
         "items": report_items[:50],

@@ -1,141 +1,3 @@
-2026-07-18 23:24:51,741 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-18 23:24:51,741 [INFO] main — 
-============================================================
-2026-07-18 23:24:51,741 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-18 23:24:51,741 [INFO] main — ============================================================
-2026-07-18 23:24:51,772 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-18 23:24:51,793 [INFO] dashboard_exporter —   시리즈: 7개 내보내기 완료
-2026-07-18 23:24:51,811 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-18 23:24:52,013 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-18 23:24:52,183 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-18 23:24:52,184 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-18 23:24:52,187 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-18 23:24:52,200 [INFO] post_manager —   포스트 레지스트리: 전체 257개 (게시 160 / 실패 17 / 대기 56)
-2026-07-18 23:24:52,201 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-18 23:24:52,201 [INFO] dashboard_exporter —   포스트: 86개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-18 23:24:52,201 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-19 05:51:18,664 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
-2026-07-19 05:51:19,625 [INFO] main — ============================================================
-2026-07-19 05:51:19,625 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-19 05:51:19
-2026-07-19 05:51:19,626 [INFO] main — ============================================================
-2026-07-19 05:51:19,634 [INFO] keyword_collector — 포스팅 이력 코퍼스: 23개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-19 05:51:24,542 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-19 05:51:31,199 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:51:31,224 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-19 05:51:31,224 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-19 05:51:31,611 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-07-19 05:51:31,913 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-19 05:51:31,914 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-19 05:51:31,915 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-07-19 05:51:31,916 [INFO] keyword_collector —   [naver_realtime] 2개: ['강원도 삼척 여름 피서지 계곡 폭포 추천', '전국 치킨 맛집 지도 K치킨벨트 코스']
-2026-07-19 05:51:31,916 [INFO] keyword_collector — 최종 선정 키워드 2개: ['강원도 삼척 여름 피서지 계곡 폭포 추천', '전국 치킨 맛집 지도 K치킨벨트 코스']
-2026-07-19 05:51:31,916 [INFO] main — 수집된 키워드 2개: ['강원도 삼척 여름 피서지 계곡 폭포 추천', '전국 치킨 맛집 지도 K치킨벨트 코스']
-2026-07-19 05:51:31,921 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
-2026-07-19 05:51:31,921 [INFO] main — 단독 포스트 대상 키워드 1개: ['강원도 삼척 여름 피서지 계곡 폭포 추천']
-2026-07-19 05:51:31,937 [INFO] main — 
-[1/1] 키워드: '강원도 삼척 여름 피서지 계곡 폭포 추천'
-2026-07-19 05:51:31,938 [INFO] content_generator — 포스트 생성 중: '강원도 삼척 여름 피서지 계곡 폭포 추천'
-2026-07-19 05:51:39,781 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:51:39,782 [INFO] research_collector — 검색 의도: 강원도 삼척 지역의 여름철 피서지로 적합한 계곡과 폭포를 찾아 방문 정보를 얻으려는 의도
-2026-07-19 05:51:59,450 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '강원도 삼척 여름 피서지 계곡 폭포 추천'
-2026-07-19 05:52:19,106 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:52:19,107 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '강원도 삼척 여름 피서지 계곡 폭포 추천'
-2026-07-19 05:52:38,669 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:52:38,670 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'D': 5, 'X': 2}
-2026-07-19 05:52:38,672 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-07-19 05:52:38,672 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-19 05:52:39,454 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:53:54,602 [WARNING] content_generator — 컨텐츠 너무 짧음(2318자, 최소 2500자) — 재시도 1/3
-2026-07-19 05:53:57,603 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-19 05:53:58,230 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:55:10,338 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:55:22,231 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-07-19 05:55:22,231 [INFO] content_generator — 제목 기반 이미지 검색: '삼척 무릉계곡 쌍폭, 여름 피서지 후기 비교'
-2026-07-19 05:55:22,555 [INFO] image_fetcher — 이미지 수집 성공: '삼척 무릉계곡 쌍폭, 여름 피서지 후기 비교' → 제목='business / woman / people / shooting / f' (관련성=0.00)
-2026-07-19 05:55:22,556 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-19 05:55:22,558 [INFO] content_generator — 포스트 생성 완료: '삼척 무릉계곡 쌍폭, 여름 피서지 후기 비교' (2683자, 이미지 1개)
-2026-07-19 05:55:23,917 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:55:36,499 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '삼척 무릉계곡 쌍폭, 여름 피서지 후기 비교'
-2026-07-19 05:55:36,499 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2683자로 글자 수 기준은 warn 구간이며, 개인 실제 경험보다는 '후기 종합/공개 자료' 재구성 위주로 구성됨
-2026-07-19 05:55:36,499 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 일부 단락(특히 체크리스트 전후)이 500자 이상으로 길게 이어짐
-2026-07-19 05:55:36,499 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 직접 경험 서술이 약하고 '후기에 따르면' 식 간접 인용 위주이며 출처 2개는 포함됨
-2026-07-19 05:55:36,499 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문 내 이미지 관련 정보 없음(이미지 부재는 fail 아닌 warn)
-2026-07-19 05:55:36,500 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트 나열, '~권합니다/~좋습니다' 반복 및 정형화된 요약 문체가 다소 두드러짐
-2026-07-19 05:55:36,507 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-19 05:55:36,511 [INFO] internal_linker —   [1/5] '리스트' -> https://www.hoguwhat.com/2026/07/2026_0427020255.html
-2026-07-19 05:55:36,512 [INFO] internal_linker —   [2/5] '보내고' -> https://www.hoguwhat.com/2026/07/4.html
-2026-07-19 05:55:36,513 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-19 05:55:36,513 [INFO] main —   제목: 삼척 무릉계곡 쌍폭, 여름 피서지 후기 비교
-2026-07-19 05:55:36,513 [INFO] main —   이미지: 1개 삽입
-2026-07-19 05:55:36,513 [INFO] main —   글자 수: 2683자
-2026-07-19 05:55:37,351 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:55:45,788 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '삼척 무릉계곡 쌍폭, 여름 피서지 후기 비교'
-2026-07-19 05:55:45,789 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2683자로 분량 기준 warn이며 개인 경험보다 후기 종합·일반론 재구성 위주로 구체적 1인칭 경험이 부족함
-2026-07-19 05:55:45,789 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용은 있으나 1인칭 직접 경험 서술이 없고 '공개된 자료' 등 모호한 출처 표현이 반복됨
-2026-07-19 05:55:45,789 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트형 글로 정책상 fail은 아니나 가독성·SEO 측면에서 warn
-2026-07-19 05:55:45,789 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·번호 나열 패턴과 '정리해볼 수 있습니다' 류 요약 문구가 반복되어 AI 생성 톤이 감지됨
-2026-07-19 05:55:45,789 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-07-19 05:55:45,789 [WARNING] main —      🟡 [원본성 및 품질] 2683자로 분량 기준 warn이며 개인 경험보다 후기 종합·일반론 재구성 위주로 구체적 1인칭 경험이 부족함
-2026-07-19 05:55:45,789 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 2개 인용은 있으나 1인칭 직접 경험 서술이 없고 '공개된 자료' 등 모호한 출처 표현이 반복됨
-2026-07-19 05:55:45,789 [WARNING] main —      🟡 [이미지 정책] 이미지가 포함되지 않은 텍스트형 글로 정책상 fail은 아니나 가독성·SEO 측면에서 warn
-2026-07-19 05:55:45,789 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-07-19 05:55:46,635 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:57:13,907 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-19 05:57:14,658 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:57:17,017 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2683자 → 3984자 (+1301자)
-2026-07-19 05:57:17,017 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-19 05:57:18,262 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:57:31,762 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '삼척 무릉계곡 쌍폭, 여름 피서지 후기 비교'
-2026-07-19 05:57:31,762 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 경험·수치는 풍부하나 글자 수가 3984자로 4000자 기준에 근소하게 미달
-2026-07-19 05:57:31,762 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 언급 없음 — 텍스트만으로도 정책 위반은 아니나 가독성 보완 권장
-2026-07-19 05:57:31,762 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-07-19 05:57:31,762 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-07-19 05:57:32,489 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:58:18,871 [INFO] final_editor —   ✏️ 제목 최종 교정: '삼척 무릉계곡 쌍폭, 여름 피서지 후기 비교' → '강원도 삼척 여름 피서지 무릉계곡 쌍폭 폭포 추천 후기 정리'
-2026-07-19 05:58:18,871 [INFO] final_editor —   ✏️ 메타 설명 교정 (127자)
-2026-07-19 05:58:18,871 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 기준에 맞춰 재정리하고, 요약 박스·체크리스트 표·개인 경험 메모·FAQ·주의사항·작성자 메모·내부 링크 구조를 표준 포맷에 맞게 배치했으며, 문단을 2~4문장 단위로 재구성하고 이미지 3컷의 위치와 alt 텍스트를 구체화했습니다.
-2026-07-19 05:58:18,968 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-19 05:58:18,968 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-07-19 05:58:19,545 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_19.html
-2026-07-19 05:58:19,556 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_19.html
-2026-07-19 05:58:53,763 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:58:53,764 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-19 05:58:53,764 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-19 05:58:53,773 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '강원도 삼척 여름 피서지 무릉계곡 쌍폭 폭포 추천 후기 정리'
-2026-07-19 05:58:54,426 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 05:58:58,313 [INFO] comment_manager —   생성된 댓글: 글 잘 봤습니다! 하나 더 팁 드리자면, 계곡 물놀이 하실 분들은 아쿠아슈즈 꼭 챙기시는 거 추천드려요. 바위 이끼 때문에 미끄러운 구간이 은근...
-2026-07-19 06:01:58,446 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-07-19 06:01:58,447 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-19 06:01:58,447 [INFO] main — 
-============================================================
-2026-07-19 06:01:58,447 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-19 06:01:58,447 [INFO] main — ============================================================
-2026-07-19 06:01:58,479 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-19 06:01:58,501 [INFO] dashboard_exporter —   시리즈: 7개 내보내기 완료
-2026-07-19 06:01:58,519 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-19 06:01:58,714 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-19 06:01:59,017 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-19 06:01:59,018 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-19 06:01:59,021 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-19 06:01:59,035 [INFO] post_manager —   포스트 레지스트리: 전체 258개 (게시 161 / 실패 17 / 대기 56)
-2026-07-19 06:01:59,035 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-19 06:01:59,035 [INFO] dashboard_exporter —   포스트: 86개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-19 06:01:59,036 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-19 06:02:29,585 [WARNING] config — BLOGS_CONFIG가 JSON 배열 형식이 아닙니다 — 다중 블로그 설정이 무시됩니다
-2026-07-19 06:02:30,944 [INFO] main — ============================================================
-2026-07-19 06:02:30,944 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-19 06:02:30
-2026-07-19 06:02:30,944 [INFO] main — ============================================================
-2026-07-19 06:02:30,954 [INFO] keyword_collector — 포스팅 이력 코퍼스: 19개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-19 06:02:36,508 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 50개
-2026-07-19 06:02:44,383 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 06:02:44,419 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
 2026-07-19 06:02:44,419 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
 2026-07-19 06:02:45,030 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
 2026-07-19 06:02:45,030 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
@@ -636,3 +498,140 @@
 ============================================================
 2026-07-19 10:22:31,612 [INFO] main — [HOGU 여행,스포츠,연예] 시리즈 완료: 0/4편 성공
 2026-07-19 10:22:31,612 [INFO] main — ============================================================
+2026-07-19 10:23:03,189 [INFO] main — [드라마 회차별 리뷰] 'SBS 드라마 김부장' 7화부터 4편
+2026-07-19 10:23:03,191 [INFO] series_planner — 드라마 회차 리뷰 시리즈 기획 완료: 'SBS 드라마 김부장 회차별 리뷰 (7~10화)' 4편 (7~10화)
+2026-07-19 10:23:03,191 [INFO] main — ============================================================
+2026-07-19 10:23:03,191 [INFO] main — [금융NEWS] 시리즈 모드 시작: 'SBS 드라마 김부장' 4편
+2026-07-19 10:23:03,191 [INFO] main — ============================================================
+2026-07-19 10:23:03,192 [INFO] main — 시리즈 기획 완료: 'SBS 드라마 김부장 회차별 리뷰 (7~10화)'
+2026-07-19 10:23:03,192 [INFO] main —   편 1: [7화] SBS 드라마 김부장 7화 리뷰 — 줄거리·명장면 정리
+2026-07-19 10:23:03,192 [INFO] main —   편 2: [8화] SBS 드라마 김부장 8화 리뷰 — 줄거리·명장면 정리
+2026-07-19 10:23:03,192 [INFO] main —   편 3: [9화] SBS 드라마 김부장 9화 리뷰 — 줄거리·명장면 정리
+2026-07-19 10:23:03,192 [INFO] main —   편 4: [10화] SBS 드라마 김부장 10화 리뷰 — 줄거리·명장면 정리
+2026-07-19 10:23:03,192 [INFO] main — 
+--- [1/4편] 'SBS 드라마 김부장 7화 리뷰' 생성 중 ---
+2026-07-19 10:23:03,192 [INFO] content_generator — 시리즈 포스트 생성: 'SBS 드라마 김부장 7화 리뷰' (1/4편)
+2026-07-19 10:23:12,067 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:23:12,097 [INFO] research_collector — 검색 의도: SBS 드라마 '김부장' 7화의 줄거리, 주요 장면, 시청률 등 구체적 정보를 확인하려는 의도
+2026-07-19 10:23:20,803 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — 'SBS 드라마 김부장 7화 리뷰'
+2026-07-19 10:23:37,633 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:23:37,635 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — 'SBS 드라마 김부장 7화 리뷰'
+2026-07-19 10:23:49,030 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:23:49,031 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'C': 3, 'D': 1, 'X': 3}
+2026-07-19 10:23:49,033 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
+2026-07-19 10:23:49,033 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-19 10:23:56,193 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:25:09,842 [WARNING] content_generator — 컨텐츠 너무 짧음(2289자, 최소 2500자) — 재시도 1/3
+2026-07-19 10:25:12,842 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-19 10:25:13,645 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:26:15,003 [WARNING] content_generator — 컨텐츠 너무 짧음(2248자, 최소 2500자) — 재시도 2/3
+2026-07-19 10:26:18,003 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-19 10:26:18,839 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:27:43,599 [WARNING] content_generator — 최소 분량 미달(2375자) — 재시도 소진, 해당 분량으로 진행
+2026-07-19 10:27:45,371 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:27:52,343 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-19 10:27:52,503 [INFO] image_fetcher — 이미지 수집 성공: '[7화] SBS 김부장 리뷰: 인물관계·관전포인트' → 제목='bus / bus stop / singapore / government ' (관련성=0.20)
+2026-07-19 10:27:52,505 [INFO] content_generator — 시리즈 포스트 생성 완료: '[7화] SBS 김부장 리뷰: 인물관계·관전포인트' (2375자, 이미지 1개)
+2026-07-19 10:27:52,505 [WARNING] main —   ⚠️ [편 1] 글자 수 미달 (2375자 < 2500자) — pending 저장
+2026-07-19 10:27:52,506 [INFO] main — 
+--- [2/4편] 'SBS 드라마 김부장 8화 리뷰' 생성 중 ---
+2026-07-19 10:27:52,506 [INFO] content_generator — 시리즈 포스트 생성: 'SBS 드라마 김부장 8화 리뷰' (2/4편)
+2026-07-19 10:27:57,909 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:27:57,911 [INFO] research_collector — 검색 의도: SBS 드라마 '김부장' 8화의 줄거리, 주요 사건, 등장인물 반응 등을 확인하고 리뷰하려는 의도
+2026-07-19 10:28:07,754 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — 'SBS 드라마 김부장 8화 리뷰'
+2026-07-19 10:28:26,854 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:28:26,855 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — 'SBS 드라마 김부장 8화 리뷰'
+2026-07-19 10:28:32,412 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:28:32,413 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'C': 3, 'X': 3}
+2026-07-19 10:28:32,414 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
+2026-07-19 10:28:32,414 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-19 10:28:33,049 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:29:44,817 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-07-19 10:29:44,818 [WARNING] content_generator — 컨텐츠 너무 짧음(2293자, 최소 2500자) — 재시도 1/3
+2026-07-19 10:29:47,818 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-19 10:29:48,974 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:31:06,324 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:31:22,014 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-07-19 10:31:22,173 [INFO] image_fetcher — 이미지 수집 성공: '[8화] SBS 드라마 김부장 8화 리뷰 총정리' → 제목='bus / bus stop / singapore / government ' (관련성=0.20)
+2026-07-19 10:31:22,174 [INFO] content_generator — 시리즈 포스트 생성 완료: '[8화] SBS 드라마 김부장 8화 리뷰 총정리' (2822자, 이미지 1개)
+2026-07-19 10:31:23,566 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:31:45,873 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '[8화] SBS 드라마 김부장 8화 리뷰 총정리'
+2026-07-19 10:31:45,873 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2822자로 fail 기준은 아니나(2500~3999 warn), 개인 경험이 구체적이지 않고 일반적 후기 나열에 가까움
+2026-07-19 10:31:45,873 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2는 6개로 충분하나 500자 이상 장문 단락이 다수 존재
+2026-07-19 10:31:45,873 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개와 개인 경험 언급은 있으나 구체성이 부족하고 전문성 신호가 약함
+2026-07-19 10:31:45,873 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 없음 (fail 아님, 정책상 warn 처리)
+2026-07-19 10:31:45,873 [INFO] adsense_validator —   ❌ AI 생성 의심도: 문장 중복 오류("참고해보셔도 좋을 것 같습니다해보셔도 좋을 것 같습니다") 및 정형화된 '~로 보입니다/평가가 많았다' 패턴 반복으로 AI 생성 의심 강함
+2026-07-19 10:31:45,873 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 문장 중복 오류("참고해보셔도 좋을 것 같습니다해보셔도 좋을 것 같습니다") 및 정형화된 '~로 보입니다/평가가 많았다' 패턴 반복으로 AI 생성 의심 강함
+2026-07-19 10:31:45,873 [WARNING] adsense_validator —   🔴 본문 중 텍스트 중복/글리치('...해보셔도 좋을 것 같습니다해보셔도 좋을 것 같습니다')는 AI 생성 오류로 즉시 수정 필요
+2026-07-19 10:31:45,873 [WARNING] adsense_validator —   🔴 레이블에 '금융, 경제, 정부지원, 복지, 시책'이 포함되어 드라마 리뷰 콘텐츠와 불일치 — 검색 노출 및 정책 위반 소지
+2026-07-19 10:31:45,873 [WARNING] main —   ⚠️ [편 2] AdSense 검토 필요 — pending 저장 (점수: 67/100)
+2026-07-19 10:31:45,874 [INFO] main — 
+--- [3/4편] 'SBS 드라마 김부장 9화 리뷰' 생성 중 ---
+2026-07-19 10:31:45,874 [INFO] content_generator — 시리즈 포스트 생성: 'SBS 드라마 김부장 9화 리뷰' (3/4편)
+2026-07-19 10:31:51,782 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:31:51,783 [INFO] research_collector — 검색 의도: SBS 드라마 '김부장' 9화의 줄거리, 주요 장면, 등장인물 관계 전개 등을 확인하려는 검색 의도
+2026-07-19 10:32:01,868 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — 'SBS 드라마 김부장 9화 리뷰'
+2026-07-19 10:32:23,824 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:32:23,826 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — 'SBS 드라마 김부장 9화 리뷰'
+2026-07-19 10:32:39,666 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:32:39,667 [INFO] source_validator — 출처 검증: 6/7개 통과, 등급 분포 {'X': 1, 'C': 6}
+2026-07-19 10:32:39,668 [INFO] evidence_builder — 자료팩: 중요 사실 6개 제외 (A/B 등급 출처 없음)
+2026-07-19 10:32:39,668 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-19 10:32:40,518 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:34:02,211 [WARNING] content_generator — 컨텐츠 너무 짧음(2337자, 최소 2500자) — 재시도 1/3
+2026-07-19 10:34:05,212 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-19 10:34:05,934 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:34:19,536 [WARNING] content_generator — 컨텐츠 너무 짧음(223자, 최소 2500자) — 재시도 2/3
+2026-07-19 10:34:22,536 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-19 10:34:23,310 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:35:52,921 [WARNING] content_generator — 최소 분량 미달(2395자) — 재시도 소진, 해당 분량으로 진행
+2026-07-19 10:35:53,663 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:36:05,501 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-19 10:36:05,744 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 김부장 9화 리뷰, 퇴직 앞둔 현실 공감' → 제목='bus / bus stop / singapore / government ' (관련성=0.14)
+2026-07-19 10:36:05,745 [INFO] content_generator — 시리즈 포스트 생성 완료: 'SBS 김부장 9화 리뷰, 퇴직 앞둔 현실 공감' (2395자, 이미지 1개)
+2026-07-19 10:36:05,745 [WARNING] main —   ⚠️ [편 3] 글자 수 미달 (2395자 < 2500자) — pending 저장
+2026-07-19 10:36:05,746 [INFO] main — 
+--- [4/4편] 'SBS 드라마 김부장 10화 리뷰' 생성 중 ---
+2026-07-19 10:36:05,746 [INFO] content_generator — 시리즈 포스트 생성: 'SBS 드라마 김부장 10화 리뷰' (4/4편)
+2026-07-19 10:36:12,518 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:36:12,519 [INFO] research_collector — 검색 의도: SBS 드라마 '김부장' 10화의 줄거리, 주요 사건, 등장인물 전개를 확인하고 시청자 반응을 파악하려는 의
+2026-07-19 10:36:19,106 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — 'SBS 드라마 김부장 10화 리뷰'
+2026-07-19 10:36:35,136 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:36:35,137 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — 'SBS 드라마 김부장 10화 리뷰'
+2026-07-19 10:36:38,892 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:36:38,893 [INFO] source_validator — 출처 검증: 1/6개 통과, 등급 분포 {'D': 1, 'X': 5}
+2026-07-19 10:36:38,894 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-07-19 10:36:38,894 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-19 10:36:39,652 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:38:13,927 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:38:26,791 [INFO] content_generator — 팩트체크: 통과
+2026-07-19 10:38:26,949 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 김부장 10화 리뷰·명장면 총정리' → 제목='bus / bus stop / singapore / government ' (관련성=0.20)
+2026-07-19 10:38:26,950 [INFO] content_generator — 시리즈 포스트 생성 완료: 'SBS 김부장 10화 리뷰·명장면 총정리' (2746자, 이미지 1개)
+2026-07-19 10:38:27,874 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-19 10:38:50,729 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — 'SBS 김부장 10화 리뷰·명장면 총정리'
+2026-07-19 10:38:50,729 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2746자로 warn 구간이며, 개인 경험은 있으나 대부분 후기 요약과 제도 설명의 재조합에 가까움
+2026-07-19 10:38:50,729 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 문단 구분이 거의 없어 500자 이상 블록이 다수 존재
+2026-07-19 10:38:50,729 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험과 출처 인용은 있으나 드라마 리뷰에 금융·세금·절세 라벨을 붙여 주제 신뢰성 신호가 불일치
+2026-07-19 10:38:50,729 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 가독성·SEO 측면에서 보완 필요
+2026-07-19 10:38:50,729 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 평이 많습니다', '~라는 반응도 적지 않습니다' 등 유사 패턴 문구가 반복되어 AI 생성 톤 감지
+2026-07-19 10:38:50,729 [WARNING] adsense_validator —   🔴 드라마 리뷰 콘텐츠에 '금융, 세금, 절세, 정부지원' 등 무관한 라벨이 붙어 있어 카테고리 오분류로 사용자 혼란 및 정책상 부적절한 태깅 소지
+2026-07-19 10:38:50,729 [WARNING] main —   ⚠️ [편 4] AdSense 검토 필요 — pending 저장 (점수: 74/100)
+2026-07-19 10:38:50,746 [INFO] dashboard_exporter —   검토 대기 저장: [7화] SBS 김부장 리뷰: 인물관계·관전포인트 (5524자 HTML)
+2026-07-19 10:38:50,746 [INFO] dashboard_exporter —   검토 대기 저장: [8화] SBS 드라마 김부장 8화 리뷰 총정리 (6846자 HTML)
+2026-07-19 10:38:50,746 [INFO] dashboard_exporter —   검토 대기 저장: SBS 김부장 9화 리뷰, 퇴직 앞둔 현실 공감 (6118자 HTML)
+2026-07-19 10:38:50,746 [INFO] dashboard_exporter —   검토 대기 저장: SBS 김부장 10화 리뷰·명장면 총정리 (6691자 HTML)
+2026-07-19 10:38:50,759 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 4개 추가 (총 89개)
+2026-07-19 10:38:50,789 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-19 10:38:50,811 [INFO] dashboard_exporter —   시리즈: 10개 내보내기 완료
+2026-07-19 10:38:50,827 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-19 10:38:51,227 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-07-19 10:38:51,228 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-19 10:38:51,230 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-19 10:38:51,244 [INFO] post_manager —   포스트 레지스트리: 전체 260개 (게시 162 / 실패 17 / 대기 56)
+2026-07-19 10:38:51,244 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-19 10:38:51,244 [INFO] dashboard_exporter —   포스트: 94개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-19 10:38:51,245 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-19 10:38:51,245 [INFO] main — 
+============================================================
+2026-07-19 10:38:51,245 [INFO] main — [금융NEWS] 시리즈 완료: 0/4편 성공
+2026-07-19 10:38:51,245 [INFO] main — ============================================================

@@ -1,439 +1,3 @@
-2026-07-19 12:08:20,418 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:08:20,428 [INFO] research_collector — 검색 의도: SBS 드라마 김부장 7화의 줄거리, 주요 사건, 등장인물 전개를 확인하려는 시청자의 검색 의도
-2026-07-19 12:08:27,164 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — 'SBS 드라마 김부장 7화 리뷰'
-2026-07-19 12:08:50,848 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:08:50,849 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — 'SBS 드라마 김부장 7화 리뷰'
-2026-07-19 12:09:01,206 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:09:01,207 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'D': 1, 'C': 2, 'X': 3, 'B': 1}
-2026-07-19 12:09:02,430 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: 'SBS 드라마 김부장 7화 리뷰'
-2026-07-19 12:09:02,430 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-07-19 12:09:02,431 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-19 12:09:03,239 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:10:24,914 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:10:38,510 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-07-19 12:10:38,743 [INFO] image_fetcher — 이미지 수집 성공: '[1편] SBS 드라마 김부장 7화 리뷰 — 민지 구출과 송환 위기, 줄거리·명장면 총정리' → 제목='bus / bus stop / singapore / government ' (관련성=0.09)
-2026-07-19 12:10:38,745 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] SBS 드라마 김부장 7화 리뷰 — 민지 구출과 송환 위기, 줄거리·명장면 총정리' (2413자, 이미지 1개)
-2026-07-19 12:10:39,682 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:10:57,771 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 59/100 — '[1편] SBS 드라마 김부장 7화 리뷰 — 민지 구출과 송환 '
-2026-07-19 12:10:57,771 [INFO] adsense_validator —   ❌ 원본성 및 품질: 2413자로 기준 미달이며, 개인 경험은 일부 있으나 대부분 일반적인 리뷰 재조합 수준
-2026-07-19 12:10:57,771 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 충족하나 500자 이상 장문 단락이 다수 존재
-2026-07-19 12:10:57,771 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 감상과 출처 4개는 있으나 문장 중복 오류로 신뢰도 다소 저하
-2026-07-19 12:10:57,771 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 가독성·SEO 측면에서 보완 필요
-2026-07-19 12:10:57,771 [INFO] adsense_validator —   ❌ AI 생성 의심도: '원작이 원작이', '다면적인 인물로 평가된다는~그려지고 있다는' 등 중복·오류 문장이 AI 생성 흔적을 강하게 시사
-2026-07-19 12:10:57,771 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 2413자로 기준 미달이며, 개인 경험은 일부 있으나 대부분 일반적인 리뷰 재조합 수준
-2026-07-19 12:10:57,771 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '원작이 원작이', '다면적인 인물로 평가된다는~그려지고 있다는' 등 중복·오류 문장이 AI 생성 흔적을 강하게 시사
-2026-07-19 12:10:57,771 [WARNING] adsense_validator —   🔴 본문 중 문장 중복 오류('원작이 원작이', '다면적인 인물로~' 등) 수정 필요
-2026-07-19 12:10:57,771 [WARNING] adsense_validator —   🔴 글자 수가 2413자로 AdSense 품질 기준(2500자 이상) 미달
-2026-07-19 12:10:57,771 [ERROR] main —   ❌ [편 1] AdSense 정책 위반 — 업로드 취소 (점수: 59/100)
-2026-07-19 12:10:57,771 [ERROR] main —      🔴 [원본성 및 품질] 2413자로 기준 미달이며, 개인 경험은 일부 있으나 대부분 일반적인 리뷰 재조합 수준
-2026-07-19 12:10:57,771 [ERROR] main —      🔴 [AI 생성 의심도] '원작이 원작이', '다면적인 인물로 평가된다는~그려지고 있다는' 등 중복·오류 문장이 AI 생성 흔적을 강하게 시사
-2026-07-19 12:10:57,771 [ERROR] main —      🔴 본문 중 문장 중복 오류('원작이 원작이', '다면적인 인물로~' 등) 수정 필요
-2026-07-19 12:10:57,771 [ERROR] main —      🔴 글자 수가 2413자로 AdSense 품질 기준(2500자 이상) 미달
-2026-07-19 12:10:57,773 [INFO] main — 
---- [2/4편] 'SBS 드라마 김부장 8화 리뷰' 생성 중 ---
-2026-07-19 12:10:57,773 [INFO] content_generator — 시리즈 포스트 생성: 'SBS 드라마 김부장 8화 리뷰' (2/4편)
-2026-07-19 12:11:06,787 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:11:06,788 [INFO] research_collector — 검색 의도: SBS 드라마 '김부장' 8화의 줄거리, 주요 장면, 등장인물 관계, 시청률 등을 확인하고 리뷰를 작성하려는
-2026-07-19 12:11:13,569 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — 'SBS 드라마 김부장 8화 리뷰'
-2026-07-19 12:11:38,846 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:11:38,847 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — 'SBS 드라마 김부장 8화 리뷰'
-2026-07-19 12:11:49,351 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:11:49,352 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'C': 3, 'X': 2, 'B': 1}
-2026-07-19 12:11:50,426 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: 'SBS 드라마 김부장 8화 리뷰'
-2026-07-19 12:11:50,426 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-07-19 12:11:50,426 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-19 12:11:51,145 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:13:00,204 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:13:14,124 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
-2026-07-19 12:13:14,361 [INFO] image_fetcher — 이미지 수집 성공: '[2편] SBS 드라마 김부장 8화 리뷰 — 민지 앞세운 배신극 총정리' → 제목='bus / bus stop / singapore / government ' (관련성=0.12)
-2026-07-19 12:13:14,362 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] SBS 드라마 김부장 8화 리뷰 — 민지 앞세운 배신극 총정리' (2291자, 이미지 1개)
-2026-07-19 12:13:15,322 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:13:33,665 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 54/100 — '[2편] SBS 드라마 김부장 8화 리뷰 — 민지 앞세운 배신극'
-2026-07-19 12:13:33,665 [INFO] adsense_validator —   ❌ 원본성 및 품질: 글자 수 2291자로 2500자 미만 기준 미달, 개인 경험은 있으나 분량 부족
-2026-07-19 12:13:33,665 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 양호하나 일부 섹션 단락이 500자 이상으로 길게 이어짐
-2026-07-19 12:13:33,665 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 슬롯 0개는 규정상 문제없으나 짧은 분량 대비 수익화 요소 전무
-2026-07-19 12:13:33,665 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험은 있으나 4개 출처가 본문에 구체적으로 인용되지 않음
-2026-07-19 12:13:33,665 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되어 있지 않음
-2026-07-19 12:13:33,665 [INFO] adsense_validator —   ❌ AI 생성 의심도: '화제성 지표에서 화제성 지표에서... 이 언급될 만큼' 등 문법이 깨진 중복 문구로 AI 생성 흔적 뚜렷
-2026-07-19 12:13:33,665 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 글자 수 2291자로 2500자 미만 기준 미달, 개인 경험은 있으나 분량 부족
-2026-07-19 12:13:33,665 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '화제성 지표에서 화제성 지표에서... 이 언급될 만큼' 등 문법이 깨진 중복 문구로 AI 생성 흔적 뚜렷
-2026-07-19 12:13:33,665 [WARNING] adsense_validator —   🔴 본문 중 '화제성 지표에서 화제성 지표에서 높은 순위를 기록했다는 언급이 있었다고 해요 이 언급될 만큼' 문장이 비문/중복으로 AI 생성 오류가 그대로 노출됨
-2026-07-19 12:13:33,665 [WARNING] adsense_validator —   🔴 글자 수가 2291자로 원본성 기준(2500자 미만 fail)에 미달
-2026-07-19 12:13:33,665 [ERROR] main —   ❌ [편 2] AdSense 정책 위반 — 업로드 취소 (점수: 54/100)
-2026-07-19 12:13:33,665 [ERROR] main —      🔴 [원본성 및 품질] 글자 수 2291자로 2500자 미만 기준 미달, 개인 경험은 있으나 분량 부족
-2026-07-19 12:13:33,665 [ERROR] main —      🔴 [AI 생성 의심도] '화제성 지표에서 화제성 지표에서... 이 언급될 만큼' 등 문법이 깨진 중복 문구로 AI 생성 흔적 뚜렷
-2026-07-19 12:13:33,666 [ERROR] main —      🔴 본문 중 '화제성 지표에서 화제성 지표에서 높은 순위를 기록했다는 언급이 있었다고 해요 이 언급될 만큼' 문장이 비문/중복으로 AI 생성 오류가 그대로 노출됨
-2026-07-19 12:13:33,666 [ERROR] main —      🔴 글자 수가 2291자로 원본성 기준(2500자 미만 fail)에 미달
-2026-07-19 12:13:33,667 [INFO] main — --- [3/4편] 📅 발행 예약 (방영 2026-07-24 → 2026-07-25 작성 예정) — 건너뜀 ---
-2026-07-19 12:13:33,667 [INFO] main — --- [4/4편] 📅 발행 예약 (방영 2026-07-25 → 2026-07-26 작성 예정) — 건너뜀 ---
-2026-07-19 12:13:33,668 [INFO] main — 
-============================================================
-2026-07-19 12:13:33,668 [INFO] main — [HOGU What?] 시리즈 완료: 0/4편 성공
-2026-07-19 12:13:33,668 [INFO] main — ============================================================
-2026-07-19 12:44:08,512 [INFO] main — 검토 모드 — pending_posts.json에 저장합니다
-2026-07-19 12:44:08,512 [INFO] main — ============================================================
-2026-07-19 12:44:08,513 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-19 12:44:08
-2026-07-19 12:44:08,513 [INFO] main — ============================================================
-2026-07-19 12:44:08,523 [WARNING] main —   ⚠️ 수동 키워드 'SBS 드라마 김부장 회차별 리뷰'는 최근 포스팅 이력과 유사합니다 — 제목이 중복되면 업로드 단계에서 차단됩니다.
-2026-07-19 12:44:08,523 [INFO] main — 수집된 키워드 1개: ['SBS 드라마 김부장 회차별 리뷰']
-2026-07-19 12:44:08,523 [INFO] main — 단독 포스트 대상 키워드 1개: ['SBS 드라마 김부장 회차별 리뷰']
-2026-07-19 12:44:08,544 [INFO] post_manager — run_history 마이그레이션: 8개 포스트 추가
-2026-07-19 12:44:08,545 [INFO] main — 
-[1/1] 키워드: 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:44:08,545 [INFO] content_generator — 포스트 생성 중: 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:44:19,669 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:44:19,698 [INFO] research_collector — 검색 의도: SBS 드라마 '김부장'의 각 회차별 줄거리, 주요 사건, 등장인물 관계 등을 확인하고 리뷰 콘텐츠를 작성하
-2026-07-19 12:44:29,006 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:44:46,491 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:44:46,493 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:44:50,866 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:44:50,867 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'B': 4, 'X': 3}
-2026-07-19 12:44:52,566 [INFO] content_generator — 드라마/영화 참고 데이터 수집 완료: 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:44:52,566 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-19 12:44:53,393 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:46:25,384 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:46:38,265 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
-2026-07-19 12:46:38,265 [INFO] content_generator — 제목 기반 이미지 검색: 'SBS 김부장 회차별 리뷰, 7회 시청률 25.5% 이유'
-2026-07-19 12:46:38,960 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 김부장 회차별 리뷰, 7회 시청률 25.5% 이유' → 제목='bus / bus stop / singapore / government ' (관련성=0.17)
-2026-07-19 12:46:38,961 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-19 12:46:38,963 [INFO] content_generator — 포스트 생성 완료: 'SBS 김부장 회차별 리뷰, 7회 시청률 25.5% 이유' (2977자, 이미지 1개)
-2026-07-19 12:46:39,688 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:47:02,379 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — 'SBS 김부장 회차별 리뷰, 7회 시청률 25.5% 이유'
-2026-07-19 12:47:02,380 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2977자로 warn 범위이며 시청률 수치 등 구체 정보는 있으나 온라인 후기 재구성 위주로 독창적 경험 비중이 낮음
-2026-07-19 12:47:02,380 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 충분하나 '7회와 8회', '시청자 반응' 등 500자 이상 단락이 다수 존재
-2026-07-19 12:47:02,380 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 감상은 있으나 출처 인용이 본문에 명확히 드러나지 않고 저자 전문성 신호 약함
-2026-07-19 12:47:02,380 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 확인되지 않음(저작권 위반은 없으나 이미지 부재)
-2026-07-19 12:47:02,380 [INFO] adsense_validator —   ❌ AI 생성 의심도: '장면에서에서', '나왔습니다으로', '점도라는 점도' 등 중복·깨진 문장이 다수 발견되어 기계적 생성/스티칭 흔적이 뚜렷함
-2026-07-19 12:47:02,380 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '장면에서에서', '나왔습니다으로', '점도라는 점도' 등 중복·깨진 문장이 다수 발견되어 기계적 생성/스티칭 흔적이 뚜렷함
-2026-07-19 12:47:02,380 [WARNING] adsense_validator —   🔴 본문 중 '성한수의 성격을 보여주는 장면에서에서', '반전이라는 평가가 나왔습니다으로 마무리되는데', 'SBS 드라마 출연이 오랜만이라는 점도라는 점도' 등 중복·비문 표현이 다수 발견되어 즉시 수정 필요
-2026-07-19 12:47:02,387 [INFO] internal_linker — 내부 링크 후보 3개 발견
-2026-07-19 12:47:02,389 [INFO] internal_linker —   [1/5] '등장인물' -> https://www.hoguwhat.com/2026/07/2.html
-2026-07-19 12:47:02,390 [INFO] internal_linker —   [2/5] '드라마' -> https://www.hoguwhat.com/2026/07/ost.html
-2026-07-19 12:47:02,391 [INFO] internal_linker —   [3/5] '넷플릭스' -> https://www.hoguwhat.com/2026/07/vs-vs.html
-2026-07-19 12:47:02,391 [INFO] internal_linker — 내부 링크 3개 삽입 완료
-2026-07-19 12:47:02,391 [INFO] main —   제목: SBS 김부장 회차별 리뷰, 7회 시청률 25.5% 이유
-2026-07-19 12:47:02,392 [INFO] main —   이미지: 1개 삽입
-2026-07-19 12:47:02,392 [INFO] main —   글자 수: 2977자
-2026-07-19 12:47:02,392 [INFO] main —   [검토 모드] 업로드 건너뜀
-2026-07-19 12:47:02,403 [INFO] main — 
-============================================================
-2026-07-19 12:47:02,403 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-19 12:47:02,403 [INFO] main — ============================================================
-2026-07-19 12:47:02,412 [INFO] dashboard_exporter —   검토 대기 저장: SBS 김부장 회차별 리뷰, 7회 시청률 25.5% 이유 (11222자 HTML)
-2026-07-19 12:47:02,423 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 82개)
-2026-07-19 12:47:02,424 [INFO] main — 검토 대기 포스트 저장 완료
-2026-07-19 12:47:02,454 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-19 12:47:02,473 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-19 12:47:02,489 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-19 12:47:03,440 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-19 12:47:03,441 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-19 12:47:03,443 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-19 12:47:03,457 [INFO] post_manager —   포스트 레지스트리: 전체 276개 (게시 162 / 실패 32 / 대기 57)
-2026-07-19 12:47:03,457 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-19 12:47:03,457 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-19 12:47:03,458 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-19 12:47:36,384 [INFO] main — 검토 모드 — pending_posts.json에 저장합니다
-2026-07-19 12:47:36,385 [INFO] main — ============================================================
-2026-07-19 12:47:36,385 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-19 12:47:36
-2026-07-19 12:47:36,385 [INFO] main — ============================================================
-2026-07-19 12:47:36,395 [WARNING] main —   ⚠️ 수동 키워드 'SBS 드라마 김부장 회차별 리뷰'는 최근 포스팅 이력과 유사합니다 — 제목이 중복되면 업로드 단계에서 차단됩니다.
-2026-07-19 12:47:36,395 [INFO] main — 수집된 키워드 1개: ['SBS 드라마 김부장 회차별 리뷰']
-2026-07-19 12:47:36,395 [INFO] main — 단독 포스트 대상 키워드 1개: ['SBS 드라마 김부장 회차별 리뷰']
-2026-07-19 12:47:36,409 [INFO] main — 
-[1/1] 키워드: 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:47:36,409 [INFO] content_generator — 포스트 생성 중: 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:47:43,145 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:47:43,174 [INFO] research_collector — 검색 의도: SBS 드라마 '김부장 이야기'의 회차별 줄거리와 리뷰 정보를 찾는 검색
-2026-07-19 12:47:54,829 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:48:14,752 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:48:14,753 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:48:36,996 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:48:36,997 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'X': 3, 'B': 2, 'C': 1}
-2026-07-19 12:48:36,999 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-07-19 12:48:36,999 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-19 12:48:37,742 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:49:42,299 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-07-19 12:49:42,984 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:49:55,518 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
-2026-07-19 12:49:55,518 [INFO] content_generator — 제목 기반 이미지 검색: 'SBS 드라마 김부장 회차별 리뷰, 6회까지 흐름 정리해봤다'
-2026-07-19 12:49:55,684 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 김부장 회차별 리뷰, 6회까지 흐름 정리해봤다' → 제목='bus / bus stop / singapore / government ' (관련성=0.12)
-2026-07-19 12:49:55,685 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-19 12:49:55,687 [INFO] content_generator — 포스트 생성 완료: 'SBS 드라마 김부장 회차별 리뷰, 6회까지 흐름 정리해봤다' (2561자, 이미지 1개)
-2026-07-19 12:49:56,488 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:50:20,427 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-19 12:50:22,556 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:50:30,374 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — 'SBS 드라마 김부장 회차별 리뷰, 6회까지 흐름 정리해봤다'
-2026-07-19 12:50:30,375 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2561자로 임계 구간에 해당하며, 개인 경험은 도입부에 짧게만 있고 대부분 언론 보도 재구성에 그침
-2026-07-19 12:50:30,375 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 6회 핵심장면·넷플릭스 순위 단락이 500자 이상으로 길어 가독성 저하
-2026-07-19 12:50:30,375 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 확인되지 않아 저작권 위반은 없으나 이미지 부재로 warn 처리
-2026-07-19 12:50:30,375 [INFO] adsense_validator —   ❌ AI 생성 의심도: '~라는 언급이 있습니다', '~전해집니다하는 장면이었는데' 같은 문장 등 자동생성 흔적과 문법 오류가 다수 발견되고, 요약 박스·정형화된 종결어미 반복이 뚜렷함
-2026-07-19 12:50:30,375 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '~라는 언급이 있습니다', '~전해집니다하는 장면이었는데' 같은 문장 등 자동생성 흔적과 문법 오류가 다수 발견되고, 요약 박스·정형화된 종결어미 반복이 뚜렷함
-2026-07-19 12:50:30,375 [WARNING] adsense_validator —   🔴 6회 대사 인용 부분에 '전해집니다하는 장면이었는데' 등 문법이 깨진 AI 생성 잔여 텍스트가 존재하여 신뢰도 저해
-2026-07-19 12:50:30,375 [WARNING] adsense_validator —   🔴 부녀 상봉 대사를 실제 인용처럼 서술했으나 출처 없이 '~라는 언급이 있습니다' 식으로 얼버무려 사실관계 불명확
-2026-07-19 12:50:30,384 [INFO] internal_linker — 내부 링크 후보 3개 발견
-2026-07-19 12:50:30,386 [INFO] internal_linker —   [1/5] '소지섭' -> https://www.hoguwhat.com/2026/07/2.html
-2026-07-19 12:50:30,388 [INFO] internal_linker —   [2/5] '넷플릭스' -> https://www.hoguwhat.com/2026/07/vs-vs.html
-2026-07-19 12:50:30,388 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-19 12:50:30,388 [INFO] main —   제목: SBS 드라마 김부장 회차별 리뷰, 6회까지 흐름 정리해봤다
-2026-07-19 12:50:30,388 [INFO] main —   이미지: 1개 삽입
-2026-07-19 12:50:30,388 [INFO] main —   글자 수: 2561자
-2026-07-19 12:50:30,388 [INFO] main —   [검토 모드] 업로드 건너뜀
-2026-07-19 12:50:30,400 [INFO] main — 
-============================================================
-2026-07-19 12:50:30,400 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-19 12:50:30,400 [INFO] main — ============================================================
-2026-07-19 12:50:30,409 [INFO] dashboard_exporter —   검토 대기 저장: SBS 드라마 김부장 회차별 리뷰, 6회까지 흐름 정리해봤다 (8269자 HTML)
-2026-07-19 12:50:30,420 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 83개)
-2026-07-19 12:50:30,421 [INFO] main — 검토 대기 포스트 저장 완료
-2026-07-19 12:50:30,448 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-19 12:50:30,467 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-19 12:50:30,483 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-19 12:50:30,851 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-19 12:50:30,853 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-19 12:50:30,855 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-19 12:50:30,869 [INFO] post_manager —   포스트 레지스트리: 전체 277개 (게시 162 / 실패 32 / 대기 58)
-2026-07-19 12:50:30,869 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-19 12:50:30,869 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-19 12:50:30,870 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-19 12:51:01,257 [INFO] main — 검토 모드 — pending_posts.json에 저장합니다
-2026-07-19 12:51:01,258 [INFO] main — ============================================================
-2026-07-19 12:51:01,258 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-19 12:51:01
-2026-07-19 12:51:01,258 [INFO] main — ============================================================
-2026-07-19 12:51:01,268 [WARNING] main —   ⚠️ 수동 키워드 'SBS 드라마 김부장 회차별 리뷰'는 최근 포스팅 이력과 유사합니다 — 제목이 중복되면 업로드 단계에서 차단됩니다.
-2026-07-19 12:51:01,268 [INFO] main — 수집된 키워드 1개: ['SBS 드라마 김부장 회차별 리뷰']
-2026-07-19 12:51:01,268 [INFO] main — 단독 포스트 대상 키워드 1개: ['SBS 드라마 김부장 회차별 리뷰']
-2026-07-19 12:51:01,284 [INFO] main — 
-[1/1] 키워드: 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:51:01,284 [INFO] content_generator — 포스트 생성 중: 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:51:08,645 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:51:08,670 [INFO] research_collector — 검색 의도: SBS 드라마 '김부장' 각 회차별 줄거리, 주요 사건, 시청률 등을 확인하려는 검색 의도
-2026-07-19 12:51:18,343 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:51:38,266 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:51:38,267 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — 'SBS 드라마 김부장 회차별 리뷰'
-2026-07-19 12:52:12,334 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:52:12,336 [INFO] source_validator — 출처 검증: 6/7개 통과, 등급 분포 {'B': 1, 'C': 5, 'X': 1}
-2026-07-19 12:52:12,338 [INFO] evidence_builder — 자료팩: 중요 사실 5개 제외 (A/B 등급 출처 없음)
-2026-07-19 12:52:12,338 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-19 12:52:13,334 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:53:46,699 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:53:50,153 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-07-19 12:53:50,153 [INFO] content_generator — 제목 기반 이미지 검색: 'SBS 드라마 '김부장', 직장인들이 열광하는 이유와 회차별 리뷰 찾는 법'
-2026-07-19 12:53:50,605 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 '김부장', 직장인들이 열광하는 이유와 회차별 리뷰 찾는 법' → 제목='bus / bus stop / singapore / government ' (관련성=0.11)
-2026-07-19 12:53:50,606 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-19 12:53:50,608 [INFO] content_generator — 포스트 생성 완료: 'SBS 드라마 '김부장', 직장인들이 열광하는 이유와 회차별 리뷰 찾는 법' (2696자, 이미지 1개)
-2026-07-19 12:53:51,342 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 12:54:01,595 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — 'SBS 드라마 '김부장', 직장인들이 열광하는 이유와 회차별 리'
-2026-07-19 12:54:01,595 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2696자로 분량 기준은 통과하나 개인 경험 없이 시청률·업계 분석 재조합 위주의 일반론 서술임
-2026-07-19 12:54:01,595 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 직접 경험 서술이 약하고 전문가 인용도 익명 서술 위주임
-2026-07-19 12:54:01,595 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 언급이 없어 텍스트 전용 콘텐츠로 판단됨
-2026-07-19 12:54:01,595 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 분석이 나옵니다', '~라는 점을 알 수 있습니다' 등 전형적 AI식 정리 문구와 중복 서술이 반복됨
-2026-07-19 12:54:01,603 [INFO] internal_linker — 내부 링크 후보 3개 발견
-2026-07-19 12:54:01,605 [INFO] internal_linker —   [1/5] '등장인물' -> https://www.hoguwhat.com/2026/07/2.html
-2026-07-19 12:54:01,607 [INFO] internal_linker —   [2/5] '넷플릭스' -> https://www.hoguwhat.com/2026/07/vs-vs.html
-2026-07-19 12:54:01,607 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-19 12:54:01,607 [INFO] main —   제목: SBS 드라마 '김부장', 직장인들이 열광하는 이유와 회차별 리뷰 찾는 법
-2026-07-19 12:54:01,607 [INFO] main —   이미지: 1개 삽입
-2026-07-19 12:54:01,607 [INFO] main —   글자 수: 2696자
-2026-07-19 12:54:01,607 [INFO] main —   [검토 모드] 업로드 건너뜀
-2026-07-19 12:54:01,619 [INFO] main — 
-============================================================
-2026-07-19 12:54:01,619 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-19 12:54:01,619 [INFO] main — ============================================================
-2026-07-19 12:54:01,629 [INFO] dashboard_exporter —   검토 대기 저장: SBS 드라마 '김부장', 직장인들이 열광하는 이유와 회차별 리뷰 찾는 법 (9917자 HTML)
-2026-07-19 12:54:01,641 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 84개)
-2026-07-19 12:54:01,641 [INFO] main — 검토 대기 포스트 저장 완료
-2026-07-19 12:54:01,673 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-19 12:54:01,692 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-19 12:54:01,709 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-19 12:54:02,050 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-19 12:54:02,051 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-19 12:54:02,054 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-19 12:54:02,068 [INFO] post_manager —   포스트 레지스트리: 전체 278개 (게시 162 / 실패 32 / 대기 59)
-2026-07-19 12:54:02,068 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-19 12:54:02,068 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-19 12:54:02,069 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-19 22:58:52,568 [INFO] main — ============================================================
-2026-07-19 22:58:52,568 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-19 22:58:52
-2026-07-19 22:58:52,568 [INFO] main — ============================================================
-2026-07-19 22:58:52,580 [INFO] keyword_collector — 포스팅 이력 코퍼스: 33개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-19 22:58:56,235 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-19 22:59:02,146 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 22:59:02,167 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-19 22:59:02,168 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-19 22:59:03,041 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-19 22:59:03,042 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-19 22:59:03,042 [INFO] keyword_collector — 폴백 키워드 전체 재사용 (30일 사이클 완료)
-2026-07-19 22:59:03,044 [INFO] keyword_collector —   [naver_realtime] 2개: ['1인 가구 재테크 전략 2026 예적금 대신 투자 방법', '반도체 저점 매수 타이밍 2026 ETF 투자 가이드']
-2026-07-19 22:59:03,045 [INFO] keyword_collector — 최종 선정 키워드 2개: ['1인 가구 재테크 전략 2026 예적금 대신 투자 방법', '반도체 저점 매수 타이밍 2026 ETF 투자 가이드']
-2026-07-19 22:59:03,045 [INFO] main — 수집된 키워드 2개: ['1인 가구 재테크 전략 2026 예적금 대신 투자 방법', '반도체 저점 매수 타이밍 2026 ETF 투자 가이드']
-2026-07-19 22:59:03,050 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
-2026-07-19 22:59:03,051 [INFO] main — 단독 포스트 대상 키워드 1개: ['1인 가구 재테크 전략 2026 예적금 대신 투자 방법']
-2026-07-19 22:59:03,072 [INFO] main — 
-[1/1] 키워드: '1인 가구 재테크 전략 2026 예적금 대신 투자 방법'
-2026-07-19 22:59:03,072 [INFO] content_generator — 포스트 생성 중: '1인 가구 재테크 전략 2026 예적금 대신 투자 방법'
-2026-07-19 22:59:12,943 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 22:59:12,944 [INFO] research_collector — 검색 의도: 2026년 기준 1인 가구가 예적금보다 높은 수익을 낼 수 있는 구체적인 투자 방법과 전략을 알고 싶어함
-2026-07-19 22:59:34,552 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 6개) — '1인 가구 재테크 전략 2026 예적금 대신 투자 방법'
-2026-07-19 22:59:46,118 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 22:59:46,119 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '1인 가구 재테크 전략 2026 예적금 대신 투자 방법'
-2026-07-19 23:00:14,330 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:00:14,331 [INFO] source_validator — 출처 검증: 0/6개 통과, 등급 분포 {'X': 6}
-2026-07-19 23:00:14,333 [INFO] evidence_builder — 자료팩: 중요 사실 6개 제외 (A/B 등급 출처 없음)
-2026-07-19 23:00:14,333 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-19 23:00:16,652 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:01:39,951 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:01:53,018 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-07-19 23:01:53,342 [INFO] image_fetcher — 이미지 수집 성공: '1인 가구 재테크 전략, 예적금 대신 투자법' → 제목='savings / piggy / bank / money / coin / ' (관련성=0.25)
-2026-07-19 23:01:53,533 [INFO] image_fetcher — 이미지 수집 성공: '가구 재테크 전략' → 제목='savings / piggy / bank / money / coin / ' (관련성=0.40)
-2026-07-19 23:01:53,760 [INFO] image_fetcher — 이미지 수집 성공: '가구 재테크 예적금만으론 부족할까 혼자 가구는' → 제목='savings / piggy / bank / money / coin / ' (관련성=0.25)
-2026-07-19 23:01:55,383 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:01:55,384 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-19 23:01:55,385 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-19 23:01:55,387 [INFO] content_generator — 포스트 생성 완료: '1인 가구 재테크 전략, 예적금 대신 투자법' (3148자, 이미지 3개)
-2026-07-19 23:01:56,342 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:02:11,516 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '1인 가구 재테크 전략, 예적금 대신 투자법'
-2026-07-19 23:02:11,516 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 3148자로 기준 통과하나 개인 경험은 '개인적으로는' 한 문장 정도로 미미하고 대부분 일반적 재테크 정보 재조합에 가까움
-2026-07-19 23:02:11,516 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 6개 인용은 있으나 1인칭 직접 경험 서술이 부족하고 저자 전문성 신호가 약함
-2026-07-19 23:02:11,516 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급이 전혀 없어 이미지 부재 상태로 판단됨
-2026-07-19 23:02:11,516 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·표 중심의 정형화된 나열 구조와 '~습니다' 반복형 문체가 AI 생성 패턴과 유사함
-2026-07-19 23:02:11,526 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-19 23:02:11,529 [INFO] internal_linker —   [1/5] 'ETF' -> https://hoguasset.blogspot.com/2026/07/1-etf.html
-2026-07-19 23:02:11,531 [INFO] internal_linker —   [2/5] '금융감독원' -> https://hoguasset.blogspot.com/2026/07/etf-2026-etf.html
-2026-07-19 23:02:11,532 [INFO] internal_linker —   [3/5] '2026년' -> https://hoguasset.blogspot.com/2026/07/etf-2026_01246396645.
-2026-07-19 23:02:11,534 [INFO] internal_linker —   [4/5] '시작하는' -> https://www.hoguwhat.com/2026/07/2026-10.html
-2026-07-19 23:02:11,536 [INFO] internal_linker —   [5/5] '투자하는' -> https://hoguasset.blogspot.com/2026/07/etf-5.html
-2026-07-19 23:02:11,536 [INFO] internal_linker — 내부 링크 5개 삽입 완료
-2026-07-19 23:02:11,537 [INFO] main —   제목: 1인 가구 재테크 전략, 예적금 대신 투자법
-2026-07-19 23:02:11,537 [INFO] main —   이미지: 3개 삽입
-2026-07-19 23:02:11,537 [INFO] main —   글자 수: 3148자
-2026-07-19 23:02:12,360 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:02:35,884 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '1인 가구 재테크 전략, 예적금 대신 투자법'
-2026-07-19 23:02:35,884 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 3148자로 기준 통과하나 내용은 커뮤니티 후기·일반 지식 재조합 위주로 구체적 개인 경험·수치·날짜가 부족함
-2026-07-19 23:02:35,884 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 충분하나 도입부·비교 설명 단락이 500자 이상으로 길게 이어지는 구간이 다수 있음
-2026-07-19 23:02:35,884 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 한국은행·금감원 등 6개 출처 인용은 있으나 1인칭 직접 경험·저자 전문성 신호는 미약함
-2026-07-19 23:02:35,884 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 확인되지 않아 저작권 위반은 없으나 이미지 부재로 warn
-2026-07-19 23:02:35,885 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·비교표 등 목록화 패턴이 과도하고 도입-전개-결론 구조가 전형적인 AI 작성 패턴에 가까움
-2026-07-19 23:02:35,885 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
-2026-07-19 23:02:35,885 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 3148자로 기준 통과하나 내용은 커뮤니티 후기·일반 지식 재조합 위주로 구체적 개인 경험·수치·날짜가 부족함
-2026-07-19 23:02:35,885 [WARNING] main —      🟡 [구조 및 가독성] H2 7개로 충분하나 도입부·비교 설명 단락이 500자 이상으로 길게 이어지는 구간이 다수 있음
-2026-07-19 23:02:35,885 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 한국은행·금감원 등 6개 출처 인용은 있으나 1인칭 직접 경험·저자 전문성 신호는 미약함
-2026-07-19 23:02:35,885 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
-2026-07-19 23:02:37,207 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:03:54,579 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-19 23:03:56,018 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:04:26,101 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3148자 → 4100자 (+952자)
-2026-07-19 23:04:26,101 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-19 23:04:27,271 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:04:45,502 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '1인 가구 재테크 전략, 예적금 대신 투자법'
-2026-07-19 23:04:45,502 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 체크리스트·비교 설명 단락이 줄바꿈 없이 500자 이상 이어지는 부분 존재
-2026-07-19 23:04:45,502 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 언급이 전혀 없어 저작권 위반은 없으나 이미지 부재 상태
-2026-07-19 23:04:45,502 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 90/100)
-2026-07-19 23:04:45,502 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-07-19 23:04:47,057 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:05:10,130 [INFO] final_editor —   ✏️ 제목 최종 교정: '1인 가구 재테크 전략, 예적금 대신 투자법' → '2026 1인 가구 재테크 전략, 예적금 대신 투자하는 법'
-2026-07-19 23:05:10,130 [INFO] final_editor —   ✏️ 메타 설명 교정 (98자)
-2026-07-19 23:05:10,130 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞춰 정리하고, 긴 문단을 2~4문장 단위로 분할했으며, 요약 박스·표·경험 메모·주의사항·FAQ·작성자 메모·내부 링크 구조를 최종 발행 형식에 맞게 배치했습니다.
-2026-07-19 23:05:10,261 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-19 23:05:10,261 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-07-19 23:05:10,379 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-07-19 23:05:10,392 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-19 23:05:10,393 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '1인 가구 재테크 전략 2026 예적금 대신 투자 방법' — 면책·팩트체크 확인 권장
-2026-07-19 23:05:10,393 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-07-19 23:05:10,831 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/2026-1.html
-2026-07-19 23:05:10,844 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/2026-1.html
-2026-07-19 23:05:44,073 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:05:44,074 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-19 23:05:44,075 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-19 23:05:44,084 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '2026 1인 가구 재테크 전략, 예적금 대신 투자하는 법'
-2026-07-19 23:05:45,331 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:05:52,260 [INFO] comment_manager —   생성된 댓글: 글에서 못 다룬 팁 하나 더 얹자면, 비상금을 그냥 보통예금에 묵혀두기보다 CMA나 파킹통장에 넣어두시면 유동성은 그대로 유지하면서 하루만 넣어...
-2026-07-19 23:08:52,374 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-19 23:08:52,375 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-07-19 23:08:52,376 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-19 23:08:52,376 [INFO] main — 
-============================================================
-2026-07-19 23:08:52,376 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-19 23:08:52,376 [INFO] main — ============================================================
-2026-07-19 23:08:52,407 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-19 23:08:52,427 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-19 23:08:52,442 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-19 23:08:52,443 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-19 23:08:52,446 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-19 23:08:52,460 [INFO] post_manager —   포스트 레지스트리: 전체 279개 (게시 179 / 실패 15 / 대기 59)
-2026-07-19 23:08:52,460 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-19 23:08:52,460 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-19 23:08:52,461 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-19 23:09:24,605 [INFO] main — ============================================================
-2026-07-19 23:09:24,605 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-19 23:09:24
-2026-07-19 23:09:24,605 [INFO] main — ============================================================
-2026-07-19 23:09:24,615 [INFO] keyword_collector — 포스팅 이력 코퍼스: 27개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-19 23:09:29,191 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-19 23:09:33,231 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:09:33,252 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-19 23:09:33,252 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-19 23:09:33,990 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-19 23:09:33,990 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-19 23:09:33,992 [INFO] keyword_collector —   [naver_realtime] 2개: ['1인 가구 재테크 방법 예적금 대신 투자 시작하기', '반도체 주가 저점 매수 타이밍 2026 투자 전략']
-2026-07-19 23:09:33,992 [INFO] keyword_collector — 최종 선정 키워드 2개: ['1인 가구 재테크 방법 예적금 대신 투자 시작하기', '반도체 주가 저점 매수 타이밍 2026 투자 전략']
-2026-07-19 23:09:33,992 [INFO] main — 수집된 키워드 2개: ['1인 가구 재테크 방법 예적금 대신 투자 시작하기', '반도체 주가 저점 매수 타이밍 2026 투자 전략']
-2026-07-19 23:09:33,998 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
-2026-07-19 23:09:33,998 [INFO] main — 단독 포스트 대상 키워드 1개: ['1인 가구 재테크 방법 예적금 대신 투자 시작하기']
-2026-07-19 23:09:34,017 [INFO] main — 
-[1/1] 키워드: '1인 가구 재테크 방법 예적금 대신 투자 시작하기'
-2026-07-19 23:09:34,017 [INFO] content_generator — 포스트 생성 중: '1인 가구 재테크 방법 예적금 대신 투자 시작하기'
-2026-07-19 23:09:40,367 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:09:40,368 [INFO] research_collector — 검색 의도: 1인 가구가 예적금 대신 시작할 수 있는 투자 방법과 절차를 알고 싶어함
-2026-07-19 23:10:13,593 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 6개) — '1인 가구 재테크 방법 예적금 대신 투자 시작하기'
-2026-07-19 23:10:31,065 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:10:31,066 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '1인 가구 재테크 방법 예적금 대신 투자 시작하기'
-2026-07-19 23:11:14,502 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:11:14,503 [INFO] source_validator — 출처 검증: 3/7개 통과, 등급 분포 {'B': 3, 'X': 4}
-2026-07-19 23:11:14,505 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-19 23:11:17,191 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:12:17,551 [WARNING] content_generator — 컨텐츠 너무 짧음(2456자, 최소 2500자) — 재시도 1/3
-2026-07-19 23:12:20,551 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-19 23:12:21,221 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:13:17,522 [WARNING] content_generator — 컨텐츠 너무 짧음(2441자, 최소 2500자) — 재시도 2/3
-2026-07-19 23:13:20,522 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-19 23:13:21,446 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:14:20,034 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:14:32,666 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-07-19 23:14:32,821 [INFO] image_fetcher — 이미지 수집 성공: '1인 가구 재테크 방법, 예적금 대신 투자 시작하기 전에 확인할 것들' → 제목='savings / piggy / bank / money / coin / ' (관련성=0.15)
-2026-07-19 23:14:32,969 [INFO] image_fetcher — 이미지 수집 성공: '가구 재테크 예적금' → 제목='savings / piggy / bank / money / coin / ' (관련성=0.40)
-2026-07-19 23:14:33,394 [INFO] image_fetcher — 이미지 수집 성공: '가구 재테크 예적금만으로 부족하다 S&P500 상반기' → 제목='savings / piggy / bank / money / coin / ' (관련성=0.00)
-2026-07-19 23:14:34,458 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:14:34,459 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-19 23:14:34,460 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-19 23:14:34,462 [INFO] content_generator — 포스트 생성 완료: '1인 가구 재테크 방법, 예적금 대신 투자 시작하기 전에 확인할 것들' (2580자, 이미지 3개)
-2026-07-19 23:14:35,118 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:14:54,098 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '1인 가구 재테크 방법, 예적금 대신 투자 시작하기 전에 확인할'
-2026-07-19 23:14:54,098 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수 2580자로 기준 충족하나 통계 재조합 위주이며 개인 경험·독창적 인사이트가 부족함
-2026-07-19 23:14:54,098 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개로 개수는 충족하나 단락 구분 없이 이어지는 긴 블록이 다수 존재
-2026-07-19 23:14:54,098 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 2개 출처 인용은 있으나 1인칭 경험 서술과 저자 전문성 신호가 부재함
-2026-07-19 23:14:54,098 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되지 않아 가독성·SEO 측면에서 보완 필요
-2026-07-19 23:14:54,098 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~다고 합니다', '~라 할 수 있습니다' 반복 및 문장 중복 오류로 AI 생성 흔적이 감지됨
-2026-07-19 23:14:54,098 [WARNING] adsense_validator —   🔴 '이른바 M7 종목군은 오히려 부진한 흐름을 보였다고 합니다을 기록했다고 합니다' 문장에 중복·비문 오류 존재, 수정 필요
-2026-07-19 23:14:54,104 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-19 23:14:54,105 [INFO] internal_linker —   [1/5] '투자하는' -> https://www.hoguwhat.com/2026/07/2026-1.html
-2026-07-19 23:14:54,107 [INFO] internal_linker —   [2/5] 'ETF' -> https://hoguasset.blogspot.com/2026/07/1-etf.html
-2026-07-19 23:14:54,108 [INFO] internal_linker —   [3/5] '안전하게' -> https://hoguasset.blogspot.com/2026/07/etf-5.html
-2026-07-19 23:14:54,109 [INFO] internal_linker —   [4/5] 'ETF' -> https://hoguasset.blogspot.com/2026/07/etf-2026-etf.html
-2026-07-19 23:14:54,109 [INFO] internal_linker —   [5/5] '금융위원회' -> https://hoguasset.blogspot.com/2026/07/etf-2026_01246396645.
-2026-07-19 23:14:54,110 [INFO] internal_linker — 내부 링크 5개 삽입 완료
-2026-07-19 23:14:54,110 [INFO] main —   제목: 1인 가구 재테크 방법, 예적금 대신 투자 시작하기 전에 확인할 것들
-2026-07-19 23:14:54,110 [INFO] main —   이미지: 3개 삽입
-2026-07-19 23:14:54,110 [INFO] main —   글자 수: 2580자
-2026-07-19 23:14:54,787 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-19 23:15:12,733 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '1인 가구 재테크 방법, 예적금 대신 투자 시작하기 전에 확인할'
-2026-07-19 23:15:12,733 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 수치 인용은 풍부하나 개인 경험 서술 없이 통계 재조합 위주라 독창성이 약함
-2026-07-19 23:15:12,734 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2는 4개로 충족하나 단락이 매우 길게 이어져 가독성이 떨어짐
 2026-07-19 23:15:12,734 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2건 인용은 있으나 1인칭 경험이나 저자 전문성 신호가 부족함
 2026-07-19 23:15:12,734 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글로 정책 위반은 아니나 개선 여지 있음
 2026-07-19 23:15:12,734 [INFO] adsense_validator —   ❌ AI 생성 의심도: '보였다고 합니다을 기록했다고 합니다' 같은 문법 오류와 획일적 보고체 문장이 AI 생성 흔적을 강하게 시사함
@@ -934,3 +498,121 @@
 2026-07-20 03:09:45,373 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-20 03:09:45,373 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-20 03:09:45,373 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-20 06:17:26,566 [INFO] main — ============================================================
+2026-07-20 06:17:26,566 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-20 06:17:26
+2026-07-20 06:17:26,566 [INFO] main — ============================================================
+2026-07-20 06:17:26,577 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
+2026-07-20 06:17:26,578 [INFO] keyword_collector — 포스팅 이력 코퍼스: 45개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-20 06:17:29,753 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-20 06:17:36,989 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:17:37,015 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-20 06:17:37,015 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-20 06:17:37,795 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-07-20 06:17:37,796 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-20 06:17:37,796 [INFO] keyword_collector — 폴백 키워드 전체 재사용 (30일 사이클 완료)
+2026-07-20 06:17:37,797 [INFO] keyword_collector — 유사 주제 제외 1개: ['예적금 대신 ETF 투자 2026 1인가구 재테크 전략']
+2026-07-20 06:17:37,829 [INFO] keyword_collector —   [naver_realtime] 2개: ['원달러 환율 1500원대 환테크 대응법', '남성 청소년 HPV 예방접종 비용·지원 총정리']
+2026-07-20 06:17:37,829 [INFO] keyword_collector — 최종 선정 키워드 2개: ['원달러 환율 1500원대 환테크 대응법', '남성 청소년 HPV 예방접종 비용·지원 총정리']
+2026-07-20 06:17:37,829 [INFO] main — 수집된 키워드 2개: ['원달러 환율 1500원대 환테크 대응법', '남성 청소년 HPV 예방접종 비용·지원 총정리']
+2026-07-20 06:17:37,838 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
+2026-07-20 06:17:37,838 [INFO] main — 단독 포스트 대상 키워드 1개: ['원달러 환율 1500원대 환테크 대응법']
+2026-07-20 06:17:37,860 [INFO] main — 
+[1/1] 키워드: '원달러 환율 1500원대 환테크 대응법'
+2026-07-20 06:17:37,860 [INFO] content_generator — 포스트 생성 중: '원달러 환율 1500원대 환테크 대응법'
+2026-07-20 06:17:46,147 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:17:46,149 [INFO] research_collector — 검색 의도: 원달러 환율이 1500원대로 급등한 상황에서 개인 투자자가 활용할 수 있는 환테크(환율 재테크) 전략과 대응
+2026-07-20 06:17:54,703 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 6개) — '원달러 환율 1500원대 환테크 대응법'
+2026-07-20 06:18:07,539 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:18:07,540 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '원달러 환율 1500원대 환테크 대응법'
+2026-07-20 06:18:22,686 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:18:22,687 [INFO] source_validator — 출처 검증: 1/7개 통과, 등급 분포 {'D': 1, 'X': 6}
+2026-07-20 06:18:22,689 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-07-20 06:18:22,689 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-20 06:18:23,404 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:19:35,855 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:19:56,329 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-20 06:19:57,805 [INFO] image_fetcher — 이미지 수집 성공: '원달러 1500원대, 환테크 대응법 점검' → 제목='연 최저 찍은 달러/원 환율에 울고 웃은 환테크 상품들' (관련성=0.20)
+2026-07-20 06:19:58,475 [INFO] image_fetcher — 이미지 수집 성공: '원달러 환율 환테크' → 제목='네이버 인플루언서 [네이버 인플루언서] 엔화 달러 환율 상승 환테크 투자' (관련성=0.67)
+2026-07-20 06:19:59,159 [INFO] image_fetcher — 이미지 수집 성공: '원달러 환율 낯설지 않은 한쪽은 환율이' → 제목='이틀 연속 하락한 환율' (관련성=0.17)
+2026-07-20 06:20:00,527 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:20:00,528 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-20 06:20:00,529 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-20 06:20:00,532 [INFO] content_generator — 포스트 생성 완료: '원달러 1500원대, 환테크 대응법 점검' (2992자, 이미지 3개)
+2026-07-20 06:20:01,262 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:20:24,012 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '원달러 1500원대, 환테크 대응법 점검'
+2026-07-20 06:20:24,012 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 통과하나 개인 경험은 도입부 한 줄 정도이고 나머지는 일반적 환테크 정보 재구성에 가까움
+2026-07-20 06:20:24,012 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 헤딩 수는 우수하나 500자 이상 장문 단락이 다수 존재
+2026-07-20 06:20:24,012 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: ‘~라는 의견이 많다’ 식 모호한 인용 반복으로 출처 신뢰도 대비 저자 전문성 신호 약함
+2026-07-20 06:20:24,012 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문 내 이미지 삽입 확인되지 않아 이미지 부재 상태
+2026-07-20 06:20:24,012 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: ‘~라고 볼 수 있습니다’, ‘~라는 평가가 나옵니다’ 등 정형화된 헤지 문구 반복 사용
+2026-07-20 06:20:24,017 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-20 06:20:24,025 [INFO] internal_linker —   [1/5] '실제로' -> https://www.hoguwhat.com/2026/07/blog-post_15.html
+2026-07-20 06:20:24,027 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-20 06:20:24,027 [INFO] main —   제목: 원달러 1500원대, 환테크 대응법 점검
+2026-07-20 06:20:24,027 [INFO] main —   이미지: 3개 삽입
+2026-07-20 06:20:24,027 [INFO] main —   글자 수: 2992자
+2026-07-20 06:20:25,007 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:20:47,267 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '원달러 1500원대, 환테크 대응법 점검'
+2026-07-20 06:20:47,267 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2992자로 기준 충족하나 개인 경험은 도입부 일화 정도이며 나머지는 일반적 환테크 정보의 재구성에 가까움
+2026-07-20 06:20:47,267 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 우수하나 체크리스트·시나리오 비교 등 일부 단락이 500자 이상으로 길게 이어짐
+2026-07-20 06:20:47,267 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개와 도입부 경험은 있으나 전문성·1인칭 경험 서술이 얕아 신뢰 신호가 제한적
+2026-07-20 06:20:47,267 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가하며 명시된 이미지가 없어 가독성 측면에서 보완 필요
+2026-07-20 06:20:47,267 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 의견이 많습니다', '~라고 봅니다' 식 헤지 표현과 목록화 패턴이 반복되어 AI 생성 톤이 다소 느껴짐
+2026-07-20 06:20:47,268 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-07-20 06:20:47,268 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 2992자로 기준 충족하나 개인 경험은 도입부 일화 정도이며 나머지는 일반적 환테크 정보의 재구성에 가까움
+2026-07-20 06:20:47,268 [WARNING] main —      🟡 [구조 및 가독성] H2 8개로 구조는 우수하나 체크리스트·시나리오 비교 등 일부 단락이 500자 이상으로 길게 이어짐
+2026-07-20 06:20:47,268 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 4개와 도입부 경험은 있으나 전문성·1인칭 경험 서술이 얕아 신뢰 신호가 제한적
+2026-07-20 06:20:47,268 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-07-20 06:20:48,330 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:22:02,498 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-20 06:22:03,308 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:22:23,541 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2992자 → 4083자 (+1091자)
+2026-07-20 06:22:23,542 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-20 06:22:27,843 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:22:48,337 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '원달러 1500원대, 환테크 대응법 점검'
+2026-07-20 06:22:48,338 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 양호하나 일부 단락이 구분 없이 길게 이어져 가독성 저하
+2026-07-20 06:22:48,338 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 삽입이 확인되지 않아 시각적 요소 부재
+2026-07-20 06:22:48,338 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 90/100)
+2026-07-20 06:22:48,338 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-07-20 06:22:49,312 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:24:07,470 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-20 06:24:08,608 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:25:20,942 [INFO] final_editor —   ✏️ 제목 최종 교정: '원달러 1500원대, 환테크 대응법 점검' → '원달러 환율 1500원대 시대, 환테크 대응법 실전 점검'
+2026-07-20 06:25:20,942 [INFO] final_editor —   ✏️ 메타 설명 교정 (127자)
+2026-07-20 06:25:20,942 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 미완성 원고를 완결하여 전문가 의견 확인법, 주의사항, 마무리, FAQ 6개, 작성자 메모, 내부링크를 추가했고, 어색한 잔여 텍스트(광고성 캡션 등)를 제거해 문단을 짧게 재구성했습니다.
+2026-07-20 06:25:21,106 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-20 06:25:21,106 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-07-20 06:25:21,275 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-07-20 06:25:21,288 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-20 06:25:21,288 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-07-20 06:25:22,455 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/1500.html
+2026-07-20 06:25:22,467 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/1500.html
+2026-07-20 06:25:51,360 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:25:51,361 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-20 06:25:51,361 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-20 06:25:51,370 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '원달러 환율 1500원대 시대, 환테크 대응법 실전 점검'
+2026-07-20 06:25:53,241 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-20 06:25:56,324 [INFO] comment_manager —   생성된 댓글: 글 쓰다 보니 하나 빠뜨린 팁이 있는데요, 환전 우대율만큼이나 은행 앱마다 매일 오전에 갱신되는 '환율 알림' 설정해두시면 훨씬 편해요. 저도 ...
+2026-07-20 06:28:56,477 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-20 06:28:56,478 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-07-20 06:28:56,478 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-20 06:28:56,479 [INFO] main — 
+============================================================
+2026-07-20 06:28:56,479 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-20 06:28:56,479 [INFO] main — ============================================================
+2026-07-20 06:28:56,510 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-20 06:28:56,534 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-20 06:28:56,553 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-20 06:28:56,554 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-20 06:28:56,556 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-20 06:28:56,570 [INFO] post_manager —   포스트 레지스트리: 전체 285개 (게시 185 / 실패 15 / 대기 59)
+2026-07-20 06:28:56,571 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-20 06:28:56,571 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-20 06:28:56,571 [INFO] main — 대시보드 데이터 업데이트 완료

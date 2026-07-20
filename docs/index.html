@@ -1957,19 +1957,22 @@
   <div class="page" id="page-config">
     <div class="page-title">⚙️ 시스템 정보</div>
     <div class="cards" style="margin-bottom:24px">
-      <div class="card purple"><div class="label">실행 엔진</div><div class="value" style="font-size:16px;color:var(--accent)" id="cfg-engine">Python 3.11</div><div class="sub">Claude API claude-sonnet-4-6</div></div>
-      <div class="card blue"><div class="label">이미지 소스</div><div class="value" style="font-size:16px;color:var(--accent2)">3단계</div><div class="sub">Naver → DDG → Wikimedia</div></div>
-      <div class="card green"><div class="label">JSON-LD 스키마</div><div class="value" style="font-size:16px;color:var(--green)">2종</div><div class="sub">Article + FAQPage</div></div>
-      <div class="card yellow"><div class="label">AdSense 슬롯</div><div class="value" style="font-size:16px;color:var(--yellow)">4개</div><div class="sub">포스트당 AdSense 정책 준수 배치</div></div>
+      <div class="card purple"><div class="label">실행 엔진</div><div class="value" style="font-size:16px;color:var(--accent)" id="cfg-engine">Python 3.11</div><div class="sub">Claude Sonnet 5 (한도 시 GPT-4o 폴백)</div></div>
+      <div class="card blue"><div class="label">이미지 파이프라인</div><div class="value" style="font-size:16px;color:var(--accent2)">글당 1~3장</div><div class="sub">Pixabay→Naver→DDG→Wikimedia → AI 생성 → SVG</div></div>
+      <div class="card green"><div class="label">JSON-LD 스키마</div><div class="value" style="font-size:16px;color:var(--green)">6종</div><div class="sub">BlogPosting·FAQ·Breadcrumb·HowTo·Review·WebPage</div></div>
+      <div class="card yellow"><div class="label">AdSense</div><div class="value" style="font-size:16px;color:var(--yellow)">자동 광고</div><div class="sub">테마 스크립트 (auto 모드) · 80점 품질 게이트</div></div>
     </div>
-    <div class="section-header"><h2>AdSense 슬롯 배치 전략</h2></div>
+    <div class="section-header"><h2>글 작성 파이프라인</h2></div>
     <div class="table-wrap" style="margin-bottom:24px">
-      <table><thead><tr><th>슬롯</th><th>위치</th><th>CTR 기여</th></tr></thead>
+      <table><thead><tr><th>단계</th><th>내용</th><th>안전장치</th></tr></thead>
       <tbody>
-        <tr><td><span class="badge green">슬롯 1</span></td><td>도입부 첫 &lt;p&gt; 바로 다음 (Above the fold)</td><td style="color:var(--green);font-weight:700">최고 ★★★★★</td></tr>
-        <tr><td><span class="badge blue">슬롯 2</span></td><td>3번째 H2 섹션 앞 (본문 중간)</td><td style="color:var(--accent2);font-weight:700">높음 ★★★★</td></tr>
-        <tr><td><span class="badge blue">슬롯 3</span></td><td>5번째 H2 섹션 앞 (본문 후반)</td><td style="color:var(--accent2);font-weight:700">높음 ★★★★</td></tr>
-        <tr><td><span class="badge yellow">슬롯 4</span></td><td>본문 끝 (독자 이탈 전 마지막)</td><td style="color:var(--yellow);font-weight:700">보통 ★★★</td></tr>
+        <tr><td><span class="badge blue">① 키워드</span></td><td>네이버 뉴스·트렌드 수집, 블로그 주제 필터</td><td>30일 재사용 금지 · 크로스 블로그 유사도 차단</td></tr>
+        <tr><td><span class="badge blue">② 자료 조사</span></td><td>검증된 자료팩 수집 → 사실 근거로만 작성</td><td>출처 등급 검증 (hallucinated URL 제거)</td></tr>
+        <tr><td><span class="badge purple">③ 작성</span></td><td>간결·임팩트 제목(28자) · 최소 2,500자</td><td>잘림 이어쓰기 · 분량 재시도 3회</td></tr>
+        <tr><td><span class="badge purple">④ 팩트체크</span></td><td>수치·날짜·과장 주장 검증·자동 수정</td><td>지시문 삽입·중복 글리치 차단</td></tr>
+        <tr><td><span class="badge green">⑤ 이미지</span></td><td>제목+섹션 기반 1~3장, 관련성 AI 필터</td><td>글 내·글 간 중복 차단 (URL+시각 지문)</td></tr>
+        <tr><td><span class="badge yellow">⑥ 검증·게시</span></td><td>AdSense 8항목 80점 게이트 → Blogger 게시</td><td>미달 시 자동 보완 → 검토 대기</td></tr>
+        <tr><td><span class="badge green">⑦ 게시 후</span></td><td>사이트맵 색인 요청 · 소셜/쇼츠 · Drive 백업</td><td>색인 상태 일일 추적</td></tr>
       </tbody></table>
     </div>
     <div class="section-header" style="margin-top:8px"><h2>AdSense 카테고리 CPC 기준</h2></div>

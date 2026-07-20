@@ -418,6 +418,36 @@ def _save_used_keywords(used_data: dict, file_path: str = _USED_KW_FILE) -> None
         logger.error(f"키워드 이력 저장 실패: {e}")
 
 
+def _load_other_blogs_recent_keywords(current_blog_id: str, days: int = 2) -> list[str]:
+    """다른 블로그가 최근 N일 내 사용한 키워드 목록.
+
+    같은 트렌드 키워드로 3개 블로그가 같은 날 중복 글을 쓰는 것을 방지합니다
+    (유사도 필터 코퍼스에 합류 — 완전 일치가 아니어도 변형 키워드까지 차단).
+    """
+    import glob as _glob
+    cutoff = datetime.now() - timedelta(days=days)
+    result: list[str] = []
+    logs_dir = os.path.dirname(_USED_KW_FILE)
+    for path in _glob.glob(os.path.join(logs_dir, "used_keywords*.json")):
+        fname = os.path.basename(path)
+        # 현재 블로그의 파일은 제외 (자체 이력은 별도 처리됨)
+        if current_blog_id and fname == f"used_keywords_{current_blog_id}.json":
+            continue
+        if not current_blog_id and fname == "used_keywords.json":
+            continue
+        try:
+            data = json.load(open(path, encoding="utf-8"))
+        except Exception:
+            continue
+        for entry in data.get("entries", []):
+            try:
+                if datetime.fromisoformat(entry["usedAt"]) >= cutoff:
+                    result.append(entry["keyword"])
+            except (KeyError, ValueError):
+                continue
+    return result
+
+
 def _get_active_used_set(used_data: dict) -> set[str]:
     """
     아직 재사용 금지 기간(_REUSE_AFTER_DAYS)이 지나지 않은 키워드 집합을 반환합니다.
@@ -988,6 +1018,13 @@ def get_trending_keywords(
 
     # 포스팅 이력 코퍼스 (키워드 + 제목) — 현재 블로그의 이력만
     post_corpus = _load_recent_post_corpus(blog_id=blog_id)
+
+    # 다른 블로그가 최근 2일 내 사용한 키워드도 코퍼스에 합류
+    # (같은 트렌드로 3개 블로그가 같은 날 중복 글 작성 방지)
+    other_recent = _load_other_blogs_recent_keywords(blog_id, days=2)
+    if other_recent:
+        post_corpus += other_recent
+        logger.info(f"타 블로그 최근 키워드 {len(other_recent)}개 중복 방지 코퍼스 합류")
     logger.info(f"포스팅 이력 코퍼스: {len(post_corpus)}개 항목 로드 (blog_id={blog_id or '전체'} 중복 방지 기준)")
 
     candidates: list[str] = []

@@ -385,6 +385,11 @@ _USED_IMAGES_FILE = os.path.join(os.path.dirname(__file__), "logs", "used_images
 _USED_IMAGES_MAX = 1000  # 최근 N개만 유지
 
 
+def _norm_img_title(title: str) -> str:
+    """이미지 제목/태그 문자열 정규화 — 같은 사진의 다른 URL 감지용 지문."""
+    return re.sub(r"\s+", " ", (title or "").strip().lower())[:80]
+
+
 def _load_used_images() -> set[str]:
     try:
         with open(_USED_IMAGES_FILE, encoding="utf-8") as f:
@@ -393,22 +398,36 @@ def _load_used_images() -> set[str]:
         return set()
 
 
-def mark_images_used(urls: list[str]) -> None:
-    """삽입된 이미지 URL을 기록해 이후 글에서 같은 이미지를 피하게 합니다.
+def _load_used_titles() -> set[str]:
+    try:
+        with open(_USED_IMAGES_FILE, encoding="utf-8") as f:
+            return set(json.load(f).get("titles", []))
+    except (FileNotFoundError, json.JSONDecodeError, OSError):
+        return set()
+
+
+def mark_images_used(urls: list[str], titles: list[str] | None = None) -> None:
+    """삽입된 이미지 URL(+제목 지문)을 기록해 이후 글에서 같은 이미지를 피하게 합니다.
+    제목 지문은 같은 사진이 다른 URL로 재등장하는 것까지 차단합니다.
     (data URI 생성 썸네일은 글마다 고유하므로 기록 제외)"""
     real = [u for u in urls if u and not u.startswith("data:")]
-    if not real:
+    norm_titles = [t for t in (_norm_img_title(t) for t in (titles or [])) if t]
+    if not real and not norm_titles:
         return
     try:
         try:
             with open(_USED_IMAGES_FILE, encoding="utf-8") as f:
-                existing = json.load(f).get("urls", [])
+                data = json.load(f)
         except (FileNotFoundError, json.JSONDecodeError, OSError):
-            existing = []
+            data = {}
+        existing = data.get("urls", [])
+        existing_titles = data.get("titles", [])
         merged = existing + [u for u in real if u not in existing]
+        merged_titles = existing_titles + [t for t in norm_titles if t not in existing_titles]
         os.makedirs(os.path.dirname(_USED_IMAGES_FILE), exist_ok=True)
         with open(_USED_IMAGES_FILE, "w", encoding="utf-8") as f:
-            json.dump({"urls": merged[-_USED_IMAGES_MAX:]}, f, ensure_ascii=False, indent=1)
+            json.dump({"urls": merged[-_USED_IMAGES_MAX:],
+                       "titles": merged_titles[-_USED_IMAGES_MAX:]}, f, ensure_ascii=False, indent=1)
     except Exception as e:
         logger.warning(f"used_images.json 기록 실패: {e}")
 
@@ -446,14 +465,17 @@ def _fetch_best_image(
     # 관련성 채점은 항상 단순화된 핵심 명사 기준
     score_query = simple2 or simple3 or query
 
-    used_urls = _load_used_images()  # 이전 글들에서 이미 쓴 이미지 회피
+    used_urls = _load_used_images()      # 이전 글들에서 이미 쓴 이미지 URL 회피
+    used_titles = _load_used_titles()    # 같은 사진의 다른 URL(제목 지문)도 회피
     best_fallback = None  # 임계값 미달이라도 후보가 있으면 보관
     for attempt_q in attempts:
         candidates = _search_all_sources(
             attempt_q, naver_client_id, naver_client_secret, n_candidates,
             pixabay_api_key=pixabay_api_key,
         )
-        fresh = [c for c in candidates if c.get("url", "") not in used_urls]
+        fresh = [c for c in candidates
+                 if c.get("url", "") not in used_urls
+                 and _norm_img_title(c.get("title", "")) not in used_titles]
         if candidates and not fresh:
             logger.debug(f"후보 전부 기사용 이미지: '{attempt_q}' — 다음 쿼리 시도")
             continue
@@ -760,28 +782,38 @@ def fetch_images_for_queries(
     모든 검색이 실패하면 제목 기반 SVG 썸네일을 생성해 대체합니다 (title 제공 시)."""
     images = []
     seen_urls: set[str] = set()
+    seen_titles: set[str] = set()  # 같은 사진이 다른 URL로 반복 선택되는 것 방지 (태그 문자열 기준)
+
+    def _norm_title(im: dict) -> str:
+        return re.sub(r"\s+", " ", (im.get("title") or "").strip().lower())[:80]
+
+    def _is_dup(im: dict) -> bool:
+        t = _norm_title(im)
+        return im.get("url", "") in seen_urls or (bool(t) and t in seen_titles)
+
+    def _remember(im: dict) -> None:
+        seen_urls.add(im.get("url", ""))
+        t = _norm_title(im)
+        if t:
+            seen_titles.add(t)
+
     for query in queries:
         img = _fetch_best_image(query, naver_client_id, naver_client_secret, n_candidates=6,
                                 pixabay_api_key=pixabay_api_key)
         if img:
-            url = img.get("url", "")
-            if url in seen_urls:
-                logger.debug(f"중복 이미지 건너뜀: '{query}' → {url[:60]}")
+            if _is_dup(img):
+                logger.debug(f"중복 이미지 건너뜀: '{query}' → {img.get('url','')[:60]}")
                 # 같은 쿼리로 후보를 더 요청해 다른 이미지 탐색
                 candidates = _search_all_sources(
                     _simplify_query(query, 2) or query,
                     naver_client_id, naver_client_secret, 8,
                     pixabay_api_key=pixabay_api_key,
                 )
-                alt_img = next(
-                    (c for c in candidates if c.get("url", "") not in seen_urls),
-                    None,
-                )
+                alt_img = next((c for c in candidates if not _is_dup(c)), None)
                 if alt_img:
                     img = alt_img
                     img["search_query"] = query
                     img["alt_text"] = query if len(query) <= 50 else query[:50].rsplit(" ", 1)[0]
-                    url = img.get("url", "")
                     score = _score_title_relevance(img, query)
                     logger.info(f"대체 이미지 수집: '{query}' → 제목='{img.get('title','')[:40]}' (관련성={score:.2f})")
                 else:
@@ -792,7 +824,7 @@ def fetch_images_for_queries(
                 img["alt_text"] = query if len(query) <= 50 else query[:50].rsplit(" ", 1)[0]
                 score = _score_title_relevance(img, query)
                 logger.info(f"이미지 수집 성공: '{query}' → 제목='{img.get('title','')[:40]}' (관련성={score:.2f})")
-                seen_urls.add(img.get("url", ""))
+                _remember(img)
         else:
             logger.warning(f"이미지 없음: '{query}'")
         if img:
@@ -872,8 +904,9 @@ def inject_images_into_content(content: str, images: list[dict], keyword: str) -
     if not images:
         return content
 
-    # 글 간 중복 방지: 삽입되는 이미지 URL 기록
-    mark_images_used([img.get("url", "") for img in images])
+    # 글 간 중복 방지: 삽입되는 이미지 URL + 제목 지문 기록
+    mark_images_used([img.get("url", "") for img in images],
+                     [img.get("title", "") for img in images])
 
     img_iter = iter(enumerate(images))
 

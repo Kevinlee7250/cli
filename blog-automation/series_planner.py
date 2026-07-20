@@ -16,11 +16,11 @@ logger = logging.getLogger(__name__)
 SERIES_FILE = os.path.join(os.path.dirname(__file__), "logs", "series.json")
 _MAX_SERIES = 50
 
-# 블로그별 주제 맵
+# 블로그별 주제 맵 (blogs.json topics와 일치 유지)
 _BLOG_TOPIC_MAP = {
-    "blog1": {"label": "여행·드라마·연예·K-POP", "topics": ["여행", "드라마", "영화", "연예", "K-POP"]},
-    "blog2": {"label": "IT·AI·기술", "topics": ["IT", "AI", "기술", "스마트폰", "앱", "테크"]},
-    "blog3": {"label": "금융·경제·정부지원", "topics": ["금융", "경제", "정부지원", "세금", "복지", "시책"]},
+    "blog1": {"label": "국내·해외여행·드라마·영화·연예·K-POP", "topics": ["국내여행", "해외여행", "드라마", "영화", "연예", "K-POP"]},
+    "blog2": {"label": "여행·스포츠·연예·드라마·영화", "topics": ["여행", "스포츠", "연예", "드라마", "영화"]},
+    "blog3": {"label": "금융·주식·ETF·경제·부동산·투자", "topics": ["금융", "주식", "ETF", "경제", "부동산", "투자", "금리", "환율"]},
 }
 
 
@@ -360,7 +360,8 @@ def plan_series(keyword: str, count: int = 4, blog_config: dict | None = None) -
     count = max(2, min(count, 5))
     blog_id = _get_blog_id(blog_config)
     if blog_id == "blog2":
-        return plan_it_series(keyword, count, blog_config)
+        # blog2 = 여행·스포츠·연예·드라마 — blog1과 같은 경험 공유형 기획 사용
+        return _plan_blog1_series(keyword, count, blog_config)
     if blog_id == "blog3":
         return plan_finance_series(keyword, count, blog_config)
     if blog_id == "blog1":

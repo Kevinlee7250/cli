@@ -1,85 +1,3 @@
-2026-07-20 02:53:48,170 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-20 02:53:48,172 [INFO] content_generator — 포스트 생성 완료: '2026 프로야구 후반기 순위 경쟁, 어디를 봐야 재밌을까 정리해봤습니다' (3113자, 이미지 3개)
-2026-07-20 02:53:49,731 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-20 02:54:08,341 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '2026 프로야구 후반기 순위 경쟁, 어디를 봐야 재밌을까 정리'
-2026-07-20 02:54:08,341 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충족하나 개인 경험이 얕고 공식 발표·뉴스 재정리 위주로 구성됨
-2026-07-20 02:54:08,341 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어짐
-2026-07-20 02:54:08,341 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개와 1인칭 언급은 있으나 전문성·경험 근거가 다소 피상적임
-2026-07-20 02:54:08,341 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부가 확인되지 않아 부재 시 SEO·가독성 측면에서 주의 필요
-2026-07-20 02:54:08,341 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 표·나열식 구성과 격식체 문장이 반복돼 AI 생성 패턴 의심 소지 있음
-2026-07-20 02:54:08,344 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-20 02:54:08,346 [INFO] internal_linker —   [1/5] '총정리' -> https://www.hoguwhat.com/2026/07/2026-5_01070982349.html
-2026-07-20 02:54:08,349 [INFO] internal_linker —   [2/5] '2026년' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0159774743
-2026-07-20 02:54:08,349 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-20 02:54:08,349 [INFO] main —   제목: 2026 프로야구 후반기 순위 경쟁, 어디를 봐야 재밌을까 정리해봤습니다
-2026-07-20 02:54:08,349 [INFO] main —   이미지: 3개 삽입
-2026-07-20 02:54:08,349 [INFO] main —   글자 수: 3113자
-2026-07-20 02:54:09,121 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-20 02:54:27,812 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '2026 프로야구 후반기 순위 경쟁, 어디를 봐야 재밌을까 정리'
-2026-07-20 02:54:27,812 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충족하나 개인 경험이 도입부 한 문장에 그치고 이후는 공식 발표 재정리 위주라 독창성이 약함
-2026-07-20 02:54:27,812 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 개수는 충분하나 각 섹션 내 단락이 500자 이상으로 길게 이어져 가독성이 떨어짐
-2026-07-20 02:54:27,812 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 삽입 확인 안 됨 (부재 자체는 fail 아님)
-2026-07-20 02:54:27,812 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 이야기가 꾸준히 나옵니다', '~라는 게 공통적으로 지적하는 부분' 등 유사 헤징 문구 반복으로 AI 생성 패턴 의심
-2026-07-20 02:54:27,812 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-07-20 02:54:27,812 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 충족하나 개인 경험이 도입부 한 문장에 그치고 이후는 공식 발표 재정리 위주라 독창성이 약함
-2026-07-20 02:54:27,812 [WARNING] main —      🟡 [구조 및 가독성] H2 7개로 개수는 충분하나 각 섹션 내 단락이 500자 이상으로 길게 이어져 가독성이 떨어짐
-2026-07-20 02:54:27,812 [WARNING] main —      🟡 [이미지 정책] 본문에 이미지 삽입 확인 안 됨 (부재 자체는 fail 아님)
-2026-07-20 02:54:27,812 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-07-20 02:54:29,242 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-20 02:55:49,536 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-20 02:55:51,125 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-20 02:56:02,527 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3113자 → 4180자 (+1067자)
-2026-07-20 02:56:02,527 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-20 02:56:03,575 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-20 02:56:21,634 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '2026 프로야구 후반기 순위 경쟁, 어디를 봐야 재밌을까 정리'
-2026-07-20 02:56:21,634 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 헤딩 구조는 양호하나 500자 이상 긴 단락이 다수 존재해 가독성 저하
-2026-07-20 02:56:21,634 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급 없음 — 이미지 부재는 fail 아님, 정책상 warn
-2026-07-20 02:56:21,634 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-07-20 02:56:21,634 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-07-20 02:56:24,065 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-20 02:56:45,029 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026 프로야구 후반기 순위 경쟁, 어디를 봐야 재밌을까 정리해봤습니다' → '2026 프로야구 후반기 순위 경쟁 관전 포인트 정리'
-2026-07-20 02:56:45,029 [INFO] final_editor —   ✏️ 메타 설명 교정 (96자)
-2026-07-20 02:56:45,029 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 규격에 맞게 정리하고, 요약 박스·표·FAQ·이미지 위치를 명확히 지정했으며 긴 문단을 2~4문장 단위로 분리했습니다.
-2026-07-20 02:56:45,209 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-20 02:56:45,209 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-07-20 02:56:45,348 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-07-20 02:56:45,358 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-20 02:56:45,359 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-07-20 02:56:46,432 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/2026_01402624469.html
-2026-07-20 02:56:46,441 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/2026_01402624469.html
-2026-07-20 02:57:16,707 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-20 02:57:16,708 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-20 02:57:16,708 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-20 02:57:16,711 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '2026 프로야구 후반기 순위 경쟁 관전 포인트 정리'
-2026-07-20 02:57:17,570 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-20 02:57:22,087 [INFO] comment_manager —   생성된 댓글: 덧붙이자면 트레이드 마감일 전후로는 순위표만큼이나 각 팀 유불리한 잔여 경기 일정(맞대결 상대, 원정/홈 비율)도 같이 체크해보시면 후반기 흐름...
-2026-07-20 03:00:22,220 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-20 03:00:22,220 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-07-20 03:00:22,221 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (2개)
-2026-07-20 03:00:22,221 [INFO] main — 
-============================================================
-2026-07-20 03:00:22,221 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-20 03:00:22,221 [INFO] main — ============================================================
-2026-07-20 03:00:22,247 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-20 03:00:22,264 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-20 03:00:22,278 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-20 03:00:22,281 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-20 03:00:22,292 [INFO] post_manager —   포스트 레지스트리: 전체 283개 (게시 183 / 실패 15 / 대기 59)
-2026-07-20 03:00:22,293 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-20 03:00:22,293 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-20 03:00:22,293 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-20 03:00:22,864 [INFO] main — ============================================================
-2026-07-20 03:00:22,864 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-20 03:00:22
-2026-07-20 03:00:22,864 [INFO] main — ============================================================
-2026-07-20 03:00:22,873 [INFO] main — 수집된 키워드 1개: ['2026 하반기 기준금리 전망과 예금 대출 전략']
-2026-07-20 03:00:22,874 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
 2026-07-20 03:00:22,874 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 하반기 기준금리 전망과 예금 대출 전략']
 2026-07-20 03:00:22,885 [INFO] main — 
 [1/1] 키워드: '2026 하반기 기준금리 전망과 예금 대출 전략'
@@ -580,3 +498,82 @@
 2026-07-20 12:16:37,686 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-20 12:16:37,686 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-20 12:16:37,687 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-20 12:17:12,810 [INFO] main — ============================================================
+2026-07-20 12:17:12,810 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-20 12:17:12
+2026-07-20 12:17:12,810 [INFO] main — ============================================================
+2026-07-20 12:17:12,817 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-07-20 12:17:12,817 [INFO] keyword_collector — 포스팅 이력 코퍼스: 41개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-20 12:17:16,695 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-20 12:17:16,970 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-20 12:17:16,970 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-20 12:17:17,605 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-20 12:17:18,065 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-07-20 12:17:18,065 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-20 12:17:18,066 [INFO] keyword_collector — 유사 주제 제외 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
+2026-07-20 12:17:18,067 [INFO] keyword_collector —   [fallback] 2개: ['배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
+2026-07-20 12:17:18,067 [INFO] keyword_collector — 최종 선정 키워드 2개: ['배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
+2026-07-20 12:17:18,067 [INFO] main — 수집된 키워드 2개: ['배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
+2026-07-20 12:17:18,070 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
+2026-07-20 12:17:18,070 [INFO] main — 단독 포스트 대상 키워드 1개: ['배당주 처음 사기 전 내가 몰랐던 것']
+2026-07-20 12:17:18,081 [INFO] main — 
+[1/1] 키워드: '배당주 처음 사기 전 내가 몰랐던 것'
+2026-07-20 12:17:18,082 [INFO] content_generator — 포스트 생성 중: '배당주 처음 사기 전 내가 몰랐던 것'
+2026-07-20 12:17:18,246 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-20 12:17:18,247 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdDJ4GUhxs6JsiHXVxt7K'}
+2026-07-20 12:17:28,825 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '배당주 처음 사기 전 내가 몰랐던 것'
+2026-07-20 12:17:29,011 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-20 12:17:29,011 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdDJ54VAhrx47Kq7fTDQ3'}
+2026-07-20 12:17:29,012 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-20 12:17:29,446 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-20 12:17:29,888 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-20 12:17:42,059 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-20 12:17:42,079 [WARNING] content_generator — 컨텐츠 너무 짧음(954자, 최소 2500자) — 재시도 1/3
+2026-07-20 12:17:45,079 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-20 12:17:45,080 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-20 12:18:01,694 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-20 12:18:01,698 [WARNING] content_generator — 컨텐츠 너무 짧음(1183자, 최소 2500자) — 재시도 2/3
+2026-07-20 12:18:04,699 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-20 12:18:04,699 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-20 12:18:24,129 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-20 12:18:24,130 [WARNING] content_generator — 최소 분량 미달(1595자) — 재시도 소진, 해당 분량으로 진행
+2026-07-20 12:18:24,143 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-20 12:18:26,064 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-20 12:18:26,072 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '이는 투자자들에게 부담이 될 수 있습니다.'
+2026-07-20 12:18:26,072 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
+2026-07-20 12:18:30,668 [INFO] image_fetcher — 이미지 수집 성공: '배당주 처음 사기 전 내가 몰랐던 것: 주식 투자에 꼭 필요한 지식' → 제목='댓글 : 떠난 투자자도 돌아온다는 그 배당주! 가을엔 배당이지' (관련성=0.09)
+2026-07-20 12:18:32,206 [INFO] image_fetcher — 대체 이미지 수집: '배당주 사기 내가' → 제목='네이버 인플루언서 [네이버 인플루언서] 고배당주 TSLY ETF 배당금 ' (관련성=0.00)
+2026-07-20 12:18:32,206 [INFO] image_fetcher — 이미지 수집 성공: '배당주 사기 내가' → 제목='네이버 인플루언서 [네이버 인플루언서] 고배당주 TSLY ETF 배당금 ' (관련성=0.00)
+2026-07-20 12:18:34,963 [INFO] image_fetcher — 이미지 수집 성공: '배당주 사기 투자 기초 배당주는 주주들에' → 제목=''고수익 보장' 억대 리딩 투자방 사기‥경찰 수사' (관련성=0.14)
+2026-07-20 12:18:35,150 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-20 12:18:35,150 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-20 12:18:35,151 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-20 12:18:35,152 [INFO] content_generator — 포스트 생성 완료: '배당주 처음 사기 전 내가 몰랐던 것: 주식 투자에 꼭 필요한 지식' (1595자, 이미지 3개)
+2026-07-20 12:18:35,166 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-20 12:18:38,412 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-20 12:18:38,413 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '배당주 처음 사기 전 내가 몰랐던 것: 주식 투자에 꼭 필요한 '
+2026-07-20 12:18:38,413 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 1595자로 기준 미달이며, 독창성 있는 사례와 개인 경험이 명확하지 않음
+2026-07-20 12:18:38,413 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처는 있으나 1인칭 경험 서술 부족, 저자 신뢰성 신호 약함
+2026-07-20 12:18:38,413 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 없음
+2026-07-20 12:18:38,419 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-20 12:18:38,421 [INFO] internal_linker —   [1/5] '투자하는' -> https://www.hoguwhat.com/2026/07/2026-1.html
+2026-07-20 12:18:38,422 [INFO] internal_linker —   [2/5] 'ETF' -> https://hoguasset.blogspot.com/2026/07/1-etf.html
+2026-07-20 12:18:38,422 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-20 12:18:38,422 [INFO] main —   제목: 배당주 처음 사기 전 내가 몰랐던 것: 주식 투자에 꼭 필요한 지식
+2026-07-20 12:18:38,422 [INFO] main —   이미지: 3개 삽입
+2026-07-20 12:18:38,422 [INFO] main —   글자 수: 1595자
+2026-07-20 12:18:38,422 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '배당주 처음 사기 전 내가 몰랐던 것: 주식 투자에 꼭 필요한 지식' (1595자 < 2500자)
+2026-07-20 12:18:38,437 [INFO] dashboard_exporter —   검토 대기 저장: 배당주 처음 사기 전 내가 몰랐던 것: 주식 투자에 꼭 필요한 지식 (6200자 HTML)
+2026-07-20 12:18:38,445 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 87개)
+2026-07-20 12:18:38,445 [INFO] main — 
+============================================================
+2026-07-20 12:18:38,445 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-20 12:18:38,445 [INFO] main — ============================================================
+2026-07-20 12:18:38,464 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-20 12:18:38,477 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-20 12:18:38,488 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-20 12:18:38,488 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-20 12:18:38,490 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-20 12:18:38,499 [INFO] post_manager —   포스트 레지스트리: 전체 289개 (게시 186 / 실패 15 / 대기 62)
+2026-07-20 12:18:38,499 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-20 12:18:38,499 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-20 12:18:38,499 [INFO] main — 대시보드 데이터 업데이트 완료

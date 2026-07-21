@@ -2313,7 +2313,7 @@ async function loadAll(silent = false) {
   purgeLegacyOAuthStorage()  // 보안: 과거 저장된 장기 토큰 제거
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage] = await Promise.all([
+  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks] = await Promise.all([
     fetch(base + '/posts.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/runs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/analytics.json' + ts).then(r => r.json()).catch(() => ({})),
@@ -2331,8 +2331,9 @@ async function loadAll(silent = false) {
     fetch(base + '/lifecycle.json' + ts).then(r => r.json()).catch(() => null),
     fetch(base + '/title_changes.json' + ts).then(r => r.json()).catch(() => null),
     fetch(base + '/ai_usage.json' + ts).then(r => r.json()).catch(() => null),
+    fetch(base + '/dead_links.json' + ts).then(r => r.json()).catch(() => null),
   ])
-  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage }
+  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks }
 
   // 아카이브 포스트 백그라운드 병합 (posts.json은 최근 300개만 유지 — 초기 로딩 속도 확보)
   fetch(base + '/posts_archive.json' + ts).then(r => r.ok ? r.json() : []).then(archive => {
@@ -7721,6 +7722,20 @@ function apiKeyClear(id) {
 }
 
 // ── 자동 수리 워크플로우 실행 ─────────────────────────────────────────────────
+// 범용 워크플로 dispatch — 관리봇/버튼 액션에서 공용으로 사용
+function wfDispatchGeneric(file, inputs, label, minutes = 3) {
+  const pat = getPAT()
+  if (!pat) { showToast('GitHub PAT가 필요합니다 (실행 제어 탭에서 설정)', 'error'); navTo('run'); return }
+  fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${file}/dispatches`, {
+    method: 'POST',
+    headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ref: GH_BRANCH, inputs: inputs || {} }),
+  }).then(r => {
+    if (r.status === 204) showToast(`${label} 실행 시작됨 (약 ${minutes}분 소요)`, 'success')
+    else showToast(`실행 실패 (${r.status}) — PAT 권한 확인`, 'error')
+  }).catch(() => showToast('네트워크 오류', 'error'))
+}
+
 function wfRunAutoRepair(dryRun = false) {
   const pat = getPAT()
   if (!pat) { showToast('GitHub PAT가 필요합니다 (실행 제어 탭에서 설정)', 'error'); navTo('run'); return }
@@ -8506,10 +8521,12 @@ AI 추천 키워드: ${learnKws || '없음'}
 수리 진단 이슈: ${repairIssues}
 AI 토큰 사용량: ${aiUsageLine}
 API 한도 상태: ${apiLimitHint}
+죽은 링크(AdSense 탐색 정책) 최근 스캔: ${DATA.deadLinks ? `${DATA.deadLinks.posts_with_dead_links}건 글 / 링크 ${DATA.deadLinks.total_dead_links}개 (dry_run=${DATA.deadLinks.dry_run}, ${DATA.deadLinks.checked_at})` : '스캔 기록 없음'}
 
 사용자가 요청할 수 있는 액션 (버튼 클릭 즉시 수행):
 【페이지 이동】 포스트 목록·수동 검토·시리즈·실행 제어·수익 분석·시스템 관리
-【워크플로 실행】 포스트 생성(live)·자동 수리·진단만·Google Drive 백업·AdSense 감사·주간 학습 점검
+【워크플로 실행 — 안전(즉시 실행 가능)】 포스트 생성(live)·자동 수리·진단만·Google Drive 백업·AdSense 감사·주간 학습 점검·죽은 링크 스캔(미리보기)·중복 이미지 스캔(미리보기)·중복 목차 정리·시리즈 발행 예약 처리·구글 색인 점검·유튜브 쇼츠 스크립트 생성
+【워크플로 실행 — 실제 콘텐츠 수정(sensitive, 스캔 결과 먼저 보여준 뒤 재확인)】 죽은 링크 실제 수정·중복 이미지 실제 교체
 
 한국어로 간결하게 답변해 주세요. 액션 제안 시에는 응답 끝에 JSON 블록으로 표시하세요:
 \`\`\`actions
@@ -8518,7 +8535,9 @@ API 한도 상태: ${apiLimitHint}
 가능한 cmd 값:
 - 페이지이동:posts, 페이지이동:review, 페이지이동:series, 페이지이동:run, 페이지이동:analytics, 페이지이동:dashboard, 페이지이동:system
 - 실행:포스트생성, 실행:자동수리, 실행:진단만, 실행:백업, 실행:애드센스감사, 실행:주간학습
-워크플로 실행 cmd는 사용자가 실행을 요청·동의한 맥락에서만 제안하세요.`
+- 실행:죽은링크스캔, 실행:죽은링크수정, 실행:중복이미지스캔, 실행:중복이미지교체, 실행:중복목차정리, 실행:시리즈발행처리, 실행:색인요청, 실행:쇼츠생성
+워크플로 실행 cmd는 사용자가 실행을 요청·동의한 맥락에서만 제안하세요.
+실제 콘텐츠를 수정하는 cmd(죽은링크수정, 중복이미지교체)는 먼저 스캔(죽은링크스캔/중복이미지스캔) 결과를 확인시키고, 사용자가 명확히 동의한 경우에만 제안하세요.`
 }
 
 // GitHub Actions 봇 백엔드 (CORS 우회)
@@ -8565,6 +8584,17 @@ async function _callClaudeViaActions(userMessage, history) {
       month: (DATA.aiUsage.monthly || {})[new Date().toISOString().slice(0, 7)] || null,
       last_updated: DATA.aiUsage.last_updated,
     } : null,
+    dead_links: DATA.deadLinks ? {
+      posts_with_dead_links: DATA.deadLinks.posts_with_dead_links,
+      total_dead_links: DATA.deadLinks.total_dead_links,
+      dry_run: DATA.deadLinks.dry_run,
+      checked_at: DATA.deadLinks.checked_at,
+    } : null,
+    available_actions: [
+      '실행:포스트생성', '실행:자동수리', '실행:진단만', '실행:백업', '실행:애드센스감사', '실행:주간학습',
+      '실행:죽은링크스캔', '실행:죽은링크수정', '실행:중복이미지스캔', '실행:중복이미지교체',
+      '실행:중복목차정리', '실행:시리즈발행처리', '실행:색인요청', '실행:쇼츠생성',
+    ],
     history: (history || []).slice(-6).map(m => ({ role: m.role, content: m.content.slice(0, 400) })),
   })
 
@@ -8756,6 +8786,7 @@ function _botAppendWithChips(role, text, chips) {
           { label: '💰 수익 분석', cmd: '현재 수익 추정치와 분석을 알려줘' },
           { label: '🤖 토큰 사용량', cmd: 'AI 토큰 사용량과 예상 비용을 알려줘' },
           { label: '🔧 자동 수리 실행', cmd: '시스템 자동 수리를 실행해줘' },
+          { label: '🔗 죽은 링크 스캔', cmd: '죽은 링크 스캔을 실행해줘' },
         ]
         _botAppendWithChips('assistant', welcomeText, chips)
       }
@@ -8825,12 +8856,33 @@ async function sendBotMsg() {
 
 // 봇이 실행할 수 있는 워크플로 화이트리스트 — 여기 없는 cmd는 무시됨
 const BOT_RUN_ACTIONS = {
-  '실행:포스트생성':   { label: '포스트 생성 (live)',   fn: () => { navTo('system'); wfRunLive() } },
-  '실행:자동수리':     { label: '자동 수리',            fn: () => wfRunAutoRepair(false) },
-  '실행:진단만':       { label: '진단만 (수리 없음)',   fn: () => wfRunAutoRepair(true) },
-  '실행:백업':         { label: 'Google Drive 백업',    fn: () => backupRunNow(false) },
-  '실행:애드센스감사': { label: 'AdSense 감사+보완',    fn: () => adsenseAuditRun(false) },
-  '실행:주간학습':     { label: '주간 학습 점검',       fn: () => wfRunWeeklyCheck() },
+  '실행:포스트생성':     { label: '포스트 생성 (live)',    fn: () => { navTo('system'); wfRunLive() } },
+  '실행:자동수리':       { label: '자동 수리',             fn: () => wfRunAutoRepair(false) },
+  '실행:진단만':         { label: '진단만 (수리 없음)',    fn: () => wfRunAutoRepair(true) },
+  '실행:백업':           { label: 'Google Drive 백업',     fn: () => backupRunNow(false) },
+  '실행:애드센스감사':   { label: 'AdSense 감사+보완',     fn: () => adsenseAuditRun(false) },
+  '실행:주간학습':       { label: '주간 학습 점검',        fn: () => wfRunWeeklyCheck() },
+  '실행:죽은링크스캔':   { label: '죽은 링크 스캔 (미리보기)', minutes: 5,
+    fn: () => wfDispatchGeneric('fix-dead-links.yml', { dry_run: true }, '죽은 링크 스캔', 5) },
+  '실행:죽은링크수정':   { label: '죽은 링크 실제 수정', minutes: 5, sensitive: true,
+    preview: () => {
+      const d = DATA.deadLinks
+      if (!d || !d.posts_with_dead_links) return '최근 스캔 결과가 없습니다. 먼저 "죽은 링크 스캔"을 실행해 주세요.'
+      return `최근 스캔 기준 글 ${d.posts_with_dead_links}건 / 링크 ${d.total_dead_links}개를 실제로 수정(교체 또는 제거)합니다.`
+    },
+    fn: () => wfDispatchGeneric('fix-dead-links.yml', { dry_run: false }, '죽은 링크 수정', 5) },
+  '실행:중복이미지스캔': { label: '중복 이미지 스캔 (미리보기)',
+    fn: () => wfDispatchGeneric('fix-duplicate-images.yml', { dry_run: true }, '중복 이미지 스캔', 5) },
+  '실행:중복이미지교체': { label: '중복 이미지 실제 교체', sensitive: true,
+    fn: () => wfDispatchGeneric('fix-duplicate-images.yml', { dry_run: false }, '중복 이미지 교체', 8) },
+  '실행:중복목차정리':   { label: '중복 목차 정리',
+    fn: () => wfDispatchGeneric('fix-duplicate-toc.yml', { dry_run: false }, '중복 목차 정리', 5) },
+  '실행:시리즈발행처리': { label: '시리즈 발행 예약 처리',
+    fn: () => wfDispatchGeneric('series-schedule.yml', {}, '시리즈 발행 예약 처리', 10) },
+  '실행:색인요청':       { label: '구글 색인 점검',
+    fn: () => wfDispatchGeneric('gsc-indexing.yml', { inspect_count: '20' }, '구글 색인 점검', 3) },
+  '실행:쇼츠생성':       { label: '유튜브 쇼츠 스크립트 생성',
+    fn: () => wfDispatchGeneric('shorts-generate.yml', { latest_count: '1' }, '쇼츠 스크립트 생성', 3) },
 }
 
 function botAction(cmd) {
@@ -8846,6 +8898,11 @@ function botAction(cmd) {
     if (!getPAT()) {
       _botAppend('assistant', '⚠️ 워크플로 실행에는 GitHub PAT가 필요합니다. 시스템 관리 → API 키 관리에서 PAT를 설정해 주세요.')
       return
+    }
+    // 실 수정(sensitive) 액션은 대상 목록을 먼저 보여준 뒤 별도 확인
+    if (action.sensitive) {
+      const preview = action.preview ? action.preview() : ''
+      if (preview) _botAppend('assistant', `🔍 ${preview}`)
     }
     if (!confirm(`"${action.label}" 워크플로를 지금 실행할까요?`)) return
     try {

@@ -1116,7 +1116,10 @@ def get_trending_keywords(
         logger.debug(f"GSC 연동 생략: {e}")
 
     # 3순위: 고정 폴백 (미사용 키워드 우선 + GSC 고성과 카테고리 먼저)
-    _TRAVEL_SPORTS_TOPICS = {"여행", "스포츠", "travel", "sports"}
+    _TRAVEL_SPORTS_TOPICS = {
+        "여행", "국내여행", "해외여행", "스포츠", "스포츠이슈", "드라마", "영화",
+        "연예", "k-pop", "kpop", "travel", "sports",
+    }
     is_travel_sports = bool(topics and _TRAVEL_SPORTS_TOPICS.intersection(set(t.lower() for t in topics)))
     if is_blog1:
         fallback = _FALLBACK_KEYWORDS_BLOG1

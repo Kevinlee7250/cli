@@ -182,7 +182,7 @@ def _load_high_cpc_keywords() -> list[dict]:
         pool = []
         _CPC_BLOG_META = {
             "blog1": {"label": "블로그1 (여행·생활)", "cpc_range": "$1.8~3.2"},
-            "blog2": {"label": "블로그2 (IT·기술)", "cpc_range": "$1.5~3.2"},
+            "blog2": {"label": "블로그2 (여행·스포츠·연예)", "cpc_range": "$1.5~3.2"},
             "blog3": {"label": "블로그3 (금융·법률)", "cpc_range": "$2.5~3.5"},
         }
         for kw in _HIGH_CPC_KEYWORDS_BLOG1:

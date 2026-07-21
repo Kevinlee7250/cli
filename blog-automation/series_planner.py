@@ -19,7 +19,7 @@ _MAX_SERIES = 50
 # 블로그별 주제 맵 (blogs.json topics와 일치 유지)
 _BLOG_TOPIC_MAP = {
     "blog1": {"label": "국내·해외여행·드라마·영화·연예·K-POP", "topics": ["국내여행", "해외여행", "드라마", "영화", "연예", "K-POP"]},
-    "blog2": {"label": "여행·스포츠·연예·드라마·영화", "topics": ["여행", "스포츠", "연예", "드라마", "영화"]},
+    "blog2": {"label": "국내여행·해외여행·스포츠·스포츠이슈·드라마영화·연예K팝", "topics": ["국내 여행", "해외 여행", "스포츠", "스포츠 이슈", "드라마·영화", "연예·K-POP"]},
     "blog3": {"label": "금융·주식·ETF·경제·부동산·투자", "topics": ["금융", "주식", "ETF", "경제", "부동산", "투자", "금리", "환율"]},
 }
 
@@ -211,57 +211,6 @@ JSON만 응답 (마크다운 없이):
         return plan
     except Exception as exc:
         logger.error(f"[blog1] 시리즈 기획 오류: {exc}", exc_info=True)
-        return None
-
-
-# ─────────────────────────────────────────────
-# 기획 — blog2 (IT·AI·기술)
-# ─────────────────────────────────────────────
-
-def plan_it_series(keyword: str, count: int = 4, blog_config: dict | None = None) -> dict | None:
-    """blog2용 시리즈 기획 — IT·AI·기술 주제, 직접 테스트 경험 기반 스타일."""
-    count = max(2, min(count, 5))
-    now = datetime.now()
-    y = now.year
-    date_str = now.strftime("%Y년 %m월 %d일")
-    prompt = f"""오늘: {date_str}
-주제 키워드: {keyword}
-시리즈 편수: {count}편
-블로그 주제: IT, AI, 기술, 스마트폰, 앱, 테크
-
-이 IT/기술 주제로 {count}편짜리 블로그 시리즈를 기획하세요.
-글쓰기 방향: '직접 써본 IT 사용자의 솔직한 사용기·비교·팁 공유' 스타일.
-광고·홍보 느낌 절대 금지. 불편한 점·아쉬운 점도 솔직히 작성.
-
-시리즈 구조 원칙:
-- 편 1: "왜 이 기술/제품을 써보게 됐나" — 사용 계기·첫인상 (긍정+부정 균형 있게)
-- 편 2~{count - 1}: 실제 사용 경험 심화 — 기능별 상세 테스트, 타 제품 비교, 숨겨진 팁
-- 편 {count}: 한 달(또는 장기) 사용 후 솔직한 총평 + 추천 대상 명확히
-- 제목: 직접성·구체성 강조 (예: "직접 써봤더니", "실제 성능 테스트", "{y}년 최신 버전")
-- 제목: 간결 + 임팩트 — 28자 이내, 핵심 키워드 앞 배치, 군더더기 제거
-
-JSON만 응답 (마크다운 없이):
-{{
-  "series_title": "시리즈 전체 제목 (IT 사용기 기반, 예: {keyword} 직접 써본 사용기 시리즈)",
-  "series_label": "Blogger 라벨 태그 (공백 없음, 하이픈 사용, IT 관련)",
-  "series_description": "어떤 IT 경험/테스트를 기반으로 쓰는 시리즈인지 (100자 이내)",
-  "series_type": "it_review",
-  "episodes": [
-    {{
-      "episode": 1,
-      "title": "[1편] ... (28자 이내 간결·임팩트, 직접 사용/테스트 강조)",
-      "focus": "이 편의 핵심 IT 경험/테스트 내용 (30자 이내)",
-      "search_keyword": "이 편의 대표 IT 검색 키워드 (구체적인 기능·제품명 포함)"
-    }}
-  ]
-}}"""
-    try:
-        plan = _call_claude_plan(prompt, f"현재 날짜: {date_str}. JSON만 응답하세요.")
-        plan = _finalize_plan(plan, keyword, blog_config)
-        logger.info(f"[blog2 IT] 시리즈 기획 완료: '{plan.get('series_title')}' {plan['total_episodes']}편")
-        return plan
-    except Exception as exc:
-        logger.error(f"[blog2 IT] 시리즈 기획 오류: {exc}", exc_info=True)
         return None
 
 

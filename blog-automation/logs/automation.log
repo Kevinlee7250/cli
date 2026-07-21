@@ -1,83 +1,3 @@
-2026-07-20 23:08:07,758 [INFO] main — 단독 포스트 대상 키워드 1개: ['퇴직연금 DC형 직접 운용하면서 배운 것']
-2026-07-20 23:08:07,774 [INFO] main — 
-[1/1] 키워드: '퇴직연금 DC형 직접 운용하면서 배운 것'
-2026-07-20 23:08:07,774 [INFO] content_generator — 포스트 생성 중: '퇴직연금 DC형 직접 운용하면서 배운 것'
-2026-07-20 23:08:07,996 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 23:08:07,997 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdE9gnjqCmzikhr6KgTn5'}
-2026-07-20 23:08:17,654 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '퇴직연금 DC형 직접 운용하면서 배운 것'
-2026-07-20 23:08:17,774 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 23:08:17,775 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdE9hWptyp7yT2YUk6sZq'}
-2026-07-20 23:08:17,776 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-20 23:08:17,888 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 23:08:18,355 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 23:08:32,410 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 23:08:32,421 [WARNING] content_generator — 컨텐츠 너무 짧음(1164자, 최소 2500자) — 재시도 1/3
-2026-07-20 23:08:35,422 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-20 23:08:35,422 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 23:08:48,965 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 23:08:48,967 [WARNING] content_generator — 컨텐츠 너무 짧음(1083자, 최소 2500자) — 재시도 2/3
-2026-07-20 23:08:51,967 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-20 23:08:51,967 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 23:09:08,517 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 23:09:08,519 [WARNING] content_generator — 최소 분량 미달(1496자) — 재시도 소진, 해당 분량으로 진행
-2026-07-20 23:09:08,536 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 23:09:11,161 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 23:09:11,165 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-07-20 23:09:11,767 [INFO] image_fetcher — 이미지 수집 성공: '퇴직연금 DC형 직접 운용하면서 배운 것들' → 제목='thomas jefferson memorial / monument / t' (관련성=0.00)
-2026-07-20 23:09:12,383 [INFO] image_fetcher — 대체 이미지 수집: '퇴직연금 DC 운용하면서' → 제목='united states / washington / dc / congre' (관련성=0.00)
-2026-07-20 23:09:12,383 [INFO] image_fetcher — 이미지 수집 성공: '퇴직연금 DC 운용하면서' → 제목='united states / washington / dc / congre' (관련성=0.00)
-2026-07-20 23:09:12,903 [INFO] image_fetcher — 대체 이미지 수집: '퇴직연금 DC 투자' → 제목='the washington monument / washington mon' (관련성=0.00)
-2026-07-20 23:09:12,904 [INFO] image_fetcher — 이미지 수집 성공: '퇴직연금 DC 투자' → 제목='the washington monument / washington mon' (관련성=0.00)
-2026-07-20 23:09:13,042 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 23:09:13,043 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-20 23:09:13,044 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-20 23:09:13,045 [INFO] content_generator — 포스트 생성 완료: '퇴직연금 DC형 직접 운용하면서 배운 것들' (1496자, 이미지 3개)
-2026-07-20 23:09:13,065 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 23:09:15,392 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 23:09:15,394 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '퇴직연금 DC형 직접 운용하면서 배운 것들'
-2026-07-20 23:09:15,394 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 1496자로 2000자 미만이며, 독창성이나 실질적 가치여부 확인 필요.
-2026-07-20 23:09:15,394 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기반 내용 부재 가능성과 저자 신뢰성 신호 부족.
-2026-07-20 23:09:15,394 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 없음.
-2026-07-20 23:09:15,403 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-20 23:09:15,404 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguasset.blogspot.com/2026/07/2026-3_01593905138.ht
-2026-07-20 23:09:15,407 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-20 23:09:15,408 [INFO] main —   제목: 퇴직연금 DC형 직접 운용하면서 배운 것들
-2026-07-20 23:09:15,408 [INFO] main —   이미지: 3개 삽입
-2026-07-20 23:09:15,408 [INFO] main —   글자 수: 1496자
-2026-07-20 23:09:15,408 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '퇴직연금 DC형 직접 운용하면서 배운 것들' (1496자 < 2500자)
-2026-07-20 23:09:15,430 [INFO] dashboard_exporter —   검토 대기 저장: 퇴직연금 DC형 직접 운용하면서 배운 것들 (6525자 HTML)
-2026-07-20 23:09:15,442 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 90개)
-2026-07-20 23:09:15,442 [INFO] main — 
-============================================================
-2026-07-20 23:09:15,442 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-20 23:09:15,443 [INFO] main — ============================================================
-2026-07-20 23:09:15,470 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-20 23:09:15,489 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-20 23:09:15,504 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-20 23:09:15,505 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-20 23:09:15,507 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-20 23:09:15,522 [INFO] post_manager —   포스트 레지스트리: 전체 292개 (게시 186 / 실패 15 / 대기 65)
-2026-07-20 23:09:15,522 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-20 23:09:15,522 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-20 23:09:15,522 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-20 23:09:53,645 [INFO] main — ============================================================
-2026-07-20 23:09:53,645 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-20 23:09:53
-2026-07-20 23:09:53,645 [INFO] main — ============================================================
-2026-07-20 23:09:53,655 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-20 23:09:53,655 [INFO] keyword_collector — 포스팅 이력 코퍼스: 43개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-20 23:09:57,243 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-20 23:09:57,540 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 23:09:57,540 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-20 23:09:58,261 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 23:09:58,669 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-20 23:09:58,669 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-20 23:09:58,671 [INFO] keyword_collector — 유사 주제 제외 3개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과', '배당주 처음 사기 전 내가 몰랐던 것']
-2026-07-20 23:09:58,671 [INFO] keyword_collector —   [fallback] 2개: ['퇴직연금 DC형 직접 운용하면서 배운 것', '달러 환전 타이밍 내가 틀린 적 있는 이유']
-2026-07-20 23:09:58,671 [INFO] keyword_collector — 최종 선정 키워드 2개: ['퇴직연금 DC형 직접 운용하면서 배운 것', '달러 환전 타이밍 내가 틀린 적 있는 이유']
-2026-07-20 23:09:58,671 [INFO] main — 수집된 키워드 2개: ['퇴직연금 DC형 직접 운용하면서 배운 것', '달러 환전 타이밍 내가 틀린 적 있는 이유']
-2026-07-20 23:09:58,676 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-07-20 23:09:58,676 [INFO] main — 단독 포스트 대상 키워드 1개: ['퇴직연금 DC형 직접 운용하면서 배운 것']
-2026-07-20 23:09:58,691 [INFO] main — 
 [1/1] 키워드: '퇴직연금 DC형 직접 운용하면서 배운 것'
 2026-07-20 23:09:58,691 [INFO] content_generator — 포스트 생성 중: '퇴직연금 DC형 직접 운용하면서 배운 것'
 2026-07-20 23:09:58,862 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
@@ -578,3 +498,81 @@
 2026-07-21 11:48:47,375 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-21 11:48:47,375 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-21 11:48:47,375 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-21 11:49:24,468 [INFO] main — ============================================================
+2026-07-21 11:49:24,468 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-21 11:49:24
+2026-07-21 11:49:24,468 [INFO] main — ============================================================
+2026-07-21 11:49:24,478 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-07-21 11:49:24,478 [INFO] keyword_collector — 포스팅 이력 코퍼스: 46개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-21 11:49:27,886 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-21 11:49:28,231 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 11:49:28,232 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-21 11:49:28,848 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 11:49:29,202 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-07-21 11:49:29,203 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-21 11:49:29,205 [INFO] keyword_collector — 유사 주제 제외 5개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과', '배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것', '달러 환전 타이밍 내가 틀린 적 있는 이유']
+2026-07-21 11:49:29,205 [INFO] keyword_collector —   [fallback] 2개: ['코인 투자 1년 후 솔직한 이야기', '종합소득세 처음 신고할 때 가장 헷갈렸던 것']
+2026-07-21 11:49:29,205 [INFO] keyword_collector — 최종 선정 키워드 2개: ['코인 투자 1년 후 솔직한 이야기', '종합소득세 처음 신고할 때 가장 헷갈렸던 것']
+2026-07-21 11:49:29,205 [INFO] main — 수집된 키워드 2개: ['코인 투자 1년 후 솔직한 이야기', '종합소득세 처음 신고할 때 가장 헷갈렸던 것']
+2026-07-21 11:49:29,211 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-07-21 11:49:29,211 [INFO] main — 단독 포스트 대상 키워드 1개: ['코인 투자 1년 후 솔직한 이야기']
+2026-07-21 11:49:29,225 [INFO] main — 
+[1/1] 키워드: '코인 투자 1년 후 솔직한 이야기'
+2026-07-21 11:49:29,225 [INFO] content_generator — 포스트 생성 중: '코인 투자 1년 후 솔직한 이야기'
+2026-07-21 11:49:29,366 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 11:49:29,366 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdF9kARer1GHxwRaj9DS4'}
+2026-07-21 11:49:35,118 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '코인 투자 1년 후 솔직한 이야기'
+2026-07-21 11:49:35,268 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 11:49:35,268 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdF9kbbE7qyVFMQa8pjmP'}
+2026-07-21 11:49:35,269 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-21 11:49:35,462 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 11:49:35,989 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 11:49:55,770 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 11:49:55,784 [WARNING] content_generator — 컨텐츠 너무 짧음(842자, 최소 2500자) — 재시도 1/3
+2026-07-21 11:49:58,785 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-21 11:49:58,785 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 11:50:15,082 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 11:50:15,085 [WARNING] content_generator — 컨텐츠 너무 짧음(1237자, 최소 2500자) — 재시도 2/3
+2026-07-21 11:50:18,085 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-21 11:50:18,086 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 11:50:31,251 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 11:50:31,261 [WARNING] content_generator — 최소 분량 미달(847자) — 재시도 소진, 해당 분량으로 진행
+2026-07-21 11:50:31,279 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 11:50:32,725 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 11:50:32,733 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-07-21 11:50:32,936 [INFO] image_fetcher — 이미지 수집 성공: '코인 투자 1년 후: 솔직한 이야기와 교훈' → 제목='hourglass / money / time / investment / ' (관련성=0.17)
+2026-07-21 11:50:33,412 [INFO] image_fetcher — 대체 이미지 수집: '코인 투자 솔직한' → 제목='money / profit / finance / business / re' (관련성=0.25)
+2026-07-21 11:50:33,412 [INFO] image_fetcher — 이미지 수집 성공: '코인 투자 솔직한' → 제목='money / profit / finance / business / re' (관련성=0.25)
+2026-07-21 11:50:34,072 [INFO] image_fetcher — 대체 이미지 수집: '코인 투자 변동성과 자료를 조사해보' → 제목='money / coin / investment / business / f' (관련성=0.17)
+2026-07-21 11:50:34,072 [INFO] image_fetcher — 이미지 수집 성공: '코인 투자 변동성과 자료를 조사해보' → 제목='money / coin / investment / business / f' (관련성=0.17)
+2026-07-21 11:50:34,222 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 11:50:34,223 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-21 11:50:34,224 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-21 11:50:34,226 [INFO] content_generator — 포스트 생성 완료: '코인 투자 1년 후: 솔직한 이야기와 교훈' (847자, 이미지 3개)
+2026-07-21 11:50:34,246 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 11:50:38,146 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 11:50:38,147 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 77/100 — '코인 투자 1년 후: 솔직한 이야기와 교훈'
+2026-07-21 11:50:38,147 [INFO] adsense_validator —   ❌ 원본성 및 품질: 글자 수가 847자로 2000자 미만이며, 독창적 관점이나 경험이 명확히 드러나지 않음
+2026-07-21 11:50:38,147 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처는 있지만 직접 경험 서술 부족
+2026-07-21 11:50:38,147 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재, 이미지 정책 관련 사항 없음
+2026-07-21 11:50:38,147 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 글자 수가 847자로 2000자 미만이며, 독창적 관점이나 경험이 명확히 드러나지 않음
+2026-07-21 11:50:38,157 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-21 11:50:38,161 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-21 11:50:38,161 [INFO] main —   제목: 코인 투자 1년 후: 솔직한 이야기와 교훈
+2026-07-21 11:50:38,161 [INFO] main —   이미지: 3개 삽입
+2026-07-21 11:50:38,161 [INFO] main —   글자 수: 847자
+2026-07-21 11:50:38,162 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '코인 투자 1년 후: 솔직한 이야기와 교훈' (847자 < 2500자)
+2026-07-21 11:50:38,188 [INFO] dashboard_exporter —   검토 대기 저장: 코인 투자 1년 후: 솔직한 이야기와 교훈 (4727자 HTML)
+2026-07-21 11:50:38,210 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 97개)
+2026-07-21 11:50:38,210 [INFO] main — 
+============================================================
+2026-07-21 11:50:38,210 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-21 11:50:38,211 [INFO] main — ============================================================
+2026-07-21 11:50:38,240 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-21 11:50:38,258 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-21 11:50:38,273 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-21 11:50:38,274 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-21 11:50:38,276 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-21 11:50:38,291 [INFO] post_manager —   포스트 레지스트리: 전체 299개 (게시 186 / 실패 15 / 대기 72)
+2026-07-21 11:50:38,291 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-21 11:50:38,291 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-21 11:50:38,291 [INFO] main — 대시보드 데이터 업데이트 완료

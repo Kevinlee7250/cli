@@ -137,9 +137,21 @@ jobs:
             git commit -m "🔧 자동 수리 완료 (#${{ github.run_number }})"
             _push_ok=0
             for i in 1 2 3; do
-              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
-                && git push origin claude/blog-automation-system-KAbtE \
-                && { _push_ok=1; break; }
+              git rebase --abort 2>/dev/null || true
+              if git pull --rebase --autostash origin claude/blog-automation-system-KAbtE; then
+                git push origin claude/blog-automation-system-KAbtE && { _push_ok=1; break; }
+              else
+                if git ls-files -u | grep -q .; then
+                  for cf in docs/data/post_registry.json blog-automation/logs/post_registry.json; do
+                    git checkout --theirs -- "$cf" 2>/dev/null || true
+                    git add -f "$cf" 2>/dev/null || true
+                  done
+                  git rebase --continue --no-edit \
+                    && git push origin claude/blog-automation-system-KAbtE \
+                    && { _push_ok=1; break; }
+                fi
+                git rebase --abort 2>/dev/null || true
+              fi
               echo "pull+push 재시도 $i/3..."
               sleep $((i * 3))
             done

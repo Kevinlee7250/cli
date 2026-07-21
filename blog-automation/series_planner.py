@@ -667,15 +667,21 @@ def build_series_nav(series_plan: dict, current_episode: int, blog_url: str = ""
                 f'◀ 이전 편<br>'
                 f'<strong style="font-size:12px;">{prev_ep.get("title", "")[:30]}</strong></a>'
             )
-        if next_ep:
-            next_url = next_ep.get("blogger_url") or "#"
-            fade = "opacity:0.55;" if not next_ep.get("blogger_url") else ""
+        if next_ep and next_ep.get("blogger_url"):
             nav_buttons += (
-                f'<a href="{next_url}" '
+                f'<a href="{next_ep["blogger_url"]}" '
                 f'style="flex:1;min-width:200px;padding:11px 14px;background:#e8f0fe;'
-                f'border-radius:8px;text-decoration:none;color:#1a73e8;font-size:13px;{fade}">'
+                f'border-radius:8px;text-decoration:none;color:#1a73e8;font-size:13px;">'
                 f'다음 편 ▶<br>'
                 f'<strong style="font-size:12px;">{next_ep.get("title", "")[:30]}</strong></a>'
+            )
+        elif next_ep:
+            nav_buttons += (
+                f'<div style="flex:1;min-width:200px;padding:11px 14px;background:#e8f0fe;'
+                f'border-radius:8px;color:#1a73e8;font-size:13px;opacity:0.55;">'
+                f'다음 편 ▶<br>'
+                f'<strong style="font-size:12px;">{next_ep.get("title", "")[:30]}</strong> '
+                f'<span style="font-size:11px;">(업데이트 예정)</span></div>'
             )
         nav_buttons += "</div>"
 

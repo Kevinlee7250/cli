@@ -567,9 +567,8 @@ H2: 마무리 (300자 이상)
 - 과도한 수익, 치료, 성공 보장 표현 금지
 
 같은 블로그 내 관련 글 연결 (마무리 안 또는 바로 아래에 자연스럽게):
-같은 블로그 안에서 연결하면 좋은 관련 글 주제 3개를 자연스럽게 언급하세요.
+같은 블로그 안에서 연결하면 좋은 관련 글 주제 3개를 텍스트로만 자연스럽게 언급하세요 (링크 태그 사용 금지, href="#" 같은 미연결 링크 절대 금지).
 예: "ETF 투자 입문 글을 따로 정리해뒀으니 참고하시면 좋을 것 같습니다."
-형식: <a href="#">관련 글 제목</a> (href는 # 그대로)
 
 글 하단 안내 문구 (content 맨 마지막에 포함):
 <p style="background:#f8fafc;border-left:4px solid #94a3b8;padding:12px 18px;margin:2em 0 0;border-radius:0 8px 8px 0;color:#64748b;font-size:0.9em;line-height:1.7;">{disclaimer}</p>
@@ -1422,6 +1421,16 @@ def _faq_to_cards(content: str) -> str:
     return pre + h2 + '\n' + faq_rebuilt + '\n' + post_body
 
 
+_DEAD_LINK_RE = re.compile(r'<a\b[^>]*href="#"[^>]*>(.*?)</a>', re.IGNORECASE | re.DOTALL)
+
+
+def _strip_dead_links(html: str) -> str:
+    """AdSense '탐색' 정책 위반 방지 — href="#" 링크는 텍스트만 남기고 태그 제거."""
+    if not html or 'href="#"' not in html:
+        return html
+    return _DEAD_LINK_RE.sub(lambda m: re.sub(r"<[^>]+>", "", m.group(1)).strip(), html)
+
+
 def _apply_design(html: str, keyword: str = "", article_type: str = "analysis") -> str:
     """
     Claude 생성 HTML에 Blogger 호환 인라인 스타일 비주얼 디자인 적용.
@@ -2226,6 +2235,9 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                 post_data["content"], keyword, blog_config
             )
 
+            # AdSense '탐색' 정책 위반 방지 — 어디로도 연결되지 않는 href="#" 링크 제거
+            post_data["content"] = _strip_dead_links(post_data["content"])
+
             logger.info(
                 f"시리즈 포스트 생성 완료: '{post_data.get('title', '?')}' "
                 f"({post_data['word_count']}자, 이미지 {post_data['images_inserted']}개)"
@@ -2609,6 +2621,9 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             post_data["content"] = inject_affiliate_section(
                 post_data["content"], keyword, blog_config
             )
+
+            # AdSense '탐색' 정책 위반 방지 — 어디로도 연결되지 않는 href="#" 링크 제거
+            post_data["content"] = _strip_dead_links(post_data["content"])
 
             logger.info(
                 f"포스트 생성 완료: '{post_data.get('title', '?')}' "

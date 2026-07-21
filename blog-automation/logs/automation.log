@@ -1,81 +1,3 @@
-2026-07-20 12:17:12,817 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-20 12:17:12,817 [INFO] keyword_collector — 포스팅 이력 코퍼스: 41개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-20 12:17:16,695 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-20 12:17:16,970 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 12:17:16,970 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-20 12:17:17,605 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 12:17:18,065 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-20 12:17:18,065 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-20 12:17:18,066 [INFO] keyword_collector — 유사 주제 제외 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
-2026-07-20 12:17:18,067 [INFO] keyword_collector —   [fallback] 2개: ['배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
-2026-07-20 12:17:18,067 [INFO] keyword_collector — 최종 선정 키워드 2개: ['배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
-2026-07-20 12:17:18,067 [INFO] main — 수집된 키워드 2개: ['배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
-2026-07-20 12:17:18,070 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-07-20 12:17:18,070 [INFO] main — 단독 포스트 대상 키워드 1개: ['배당주 처음 사기 전 내가 몰랐던 것']
-2026-07-20 12:17:18,081 [INFO] main — 
-[1/1] 키워드: '배당주 처음 사기 전 내가 몰랐던 것'
-2026-07-20 12:17:18,082 [INFO] content_generator — 포스트 생성 중: '배당주 처음 사기 전 내가 몰랐던 것'
-2026-07-20 12:17:18,246 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 12:17:18,247 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdDJ4GUhxs6JsiHXVxt7K'}
-2026-07-20 12:17:28,825 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '배당주 처음 사기 전 내가 몰랐던 것'
-2026-07-20 12:17:29,011 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 12:17:29,011 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdDJ54VAhrx47Kq7fTDQ3'}
-2026-07-20 12:17:29,012 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-20 12:17:29,446 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 12:17:29,888 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 12:17:42,059 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 12:17:42,079 [WARNING] content_generator — 컨텐츠 너무 짧음(954자, 최소 2500자) — 재시도 1/3
-2026-07-20 12:17:45,079 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-20 12:17:45,080 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 12:18:01,694 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 12:18:01,698 [WARNING] content_generator — 컨텐츠 너무 짧음(1183자, 최소 2500자) — 재시도 2/3
-2026-07-20 12:18:04,699 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-20 12:18:04,699 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 12:18:24,129 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 12:18:24,130 [WARNING] content_generator — 최소 분량 미달(1595자) — 재시도 소진, 해당 분량으로 진행
-2026-07-20 12:18:24,143 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 12:18:26,064 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 12:18:26,072 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '이는 투자자들에게 부담이 될 수 있습니다.'
-2026-07-20 12:18:26,072 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
-2026-07-20 12:18:30,668 [INFO] image_fetcher — 이미지 수집 성공: '배당주 처음 사기 전 내가 몰랐던 것: 주식 투자에 꼭 필요한 지식' → 제목='댓글 : 떠난 투자자도 돌아온다는 그 배당주! 가을엔 배당이지' (관련성=0.09)
-2026-07-20 12:18:32,206 [INFO] image_fetcher — 대체 이미지 수집: '배당주 사기 내가' → 제목='네이버 인플루언서 [네이버 인플루언서] 고배당주 TSLY ETF 배당금 ' (관련성=0.00)
-2026-07-20 12:18:32,206 [INFO] image_fetcher — 이미지 수집 성공: '배당주 사기 내가' → 제목='네이버 인플루언서 [네이버 인플루언서] 고배당주 TSLY ETF 배당금 ' (관련성=0.00)
-2026-07-20 12:18:34,963 [INFO] image_fetcher — 이미지 수집 성공: '배당주 사기 투자 기초 배당주는 주주들에' → 제목=''고수익 보장' 억대 리딩 투자방 사기‥경찰 수사' (관련성=0.14)
-2026-07-20 12:18:35,150 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 12:18:35,150 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-20 12:18:35,151 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-20 12:18:35,152 [INFO] content_generator — 포스트 생성 완료: '배당주 처음 사기 전 내가 몰랐던 것: 주식 투자에 꼭 필요한 지식' (1595자, 이미지 3개)
-2026-07-20 12:18:35,166 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 12:18:38,412 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 12:18:38,413 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '배당주 처음 사기 전 내가 몰랐던 것: 주식 투자에 꼭 필요한 '
-2026-07-20 12:18:38,413 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 1595자로 기준 미달이며, 독창성 있는 사례와 개인 경험이 명확하지 않음
-2026-07-20 12:18:38,413 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처는 있으나 1인칭 경험 서술 부족, 저자 신뢰성 신호 약함
-2026-07-20 12:18:38,413 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 없음
-2026-07-20 12:18:38,419 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-20 12:18:38,421 [INFO] internal_linker —   [1/5] '투자하는' -> https://www.hoguwhat.com/2026/07/2026-1.html
-2026-07-20 12:18:38,422 [INFO] internal_linker —   [2/5] 'ETF' -> https://hoguasset.blogspot.com/2026/07/1-etf.html
-2026-07-20 12:18:38,422 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-20 12:18:38,422 [INFO] main —   제목: 배당주 처음 사기 전 내가 몰랐던 것: 주식 투자에 꼭 필요한 지식
-2026-07-20 12:18:38,422 [INFO] main —   이미지: 3개 삽입
-2026-07-20 12:18:38,422 [INFO] main —   글자 수: 1595자
-2026-07-20 12:18:38,422 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '배당주 처음 사기 전 내가 몰랐던 것: 주식 투자에 꼭 필요한 지식' (1595자 < 2500자)
-2026-07-20 12:18:38,437 [INFO] dashboard_exporter —   검토 대기 저장: 배당주 처음 사기 전 내가 몰랐던 것: 주식 투자에 꼭 필요한 지식 (6200자 HTML)
-2026-07-20 12:18:38,445 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 87개)
-2026-07-20 12:18:38,445 [INFO] main — 
-============================================================
-2026-07-20 12:18:38,445 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-20 12:18:38,445 [INFO] main — ============================================================
-2026-07-20 12:18:38,464 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-20 12:18:38,477 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-20 12:18:38,488 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-20 12:18:38,488 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-20 12:18:38,490 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-20 12:18:38,499 [INFO] post_manager —   포스트 레지스트리: 전체 289개 (게시 186 / 실패 15 / 대기 62)
-2026-07-20 12:18:38,499 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-20 12:18:38,499 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-20 12:18:38,499 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-20 12:19:10,483 [INFO] main — ============================================================
-2026-07-20 12:19:10,483 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-20 12:19:10
 2026-07-20 12:19:10,483 [INFO] main — ============================================================
 2026-07-20 12:19:10,494 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
 2026-07-20 12:19:10,494 [INFO] keyword_collector — 포스팅 이력 코퍼스: 47개 항목 로드 (blog_id=blog3 중복 방지 기준)
@@ -576,3 +498,99 @@
 2026-07-21 05:51:53,816 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-21 05:51:53,816 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-21 05:51:53,817 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-21 05:52:27,014 [INFO] main — ============================================================
+2026-07-21 05:52:27,014 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-21 05:52:27
+2026-07-21 05:52:27,014 [INFO] main — ============================================================
+2026-07-21 05:52:27,024 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-07-21 05:52:27,024 [INFO] keyword_collector — 포스팅 이력 코퍼스: 46개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-21 05:52:31,625 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-21 05:52:31,794 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 05:52:31,794 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-21 05:52:32,298 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 05:52:32,576 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-07-21 05:52:32,577 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-21 05:52:32,578 [INFO] keyword_collector — 유사 주제 제외 4개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과', '배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
+2026-07-21 05:52:32,579 [INFO] keyword_collector —   [fallback] 2개: ['달러 환전 타이밍 내가 틀린 적 있는 이유', '코인 투자 1년 후 솔직한 이야기']
+2026-07-21 05:52:32,579 [INFO] keyword_collector — 최종 선정 키워드 2개: ['달러 환전 타이밍 내가 틀린 적 있는 이유', '코인 투자 1년 후 솔직한 이야기']
+2026-07-21 05:52:32,579 [INFO] main — 수집된 키워드 2개: ['달러 환전 타이밍 내가 틀린 적 있는 이유', '코인 투자 1년 후 솔직한 이야기']
+2026-07-21 05:52:32,585 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
+2026-07-21 05:52:32,585 [INFO] main — 단독 포스트 대상 키워드 1개: ['달러 환전 타이밍 내가 틀린 적 있는 이유']
+2026-07-21 05:52:32,600 [INFO] main — 
+[1/1] 키워드: '달러 환전 타이밍 내가 틀린 적 있는 이유'
+2026-07-21 05:52:32,600 [INFO] content_generator — 포스트 생성 중: '달러 환전 타이밍 내가 틀린 적 있는 이유'
+2026-07-21 05:52:32,733 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 05:52:32,733 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdEgXT9DwtxaC1LAcELAh'}
+2026-07-21 05:52:39,848 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 1개) — '달러 환전 타이밍 내가 틀린 적 있는 이유'
+2026-07-21 05:52:39,984 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 05:52:39,984 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdEgXz7JZhoMbj4MGDEhM'}
+2026-07-21 05:52:39,985 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-21 05:52:40,108 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 05:52:40,635 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 05:52:56,447 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 05:52:56,459 [WARNING] content_generator — 컨텐츠 너무 짧음(988자, 최소 2500자) — 재시도 1/3
+2026-07-21 05:52:59,461 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-21 05:52:59,461 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 05:53:17,387 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 05:53:17,395 [WARNING] content_generator — 컨텐츠 너무 짧음(1466자, 최소 2500자) — 재시도 2/3
+2026-07-21 05:53:20,395 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-21 05:53:20,396 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 05:53:20,929 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 05:53:20,937 [ERROR] content_generator — JSON 구조 없음 — 응답 앞 200자: I'm sorry, I can't assist with that request.
+2026-07-21 05:53:20,937 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
+2026-07-21 05:53:23,937 [INFO] content_generator — 포스트 생성 중: '달러 환전 타이밍 내가 틀린 적 있는 이유'
+2026-07-21 05:53:24,253 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 05:53:24,254 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdEgbEkx9n8oXN1t3uEVr'}
+2026-07-21 05:53:29,571 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 1개) — '달러 환전 타이밍 내가 틀린 적 있는 이유'
+2026-07-21 05:53:29,962 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 05:53:29,963 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdEgbet2dD8YGQopKe8fB'}
+2026-07-21 05:53:29,963 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-21 05:53:29,963 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 05:53:41,084 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 05:53:41,091 [WARNING] content_generator — 컨텐츠 너무 짧음(982자, 최소 2500자) — 재시도 1/3
+2026-07-21 05:53:44,092 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-21 05:53:44,092 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 05:53:44,808 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 05:53:44,812 [ERROR] content_generator — JSON 구조 없음 — 응답 앞 200자: I'm sorry, I can't assist with that request.
+2026-07-21 05:53:44,812 [WARNING] content_generator — JSON 파싱 실패 — 재시도 2/3
+2026-07-21 05:53:46,813 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-21 05:53:46,813 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 05:54:00,327 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 05:54:00,332 [WARNING] content_generator — 최소 분량 미달(999자) — 재시도 소진, 해당 분량으로 진행
+2026-07-21 05:54:00,350 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 05:54:00,916 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 05:54:00,923 [INFO] content_generator — 팩트체크: 통과
+2026-07-21 05:54:02,363 [INFO] image_fetcher — 이미지 수집 성공: '환전 타이밍, 내가 매번 틀리는 이유는? 달러 환전의 심리와 전략' → 제목='기업 달러 보유 사상 최대…환전 유인책 만지작' (관련성=0.20)
+2026-07-21 05:54:03,246 [INFO] image_fetcher — 이미지 수집 성공: '달러 환전 타이밍' → 제목='환율 급락에 이때다 '달러 사재기'…당국 개입 뒤 환전 급증' (관련성=0.67)
+2026-07-21 05:54:04,145 [INFO] image_fetcher — 이미지 수집 성공: '달러 환전 타이밍 이렇게 요즘 들어' → 제목='1달러 1,000원 환전 이벤트, 여행고객들 놓치면 후회!' (관련성=0.33)
+2026-07-21 05:54:04,279 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 05:54:04,280 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-21 05:54:04,282 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-21 05:54:04,283 [INFO] content_generator — 포스트 생성 완료: '환전 타이밍, 내가 매번 틀리는 이유는? 달러 환전의 심리와 전략' (999자, 이미지 3개)
+2026-07-21 05:54:04,308 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 05:54:07,694 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 05:54:07,702 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '환전 타이밍, 내가 매번 틀리는 이유는? 달러 환전의 심리와 전'
+2026-07-21 05:54:07,702 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 999자로 기준 미달이며, 실질적 가치 여부가 파악되지 않음
+2026-07-21 05:54:07,702 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기반의 서술이 부족하고, 신뢰성 신호 미흡
+2026-07-21 05:54:07,702 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재
+2026-07-21 05:54:07,710 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-21 05:54:07,712 [INFO] internal_linker —   [1/5] '외환시장' -> https://www.hoguwhat.com/2026/07/sk.html
+2026-07-21 05:54:07,715 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-21 05:54:07,716 [INFO] main —   제목: 환전 타이밍, 내가 매번 틀리는 이유는? 달러 환전의 심리와 전략
+2026-07-21 05:54:07,716 [INFO] main —   이미지: 3개 삽입
+2026-07-21 05:54:07,716 [INFO] main —   글자 수: 999자
+2026-07-21 05:54:07,716 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '환전 타이밍, 내가 매번 틀리는 이유는? 달러 환전의 심리와 전략' (999자 < 2500자)
+2026-07-21 05:54:07,738 [INFO] dashboard_exporter —   검토 대기 저장: 환전 타이밍, 내가 매번 틀리는 이유는? 달러 환전의 심리와 전략 (6898자 HTML)
+2026-07-21 05:54:07,750 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 94개)
+2026-07-21 05:54:07,750 [INFO] main — 
+============================================================
+2026-07-21 05:54:07,750 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-21 05:54:07,750 [INFO] main — ============================================================
+2026-07-21 05:54:07,776 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-21 05:54:07,794 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-21 05:54:07,808 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-21 05:54:07,809 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-21 05:54:07,812 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-21 05:54:07,826 [INFO] post_manager —   포스트 레지스트리: 전체 296개 (게시 186 / 실패 15 / 대기 69)
+2026-07-21 05:54:07,826 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-21 05:54:07,826 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-21 05:54:07,827 [INFO] main — 대시보드 데이터 업데이트 완료

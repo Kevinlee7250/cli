@@ -657,6 +657,33 @@ def get_post_id_by_url(blog_url: str, blog_config: dict | None = None) -> str | 
         return None
 
 
+def delete_post(blogger_post_id: str, blog_config: dict | None = None) -> bool:
+    """Blogger 포스트를 실제로 삭제합니다 (DELETE /posts/{postId}). 되돌릴 수 없습니다."""
+    cfg = blog_config or {}
+    blog_id = cfg.get("blog_id") or BLOGGER_BLOG_ID
+    access_token = _get_access_token(blog_config)
+    if not access_token:
+        logger.error("delete_post: 액세스 토큰 없음")
+        return False
+
+    try:
+        resp = requests.delete(
+            f"{BLOGGER_API_BASE}/blogs/{blog_id}/posts/{blogger_post_id}",
+            headers={"Authorization": f"Bearer {access_token}"},
+            timeout=15,
+        )
+        if resp.status_code in (200, 204):
+            return True
+        if resp.status_code == 404:
+            logger.warning(f"delete_post: 이미 삭제됨 또는 존재하지 않음 (id={blogger_post_id})")
+            return False
+        logger.error(f"delete_post 실패 [{resp.status_code}] id={blogger_post_id}: {resp.text[:200]}")
+        return False
+    except requests.exceptions.RequestException as e:
+        logger.error(f"delete_post 네트워크 오류: {e}")
+        return False
+
+
 def update_post(blogger_post_id: str, post_data: dict, blog_config: dict | None = None) -> dict | None:
     """기존 Blogger 포스트 내용을 업데이트합니다 (PUT /posts/{postId})."""
     cfg = blog_config or {}

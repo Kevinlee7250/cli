@@ -392,118 +392,146 @@ def run_analytics(
     반환값: 분석 결과 요약 딕셔너리
     """
     # ── 설정 로드 ────────────────────────────────────────────────────────────
+    # 3개 블로그는 같은 Google 계정 소유라 OAuth 자격증명(client_id/secret/refresh_token)은
+    # 공용이지만, blog_id(Blogger 숫자 ID)와 gsc_site_url은 블로그마다 다름.
+    # 예전에는 blogs.json을 무시하고 단일 BLOGGER_BLOG_ID/GSC_SITE_URL만 써서
+    # blog2·blog3 포스트는 항상 조회수 0으로 처리되던 버그가 있었음 — 블로그별로 분리 수집.
     try:
         from config import (  # noqa: PLC0415
             BLOGGER_CLIENT_ID, BLOGGER_CLIENT_SECRET, BLOGGER_REFRESH_TOKEN,
-            BLOGGER_BLOG_ID, GSC_SITE_URL,
+            BLOGGER_BLOG_ID, GSC_SITE_URL, get_blog_configs,
         )
         client_id = BLOGGER_CLIENT_ID or ""
         client_secret = BLOGGER_CLIENT_SECRET or ""
         refresh_token = BLOGGER_REFRESH_TOKEN or ""
-        blog_id = BLOGGER_BLOG_ID or ""
-        gsc_site_url = GSC_SITE_URL or ""
+        default_blog_id = BLOGGER_BLOG_ID or ""
+        default_gsc_site_url = GSC_SITE_URL or ""
+        blog_configs = get_blog_configs() or [{
+            "id": "blog1", "blog_id": default_blog_id, "gsc_site_url": default_gsc_site_url,
+        }]
     except ImportError:
         client_id = os.getenv("GOOGLE_CLIENT_ID", "")
         client_secret = os.getenv("GOOGLE_CLIENT_SECRET", "")
         refresh_token = os.getenv("GOOGLE_REFRESH_TOKEN", "")
-        blog_id = os.getenv("BLOGGER_BLOG_ID", "")
-        gsc_site_url = os.getenv("GSC_SITE_URL", "")
+        default_blog_id = os.getenv("BLOGGER_BLOG_ID", "")
+        default_gsc_site_url = os.getenv("GSC_SITE_URL", "")
+        blog_configs = [{"id": "blog1", "blog_id": default_blog_id, "gsc_site_url": default_gsc_site_url}]
 
-    # ── OAuth 토큰 ───────────────────────────────────────────────────────────
+    # ── OAuth 토큰 (공용) ────────────────────────────────────────────────────
     token = _get_oauth_token(client_id, client_secret, refresh_token)
     if not token:
         logger.warning("OAuth 토큰 발급 실패 — Blogger/GSC 데이터 없이 기본값으로 등급 분류")
 
-    # ── Feature A: Blogger 실제 조회수 수집 ─────────────────────────────────
-    blogger_views = fetch_blogger_pageviews(blog_id, token or "")
-    total_blog_views_30d = blogger_views["total_30d"]
-
-    # ── Feature B: GSC 페이지별 클릭 데이터 수집 ────────────────────────────
-    gsc_page_data: dict[str, dict] = {}
-    if gsc_site_url and token:
-        gsc_page_data = fetch_gsc_page_data(gsc_site_url, token)
-
-    total_gsc_clicks = sum(d["clicks"] for d in gsc_page_data.values())
-
-    # ── posts.json 로드 ──────────────────────────────────────────────────────
+    # ── posts.json 로드 후 블로그별 그룹화 ──────────────────────────────────
     posts = load_posts(limit)
     if not posts:
         return {"error": "posts.json 없음 또는 빈 파일"}
 
-    # ── 포스트별 분석 ────────────────────────────────────────────────────────
+    posts_by_blog: dict[str, list[dict]] = {}
+    for post in posts:
+        bid = post.get("blogId") or "blog1"
+        posts_by_blog.setdefault(bid, []).append(post)
+
+    # ── 블로그별로 실제 조회수·GSC 데이터 수집 ──────────────────────────────
     grade_counts: dict[str, int] = {"S": 0, "A": 0, "B": 0, "C": 0}
     total_revenue_30d = 0.0
+    total_blog_views_30d_all = 0
+    total_blog_views_7d_all = 0
+    total_gsc_clicks_all = 0
     rewrite_targets: list[dict] = []
     top_performers: list[dict] = []
+    updated_posts: list[dict] = []
+    blog_breakdown: dict[str, dict] = {}
+    any_gsc_data = False
 
-    updated_posts = []
-    for post in posts:
-        post_url = post.get("blogUrl", "")
-        category = post.get("adsenseCategory", "일반")
-        cpc = float(post.get("estimatedCPC", 0))
-        post_date = post.get("date", "2020-01-01")
+    cfg_by_id = {c.get("id", "blog1"): c for c in blog_configs}
+    for bid, blog_posts in posts_by_blog.items():
+        cfg = cfg_by_id.get(bid, {"blog_id": default_blog_id, "gsc_site_url": default_gsc_site_url})
+        blog_numeric_id = cfg.get("blog_id") or default_blog_id
+        gsc_site_url = cfg.get("gsc_site_url") or default_gsc_site_url
 
-        # GSC 데이터 매핑
-        gsc_info = gsc_page_data.get(post_url, {})
-        clicks = gsc_info.get("clicks", 0)
-        impressions = gsc_info.get("impressions", 0)
-        ctr = gsc_info.get("ctr", 0.0)
-        position = gsc_info.get("position", 0.0)
+        blogger_views = fetch_blogger_pageviews(blog_numeric_id, token or "")
+        blog_views_30d = blogger_views["total_30d"]
 
-        # 추정 조회수
-        est_views = estimate_post_pageviews(
-            post_url, gsc_page_data, total_blog_views_30d,
-            total_gsc_clicks, len(posts)
-        )
+        gsc_page_data: dict[str, dict] = {}
+        if gsc_site_url and token:
+            gsc_page_data = fetch_gsc_page_data(gsc_site_url, token)
+        blog_gsc_clicks = sum(d["clicks"] for d in gsc_page_data.values())
+        if gsc_page_data:
+            any_gsc_data = True
 
-        # 등급 계산
-        grade, score, hint = calculate_grade(
-            clicks, impressions, ctr, position, est_views, post_date
-        )
+        total_blog_views_30d_all += blog_views_30d
+        total_blog_views_7d_all += blogger_views["total_7d"]
+        total_gsc_clicks_all += blog_gsc_clicks
 
-        # 수익 재계산
-        revenue = calculate_revenue(est_views, category, cpc)
-        total_revenue_30d += revenue["estimated30d"]
+        blog_bd = {"posts": len(blog_posts), "grade_counts": {"S": 0, "A": 0, "B": 0, "C": 0},
+                   "pageviews30d": blog_views_30d, "gscClicks30d": blog_gsc_clicks}
 
-        # posts 업데이트
-        post.update({
-            "grade": grade,
-            "gradeScore": score,
-            "gradeHint": hint,
-            "gscClicks30d": clicks,
-            "gscImpressions30d": impressions,
-            "gscCTR30d": ctr,
-            "gscPosition30d": position,
-            "estimatedPageviews30d": est_views,
-            "estimatedRevenue30d": revenue["estimated30d"],
-            "revenueUpdatedAt": datetime.now().strftime("%Y-%m-%d"),
-        })
-        updated_posts.append(post)
-        grade_counts[grade] += 1
+        for post in blog_posts:
+            post_url = post.get("blogUrl", "")
+            category = post.get("adsenseCategory", "일반")
+            cpc = float(post.get("estimatedCPC", 0))
+            post_date = post.get("date", "2020-01-01")
 
-        if grade == "C":
-            rewrite_targets.append({
-                "id": post.get("id", ""),
-                "title": post.get("title", ""),
-                "keyword": post.get("keyword", ""),
-                "blogUrl": post_url,
-                "score": score,
-                "date": post_date,
-                "clicks30d": clicks,
-                "impressions30d": impressions,
-                "hint": hint,
+            gsc_info = gsc_page_data.get(post_url, {})
+            clicks = gsc_info.get("clicks", 0)
+            impressions = gsc_info.get("impressions", 0)
+            ctr = gsc_info.get("ctr", 0.0)
+            position = gsc_info.get("position", 0.0)
+
+            est_views = estimate_post_pageviews(
+                post_url, gsc_page_data, blog_views_30d,
+                blog_gsc_clicks, len(blog_posts)
+            )
+
+            grade, score, hint = calculate_grade(
+                clicks, impressions, ctr, position, est_views, post_date
+            )
+
+            revenue = calculate_revenue(est_views, category, cpc)
+            total_revenue_30d += revenue["estimated30d"]
+
+            post.update({
+                "grade": grade,
+                "gradeScore": score,
+                "gradeHint": hint,
+                "gscClicks30d": clicks,
+                "gscImpressions30d": impressions,
+                "gscCTR30d": ctr,
+                "gscPosition30d": position,
+                "estimatedPageviews30d": est_views,
+                "estimatedRevenue30d": revenue["estimated30d"],
+                "revenueUpdatedAt": datetime.now().strftime("%Y-%m-%d"),
             })
-        elif grade == "S":
-            top_performers.append({
-                "id": post.get("id", ""),
-                "title": post.get("title", ""),
-                "keyword": post.get("keyword", ""),
-                "blogUrl": post_url,
-                "score": score,
-                "clicks30d": clicks,
-                "impressions30d": impressions,
-                "revenue30d": revenue["estimated30d"],
-            })
+            updated_posts.append(post)
+            grade_counts[grade] += 1
+            blog_bd["grade_counts"][grade] += 1
+
+            if grade == "C":
+                rewrite_targets.append({
+                    "id": post.get("id", ""), "blogId": bid,
+                    "title": post.get("title", ""),
+                    "keyword": post.get("keyword", ""),
+                    "blogUrl": post_url,
+                    "score": score,
+                    "date": post_date,
+                    "clicks30d": clicks,
+                    "impressions30d": impressions,
+                    "hint": hint,
+                })
+            elif grade == "S":
+                top_performers.append({
+                    "id": post.get("id", ""), "blogId": bid,
+                    "title": post.get("title", ""),
+                    "keyword": post.get("keyword", ""),
+                    "blogUrl": post_url,
+                    "score": score,
+                    "clicks30d": clicks,
+                    "impressions30d": impressions,
+                    "revenue30d": revenue["estimated30d"],
+                })
+
+        blog_breakdown[bid] = blog_bd
 
     # 성과 순 정렬
     rewrite_targets.sort(key=lambda x: x["score"])
@@ -514,9 +542,9 @@ def run_analytics(
         "generatedAt": datetime.now().isoformat(),
         "period": "30days",
         "totalPosts": len(posts),
-        "bloggerPageviews30d": total_blog_views_30d,
-        "bloggerPageviews7d": blogger_views["total_7d"],
-        "totalGscClicks30d": total_gsc_clicks,
+        "bloggerPageviews30d": total_blog_views_30d_all,
+        "bloggerPageviews7d": total_blog_views_7d_all,
+        "totalGscClicks30d": total_gsc_clicks_all,
         "totalEstimatedRevenue30d": round(total_revenue_30d, 4),
         "totalEstimatedRevenueMonthly": round(total_revenue_30d, 4),
         "gradeDistribution": grade_counts,
@@ -524,12 +552,13 @@ def run_analytics(
             g: round(cnt / len(posts) * 100, 1)
             for g, cnt in grade_counts.items()
         },
+        "blogBreakdown": blog_breakdown,
         "rewriteTargets": rewrite_targets[:20],       # 상위 20개 C급
         "topPerformers": top_performers[:10],           # 상위 10개 S급
         "dataSource": {
-            "bloggerApi": total_blog_views_30d > 0,
-            "gscPageData": len(gsc_page_data) > 0,
-            "gscUrlsMatched": sum(1 for p in posts if p.get("blogUrl") in gsc_page_data),
+            "bloggerApi": total_blog_views_30d_all > 0,
+            "gscPageData": any_gsc_data,
+            "gscUrlsMatched": sum(1 for p in posts if p.get("grade") and p.get("gscClicks30d", 0) > 0),
         },
     }
 
@@ -538,8 +567,8 @@ def run_analytics(
     logger.info(f"  블로그 성과 분석 결과")
     logger.info("="*60)
     logger.info(f"  분석 포스트: {len(posts)}개")
-    logger.info(f"  Blogger 실제 조회수(30일): {total_blog_views_30d:,}회")
-    logger.info(f"  GSC 총 클릭(30일): {total_gsc_clicks:,}회")
+    logger.info(f"  Blogger 실제 조회수(30일, 전체 블로그 합산): {total_blog_views_30d_all:,}회")
+    logger.info(f"  GSC 총 클릭(30일, 전체 블로그 합산): {total_gsc_clicks_all:,}회")
     logger.info(f"  추정 월 수익: ${total_revenue_30d:.2f} USD")
     logger.info(f"  등급 분포:")
     for g in ["S", "A", "B", "C"]:

@@ -97,13 +97,26 @@ jobs:
           print()
           print("아래 URL을 브라우저에서 열고 Google 계정으로 로그인하세요:")
           print()
-          print(url)
+          print(url)  # GitHub 로그에서는 client_id가 자동 마스킹됨 — 실제 값은 업로드되는 아티팩트에서 확인
           print()
           print("=" * 60)
           print("로그인 후 표시되는 '인증 코드'를 복사하세요.")
           print("그 다음 이 워크플로우를 step=2_exchange_code 로 재실행하고")
           print("auth_code 항목에 복사한 코드를 붙여넣으세요.")
+
+          # 로그는 시크릿 마스킹으로 client_id가 ***로 가려지므로,
+          # 아티팩트 파일로 별도 저장 (아티팩트는 로그 마스킹 대상이 아님)
+          with open("oauth_url.txt", "w") as f:
+              f.write(url + "\n")
           PYEOF
+
+      - name: 인증 URL 아티팩트 업로드
+        if: ${{ env.step_mode == '1_get_url' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: oauth-auth-url
+          path: oauth_url.txt
+          retention-days: 1
 
       - name: 🔄 2단계 — 코드 교환 및 Refresh Token 출력
         if: ${{ env.step_mode == '2_exchange_code' }}
@@ -151,10 +164,22 @@ jobs:
           print("=" * 60)
           print("✅ Refresh Token 발급 성공!")
           print()
-          print(f"{secret_name} 값:")
-          print(refresh_token)
+          print(f"{secret_name} 값: (로그에는 마스킹되어 안 보일 수 있음 — 아티팩트 파일 확인)")
           print()
           print("=" * 60)
           print("이 값을 복사해서:")
           print(save_hint)
+
+          # refresh_token은 시크릿이 아니라 로그에 마스킹되지 않지만,
+          # 혹시 모를 노출 최소화를 위해 아티팩트로도 저장 (1일 후 자동 삭제)
+          with open("oauth_result.txt", "w") as f:
+              f.write(f"{secret_name}={refresh_token}\n")
           PYEOF
+
+      - name: Refresh Token 아티팩트 업로드
+        if: ${{ env.step_mode == '2_exchange_code' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: oauth-refresh-token
+          path: oauth_result.txt
+          retention-days: 1

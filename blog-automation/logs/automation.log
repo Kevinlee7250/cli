@@ -1,99 +1,3 @@
-2026-07-20 12:19:10,483 [INFO] main — ============================================================
-2026-07-20 12:19:10,494 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-20 12:19:10,494 [INFO] keyword_collector — 포스팅 이력 코퍼스: 47개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-20 12:19:15,260 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-20 12:19:16,181 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 12:19:16,182 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-20 12:19:16,881 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 12:19:17,237 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-20 12:19:17,238 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-20 12:19:17,240 [INFO] keyword_collector — 유사 주제 제외 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
-2026-07-20 12:19:17,240 [INFO] keyword_collector —   [fallback] 2개: ['배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
-2026-07-20 12:19:17,240 [INFO] keyword_collector — 최종 선정 키워드 2개: ['배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
-2026-07-20 12:19:17,240 [INFO] main — 수집된 키워드 2개: ['배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것']
-2026-07-20 12:19:17,246 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-07-20 12:19:17,246 [INFO] main — 단독 포스트 대상 키워드 1개: ['배당주 처음 사기 전 내가 몰랐던 것']
-2026-07-20 12:19:17,262 [INFO] main — 
-[1/1] 키워드: '배당주 처음 사기 전 내가 몰랐던 것'
-2026-07-20 12:19:17,262 [INFO] content_generator — 포스트 생성 중: '배당주 처음 사기 전 내가 몰랐던 것'
-2026-07-20 12:19:17,783 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 12:19:17,783 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdDJD4sDJuNKEFauvoQbJ'}
-2026-07-20 12:19:28,328 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '배당주 처음 사기 전 내가 몰랐던 것'
-2026-07-20 12:19:28,509 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 12:19:28,509 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdDJDsSeTXBEdEUg71fbu'}
-2026-07-20 12:19:28,511 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-20 12:19:28,917 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 12:19:29,427 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 12:19:52,212 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 12:19:52,237 [WARNING] content_generator — 컨텐츠 너무 짧음(1182자, 최소 2500자) — 재시도 1/3
-2026-07-20 12:19:55,237 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-20 12:19:55,237 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 12:20:18,009 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 12:20:18,016 [WARNING] content_generator — 컨텐츠 너무 짧음(922자, 최소 2500자) — 재시도 2/3
-2026-07-20 12:20:21,016 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-20 12:20:21,017 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 12:20:37,872 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 12:20:37,887 [WARNING] content_generator — 최소 분량 미달(1552자) — 재시도 소진, 해당 분량으로 진행
-2026-07-20 12:20:37,905 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 12:20:40,616 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 12:20:40,622 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-07-20 12:20:40,775 [INFO] image_fetcher — 이미지 수집 성공: '배당주 투자 시작하기 전에 꼭 알아야 할 5가지' → 제목='money / profit / finance / business / re' (관련성=0.14)
-2026-07-20 12:20:42,473 [INFO] image_fetcher — 이미지 수집 성공: '배당주 사기 내가' → 제목='"결과 틀리면 배당금"...'역베팅' 사기 급증/투데이' (관련성=0.33)
-2026-07-20 12:20:43,389 [INFO] image_fetcher — 이미지 수집 성공: '배당주 사기 배당주란 무엇인가요 배당주는 회사가' → 제목='네이버 인플루언서 [네이버 인플루언서] 지금 알아두면 좋은 저평가 배당주' (관련성=0.17)
-2026-07-20 12:20:43,577 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 12:20:43,577 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-20 12:20:43,578 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-20 12:20:43,580 [INFO] content_generator — 포스트 생성 완료: '배당주 투자 시작하기 전에 꼭 알아야 할 5가지' (1552자, 이미지 3개)
-2026-07-20 12:20:43,600 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-20 12:20:47,192 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-20 12:20:47,198 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '배당주 투자 시작하기 전에 꼭 알아야 할 5가지'
-2026-07-20 12:20:47,198 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 1552자임에도 불구하고 구체적인 사례나 독창적 관점이 부족함
-2026-07-20 12:20:47,198 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 포함이지만 직접 경험이나 고유 인사이트 부족
-2026-07-20 12:20:47,198 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재로 가독성 및 SEO 약화 가능성
-2026-07-20 12:20:47,198 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 일부 목록화와 일반론 나열 경향
-2026-07-20 12:20:47,207 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-20 12:20:47,212 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-07-20 12:20:47,212 [INFO] main —   제목: 배당주 투자 시작하기 전에 꼭 알아야 할 5가지
-2026-07-20 12:20:47,212 [INFO] main —   이미지: 3개 삽입
-2026-07-20 12:20:47,212 [INFO] main —   글자 수: 1552자
-2026-07-20 12:20:47,212 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '배당주 투자 시작하기 전에 꼭 알아야 할 5가지' (1552자 < 2500자)
-2026-07-20 12:20:47,234 [INFO] dashboard_exporter —   검토 대기 저장: 배당주 투자 시작하기 전에 꼭 알아야 할 5가지 (6141자 HTML)
-2026-07-20 12:20:47,246 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 88개)
-2026-07-20 12:20:47,246 [INFO] main — 
-============================================================
-2026-07-20 12:20:47,246 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-20 12:20:47,246 [INFO] main — ============================================================
-2026-07-20 12:20:47,274 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-20 12:20:47,294 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-20 12:20:47,310 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-20 12:20:47,311 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-20 12:20:47,314 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-20 12:20:47,328 [INFO] post_manager —   포스트 레지스트리: 전체 290개 (게시 186 / 실패 15 / 대기 63)
-2026-07-20 12:20:47,328 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-20 12:20:47,329 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-20 12:20:47,329 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-20 23:06:25,906 [INFO] main — ============================================================
-2026-07-20 23:06:25,906 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-20 23:06:25
-2026-07-20 23:06:25,906 [INFO] main — ============================================================
-2026-07-20 23:06:25,919 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
-2026-07-20 23:06:25,919 [INFO] keyword_collector — 포스팅 이력 코퍼스: 45개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-20 23:06:30,577 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-20 23:06:30,791 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 23:06:30,792 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-20 23:06:31,422 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-20 23:06:31,701 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-20 23:06:31,702 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-20 23:06:31,702 [INFO] keyword_collector — 폴백 키워드 전체 재사용 (30일 사이클 완료)
-2026-07-20 23:06:31,702 [INFO] keyword_collector — 최근 사용 제외 38개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과', '배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것', '달러 환전 타이밍 내가 틀린 적 있는 이유']
-2026-07-20 23:06:31,702 [WARNING] keyword_collector — 선정 키워드 부족 (0/2) — 유사도 기준 완화하여 재시도
-2026-07-20 23:06:31,702 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (0/2) — 이전 사용 키워드 일부 허용
-2026-07-20 23:06:31,703 [INFO] keyword_collector —   [fallback] 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
-2026-07-20 23:06:31,703 [INFO] keyword_collector — 최종 선정 키워드 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
-2026-07-20 23:06:31,704 [INFO] main — 수집된 키워드 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
-2026-07-20 23:06:31,709 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-07-20 23:06:31,709 [INFO] main — 단독 포스트 대상 키워드 1개: ['직장인 월 30만원 ETF 투자 솔직 후기']
-2026-07-20 23:06:31,727 [INFO] main — 
-[1/1] 키워드: '직장인 월 30만원 ETF 투자 솔직 후기'
 2026-07-20 23:06:31,727 [INFO] content_generator — 포스트 생성 중: '직장인 월 30만원 ETF 투자 솔직 후기'
 2026-07-20 23:06:31,881 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
 2026-07-20 23:06:31,882 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdE9Zi2sUCrNncu1GpLrL'}
@@ -594,3 +498,83 @@
 2026-07-21 05:54:07,826 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-21 05:54:07,826 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-21 05:54:07,827 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-21 11:45:58,364 [INFO] main — ============================================================
+2026-07-21 11:45:58,364 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-21 11:45:58
+2026-07-21 11:45:58,364 [INFO] main — ============================================================
+2026-07-21 11:45:58,375 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
+2026-07-21 11:45:58,375 [INFO] keyword_collector — 포스팅 이력 코퍼스: 44개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-21 11:46:02,160 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-21 11:46:02,752 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 11:46:02,752 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-21 11:46:03,274 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 11:46:03,624 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-07-21 11:46:03,625 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-21 11:46:03,625 [INFO] keyword_collector — 폴백 키워드 전체 재사용 (30일 사이클 완료)
+2026-07-21 11:46:03,625 [INFO] keyword_collector — 최근 사용 제외 38개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과', '배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것', '달러 환전 타이밍 내가 틀린 적 있는 이유']
+2026-07-21 11:46:03,625 [WARNING] keyword_collector — 선정 키워드 부족 (0/2) — 유사도 기준 완화하여 재시도
+2026-07-21 11:46:03,625 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (0/2) — 이전 사용 키워드 일부 허용
+2026-07-21 11:46:03,626 [INFO] keyword_collector —   [fallback] 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
+2026-07-21 11:46:03,627 [INFO] keyword_collector — 최종 선정 키워드 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
+2026-07-21 11:46:03,627 [INFO] main — 수집된 키워드 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
+2026-07-21 11:46:03,632 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
+2026-07-21 11:46:03,632 [INFO] main — 단독 포스트 대상 키워드 1개: ['직장인 월 30만원 ETF 투자 솔직 후기']
+2026-07-21 11:46:03,647 [INFO] main — 
+[1/1] 키워드: '직장인 월 30만원 ETF 투자 솔직 후기'
+2026-07-21 11:46:03,648 [INFO] content_generator — 포스트 생성 중: '직장인 월 30만원 ETF 투자 솔직 후기'
+2026-07-21 11:46:03,776 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 11:46:03,776 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdF9V1UE5GiTJADu9gYc3'}
+2026-07-21 11:46:09,644 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '직장인 월 30만원 ETF 투자 솔직 후기'
+2026-07-21 11:46:09,751 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 11:46:09,752 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdF9VT3roSEHfH89VTcWV'}
+2026-07-21 11:46:09,753 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-21 11:46:09,901 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 11:46:10,383 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 11:46:29,225 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 11:46:29,239 [WARNING] content_generator — 컨텐츠 너무 짧음(1581자, 최소 2500자) — 재시도 1/3
+2026-07-21 11:46:32,240 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-21 11:46:32,240 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 11:46:32,892 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 11:46:32,898 [ERROR] content_generator — JSON 구조 없음 — 응답 앞 200자: I'm sorry, I can't assist with that.
+2026-07-21 11:46:32,898 [WARNING] content_generator — JSON 파싱 실패 — 재시도 2/3
+2026-07-21 11:46:34,898 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-21 11:46:34,898 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 11:46:52,606 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 11:46:52,609 [WARNING] content_generator — 최소 분량 미달(1339자) — 재시도 소진, 해당 분량으로 진행
+2026-07-21 11:46:52,627 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 11:46:53,275 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 11:46:53,276 [INFO] content_generator — 팩트체크: 통과
+2026-07-21 11:46:53,845 [WARNING] image_fetcher — 이미지 없음: '직장인 월 30만원 ETF 투자 솔직 후기'
+2026-07-21 11:46:54,440 [WARNING] image_fetcher — 이미지 없음: '직장인 ETF 투자'
+2026-07-21 11:46:55,041 [WARNING] image_fetcher — 이미지 없음: '직장인 ETF 투자 중요할까 직장인들 여유'
+2026-07-21 11:46:55,042 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-07-21 11:46:55,042 [INFO] image_fetcher — 제목 썸네일 생성: '직장인 월 30만원 ETF 투자 솔직 후기' (data URI, 974B)
+2026-07-21 11:46:55,395 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-07-21 11:46:55,397 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-21 11:46:55,398 [INFO] content_generator — 포스트 생성 완료: '직장인 월 30만원 ETF 투자 솔직 후기' (1339자, 이미지 1개)
+2026-07-21 11:46:55,422 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 11:46:59,365 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 11:46:59,379 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '직장인 월 30만원 ETF 투자 솔직 후기'
+2026-07-21 11:46:59,379 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 1339자로 2000자 미만이므로 fail.
+2026-07-21 11:46:59,379 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없어 warn.
+2026-07-21 11:46:59,388 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-21 11:46:59,392 [INFO] internal_linker —   [1/5] '초보자' -> https://hoguasset.blogspot.com/2026/07/etf.html
+2026-07-21 11:46:59,393 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-21 11:46:59,394 [INFO] main —   제목: 직장인 월 30만원 ETF 투자 솔직 후기
+2026-07-21 11:46:59,394 [INFO] main —   이미지: 1개 삽입
+2026-07-21 11:46:59,394 [INFO] main —   글자 수: 1339자
+2026-07-21 11:46:59,394 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '직장인 월 30만원 ETF 투자 솔직 후기' (1339자 < 2500자)
+2026-07-21 11:46:59,417 [INFO] dashboard_exporter —   검토 대기 저장: 직장인 월 30만원 ETF 투자 솔직 후기 (7990자 HTML)
+2026-07-21 11:46:59,430 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 95개)
+2026-07-21 11:46:59,430 [INFO] main — 
+============================================================
+2026-07-21 11:46:59,430 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-21 11:46:59,430 [INFO] main — ============================================================
+2026-07-21 11:46:59,457 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-21 11:46:59,474 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-21 11:46:59,489 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-21 11:46:59,490 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-21 11:46:59,493 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-21 11:46:59,507 [INFO] post_manager —   포스트 레지스트리: 전체 297개 (게시 186 / 실패 15 / 대기 70)
+2026-07-21 11:46:59,507 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-21 11:46:59,508 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-21 11:46:59,508 [INFO] main — 대시보드 데이터 업데이트 완료

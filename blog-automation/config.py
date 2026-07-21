@@ -445,7 +445,10 @@ def get_blog_configs() -> list[dict]:
                     f"BLOGS_CONFIG 항목 id={b.get('id')!r} → 'blog1'로 간주합니다 — Secret에 id: \"blog1\"을 설정하세요."
                 )
                 b = {**b, "id": "blog1"}
-            merged[b["id"]] = b  # BLOGS_CONFIG 항목이 덮어씀
+            # 필드 단위 병합 — BLOGS_CONFIG가 값을 준 필드만 덮어쓰고, 나머지는
+            # blogs.json의 값(gsc_site_url, topics, naver_api_queries 등)을 유지.
+            # 예전에는 통째로 교체해서 BLOGS_CONFIG에 없는 필드가 전부 사라졌음.
+            merged[b["id"]] = {**registry.get(b["id"], {}), **b}
         if merged:
             return list(merged.values())
 

@@ -171,18 +171,35 @@ def fetch_gsc_page_data(
         "orderBy": [{"fieldName": "clicks", "sortOrder": "DESCENDING"}],
     }
 
-    encoded_url = requests.utils.quote(site_url, safe="")
-    url = f"{GSC_API_BASE}/sites/{encoded_url}/searchAnalytics/query"
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 
-    try:
-        resp = requests.post(url, json=payload, headers=headers, timeout=30)
-    except Exception as exc:
-        logger.warning(f"GSC 페이지 데이터 요청 실패: {exc}")
-        return {}
+    def _query(property_id: str):
+        encoded = requests.utils.quote(property_id, safe="")
+        u = f"{GSC_API_BASE}/sites/{encoded}/searchAnalytics/query"
+        try:
+            return requests.post(u, json=payload, headers=headers, timeout=30)
+        except Exception as exc:
+            logger.warning(f"GSC 페이지 데이터 요청 실패 ({property_id}): {exc}")
+            return None
 
+    resp = _query(site_url)
+
+    # 커스텀 도메인이 "도메인 속성"(sc-domain:)으로 등록된 경우 URL-프리픽스 형식은
+    # 403을 반환함 — netloc만 뽑아 sc-domain: 형식으로 한 번 더 시도.
+    if resp is not None and resp.status_code == 403:
+        from urllib.parse import urlparse
+        netloc = urlparse(site_url).netloc.removeprefix("www.")
+        if netloc:
+            domain_property = f"sc-domain:{netloc}"
+            logger.info(f"GSC URL-프리픽스 속성 403 — 도메인 속성으로 재시도: {domain_property}")
+            retry_resp = _query(domain_property)
+            if retry_resp is not None and retry_resp.status_code == 200:
+                resp = retry_resp
+
+    if resp is None:
+        return {}
     if resp.status_code == 403:
-        logger.warning("GSC 권한 없음 — Search Console에 사이트 등록 여부 확인")
+        logger.warning(f"GSC 권한 없음 ({site_url}) — Search Console에 사이트 등록/속성 유형(도메인 vs URL-프리픽스) 확인")
         return {}
     if resp.status_code != 200:
         logger.debug(f"GSC 페이지 데이터 오류: HTTP {resp.status_code}")

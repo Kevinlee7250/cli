@@ -374,6 +374,39 @@ def _structure_variation(keyword: str) -> str:
 • 소제목 문구는 권장 구조의 단어를 그대로 쓰지 말고 주제에 맞는 구체적 표현으로"""
 
 
+def _engagement_block() -> str:
+    """독자 체류시간·몰입도를 높이기 위한 공통 지침 — AdSense 정책 준수 범위 내에서만 적용.
+
+    핵심 원칙: 후킹은 "낚시"가 아니라 "약속과 이행의 일치"여야 함 — 제목·도입부가
+    암시한 내용을 본문이 충족하지 못하면 AdSense 오해소지 콘텐츠 위반이자 즉시 이탈 원인.
+    """
+    return """
+━━━ 독자 체류·몰입 강화 지침 (AdSense 정책 준수 범위 내에서만) ━━━
+
+도입부 후킹 (첫 2문장):
+- 구체적 상황·숫자·긴장감으로 시작해 "왜 계속 읽어야 하는지"를 즉시 납득시킬 것
+- 절대 낚시 금지: 도입부가 암시한 내용은 본문에서 반드시 충족되어야 함
+  (약속만 하고 안 지키면 AdSense "오해소지 콘텐츠" 위반이자 즉시 이탈 원인)
+
+문단·소제목 스타일:
+- 한 문단 2~4문장, 한 문단에 요점 하나만 (긴 문단 금지 — 모바일 가독성)
+- H2 소제목은 막연한 라벨이 아니라 독자의 질문에 대한 구체적 답처럼 작성
+  나쁜 예: "장점과 단점" / 좋은 예: "실제로 이만큼 가격 차이가 났다"
+
+섹션 간 연결(스크롤 유도, 각 H2 끝에 1문장):
+- 다음 섹션 내용을 자연스럽게 예고하는 문장을 넣어 다음 섹션까지 읽게 유도
+  예: "그런데 이것만으로는 부족합니다. 실제로 확인해야 할 게 하나 더 있습니다."
+- 예고한 내용은 다음 섹션에서 반드시 실제로 다룰 것 (지키지 못할 예고 금지)
+
+스캔 가능성:
+- 핵심 문장은 섹션당 <strong> 1~2회만 강조 (과다 강조는 오히려 신뢰도 저하)
+- 목록·표를 적극 활용해 훑어봐도 핵심이 파악되게 정리
+
+검색 의도 우선 충족 (뒤로가기 방지):
+- 독자가 찾는 핵심 답은 요약 박스 또는 첫 H2에서 먼저 제시하고,
+  이후 섹션에서 근거·사례·디테일을 순차적으로 전개할 것"""
+
+
 def _author_name() -> str:
     """author_profile.json의 저자 필명 (없으면 빈 문자열)."""
     try:
@@ -895,8 +928,8 @@ JSON만 응답 (마크다운 없이):
 
 def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
     blog_id = (blog_config or {}).get("id", "")
-    # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 (모든 블로그 공통)
-    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword)
+    # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (모든 블로그 공통)
+    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block()
 
     # blog1 (HOGU What?) 전용 프롬프트
     if blog_id == "blog1":
@@ -1720,8 +1753,8 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict, blog_
     """시리즈 포스트용 프롬프트 — 블로그 주제별 분기"""
     from datetime import datetime
     blog_id = (blog_config or {}).get("id", "")
-    # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 (가짜 체험담·목차 반복 방지)
-    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword)
+    # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (가짜 체험담·목차 반복 방지)
+    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block()
     if blog_id == "blog3":
         return _build_series_prompt_finance(keyword, traffic, series_context, blog_config) + style_block
     # blog1 또는 미지정

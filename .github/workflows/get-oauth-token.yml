@@ -88,7 +88,7 @@ jobs:
 
           params = {
               "client_id":     client_id,
-              "redirect_uri":  "urn:ietf:wg:oauth:2.0:oob",
+              "redirect_uri":  "http://localhost",
               "response_type": "code",
               "scope":         scope,
               "access_type":   "offline",
@@ -103,9 +103,15 @@ jobs:
           print(url)  # GitHub 로그에서는 client_id가 자동 마스킹됨 — 실제 값은 업로드되는 아티팩트에서 확인
           print()
           print("=" * 60)
-          print("로그인 후 표시되는 '인증 코드'를 복사하세요.")
+          print("로그인·동의 후 브라우저가 http://localhost/?code=...&scope=... 로 이동하며")
+          print("'사이트에 연결할 수 없음' 오류 페이지가 뜹니다 (정상 — localhost에 서버가 없어서).")
+          print("이때 주소창의 URL에서 'code=' 뒤부터 '&scope=' 앞까지를 복사하세요 (URL 디코딩 필요할 수 있음).")
           print("그 다음 이 워크플로우를 step=2_exchange_code 로 재실행하고")
           print("auth_code 항목에 복사한 코드를 붙여넣으세요.")
+          print()
+          print("⚠️ 'redirect_uri_mismatch' 오류가 뜨면 Google Cloud Console → API 및 서비스 →")
+          print("사용자 인증 정보 → 이 OAuth 클라이언트 → '승인된 리디렉션 URI'에")
+          print("http://localhost 를 추가해야 합니다.")
 
           # 로그는 시크릿 마스킹으로 client_id가 ***로 가려지므로,
           # 아티팩트(네트워크 정책상 다운로드 불가할 수 있음) + git 커밋 파일로 이중 저장
@@ -163,7 +169,7 @@ jobs:
               "code":          auth_code,
               "client_id":     client_id,
               "client_secret": client_secret,
-              "redirect_uri":  "urn:ietf:wg:oauth:2.0:oob",
+              "redirect_uri":  "http://localhost",
               "grant_type":    "authorization_code",
           })
 

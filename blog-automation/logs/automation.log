@@ -1,83 +1,3 @@
-2026-07-21 05:53:20,929 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 05:53:20,937 [ERROR] content_generator — JSON 구조 없음 — 응답 앞 200자: I'm sorry, I can't assist with that request.
-2026-07-21 05:53:20,937 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-07-21 05:53:23,937 [INFO] content_generator — 포스트 생성 중: '달러 환전 타이밍 내가 틀린 적 있는 이유'
-2026-07-21 05:53:24,253 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 05:53:24,254 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdEgbEkx9n8oXN1t3uEVr'}
-2026-07-21 05:53:29,571 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 1개) — '달러 환전 타이밍 내가 틀린 적 있는 이유'
-2026-07-21 05:53:29,962 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 05:53:29,963 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdEgbet2dD8YGQopKe8fB'}
-2026-07-21 05:53:29,963 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-21 05:53:29,963 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 05:53:41,084 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 05:53:41,091 [WARNING] content_generator — 컨텐츠 너무 짧음(982자, 최소 2500자) — 재시도 1/3
-2026-07-21 05:53:44,092 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-21 05:53:44,092 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 05:53:44,808 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 05:53:44,812 [ERROR] content_generator — JSON 구조 없음 — 응답 앞 200자: I'm sorry, I can't assist with that request.
-2026-07-21 05:53:44,812 [WARNING] content_generator — JSON 파싱 실패 — 재시도 2/3
-2026-07-21 05:53:46,813 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-21 05:53:46,813 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 05:54:00,327 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 05:54:00,332 [WARNING] content_generator — 최소 분량 미달(999자) — 재시도 소진, 해당 분량으로 진행
-2026-07-21 05:54:00,350 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 05:54:00,916 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 05:54:00,923 [INFO] content_generator — 팩트체크: 통과
-2026-07-21 05:54:02,363 [INFO] image_fetcher — 이미지 수집 성공: '환전 타이밍, 내가 매번 틀리는 이유는? 달러 환전의 심리와 전략' → 제목='기업 달러 보유 사상 최대…환전 유인책 만지작' (관련성=0.20)
-2026-07-21 05:54:03,246 [INFO] image_fetcher — 이미지 수집 성공: '달러 환전 타이밍' → 제목='환율 급락에 이때다 '달러 사재기'…당국 개입 뒤 환전 급증' (관련성=0.67)
-2026-07-21 05:54:04,145 [INFO] image_fetcher — 이미지 수집 성공: '달러 환전 타이밍 이렇게 요즘 들어' → 제목='1달러 1,000원 환전 이벤트, 여행고객들 놓치면 후회!' (관련성=0.33)
-2026-07-21 05:54:04,279 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 05:54:04,280 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-21 05:54:04,282 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-21 05:54:04,283 [INFO] content_generator — 포스트 생성 완료: '환전 타이밍, 내가 매번 틀리는 이유는? 달러 환전의 심리와 전략' (999자, 이미지 3개)
-2026-07-21 05:54:04,308 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 05:54:07,694 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 05:54:07,702 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '환전 타이밍, 내가 매번 틀리는 이유는? 달러 환전의 심리와 전'
-2026-07-21 05:54:07,702 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 999자로 기준 미달이며, 실질적 가치 여부가 파악되지 않음
-2026-07-21 05:54:07,702 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기반의 서술이 부족하고, 신뢰성 신호 미흡
-2026-07-21 05:54:07,702 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재
-2026-07-21 05:54:07,710 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-21 05:54:07,712 [INFO] internal_linker —   [1/5] '외환시장' -> https://www.hoguwhat.com/2026/07/sk.html
-2026-07-21 05:54:07,715 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-21 05:54:07,716 [INFO] main —   제목: 환전 타이밍, 내가 매번 틀리는 이유는? 달러 환전의 심리와 전략
-2026-07-21 05:54:07,716 [INFO] main —   이미지: 3개 삽입
-2026-07-21 05:54:07,716 [INFO] main —   글자 수: 999자
-2026-07-21 05:54:07,716 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '환전 타이밍, 내가 매번 틀리는 이유는? 달러 환전의 심리와 전략' (999자 < 2500자)
-2026-07-21 05:54:07,738 [INFO] dashboard_exporter —   검토 대기 저장: 환전 타이밍, 내가 매번 틀리는 이유는? 달러 환전의 심리와 전략 (6898자 HTML)
-2026-07-21 05:54:07,750 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 94개)
-2026-07-21 05:54:07,750 [INFO] main — 
-============================================================
-2026-07-21 05:54:07,750 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-21 05:54:07,750 [INFO] main — ============================================================
-2026-07-21 05:54:07,776 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-21 05:54:07,794 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-21 05:54:07,808 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-21 05:54:07,809 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-21 05:54:07,812 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-21 05:54:07,826 [INFO] post_manager —   포스트 레지스트리: 전체 296개 (게시 186 / 실패 15 / 대기 69)
-2026-07-21 05:54:07,826 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-21 05:54:07,826 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-21 05:54:07,827 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-21 11:45:58,364 [INFO] main — ============================================================
-2026-07-21 11:45:58,364 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-21 11:45:58
-2026-07-21 11:45:58,364 [INFO] main — ============================================================
-2026-07-21 11:45:58,375 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
-2026-07-21 11:45:58,375 [INFO] keyword_collector — 포스팅 이력 코퍼스: 44개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-21 11:46:02,160 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-21 11:46:02,752 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 11:46:02,752 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-21 11:46:03,274 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 11:46:03,624 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-21 11:46:03,625 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-21 11:46:03,625 [INFO] keyword_collector — 폴백 키워드 전체 재사용 (30일 사이클 완료)
-2026-07-21 11:46:03,625 [INFO] keyword_collector — 최근 사용 제외 38개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과', '배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것', '달러 환전 타이밍 내가 틀린 적 있는 이유']
-2026-07-21 11:46:03,625 [WARNING] keyword_collector — 선정 키워드 부족 (0/2) — 유사도 기준 완화하여 재시도
-2026-07-21 11:46:03,625 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (0/2) — 이전 사용 키워드 일부 허용
-2026-07-21 11:46:03,626 [INFO] keyword_collector —   [fallback] 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
-2026-07-21 11:46:03,627 [INFO] keyword_collector — 최종 선정 키워드 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
-2026-07-21 11:46:03,627 [INFO] main — 수집된 키워드 2개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과']
-2026-07-21 11:46:03,632 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-07-21 11:46:03,632 [INFO] main — 단독 포스트 대상 키워드 1개: ['직장인 월 30만원 ETF 투자 솔직 후기']
 2026-07-21 11:46:03,647 [INFO] main — 
 [1/1] 키워드: '직장인 월 30만원 ETF 투자 솔직 후기'
 2026-07-21 11:46:03,648 [INFO] content_generator — 포스트 생성 중: '직장인 월 30만원 ETF 투자 솔직 후기'
@@ -578,3 +498,83 @@
 2026-07-21 23:07:10,780 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-21 23:07:10,780 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-21 23:07:10,781 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-21 23:07:44,727 [INFO] main — ============================================================
+2026-07-21 23:07:44,727 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-21 23:07:44
+2026-07-21 23:07:44,727 [INFO] main — ============================================================
+2026-07-21 23:07:44,737 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
+2026-07-21 23:07:44,737 [INFO] keyword_collector — 포스팅 이력 코퍼스: 39개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-21 23:07:48,865 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-21 23:07:49,039 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 23:07:49,042 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-21 23:07:49,505 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-21 23:07:49,631 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 23:07:49,779 [WARNING] gsc_fetcher — GSC 토큰 발급 실패: 400
+2026-07-21 23:07:49,915 [WARNING] gsc_fetcher — GSC 토큰 발급 실패: 400
+2026-07-21 23:07:49,917 [INFO] keyword_collector —   [high_cpc] 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-21 23:07:49,917 [INFO] keyword_collector —   [fallback] 1개: ['코스피 코스닥 2026 하반기 전망 핵심 정리']
+2026-07-21 23:07:49,917 [INFO] keyword_collector — 최종 선정 키워드 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리']
+2026-07-21 23:07:49,918 [INFO] main — 수집된 키워드 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리']
+2026-07-21 23:07:49,923 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-07-21 23:07:49,923 [INFO] main — 단독 포스트 대상 키워드 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-21 23:07:49,938 [INFO] main — 
+[1/1] 키워드: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
+2026-07-21 23:07:49,938 [INFO] content_generator — 포스트 생성 중: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
+2026-07-21 23:07:50,057 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 23:07:50,058 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdG3UPR6zwhbW1MFKRYoh'}
+2026-07-21 23:07:55,546 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
+2026-07-21 23:07:55,663 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 23:07:55,664 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdG3UoPFaVPGHhK7TTeTL'}
+2026-07-21 23:07:55,665 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-21 23:07:55,782 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 23:07:56,269 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 23:08:09,494 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 23:08:09,511 [WARNING] content_generator — 컨텐츠 너무 짧음(1046자, 최소 2500자) — 재시도 1/3
+2026-07-21 23:08:12,511 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-21 23:08:12,511 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 23:08:28,775 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 23:08:28,781 [WARNING] content_generator — 컨텐츠 너무 짧음(1491자, 최소 2500자) — 재시도 2/3
+2026-07-21 23:08:31,782 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-21 23:08:31,782 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 23:08:50,816 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 23:08:50,817 [WARNING] content_generator — 최소 분량 미달(2073자) — 재시도 소진, 해당 분량으로 진행
+2026-07-21 23:08:50,835 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 23:08:52,622 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 23:08:52,631 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-07-21 23:08:53,792 [INFO] image_fetcher — 이미지 수집 성공: '2026년 주택담보대출 금리 비교: 발품 팔아 가장 유리한 은행 찾기' → 제목='주택담보대출 고정금리 vs 변동금리, 차이점과 나에게 유리한 금리를 선택' (관련성=0.22)
+2026-07-21 23:08:54,601 [INFO] image_fetcher — 이미지 수집 성공: '주택담보대출 금리 최저' → 제목='5개월 만에 내려간 주택담보대출 금리 '가산금리 인상 중단 영향'' (관련성=0.67)
+2026-07-21 23:08:55,596 [INFO] image_fetcher — 이미지 수집 성공: '주택담보대출 금리 주요 은행 주택담보 대출' → 제목='3월 주택담보대출 금리 3.94%... 5개월 연속 하락세' (관련성=0.29)
+2026-07-21 23:08:55,747 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-21 23:08:55,748 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-21 23:08:55,750 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-21 23:08:55,751 [INFO] content_generator — 포스트 생성 완료: '2026년 주택담보대출 금리 비교: 발품 팔아 가장 유리한 은행 찾기' (2073자, 이미지 3개)
+2026-07-21 23:08:55,772 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-21 23:08:58,807 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-21 23:08:58,813 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '2026년 주택담보대출 금리 비교: 발품 팔아 가장 유리한 은행'
+2026-07-21 23:08:58,813 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 2073자이므로 경고임.
+2026-07-21 23:08:58,813 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기반 내용이 부족하며 독창적 경험 서술 부족함.
+2026-07-21 23:08:58,813 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재로 인한 경고.
+2026-07-21 23:08:58,823 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-21 23:08:58,829 [INFO] internal_linker —   [1/5] '수수료' -> https://www.hoguwhat.com/2026/07/0.html
+2026-07-21 23:08:58,831 [INFO] internal_linker —   [2/5] '포인트' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0140262446
+2026-07-21 23:08:58,833 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-21 23:08:58,833 [INFO] main —   제목: 2026년 주택담보대출 금리 비교: 발품 팔아 가장 유리한 은행 찾기
+2026-07-21 23:08:58,833 [INFO] main —   이미지: 3개 삽입
+2026-07-21 23:08:58,833 [INFO] main —   글자 수: 2073자
+2026-07-21 23:08:58,833 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '2026년 주택담보대출 금리 비교: 발품 팔아 가장 유리한 은행 찾기' (2073자 < 2500자)
+2026-07-21 23:08:58,857 [INFO] dashboard_exporter —   검토 대기 저장: 2026년 주택담보대출 금리 비교: 발품 팔아 가장 유리한 은행 찾기 (11212자 HTML)
+2026-07-21 23:08:58,870 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 100개)
+2026-07-21 23:08:58,871 [INFO] main — 
+============================================================
+2026-07-21 23:08:58,871 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-21 23:08:58,871 [INFO] main — ============================================================
+2026-07-21 23:08:58,896 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-21 23:08:58,914 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-21 23:08:58,929 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-21 23:08:59,064 [WARNING] gsc_fetcher — GSC 토큰 발급 실패: 400
+2026-07-21 23:08:59,201 [WARNING] gsc_fetcher — GSC 토큰 발급 실패: 400
+2026-07-21 23:08:59,340 [WARNING] gsc_fetcher — GSC 토큰 발급 실패: 400
+2026-07-21 23:08:59,344 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-21 23:08:59,358 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 186 / 실패 15 / 대기 73)
+2026-07-21 23:08:59,359 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-21 23:08:59,359 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-21 23:08:59,360 [INFO] main — 대시보드 데이터 업데이트 완료

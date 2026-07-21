@@ -50,14 +50,32 @@ def _save_json(path: str, data) -> None:
 # ── 진단 함수들 ───────────────────────────────────────────────────────────────
 
 def _diagnose_upload_failures(runs: list[dict]) -> list[dict]:
-    """최근 5회 중 3회 이상 업로드 0건이면 critical 이슈로 등록."""
+    """최근 5회 중 3회 이상 업로드 0건이면 critical 이슈로 등록.
+
+    postsGenerated>0인데 bloggerUploaded==0인 실행은 두 가지 경우가 있음:
+    ① 분량/AdSense 점수 미달로 검토 대기(pending_posts.json)로 정상 라우팅된 경우 —
+       의도된 품질 게이트 동작이므로 실패로 보지 않음 (pendingReview == postsGenerated)
+    ② 그 외 원인(업로드 API 오류 등)으로 조용히 누락된 경우 — 진짜 실패
+    """
     issues = []
     recent = runs[:5]  # 최신순 (insert(0, …) 방식으로 저장됨)
-    # errors==0이어도 postsGenerated>0이면 silent 실패(JSON 파싱 오류 등)로 간주
-    fail_runs = [
+
+    def _is_real_failure(r: dict) -> bool:
+        if r.get("bloggerUploaded", 0) != 0:
+            return False
+        if r.get("errors", 0) > 0:
+            return True
+        posts_generated = r.get("postsGenerated", 0)
+        if posts_generated == 0:
+            return False
+        pending = r.get("pendingReview", 0)
+        return pending < posts_generated  # 일부라도 pending도 아니면 원인불명 실패
+
+    fail_runs = [r for r in recent if _is_real_failure(r)]
+    pending_runs = [
         r for r in recent
-        if r.get("bloggerUploaded", 0) == 0
-        and (r.get("errors", 0) > 0 or r.get("postsGenerated", 0) > 0)
+        if r.get("bloggerUploaded", 0) == 0 and r.get("errors", 0) == 0
+        and r.get("postsGenerated", 0) > 0 and not _is_real_failure(r)
     ]
     if len(fail_runs) >= 3:
         issues.append({
@@ -66,6 +84,14 @@ def _diagnose_upload_failures(runs: list[dict]) -> list[dict]:
             "message": f"최근 {len(fail_runs)}회 연속 업로드 실패 (0건 업로드)",
             "context": {"fail_count": len(fail_runs), "recent_dates": [r.get("date") for r in fail_runs]},
             "fix": "check_blogger_connection",
+        })
+    elif len(pending_runs) >= 3:
+        issues.append({
+            "id": "consecutive_pending_review",
+            "level": "warning",
+            "message": f"최근 {len(pending_runs)}회 연속 검토 대기 전환 (분량/AdSense 점수 미달)",
+            "context": {"pending_count": len(pending_runs), "recent_dates": [r.get("date") for r in pending_runs]},
+            "fix": None,
         })
     return issues
 

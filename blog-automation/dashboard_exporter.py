@@ -92,6 +92,7 @@ def log_run(
     total_images = sum(r.get("images_inserted", 0) for r in results)
     total_posts = len(results)
     total_words = sum(r.get("word_count", 0) for r in results)
+    pending_review = sum(1 for r in results if r.get("status") == "pending")
 
     avg_cpc = 0.9
     if results:
@@ -108,6 +109,7 @@ def log_run(
         "keywords": keywords,
         "postsGenerated": total_posts,
         "bloggerUploaded": blogger_uploaded,
+        "pendingReview": pending_review,
         "errors": errors,
         "errorMessages": (error_messages or [])[:20],
         "imagesInserted": total_images,

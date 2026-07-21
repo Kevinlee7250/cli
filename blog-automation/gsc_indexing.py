@@ -62,6 +62,18 @@ def _site_url_for(cfg: dict) -> str:
     return site
 
 
+def _domain_property_for(site_url: str) -> str:
+    """URL-프리픽스 사이트 URL에서 도메인 속성(sc-domain:) 식별자를 만듭니다.
+
+    커스텀 도메인은 Search Console에 도메인 속성으로 등록된 경우가 많아
+    (예: hoguwhat.com), URL-프리픽스 형식(https://www.hoguwhat.com/)으로
+    호출하면 403이 남 — 이 경우 sc-domain: 형식으로 재시도해야 함.
+    """
+    from urllib.parse import urlparse
+    netloc = urlparse(site_url).netloc.removeprefix("www.")
+    return f"sc-domain:{netloc}" if netloc else site_url
+
+
 def submit_sitemaps(blogs: list[dict], token: str | None = None) -> dict:
     """각 블로그의 sitemap.xml을 GSC에 (재)제출합니다. 멱등 — 반복 호출 안전."""
     token = token or _access_token()
@@ -75,11 +87,19 @@ def submit_sitemaps(blogs: list[dict], token: str | None = None) -> dict:
             logger.info(f"[{name}] 사이트 URL 없음 — 건너뜀 (blogs.json에 url 또는 gsc_site_url 설정)")
             continue
         sitemap = site + "sitemap.xml"
-        try:
-            r = requests.put(
-                f"{GSC_API_BASE}/sites/{quote(site, safe='')}/sitemaps/{quote(sitemap, safe='')}",
+
+        def _submit(property_id: str):
+            return requests.put(
+                f"{GSC_API_BASE}/sites/{quote(property_id, safe='')}/sitemaps/{quote(sitemap, safe='')}",
                 headers={"Authorization": f"Bearer {token}"}, timeout=20,
             )
+
+        try:
+            r = _submit(site)
+            if r.status_code == 403:
+                domain_property = _domain_property_for(site)
+                logger.info(f"[{name}] URL-프리픽스 속성 403 — 도메인 속성으로 재시도: {domain_property}")
+                r = _submit(domain_property)
             if r.status_code in (200, 204):
                 logger.info(f"✅ [{name}] 사이트맵 제출: {sitemap}")
                 submitted += 1
@@ -136,12 +156,17 @@ def inspect_recent(blogs: list[dict], limit: int = 20, token: str | None = None)
     counts = {"indexed": 0, "not_indexed": 0, "unknown": 0}
     for p in posts:
         try:
-            r = requests.post(
-                INSPECT_API,
-                headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
-                json={"inspectionUrl": p["url"], "siteUrl": p["site"]},
-                timeout=20,
-            )
+            def _inspect(site_id: str):
+                return requests.post(
+                    INSPECT_API,
+                    headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+                    json={"inspectionUrl": p["url"], "siteUrl": site_id},
+                    timeout=20,
+                )
+
+            r = _inspect(p["site"])
+            if r.status_code == 403:
+                r = _inspect(_domain_property_for(p["site"]))
             if r.status_code != 200:
                 logger.debug(f"검사 실패 [{r.status_code}]: {p['url']} {r.text[:100]}")
                 results.append({**p, "verdict": "unknown", "coverage": f"API {r.status_code}"})

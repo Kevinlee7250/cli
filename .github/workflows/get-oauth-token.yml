@@ -1,6 +1,9 @@
 name: 🔑 Google OAuth 토큰 발급
 
 on:
+  push:
+    branches: [claude/blog-automation-system-KAbtE]
+    paths: ['.github/oauth-token-trigger']
   workflow_dispatch:
     inputs:
       step:
@@ -30,6 +33,30 @@ jobs:
     timeout-minutes: 5
 
     steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: 실행 모드 결정 (push 트리거 파일 또는 workflow_dispatch 입력)
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            LINE=$(cat .github/oauth-token-trigger 2>/dev/null | head -1)
+            if [[ "$LINE" == 2_exchange_code:* ]]; then
+              echo "step_mode=2_exchange_code" >> "$GITHUB_ENV"
+              echo "auth_code_value=${LINE#2_exchange_code:}" >> "$GITHUB_ENV"
+            else
+              echo "step_mode=1_get_url" >> "$GITHUB_ENV"
+              echo "auth_code_value=" >> "$GITHUB_ENV"
+            fi
+            echo "scope_value=blogger+gsc" >> "$GITHUB_ENV"
+          else
+            echo "step_mode=${{ inputs.step }}" >> "$GITHUB_ENV"
+            echo "auth_code_value=${{ inputs.auth_code }}" >> "$GITHUB_ENV"
+            echo "scope_value=${{ inputs.scope }}" >> "$GITHUB_ENV"
+          fi
+
       - name: Python 설정
         uses: actions/setup-python@v5
         with:
@@ -39,10 +66,10 @@ jobs:
         run: pip install requests -q
 
       - name: 🔗 1단계 — 인증 URL 생성
-        if: ${{ inputs.step == '1_get_url' }}
+        if: ${{ env.step_mode == '1_get_url' }}
         env:
           CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          SCOPE_CHOICE: ${{ inputs.scope }}
+          SCOPE_CHOICE: ${{ env.scope_value }}
         run: |
           python3 - <<'PYEOF'
           import os, urllib.parse
@@ -79,12 +106,12 @@ jobs:
           PYEOF
 
       - name: 🔄 2단계 — 코드 교환 및 Refresh Token 출력
-        if: ${{ inputs.step == '2_exchange_code' }}
+        if: ${{ env.step_mode == '2_exchange_code' }}
         env:
           CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          AUTH_CODE: ${{ inputs.auth_code }}
-          SCOPE_CHOICE: ${{ inputs.scope }}
+          AUTH_CODE: ${{ env.auth_code_value }}
+          SCOPE_CHOICE: ${{ env.scope_value }}
         run: |
           python3 - <<'PYEOF'
           import os, requests

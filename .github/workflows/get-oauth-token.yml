@@ -27,6 +27,9 @@ on:
         required: false
         default: ''
 
+permissions:
+  contents: write
+
 jobs:
   get-token:
     runs-on: ubuntu-latest
@@ -105,7 +108,7 @@ jobs:
           print("auth_code 항목에 복사한 코드를 붙여넣으세요.")
 
           # 로그는 시크릿 마스킹으로 client_id가 ***로 가려지므로,
-          # 아티팩트 파일로 별도 저장 (아티팩트는 로그 마스킹 대상이 아님)
+          # 아티팩트(네트워크 정책상 다운로드 불가할 수 있음) + git 커밋 파일로 이중 저장
           with open("oauth_url.txt", "w") as f:
               f.write(url + "\n")
           PYEOF
@@ -117,6 +120,24 @@ jobs:
           name: oauth-auth-url
           path: oauth_url.txt
           retention-days: 1
+
+      - name: 인증 URL 임시 커밋 (client_id는 공개 식별자 — 사용 후 삭제 권장)
+        if: ${{ env.step_mode == '1_get_url' }}
+        run: |
+          cp oauth_url.txt .github/oauth_url_output.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f .github/oauth_url_output.txt
+          if git diff --staged --quiet; then
+            echo "변경사항 없음"
+          else
+            git commit -m "🔑 OAuth 인증 URL 출력 (임시 — 확인 후 삭제 권장)"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE && break
+              sleep $((i * 2))
+            done
+          fi
 
       - name: 🔄 2단계 — 코드 교환 및 Refresh Token 출력
         if: ${{ env.step_mode == '2_exchange_code' }}

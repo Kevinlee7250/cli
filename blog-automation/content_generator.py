@@ -1507,6 +1507,47 @@ def _faq_to_cards(content: str) -> str:
     return pre + h2 + '\n' + faq_rebuilt + '\n' + post_body
 
 
+_FAQ_HEADING_RE = re.compile(
+    r'<h2[^>]*>[^<]*(?:자주\s*묻는\s*질문|Frequently Asked Questions|FAQ)[^<]*</h2>',
+    re.IGNORECASE,
+)
+_FAQ_CARD_RE = re.compile(r'<div style="background:#f8fafc.*?</div>', re.IGNORECASE | re.DOTALL)
+
+
+def _inject_mid_article_faq(html: str) -> str:
+    """FAQ 카드 1개를 본문 중간(이탈이 잦은 지점)에도 배치해 재유입을 유도합니다.
+
+    이탈은 도입부 후킹 효과가 끝나고 결론까지는 아직 먼 글 중간 지점에서
+    가장 많이 발생함. FAQ 전체를 옮기지 않고(끝에 있는 완전한 목록은 SEO·
+    스키마용으로 유지) 카드 1개만 복제해 "이것도 궁금하지 않으세요?" 형태로
+    중간에 배치하면 완독까지 이어질 계기를 하나 더 만들 수 있음.
+
+    본문 H2 섹션이 3개 미만이면(끼워 넣을 마땅한 지점이 없으므로) 건드리지 않음.
+    """
+    faq_h2_m = _FAQ_HEADING_RE.search(html)
+    if not faq_h2_m:
+        return html
+
+    faq_section = html[faq_h2_m.end():]
+    card_m = _FAQ_CARD_RE.search(faq_section)
+    if not card_m:
+        return html
+    faq_card = card_m.group(0)
+
+    body = html[:faq_h2_m.start()]
+    h2_positions = [m.start() for m in re.finditer(r'<h2[^>]*>', body)]
+    if len(h2_positions) < 3:
+        return html
+
+    mid_pos = h2_positions[len(h2_positions) // 2]
+    teaser = (
+        '<p style="font-weight:700;color:#92400e;margin:1.8em 0 8px;font-size:0.95em;">'
+        '💬 잠깐, 이것도 궁금하지 않으세요?</p>'
+        f'{faq_card}'
+    )
+    return body[:mid_pos] + teaser + body[mid_pos:] + html[faq_h2_m.start():]
+
+
 _DEAD_LINK_RE = re.compile(r'<a\b[^>]*href="#"[^>]*>(.*?)</a>', re.IGNORECASE | re.DOTALL)
 
 
@@ -1609,6 +1650,8 @@ def _apply_design(html: str, keyword: str = "", article_type: str = "analysis") 
 
     # FAQ 섹션을 카드 스타일로 변환
     html = _faq_to_cards(html)
+    # FAQ 배치 최적화 — 카드 1개를 본문 중간(이탈 잦은 지점)에도 배치
+    html = _inject_mid_article_faq(html)
 
     # 이모지 callout 박스 (💡팁 / ⚠️주의 단락 자동 스타일)
     html = _style_callout_paragraphs(html, theme)

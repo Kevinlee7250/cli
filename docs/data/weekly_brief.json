@@ -1,0 +1,120 @@
+{
+  "generated_at": "2026-07-22T12:11:10.435605+00:00",
+  "period_days": 7,
+  "period_start": "2026-07-15T12:11:10.435605+00:00",
+  "period_end": "2026-07-22T12:11:10.435605+00:00",
+  "summary_text": "지난 7일간 총 71건 생성, 24건 발행(금융NEWS 9건, HOGU 여행,스포츠,연예 4건, HOGU What? 11건). 평균 건강점수 74.3/100. 위험 신호 2건 확인됨.",
+  "metrics": {
+    "posts_generated": 71,
+    "posts_uploaded": 24,
+    "errors": 16,
+    "avg_health_score": 74.3,
+    "min_health_score": 63,
+    "by_blog": {
+      "blog3": {
+        "blogName": "금융NEWS",
+        "generated": 25,
+        "uploaded": 9
+      },
+      "blog2": {
+        "blogName": "HOGU 여행,스포츠,연예",
+        "generated": 21,
+        "uploaded": 4
+      },
+      "blog1": {
+        "blogName": "HOGU What?",
+        "generated": 25,
+        "uploaded": 11
+      }
+    },
+    "new_incidents": 6,
+    "recurring_issues_auto_matched": 0,
+    "deleted_low_grade_posts": 0,
+    "total_published_posts": 91
+  },
+  "highlights": [
+    "이번 주 24건 발행 완료 (3개 블로그)",
+    "새 인시던트 6건 기록 (재발 방지 조치 포함)"
+  ],
+  "risks": [
+    "critical 등급 이슈 25건 발생",
+    "발행 오류 16건 발생"
+  ],
+  "new_incidents": [
+    {
+      "id": "20260722060825",
+      "date": "2026-07-22T06:08:25.624538+00:00",
+      "title": "등급 삭제 근접 사고 — '측정 불가'를 '저성과'로 착각",
+      "symptom": "Blogger/GSC 연동이 깨진 상태에서 분석을 돌렸더니 91개 글 전부 B등급으로 나옴 — 사용자 승인(B+C 삭제) 실행 직전까지 감",
+      "root_cause": "analytics_summary.json의 dataSource(bloggerApi/gscPageData)가 전부 false인데도 등급만으로 삭제를 진행할 수 있었음 — 측정 불가 상태와 실제 저성과 상태를 구분하는 안전장치 부재",
+      "fix": "delete_low_grade_posts.py에 _measurement_gate_blocked() 게이트 추가 — 실제 성과 데이터 없으면 --force 없이 삭제 거부",
+      "files": [
+        "delete_low_grade_posts.py"
+      ],
+      "prevention": "tests/test_auth_flow.py에 게이트 관련 테스트 4건 추가, docs/OAUTH_RUNBOOK.md '알려진 함정'에 기록"
+    },
+    {
+      "id": "20260722060825",
+      "date": "2026-07-22T06:08:25.624331+00:00",
+      "title": "GOOGLE_REFRESH_TOKEN invalid_grant / GOOGLE_CLIENT_SECRET invalid_client 혼동",
+      "symptom": "토큰 갱신 요청이 계속 실패하지만 원인(만료된 refresh_token vs 잘못된 client_secret)을 구분 못 함",
+      "root_cause": "invalid_grant는 refresh_token 자체 무효, invalid_client는 client_secret이 GitHub Secret 값과 불일치 — 두 오류 메시지를 구분해서 진단하지 않음",
+      "fix": "auth_health_check.py로 access_token 갱신을 1회 시도해 두 오류를 명시적으로 구분·기록, docs/data/auth_health.json에 결과 저장 + 대시보드 카드 표시",
+      "files": [
+        "auth_health_check.py",
+        "docs/index.html",
+        ".github/workflows/auto-repair.yml"
+      ],
+      "prevention": "tests/test_auth_flow.py::test_auth_health_detects_invalid_grant / test_auth_health_detects_invalid_client"
+    },
+    {
+      "id": "20260722060825",
+      "date": "2026-07-22T06:08:25.624116+00:00",
+      "title": "Google OAuth OOB(urn:ietf:wg:oauth:2.0:oob) redirect_uri 폐지",
+      "symptom": "인증 URL 접속 시 '액세스 차단됨: 요청이 잘못되었으므로... 400 오류: invalid_request'",
+      "root_cause": "Google이 OOB(out-of-band) redirect_uri를 보안상의 이유로 폐지",
+      "fix": "redirect_uri를 http://localhost로 교체, 승인 후 '사이트에 연결할 수 없음' 페이지 주소창에서 code= 파라미터 추출",
+      "files": [
+        "docs/OAUTH_RUNBOOK.md"
+      ],
+      "prevention": "OAUTH_RUNBOOK.md에 절차 문서화"
+    },
+    {
+      "id": "20260722060825",
+      "date": "2026-07-22T06:08:25.623891+00:00",
+      "title": "BLOGS_CONFIG 환경변수 병합 버그 — blogs.json 필드 유실",
+      "symptom": "워크플로 실행 시 3개 블로그 전부 '사이트 URL 없음 — 건너뜀' 로그와 함께 건너뜀",
+      "root_cause": "get_blog_configs()가 BLOGS_CONFIG(credential만 포함)로 blogs.json 레지스트리 항목을 통째로 교체(merged[id]=b), gsc_site_url/topics 등 필드가 사라짐",
+      "fix": "필드 단위 병합으로 변경: merged[b['id']] = {**registry.get(b['id'], {}), **b}",
+      "files": [
+        "config.py"
+      ],
+      "prevention": "tests/test_core.py::test_merge_preserves_registry_fields_not_in_env 추가"
+    },
+    {
+      "id": "20260722060825",
+      "date": "2026-07-22T06:08:25.623481+00:00",
+      "title": "GSC 도메인 속성(sc-domain:) 403 — 사이트맵 제출·검사 실패",
+      "symptom": "blog1(커스텀 도메인 hoguwhat.com)만 GSC API 호출이 403으로 실패",
+      "root_cause": "GSC에 도메인 속성(sc-domain:)으로 등록된 사이트를 URL-프리픽스 형식으로 조회하면 403 발생",
+      "fix": "_domain_property_for() 헬퍼로 403 시 sc-domain: 형식으로 자동 재시도 (blog_analytics.py, gsc_indexing.py 양쪽)",
+      "files": [
+        "blog_analytics.py",
+        "gsc_indexing.py"
+      ],
+      "prevention": "tests/test_auth_flow.py에 도메인 속성 폴백 회귀 테스트 2건 추가"
+    },
+    {
+      "id": "20260722060825",
+      "date": "2026-07-22T06:08:25.622825+00:00",
+      "title": "블로그별 analytics 데이터 오염 (단일 블로그 데이터를 3개 블로그에 복제)",
+      "symptom": "blog_analytics.py 실행 후 blog2/blog3 조회수·클릭수가 blog1과 동일하게 표시됨",
+      "root_cause": "run_analytics()가 BLOGGER_BLOG_ID 환경변수 하나로만 Blogger/GSC 데이터를 조회한 뒤 전체 블로그에 동일하게 적용",
+      "fix": "posts_by_blog로 그룹화해 블로그별 blog_id/gsc_site_url로 개별 수집하도록 리팩터, blogBreakdown 필드 추가",
+      "files": [
+        "blog_analytics.py"
+      ],
+      "prevention": "tests/test_core.py에 블로그별 분리 회귀 테스트"
+    }
+  ]
+}

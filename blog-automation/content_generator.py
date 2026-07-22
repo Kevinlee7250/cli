@@ -17,6 +17,7 @@ from config import (
 )
 from coupang_affiliate import inject_affiliate_section
 from image_fetcher import fetch_images_for_queries, inject_images_into_content
+from readability_checker import assess_readability, readability_escalation_note
 
 logger = logging.getLogger(__name__)
 _client: anthropic.Anthropic | None = None
@@ -2224,6 +2225,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
     ai_provider = _resolve_ai_provider(blog_config)
 
     prev_wc = 0
+    last_readability: dict | None = None
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
@@ -2250,7 +2252,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                     "You are a blogger who writes well-researched, trustworthy posts. Never fabricate personal experiences. "
                     "Write naturally, like a real person — not an AI report. JSON only."
                 )
-            escalation = _retry_escalation_note(attempt, prev_wc)
+            escalation = _retry_escalation_note(attempt, prev_wc) + readability_escalation_note(last_readability)
             logger.info(f"  AI 제공자: {ai_provider.upper()} (시도 {attempt + 1}/3)")
             raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
             if not raw:
@@ -2273,7 +2275,8 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             post_data["risk_level"] = _assess_risk_level(keyword)
             # 글작성 고도화 실험 추적용 — 어떤 도입부 후킹 스타일이 적용됐는지 기록해
             # 발행 후 GSC 지표·등급과 비교할 수 있게 함 (weekly_learning.py가 집계)
-            post_data["content_category"] = _detect_content_category(keyword, (blog_config or {}).get("id", ""))
+            content_category = _detect_content_category(keyword, (blog_config or {}).get("id", ""))
+            post_data["content_category"] = content_category
             # 표준 스키마: tags는 labels의 별칭 (내부 링크·대시보드 공용)
             post_data["tags"] = list(post_data.get("labels", []) or [])
             post_data["series_id"] = series_context.get("series_id", "")
@@ -2293,6 +2296,16 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                     logger.error(f"컨텐츠 생성 실패: {post_data['word_count']}자 — thin content 방지를 위해 게시 거부")
                     return None
                 logger.warning(f"최소 분량 미달({post_data['word_count']}자) — 재시도 소진, 해당 분량으로 진행")
+
+            # 읽기 난이도 자동 검사 — 문장 길이·전문용어 비율 스캔, 기준 미달 시 재작성 요청
+            last_readability = assess_readability(content_html, content_category)
+            post_data["readability"] = last_readability
+            if not last_readability["ok"]:
+                if attempt < 2:
+                    logger.warning(f"읽기 난이도 기준 미달({last_readability['issues']}) — 재작성 요청 {attempt + 1}/3")
+                    time.sleep(2)
+                    continue
+                logger.warning(f"읽기 난이도 기준 미달({last_readability['issues']}) — 재시도 소진, 해당 상태로 진행")
 
             if not isinstance(post_data.get("sources"), list):
                 post_data["sources"] = []
@@ -2602,6 +2615,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
     is_blog1 = blog_config and blog_config.get("id") == "blog1"
     ai_provider = _resolve_ai_provider(blog_config)
     prev_wc = 0
+    last_readability: dict | None = None
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
@@ -2631,7 +2645,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                     "For events after your knowledge cutoff, use 'according to recent trends'. "
                     "JSON only."
                 )
-            escalation = _retry_escalation_note(attempt, prev_wc)
+            escalation = _retry_escalation_note(attempt, prev_wc) + readability_escalation_note(last_readability)
             logger.info(f"  AI 제공자: {ai_provider.upper()} (시도 {attempt + 1}/3)")
             raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
             if not raw:
@@ -2655,7 +2669,8 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             post_data["risk_level"] = _assess_risk_level(keyword)
             # 글작성 고도화 실험 추적용 — 어떤 도입부 후킹 스타일이 적용됐는지 기록해
             # 발행 후 GSC 지표·등급과 비교할 수 있게 함 (weekly_learning.py가 집계)
-            post_data["content_category"] = _detect_content_category(keyword, (blog_config or {}).get("id", ""))
+            content_category = _detect_content_category(keyword, (blog_config or {}).get("id", ""))
+            post_data["content_category"] = content_category
             # 표준 스키마: tags는 labels의 별칭 (내부 링크·대시보드 공용)
             post_data["tags"] = list(post_data.get("labels", []) or [])
 
@@ -2675,6 +2690,16 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                     logger.error(f"컨텐츠 생성 실패: {post_data['word_count']}자 — thin content 방지를 위해 게시 거부")
                     return None
                 logger.warning(f"최소 분량 미달({post_data['word_count']}자) — 재시도 소진, 해당 분량으로 진행")
+
+            # 읽기 난이도 자동 검사 — 문장 길이·전문용어 비율 스캔, 기준 미달 시 재작성 요청
+            last_readability = assess_readability(content_html, content_category)
+            post_data["readability"] = last_readability
+            if not last_readability["ok"]:
+                if attempt < 2:
+                    logger.warning(f"읽기 난이도 기준 미달({last_readability['issues']}) — 재작성 요청 {attempt + 1}/3")
+                    time.sleep(2)
+                    continue
+                logger.warning(f"읽기 난이도 기준 미달({last_readability['issues']}) — 재시도 소진, 해당 상태로 진행")
 
             # sources 필드 유효성 검증 (hallucinated URL 필터링)
             if not isinstance(post_data.get("sources"), list):

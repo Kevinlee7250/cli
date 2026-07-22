@@ -209,6 +209,23 @@ def test_registry_blogs_have_gsc_site_url(monkeypatch):
         assert "gsc_site_url" in b, f"{b['id']}에 gsc_site_url 없음"
 
 
+def test_merge_preserves_registry_fields_not_in_env(monkeypatch):
+    """BLOGS_CONFIG가 credential만 줘도 blogs.json의 gsc_site_url/topics는 유지된다.
+
+    회귀 방지: 예전엔 merged[id] = b로 통째 교체해서 BLOGS_CONFIG에 없는 필드
+    (gsc_site_url, topics, naver_api_queries)가 전부 사라지는 버그가 있었음
+    (2026-07-22, 사이트맵 제출이 전 블로그에서 "사이트 URL 없음"으로 실패해서 발견).
+    """
+    env = json.dumps([
+        {"id": "blog1", "client_id": "X", "client_secret": "Y", "refresh_token": "Z", "enabled": True},
+    ])
+    config = _reload_config(monkeypatch, env)
+    blogs = {b["id"]: b for b in config.get_blog_configs()}
+    assert blogs["blog1"]["client_id"] == "X"
+    assert blogs["blog1"].get("gsc_site_url"), "BLOGS_CONFIG 병합 후 gsc_site_url 유실됨"
+    assert blogs["blog1"].get("topics"), "BLOGS_CONFIG 병합 후 topics 유실됨"
+
+
 # ──────────────────────────────────────────────────────────────────────────────
 # keyword_collector — 블로그별 이력 필터
 # ──────────────────────────────────────────────────────────────────────────────

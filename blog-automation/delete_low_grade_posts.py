@@ -29,6 +29,7 @@ _DOCS_DATA = os.path.join(_BASE_DIR, "..", "docs", "data")
 _POSTS_JSON = os.path.join(_DOCS_DATA, "posts.json")
 _REGISTRY_JSON = os.path.join(_DOCS_DATA, "post_registry.json")
 _REGISTRY_LOGS = os.path.join(_BASE_DIR, "logs", "post_registry.json")
+_ANALYTICS_SUMMARY = os.path.join(_DOCS_DATA, "analytics_summary.json")
 
 
 def _load(path: str, default):
@@ -47,9 +48,37 @@ def _save(path: str, data) -> None:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def scan_and_delete(grades: set[str], blog_filter: str, dry_run: bool) -> dict:
+def _measurement_gate_blocked() -> str | None:
+    """등급이 '실제 저성과'가 아니라 '측정 불가'로 나온 상태에서 삭제를 막습니다.
+
+    2026-07-22 실제로 겪은 근접 사고: Blogger API·GSC 연동이 전부 깨진 상태에서
+    분석을 돌렸더니 91개 글이 전부 "B등급"으로 나왔음 — 이건 저성과가 아니라
+    측정 자체가 안 된 것이었는데, 하마터면 발행 글 47개를 무근거로 삭제할 뻔함.
+    dataSource가 신호 없음을 보고하면 --force 없이는 삭제를 거부합니다.
+    """
+    summary = _load(_ANALYTICS_SUMMARY, None)
+    if not summary:
+        return "analytics_summary.json 없음 — blog_analytics.py를 먼저 실행해 실제 등급을 매기세요"
+    ds = summary.get("dataSource", {})
+    if not ds.get("bloggerApi") and not ds.get("gscPageData"):
+        return (
+            "실제 성과 데이터(Blogger 조회수/GSC 클릭)가 전혀 수집되지 않았습니다 — "
+            "지금의 등급은 '저성과'가 아니라 '측정 불가'를 의미할 수 있습니다. "
+            "GOOGLE_REFRESH_TOKEN 등 인증 상태를 확인하고 재분석 후 다시 시도하거나, "
+            "정말 이 상태로 진행하려면 --force를 명시하세요."
+        )
+    return None
+
+
+def scan_and_delete(grades: set[str], blog_filter: str, dry_run: bool, force: bool = False) -> dict:
     from config import get_blog_configs
     from blogger_uploader import get_post_id_by_url, delete_post
+
+    if not dry_run and not force:
+        gate_msg = _measurement_gate_blocked()
+        if gate_msg:
+            logger.error(f"⛔ 삭제 중단: {gate_msg}")
+            return {"error": gate_msg, "gated": True}
 
     blogs = {c.get("id", "blog1"): c for c in get_blog_configs()}
     posts = _load(_POSTS_JSON, [])
@@ -148,10 +177,12 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--grades", default="B,C", help="삭제 대상 등급 (쉼표 구분, 기본 B,C)")
     parser.add_argument("--blog", default="", help="특정 블로그 ID만 대상 (비우면 전체)")
+    parser.add_argument("--force", action="store_true",
+                         help="실제 성과 데이터 없이(측정 불가 상태) 등급만으로도 강제 삭제 진행")
     args = parser.parse_args()
 
     grades = {g.strip().upper() for g in args.grades.split(",") if g.strip()}
-    report = scan_and_delete(grades, args.blog, args.dry_run)
+    report = scan_and_delete(grades, args.blog, args.dry_run, force=args.force)
     return 0 if not report.get("error") and report.get("failed", 0) == 0 else 1
 
 

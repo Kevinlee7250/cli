@@ -7786,8 +7786,39 @@ function renderAuthHealth() {
         <span style="font-size:11px;color:var(--muted)">마지막 확인: ${checkedAt}</span>
       </div>
       ${rows}
-      ${ok ? '' : '<div style="font-size:12px;color:var(--muted);margin-top:8px">GOOGLE_REFRESH_TOKEN 또는 GOOGLE_CLIENT_SECRET Secret을 재발급해서 업데이트하세요.</div>'}
+      ${ok ? '' : `
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">GOOGLE_REFRESH_TOKEN 또는 GOOGLE_CLIENT_SECRET Secret을 재발급해서 업데이트하세요.</div>
+        <button onclick="startReauthFlow()" style="margin-top:10px;padding:8px 14px;border-radius:8px;border:1px solid rgba(239,68,68,.4);background:rgba(239,68,68,.12);color:var(--fg,#fff);font-size:12px;cursor:pointer">🔁 재인증 시작 (1단계: 동의 화면 열기)</button>
+        <div id="reauth-steps" style="display:none;margin-top:10px;font-size:12px;color:var(--muted);line-height:1.7;padding:12px;background:rgba(255,255,255,.03);border-radius:8px"></div>
+      `}
     </div>`
+}
+
+// 원클릭 재인증 — 1단계(동의 화면)만 브라우저에서 자동화, 2단계(코드→refresh_token 교환)는
+// client_secret이 필요해 보안상 로컬에서만 수행해야 하므로 안내로 대체한다 (OAUTH_RUNBOOK.md 참고)
+function startReauthFlow() {
+  const clientId = DATA.authHealth?.client_id
+  const steps = document.getElementById('reauth-steps')
+  if (!clientId) {
+    if (steps) {
+      steps.style.display = 'block'
+      steps.innerHTML = `client_id를 찾을 수 없습니다. 아래 절차를 docs/OAUTH_RUNBOOK.md 문서를 참고해 수동으로 진행해 주세요.`
+    }
+    return
+  }
+  const scope = encodeURIComponent('https://www.googleapis.com/auth/blogger https://www.googleapis.com/auth/webmasters')
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodeURIComponent('http://localhost')}&response_type=code&scope=${scope}&access_type=offline&prompt=consent`
+  window.open(url, '_blank')
+  if (steps) {
+    steps.style.display = 'block'
+    steps.innerHTML = `
+      <b>다음 절차 (docs/OAUTH_RUNBOOK.md 참고):</b><br>
+      1. 새 탭에서 Google 계정으로 로그인하고 동의합니다.<br>
+      2. 승인 후 "사이트에 연결할 수 없음" 페이지로 이동합니다 — <b>주소창 URL 전체</b>를 복사하세요.<br>
+      3. 그 URL에서 <code>code=...</code> 파라미터 값(다음 <code>&amp;</code> 전까지)을 추출합니다.<br>
+      4. 로컬 환경에서 그 code와 client_secret으로 토큰을 교환해 새 refresh_token을 발급받습니다 (보안상 GitHub Actions에서 실행하면 안 됨 — public 저장소 로그에 노출됨).<br>
+      5. 새 refresh_token을 GitHub Secret <code>GOOGLE_REFRESH_TOKEN</code>에 업데이트합니다.`
+  }
 }
 
 // ── 자동 수리 리포트 렌더 ──────────────────────────────────────────────────────
@@ -8925,6 +8956,8 @@ const BOT_RUN_ACTIONS = {
     fn: () => wfDispatchGeneric('gsc-indexing.yml', { inspect_count: '20' }, '구글 색인 점검', 3) },
   '실행:쇼츠생성':       { label: '유튜브 쇼츠 스크립트 생성',
     fn: () => wfDispatchGeneric('shorts-generate.yml', { latest_count: '1' }, '쇼츠 스크립트 생성', 3) },
+  '실행:재인증시작':     { label: 'OAuth 재인증 시작 (1단계)', noPat: true,
+    fn: () => { navTo('system'); startReauthFlow() } },
 }
 
 function botAction(cmd) {
@@ -8937,7 +8970,7 @@ function botAction(cmd) {
   if (cmd.startsWith('실행:')) {
     const action = BOT_RUN_ACTIONS[cmd]
     if (!action) { showToast('알 수 없는 실행 명령입니다', 'warning'); return }
-    if (!getPAT()) {
+    if (!action.noPat && !getPAT()) {
       _botAppend('assistant', '⚠️ 워크플로 실행에는 GitHub PAT가 필요합니다. 시스템 관리 → API 키 관리에서 PAT를 설정해 주세요.')
       return
     }

@@ -63,6 +63,9 @@ def run() -> dict:
         "checked_at": datetime.now(timezone.utc).isoformat(),
         "all_ok": all(c["ok"] for c in checks),
         "checks": checks,
+        # client_id는 공개돼도 무해함(OAuth 재인증 URL을 대시보드에서 바로 구성하기 위해 노출) —
+        # client_secret/refresh_token은 절대 여기 포함하지 않는다.
+        "client_id": os.getenv("GOOGLE_CLIENT_ID", ""),
     }
 
     for c in checks:

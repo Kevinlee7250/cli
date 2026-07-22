@@ -1,71 +1,3 @@
-2026-07-22 05:51:23,524 [INFO] keyword_collector — 유사 주제 제외 1개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
-2026-07-22 05:51:23,524 [INFO] keyword_collector —   [fallback] 2개: ['부산 1박2일 혼자 여행 현실 비용 공개', '강원도 캠핑 처음 해봤을 때 몰랐던 것들']
-2026-07-22 05:51:23,524 [INFO] keyword_collector — 최종 선정 키워드 2개: ['부산 1박2일 혼자 여행 현실 비용 공개', '강원도 캠핑 처음 해봤을 때 몰랐던 것들']
-2026-07-22 05:51:23,524 [INFO] main — 수집된 키워드 2개: ['부산 1박2일 혼자 여행 현실 비용 공개', '강원도 캠핑 처음 해봤을 때 몰랐던 것들']
-2026-07-22 05:51:23,529 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-07-22 05:51:23,529 [INFO] main — 단독 포스트 대상 키워드 1개: ['부산 1박2일 혼자 여행 현실 비용 공개']
-2026-07-22 05:51:23,545 [INFO] main — 
-[1/1] 키워드: '부산 1박2일 혼자 여행 현실 비용 공개'
-2026-07-22 05:51:23,545 [INFO] content_generator — 포스트 생성 중: '부산 1박2일 혼자 여행 현실 비용 공개'
-2026-07-22 05:51:23,666 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 05:51:23,667 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdGaFGyAENV29JFoFzPem'}
-2026-07-22 05:51:34,594 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '부산 1박2일 혼자 여행 현실 비용 공개'
-2026-07-22 05:51:34,722 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 05:51:34,722 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdGaG6GFyoWiCcrwocog8'}
-2026-07-22 05:51:34,723 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-22 05:51:34,850 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 05:51:35,386 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 05:51:53,810 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 05:51:53,823 [WARNING] content_generator — 컨텐츠 너무 짧음(1351자, 최소 2500자) — 재시도 1/3
-2026-07-22 05:51:56,824 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-22 05:51:56,824 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 05:52:09,501 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 05:52:09,506 [WARNING] content_generator — 컨텐츠 너무 짧음(1028자, 최소 2500자) — 재시도 2/3
-2026-07-22 05:52:12,507 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-22 05:52:12,507 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 05:52:27,550 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 05:52:27,554 [WARNING] content_generator — 최소 분량 미달(1412자) — 재시도 소진, 해당 분량으로 진행
-2026-07-22 05:52:27,573 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 05:52:29,967 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 05:52:29,972 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
-2026-07-22 05:52:30,239 [INFO] image_fetcher — 이미지 수집 성공: '부산 1박2일 혼자 여행: 현실적으로 드는 총 비용은?' → 제목='passport / map / world map / world / tri' (관련성=0.14)
-2026-07-22 05:52:30,512 [INFO] image_fetcher — 대체 이미지 수집: '부산 여행 비용' → 제목='airport / woman / flight / boarding / tr' (관련성=0.00)
-2026-07-22 05:52:30,513 [INFO] image_fetcher — 이미지 수집 성공: '부산 여행 비용' → 제목='airport / woman / flight / boarding / tr' (관련성=0.00)
-2026-07-22 05:52:30,727 [INFO] image_fetcher — 이미지 수집 성공: '부산 여행 부산으로 가는 KTX 이용하면' → 제목='train / korea / ktx / travel / railroad ' (관련성=0.17)
-2026-07-22 05:52:30,893 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 05:52:30,894 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-22 05:52:30,896 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-22 05:52:30,897 [INFO] content_generator — 포스트 생성 완료: '부산 1박2일 혼자 여행: 현실적으로 드는 총 비용은?' (1412자, 이미지 3개)
-2026-07-22 05:52:30,918 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 05:52:33,637 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 05:52:33,640 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '부산 1박2일 혼자 여행: 현실적으로 드는 총 비용은?'
-2026-07-22 05:52:33,641 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 1412자이며 개인 경험이 분명하지 않음
-2026-07-22 05:52:33,641 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 개인 경험의 명확한 서술이 부족하고 출처는 있지만 상세하지 않음
-2026-07-22 05:52:33,641 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없으나 저작권 문제는 없음
-2026-07-22 05:52:33,650 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-22 05:52:33,654 [INFO] internal_linker —   [1/5] '즐기는' -> https://hogugolfntraval.blogspot.com/2026/07/202607.html
-2026-07-22 05:52:33,656 [INFO] internal_linker —   [2/5] '얼마나' -> https://www.hoguwhat.com/2026/07/blog-post_434.html
-2026-07-22 05:52:33,656 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-22 05:52:33,656 [INFO] main —   제목: 부산 1박2일 혼자 여행: 현실적으로 드는 총 비용은?
-2026-07-22 05:52:33,656 [INFO] main —   이미지: 3개 삽입
-2026-07-22 05:52:33,657 [INFO] main —   글자 수: 1412자
-2026-07-22 05:52:33,657 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '부산 1박2일 혼자 여행: 현실적으로 드는 총 비용은?' (1412자 < 2500자)
-2026-07-22 05:52:33,680 [INFO] dashboard_exporter —   검토 대기 저장: 부산 1박2일 혼자 여행: 현실적으로 드는 총 비용은? (7273자 HTML)
-2026-07-22 05:52:33,694 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 102개)
-2026-07-22 05:52:33,694 [INFO] main — 
-============================================================
-2026-07-22 05:52:33,694 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-22 05:52:33,694 [INFO] main — ============================================================
-2026-07-22 05:52:33,719 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-22 05:52:33,738 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-22 05:52:33,752 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-22 05:52:33,996 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-22 05:52:34,286 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-22 05:52:34,288 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-22 05:52:34,290 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-22 05:52:34,305 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 184 / 실패 15 / 대기 75)
-2026-07-22 05:52:34,305 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-22 05:52:34,305 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-22 05:52:34,306 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-07-22 05:53:10,944 [INFO] main — ============================================================
 2026-07-22 05:53:10,945 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-22 05:53:10
@@ -566,3 +498,93 @@
 2026-07-22 15:37:09,734 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-22 15:37:09,734 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-22 15:37:09,735 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-22 15:38:11,379 [INFO] main — ============================================================
+2026-07-22 15:38:11,379 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-22 15:38:11
+2026-07-22 15:38:11,379 [INFO] main — ============================================================
+2026-07-22 15:38:11,388 [INFO] main — 수집된 키워드 1개: ['폴드8']
+2026-07-22 15:38:11,393 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-07-22 15:38:11,393 [INFO] main — 단독 포스트 대상 키워드 1개: ['폴드8']
+2026-07-22 15:38:11,406 [INFO] main — 
+[1/1] 키워드: '폴드8'
+2026-07-22 15:38:11,406 [INFO] content_generator — 포스트 생성 중: '폴드8'
+2026-07-22 15:38:11,718 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:38:11,719 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHLzcBshh9WQbVQUdWQV'}
+2026-07-22 15:38:17,393 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '폴드8'
+2026-07-22 15:38:17,581 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:38:17,581 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHM13WdY5LXSgeRiJPya'}
+2026-07-22 15:38:17,583 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 15:38:17,784 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:38:18,234 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:38:43,016 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:38:43,028 [WARNING] content_generator — 컨텐츠 너무 짧음(2215자, 최소 2500자) — 재시도 1/3
+2026-07-22 15:38:46,028 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 15:38:46,029 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:39:06,018 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:39:06,021 [WARNING] content_generator — 컨텐츠 너무 짧음(2145자, 최소 2500자) — 재시도 2/3
+2026-07-22 15:39:09,021 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 15:39:09,022 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:39:10,239 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:39:10,246 [ERROR] content_generator — JSON 구조 없음 — 응답 앞 200자: 죄송합니다, 요청하신 작업을 수행할 수 없습니다.
+2026-07-22 15:39:10,246 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
+2026-07-22 15:39:13,246 [INFO] content_generator — 포스트 생성 중: '폴드8'
+2026-07-22 15:39:13,448 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:39:13,449 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHM5APV3Qhkpjf79mLKC'}
+2026-07-22 15:39:18,324 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '폴드8'
+2026-07-22 15:39:18,689 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:39:18,690 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHM5YmtJFZRZyCc3onSL'}
+2026-07-22 15:39:18,690 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 15:39:18,690 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:39:32,689 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:39:32,693 [WARNING] content_generator — 컨텐츠 너무 짧음(1390자, 최소 2500자) — 재시도 1/3
+2026-07-22 15:39:35,693 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 15:39:35,694 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:39:45,038 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:39:45,059 [WARNING] content_generator — 컨텐츠 너무 짧음(1702자, 최소 2500자) — 재시도 2/3
+2026-07-22 15:39:48,060 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 15:39:48,060 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:40:09,202 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:40:09,205 [WARNING] content_generator — 최소 분량 미달(2031자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 15:40:09,206 [INFO] content_generator — 출처 검증: 0개 유효 / 2개 제거
+2026-07-22 15:40:09,206 [WARNING] content_generator — sources 필드: 유효한 출처 없음 — 전부 제거됨
+2026-07-22 15:40:09,224 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:40:11,993 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:40:12,012 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-07-22 15:40:12,343 [INFO] image_fetcher — 이미지 수집 성공: '폴드8, 스마트폰 시장의 새로운 지표가 되다' → 제목='iphone / hand / screen / smartphone / ap' (관련성=0.14)
+2026-07-22 15:40:13,055 [INFO] image_fetcher — 이미지 수집 성공: '폴드' → 제목='케인 사생활 보안 액정 보호 필름 갤럭시Z 폴드5 외부 (강화유리), 1' (관련성=1.00)
+2026-07-22 15:40:14,800 [INFO] image_fetcher — 이미지 수집 성공: '폴드 의미와 스마트폰 최근' → 제목='의미와 무의미 | 메를로 뽕띠 - 교보문고' (관련성=0.20)
+2026-07-22 15:40:15,028 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:40:15,029 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 15:40:15,030 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 15:40:15,032 [INFO] content_generator — 포스트 생성 완료: '폴드8, 스마트폰 시장의 새로운 지표가 되다' (2031자, 이미지 3개)
+2026-07-22 15:40:15,057 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:40:17,557 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:40:17,560 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '폴드8, 스마트폰 시장의 새로운 지표가 되다'
+2026-07-22 15:40:17,560 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 2031자로, 독창적 관점 부족
+2026-07-22 15:40:17,560 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 및 직접 경험 기반 내용 부족
+2026-07-22 15:40:17,560 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재
+2026-07-22 15:40:17,569 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 15:40:17,573 [INFO] internal_linker —   [1/5] '실제로' -> https://www.hoguwhat.com/2026/07/blog-post_15.html
+2026-07-22 15:40:17,575 [INFO] internal_linker —   [2/5] '만족도' -> https://hogugolfntraval.blogspot.com/2026/07/2025.html
+2026-07-22 15:40:17,575 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-22 15:40:17,575 [INFO] main —   제목: 폴드8, 스마트폰 시장의 새로운 지표가 되다
+2026-07-22 15:40:17,575 [INFO] main —   이미지: 3개 삽입
+2026-07-22 15:40:17,575 [INFO] main —   글자 수: 2031자
+2026-07-22 15:40:17,575 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '폴드8, 스마트폰 시장의 새로운 지표가 되다' (2031자 < 2500자)
+2026-07-22 15:40:17,600 [INFO] dashboard_exporter —   검토 대기 저장: 폴드8, 스마트폰 시장의 새로운 지표가 되다 (8289자 HTML)
+2026-07-22 15:40:17,613 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 109개)
+2026-07-22 15:40:17,614 [INFO] main — 
+============================================================
+2026-07-22 15:40:17,614 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-22 15:40:17,614 [INFO] main — ============================================================
+2026-07-22 15:40:17,636 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 15:40:17,652 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 15:40:17,665 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 15:40:17,903 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 15:40:18,163 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 15:40:18,446 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 15:40:18,447 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 15:40:18,450 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 15:40:18,464 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 178 / 실패 15 / 대기 81)
+2026-07-22 15:40:18,464 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 15:40:18,464 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 15:40:18,465 [INFO] main — 대시보드 데이터 업데이트 완료

@@ -1,83 +1,3 @@
-2026-07-22 11:46:15,895 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-22 11:46:16,150 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-22 11:46:16,152 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-07-22 11:46:16,153 [INFO] keyword_collector —   [fallback] 2개: ['인천 차이나타운 맛집과 볼거리 직접 다녀온 솔직 평가', '안동 하회마을 혼자 여행하기 좋을까 솔직 후기']
-2026-07-22 11:46:16,154 [INFO] keyword_collector — 최종 선정 키워드 2개: ['인천 차이나타운 맛집과 볼거리 직접 다녀온 솔직 평가', '안동 하회마을 혼자 여행하기 좋을까 솔직 후기']
-2026-07-22 11:46:16,154 [INFO] main — 수집된 키워드 2개: ['인천 차이나타운 맛집과 볼거리 직접 다녀온 솔직 평가', '안동 하회마을 혼자 여행하기 좋을까 솔직 후기']
-2026-07-22 11:46:16,159 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-07-22 11:46:16,159 [INFO] main — 단독 포스트 대상 키워드 1개: ['인천 차이나타운 맛집과 볼거리 직접 다녀온 솔직 평가']
-2026-07-22 11:46:16,176 [INFO] main — 
-[1/1] 키워드: '인천 차이나타운 맛집과 볼거리 직접 다녀온 솔직 평가'
-2026-07-22 11:46:16,176 [INFO] content_generator — 포스트 생성 중: '인천 차이나타운 맛집과 볼거리 직접 다녀온 솔직 평가'
-2026-07-22 11:46:16,444 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:46:16,444 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH3JrXz585PTpRJWyDha'}
-2026-07-22 11:46:20,901 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '인천 차이나타운 맛집과 볼거리 직접 다녀온 솔직 평가'
-2026-07-22 11:46:21,104 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:46:21,105 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH3KCZzYX4XamGmDNVg1'}
-2026-07-22 11:46:21,106 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-22 11:46:21,274 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:46:21,829 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:46:43,325 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:46:43,338 [WARNING] content_generator — 컨텐츠 너무 짧음(1863자, 최소 2500자) — 재시도 1/3
-2026-07-22 11:46:46,338 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-22 11:46:46,339 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:46:47,176 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:46:47,181 [ERROR] content_generator — JSON 구조 없음 — 응답 앞 200자: I'm sorry, I can't assist with that request.
-2026-07-22 11:46:47,181 [WARNING] content_generator — JSON 파싱 실패 — 재시도 2/3
-2026-07-22 11:46:49,181 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-22 11:46:49,181 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:47:06,622 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:47:06,626 [WARNING] content_generator — 최소 분량 미달(1327자) — 재시도 소진, 해당 분량으로 진행
-2026-07-22 11:47:06,645 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:47:07,276 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:47:07,278 [INFO] content_generator — 팩트체크: 통과
-2026-07-22 11:47:07,914 [INFO] image_fetcher — 이미지 수집 성공: '인천 차이나타운의 맛집과 볼거리 솔직 평가' → 제목='네이버 인플루언서 [네이버 인플루언서] 인천 차이나타운 맛집, 카페, 볼' (관련성=0.33)
-2026-07-22 11:47:08,750 [INFO] image_fetcher — 이미지 수집 성공: '인천 차이나타운 맛집과' → 제목='네이버 인플루언서 [네이버 인플루언서] 인천 차이나타운 근처 가볼만한곳 ' (관련성=0.67)
-2026-07-22 11:47:09,529 [INFO] image_fetcher — 이미지 수집 성공: '인천 차이나타운 방문이 중요한 차이나타 단순한' → 제목='[잡담] 오늘 처음으로 인천 차이나타운 가봤는데 - 인스티즈(instiz' (관련성=0.33)
-2026-07-22 11:47:09,699 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:47:09,700 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-22 11:47:09,701 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-22 11:47:09,703 [INFO] content_generator — 포스트 생성 완료: '인천 차이나타운의 맛집과 볼거리 솔직 평가' (1327자, 이미지 3개)
-2026-07-22 11:47:09,724 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:47:13,543 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:47:13,550 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '인천 차이나타운의 맛집과 볼거리 솔직 평가'
-2026-07-22 11:47:13,550 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 2000자 미만으로 정보의 독창성이 부족할 수 있음
-2026-07-22 11:47:13,551 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 인용은 있으나 1인칭 경험 서술 부족
-2026-07-22 11:47:13,551 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 부족으로 인해 SEO적 약점 존재
-2026-07-22 11:47:13,560 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-22 11:47:13,565 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-07-22 11:47:13,566 [INFO] main —   제목: 인천 차이나타운의 맛집과 볼거리 솔직 평가
-2026-07-22 11:47:13,566 [INFO] main —   이미지: 3개 삽입
-2026-07-22 11:47:13,566 [INFO] main —   글자 수: 1327자
-2026-07-22 11:47:13,566 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '인천 차이나타운의 맛집과 볼거리 솔직 평가' (1327자 < 2500자)
-2026-07-22 11:47:13,590 [INFO] dashboard_exporter —   검토 대기 저장: 인천 차이나타운의 맛집과 볼거리 솔직 평가 (7591자 HTML)
-2026-07-22 11:47:13,604 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 104개)
-2026-07-22 11:47:13,604 [INFO] main — 
-============================================================
-2026-07-22 11:47:13,604 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-22 11:47:13,604 [INFO] main — ============================================================
-2026-07-22 11:47:13,629 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-22 11:47:13,646 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-22 11:47:13,661 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-22 11:47:13,941 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-22 11:47:14,398 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-22 11:47:14,730 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-22 11:47:14,732 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-22 11:47:14,734 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-22 11:47:14,749 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 182 / 실패 15 / 대기 77)
-2026-07-22 11:47:14,750 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-22 11:47:14,750 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-22 11:47:14,750 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-22 11:47:53,148 [INFO] main — ============================================================
-2026-07-22 11:47:53,149 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-22 11:47:53
-2026-07-22 11:47:53,149 [INFO] main — ============================================================
-2026-07-22 11:47:53,157 [INFO] keyword_collector — 타 블로그 최근 키워드 16개 중복 방지 코퍼스 합류
-2026-07-22 11:47:53,157 [INFO] keyword_collector — 포스팅 이력 코퍼스: 43개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-22 11:47:57,437 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-07-22 11:47:57,606 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:47:57,606 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-22 11:47:58,105 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:47:58,525 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
 2026-07-22 11:47:58,526 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
 2026-07-22 11:47:58,527 [INFO] keyword_collector — 유사 주제 제외 2개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개']
 2026-07-22 11:47:58,527 [INFO] keyword_collector —   [fallback] 2개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
@@ -578,3 +498,82 @@
 2026-07-22 23:11:58,514 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-22 23:11:58,514 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-22 23:11:58,515 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-22 23:12:31,635 [INFO] main — ============================================================
+2026-07-22 23:12:31,635 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-22 23:12:31
+2026-07-22 23:12:31,635 [INFO] main — ============================================================
+2026-07-22 23:12:31,644 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
+2026-07-22 23:12:31,644 [INFO] keyword_collector — 포스팅 이력 코퍼스: 38개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-22 23:12:36,124 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-07-22 23:12:36,389 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:12:36,390 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-22 23:12:36,864 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:12:37,246 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 23:12:37,247 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-22 23:12:37,248 [INFO] keyword_collector — 유사 주제 제외 3개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개', '강원도 캠핑 처음 해봤을 때 몰랐던 것들']
+2026-07-22 23:12:37,249 [INFO] keyword_collector —   [fallback] 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
+2026-07-22 23:12:37,249 [INFO] keyword_collector — 최종 선정 키워드 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
+2026-07-22 23:12:37,249 [INFO] main — 수집된 키워드 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
+2026-07-22 23:12:37,254 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-07-22 23:12:37,254 [INFO] main — 단독 포스트 대상 키워드 1개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-07-22 23:12:37,267 [INFO] main — 
+[1/1] 키워드: '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
+2026-07-22 23:12:37,267 [INFO] content_generator — 포스트 생성 중: '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
+2026-07-22 23:12:37,459 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:12:37,460 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHweVDh53igr1zhDFqdd'}
+2026-07-22 23:12:45,518 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
+2026-07-22 23:12:45,720 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:12:45,720 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwf6XikPCjhhrLKySAP'}
+2026-07-22 23:12:45,722 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 23:12:45,932 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:12:46,372 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:13:09,011 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:13:09,022 [WARNING] content_generator — 컨텐츠 너무 짧음(1064자, 최소 2500자) — 재시도 1/3
+2026-07-22 23:13:12,023 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 23:13:12,023 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:13:25,119 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:13:25,125 [WARNING] content_generator — 컨텐츠 너무 짧음(1106자, 최소 2500자) — 재시도 2/3
+2026-07-22 23:13:28,125 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 23:13:28,125 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:13:46,295 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:13:46,306 [WARNING] content_generator — 최소 분량 미달(1340자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 23:13:46,325 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:13:47,744 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:13:47,748 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 2건 자동 수정 적용
+2026-07-22 23:13:49,006 [INFO] image_fetcher — 이미지 수집 성공: '경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!' → 제목='여행/해외거주 - 경주 당일치기 뚜벅이의 후기' (관련성=0.29)
+2026-07-22 23:13:49,546 [INFO] image_fetcher — 이미지 수집 성공: '경주 당일치기 놓치면' → 제목='뽐뿌:여행포럼 - 경주 당일치기 다녀왔어요^^ 경주 당일치기 다녀왔어요^' (관련성=0.67)
+2026-07-22 23:13:50,783 [INFO] image_fetcher — 대체 이미지 수집: '경주 당일치기 일정 알차게' → 제목='[KTX] 문화해설사님과 함께하는 경주 세계문화유산 투어 당일치기 기차여' (관련성=0.50)
+2026-07-22 23:13:50,783 [INFO] image_fetcher — 이미지 수집 성공: '경주 당일치기 일정 알차게' → 제목='[KTX] 문화해설사님과 함께하는 경주 세계문화유산 투어 당일치기 기차여' (관련성=0.50)
+2026-07-22 23:13:51,006 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:13:51,006 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 23:13:51,008 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 23:13:51,009 [INFO] content_generator — 포스트 생성 완료: '경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!' (1340자, 이미지 3개)
+2026-07-22 23:13:51,031 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:13:54,181 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:13:54,186 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!'
+2026-07-22 23:13:54,186 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 1340자로 2000자 미만, 정보 재조합 의심.
+2026-07-22 23:13:54,186 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기반 서술 부족, 출처 사용은 긍정적.
+2026-07-22 23:13:54,186 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재, 저작권 위반 위험은 없음.
+2026-07-22 23:13:54,195 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 23:13:54,198 [INFO] internal_linker —   [1/5] '즐기는' -> https://hogugolfntraval.blogspot.com/2026/07/202607.html
+2026-07-22 23:13:54,199 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-22 23:13:54,199 [INFO] main —   제목: 경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!
+2026-07-22 23:13:54,199 [INFO] main —   이미지: 3개 삽입
+2026-07-22 23:13:54,199 [INFO] main —   글자 수: 1340자
+2026-07-22 23:13:54,199 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!' (1340자 < 2500자)
+2026-07-22 23:13:54,221 [INFO] dashboard_exporter —   검토 대기 저장: 경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서! (5135자 HTML)
+2026-07-22 23:13:54,233 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 111개)
+2026-07-22 23:13:54,234 [INFO] main — 
+============================================================
+2026-07-22 23:13:54,234 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-22 23:13:54,234 [INFO] main — ============================================================
+2026-07-22 23:13:54,256 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 23:13:54,272 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 23:13:54,284 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 23:13:54,492 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 23:13:54,799 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 23:13:54,801 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 23:13:54,804 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 23:13:54,818 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 176 / 실패 15 / 대기 83)
+2026-07-22 23:13:54,818 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 23:13:54,818 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 23:13:54,819 [INFO] main — 대시보드 데이터 업데이트 완료

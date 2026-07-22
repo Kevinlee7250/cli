@@ -459,6 +459,9 @@ def run_analytics(
     top_performers: list[dict] = []
     updated_posts: list[dict] = []
     blog_breakdown: dict[str, dict] = {}
+    # 글작성 고도화 실험(카테고리별 도입부 후킹) 효과 비교용 — content_generator.py의
+    # _detect_content_category()가 남긴 태그별로 등급 분포를 집계
+    content_category_breakdown: dict[str, dict] = {}
     any_gsc_data = False
 
     cfg_by_id = {c.get("id", "blog1"): c for c in blog_configs}
@@ -487,6 +490,7 @@ def run_analytics(
         for post in blog_posts:
             post_url = post.get("blogUrl", "")
             category = post.get("adsenseCategory", "일반")
+            content_category = post.get("contentCategory", "")
             cpc = float(post.get("estimatedCPC", 0))
             post_date = post.get("date", "2020-01-01")
 
@@ -523,6 +527,14 @@ def run_analytics(
             updated_posts.append(post)
             grade_counts[grade] += 1
             blog_bd["grade_counts"][grade] += 1
+
+            if content_category:
+                cc_bd = content_category_breakdown.setdefault(
+                    content_category, {"posts": 0, "grade_counts": {"S": 0, "A": 0, "B": 0, "C": 0}, "totalPageviews30d": 0}
+                )
+                cc_bd["posts"] += 1
+                cc_bd["grade_counts"][grade] += 1
+                cc_bd["totalPageviews30d"] += est_views
 
             if grade == "C":
                 rewrite_targets.append({
@@ -570,6 +582,7 @@ def run_analytics(
             for g, cnt in grade_counts.items()
         },
         "blogBreakdown": blog_breakdown,
+        "contentCategoryBreakdown": content_category_breakdown,
         "rewriteTargets": rewrite_targets[:20],       # 상위 20개 C급
         "topPerformers": top_performers[:10],           # 상위 10개 S급
         "dataSource": {

@@ -2271,6 +2271,9 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             post_data["keyword"] = keyword
             post_data["article_type"] = _detect_article_type(keyword)
             post_data["risk_level"] = _assess_risk_level(keyword)
+            # 글작성 고도화 실험 추적용 — 어떤 도입부 후킹 스타일이 적용됐는지 기록해
+            # 발행 후 GSC 지표·등급과 비교할 수 있게 함 (weekly_learning.py가 집계)
+            post_data["content_category"] = _detect_content_category(keyword, (blog_config or {}).get("id", ""))
             # 표준 스키마: tags는 labels의 별칭 (내부 링크·대시보드 공용)
             post_data["tags"] = list(post_data.get("labels", []) or [])
             post_data["series_id"] = series_context.get("series_id", "")
@@ -2650,6 +2653,9 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             post_data["keyword"] = keyword
             post_data["article_type"] = _detect_article_type(keyword)
             post_data["risk_level"] = _assess_risk_level(keyword)
+            # 글작성 고도화 실험 추적용 — 어떤 도입부 후킹 스타일이 적용됐는지 기록해
+            # 발행 후 GSC 지표·등급과 비교할 수 있게 함 (weekly_learning.py가 집계)
+            post_data["content_category"] = _detect_content_category(keyword, (blog_config or {}).get("id", ""))
             # 표준 스키마: tags는 labels의 별칭 (내부 링크·대시보드 공용)
             post_data["tags"] = list(post_data.get("labels", []) or [])
 

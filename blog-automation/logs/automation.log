@@ -1,83 +1,3 @@
-2026-07-21 15:06:37,875 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-21 15:06:37,875 [INFO] main — 
-============================================================
-2026-07-21 15:06:37,875 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-21 15:06:37,875 [INFO] main — ============================================================
-2026-07-21 15:06:37,904 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-21 15:06:37,924 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-21 15:06:37,940 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-21 15:06:37,941 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-21 15:06:37,944 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-21 15:06:37,959 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 187 / 실패 17 / 대기 70)
-2026-07-21 15:06:37,959 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-21 15:06:37,960 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-21 15:06:37,960 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-21 23:04:08,116 [INFO] main — ============================================================
-2026-07-21 23:04:08,116 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-21 23:04:08
-2026-07-21 23:04:08,116 [INFO] main — ============================================================
-2026-07-21 23:04:08,126 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-21 23:04:08,126 [INFO] keyword_collector — 포스팅 이력 코퍼스: 40개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-21 23:04:12,467 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-21 23:04:12,707 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 23:04:12,708 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-21 23:04:13,075 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-07-21 23:04:13,217 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 23:04:13,296 [WARNING] gsc_fetcher — GSC 토큰 발급 실패: 400
-2026-07-21 23:04:13,368 [WARNING] gsc_fetcher — GSC 토큰 발급 실패: 400
-2026-07-21 23:04:13,370 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-07-21 23:04:13,371 [INFO] keyword_collector —   [fallback] 2개: ['여수 밤바다 숙소 오션뷰 가성비 비교 직접 예약해봤더니', '속초 여행 겨울에 가면 좋은 이유와 숨은 맛집']
-2026-07-21 23:04:13,371 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여수 밤바다 숙소 오션뷰 가성비 비교 직접 예약해봤더니', '속초 여행 겨울에 가면 좋은 이유와 숨은 맛집']
-2026-07-21 23:04:13,371 [INFO] main — 수집된 키워드 2개: ['여수 밤바다 숙소 오션뷰 가성비 비교 직접 예약해봤더니', '속초 여행 겨울에 가면 좋은 이유와 숨은 맛집']
-2026-07-21 23:04:13,376 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-07-21 23:04:13,377 [INFO] main — 단독 포스트 대상 키워드 1개: ['여수 밤바다 숙소 오션뷰 가성비 비교 직접 예약해봤더니']
-2026-07-21 23:04:13,392 [INFO] main — 
-[1/1] 키워드: '여수 밤바다 숙소 오션뷰 가성비 비교 직접 예약해봤더니'
-2026-07-21 23:04:13,393 [INFO] content_generator — 포스트 생성 중: '여수 밤바다 숙소 오션뷰 가성비 비교 직접 예약해봤더니'
-2026-07-21 23:04:13,534 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 23:04:13,535 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdG3CRerNXuVdSmR9oaQp'}
-2026-07-21 23:04:26,563 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '여수 밤바다 숙소 오션뷰 가성비 비교 직접 예약해봤더니'
-2026-07-21 23:04:26,843 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 23:04:26,844 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdG3DQMF6wgQJNkLUUa47'}
-2026-07-21 23:04:26,845 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-21 23:04:26,993 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 23:04:27,469 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 23:04:49,040 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 23:04:49,053 [WARNING] content_generator — 컨텐츠 너무 짧음(1633자, 최소 2500자) — 재시도 1/3
-2026-07-21 23:04:52,053 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-21 23:04:52,053 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 23:04:53,731 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 23:04:53,734 [ERROR] content_generator — JSON 구조 없음 — 응답 앞 200자: I'm sorry, I can't assist with that request.
-2026-07-21 23:04:53,734 [WARNING] content_generator — JSON 파싱 실패 — 재시도 2/3
-2026-07-21 23:04:55,735 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-21 23:04:55,735 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 23:05:17,816 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 23:05:17,822 [WARNING] content_generator — 최소 분량 미달(1542자) — 재시도 소진, 해당 분량으로 진행
-2026-07-21 23:05:17,822 [WARNING] content_generator — sources 필드: 유효한 출처 없음 — 전부 제거됨
-2026-07-21 23:05:17,840 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 23:05:19,099 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 23:05:19,107 [INFO] content_generator — 팩트체크: 통과
-2026-07-21 23:05:20,643 [INFO] image_fetcher — 이미지 수집 성공: '여수 오션뷰 숙소 직접 예약해봤더니' → 제목=''여수 밤바다' 노래가 절로 떠오르는 여수 오션뷰 호텔' (관련성=0.33)
-2026-07-21 23:05:22,427 [INFO] image_fetcher — 이미지 수집 성공: '여수 밤바다 숙소' → 제목='여수 밤바다 보기 전에 들러볼만한 이곳' (관련성=0.50)
-2026-07-21 23:05:23,333 [INFO] image_fetcher — 이미지 수집 성공: '여수 밤바다 선택 중요성 멋진 바다' → 제목='네이버 인플루언서 [네이버 인플루언서] 여수 밤바다 ↘가 멋진 여수여행' (관련성=0.50)
-2026-07-21 23:05:23,482 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 23:05:23,483 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-21 23:05:23,484 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-21 23:05:23,485 [INFO] content_generator — 포스트 생성 완료: '여수 오션뷰 숙소 직접 예약해봤더니' (1542자, 이미지 3개)
-2026-07-21 23:05:23,506 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 23:05:27,960 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 23:05:27,969 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '여수 오션뷰 숙소 직접 예약해봤더니'
-2026-07-21 23:05:27,969 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 1542자로 2000자 미만이며, 독창적 관점보다는 일반적인 정보가 주를 이룸.
-2026-07-21 23:05:27,969 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험이 명시되지 않았고 출처가 부족함.
-2026-07-21 23:05:27,969 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없으며 저작권 위반에 대한 정보 부족.
-2026-07-21 23:05:27,979 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-21 23:05:27,983 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-07-21 23:05:27,984 [INFO] main —   제목: 여수 오션뷰 숙소 직접 예약해봤더니
-2026-07-21 23:05:27,984 [INFO] main —   이미지: 3개 삽입
-2026-07-21 23:05:27,984 [INFO] main —   글자 수: 1542자
-2026-07-21 23:05:27,984 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '여수 오션뷰 숙소 직접 예약해봤더니' (1542자 < 2500자)
-2026-07-21 23:05:28,007 [INFO] dashboard_exporter —   검토 대기 저장: 여수 오션뷰 숙소 직접 예약해봤더니 (6466자 HTML)
-2026-07-21 23:05:28,021 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 98개)
-2026-07-21 23:05:28,021 [INFO] main — 
 ============================================================
 2026-07-21 23:05:28,021 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
 2026-07-21 23:05:28,021 [INFO] main — ============================================================
@@ -578,3 +498,81 @@
 2026-07-22 11:47:14,750 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-22 11:47:14,750 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-22 11:47:14,750 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-22 11:47:53,148 [INFO] main — ============================================================
+2026-07-22 11:47:53,149 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-22 11:47:53
+2026-07-22 11:47:53,149 [INFO] main — ============================================================
+2026-07-22 11:47:53,157 [INFO] keyword_collector — 타 블로그 최근 키워드 16개 중복 방지 코퍼스 합류
+2026-07-22 11:47:53,157 [INFO] keyword_collector — 포스팅 이력 코퍼스: 43개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-22 11:47:57,437 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-07-22 11:47:57,606 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 11:47:57,606 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-22 11:47:58,105 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 11:47:58,525 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 11:47:58,526 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-22 11:47:58,527 [INFO] keyword_collector — 유사 주제 제외 2개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개']
+2026-07-22 11:47:58,527 [INFO] keyword_collector —   [fallback] 2개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-07-22 11:47:58,527 [INFO] keyword_collector — 최종 선정 키워드 2개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-07-22 11:47:58,527 [INFO] main — 수집된 키워드 2개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-07-22 11:47:58,531 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-07-22 11:47:58,532 [INFO] main — 단독 포스트 대상 키워드 1개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들']
+2026-07-22 11:47:58,543 [INFO] main — 
+[1/1] 키워드: '강원도 캠핑 처음 해봤을 때 몰랐던 것들'
+2026-07-22 11:47:58,543 [INFO] content_generator — 포스트 생성 중: '강원도 캠핑 처음 해봤을 때 몰랐던 것들'
+2026-07-22 11:47:58,902 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 11:47:58,902 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH3SPqrE9Uo9C9SXrXQw'}
+2026-07-22 11:48:05,449 [INFO] research_collector — 자료 조사: 7개 수집 (신뢰 도메인 1개) — '강원도 캠핑 처음 해봤을 때 몰랐던 것들'
+2026-07-22 11:48:05,617 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 11:48:05,617 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH3SuT5U43zs3GZDEqzF'}
+2026-07-22 11:48:05,618 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 11:48:05,808 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 11:48:06,175 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 11:48:29,649 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 11:48:29,659 [WARNING] content_generator — 컨텐츠 너무 짧음(1406자, 최소 2500자) — 재시도 1/3
+2026-07-22 11:48:32,659 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 11:48:32,659 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 11:48:53,105 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 11:48:53,109 [WARNING] content_generator — 컨텐츠 너무 짧음(1100자, 최소 2500자) — 재시도 2/3
+2026-07-22 11:48:56,110 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 11:48:56,110 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 11:49:11,266 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 11:49:11,272 [WARNING] content_generator — 최소 분량 미달(950자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 11:49:11,286 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 11:49:12,364 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 11:49:12,375 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-22 11:49:13,099 [INFO] image_fetcher — 이미지 수집 성공: '강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들' → 제목='“피서 하면 강원도… 숲·강·바다서 추억 만들며 더위 날려요”' (관련성=0.12)
+2026-07-22 11:49:13,330 [INFO] image_fetcher — 이미지 수집 성공: '강원도 캠핑 해봤' → 제목='ground camping / family camp / picnic / ' (관련성=0.25)
+2026-07-22 11:49:13,741 [INFO] image_fetcher — 대체 이미지 수집: '강원도 캠핑 시작하기 알아야 캠핑이 최근' → 제목='spring / vacation / camping / early summ' (관련성=0.14)
+2026-07-22 11:49:13,741 [INFO] image_fetcher — 이미지 수집 성공: '강원도 캠핑 시작하기 알아야 캠핑이 최근' → 제목='spring / vacation / camping / early summ' (관련성=0.14)
+2026-07-22 11:49:14,271 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 11:49:14,272 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 11:49:14,273 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 11:49:14,274 [INFO] content_generator — 포스트 생성 완료: '강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들' (950자, 이미지 3개)
+2026-07-22 11:49:14,290 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 11:49:17,841 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 11:49:17,844 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들'
+2026-07-22 11:49:17,844 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 950자로 2000자 미만이며, 인사이트나 독창적 관점보다는 일반적인 정보가 주를 이루고 있음
+2026-07-22 11:49:17,844 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기반의 서술이 부족하고 출처는 있으나 저자 신뢰성 부족
+2026-07-22 11:49:17,844 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되어 있지 않음
+2026-07-22 11:49:17,852 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 11:49:17,856 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-22 11:49:17,856 [INFO] main —   제목: 강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들
+2026-07-22 11:49:17,856 [INFO] main —   이미지: 3개 삽입
+2026-07-22 11:49:17,856 [INFO] main —   글자 수: 950자
+2026-07-22 11:49:17,856 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들' (950자 < 2500자)
+2026-07-22 11:49:17,876 [INFO] dashboard_exporter —   검토 대기 저장: 강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들 (5651자 HTML)
+2026-07-22 11:49:17,887 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 105개)
+2026-07-22 11:49:17,887 [INFO] main — 
+============================================================
+2026-07-22 11:49:17,887 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-22 11:49:17,887 [INFO] main — ============================================================
+2026-07-22 11:49:17,906 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 11:49:17,920 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 11:49:17,931 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 11:49:18,194 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 11:49:18,752 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 11:49:18,753 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 11:49:18,756 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 11:49:18,767 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 181 / 실패 15 / 대기 78)
+2026-07-22 11:49:18,767 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 11:49:18,768 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 11:49:18,768 [INFO] main — 대시보드 데이터 업데이트 완료

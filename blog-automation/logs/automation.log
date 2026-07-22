@@ -1,89 +1,3 @@
-2026-07-21 11:46:03,647 [INFO] main — 
-[1/1] 키워드: '직장인 월 30만원 ETF 투자 솔직 후기'
-2026-07-21 11:46:03,648 [INFO] content_generator — 포스트 생성 중: '직장인 월 30만원 ETF 투자 솔직 후기'
-2026-07-21 11:46:03,776 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 11:46:03,776 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdF9V1UE5GiTJADu9gYc3'}
-2026-07-21 11:46:09,644 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '직장인 월 30만원 ETF 투자 솔직 후기'
-2026-07-21 11:46:09,751 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 11:46:09,752 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdF9VT3roSEHfH89VTcWV'}
-2026-07-21 11:46:09,753 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-21 11:46:09,901 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 11:46:10,383 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 11:46:29,225 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 11:46:29,239 [WARNING] content_generator — 컨텐츠 너무 짧음(1581자, 최소 2500자) — 재시도 1/3
-2026-07-21 11:46:32,240 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-21 11:46:32,240 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 11:46:32,892 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 11:46:32,898 [ERROR] content_generator — JSON 구조 없음 — 응답 앞 200자: I'm sorry, I can't assist with that.
-2026-07-21 11:46:32,898 [WARNING] content_generator — JSON 파싱 실패 — 재시도 2/3
-2026-07-21 11:46:34,898 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-21 11:46:34,898 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 11:46:52,606 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 11:46:52,609 [WARNING] content_generator — 최소 분량 미달(1339자) — 재시도 소진, 해당 분량으로 진행
-2026-07-21 11:46:52,627 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 11:46:53,275 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 11:46:53,276 [INFO] content_generator — 팩트체크: 통과
-2026-07-21 11:46:53,845 [WARNING] image_fetcher — 이미지 없음: '직장인 월 30만원 ETF 투자 솔직 후기'
-2026-07-21 11:46:54,440 [WARNING] image_fetcher — 이미지 없음: '직장인 ETF 투자'
-2026-07-21 11:46:55,041 [WARNING] image_fetcher — 이미지 없음: '직장인 ETF 투자 중요할까 직장인들 여유'
-2026-07-21 11:46:55,042 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-07-21 11:46:55,042 [INFO] image_fetcher — 제목 썸네일 생성: '직장인 월 30만원 ETF 투자 솔직 후기' (data URI, 974B)
-2026-07-21 11:46:55,395 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-07-21 11:46:55,397 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-21 11:46:55,398 [INFO] content_generator — 포스트 생성 완료: '직장인 월 30만원 ETF 투자 솔직 후기' (1339자, 이미지 1개)
-2026-07-21 11:46:55,422 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 11:46:59,365 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 11:46:59,379 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '직장인 월 30만원 ETF 투자 솔직 후기'
-2026-07-21 11:46:59,379 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 1339자로 2000자 미만이므로 fail.
-2026-07-21 11:46:59,379 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없어 warn.
-2026-07-21 11:46:59,388 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-21 11:46:59,392 [INFO] internal_linker —   [1/5] '초보자' -> https://hoguasset.blogspot.com/2026/07/etf.html
-2026-07-21 11:46:59,393 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-21 11:46:59,394 [INFO] main —   제목: 직장인 월 30만원 ETF 투자 솔직 후기
-2026-07-21 11:46:59,394 [INFO] main —   이미지: 1개 삽입
-2026-07-21 11:46:59,394 [INFO] main —   글자 수: 1339자
-2026-07-21 11:46:59,394 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '직장인 월 30만원 ETF 투자 솔직 후기' (1339자 < 2500자)
-2026-07-21 11:46:59,417 [INFO] dashboard_exporter —   검토 대기 저장: 직장인 월 30만원 ETF 투자 솔직 후기 (7990자 HTML)
-2026-07-21 11:46:59,430 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 95개)
-2026-07-21 11:46:59,430 [INFO] main — 
-============================================================
-2026-07-21 11:46:59,430 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-21 11:46:59,430 [INFO] main — ============================================================
-2026-07-21 11:46:59,457 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-21 11:46:59,474 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-21 11:46:59,489 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-21 11:46:59,490 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-21 11:46:59,493 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-21 11:46:59,507 [INFO] post_manager —   포스트 레지스트리: 전체 297개 (게시 186 / 실패 15 / 대기 70)
-2026-07-21 11:46:59,507 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-21 11:46:59,508 [INFO] dashboard_exporter —   포스트: 90개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-21 11:46:59,508 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-21 11:47:40,826 [INFO] main — ============================================================
-2026-07-21 11:47:40,826 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-21 11:47:40
-2026-07-21 11:47:40,826 [INFO] main — ============================================================
-2026-07-21 11:47:40,836 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-21 11:47:40,836 [INFO] keyword_collector — 포스팅 이력 코퍼스: 44개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-21 11:47:44,105 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-21 11:47:44,340 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 11:47:44,341 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-21 11:47:44,882 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 11:47:45,249 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-07-21 11:47:45,250 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-21 11:47:45,252 [INFO] keyword_collector — 유사 주제 제외 5개: ['직장인 월 30만원 ETF 투자 솔직 후기', 'ISA 계좌 3년 직접 써본 결과', '배당주 처음 사기 전 내가 몰랐던 것', '퇴직연금 DC형 직접 운용하면서 배운 것', '달러 환전 타이밍 내가 틀린 적 있는 이유']
-2026-07-21 11:47:45,252 [INFO] keyword_collector —   [fallback] 2개: ['코인 투자 1년 후 솔직한 이야기', '종합소득세 처음 신고할 때 가장 헷갈렸던 것']
-2026-07-21 11:47:45,252 [INFO] keyword_collector — 최종 선정 키워드 2개: ['코인 투자 1년 후 솔직한 이야기', '종합소득세 처음 신고할 때 가장 헷갈렸던 것']
-2026-07-21 11:47:45,252 [INFO] main — 수집된 키워드 2개: ['코인 투자 1년 후 솔직한 이야기', '종합소득세 처음 신고할 때 가장 헷갈렸던 것']
-2026-07-21 11:47:45,258 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-07-21 11:47:45,258 [INFO] main — 단독 포스트 대상 키워드 1개: ['코인 투자 1년 후 솔직한 이야기']
-2026-07-21 11:47:45,272 [INFO] main — 
-[1/1] 키워드: '코인 투자 1년 후 솔직한 이야기'
-2026-07-21 11:47:45,272 [INFO] content_generator — 포스트 생성 중: '코인 투자 1년 후 솔직한 이야기'
-2026-07-21 11:47:45,443 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 11:47:45,444 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdF9cW5sGYqSsES3JKdAc'}
-2026-07-21 11:47:52,111 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '코인 투자 1년 후 솔직한 이야기'
-2026-07-21 11:47:52,252 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 11:47:52,253 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdF9d1CpiNHSy51nL9V9N'}
-2026-07-21 11:47:52,254 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
 2026-07-21 11:47:52,397 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
 2026-07-21 11:47:52,917 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
 2026-07-21 11:48:05,601 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
@@ -584,3 +498,84 @@
 2026-07-21 23:56:07,216 [INFO] main —   - [blog3] 금융NEWS
 2026-07-21 23:56:07,221 [INFO] main — ⏳ 'SBS 드라마 김부장 회차별 리뷰 (7~10화)' 예약 2편 대기 중 (다음 2026-07-25)
 2026-07-21 23:56:07,221 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-07-22 05:49:08,018 [INFO] main — ============================================================
+2026-07-22 05:49:08,018 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-22 05:49:08
+2026-07-22 05:49:08,018 [INFO] main — ============================================================
+2026-07-22 05:49:08,028 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
+2026-07-22 05:49:08,028 [INFO] keyword_collector — 포스팅 이력 코퍼스: 44개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-22 05:49:12,771 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-22 05:49:13,298 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 05:49:13,298 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-22 05:49:13,675 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-07-22 05:49:13,802 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 05:49:13,957 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 05:49:14,179 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 05:49:14,181 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-07-22 05:49:14,182 [INFO] keyword_collector —   [fallback] 2개: ['통영 하루 코스 알짜 명소와 숙소 실제 후기', '남해 독일마을 방문 전 알았으면 좋을 것들']
+2026-07-22 05:49:14,183 [INFO] keyword_collector — 최종 선정 키워드 2개: ['통영 하루 코스 알짜 명소와 숙소 실제 후기', '남해 독일마을 방문 전 알았으면 좋을 것들']
+2026-07-22 05:49:14,183 [INFO] main — 수집된 키워드 2개: ['통영 하루 코스 알짜 명소와 숙소 실제 후기', '남해 독일마을 방문 전 알았으면 좋을 것들']
+2026-07-22 05:49:14,188 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
+2026-07-22 05:49:14,188 [INFO] main — 단독 포스트 대상 키워드 1개: ['통영 하루 코스 알짜 명소와 숙소 실제 후기']
+2026-07-22 05:49:14,204 [INFO] main — 
+[1/1] 키워드: '통영 하루 코스 알짜 명소와 숙소 실제 후기'
+2026-07-22 05:49:14,204 [INFO] content_generator — 포스트 생성 중: '통영 하루 코스 알짜 명소와 숙소 실제 후기'
+2026-07-22 05:49:14,772 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 05:49:14,772 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdGa5kXpbCUNo5pTR9ooH'}
+2026-07-22 05:49:27,534 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 1개) — '통영 하루 코스 알짜 명소와 숙소 실제 후기'
+2026-07-22 05:49:27,665 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 05:49:27,665 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdGa6iyqLnJyfh28adhuu'}
+2026-07-22 05:49:27,666 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 05:49:30,070 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 05:49:30,604 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 05:49:48,006 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 05:49:48,026 [WARNING] content_generator — 컨텐츠 너무 짧음(1358자, 최소 2500자) — 재시도 1/3
+2026-07-22 05:49:51,026 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 05:49:51,026 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 05:50:08,815 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 05:50:08,824 [WARNING] content_generator — 컨텐츠 너무 짧음(1563자, 최소 2500자) — 재시도 2/3
+2026-07-22 05:50:11,824 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 05:50:11,824 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 05:50:31,975 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 05:50:31,980 [WARNING] content_generator — 최소 분량 미달(1770자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 05:50:31,999 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 05:50:34,677 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 05:50:34,681 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-07-22 05:50:36,169 [INFO] image_fetcher — 이미지 수집 성공: '통영 하루 코스 알짜 명소와 숙소 총정리' → 제목='사랑의이해 매이킹 32. [하루에 5코스 수수 통영 데이트] - 유연석 ' (관련성=0.25)
+2026-07-22 05:50:37,782 [INFO] image_fetcher — 대체 이미지 수집: '통영 하루 코스' → 제목='통영에서의 하루 | TVING 통영에서의 하루  | TVING' (관련성=0.33)
+2026-07-22 05:50:37,782 [INFO] image_fetcher — 이미지 수집 성공: '통영 하루 코스' → 제목='통영에서의 하루 | TVING 통영에서의 하루  | TVING' (관련성=0.33)
+2026-07-22 05:50:38,719 [INFO] image_fetcher — 이미지 수집 성공: '통영 하루 코스 특별한 통영은 한국' → 제목='네이버 인플루언서 [네이버 인플루언서] 황금연휴! 통영 가볼만한곳 여행코' (관련성=0.17)
+2026-07-22 05:50:38,910 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 05:50:38,910 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 05:50:38,911 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 05:50:38,913 [INFO] content_generator — 포스트 생성 완료: '통영 하루 코스 알짜 명소와 숙소 총정리' (1770자, 이미지 3개)
+2026-07-22 05:50:38,935 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 05:50:42,048 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 05:50:42,055 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '통영 하루 코스 알짜 명소와 숙소 총정리'
+2026-07-22 05:50:42,055 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 2000자 미만이며 구체적 경험이나 수치 포함 안 됨
+2026-07-22 05:50:42,055 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 서술 부족, 출처는 있으나 구체적이지 않음
+2026-07-22 05:50:42,055 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재, 저작권 관련 정보 부족
+2026-07-22 05:50:42,055 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 인간적 관점 부족, 자동 생성 문구 이용 가능성
+2026-07-22 05:50:42,064 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 05:50:42,070 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-22 05:50:42,070 [INFO] main —   제목: 통영 하루 코스 알짜 명소와 숙소 총정리
+2026-07-22 05:50:42,070 [INFO] main —   이미지: 3개 삽입
+2026-07-22 05:50:42,070 [INFO] main —   글자 수: 1770자
+2026-07-22 05:50:42,070 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '통영 하루 코스 알짜 명소와 숙소 총정리' (1770자 < 2500자)
+2026-07-22 05:50:42,093 [INFO] dashboard_exporter —   검토 대기 저장: 통영 하루 코스 알짜 명소와 숙소 총정리 (6875자 HTML)
+2026-07-22 05:50:42,106 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 101개)
+2026-07-22 05:50:42,106 [INFO] main — 
+============================================================
+2026-07-22 05:50:42,106 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-22 05:50:42,106 [INFO] main — ============================================================
+2026-07-22 05:50:42,131 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 05:50:42,149 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 05:50:42,164 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 05:50:42,383 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 05:50:42,639 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 05:50:42,984 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 05:50:42,985 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 05:50:42,988 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 05:50:43,004 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 185 / 실패 15 / 대기 74)
+2026-07-22 05:50:43,004 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 05:50:43,004 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 05:50:43,005 [INFO] main — 대시보드 데이터 업데이트 완료

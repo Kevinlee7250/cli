@@ -71,6 +71,11 @@ jobs:
         working-directory: blog-automation
         run: mkdir -p logs
 
+      - name: 🔐 인증 헬스체크 (Google OAuth 자격증명 만료 감지)
+        working-directory: blog-automation
+        continue-on-error: true
+        run: python auth_health_check.py
+
       - name: 🔧 자동 진단 및 수리 실행
         working-directory: blog-automation
         run: |
@@ -108,6 +113,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           for f in \
+            docs/data/auth_health.json \
             docs/data/repairs.json docs/data/pending_posts.json \
             docs/data/posts.json docs/data/post_registry.json \
             docs/data/code_repairs.json \

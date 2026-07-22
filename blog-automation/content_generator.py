@@ -374,17 +374,69 @@ def _structure_variation(keyword: str) -> str:
 • 소제목 문구는 권장 구조의 단어를 그대로 쓰지 말고 주제에 맞는 구체적 표현으로"""
 
 
-def _engagement_block() -> str:
+_FINANCE_TOKENS = {"금융", "주식", "etf", "경제", "부동산", "투자", "금리", "환율", "세금", "연금", "대출"}
+_SPORTS_TOKENS = {"스포츠", "축구", "야구", "농구", "배구", "골프", "경기", "선수", "리그", "올림픽", "대회"}
+_DRAMA_TOKENS = {"드라마", "영화", "연예", "k-pop", "kpop", "아이돌", "배우", "가수", "예능", "리뷰"}
+
+
+def _detect_content_category(keyword: str, blog_id: str = "") -> str:
+    """키워드·블로그ID로 글의 성격(금융/스포츠/드라마·연예/여행·일반)을 판별합니다.
+
+    카테고리마다 독자가 글을 읽는 방식이 근본적으로 다름 — 금융은 근거를 확인하려
+    천천히 읽고, 스포츠는 결과부터 확인하려 훑어보고, 드라마·연예는 감정선을 따라
+    몰입해서 읽고, 여행·일반은 필요한 정보만 스캔함. 하나의 지침으로 4가지를 다
+    커버할 수 없어 카테고리별로 분기한다.
+    """
+    tokens = set(re.findall(r"[a-zA-Z가-힣]+", keyword.lower()))
+    if blog_id == "blog3" or tokens & _FINANCE_TOKENS:
+        return "finance"
+    if tokens & _SPORTS_TOKENS:
+        return "sports"
+    if tokens & _DRAMA_TOKENS:
+        return "drama"
+    return "travel"
+
+
+_HOOK_BY_CATEGORY = {
+    "finance": (
+        "숫자·근거로 시작: 첫 문장에 구체적 수치(금액·비율·기간)나 "
+        "믿기 힘든 사실을 제시해 \"진짜인지 확인하고 싶게\" 만들 것. "
+        "감탄사나 추측성 표현으로 시작 금지 — 신뢰가 최우선인 독자층."
+    ),
+    "sports": (
+        "결과·핵심부터 공개: 첫 문장에 경기 결과·기록·순위 등 독자가 "
+        "가장 궁금해하는 핵심 정보를 먼저 제시하고, 그 다음에 과정을 풀어갈 것. "
+        "속보를 읽는 독자는 서론이 길면 즉시 이탈함."
+    ),
+    "drama": (
+        "장면·감정으로 시작: 구체적인 장면 묘사나 등장인물의 감정 상태로 "
+        "시작해 몰입을 유도할 것. 이후 단락에 긴장(문제 제기) → 전개 → "
+        "해소(결말/총평)의 감정 곡선을 명시적으로 설계할 것."
+    ),
+    "travel": (
+        "상황·공감으로 시작: 독자가 실제로 겪을 법한 구체적 상황(\"~할 때 이런 "
+        "고민이 든다\")으로 시작해 공감을 얻고, 바로 이어서 이 글이 그 고민을 "
+        "어떻게 해결해주는지 한 문장으로 예고할 것."
+    ),
+}
+
+
+def _engagement_block(keyword: str = "", blog_id: str = "") -> str:
     """독자 체류시간·몰입도를 높이기 위한 공통 지침 — AdSense 정책 준수 범위 내에서만 적용.
 
     핵심 원칙: 후킹은 "낚시"가 아니라 "약속과 이행의 일치"여야 함 — 제목·도입부가
     암시한 내용을 본문이 충족하지 못하면 AdSense 오해소지 콘텐츠 위반이자 즉시 이탈 원인.
+
+    도입부(첫 2~3문장)는 카테고리별로 읽히는 방식이 다르므로 별도 지침을 적용하고,
+    그 외 구조·스캔 가능성 지침은 공통으로 적용한다.
     """
-    return """
+    category = _detect_content_category(keyword, blog_id)
+    hook_rule = _HOOK_BY_CATEGORY[category]
+    return f"""
 ━━━ 독자 체류·몰입 강화 지침 (AdSense 정책 준수 범위 내에서만) ━━━
 
-도입부 후킹 (첫 2문장):
-- 구체적 상황·숫자·긴장감으로 시작해 "왜 계속 읽어야 하는지"를 즉시 납득시킬 것
+도입부 후킹 (첫 2~3문장, 카테고리: {category}):
+- {hook_rule}
 - 절대 낚시 금지: 도입부가 암시한 내용은 본문에서 반드시 충족되어야 함
   (약속만 하고 안 지키면 AdSense "오해소지 콘텐츠" 위반이자 즉시 이탈 원인)
 
@@ -929,7 +981,7 @@ JSON만 응답 (마크다운 없이):
 def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
     blog_id = (blog_config or {}).get("id", "")
     # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (모든 블로그 공통)
-    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block()
+    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block(keyword, blog_id)
 
     # blog1 (HOGU What?) 전용 프롬프트
     if blog_id == "blog1":
@@ -1754,7 +1806,7 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict, blog_
     from datetime import datetime
     blog_id = (blog_config or {}).get("id", "")
     # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (가짜 체험담·목차 반복 방지)
-    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block()
+    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block(keyword, blog_id)
     if blog_id == "blog3":
         return _build_series_prompt_finance(keyword, traffic, series_context, blog_config) + style_block
     # blog1 또는 미지정

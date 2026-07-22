@@ -1,87 +1,3 @@
-2026-07-21 23:07:10,495 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 99개)
-2026-07-21 23:07:10,495 [INFO] main — 
-============================================================
-2026-07-21 23:07:10,495 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-21 23:07:10,495 [INFO] main — ============================================================
-2026-07-21 23:07:10,520 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-21 23:07:10,540 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-21 23:07:10,555 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-21 23:07:10,628 [WARNING] gsc_fetcher — GSC 토큰 발급 실패: 400
-2026-07-21 23:07:10,695 [WARNING] gsc_fetcher — GSC 토큰 발급 실패: 400
-2026-07-21 23:07:10,760 [WARNING] gsc_fetcher — GSC 토큰 발급 실패: 400
-2026-07-21 23:07:10,764 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-21 23:07:10,779 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 186 / 실패 16 / 대기 72)
-2026-07-21 23:07:10,780 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-21 23:07:10,780 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-21 23:07:10,781 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-21 23:07:44,727 [INFO] main — ============================================================
-2026-07-21 23:07:44,727 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-21 23:07:44
-2026-07-21 23:07:44,727 [INFO] main — ============================================================
-2026-07-21 23:07:44,737 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
-2026-07-21 23:07:44,737 [INFO] keyword_collector — 포스팅 이력 코퍼스: 39개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-21 23:07:48,865 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-21 23:07:49,039 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 23:07:49,042 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-21 23:07:49,505 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-21 23:07:49,631 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 23:07:49,779 [WARNING] gsc_fetcher — GSC 토큰 발급 실패: 400
-2026-07-21 23:07:49,915 [WARNING] gsc_fetcher — GSC 토큰 발급 실패: 400
-2026-07-21 23:07:49,917 [INFO] keyword_collector —   [high_cpc] 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-21 23:07:49,917 [INFO] keyword_collector —   [fallback] 1개: ['코스피 코스닥 2026 하반기 전망 핵심 정리']
-2026-07-21 23:07:49,917 [INFO] keyword_collector — 최종 선정 키워드 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리']
-2026-07-21 23:07:49,918 [INFO] main — 수집된 키워드 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리']
-2026-07-21 23:07:49,923 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-07-21 23:07:49,923 [INFO] main — 단독 포스트 대상 키워드 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-21 23:07:49,938 [INFO] main — 
-[1/1] 키워드: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
-2026-07-21 23:07:49,938 [INFO] content_generator — 포스트 생성 중: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
-2026-07-21 23:07:50,057 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 23:07:50,058 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdG3UPR6zwhbW1MFKRYoh'}
-2026-07-21 23:07:55,546 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
-2026-07-21 23:07:55,663 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 23:07:55,664 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdG3UoPFaVPGHhK7TTeTL'}
-2026-07-21 23:07:55,665 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-21 23:07:55,782 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 23:07:56,269 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 23:08:09,494 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 23:08:09,511 [WARNING] content_generator — 컨텐츠 너무 짧음(1046자, 최소 2500자) — 재시도 1/3
-2026-07-21 23:08:12,511 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-21 23:08:12,511 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 23:08:28,775 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 23:08:28,781 [WARNING] content_generator — 컨텐츠 너무 짧음(1491자, 최소 2500자) — 재시도 2/3
-2026-07-21 23:08:31,782 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-21 23:08:31,782 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 23:08:50,816 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 23:08:50,817 [WARNING] content_generator — 최소 분량 미달(2073자) — 재시도 소진, 해당 분량으로 진행
-2026-07-21 23:08:50,835 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 23:08:52,622 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 23:08:52,631 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
-2026-07-21 23:08:53,792 [INFO] image_fetcher — 이미지 수집 성공: '2026년 주택담보대출 금리 비교: 발품 팔아 가장 유리한 은행 찾기' → 제목='주택담보대출 고정금리 vs 변동금리, 차이점과 나에게 유리한 금리를 선택' (관련성=0.22)
-2026-07-21 23:08:54,601 [INFO] image_fetcher — 이미지 수집 성공: '주택담보대출 금리 최저' → 제목='5개월 만에 내려간 주택담보대출 금리 '가산금리 인상 중단 영향'' (관련성=0.67)
-2026-07-21 23:08:55,596 [INFO] image_fetcher — 이미지 수집 성공: '주택담보대출 금리 주요 은행 주택담보 대출' → 제목='3월 주택담보대출 금리 3.94%... 5개월 연속 하락세' (관련성=0.29)
-2026-07-21 23:08:55,747 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-21 23:08:55,748 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-21 23:08:55,750 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-21 23:08:55,751 [INFO] content_generator — 포스트 생성 완료: '2026년 주택담보대출 금리 비교: 발품 팔아 가장 유리한 은행 찾기' (2073자, 이미지 3개)
-2026-07-21 23:08:55,772 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-21 23:08:58,807 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-21 23:08:58,813 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '2026년 주택담보대출 금리 비교: 발품 팔아 가장 유리한 은행'
-2026-07-21 23:08:58,813 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 2073자이므로 경고임.
-2026-07-21 23:08:58,813 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기반 내용이 부족하며 독창적 경험 서술 부족함.
-2026-07-21 23:08:58,813 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재로 인한 경고.
-2026-07-21 23:08:58,823 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-21 23:08:58,829 [INFO] internal_linker —   [1/5] '수수료' -> https://www.hoguwhat.com/2026/07/0.html
-2026-07-21 23:08:58,831 [INFO] internal_linker —   [2/5] '포인트' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0140262446
-2026-07-21 23:08:58,833 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-21 23:08:58,833 [INFO] main —   제목: 2026년 주택담보대출 금리 비교: 발품 팔아 가장 유리한 은행 찾기
-2026-07-21 23:08:58,833 [INFO] main —   이미지: 3개 삽입
-2026-07-21 23:08:58,833 [INFO] main —   글자 수: 2073자
-2026-07-21 23:08:58,833 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '2026년 주택담보대출 금리 비교: 발품 팔아 가장 유리한 은행 찾기' (2073자 < 2500자)
-2026-07-21 23:08:58,857 [INFO] dashboard_exporter —   검토 대기 저장: 2026년 주택담보대출 금리 비교: 발품 팔아 가장 유리한 은행 찾기 (11212자 HTML)
-2026-07-21 23:08:58,870 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 100개)
-2026-07-21 23:08:58,871 [INFO] main — 
-============================================================
-2026-07-21 23:08:58,871 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
 2026-07-21 23:08:58,871 [INFO] main — ============================================================
 2026-07-21 23:08:58,896 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
 2026-07-21 23:08:58,914 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
@@ -582,3 +498,113 @@
 2026-07-22 11:51:26,272 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-22 11:51:26,272 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-22 11:51:26,272 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-22 12:29:23,276 [INFO] main — ============================================================
+2026-07-22 12:29:23,276 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-22 12:29:23
+2026-07-22 12:29:23,276 [INFO] main — ============================================================
+2026-07-22 12:29:23,283 [INFO] main — 수집된 키워드 1개: ['대통령도 택한 방식 강남에도 집주인 대출']
+2026-07-22 12:29:23,287 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-07-22 12:29:23,287 [INFO] main — 단독 포스트 대상 키워드 1개: ['대통령도 택한 방식 강남에도 집주인 대출']
+2026-07-22 12:29:23,298 [INFO] main — 
+[1/1] 키워드: '대통령도 택한 방식 강남에도 집주인 대출'
+2026-07-22 12:29:23,298 [INFO] content_generator — 포스트 생성 중: '대통령도 택한 방식 강남에도 집주인 대출'
+2026-07-22 12:29:23,697 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:29:23,698 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH6ba7arghZEFng1Y1HB'}
+2026-07-22 12:29:29,145 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '대통령도 택한 방식 강남에도 집주인 대출'
+2026-07-22 12:29:29,351 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:29:29,352 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH6bzSZbHwNPwwheoqrL'}
+2026-07-22 12:29:29,352 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 12:29:29,555 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:29:29,906 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:29:53,426 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:29:53,478 [WARNING] content_generator — 컨텐츠 너무 짧음(1365자, 최소 2500자) — 재시도 1/3
+2026-07-22 12:29:56,478 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 12:29:56,478 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:30:15,861 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:30:15,862 [WARNING] content_generator — 컨텐츠 너무 짧음(1424자, 최소 2500자) — 재시도 2/3
+2026-07-22 12:30:18,863 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 12:30:18,863 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:30:39,081 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:30:39,085 [WARNING] content_generator — 최소 분량 미달(1493자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 12:30:39,101 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:30:41,238 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:30:41,252 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-07-22 12:30:41,536 [INFO] image_fetcher — 이미지 수집 성공: '강남집주인 대출, 진짜 내게도 해당될까? 대통령도 선택한 방법' → 제목='real estate / homeownership / homebuying' (관련성=0.11)
+2026-07-22 12:30:43,417 [INFO] image_fetcher — 이미지 수집 성공: '대통령도 택한 방식' → 제목='외신 “스스로 몰락 택한 대통령” “위대한 민주주의 승리”[윤석열 탄핵 ' (관련성=0.33)
+2026-07-22 12:30:45,470 [INFO] image_fetcher — 이미지 수집 성공: '대통령도 택한 강남집주인 대출이란 부동산을 높은' → 제목='■사실상 ‘정치적 자살’ 택한 尹 대통령…대체 왜? | 보배드림 정치게시' (관련성=0.17)
+2026-07-22 12:30:45,633 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:30:45,633 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 12:30:45,634 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 12:30:45,636 [INFO] content_generator — 포스트 생성 완료: '강남집주인 대출, 진짜 내게도 해당될까? 대통령도 선택한 방법' (1493자, 이미지 3개)
+2026-07-22 12:30:45,653 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:30:49,373 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:30:49,374 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 61/100 — '강남집주인 대출, 진짜 내게도 해당될까? 대통령도 선택한 방법'
+2026-07-22 12:30:49,374 [INFO] adsense_validator —   ❌ 원본성 및 품질: 그저 정보 나열에 그치며 실질적 가치 부족
+2026-07-22 12:30:49,374 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드 사용 적절하나 반복 및 밀집 우려 가능
+2026-07-22 12:30:49,374 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 투자 관련 면책 조항 필요 가능
+2026-07-22 12:30:49,374 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 서술 부족 및 저자 신뢰성 정보 없음
+2026-07-22 12:30:49,374 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재로 SEO 및 가독성 우려
+2026-07-22 12:30:49,374 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 정보 나열은 AI 생성 의심 요소 있음
+2026-07-22 12:30:49,374 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 그저 정보 나열에 그치며 실질적 가치 부족
+2026-07-22 12:30:49,375 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 61/100, 이유: ['[원본성 및 품질] 그저 정보 나열에 그치며 실질적 가치 부족']) — 재생성 2/2
+2026-07-22 12:30:52,375 [INFO] content_generator — 포스트 생성 중: '대통령도 택한 방식 강남에도 집주인 대출'
+2026-07-22 12:30:52,556 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:30:52,557 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH6i89LSNgrtvNgWD4co'}
+2026-07-22 12:30:56,816 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '대통령도 택한 방식 강남에도 집주인 대출'
+2026-07-22 12:30:56,984 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:30:56,984 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH6iTAa82fXXsN9fJJB4'}
+2026-07-22 12:30:56,985 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 12:30:56,985 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:31:15,559 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:31:15,567 [WARNING] content_generator — 컨텐츠 너무 짧음(1547자, 최소 2500자) — 재시도 1/3
+2026-07-22 12:31:18,567 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 12:31:18,567 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:31:40,317 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:31:40,322 [WARNING] content_generator — 컨텐츠 너무 짧음(1428자, 최소 2500자) — 재시도 2/3
+2026-07-22 12:31:43,322 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 12:31:43,323 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:32:04,631 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:32:04,641 [WARNING] content_generator — 최소 분량 미달(1428자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 12:32:04,656 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:32:06,919 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:32:06,923 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-07-22 12:32:08,739 [INFO] image_fetcher — 이미지 수집 성공: '대통령도 주목한 '강남 집주인 대출', 나에게 맞는 방법일까?' → 제목='money / finance / mortgage / loan / real' (관련성=0.11)
+2026-07-22 12:32:09,931 [INFO] image_fetcher — 이미지 수집 성공: '대통령도 택한 방식' → 제목='마크롱 佛 대통령 "희망 택한 프랑스…분열 반드시 극복"' (관련성=0.33)
+2026-07-22 12:32:11,839 [INFO] image_fetcher — 대체 이미지 수집: '대통령도 택한 대출 핵심 특히 주택' → 제목='오늘의유머 - 거봐요 트럼프는 문대통령을 택한거라고 거봐요 트럼프는 문대' (관련성=0.00)
+2026-07-22 12:32:11,839 [INFO] image_fetcher — 이미지 수집 성공: '대통령도 택한 대출 핵심 특히 주택' → 제목='오늘의유머 - 거봐요 트럼프는 문대통령을 택한거라고 거봐요 트럼프는 문대' (관련성=0.00)
+2026-07-22 12:32:12,056 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:32:12,056 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 12:32:12,057 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 12:32:12,058 [INFO] content_generator — 포스트 생성 완료: '대통령도 주목한 '강남 집주인 대출', 나에게 맞는 방법일까?' (1428자, 이미지 3개)
+2026-07-22 12:32:12,072 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:32:17,271 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:32:17,276 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '대통령도 주목한 '강남 집주인 대출', 나에게 맞는 방법일까?'
+2026-07-22 12:32:17,276 [INFO] adsense_validator —   ❌ 원본성 및 품질: 1428자로 글자 수 기준 불충족 및 독창성 부족
+2026-07-22 12:32:17,276 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 인용은 있지만 직접 경험 부족
+2026-07-22 12:32:17,276 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없어 가독성 영향 가능
+2026-07-22 12:32:17,276 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 다소 일반적인 문체 사용됨
+2026-07-22 12:32:17,276 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 1428자로 글자 수 기준 불충족 및 독창성 부족
+2026-07-22 12:32:17,276 [WARNING] adsense_validator —   🔴 originality
+2026-07-22 12:32:17,287 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 12:32:17,293 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-22 12:32:17,293 [INFO] main —   제목: 대통령도 주목한 '강남 집주인 대출', 나에게 맞는 방법일까?
+2026-07-22 12:32:17,293 [INFO] main —   이미지: 3개 삽입
+2026-07-22 12:32:17,293 [INFO] main —   글자 수: 1428자
+2026-07-22 12:32:17,293 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '대통령도 주목한 '강남 집주인 대출', 나에게 맞는 방법일까?' (1428자 < 2500자)
+2026-07-22 12:32:17,312 [INFO] dashboard_exporter —   검토 대기 저장: 대통령도 주목한 '강남 집주인 대출', 나에게 맞는 방법일까? (7876자 HTML)
+2026-07-22 12:32:17,323 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 107개)
+2026-07-22 12:32:17,324 [INFO] main — 
+============================================================
+2026-07-22 12:32:17,324 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-22 12:32:17,324 [INFO] main — ============================================================
+2026-07-22 12:32:17,342 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 12:32:17,355 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 12:32:17,366 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 12:32:17,583 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 12:32:17,846 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 12:32:18,093 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 12:32:18,093 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 12:32:18,095 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 12:32:18,107 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 179 / 실패 15 / 대기 80)
+2026-07-22 12:32:18,108 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 12:32:18,108 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 12:32:18,108 [INFO] main — 대시보드 데이터 업데이트 완료

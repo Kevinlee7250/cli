@@ -24,6 +24,7 @@ CLI:
 import argparse
 import json
 import os
+import re
 from datetime import datetime, timezone
 
 _DOCS_DATA = os.path.join(os.path.dirname(__file__), "..", "docs", "data")
@@ -77,6 +78,44 @@ def search(keyword: str) -> list[dict]:
         e for e in _load()
         if kw in json.dumps(e, ensure_ascii=False).lower()
     ]
+
+
+_STOPWORDS = {"the", "a", "an", "of", "to", "for", "and", "or", "is", "are", "in", "on"}
+
+
+def _tokenize(text: str) -> set[str]:
+    words = re.findall(r"[a-zA-Z0-9_]+|[가-힣]+", text.lower())
+    return {w for w in words if len(w) > 1 and w not in _STOPWORDS}
+
+
+def match_known(message: str, min_overlap: int = 2) -> dict | None:
+    """새 진단 메시지를 과거 인시던트와 자동 대조합니다 (자가진단 대조 봇).
+
+    같은 종류의 장애(예: GSC 403, invalid_grant)가 재발했을 때, 사람이 다시
+    처음부터 원인을 추리하지 않도록 이미 기록된 root_cause/fix를 즉시 보여줍니다.
+    토큰 겹침 개수로만 판단하는 단순 매칭 — 정교한 유사도가 아니라 "이거 전에
+    본 문제 같은데?"를 빠르게 알려주는 용도입니다.
+    """
+    msg_tokens = _tokenize(message)
+    if not msg_tokens:
+        return None
+
+    best, best_score = None, 0
+    for entry in _load():
+        haystack = " ".join([entry.get("title", ""), entry.get("symptom", "")])
+        overlap = len(msg_tokens & _tokenize(haystack))
+        if overlap > best_score:
+            best, best_score = entry, overlap
+
+    if best and best_score >= min_overlap:
+        return {
+            "incident_id": best["id"],
+            "title": best["title"],
+            "root_cause": best["root_cause"],
+            "fix": best["fix"],
+            "match_score": best_score,
+        }
+    return None
 
 
 def main() -> int:

@@ -612,10 +612,23 @@ def run_auto_repair(dry_run: bool = False) -> dict:
     lvl_order = {"critical": 0, "high": 1, "warning": 2, "low": 3}
     issues.sort(key=lambda x: lvl_order.get(x["level"], 9))
 
+    # ── 자가진단 자동 대조 — 새 이슈를 과거 인시던트와 매칭해 즉시 원인/수정 힌트 제공 ──
+    try:
+        from incident_log import match_known
+        for iss in issues:
+            known = match_known(iss["message"])
+            if known:
+                iss["known_incident"] = known
+    except Exception as e:
+        logger.warning(f"[AutoRepair] 인시던트 대조 실패 (무시하고 계속): {e}")
+
     logger.info(f"[AutoRepair] 진단 완료: {len(issues)}개 이슈")
     for iss in issues:
         icon = {"critical": "🔴", "high": "🟠", "warning": "🟡", "low": "🔵"}.get(iss["level"], "⚪")
         logger.info(f"  {icon} [{iss['level'].upper()}] {iss['message']}")
+        known = iss.get("known_incident")
+        if known:
+            logger.info(f"      💡 기존 인시던트와 일치: \"{known['title']}\" → {known['fix']}")
 
     # ── 수리 전 백업 (문제 발생 시 자동 롤백용) ─────────────────────────────────
     backup_dir = ""

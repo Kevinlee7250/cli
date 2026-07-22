@@ -1,82 +1,3 @@
-2026-07-22 11:47:58,526 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-22 11:47:58,527 [INFO] keyword_collector — 유사 주제 제외 2개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개']
-2026-07-22 11:47:58,527 [INFO] keyword_collector —   [fallback] 2개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
-2026-07-22 11:47:58,527 [INFO] keyword_collector — 최종 선정 키워드 2개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
-2026-07-22 11:47:58,527 [INFO] main — 수집된 키워드 2개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
-2026-07-22 11:47:58,531 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-07-22 11:47:58,532 [INFO] main — 단독 포스트 대상 키워드 1개: ['강원도 캠핑 처음 해봤을 때 몰랐던 것들']
-2026-07-22 11:47:58,543 [INFO] main — 
-[1/1] 키워드: '강원도 캠핑 처음 해봤을 때 몰랐던 것들'
-2026-07-22 11:47:58,543 [INFO] content_generator — 포스트 생성 중: '강원도 캠핑 처음 해봤을 때 몰랐던 것들'
-2026-07-22 11:47:58,902 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:47:58,902 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH3SPqrE9Uo9C9SXrXQw'}
-2026-07-22 11:48:05,449 [INFO] research_collector — 자료 조사: 7개 수집 (신뢰 도메인 1개) — '강원도 캠핑 처음 해봤을 때 몰랐던 것들'
-2026-07-22 11:48:05,617 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:48:05,617 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH3SuT5U43zs3GZDEqzF'}
-2026-07-22 11:48:05,618 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-22 11:48:05,808 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:48:06,175 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:48:29,649 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:48:29,659 [WARNING] content_generator — 컨텐츠 너무 짧음(1406자, 최소 2500자) — 재시도 1/3
-2026-07-22 11:48:32,659 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-22 11:48:32,659 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:48:53,105 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:48:53,109 [WARNING] content_generator — 컨텐츠 너무 짧음(1100자, 최소 2500자) — 재시도 2/3
-2026-07-22 11:48:56,110 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-22 11:48:56,110 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:49:11,266 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:49:11,272 [WARNING] content_generator — 최소 분량 미달(950자) — 재시도 소진, 해당 분량으로 진행
-2026-07-22 11:49:11,286 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:49:12,364 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:49:12,375 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-07-22 11:49:13,099 [INFO] image_fetcher — 이미지 수집 성공: '강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들' → 제목='“피서 하면 강원도… 숲·강·바다서 추억 만들며 더위 날려요”' (관련성=0.12)
-2026-07-22 11:49:13,330 [INFO] image_fetcher — 이미지 수집 성공: '강원도 캠핑 해봤' → 제목='ground camping / family camp / picnic / ' (관련성=0.25)
-2026-07-22 11:49:13,741 [INFO] image_fetcher — 대체 이미지 수집: '강원도 캠핑 시작하기 알아야 캠핑이 최근' → 제목='spring / vacation / camping / early summ' (관련성=0.14)
-2026-07-22 11:49:13,741 [INFO] image_fetcher — 이미지 수집 성공: '강원도 캠핑 시작하기 알아야 캠핑이 최근' → 제목='spring / vacation / camping / early summ' (관련성=0.14)
-2026-07-22 11:49:14,271 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:49:14,272 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-22 11:49:14,273 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-22 11:49:14,274 [INFO] content_generator — 포스트 생성 완료: '강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들' (950자, 이미지 3개)
-2026-07-22 11:49:14,290 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:49:17,841 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:49:17,844 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들'
-2026-07-22 11:49:17,844 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 950자로 2000자 미만이며, 인사이트나 독창적 관점보다는 일반적인 정보가 주를 이루고 있음
-2026-07-22 11:49:17,844 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기반의 서술이 부족하고 출처는 있으나 저자 신뢰성 부족
-2026-07-22 11:49:17,844 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되어 있지 않음
-2026-07-22 11:49:17,852 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-22 11:49:17,856 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-07-22 11:49:17,856 [INFO] main —   제목: 강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들
-2026-07-22 11:49:17,856 [INFO] main —   이미지: 3개 삽입
-2026-07-22 11:49:17,856 [INFO] main —   글자 수: 950자
-2026-07-22 11:49:17,856 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들' (950자 < 2500자)
-2026-07-22 11:49:17,876 [INFO] dashboard_exporter —   검토 대기 저장: 강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들 (5651자 HTML)
-2026-07-22 11:49:17,887 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 105개)
-2026-07-22 11:49:17,887 [INFO] main — 
-============================================================
-2026-07-22 11:49:17,887 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-22 11:49:17,887 [INFO] main — ============================================================
-2026-07-22 11:49:17,906 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-22 11:49:17,920 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-22 11:49:17,931 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-22 11:49:18,194 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-22 11:49:18,752 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-22 11:49:18,753 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-22 11:49:18,756 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-22 11:49:18,767 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 181 / 실패 15 / 대기 78)
-2026-07-22 11:49:18,767 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-22 11:49:18,768 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-22 11:49:18,768 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-22 11:49:57,144 [INFO] main — ============================================================
-2026-07-22 11:49:57,144 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-22 11:49:57
-2026-07-22 11:49:57,144 [INFO] main — ============================================================
-2026-07-22 11:49:57,153 [INFO] keyword_collector — 타 블로그 최근 키워드 16개 중복 방지 코퍼스 합류
-2026-07-22 11:49:57,153 [INFO] keyword_collector — 포스팅 이력 코퍼스: 43개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-22 11:50:01,515 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-22 11:50:02,023 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:50:02,024 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-22 11:50:02,323 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-22 11:50:02,499 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:50:02,780 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
 2026-07-22 11:50:02,780 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
 2026-07-22 11:50:02,782 [INFO] keyword_collector — 유사 주제 제외 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리']
 2026-07-22 11:50:02,782 [INFO] keyword_collector —   [fallback] 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
@@ -577,3 +498,84 @@
 2026-07-22 23:13:54,818 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-22 23:13:54,818 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-22 23:13:54,819 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-22 23:14:34,638 [INFO] main — ============================================================
+2026-07-22 23:14:34,638 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-22 23:14:34
+2026-07-22 23:14:34,639 [INFO] main — ============================================================
+2026-07-22 23:14:34,648 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
+2026-07-22 23:14:34,648 [INFO] keyword_collector — 포스팅 이력 코퍼스: 44개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-22 23:14:37,974 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-22 23:14:38,432 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:14:38,433 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-22 23:14:39,002 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-22 23:14:39,182 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:14:39,484 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 23:14:39,485 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-22 23:14:39,486 [INFO] keyword_collector — 유사 주제 제외 3개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리', '미국 연준 금리 결정 한국 증시 영향 분석']
+2026-07-22 23:14:39,487 [INFO] keyword_collector —   [fallback] 2개: ['원달러 환율 급등락 원인과 개인투자자 대응법', '2026 금융시장 주요 이슈 직장인이 알아야 할 것']
+2026-07-22 23:14:39,487 [INFO] keyword_collector — 최종 선정 키워드 2개: ['원달러 환율 급등락 원인과 개인투자자 대응법', '2026 금융시장 주요 이슈 직장인이 알아야 할 것']
+2026-07-22 23:14:39,487 [INFO] main — 수집된 키워드 2개: ['원달러 환율 급등락 원인과 개인투자자 대응법', '2026 금융시장 주요 이슈 직장인이 알아야 할 것']
+2026-07-22 23:14:39,492 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-07-22 23:14:39,492 [INFO] main — 단독 포스트 대상 키워드 1개: ['원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-22 23:14:39,507 [INFO] main — 
+[1/1] 키워드: '원달러 환율 급등락 원인과 개인투자자 대응법'
+2026-07-22 23:14:39,507 [INFO] content_generator — 포스트 생성 중: '원달러 환율 급등락 원인과 개인투자자 대응법'
+2026-07-22 23:14:39,714 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:14:39,714 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwoVoAiYLzC3iX2XxZt'}
+2026-07-22 23:14:46,082 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '원달러 환율 급등락 원인과 개인투자자 대응법'
+2026-07-22 23:14:46,245 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:14:46,246 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwoyqeFVPw3gGrxSfWr'}
+2026-07-22 23:14:46,248 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 23:14:47,241 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:14:47,778 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:15:04,669 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:15:04,684 [WARNING] content_generator — 컨텐츠 너무 짧음(1284자, 최소 2500자) — 재시도 1/3
+2026-07-22 23:15:07,684 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 23:15:07,684 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:15:28,893 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:15:28,900 [WARNING] content_generator — 컨텐츠 너무 짧음(1923자, 최소 2500자) — 재시도 2/3
+2026-07-22 23:15:31,901 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 23:15:31,901 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:15:49,964 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:15:49,970 [WARNING] content_generator — 최소 분량 미달(1553자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 23:15:49,970 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(환헤지)가 쉬운 설명 없이 사용됨']) — 재시도 소진, 해당 상태로 진행
+2026-07-22 23:15:49,989 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:15:51,046 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:15:51,056 [INFO] content_generator — 팩트체크: 통과
+2026-07-22 23:15:51,883 [INFO] image_fetcher — 이미지 수집 성공: '원달러 환율 급등락의 이유와 개인투자자 대응 방안' → 제목='15년 만에 환율 1,450원대 돌파...앞으로의 대응 방안은?' (관련성=0.29)
+2026-07-22 23:15:52,599 [INFO] image_fetcher — 이미지 수집 성공: '원달러 환율 급등락' → 제목='증시 급등락 장세 속 ‘원·달러 환율’ 잘 버틴 까닭?' (관련성=0.67)
+2026-07-22 23:15:53,957 [INFO] image_fetcher — 대체 이미지 수집: '원달러 환율 급등락 주요 경제 변동의' → 제목='중국발 경기 둔화 경고음…원·달러 환율 1340원 돌파' (관련성=0.14)
+2026-07-22 23:15:53,957 [INFO] image_fetcher — 이미지 수집 성공: '원달러 환율 급등락 주요 경제 변동의' → 제목='중국발 경기 둔화 경고음…원·달러 환율 1340원 돌파' (관련성=0.14)
+2026-07-22 23:15:54,184 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:15:54,184 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 23:15:54,186 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 23:15:54,187 [INFO] content_generator — 포스트 생성 완료: '원달러 환율 급등락의 이유와 개인투자자 대응 방안' (1553자, 이미지 3개)
+2026-07-22 23:15:54,209 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:15:57,402 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:15:57,403 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '원달러 환율 급등락의 이유와 개인투자자 대응 방안'
+2026-07-22 23:15:57,403 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 2000자 미만이며, 일반적인 정보로 보임.
+2026-07-22 23:15:57,403 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 개인 경험 기반 내용 부족하고, 신뢰성 보완 필요.
+2026-07-22 23:15:57,403 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없어 SEO 및 가독성 보완 필요.
+2026-07-22 23:15:57,411 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 23:15:57,413 [INFO] internal_linker —   [1/5] 'ETF' -> https://www.hoguwhat.com/2026/07/30-etf.html
+2026-07-22 23:15:57,416 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-22 23:15:57,416 [INFO] main —   제목: 원달러 환율 급등락의 이유와 개인투자자 대응 방안
+2026-07-22 23:15:57,416 [INFO] main —   이미지: 3개 삽입
+2026-07-22 23:15:57,417 [INFO] main —   글자 수: 1553자
+2026-07-22 23:15:57,417 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '원달러 환율 급등락의 이유와 개인투자자 대응 방안' (1553자 < 2500자)
+2026-07-22 23:15:57,441 [INFO] dashboard_exporter —   검토 대기 저장: 원달러 환율 급등락의 이유와 개인투자자 대응 방안 (6581자 HTML)
+2026-07-22 23:15:57,455 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 112개)
+2026-07-22 23:15:57,456 [INFO] main — 
+============================================================
+2026-07-22 23:15:57,456 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-22 23:15:57,456 [INFO] main — ============================================================
+2026-07-22 23:15:57,479 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 23:15:57,496 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 23:15:57,510 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 23:15:57,727 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 23:15:57,992 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 23:15:57,994 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 23:15:57,997 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 23:15:58,011 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 175 / 실패 15 / 대기 84)
+2026-07-22 23:15:58,011 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 23:15:58,012 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 23:15:58,012 [INFO] main — 대시보드 데이터 업데이트 완료

@@ -606,6 +606,9 @@
     <!-- Last run status banner -->
     <div id="last-run-banner" style="display:none"></div>
 
+    <!-- Weekly brief mini banner -->
+    <div id="weekly-brief-banner" style="display:none"></div>
+
     <!-- Countdown -->
     <div class="countdown-card">
       <div>
@@ -7773,8 +7776,27 @@ function wfRunAutoRepair(dryRun = false) {
   }).catch(() => showToast('네트워크 오류', 'error'))
 }
 
+// ── 주간 브리핑 미니 배너 (개요 페이지 상단) ─────────────────────────────────────
+function renderWeeklyBriefBanner() {
+  const el = document.getElementById('weekly-brief-banner')
+  if (!el) return
+  const b = DATA.weeklyBrief
+  if (!b) { el.style.display = 'none'; return }
+  const hasRisk = (b.risks || []).length > 0
+  el.style.display = 'flex'
+  el.className = 'status-banner ' + (hasRisk ? 'err' : 'ok')
+  el.innerHTML = `
+    <div class="sb-icon">📋</div>
+    <div class="sb-text" style="flex:1">
+      <div class="sb-title">이번 주 브리핑 ${hasRisk ? `— 위험 신호 ${b.risks.length}건` : '— 정상 운영'}</div>
+      <div class="sb-detail">${esc(b.summary_text || '')}</div>
+    </div>
+    <button onclick="navTo('system')" style="padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--fg,#fff);font-size:12px;cursor:pointer;white-space:nowrap">자세히 →</button>`
+}
+
 // ── 주간 운영 브리핑 렌더 ────────────────────────────────────────────────────────
 function renderWeeklyBrief() {
+  renderWeeklyBriefBanner()
   const wrap = document.getElementById('weekly-brief-wrap')
   if (!wrap) return
   const b = DATA.weeklyBrief

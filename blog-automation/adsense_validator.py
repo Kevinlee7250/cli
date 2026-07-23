@@ -29,8 +29,17 @@ Google AdSense 정책 자동 검증기 — 8개 항목 점검
 import json
 import logging
 import re
+from config import claude_text
 
 logger = logging.getLogger(__name__)
+
+# 최신 AdSense 정책 힌트 주입 (adsense_policy_updater.py가 생성한 캐시 사용)
+def _get_policy_context() -> str:
+    try:
+        from adsense_policy_updater import get_policy_summary_for_prompt
+        return get_policy_summary_for_prompt()
+    except Exception:
+        return ""
 
 # ─── 스코어링 ───────────────────────────────────────────────────────────────
 _SCORE_MAP = {"pass": 12, "warn": 7, "fail": 0}
@@ -49,7 +58,7 @@ _MAX_RAW = len(_CHECKS) * _SCORE_MAP["pass"]   # 96
 # 이 항목이 fail이면 점수 관계없이 즉시 reject
 _MANDATORY_PASS = {"harmful_content"}
 
-_THRESHOLD_UPLOAD = 80
+_THRESHOLD_UPLOAD = 80  # 80점 이상만 즉시 업로드
 _THRESHOLD_REVIEW = 65
 
 _LABELS_KO = {
@@ -83,17 +92,17 @@ def _count_h2(html: str) -> int:
 
 
 def _default_pass() -> dict:
-    """API 오류 시 warn 수준 기본 결과를 반환합니다."""
+    """API 오류 시 warn 수준 기본 결과를 반환합니다. score=65(review)로 업로드를 막습니다."""
     return {
         "pass": True,
-        "score": 75,
-        "recommendation": "upload",
+        "score": 65,
+        "recommendation": "review",
         "checks": {
             k: {"status": "warn", "label": _LABELS_KO[k], "note": "검증 생략 (API 오류)", "icon": "⚠️"}
             for k in _CHECKS
         },
         "issues": [],
-        "warnings": ["AdSense 검증이 API 오류로 생략됐습니다."],
+        "warnings": ["AdSense 검증이 API 오류로 생략됐습니다. 검토 후 수동 업로드 필요합니다."],
     }
 
 
@@ -143,10 +152,13 @@ def validate_adsense(post_data: dict) -> dict:
 
     try:
         import anthropic
-        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
+        from config import claude_text, ANTHROPIC_API_KEY, CLAUDE_MODEL
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
-        prompt = f"""Google AdSense 2025 최신 정책 기준으로 다음 블로그 포스트를 8개 항목 검증하세요.
+        policy_ctx = _get_policy_context()
+        policy_section = f"\n\n최신 정책 업데이트:\n{policy_ctx}" if policy_ctx else ""
+
+        prompt = f"""Google AdSense 최신 정책 기준으로 다음 블로그 포스트를 8개 항목 검증하세요.{policy_section}
 
 포스트 정보:
 - 제목: {title}
@@ -163,12 +175,14 @@ def validate_adsense(post_data: dict) -> dict:
 
 ━━━ 검증 항목 ━━━ (각 항목: pass / warn / fail + 한 줄 근거)
 
-1. originality — 원본성 및 품질 (AdSense Valuable Inventory 정책)
+1. originality — 원본성 및 품질 (AdSense Valuable Inventory / 가치 없는 콘텐츠 정책)
    판단 기준:
-   • 독창적 관점·개인 경험이 실제로 포함됐는가?
+   • 독창적 관점·개인 경험이 구체적 수치·날짜·사례와 함께 실제로 포함됐는가?
    • 다른 사이트의 정보를 그대로 나열만 하지 않는가? (thin content 금지)
-   • 글자 수 2000자 미만이면 warn, 1000자 미만이면 fail
-   • 독자에게 실질적 가치를 주는가?
+   • 글자 수 2500자 이상이면 pass, 2000~2499자면 warn, 2000자 미만이면 fail
+     (글자 수는 위 '포스트 정보'의 값을 기준으로 판단 — 본문 미리보기는 앞부분만 제공됨)
+   • 독자에게 실질적 가치를 주는가? (인터넷에 이미 넘치는 정보의 재조합이면 fail)
+   • AI가 생성한 일반론 나열인지, 아니면 진짜 경험·인사이트가 담겼는지 판단
 
 2. seo — SEO 최적화
    판단 기준:
@@ -203,6 +217,8 @@ def validate_adsense(post_data: dict) -> dict:
    • 저자 신뢰성 신호가 있는가? (전문 지식 표현)
 
 7. image_policy — 이미지 정책 (저작권 정책)
+   ★ 중요: 이미지가 없거나 적어도 저작권 위반이 없으면 반드시 "warn"으로 평가.
+     이미지 부재 자체는 "fail"이 아님 — 텍스트만으로도 AdSense 정책 통과 가능.
    판단 기준:
    • alt 텍스트 없는 이미지가 많으면 warn
    • 이미지 출처가 네이버 검색 결과 기반이면 warn (저작권 주의)
@@ -234,12 +250,13 @@ JSON만 응답 (설명 없이):
   "suggestions": ["개선 권장 사항 (없으면 빈 배열)"]
 }}"""
 
-        msg = client.messages.create(
+        from config import claude_generate
+        raw = claude_generate(
+            client,
             model=CLAUDE_MODEL,
-            max_tokens=900,
+            max_tokens=2000,
             messages=[{"role": "user", "content": prompt}],
-        )
-        raw = msg.content[0].text.strip()
+        ).strip()
         s, e = raw.find("{"), raw.rfind("}")
         if s == -1 or e <= s:
             logger.warning(f"AdSense 검증 JSON 파싱 실패 — 기본 처리: {raw[:200]}")
@@ -312,3 +329,118 @@ JSON만 응답 (설명 없이):
     except Exception as exc:
         logger.warning(f"AdSense 검증 오류 — 기본 통과 처리: {exc}")
         return _default_pass()
+
+
+# ─── 자동 수정 ────────────────────────────────────────────────────────────────
+
+def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
+    """AdSense 검증 결과를 바탕으로 포스트 내용을 자동 수정합니다.
+
+    harmful_content fail → 수정 불가, None 반환
+    그 외 warn/fail 항목 → Claude로 해당 부분만 개선
+
+    Returns:
+        개선된 post_data dict, 또는 수정 불가/실패 시 None
+    """
+    checks  = validation.get("checks", {})
+    score   = validation.get("score", 0)
+    rec     = validation.get("recommendation", "")
+
+    # harmful_content fail은 자동 수정 불가
+    if checks.get("harmful_content", {}).get("status") == "fail":
+        logger.warning("harmful_content fail — 자동 수정 불가 (수동 검토 필요)")
+        return None
+
+    # 이미 upload 기준 통과했으면 수정 불필요
+    if rec == "upload" and score >= _THRESHOLD_UPLOAD:
+        logger.info("이미 AdSense 기준 통과 — 수정 불필요")
+        return post_data
+
+    # 수정 대상 항목 수집
+    fail_items = [(k, v) for k, v in checks.items() if v.get("status") == "fail" and k != "harmful_content"]
+    warn_items = [(k, v) for k, v in checks.items() if v.get("status") == "warn"]
+
+    if not fail_items and not warn_items:
+        return post_data
+
+    logger.info(f"AdSense 자동 수정 시작 — 점수: {score}/100, fail: {len(fail_items)}개, warn: {len(warn_items)}개")
+
+    # 수정 지시 생성
+    fix_instructions = []
+    for key, chk in fail_items:
+        fix_instructions.append(f"[{_LABELS_KO.get(key, key)} — 필수 수정] {chk.get('note', '')}")
+    for key, chk in warn_items[:4]:  # warn은 상위 4개만
+        fix_instructions.append(f"[{_LABELS_KO.get(key, key)} — 개선 권장] {chk.get('note', '')}")
+
+    issues_text = "\n".join(f"• {i}" for i in fix_instructions)
+
+    title   = post_data.get("title", "")
+    html    = post_data.get("content", "")
+    keyword = post_data.get("keyword", "")
+
+    # 원본 글자 수
+    orig_word_count = post_data.get("word_count", len(re.sub(r'<[^>]+>', '', html)))
+
+    policy_ctx = _get_policy_context()
+    policy_note = f"\n\n최신 AdSense 정책:\n{policy_ctx}" if policy_ctx else ""
+
+    prompt = f"""당신은 Google AdSense 정책 준수 전문가입니다.
+아래 블로그 포스트가 AdSense 검증에서 {score}점을 받았습니다 (업로드 기준: 80점).
+지적된 문제를 수정하여 AdSense 정책에 완전히 부합하는 고품질 포스트로 개선하세요.{policy_note}
+
+━━━ 수정 지시 ━━━
+{issues_text}
+
+━━━ 수정 원칙 ━━━
+1. 기존 내용의 80% 이상을 유지하면서 지적된 부분만 수정하세요
+2. 제목·키워드·HTML 구조(h2/h3/ul/li)는 가능한 유지하세요
+3. 총 글자 수는 원본({orig_word_count}자) 이상을 유지하세요
+4. AdSense 광고 코드(adsbygoogle 블록)는 절대 수정하지 마세요
+5. 개인 경험·구체적 수치·날짜를 자연스럽게 추가하세요
+6. AI가 쓴 것처럼 보이는 상투어("또한", "더불어", "이처럼")를 줄이세요
+
+━━━ 포스트 정보 ━━━
+제목: {title}
+키워드: {keyword}
+현재 점수: {score}/100
+
+━━━ 현재 본문 HTML ━━━
+{html[:8000]}
+
+━━━ 요청 ━━━
+수정된 본문 HTML 전체를 그대로 출력하세요. 설명이나 주석 없이 HTML만 출력합니다.
+반드시 원본 HTML 태그 구조(div, h2, p, ul 등)를 유지하세요."""
+
+    try:
+        import anthropic
+        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL, claude_generate
+
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        fixed_html = claude_generate(
+            client,
+            model=CLAUDE_MODEL,
+            max_tokens=8000,
+            messages=[{"role": "user", "content": prompt}],
+        ).strip()
+
+        if not fixed_html or len(fixed_html) < len(html) * 0.5:
+            logger.warning("자동 수정 결과가 너무 짧음 — 원본 유지")
+            return None
+
+        # 수정된 내용 적용
+        fixed = dict(post_data)
+        fixed["content"] = fixed_html
+        fixed["word_count"] = len(re.sub(r'<[^>]+>', '', fixed_html))
+        fixed["adsense_auto_fixed"] = True
+        fixed["adsense_fix_items"] = [k for k, _ in fail_items + warn_items[:4]]
+
+        improvement = fixed["word_count"] - orig_word_count
+        logger.info(
+            f"자동 수정 완료 — 글자 수: {orig_word_count}자 → {fixed['word_count']}자 "
+            f"({'+'if improvement>=0 else ''}{improvement}자)"
+        )
+        return fixed
+
+    except Exception as e:
+        logger.error(f"자동 수정 오류: {e}")
+        return None

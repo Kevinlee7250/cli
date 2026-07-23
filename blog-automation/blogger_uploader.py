@@ -5,6 +5,8 @@ import logging
 import re
 import requests
 from datetime import datetime
+from schema_generator import generate_all_schemas
+from related_posts import build_related_section
 
 from config import (
     BLOGGER_CLIENT_ID,
@@ -14,6 +16,7 @@ from config import (
     POST_STATUS,
     ADSENSE_CLIENT_ID,
     ADSENSE_SLOT_IDS,
+    ADSENSE_MODE,
 )
 
 logger = logging.getLogger(__name__)
@@ -21,16 +24,12 @@ logger = logging.getLogger(__name__)
 TOKEN_URL = "https://oauth2.googleapis.com/token"
 BLOGGER_API_BASE = "https://www.googleapis.com/blogger/v3"
 
-
 # ──────────────────────────────────────────────────────────────────────────────
 # OAuth
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _get_access_token(blog_config: dict | None = None) -> str | None:
-    cfg = blog_config or {}
-    client_id = cfg.get("client_id") or BLOGGER_CLIENT_ID
-    client_secret = cfg.get("client_secret") or BLOGGER_CLIENT_SECRET
-    refresh_token = cfg.get("refresh_token") or BLOGGER_REFRESH_TOKEN
+def _request_token(client_id: str, client_secret: str, refresh_token: str):
+    """토큰 발급 요청 — (access_token|None, response_text)."""
     try:
         resp = requests.post(TOKEN_URL, data={
             "client_id": client_id,
@@ -40,18 +39,49 @@ def _get_access_token(blog_config: dict | None = None) -> str | None:
         }, timeout=15)
     except requests.exceptions.RequestException as e:
         logger.error(f"토큰 요청 네트워크 오류: {e}")
-        return None
+        return None, str(e)
     if resp.status_code == 200:
         try:
             token = resp.json().get("access_token")
             if token:
-                return token
+                return token, ""
         except json.JSONDecodeError as e:
             logger.error(f"토큰 응답 JSON 파싱 실패: {e}")
-            return None
-    logger.error(f"토큰 발급 실패: {resp.status_code} {resp.text[:200]}")
-    if "invalid_grant" in resp.text:
+            return None, str(e)
+    return None, f"{resp.status_code} {resp.text[:200]}"
+
+
+def _get_access_token(blog_config: dict | None = None) -> str | None:
+    cfg = blog_config or {}
+    client_id = cfg.get("client_id") or BLOGGER_CLIENT_ID
+    client_secret = cfg.get("client_secret") or BLOGGER_CLIENT_SECRET
+    refresh_token = cfg.get("refresh_token") or BLOGGER_REFRESH_TOKEN
+
+    token, err = _request_token(client_id, client_secret, refresh_token)
+    if token:
+        return token
+    logger.error(f"토큰 발급 실패: {err}")
+
+    # 블로그별 크리덴셜이 잘못된 경우(invalid_client 등) 기본 GOOGLE_* Secret으로 폴백
+    # — BLOGS_CONFIG에 자리표시자·오타가 들어가도 업로드가 멈추지 않도록
+    used_custom = bool(cfg.get("client_id") or cfg.get("client_secret") or cfg.get("refresh_token"))
+    if used_custom and BLOGGER_CLIENT_ID and BLOGGER_REFRESH_TOKEN:
+        logger.warning(
+            f"[{cfg.get('id', '?')}] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도"
+        )
+        token, err2 = _request_token(BLOGGER_CLIENT_ID, BLOGGER_CLIENT_SECRET, BLOGGER_REFRESH_TOKEN)
+        if token:
+            logger.warning(
+                "⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 "
+                "client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)"
+            )
+            return token
+        logger.error(f"기본 크리덴셜도 실패: {err2}")
+
+    if "invalid_grant" in err:
         logger.error("💡 해결: blog-automation/get_refresh_token.py 실행 후 GOOGLE_REFRESH_TOKEN Secret을 새 토큰으로 교체하세요.")
+    if "invalid_client" in err:
+        logger.error("💡 해결: BLOGS_CONFIG Secret의 client_id/client_secret가 Google Cloud Console의 OAuth 클라이언트 값과 일치하는지 확인하세요.")
     return None
 
 
@@ -60,8 +90,13 @@ def _get_access_token(blog_config: dict | None = None) -> str | None:
 # ──────────────────────────────────────────────────────────────────────────────
 
 def _ad_unit(slot_index: int, blog_config: dict | None = None) -> str:
-    """반응형 AdSense 광고 유닛 HTML."""
+    """반응형 AdSense 광고 유닛 HTML.
+    auto 모드에서는 빈 문자열 반환 — 광고는 Blogger 테마의 자동 광고 스크립트가 처리.
+    """
     cfg = blog_config or {}
+    mode = cfg.get("adsense_mode") or ADSENSE_MODE
+    if mode == "auto":
+        return ""
     adsense_client = cfg.get("adsense_client_id") or ADSENSE_CLIENT_ID
     adsense_slots = cfg.get("adsense_slot_ids") or ADSENSE_SLOT_IDS
     if not adsense_client or adsense_client == "ca-pub-XXXXXXXXXXXXXXXXX":
@@ -69,7 +104,7 @@ def _ad_unit(slot_index: int, blog_config: dict | None = None) -> str:
     slot_id = adsense_slots[slot_index % len(adsense_slots)] if adsense_slots else "0000000000"
     return f"""
 <!-- AdSense 광고 슬롯 {slot_index + 1} -->
-<div style="margin:2.4em auto;text-align:center;max-width:728px;overflow:hidden;border-top:1px solid #ede9fe;border-bottom:1px solid #ede9fe;padding:1.2em 0;">
+<div style="margin:2em auto;text-align:center;max-width:728px;overflow:hidden;">
   <ins class="adsbygoogle"
     style="display:block;width:100%;min-height:100px;"
     data-ad-client="{adsense_client}"
@@ -92,7 +127,7 @@ def _inject_ads(html: str, blog_config: dict | None = None) -> str:
     # 슬롯 1: 목차 div 이후 첫 번째 </p> 뒤 (목차 내부 삽입 방지)
     # </ol> 을 기준으로 목차 끝 위치를 잡는다 — 내부 </div> 오인 방지
     ad0 = _ad_unit(0, blog_config)
-    toc_pos = html.find('목차')
+    toc_pos = html.find('📋 목차')
     if toc_pos != -1:
         ol_end = html.lower().find('</ol>', toc_pos)
         search_start = ol_end + 5 if ol_end != -1 else 0
@@ -139,22 +174,6 @@ def _article_schema(post_data: dict) -> str:
     return f'<script type="application/ld+json">{json.dumps(schema, ensure_ascii=False)}</script>\n'
 
 
-def _faq_schema(faq: list[dict]) -> str:
-    if not faq:
-        return ""
-    schema = {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": item.get("q", ""),
-                "acceptedAnswer": {"@type": "Answer", "text": item.get("a", "")},
-            }
-            for item in faq
-        ],
-    }
-    return f'<script type="application/ld+json">{json.dumps(schema, ensure_ascii=False)}</script>\n'
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -181,38 +200,49 @@ def _add_h2_ids(html: str) -> str:
     return re.sub(r'<h2([^>]*)>(.*?)</h2>', replacer, html, flags=re.IGNORECASE | re.DOTALL)
 
 
+def _strip_model_toc(html: str) -> str:
+    """AI가 본문에 직접 생성한 목차 블록을 제거합니다 (자동 목차와 중복 방지).
+    패턴: '목차'/'📋 목차' 제목(h2·h3·p·strong) + 바로 뒤따르는 ol/ul 목록."""
+    # ① 제목 + 목록 (div 래핑 여부 무관하게 내부 쌍 제거)
+    pattern = (
+        r'<(h[23]|p|div)[^>]*>\s*(?:<strong[^>]*>\s*)?(?:📋\s*)?목차\s*(?::)?\s*'
+        r'(?:</strong>\s*)?</\1>\s*<(ol|ul)[^>]*>.*?</\2>'
+    )
+    before = html
+    html = re.sub(pattern, '', html, flags=re.IGNORECASE | re.DOTALL)
+    # ② 자동 목차 형식(📋 목차 div 박스)이 이미 본문에 있으면 통째로 제거 후 재생성
+    html = re.sub(
+        r'<div[^>]*>\s*<p[^>]*>\s*📋\s*목차\s*</p>\s*<ol[^>]*>.*?</ol>\s*</div>',
+        '', html, flags=re.IGNORECASE | re.DOTALL,
+    )
+    if html != before:
+        logger.info("본문 내 기존 목차 블록 제거 (자동 목차와 중복 방지)")
+    return html
+
+
 def _build_toc(html: str) -> str:
     """H2 태그를 파싱해 목차 HTML을 생성합니다."""
     headings = re.findall(r'<h2[^>]*id="([^"]+)"[^>]*>(.*?)</h2>', html, re.IGNORECASE | re.DOTALL)
     if len(headings) < 2:
         return ""
 
-    # 목차 번호 색상: 바이올렛·블루·틸·앰버 순환
-    toc_colors = ['#7c3aed', '#2563eb', '#0d9488', '#d97706']
-
     items = []
-    for i, (slug, inner) in enumerate(headings, 1):
+    for slug, inner in headings:
         clean = re.sub(r'<[^>]+>', '', inner).strip()
-        color = toc_colors[(i - 1) % len(toc_colors)]
         items.append(
-            f'<li style="display:flex;align-items:baseline;gap:10px;padding:7px 0;'
-            f'border-bottom:1px solid #f3f0ff;">'
-            f'<span style="flex-shrink:0;width:20px;height:20px;background:{color};'
-            f'border-radius:50%;font-size:10px;font-weight:800;color:#fff;'
-            f'display:inline-flex;align-items:center;justify-content:center;'
-            f'position:relative;top:1px;">{i}</span>'
-            f'<a href="#{slug}" style="color:#1f1f2e;text-decoration:none;font-weight:500;'
-            f'font-size:14px;line-height:1.4;">{clean}</a></li>'
+            f'<li><a href="#{slug}" style="color:#4a90e2;text-decoration:none;">'
+            f'{clean}</a></li>'
         )
 
-    return (
-        '<div style="background:#faf9ff;border:1.5px solid #ede9fe;border-radius:12px;'
-        'padding:20px 24px;margin:2em 0;">'
-        '<p style="font-weight:800;font-size:11px;letter-spacing:.14em;text-transform:uppercase;'
-        'margin:0 0 14px;color:#7c3aed;">이 글의 목차</p>'
-        f'<ol style="margin:0;padding:0;list-style:none;">{"".join(items)}</ol>'
-        '</div>\n'
-    )
+    return f"""
+<div style="background:#f8f9fa;border-left:4px solid #4a90e2;border-radius:8px;
+padding:20px 24px;margin:2em 0;max-width:680px;">
+  <p style="font-weight:700;font-size:16px;margin:0 0 12px;">📋 목차</p>
+  <ol style="margin:0;padding-left:20px;line-height:2;">
+    {"".join(items)}
+  </ol>
+</div>
+"""
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -222,11 +252,16 @@ def _build_toc(html: str) -> str:
 def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str:
     """SEO 완전 최적화 HTML을 구성합니다."""
     html = post_data.get("content", "")
-    faq = post_data.get("faq", [])
     labels = post_data.get("labels", [])
     series_nav = post_data.get("series_nav", "")  # 시리즈 내비게이션 HTML
 
-    # ① H2에 id 부여 (중복 slug 방지 포함)
+    # ① Blogger가 거부하는 속성 사전 제거 (aria-*, itemscope, itemtype 등)
+    html = _sanitize_for_blogger(html)
+
+    # ①.5 본문에 이미 있는 목차 제거 — 자동 목차와 중복 방지
+    html = _strip_model_toc(html)
+
+    # ② H2에 id 부여 (중복 slug 방지 포함)
     html = _add_h2_ids(html)
 
     # ② 목차 생성 — 첫 번째 </p> 뒤에 삽입
@@ -241,112 +276,67 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
     # ③ AdSense 광고 삽입
     html = _inject_ads(html, blog_config)
 
-    # ④ 태그 클라우드 — 색상 순환 (바이올렛·블루·틸·앰버·로즈)
-    tag_styles = [
-        ('background:#f5f3ff;color:#7c3aed;',),
-        ('background:#eff6ff;color:#2563eb;',),
-        ('background:#f0fdfa;color:#0d9488;',),
-        ('background:#fffbeb;color:#d97706;',),
-        ('background:#fff1f2;color:#e11d48;',),
-    ]
+    # ④ 태그 클라우드 (내부 링크 효과)
+    from urllib.parse import quote as _url_quote
     tag_links = "".join(
-        f'<a href="/search/label/{label}" '
-        f'style="display:inline-block;margin:4px 3px;padding:6px 16px;'
-        f'border-radius:20px;text-decoration:none;font-size:12px;font-weight:600;'
-        f'letter-spacing:.01em;{tag_styles[i % len(tag_styles)][0]}">{label}</a>'
-        for i, label in enumerate(labels[:10])
+        f'<a href="/search/label/{_url_quote(label, safe="")}" '
+        f'style="display:inline-block;margin:4px;padding:5px 14px;'
+        f'background:#e8f0fe;border-radius:20px;text-decoration:none;'
+        f'color:#1a73e8;font-size:13px;">{label}</a>'
+        for label in labels[:10]
     )
-    tag_section = (
-        '<div style="margin:3em 0 0;padding-top:1.8em;border-top:1px solid #ede9fe;">'
-        '<p style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;'
-        'color:#7c3aed;margin:0 0 12px;">관련 태그</p>'
-        f'<div>{tag_links}</div>'
-        '</div>\n'
-    )
+    tag_section = f"""
+<div style="margin:2.5em 0;padding:20px;background:#f8f9fa;border-radius:10px;">
+  <p style="font-weight:700;margin:0 0 10px;">🏷️ 관련 태그</p>
+  <div>{tag_links}</div>
+</div>
+"""
 
     # ⑤ 출처 섹션
     sources = post_data.get("sources", [])
     sources_section = ""
     if sources:
         source_items = "".join(
-            f'<li style="margin:5px 0;">'
+            f'<li style="margin:6px 0;">'
             f'<a href="{s.get("url", "#")}" target="_blank" rel="nofollow noopener" '
-            f'style="color:#7c3aed;text-decoration:none;font-size:13px;">'
+            f'style="color:#1a73e8;text-decoration:none;">'
             f'{s.get("title", s.get("url", ""))}</a></li>'
             for s in sources
         )
         sources_section = (
-            '<div style="margin:2em 0;padding-top:1.4em;border-top:1px solid #ede9fe;">'
-            '<p style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;'
-            'color:#9ca3af;margin:0 0 10px;">참고 자료</p>'
-            f'<ul style="margin:0;padding-left:18px;line-height:2.1;color:#6b7280;">{source_items}</ul>'
+            '<div style="margin:2.5em 0;padding:20px 24px;background:#f1f3f4;'
+            'border-radius:10px;border-left:4px solid #5f6368;">'
+            '<p style="font-weight:700;font-size:15px;margin:0 0 10px;">📚 참고 자료</p>'
+            f'<ul style="margin:0;padding-left:20px;line-height:1.9;font-size:14px;">{source_items}</ul>'
             '</div>'
         )
 
-    # ⑥ CTA + 면책조항 — 로즈 포인트 CTA
-    footer = (
-        '<div style="margin-top:2.8em;padding:24px 28px;'
-        'background:linear-gradient(135deg,#faf9ff 0%,#fff1f2 100%);'
-        'border-radius:12px;border:1.5px solid #fecdd3;">'
-        '<p style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;'
-        'color:#e11d48;margin:0 0 8px;">도움이 됐나요?</p>'
-        '<p style="font-size:15px;font-weight:800;color:#0f0f14;margin:0 0 6px;">'
-        '북마크하고 공유해주세요!</p>'
-        '<p style="font-size:13px;color:#6b7280;margin:0 0 14px;line-height:1.7;">'
-        '더 좋은 정보로 보답하겠습니다. 구독하면 새 글을 바로 받아보실 수 있습니다.</p>'
-        '<p style="font-size:11px;color:#9ca3af;margin:0;line-height:1.8;">'
-        '투자·의료·법률 등 전문 분야는 반드시 전문가와 상담하세요.</p>'
-        '</div>\n'
-    )
+    # ⑥ 면책조항 + 소셜 공유 유도
+    # ── 관련 포스트 섹션 (유사도 기반 자동 추천) ──
+    try:
+        related_section = build_related_section(post_data, blog_config)
+    except Exception as _rp_e:
+        logger.warning(f'related_section 생성 실패: {_rp_e}')
+        related_section = ''
 
-    # 포스트 공통 CSS — 다색 팔레트 도시 테마
-    # 바이올렛(H2) · 틸(인용) · 앰버(하이라이트) · 블루(링크/H3) · 로즈(레이블)
-    post_css = (
-        '<style>'
-        '.bp-wrap{max-width:760px;margin:0 auto;padding:8px 4px;'
-        'font-family:"Noto Sans KR","Apple SD Gothic Neo","맑은 고딕",sans-serif;'
-        'font-size:16px;line-height:1.9;color:#1f1f2e;word-break:keep-all;'
-        'counter-reset:h2-counter;}'
-        # H2: 바이올렛 번호 뱃지
-        '.bp-wrap h2{font-size:1.45rem;font-weight:800;color:#0f0f14;'
-        'margin:2.6em 0 .8em;letter-spacing:-.025em;line-height:1.25;'
-        'display:flex;align-items:center;gap:12px;}'
-        '.bp-wrap h2::before{counter-increment:h2-counter;content:counter(h2-counter);'
-        'flex-shrink:0;width:32px;height:32px;background:#7c3aed;'
-        'border-radius:8px;font-size:13px;font-weight:800;color:#fff;'
-        'display:inline-flex;align-items:center;justify-content:center;}'
-        # H3: 블루 왼쪽 선
-        '.bp-wrap h3{font-size:1.08rem;font-weight:700;color:#1e3a8a;'
-        'margin:1.8em 0 .5em;letter-spacing:-.01em;padding-left:14px;'
-        'border-left:3px solid #3b82f6;}'
-        '.bp-wrap p{margin:0 0 1.15em;color:#374151;}'
-        # 링크: 블루
-        '.bp-wrap a{color:#2563eb;text-decoration:none;font-weight:500;}'
-        '.bp-wrap a:hover{color:#1d4ed8;text-decoration:underline;}'
-        # blockquote: 틸 — 인용·전문가 의견 강조
-        '.bp-wrap blockquote{background:#f0fdfa;border:none;border-left:4px solid #0d9488;'
-        'margin:2em 0;padding:18px 22px;border-radius:0 10px 10px 0;'
-        'font-size:1.05rem;font-weight:600;color:#134e4a;line-height:1.7;font-style:normal;}'
-        # code: 바이올렛 틴트
-        '.bp-wrap code{background:#f5f3ff;color:#5b21b6;padding:2px 7px;'
-        'border-radius:4px;font-size:.88em;font-weight:600;}'
-        '.bp-wrap strong{color:#0f0f14;font-weight:700;}'
-        # mark: 앰버 형광펜
-        '.bp-wrap mark{background:linear-gradient(180deg,transparent 52%,#fde68a 52%);'
-        'color:inherit;padding:0 2px;}'
-        # 구분선: 라벤더
-        '.bp-wrap hr{border:none;border-top:1px solid #ede9fe;margin:2.4em 0;}'
-        '</style>'
-    )
+    footer = """
+<div style="margin-top:3em;padding:18px 20px;background:#fff3cd;border-radius:10px;
+border-left:4px solid #ffc107;">
+  <p style="font-size:13px;color:#666;margin:0;">
+    📌 이 글이 도움이 됐다면 북마크 &amp; 공유해주세요!<br>
+    ⚠️ 투자·의료·법률 등 전문 분야는 반드시 전문가와 상담하세요.
+  </p>
+</div>
+"""
 
     return (
-        _article_schema(post_data)
-        + _faq_schema(faq)
-        + post_css
-        + '<div class="bp-wrap">'
+        generate_all_schemas(post_data, blog_config)
+        + '<div class="blog-post" style="max-width:800px;margin:0 auto;'
+          'font-family:\'Noto Sans KR\',sans-serif;line-height:1.9;color:#222;">'
         + series_nav           # ⑦ 시리즈 내비게이션 (상단)
         + html
         + series_nav           # ⑧ 시리즈 내비게이션 (하단 — 읽은 후 다음 편 유도)
+        + related_section
         + tag_section
         + sources_section
         + footer
@@ -357,6 +347,149 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
 # ──────────────────────────────────────────────────────────────────────────────
 # 업로드
 # ──────────────────────────────────────────────────────────────────────────────
+
+def _sanitize_for_blogger(html: str) -> str:
+    """Blogger API 호환성: 거부되는 HTML 요소 제거 및 변환.
+    실제 테스트로 확인된 Blogger API 거부 요소:
+      - <script> 태그 (JSON-LD 제외 — AdSense push만 제거)
+      - <ins> 태그 (AdSense <ins class="adsbygoogle"> 포함)
+      - data-ad-* 속성 (AdSense 광고 데이터)
+      - <nav>, <section>, <main>, <aside>, <header>, <footer> 시맨틱 태그
+      - aria-* 속성
+      - id 속성 (앵커 타겟)
+      - href="#..." 내부 앵커 링크
+    성공 사례에서 허용 확인됨: <article>, <p>, <h2>, <ul>, <li>, <div>
+    """
+    # <script> 태그 제거 — JSON-LD(application/ld+json)는 SEO 필수이므로 유지
+    html = re.sub(
+        r'<script(?![^>]*type=["\']application/ld\+json["\'])[^>]*>.*?</script>',
+        '', html, flags=re.DOTALL | re.IGNORECASE
+    )
+    # AdSense 광고 블록 전체 제거 (<!-- AdSense ... --> 주석 + <ins> + </div>)
+    html = re.sub(r'<!--\s*AdSense 광고 슬롯[^>]*-->.*?</div>', '', html, flags=re.DOTALL | re.IGNORECASE)
+    # <ins> 태그 제거 (잔여 AdSense 코드)
+    html = re.sub(r'<ins[^>]*>.*?</ins>', '', html, flags=re.DOTALL | re.IGNORECASE)
+    html = re.sub(r'<ins[^>]*/>', '', html, flags=re.IGNORECASE)
+    # data-ad-* 속성 제거 (AdSense 커스텀 속성)
+    html = re.sub(r'\s+data-ad-[\w-]+="[^"]*"', '', html, flags=re.IGNORECASE)
+    html = re.sub(r"\s+data-ad-[\w-]+='[^']*'", '', html, flags=re.IGNORECASE)
+    # HTML5 시맨틱 블록 태그 → <div> 변환
+    for tag in ['nav', 'section', 'main', 'aside', 'header', 'footer']:
+        html = re.sub(f'<{tag}([^>]*)>', r'<div\1>', html, flags=re.IGNORECASE)
+        html = re.sub(f'</{tag}>', '</div>', html, flags=re.IGNORECASE)
+    # aria-* 속성 제거
+    html = re.sub(r'\s+aria-[\w-]+="[^"]*"', '', html)
+    html = re.sub(r"\s+aria-[\w-]+='[^']*'", '', html)
+    # id 속성 제거 (앵커 타겟)
+    html = re.sub(r'\s+id="[^"]*"', '', html, flags=re.IGNORECASE)
+    html = re.sub(r"\s+id='[^']*'", '', html, flags=re.IGNORECASE)
+    # 내부 앵커 링크 href="#..." → 텍스트만 남김
+    html = re.sub(
+        r'<a[^>]*\shref="#[^"]*"[^>]*>(.*?)</a>',
+        r'\1', html, flags=re.IGNORECASE | re.DOTALL
+    )
+    # /search/label/ 한국어 비인코딩 href → 텍스트로 변환 (Blogger API 400 원인)
+    html = re.sub(
+        r'<a[^>]*\shref="/search/label/[^"]*"[^>]*>(.*?)</a>',
+        r'\1', html, flags=re.IGNORECASE | re.DOTALL
+    )
+    return html
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# AdSense 자동 광고 — Blogger 테마 주입
+# ──────────────────────────────────────────────────────────────────────────────
+
+_ADSENSE_SCRIPT_MARKER = "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+
+
+def inject_adsense_to_theme(blog_config: dict | None = None) -> bool:
+    """Blogger 테마 <head>에 AdSense 자동 광고 스크립트를 삽입합니다.
+
+    Blogger Templates API (layout / skin)를 순차 시도하고,
+    API가 지원되지 않으면 수동 설치 안내를 로그로 출력합니다.
+
+    반환값: True=성공(또는 이미 존재), False=API 불가(수동 안내 출력됨)
+    """
+    cfg = blog_config or {}
+    token = _get_access_token(cfg)
+    if not token:
+        logger.error("OAuth 토큰 발급 실패 — AdSense 테마 주입 중단")
+        return False
+
+    blog_id = str(cfg.get("blog_id") or BLOGGER_BLOG_ID).strip()
+    pub_id = cfg.get("adsense_client_id") or ADSENSE_CLIENT_ID
+
+    if not pub_id or pub_id == "ca-pub-XXXXXXXXXXXXXXXXX":
+        logger.error("ADSENSE_CLIENT_ID가 설정되지 않았습니다 — GitHub Secrets에 추가하세요")
+        return False
+
+    adsense_script = (
+        f'  <script async src="https://pagead2.googlesyndication.com'
+        f'/pagead/js/adsbygoogle.js?client={pub_id}"'
+        f' crossorigin="anonymous"></script>'
+    )
+
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+
+    for tpl_type in ["layout", "skin"]:
+        url = f"{BLOGGER_API_BASE}/blogs/{blog_id}/templates/{tpl_type}"
+        try:
+            resp = requests.get(url, headers=headers, timeout=15)
+        except requests.exceptions.RequestException as e:
+            logger.debug(f"템플릿 GET 네트워크 오류 ({tpl_type}): {e}")
+            continue
+
+        if resp.status_code != 200:
+            logger.debug(f"템플릿 {tpl_type} GET {resp.status_code} — 다음 시도")
+            continue
+
+        try:
+            tpl = resp.json()
+        except Exception:
+            continue
+
+        # 응답 구조에서 실제 HTML/XML 문자열 추출
+        template_html = tpl.get("template") or tpl.get("skin") or ""
+        if not template_html:
+            continue
+
+        if _ADSENSE_SCRIPT_MARKER in template_html:
+            logger.info("✅ AdSense 자동 광고 스크립트가 이미 Blogger 테마에 존재합니다")
+            return True
+
+        # </head> 직전에 삽입
+        if "</head>" in template_html:
+            new_html = template_html.replace("</head>", f"{adsense_script}\n</head>", 1)
+        else:
+            new_html = adsense_script + "\n" + template_html
+
+        key = "template" if "template" in tpl else "skin"
+        patch_body = {**tpl, key: new_html}
+
+        try:
+            patch = requests.patch(url, headers=headers, json=patch_body, timeout=15)
+        except requests.exceptions.RequestException as e:
+            logger.debug(f"템플릿 PATCH 네트워크 오류 ({tpl_type}): {e}")
+            continue
+
+        if patch.status_code in (200, 201, 204):
+            logger.info(f"✅ Blogger 테마({tpl_type})에 AdSense 자동 광고 스크립트 삽입 완료")
+            return True
+        logger.debug(f"템플릿 PATCH {patch.status_code}: {patch.text[:120]}")
+
+    # API 미지원 → 수동 설치 안내
+    logger.warning(
+        "\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        "⚠️  Blogger API 테마 자동 수정 불가 → 수동 설치 필요\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        "Blogger 관리자 → 테마 → HTML 편집 → </head> 바로 위에 아래 코드 삽입 후 저장:\n\n"
+        f"  {adsense_script}\n"
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    )
+    return False
+
 
 def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None:
     """Blogger API로 포스트를 업로드합니다."""
@@ -379,10 +512,25 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
     if not access_token:
         return None
 
+    # 업로드 직전 제목 중복 검사 — 동일/유사 제목이 이미 게시된 경우 차단
+    _title = post_data.get("title", "")
+    _blog_cfg_id = cfg.get("id", "")
+    try:
+        from post_manager import find_duplicate_post
+        _dup = find_duplicate_post(_title, blog_id=_blog_cfg_id)
+        if _dup:
+            logger.error(
+                f"❌ 중복 포스트 감지 — 업로드 차단: '{_title[:60]}'\n"
+                f"   기존 포스트: '{_dup.get('title', '')[:60]}' ({_dup.get('blogUrl', '')})"
+            )
+            return None
+    except Exception as _de:
+        logger.debug(f"중복 검사 오류 (무시): {_de}")
+
     full_content = _build_full_content(post_data, blog_config)
     kw = post_data.get("keyword") or ""
-    # None-safe: Claude가 "labels": null 반환해도 안전하게 처리
-    raw_labels = post_data.get("labels") or []
+    # None-safe: Claude가 "labels": null 반환해도 안전하게 처리 (표준 스키마 tags 폴백)
+    raw_labels = post_data.get("labels") or post_data.get("tags") or []
     if not isinstance(raw_labels, list):
         raw_labels = []
 
@@ -391,10 +539,13 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
         return str(lb).strip()[:200]
 
     all_labels = [_clean_label(kw)] + [_clean_label(lb) for lb in raw_labels]
-    labels = [lb for lb in dict.fromkeys(all_labels) if lb][:20]
+    labels = [lb for lb in dict.fromkeys(all_labels) if lb][:5]  # Blogger API: 5개 초과 시 400
 
     blog_name = cfg.get("name", "")
     logger.debug(f"업로드 레이블 ({len(labels)}개): {labels[:5]}{'…' if len(labels)>5 else ''}")
+    risk = post_data.get("risk_level", "")
+    if risk == "high":
+        logger.info(f"⚠️ 고위험(YMYL) 주제 업로드: '{post_data.get('keyword', '')}' — 면책·팩트체크 확인 권장")
     logger.info(f"업로드 대상 블로그: {blog_name or '기본'} (blog_id={blog_id})")
 
     payload = {
@@ -442,12 +593,9 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
         if info_resp.status_code == 200:
             blog_url = info_resp.json().get("url", "")
             logger.info(f"  ✅ 블로그 접근 확인 (blog_id·토큰 정상): {blog_url}")
-            logger.info("  ➡ 400 원인은 요청 본문 문제 — <script> 태그 제거 후 재시도합니다")
-            # 재시도: <script> 태그 제거 (JSON-LD 스키마 등 Blogger가 거부하는 태그 제거)
-            safe_content = re.sub(
-                r'<script[^>]*>.*?</script>', '', full_content,
-                flags=re.DOTALL | re.IGNORECASE
-            )
+            logger.info("  ➡ 400 원인은 요청 본문 문제 — 차단 속성 제거 후 재시도합니다")
+            # 재시도: script 태그 + aria-* + itemscope/itemtype 등 Blogger 차단 요소 제거
+            safe_content = _sanitize_for_blogger(full_content)
             payload2 = {**payload, "content": safe_content}
             try:
                 resp2 = requests.post(url, json=payload2, headers=headers, params=params, timeout=30)
@@ -474,6 +622,121 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
         logger.error(f"  진단 API 호출 오류: {diag_e}")
         logger.error(f"  content 앞 300자: {full_content[:300]}")
 
+    return None
+
+
+def get_post_id_by_url(blog_url: str, blog_config: dict | None = None) -> str | None:
+    """Blogger 포스트 URL로 숫자 포스트 ID를 조회합니다."""
+    from urllib.parse import urlparse
+    if not blog_url:
+        return None
+    path = urlparse(blog_url).path
+    if not path or path == "/":
+        return None
+
+    cfg = blog_config or {}
+    blog_id = cfg.get("blog_id") or BLOGGER_BLOG_ID
+    access_token = _get_access_token(blog_config)
+    if not access_token:
+        logger.error("get_post_id_by_url: 액세스 토큰 없음")
+        return None
+
+    try:
+        resp = requests.get(
+            f"{BLOGGER_API_BASE}/blogs/{blog_id}/posts/bypath",
+            headers={"Authorization": f"Bearer {access_token}"},
+            params={"path": path},
+            timeout=15,
+        )
+        if resp.status_code == 200:
+            return resp.json().get("id")
+        logger.warning(f"get_post_id_by_url [{resp.status_code}] path={path}: {resp.text[:200]}")
+        return None
+    except requests.exceptions.RequestException as e:
+        logger.error(f"get_post_id_by_url 네트워크 오류: {e}")
+        return None
+
+
+def delete_post(blogger_post_id: str, blog_config: dict | None = None) -> bool:
+    """Blogger 포스트를 실제로 삭제합니다 (DELETE /posts/{postId}). 되돌릴 수 없습니다."""
+    cfg = blog_config or {}
+    blog_id = cfg.get("blog_id") or BLOGGER_BLOG_ID
+    access_token = _get_access_token(blog_config)
+    if not access_token:
+        logger.error("delete_post: 액세스 토큰 없음")
+        return False
+
+    try:
+        resp = requests.delete(
+            f"{BLOGGER_API_BASE}/blogs/{blog_id}/posts/{blogger_post_id}",
+            headers={"Authorization": f"Bearer {access_token}"},
+            timeout=15,
+        )
+        if resp.status_code in (200, 204):
+            return True
+        if resp.status_code == 404:
+            logger.warning(f"delete_post: 이미 삭제됨 또는 존재하지 않음 (id={blogger_post_id})")
+            return False
+        logger.error(f"delete_post 실패 [{resp.status_code}] id={blogger_post_id}: {resp.text[:200]}")
+        return False
+    except requests.exceptions.RequestException as e:
+        logger.error(f"delete_post 네트워크 오류: {e}")
+        return False
+
+
+def update_post(blogger_post_id: str, post_data: dict, blog_config: dict | None = None) -> dict | None:
+    """기존 Blogger 포스트 내용을 업데이트합니다 (PUT /posts/{postId})."""
+    cfg = blog_config or {}
+    blog_id = cfg.get("blog_id") or BLOGGER_BLOG_ID
+    access_token = _get_access_token(blog_config)
+    if not access_token:
+        logger.error("update_post: 액세스 토큰 없음")
+        return None
+
+    full_content = _build_full_content(post_data, blog_config)
+
+    kw = post_data.get("keyword") or ""
+    raw_labels = post_data.get("labels") or []
+    if not isinstance(raw_labels, list):
+        raw_labels = []
+
+    def _clean_label(lb: str) -> str:
+        return str(lb).strip()[:200]
+
+    all_labels = list(dict.fromkeys(
+        [_clean_label(kw)] + [_clean_label(lb) for lb in raw_labels]
+    ))
+    all_labels = [lb for lb in all_labels if lb][:5]
+
+    payload = {
+        "title": post_data.get("title", ""),
+        "content": full_content,
+        "labels": all_labels,
+    }
+
+    url = f"{BLOGGER_API_BASE}/blogs/{blog_id}/posts/{blogger_post_id}"
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json",
+    }
+    params = {"fetchBody": "false"}
+
+    try:
+        resp = requests.put(url, json=payload, headers=headers, params=params, timeout=30)
+    except requests.exceptions.RequestException as e:
+        logger.error(f"update_post 네트워크 오류: {e}")
+        return None
+
+    if resp.status_code == 200:
+        try:
+            result = resp.json()
+        except Exception as e:
+            logger.error(f"update_post 응답 파싱 오류: {e} — body: {resp.text[:200]}")
+            return None
+        logger.info(f"포스트 업데이트 성공: {result.get('url', blogger_post_id)}")
+        return result
+
+    logger.error(f"update_post 실패 [{resp.status_code}]: {resp.text[:500]}")
     return None
 
 

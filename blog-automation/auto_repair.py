@@ -50,14 +50,32 @@ def _save_json(path: str, data) -> None:
 # ── 진단 함수들 ───────────────────────────────────────────────────────────────
 
 def _diagnose_upload_failures(runs: list[dict]) -> list[dict]:
-    """최근 5회 중 3회 이상 업로드 0건이면 critical 이슈로 등록."""
+    """최근 5회 중 3회 이상 업로드 0건이면 critical 이슈로 등록.
+
+    postsGenerated>0인데 bloggerUploaded==0인 실행은 두 가지 경우가 있음:
+    ① 분량/AdSense 점수 미달로 검토 대기(pending_posts.json)로 정상 라우팅된 경우 —
+       의도된 품질 게이트 동작이므로 실패로 보지 않음 (pendingReview == postsGenerated)
+    ② 그 외 원인(업로드 API 오류 등)으로 조용히 누락된 경우 — 진짜 실패
+    """
     issues = []
     recent = runs[:5]  # 최신순 (insert(0, …) 방식으로 저장됨)
-    # errors==0이어도 postsGenerated>0이면 silent 실패(JSON 파싱 오류 등)로 간주
-    fail_runs = [
+
+    def _is_real_failure(r: dict) -> bool:
+        if r.get("bloggerUploaded", 0) != 0:
+            return False
+        if r.get("errors", 0) > 0:
+            return True
+        posts_generated = r.get("postsGenerated", 0)
+        if posts_generated == 0:
+            return False
+        pending = r.get("pendingReview", 0)
+        return pending < posts_generated  # 일부라도 pending도 아니면 원인불명 실패
+
+    fail_runs = [r for r in recent if _is_real_failure(r)]
+    pending_runs = [
         r for r in recent
-        if r.get("bloggerUploaded", 0) == 0
-        and (r.get("errors", 0) > 0 or r.get("postsGenerated", 0) > 0)
+        if r.get("bloggerUploaded", 0) == 0 and r.get("errors", 0) == 0
+        and r.get("postsGenerated", 0) > 0 and not _is_real_failure(r)
     ]
     if len(fail_runs) >= 3:
         issues.append({
@@ -66,6 +84,14 @@ def _diagnose_upload_failures(runs: list[dict]) -> list[dict]:
             "message": f"최근 {len(fail_runs)}회 연속 업로드 실패 (0건 업로드)",
             "context": {"fail_count": len(fail_runs), "recent_dates": [r.get("date") for r in fail_runs]},
             "fix": "check_blogger_connection",
+        })
+    elif len(pending_runs) >= 3:
+        issues.append({
+            "id": "consecutive_pending_review",
+            "level": "warning",
+            "message": f"최근 {len(pending_runs)}회 연속 검토 대기 전환 (분량/AdSense 점수 미달)",
+            "context": {"pending_count": len(pending_runs), "recent_dates": [r.get("date") for r in pending_runs]},
+            "fix": None,
         })
     return issues
 
@@ -99,16 +125,27 @@ def _diagnose_keyword_exhaustion(used_kw: dict) -> list[dict]:
     issues = []
     if not isinstance(used_kw, dict):
         return issues
-    total = len(used_kw)
-    if total < 100:
-        return issues
-    cutoff = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
-    # used_keywords.json 은 구형(str) 또는 신형(dict {"used_at": ...}) 포맷 모두 지원
-    def _kw_date(v) -> str:
-        if isinstance(v, str): return v
-        if isinstance(v, dict): return v.get("used_at", "9999-99-99")
-        return "9999-99-99"
-    old_count = sum(1 for v in used_kw.values() if _kw_date(v) < cutoff)
+    # 신형 포맷: {"keywords": [...], "entries": [...], "updatedAt": "..."}
+    # 구형 포맷: {keyword_str: date_str, ...}
+    entries = used_kw.get("entries")
+    if isinstance(entries, list):
+        # 신형: entries 리스트에서 keyword/used_at 추출
+        cutoff = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
+        total = len(entries)
+        if total < 100:
+            return issues
+        old_count = sum(1 for e in entries if isinstance(e, dict) and e.get("used_at", "9999-99-99") < cutoff)
+    else:
+        # 구형 포맷 호환
+        total = len(used_kw)
+        if total < 100:
+            return issues
+        cutoff = (datetime.now() - timedelta(days=90)).strftime("%Y-%m-%d")
+        def _kw_date(v) -> str:
+            if isinstance(v, str): return v
+            if isinstance(v, dict): return v.get("used_at", "9999-99-99")
+            return "9999-99-99"
+        old_count = sum(1 for v in used_kw.values() if _kw_date(v) < cutoff)
     if old_count > 50:
         issues.append({
             "id": "keyword_pool_exhaustion",
@@ -190,6 +227,70 @@ def _diagnose_log_size() -> list[dict]:
     return issues
 
 
+def _diagnose_json_corruption() -> list[dict]:
+    """주요 JSON 데이터 파일 손상 감지."""
+    issues = []
+    check_map = [
+        (RUN_HISTORY, list),
+        (USED_KW_FILE, dict),
+        (SERIES_FILE, list),
+        (PENDING_FILE, list),
+        (os.path.join(_DOCS, "post_registry.json"), list),
+    ]
+    corrupted = []
+    for path, expected in check_map:
+        if not os.path.exists(path):
+            continue
+        try:
+            with open(path, encoding="utf-8") as f:
+                data = json.load(f)
+            if not isinstance(data, expected):
+                corrupted.append(os.path.basename(path))
+        except (json.JSONDecodeError, OSError):
+            corrupted.append(os.path.basename(path))
+    if corrupted:
+        issues.append({
+            "id": "json_file_corruption",
+            "level": "critical",
+            "message": f"JSON 파일 손상 감지: {', '.join(corrupted)}",
+            "context": {"files": corrupted},
+            "fix": "reset_corrupt_json",
+        })
+    return issues
+
+
+def _diagnose_from_logs() -> list[dict]:
+    """automation.log에서 Python 예외·CRITICAL 오류 감지."""
+    issues = []
+    if not os.path.exists(LOG_FILE):
+        return issues
+    try:
+        with open(LOG_FILE, encoding="utf-8", errors="replace") as f:
+            lines = f.readlines()[-300:]
+        log_tail = "".join(lines)
+        tb_count = log_tail.count("Traceback (most recent call last):")
+        if tb_count > 0:
+            issues.append({
+                "id": "python_exception_in_log",
+                "level": "high",
+                "message": f"최근 로그에서 Python 예외 {tb_count}건 감지 — 코드 자동 수리 대상",
+                "context": {"tb_count": tb_count},
+                "fix": "code_repair_pending",
+            })
+        critical_lines = [l.strip() for l in lines if "[CRITICAL]" in l or ("CRITICAL" in l and "—" in l)]
+        if critical_lines and tb_count == 0:
+            issues.append({
+                "id": "critical_errors_in_log",
+                "level": "warning",
+                "message": f"CRITICAL 오류 {len(critical_lines)}건 감지",
+                "context": {"samples": [l[:120] for l in critical_lines[-3:]]},
+                "fix": "code_repair_pending",
+            })
+    except OSError as e:
+        logger.warning(f"로그 파싱 오류: {e}")
+    return issues
+
+
 def _diagnose_adsense_config() -> list[dict]:
     """AdSense 미설정 감지."""
     issues = []
@@ -216,15 +317,25 @@ def _fix_prune_old_keywords(issue: dict) -> dict:
     if not isinstance(used_kw, dict):
         return {"success": False, "detail": "used_keywords.json 형식 오류"}
     cutoff = issue.get("context", {}).get("cutoff", "")
-    before = len(used_kw)
-    # used_keywords.json 은 구형(str) 또는 신형(dict) 포맷 모두 지원
-    def _kw_date(v) -> str:
-        if isinstance(v, str): return v
-        if isinstance(v, dict): return v.get("used_at", "9999-99-99")
-        return "9999-99-99"
-    pruned = {k: v for k, v in used_kw.items() if not (_kw_date(v) < cutoff)}
-    removed = before - len(pruned)
-    _save_json(USED_KW_FILE, pruned)
+    entries = used_kw.get("entries")
+    if isinstance(entries, list):
+        # 신형 포맷: entries 리스트에서 cutoff 미만 항목만 유지
+        before = len(entries)
+        kept = [e for e in entries if not (isinstance(e, dict) and e.get("used_at", "9999-99-99") < cutoff)]
+        removed = before - len(kept)
+        used_kw["entries"] = kept
+        used_kw["keywords"] = [e.get("keyword", "") for e in kept if isinstance(e, dict)]
+        _save_json(USED_KW_FILE, used_kw)
+    else:
+        # 구형 포맷 호환
+        before = len(used_kw)
+        def _kw_date(v) -> str:
+            if isinstance(v, str): return v
+            if isinstance(v, dict): return v.get("used_at", "9999-99-99")
+            return "9999-99-99"
+        pruned = {k: v for k, v in used_kw.items() if not (_kw_date(v) < cutoff)}
+        removed = before - len(pruned)
+        _save_json(USED_KW_FILE, pruned)
     return {
         "success": True,
         "detail": f"키워드 {removed}개 삭제 (90일 경과, 재사용 가능 상태로 전환)",
@@ -350,17 +461,126 @@ def _fix_check_blogger_connection(issue: dict) -> dict:
         return {"success": False, "detail": f"연결 확인 오류: {e}"}
 
 
+def _fix_reset_corrupt_json(issue: dict) -> dict:
+    """손상된 JSON 파일을 안전한 기본값으로 초기화합니다."""
+    files = issue.get("context", {}).get("files", [])
+    if not files:
+        return {"success": False, "detail": "초기화할 파일 목록 없음"}
+
+    defaults = {
+        "run_history.json": [],
+        "used_keywords.json": {},
+        "series.json": [],
+        "pending_posts.json": [],
+        "post_registry.json": [],
+    }
+    reset = []
+    failed = []
+    for fname in files:
+        default_val = defaults.get(fname)
+        if default_val is None:
+            failed.append(fname)
+            continue
+        candidates = [
+            os.path.join(_LOGS, fname),
+            os.path.join(_DOCS, fname),
+        ]
+        for path in candidates:
+            if os.path.exists(path):
+                try:
+                    # 손상 파일 백업
+                    bak = path + ".corrupt_bak"
+                    import shutil
+                    shutil.copy2(path, bak)
+                    _save_json(path, default_val)
+                    reset.append(fname)
+                    break
+                except OSError as e:
+                    failed.append(f"{fname}({e})")
+    if reset:
+        return {
+            "success": True,
+            "detail": f"손상 파일 초기화: {', '.join(reset)} (원본은 .corrupt_bak으로 백업)",
+            "reset": reset,
+        }
+    return {"success": False, "detail": f"초기화 실패: {', '.join(failed)}"}
+
+
+def _fix_code_repair_pending(issue: dict) -> dict:
+    """코드 수리가 code_repair.py 단계에서 처리됨을 기록합니다."""
+    return {
+        "success": None,
+        "detail": "코드 수리는 code_repair.py 워크플로우 스텝에서 처리됩니다.",
+    }
+
+
 _FIX_HANDLERS = {
-    "prune_old_keywords":   _fix_prune_old_keywords,
-    "trim_history":         _fix_trim_history,
-    "reset_stuck_series":   _fix_reset_stuck_series,
-    "expire_old_pending":   _fix_expire_old_pending,
-    "rotate_log":           _fix_rotate_log,
+    "prune_old_keywords":       _fix_prune_old_keywords,
+    "trim_history":             _fix_trim_history,
+    "reset_stuck_series":       _fix_reset_stuck_series,
+    "expire_old_pending":       _fix_expire_old_pending,
+    "rotate_log":               _fix_rotate_log,
     "check_blogger_connection": _fix_check_blogger_connection,
+    "reset_corrupt_json":       _fix_reset_corrupt_json,
+    "code_repair_pending":      _fix_code_repair_pending,
 }
 
 
 # ── 메인 ──────────────────────────────────────────────────────────────────────
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 수리 전 백업 + 문제 발생 시 자동 롤백
+# ──────────────────────────────────────────────────────────────────────────────
+
+_BACKUP_ROOT = os.path.join(_LOGS, "repair_backups")
+_MANAGED_DATA_FILES = [RUN_HISTORY, USED_KW_FILE, SERIES_FILE, PENDING_FILE]
+
+
+def _backup_data_files() -> str:
+    """수리 대상 데이터 파일을 타임스탬프 디렉터리에 백업하고 경로를 반환합니다."""
+    import shutil
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_dir = os.path.join(_BACKUP_ROOT, ts)
+    os.makedirs(backup_dir, exist_ok=True)
+    for path in _MANAGED_DATA_FILES:
+        if os.path.exists(path):
+            shutil.copy2(path, os.path.join(backup_dir, os.path.basename(path)))
+    # 오래된 백업 정리 (최근 10개 유지)
+    try:
+        dirs = sorted(os.listdir(_BACKUP_ROOT))
+        for old in dirs[:-10]:
+            shutil.rmtree(os.path.join(_BACKUP_ROOT, old), ignore_errors=True)
+    except Exception:
+        pass
+    logger.info(f"[AutoRepair] 수리 전 백업 완료 → {backup_dir}")
+    return backup_dir
+
+
+def _validate_and_rollback(backup_dir: str) -> list[str]:
+    """수리 후 데이터 파일을 검증하고, 손상된 파일은 백업에서 자동 복원합니다.
+
+    Returns: 롤백된 파일 이름 목록
+    """
+    import shutil
+    rolled_back = []
+    for path in _MANAGED_DATA_FILES:
+        if not os.path.exists(path):
+            continue
+        try:
+            with open(path, encoding="utf-8") as f:
+                json.load(f)
+        except Exception as exc:
+            name = os.path.basename(path)
+            src_file = os.path.join(backup_dir, name)
+            if os.path.exists(src_file):
+                shutil.copy2(src_file, path)
+                rolled_back.append(name)
+                logger.error(f"[AutoRepair] ⛑ {name} 손상 감지 ({exc}) → 백업에서 자동 롤백")
+            else:
+                logger.error(f"[AutoRepair] {name} 손상 감지했으나 백업 없음: {exc}")
+    return rolled_back
+
 
 def run_auto_repair(dry_run: bool = False) -> dict:
     """자동 진단·수리를 실행하고 결과 dict를 반환합니다."""
@@ -386,14 +606,37 @@ def run_auto_repair(dry_run: bool = False) -> dict:
     issues += _diagnose_stale_pending(pending)
     issues += _diagnose_log_size()
     issues += _diagnose_adsense_config()
+    issues += _diagnose_json_corruption()
+    issues += _diagnose_from_logs()
 
     lvl_order = {"critical": 0, "high": 1, "warning": 2, "low": 3}
     issues.sort(key=lambda x: lvl_order.get(x["level"], 9))
+
+    # ── 자가진단 자동 대조 — 새 이슈를 과거 인시던트와 매칭해 즉시 원인/수정 힌트 제공 ──
+    try:
+        from incident_log import match_known
+        for iss in issues:
+            known = match_known(iss["message"])
+            if known:
+                iss["known_incident"] = known
+    except Exception as e:
+        logger.warning(f"[AutoRepair] 인시던트 대조 실패 (무시하고 계속): {e}")
 
     logger.info(f"[AutoRepair] 진단 완료: {len(issues)}개 이슈")
     for iss in issues:
         icon = {"critical": "🔴", "high": "🟠", "warning": "🟡", "low": "🔵"}.get(iss["level"], "⚪")
         logger.info(f"  {icon} [{iss['level'].upper()}] {iss['message']}")
+        known = iss.get("known_incident")
+        if known:
+            logger.info(f"      💡 기존 인시던트와 일치: \"{known['title']}\" → {known['fix']}")
+
+    # ── 수리 전 백업 (문제 발생 시 자동 롤백용) ─────────────────────────────────
+    backup_dir = ""
+    if not dry_run and any(i.get("fix") for i in issues):
+        try:
+            backup_dir = _backup_data_files()
+        except Exception as _be:
+            logger.warning(f"[AutoRepair] 백업 실패 (수리는 계속): {_be}")
 
     # ── 수리 ─────────────────────────────────────────────────────────────────
     repairs: list[dict] = []
@@ -431,6 +674,21 @@ def run_auto_repair(dry_run: bool = False) -> dict:
         except Exception as e:
             logger.error(f"  ❌ [{issue['id']}] 수리 오류: {e}")
             repairs.append({**base, "success": False, "detail": f"수리 중 예외: {e}"})
+
+    # ── 수리 후 검증 — 손상 시 백업에서 자동 롤백 ─────────────────────────────
+    rolled_back: list[str] = []
+    if backup_dir:
+        rolled_back = _validate_and_rollback(backup_dir)
+        if rolled_back:
+            repairs.append({
+                "issue_id": "post_repair_validation",
+                "issue_level": "critical",
+                "issue_message": f"수리 후 파일 손상 감지 → 자동 롤백: {', '.join(rolled_back)}",
+                "fix_applied": "rollback_from_backup",
+                "success": True,
+                "detail": f"백업 {os.path.basename(backup_dir)}에서 복원",
+                "timestamp": datetime.now().isoformat(),
+            })
 
     # ── 건강 점수 계산 ────────────────────────────────────────────────────────
     score = 100

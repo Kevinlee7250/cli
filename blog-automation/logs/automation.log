@@ -1,0 +1,587 @@
+2026-07-22 11:50:02,780 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-22 11:50:02,782 [INFO] keyword_collector — 유사 주제 제외 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리']
+2026-07-22 11:50:02,782 [INFO] keyword_collector —   [fallback] 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-22 11:50:02,782 [INFO] keyword_collector — 최종 선정 키워드 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-22 11:50:02,782 [INFO] main — 수집된 키워드 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-22 11:50:02,787 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-07-22 11:50:02,787 [INFO] main — 단독 포스트 대상 키워드 1개: ['미국 연준 금리 결정 한국 증시 영향 분석']
+2026-07-22 11:50:02,800 [INFO] main — 
+[1/1] 키워드: '미국 연준 금리 결정 한국 증시 영향 분석'
+2026-07-22 11:50:02,801 [INFO] content_generator — 포스트 생성 중: '미국 연준 금리 결정 한국 증시 영향 분석'
+2026-07-22 11:50:03,333 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 11:50:03,333 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH3bZU3icwt1q4wpP4qs'}
+2026-07-22 11:50:20,275 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '미국 연준 금리 결정 한국 증시 영향 분석'
+2026-07-22 11:50:20,482 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 11:50:20,482 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH3cqwmVxiSnLhb7FhTC'}
+2026-07-22 11:50:20,484 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 11:50:20,715 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 11:50:21,159 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 11:50:34,895 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 11:50:34,912 [WARNING] content_generator — 컨텐츠 너무 짧음(1025자, 최소 2500자) — 재시도 1/3
+2026-07-22 11:50:37,912 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 11:50:37,913 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 11:50:52,433 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 11:50:52,437 [WARNING] content_generator — 컨텐츠 너무 짧음(1118자, 최소 2500자) — 재시도 2/3
+2026-07-22 11:50:55,437 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 11:50:55,437 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 11:51:13,877 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 11:51:13,882 [WARNING] content_generator — 최소 분량 미달(1377자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 11:51:13,902 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 11:51:18,239 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 11:51:18,250 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-07-22 11:51:19,952 [INFO] image_fetcher — 이미지 수집 성공: '미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금 알아야 할 점' → 제목='미국 금리인하 상반기 넘길 듯…연준 "경제 어디로 튈지 모르겠다"' (관련성=0.20)
+2026-07-22 11:51:21,203 [INFO] image_fetcher — 대체 이미지 수집: '미국 연준 금리' → 제목='뉴욕증시, FOMC 결과에 안도···나스닥 4.06%↑마감' (관련성=0.00)
+2026-07-22 11:51:21,203 [INFO] image_fetcher — 이미지 수집 성공: '미국 연준 금리' → 제목='뉴욕증시, FOMC 결과에 안도···나스닥 4.06%↑마감' (관련성=0.00)
+2026-07-22 11:51:21,902 [INFO] image_fetcher — 이미지 수집 성공: '미국 연준 결정 배경과 금리를 정책은' → 제목='미국 5월 고용지표 ‘쇼크’…연준 금리 인하 압박' (관련성=0.33)
+2026-07-22 11:51:22,116 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 11:51:22,117 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 11:51:22,118 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 11:51:22,120 [INFO] content_generator — 포스트 생성 완료: '미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금 알아야 할 점' (1377자, 이미지 3개)
+2026-07-22 11:51:22,143 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 11:51:25,664 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 11:51:25,673 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금 알아야 '
+2026-07-22 11:51:25,673 [INFO] adsense_validator —   ❌ 원본성 및 품질: 글자 수가 1377자로 2000자 미만이며, 새로운 인사이트나 경험 기반 분석이 부족함.
+2026-07-22 11:51:25,673 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처는 있으나 1인칭 경험이 부족하고 저자 신뢰성에 대한 정보가 부족.
+2026-07-22 11:51:25,674 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없기 때문에 SEO 및 가독성 측면에서 개선 가능.
+2026-07-22 11:51:25,674 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 일반적인 문체로 특정 경험이나 감정이 드러나지 않음.
+2026-07-22 11:51:25,674 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 글자 수가 1377자로 2000자 미만이며, 새로운 인사이트나 경험 기반 분석이 부족함.
+2026-07-22 11:51:25,674 [WARNING] adsense_validator —   🔴 originality
+2026-07-22 11:51:25,683 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 11:51:25,686 [INFO] internal_linker —   [1/5] '포인트' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0140262446
+2026-07-22 11:51:25,688 [INFO] internal_linker —   [2/5] '투자자' -> https://hoguasset.blogspot.com/2026/07/etf_0136688765.html
+2026-07-22 11:51:25,688 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-22 11:51:25,688 [INFO] main —   제목: 미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금 알아야 할 점
+2026-07-22 11:51:25,688 [INFO] main —   이미지: 3개 삽입
+2026-07-22 11:51:25,688 [INFO] main —   글자 수: 1377자
+2026-07-22 11:51:25,688 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금 알아야 할 점' (1377자 < 2500자)
+2026-07-22 11:51:25,710 [INFO] dashboard_exporter —   검토 대기 저장: 미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금 알아야 할 점 (6459자 HTML)
+2026-07-22 11:51:25,723 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 106개)
+2026-07-22 11:51:25,723 [INFO] main — 
+============================================================
+2026-07-22 11:51:25,723 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-22 11:51:25,723 [INFO] main — ============================================================
+2026-07-22 11:51:25,746 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 11:51:25,762 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 11:51:25,775 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 11:51:25,984 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 11:51:26,252 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 11:51:26,254 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 11:51:26,257 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 11:51:26,271 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 180 / 실패 15 / 대기 79)
+2026-07-22 11:51:26,272 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 11:51:26,272 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 11:51:26,272 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-22 12:29:23,276 [INFO] main — ============================================================
+2026-07-22 12:29:23,276 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-22 12:29:23
+2026-07-22 12:29:23,276 [INFO] main — ============================================================
+2026-07-22 12:29:23,283 [INFO] main — 수집된 키워드 1개: ['대통령도 택한 방식 강남에도 집주인 대출']
+2026-07-22 12:29:23,287 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-07-22 12:29:23,287 [INFO] main — 단독 포스트 대상 키워드 1개: ['대통령도 택한 방식 강남에도 집주인 대출']
+2026-07-22 12:29:23,298 [INFO] main — 
+[1/1] 키워드: '대통령도 택한 방식 강남에도 집주인 대출'
+2026-07-22 12:29:23,298 [INFO] content_generator — 포스트 생성 중: '대통령도 택한 방식 강남에도 집주인 대출'
+2026-07-22 12:29:23,697 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:29:23,698 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH6ba7arghZEFng1Y1HB'}
+2026-07-22 12:29:29,145 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '대통령도 택한 방식 강남에도 집주인 대출'
+2026-07-22 12:29:29,351 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:29:29,352 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH6bzSZbHwNPwwheoqrL'}
+2026-07-22 12:29:29,352 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 12:29:29,555 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:29:29,906 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:29:53,426 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:29:53,478 [WARNING] content_generator — 컨텐츠 너무 짧음(1365자, 최소 2500자) — 재시도 1/3
+2026-07-22 12:29:56,478 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 12:29:56,478 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:30:15,861 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:30:15,862 [WARNING] content_generator — 컨텐츠 너무 짧음(1424자, 최소 2500자) — 재시도 2/3
+2026-07-22 12:30:18,863 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 12:30:18,863 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:30:39,081 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:30:39,085 [WARNING] content_generator — 최소 분량 미달(1493자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 12:30:39,101 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:30:41,238 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:30:41,252 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-07-22 12:30:41,536 [INFO] image_fetcher — 이미지 수집 성공: '강남집주인 대출, 진짜 내게도 해당될까? 대통령도 선택한 방법' → 제목='real estate / homeownership / homebuying' (관련성=0.11)
+2026-07-22 12:30:43,417 [INFO] image_fetcher — 이미지 수집 성공: '대통령도 택한 방식' → 제목='외신 “스스로 몰락 택한 대통령” “위대한 민주주의 승리”[윤석열 탄핵 ' (관련성=0.33)
+2026-07-22 12:30:45,470 [INFO] image_fetcher — 이미지 수집 성공: '대통령도 택한 강남집주인 대출이란 부동산을 높은' → 제목='■사실상 ‘정치적 자살’ 택한 尹 대통령…대체 왜? | 보배드림 정치게시' (관련성=0.17)
+2026-07-22 12:30:45,633 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:30:45,633 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 12:30:45,634 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 12:30:45,636 [INFO] content_generator — 포스트 생성 완료: '강남집주인 대출, 진짜 내게도 해당될까? 대통령도 선택한 방법' (1493자, 이미지 3개)
+2026-07-22 12:30:45,653 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:30:49,373 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:30:49,374 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 61/100 — '강남집주인 대출, 진짜 내게도 해당될까? 대통령도 선택한 방법'
+2026-07-22 12:30:49,374 [INFO] adsense_validator —   ❌ 원본성 및 품질: 그저 정보 나열에 그치며 실질적 가치 부족
+2026-07-22 12:30:49,374 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드 사용 적절하나 반복 및 밀집 우려 가능
+2026-07-22 12:30:49,374 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 투자 관련 면책 조항 필요 가능
+2026-07-22 12:30:49,374 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 서술 부족 및 저자 신뢰성 정보 없음
+2026-07-22 12:30:49,374 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재로 SEO 및 가독성 우려
+2026-07-22 12:30:49,374 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 정보 나열은 AI 생성 의심 요소 있음
+2026-07-22 12:30:49,374 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 그저 정보 나열에 그치며 실질적 가치 부족
+2026-07-22 12:30:49,375 [WARNING] main —   ⚠️ 사전 검증 불합격 (점수: 61/100, 이유: ['[원본성 및 품질] 그저 정보 나열에 그치며 실질적 가치 부족']) — 재생성 2/2
+2026-07-22 12:30:52,375 [INFO] content_generator — 포스트 생성 중: '대통령도 택한 방식 강남에도 집주인 대출'
+2026-07-22 12:30:52,556 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:30:52,557 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH6i89LSNgrtvNgWD4co'}
+2026-07-22 12:30:56,816 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '대통령도 택한 방식 강남에도 집주인 대출'
+2026-07-22 12:30:56,984 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:30:56,984 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH6iTAa82fXXsN9fJJB4'}
+2026-07-22 12:30:56,985 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 12:30:56,985 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:31:15,559 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:31:15,567 [WARNING] content_generator — 컨텐츠 너무 짧음(1547자, 최소 2500자) — 재시도 1/3
+2026-07-22 12:31:18,567 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 12:31:18,567 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:31:40,317 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:31:40,322 [WARNING] content_generator — 컨텐츠 너무 짧음(1428자, 최소 2500자) — 재시도 2/3
+2026-07-22 12:31:43,322 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 12:31:43,323 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:32:04,631 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:32:04,641 [WARNING] content_generator — 최소 분량 미달(1428자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 12:32:04,656 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:32:06,919 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:32:06,923 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-07-22 12:32:08,739 [INFO] image_fetcher — 이미지 수집 성공: '대통령도 주목한 '강남 집주인 대출', 나에게 맞는 방법일까?' → 제목='money / finance / mortgage / loan / real' (관련성=0.11)
+2026-07-22 12:32:09,931 [INFO] image_fetcher — 이미지 수집 성공: '대통령도 택한 방식' → 제목='마크롱 佛 대통령 "희망 택한 프랑스…분열 반드시 극복"' (관련성=0.33)
+2026-07-22 12:32:11,839 [INFO] image_fetcher — 대체 이미지 수집: '대통령도 택한 대출 핵심 특히 주택' → 제목='오늘의유머 - 거봐요 트럼프는 문대통령을 택한거라고 거봐요 트럼프는 문대' (관련성=0.00)
+2026-07-22 12:32:11,839 [INFO] image_fetcher — 이미지 수집 성공: '대통령도 택한 대출 핵심 특히 주택' → 제목='오늘의유머 - 거봐요 트럼프는 문대통령을 택한거라고 거봐요 트럼프는 문대' (관련성=0.00)
+2026-07-22 12:32:12,056 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 12:32:12,056 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 12:32:12,057 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 12:32:12,058 [INFO] content_generator — 포스트 생성 완료: '대통령도 주목한 '강남 집주인 대출', 나에게 맞는 방법일까?' (1428자, 이미지 3개)
+2026-07-22 12:32:12,072 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 12:32:17,271 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 12:32:17,276 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '대통령도 주목한 '강남 집주인 대출', 나에게 맞는 방법일까?'
+2026-07-22 12:32:17,276 [INFO] adsense_validator —   ❌ 원본성 및 품질: 1428자로 글자 수 기준 불충족 및 독창성 부족
+2026-07-22 12:32:17,276 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 인용은 있지만 직접 경험 부족
+2026-07-22 12:32:17,276 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없어 가독성 영향 가능
+2026-07-22 12:32:17,276 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 다소 일반적인 문체 사용됨
+2026-07-22 12:32:17,276 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 1428자로 글자 수 기준 불충족 및 독창성 부족
+2026-07-22 12:32:17,276 [WARNING] adsense_validator —   🔴 originality
+2026-07-22 12:32:17,287 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 12:32:17,293 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-22 12:32:17,293 [INFO] main —   제목: 대통령도 주목한 '강남 집주인 대출', 나에게 맞는 방법일까?
+2026-07-22 12:32:17,293 [INFO] main —   이미지: 3개 삽입
+2026-07-22 12:32:17,293 [INFO] main —   글자 수: 1428자
+2026-07-22 12:32:17,293 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '대통령도 주목한 '강남 집주인 대출', 나에게 맞는 방법일까?' (1428자 < 2500자)
+2026-07-22 12:32:17,312 [INFO] dashboard_exporter —   검토 대기 저장: 대통령도 주목한 '강남 집주인 대출', 나에게 맞는 방법일까? (7876자 HTML)
+2026-07-22 12:32:17,323 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 107개)
+2026-07-22 12:32:17,324 [INFO] main — 
+============================================================
+2026-07-22 12:32:17,324 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-22 12:32:17,324 [INFO] main — ============================================================
+2026-07-22 12:32:17,342 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 12:32:17,355 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 12:32:17,366 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 12:32:17,583 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 12:32:17,846 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 12:32:18,093 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 12:32:18,093 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 12:32:18,095 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 12:32:18,107 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 179 / 실패 15 / 대기 80)
+2026-07-22 12:32:18,108 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 12:32:18,108 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 12:32:18,108 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-22 15:35:45,234 [INFO] main — ============================================================
+2026-07-22 15:35:45,234 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-22 15:35:45
+2026-07-22 15:35:45,234 [INFO] main — ============================================================
+2026-07-22 15:35:45,243 [INFO] main — 수집된 키워드 1개: ['코스피 불장 덕분에 가계 순자산 만에']
+2026-07-22 15:35:45,248 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-07-22 15:35:45,248 [INFO] main — 단독 포스트 대상 키워드 1개: ['코스피 불장 덕분에 가계 순자산 만에']
+2026-07-22 15:35:45,262 [INFO] main — 
+[1/1] 키워드: '코스피 불장 덕분에 가계 순자산 만에'
+2026-07-22 15:35:45,262 [INFO] content_generator — 포스트 생성 중: '코스피 불장 덕분에 가계 순자산 만에'
+2026-07-22 15:35:45,479 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:35:45,480 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHLoq8wFC9gM69a6m5An'}
+2026-07-22 15:35:59,585 [INFO] research_collector — 자료 조사: 6개 수집 (신뢰 도메인 3개) — '코스피 불장 덕분에 가계 순자산 만에'
+2026-07-22 15:35:59,756 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:35:59,757 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHLptHihPLTna5iSunAK'}
+2026-07-22 15:35:59,759 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 15:36:00,048 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:36:00,613 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:36:15,564 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:36:15,583 [WARNING] content_generator — 컨텐츠 너무 짧음(968자, 최소 2500자) — 재시도 1/3
+2026-07-22 15:36:18,583 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 15:36:18,583 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:36:35,986 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:36:35,998 [WARNING] content_generator — 컨텐츠 너무 짧음(1125자, 최소 2500자) — 재시도 2/3
+2026-07-22 15:36:38,998 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 15:36:38,998 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:36:59,699 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:36:59,707 [WARNING] content_generator — 최소 분량 미달(1140자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 15:36:59,727 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:37:00,457 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:37:00,462 [INFO] content_generator — 팩트체크: 통과
+2026-07-22 15:37:01,743 [INFO] image_fetcher — 이미지 수집 성공: '코스피 불장으로 가계 순자산 다시 증가, 나에게 미치는 영향은?' → 제목='코스피 불장에 '빚투' 사상 최고치 근접…한달새 2조 원 증가' (관련성=0.22)
+2026-07-22 15:37:02,638 [INFO] image_fetcher — 이미지 수집 성공: '코스피 불장 덕분에' → 제목='[아듀2025]을사년 불장 이어진 코스피' (관련성=0.67)
+2026-07-22 15:37:03,548 [INFO] image_fetcher — 이미지 수집 성공: '코스피 불장 상승이 주는 지수 상승은' → 제목='🔥🚀비트코인 폭등의 트리거, 글로벌 M2지표를 따라가라! 역대급 불장 드' (관련성=0.17)
+2026-07-22 15:37:03,713 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:37:03,713 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 15:37:03,715 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 15:37:03,717 [INFO] content_generator — 포스트 생성 완료: '코스피 불장으로 가계 순자산 다시 증가, 나에게 미치는 영향은?' (1140자, 이미지 3개)
+2026-07-22 15:37:03,741 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:37:08,694 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:37:08,704 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '코스피 불장으로 가계 순자산 다시 증가, 나에게 미치는 영향은?'
+2026-07-22 15:37:08,704 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 1140자로 기준 미달이며 독창적 관점과 사례가 충분히 드러나지 않음
+2026-07-22 15:37:08,704 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기반 내용 및 1인칭 서술 미흡, 출처는 있으나 깊이 있는 신뢰도 부족
+2026-07-22 15:37:08,704 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없으나 저작권 문제는 의심되지 않는 것으로 보임
+2026-07-22 15:37:08,712 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 15:37:08,714 [INFO] internal_linker —   [1/5] 'ETF' -> https://www.hoguwhat.com/2026/07/30-etf.html
+2026-07-22 15:37:08,717 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-22 15:37:08,717 [INFO] main —   제목: 코스피 불장으로 가계 순자산 다시 증가, 나에게 미치는 영향은?
+2026-07-22 15:37:08,717 [INFO] main —   이미지: 3개 삽입
+2026-07-22 15:37:08,717 [INFO] main —   글자 수: 1140자
+2026-07-22 15:37:08,717 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '코스피 불장으로 가계 순자산 다시 증가, 나에게 미치는 영향은?' (1140자 < 2500자)
+2026-07-22 15:37:08,743 [INFO] dashboard_exporter —   검토 대기 저장: 코스피 불장으로 가계 순자산 다시 증가, 나에게 미치는 영향은? (5887자 HTML)
+2026-07-22 15:37:08,757 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 108개)
+2026-07-22 15:37:08,757 [INFO] main — 
+============================================================
+2026-07-22 15:37:08,758 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-22 15:37:08,758 [INFO] main — ============================================================
+2026-07-22 15:37:08,782 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 15:37:08,801 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 15:37:08,815 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 15:37:09,093 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 15:37:09,357 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 15:37:09,714 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 15:37:09,716 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 15:37:09,718 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 15:37:09,734 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 179 / 실패 15 / 대기 80)
+2026-07-22 15:37:09,734 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 15:37:09,734 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 15:37:09,735 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-22 15:38:11,379 [INFO] main — ============================================================
+2026-07-22 15:38:11,379 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-22 15:38:11
+2026-07-22 15:38:11,379 [INFO] main — ============================================================
+2026-07-22 15:38:11,388 [INFO] main — 수집된 키워드 1개: ['폴드8']
+2026-07-22 15:38:11,393 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-07-22 15:38:11,393 [INFO] main — 단독 포스트 대상 키워드 1개: ['폴드8']
+2026-07-22 15:38:11,406 [INFO] main — 
+[1/1] 키워드: '폴드8'
+2026-07-22 15:38:11,406 [INFO] content_generator — 포스트 생성 중: '폴드8'
+2026-07-22 15:38:11,718 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:38:11,719 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHLzcBshh9WQbVQUdWQV'}
+2026-07-22 15:38:17,393 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '폴드8'
+2026-07-22 15:38:17,581 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:38:17,581 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHM13WdY5LXSgeRiJPya'}
+2026-07-22 15:38:17,583 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 15:38:17,784 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:38:18,234 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:38:43,016 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:38:43,028 [WARNING] content_generator — 컨텐츠 너무 짧음(2215자, 최소 2500자) — 재시도 1/3
+2026-07-22 15:38:46,028 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 15:38:46,029 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:39:06,018 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:39:06,021 [WARNING] content_generator — 컨텐츠 너무 짧음(2145자, 최소 2500자) — 재시도 2/3
+2026-07-22 15:39:09,021 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 15:39:09,022 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:39:10,239 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:39:10,246 [ERROR] content_generator — JSON 구조 없음 — 응답 앞 200자: 죄송합니다, 요청하신 작업을 수행할 수 없습니다.
+2026-07-22 15:39:10,246 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
+2026-07-22 15:39:13,246 [INFO] content_generator — 포스트 생성 중: '폴드8'
+2026-07-22 15:39:13,448 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:39:13,449 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHM5APV3Qhkpjf79mLKC'}
+2026-07-22 15:39:18,324 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '폴드8'
+2026-07-22 15:39:18,689 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:39:18,690 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHM5YmtJFZRZyCc3onSL'}
+2026-07-22 15:39:18,690 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 15:39:18,690 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:39:32,689 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:39:32,693 [WARNING] content_generator — 컨텐츠 너무 짧음(1390자, 최소 2500자) — 재시도 1/3
+2026-07-22 15:39:35,693 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 15:39:35,694 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:39:45,038 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:39:45,059 [WARNING] content_generator — 컨텐츠 너무 짧음(1702자, 최소 2500자) — 재시도 2/3
+2026-07-22 15:39:48,060 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 15:39:48,060 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:40:09,202 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:40:09,205 [WARNING] content_generator — 최소 분량 미달(2031자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 15:40:09,206 [INFO] content_generator — 출처 검증: 0개 유효 / 2개 제거
+2026-07-22 15:40:09,206 [WARNING] content_generator — sources 필드: 유효한 출처 없음 — 전부 제거됨
+2026-07-22 15:40:09,224 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:40:11,993 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:40:12,012 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-07-22 15:40:12,343 [INFO] image_fetcher — 이미지 수집 성공: '폴드8, 스마트폰 시장의 새로운 지표가 되다' → 제목='iphone / hand / screen / smartphone / ap' (관련성=0.14)
+2026-07-22 15:40:13,055 [INFO] image_fetcher — 이미지 수집 성공: '폴드' → 제목='케인 사생활 보안 액정 보호 필름 갤럭시Z 폴드5 외부 (강화유리), 1' (관련성=1.00)
+2026-07-22 15:40:14,800 [INFO] image_fetcher — 이미지 수집 성공: '폴드 의미와 스마트폰 최근' → 제목='의미와 무의미 | 메를로 뽕띠 - 교보문고' (관련성=0.20)
+2026-07-22 15:40:15,028 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 15:40:15,029 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 15:40:15,030 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 15:40:15,032 [INFO] content_generator — 포스트 생성 완료: '폴드8, 스마트폰 시장의 새로운 지표가 되다' (2031자, 이미지 3개)
+2026-07-22 15:40:15,057 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 15:40:17,557 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 15:40:17,560 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '폴드8, 스마트폰 시장의 새로운 지표가 되다'
+2026-07-22 15:40:17,560 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 2031자로, 독창적 관점 부족
+2026-07-22 15:40:17,560 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 및 직접 경험 기반 내용 부족
+2026-07-22 15:40:17,560 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재
+2026-07-22 15:40:17,569 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 15:40:17,573 [INFO] internal_linker —   [1/5] '실제로' -> https://www.hoguwhat.com/2026/07/blog-post_15.html
+2026-07-22 15:40:17,575 [INFO] internal_linker —   [2/5] '만족도' -> https://hogugolfntraval.blogspot.com/2026/07/2025.html
+2026-07-22 15:40:17,575 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-22 15:40:17,575 [INFO] main —   제목: 폴드8, 스마트폰 시장의 새로운 지표가 되다
+2026-07-22 15:40:17,575 [INFO] main —   이미지: 3개 삽입
+2026-07-22 15:40:17,575 [INFO] main —   글자 수: 2031자
+2026-07-22 15:40:17,575 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '폴드8, 스마트폰 시장의 새로운 지표가 되다' (2031자 < 2500자)
+2026-07-22 15:40:17,600 [INFO] dashboard_exporter —   검토 대기 저장: 폴드8, 스마트폰 시장의 새로운 지표가 되다 (8289자 HTML)
+2026-07-22 15:40:17,613 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 109개)
+2026-07-22 15:40:17,614 [INFO] main — 
+============================================================
+2026-07-22 15:40:17,614 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-22 15:40:17,614 [INFO] main — ============================================================
+2026-07-22 15:40:17,636 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 15:40:17,652 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 15:40:17,665 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 15:40:17,903 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 15:40:18,163 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 15:40:18,446 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 15:40:18,447 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 15:40:18,450 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 15:40:18,464 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 178 / 실패 15 / 대기 81)
+2026-07-22 15:40:18,464 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 15:40:18,464 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 15:40:18,465 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-22 23:10:46,498 [INFO] main — ============================================================
+2026-07-22 23:10:46,498 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-22 23:10:46
+2026-07-22 23:10:46,498 [INFO] main — ============================================================
+2026-07-22 23:10:46,508 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-07-22 23:10:46,508 [INFO] keyword_collector — 포스팅 이력 코퍼스: 42개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-22 23:10:50,262 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-22 23:10:50,515 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:10:50,516 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-22 23:10:51,073 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-07-22 23:10:51,185 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:10:51,719 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 23:10:52,254 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 23:10:52,256 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-07-22 23:10:52,258 [INFO] keyword_collector —   [fallback] 2개: ['춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳', '담양 메타세쿼이아길 계절별 다른 매력 직접 방문 후기']
+2026-07-22 23:10:52,258 [INFO] keyword_collector — 최종 선정 키워드 2개: ['춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳', '담양 메타세쿼이아길 계절별 다른 매력 직접 방문 후기']
+2026-07-22 23:10:52,258 [INFO] main — 수집된 키워드 2개: ['춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳', '담양 메타세쿼이아길 계절별 다른 매력 직접 방문 후기']
+2026-07-22 23:10:52,263 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-07-22 23:10:52,263 [INFO] main — 단독 포스트 대상 키워드 1개: ['춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳']
+2026-07-22 23:10:52,278 [INFO] main — 
+[1/1] 키워드: '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳'
+2026-07-22 23:10:52,278 [INFO] content_generator — 포스트 생성 중: '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳'
+2026-07-22 23:10:52,394 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:10:52,395 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwWk6BKZLAGY5jCodJP'}
+2026-07-22 23:10:56,582 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳'
+2026-07-22 23:10:56,705 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:10:56,705 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwX4XCZMjFKSq5MaGQT'}
+2026-07-22 23:10:56,707 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 23:10:56,821 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:10:57,289 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:11:11,919 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:11:11,934 [WARNING] content_generator — 컨텐츠 너무 짧음(1222자, 최소 2500자) — 재시도 1/3
+2026-07-22 23:11:14,935 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 23:11:14,935 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:11:32,327 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:11:32,352 [WARNING] content_generator — 컨텐츠 너무 짧음(1671자, 최소 2500자) — 재시도 2/3
+2026-07-22 23:11:35,352 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 23:11:35,353 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:11:49,829 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:11:49,834 [WARNING] content_generator — 최소 분량 미달(1634자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 23:11:49,852 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:11:51,426 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:11:51,437 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-07-22 23:11:52,446 [INFO] image_fetcher — 이미지 수집 성공: '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳' → 제목='춘천 명물 '닭갈비 골목'…AI에 찬바람만 '쌩∼'' (관련성=0.50)
+2026-07-22 23:11:53,286 [INFO] image_fetcher — 이미지 수집 성공: '춘천 닭갈비 골목' → 제목='[SN여행] 춘천의 문화와 맛, '상상마당 춘천'과 '닭갈비 골목' [강' (관련성=1.00)
+2026-07-22 23:11:54,779 [INFO] image_fetcher — 대체 이미지 수집: '춘천 닭갈비 골목 찾아야 골목에 명성은' → 제목='국내산 닭다리살 태양초 춘천 닭갈비 500g 1팩+1팩 (냉동) : 춘천' (관련성=0.33)
+2026-07-22 23:11:54,779 [INFO] image_fetcher — 이미지 수집 성공: '춘천 닭갈비 골목 찾아야 골목에 명성은' → 제목='국내산 닭다리살 태양초 춘천 닭갈비 500g 1팩+1팩 (냉동) : 춘천' (관련성=0.33)
+2026-07-22 23:11:54,965 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:11:54,965 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 23:11:54,967 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 23:11:54,968 [INFO] content_generator — 포스트 생성 완료: '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳' (1634자, 이미지 3개)
+2026-07-22 23:11:54,989 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:11:57,380 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:11:57,386 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳'
+2026-07-22 23:11:57,386 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 2000자 미만이며, 독창적 경험이나 인사이트 부족
+2026-07-22 23:11:57,386 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기술 부족, 출처는 있으나 신뢰성 있는 저자 정보 또는 전문성 표현 부족
+2026-07-22 23:11:57,386 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없으므로 SEO 및 가독성 보강 필요
+2026-07-22 23:11:57,395 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 23:11:57,400 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-22 23:11:57,400 [INFO] main —   제목: 춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳
+2026-07-22 23:11:57,400 [INFO] main —   이미지: 3개 삽입
+2026-07-22 23:11:57,400 [INFO] main —   글자 수: 1634자
+2026-07-22 23:11:57,400 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳' (1634자 < 2500자)
+2026-07-22 23:11:57,425 [INFO] dashboard_exporter —   검토 대기 저장: 춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳 (7514자 HTML)
+2026-07-22 23:11:57,439 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 110개)
+2026-07-22 23:11:57,440 [INFO] main — 
+============================================================
+2026-07-22 23:11:57,440 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-22 23:11:57,440 [INFO] main — ============================================================
+2026-07-22 23:11:57,463 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 23:11:57,481 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 23:11:57,494 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 23:11:57,745 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 23:11:58,106 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 23:11:58,495 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 23:11:58,496 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 23:11:58,499 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 23:11:58,514 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 177 / 실패 15 / 대기 82)
+2026-07-22 23:11:58,514 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 23:11:58,514 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 23:11:58,515 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-22 23:12:31,635 [INFO] main — ============================================================
+2026-07-22 23:12:31,635 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-22 23:12:31
+2026-07-22 23:12:31,635 [INFO] main — ============================================================
+2026-07-22 23:12:31,644 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
+2026-07-22 23:12:31,644 [INFO] keyword_collector — 포스팅 이력 코퍼스: 38개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-22 23:12:36,124 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-07-22 23:12:36,389 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:12:36,390 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-22 23:12:36,864 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:12:37,246 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 23:12:37,247 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-22 23:12:37,248 [INFO] keyword_collector — 유사 주제 제외 3개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개', '강원도 캠핑 처음 해봤을 때 몰랐던 것들']
+2026-07-22 23:12:37,249 [INFO] keyword_collector —   [fallback] 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
+2026-07-22 23:12:37,249 [INFO] keyword_collector — 최종 선정 키워드 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
+2026-07-22 23:12:37,249 [INFO] main — 수집된 키워드 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
+2026-07-22 23:12:37,254 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-07-22 23:12:37,254 [INFO] main — 단독 포스트 대상 키워드 1개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-07-22 23:12:37,267 [INFO] main — 
+[1/1] 키워드: '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
+2026-07-22 23:12:37,267 [INFO] content_generator — 포스트 생성 중: '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
+2026-07-22 23:12:37,459 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:12:37,460 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHweVDh53igr1zhDFqdd'}
+2026-07-22 23:12:45,518 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
+2026-07-22 23:12:45,720 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:12:45,720 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwf6XikPCjhhrLKySAP'}
+2026-07-22 23:12:45,722 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 23:12:45,932 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:12:46,372 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:13:09,011 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:13:09,022 [WARNING] content_generator — 컨텐츠 너무 짧음(1064자, 최소 2500자) — 재시도 1/3
+2026-07-22 23:13:12,023 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 23:13:12,023 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:13:25,119 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:13:25,125 [WARNING] content_generator — 컨텐츠 너무 짧음(1106자, 최소 2500자) — 재시도 2/3
+2026-07-22 23:13:28,125 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 23:13:28,125 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:13:46,295 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:13:46,306 [WARNING] content_generator — 최소 분량 미달(1340자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 23:13:46,325 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:13:47,744 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:13:47,748 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 2건 자동 수정 적용
+2026-07-22 23:13:49,006 [INFO] image_fetcher — 이미지 수집 성공: '경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!' → 제목='여행/해외거주 - 경주 당일치기 뚜벅이의 후기' (관련성=0.29)
+2026-07-22 23:13:49,546 [INFO] image_fetcher — 이미지 수집 성공: '경주 당일치기 놓치면' → 제목='뽐뿌:여행포럼 - 경주 당일치기 다녀왔어요^^ 경주 당일치기 다녀왔어요^' (관련성=0.67)
+2026-07-22 23:13:50,783 [INFO] image_fetcher — 대체 이미지 수집: '경주 당일치기 일정 알차게' → 제목='[KTX] 문화해설사님과 함께하는 경주 세계문화유산 투어 당일치기 기차여' (관련성=0.50)
+2026-07-22 23:13:50,783 [INFO] image_fetcher — 이미지 수집 성공: '경주 당일치기 일정 알차게' → 제목='[KTX] 문화해설사님과 함께하는 경주 세계문화유산 투어 당일치기 기차여' (관련성=0.50)
+2026-07-22 23:13:51,006 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:13:51,006 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 23:13:51,008 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 23:13:51,009 [INFO] content_generator — 포스트 생성 완료: '경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!' (1340자, 이미지 3개)
+2026-07-22 23:13:51,031 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:13:54,181 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:13:54,186 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!'
+2026-07-22 23:13:54,186 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 1340자로 2000자 미만, 정보 재조합 의심.
+2026-07-22 23:13:54,186 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기반 서술 부족, 출처 사용은 긍정적.
+2026-07-22 23:13:54,186 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재, 저작권 위반 위험은 없음.
+2026-07-22 23:13:54,195 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 23:13:54,198 [INFO] internal_linker —   [1/5] '즐기는' -> https://hogugolfntraval.blogspot.com/2026/07/202607.html
+2026-07-22 23:13:54,199 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-22 23:13:54,199 [INFO] main —   제목: 경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!
+2026-07-22 23:13:54,199 [INFO] main —   이미지: 3개 삽입
+2026-07-22 23:13:54,199 [INFO] main —   글자 수: 1340자
+2026-07-22 23:13:54,199 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!' (1340자 < 2500자)
+2026-07-22 23:13:54,221 [INFO] dashboard_exporter —   검토 대기 저장: 경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서! (5135자 HTML)
+2026-07-22 23:13:54,233 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 111개)
+2026-07-22 23:13:54,234 [INFO] main — 
+============================================================
+2026-07-22 23:13:54,234 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-22 23:13:54,234 [INFO] main — ============================================================
+2026-07-22 23:13:54,256 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 23:13:54,272 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 23:13:54,284 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 23:13:54,492 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 23:13:54,799 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 23:13:54,801 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 23:13:54,804 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 23:13:54,818 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 176 / 실패 15 / 대기 83)
+2026-07-22 23:13:54,818 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 23:13:54,818 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 23:13:54,819 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-22 23:14:34,638 [INFO] main — ============================================================
+2026-07-22 23:14:34,638 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-22 23:14:34
+2026-07-22 23:14:34,639 [INFO] main — ============================================================
+2026-07-22 23:14:34,648 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
+2026-07-22 23:14:34,648 [INFO] keyword_collector — 포스팅 이력 코퍼스: 44개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-22 23:14:37,974 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-22 23:14:38,432 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:14:38,433 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-22 23:14:39,002 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-22 23:14:39,182 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:14:39,484 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 23:14:39,485 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-22 23:14:39,486 [INFO] keyword_collector — 유사 주제 제외 3개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리', '미국 연준 금리 결정 한국 증시 영향 분석']
+2026-07-22 23:14:39,487 [INFO] keyword_collector —   [fallback] 2개: ['원달러 환율 급등락 원인과 개인투자자 대응법', '2026 금융시장 주요 이슈 직장인이 알아야 할 것']
+2026-07-22 23:14:39,487 [INFO] keyword_collector — 최종 선정 키워드 2개: ['원달러 환율 급등락 원인과 개인투자자 대응법', '2026 금융시장 주요 이슈 직장인이 알아야 할 것']
+2026-07-22 23:14:39,487 [INFO] main — 수집된 키워드 2개: ['원달러 환율 급등락 원인과 개인투자자 대응법', '2026 금융시장 주요 이슈 직장인이 알아야 할 것']
+2026-07-22 23:14:39,492 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-07-22 23:14:39,492 [INFO] main — 단독 포스트 대상 키워드 1개: ['원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-22 23:14:39,507 [INFO] main — 
+[1/1] 키워드: '원달러 환율 급등락 원인과 개인투자자 대응법'
+2026-07-22 23:14:39,507 [INFO] content_generator — 포스트 생성 중: '원달러 환율 급등락 원인과 개인투자자 대응법'
+2026-07-22 23:14:39,714 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:14:39,714 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwoVoAiYLzC3iX2XxZt'}
+2026-07-22 23:14:46,082 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '원달러 환율 급등락 원인과 개인투자자 대응법'
+2026-07-22 23:14:46,245 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:14:46,246 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwoyqeFVPw3gGrxSfWr'}
+2026-07-22 23:14:46,248 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-22 23:14:47,241 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:14:47,778 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:15:04,669 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:15:04,684 [WARNING] content_generator — 컨텐츠 너무 짧음(1284자, 최소 2500자) — 재시도 1/3
+2026-07-22 23:15:07,684 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-22 23:15:07,684 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:15:28,893 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:15:28,900 [WARNING] content_generator — 컨텐츠 너무 짧음(1923자, 최소 2500자) — 재시도 2/3
+2026-07-22 23:15:31,901 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-22 23:15:31,901 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:15:49,964 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:15:49,970 [WARNING] content_generator — 최소 분량 미달(1553자) — 재시도 소진, 해당 분량으로 진행
+2026-07-22 23:15:49,970 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(환헤지)가 쉬운 설명 없이 사용됨']) — 재시도 소진, 해당 상태로 진행
+2026-07-22 23:15:49,989 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:15:51,046 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:15:51,056 [INFO] content_generator — 팩트체크: 통과
+2026-07-22 23:15:51,883 [INFO] image_fetcher — 이미지 수집 성공: '원달러 환율 급등락의 이유와 개인투자자 대응 방안' → 제목='15년 만에 환율 1,450원대 돌파...앞으로의 대응 방안은?' (관련성=0.29)
+2026-07-22 23:15:52,599 [INFO] image_fetcher — 이미지 수집 성공: '원달러 환율 급등락' → 제목='증시 급등락 장세 속 ‘원·달러 환율’ 잘 버틴 까닭?' (관련성=0.67)
+2026-07-22 23:15:53,957 [INFO] image_fetcher — 대체 이미지 수집: '원달러 환율 급등락 주요 경제 변동의' → 제목='중국발 경기 둔화 경고음…원·달러 환율 1340원 돌파' (관련성=0.14)
+2026-07-22 23:15:53,957 [INFO] image_fetcher — 이미지 수집 성공: '원달러 환율 급등락 주요 경제 변동의' → 제목='중국발 경기 둔화 경고음…원·달러 환율 1340원 돌파' (관련성=0.14)
+2026-07-22 23:15:54,184 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-22 23:15:54,184 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-22 23:15:54,186 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-22 23:15:54,187 [INFO] content_generator — 포스트 생성 완료: '원달러 환율 급등락의 이유와 개인투자자 대응 방안' (1553자, 이미지 3개)
+2026-07-22 23:15:54,209 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-22 23:15:57,402 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-22 23:15:57,403 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '원달러 환율 급등락의 이유와 개인투자자 대응 방안'
+2026-07-22 23:15:57,403 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 2000자 미만이며, 일반적인 정보로 보임.
+2026-07-22 23:15:57,403 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 개인 경험 기반 내용 부족하고, 신뢰성 보완 필요.
+2026-07-22 23:15:57,403 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없어 SEO 및 가독성 보완 필요.
+2026-07-22 23:15:57,411 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-22 23:15:57,413 [INFO] internal_linker —   [1/5] 'ETF' -> https://www.hoguwhat.com/2026/07/30-etf.html
+2026-07-22 23:15:57,416 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-22 23:15:57,416 [INFO] main —   제목: 원달러 환율 급등락의 이유와 개인투자자 대응 방안
+2026-07-22 23:15:57,416 [INFO] main —   이미지: 3개 삽입
+2026-07-22 23:15:57,417 [INFO] main —   글자 수: 1553자
+2026-07-22 23:15:57,417 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '원달러 환율 급등락의 이유와 개인투자자 대응 방안' (1553자 < 2500자)
+2026-07-22 23:15:57,441 [INFO] dashboard_exporter —   검토 대기 저장: 원달러 환율 급등락의 이유와 개인투자자 대응 방안 (6581자 HTML)
+2026-07-22 23:15:57,455 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 112개)
+2026-07-22 23:15:57,456 [INFO] main — 
+============================================================
+2026-07-22 23:15:57,456 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-22 23:15:57,456 [INFO] main — ============================================================
+2026-07-22 23:15:57,479 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-22 23:15:57,496 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-22 23:15:57,510 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-22 23:15:57,727 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-22 23:15:57,992 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-22 23:15:57,994 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-22 23:15:57,997 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-22 23:15:58,011 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 175 / 실패 15 / 대기 84)
+2026-07-22 23:15:58,011 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-22 23:15:58,012 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-22 23:15:58,012 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-23 00:00:23,991 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
+2026-07-23 00:00:23,991 [INFO] main —   - [blog1] HOGU What?
+2026-07-23 00:00:23,991 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
+2026-07-23 00:00:23,991 [INFO] main —   - [blog3] 금융NEWS
+2026-07-23 00:00:23,996 [INFO] main — ⏳ 'SBS 드라마 김부장 회차별 리뷰 (7~10화)' 예약 2편 대기 중 (다음 2026-07-25)
+2026-07-23 00:00:23,996 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다

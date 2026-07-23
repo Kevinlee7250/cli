@@ -18,6 +18,7 @@
 import argparse
 import logging
 import os
+import re
 import sys
 import time
 from datetime import datetime
@@ -58,6 +59,7 @@ from config import (
     AUTO_SERIES_MIN_DAYS,
     ADSENSE_VALIDATION,
     ADSENSE_MIN_SCORE,
+    SOCIAL_AUTO_PUBLISH,
     get_blog_configs,
 )
 from content_generator import generate_post, generate_series_post
@@ -65,6 +67,16 @@ from adsense_validator import validate_adsense
 from blogger_uploader import upload_post
 from keyword_collector import get_trending_keywords, _migrate_used_keywords
 from dashboard_exporter import log_run, export_dashboard, save_pending_posts
+from post_manager import (
+    register_post, update_post_status, save_draft, get_failed_posts,
+    retry_failed_posts,
+    Status as PostStatus, migrate_from_run_history,
+)
+
+# ── 실패 없는 흐름 보장 상수 ─────────────────────────────────────────────────────
+MAX_ADSENSE_RETRY = 2   # AdSense 사전검증 불합격 시 콘텐츠 재생성 최대 횟수
+MAX_UPLOAD_RETRY  = 3   # Blogger API 업로드 실패 시 재시도 최대 횟수
+# ─────────────────────────────────────────────────────────────────────────────
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -117,6 +129,20 @@ def run_once(
     logger.info(f"{blog_label}블로그 자동화 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     logger.info("=" * 60)
 
+    # 수동 키워드가 있으면 포스팅 이력 대비 유사도 사전 점검 (경고만, 차단 없음)
+    if keywords:
+        try:
+            from keyword_collector import _load_recent_post_corpus, _is_too_similar
+            _corpus = _load_recent_post_corpus(blog_id=cfg.get("id", ""))
+            for _kw in keywords:
+                if _is_too_similar(_kw, _corpus):
+                    logger.warning(
+                        f"  ⚠️ 수동 키워드 '{_kw}'는 최근 포스팅 이력과 유사합니다 — "
+                        "제목이 중복되면 업로드 단계에서 차단됩니다."
+                    )
+        except Exception as _ke:
+            logger.debug(f"수동 키워드 유사도 점검 실패 (무시): {_ke}")
+
     # 키워드 수집 (자동 시리즈를 위해 여유분 +1개 더 수집)
     if not keywords:
         collect_count = POSTS_PER_RUN + (1 if AUTO_SERIES and not dry_run and not review else 0)
@@ -154,9 +180,9 @@ def run_once(
 
     if AUTO_SERIES and not dry_run and not review:
         from series_planner import get_last_series_date, pick_series_keyword, plan_drama_series
-        from keyword_collector import _naver_drama_news, extract_drama_titles
+        blog_id = cfg.get("id", "")
 
-        last_date = get_last_series_date()
+        last_date = get_last_series_date(blog_id=blog_id)
         days_elapsed = (datetime.now() - last_date).days if last_date else AUTO_SERIES_MIN_DAYS + 1
 
         if days_elapsed >= AUTO_SERIES_MIN_DAYS:
@@ -165,25 +191,27 @@ def run_once(
                 f"(마지막 시리즈: {'없음' if not last_date else f'{days_elapsed}일 전'})"
             )
 
-            # ① 인기 드라마 탐지 — 트렌드 키워드보다 우선
-            drama_headlines = _naver_drama_news(
-                os.getenv("NAVER_CLIENT_ID", ""),
-                os.getenv("NAVER_CLIENT_SECRET", ""),
-            )
-            drama_titles = extract_drama_titles(drama_headlines)
+            # ① blog1 전용 — 인기 드라마 탐지 (여행·드라마·연예·K-POP 블로그)
+            if blog_id in ("blog1", ""):
+                from keyword_collector import _naver_drama_news, extract_drama_titles
+                drama_headlines = _naver_drama_news(
+                    os.getenv("NAVER_CLIENT_ID", ""),
+                    os.getenv("NAVER_CLIENT_SECRET", ""),
+                )
+                drama_titles = extract_drama_titles(drama_headlines)
+                if drama_titles:
+                    drama_name = drama_titles[0]
+                    logger.info(f"[자동 드라마 시리즈] '{drama_name}' 감지 — 리뷰 시리즈 기획 시작")
+                    auto_series_plan = plan_drama_series(drama_name, AUTO_SERIES_COUNT)
+                    if auto_series_plan:
+                        auto_series_plan["blog_id"] = blog_id
+                        auto_series_keyword = drama_name
+                    else:
+                        logger.warning("드라마 시리즈 기획 실패 — 일반 트렌드 시리즈로 폴백")
 
-            if drama_titles:
-                drama_name = drama_titles[0]
-                logger.info(f"[자동 드라마 시리즈] '{drama_name}' 감지 — 리뷰 시리즈 기획 시작")
-                auto_series_plan = plan_drama_series(drama_name, AUTO_SERIES_COUNT)
-                if auto_series_plan:
-                    auto_series_keyword = drama_name
-                else:
-                    logger.warning("드라마 시리즈 기획 실패 — 일반 트렌드 시리즈로 폴백")
-
-            # ② 드라마 없음 또는 기획 실패 → 일반 트렌드 키워드 중 시리즈 선정
+            # ② 드라마 미탐지 / blog2 / blog3 → 블로그 주제에 맞는 키워드 선정
             if not auto_series_keyword:
-                auto_series_keyword = pick_series_keyword(keywords)
+                auto_series_keyword = pick_series_keyword(keywords, blog_config=blog_config)
 
         else:
             logger.info(
@@ -198,7 +226,7 @@ def run_once(
             f"[자동 시리즈] '{auto_series_keyword}' {AUTO_SERIES_COUNT}편 기획 시작 "
             f"(이후 단독 포스트 {len(remaining)}개)"
         )
-        run_series(auto_series_keyword, AUTO_SERIES_COUNT, series_plan=auto_series_plan)
+        run_series(auto_series_keyword, AUTO_SERIES_COUNT, series_plan=auto_series_plan, blog_config=blog_config)
         keywords = remaining
     else:
         keywords = keywords[:POSTS_PER_RUN]
@@ -212,19 +240,57 @@ def run_once(
     completed_posts: list[dict] = []
     error_messages: list[str] = []
 
+    # run_history → post_registry 마이그레이션 (최초 1회)
+    try:
+        from dashboard_exporter import _load_history as _lh
+        _hist = _lh()
+        if _hist:
+            migrate_from_run_history(_hist)
+    except Exception:
+        pass
+
+    _run_number = int(os.getenv("GITHUB_RUN_NUMBER", "0"))
+    _source     = "manual" if (dry_run or review) else "auto"
+
     for i, keyword in enumerate(keywords, 1):
         logger.info(f"\n[{i}/{len(keywords)}] 키워드: '{keyword}'")
 
-        # 포스트 생성
-        post_data = generate_post(keyword)
+        # ── ① 콘텐츠 생성 + AdSense 사전 검증 (최대 MAX_ADSENSE_RETRY회) ─────────────
+        # 목표: harmful_content 또는 심각한 품질 문제 조기 감지 → 재생성
+        post_data = None
+        for gen_attempt in range(1, MAX_ADSENSE_RETRY + 1):
+            _post = generate_post(keyword, blog_config=cfg)
+            if not _post:
+                logger.warning(f"  콘텐츠 생성 실패 (시도 {gen_attempt}/{MAX_ADSENSE_RETRY})")
+                if gen_attempt < MAX_ADSENSE_RETRY:
+                    time.sleep(3)
+                    continue
+                break  # 전체 실패 → post_data=None
+
+            # AdSense 사전 검증: 유해 콘텐츠 또는 점수 < 55이면 재생성
+            if ADSENSE_VALIDATION:
+                _pre = validate_adsense(_post)
+                if _pre["recommendation"] == "reject" and gen_attempt < MAX_ADSENSE_RETRY:
+                    logger.warning(
+                        f"  ⚠️ 사전 검증 불합격 (점수: {_pre['score']}/100, "
+                        f"이유: {_pre.get('issues', [])[:1]}) — "
+                        f"재생성 {gen_attempt+1}/{MAX_ADSENSE_RETRY}"
+                    )
+                    time.sleep(3)
+                    continue
+
+            post_data = _post
+            break
+
         if not post_data:
-            msg = f"콘텐츠 생성 실패: '{keyword}'"
-            logger.error(f"  {msg}")
+            msg = f"콘텐츠 생성 최종 실패 ({MAX_ADSENSE_RETRY}회 시도): '{keyword}'"
+            logger.error(f"  ❌ {msg}")
             fail_count += 1
             error_messages.append(msg)
             continue
+        # ─────────────────────────────────────────────────────────────────────────────
 
-        # 내부 링크 자동 삽입 (기존 포스트와 연결 — SEO 개선)
+        # ── ② 내부 링크 삽입 (SEO — non-blocking) ───────────────────────────────────
         try:
             from internal_linker import insert_internal_links
             post_data["content"] = insert_internal_links(post_data)
@@ -233,50 +299,182 @@ def run_once(
 
         title = post_data.get("title", "?")
         images = post_data.get("images_inserted", 0)
+        word_count = post_data.get("word_count", 0)
         logger.info(f"  제목: {title}")
         logger.info(f"  이미지: {images}개 삽입")
+        logger.info(f"  글자 수: {word_count}자")
 
-        if dry_run or review:
-            mode_label = "검토 모드" if review else "테스트 모드"
-            logger.info(f"  [{mode_label}] 업로드 건너뜀")
+        # 2500자 미달 → pending 저장 (thin content 업로드 방지)
+        if not (dry_run or review) and word_count < 2500:
+            msg = f"글자 수 미달 — pending 저장: '{title}' ({word_count}자 < 2500자)"
+            logger.warning(f"  ⚠️ {msg}")
+            post_data["status"] = "pending"
+            _pid = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
+            save_draft(_pid, post_data)
+            save_pending_posts([post_data], blog_config)
             completed_posts.append(post_data)
             success_count += 1
             continue
 
-        # AdSense 정책 검증
+        if dry_run or review:
+            mode_label = "검토 모드" if review else "테스트 모드"
+            logger.info(f"  [{mode_label}] 업로드 건너뜀")
+            register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
+            completed_posts.append(post_data)
+            success_count += 1
+            continue
+
+        # ── ③ AdSense 최종 검증 ──────────────────────────────────────────────────────
+        # 정책: harmful_content → reject(skip) / 65-79(review) → pending 저장 / 80+ → 업로드
         if ADSENSE_VALIDATION:
             validation = validate_adsense(post_data)
             post_data["adsense_score"] = validation["score"]
             post_data["adsense_recommendation"] = validation["recommendation"]
+
             if validation["recommendation"] == "reject":
-                msg = f"AdSense 정책 위반 — 업로드 취소: '{title}' (점수: {validation['score']}/100)"
+                # harmful_content fail = 유해 콘텐츠 → 업로드 불가
+                msg = (
+                    f"AdSense 유해 콘텐츠 감지 — 업로드 취소: '{title}' "
+                    f"(점수: {validation['score']}/100)"
+                )
                 logger.error(f"  ❌ {msg}")
-                for issue in validation["issues"]:
+                for issue in validation.get("issues", []):
                     logger.error(f"     🔴 {issue}")
+                register_post(post_data, PostStatus.SKIPPED, blog_config, source=_source, run_number=_run_number)
                 fail_count += 1
                 error_messages.append(msg)
                 continue
+
+            # review(65-79) 또는 ADSENSE_MIN_SCORE(80) 미달 → 자동 수정 1회 시도 후 재검증
             if validation["recommendation"] == "review" or validation["score"] < ADSENSE_MIN_SCORE:
                 logger.warning(
-                    f"  ⚠️ AdSense 검토 필요 — pending 저장 (점수: {validation['score']}/100)"
+                    f"  ⚠️ AdSense 기준 미달 (점수: {validation['score']}/100, "
+                    f"권장: {validation['recommendation']}) — 자동 수정 시도"
                 )
-                post_data["status"] = "pending"
-                completed_posts.append(post_data)
-                save_pending_posts([post_data])
-                success_count += 1
-                continue
+                for issue in validation.get("issues", []):
+                    logger.warning(f"     🔴 {issue}")
+                for warn in validation.get("warnings", [])[:3]:
+                    logger.warning(f"     🟡 {warn}")
 
-        # Blogger 업로드
-        result = upload_post(post_data, blog_config)
+                # ── 자동 수정 (Claude가 지적 항목 개선) ───────────────────────
+                try:
+                    from adsense_validator import fix_adsense_issues
+                    fixed = fix_adsense_issues(post_data, validation)
+                    if fixed:
+                        logger.info("  🔧 자동 수정 완료 — 재검증 시작")
+                        re_val = validate_adsense(fixed)
+                        if re_val["score"] >= ADSENSE_MIN_SCORE and re_val["recommendation"] != "reject":
+                            logger.info(
+                                f"  ✅ 자동 수정 후 AdSense 통과 "
+                                f"(점수: {validation['score']} → {re_val['score']}/100)"
+                            )
+                            post_data = fixed
+                            post_data["adsense_score"] = re_val["score"]
+                            post_data["adsense_recommendation"] = re_val["recommendation"]
+                            validation = re_val
+                            # 통과했으므로 아래 업로드 단계로 진행
+                        else:
+                            logger.warning(
+                                f"  ⚠️ 자동 수정 후에도 기준 미달 "
+                                f"(점수: {re_val['score']}/100) — pending 저장"
+                            )
+                            post_data = fixed  # 그래도 수정본 저장
+                            post_data["adsense_score"] = re_val["score"]
+                            validation = re_val
+                    else:
+                        logger.warning("  ⚠️ 자동 수정 불가 — pending 저장")
+                except Exception as _fe:
+                    logger.warning(f"  ⚠️ 자동 수정 오류 (무시): {_fe}")
+
+                # 재검증 후에도 기준 미달이면 pending 저장
+                if validation["recommendation"] != "upload" or validation["score"] < ADSENSE_MIN_SCORE:
+                    msg = (
+                        f"AdSense 기준 미달 — pending 저장: '{title}' "
+                        f"(점수: {validation['score']}/100, 권장: {validation['recommendation']})"
+                    )
+                    logger.warning(f"  ⚠️ {msg}")
+                    post_data["status"] = "pending"
+                    _pid = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
+                    save_draft(_pid, post_data)
+                    save_pending_posts([post_data], blog_config)
+                    completed_posts.append(post_data)
+                    success_count += 1
+                    continue
+
+            logger.info(f"  ✅ AdSense 검증 통과 (점수: {validation['score']}/100) — 업로드")
+        # ─────────────────────────────────────────────────────────────────────────────
+
+        # ── ③.5 최종 편집 (제목↔소제목 정합성·문체·SEO 마무리) ────────────────────
+        try:
+            from final_editor import polish_post
+            post_data = polish_post(post_data)
+        except Exception as _fe:
+            logger.debug(f"  최종 편집 건너뜀 (무시): {_fe}")
+        # ─────────────────────────────────────────────────────────────────────────────
+
+        # ── ④ 레지스트리 등록 (pending) + 초안 저장 ─────────────────────────────────
+        _post_id = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
+        save_draft(_post_id, post_data)
+
+        # ── ⑤ Blogger 업로드 (최대 MAX_UPLOAD_RETRY회 재시도) ───────────────────────
+        result = None
+        for upload_try in range(1, MAX_UPLOAD_RETRY + 1):
+            result = upload_post(post_data, blog_config)
+            if result:
+                break
+            if upload_try < MAX_UPLOAD_RETRY:
+                _wait = 5 * upload_try
+                logger.warning(
+                    f"  업로드 실패 — {_wait}s 대기 후 재시도 "
+                    f"({upload_try}/{MAX_UPLOAD_RETRY})"
+                )
+                time.sleep(_wait)
+
         if result:
             url = result.get("url", "")
             post_data["blogUrl"] = url
+            update_post_status(_post_id, PostStatus.PUBLISHED, blog_url=url)
             logger.info(f"  ✅ 업로드 성공: {url}")
+
+            # ── ⑥ 소셜 미디어 콘텐츠 생성 (완전 non-blocking) ──────────────────────
+            try:
+                from social_publisher import publish_all, generate_social_content
+                if SOCIAL_AUTO_PUBLISH:
+                    _img_m = re.search(r'<img[^>]+src="([^"]+)"', post_data.get("content", ""))
+                    social_result = publish_all(
+                        post_data, blog_url=url,
+                        image_url=_img_m.group(1) if _img_m else None,
+                    )
+                else:
+                    social_content = generate_social_content(post_data, blog_url=url)
+                    _skip = {"skipped": True, "reason": "SOCIAL_AUTO_PUBLISH=false"}
+                    social_result = {
+                        "socialContent": social_content,
+                        "instagram": _skip, "threads": _skip, "tiktok": _skip,
+                    }
+                    logger.info(f"  📱 소셜 콘텐츠 생성 완료")
+                post_data["socialContent"]    = social_result.get("socialContent")
+                post_data["social_instagram"] = social_result.get("instagram")
+                post_data["social_threads"]   = social_result.get("threads")
+                post_data["social_tiktok"]    = social_result.get("tiktok")
+            except Exception as _se:
+                logger.warning(f"  ⚠️ 소셜 콘텐츠 생성 실패 (무시): {_se}")
+
+            # ── ⑦ 씨앗 댓글 (완전 non-blocking — 업로드 성공에 영향 없음) ────────────
+            try:
+                from comment_manager import seed_new_post as _seed_post
+                _blogger_post_id = result.get("id", "")
+                post_data["_blogger_post_id"] = _blogger_post_id
+                _seed_post(post_data, blog_config or {}, blogger_post_id=_blogger_post_id)
+            except Exception as _cm_e:
+                logger.debug(f"  씨앗 댓글 건너뜀 (무시): {_cm_e}")
+
             completed_posts.append(post_data)
             success_count += 1
             blogger_count += 1
         else:
-            msg = f"Blogger 업로드 실패: '{title}'"
+            msg = f"Blogger 업로드 최종 실패 ({MAX_UPLOAD_RETRY}회 시도): '{title}'"
+            update_post_status(_post_id, PostStatus.FAILED, error=msg)
             logger.error(f"  ❌ {msg}")
             fail_count += 1
             error_messages.append(msg)
@@ -312,6 +510,57 @@ def run_once(
 # 시리즈 모드
 # ──────────────────────────────────────────────────────────────────────────────
 
+def process_scheduled_series() -> None:
+    """발행 예약된 시리즈 편을 처리합니다 (매일 스케줄 실행용).
+
+    logs/series.json에서 status=scheduled인 편 중 예약일이 오늘 이하인 것을
+    찾아 run_series로 이어서 생성·게시합니다. run_series는 이미 처리된 편과
+    예약일 미도래 편을 건너뛰므로 안전하게 재실행됩니다.
+    자료 부족(방영 직후) 시 다음 날로 자동 재예약됩니다.
+    """
+    from datetime import date as _date
+    from series_planner import load_series
+
+    today = _date.today().isoformat()
+    all_series = load_series()
+    blogs = {b.get("id"): b for b in get_blog_configs()}
+
+    due_plans = []
+    for plan in all_series:
+        eps = plan.get("episodes", [])
+        due = [
+            e for e in eps
+            if e.get("status") == "scheduled"
+            and (not e.get("scheduled_date") or e["scheduled_date"] <= today)
+        ]
+        waiting = [e for e in eps if e.get("status") == "scheduled"]
+        if due:
+            due_plans.append((plan, due))
+        elif waiting:
+            nxt = min((e.get("scheduled_date") or "미정") for e in waiting)
+            logger.info(
+                f"⏳ '{plan.get('series_title','?')}' 예약 {len(waiting)}편 대기 중 (다음 {nxt})"
+            )
+
+    if not due_plans:
+        logger.info("오늘 처리할 발행 예약 편이 없습니다")
+        return
+
+    for plan, due in due_plans:
+        cfg = blogs.get(plan.get("blog_id"))
+        logger.info("=" * 60)
+        logger.info(
+            f"📅 예약 처리: '{plan.get('series_title','?')}' — "
+            f"오늘 도래 {len(due)}편 ({', '.join(str(e.get('drama_episode') or e.get('episode')) + '화' for e in due)})"
+        )
+        run_series(
+            plan.get("keyword", ""),
+            plan.get("total_episodes", len(plan.get("episodes", []))),
+            series_plan=plan,
+            blog_config=cfg,
+        )
+
+
 def run_series(
     keyword: str,
     count: int = 4,
@@ -321,7 +570,7 @@ def run_series(
     blog_config: dict | None = None,
 ) -> None:
     """시리즈 포스트를 순서대로 기획·생성·게시합니다."""
-    from series_planner import plan_series, build_series_nav, save_series
+    from series_planner import plan_series, build_series_nav, save_series, save_series_with_blog
 
     cfg = blog_config or {}
     blog_label = f"[{cfg.get('name', '기본')}] " if cfg.get("name") else ""
@@ -331,10 +580,14 @@ def run_series(
     logger.info("=" * 60)
 
     if series_plan is None:
-        series_plan = plan_series(keyword, count)
+        series_plan = plan_series(keyword, count, blog_config=blog_config)
     if not series_plan:
         logger.error("시리즈 기획 실패 — 종료")
         return
+    # blog_id 태깅 보장
+    if cfg.get("id") and not series_plan.get("blog_id"):
+        series_plan["blog_id"] = cfg["id"]
+        series_plan["blog_name"] = cfg.get("name", "")
     save_series(series_plan)
     logger.info(f"시리즈 기획 완료: '{series_plan.get('series_title')}'")
     for ep in series_plan.get("episodes", []):
@@ -344,9 +597,27 @@ def run_series(
     pending_list: list[dict] = []
     episodes = series_plan.get("episodes", [])
 
+    from datetime import date as _date
+    today_str = _date.today().isoformat()
+
     for ep_idx, ep in enumerate(episodes):
         ep_num = ep["episode"]
         ep_keyword = ep.get("search_keyword", keyword)
+
+        # 이미 처리된 편은 건너뜀 (재실행·예약 처리 시 중복 방지)
+        if ep.get("status") in ("done", "pending_review"):
+            logger.info(f"--- [{ep_num}/{len(episodes)}편] 이미 처리됨({ep['status']}) — 건너뜀 ---")
+            continue
+        # 발행 예약 편: 예약일 전이면 건너뜀 (매일 예약 처리기가 도래 시 생성)
+        if ep.get("status") == "scheduled":
+            sched = ep.get("scheduled_date")
+            if sched and sched > today_str:
+                logger.info(
+                    f"--- [{ep_num}/{len(episodes)}편] 📅 발행 예약 "
+                    f"(방영 {ep.get('air_date','?')} → {sched} 작성 예정) — 건너뜀 ---"
+                )
+                continue
+            logger.info(f"--- [{ep_num}/{len(episodes)}편] 📅 예약일 도래 — 생성 시도 ---")
 
         logger.info(f"\n--- [{ep_num}/{len(episodes)}편] '{ep_keyword}' 생성 중 ---")
 
@@ -355,17 +626,34 @@ def run_series(
             "episode": ep_num,
             "focus": ep.get("focus", ""),
             "title": ep.get("title", ""),
+            "drama_episode": ep.get("drama_episode"),  # 회차별 리뷰: 실제 드라마 회차
         }
 
-        post_data = generate_series_post(ep_keyword, "N/A", series_context)
+        post_data = generate_series_post(ep_keyword, "N/A", series_context, blog_config=blog_config)
         if not post_data:
-            logger.error(f"편 {ep_num} 생성 실패 — 건너뜀")
-            ep["status"] = "failed"
+            if ep.get("scheduled_date") or ep.get("air_date"):
+                # 예약 편: 자료 부족(방영 직후 기사 미집계 등) — 다음 날 재시도
+                from datetime import timedelta as _td
+                attempts = ep.get("schedule_attempts", 0) + 1
+                ep["schedule_attempts"] = attempts
+                if attempts >= 7:
+                    logger.error(f"편 {ep_num} 예약 생성 7회 실패 — failed 처리")
+                    ep["status"] = "failed"
+                else:
+                    ep["status"] = "scheduled"
+                    ep["scheduled_date"] = (_date.today() + _td(days=1)).isoformat()
+                    logger.warning(
+                        f"편 {ep_num} 방영 후 자료 부족 — {ep['scheduled_date']}로 재예약 "
+                        f"(시도 {attempts}/7)"
+                    )
+            else:
+                logger.error(f"편 {ep_num} 생성 실패 — 건너뜀")
+                ep["status"] = "failed"
             save_series(series_plan)
             continue
 
         ep["status"] = "generated"
-        nav_html = build_series_nav(series_plan, ep_num)
+        nav_html = build_series_nav(series_plan, ep_num, blog_url=cfg.get("url", ""))
         post_data["series_nav"] = nav_html
         post_data["series_label"] = series_plan.get("series_label", "")
 
@@ -377,6 +665,19 @@ def run_series(
             continue
 
         if review:
+            post_data["status"] = "pending"
+            pending_list.append(post_data)
+            ep["status"] = "pending_review"
+            generated_posts.append(post_data)
+            save_series(series_plan)
+            continue
+
+        # 분량 미달 → pending 저장 (thin content 업로드 방지)
+        # 드라마 회차별 리뷰는 단일 회차 주제 특성상 기준 완화 (2000자)
+        series_min_wc = 2000 if series_plan.get("type") == "drama_episode_review" else 2500
+        series_wc = post_data.get("word_count", 0)
+        if series_wc < series_min_wc:
+            logger.warning(f"  ⚠️ [편 {ep_num}] 글자 수 미달 ({series_wc}자 < {series_min_wc}자) — pending 저장")
             post_data["status"] = "pending"
             pending_list.append(post_data)
             ep["status"] = "pending_review"
@@ -409,6 +710,13 @@ def run_series(
                 save_series(series_plan)
                 continue
 
+        # ── 최종 편집 (제목↔소제목 정합성·문체·SEO 마무리) ──────────────────────
+        try:
+            from final_editor import polish_post
+            post_data = polish_post(post_data)
+        except Exception as _fe:
+            logger.debug(f"  최종 편집 건너뜀 (무시): {_fe}")
+
         result = upload_post(post_data, blog_config)
         if result:
             blogger_url = result.get("url", "")
@@ -427,8 +735,12 @@ def run_series(
         if ep_idx < len(episodes) - 1:
             time.sleep(3)
 
+    has_scheduled = any(ep.get("status") == "scheduled" for ep in episodes)
     all_done = all(ep.get("status") in ("done", "pending_review") for ep in episodes)
-    series_plan["status"] = "completed" if all_done else "partial"
+    if has_scheduled:
+        series_plan["status"] = "scheduled_wait"  # 예약 편 대기 중 — 매일 예약 처리기가 이어감
+    else:
+        series_plan["status"] = "completed" if all_done else "partial"
     save_series(series_plan)
 
     uploaded = sum(1 for ep in episodes if ep.get("status") == "done")
@@ -486,8 +798,12 @@ def run_scheduled() -> None:
     except (ValueError, IndexError):
         logger.error(f"잘못된 SCHEDULE_CRON 형식: '{SCHEDULE_CRON}'")
         sys.exit(1)
-    schedule.every().day.at(time_str).do(run_once)
-    logger.info(f"스케줄 등록: 매일 {time_str} 실행 (cron: {SCHEDULE_CRON})")
+    def _run_all_blogs() -> None:
+        for blog_cfg in get_blog_configs():
+            run_once(blog_config=blog_cfg)
+
+    schedule.every().day.at(time_str).do(_run_all_blogs)
+    logger.info(f"스케줄 등록: 매일 {time_str} 전체 블로그 실행 (cron: {SCHEDULE_CRON})")
     logger.info("Ctrl+C로 종료")
 
     while True:
@@ -547,7 +863,14 @@ def main() -> None:
     parser.add_argument("--keyword", type=str, help="특정 키워드로 실행 (쉼표로 복수 지정)")
     parser.add_argument("--interactive", "-i", action="store_true", help="키워드 직접 입력 후 즉시 실행")
     parser.add_argument("--series", action="store_true", help="시리즈 모드 — 주제를 N편으로 분할 기획·생성·게시 (--keyword 필수)")
-    parser.add_argument("--series-count", type=int, default=4, metavar="N", help="시리즈 편수 (2~5, 기본값 4)")
+    parser.add_argument("--series-count", type=int, default=4, metavar="N", help="시리즈 편수 (2~5, 회차별 리뷰는 1~8, 기본값 4)")
+    parser.add_argument("--series-type", default="auto", dest="series_type",
+                        choices=["auto", "drama", "drama_episodes"],
+                        help="시리즈 유형: auto=블로그별 자동, drama=드라마 테마형 리뷰(첫인상·인물·총평), drama_episodes=드라마 회차별 리뷰(매 화 1편)")
+    parser.add_argument("--start-episode", type=int, default=1, dest="start_episode", metavar="N",
+                        help="드라마 회차별 리뷰 시작 회차 (drama_episodes 전용, 기본 1화)")
+    parser.add_argument("--process-scheduled-series", action="store_true", dest="process_scheduled",
+                        help="발행 예약된 시리즈 편 처리 — 예약일이 된 회차를 생성·게시 (매일 스케줄용)")
     parser.add_argument("--setup", action="store_true", help="AdSense 심사 필수 페이지 생성 (개인정보처리방침·블로그 소개)")
     parser.add_argument("--blog", type=str, default="", metavar="BLOG_ID",
                         help="특정 블로그 ID만 실행 (BLOGS_CONFIG의 id 값; 기본값: 모든 블로그)")
@@ -557,6 +880,12 @@ def main() -> None:
                         help="자동 진단·수리 실행 (auto_repair.py)")
     parser.add_argument("--dry", action="store_true",
                         help="--auto-repair 와 함께 사용: 진단만 하고 실제 수리는 하지 않음")
+    parser.add_argument("--retry", action="store_true",
+                        help="실패한 포스트 재시도 (post_registry의 failed/retry_queued 상태 포스트)")
+    parser.add_argument("--retry-max", type=int, default=10, metavar="N",
+                        help="한 번에 재시도할 최대 포스트 수 (기본값: 10)")
+    parser.add_argument("--retry-age", type=int, default=7, metavar="DAYS",
+                        help="재시도 대상 포스트 최대 보존 일수 (기본값: 7일)")
     args = parser.parse_args()
 
     keywords = None
@@ -575,6 +904,35 @@ def main() -> None:
         logger.info(f"점검 완료 | 건강점수: {health} | 이슈: {len(issues)}건")
         return
 
+    if args.retry:
+        logger.info("=== 실패 포스트 재시도 모드 ===")
+        all_blogs = get_blog_configs()
+        if args.blog:
+            target_blogs = [b for b in all_blogs if b.get("id") == args.blog] or all_blogs
+        else:
+            target_blogs = all_blogs
+        if not _check_config():
+            sys.exit(1)
+        total = {"success": 0, "failed": 0, "skipped": 0}
+        for blog_cfg in target_blogs:
+            blog_label = f"[{blog_cfg.get('name', blog_cfg.get('id', ''))}] "
+            logger.info(f"{blog_label}실패 포스트 재시도 시작")
+            counts = retry_failed_posts(
+                blog_config=blog_cfg,
+                max_posts=args.retry_max,
+                max_age_days=args.retry_age,
+            )
+            for k in total:
+                total[k] += counts.get(k, 0)
+        logger.info(
+            f"전체 재시도 완료 — 성공: {total['success']} / 실패: {total['failed']} / 건너뜀: {total['skipped']}"
+        )
+        try:
+            export_dashboard()
+        except Exception as _e:
+            logger.warning(f"대시보드 업데이트 실패 (무시): {_e}")
+        return
+
     if args.auto_repair:
         dry = getattr(args, "dry", False)
         logger.info(f"=== 자동 수리 모드{'(dry-run)' if dry else ''} ===")
@@ -587,18 +945,40 @@ def main() -> None:
         return
 
     if args.setup:
-        logger.info("=== AdSense 필수 페이지 생성 모드 ===")
-        from page_creator import create_required_pages
-        from config import BLOGGER_BLOG_ID
-        if not BLOGGER_BLOG_ID:
-            logger.error("BLOGGER_BLOG_ID 미설정 — .env 확인")
+        logger.info("=== AdSense 셋업 모드: 필수 페이지 생성 + 자동 광고 테마 주입 + ads.txt ===")
+        from page_creator import create_required_pages, setup_ads_txt
+        from blogger_uploader import inject_adsense_to_theme
+
+        setup_blogs = get_blog_configs()
+        if args.blog:
+            filtered = [b for b in setup_blogs if b.get("id") == args.blog]
+            setup_blogs = filtered if filtered else setup_blogs
+
+        if not setup_blogs:
+            logger.error("BLOGS_CONFIG에 블로그가 없습니다 — .env 또는 GitHub Secrets 확인")
             sys.exit(1)
-        results = create_required_pages()
-        for name, url in results.items():
-            if url:
-                logger.info(f"  ✅ {name}: {url}")
+
+        for blog_cfg in setup_blogs:
+            blog_name = blog_cfg.get("name") or blog_cfg.get("id", "")
+            logger.info(f"\n── {blog_name} 필수 페이지 생성 ──")
+            # 블로그별 맞춤 페이지 생성 (theme 자동 감지)
+            results = create_required_pages(blog_cfg)
+            for page_key, url in results.items():
+                if url:
+                    logger.info(f"  ✅ {page_key}: {url}")
+                else:
+                    logger.error(f"  ❌ {page_key}: 생성 실패")
+            # AdSense 자동 광고 스크립트를 블로그 테마에 주입
+            logger.info(f"  AdSense 자동 광고 테마 주입 시도: {blog_name}")
+            ok = inject_adsense_to_theme(blog_cfg)
+            if ok:
+                logger.info(f"  ✅ AdSense 자동 광고 활성화: {blog_name}")
             else:
-                logger.error(f"  ❌ {name}: 생성 실패")
+                logger.warning(f"  ⚠️ 테마 주입 실패 — Blogger 관리자에서 수동으로 AdSense 연결 필요: {blog_name}")
+
+        # ads.txt 설정 가이드 출력 (블로그별 1회만)
+        first_blog = setup_blogs[0] if setup_blogs else None
+        setup_ads_txt(first_blog)
         return
 
     # 블로그 목록 결정
@@ -606,9 +986,9 @@ def main() -> None:
     if args.blog:
         target_blogs = [b for b in all_blogs if b.get("id") == args.blog]
         if not target_blogs:
-            logger.error(f"블로그 ID '{args.blog}'를 BLOGS_CONFIG에서 찾을 수 없습니다.")
-            logger.error(f"사용 가능한 블로그: {[b.get('id') for b in all_blogs]}")
-            sys.exit(1)
+            logger.warning(f"블로그 ID '{args.blog}'를 BLOGS_CONFIG에서 찾을 수 없습니다.")
+            logger.warning(f"사용 가능한 블로그: {[b.get('id') for b in all_blogs]} — 전체 블로그로 실행합니다.")
+            target_blogs = all_blogs
     else:
         target_blogs = all_blogs
 
@@ -617,24 +997,53 @@ def main() -> None:
         for b in target_blogs:
             logger.info(f"  - [{b.get('id')}] {b.get('name', '')}")
 
+    if getattr(args, "process_scheduled", False):
+        if not _check_config():
+            sys.exit(1)
+        process_scheduled_series()
+        return
+
     if args.series:
         if not keywords:
             logger.error("시리즈 모드는 --keyword 가 필수입니다 (예: --series --keyword '재테크 완전정복')")
             sys.exit(1)
         series_kw = keywords[0]
-        series_count = max(2, min(getattr(args, "series_count", 4), 5))
+        series_type = getattr(args, "series_type", "auto")
+        # 회차별 리뷰는 최대 8편(8회차)까지 허용, 나머지 유형은 기존 2~5편 유지
+        if series_type == "drama_episodes":
+            series_count = max(1, min(getattr(args, "series_count", 4), 8))
+        else:
+            series_count = max(2, min(getattr(args, "series_count", 4), 5))
         skip_blogger = args.test or args.review
         if not _check_config(skip_blogger=skip_blogger):
             sys.exit(1)
+
+        # 시리즈 유형별 사전 기획 (auto는 run_series 내부의 블로그별 기획 사용)
+        def _make_pre_plan():
+            if series_type == "drama":
+                from series_planner import plan_drama_series
+                logger.info(f"[드라마 리뷰 시리즈] '{series_kw}' 테마형 기획")
+                return plan_drama_series(series_kw, series_count)
+            if series_type == "drama_episodes":
+                from series_planner import plan_drama_episode_series
+                start_ep = max(1, getattr(args, "start_episode", 1))
+                logger.info(f"[드라마 회차별 리뷰] '{series_kw}' {start_ep}화부터 {series_count}편")
+                return plan_drama_episode_series(series_kw, series_count, start_ep)
+            return None
+
         for blog_cfg in target_blogs:
+            pre_plan = _make_pre_plan()
+            if series_type != "auto" and not pre_plan:
+                logger.error("시리즈 사전 기획 실패 — 종료")
+                sys.exit(1)
             if args.test:
                 logger.info(f"[시리즈 테스트] '{series_kw}' {series_count}편 — 업로드 없이 생성만")
-                run_series(series_kw, series_count, dry_run=True, blog_config=blog_cfg)
+                run_series(series_kw, series_count, dry_run=True, series_plan=pre_plan, blog_config=blog_cfg)
             elif args.review:
                 logger.info(f"[시리즈 검토] '{series_kw}' {series_count}편 — pending에 저장")
-                run_series(series_kw, series_count, review=True, blog_config=blog_cfg)
+                run_series(series_kw, series_count, review=True, series_plan=pre_plan, blog_config=blog_cfg)
             else:
-                run_series(series_kw, series_count, blog_config=blog_cfg)
+                run_series(series_kw, series_count, series_plan=pre_plan, blog_config=blog_cfg)
         return
 
     if not _check_config(skip_blogger=(args.test or args.review)):
@@ -661,3 +1070,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

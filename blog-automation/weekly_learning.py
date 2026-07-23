@@ -17,6 +17,7 @@ import sys
 from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
+from config import claude_text
 
 load_dotenv()
 
@@ -39,6 +40,7 @@ HISTORY_FILE = os.path.join(_BASE, "logs", "run_history.json")
 KEYWORDS_USED_FILE = os.path.join(_BASE, "logs", "used_keywords.json")
 LEARNED_KW_FILE = os.path.join(_BASE, "logs", "learned_keywords.json")
 DOCS_DATA_DIR = os.path.join(_BASE, "..", "docs", "data")
+ANALYTICS_SUMMARY_FILE = os.path.join(DOCS_DATA_DIR, "analytics_summary.json")
 
 
 # ── 유틸 ─────────────────────────────────────────────────────────────────────
@@ -69,6 +71,56 @@ def _collect_week_data():
     ]
 
 
+def _build_blog_breakdown(week_runs: list[dict]) -> dict:
+    """블로그별 집계 — 3개 블로그를 하나로 뭉뚱그리면 특정 블로그의 문제가
+    다른 블로그 실적에 가려지므로 블로그 단위로 분리해서 진단합니다."""
+    by_blog: dict[str, dict] = {}
+    for r in week_runs:
+        bid = r.get("blogId", "default")
+        b = by_blog.setdefault(bid, {
+            "blog_name": r.get("blogName", bid),
+            "runs": 0, "posts_generated": 0, "posts_uploaded": 0,
+            "pending_review": 0, "errors": 0,
+        })
+        b["runs"] += 1
+        b["posts_generated"] += r.get("postsGenerated", 0)
+        b["posts_uploaded"] += r.get("bloggerUploaded", 0)
+        b["pending_review"] += r.get("pendingReview", 0)
+        b["errors"] += r.get("errors", 0)
+    for b in by_blog.values():
+        gen = max(b["posts_generated"], 1)
+        b["pending_rate_pct"] = round(b["pending_review"] / gen * 100, 1)
+        b["upload_rate_pct"] = round(b["posts_uploaded"] / gen * 100, 1)
+    return by_blog
+
+
+def _load_real_performance() -> dict | None:
+    """blog_analytics.py 가 생성한 실제 Blogger/GSC 성과 데이터(analytics_summary.json)를
+    있으면 로드합니다. 정적 CPC 가정 대신 실제 클릭·수익 데이터로 카테고리 가치를 판단합니다."""
+    if not os.path.exists(ANALYTICS_SUMMARY_FILE):
+        return None
+    try:
+        with open(ANALYTICS_SUMMARY_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        return {
+            "blogger_pageviews_30d": data.get("bloggerPageviews30d", 0),
+            "gsc_clicks_30d": data.get("totalGscClicks30d", 0),
+            "estimated_monthly_revenue": data.get("totalEstimatedRevenueMonthly", 0),
+            "grade_distribution": data.get("gradeDistribution", {}),
+            "top_performers": [
+                {"title": p.get("title", ""), "keyword": p.get("keyword", ""), "clicks30d": p.get("clicks30d", 0)}
+                for p in data.get("topPerformers", [])[:5]
+            ],
+            "rewrite_targets": [
+                {"title": p.get("title", ""), "keyword": p.get("keyword", ""), "hint": p.get("hint", "")}
+                for p in data.get("rewriteTargets", [])[:5]
+            ],
+        }
+    except Exception as e:
+        logger.warning(f"실제 성과 데이터 로드 실패 (무시): {e}")
+        return None
+
+
 def _build_summary(week_runs: list[dict]) -> dict:
     """주간 데이터에서 집계 요약을 만듭니다."""
     all_posts = [p for r in week_runs for p in r.get("posts", [])]
@@ -76,6 +128,7 @@ def _build_summary(week_runs: list[dict]) -> dict:
     total_errors = sum(r.get("errors", 0) for r in week_runs)
     total_posts = sum(r.get("postsGenerated", 0) for r in week_runs)
     total_uploaded = sum(r.get("bloggerUploaded", 0) for r in week_runs)
+    total_pending = sum(r.get("pendingReview", 0) for r in week_runs)
 
     # adsenseCategory 가 없는 구형 이력은 keyword 로 카테고리를 도출 (하위 호환)
     _CAT_KW = {
@@ -96,9 +149,15 @@ def _build_summary(week_runs: list[dict]) -> dict:
         return "일반"
 
     cat_count: dict[str, int] = {}
+    type_count: dict[str, int] = {}
+    risk_count: dict[str, int] = {}
     for p in all_posts:
         cat = p.get("adsenseCategory") or _cat_from_keyword(p.get("keyword", ""))
         cat_count[cat] = cat_count.get(cat, 0) + 1
+        at = p.get("articleType") or "unknown"
+        type_count[at] = type_count.get(at, 0) + 1
+        rl = p.get("riskLevel") or "unknown"
+        risk_count[rl] = risk_count.get(rl, 0) + 1
 
     cpc_map = {
         "법률": 3.2, "부동산": 2.8, "금융": 2.5, "건강": 1.8,
@@ -110,41 +169,64 @@ def _build_summary(week_runs: list[dict]) -> dict:
         "runs": len(week_runs),
         "posts_generated": total_posts,
         "posts_uploaded": total_uploaded,
+        "pending_review": total_pending,
+        "pending_rate_pct": round(total_pending / max(total_posts, 1) * 100, 1),
         "errors": total_errors,
         "error_rate_pct": round(total_errors / max(total_posts, 1) * 100, 1),
         "unique_keywords": list(set(all_keywords))[:30],
         "category_distribution": dict(cat_count),
+        "article_type_distribution": dict(type_count),
+        "risk_level_distribution": dict(risk_count),
         "top_categories_by_revenue": [c[0] for c in top_cats[:3]],
         "avg_word_count": round(sum(p.get("wordCount", 0) for p in all_posts) / max(len(all_posts), 1)),
         "avg_images": round(sum(p.get("imagesInserted", 0) for p in all_posts) / max(len(all_posts), 1), 1),
         "avg_faq": round(sum(p.get("faqCount", 0) for p in all_posts) / max(len(all_posts), 1), 1),
         "blog_ids": list({r.get("blogId", "default") for r in week_runs}),
+        "blog_breakdown": _build_blog_breakdown(week_runs),
+        "real_performance": _load_real_performance(),
     }
 
 
 # ── Claude 분석 ───────────────────────────────────────────────────────────────
-def _analyze_with_claude(summary: dict, api_key: str) -> dict:
+def _analyze_with_claude(summary: dict, api_key: str, prev_summary: dict | None = None) -> dict:
     """Claude Haiku 로 주간 데이터를 분석하고 JSON 인사이트를 반환합니다."""
     from anthropic import Anthropic
 
     client = Anthropic(api_key=api_key)
 
+    real_perf = summary.get("real_performance")
+    perf_block = (
+        f"\n## 실제 성과 데이터 (Blogger/GSC, 정적 CPC 가정보다 우선 신뢰)\n"
+        f"{json.dumps(real_perf, ensure_ascii=False, indent=2)}\n"
+        if real_perf else
+        "\n## 실제 성과 데이터: 아직 없음 (blog-analytics.yml 미실행) — 아래 CPC 가정으로만 판단\n"
+    )
+    trend_block = ""
+    if prev_summary:
+        trend_block = f"""
+## 지난 주 대비 추세
+- 지난 주 건강점수: {prev_summary.get('health_score', 'N/A')} (이번 주와 비교해 개선/악화 판단에 활용)
+- 지난 주 오류율: {prev_summary.get('error_rate_pct', 'N/A')}% → 이번 주: {summary['error_rate_pct']}%
+- 지난 주 검토대기율: {prev_summary.get('pending_rate_pct', 'N/A')}% → 이번 주: {summary['pending_rate_pct']}%
+"""
+
     prompt = f"""당신은 블로그 자동화 시스템의 AI 분석가입니다. 아래 지난 7일 운영 데이터를 분석하고 개선 방안을 도출해주세요.
 
-## 주간 운영 데이터
+## 주간 운영 데이터 (블로그별 breakdown 포함)
 {json.dumps(summary, ensure_ascii=False, indent=2)}
-
-## AdSense CPC 기준 카테고리 가치: 법률($3.2) > 부동산($2.8) > 금융($2.5) > 건강($1.8) > 기술($1.5) > 교육($1.3) > 여행($1.2) > 쇼핑($0.9)
+{perf_block}{trend_block}
+## AdSense CPC 기준 카테고리 가치(참고용, real_performance 있으면 그쪽을 우선): 법률($3.2) > 부동산($2.8) > 금융($2.5) > 건강($1.8) > 기술($1.5) > 교육($1.3) > 여행($1.2) > 쇼핑($0.9)
 
 ## 분석 요청 (JSON 형식으로만 응답)
 {{
-  "health_score": 0-100 점수 (포스트 수·오류율·업로드율 종합),
-  "performance_summary": "이번 주 성과 요약 (2문장 이내)",
+  "health_score": 0-100 점수 (포스트 수·오류율·업로드율·검토대기율·실제 성과 종합),
+  "performance_summary": "이번 주 성과 요약 (2문장 이내, 지난 주 대비 추세 언급)",
   "key_insights": ["핵심 인사이트 1", "인사이트 2", "인사이트 3"],
   "error_diagnosis": "오류율 {summary['error_rate_pct']}%의 주요 원인 및 해결책",
+  "blog_specific_insights": {{"blog1": "blog1 관련 인사이트", "blog2": "...", "blog3": "..."}},
   "recommended_categories": ["다음 주 집중 카테고리 1", "카테고리 2"],
   "recommended_keywords": ["추천 키워드 1", "키워드 2", "키워드 3", "키워드 4", "키워드 5"],
-  "keyword_reason": "위 키워드를 추천하는 이유",
+  "keyword_reason": "위 키워드를 추천하는 이유 (real_performance가 있으면 실제 클릭/수익 근거로 설명)",
   "auto_apply": {{
     "posts_per_run_recommendation": 3,
     "focus_category": "가장 집중할 카테고리",
@@ -164,7 +246,7 @@ def _analyze_with_claude(summary: dict, api_key: str) -> dict:
         messages=[{"role": "user", "content": prompt}],
     )
 
-    text = resp.content[0].text.strip()
+    text = claude_text(resp).strip()
     # JSON 블록 추출
     for marker in ("```json", "```"):
         if marker in text:
@@ -244,18 +326,64 @@ def _diagnose_system(week_runs: list[dict], summary: dict) -> list[dict]:
             "suggestion": "content_generator.py 의 MIN_WORD_COUNT 설정 확인",
         })
 
+    if summary.get("pending_rate_pct", 0) > 40:
+        issues.append({
+            "level": "warning",
+            "message": f"검토 대기 전환율 {summary['pending_rate_pct']}% — 분량/AdSense 점수 미달 글이 다수",
+            "suggestion": "프롬프트 분량 목표·AdSense 자동 수정 로직 점검 필요",
+        })
+
+    for bid, b in (summary.get("blog_breakdown") or {}).items():
+        if b["runs"] > 0 and b["posts_uploaded"] == 0 and b["posts_generated"] > 0:
+            issues.append({
+                "level": "warning",
+                "message": f"[{b['blog_name']}] 이번 주 생성 {b['posts_generated']}건 중 업로드 0건 "
+                            f"(검토대기율 {b['pending_rate_pct']}%)",
+                "suggestion": f"{bid} 전용 프롬프트/AdSense 기준 재검토",
+            })
+
+    return issues
+
+
+def _diagnose_trend(summary: dict, prev_summary: dict | None) -> list[dict]:
+    """직전 주 대비 추세 악화를 감지합니다 (연속 저하는 단발 이슈보다 늦게 발견되기 쉬움)."""
+    issues = []
+    if not prev_summary:
+        return issues
+    prev_err = prev_summary.get("error_rate_pct", 0)
+    if summary["error_rate_pct"] > prev_err + 10:
+        issues.append({
+            "level": "warning",
+            "message": f"오류율 상승 추세: {prev_err}% → {summary['error_rate_pct']}%",
+            "suggestion": "최근 코드 변경·API 키 만료 여부 확인",
+        })
+    prev_pending = prev_summary.get("pending_rate_pct", 0)
+    if summary.get("pending_rate_pct", 0) > prev_pending + 15:
+        issues.append({
+            "level": "warning",
+            "message": f"검토 대기율 상승 추세: {prev_pending}% → {summary.get('pending_rate_pct', 0)}%",
+            "suggestion": "콘텐츠 품질 게이트 기준 대비 생성 프롬프트 정합성 확인",
+        })
     return issues
 
 
 # ── 메인 엔트리 ───────────────────────────────────────────────────────────────
 def run_weekly_check() -> dict:
     """주간 시스템 점검 및 학습 실행."""
-    from config import ANTHROPIC_API_KEY
+    from config import claude_text, ANTHROPIC_API_KEY
 
     logger.info("=" * 60)
     logger.info("주간 시스템 점검 시작")
     logger.info("=" * 60)
     now = datetime.now()
+
+    # 0. 지난 주 학습 이력 로드 (추세 비교용)
+    learning_history = _load(LEARNING_FILE, default=[])
+    prev_report = learning_history[0] if learning_history else None
+    prev_summary = prev_report.get("stats") if prev_report else None
+    if prev_summary:
+        prev_summary = dict(prev_summary)
+        prev_summary["health_score"] = (prev_report.get("analysis") or {}).get("health_score")
 
     # 1. 데이터 수집
     week_runs = _collect_week_data()
@@ -264,11 +392,12 @@ def run_weekly_check() -> dict:
     summary = _build_summary(week_runs)
     logger.info(
         f"집계: 포스트 {summary['posts_generated']}개 생성 / "
-        f"{summary['posts_uploaded']}개 게시 / 오류율 {summary['error_rate_pct']}%"
+        f"{summary['posts_uploaded']}개 게시 / 오류율 {summary['error_rate_pct']}% / "
+        f"검토대기율 {summary['pending_rate_pct']}%"
     )
 
-    # 2. 시스템 진단
-    issues = _diagnose_system(week_runs, summary)
+    # 2. 시스템 진단 (기본 + 추세)
+    issues = _diagnose_system(week_runs, summary) + _diagnose_trend(summary, prev_summary)
     for issue in issues:
         level = issue["level"]
         if level == "error":
@@ -282,7 +411,7 @@ def run_weekly_check() -> dict:
     if ANTHROPIC_API_KEY and not ANTHROPIC_API_KEY.startswith("sk-ant-xxx"):
         try:
             logger.info("Claude AI 분석 중…")
-            analysis = _analyze_with_claude(summary, ANTHROPIC_API_KEY)
+            analysis = _analyze_with_claude(summary, ANTHROPIC_API_KEY, prev_summary)
             ai_ok = True
             logger.info(
                 f"AI 분석 완료 — 건강점수: {analysis.get('health_score', 'N/A')} / "
@@ -317,7 +446,7 @@ def run_weekly_check() -> dict:
     }
 
     # 6. 이력 저장
-    history = _load(LEARNING_FILE, default=[])
+    history = learning_history
     history.insert(0, report)
     history = history[:52]  # 최대 1년치(52주)
     _save(LEARNING_FILE, history)

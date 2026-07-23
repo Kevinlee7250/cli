@@ -4,6 +4,9 @@ on:
   schedule:
     # 매주 월요일 09:00 KST (UTC 00:00)
     - cron: "0 0 * * 1"
+  push:
+    branches: [claude/blog-automation-system-KAbtE]
+    paths: ['.github/analytics-trigger']
   workflow_dispatch:
     inputs:
       dry_run:

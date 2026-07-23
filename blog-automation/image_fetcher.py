@@ -5,10 +5,14 @@
 - Wikimedia Commons (폴백)
 """
 
+import base64
 import html
+import json
+import os
 import re
 import logging
 import requests
+from config import claude_text
 
 logger = logging.getLogger(__name__)
 
@@ -27,12 +31,12 @@ _HEADERS = {
 def _ddg_images(keyword: str, count: int) -> list[dict]:
     """DuckDuckGo 이미지 검색 (API 키 불필요)."""
     try:
-        # 1단계: vqd 토큰 획득
+        # 1단계: vqd 토큰 획득 (CI 환경에서 bot-detection으로 자주 실패 → 타임아웃 단축)
         r = requests.get(
             "https://duckduckgo.com/",
             params={"q": keyword, "iax": "images", "ia": "images"},
             headers=_HEADERS,
-            timeout=12,
+            timeout=6,
         )
         vqd = (re.search(r'vqd="([^"]+)"', r.text) or
                re.search(r"vqd='([^']+)'", r.text) or
@@ -66,6 +70,64 @@ def _ddg_images(keyword: str, count: int) -> list[dict]:
         return images
     except Exception as e:
         logger.debug(f"DDG 이미지 검색 실패: {e}")
+        return []
+
+
+def _pixabay_images(keyword: str, count: int, api_key: str) -> list[dict]:
+    """Pixabay 이미지 검색 API (저작권 무료, 상업적 사용 가능).
+    https://pixabay.com/api/docs/
+    """
+    if not api_key:
+        return []
+    try:
+        # 한국어 키워드 → 영어로 변환 (Pixabay는 영문 검색 품질이 높음)
+        en_terms = re.findall(r'[A-Za-z][A-Za-z0-9]{1,}', keyword)
+        if en_terms:
+            query = " ".join(en_terms[:4])
+        else:
+            # 순수 한국어: 영어 변환 실패 시 Pixabay 건너뜀 (네이버가 한국어 담당)
+            query = _ko_to_en_query(keyword)
+            if not query:
+                return []
+
+        r = requests.get(
+            "https://pixabay.com/api/",
+            params={
+                "key": api_key,
+                "q": query,
+                "image_type": "photo",
+                "orientation": "horizontal",
+                "safesearch": "true",
+                "per_page": min(count * 3, 20),
+                "min_width": 400,
+                "lang": "en",
+                "order": "popular",
+            },
+            headers=_HEADERS,
+            timeout=12,
+        )
+        if r.status_code != 200:
+            logger.debug(f"Pixabay API 오류: HTTP {r.status_code}")
+            return []
+        images = []
+        for item in r.json().get("hits", []):
+            img_url = item.get("largeImageURL") or item.get("webformatURL", "")
+            if not img_url:
+                continue
+            images.append({
+                "url": img_url,
+                "title": item.get("tags", keyword).replace(",", " /"),
+                "width": item.get("imageWidth", item.get("webformatWidth", 800)),
+                "height": item.get("imageHeight", item.get("webformatHeight", 450)),
+                "source": "pixabay",
+            })
+            if len(images) >= count:
+                break
+        if images:
+            logger.debug(f"Pixabay 이미지 {len(images)}개 수집: '{query}'")
+        return images
+    except Exception as e:
+        logger.debug(f"Pixabay 이미지 검색 실패: {e}")
         return []
 
 
@@ -163,12 +225,68 @@ def _wikimedia_images(keyword: str, count: int) -> list[dict]:
 
 
 # ──────────────────────────────────────────────────────────────────────────────
+# 쿼리 단순화
+# ──────────────────────────────────────────────────────────────────────────────
+
+# 체험담식 키워드의 수식어 — 이미지 검색에 방해만 되는 단어들
+_QUERY_FLUFF = {
+    "실수담", "솔직", "후기", "직접", "처음", "해봤더니", "해봤어요", "몰랐던",
+    "알게", "공개", "현실", "진짜", "갔을", "받아보고", "써봤더니", "저지른",
+    "이야기", "느낀", "겪은", "달랐던", "생각보다", "막상", "저도", "제가",
+    "했을", "안", "것들", "것", "때", "저는", "완벽", "정리", "총정리",
+    "실수들", "실수", "투자할", "혼자", "비슷하면", "이유", "방법", "꿀팁",
+    # 간결·임팩트형 제목에서 자주 나오는 수식어·동사형
+    "받는", "하는", "되는", "가장", "많이", "바로", "지금", "해보니",
+    "비교해보니", "써보니", "가본", "다녀온", "추천", "기준", "이내",
+    # 숫자에서 분리된 단위어 (예: "40만원" → "만원")
+    "만원", "천원", "억원", "원대", "가지", "개월", "주일", "박일",
+}
+
+# 단어 끝 조사 — 떼어내고 남은 어근이 2자 이상이면 어근을 사용 (예: "초보가" → "초보")
+# 로·에 등은 명사 일부인 경우가 많아 제외 (예: "고속도로")
+_TRAILING_JOSA = ("가", "은", "는", "을", "를", "의")
+
+
+def _strip_josa(word: str) -> str:
+    """한국어 단어 끝의 조사를 제거합니다 (어근 2자 이상 유지될 때만)."""
+    for j in _TRAILING_JOSA:
+        if word.endswith(j) and len(word) - len(j) >= 2:
+            return word[: -len(j)]
+    return word
+
+
+def _core_terms(text: str, max_terms: int = 3) -> list[str]:
+    """검색 쿼리에서 수식어를 제거하고 핵심 명사만 추출합니다."""
+    words = re.findall(r'[A-Za-z][A-Za-z0-9&]{1,9}|[가-힣]{2,}', text)
+    core = []
+    for w in words:
+        if re.search(r'[가-힣]', w):
+            w = _strip_josa(w)
+        if w in _QUERY_FLUFF or w.lower() in {c.lower() for c in core}:
+            continue
+        core.append(w)
+        if len(core) >= max_terms:
+            break
+    return core
+
+
+def _simplify_query(query: str, max_terms: int = 3) -> str:
+    """긴 체험담식 쿼리를 이미지 검색에 적합한 핵심 명사 조합으로 줄입니다."""
+    return " ".join(_core_terms(query, max_terms))
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 # 통합 검색 & HTML 삽입
 # ──────────────────────────────────────────────────────────────────────────────
 
 def _score_title_relevance(img: dict, query: str) -> float:
-    """이미지 제목·URL과 쿼리 단어의 겹침 비율 (0~1). 관련성 순위 정렬에 사용."""
+    """이미지 제목·URL과 쿼리 단어의 겹침 비율 (0~1). 관련성 순위 정렬에 사용.
+    한국어 쿼리는 영어 번역 단어도 포함해 영어 이미지 제목과 매칭합니다."""
     query_words = set(re.findall(r'[가-힣]{2,}|[A-Za-z]{3,}', query.lower()))
+    # 한국어 쿼리인 경우 Pixabay/DDG 영어 이미지와의 관련성 채점을 위해 번역 단어 추가
+    if _is_korean_query(query):
+        en_q = _ko_to_en_query(query)
+        query_words |= set(re.findall(r'[A-Za-z]{3,}', en_q.lower()))
     if not query_words:
         return 0.0
     haystack = (img.get("title", "") + " " + img.get("url", "")).lower()
@@ -176,24 +294,208 @@ def _score_title_relevance(img: dict, query: str) -> float:
     return len(query_words & title_words) / len(query_words)
 
 
+def _search_all_sources(
+    query: str,
+    naver_client_id: str,
+    naver_client_secret: str,
+    n_candidates: int,
+    pixabay_api_key: str = "",
+) -> list[dict]:
+    """Pixabay → 네이버 → DDG → Wikimedia 순으로 검색합니다."""
+    # 1순위: Pixabay (저작권 무료, 고품질)
+    if pixabay_api_key:
+        candidates = _pixabay_images(query, n_candidates, pixabay_api_key)
+        if candidates:
+            return candidates
+    # 2순위: 네이버 이미지 API
+    if naver_client_id and naver_client_secret:
+        candidates = _naver_images(query, n_candidates, naver_client_id, naver_client_secret)
+        if candidates:
+            return candidates
+    # 3순위: DuckDuckGo
+    candidates = _ddg_images(query, n_candidates)
+    if candidates:
+        return candidates
+    # 4순위: Wikimedia Commons
+    return _wikimedia_images(query, n_candidates)
+
+
+# 관련성 최소 임계값 — 이 미만이면 엉뚱한 이미지(Wikimedia 잡음 등)로 판단하고 버림
+_MIN_RELEVANCE = 0.15
+
+
+def _is_korean_query(text: str) -> bool:
+    """쿼리 단어 중 한글 비율이 50% 이상이면 한국어 쿼리로 판정합니다."""
+    words = re.findall(r'[가-힣]{2,}|[A-Za-z]{2,}', text)
+    if not words:
+        return False
+    ko = sum(1 for w in words if re.search(r'[가-힣]', w))
+    return ko / len(words) >= 0.5
+
+
+def _ko_to_en_query(query: str) -> str:
+    """한국어 핵심 명사를 기반으로 Pixabay/DDG용 영어 쿼리를 생성합니다.
+    단순 영단어 추출이 없으면 범용 카테고리어로 대체합니다."""
+    # 영어 단어가 있으면 우선 사용
+    en_words = re.findall(r'[A-Za-z][A-Za-z0-9]{2,}', query)
+    if en_words:
+        return " ".join(en_words[:3])
+
+    # 한국어 → 영어 범용 매핑 (이미지 검색 친화적 카테고리)
+    _KO_EN = {
+        "건강": "health", "의료": "healthcare", "운동": "exercise", "다이어트": "diet",
+        "투자": "investment", "주식": "stock market", "ETF": "ETF", "금융": "finance",
+        "부동산": "real estate", "경제": "economy", "재테크": "personal finance",
+        "여행": "travel", "관광": "tourism", "맛집": "restaurant", "숙소": "hotel",
+        "독서": "reading books", "책": "books", "교육": "education", "학습": "learning",
+        "요리": "cooking", "음식": "food", "카페": "cafe", "커피": "coffee",
+        "패션": "fashion", "뷰티": "beauty", "화장": "makeup", "스킨케어": "skincare",
+        "육아": "parenting", "아이": "child", "가족": "family",
+        "여름": "summer", "봄": "spring", "가을": "autumn", "겨울": "winter",
+        "장마": "rainy season", "폭염": "heat wave", "날씨": "weather",
+        "캠프": "camp", "캠핑": "camping", "등산": "hiking", "자전거": "cycling",
+        "스포츠": "sports", "축구": "soccer", "야구": "baseball", "테니스": "tennis",
+        "드라마": "drama", "영화": "movie", "음악": "music", "공연": "concert",
+        "취업": "job", "직장": "workplace", "창업": "startup", "부업": "side job",
+        "세금": "tax", "연금": "pension", "보험": "insurance", "대출": "loan",
+        "AI": "artificial intelligence", "기술": "technology", "스마트폰": "smartphone",
+        "방학": "school vacation", "대비": "preparation", "관리": "management",
+        "절약": "saving money", "절세": "tax saving", "공부": "studying",
+        "노후": "retirement", "임신": "pregnancy", "출산": "childbirth",
+        "정책": "policy", "지원": "support", "혜택": "benefit", "신청": "application",
+        "이사": "moving house", "전세": "rental housing", "청약": "housing subscription",
+    }
+    ko_words = re.findall(r'[가-힣]{2,}', query)
+    en_terms = []
+    for w in ko_words:
+        if w in _KO_EN:
+            en_terms.append(_KO_EN[w])
+        if len(en_terms) >= 2:
+            break
+    # 매핑되는 단어가 없으면 빈 문자열 — 범용어("lifestyle blog" 등)로 검색하면
+    # 주제와 무관한 동일 인기 이미지가 모든 글에 반복 첨부되므로 검색을 건너뛴다
+    return " ".join(en_terms)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 글 간 이미지 중복 방지 — 이미 사용한 이미지 URL을 기록·회피
+# ──────────────────────────────────────────────────────────────────────────────
+
+_USED_IMAGES_FILE = os.path.join(os.path.dirname(__file__), "logs", "used_images.json")
+_USED_IMAGES_MAX = 1000  # 최근 N개만 유지
+
+
+def _norm_img_title(title: str) -> str:
+    """이미지 제목/태그 문자열 정규화 — 같은 사진의 다른 URL 감지용 지문."""
+    return re.sub(r"\s+", " ", (title or "").strip().lower())[:80]
+
+
+def _load_used_images() -> set[str]:
+    try:
+        with open(_USED_IMAGES_FILE, encoding="utf-8") as f:
+            return set(json.load(f).get("urls", []))
+    except (FileNotFoundError, json.JSONDecodeError, OSError):
+        return set()
+
+
+def _load_used_titles() -> set[str]:
+    try:
+        with open(_USED_IMAGES_FILE, encoding="utf-8") as f:
+            return set(json.load(f).get("titles", []))
+    except (FileNotFoundError, json.JSONDecodeError, OSError):
+        return set()
+
+
+def mark_images_used(urls: list[str], titles: list[str] | None = None) -> None:
+    """삽입된 이미지 URL(+제목 지문)을 기록해 이후 글에서 같은 이미지를 피하게 합니다.
+    제목 지문은 같은 사진이 다른 URL로 재등장하는 것까지 차단합니다.
+    (data URI 생성 썸네일은 글마다 고유하므로 기록 제외)"""
+    real = [u for u in urls if u and not u.startswith("data:")]
+    norm_titles = [t for t in (_norm_img_title(t) for t in (titles or [])) if t]
+    if not real and not norm_titles:
+        return
+    try:
+        try:
+            with open(_USED_IMAGES_FILE, encoding="utf-8") as f:
+                data = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError, OSError):
+            data = {}
+        existing = data.get("urls", [])
+        existing_titles = data.get("titles", [])
+        merged = existing + [u for u in real if u not in existing]
+        merged_titles = existing_titles + [t for t in norm_titles if t not in existing_titles]
+        os.makedirs(os.path.dirname(_USED_IMAGES_FILE), exist_ok=True)
+        with open(_USED_IMAGES_FILE, "w", encoding="utf-8") as f:
+            json.dump({"urls": merged[-_USED_IMAGES_MAX:],
+                       "titles": merged_titles[-_USED_IMAGES_MAX:]}, f, ensure_ascii=False, indent=1)
+    except Exception as e:
+        logger.warning(f"used_images.json 기록 실패: {e}")
+
+
 def _fetch_best_image(
     query: str,
     naver_client_id: str = "",
     naver_client_secret: str = "",
     n_candidates: int = 4,
+    pixabay_api_key: str = "",
 ) -> dict | None:
-    """단일 쿼리로 후보 이미지 여러 개를 가져와 제목 관련성이 가장 높은 것을 반환합니다."""
-    candidates: list[dict] = []
-    if naver_client_id and naver_client_secret:
-        candidates = _naver_images(query, n_candidates, naver_client_id, naver_client_secret)
-    if not candidates:
-        candidates = _ddg_images(query, n_candidates)
-    if not candidates:
-        candidates = _wikimedia_images(query, n_candidates)
-    if not candidates:
-        return None
-    # 제목 관련성 점수가 가장 높은 후보 선택 (동점 시 API 기본 순위 존중)
-    return max(candidates, key=lambda img: _score_title_relevance(img, query))
+    """
+    후보 이미지를 가져와 제목 관련성이 가장 높은 것을 반환합니다.
+    긴 체험담식 쿼리는 결과가 없으므로 점진적으로 단순화하며 재시도합니다:
+    ① 원본 쿼리 → ② 핵심 명사 3개 → ③ 핵심 명사 2개
+    한국어 쿼리는 영어 변환 쿼리도 추가 시도.
+    관련성 임계값 미달 시에도 후보가 있으면 최상위 이미지를 반환합니다
+    (Claude _filter_relevant_images에서 최종 필터링).
+    """
+    is_korean = _is_korean_query(query)
+    attempts = [query]
+    simple3 = _simplify_query(query, 3)
+    simple2 = _simplify_query(query, 2)
+    if simple3 and simple3 != query:
+        attempts.append(simple3)
+    if simple2 and simple2 not in attempts:
+        attempts.append(simple2)
+
+    # 한국어 쿼리: 영어 변환 버전도 시도 (Pixabay/DDG/Wikimedia 결과 개선)
+    if is_korean:
+        en_q = _ko_to_en_query(query)
+        if en_q and en_q not in attempts:
+            attempts.append(en_q)
+
+    # 관련성 채점은 항상 단순화된 핵심 명사 기준
+    score_query = simple2 or simple3 or query
+
+    used_urls = _load_used_images()      # 이전 글들에서 이미 쓴 이미지 URL 회피
+    used_titles = _load_used_titles()    # 같은 사진의 다른 URL(제목 지문)도 회피
+    best_fallback = None  # 임계값 미달이라도 후보가 있으면 보관
+    for attempt_q in attempts:
+        candidates = _search_all_sources(
+            attempt_q, naver_client_id, naver_client_secret, n_candidates,
+            pixabay_api_key=pixabay_api_key,
+        )
+        fresh = [c for c in candidates
+                 if c.get("url", "") not in used_urls
+                 and _norm_img_title(c.get("title", "")) not in used_titles]
+        if candidates and not fresh:
+            logger.debug(f"후보 전부 기사용 이미지: '{attempt_q}' — 다음 쿼리 시도")
+            continue
+        candidates = fresh
+        if not candidates:
+            continue
+        best = max(candidates, key=lambda img: _score_title_relevance(img, score_query))
+        score = _score_title_relevance(best, score_query)
+        if score >= _MIN_RELEVANCE:
+            return best
+        logger.debug(f"관련성 미달 후보 보관: '{attempt_q}' → '{best.get('title','')[:30]}' (score={score:.2f})")
+        if best_fallback is None:
+            best_fallback = best
+
+    # 임계값을 넘는 이미지가 없어도 후보가 있으면 최상위 반환
+    # (Claude _filter_relevant_images가 최종 필터링 담당)
+    if best_fallback:
+        logger.debug(f"관련성 미달 폴백 이미지 사용: '{best_fallback.get('title','')[:40]}'")
+        return best_fallback
+    return None
 
 
 def _filter_relevant_images(
@@ -209,7 +511,7 @@ def _filter_relevant_images(
         return images
     try:
         import anthropic
-        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
+        from config import claude_text, ANTHROPIC_API_KEY, CLAUDE_MODEL
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
         img_list = "\n".join(
@@ -223,7 +525,7 @@ def _filter_relevant_images(
 
         msg = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=200,
+            max_tokens=1000,
             messages=[{
                 "role": "user",
                 "content": (
@@ -239,7 +541,7 @@ def _filter_relevant_images(
                 ),
             }],
         )
-        answer = msg.content[0].text.strip()
+        answer = claude_text(msg).strip()
         logger.debug(f"이미지 관련성 평가 결과: {answer}")
 
         # '없음' 변형 처리
@@ -267,34 +569,307 @@ def _filter_relevant_images(
         return images
 
 
+# ──────────────────────────────────────────────────────────────────────────────
+# 제목 기반 썸네일 자동 생성 (이미지 검색 전부 실패 시 폴백)
+# ──────────────────────────────────────────────────────────────────────────────
+
+# 주제별 그라디언트·이모지 (content_generator 테마와 톤 일치 — 순환 임포트 방지 위해 자체 정의)
+_THUMB_THEMES = [
+    # (감지 키워드, 그라디언트 시작, 끝, 액센트, 이모지)
+    ({"여행", "관광", "명소", "숙소", "호텔", "맛집", "항공", "제주", "투어", "휴양"},
+     "#0369a1", "#0ea5e9", "#e0f2fe", "✈️"),
+    ({"드라마", "영화", "넷플릭스", "ott", "결말", "출연진", "배우"},
+     "#6d28d9", "#a78bfa", "#f3e8ff", "🎬"),
+    ({"아이돌", "컴백", "k-pop", "kpop", "음반", "신곡", "콘서트", "걸그룹", "보이그룹", "월드투어", "팬덤"},
+     "#be185d", "#f472b6", "#fce7f3", "🎵"),
+    ({"투자", "주식", "etf", "금융", "경제", "금리", "환율", "부동산", "재테크", "세금"},
+     "#1d4ed8", "#3b82f6", "#dbeafe", "📈"),
+    ({"축구", "야구", "농구", "골프", "스포츠", "경기", "선수", "손흥민"},
+     "#dc2626", "#f87171", "#fee2e2", "⚽"),
+    ({"건강", "다이어트", "운동", "의료", "영양", "식단"},
+     "#047857", "#34d399", "#d1fae5", "💪"),
+]
+_THUMB_DEFAULT = ("#1e3a8a", "#60a5fa", "#dbeafe", "📝")
+
+# 대시보드 테마 선택값 → _THUMB_THEMES 인덱스 (순서 일치)
+_THUMB_THEME_NAMES = ["travel", "drama", "kpop", "finance", "sports", "health"]
+
+
+def _thumb_theme(text: str, theme_name: str = "") -> tuple[str, str, str, str]:
+    if theme_name and theme_name in _THUMB_THEME_NAMES:
+        _, c1, c2, accent, emoji = _THUMB_THEMES[_THUMB_THEME_NAMES.index(theme_name)]
+        return c1, c2, accent, emoji
+    if theme_name == "default":
+        return _THUMB_DEFAULT
+    t = text.lower()
+    for kws, c1, c2, accent, emoji in _THUMB_THEMES:
+        if any(w in t for w in kws):
+            return c1, c2, accent, emoji
+    return _THUMB_DEFAULT
+
+
+def _wrap_title(title: str, max_chars: int = 13, max_lines: int = 3) -> list[str]:
+    """제목을 단어 단위로 줄바꿈합니다 (한 줄 max_chars자, 최대 max_lines줄)."""
+    words = title.split()
+    lines: list[str] = []
+    cur = ""
+    for w in words:
+        cand = f"{cur} {w}".strip()
+        if len(cand) <= max_chars or not cur:
+            cur = cand
+        else:
+            lines.append(cur)
+            cur = w
+        if len(lines) == max_lines:
+            break
+    if cur and len(lines) < max_lines:
+        lines.append(cur)
+    # 넘친 마지막 줄 말줄임
+    if lines and (len(lines) == max_lines and len(" ".join(words)) > sum(len(l) for l in lines) + len(lines) - 1):
+        last = lines[-1]
+        lines[-1] = (last[:max_chars - 1] + "…") if len(last) > max_chars else last + "…"
+    return lines or [title[:max_chars]]
+
+
+def _upload_to_imgbb(svg_bytes: bytes) -> str:
+    """SVG를 imgbb에 업로드해 공개 URL을 반환합니다. 실패 시 빈 문자열."""
+    api_key = os.getenv("IMGBB_API_KEY", "")
+    if not api_key:
+        return ""
+    try:
+        r = requests.post(
+            "https://api.imgbb.com/1/upload",
+            data={"key": api_key, "image": base64.b64encode(svg_bytes).decode()},
+            timeout=15,
+        )
+        if r.status_code == 200:
+            return r.json().get("data", {}).get("url", "")
+    except Exception as e:
+        logger.debug(f"imgbb 업로드 실패: {e}")
+    return ""
+
+
+def _generate_ai_image(topic: str) -> dict | None:
+    """검색 실패 시 AI(OpenAI 이미지 모델)로 주제 이미지를 생성합니다.
+
+    생성 이미지는 ImgBB에 업로드해 공개 URL로 반환합니다.
+    - AI_IMAGE_FALLBACK=false 로 비활성화 가능 (기본 활성)
+    - OPENAI_API_KEY·IMGBB_API_KEY 둘 다 필요 (없으면 None → SVG 썸네일로)
+    - 초상권·저작권 안전: 실존 인물·텍스트·워터마크 금지 프롬프트
+    """
+    if os.getenv("AI_IMAGE_FALLBACK", "true").strip().lower() not in ("true", "1", "yes"):
+        return None
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        return None
+    if not os.getenv("IMGBB_API_KEY", "").strip():
+        logger.info("IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백")
+        return None
+    topic = (topic or "").strip()
+    if not topic:
+        return None
+    try:
+        from openai import OpenAI
+        client = OpenAI(api_key=api_key)
+        model = os.getenv("OPENAI_IMAGE_MODEL", "gpt-image-1")
+        prompt = (
+            f"Clean, modern blog header illustration about: {topic}. "
+            "Soft gradients, flat design with subtle depth, warm inviting colors. "
+            "Strictly NO text, NO letters, NO watermark, NO logos, "
+            "NO real or recognizable people or celebrity likenesses."
+        )
+        resp = client.images.generate(model=model, prompt=prompt, size="1536x1024", n=1)
+        data = resp.data[0]
+        b64 = getattr(data, "b64_json", None)
+        if b64:
+            img_bytes = base64.b64decode(b64)
+        else:
+            src_url = getattr(data, "url", None)
+            if not src_url:
+                return None
+            img_bytes = requests.get(src_url, timeout=30).content
+        url = _upload_to_imgbb(img_bytes)
+        if not url:
+            logger.warning("AI 이미지 ImgBB 업로드 실패 — SVG 썸네일로 폴백")
+            return None
+        logger.info(f"🎨 AI 이미지 생성·업로드 완료: '{topic[:40]}' → {url[:70]}")
+        return {
+            "url": url,
+            "title": topic,
+            "width": 1536,
+            "height": 1024,
+            "source": "ai_generated",
+        }
+    except Exception as e:
+        logger.warning(f"AI 이미지 생성 실패 ({type(e).__name__}): {str(e)[:120]} — SVG 썸네일로 폴백")
+        return None
+
+
+def generate_fallback_image(title: str, keyword: str = "", theme: str = "") -> dict | None:
+    """검색 전부 실패 시 폴백 이미지: ① AI 생성 이미지 → ② SVG 제목 썸네일."""
+    topic = (title or keyword or "").strip()
+    img = _generate_ai_image(topic)
+    if img:
+        img["alt_text"] = topic[:50]
+        img["search_query"] = topic
+        return img
+    return generate_title_thumbnail(title, keyword, theme=theme)
+
+
+def generate_title_thumbnail(title: str, keyword: str = "", theme: str = "") -> dict | None:
+    """
+    제목 기반 SVG 썸네일 카드를 생성합니다 (이미지 검색 전부 실패 시 폴백).
+    - 주제별 그라디언트 배경 + 카테고리 이모지 + 제목 텍스트
+    - IMGBB_API_KEY 설정 시 공개 URL 업로드, 아니면 data URI로 본문에 직접 임베드
+    """
+    text = (title or keyword or "").strip()
+    if not text:
+        return None
+    c1, c2, accent, emoji = _thumb_theme(f"{title} {keyword}", theme_name=theme)
+    lines = _wrap_title(text)
+
+    line_h = 78
+    total_h = len(lines) * line_h
+    start_y = 340 - total_h // 2 + 56
+    tspans = "".join(
+        f'<text x="600" y="{start_y + i * line_h}" text-anchor="middle" '
+        f'font-family="\'Noto Sans KR\',\'Apple SD Gothic Neo\',sans-serif" '
+        f'font-size="56" font-weight="800" fill="#ffffff">{html.escape(l)}</text>'
+        for i, l in enumerate(lines)
+    )
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="{c1}"/><stop offset="1" stop-color="{c2}"/>
+  </linearGradient>
+</defs>
+<rect width="1200" height="630" fill="url(#bg)"/>
+<circle cx="1080" cy="90" r="180" fill="{accent}" opacity="0.13"/>
+<circle cx="110" cy="560" r="140" fill="{accent}" opacity="0.10"/>
+<text x="600" y="150" text-anchor="middle" font-size="72">{emoji}</text>
+{tspans}
+<rect x="500" y="{start_y + len(lines) * line_h + 10}" width="200" height="5" rx="2.5" fill="{accent}" opacity="0.85"/>
+</svg>"""
+    svg_bytes = svg.encode("utf-8")
+
+    url = _upload_to_imgbb(svg_bytes)
+    if not url:
+        url = "data:image/svg+xml;base64," + base64.b64encode(svg_bytes).decode()
+
+    logger.info(f"제목 썸네일 생성: '{text[:30]}' ({'imgbb' if url.startswith('http') else 'data URI'}, {len(svg_bytes)}B)")
+    return {
+        "url": url,
+        "title": text,
+        "width": 1200,
+        "height": 630,
+        "source": "generated_thumbnail",
+        "generated": True,
+        "alt_text": text if len(text) <= 50 else text[:50].rsplit(" ", 1)[0],
+        "search_query": keyword or text,
+    }
+
+
 def fetch_images_for_queries(
     queries: list[str],
     naver_client_id: str = "",
     naver_client_secret: str = "",
     article_plain_text: str = "",
     keyword: str = "",
+    pixabay_api_key: str = "",
+    title: str = "",
 ) -> list[dict]:
-    """섹션별 쿼리 목록에 맞춰 이미지를 검색(후보 4개 중 관련성 최고 선택)하고 Claude로 최종 검증합니다."""
+    """섹션별 쿼리 목록에 맞춰 이미지를 검색(Pixabay → 네이버 → DDG → Wikimedia)하고 Claude로 최종 검증합니다.
+    모든 검색이 실패하면 제목 기반 SVG 썸네일을 생성해 대체합니다 (title 제공 시)."""
     images = []
+    seen_urls: set[str] = set()
+    seen_titles: set[str] = set()  # 같은 사진이 다른 URL로 반복 선택되는 것 방지 (태그 문자열 기준)
+
+    def _norm_title(im: dict) -> str:
+        return re.sub(r"\s+", " ", (im.get("title") or "").strip().lower())[:80]
+
+    def _is_dup(im: dict) -> bool:
+        t = _norm_title(im)
+        return im.get("url", "") in seen_urls or (bool(t) and t in seen_titles)
+
+    def _remember(im: dict) -> None:
+        seen_urls.add(im.get("url", ""))
+        t = _norm_title(im)
+        if t:
+            seen_titles.add(t)
+
     for query in queries:
-        img = _fetch_best_image(query, naver_client_id, naver_client_secret, n_candidates=4)
+        img = _fetch_best_image(query, naver_client_id, naver_client_secret, n_candidates=6,
+                                pixabay_api_key=pixabay_api_key)
         if img:
-            img["search_query"] = query
-            img["alt_text"] = query if len(query) <= 50 else query[:50].rsplit(" ", 1)[0]
-            score = _score_title_relevance(img, query)
-            logger.info(f"이미지 수집 성공: '{query}' → 제목='{img.get('title','')[:40]}' (관련성={score:.2f})")
+            if _is_dup(img):
+                logger.debug(f"중복 이미지 건너뜀: '{query}' → {img.get('url','')[:60]}")
+                # 같은 쿼리로 후보를 더 요청해 다른 이미지 탐색
+                candidates = _search_all_sources(
+                    _simplify_query(query, 2) or query,
+                    naver_client_id, naver_client_secret, 8,
+                    pixabay_api_key=pixabay_api_key,
+                )
+                alt_img = next((c for c in candidates if not _is_dup(c)), None)
+                if alt_img:
+                    img = alt_img
+                    img["search_query"] = query
+                    img["alt_text"] = query if len(query) <= 50 else query[:50].rsplit(" ", 1)[0]
+                    score = _score_title_relevance(img, query)
+                    logger.info(f"대체 이미지 수집: '{query}' → 제목='{img.get('title','')[:40]}' (관련성={score:.2f})")
+                else:
+                    logger.warning(f"중복 대체 이미지 없음: '{query}' — 건너뜀")
+                    img = None
+            if img:
+                img["search_query"] = query
+                img["alt_text"] = query if len(query) <= 50 else query[:50].rsplit(" ", 1)[0]
+                score = _score_title_relevance(img, query)
+                logger.info(f"이미지 수집 성공: '{query}' → 제목='{img.get('title','')[:40]}' (관련성={score:.2f})")
+                _remember(img)
         else:
             logger.warning(f"이미지 없음: '{query}'")
         if img:
             images.append(img)
 
-    # Claude로 최종 관련성 검증 (article_plain_text 제공 시)
-    if images and article_plain_text:
+    # Claude로 최종 관련성 검증 (article_plain_text 제공 시, 이미지 2개 이상일 때만)
+    # 이미지가 1개뿐이면 Claude 필터를 거치지 않음 — 유일한 후보를 "없음" 판정으로 제거 방지
+    if images and article_plain_text and len(images) >= 2:
         images = _filter_relevant_images(images, keyword or queries[0], article_plain_text)
+
+    # 최종 폴백: 이미지가 하나도 없으면 제목 기반 썸네일 생성
+    # + 글 내용과 관련된 실제 이미지도 함께 검색해 첨부
+    if not images and (title or keyword):
+        thumb = generate_fallback_image(title, keyword)
+        if thumb:
+            # 실제 사진 이미지 추가 검색 (썸네일과 함께 제공)
+            search_kw = keyword or title or ""
+            simple_q = _simplify_query(search_kw, 2) or search_kw
+            real_img = _fetch_best_image(
+                simple_q, naver_client_id, naver_client_secret,
+                n_candidates=6, pixabay_api_key=pixabay_api_key,
+            )
+            if real_img:
+                real_img["search_query"] = simple_q
+                real_img["alt_text"] = simple_q if len(simple_q) <= 50 else simple_q[:50].rsplit(" ", 1)[0]
+                logger.info(f"썸네일 폴백 + 관련 이미지 추가: '{real_img.get('title','')[:40]}'")
+                images.append(real_img)
+            images.append(thumb)
 
     return images
 
 
+
+
+def _safe_caption(img: dict, alt: str) -> str:
+    """캡션 텍스트 결정 — 파일명·Pixabay 태그 나열·무의미한 제목은 alt로 대체합니다."""
+    title = (img.get("title") or "").strip()
+    if not title or re.search(r'\.(jpe?g|png|webp|svg|gif)$', title, re.I):
+        return alt
+    if len(title) < 4:
+        return alt
+    # Pixabay 태그 형식 감지: "word / word / word ..." (슬래시 2개 이상 → 태그 나열)
+    if len(re.findall(r'\s*/\s*', title)) >= 2:
+        return alt
+    return title
 
 
 def _make_img_html(img: dict, alt: str, caption: str = "") -> str:
@@ -329,6 +904,10 @@ def inject_images_into_content(content: str, images: list[dict], keyword: str) -
     if not images:
         return content
 
+    # 글 간 중복 방지: 삽입되는 이미지 URL + 제목 지문 기록
+    mark_images_used([img.get("url", "") for img in images],
+                     [img.get("title", "") for img in images])
+
     img_iter = iter(enumerate(images))
 
     def _alt(img: dict, fallback: str) -> str:
@@ -339,7 +918,8 @@ def inject_images_into_content(content: str, images: list[dict], keyword: str) -
     if first_p:
         try:
             idx, img = next(img_iter)
-            img_html = _make_img_html(img, _alt(img, keyword), img.get("title", ""))
+            alt = _alt(img, keyword)
+            img_html = _make_img_html(img, alt, _safe_caption(img, alt))
             content = content[:first_p.end()] + img_html + content[first_p.end():]
         except StopIteration:
             return content
@@ -352,15 +932,17 @@ def inject_images_into_content(content: str, images: list[dict], keyword: str) -
     for pos in insert_positions:
         try:
             idx, img = next(img_iter)
-            img_html = _make_img_html(
-                img,
-                _alt(img, f"{keyword} 관련 이미지 {idx + 1}"),
-                img.get("title", ""),
-            )
+            alt = _alt(img, f"{keyword} 관련 이미지 {idx + 1}")
+            img_html = _make_img_html(img, alt, _safe_caption(img, alt))
             actual_pos = pos + offset
             content = content[:actual_pos] + img_html + content[actual_pos:]
             offset += len(img_html)
         except StopIteration:
             break
+
+    # ③ H2 슬롯이 부족해 남은 이미지: 본문 끝에 배치 (버리지 않음)
+    for idx, img in img_iter:
+        alt = _alt(img, f"{keyword} 관련 이미지 {idx + 1}")
+        content = content + _make_img_html(img, alt, _safe_caption(img, alt))
 
     return content

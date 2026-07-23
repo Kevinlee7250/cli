@@ -9,11 +9,19 @@ import time
 
 import anthropic
 
-from config import ANTHROPIC_API_KEY, CLAUDE_MODEL, BLOG_LANGUAGE
+from config import (
+    claude_text, claude_generate, gpt_generate,
+    ANTHROPIC_API_KEY, CLAUDE_MODEL,
+    OPENAI_API_KEY, OPENAI_MODEL,
+    AI_PROVIDER, BLOG_LANGUAGE,
+)
+from coupang_affiliate import inject_affiliate_section
 from image_fetcher import fetch_images_for_queries, inject_images_into_content
+from readability_checker import assess_readability, readability_escalation_note
 
 logger = logging.getLogger(__name__)
 _client: anthropic.Anthropic | None = None
+_openai_client = None  # openai.OpenAI 인스턴스 (지연 초기화)
 
 
 def _get_client() -> anthropic.Anthropic:
@@ -23,17 +31,149 @@ def _get_client() -> anthropic.Anthropic:
     return _client
 
 
+def _fetch_drama_references(keyword: str) -> str:
+    """
+    드라마·영화 키워드에 대한 실제 리뷰·반응 데이터를 네이버 블로그/뉴스 API로 수집합니다.
+    수집된 내용은 Claude 프롬프트에 참고 자료로 주입됩니다.
+    API 키가 없거나 실패하면 빈 문자열을 반환합니다.
+    """
+    import requests as _req
+    naver_id = os.getenv("NAVER_CLIENT_ID", "")
+    naver_secret = os.getenv("NAVER_CLIENT_SECRET", "")
+    if not naver_id or not naver_secret:
+        return ""
+
+    headers = {
+        "X-Naver-Client-Id": naver_id,
+        "X-Naver-Client-Secret": naver_secret,
+    }
+    snippets: list[str] = []
+
+    # 블로그 리뷰 수집 (최신순 5개)
+    try:
+        r = _req.get(
+            "https://openapi.naver.com/v1/search/blog.json",
+            headers=headers,
+            params={"query": keyword + " 리뷰", "display": 5, "sort": "date"},
+            timeout=8,
+        )
+        if r.status_code == 200:
+            for item in r.json().get("items", []):
+                title = re.sub(r"<[^>]+>", "", item.get("title", "")).strip()
+                desc = re.sub(r"<[^>]+>", "", item.get("description", "")).strip()
+                if title and desc:
+                    snippets.append(f"[블로그 리뷰] {title}: {desc}")
+    except Exception:
+        pass
+
+    # 뉴스 수집 (최신 5개)
+    try:
+        r = _req.get(
+            "https://openapi.naver.com/v1/search/news.json",
+            headers=headers,
+            params={"query": keyword, "display": 5, "sort": "date"},
+            timeout=8,
+        )
+        if r.status_code == 200:
+            for item in r.json().get("items", []):
+                title = re.sub(r"<[^>]+>", "", item.get("title", "")).strip()
+                desc = re.sub(r"<[^>]+>", "", item.get("description", "")).strip()
+                if title and desc:
+                    snippets.append(f"[뉴스] {title}: {desc}")
+    except Exception:
+        pass
+
+    if not snippets:
+        return ""
+
+    lines = "\n".join(f"- {s}" for s in snippets[:8])
+    return f"""
+━━━ 실제 시청자·관객 반응 참고 자료 (네이버 최신 검색 결과) ━━━
+
+아래는 이 작품에 대한 실제 블로그 리뷰와 뉴스 요약입니다.
+반드시 이 내용을 참고해서 실제 시청자 반응과 평가를 글에 자연스럽게 녹여주세요.
+단, 아래 내용을 그대로 복사하지 말고, 개인 시청 경험과 결합해 재구성하세요.
+
+{lines}
+
+위 참고 자료를 바탕으로:
+- 실제 시청자들이 공통적으로 언급하는 장면·배우·스토리 포인트를 글에 포함할 것
+- 호불호가 갈리는 요소가 있다면 양쪽 시각 모두 언급할 것
+- 수치(시청률, 박스오피스 순위, 별점 등)가 언급된 경우 글에 반영할 것
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
+
+
+def _get_openai_client():
+    global _openai_client
+    if _openai_client is None:
+        try:
+            from openai import OpenAI
+            _openai_client = OpenAI(api_key=OPENAI_API_KEY)
+        except ImportError:
+            raise RuntimeError("openai 패키지가 설치되지 않았습니다. pip install openai 를 실행하세요.")
+    return _openai_client
+
+
+def _resolve_ai_provider(blog_config: dict | None) -> str:
+    """블로그별 ai_provider 설정 → 없으면 전역 AI_PROVIDER 사용."""
+    if blog_config:
+        provider = blog_config.get("ai_provider", "").strip().lower()
+        if provider in ("claude", "openai"):
+            return provider
+    return AI_PROVIDER.lower()
+
+
+def _ai_generate(system: str, prompt: str, ai_provider: str) -> str:
+    """ai_provider에 따라 Claude 또는 GPT API를 호출하고 원본 텍스트를 반환합니다."""
+    if ai_provider == "openai":
+        if not OPENAI_API_KEY:
+            raise ValueError("OPENAI_API_KEY가 설정되지 않았습니다.")
+        return gpt_generate(
+            _get_openai_client(),
+            model=OPENAI_MODEL,
+            system=system,
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=8000,
+            temperature=1.0,
+        )
+    # 기본: Claude
+    return claude_generate(
+        _get_client(),
+        model=CLAUDE_MODEL,
+        max_tokens=24000,
+        temperature=1.0,
+        system=system,
+        messages=[{"role": "user", "content": prompt}],
+    )
+
+
 def _detect_article_type(keyword: str) -> str:
     """키워드 기반 아티클 유형 감지"""
     kw = keyword.lower()
-    # 드라마 리뷰 — 가장 먼저 체크 (리뷰 타입과 겹치지 않게)
-    if any(w in kw for w in ["드라마", "시즌", "넷플릭스", "티빙", "쿠팡플레이", "ott", "왓챠",
-                              "결말 해석", "등장인물", "ost 추천", "명장면"]):
+    # K-POP·연예 — 드라마보다 먼저 체크 (아이돌·컴백·시상식 등)
+    if any(w in kw for w in ["아이돌", "컴백", "k-pop", "kpop", "k pop", "음반", "신보", "신곡",
+                              "팬미팅", "콘서트 티켓", "티케팅", "시상식", "mama", "멜론어워드",
+                              "초동", "음원 차트", "걸그룹", "보이그룹", "데뷔",
+                              "월드투어", "내한공연", "팬덤"]):
+        return "kpop_review"
+    # 드라마·영화 리뷰
+    if any(w in kw for w in ["드라마", "영화", "넷플릭스", "티빙", "쿠팡플레이", "ott", "왓챠",
+                              "결말", "등장인물", "인물관계도", "출연진", "몇부작", "시청률",
+                              "다시보기", "ost 추천", "명장면", "영화 리뷰", "영화 후기",
+                              "박스오피스", "개봉"]):
         return "drama_review"
     # 여행 가이드
     if any(w in kw for w in ["여행", "관광", "투어", "코스", "명소", "숙소", "호텔", "맛집",
-                              "공항", "비자", "패키지", "자유여행", "배낭", "현지"]):
+                              "공항", "항공권", "항공", "비자", "패키지", "자유여행", "배낭", "현지"]):
         return "travel_guide"
+    # 투자형 — 종목·시장 분석
+    if any(w in kw for w in ["주가", "투자", "종목", "시장 전망", "매수", "매도", "포트폴리오",
+                              "etf", "펀드", "배당", "코인", "실적"]):
+        return "investment"
+    # 뉴스 해설 — 사건·발표·이슈 해설
+    if any(w in kw for w in ["발표", "개정", "시행", "논란", "이슈", "속보", "확정", "폐지",
+                              "인상", "인하", "변경사항", "달라지는"]):
+        return "news_analysis"
     # 스포츠 분석·리뷰
     if any(w in kw for w in ["경기", "축구", "야구", "농구", "테니스", "골프", "k리그", "kbo",
                               "nba", "epl", "선수", "감독", "시즌", "분석", "전망", "순위",
@@ -53,94 +193,831 @@ def _detect_article_type(keyword: str) -> str:
 # 유형별 구조 가이드
 _STRUCTURE_GUIDE = {
     "how_to": """
-- 도입부: 나도 처음엔 이걸 몰라서 고생했다는 실제 경험 언급
-- 본문: "직접 해보니 이랬어요" 식의 경험 기반 단계별 설명
-- 섹션 제목: 실제로 하다 보면 마주치는 상황 중심 (예: "처음 시작할 때 가장 헷갈렸던 것")
-- 중간에 "근데 사실 이게 제일 중요해요" 같은 사적인 코멘트 포함
-- 마지막: 내가 해보고 느낀 솔직한 총평""",
+[사용법형 권장 구조: 준비 → 단계 → 오류 해결 → 체크리스트]
+- 준비: 시작 전 필요한 것 (조건·서류·환경) — 처음 하는 사람이 놓치는 것 위주
+- 단계: 순서대로 진행 방법 — 각 단계에서 확인할 것과 흔한 실수
+- 오류 해결: 도중에 막히는 상황과 해결법 (에러·거절·반려 사례)
+- 체크리스트: 마지막 점검 항목 목록
+- 섹션 제목·순서는 주제에 맞게 변형 — 매 글이 같은 목차가 되지 않게""",
 
     "review": """
-- 도입부: 왜 직접 써봤는지 계기 설명 (광고 아님, 진짜 써본 것)
-- 본문: 장점 → 단점 → 의외로 좋았던 점 → 이런 사람에게 맞다/안 맞다
-- "기대했던 것 vs 실제로 써보니" 대비 구조 포함
-- 솔직한 불만이나 아쉬운 점도 명확히 표현
-- 마지막: 재구매/재사용 의향 + 어떤 독자에게 추천""",
+[후기형: 실제 경험 자료가 있을 때만 경험형 구성 — 없으면 후기 종합·분석형]
+- 경험 자료가 주어진 경우: 계기 → 사용 과정 → 좋았던 점/아쉬운 점 → 추천 기준 (자료 범위 안에서만)
+- 경험 자료가 없는 경우: 관심 배경 → 공식 스펙 vs 이용자 실사용 반응 → 공통 불만점 → 후기 종합 추천 기준
+- 어느 쪽이든 장점만 나열 금지 — 아쉬운 점을 명확히
+- 마지막: 어떤 독자에게 맞는지/안 맞는지 구분""",
 
     "comparison": """
-- 도입부: 나도 어떤 걸 선택해야 할지 고민해봤던 상황 공유
-- 본문: 직접 비교해본 기준 설명 → 항목별 비교 → 상황별 추천
-- "처음엔 A가 나을 것 같았는데 실제론 B가 더 좋더라" 식의 반전 포함
-- 표(table)나 항목 비교 위주의 구조 (독자가 빠르게 파악할 수 있게)
-- 결론: "나라면 이런 상황엔 A, 저런 상황엔 B를 선택할 것" 같은 개인 의견""",
+[비교형 권장 구조: 비교 기준 → 항목별 분석 → 상황별 추천]
+- 비교 기준: 무엇을 기준으로 비교하는지 먼저 정의 (가격·기능·조건 등)
+- 항목별 분석: 기준별로 대상들을 분석 — 표(table) 적극 활용
+- "언뜻 보면 A가 나아 보이지만 자료를 보면 B가 유리한 경우" 식의 반전 포함
+- 상황별 추천: "이런 상황엔 A, 저런 상황엔 B" — 독자 상황별로 명확하게
+- 결론은 의견임을 분명히 ("저라면 ~를 선택하겠습니다" — 경험 주장 아님)""",
 
     "explainer": """
-- 도입부: 이 개념을 처음 접했을 때 내가 어떻게 이해했는지
-- 본문: 쉬운 비유 → 핵심 개념 → 실생활 적용 사례
-- "어렵게 생각할 필요 없고요" 같은 독자와의 거리감 좁히는 표현 사용
-- 전문 용어가 나오면 반드시 바로 아래에 쉬운 말로 풀어 설명
-- 마지막: 이걸 알면 어떻게 달라지는지 실질적인 변화 설명""",
+[정보형 권장 구조: 문제 → 핵심 정보 → 사례 → 주의사항]
+- 문제: 독자가 겪는 문제·헷갈리는 지점에서 시작
+- 핵심 정보: 개념·제도·방법의 핵심 — 전문 용어는 바로 쉬운 말로 풀기
+- 사례: 실생활 적용 사례·시나리오로 이해 돕기
+- 주의사항: 놓치기 쉬운 함정·예외 상황
+- "어렵게 생각할 필요 없고요" 같은 거리감 좁히는 표현 사용""",
 
     "analysis": """
-- 도입부: 이 주제에 내가 관심 갖게 된 계기 또는 최근 뉴스/이슈 언급
-- 본문: 현황 → 내가 보는 핵심 포인트 → 구체적 근거/데이터 → 개인적 전망
+- 도입부: 이 주제가 지금 주목받는 계기 또는 최근 뉴스/이슈 언급
+- 본문: 현황 → 핵심 포인트 → 구체적 근거/데이터 → 전망 (의견임을 명확히)
 - "이 부분은 제 개인적인 생각인데요" 같은 의견임을 명확히 하는 표현 포함
 - 과도한 낙관론/비관론 없이 균형 잡힌 시각
 - 마지막: "결국 핵심은 이거예요" 식의 짧고 명확한 결론""",
 
+    "investment": """
+[투자형 권장 구조: 기업·시장 → 데이터 → 위험 → 시나리오]
+- 기업·시장: 대상 기업/상품/시장의 현재 상황 (자료팩 근거)
+- 데이터: 실적·수치·지표 — 반드시 검증된 자료 기준, 임의 수치 금지
+- 위험: 하락 요인·리스크를 낙관론과 같은 비중으로
+- 시나리오: 상황별 전개 가능성 ("~라면 ~할 수 있다") — 단정 금지
+- 매수·매도 추천 표현 절대 금지, 투자 판단은 독자 몫임을 명시""",
+
+    "news_analysis": """
+[뉴스 해설형 권장 구조: 사건 → 배경 → 영향 → 향후 관찰점]
+- 사건: 무슨 일이 있었는지 사실 관계 정리 (자료팩 근거, 날짜 명확히)
+- 배경: 왜 이런 일이 생겼는지 맥락 설명
+- 영향: 독자 생활에 미치는 실질적 영향 (대상·시기·금액 등)
+- 향후 관찰점: 앞으로 지켜볼 것 — 확정되지 않은 것은 "확정 전"임을 명시
+- 정치적 논평·진영 표현 금지, 사실과 해석을 명확히 구분""",
+
     "drama_review": """
-- 도입부: 이 드라마를 보게 된 계기와 첫 화 보고 나서의 솔직한 첫인상 (광고 아닌 진짜 시청자 감상)
+- 도입부: 이 작품이 왜 화제인지 + 시청자 반응의 전반적 분위기 소개
 - 본문 구성 (편의 focus에 따라 선택):
   • 소개 편: 줄거리 요약(스포 최소화) + 장르·분위기 소개 + 어떤 사람에게 맞는지
-  • 인물 편: 주인공 감정선·성장 + 조연 캐릭터 분석 + 배우 연기력 솔직 평가 + 케미
-  • 명장면 편: 인상 깊었던 장면·대사 + "이 장면에서 진짜 소름 돋았어요" 같은 구체적 감상
-  • 결말 편: 결말 총평(스포 주의 경고 포함) + OST 추천 + 비슷한 드라마 추천 + 별점
-- 감상 표현은 독자와 함께 이야기하는 구어체: "저는 이 부분에서 울었어요", "이건 좀 아쉬웠거든요"
-- 과도한 칭찬이나 홍보성 표현 금지 — 아쉬운 점도 솔직하게
+  • 인물 편: 주인공 감정선·성장 + 조연 캐릭터 분석 + 배우 연기에 대한 시청자 평가 + 케미
+  • 명장면 편: 화제가 된 장면·대사 + "시청자들 사이에서 가장 회자되는 장면" 같은 반응 기반 소개
+  • 결말 편: 결말 총평(스포 주의 경고 포함) + OST 추천 + 비슷한 드라마 추천 + 평점 반응
+- 감상 표현은 시청자 반응·평점 데이터를 근거로: "이 장면에서 울었다는 반응이 많았어요", "호불호가 갈린 부분은"
+- 과도한 칭찬이나 홍보성 표현 금지 — 아쉽다는 평가도 솔직하게 전달
 - 마지막: "이런 취향이면 강추 / 이런 취향이면 비추" 식의 명확한 추천 기준""",
 
     "travel_guide": """
-- 도입부: 이 여행지를 선택하게 된 계기 + 출발 전 기대했던 것과 현실 비교 예고
-- 본문 구성:
-  • 실제 여행 경비 공개 (교통·숙소·식비·관광비 항목별 현실 숫자)
-  • 현지에서 직접 해보고 "이건 몰랐던 것" 또는 "이건 생각보다 좋았던 것"
-  • 숨은 명소·맛집 — 포털에 안 나오는 로컬 스팟 위주
-  • 가면 안 되는 시간대·시즌 또는 주의사항 (경험 기반)
-- "유명 블로그에서 추천한 곳인데 실제로 가보니..." 같은 반전 경험 포함
+[여행형 권장 구조: 동선 → 시간 → 비용 → 주의사항]
+- 동선: 추천 이동 경로·코스 (지역별·일차별 구성)
+- 시간: 소요 시간·최적 방문 시간대·시즌 (후기 기반)
+- 비용: 예상 경비 정리 (공개 가격 자료 기준 — 교통·숙소·식비·관광비 항목별)
+- 주의사항: 피해야 할 시간대·시즌, 예약 팁, 여행자 후기에서 공통 언급되는 함정
+- "유명 블로그 추천 스팟인데 실제 방문 후기는 갈린다" 같은 반전 정보 포함
 - 마지막: 이 여행지가 어떤 사람에게 맞는지 명확한 추천 기준""",
 
     "sports_review": """
-- 도입부: 이 경기/선수/팀을 응원·관심 갖게 된 계기 (팬 시점 or 분석가 시점)
+- 도입부: 이 경기/선수/팀이 왜 주목받는지 (팬 시점 or 분석가 시점)
 - 본문 구성:
   • 최근 성적·경기 결과 요약 (수치 기반 — 득점·순위·승률 등)
-  • 핵심 포인트 분석: "이 부분이 승패를 갈랐다고 생각해요"
+  • 핵심 포인트 분석: "이 부분이 승패를 갈랐다고 생각해요" (의견임을 명확히)
   • 선수·전술·팀 운영 관련 솔직한 평가 (과도한 찬양 금지)
   • 앞으로의 전망 — 명확한 개인 의견 포함 ("제 예상엔...")
-- 직관 경험이 있으면 분위기·관람 팁 추가
+- 관람 팁은 공개된 후기·안내 정보 기반으로 정리
 - 마지막: 이 팀/선수/종목에 처음 관심 갖는 독자에게 입문 팁""",
+
+    "kpop_review": """
+- 도입부: 이 아이돌/음반/이벤트가 왜 화제인지 + 팬덤 반응 전반 분위기 소개
+- 본문 구성 (주제에 따라 선택):
+  • 컴백/신보 편: 음반명·발매일·수록곡 소개 + 타이틀곡 분위기·가사 포인트 + 초동·음원 성적
+  • 콘서트/팬미팅 편: 공연 구성·세트리스트 + 티케팅 경쟁률·꿀팁 + 참석자 반응 종합
+  • 시상식 편: 후보·수상 결과 + 수상 소감·화제 장면 + 팬덤 반응
+  • 소식/근황 편: 최근 활동 정리 + 공식 발표 vs 팬덤 반응 구분
+- 팬덤 용어·약어는 처음 등장 시 간단히 설명 (입문자도 읽을 수 있게)
+- 과도한 찬양·홍보성 표현 금지 — 아쉬운 평가도 솔직하게
+- 마지막: 이 아티스트를 처음 접하는 독자를 위한 입문 추천 콘텐츠""",
 }
 
 
-def _build_prompt(keyword: str, traffic: str) -> str:
+def _build_blog_topic_hint(blog_config: dict | None) -> str:
+    """블로그 주제 힌트 문자열을 생성합니다."""
+    if not blog_config:
+        return ""
+    topics = blog_config.get("topics") or []
+    blog_name = blog_config.get("name") or ""
+    if not topics and not blog_name:
+        return ""
+    topic_str = "·".join(topics) if topics else ""
+    if blog_name and topic_str:
+        return f"\n【블로그 주제】 이 블로그({blog_name})는 '{topic_str}' 전문 블로그입니다. 키워드가 여러 방향으로 해석될 수 있다면 이 주제에 맞게 작성하세요."
+    elif topic_str:
+        return f"\n【블로그 주제】 이 블로그는 '{topic_str}' 전문 블로그입니다. 키워드가 여러 방향으로 해석될 수 있다면 이 주제에 맞게 작성하세요."
+    return ""
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 가짜 체험담 방지 — 실제 경험 자료(author_profile.json)가 있을 때만 1인칭 경험 허용
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _match_experience(keyword: str, blog_id: str = "") -> dict | None:
+    """author_profile.json의 experiences에서 키워드·블로그가 일치하는 실제 경험 반환.
+
+    '예: '로 시작하는 topics 항목은 템플릿 예시이므로 무시합니다.
+    """
+    try:
+        from config import get_author_profile
+        profile = get_author_profile()
+    except Exception:
+        return None
+    kw_words = set(re.findall(r"[가-힣]{2,}|[A-Za-z]{2,}", keyword.lower()))
+    if not kw_words:
+        return None
+    for exp in profile.get("experiences", []) or []:
+        if not isinstance(exp, dict):
+            continue
+        blogs = exp.get("blogs") or []
+        if blog_id and blogs and blog_id not in blogs:
+            continue
+        for topic in exp.get("topics", []) or []:
+            topic = str(topic).strip()
+            if not topic or topic.startswith("예:"):
+                continue
+            topic_words = set(re.findall(r"[가-힣]{2,}|[A-Za-z]{2,}", topic.lower()))
+            if topic_words and (topic_words & kw_words):
+                return exp
+    return None
+
+
+def _structure_variation(keyword: str) -> str:
+    """키워드 해시 기반 구조 변주 지시 — 연속 글이 같은 목차·문장 구조를 반복하지 않게.
+
+    같은 키워드는 같은 변주(재시도 시 일관성), 다른 키워드는 다른 변주가 선택됩니다.
+    """
+    import hashlib
+    h = int(hashlib.md5(keyword.encode("utf-8")).hexdigest(), 16)
+
+    h2_count = 4 + (h % 4)  # 4~7개
+    opening = [
+        "구체적인 상황 묘사로 시작 (질문 금지)",
+        "독자에게 던지는 질문으로 시작",
+        "최근 변화·이슈 언급으로 시작",
+        "흔한 오해를 바로잡으며 시작",
+    ][(h >> 4) % 4]
+    emphasis = [
+        "표(table)를 1~2개 활용해 정보를 압축",
+        "실제 사례·시나리오 중심으로 서술 (표 최소화)",
+        "번호 목록보다 문단 위주로 서술",
+        "핵심 문장을 blockquote로 1~2회 강조",
+    ][(h >> 8) % 4]
+    closing = [
+        "마무리: 핵심 요약 한 문단",
+        "마무리: 독자가 다음에 할 행동 제안",
+        "마무리: 남은 궁금증 짚고 확인 방법 안내",
+        "마무리: 상황별 선택 기준 정리",
+    ][(h >> 12) % 4]
+
+    return f"""
+━━━ 이번 글의 구조 변주 (연속 글 목차 반복 방지 — 반드시 적용) ━━━
+• H2 소제목 {h2_count}개 (권장 구조의 요소를 이 개수에 맞게 병합·분리)
+• 도입부: {opening}
+• 본문: {emphasis}
+• {closing}
+• 소제목 문구는 권장 구조의 단어를 그대로 쓰지 말고 주제에 맞는 구체적 표현으로"""
+
+
+_FINANCE_TOKENS = {"금융", "주식", "etf", "경제", "부동산", "투자", "금리", "환율", "세금", "연금", "대출"}
+_SPORTS_TOKENS = {"스포츠", "축구", "야구", "농구", "배구", "골프", "경기", "선수", "리그", "올림픽", "대회"}
+_DRAMA_TOKENS = {"드라마", "영화", "연예", "k-pop", "kpop", "아이돌", "배우", "가수", "예능", "리뷰"}
+
+
+def _detect_content_category(keyword: str, blog_id: str = "") -> str:
+    """키워드·블로그ID로 글의 성격(금융/스포츠/드라마·연예/여행·일반)을 판별합니다.
+
+    카테고리마다 독자가 글을 읽는 방식이 근본적으로 다름 — 금융은 근거를 확인하려
+    천천히 읽고, 스포츠는 결과부터 확인하려 훑어보고, 드라마·연예는 감정선을 따라
+    몰입해서 읽고, 여행·일반은 필요한 정보만 스캔함. 하나의 지침으로 4가지를 다
+    커버할 수 없어 카테고리별로 분기한다.
+    """
+    tokens = set(re.findall(r"[a-zA-Z가-힣]+", keyword.lower()))
+    if blog_id == "blog3" or tokens & _FINANCE_TOKENS:
+        return "finance"
+    if tokens & _SPORTS_TOKENS:
+        return "sports"
+    if tokens & _DRAMA_TOKENS:
+        return "drama"
+    return "travel"
+
+
+_HOOK_BY_CATEGORY = {
+    "finance": (
+        "숫자·근거로 시작: 첫 문장에 구체적 수치(금액·비율·기간)나 "
+        "믿기 힘든 사실을 제시해 \"진짜인지 확인하고 싶게\" 만들 것. "
+        "감탄사나 추측성 표현으로 시작 금지 — 신뢰가 최우선인 독자층."
+    ),
+    "sports": (
+        "결과·핵심부터 공개: 첫 문장에 경기 결과·기록·순위 등 독자가 "
+        "가장 궁금해하는 핵심 정보를 먼저 제시하고, 그 다음에 과정을 풀어갈 것. "
+        "속보를 읽는 독자는 서론이 길면 즉시 이탈함."
+    ),
+    "drama": (
+        "장면·감정으로 시작: 구체적인 장면 묘사나 등장인물의 감정 상태로 "
+        "시작해 몰입을 유도할 것. 이후 단락에 긴장(문제 제기) → 전개 → "
+        "해소(결말/총평)의 감정 곡선을 명시적으로 설계할 것."
+    ),
+    "travel": (
+        "상황·공감으로 시작: 독자가 실제로 겪을 법한 구체적 상황(\"~할 때 이런 "
+        "고민이 든다\")으로 시작해 공감을 얻고, 바로 이어서 이 글이 그 고민을 "
+        "어떻게 해결해주는지 한 문장으로 예고할 것."
+    ),
+}
+
+
+def _engagement_block(keyword: str = "", blog_id: str = "") -> str:
+    """독자 체류시간·몰입도를 높이기 위한 공통 지침 — AdSense 정책 준수 범위 내에서만 적용.
+
+    핵심 원칙: 후킹은 "낚시"가 아니라 "약속과 이행의 일치"여야 함 — 제목·도입부가
+    암시한 내용을 본문이 충족하지 못하면 AdSense 오해소지 콘텐츠 위반이자 즉시 이탈 원인.
+
+    도입부(첫 2~3문장)는 카테고리별로 읽히는 방식이 다르므로 별도 지침을 적용하고,
+    그 외 구조·스캔 가능성 지침은 공통으로 적용한다.
+    """
+    category = _detect_content_category(keyword, blog_id)
+    hook_rule = _HOOK_BY_CATEGORY[category]
+    return f"""
+━━━ 독자 체류·몰입 강화 지침 (AdSense 정책 준수 범위 내에서만) ━━━
+
+도입부 후킹 (첫 2~3문장, 카테고리: {category}):
+- {hook_rule}
+- 절대 낚시 금지: 도입부가 암시한 내용은 본문에서 반드시 충족되어야 함
+  (약속만 하고 안 지키면 AdSense "오해소지 콘텐츠" 위반이자 즉시 이탈 원인)
+
+문단·소제목 스타일:
+- 한 문단 2~4문장, 한 문단에 요점 하나만 (긴 문단 금지 — 모바일 가독성)
+- H2 소제목은 막연한 라벨이 아니라 독자의 질문에 대한 구체적 답처럼 작성
+  나쁜 예: "장점과 단점" / 좋은 예: "실제로 이만큼 가격 차이가 났다"
+
+섹션 간 연결(스크롤 유도, 각 H2 끝에 1문장):
+- 다음 섹션 내용을 자연스럽게 예고하는 문장을 넣어 다음 섹션까지 읽게 유도
+  예: "그런데 이것만으로는 부족합니다. 실제로 확인해야 할 게 하나 더 있습니다."
+- 예고한 내용은 다음 섹션에서 반드시 실제로 다룰 것 (지키지 못할 예고 금지)
+
+스캔 가능성:
+- 핵심 문장은 섹션당 <strong> 1~2회만 강조 (과다 강조는 오히려 신뢰도 저하)
+- 목록·표를 적극 활용해 훑어봐도 핵심이 파악되게 정리
+
+검색 의도 우선 충족 (뒤로가기 방지):
+- 독자가 찾는 핵심 답은 요약 박스 또는 첫 H2에서 먼저 제시하고,
+  이후 섹션에서 근거·사례·디테일을 순차적으로 전개할 것"""
+
+
+def _author_name() -> str:
+    """author_profile.json의 저자 필명 (없으면 빈 문자열)."""
+    try:
+        from config import get_author_profile
+        return str(get_author_profile().get("name", "")).strip()
+    except Exception:
+        return ""
+
+
+def _experience_style_block(keyword: str, blog_id: str = "") -> str:
+    """경험 자료 유무에 따라 1인칭 경험 허용/조사형 문체 지시 블록을 생성합니다."""
+    name = _author_name()
+    name_line = f"\n글쓴이 필명: {name} (글에서 자신을 지칭할 일이 있으면 이 필명 사용)" if name else ""
+    exp = _match_experience(keyword, blog_id)
+    if exp:
+        summary = str(exp.get("summary", "")).strip()
+        detail = str(exp.get("detail", "")).strip()
+        material = summary + (f"\n{detail}" if detail else "")
+        return f"""
+━━━ 실제 경험 자료 (1인칭 경험 표현 허용) ━━━{name_line}
+아래는 글쓴이의 실제 경험 자료입니다. 이 범위 안에서만 1인칭 경험 표현("직접 해보니", "제가 써본 결과" 등)을 사용하세요.
+{material}
+⚠️ 위 자료에 없는 경험(기간·수치·결과 등)은 절대 지어내지 마세요. 자료 범위를 벗어나는 내용은 조사·분석형으로 서술하세요."""
+    return f"""
+━━━ 문체 필수 규칙: 조사·분석형 (가짜 체험담 금지) ━━━{name_line}
+이 주제에 대한 글쓴이의 실제 경험 자료가 없습니다. 아래 규칙을 반드시 지키세요.
+
+✗ 경험 주장 1인칭 전면 금지:
+  "직접 사용해봤습니다" / "직접 다녀왔습니다" / "몇 달 동안 투자해봤습니다" /
+  "치료를 받아봤습니다" / "실제 수익을 공개합니다" / "제가 써보니" /
+  "직접 해보니" / "제 경험상" 등 실제로 하지 않은 경험을 한 것처럼 쓰는 표현 전부
+
+✓ 대신 조사·분석형 문체 사용:
+  "자료를 조사해보니" / "이용자들의 후기를 종합하면" / "공식 발표 기준으로는" /
+  "~라고 합니다" / "전문가들은 ~라고 설명합니다" / "실제 사례들을 보면"
+
+✓ 의견·계획성 1인칭은 허용:
+  "개인적으로는 ~가 나아 보입니다" / "저라면 ~부터 확인하겠습니다" / "제 생각에는"
+  (경험을 했다는 주장이 아닌 의견·판단임이 분명한 표현만)"""
+
+
+def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
+    """blog1 (HOGU What?) 전용 프롬프트 — 생활 실험형 정보 블로그, AdSense 최적화"""
+    from datetime import datetime
+    now = datetime.now()
+    y = now.year
+    date_str = now.strftime("%Y년 %m월 %d일")
+    article_type = _detect_article_type(keyword)
+    blog_topic_hint = _build_blog_topic_hint(blog_config)
+
+    # 드라마·영화·K-POP 리뷰일 때 실제 반응·리뷰 데이터 수집
+    drama_ref_section = ""
+    if article_type in ("drama_review", "kpop_review"):
+        drama_ref_section = _fetch_drama_references(keyword)
+        if drama_ref_section:
+            label = "K-POP" if article_type == "kpop_review" else "드라마/영화"
+            logger.info(f"{label} 참고 데이터 수집 완료: '{keyword}'")
+
+    kw_lower = keyword.lower()
+    if any(w in kw_lower for w in _FINANCE_KW):
+        disclaimer = "이 글은 개인적인 경험과 정보 공유 목적이며, 특정 상품의 매수·매도 추천이 아닙니다. 투자 판단과 책임은 본인에게 있습니다."
+    elif any(w in kw_lower for w in _HEALTH_KW):
+        disclaimer = "이 글은 일반적인 정보 공유 목적이며, 진단이나 치료를 대신하지 않습니다. 증상이 있거나 건강 수치가 걱정된다면 의료 전문가와 상담하시기 바랍니다."
+    elif any(w in kw_lower for w in {"법률", "민법", "형법", "법원", "계약", "소송", "판결", "권리", "임대차", "약관", "분쟁"}):
+        disclaimer = "이 글은 일반적인 정보 제공 목적이며, 법률 자문이 아닙니다. 중요한 계약이나 분쟁은 전문가 상담을 권장합니다."
+    else:
+        disclaimer = "이 글은 개인적인 경험과 정보 정리를 바탕으로 작성되었습니다. 상황에 따라 결과가 다를 수 있으니 본인에게 맞게 참고하시기 바랍니다."
+
+    return f"""당신은 구글 애드센스 승인 기준을 잘 이해하는 전문 블로그 작가이자 SEO 콘텐츠 에디터입니다.
+
+아래 조건에 맞춰 구글 애드센스 승인 가능성을 높일 수 있는 고품질 블로그 글을 작성해주세요.
+
+【블로그 기본 방향】
+- 블로그명: HOGU What? (직장인과 일반인을 위한 생활 실험형 정보 블로그)
+- 주요 카테고리 (아래 4개 중 키워드와 가장 맞는 카테고리로 작성):
+  ✈️ 국내 여행 — 숨겨진 명소·맛집·숙소 솔직 후기
+  🌏 해외 여행 — 항공권·호텔·패키지 정보 및 현지 체험
+  🎬 드라마·영화 — 국내외 인기 작품 리뷰 및 등장인물 분석
+  🎵 연예·K-POP — 아이돌·배우 소식, 음반·공연 정보
+- 글쓴이: 여행·드라마·연예 정보를 깊이 조사하고 후기를 종합해 정리하는 블로거
+- 글의 톤: 친근하지만 신뢰감 있게, 과장 없이, 구체적인 자료·후기 기반으로
+
+【현재 날짜】 {date_str}
+【키워드】 {keyword}
+【아티클 유형】 {article_type}{blog_topic_hint}
+
+━━━ 카테고리별 글쓰기 핵심 가이드 ━━━
+
+✈️ 국내 여행 글이라면:
+- 구체적 장소명·음식명·숙소명 언급 (공개 정보·방문자 후기 기반)
+- 가격, 영업시간, 주차, 줄서는 시간 등 실용 정보 포함
+- "후기를 보면 여기는 평가가 갈린다", "기대 이하라는 반응도 있다" 같은 솔직한 평가 전달 필수
+
+🌏 해외 여행 글이라면:
+- 항공권 시세·예약 타이밍 언급 (공개 가격 자료 기준)
+- 호텔 위치별 장단점, 투숙객 후기 종합
+- 여행자들이 공통적으로 강조하는 정보 (교통·물가·환전 팁 등)
+
+🎬 드라마·영화 글이라면:
+- 스포일러 수위 명시 (스포 없는 리뷰 / 결말 포함 리뷰)
+- 등장인물 관계도나 명장면 분석 포함
+- 시청자·관객 반응과 개인 감상 구분
+
+🎵 연예·K-POP 글이라면:
+- 음반명·발매일·수록곡 등 정확한 정보
+- 콘서트·팬미팅 현장 분위기나 티켓팅 팁 (참석자 후기 종합)
+- 팬덤 반응과 음원 성적 데이터 포함
+
+━━━ 글의 핵심 원칙 ━━━
+
+1. 검색엔진만을 위한 글이 아니라 실제 독자에게 도움이 되는 글
+2. 단순 정보 요약이 아니라 경험, 비교, 체크리스트, 실수 사례, 실제 활용 팁 포함
+3. 과장된 표현, 낚시성 제목, 근거 없는 수익·건강·효과 보장 절대 금지
+4. 동일한 문장 반복 금지, 키워드 억지 반복 금지
+5. AI가 대량 생성한 것처럼 보이지 않도록 자연스럽고 사람다운 문체
+6. 광고 문구, 광고 영역, 배너 자리, 클릭 유도 문구 절대 넣지 않기
+7. 독자가 읽고 바로 실행할 수 있도록 구체적인 방법 제공
+
+━━━ 절대 사용하지 말아야 할 표현 ━━━
+
+✗ "알아보겠습니다" / "살펴보겠습니다" / "정리해드리겠습니다" / "소개해드리겠습니다"
+✗ "다음과 같습니다" / "아래와 같이" / "해당 " (관공서 문체)
+✗ "이처럼" / "정리하자면" / "결론적으로" / "이를 통해 알 수 있듯이"
+✗ "중요한 것은 바로" / "앞서 언급했듯이" / "다시 한번 강조하지만"
+✗ "또한" / "더불어" / "아울러" (합산 3회 초과 금지)
+✗ "충격", "무조건", "100%", "완벽 보장", "누구나 월 얼마"
+✗ "광고 영역", "여기에 광고 삽입", "배너 클릭", "수익 보장", "확실히 돈 번다"
+✗ 출처 없는 통계, 타 블로그 문장 복사, 의미 없는 키워드 반복
+
+━━━ 문체 조건 ━━━
+
+• 문장은 너무 길지 않게 (30자 이내 위주)
+• 딱딱한 백과사전식 문체 금지
+• "~입니다" 중심의 신뢰감 있는 문체
+• 지나친 감탄사나 홍보성 문구 금지
+• 같은 표현 반복 금지
+• 소제목, 표, 목록을 적절히 사용
+• 이모지는 💡(팁 1~2개), ⚠️(주의 1~2개)만. H2 제목 이모지 금지
+
+━━━ 제목 조건 (간결 + 임팩트) ━━━
+
+• 28자 이내 — 짧을수록 좋음. 조사·군더더기·중언부언 제거
+• 핵심 키워드를 제목 맨 앞에 배치, 독자 이익이 한눈에 보이게
+• 숫자·구체성으로 임팩트: 예 "국민연금 30% 더 받는 법", "제주 3박4일 40만원 코스"
+• "~해보니", "~하는 법", "~총정리" 같은 완결형 어미로 마무리
+• 과장형 금지: "충격", "무조건", "100%", "완벽 보장", "누구나 월 얼마" 금지
+• {y}년은 연도가 중요한 정보성 주제에만 포함 (필수 아님)
+
+━━━ 본문 구조 (반드시 이 순서와 형식으로 작성) ━━━
+
+⚠️ 분량: 최소 2,500자 이상(공백 제외), 목표 3,000자 수준
+⚠️ 각 H2 섹션마다 최소 500자 이상 작성(공백 제외) — 단락(p 태그) 3개 이상, 구체적 사례·수치·경험 포함
+⚠️ 제목(title)과 H2 소제목들의 주제가 반드시 일치해야 함 — 제목에서 약속한 내용이 소제목에 구체적으로 포함될 것
+⚠️ 이미지는 글 내용과 가장 관련 있는 대표 이미지 1장만 삽입
+
+도입부 (p 태그, 300자 이상):
+독자가 왜 이 글을 읽어야 하는지 설명. 개인적인 문제의식이나 실제 상황 자연스럽게 제시.
+"요즘 많은 사람들이…" 같은 흔한 문장으로 시작하지 말 것.
+
+핵심 요약 박스 (도입부 바로 아래):
+<div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>핵심 포인트:</strong> [이 글의 가장 실용적인 핵심을 1~2문장으로]</div>
+
+H2: 이 주제가 중요한 이유 (500자 이상)
+- 독자가 실제로 겪는 문제를 설명
+- 단순 정의보다 현실적인 상황 중심으로 작성
+
+H2: 핵심 개념 쉽게 이해하기 (500자 이상)
+- 초보자도 이해할 수 있게 설명
+- 어려운 용어는 쉽게 풀어서 설명
+- 필요한 경우 표로 정리
+
+H2: 실제로 확인해야 할 체크리스트 (500자 이상)
+- 독자가 바로 점검할 수 있는 항목 5~7개 제공
+- 각 항목마다 왜 중요한지 설명
+
+H2: 자료·후기를 비교해본 관점 (500자 이상)
+- 개인 경험처럼 구체적으로 작성
+- 비용, 시간, 장단점, 시행착오, 주의점 포함
+- 경험 정보 부족 시 "실제 적용 시 확인할 부분"으로 정리
+
+H2: 초보자가 자주 하는 실수 (500자 이상)
+- 최소 4가지 이상
+- 실수를 피하는 방법까지 함께 제시
+
+H2: 상황별 추천 방법 (500자 이상)
+- 초보자 / 시간이 부족한 사람 / 비용을 아끼고 싶은 사람 / 장기적으로 관리하려는 사람 등으로 구분해 제안
+
+H2: 마무리 (300자 이상)
+- 글 전체 요약
+- 독자가 오늘 바로 할 수 있는 첫 행동 1~3개 제시
+- 과도한 수익, 치료, 성공 보장 표현 금지
+
+같은 블로그 내 관련 글 연결 (마무리 안 또는 바로 아래에 자연스럽게):
+같은 블로그 안에서 연결하면 좋은 관련 글 주제 3개를 텍스트로만 자연스럽게 언급하세요 (링크 태그 사용 금지, href="#" 같은 미연결 링크 절대 금지).
+예: "ETF 투자 입문 글을 따로 정리해뒀으니 참고하시면 좋을 것 같습니다."
+
+글 하단 안내 문구 (content 맨 마지막에 포함):
+<p style="background:#f8fafc;border-left:4px solid #94a3b8;padding:12px 18px;margin:2em 0 0;border-radius:0 8px 8px 0;color:#64748b;font-size:0.9em;line-height:1.7;">{disclaimer}</p>
+
+━━━ FAQ (자주 묻는 질문) ━━━
+검색 의도상 독자가 실제로 궁금해할 때만 2~5개. 필요 없으면 FAQ 섹션과 faq 필드를 생략(빈 배열)하세요. 모든 글에 같은 개수 금지. 답변은 짧고 명확하게, 근거 없는 단정 금지.
+<h2>자주 묻는 질문</h2>
+<h3>Q. 질문</h3>
+<p>답변</p>
+(필요할 때만 2~5쌍)
+
+━━━ Google AdSense 정책 준수 ━━━
+① 원본성 — 독창적 경험·인사이트 필수. 인터넷에 흔한 정보 나열 금지
+② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치, 낚시성 제목 금지
+③ E-E-A-T — 1인칭 경험, 구체적 수치·날짜 포함, 출처 최소 2개, 균형 잡힌 시각
+④ 유해 금지 — 성인/폭력/혐오/불법 절대 금지. 투자·의료는 면책 표현 필수
+⑤ 분량 2,500자 이상(공백 제외) 필수 — 미달 시 자동 거부
+
+━━━ 출처 사용 원칙 ━━━
+• 건강, 금융, 법률, 정책, 세금 관련 내용은 공식기관 또는 신뢰 가능한 자료 바탕
+• 출처를 모르면 "확인 필요", "상황에 따라 다를 수 있음"으로 표현
+• 실존 URL만 사용 (2~6개)
+
+━━━ SEO ━━━
+키워드 10~14회 | LSI 키워드 | 라벨 10개 | meta_description 120~160자
+{drama_ref_section}
+JSON만 응답 (마크다운 없이):
+{{
+  "title": "...",
+  "content": "<완전한 HTML>",
+  "labels": ["태그1","태그2","태그3","태그4","태그5","태그6","태그7","태그8","태그9","태그10"],
+  "meta_description": "...",
+  "faq": [
+    {{"q": "질문1", "a": "답변1"}},
+    {{"q": "질문2", "a": "답변2"}},
+    {{"q": "질문3", "a": "답변3"}}
+  ],
+  "sources": [
+    {{"title": "출처명1", "url": "https://실제URL"}},
+    {{"title": "출처명2", "url": "https://실제URL"}}
+  ]
+}}"""
+
+
+def _build_blog2_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
+    """blog2 전용 프롬프트 — 여행·스포츠·연예 블로그, 경험 공유형"""
+    from datetime import datetime
+    now = datetime.now()
+    y = now.year
+    date_str = now.strftime("%Y년 %m월 %d일")
+    article_type = _detect_article_type(keyword)
+    blog_topic_hint = _build_blog_topic_hint(blog_config)
+
+    drama_ref_section = ""
+    if article_type in ("drama_review", "kpop_review"):
+        drama_ref_section = _fetch_drama_references(keyword)
+        if drama_ref_section:
+            label = "K-POP" if article_type == "kpop_review" else "드라마/영화"
+            logger.info(f"{label} 참고 데이터 수집 완료: '{keyword}'")
+
+    return f"""당신은 여행·스포츠·연예 소식을 직접 조사하고 정리해 솔직하게 전달하는 블로거입니다.
+전문 기자가 아니라 관심 있는 일반 독자 입장에서 실제로 도움이 되는 정보를 씁니다.
+구글 AdSense 정책을 완전히 준수합니다.
+
+【블로그 기본 방향】
+- 블로그명: HOGU 여행,스포츠,연예 (여행·스포츠·연예 정보 블로그)
+- 주요 카테고리 (아래 중 키워드와 가장 맞는 카테고리로 작성):
+  ✈️ 국내 여행 — 숨겨진 명소·맛집·숙소 솔직 후기
+  🌏 해외 여행 — 항공권·호텔·패키지 정보 및 현지 체험
+  ⚽ 스포츠 — 축구·야구·농구 등 주요 경기 결과 및 분석
+  🏆 스포츠 이슈 — 선수 이적·대회 소식·랭킹 업데이트
+  🎬 드라마·영화 — 국내외 인기 작품 리뷰 및 등장인물 분석
+  🎵 연예·K-POP — 아이돌·배우 소식, 음반·공연 정보
+- 글쓴이: 여행·스포츠·연예 정보를 깊이 조사하고 후기·데이터를 종합해 정리하는 블로거
+- 글의 톤: 친근하지만 신뢰감 있게, 과장 없이, 구체적인 자료·후기 기반으로
+
+【현재 날짜】 {date_str}
+【키워드】 {keyword}
+【아티클 유형】 {article_type}{blog_topic_hint}
+
+━━━ 카테고리별 글쓰기 핵심 가이드 ━━━
+
+✈️ 국내 여행 글이라면:
+- 구체적 장소명·음식명·숙소명 언급 (공개 정보·방문자 후기 기반)
+- 가격, 영업시간, 주차, 줄서는 시간 등 실용 정보 포함
+- "후기를 보면 여기는 평가가 갈린다", "기대 이하라는 반응도 있다" 같은 솔직한 평가 전달 필수
+
+🌏 해외 여행 글이라면:
+- 항공권 시세·예약 타이밍 언급 (공개 가격 자료 기준)
+- 호텔 위치별 장단점, 투숙객 후기 종합
+- 여행자들이 공통적으로 강조하는 정보 (교통·물가·환전 팁 등)
+
+⚽ 스포츠 글이라면:
+- 경기 결과·스코어·주요 장면을 구체적으로
+- 통계·기록을 근거로 한 분석, 근거 없는 예측 금지
+- 팬 반응과 전문가 분석 구분해서 전달
+
+🏆 스포츠 이슈 글이라면:
+- 이적·대회·랭킹 소식은 공개된 발표·보도 기준으로만
+- 확정 안 된 소식은 "~설이 나온다", "협상 중으로 알려졌다"처럼 명확히 구분
+- 선수·구단 반응, 팬 커뮤니티 반응 종합
+
+🎬 드라마·영화 글이라면:
+- 스포일러 수위 명시 (스포 없는 리뷰 / 결말 포함 리뷰)
+- 등장인물 관계도나 명장면 분석 포함
+- 시청자·관객 반응과 개인 감상 구분
+
+🎵 연예·K-POP 글이라면:
+- 음반명·발매일·수록곡 등 정확한 정보
+- 콘서트·팬미팅 현장 분위기나 티켓팅 팁 (참석자 후기 종합)
+- 팬덤 반응과 음원 성적 데이터 포함
+
+━━━ 글의 핵심 원칙 ━━━
+
+1. 검색엔진만을 위한 글이 아니라 실제 독자에게 도움이 되는 글
+2. 단순 정보 요약이 아니라 경험, 비교, 체크리스트, 실수 사례, 실제 활용 팁 포함
+3. 과장된 표현, 낚시성 제목, 근거 없는 수익·건강·효과 보장 절대 금지
+4. 동일한 문장 반복 금지, 키워드 억지 반복 금지
+5. AI가 대량 생성한 것처럼 보이지 않도록 자연스럽고 사람다운 문체
+6. 광고 문구, 광고 영역, 배너 자리, 클릭 유도 문구 절대 넣지 않기
+7. 독자가 읽고 바로 실행할 수 있도록 구체적인 방법 제공
+
+━━━ 절대 쓰지 말아야 할 표현 ━━━
+
+✗ "알아보겠습니다" / "살펴보겠습니다" / "정리해드리겠습니다" / "소개해드리겠습니다"
+✗ "다음과 같습니다" / "아래와 같이" / "해당 " (관공서 문체)
+✗ "이처럼" / "정리하자면" / "결론적으로" / "이를 통해 알 수 있듯이"
+✗ "중요한 것은 바로" / "앞서 언급했듯이" / "다시 한번 강조하지만"
+✗ "또한" / "더불어" / "아울러" (합산 3회 초과 금지)
+✗ "충격", "무조건", "100%", "완벽 보장", "누구나 월 얼마"
+✗ "광고 영역", "여기에 광고 삽입", "배너 클릭", "수익 보장", "확실히 돈 번다"
+✗ 출처 없는 통계, 타 블로그 문장 복사, 의미 없는 키워드 반복
+
+━━━ 본문 구조 ━━━
+
+⚠️ 분량: 최소 2,500자 이상(공백 제외), 목표 3,000자 수준
+⚠️ 각 H2 섹션마다 최소 500자 이상(공백 제외)
+⚠️ 제목과 H2 소제목 주제 일치 필수
+⚠️ 이미지는 글 내용과 가장 관련 있는 대표 이미지 1장만
+
+도입부 (300자 이상):
+독자가 왜 이 글을 읽어야 하는지 설명. 개인적인 관심이나 실제 상황으로 자연스럽게 시작.
+"요즘 유행하는~"이 아니라 구체적 상황으로 시작.
+
+핵심 요약 박스 (도입부 바로 아래):
+<div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>핵심 요약:</strong> [이 글의 결론을 한두 문장으로]</div>
+
+H2 섹션 (5~7개, 각 500자 이상):
+- 핵심 정보 소개 (객관적 사실·수치)
+- 후기·반응 기반 장점 또는 볼거리 (구체적 상황)
+- 솔직한 단점 또는 아쉬운 점 (반드시 포함)
+- 비용·일정·접근성 등 실용 정보 ({y}년 기준)
+- 비교 대상이 있다면 항목별 비교
+- 어떤 독자에게 추천/비추천
+
+마무리 (300자 이상):
+글 전체 요약과 독자가 바로 참고할 수 있는 팁 1~3개 제시.
+
+━━━ Google AdSense 정책 준수 ━━━
+① 원본성 — 독창적 경험·인사이트 필수. 인터넷에 흔한 정보 나열 금지
+② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치, 낚시성 제목 금지
+③ E-E-A-T — 구체적 수치·날짜 포함, 출처 최소 2개, 균형 잡힌 시각
+④ 유해 금지 — 불법 도박·저작권 침해·확인되지 않은 루머 유포 금지
+⑤ 분량 2,500자 이상(공백 제외) 필수
+
+━━━ 출처 ━━━
+• 공식 발표·보도자료, 신뢰할 수 있는 언론사·공식 SNS만
+• 실존 URL만 사용 (2~5개)
+
+━━━ SEO ━━━
+키워드 10~14회 | LSI 키워드 | 라벨 10개 | meta_description 120~160자
+{drama_ref_section}
+
+JSON만 응답 (마크다운 없이):
+{{
+  "title": "...",
+  "content": "<완전한 HTML>",
+  "labels": ["태그1","태그2","태그3","태그4","태그5","태그6","태그7","태그8","태그9","태그10"],
+  "meta_description": "...",
+  "faq": [
+    {{"q": "질문1", "a": "답변1"}},
+    {{"q": "질문2", "a": "답변2"}}
+    // 검색 의도상 필요할 때만 2~5개, 필요 없으면 빈 배열 []
+  ],
+  "sources": [
+    {{"title": "출처명1", "url": "https://실제URL"}},
+    {{"title": "출처명2", "url": "https://실제URL"}}
+  ]
+}}"""
+
+
+def _build_blog3_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
+    """blog3 전용 프롬프트 — 금융 뉴스 & 정부 지원 시책 정보 블로그"""
+    from datetime import datetime
+    now = datetime.now()
+    y = now.year
+    date_str = now.strftime("%Y년 %m월 %d일")
+    blog_topic_hint = _build_blog_topic_hint(blog_config)
+
+    return f"""당신은 금융·경제 정보와 정부 지원 정책을 일반인이 이해하기 쉽게 정리해주는 블로거입니다.
+딱딱한 뉴스 기사가 아니라, 직장인·서민·소상공인이 "이거 나한테 해당되나?"를 바로 판단할 수 있게 쓰는 것이 목표입니다.
+구글 AdSense 정책을 완전히 준수하며, 투자 권유·과장 표현·단정적 전망은 절대 쓰지 않습니다.
+
+【블로그 기본 방향】
+- 블로그명: 금융NEWS (금융 뉴스 & 정부 지원 시책 정보)
+- 주요 카테고리:
+  📈 금융 뉴스 — 주식·금리·환율·부동산 최신 동향 쉽게 정리
+  🏦 은행·대출·예적금 — 금리 비교·대출 조건·예적금 추천
+  🏛️ 정부 지원 시책 — 보조금·장려금·대출 지원·복지 제도 정리
+  💰 세금·절세 — 연말정산·종합소득세·증여·양도세 실전 정리
+  📊 경제 정책 — 최저임금·부동산 정책·금융 규제 변화 분석
+- 글쓴이: 금융 뉴스를 매일 챙기고 정부 지원 제도를 깊이 조사해 정리하는 블로거
+- 글의 톤: 쉽고 명확하게, 복잡한 내용은 표로 정리, 독자가 바로 신청·활용할 수 있게
+
+【현재 날짜】 {date_str}
+【키워드】 {keyword}{blog_topic_hint}
+
+━━━ 글의 핵심 원칙 ━━━
+
+1. 복잡한 금융·정책 용어를 일반인 수준으로 쉽게 풀어서 설명
+2. "나에게 해당되나?"를 독자가 바로 판단할 수 있도록 대상 조건 명확히 제시
+3. 수치·날짜·기관명은 반드시 정확하게 — {y}년 기준 최신 정보
+4. 투자 권유·단정적 수익 보장 표현 절대 금지
+5. 정부 지원 내용은 공식 기관 출처 반드시 포함
+6. 신청 방법을 단계별로 구체적으로 안내
+
+━━━ 절대 쓰지 말아야 할 표현 ━━━
+
+✗ "무조건 오릅니다", "확실한 수익", "반드시 신청하세요"
+✗ "알아보겠습니다" / "살펴보겠습니다" / "정리해드리겠습니다"
+✗ 출처 없는 수치, 미확인 정책 내용
+✗ 특정 종목·금융상품 직접 매수 권유
+✗ 정치적으로 편향된 정책 평가
+
+━━━ 카테고리별 작성 핵심 ━━━
+
+📈 금융 뉴스·시장 동향이라면:
+- 뉴스 핵심만 3줄 요약 후 일반인 영향 분석
+- "이 뉴스가 내 통장에 미치는 영향"처럼 실생활 연결
+- 주가·금리 전망은 복수 의견 제시, 단정 금지
+
+🏛️ 정부 지원 시책이라면:
+- 지원 대상 조건 표로 정리 (나이·소득·직업 등)
+- 지원 금액·기간·혜택 명확히
+- 신청 방법 단계별 안내 (홈페이지·앱·방문)
+- 신청 기간·마감일 강조
+- 비슷한 제도끼리 비교표 제공
+
+💰 세금·절세라면:
+- 대상자 조건 먼저 → 절세 금액 계산 예시
+- "이런 경우 이만큼 돌려받을 수 있다" 구체적 사례
+- 신고 기간·방법·주의사항 포함
+
+🏦 은행·대출·예적금이라면:
+- 주요 은행 금리 비교표 반드시 포함
+- 조건(가입 자격·한도·기간) 명확히
+- 유의사항·중도 해지 조건 안내
+
+━━━ 본문 구조 ━━━
+
+⚠️ 분량: 최소 2,500자 이상(공백 제외)
+⚠️ 각 H2 섹션마다 최소 500자 이상(공백 제외)
+⚠️ 표(비교표·조건표) 최소 1개 필수
+⚠️ 이미지는 글 내용과 관련된 대표 이미지 1장만
+
+도입부 (300자 이상):
+이 뉴스·제도가 "왜 지금 중요한지"부터 시작.
+독자가 "아, 이거 나한테 해당되는 거구나"를 느끼게 연결.
+
+핵심 요약 박스 (도입부 바로 아래):
+<div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">
+💡 <strong>핵심 포인트:</strong> [대상·혜택·신청 기간을 1~2문장으로]
+</div>
+
+H2 섹션 (5~7개, 각 500자 이상):
+- 한눈에 보는 핵심 정보 (표 포함)
+- 지원 대상 및 조건 상세
+- 지원 내용·혜택·금액
+- 신청 방법 단계별 안내
+- 주의사항·자주 묻는 질문
+- 비슷한 제도와 비교 (있다면)
+- 마무리: 놓치면 아까운 이유 + 체크리스트
+
+면책 문구 (글 하단 반드시 포함):
+<p style="background:#f8fafc;border-left:4px solid #94a3b8;padding:12px 18px;margin:2em 0 0;border-radius:0 8px 8px 0;color:#64748b;font-size:0.9em;line-height:1.7;">
+이 글은 공개된 정보와 공식 자료를 바탕으로 작성되었으며, 개인의 상황에 따라 지원 조건·금액이 다를 수 있습니다. 최종 확인은 반드시 해당 기관 공식 홈페이지 또는 담당 부서를 통해 하시기 바랍니다.
+</p>
+
+━━━ FAQ ━━━
+검색 의도상 독자가 실제로 궁금해할 때만 2~5개. 필요 없으면 FAQ 섹션과 faq 필드를 생략(빈 배열)하세요. 모든 글에 같은 개수 금지.
+독자가 헷갈리는 조건·신청법·자격 관련 질문 중심
+
+━━━ Google AdSense 정책 준수 ━━━
+① 원본성 — 뉴스 재가공이 아닌 독자 입장의 분석·해설 필수
+② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치
+③ E-E-A-T — 공식 출처 최소 2개, 날짜 명기, 균형 잡힌 시각
+④ 유해 금지 — 투자 사기·불법 금융상품 관련 내용 금지
+⑤ 분량 2,500자 이상(공백 제외) 필수
+
+━━━ 출처 ━━━
+• 기획재정부·금융위원회·국세청·복지로·고용노동부 등 공식 기관 사이트
+• 주요 금융기관 공식 보도자료
+• 실존 URL만 사용 (2~5개)
+
+━━━ SEO ━━━
+키워드 10~14회 | 정책명·기관명 LSI 키워드 | 라벨 10개 | meta_description 120~160자
+
+JSON만 응답 (마크다운 없이):
+{{
+  "title": "...",
+  "content": "<완전한 HTML>",
+  "labels": ["태그1","태그2","태그3","태그4","태그5","태그6","태그7","태그8","태그9","태그10"],
+  "meta_description": "...",
+  "faq": [
+    {{"q": "질문1", "a": "답변1"}},
+    {{"q": "질문2", "a": "답변2"}}
+  ],
+  "sources": [
+    {{"title": "출처명1", "url": "https://실제URL"}},
+    {{"title": "출처명2", "url": "https://실제URL"}}
+  ]
+}}"""
+
+
+def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
+    blog_id = (blog_config or {}).get("id", "")
+    # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (모든 블로그 공통)
+    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block(keyword, blog_id)
+
+    # blog1 (HOGU What?) 전용 프롬프트
+    if blog_id == "blog1":
+        return _build_blog1_prompt(keyword, traffic, blog_config) + style_block
+
+    # blog2 (HOGU 여행,스포츠,연예) 전용 프롬프트
+    if blog_id == "blog2":
+        return _build_blog2_prompt(keyword, traffic, blog_config) + style_block
+
+    # blog3 (금융NEWS) 전용 프롬프트
+    if blog_id == "blog3":
+        return _build_blog3_prompt(keyword, traffic, blog_config) + style_block
+
     from datetime import datetime
     now = datetime.now()
     y = now.year
     date_str = now.strftime("%Y년 %m월 %d일")
     article_type = _detect_article_type(keyword)
     structure_guide = _STRUCTURE_GUIDE.get(article_type, _STRUCTURE_GUIDE["analysis"])
+    blog_topic_hint = _build_blog_topic_hint(blog_config)
 
     if BLOG_LANGUAGE == "ko":
-        return f"""당신은 30대 중반 직장인입니다. 본업이 따로 있고, 퇴근 후나 주말에 직접 경험하고 공부한 것들을 블로그에 씁니다.
-글쓰기 전문가가 아니라 완벽하지 않아도 됩니다. 중요한 건 진짜처럼 들리는 것입니다.
+        return f"""당신은 관심 있는 주제를 깊이 조사하고 공부해서 블로그에 정리하는 블로거입니다.
+글쓰기 전문가가 아니라 완벽하지 않아도 됩니다. 중요한 건 신뢰할 수 있고 자연스럽게 읽히는 것입니다.
 구글 AdSense 정책을 완전히 준수합니다.
 
 【현재 날짜】 {date_str}
 【키워드】 {keyword}
-【아티클 유형】 {article_type}
+【아티클 유형】 {article_type}{blog_topic_hint}
 
 ━━━ 1. 인간적인 목소리 (가장 중요) ━━━
 
-• "저는", "제가", "제 경험상", "솔직히" 등 1인칭을 자연스럽게 사용
-• 도입부: 이 주제를 쓰게 된 계기나 직접 겪은 상황으로 시작 (정보 나열 X)
+• "저는", "제가", "솔직히", "개인적으로는" 등 의견·판단형 1인칭을 자연스럽게 사용
+  (단, 하지 않은 경험을 한 것처럼 쓰는 표현은 아래 문체 필수 규칙을 따를 것)
+• 도입부: 이 주제를 다루게 된 계기나 독자가 겪는 상황으로 시작 (정보 나열 X)
 • 본문 어딘가에 확신이 없는 순간도 표현: "이게 맞는 건지 저도 100% 확신하진 못하지만요",
   "근데 저만 이렇게 느끼는 건지 모르겠어요" 같은 표현 1~2회
 • 독자에게 말 걸기: "혹시 이런 경험 있으세요?", "저만 그랬던 건 아니겠죠?" 1~2회
@@ -212,23 +1089,33 @@ def _build_prompt(keyword: str, traffic: str) -> str:
 • "{keyword}"에 대해 이미 인터넷에 넘치는 포괄적 내용 금지
 • "이런 이야기는 처음 봤다"고 느낄 각도: "실패해본 사람 입장에서", "막상 해보니 달랐던 것", "{y}년부터 달라진 점"
 
-━━━ Google AdSense 정책 준수 ━━━
-① 원본성 — 독창적 경험·인사이트, 2500자 이상
+━━━ Google AdSense 정책 준수 (가치 없는 콘텐츠 위반 방지) ━━━
+① 원본성 — 독창적 경험·인사이트 필수. 인터넷에 흔한 정보 나열 금지. 반드시 글쓴이만 아는 구체적 경험·수치·실수 포함
 ② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치, 낚시성 제목 금지
-③ 구조 — H2 4개 이상, 단락 적절한 길이
+③ 구조 — H2 5개 이상, 각 섹션 300자 이상, 단락 적절한 길이
 ④ 유해 금지 — 성인/폭력/혐오/불법 절대 금지. 투자·의료는 면책 표현 필수
-⑤ E-E-A-T — 1인칭 경험, 출처 최소 2개, 균형 잡힌 시각
+⑤ E-E-A-T — 구체적 수치·날짜·출처 포함 (최소 3개), 균형 잡힌 시각
+   예: "{y}년 공식 발표 기준으로", "이용자 후기를 종합하면", "3개월 이용 후기들을 보면"
 ⑥ 이미지 — alt 텍스트 포함
+⑦ 분량 4500자 이상 필수 — 이 이하는 'thin content'로 AdSense 거부됨
 
-━━━ 제목 ━━━
-• 자연스러운 블로그 말투 (기사 제목 X)
-• {y}년 포함 | 40자 이내
-• 예: "직접 해봤는데요", "솔직 후기", "저는 이렇게 했어요"
+━━━ 제목 (간결 + 임팩트) ━━━
+• 28자 이내 — 짧을수록 좋음. 조사·군더더기 제거, 핵심 키워드 맨 앞 배치
+• 숫자·구체성으로 임팩트: 예 "국민연금 30% 더 받는 법", "제주 3박4일 40만원 코스"
+• 자연스러운 블로그 말투 (기사 제목 X), 과장·낚시 금지
+• {y}년은 연도가 중요한 정보성 주제에만 포함 (필수 아님)
 
-━━━ 본문 구조 ━━━
-분량: 2800~3500자 완전한 HTML
-H2 섹션: 4~6개 (주제에 따라 자유롭게)
+━━━ 본문 구조 (분량 엄수 — 가장 중요) ━━━
+분량: 4500~6000자 완전한 HTML (Google AdSense 정책상 4000자 미만은 thin content)
+⚠️ 반드시 지켜야 할 분량 규칙:
+  - H2 섹션 7개 이상 (각 섹션 최소 500자 이상)
+  - 도입부(p 태그) 최소 300자
+  - FAQ는 필요할 때만 2~5개 (답변은 충실하게)
+  - 결론 섹션 최소 200자
+  - 섹션 합계 = 최소 4500자
 도입부·각 섹션·결론 모두 단락(p 태그) 기반
+각 H2 섹션마다 최소 3개 단락, 구체적 사례·수치·경험 반드시 포함
+⚠️ 분량 부족 시 글이 게시되지 않습니다 — 4500자 미만은 자동 거부됩니다
 
 핵심 요약 박스 (첫 번째 h2 바로 앞에 1개):
 <div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>핵심 포인트:</strong> [이 글의 가장 실용적인 핵심을 1~2문장으로]</div>
@@ -240,7 +1127,7 @@ H2 섹션: 4~6개 (주제에 따라 자유롭게)
 • <blockquote>: 핵심 인사이트 문장 (1~2개)
 
 ━━━ FAQ ━━━
-h2 "자주 묻는 질문" + 5개 Q&A
+검색 의도상 독자가 실제로 궁금해할 때만 2~5개. 필요 없으면 FAQ 섹션과 faq 필드를 생략(빈 배열)하세요. 모든 글에 같은 개수 금지.
 실제 사람들이 검색할 법한 구체적 질문. 답변 2~4문장.
 형식:
 <h2>자주 묻는 질문</h2>
@@ -263,22 +1150,20 @@ JSON만 응답 (마크다운 없이):
   "meta_description": "...",
   "faq": [
     {{"q": "질문1", "a": "답변1"}},
-    {{"q": "질문2", "a": "답변2"}},
-    {{"q": "질문3", "a": "답변3"}},
-    {{"q": "질문4", "a": "답변4"}},
-    {{"q": "질문5", "a": "답변5"}}
+    {{"q": "질문2", "a": "답변2"}}
+    // 검색 의도상 필요할 때만 2~5개, 필요 없으면 빈 배열 []
   ],
   "sources": [
     {{"title": "출처명1", "url": "https://실제URL"}},
     {{"title": "출처명2", "url": "https://실제URL"}}
   ]
-}}"""
+}}""" + style_block
 
     # English prompt (E-E-A-T focused)
     date_str_en = now.strftime("%B %d, %Y")
     article_type_en = article_type
-    return f"""You are a personal blogger in your 30s who writes about finance, health, and everyday life.
-You share what you've personally experienced, researched, and honestly thought about — not just information gathered from web searches.
+    return f"""You are a blogger who writes about finance, health, and everyday life.
+You share what you've thoroughly researched and honestly thought about — never fabricate personal experiences.
 You strictly follow Google AdSense content policies and prioritize genuine value to readers.
 
 【Date】 {date_str_en}
@@ -288,14 +1173,15 @@ You strictly follow Google AdSense content policies and prioritize genuine value
 ━━━ CORE WRITING PRINCIPLES ━━━
 
 1. Human Voice (most important)
-• Use first person naturally: "I've tried", "In my experience", "Personally I think"
-• Opening must include a personal anecdote or why you got interested in this topic
+• Use opinion-style first person naturally: "Personally I think", "If I had to choose"
+• Never claim experiences you did not have ("I've tried", "I visited") — write research-based instead
+• Opening must explain why this topic matters to readers right now
 • At least 1 genuine aside in the body: "Honestly though", "Here's what surprised me", "I didn't expect this"
 
 2. Break Template Structure
 • NEVER use formulaic structures like "5 Methods", "3 Mistakes to Avoid" for every post
 • H2 headings should reflect real questions or situations readers face
-  ✗ "✅ TOP 5 Investment Methods" → ✓ "What I Actually Did With $300/Month in ETFs"
+  ✗ "✅ TOP 5 Investment Methods" → ✓ "What $300/Month in ETFs Actually Looks Like"
 • Structure follows the topic naturally, not a fixed template
 
 3. Natural Blog Writing
@@ -309,7 +1195,7 @@ You strictly follow Google AdSense content policies and prioritize genuine value
 • Auto-summary phrases banned — "In summary", "To conclude", "As we can see", "This shows that"
   → AI signature closers. Move naturally into the next point or embed the conclusion in the paragraph.
 • Excessive neutrality banned — don't end every sentence with "can be", "may be", "is considered"
-  ✗ "This approach can be effective." → ✓ "Honestly, I'd pick this over the alternatives."
+  ✗ "This approach can be effective." → ✓ "Honestly, I'd pick this over the alternatives." (opinion, not a fabricated experience)
 • Same-length sentence repetition banned — mix short (5-8 words), medium (12-18), and long (25+) sentences
   Vary sentence endings too: questions, em dashes, fragments for emphasis.
 • Overly smooth structure banned — not every H2 should follow "definition → benefits → warnings → summary"
@@ -320,20 +1206,23 @@ You strictly follow Google AdSense content policies and prioritize genuine value
 • Formal/report tone banned — "This paper examines", "It is evident that", "The aforementioned"
   → Blog voice: "Here's what I found", "Turns out", "Here's the thing"
 • Cliché phrases banned — no more than 1 use of "important", "essential", "critical", "must"
-  → Replace with specific experience: "Skip this and you'll regret it — learned that the hard way"
+  → Replace with specific, concrete detail: "Skip this and most users end up redoing the whole setup"
 
 5. Niche Angle
 • Find a specific angle other articles aren't covering well
-• Example angles: "from a beginner's perspective after failing twice", "what changed in {y}", "the part no one talks about"
+• Example angles: "from a complete beginner's perspective", "what changed in {y}", "the part no one talks about"
 
-━━━ TITLE ━━━
-Natural blog style | Include {y} | Under 65 chars
-Trigger curiosity or recognition ("I tested this", "Honest review", "What I wish I knew")
+━━━ TITLE (concise + high-impact) ━━━
+Under 50 chars — shorter is better; cut filler words, lead with the core keyword
+Use numbers and specifics for impact ("5 settings that double battery life")
+Natural blog style, no clickbait; include {y} only when the year matters
 
 ━━━ CONTENT STRUCTURE ━━━
-Length: 2800-3500 chars, complete HTML
-H2 sections: 4-6 (based on topic, not a fixed count)
+Length: 2500-3200 chars (excluding whitespace), complete HTML
+H2 sections: 4-6 (based on topic, not a fixed count) — each section ≥500 chars (excluding whitespace)
 All sections paragraph-based (p tags)
+Title and H2 subheadings must align: every H2 should directly address the topic promised in the title
+One image only: the most relevant single image for the article (alt text required)
 
 Key summary box: Insert this HTML exactly, immediately before the first <h2> in the body:
 <div style="background:#eff6ff;border-left:5px solid #2563eb;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#1e3a8a;font-size:0.96em;line-height:1.8;">💡 <strong>Key takeaway:</strong> [The single most practical insight from this article in 1-2 sentences]</div>
@@ -346,7 +1235,7 @@ Emphasis & readability rules:
 • Over-emphasis loses impact — only mark what truly matters
 
 ━━━ FAQ ━━━
-h2 "Frequently Asked Questions" + 5 Q&As
+Only when search intent calls for it: 2-5 Q&As (omit the section and return "faq": [] otherwise; never a fixed count)
 Specific questions people actually search | 2-4 sentence answers
 No Schema.org markup (itemscope/itemtype/itemprop) — use this format only:
 <h2>Frequently Asked Questions</h2>
@@ -369,16 +1258,14 @@ JSON only (no markdown):
   "meta_description": "...",
   "faq": [
     {{"q": "Q1", "a": "A1"}},
-    {{"q": "Q2", "a": "A2"}},
-    {{"q": "Q3", "a": "A3"}},
-    {{"q": "Q4", "a": "A4"}},
-    {{"q": "Q5", "a": "A5"}}
+    {{"q": "Q2", "a": "A2"}}
+    // only when search intent calls for it: 2-5 items, else []
   ],
   "sources": [
     {{"title": "Source 1", "url": "https://real-url"}},
     {{"title": "Source 2", "url": "https://real-url"}}
   ]
-}}"""
+}}""" + style_block
 
 
 def _apply_style_to_tag(html: str, tag: str, style: str) -> str:
@@ -454,13 +1341,34 @@ _HEALTH_KW  = {"건강","다이어트","운동","의료","병원","영양","질�
                "헬스","요가","필라테스","수면","스트레스","피부","탈모","체중",
                "면역","혈압","당뇨","근육","칼로리","단백질","식단","비타민"}
 _DRAMA_KW   = {"드라마","영화","넷플릭스","티빙","쿠팡플레이","왓챠","ott","음악",
-               "연예","아이돌","가수","배우","예능","웹툰","애니","시즌","결말"}
+               "연예","아이돌","가수","배우","예능","웹툰","애니","시즌","결말",
+               "k-pop","kpop","컴백","신보","신곡","음반","팬미팅","시상식","mama",
+               "초동","걸그룹","보이그룹","데뷔","티케팅","월드투어","내한공연","팬덤"}
 _TRAVEL_KW  = {"여행","관광","투어","코스","명소","숙소","호텔","맛집","공항",
                "비자","패키지","자유여행","배낭","현지","국내여행","해외여행",
-               "제주","부산","오사카","방콕","다낭","유럽","괌","하와이"}
+               "항공권","항공","제주","부산","오사카","방콕","다낭","유럽","괌","하와이"}
 _SPORTS_KW  = {"축구","야구","농구","테니스","골프","k리그","kbo","nba","epl","선수",
                "감독","스포츠","마라톤","트레킹","등산","러닝","수영","자전거",
                "손흥민","류현진","경기","승리","패배","득점","순위","직관"}
+
+
+_LEGAL_KW = {"법률", "민법", "형법", "법원", "계약", "소송", "판결", "권리",
+             "임대차", "약관", "분쟁", "상속", "이혼", "고소", "변호사"}
+
+
+def _assess_risk_level(keyword: str) -> str:
+    """키워드의 YMYL(돈·건강·법률) 위험도를 분류합니다.
+
+    high   — 금융·투자 / 건강·의료 / 법률 (잘못된 정보가 독자에게 실질 피해)
+    medium — 그 외 정보성 주제 (구매 결정·생활 정보 등)
+    low    — 여행·드라마·연예·스포츠 등 엔터테인먼트
+    """
+    kw = keyword.lower()
+    if any(w in kw for w in _FINANCE_KW | _HEALTH_KW | _LEGAL_KW):
+        return "high"
+    if any(w in kw for w in _DRAMA_KW | _TRAVEL_KW | _SPORTS_KW):
+        return "low"
+    return "medium"
 
 
 def _detect_theme(keyword: str, article_type: str) -> dict:
@@ -470,7 +1378,7 @@ def _detect_theme(keyword: str, article_type: str) -> dict:
         return _THEMES["finance"]
     if any(w in kw for w in _HEALTH_KW):
         return _THEMES["health"]
-    if any(w in kw for w in _DRAMA_KW) or article_type == "drama_review":
+    if any(w in kw for w in _DRAMA_KW) or article_type in ("drama_review", "kpop_review"):
         return _THEMES["drama"]
     if any(w in kw for w in _TRAVEL_KW) or article_type == "travel_guide":
         return _THEMES["travel"]
@@ -599,6 +1507,57 @@ def _faq_to_cards(content: str) -> str:
     return pre + h2 + '\n' + faq_rebuilt + '\n' + post_body
 
 
+_FAQ_HEADING_RE = re.compile(
+    r'<h2[^>]*>[^<]*(?:자주\s*묻는\s*질문|Frequently Asked Questions|FAQ)[^<]*</h2>',
+    re.IGNORECASE,
+)
+_FAQ_CARD_RE = re.compile(r'<div style="background:#f8fafc.*?</div>', re.IGNORECASE | re.DOTALL)
+
+
+def _inject_mid_article_faq(html: str) -> str:
+    """FAQ 카드 1개를 본문 중간(이탈이 잦은 지점)에도 배치해 재유입을 유도합니다.
+
+    이탈은 도입부 후킹 효과가 끝나고 결론까지는 아직 먼 글 중간 지점에서
+    가장 많이 발생함. FAQ 전체를 옮기지 않고(끝에 있는 완전한 목록은 SEO·
+    스키마용으로 유지) 카드 1개만 복제해 "이것도 궁금하지 않으세요?" 형태로
+    중간에 배치하면 완독까지 이어질 계기를 하나 더 만들 수 있음.
+
+    본문 H2 섹션이 3개 미만이면(끼워 넣을 마땅한 지점이 없으므로) 건드리지 않음.
+    """
+    faq_h2_m = _FAQ_HEADING_RE.search(html)
+    if not faq_h2_m:
+        return html
+
+    faq_section = html[faq_h2_m.end():]
+    card_m = _FAQ_CARD_RE.search(faq_section)
+    if not card_m:
+        return html
+    faq_card = card_m.group(0)
+
+    body = html[:faq_h2_m.start()]
+    h2_positions = [m.start() for m in re.finditer(r'<h2[^>]*>', body)]
+    if len(h2_positions) < 3:
+        return html
+
+    mid_pos = h2_positions[len(h2_positions) // 2]
+    teaser = (
+        '<p style="font-weight:700;color:#92400e;margin:1.8em 0 8px;font-size:0.95em;">'
+        '💬 잠깐, 이것도 궁금하지 않으세요?</p>'
+        f'{faq_card}'
+    )
+    return body[:mid_pos] + teaser + body[mid_pos:] + html[faq_h2_m.start():]
+
+
+_DEAD_LINK_RE = re.compile(r'<a\b[^>]*href="#"[^>]*>(.*?)</a>', re.IGNORECASE | re.DOTALL)
+
+
+def _strip_dead_links(html: str) -> str:
+    """AdSense '탐색' 정책 위반 방지 — href="#" 링크는 텍스트만 남기고 태그 제거."""
+    if not html or 'href="#"' not in html:
+        return html
+    return _DEAD_LINK_RE.sub(lambda m: re.sub(r"<[^>]+>", "", m.group(1)).strip(), html)
+
+
 def _apply_design(html: str, keyword: str = "", article_type: str = "analysis") -> str:
     """
     Claude 생성 HTML에 Blogger 호환 인라인 스타일 비주얼 디자인 적용.
@@ -691,6 +1650,8 @@ def _apply_design(html: str, keyword: str = "", article_type: str = "analysis") 
 
     # FAQ 섹션을 카드 스타일로 변환
     html = _faq_to_cards(html)
+    # FAQ 배치 최적화 — 카드 1개를 본문 중간(이탈 잦은 지점)에도 배치
+    html = _inject_mid_article_faq(html)
 
     # 이모지 callout 박스 (💡팁 / ⚠️주의 단락 자동 스타일)
     html = _style_callout_paragraphs(html, theme)
@@ -812,11 +1773,18 @@ def _extract_section_queries(html: str, keyword: str) -> list[str]:
                     break
             extra_terms = " ".join(extra_parts)
 
-        query = f"{keyword} {heading_clean}".strip()
-        if extra_terms:
-            query = f"{query} {extra_terms}".strip()
-        queries.append(query[:65])
+        # 이미지 검색용 쿼리: 키워드 핵심 명사(최대 2개) + 섹션 핵심어
+        # — 문장형 긴 쿼리는 네이버/DDG에서 결과 0건이 되므로 명사 조합으로 축약
+        from image_fetcher import _core_terms
+        kw_core = " ".join(_core_terms(keyword, 2))
+        heading_core = " ".join(_core_terms(heading_clean, 2))
+        parts = [p for p in (kw_core, heading_core, extra_terms) if p]
+        query = " ".join(dict.fromkeys(" ".join(parts).split()))  # 단어 중복 제거
+        queries.append(query[:50])
 
+    # 첫 쿼리(메인 키워드)도 핵심 명사로 축약
+    from image_fetcher import _core_terms as _ct
+    queries[0] = " ".join(_ct(keyword, 3)) or keyword
     return queries[:4]
 
 
@@ -877,8 +1845,37 @@ def _validate_sources(sources: list) -> list:
     return valid
 
 
-def _build_series_prompt(keyword: str, traffic: str, series_context: dict) -> str:
-    """시리즈 포스트용 프롬프트"""
+def _build_series_prompt(keyword: str, traffic: str, series_context: dict, blog_config: dict | None = None) -> str:
+    """시리즈 포스트용 프롬프트 — 블로그 주제별 분기"""
+    from datetime import datetime
+    blog_id = (blog_config or {}).get("id", "")
+    # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (가짜 체험담·목차 반복 방지)
+    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block(keyword, blog_id)
+    if blog_id == "blog3":
+        return _build_series_prompt_finance(keyword, traffic, series_context, blog_config) + style_block
+    # blog1 또는 미지정
+    return _build_series_prompt_general(keyword, traffic, series_context, blog_config) + style_block
+
+
+def _series_common_vars(keyword: str, series_context: dict):
+    """시리즈 프롬프트 공통 변수를 반환합니다."""
+    from datetime import datetime
+    now = datetime.now()
+    series_title = series_context.get("series_title", "")
+    episode = series_context.get("episode", 1)
+    total = series_context.get("total_episodes", 1)
+    focus = series_context.get("focus", "")
+    title_hint = series_context.get("title", "")
+    series_label = series_context.get("series_label", "")
+    all_eps = series_context.get("episodes", [])
+    other_eps = [ep for ep in all_eps if ep.get("episode") != episode]
+    other_list = "\n".join([f"  • {ep['episode']}편: {ep.get('title', '')}" for ep in other_eps])
+    return (now.year, now.strftime("%Y년 %m월 %d일"),
+            series_title, episode, total, focus, title_hint, series_label, other_list)
+
+
+def _build_series_prompt_general(keyword: str, traffic: str, series_context: dict, blog_config: dict | None = None) -> str:
+    """blog1 / 기본 — 여행·드라마·연예·K-POP 시리즈 프롬프트 (개인 경험 스타일)"""
     from datetime import datetime
     now = datetime.now()
     y = now.year
@@ -898,16 +1895,24 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict) -> st
 
     article_type = _detect_article_type(keyword)
     structure_guide = _STRUCTURE_GUIDE.get(article_type, _STRUCTURE_GUIDE["analysis"])
+    blog_topic_hint = _build_blog_topic_hint(blog_config)
+
+    # 드라마·영화 시리즈일 때 실제 리뷰 데이터 수집
+    drama_ref_section = ""
+    if article_type == "drama_review":
+        drama_ref_section = _fetch_drama_references(keyword)
+        if drama_ref_section:
+            logger.info(f"[시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '{keyword}'")
 
     if BLOG_LANGUAGE == "ko":
-        return f"""당신은 30대 중반 직장인입니다. 본업이 따로 있고, "{series_title}" 시리즈를 직접 공부하고 경험하면서 편씩 정리해 올리는 중입니다.
+        return f"""당신은 "{series_title}" 시리즈를 깊이 공부하고 조사하면서 한 편씩 정리해 올리는 블로거입니다.
 글쓰기 전문가가 아니라 완벽하지 않아도 됩니다. 구글 AdSense 정책을 완전히 준수합니다.
 
 【현재 날짜】 {date_str}
 【시리즈】 "{series_title}" — 총 {total}편 중 {episode}번째
 【이 편 초점】 {focus}
 【키워드】 {keyword}
-【아티클 유형】 {article_type}
+【아티클 유형】 {article_type}{blog_topic_hint}
 
 ━━━ 시리즈 연결 방식 ━━━
 
@@ -966,24 +1971,33 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict) -> st
 • 유형별 구조 가이드:
 {structure_guide}
 
-━━━ Google AdSense 2025 정책 준수 (자동 검증 대상) ━━━
-① 원본성·품질 — 독창적 경험·인사이트 필수, 2500자 이상
+━━━ Google AdSense 2025 정책 준수 (가치 없는 콘텐츠 위반 방지) ━━━
+① 원본성·품질 — 독창적 경험·인사이트 필수. 인터넷에 흔한 정보 나열 금지. 글쓴이만 아는 구체적 경험·수치·실수 포함
 ② SEO 최적화 — 키워드 자연 분산, 제목·내용 일치
-③ 구조·가독성 — H2 4개 이상, 단락 적절한 길이, 목차 포함
+③ 구조·가독성 — H2 5개 이상, 각 섹션 300자 이상, 목차 포함
 ④ 광고 배치 — 광고 4개 이하, 콘텐츠 충분, 흐름 방해 금지
 ⑤ 유해·금지 — 성인/폭력/혐오/불법 절대 금지 (위반 시 즉시 거부)
    투자·의료 주장은 반드시 면책 표현 포함
-⑥ E-E-A-T — 1인칭 경험 포함, 출처 최소 2개, 균형 잡힌 시각
+⑥ E-E-A-T — 구체적 수치·날짜·출처 포함 (최소 3개), 균형 잡힌 시각
+   예: "{y}년 공식 발표 기준으로", "이용자 후기를 종합하면", "○개월 이용 후기들을 보면"
 ⑦ 이미지 — alt 텍스트 모든 이미지에 포함
 ⑧ AI 의심도 — 위 4번 AI 상투어 규칙 철저 준수
+⑨ 분량 4500자 이상 필수 — 이 이하는 'thin content'로 AdSense 거부됨
 
 ━━━ 제목 규칙 ━━━
 • "[{episode}편]"으로 시작
-• 자연스러운 블로그 제목 | {y}년 포함 | 40자 이내
+• 간결하고 임팩트 있게: 접두어 제외 28자 이내, 핵심 키워드 앞 배치, 군더더기 제거
 
-━━━ 본문 구조 ━━━
-분량: 2800~3500자 완전한 HTML
-H2 섹션: 4~6개 (주제에 따라 자유롭게)
+━━━ 본문 구조 (분량 엄수 — 가장 중요) ━━━
+분량: 4500~6000자 완전한 HTML (Google AdSense 정책상 4000자 미만은 thin content)
+⚠️ 반드시 지켜야 할 분량 규칙:
+  - H2 섹션 7개 이상 (각 섹션 최소 500자 이상)
+  - 도입부(p 태그) 최소 300자
+  - FAQ는 필요할 때만 2~5개 (답변은 충실하게)
+  - 결론 섹션 최소 200자
+  - 섹션 합계 = 최소 4500자
+각 H2 섹션마다 최소 3개 단락, 구체적 사례·수치·경험 반드시 포함
+⚠️ 분량 부족 시 글이 게시되지 않습니다 — 4500자 미만은 자동 거부됩니다
 
 ━━━ 강조 & 가독성 ━━━
 • 핵심 수치·팩트·행동 지침은 <strong>으로 강조 (문단당 1~2개, 남용 금지)
@@ -992,7 +2006,7 @@ H2 섹션: 4~6개 (주제에 따라 자유롭게)
 • 핵심 인사이트는 <blockquote>로 감싸기 (1~2개)
 
 ━━━ FAQ ━━━
-h2 "자주 묻는 질문" + 5개 / 구체적이고 실질적인 질문·답변
+검색 의도상 독자가 실제로 궁금해할 때만 2~5개. 필요 없으면 FAQ 섹션과 faq 필드를 생략(빈 배열)하세요. 모든 글에 같은 개수 금지. 구체적이고 실질적인 질문·답변
 
 ━━━ SEO ━━━
 키워드 10~14회 | LSI 키워드 | 라벨 10개 (반드시 "{series_label}" 포함) | meta_description 155자 이내
@@ -1002,7 +2016,7 @@ h2 "자주 묻는 질문" + 5개 / 구체적이고 실질적인 질문·답변
 • 실존하는 공신력 있는 URL만
 • 확인 불가 통계는 출처 생략
 • 최소 2개, 최대 6개
-
+{drama_ref_section}
 JSON만 응답 (마크다운 없이):
 {{
   "title": "[{episode}편] ...",
@@ -1045,7 +2059,7 @@ Intro (300w): reader problem + episode value + 1-line series intro
 5. "🔥 {y} Trends & Updates"
 6. "💰 Action Steps & What's Next"
 
-FAQ (h2 "Frequently Asked Questions"): 5 Q&As
+FAQ (h2 "Frequently Asked Questions"): only if search intent calls for it, 2-5 Q&As
 Conclusion (200w): summary + encourage reading next part
 
 ━━━ CONTENT QUALITY ━━━
@@ -1072,10 +2086,126 @@ JSON only:
 }}"""
 
 
-def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dict | None = None) -> dict | None:
+# ── blog3 금융 시리즈 프롬프트 ────────────────────────────────────────────────
+
+def _build_series_prompt_finance(keyword: str, traffic: str, series_context: dict, blog_config: dict | None = None) -> str:
+    """blog3 금융·정부지원 시리즈 전용 프롬프트 — 개인 경험 기반 실용 금융 정보"""
+    from datetime import datetime
+    now = datetime.now()
+    date_str = now.strftime("%Y년 %m월 %d일")
+    series_title = series_context.get("series_title", "")
+    episode = series_context.get("episode", 1)
+    total = series_context.get("total_episodes", 1)
+    focus = series_context.get("focus", "")
+    title_hint = series_context.get("title", "")
+    series_label = series_context.get("series_label", "")
+    all_eps = series_context.get("episodes", [])
+    other_list = "\n".join(
+        [f"  • {ep['episode']}편: {ep.get('title', '')}"
+         for ep in all_eps if ep.get("episode") != episode]
+    )
+    return f"""당신은 금융과 정부지원 정책을 깊이 공부하고 조사해 정리하는 블로거입니다.
+"{series_title}" 시리즈를 조사한 내용 기준으로 한 편씩 정리해 올리는 중입니다.
+투자 전문가가 아니라 완벽하지 않아도 됩니다. 구글 AdSense 정책을 완전히 준수합니다.
+
+【현재 날짜】 {date_str}
+【시리즈】 "{series_title}" — 총 {total}편 중 {episode}번째
+【이 편 초점】 {focus}
+【키워드】 {keyword}
+
+━━━ 시리즈 연결 방식 ━━━
+다른 편 목록:
+{other_list}
+
+• 도입부: 이 금융/정책 주제를 알아보게 된 계기 또는 이전 편 흐름 자연스럽게 언급
+• 본문에서 다른 편을 1~2회 언급 ("1편에서 자격 조건 얘기했는데", "다음 편에서 신청 과정 알려드릴게요")
+• 이 편만 읽어도 완결되는 독립적 글
+• 제목 힌트 "{title_hint}"를 더 구체적이고 금융 검색에 적합하게 다듬어 사용
+
+━━━ 금융 블로그 글쓰기 원칙 ━━━
+
+• 공신력 있는 출처 필수 인용 (기획재정부·금융위원회·국세청·금융감독원·복지로·고용24)
+• 금액·날짜·자격 조건 등 수치는 반드시 출처와 함께 제시
+• 독자가 바로 활용할 수 있는 단계별 가이드 포함
+• "처음엔 헷갈리기 쉬운데", "신청자 후기를 보면" 등 독자 상황 공감 표현 사용
+
+━━━ 절대 쓰지 말아야 할 표현 ━━━
+✗ "투자를 권유합니다" / "수익이 보장됩니다" / "반드시 오릅니다"
+✗ 특정 금융상품·주식 매수·매도 유도 표현
+✗ "알아보겠습니다" / "살펴보겠습니다" / "정리해드리겠습니다"
+
+━━━ 글 구조 ━━━
+• H2 소제목 4~6개 (각 500자 이상, 공백 제외)
+• 도입: 이 정보를 알아보게 된 실생활 계기 (200자)
+• 요약 박스: 이 편 핵심 정보 3줄 (HTML 박스, ⚠️ 투자 조언 아님 명시)
+• 본문: 자격 조건·신청 방법·주의사항·실계산 예시
+• 이미지 1장 (금융 관련)
+• 면책 문구: "본 글은 개인적인 경험과 공개된 정보를 바탕으로 작성된 것으로, 전문적인 금융 조언이 아닙니다. 중요한 금융 결정은 전문가와 상담하시기 바랍니다."
+• FAQ는 필요할 때만 2~5개 (자격·신청 관련 질문, 불필요하면 생략)
+• 결론: 이 제도의 대상자와 주의사항 명확히
+
+⚠️ 분량: 최소 2,500자 이상(공백 제외)
+⚠️ 투자 권유·수익 보장 표현 절대 금지
+⚠️ HTML만 출력, 마크다운 사용 금지
+
+다음 JSON 형식으로만 응답하세요:
+{{
+  "title": "제목 (28자 이내 간결·임팩트, 핵심 키워드 앞 배치, 금융 검색 최적화)",
+  "content": "<완성된 HTML 본문 + 면책 문구 포함>",
+  "labels": ["{series_label}","금융","경제","정부지원","세금","절세","재테크","복지","시책","정책"],
+  "meta_description": "검색 결과 요약 (155자 이내, 실용 정보 강조, 투자 조언 아님 명시)",
+  "faq": [{{"q":"독자 금융 질문","a":"공신력 있는 정보 기반 답변"}}],
+  "sources": [{{"title":"기획재정부·금융위 등 공식 출처명","url":"https://..."}}]
+}}"""
+
+
+# 글당 이미지 정책: 최소 1장 (폴백 SVG 썸네일로 보장) / 최대 3장
+_MIN_IMAGES_PER_POST = 1
+_MAX_IMAGES_PER_POST = 3
+
+
+def _collect_post_images(post_data: dict, keyword: str) -> list[dict]:
+    """글 작성 완료 후 이미지를 수집합니다 (최소 1장, 최대 3장).
+
+    1순위: 최종 제목 기반 대표 이미지
+    2·3순위: H2 섹션 기반 이미지 (제목 쿼리와 다른 각도)
+    전부 실패 시 fetch_images_for_queries의 폴백(SVG 썸네일)이 최소 1장 보장.
+    """
+    final_title = (post_data.get("title") or "").strip() or keyword
+
+    # 검색 쿼리 구성: 제목 1개 + 섹션 쿼리 최대 2개 (중복 각도 제거)
+    queries = [final_title]
+    try:
+        for q in _extract_section_queries(post_data.get("content", ""), keyword):
+            if len(queries) >= _MAX_IMAGES_PER_POST:
+                break
+            if q and q not in queries:
+                queries.append(q)
+    except Exception as e:
+        logger.debug(f"섹션 쿼리 추출 실패 (제목 쿼리만 사용): {e}")
+
+    plain_text = _content_preview(post_data.get("content", ""), chars=600)
+    images = fetch_images_for_queries(
+        queries[:_MAX_IMAGES_PER_POST],
+        naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
+        naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
+        pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
+        article_plain_text=plain_text,
+        keyword=keyword,
+        title=post_data.get("title", ""),
+    )
+    images = images[:_MAX_IMAGES_PER_POST]
+    if len(images) < _MIN_IMAGES_PER_POST:
+        logger.warning(f"이미지 최소 개수({_MIN_IMAGES_PER_POST}장) 미달: {len(images)}장 — 텍스트만으로 진행")
+    else:
+        logger.info(f"이미지 {len(images)}장 수집 완료 (최소 {_MIN_IMAGES_PER_POST} / 최대 {_MAX_IMAGES_PER_POST})")
+    return images
+
+
+def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dict | None = None, blog_config: dict | None = None) -> dict | None:
     """시리즈 포스트를 생성합니다."""
     if not series_context:
-        return generate_post(keyword, traffic)
+        return generate_post(keyword, traffic, blog_config)
 
     # episode 는 반드시 int — 기본값 "?" 는 build_series_nav에서 TypeError 유발
     _ep_raw = series_context.get("episode", 1)
@@ -1085,45 +2215,113 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
         episode = 1
     total = series_context.get("total_episodes", "?")
     logger.info(f"시리즈 포스트 생성: '{keyword}' ({episode}/{total}편)")
-    prompt = _build_series_prompt(keyword, traffic, series_context)
+    # 글 작성 전 자료 조사 — 검증된 자료팩만 사실 근거로 사용
+    from evidence_builder import format_evidence_for_prompt
+    evidence_pack = _run_research(keyword)
+    prompt = _build_series_prompt(keyword, traffic, series_context, blog_config) + format_evidence_for_prompt(evidence_pack)
 
+    # 드라마 회차별 리뷰: 단일 회차 주제라 분량이 짧아지기 쉬움 —
+    # 리뷰 구조 가이드를 추가하고 최소 분량 기준을 완화 (2000자, thin content 방지선 유지)
+    is_drama_ep = (series_context or {}).get("type") == "drama_episode_review"
+    min_wc = 2000 if is_drama_ep else 2500
+    if is_drama_ep:
+        # ── 방영 후 자료 게이트: 실제 방영 자료가 없으면 생성 자체를 거부 ──
+        # (미방영 회차를 상상으로 리뷰하는 '예상 시나리오' 작성 방지)
+        _facts = (evidence_pack or {}).get("facts") or []
+        if len(_facts) < 2:
+            logger.error(
+                f"'{keyword}' 방영 후 자료 부족 ({len(_facts)}건) — "
+                f"예상 시나리오 리뷰 방지를 위해 이 회차 생성을 건너뜁니다 "
+                f"(미방영이거나 아직 기사·반응이 없는 회차)"
+            )
+            return None
+
+        drama_ep_num = series_context.get("drama_episode") or episode
+        binfo = series_context.get("broadcast_info") or {}
+        binfo_line = ""
+        if binfo:
+            binfo_line = (
+                f"\n확인된 편성 정보: {binfo.get('platform') or '?'} | "
+                f"총 {binfo.get('total_episodes') or '?'}부작 | {binfo.get('air_schedule') or ''} | "
+                f"현재 {binfo.get('latest_aired_episode') or '?'}화까지 방영됨"
+            )
+        prompt += f"""
+
+━━━ 드라마 회차 리뷰 구조 (분량 확보 — 반드시 이 요소들을 모두 포함) ━━━
+이 글은 이미 방영된 드라마 {drama_ep_num}화의 회차 리뷰입니다.{binfo_line}
+• 도입: 이번 화를 본 직후의 한 줄 감상 + 스포일러 주의 안내
+• H2: {drama_ep_num}화 줄거리 핵심 정리 (600자 이상 — 장면 순서대로 구체적으로)
+• H2: 명장면 TOP 3 — 각 장면의 상황·연출·의미를 하나씩 (600자 이상)
+• H2: 명대사와 배우 연기 — 인상적인 대사 인용 + 연기 디테일 평가 (400자 이상)
+• H2: 시청자 반응·화제 포인트 — 자료팩의 기사·반응 근거 활용 (400자 이상)
+• H2: 다음 화 예상 포인트 — 자료팩에서 확인되는 떡밥·복선만 정리 (300자 이상)
+• 라벨(labels)은 드라마·리뷰 관련으로만: ["드라마리뷰","{keyword}","드라마"] 등 (금융·경제 등 무관 라벨 금지)
+
+⚠️⚠️ 절대 규칙 — 예상 시나리오 금지:
+• 줄거리·장면·대사·전개는 반드시 위 자료팩(방영 후 기사·반응)에서 확인되는 내용만 쓰세요
+• 자료팩에 없는 장면·대사·결말을 상상해서 만들지 마세요 — 확인 안 되는 부분은
+  "이번 화에서는 ~한 전개가 화제였다" 수준으로 자료 범위 안에서만 서술
+• 자료가 부족한 섹션은 억지로 채우지 말고 배우·작품 배경 등 확인된 정보로 대체
+⚠️ 총 분량 3000자 이상 목표, 최소 2500자"""
+
+    is_blog1 = blog_config and blog_config.get("id") == "blog1"
+    ai_provider = _resolve_ai_provider(blog_config)
+
+    prev_wc = 0
+    last_readability: dict | None = None
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
             _now = _dt.now()
-            _sys = (
-                f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
-                "당신은 직접 경험을 바탕으로 솔직하게 글을 쓰는 30대 직장인 블로거입니다. "
-                "AI가 쓴 것처럼 보이지 않게, 사람 냄새 나는 자연스러운 한국어 블로그 글을 씁니다. "
-                "JSON만 응답하세요."
-                if BLOG_LANGUAGE == "ko" else
-                f"Current date: {_now.strftime('%B %d, %Y')}. "
-                "You are a personal blogger who writes from direct experience. "
-                "Write naturally, like a real person — not an AI report. JSON only."
-            )
-            message = _get_client().messages.create(
-                model=CLAUDE_MODEL,
-                max_tokens=16000,
-                temperature=1.0,
-                system=_sys,
-                messages=[{"role": "user", "content": prompt}],
-            )
-            if not message.content or not hasattr(message.content[0], "text"):
+            blog_lang = (blog_config or {}).get("language", BLOG_LANGUAGE)
+            if is_blog1:
+                _sys = (
+                    f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
+                    "당신은 관심 주제를 깊이 조사하고 공부해서 솔직하게 정리해 올리는 블로거입니다. 하지 않은 경험을 한 것처럼 쓰지 않습니다. "
+                    "구글 애드센스 정책을 완전히 준수하며, AI가 쓴 것처럼 보이지 않는 자연스러운 한국어 문체로 작성합니다. "
+                    "독자에게 실질적인 도움이 되는 정보를 제공하는 것이 최우선입니다. "
+                    "JSON만 응답하세요."
+                )
+            elif blog_lang == "ko":
+                _sys = (
+                    f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
+                    "당신은 신뢰할 수 있는 정보를 조사·정리해 솔직하게 글을 쓰는 블로거입니다. 하지 않은 경험을 한 것처럼 쓰지 않습니다. "
+                    "AI가 쓴 것처럼 보이지 않게, 사람 냄새 나는 자연스러운 한국어 블로그 글을 씁니다. "
+                    "JSON만 응답하세요."
+                )
+            else:
+                _sys = (
+                    f"Current date: {_now.strftime('%B %d, %Y')}. "
+                    "You are a blogger who writes well-researched, trustworthy posts. Never fabricate personal experiences. "
+                    "Write naturally, like a real person — not an AI report. JSON only."
+                )
+            escalation = _retry_escalation_note(attempt, prev_wc) + readability_escalation_note(last_readability)
+            logger.info(f"  AI 제공자: {ai_provider.upper()} (시도 {attempt + 1}/3)")
+            raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
+            if not raw:
+                logger.warning(f"{ai_provider.upper()} 응답 없음 — 재시도")
                 if attempt < 2:
                     time.sleep(2)
                     continue
                 return None
-            raw = message.content[0].text.strip()
             post_data = _parse_response(raw)
             if post_data is None:
                 if attempt < 2:
                     logger.warning(f"JSON 파싱 실패 — 재시도 {attempt + 1}/3")
+                    prev_wc = -1  # 파싱 실패 센티널
                     time.sleep(2)
                     continue
                 return None
 
             post_data["keyword"] = keyword
             post_data["article_type"] = _detect_article_type(keyword)
+            post_data["risk_level"] = _assess_risk_level(keyword)
+            # 글작성 고도화 실험 추적용 — 어떤 도입부 후킹 스타일이 적용됐는지 기록해
+            # 발행 후 GSC 지표·등급과 비교할 수 있게 함 (weekly_learning.py가 집계)
+            content_category = _detect_content_category(keyword, (blog_config or {}).get("id", ""))
+            post_data["content_category"] = content_category
+            # 표준 스키마: tags는 labels의 별칭 (내부 링크·대시보드 공용)
+            post_data["tags"] = list(post_data.get("labels", []) or [])
             post_data["series_id"] = series_context.get("series_id", "")
             post_data["episode"] = episode
 
@@ -1131,27 +2329,40 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             post_data["word_count"] = _word_count(content_html)
             post_data["content_preview"] = _content_preview(content_html)
 
-            if not content_html.strip() or post_data["word_count"] < 100:
+            prev_wc = post_data["word_count"]
+            if not content_html.strip() or post_data["word_count"] < min_wc:
                 if attempt < 2:
-                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자) — 재시도")
+                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 {min_wc}자) — 재시도 {attempt + 1}/3")
+                    time.sleep(3)
+                    continue
+                if post_data["word_count"] < 500:
+                    logger.error(f"컨텐츠 생성 실패: {post_data['word_count']}자 — thin content 방지를 위해 게시 거부")
+                    return None
+                logger.warning(f"최소 분량 미달({post_data['word_count']}자) — 재시도 소진, 해당 분량으로 진행")
+
+            # 읽기 난이도 자동 검사 — 문장 길이·전문용어 비율 스캔, 기준 미달 시 재작성 요청
+            last_readability = assess_readability(content_html, content_category)
+            post_data["readability"] = last_readability
+            if not last_readability["ok"]:
+                if attempt < 2:
+                    logger.warning(f"읽기 난이도 기준 미달({last_readability['issues']}) — 재작성 요청 {attempt + 1}/3")
                     time.sleep(2)
                     continue
-                return None
+                logger.warning(f"읽기 난이도 기준 미달({last_readability['issues']}) — 재시도 소진, 해당 상태로 진행")
 
             if not isinstance(post_data.get("sources"), list):
                 post_data["sources"] = []
             else:
                 post_data["sources"] = _validate_sources(post_data["sources"])
 
-            section_queries = _extract_section_queries(content_html, keyword)
-            plain_text = _content_preview(post_data.get("content", ""), chars=600)
-            images = fetch_images_for_queries(
-                section_queries,
-                naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
-                naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
-                article_plain_text=plain_text,
-                keyword=keyword,
-            )
+            # 자료팩 출처를 sources에 병합 (검증된 출처 우선)
+            _merge_evidence(post_data, evidence_pack)
+
+            # 게시 전 팩트체크 — 이미지 삽입 전에 실행 (이미지 HTML 훼손 방지)
+            _fact_check_content(post_data, keyword, evidence_pack)
+
+            # 글 작성 완료 후 이미지 수집·삽입 (최소 1장 / 최대 3장)
+            images = _collect_post_images(post_data, keyword)
             if images:
                 post_data["content"] = inject_images_into_content(post_data["content"], images, keyword)
                 post_data["images_inserted"] = len(images)
@@ -1162,6 +2373,14 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             post_data["content"] = _apply_design(
                 post_data["content"], keyword, _detect_article_type(keyword)
             )
+
+            # 쿠팡파트너스 추천 상품 섹션 삽입 (AdSense 자동 광고와 겹치지 않게 맨 하단 고정)
+            post_data["content"] = inject_affiliate_section(
+                post_data["content"], keyword, blog_config
+            )
+
+            # AdSense '탐색' 정책 위반 방지 — 어디로도 연결되지 않는 href="#" 링크 제거
+            post_data["content"] = _strip_dead_links(post_data["content"])
 
             logger.info(
                 f"시리즈 포스트 생성 완료: '{post_data.get('title', '?')}' "
@@ -1183,67 +2402,347 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
     return None
 
 
-def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
+def _merge_evidence(post_data: dict, evidence_pack: dict | None) -> None:
+    """자료팩의 검증된 출처를 post_data sources 앞쪽에 병합하고 통계를 기록합니다."""
+    if not evidence_pack:
+        post_data["evidence"] = {"used": False, "facts": 0, "verified": 0}
+        return
+    facts = evidence_pack.get("facts") or []
+    verified = [f for f in facts if f.get("verified")]
+    ev_sources = []
+    seen = set()
+    for f in (verified or facts):
+        url = f.get("source_url", "")
+        if url and url not in seen:
+            seen.add(url)
+            ev_sources.append({"title": f.get("source_title") or url, "url": url})
+    existing = [s for s in (post_data.get("sources") or [])
+                if isinstance(s, dict) and s.get("url") not in seen]
+    post_data["sources"] = (ev_sources + existing)[:6]
+    post_data["evidence"] = {"used": True, "facts": len(facts), "verified": len(verified)}
+
+
+def _fact_check_content(post_data: dict, keyword: str, evidence_pack: dict | None = None) -> None:
+    """
+    게시 전 팩트체크 — 본문의 수치·날짜·통계·기관명 주장 중 의심스러운 것을
+    Claude로 검증하고, 본문에서 원문이 그대로 발견되는 경우 수정을 적용합니다.
+    결과는 post_data['fact_check']에 기록됩니다. 오류 시 게시를 막지 않습니다.
+    환경변수 FACT_CHECK=false 로 비활성화할 수 있습니다.
+    """
+    if os.getenv("FACT_CHECK", "true").lower() != "true":
+        post_data["fact_check"] = {"checked": False, "reason": "disabled"}
+        return
+    try:
+        content_html = post_data.get("content", "")
+        plain = re.sub(r"<[^>]+>", " ", content_html)
+        plain = re.sub(r"\s+", " ", plain).strip()[:3500]
+        if len(plain) < 300:
+            post_data["fact_check"] = {"checked": False, "reason": "too_short"}
+            return
+
+        from datetime import datetime as _dt
+        today = _dt.now().strftime("%Y년 %m월 %d일")
+
+        # 실제 경험 자료가 있으면 그 범위 내 경험담은 허용, 없으면 체험 주장도 검사 대상
+        exp = _match_experience(keyword)
+        post_data["experience_used"] = bool(exp)
+        if exp:
+            exp_rule = (
+                "⑤글쓴이의 실제 경험 자료 범위를 벗어난 1인칭 체험 주장. "
+                f"실제 경험 자료: {str(exp.get('summary', ''))[:200]} — 이 범위 안의 경험담은 허용하세요. "
+            )
+        else:
+            exp_rule = (
+                "⑤근거 자료 없는 1인칭 체험 주장(예: '직접 써봤다', '다녀왔다', '투자해봤다', "
+                "'치료를 받아봤다', '실제 수익 공개') — 조사형 표현으로 교체하세요. "
+            )
+
+        # 자료팩이 있으면 팩트체커가 그 기준으로 수치·날짜를 대조
+        pack_rule = ""
+        pack_facts = (evidence_pack or {}).get("facts") or []
+        if pack_facts:
+            facts_brief = " / ".join(f.get("claim", "")[:80] for f in pack_facts[:8])
+            pack_rule = (
+                "⑥검증된 자료팩과 모순되거나 자료팩에 없는 구체적 수치·정책 내용. "
+                f"자료팩: {facts_brief} "
+            )
+
+        fc_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        # max_tokens에 adaptive thinking 토큰도 포함되므로 여유 있게 잡아야
+        # 응답 잘림(→ 빈 문자열 → 팩트체크 무력화)을 방지할 수 있음
+        raw = claude_generate(
+            fc_client,
+            model=CLAUDE_MODEL,
+            max_tokens=4000,
+            max_continues=1,
+            system=(
+                f"현재 날짜: {today}. 당신은 블로그 글의 팩트체커입니다. "
+                "본문에서 사실 오류 가능성이 높은 주장만 찾으세요: "
+                "①검증 불가능한 구체적 수치·통계(예: '국민 67%가'), ②잘못된 날짜/연도, "
+                "③존재하지 않는 제도·기관·상품명, ④과장된 단정(예: '무조건', '100%'), "
+                + exp_rule + pack_rule +
+                "의견·판단형 1인칭('개인적으로는', '제 생각에는')은 문제 삼지 마세요. JSON만 응답하세요."
+            ),
+            messages=[{
+                "role": "user",
+                "content": (
+                    f"주제: {keyword}\n본문:\n{plain}\n\n"
+                    '다음 JSON 형식으로만 답하세요:\n'
+                    '{"issues": [{"quote": "본문에서 그대로 복사한 문제 구절(20자 이내)", '
+                    '"problem": "무엇이 문제인지", "fix": "안전하게 고친 표현"}], '
+                    '"verdict": "pass 또는 warn"}\n'
+                    '⚠️ fix는 본문에 그대로 들어갈 완성된 대체 문구여야 합니다. '
+                    '"~로 수정", "~등으로 완화", "~하세요" 같은 편집 지시문은 절대 금지.\n'
+                    "문제가 없으면 issues를 빈 배열로, verdict를 pass로 하세요. 이슈는 최대 5개."
+                ),
+            }],
+        )
+        raw = raw.strip()
+        if not raw:
+            # 응답이 잘렸거나 비어 있음 — '통과'로 위장하지 않고 미검증으로 기록
+            logger.warning("팩트체크 응답 비어있음 (토큰 잘림 추정) — 미검증으로 기록, 게시는 계속")
+            post_data["fact_check"] = {"checked": False, "reason": "empty_response"}
+            return
+        parsed = _parse_response(raw)
+        if not parsed or "issues" not in parsed:
+            logger.warning("팩트체크 응답 파싱 실패 — 미검증으로 기록, 게시는 계속")
+            post_data["fact_check"] = {"checked": False, "reason": "parse_failed"}
+            return
+        result = parsed
+
+        def _makes_glitch(html_text: str, pos: int, end: int, fix: str) -> bool:
+            """치환 결과가 중복 문구 글리치를 만드는지 검사합니다.
+            (예: '화제성 지표에서 화제성 지표에서', '~같습니다해보셔도 좋을 것 같습니다'
+             — quote가 문장 일부만 매칭되고 fix에 주변 문맥이 포함된 경우 발생)"""
+            candidate = html_text[:pos] + fix + html_text[end:]
+            # 삽입 지점 주변 창에서 10자 이상 인접 반복 감지 (원본에 없던 것만)
+            w_start, w_end = max(0, pos - 20), pos + len(fix) + 40
+            new_win = candidate[w_start:w_end]
+            old_win = html_text[max(0, pos - 20):end + 40]
+            dup = re.search(r'(\S[^<>]{5,}?)\s*\1', new_win)
+            return bool(dup and not re.search(re.escape(dup.group(1)) + r'\s*' + re.escape(dup.group(1)), old_win))
+
+        def _safe_replace(html_text: str, quote: str, fix: str) -> str | None:
+            """태그 내부(속성/스타일)가 아닌 텍스트 위치에서만 치환합니다.
+            공백·태그 차이로 직접 매칭이 실패하면 공백 유연 정규식으로 재시도.
+            치환 실패·중복 글리치 발생 시 None."""
+            if len(quote) < 6:
+                return None  # '100%' 같은 짧은 인용은 스타일 훼손 위험 — 건너뜀
+
+            def _in_tag(pos: int) -> bool:
+                lt = html_text.rfind("<", 0, pos)
+                gt = html_text.rfind(">", 0, pos)
+                return lt > gt  # 직전 '<'가 '>'보다 뒤 = 태그 내부
+
+            # ① 직접 매칭 (태그 밖 첫 위치)
+            start = 0
+            while True:
+                pos = html_text.find(quote, start)
+                if pos == -1:
+                    break
+                if not _in_tag(pos):
+                    if _makes_glitch(html_text, pos, pos + len(quote), fix):
+                        logger.warning(f"팩트체크 치환이 중복 문구 생성 — 건너뜀: '{fix[:40]}'")
+                        return None
+                    return html_text[:pos] + fix + html_text[pos + len(quote):]
+                start = pos + 1
+            # ② 공백 유연 정규식 (plain은 \s+ 정규화되어 있어 HTML과 어긋날 수 있음)
+            pattern = re.escape(quote).replace(r"\ ", r"\s+")
+            for m2 in re.finditer(pattern, html_text):
+                if not _in_tag(m2.start()):
+                    if _makes_glitch(html_text, m2.start(), m2.end(), fix):
+                        logger.warning(f"팩트체크 치환이 중복 문구 생성 — 건너뜀: '{fix[:40]}'")
+                        return None
+                    return html_text[:m2.start()] + fix + html_text[m2.end():]
+            return None
+
+        def _is_edit_instruction(fix_text: str) -> bool:
+            """fix가 대체 문구가 아닌 편집 지시문인지 판별합니다.
+            (본문에 지시문이 그대로 삽입되는 사고 방지 — 2026-07-19 실제 발생)"""
+            t = fix_text.strip()
+            if re.search(r'(하세요|해야\s*합니다|필요합니다|바랍니다)\s*[.!]?$', t):
+                return True
+            # "~로 수정", "~등으로 완화", "~로 교체/변경/삭제" 형태로 끝나는 지시문
+            return bool(re.search(r'(으로|로)\s*(수정|완화|교체|변경|삭제|대체)\s*[.!]?$', t))
+
+        applied = 0
+        issue_records = []
+        for issue in result.get("issues", [])[:5]:
+            quote, fix = issue.get("quote", ""), issue.get("fix", "")
+            fixed = False
+            if fix and _is_edit_instruction(fix):
+                logger.warning(f"팩트체크 fix가 지시문 형태 — 적용 건너뜀: '{fix[:50]}'")
+                issue_records.append({"problem": issue.get("problem", ""), "fixed": False})
+                continue
+            if quote and fix:
+                replaced = _safe_replace(content_html, quote, fix)
+                if replaced is not None:
+                    content_html = replaced
+                    applied += 1
+                    fixed = True
+            issue_records.append({"problem": issue.get("problem", ""), "fixed": fixed})
+        if applied:
+            post_data["content"] = content_html
+
+        post_data["fact_check"] = {
+            "checked": True,
+            "verdict": result.get("verdict", "pass"),
+            "issues_found": len(result.get("issues", [])),
+            "fixes_applied": applied,
+            "issues": issue_records,
+        }
+        if result.get("issues"):
+            logger.info(
+                f"팩트체크: 이슈 {len(result['issues'])}건 발견, {applied}건 자동 수정 적용"
+            )
+        else:
+            logger.info("팩트체크: 통과")
+    except Exception as e:
+        logger.warning(f"팩트체크 실패 (게시는 계속 진행): {e}")
+        post_data["fact_check"] = {"checked": False, "reason": str(e)[:100]}
+
+
+def _retry_escalation_note(attempt: int, prev_wc: int) -> str:
+    """재시도 시 분량 부족 피드백 메시지를 반환합니다."""
+    if attempt == 0 or prev_wc <= 0:
+        return ""
+    needed = max(0, 2500 - prev_wc)
+    needed_str = f"지금 {needed}자가 더 필요합니다 — 각 섹션을 더 길고 구체적으로 작성하세요\n" if needed > 0 else "분량은 충분하지만 구조를 개선하세요\n"
+    return (
+        f"\n\n⚠️⚠️⚠️ [재시도 {attempt}/2] 이전 응답이 {prev_wc}자로 너무 짧았습니다.\n"
+        "이번에는 반드시 다음을 지키세요:\n"
+        f"  - H2 섹션마다 최소 500자(공백 제외)\n"
+        f"  - 도입부 최소 300자 (경험담으로 풍부하게)\n"
+        f"  - FAQ를 넣는 경우 각 답변은 충실하게\n"
+        f"  - 전체 content 필드 텍스트 기준 2500자 이상(공백 제외)\n"
+        f"  - {needed_str}"
+        "⚠️⚠️⚠️\n"
+    )
+
+
+def _run_research(keyword: str) -> dict | None:
+    """글 작성 전 자료 조사 파이프라인 실행 → 검증된 자료팩 반환.
+
+    RESEARCH_ENGINE=false로 비활성화 가능. 실패해도 글 생성은 계속되며,
+    자료팩이 없으면 프롬프트에 '검증 불가 수치 작성 금지' 폴백 규칙이 들어갑니다.
+    """
+    if os.getenv("RESEARCH_ENGINE", "true").strip().lower() not in ("true", "1", "yes"):
+        return None
+    try:
+        from research_collector import collect_research
+        from evidence_builder import build_evidence_pack, save_evidence_pack
+        from source_validator import validate_pack
+        research = collect_research(keyword)
+        if not research.get("materials"):
+            return None
+        pack = build_evidence_pack(research)
+        if not pack.get("facts"):
+            return None
+        pack = validate_pack(pack)
+        save_evidence_pack(pack)
+        return pack
+    except Exception as exc:
+        logger.warning(f"자료 조사 실패 (글 생성은 계속): {exc}")
+        return None
+
+
+def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None = None) -> dict | None:
     """Claude API로 포스트 생성 후 이미지를 자동 삽입합니다. 실패 시 최대 2회 재시도."""
     logger.info(f"포스트 생성 중: '{keyword}'")
-    prompt = _build_prompt(keyword, traffic)
 
+    # 글 작성 전 자료 조사 — 검증된 자료팩만 사실 근거로 사용
+    from evidence_builder import format_evidence_for_prompt
+    evidence_pack = _run_research(keyword)
+    prompt = _build_prompt(keyword, traffic, blog_config) + format_evidence_for_prompt(evidence_pack)
+
+    is_blog1 = blog_config and blog_config.get("id") == "blog1"
+    ai_provider = _resolve_ai_provider(blog_config)
+    prev_wc = 0
+    last_readability: dict | None = None
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
             _now = _dt.now()
-            _sys = (
-                f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
-                "당신은 직접 경험을 바탕으로 솔직하게 글을 쓰는 30대 직장인 블로거입니다. "
-                "AI가 쓴 것처럼 보이지 않게, 사람 냄새 나는 자연스러운 한국어 블로그 글을 씁니다. "
-                "지식 학습 시점 이후의 사건은 '최근 동향에 따르면' 등으로 처리하세요. "
-                "JSON만 응답하세요."
-                if BLOG_LANGUAGE == "ko" else
-                f"Current date: {_now.strftime('%B %d, %Y')}. "
-                "You are a personal blogger who writes from direct experience. "
-                "Write naturally, like a real person — not an AI report. "
-                "For events after your knowledge cutoff, use 'according to recent trends'. "
-                "JSON only."
-            )
-            message = _get_client().messages.create(
-                model=CLAUDE_MODEL,
-                max_tokens=16000,
-                temperature=1.0,
-                system=_sys,
-                messages=[{"role": "user", "content": prompt}],
-            )
-            if not message.content or not hasattr(message.content[0], "text"):
-                logger.error("Claude 응답 형식 오류: text 콘텐츠 없음")
+            blog_lang = (blog_config or {}).get("language", BLOG_LANGUAGE)
+            if is_blog1:
+                _sys = (
+                    f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
+                    "당신은 관심 주제를 깊이 조사하고 공부해서 솔직하게 정리해 올리는 블로거입니다. 하지 않은 경험을 한 것처럼 쓰지 않습니다. "
+                    "구글 애드센스 정책을 완전히 준수하며, AI가 쓴 것처럼 보이지 않는 자연스러운 한국어 문체로 작성합니다. "
+                    "독자에게 실질적인 도움이 되는 정보를 제공하는 것이 최우선입니다. "
+                    "JSON만 응답하세요."
+                )
+            elif blog_lang == "ko":
+                _sys = (
+                    f"현재 날짜: {_now.strftime('%Y년 %m월 %d일')}. "
+                    "당신은 신뢰할 수 있는 정보를 조사·정리해 솔직하게 글을 쓰는 블로거입니다. 하지 않은 경험을 한 것처럼 쓰지 않습니다. "
+                    "AI가 쓴 것처럼 보이지 않게, 사람 냄새 나는 자연스러운 한국어 블로그 글을 씁니다. "
+                    "지식 학습 시점 이후의 사건은 '최근 동향에 따르면' 등으로 처리하세요. "
+                    "JSON만 응답하세요."
+                )
+            else:
+                _sys = (
+                    f"Current date: {_now.strftime('%B %d, %Y')}. "
+                    "You are a blogger who writes well-researched, trustworthy posts. Never fabricate personal experiences. "
+                    "Write naturally, like a real person — not an AI report. "
+                    "For events after your knowledge cutoff, use 'according to recent trends'. "
+                    "JSON only."
+                )
+            escalation = _retry_escalation_note(attempt, prev_wc) + readability_escalation_note(last_readability)
+            logger.info(f"  AI 제공자: {ai_provider.upper()} (시도 {attempt + 1}/3)")
+            raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
+            if not raw:
+                logger.error(f"{ai_provider.upper()} 응답 없음 또는 max_tokens로 잘림")
                 if attempt < 2:
                     time.sleep(2)
                     continue
                 return None
-            raw = message.content[0].text.strip()
             post_data = _parse_response(raw)
 
             if post_data is None:
                 if attempt < 2:
                     logger.warning(f"JSON 파싱 실패 — 재시도 {attempt + 1}/3")
+                    prev_wc = -1  # 파싱 실패 센티널 — escalation note 생략 구분용
                     time.sleep(2)
                     continue
                 return None
 
             post_data["keyword"] = keyword
             post_data["article_type"] = _detect_article_type(keyword)
+            post_data["risk_level"] = _assess_risk_level(keyword)
+            # 글작성 고도화 실험 추적용 — 어떤 도입부 후킹 스타일이 적용됐는지 기록해
+            # 발행 후 GSC 지표·등급과 비교할 수 있게 함 (weekly_learning.py가 집계)
+            content_category = _detect_content_category(keyword, (blog_config or {}).get("id", ""))
+            post_data["content_category"] = content_category
+            # 표준 스키마: tags는 labels의 별칭 (내부 링크·대시보드 공용)
+            post_data["tags"] = list(post_data.get("labels", []) or [])
 
             # 글자 수 및 미리보기 추가
             content_html = post_data.get("content", "")
             post_data["word_count"] = _word_count(content_html)
             post_data["content_preview"] = _content_preview(content_html)
 
-            # 컨텐츠 유효성 검사 (json_repair로 복구됐지만 내용이 비어있는 경우 방지)
-            if not content_html.strip() or post_data["word_count"] < 100:
+            # 컨텐츠 유효성 검사 — AdSense thin content 방지 (최소 2500자)
+            prev_wc = post_data["word_count"]
+            if not content_html.strip() or post_data["word_count"] < 2500:
                 if attempt < 2:
-                    logger.warning(f"컨텐츠 비어있음 또는 너무 짧음({post_data['word_count']}자) — 재시도 {attempt + 1}/3")
+                    logger.warning(f"컨텐츠 너무 짧음({post_data['word_count']}자, 최소 2500자) — 재시도 {attempt + 1}/3")
+                    time.sleep(3)
+                    continue
+                if post_data["word_count"] < 500:
+                    logger.error(f"컨텐츠 생성 실패: {post_data['word_count']}자 — thin content 방지를 위해 게시 거부")
+                    return None
+                logger.warning(f"최소 분량 미달({post_data['word_count']}자) — 재시도 소진, 해당 분량으로 진행")
+
+            # 읽기 난이도 자동 검사 — 문장 길이·전문용어 비율 스캔, 기준 미달 시 재작성 요청
+            last_readability = assess_readability(content_html, content_category)
+            post_data["readability"] = last_readability
+            if not last_readability["ok"]:
+                if attempt < 2:
+                    logger.warning(f"읽기 난이도 기준 미달({last_readability['issues']}) — 재작성 요청 {attempt + 1}/3")
                     time.sleep(2)
                     continue
-                logger.error("컨텐츠 생성 실패: 유효한 내용 없음")
-                return None
+                logger.warning(f"읽기 난이도 기준 미달({last_readability['issues']}) — 재시도 소진, 해당 상태로 진행")
 
             # sources 필드 유효성 검증 (hallucinated URL 필터링)
             if not isinstance(post_data.get("sources"), list):
@@ -1254,17 +2753,14 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
                 if not post_data["sources"]:
                     logger.warning("sources 필드: 유효한 출처 없음 — 전부 제거됨")
 
-            # 섹션별 이미지 검색 & 삽입 (관련성 검증 포함)
-            section_queries = _extract_section_queries(post_data.get("content", ""), keyword)
-            logger.info(f"섹션별 이미지 검색: {section_queries}")
-            plain_text = _content_preview(post_data.get("content", ""), chars=600)
-            images = fetch_images_for_queries(
-                section_queries,
-                naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
-                naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
-                article_plain_text=plain_text,
-                keyword=keyword,
-            )
+            # 자료팩 출처를 sources에 병합 (검증된 출처 우선)
+            _merge_evidence(post_data, evidence_pack)
+
+            # 게시 전 팩트체크 — 이미지 삽입 전에 실행 (이미지 HTML 훼손 방지)
+            _fact_check_content(post_data, keyword, evidence_pack)
+
+            # 글 작성 완료 후 이미지 수집·삽입 (최소 1장 / 최대 3장)
+            images = _collect_post_images(post_data, keyword)
             if images:
                 post_data["content"] = inject_images_into_content(
                     post_data["content"], images, keyword
@@ -1279,6 +2775,14 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
             post_data["content"] = _apply_design(
                 post_data["content"], keyword, _detect_article_type(keyword)
             )
+
+            # 쿠팡파트너스 추천 상품 섹션 삽입 (AdSense 자동 광고와 겹치지 않게 맨 하단 고정)
+            post_data["content"] = inject_affiliate_section(
+                post_data["content"], keyword, blog_config
+            )
+
+            # AdSense '탐색' 정책 위반 방지 — 어디로도 연결되지 않는 href="#" 링크 제거
+            post_data["content"] = _strip_dead_links(post_data["content"])
 
             logger.info(
                 f"포스트 생성 완료: '{post_data.get('title', '?')}' "
@@ -1306,7 +2810,7 @@ def generate_post(keyword: str, traffic: str = "N/A") -> dict | None:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    result = generate_post("재테크 방법", "100K+")
+    result = generate_post("제주도 숨겨진 명소 솔직 후기", "100K+")
     if result:
         print(f"제목: {result['title']}")
         print(f"라벨: {result['labels']}")
@@ -1314,3 +2818,4 @@ if __name__ == "__main__":
         print(f"이미지: {result.get('images_inserted', 0)}개")
         print(f"FAQ: {len(result.get('faq', []))}개")
         print(f"미리보기: {result.get('content_preview', '')[:100]}")
+

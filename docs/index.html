@@ -1694,6 +1694,14 @@
 
   </div>
 
+  <!-- ══ PAT 기기 간 전송 모달 (QR) ═══════════════════════════════════════ -->
+  <div id="qr-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9500;align-items:center;justify-content:center;padding:16px">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:380px;padding:24px;text-align:center">
+      <div id="qr-modal-body"></div>
+      <button onclick="qrModalClose()" style="margin-top:16px;padding:8px 20px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:13px;cursor:pointer">닫기</button>
+    </div>
+  </div>
+
   <!-- ══ 블로그 설정 모달 ══════════════════════════════════════════════════ -->
   <div id="blog-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9000;align-items:center;justify-content:center;padding:16px">
     <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:620px;max-height:90vh;overflow-y:auto;position:relative">
@@ -7347,6 +7355,8 @@ function renderApiKeyManager() {
         <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
           ${editBtnHtml}
           ${isSet && k.testFn ? `<button onclick="${k.testFn}()" id="${k.id}-test-btn" style="padding:4px 10px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);border-radius:6px;color:var(--green);font-size:11px;cursor:pointer">🔌 연결 테스트</button>` : ''}
+          ${k.id === 'gh_pat' && isSet ? `<button onclick="qrExportPAT()" style="padding:4px 10px;background:rgba(124,106,247,.1);border:1px solid rgba(124,106,247,.3);border-radius:6px;color:var(--accent);font-size:11px;cursor:pointer">📱 다른 기기로 보내기</button>` : ''}
+          ${k.id === 'gh_pat' ? `<button onclick="qrImportPATStart()" style="padding:4px 10px;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:6px;color:var(--accent2);font-size:11px;cursor:pointer">📷 QR로 가져오기</button>` : ''}
           ${isSet && !k.secretOnly ? `<button onclick="apiKeyClear('${k.id}')" style="padding:4px 8px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:6px;color:var(--red);font-size:11px;cursor:pointer">🗑</button>` : ''}
         </div>
         <div id="apikey-input-${k.id}" style="display:none;flex:0 0 100%;margin-top:8px"></div>
@@ -7660,6 +7670,102 @@ function _loadScript(src) {
     s.src = src; s.onload = res; s.onerror = rej
     document.head.appendChild(s)
   })
+}
+
+// ── PAT 기기 간 전송 (QR) ────────────────────────────────────────────────────
+// PAT는 서버에 저장하지 않고 브라우저 localStorage에만 보관하므로, 새 기기에서
+// 매번 새로 발급받아 붙여넣어야 하는 불편을 QR 코드로 줄인다. 서버를 거치지
+// 않고 두 기기가 화면↔카메라로 직접 주고받는 방식이라 저장소 노출 위험은 없지만,
+// 화면에 QR이 떠 있는 동안 어깨너머로 촬영될 수 있으므로 자동 닫힘·경고 문구를 둔다.
+async function _loadQrLibs() {
+  if (window._qrLibsLoaded) return
+  await _loadScript('https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js')
+  await _loadScript('https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js')
+  window._qrLibsLoaded = true
+}
+
+let _qrAutoCloseTimer = null
+let _qrScanStream = null
+let _qrScanRAF = null
+
+function qrModalClose() {
+  document.getElementById('qr-modal-overlay').style.display = 'none'
+  document.getElementById('qr-modal-body').innerHTML = ''
+  if (_qrAutoCloseTimer) { clearTimeout(_qrAutoCloseTimer); _qrAutoCloseTimer = null }
+  if (_qrScanRAF) { cancelAnimationFrame(_qrScanRAF); _qrScanRAF = null }
+  if (_qrScanStream) { _qrScanStream.getTracks().forEach(t => t.stop()); _qrScanStream = null }
+}
+
+async function qrExportPAT() {
+  const pat = getPAT()
+  if (!pat) { showToast('GitHub PAT가 없습니다', 'error'); return }
+  const overlay = document.getElementById('qr-modal-overlay')
+  const body = document.getElementById('qr-modal-body')
+  overlay.style.display = 'flex'
+  body.innerHTML = `<div style="color:var(--muted);font-size:13px">QR 생성 중...</div>`
+  try {
+    await _loadQrLibs()
+    body.innerHTML = `
+      <div style="font-weight:700;margin-bottom:10px">📱 다른 기기로 PAT 전송</div>
+      <div id="qr-canvas-wrap" style="display:flex;justify-content:center;background:#fff;border-radius:12px;padding:16px;margin-bottom:12px"></div>
+      <div style="font-size:11px;color:#f59e0b;line-height:1.6">⚠️ 이 QR에는 GitHub 토큰 원문이 담겨 있습니다. 다른 사람이 화면을 보거나 촬영하지 않도록 주의하고, 스캔 후 바로 닫아 주세요. 90초 후 자동으로 닫힙니다.</div>`
+    new window.QRCode(document.getElementById('qr-canvas-wrap'), {
+      text: JSON.stringify({ type: 'gh_pat', v: pat }),
+      width: 220, height: 220,
+    })
+    _qrAutoCloseTimer = setTimeout(qrModalClose, 90000)
+  } catch (e) {
+    body.innerHTML = `<div style="color:var(--red);font-size:13px">QR 생성 실패: ${e.message}</div>`
+  }
+}
+
+async function qrImportPATStart() {
+  const overlay = document.getElementById('qr-modal-overlay')
+  const body = document.getElementById('qr-modal-body')
+  overlay.style.display = 'flex'
+  body.innerHTML = `<div style="color:var(--muted);font-size:13px">카메라 준비 중...</div>`
+  try {
+    await _loadQrLibs()
+    body.innerHTML = `
+      <div style="font-weight:700;margin-bottom:10px">📷 QR로 PAT 가져오기</div>
+      <video id="qr-scan-video" playsinline style="width:100%;border-radius:12px;background:#000"></video>
+      <canvas id="qr-scan-canvas" style="display:none"></canvas>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px">PC 화면에 띄운 QR을 카메라에 비춰 주세요</div>`
+    _qrScanStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+    const video = document.getElementById('qr-scan-video')
+    video.srcObject = _qrScanStream
+    await video.play()
+    const canvas = document.getElementById('qr-scan-canvas')
+    const ctx = canvas.getContext('2d')
+
+    const tick = () => {
+      if (!_qrScanStream) return
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvas.width = video.videoWidth
+        canvas.height = video.videoHeight
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        const code = window.jsQR(imgData.data, imgData.width, imgData.height)
+        if (code) {
+          try {
+            const payload = JSON.parse(code.data)
+            if (payload.type === 'gh_pat' && payload.v) {
+              localStorage.setItem('gh_pat', payload.v)
+              qrModalClose()
+              checkPATStatus()
+              renderApiKeyManager()
+              showToast('✅ PAT를 다른 기기에서 가져왔습니다', 'success')
+              return
+            }
+          } catch (_) { /* QR이 아직 PAT 데이터가 아님 — 계속 스캔 */ }
+        }
+      }
+      _qrScanRAF = requestAnimationFrame(tick)
+    }
+    _qrScanRAF = requestAnimationFrame(tick)
+  } catch (e) {
+    body.innerHTML = `<div style="color:var(--red);font-size:13px">카메라 접근 실패: ${e.message}<br>브라우저 카메라 권한을 확인해 주세요.</div>`
+  }
 }
 
 function _sealBox(plaintext, pubKeyBase64) {

@@ -1,128 +1,3 @@
-2026-07-22 23:13:46,306 [WARNING] content_generator — 최소 분량 미달(1340자) — 재시도 소진, 해당 분량으로 진행
-2026-07-22 23:13:46,325 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:13:47,744 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:13:47,748 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 2건 자동 수정 적용
-2026-07-22 23:13:49,006 [INFO] image_fetcher — 이미지 수집 성공: '경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!' → 제목='여행/해외거주 - 경주 당일치기 뚜벅이의 후기' (관련성=0.29)
-2026-07-22 23:13:49,546 [INFO] image_fetcher — 이미지 수집 성공: '경주 당일치기 놓치면' → 제목='뽐뿌:여행포럼 - 경주 당일치기 다녀왔어요^^ 경주 당일치기 다녀왔어요^' (관련성=0.67)
-2026-07-22 23:13:50,783 [INFO] image_fetcher — 대체 이미지 수집: '경주 당일치기 일정 알차게' → 제목='[KTX] 문화해설사님과 함께하는 경주 세계문화유산 투어 당일치기 기차여' (관련성=0.50)
-2026-07-22 23:13:50,783 [INFO] image_fetcher — 이미지 수집 성공: '경주 당일치기 일정 알차게' → 제목='[KTX] 문화해설사님과 함께하는 경주 세계문화유산 투어 당일치기 기차여' (관련성=0.50)
-2026-07-22 23:13:51,006 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:13:51,006 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-22 23:13:51,008 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-22 23:13:51,009 [INFO] content_generator — 포스트 생성 완료: '경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!' (1340자, 이미지 3개)
-2026-07-22 23:13:51,031 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:13:54,181 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:13:54,186 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!'
-2026-07-22 23:13:54,186 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 1340자로 2000자 미만, 정보 재조합 의심.
-2026-07-22 23:13:54,186 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기반 서술 부족, 출처 사용은 긍정적.
-2026-07-22 23:13:54,186 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재, 저작권 위반 위험은 없음.
-2026-07-22 23:13:54,195 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-22 23:13:54,198 [INFO] internal_linker —   [1/5] '즐기는' -> https://hogugolfntraval.blogspot.com/2026/07/202607.html
-2026-07-22 23:13:54,199 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-22 23:13:54,199 [INFO] main —   제목: 경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!
-2026-07-22 23:13:54,199 [INFO] main —   이미지: 3개 삽입
-2026-07-22 23:13:54,199 [INFO] main —   글자 수: 1340자
-2026-07-22 23:13:54,199 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서!' (1340자 < 2500자)
-2026-07-22 23:13:54,221 [INFO] dashboard_exporter —   검토 대기 저장: 경주 당일치기, 놓치면 후회하는 코스 직접 다녀와서! (5135자 HTML)
-2026-07-22 23:13:54,233 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 111개)
-2026-07-22 23:13:54,234 [INFO] main — 
-============================================================
-2026-07-22 23:13:54,234 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-22 23:13:54,234 [INFO] main — ============================================================
-2026-07-22 23:13:54,256 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-22 23:13:54,272 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-22 23:13:54,284 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-22 23:13:54,492 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-22 23:13:54,799 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-22 23:13:54,801 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-22 23:13:54,804 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-22 23:13:54,818 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 176 / 실패 15 / 대기 83)
-2026-07-22 23:13:54,818 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-22 23:13:54,818 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-22 23:13:54,819 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-22 23:14:34,638 [INFO] main — ============================================================
-2026-07-22 23:14:34,638 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-22 23:14:34
-2026-07-22 23:14:34,639 [INFO] main — ============================================================
-2026-07-22 23:14:34,648 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
-2026-07-22 23:14:34,648 [INFO] keyword_collector — 포스팅 이력 코퍼스: 44개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-22 23:14:37,974 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-22 23:14:38,432 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:14:38,433 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-22 23:14:39,002 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-22 23:14:39,182 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:14:39,484 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-22 23:14:39,485 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-22 23:14:39,486 [INFO] keyword_collector — 유사 주제 제외 3개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리', '미국 연준 금리 결정 한국 증시 영향 분석']
-2026-07-22 23:14:39,487 [INFO] keyword_collector —   [fallback] 2개: ['원달러 환율 급등락 원인과 개인투자자 대응법', '2026 금융시장 주요 이슈 직장인이 알아야 할 것']
-2026-07-22 23:14:39,487 [INFO] keyword_collector — 최종 선정 키워드 2개: ['원달러 환율 급등락 원인과 개인투자자 대응법', '2026 금융시장 주요 이슈 직장인이 알아야 할 것']
-2026-07-22 23:14:39,487 [INFO] main — 수집된 키워드 2개: ['원달러 환율 급등락 원인과 개인투자자 대응법', '2026 금융시장 주요 이슈 직장인이 알아야 할 것']
-2026-07-22 23:14:39,492 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
-2026-07-22 23:14:39,492 [INFO] main — 단독 포스트 대상 키워드 1개: ['원달러 환율 급등락 원인과 개인투자자 대응법']
-2026-07-22 23:14:39,507 [INFO] main — 
-[1/1] 키워드: '원달러 환율 급등락 원인과 개인투자자 대응법'
-2026-07-22 23:14:39,507 [INFO] content_generator — 포스트 생성 중: '원달러 환율 급등락 원인과 개인투자자 대응법'
-2026-07-22 23:14:39,714 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:14:39,714 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwoVoAiYLzC3iX2XxZt'}
-2026-07-22 23:14:46,082 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '원달러 환율 급등락 원인과 개인투자자 대응법'
-2026-07-22 23:14:46,245 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:14:46,246 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwoyqeFVPw3gGrxSfWr'}
-2026-07-22 23:14:46,248 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-22 23:14:47,241 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:14:47,778 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:15:04,669 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:15:04,684 [WARNING] content_generator — 컨텐츠 너무 짧음(1284자, 최소 2500자) — 재시도 1/3
-2026-07-22 23:15:07,684 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-22 23:15:07,684 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:15:28,893 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:15:28,900 [WARNING] content_generator — 컨텐츠 너무 짧음(1923자, 최소 2500자) — 재시도 2/3
-2026-07-22 23:15:31,901 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-22 23:15:31,901 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:15:49,964 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:15:49,970 [WARNING] content_generator — 최소 분량 미달(1553자) — 재시도 소진, 해당 분량으로 진행
-2026-07-22 23:15:49,970 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(환헤지)가 쉬운 설명 없이 사용됨']) — 재시도 소진, 해당 상태로 진행
-2026-07-22 23:15:49,989 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:15:51,046 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:15:51,056 [INFO] content_generator — 팩트체크: 통과
-2026-07-22 23:15:51,883 [INFO] image_fetcher — 이미지 수집 성공: '원달러 환율 급등락의 이유와 개인투자자 대응 방안' → 제목='15년 만에 환율 1,450원대 돌파...앞으로의 대응 방안은?' (관련성=0.29)
-2026-07-22 23:15:52,599 [INFO] image_fetcher — 이미지 수집 성공: '원달러 환율 급등락' → 제목='증시 급등락 장세 속 ‘원·달러 환율’ 잘 버틴 까닭?' (관련성=0.67)
-2026-07-22 23:15:53,957 [INFO] image_fetcher — 대체 이미지 수집: '원달러 환율 급등락 주요 경제 변동의' → 제목='중국발 경기 둔화 경고음…원·달러 환율 1340원 돌파' (관련성=0.14)
-2026-07-22 23:15:53,957 [INFO] image_fetcher — 이미지 수집 성공: '원달러 환율 급등락 주요 경제 변동의' → 제목='중국발 경기 둔화 경고음…원·달러 환율 1340원 돌파' (관련성=0.14)
-2026-07-22 23:15:54,184 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:15:54,184 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-22 23:15:54,186 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-22 23:15:54,187 [INFO] content_generator — 포스트 생성 완료: '원달러 환율 급등락의 이유와 개인투자자 대응 방안' (1553자, 이미지 3개)
-2026-07-22 23:15:54,209 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:15:57,402 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:15:57,403 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '원달러 환율 급등락의 이유와 개인투자자 대응 방안'
-2026-07-22 23:15:57,403 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 2000자 미만이며, 일반적인 정보로 보임.
-2026-07-22 23:15:57,403 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 개인 경험 기반 내용 부족하고, 신뢰성 보완 필요.
-2026-07-22 23:15:57,403 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없어 SEO 및 가독성 보완 필요.
-2026-07-22 23:15:57,411 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-22 23:15:57,413 [INFO] internal_linker —   [1/5] 'ETF' -> https://www.hoguwhat.com/2026/07/30-etf.html
-2026-07-22 23:15:57,416 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-22 23:15:57,416 [INFO] main —   제목: 원달러 환율 급등락의 이유와 개인투자자 대응 방안
-2026-07-22 23:15:57,416 [INFO] main —   이미지: 3개 삽입
-2026-07-22 23:15:57,417 [INFO] main —   글자 수: 1553자
-2026-07-22 23:15:57,417 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '원달러 환율 급등락의 이유와 개인투자자 대응 방안' (1553자 < 2500자)
-2026-07-22 23:15:57,441 [INFO] dashboard_exporter —   검토 대기 저장: 원달러 환율 급등락의 이유와 개인투자자 대응 방안 (6581자 HTML)
-2026-07-22 23:15:57,455 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 112개)
-2026-07-22 23:15:57,456 [INFO] main — 
-============================================================
-2026-07-22 23:15:57,456 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-22 23:15:57,456 [INFO] main — ============================================================
-2026-07-22 23:15:57,479 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-22 23:15:57,496 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-22 23:15:57,510 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-22 23:15:57,727 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-22 23:15:57,992 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-22 23:15:57,994 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-22 23:15:57,997 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-22 23:15:58,011 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 175 / 실패 15 / 대기 84)
-2026-07-22 23:15:58,011 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-22 23:15:58,012 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-22 23:15:58,012 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-23 00:00:23,991 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-07-23 00:00:23,991 [INFO] main —   - [blog1] HOGU What?
 2026-07-23 00:00:23,991 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-07-23 00:00:23,991 [INFO] main —   - [blog3] 금융NEWS
 2026-07-23 00:00:23,996 [INFO] main — ⏳ 'SBS 드라마 김부장 회차별 리뷰 (7~10화)' 예약 2편 대기 중 (다음 2026-07-25)
@@ -623,3 +498,100 @@
 2026-07-23 12:00:10,900 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-23 12:00:10,900 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-23 12:00:10,901 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-23 12:00:41,684 [INFO] main — ============================================================
+2026-07-23 12:00:41,684 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-23 12:00:41
+2026-07-23 12:00:41,684 [INFO] main — ============================================================
+2026-07-23 12:00:41,694 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
+2026-07-23 12:00:41,695 [INFO] keyword_collector — 포스팅 이력 코퍼스: 38개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-23 12:00:47,861 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-07-23 12:00:53,100 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 12:00:53,120 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-23 12:00:53,120 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-23 12:00:53,972 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-23 12:00:53,973 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-23 12:00:53,975 [INFO] keyword_collector — 유사 주제 제외 1개: ['여름휴가 항공권 저렴하게 예약하는 방법 2026']
+2026-07-23 12:00:53,975 [INFO] keyword_collector —   [naver_realtime] 2개: ['유류할증료 인하 일본여행 저렴하게 가는 법', '수도권 벗어난 국내 로컬여행지 추천']
+2026-07-23 12:00:53,975 [INFO] keyword_collector — 최종 선정 키워드 2개: ['유류할증료 인하 일본여행 저렴하게 가는 법', '수도권 벗어난 국내 로컬여행지 추천']
+2026-07-23 12:00:53,975 [INFO] main — 수집된 키워드 2개: ['유류할증료 인하 일본여행 저렴하게 가는 법', '수도권 벗어난 국내 로컬여행지 추천']
+2026-07-23 12:00:53,980 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-07-23 12:00:53,980 [INFO] main — 단독 포스트 대상 키워드 1개: ['유류할증료 인하 일본여행 저렴하게 가는 법']
+2026-07-23 12:00:53,997 [INFO] main — 
+[1/1] 키워드: '유류할증료 인하 일본여행 저렴하게 가는 법'
+2026-07-23 12:00:53,997 [INFO] content_generator — 포스트 생성 중: '유류할증료 인하 일본여행 저렴하게 가는 법'
+2026-07-23 12:01:02,083 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 12:01:02,084 [INFO] research_collector — 검색 의도: 유류할증료 인하 시점과 정보를 파악하여 일본여행을 저렴하게 예약하는 방법을 찾고자 함
+2026-07-23 12:01:12,949 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '유류할증료 인하 일본여행 저렴하게 가는 법'
+2026-07-23 12:01:29,083 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 12:01:29,084 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '유류할증료 인하 일본여행 저렴하게 가는 법'
+2026-07-23 12:01:55,252 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 12:01:55,253 [INFO] source_validator — 출처 검증: 7/7개 통과, 등급 분포 {'B': 5, 'C': 2}
+2026-07-23 12:01:55,256 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-07-23 12:01:55,256 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-23 12:01:57,858 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 12:03:07,222 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(얼리버드)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-07-23 12:03:09,223 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-23 12:03:09,972 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 12:04:26,598 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 12:04:41,549 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-07-23 12:04:43,966 [INFO] image_fetcher — 이미지 수집 성공: '유류할증료 인하, 일본여행 저렴하게 가는 법 완전 정리' → 제목='네이버 인플루언서 [네이버 인플루언서] 일본 비행기 특가 정보와 유류할증' (관련성=0.29)
+2026-07-23 12:04:45,718 [INFO] image_fetcher — 대체 이미지 수집: '유류할증료 인하 일본여행' → 제목='이달 항공권 2만원 싸진다… "국제선 유류할증료 인하"' (관련성=0.67)
+2026-07-23 12:04:45,719 [INFO] image_fetcher — 이미지 수집 성공: '유류할증료 인하 일본여행' → 제목='이달 항공권 2만원 싸진다… "국제선 유류할증료 인하"' (관련성=0.67)
+2026-07-23 12:04:46,846 [INFO] image_fetcher — 이미지 수집 성공: '유류할증료 인하 갑자기 MOPS 유류할증' → 제목='7월 국내선 유류할증료 1만1000원 하락... 국제선도 인하 '유력'' (관련성=0.40)
+2026-07-23 12:04:48,355 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 12:04:48,356 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-23 12:04:48,357 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-23 12:04:48,359 [INFO] content_generator — 포스트 생성 완료: '유류할증료 인하, 일본여행 저렴하게 가는 법 완전 정리' (3575자, 이미지 3개)
+2026-07-23 12:04:49,595 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 12:05:13,533 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-23 12:05:14,304 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 12:05:15,070 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '유류할증료 인하, 일본여행 저렴하게 가는 법 완전 정리'
+2026-07-23 12:05:15,070 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 '~로 알려져 있습니다' 식 정보 재구성이 많고 개인 경험은 한두 문장 수준에 그침
+2026-07-23 12:05:15,070 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개는 충분하나 일부 단락(유류할증료 인하 근거 설명 부분 등)이 500자 이상으로 지나치게 길게 이어짐
+2026-07-23 12:05:15,070 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개와 공식 발표 인용은 있으나 '~로 알려져 있습니다' 식 모호한 표현이 반복되어 신뢰도 신호가 약함
+2026-07-23 12:05:15,070 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 존재 여부 확인 불가/부재로 규정상 warn 처리
+2026-07-23 12:05:15,070 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~것으로 알려져 있습니다/알려졌습니다' 반복과 '다음 섹션에서 짚어보겠습니다' 같은 정형화된 전환구가 다수 반복되어 AI 패턴 의심
+2026-07-23 12:05:15,070 [WARNING] adsense_validator —   🔴 본문 중 '알려져 있습니다였는데'와 같은 문법적으로 어색하고 깨진 문장이 존재하여 신뢰도 저하 우려
+2026-07-23 12:05:15,079 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-23 12:05:15,081 [INFO] internal_linker —   [1/5] '2026년' -> https://www.hoguwhat.com/2026/07/2026_0805021684.html
+2026-07-23 12:05:15,082 [INFO] internal_linker —   [2/5] '항공권 예약' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_23.ht
+2026-07-23 12:05:15,082 [INFO] internal_linker —   [3/5] '2026년' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0159774743
+2026-07-23 12:05:15,085 [INFO] internal_linker —   [4/5] '1500원' -> https://hogugolfntraval.blogspot.com/2026/07/1500.html
+2026-07-23 12:05:15,085 [INFO] internal_linker — 내부 링크 4개 삽입 완료
+2026-07-23 12:05:15,086 [INFO] main —   제목: 유류할증료 인하, 일본여행 저렴하게 가는 법 완전 정리
+2026-07-23 12:05:15,086 [INFO] main —   이미지: 3개 삽입
+2026-07-23 12:05:15,086 [INFO] main —   글자 수: 3575자
+2026-07-23 12:05:16,203 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 12:05:41,048 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-23 12:05:42,010 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 12:05:56,801 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 52/100 — '유류할증료 인하, 일본여행 저렴하게 가는 법 완전 정리'
+2026-07-23 12:05:56,802 [INFO] adsense_validator —   ❌ 원본성 및 품질: 미완성 템플릿 문구('~였는데,~입니다입니다')와 중복 단어, 뉴스 헤드라인·인플루언서 텍스트를 그대로 삽입한 흔적이 있어 원본 편집 없이 짜깁기된 콘텐츠로 판단됨
+2026-07-23 12:05:56,802 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드가 반복 배치되나 문장 파손으로 가독성이 떨어져 검색 품질 신호에 부정적 영향을 줄 수 있음
+2026-07-23 12:05:56,802 [INFO] adsense_validator —   ❌ E-E-A-T 신뢰도: 5개 출처 인용은 있으나 문장 파손·미검증 헤지 표현 반복('~것으로 알려졌습니다')과 원문 그대로 삽입된 스크랩 흔적이 신뢰도를 크게 훼손함
+2026-07-23 12:05:56,802 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 사용 여부 언급 없음 — 저작권 위반은 없으나 이미지 부재로 warn 처리
+2026-07-23 12:05:56,802 [INFO] adsense_validator —   ❌ AI 생성 의심도: 템플릿 변수 미치환으로 보이는 중복·파손 문장, 동일 헤지 표현 반복 패턴이 명백한 AI 생성 흔적을 보임
+2026-07-23 12:05:56,802 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 미완성 템플릿 문구('~였는데,~입니다입니다')와 중복 단어, 뉴스 헤드라인·인플루언서 텍스트를 그대로 삽입한 흔적이 있어 원본 편집 없이 짜깁기된 콘텐츠로 판단됨
+2026-07-23 12:05:56,802 [WARNING] adsense_validator —   🔴 [E-E-A-T 신뢰도] 5개 출처 인용은 있으나 문장 파손·미검증 헤지 표현 반복('~것으로 알려졌습니다')과 원문 그대로 삽입된 스크랩 흔적이 신뢰도를 크게 훼손함
+2026-07-23 12:05:56,802 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 템플릿 변수 미치환으로 보이는 중복·파손 문장, 동일 헤지 표현 반복 패턴이 명백한 AI 생성 흔적을 보임
+2026-07-23 12:05:56,802 [WARNING] adsense_validator —   🔴 본문 중 '싱가포르 항공유 평균 가격이 직전 기간보다 낮아진 것으로 알려져 있습니다였는데... 입니다입니다' 등 문법적으로 파손된 문장이 다수 포함되어 발행 전 반드시 수정 필요
+2026-07-23 12:05:56,802 [WARNING] adsense_validator —   🔴 뉴스 헤드라인('이달 항공권 2만원 싸진다...')과 네이버 인플루언서 소개 문구가 편집 없이 원문 그대로 본문에 삽입되어 있어 저작권·표절 리스크 및 신뢰도 저하 우려
+2026-07-23 12:05:56,802 [ERROR] main —   ❌ AdSense 유해 콘텐츠 감지 — 업로드 취소: '유류할증료 인하, 일본여행 저렴하게 가는 법 완전 정리' (점수: 52/100)
+2026-07-23 12:05:56,802 [ERROR] main —      🔴 [원본성 및 품질] 미완성 템플릿 문구('~였는데,~입니다입니다')와 중복 단어, 뉴스 헤드라인·인플루언서 텍스트를 그대로 삽입한 흔적이 있어 원본 편집 없이 짜깁기된 콘텐츠로 판단됨
+2026-07-23 12:05:56,802 [ERROR] main —      🔴 [E-E-A-T 신뢰도] 5개 출처 인용은 있으나 문장 파손·미검증 헤지 표현 반복('~것으로 알려졌습니다')과 원문 그대로 삽입된 스크랩 흔적이 신뢰도를 크게 훼손함
+2026-07-23 12:05:56,802 [ERROR] main —      🔴 [AI 생성 의심도] 템플릿 변수 미치환으로 보이는 중복·파손 문장, 동일 헤지 표현 반복 패턴이 명백한 AI 생성 흔적을 보임
+2026-07-23 12:05:56,802 [ERROR] main —      🔴 본문 중 '싱가포르 항공유 평균 가격이 직전 기간보다 낮아진 것으로 알려져 있습니다였는데... 입니다입니다' 등 문법적으로 파손된 문장이 다수 포함되어 발행 전 반드시 수정 필요
+2026-07-23 12:05:56,802 [ERROR] main —      🔴 뉴스 헤드라인('이달 항공권 2만원 싸진다...')과 네이버 인플루언서 소개 문구가 편집 없이 원문 그대로 본문에 삽입되어 있어 저작권·표절 리스크 및 신뢰도 저하 우려
+2026-07-23 12:05:56,816 [INFO] main — 
+============================================================
+2026-07-23 12:05:56,816 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 1개
+2026-07-23 12:05:56,816 [INFO] main — ============================================================
+2026-07-23 12:05:56,841 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-23 12:05:56,860 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-23 12:05:56,877 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-23 12:05:57,028 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-23 12:05:57,298 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-23 12:05:57,300 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-23 12:05:57,302 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-23 12:05:57,318 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 174 / 실패 15 / 대기 84)
+2026-07-23 12:05:57,319 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-23 12:05:57,319 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-23 12:05:57,320 [INFO] main — 대시보드 데이터 업데이트 완료

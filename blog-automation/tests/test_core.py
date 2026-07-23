@@ -1,0 +1,826 @@
+"""핵심 로직 회귀 테스트 — config 병합, 키워드 필터, 이미지 쿼리 단순화.
+
+실행: cd blog-automation && python -m pytest tests/ -v
+"""
+
+import json
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# config.get_blog_configs — BLOGS_CONFIG + blogs.json 병합
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _reload_config(monkeypatch, blogs_config_env: str = ""):
+    """환경변수를 설정하고 config 모듈을 새로 로드합니다."""
+    monkeypatch.setenv("BLOGS_CONFIG", blogs_config_env)
+    for mod in ("config",):
+        sys.modules.pop(mod, None)
+    import config
+    return config
+
+
+class _FakeBlock:
+    def __init__(self, type_, text=""):
+        self.type = type_
+        self.text = text
+
+
+class _FakeMessage:
+    def __init__(self, text, stop_reason):
+        self.content = [_FakeBlock("thinking"), _FakeBlock("text", text)]
+        self.stop_reason = stop_reason
+
+
+class _FakeStream:
+    """client.messages.stream() 컨텍스트 매니저 스텁."""
+    def __init__(self, message):
+        self._message = message
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        pass
+
+    def get_final_message(self):
+        return self._message
+
+
+class _FakeMessages:
+    """client.messages 네임스페이스 — stream()과 calls 모두 지원."""
+    def __init__(self, owner):
+        self._owner = owner
+
+    def stream(self, **kwargs):
+        self._owner.calls.append(kwargs)
+        return _FakeStream(self._owner._responses.pop(0))
+
+
+class _FakeClient:
+    """messages.stream 호출마다 준비된 응답을 순서대로 반환."""
+    def __init__(self, responses):
+        self._responses = list(responses)
+        self.calls = []
+        self.messages = _FakeMessages(self)
+
+
+def test_claude_generate_continues_truncated_response():
+    """max_tokens로 잘리면 이어쓰기 요청으로 텍스트를 이어붙인다."""
+    from config import claude_generate
+    client = _FakeClient([
+        _FakeMessage("앞부분", "max_tokens"),
+        _FakeMessage("뒷부분", "end_turn"),
+    ])
+    result = claude_generate(client, model="m", max_tokens=100,
+                             messages=[{"role": "user", "content": "글 써줘"}])
+    assert result == "앞부분뒷부분"
+    # 이어쓰기 요청에 이전 assistant 블록이 그대로 포함되어야 함
+    assert client.calls[1]["messages"][1]["role"] == "assistant"
+
+
+def test_claude_generate_gives_up_when_still_truncated():
+    """이어쓰기 후에도 잘려 있으면 빈 문자열 (잘린 글 게시 방지)."""
+    from config import claude_generate
+    client = _FakeClient([
+        _FakeMessage("A", "max_tokens"),
+        _FakeMessage("B", "max_tokens"),
+        _FakeMessage("C", "max_tokens"),
+    ])
+    result = claude_generate(client, model="m", max_tokens=100, max_continues=2,
+                             messages=[{"role": "user", "content": "글 써줘"}])
+    assert result == ""
+
+
+class _LimitErrorMessages:
+    """stream() 호출 시 Anthropic 사용 한도 오류를 던지는 가짜 messages."""
+    def stream(self, **kwargs):
+        raise RuntimeError(
+            "Error code: 400 - You have reached your specified API usage limits. "
+            "You will regain access on 2026-08-01 at 00:00 UTC."
+        )
+
+
+class _LimitErrorClient:
+    def __init__(self):
+        self.messages = _LimitErrorMessages()
+
+
+def test_claude_generate_falls_back_to_openai_on_usage_limit(monkeypatch):
+    """Claude 사용 한도 오류 시 OpenAI 폴백을 호출하고 플래그를 세운다."""
+    import config
+    monkeypatch.setattr(config, "_claude_limit_hit", False)
+    called = {}
+    def fake_fallback(system, messages, max_tokens, temperature):
+        called["args"] = (system, messages, max_tokens, temperature)
+        return "GPT 폴백 결과"
+    monkeypatch.setattr(config, "_openai_fallback", fake_fallback)
+
+    result = config.claude_generate(
+        _LimitErrorClient(), model="m", max_tokens=100, system="시스템",
+        messages=[{"role": "user", "content": "글 써줘"}])
+    assert result == "GPT 폴백 결과"
+    assert called["args"][0] == "시스템"
+    assert config._claude_limit_hit is True
+
+
+def test_claude_generate_skips_claude_after_limit_hit(monkeypatch):
+    """한도 도달 이후 호출은 Claude를 건너뛰고 바로 폴백한다."""
+    import config
+    monkeypatch.setattr(config, "_claude_limit_hit", True)
+    monkeypatch.setattr(config, "_openai_fallback", lambda *a: "바로 폴백")
+    client = _FakeClient([_FakeMessage("Claude 응답", "end_turn")])
+    result = config.claude_generate(client, model="m", max_tokens=100,
+                                    messages=[{"role": "user", "content": "x"}])
+    assert result == "바로 폴백"
+    assert client.calls == []  # Claude API 호출 자체가 없어야 함
+
+
+def test_claude_generate_reraises_non_limit_errors(monkeypatch):
+    """한도 오류가 아닌 예외는 그대로 전파한다 (기존 재시도 로직 유지)."""
+    import config, pytest as _pytest
+    monkeypatch.setattr(config, "_claude_limit_hit", False)
+
+    class _OtherErrorMessages:
+        def stream(self, **kwargs):
+            raise RuntimeError("Error code: 529 - overloaded")
+
+    class _OtherErrorClient:
+        messages = _OtherErrorMessages()
+
+    with _pytest.raises(RuntimeError, match="overloaded"):
+        config.claude_generate(_OtherErrorClient(), model="m", max_tokens=100,
+                               messages=[{"role": "user", "content": "x"}])
+    assert config._claude_limit_hit is False
+
+
+def test_messages_to_text_flattens_content_blocks():
+    """Claude content 블록 리스트가 OpenAI 평문 형식으로 변환된다."""
+    from config import _messages_to_text
+    msgs = [
+        {"role": "user", "content": "질문"},
+        {"role": "assistant", "content": [{"type": "thinking", "thinking": "..."},
+                                          {"type": "text", "text": "답변"}]},
+    ]
+    out = _messages_to_text(msgs)
+    assert out == [{"role": "user", "content": "질문"},
+                   {"role": "assistant", "content": "답변"}]
+
+
+def test_adsense_min_score_default_80(monkeypatch):
+    """AdSense 품질 기준 기본값은 80점 (사용자 확정 정책 — 낮추지 말 것)."""
+    monkeypatch.delenv("ADSENSE_MIN_SCORE", raising=False)
+    config = _reload_config(monkeypatch)
+    assert config.ADSENSE_MIN_SCORE == 80
+
+
+def test_merge_env_overrides_registry(monkeypatch):
+    """BLOGS_CONFIG의 blog1이 blogs.json의 blog1을 덮어쓴다."""
+    env = json.dumps([{"id": "blog1", "name": "ENV블로그", "blog_id": "999", "enabled": True}])
+    config = _reload_config(monkeypatch, env)
+    blogs = {b["id"]: b for b in config.get_blog_configs()}
+    assert blogs["blog1"]["name"] == "ENV블로그"
+    assert blogs["blog1"]["blog_id"] == "999"
+
+
+def test_merge_keeps_registry_only_blogs(monkeypatch):
+    """BLOGS_CONFIG에 없는 blog2/blog3는 blogs.json에서 유지된다."""
+    env = json.dumps([{"id": "blog1", "name": "ENV블로그", "enabled": True}])
+    config = _reload_config(monkeypatch, env)
+    ids = {b["id"] for b in config.get_blog_configs()}
+    assert {"blog1", "blog2", "blog3"} <= ids
+
+
+def test_env_item_without_id_treated_as_blog1(monkeypatch):
+    """id 없는 BLOGS_CONFIG 항목은 버려지지 않고 blog1으로 간주된다."""
+    env = json.dumps([{"name": "ID없는블로그", "blog_id": "777", "enabled": True}])
+    config = _reload_config(monkeypatch, env)
+    blogs = {b["id"]: b for b in config.get_blog_configs()}
+    assert blogs["blog1"]["blog_id"] == "777"
+
+
+def test_registry_blogs_have_gsc_site_url(monkeypatch):
+    """blogs.json 기반 설정에 gsc_site_url이 포함된다."""
+    config = _reload_config(monkeypatch, "")
+    for b in config.get_blog_configs():
+        assert "gsc_site_url" in b, f"{b['id']}에 gsc_site_url 없음"
+
+
+def test_merge_preserves_registry_fields_not_in_env(monkeypatch):
+    """BLOGS_CONFIG가 credential만 줘도 blogs.json의 gsc_site_url/topics는 유지된다.
+
+    회귀 방지: 예전엔 merged[id] = b로 통째 교체해서 BLOGS_CONFIG에 없는 필드
+    (gsc_site_url, topics, naver_api_queries)가 전부 사라지는 버그가 있었음
+    (2026-07-22, 사이트맵 제출이 전 블로그에서 "사이트 URL 없음"으로 실패해서 발견).
+    """
+    env = json.dumps([
+        {"id": "blog1", "client_id": "X", "client_secret": "Y", "refresh_token": "Z", "enabled": True},
+    ])
+    config = _reload_config(monkeypatch, env)
+    blogs = {b["id"]: b for b in config.get_blog_configs()}
+    assert blogs["blog1"]["client_id"] == "X"
+    assert blogs["blog1"].get("gsc_site_url"), "BLOGS_CONFIG 병합 후 gsc_site_url 유실됨"
+    assert blogs["blog1"].get("topics"), "BLOGS_CONFIG 병합 후 topics 유실됨"
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# keyword_collector — 블로그별 이력 필터
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_corpus_blog_filter(tmp_path, monkeypatch):
+    """유사도 코퍼스가 blogId별로 분리되고, default는 blog1 소속으로 간주된다."""
+    import keyword_collector as kc
+    history = [
+        {"blogId": "blog1", "keywords": ["재테크 방법"], "posts": []},
+        {"blogId": "blog2", "keywords": ["제주 여행"], "posts": []},
+        {"blogId": "default", "keywords": ["ISA 계좌"], "posts": []},
+        {"blogId": "blog3", "keywords": [], "posts": [
+            {"blogId": "blog3", "keyword": "ETF 수수료", "title": "ETF 글"},
+        ]},
+    ]
+    hist_file = tmp_path / "run_history.json"
+    hist_file.write_text(json.dumps(history), encoding="utf-8")
+    monkeypatch.setattr(kc, "_HISTORY_FILE", str(hist_file))
+
+    blog1 = kc._load_recent_post_corpus(blog_id="blog1")
+    blog2 = kc._load_recent_post_corpus(blog_id="blog2")
+    blog3 = kc._load_recent_post_corpus(blog_id="blog3")
+
+    assert "재테크 방법" in blog1 and "ISA 계좌" in blog1   # default → blog1 소속
+    assert "제주 여행" not in blog1
+    assert blog2 == ["제주 여행"]
+    assert "ETF 수수료" in blog3 and "재테크 방법" not in blog3
+
+
+def test_corpus_no_filter_returns_all(tmp_path, monkeypatch):
+    """blog_id 미지정 시 전체 이력을 반환한다."""
+    import keyword_collector as kc
+    history = [
+        {"blogId": "blog1", "keywords": ["A"], "posts": []},
+        {"blogId": "blog2", "keywords": ["B"], "posts": []},
+    ]
+    hist_file = tmp_path / "run_history.json"
+    hist_file.write_text(json.dumps(history), encoding="utf-8")
+    monkeypatch.setattr(kc, "_HISTORY_FILE", str(hist_file))
+    assert set(kc._load_recent_post_corpus()) == {"A", "B"}
+
+
+def test_used_kw_file_per_blog():
+    """blog2/blog3는 전용 used_keywords 파일, blog1/default는 공용 파일."""
+    import keyword_collector as kc
+    f1 = kc._get_used_kw_file("blog1")
+    fd = kc._get_used_kw_file("default")
+    f2 = kc._get_used_kw_file("blog2")
+    f3 = kc._get_used_kw_file("blog3")
+    assert f1 == fd
+    assert f2 != f1 and f3 != f1 and f2 != f3
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# image_fetcher — 쿼리 단순화 & 캡션 안전화
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_simplify_query_strips_fluff():
+    from image_fetcher import _simplify_query
+    q = _simplify_query("스타벅스 사이렌오더 첫 사용 실수담 공개", 3)
+    assert "실수담" not in q and "공개" not in q
+    assert "스타벅스" in q
+
+
+def test_simplify_query_keeps_acronyms():
+    from image_fetcher import _simplify_query
+    q = _simplify_query("ETF 처음 투자할 때 몰랐던 실수들", 2)
+    assert "ETF" in q
+
+
+def test_simplify_query_impact_title_style():
+    """간결·임팩트형 제목에서 조사·단위어·수식어가 제거된다."""
+    from image_fetcher import _simplify_query
+    assert _simplify_query("국민연금 30% 더 받는 법", 2) == "국민연금"
+    assert _simplify_query("제주 3박4일 40만원 코스", 2) == "제주 코스"
+    assert _simplify_query("ETF 초보가 가장 많이 하는 실수 5가지", 2) == "ETF 초보"
+
+
+def test_strip_josa_preserves_nouns():
+    """조사 제거가 명사 일부를 오절단하지 않는다."""
+    from image_fetcher import _strip_josa
+    assert _strip_josa("초보가") == "초보"
+    assert _strip_josa("고속도로") == "고속도로"   # '로'는 조사 목록에서 제외
+    assert _strip_josa("회의") == "회의"           # 어근 1자면 유지
+    assert _strip_josa("제주의") == "제주"
+
+
+def test_inject_images_no_loss_when_few_h2():
+    """H2 슬롯이 부족해도 이미지가 유실되지 않는다 (남는 것은 본문 끝 배치)."""
+    import image_fetcher as imf
+    imgs = [{"url": f"http://x/{i}.jpg", "title": f"t{i}", "alt_text": f"a{i}"} for i in range(3)]
+    short = "<p>도입</p><h2>A</h2><p>1</p><h2>B</h2><p>2</p>"  # H2 2개 → 슬롯 1개
+    out = imf.inject_images_into_content(short, imgs, "키워드")
+    assert out.count("<figure") == 3
+
+
+def test_max_images_per_post_constant():
+    """글당 이미지 정책 상수: 최소 1 / 최대 3."""
+    import content_generator as cg
+    assert cg._MIN_IMAGES_PER_POST == 1
+    assert cg._MAX_IMAGES_PER_POST == 3
+
+
+def test_safe_caption_rejects_filenames():
+    from image_fetcher import _safe_caption
+    assert _safe_caption({"title": "MetabolismoLipidiE.png"}, "대체텍스트") == "대체텍스트"
+    assert _safe_caption({"title": ""}, "대체텍스트") == "대체텍스트"
+    assert _safe_caption({"title": "서울 야경 사진"}, "대체텍스트") == "서울 야경 사진"
+    # Pixabay 태그 나열 형식 (슬래시 2개 이상) → alt로 대체
+    assert _safe_caption({"title": "marguerite / white petals / blossom / fl"}, "대체텍스트") == "대체텍스트"
+    assert _safe_caption({"title": "heat wave / flower wallpaper / beautiful"}, "대체텍스트") == "대체텍스트"
+
+
+def test_min_relevance_returns_fallback():
+    """관련성 0 후보만 있어도 _fetch_best_image는 최상위 후보를 폴백으로 반환한다.
+    최종 품질 게이트는 _filter_relevant_images(Claude)가 담당한다."""
+    import image_fetcher as imf
+
+    junk = {"url": "http://x/ChateauValere.jpg", "title": "Château de Valère", "width": 800, "height": 600}
+
+    def fake_search(query, cid, csec, n, **kwargs):
+        return [junk]
+
+    orig = imf._search_all_sources
+    imf._search_all_sources = fake_search
+    try:
+        result = imf._fetch_best_image("프리랜서 종합소득세 신고")
+        # 폴백 반환: 관련성 미달이라도 후보가 있으면 반환 (Claude가 최종 필터링)
+        assert result is not None
+        assert result["url"] == junk["url"]
+    finally:
+        imf._search_all_sources = orig
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# content_generator — 가짜 체험담 방지 (경험 기반 1인칭 게이팅)
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _write_author_profile(tmp_path, monkeypatch, experiences):
+    """임시 author_profile.json을 만들어 config에 주입합니다."""
+    import config
+    profile_file = tmp_path / "author_profile.json"
+    profile_file.write_text(
+        json.dumps({"name": "마린파파", "experiences": experiences}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(config, "_AUTHOR_PROFILE_FILE", str(profile_file))
+
+
+def test_match_experience_ignores_examples(tmp_path, monkeypatch):
+    """'예: ' 접두 항목은 템플릿 예시이므로 매칭되지 않는다."""
+    from content_generator import _match_experience
+    _write_author_profile(tmp_path, monkeypatch, [
+        {"topics": ["예: ISA 계좌"], "blogs": ["blog1"], "summary": "예시"},
+    ])
+    assert _match_experience("ISA 계좌 개설 방법", "blog1") is None
+
+
+def test_match_experience_topic_and_blog_filter(tmp_path, monkeypatch):
+    """실제 topics는 부분 일치로 매칭되고, blogs 필터가 적용된다."""
+    from content_generator import _match_experience
+    _write_author_profile(tmp_path, monkeypatch, [
+        {"topics": ["ISA 계좌"], "blogs": ["blog1"], "summary": "2023년부터 운용 중"},
+    ])
+    hit = _match_experience("ISA 계좌 수익률 정리", "blog1")
+    assert hit is not None and hit["summary"] == "2023년부터 운용 중"
+    assert _match_experience("ISA 계좌 수익률 정리", "blog2") is None
+    assert _match_experience("제주 여행 코스", "blog1") is None
+
+
+def test_style_block_without_experience_bans_fake_claims(tmp_path, monkeypatch):
+    """경험 자료가 없으면 조사형 지시 + 경험 주장 금지 문구가 포함된다."""
+    from content_generator import _experience_style_block
+    _write_author_profile(tmp_path, monkeypatch, [])
+    block = _experience_style_block("전세 보증금 반환", "blog1")
+    assert "조사·분석형" in block
+    assert "직접 사용해봤습니다" in block  # 금지 예시 명시
+    assert "실제 수익을 공개합니다" in block
+
+
+def test_style_block_with_experience_injects_material(tmp_path, monkeypatch):
+    """경험 자료가 있으면 자료가 주입되고 범위 제한 경고가 포함된다."""
+    from content_generator import _experience_style_block
+    _write_author_profile(tmp_path, monkeypatch, [
+        {"topics": ["ISA 계좌"], "blogs": [], "summary": "2023년부터 ISA 운용", "detail": "연 수익률 기록 있음"},
+    ])
+    block = _experience_style_block("ISA 계좌 후기", "blog1")
+    assert "2023년부터 ISA 운용" in block
+    assert "지어내지 마세요" in block
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# dashboard_exporter — blogId 폴백
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_categorize():
+    from dashboard_exporter import _categorize
+    assert _categorize("ETF 투자 방법") == "금융"
+    assert _categorize("제주 여행 코스") == "여행"
+    assert _categorize("아무 관련 없는 주제") == "일반"
+
+
+def test_assess_risk_level():
+    """YMYL 위험도 분류: 금융·건강·법률=high, 엔터·여행=low, 그 외=medium."""
+    from content_generator import _assess_risk_level
+    assert _assess_risk_level("ETF 투자 방법") == "high"
+    assert _assess_risk_level("당뇨 식단 관리") == "high"
+    assert _assess_risk_level("전세 계약 주의사항") == "high"
+    assert _assess_risk_level("제주 여행 코스") == "low"
+    assert _assess_risk_level("넷플릭스 드라마 추천") == "low"
+    assert _assess_risk_level("노션 사용법 정리") == "medium"
+
+
+def test_score_relevance_article_type_bonus():
+    """같은 articleType 후보는 관련도 점수 +1 보너스를 받는다."""
+    from internal_linker import _score_relevance
+    cand = {"tags": ["ETF"], "keyword": "etf 투자", "articleType": "how_to"}
+    base = _score_relevance(cand, {"ETF"}, "etf 투자")
+    boosted = _score_relevance(cand, {"ETF"}, "etf 투자", current_article_type="how_to")
+    assert boosted == base + 1
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# post_manager — 제목 중복 감지
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _make_registry(entries: list[dict], tmp_path, monkeypatch):
+    """임시 post_registry.json을 생성하고 post_manager에 주입합니다."""
+    import post_manager as pm
+    reg_file = tmp_path / "post_registry.json"
+    reg_file.write_text(json.dumps(entries), encoding="utf-8")
+    monkeypatch.setattr(pm, "REGISTRY_FILE", str(reg_file))
+    return pm
+
+
+def test_find_duplicate_exact_match(tmp_path, monkeypatch):
+    """완전히 동일한 제목은 중복으로 감지된다."""
+    pm = _make_registry(
+        [{"post_id": "x", "title": "ETF 투자 방법", "status": "published", "blogId": "blog1"}],
+        tmp_path, monkeypatch,
+    )
+    dup = pm.find_duplicate_post("ETF 투자 방법", blog_id="blog1")
+    assert dup is not None
+    assert dup["post_id"] == "x"
+
+
+def test_find_duplicate_similar_title(tmp_path, monkeypatch):
+    """단어 겹침이 60% 이상인 유사 제목도 중복으로 감지된다."""
+    pm = _make_registry(
+        [{"post_id": "y", "title": "ETF 투자 처음 입문 주의사항 정리", "status": "published", "blogId": "blog1"}],
+        tmp_path, monkeypatch,
+    )
+    dup = pm.find_duplicate_post("ETF 투자 처음 입문 주의사항", blog_id="blog1")
+    assert dup is not None
+
+
+def test_find_duplicate_different_blog_no_match(tmp_path, monkeypatch):
+    """다른 블로그의 동일 제목은 중복으로 잡지 않는다."""
+    pm = _make_registry(
+        [{"post_id": "z", "title": "ETF 투자 방법", "status": "published", "blogId": "blog2"}],
+        tmp_path, monkeypatch,
+    )
+    dup = pm.find_duplicate_post("ETF 투자 방법", blog_id="blog1")
+    assert dup is None
+
+
+def test_find_duplicate_pending_not_blocked(tmp_path, monkeypatch):
+    """pending 상태 포스트는 기본 필터(published)에 걸리지 않는다."""
+    pm = _make_registry(
+        [{"post_id": "p", "title": "ETF 투자 방법", "status": "pending", "blogId": "blog1"}],
+        tmp_path, monkeypatch,
+    )
+    dup = pm.find_duplicate_post("ETF 투자 방법", blog_id="blog1")
+    assert dup is None
+
+
+def test_find_duplicate_no_match(tmp_path, monkeypatch):
+    """주제가 완전히 다른 제목은 중복으로 판단하지 않는다."""
+    pm = _make_registry(
+        [{"post_id": "q", "title": "제주도 여행 코스 추천", "status": "published", "blogId": "blog1"}],
+        tmp_path, monkeypatch,
+    )
+    dup = pm.find_duplicate_post("ETF 투자 방법 완전 정리", blog_id="blog1")
+    assert dup is None
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 자료 조사 엔진 — 자료팩 생성·검증·프롬프트 주입
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_format_evidence_without_pack_bans_fabricated_numbers():
+    """자료팩이 없으면 임의 수치·날짜·정책 작성 금지 폴백 규칙이 들어간다."""
+    from evidence_builder import format_evidence_for_prompt
+    block = format_evidence_for_prompt(None)
+    assert "임의로 만들어 쓰지 마세요" in block
+    assert "자료팩 없음" in block
+
+
+def test_format_evidence_with_pack_injects_facts():
+    """검증된 사실이 자료팩 블록에 출처와 함께 포함된다."""
+    from evidence_builder import format_evidence_for_prompt
+    pack = {"keyword": "ISA", "facts": [
+        {"claim": "2026년 납입 한도 4천만원", "source_title": "기재부 보도자료",
+         "source_url": "https://moef.go.kr/a", "published_at": "2026-01-02", "verified": True},
+        {"claim": "미검증 사실", "source_title": "x", "source_url": "https://x.com/1",
+         "published_at": "", "verified": False},
+    ]}
+    block = format_evidence_for_prompt(pack)
+    assert "2026년 납입 한도 4천만원" in block
+    assert "https://moef.go.kr/a" in block
+    assert "미검증 사실" not in block  # verified 사실이 있으면 그것만 사용
+    assert "자료팩에 있는 것만 사용" in block
+
+
+def test_validate_pack_sets_verified(monkeypatch):
+    """접속 가능 여부에 따라 verified가 설정된다 (네트워크 모킹)."""
+    import source_validator as sv
+    monkeypatch.setattr(sv, "_fetch_page", lambda url, timeout=10: {
+        "ok": "good" in url, "text": "본문", "published_at": "", "publisher": ""})
+    monkeypatch.setattr(sv, "_verify_claims_with_claude", lambda facts, p: [])
+    pack = {"facts": [
+        {"claim": "a", "source_url": "https://good.example/1", "verified": False},
+        {"claim": "b", "source_url": "https://dead.example/1", "verified": False},
+    ]}
+    result = sv.validate_pack(pack)
+    assert result["facts"][0]["verified"] is True
+    assert result["facts"][1]["verified"] is False
+
+
+def test_merge_evidence_prioritizes_verified_sources():
+    """자료팩 검증 출처가 sources 앞쪽에 병합되고 evidence 통계가 기록된다."""
+    from content_generator import _merge_evidence
+    post = {"sources": [{"title": "모델 생성 출처", "url": "https://model.example"}]}
+    pack = {"facts": [
+        {"claim": "a", "source_title": "공식", "source_url": "https://gov.example", "verified": True},
+        {"claim": "b", "source_title": "미검증", "source_url": "https://un.example", "verified": False},
+    ]}
+    _merge_evidence(post, pack)
+    assert post["sources"][0]["url"] == "https://gov.example"
+    assert any(s["url"] == "https://model.example" for s in post["sources"])
+    assert post["evidence"] == {"used": True, "facts": 2, "verified": 1}
+
+
+def test_merge_evidence_without_pack():
+    from content_generator import _merge_evidence
+    post = {"sources": []}
+    _merge_evidence(post, None)
+    assert post["evidence"]["used"] is False
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# source_validator — 출처 신뢰도 등급·최신성·주장 대조
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_grade_source():
+    """도메인 기반 A/B/C/D 등급 분류."""
+    from source_validator import grade_source
+    assert grade_source("https://www.moef.go.kr/press/1") == "A"
+    assert grade_source("https://www.yna.co.kr/view/AKR123") == "B"
+    assert grade_source("https://www.snu.ac.kr/research") == "B"
+    assert grade_source("https://www.etnews.com/2026") == "C"
+    assert grade_source("https://blog.naver.com/someone/1") == "D"
+    assert grade_source("not-a-url") == "X"
+
+
+def test_is_stale():
+    from source_validator import is_stale
+    assert is_stale("2020-01-01", max_age_days=730) is True
+    from datetime import datetime, timezone
+    recent = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    assert is_stale(recent, max_age_days=730) is False
+    assert is_stale("", max_age_days=730) is False  # 날짜 불명은 통과
+
+
+def test_validate_pack_excludes_dead_and_unsupported(monkeypatch):
+    """접속 불가(X) / 내용 불일치는 제외, 나머지는 등급과 함께 통과."""
+    import source_validator as sv
+    pages = {
+        "https://moef.go.kr/ok": {"ok": True, "text": "납입 한도 4천만원", "published_at": "2026-01-05", "publisher": "기획재정부"},
+        "https://dead.example/x": {"ok": False, "text": "", "published_at": "", "publisher": ""},
+        "https://yna.co.kr/wrong": {"ok": True, "text": "무관한 내용", "published_at": "2026-02-01", "publisher": "연합뉴스"},
+    }
+    monkeypatch.setattr(sv, "_fetch_page", lambda url, timeout=10: pages[url])
+    monkeypatch.setattr(sv, "_verify_claims_with_claude", lambda facts, p: [
+        {"index": 0, "supported": True, "conflicts_with": []},
+        {"index": 2, "supported": False, "conflicts_with": []},
+    ])
+    pack = {"facts": [
+        {"claim": "한도 4천만원", "source_url": "https://moef.go.kr/ok"},
+        {"claim": "접속 불가 출처", "source_url": "https://dead.example/x"},
+        {"claim": "내용 불일치", "source_url": "https://yna.co.kr/wrong"},
+    ]}
+    result = sv.validate_pack(pack)
+    f0, f1, f2 = result["facts"]
+    assert f0["verified"] is True and f0["grade"] == "A" and f0["publisher"] == "기획재정부"
+    assert f1["verified"] is False and f1["grade"] == "X"
+    assert f2["verified"] is False and f2["grade"] == "X"  # 내용 불일치 → 제외
+
+
+def test_format_evidence_requires_ab_grade_for_critical_facts():
+    """중요 수치·정책 사실은 A/B 등급 출처가 있어야 자료팩 블록에 포함된다."""
+    from evidence_builder import format_evidence_for_prompt
+    pack = {"keyword": "ISA", "facts": [
+        {"claim": "납입 한도 4천만원으로 변경", "source_title": "기재부", "grade": "A",
+         "source_url": "https://moef.go.kr/1", "published_at": "2026-01-01", "verified": True},
+        {"claim": "세율 15% 인하 예정", "source_title": "개인 블로그", "grade": "D",
+         "source_url": "https://blog.naver.com/x", "published_at": "", "verified": True},
+        {"claim": "가입 절차는 비대면으로 가능", "source_title": "블로그", "grade": "D",
+         "source_url": "https://blog.naver.com/y", "published_at": "", "verified": True},
+    ]}
+    block = format_evidence_for_prompt(pack)
+    assert "납입 한도 4천만원" in block          # 중요 + A등급 → 포함
+    assert "세율 15% 인하" not in block          # 중요 + D등급 → 제외
+    assert "비대면으로 가능" in block            # 비중요 + D등급 → 포함
+    assert "[등급 A]" in block
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 글 유형별 구조 재설계 — 유형 감지·구조 변주·FAQ 스키마
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_detect_new_article_types():
+    """투자형·뉴스해설 유형이 감지된다."""
+    from content_generator import _detect_article_type
+    assert _detect_article_type("삼성전자 주가 전망") == "investment"
+    assert _detect_article_type("2026 최저임금 인상 발표") == "news_analysis"
+    assert _detect_article_type("ISA 계좌 개설 방법") == "how_to"
+
+
+def test_structure_guide_has_all_types():
+    """모든 유형에 권장 구조가 정의되어 있다."""
+    from content_generator import _STRUCTURE_GUIDE, _detect_article_type
+    for t in ["how_to", "review", "comparison", "explainer", "analysis",
+              "investment", "news_analysis", "drama_review", "travel_guide", "sports_review"]:
+        assert t in _STRUCTURE_GUIDE, f"{t} 구조 없음"
+    assert "준비 → 단계" in _STRUCTURE_GUIDE["how_to"] or "준비:" in _STRUCTURE_GUIDE["how_to"]
+    assert "시나리오" in _STRUCTURE_GUIDE["investment"]
+    assert "향후 관찰점" in _STRUCTURE_GUIDE["news_analysis"]
+
+
+def test_structure_variation_deterministic_but_diverse():
+    """같은 키워드는 같은 변주, 다른 키워드들은 서로 다른 변주가 나온다."""
+    from content_generator import _structure_variation
+    a1 = _structure_variation("ISA 계좌 개설")
+    a2 = _structure_variation("ISA 계좌 개설")
+    assert a1 == a2  # 재시도 시 일관성
+    assert "구조 변주" in a1
+    # 여러 키워드에서 H2 개수·도입부 스타일이 다양하게 분포하는지
+    variations = {_structure_variation(f"키워드{i}") for i in range(12)}
+    assert len(variations) >= 4
+
+
+def test_faq_schema_disabled_by_default(monkeypatch):
+    """FAQPage 구조화 데이터는 기본 비활성 — Article·Breadcrumb 중심."""
+    monkeypatch.delenv("FAQ_SCHEMA", raising=False)
+    import importlib
+    import schema_generator as sg
+    importlib.reload(sg)
+    types = sg._detect_types({
+        "title": "테스트", "keyword": "테스트",
+        "faq": [{"q": "질문", "a": "답변"}],
+    })
+    assert "FAQPage" not in types
+    assert "BlogPosting" in types and "BreadcrumbList" in types
+    # 환경변수로 재활성화 가능
+    monkeypatch.setenv("FAQ_SCHEMA", "true")
+    types2 = sg._detect_types({
+        "title": "테스트", "keyword": "테스트",
+        "faq": [{"q": "질문", "a": "답변"}],
+    })
+    assert "FAQPage" in types2
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# post_lifecycle — 게시 후 성과 추적 상태 판정
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_lifecycle_due_checks():
+    """경과일 기준 도래한 자동 작업 목록 (7/14/30/60/90)."""
+    from post_lifecycle import due_checks
+    assert due_checks(3) == []
+    assert due_checks(7) == ["색인 여부 확인"]
+    assert due_checks(35) == ["색인 여부 확인", "첫 노출·검색어 확인", "제목·도입부·CTR 평가"]
+    assert len(due_checks(100)) == 5
+    assert due_checks(None) == []
+
+
+def test_lifecycle_status_transitions():
+    """상태 판정: 신규→색인 대기→성장 중→최적화/업데이트/통합/우수."""
+    from post_lifecycle import evaluate_status
+    zero = {"clicks": 0, "impressions": 0, "ctr": 0.0}
+    assert evaluate_status(3, zero, None) == "신규"
+    assert evaluate_status(10, zero, None) == "색인 대기"
+    assert evaluate_status(95, zero, None) == "통합 후보"          # 90일+ 노출 없음
+    assert evaluate_status(20, {"clicks": 2, "impressions": 50, "ctr": 4.0}, None) == "성장 중"
+    assert evaluate_status(40, {"clicks": 1, "impressions": 200, "ctr": 0.5}, None) == "최적화 필요"
+    # 60일+ 클릭 하락 → 업데이트 필요
+    assert evaluate_status(65, {"clicks": 3, "impressions": 100, "ctr": 3.0},
+                           {"clicks": 10}) == "업데이트 필요"
+    # 성과 우수는 경과일 무관 최우선
+    assert evaluate_status(65, {"clicks": 50, "impressions": 1000, "ctr": 5.0},
+                           {"clicks": 60}) == "성과 우수"
+    assert evaluate_status(95, {"clicks": 5, "impressions": 3, "ctr": 2.0}, None) == "통합 후보"
+
+
+def test_lifecycle_model_cost_estimate():
+    from post_lifecycle import estimate_model_cost
+    cost = estimate_model_cost(3000)
+    assert 0 < cost < 1  # 3천 자 글 → 1달러 미만 근사치
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# title_ab_tracker — 제목 A/B 개선·복구
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _setup_ab(tmp_path, monkeypatch):
+    import title_ab_tracker as ab
+    monkeypatch.setattr(ab, "CHANGES_FILE", tmp_path / "title_changes.json")
+    monkeypatch.setattr(ab, "FIX_HISTORY_FILE", tmp_path / "fix_history.json")
+    monkeypatch.setattr(ab, "DASHBOARD_FILE", tmp_path / "dash_title_changes.json")
+    return ab
+
+
+def test_ab_record_and_guard(tmp_path, monkeypatch):
+    """변경 전 제목·날짜·원인이 저장되고, 28일간 동시 변경 가드가 걸린다."""
+    ab = _setup_ab(tmp_path, monkeypatch)
+    ab.record_title_change("https://x.blogspot.com/p/1", "옛 제목", "새 제목",
+                           "저CTR 검색어 'isa' (CTR 1.0%)",
+                           {"ctr": 1.0, "position": 12.0, "impressions": 100, "clicks": 1})
+    recs = ab.load_changes()
+    assert recs[0]["old_title"] == "옛 제목" and recs[0]["changed_at"]
+    assert recs[0]["reason"].startswith("저CTR")
+    assert ab.title_changed_recently("https://x.blogspot.com/p/1") is True
+    assert ab.title_changed_recently("https://x.blogspot.com/p/other") is False
+
+
+def test_ab_body_edit_guard(tmp_path, monkeypatch):
+    """최근 본문 수정 이력이 있으면 body_edited_recently=True."""
+    import json as _json
+    from datetime import datetime, timezone
+    ab = _setup_ab(tmp_path, monkeypatch)
+    (tmp_path / "fix_history.json").write_text(_json.dumps({
+        "fixed": [{"url": "https://x.blogspot.com/p/2",
+                   "at": datetime.now(timezone.utc).isoformat()}]
+    }), encoding="utf-8")
+    assert ab.body_edited_recently("https://x.blogspot.com/p/2") is True
+    assert ab.body_edited_recently("https://x.blogspot.com/p/9") is False
+
+
+def test_ab_evaluate_suggests_rollback(tmp_path, monkeypatch):
+    """28일 후 CTR·순위 모두 하락하면 복원 제안, 상승하면 improved."""
+    import json as _json
+    from datetime import datetime, timezone, timedelta
+    ab = _setup_ab(tmp_path, monkeypatch)
+    old_ts = (datetime.now(timezone.utc) - timedelta(days=30)).isoformat()
+    (tmp_path / "title_changes.json").write_text(_json.dumps([
+        {"blogUrl": "https://x.com/a", "old_title": "o", "new_title": "n",
+         "changed_at": old_ts, "reason": "r", "restored": False,
+         "baseline": {"ctr": 3.0, "position": 8.0}, "after": None},
+        {"blogUrl": "https://x.com/b", "old_title": "o2", "new_title": "n2",
+         "changed_at": old_ts, "reason": "r", "restored": False,
+         "baseline": {"ctr": 1.0, "position": 20.0}, "after": None},
+    ]), encoding="utf-8")
+    n = ab.evaluate_changes({
+        "https://x.com/a": {"ctr": 1.5, "position": 15.0, "impressions": 50, "clicks": 1},
+        "https://x.com/b": {"ctr": 4.0, "position": 6.0, "impressions": 300, "clicks": 12},
+    })
+    assert n == 2
+    recs = ab.load_changes()
+    assert recs[0]["verdict"] == "declined" and recs[0]["rollback_suggested"] is True
+    assert recs[1]["verdict"] == "improved" and recs[1]["rollback_suggested"] is False
+    # 완료 기준: 변경 전후 성과가 기록되어 표시 가능
+    assert recs[0]["after"]["ctr"] == 1.5 and recs[0]["baseline"]["ctr"] == 3.0
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# auto_repair — 수리 전 백업 + 자동 롤백
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_auto_repair_backup_and_rollback(tmp_path, monkeypatch):
+    """수리 전 백업이 생성되고, 파일 손상 시 백업에서 자동 복원된다."""
+    import auto_repair as ar
+    data_file = tmp_path / "run_history.json"
+    data_file.write_text('[{"ok": true}]', encoding="utf-8")
+    monkeypatch.setattr(ar, "_BACKUP_ROOT", str(tmp_path / "backups"))
+    monkeypatch.setattr(ar, "_MANAGED_DATA_FILES", [str(data_file)])
+
+    backup_dir = ar._backup_data_files()
+    assert os.path.exists(os.path.join(backup_dir, "run_history.json"))
+
+    # 파일 손상 시뮬레이션 → 롤백
+    data_file.write_text('{"broken": ', encoding="utf-8")
+    rolled = ar._validate_and_rollback(backup_dir)
+    assert rolled == ["run_history.json"]
+    assert json.loads(data_file.read_text(encoding="utf-8")) == [{"ok": True}]
+
+    # 정상 파일은 롤백하지 않음
+    assert ar._validate_and_rollback(backup_dir) == []

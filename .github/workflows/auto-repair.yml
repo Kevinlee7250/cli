@@ -71,6 +71,11 @@ jobs:
         working-directory: blog-automation
         run: mkdir -p logs
 
+      - name: 🔐 인증 헬스체크 (Google OAuth 자격증명 만료 감지)
+        working-directory: blog-automation
+        continue-on-error: true
+        run: python auth_health_check.py
+
       - name: 🔧 자동 진단 및 수리 실행
         working-directory: blog-automation
         run: |
@@ -108,6 +113,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           for f in \
+            docs/data/auth_health.json \
             docs/data/repairs.json docs/data/pending_posts.json \
             docs/data/posts.json docs/data/post_registry.json \
             docs/data/code_repairs.json \
@@ -123,8 +129,7 @@ jobs:
             blog-automation/post_manager.py \
             blog-automation/adsense_validator.py \
             blog-automation/main.py \
-            blog-automation/trend_collector.py \
-            blog-automation/image_handler.py \
+            blog-automation/auto_repair.py \
             blog-automation/social_publisher.py \
             blog-automation/fix_existing_posts.py \
             blog-automation/coupang_affiliate.py; do
@@ -138,9 +143,21 @@ jobs:
             git commit -m "🔧 자동 수리 완료 (#${{ github.run_number }})"
             _push_ok=0
             for i in 1 2 3; do
-              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
-                && git push origin claude/blog-automation-system-KAbtE \
-                && { _push_ok=1; break; }
+              git rebase --abort 2>/dev/null || true
+              if git pull --rebase --autostash origin claude/blog-automation-system-KAbtE; then
+                git push origin claude/blog-automation-system-KAbtE && { _push_ok=1; break; }
+              else
+                if git ls-files -u | grep -q .; then
+                  for cf in docs/data/post_registry.json blog-automation/logs/post_registry.json; do
+                    git checkout --theirs -- "$cf" 2>/dev/null || true
+                    git add -f "$cf" 2>/dev/null || true
+                  done
+                  git rebase --continue --no-edit \
+                    && git push origin claude/blog-automation-system-KAbtE \
+                    && { _push_ok=1; break; }
+                fi
+                git rebase --abort 2>/dev/null || true
+              fi
               echo "pull+push 재시도 $i/3..."
               sleep $((i * 3))
             done

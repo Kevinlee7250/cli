@@ -27,6 +27,7 @@ from pathlib import Path
 import anthropic
 import requests
 from dotenv import load_dotenv
+from config import claude_text
 
 load_dotenv()
 
@@ -77,12 +78,13 @@ def _google_token() -> str | None:
 # GSC — 저성과 쿼리 추출
 # ──────────────────────────────────────────────────────────────────────────────
 
-def fetch_low_ctr_queries(token: str, days: int = 30) -> list[dict]:
+def fetch_low_ctr_queries(token: str, days: int = 30, site_url: str = "") -> list[dict]:
     """
     GSC 쿼리 데이터에서 노출 >= IMPRESSION_MIN & CTR < CTR_THRESHOLD% 쿼리를 반환.
     반환 형식: [{"query": str, "impressions": int, "ctr": float, "position": float}, ...]
+    site_url 미지정 시 전역 GSC_SITE_URL을 사용합니다.
     """
-    site_url = os.getenv("GSC_SITE_URL", "")
+    site_url = site_url or os.getenv("GSC_SITE_URL", "")
     if not site_url:
         logger.error("GSC_SITE_URL 환경변수 미설정")
         return []
@@ -164,10 +166,14 @@ def match_posts_to_queries(posts: list[dict], queries: list[dict]) -> list[dict]
         q_words = [w for w in query_data["query"].lower().split() if len(w) >= 2]
         if not q_words:
             continue
+        # 쿼리가 수집된 사이트와 같은 블로그의 포스트만 매칭 (블로그 간 교차 오염 방지)
+        q_site = (query_data.get("site_url") or "").rstrip("/")
 
         for post in posts:
             url = post.get("blogUrl", "")
             if not url or url in already_done:
+                continue
+            if q_site and not url.startswith(q_site):
                 continue
 
             keyword_text = (post.get("keyword", "") or "").lower()
@@ -199,14 +205,15 @@ def _blog_id() -> str:
     return os.getenv("BLOGGER_BLOG_ID", "").strip()
 
 
-def get_post_id_by_url(token: str, blog_url: str) -> str | None:
-    """blogUrl 의 path 로 Blogger bypath API 조회 -> post ID 반환"""
+def get_post_id_by_url(token: str, blog_url: str, blog_id: str = "") -> str | None:
+    """blogUrl 의 path 로 Blogger bypath API 조회 -> post ID 반환.
+    blog_id 미지정 시 전역 BLOGGER_BLOG_ID 사용."""
     parsed = re.search(r"blogspot\.com(/.+)", blog_url)
     if not parsed:
         logger.debug(f"blogspot URL 아님, 건너뜀: {blog_url}")
         return None
     path = parsed.group(1).rstrip("/")
-    bid  = _blog_id()
+    bid  = blog_id or _blog_id()
     if not bid:
         return None
     try:
@@ -224,9 +231,9 @@ def get_post_id_by_url(token: str, blog_url: str) -> str | None:
     return None
 
 
-def update_blogger_title(token: str, post_id: str, new_title: str) -> bool:
-    """Blogger PATCH API 로 제목만 업데이트"""
-    bid = _blog_id()
+def update_blogger_title(token: str, post_id: str, new_title: str, blog_id: str = "") -> bool:
+    """Blogger PATCH API 로 제목만 업데이트. blog_id 미지정 시 전역 BLOGGER_BLOG_ID."""
+    bid = blog_id or _blog_id()
     if not bid or not post_id:
         return False
     try:
@@ -289,10 +296,10 @@ def generate_improved_titles(
     try:
         msg = client.messages.create(
             model="claude-haiku-4-5-20251001",
-            max_tokens=300,
+            max_tokens=1200,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         match = re.search(r'\[.*?\]', raw, re.DOTALL)
         if match:
             titles = json.loads(match.group(0))
@@ -350,8 +357,30 @@ def run_optimization(dry_run: bool = False, limit: int = MAX_PER_RUN) -> dict:
     if not client:
         return {"optimized": 0, "skipped": 0, "details": [], "error": "API 키 없음"}
 
-    # 1) GSC 저CTR 쿼리 수집
-    low_ctr_queries = fetch_low_ctr_queries(token)
+    # 1) GSC 저CTR 쿼리 수집 — 모든 블로그의 GSC 사이트 순회 (중복 URL 제거)
+    # site_blog_map: gsc_site_url → Blogger blog_id (제목 PATCH 시 해당 블로그 API 사용)
+    site_urls: list[str] = []
+    site_blog_map: dict[str, str] = {}
+    try:
+        from config import claude_text, get_blog_configs
+        for b in get_blog_configs():
+            u = b.get("gsc_site_url", "")
+            if u and u not in site_urls:
+                site_urls.append(u)
+                site_blog_map[u.rstrip("/")] = str(b.get("blog_id") or "")
+    except Exception as e:
+        logger.debug(f"블로그 설정 로드 실패 — 전역 GSC_SITE_URL 사용: {e}")
+    if not site_urls:
+        site_urls = [os.getenv("GSC_SITE_URL", "")]
+
+    low_ctr_queries: list[dict] = []
+    for su in site_urls:
+        qs = fetch_low_ctr_queries(token, site_url=su)
+        if qs:
+            logger.info(f"저CTR 쿼리 {len(qs)}개 수집: {su}")
+            for q in qs:
+                q["site_url"] = su  # 매칭·업데이트 시 블로그 구분용
+            low_ctr_queries.extend(qs)
     if not low_ctr_queries:
         logger.info("저CTR 쿼리 없음 (모두 CTR >= 3%) — 최적화 불필요")
         return {"optimized": 0, "skipped": 0, "details": []}
@@ -377,6 +406,20 @@ def run_optimization(dry_run: bool = False, limit: int = MAX_PER_RUN) -> dict:
 
         logger.info(f"\n[{idx}/{len(candidates)}] {title[:50]}...")
         logger.info(f"  검색어: '{query['query']}' | 노출: {query['impressions']} | CTR: {query['ctr']}%")
+
+        # 제목·본문 동시 변경 금지 + 진행 중인 A/B 테스트 보호 (28일)
+        try:
+            from title_ab_tracker import body_edited_recently, title_changed_recently
+            if body_edited_recently(url):
+                logger.info("  최근 28일 내 본문 수정됨 — 동시 변경 방지로 건너뜀")
+                skipped += 1
+                continue
+            if title_changed_recently(url):
+                logger.info("  제목 A/B 테스트 진행 중 (28일 미경과) — 건너뜀")
+                skipped += 1
+                continue
+        except Exception:
+            pass
 
         # 3) Claude로 개선 제목 생성
         new_titles = generate_improved_titles(
@@ -408,9 +451,12 @@ def run_optimization(dry_run: bool = False, limit: int = MAX_PER_RUN) -> dict:
             "dry_run":        dry_run,
         }
 
+        # 이 포스트가 속한 블로그의 Blogger ID (쿼리 수집 사이트 기준)
+        target_blog_id = site_blog_map.get((query.get("site_url") or "").rstrip("/"), "")
+
         if not dry_run:
             # 4) Blogger 포스트 ID 조회
-            post_id = get_post_id_by_url(token, url)
+            post_id = get_post_id_by_url(token, url, blog_id=target_blog_id)
             if not post_id:
                 logger.warning("  포스트 ID 조회 실패 — 제목 후보만 저장 (blogspot URL이 아닐 수 있음)")
                 detail["blogger_updated"] = False
@@ -418,11 +464,23 @@ def run_optimization(dry_run: bool = False, limit: int = MAX_PER_RUN) -> dict:
                 skipped += 1
             else:
                 # 5) Blogger 제목 PATCH
-                ok = update_blogger_title(token, post_id, best_title)
+                ok = update_blogger_title(token, post_id, best_title, blog_id=target_blog_id)
                 detail["blogger_updated"] = ok
                 detail["post_id"]         = post_id
                 if ok:
                     _update_posts_json(url, best_title)
+                    # A/B 추적: 변경 전 제목·날짜·원인·기준 성과 기록
+                    try:
+                        from title_ab_tracker import record_title_change
+                        record_title_change(
+                            blog_url=url, old_title=title, new_title=best_title,
+                            reason=f"저CTR 검색어 '{query['query']}' (CTR {query['ctr']}%)",
+                            baseline={"ctr": query["ctr"], "position": query["position"],
+                                      "impressions": query["impressions"],
+                                      "clicks": query.get("clicks", 0)},
+                        )
+                    except Exception as _abe:
+                        logger.warning(f"  A/B 기록 실패: {_abe}")
                     optimized += 1
                 else:
                     skipped += 1

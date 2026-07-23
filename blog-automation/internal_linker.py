@@ -69,7 +69,8 @@ def _extract_keywords(post: dict) -> list[str]:
     return sorted(kws, key=len, reverse=True)  # 긴 키워드 우선 매칭
 
 
-def _score_relevance(candidate: dict, current_tags: set, current_keyword: str) -> int:
+def _score_relevance(candidate: dict, current_tags: set, current_keyword: str,
+                     current_article_type: str = "") -> int:
     """후보 포스트와 현재 포스트의 관련도 점수 (공유 태그 수 기반)"""
     cand_tags = set(candidate.get("tags", []) or [])
     shared    = len(current_tags & cand_tags)
@@ -78,6 +79,9 @@ def _score_relevance(candidate: dict, current_tags: set, current_keyword: str) -
     for word in current_keyword.lower().split():
         if len(word) >= 2 and word in cand_kw:
             shared += 1
+    # 같은 아티클 유형(how_to·review 등) 보너스 — 유형이 겹치면 독자 관심도 유사
+    if current_article_type and candidate.get("articleType") == current_article_type:
+        shared += 1
     return shared
 
 
@@ -185,8 +189,10 @@ def insert_internal_links(post_data: dict) -> str:
 
     current_title   = post_data.get("title", "")
     current_keyword = (post_data.get("keyword") or "").lower()
-    current_tags    = set(post_data.get("tags", []) or [])
+    # tags 우선, 없으면 labels 폴백 (생성 직후 post_data는 labels만 가질 수 있음)
+    current_tags    = set(post_data.get("tags") or post_data.get("labels") or [])
     current_url     = post_data.get("blogUrl", "")  # 아직 업로드 전이면 비어있음
+    current_article_type = post_data.get("article_type", "") or post_data.get("articleType", "")
 
     # 기존 포스트 인덱스 로드
     all_posts = _load_posts_index()
@@ -199,7 +205,7 @@ def insert_internal_links(post_data: dict) -> str:
 
     # 관련도 점수 계산 → 상위 MAX_LINKS 개 선택
     scored = [
-        (p, _score_relevance(p, current_tags, current_keyword))
+        (p, _score_relevance(p, current_tags, current_keyword, current_article_type))
         for p in candidates
     ]
     scored = [(p, s) for p, s in scored if s > 0]

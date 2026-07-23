@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>블로그 자동화 대시보드</title>
+<style>
+  :root {
+    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a;
+    --border: #2d3350; --text: #e2e8f0; --muted: #8892b0;
+    --accent: #7c6af7; --accent2: #06b6d4; --green: #34d399;
+    --red: #f87171; --yellow: #fbbf24; --orange: #fb923c;
+    --sky: #0ea5e9; --sports: #ef4444;
+    --radius: 12px; --font: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; display: flex; }
+
+  /* Sidebar */
+  #sidebar {
+    width: 220px; min-height: 100vh; background: var(--bg2); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; flex-shrink: 0; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+  }
+  .logo { padding: 24px 20px 16px; border-bottom: 1px solid var(--border); }
+  .logo h1 { font-size: 16px; font-weight: 700; color: var(--accent); }
+  .logo p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  nav { flex: 1; padding: 12px 0; }
+  nav a {
+    display: flex; align-items: center; gap: 10px; padding: 10px 20px;
+    color: var(--muted); text-decoration: none; font-size: 14px; cursor: pointer; transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+  nav a:hover { color: var(--text); background: var(--bg3); }
+  nav a.active { color: var(--accent); background: rgba(124,106,247,0.1); border-left-color: var(--accent); }
+  nav a .icon { font-size: 18px; width: 22px; text-align: center; }
+  .run-btn {
+    margin: 12px 16px; padding: 12px; background: var(--accent); color: #fff;
+    border: none; border-radius: var(--radius); cursor: pointer; font-size: 14px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.2s;
+  }
+  .run-btn:hover { opacity: 0.85; }
+  .run-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .run-btn.running { background: var(--red); }
+  #run-indicator { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: none; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+
+  /* Main */
+  #main { flex: 1; overflow-y: auto; }
+  .page { display: none; padding: 28px 32px; }
+  .page.active { display: block; }
+  .page-title { font-size: 22px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px;
+  }
+  .card .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .card .value { font-size: 28px; font-weight: 700; margin-top: 6px; }
+  .card .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .card.green .value { color: var(--green); }
+  .card.blue .value { color: var(--accent2); }
+  .card.purple .value { color: var(--accent); }
+  .card.yellow .value { color: var(--yellow); }
+
+  /* Table */
+  .table-wrap { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: var(--bg3); padding: 12px 16px; text-align: left; font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+  td { padding: 12px 16px; border-top: 1px solid var(--border); font-size: 14px; vertical-align: middle; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* Badges */
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600;
+  }
+  .badge.green { background: rgba(52,211,153,0.15); color: var(--green); }
+  .badge.red { background: rgba(248,113,113,0.15); color: var(--red); }
+  .badge.yellow { background: rgba(251,191,36,0.15); color: var(--yellow); }
+  .badge.purple { background: rgba(124,106,247,0.15); color: var(--accent); }
+  .badge.blue { background: rgba(6,182,212,0.15); color: var(--accent2); }
+  .badge.sky { background: rgba(14,165,233,0.15); color: var(--sky); }
+  .badge.sports { background: rgba(239,68,68,0.15); color: var(--sports); }
+  .badge.orange { background: rgba(251,146,60,0.15); color: var(--orange); }
+  .badge.muted { background: rgba(136,146,176,0.15); color: var(--muted); }
+
+  /* Trend arrows */
+  .rising { color: var(--green); }
+  .falling { color: var(--red); }
+  .stable { color: var(--muted); }
+
+  /* Section headers */
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .section-header h2 { font-size: 16px; font-weight: 600; }
+
+  /* Log viewer */
+  #log-box {
+    background: #0a0c12; border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px; height: 450px; overflow-y: auto; font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 12px; line-height: 1.7;
+  }
+  .log-info { color: #34d399; }
+  .log-warn { color: #fbbf24; }
+  .log-error { color: #f87171; }
+  .log-default { color: #94a3b8; }
+
+  /* Modal */
+  #modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000;
+    align-items: center; justify-content: center; padding: 24px;
+  }
+  #modal-overlay.open { display: flex; }
+  #modal {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+    width: 100%; max-width: 840px; max-height: 90vh; overflow-y: auto; padding: 28px;
+  }
+  #modal h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  #modal .meta { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  #modal-close { float: right; background: none; border: none; color: var(--muted); font-size: 22px; cursor: pointer; margin-top: -4px; }
+  .modal-content { font-size: 14px; line-height: 1.8; color: var(--text); }
+  .modal-content h2, .modal-content h3 { color: var(--accent); margin: 16px 0 8px; }
+  .modal-content p { margin-bottom: 10px; }
+  .modal-content ul, .modal-content ol { padding-left: 20px; margin-bottom: 10px; }
+  .modal-content li { margin-bottom: 4px; }
+
+  /* Post list cards */
+  .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+  .post-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden; cursor: pointer; transition: border-color 0.15s, transform 0.1s;
+  }
+  .post-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .post-card .thumb { width: 100%; height: 140px; object-fit: cover; background: var(--bg3); display: block; }
+  .post-card .thumb-placeholder { width: 100%; height: 140px; background: var(--bg3); display: flex; align-items: center; justify-content: center; font-size: 32px; }
+  .post-card .info { padding: 14px; }
+  .post-card .keyword { font-size: 11px; color: var(--accent); font-weight: 600; text-transform: uppercase; margin-bottom: 6px; }
+  .post-card .title { font-size: 14px; font-weight: 600; line-height: 1.4; margin-bottom: 8px; }
+  .post-card .footer { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  /* SNS content */
+  .sns-tabs { display: flex; gap: 2px; margin-bottom: 20px; background: var(--bg3); padding: 4px; border-radius: 8px; width: fit-content; }
+  .sns-tab { padding: 6px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; color: var(--muted); transition: all 0.15s; }
+  .sns-tab.active { background: var(--bg2); color: var(--text); font-weight: 600; }
+  .sns-panel { display: none; }
+  .sns-panel.active { display: block; }
+  .sns-caption { background: var(--bg3); border-radius: var(--radius); padding: 16px; font-size: 13px; line-height: 1.8; white-space: pre-wrap; max-height: 400px; overflow-y: auto; }
+  .thread-item { background: var(--bg3); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; font-size: 13px; line-height: 1.8; white-space: pre-wrap; }
+  .thread-label { font-size: 11px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  .tiktok-scene { background: var(--bg3); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; }
+  .tiktok-scene .time { font-size: 11px; color: var(--accent2); font-weight: 700; margin-bottom: 6px; }
+  .tiktok-scene .text { font-size: 13px; margin-bottom: 4px; }
+  .tiktok-scene .dir { font-size: 12px; color: var(--muted); }
+  .hashtag-wrap { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+  .hashtag { background: rgba(124,106,247,0.15); color: var(--accent); padding: 3px 10px; border-radius: 20px; font-size: 12px; }
+
+  /* Config */
+  .config-row { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+  .config-row .key { font-size: 13px; font-weight: 600; }
+  .config-row .val { font-size: 13px; color: var(--muted); font-family: monospace; }
+  .config-row .set { color: var(--green); }
+  .config-row .unset { color: var(--red); }
+
+  /* Run controls */
+  .run-controls { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+  .mode-btn {
+    padding: 12px 24px; border-radius: var(--radius); border: 1px solid var(--border);
+    background: var(--bg2); color: var(--text); cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .mode-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .mode-btn.publish { border-color: var(--accent); background: rgba(124,106,247,0.15); color: var(--accent); }
+  .mode-btn.draft { border-color: var(--yellow); background: rgba(251,191,36,0.1); color: var(--yellow); }
+  .mode-btn.preview { border-color: var(--accent2); background: rgba(6,182,212,0.1); color: var(--accent2); }
+  .mode-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .stop-btn {
+    padding: 12px 24px; border-radius: var(--radius); border: 1px solid var(--red);
+    background: rgba(248,113,113,0.15); color: var(--red); cursor: pointer; font-size: 14px; font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .stop-btn:hover { background: rgba(248,113,113,0.25); }
+
+  /* Search & filter */
+  .search-row { display: flex; gap: 12px; margin-bottom: 20px; align-items: center; }
+  .search-input {
+    flex: 1; padding: 10px 14px; background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: 14px; outline: none;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  select.filter-select {
+    padding: 10px 14px; background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: 14px; outline: none; cursor: pointer;
+  }
+
+  /* Fact check details */
+  .fact-issue { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; font-size: 13px; }
+  .fact-issue .type { color: var(--yellow); font-weight: 700; font-size: 11px; margin-bottom: 4px; }
+  .fact-issue .original { color: var(--red); text-decoration: line-through; margin-bottom: 2px; }
+  .fact-issue .corrected { color: var(--green); }
+  .fact-issue .reason { color: var(--muted); font-size: 12px; margin-top: 4px; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* Empty state */
+  .empty { text-align: center; padding: 60px; color: var(--muted); font-size: 14px; }
+  .empty .icon { font-size: 48px; margin-bottom: 12px; }
+
+  /* Loading spinner */
+  .spin { animation: spin 0.8s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Earnings table */
+  .earnings-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
+  .earnings-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .earnings-row:last-child { border-bottom: none; }
+  .earnings-label { font-size: 13px; color: var(--muted); }
+  .earnings-value { font-size: 15px; font-weight: 700; color: var(--green); }
+
+  /* Pending queue */
+  .pending-alert { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.35); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; }
+  .pending-alert .pa-count { font-size: 16px; font-weight: 700; color: var(--yellow); }
+  .pending-alert .pa-text { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .btn-review { padding: 9px 18px; background: var(--yellow); color: #0f1117; border: none; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 700; white-space: nowrap; }
+  .post-card.pending { border-color: rgba(251,191,36,0.45); }
+  .post-card.rejected { opacity: 0.45; }
+  .post-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .btn-approve { padding: 6px 13px; background: rgba(52,211,153,0.12); color: var(--green); border: 1px solid rgba(52,211,153,0.5); border-radius: 7px; cursor: pointer; font-size: 12px; font-weight: 600; }
+  .btn-approve:hover { background: rgba(52,211,153,0.25); }
+  .btn-edit { padding: 6px 13px; background: rgba(124,106,247,0.12); color: var(--accent); border: 1px solid rgba(124,106,247,0.5); border-radius: 7px; cursor: pointer; font-size: 12px; font-weight: 600; }
+  .btn-edit:hover { background: rgba(124,106,247,0.25); }
+  .btn-reject-sm { padding: 6px 13px; background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.5); border-radius: 7px; cursor: pointer; font-size: 12px; font-weight: 600; }
+  .btn-reject-sm:hover { background: rgba(248,113,113,0.25); }
+
+  /* Edit modal */
+  #edit-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.82); z-index: 1100; align-items: flex-start; justify-content: center; padding: 20px; overflow-y: auto; }
+  #edit-overlay.open { display: flex; }
+  #edit-modal { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 900px; padding: 28px; position: relative; margin: auto; }
+  .form-group { margin-bottom: 16px; }
+  .form-label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .form-input { width: 100%; padding: 10px 13px; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; outline: none; }
+  .form-input:focus { border-color: var(--accent); }
+  textarea.form-input { font-family: monospace; font-size: 12px; min-height: 280px; resize: vertical; line-height: 1.5; }
+  .faq-item { background: var(--bg3); border-radius: 8px; padding: 12px 40px 12px 12px; margin-bottom: 8px; position: relative; }
+  .faq-item input { width: 100%; padding: 7px 10px; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-size: 13px; outline: none; margin-bottom: 5px; }
+  .faq-item input:last-child { margin-bottom: 0; }
+  .faq-item input:focus { border-color: var(--accent); }
+  .btn-del-faq { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--muted); cursor: pointer; font-size: 15px; line-height: 1; }
+  .edit-footer { display: flex; gap: 10px; margin-top: 22px; justify-content: flex-end; flex-wrap: wrap; }
+
+  /* Confirm dialog */
+  #confirm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 1200; align-items: center; justify-content: center; }
+  #confirm-overlay.open { display: flex; }
+  #confirm-dialog { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; max-width: 400px; width: 90%; text-align: center; }
+  #confirm-dialog h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+  #confirm-dialog p { font-size: 13px; color: var(--muted); margin-bottom: 22px; line-height: 1.7; white-space: pre-line; }
+  .confirm-row { display: flex; gap: 12px; justify-content: center; }
+  #confirm-no { padding: 10px 22px; border: 1px solid var(--border); background: var(--bg3); color: var(--text); border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; }
+  #confirm-yes { padding: 10px 22px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 700; color: #fff; }
+
+  /* Toast */
+  .toast { position: fixed; bottom: 24px; right: 24px; padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; z-index: 9999; animation: toastIn .2s ease; pointer-events: none; }
+  @keyframes toastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="sidebar">
+  <div class="logo">
+    <h1>🤖 블로그 자동화</h1>
+    <p>AI Blog Management v2</p>
+  </div>
+  <nav>
+    <a class="active" data-page="dashboard"><span class="icon">📊</span> 대시보드</a>
+    <a data-page="run"><span class="icon">▶️</span> 실행 제어</a>
+    <a data-page="pending" style="position:relative"><span class="icon">📋</span> 게시 대기 <span id="nav-pending-badge" class="badge yellow" style="margin-left:auto;display:none;font-size:10px;padding:1px 6px">0</span></a>
+    <a data-page="posts"><span class="icon">📝</span> 포스트 목록</a>
+    <a data-page="social"><span class="icon">📱</span> SNS 콘텐츠</a>
+    <a data-page="analytics"><span class="icon">💰</span> 수익 분석</a>
+    <a data-page="gsc"><span class="icon">🔍</span> 검색 성과</a>
+    <a data-page="logs"><span class="icon">🪵</span> 로그 뷰어</a>
+    <a data-page="config"><span class="icon">⚙️</span> 설정</a>
+  </nav>
+  <div style="padding:0 12px 12px">
+    <select id="blog-selector" onchange="onBlogFilter()" style="width:100%;padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;cursor:pointer;outline:none">
+      <option value="">🗂 전체 블로그</option>
+    </select>
+  </div>
+  <button class="run-btn" id="sidebar-run-btn" onclick="quickRun()">
+    <span id="run-indicator"></span>
+    <span id="sidebar-run-label">▶ 즉시 실행</span>
+  </button>
+</div>
+
+<!-- Main Content -->
+<div id="main">
+
+  <!-- Dashboard -->
+  <div class="page active" id="page-dashboard">
+    <div class="page-title">📊 대시보드</div>
+    <div class="cards" id="stat-cards">
+      <div class="card purple"><div class="label">총 포스트</div><div class="value" id="stat-posts">-</div><div class="sub">생성된 전체 포스트</div></div>
+      <div class="card green"><div class="label">예상 총 수익</div><div class="value" id="stat-revenue">-</div><div class="sub">AdSense 누적 추정</div></div>
+      <div class="card blue"><div class="label">Blogger 게시</div><div class="value" id="stat-blogger">-</div><div class="sub">실제 발행된 포스트</div></div>
+      <div class="card yellow"><div class="label">전체 실행 횟수</div><div class="value" id="stat-runs">-</div><div class="sub">자동화 실행 이력</div></div>
+    </div>
+
+    <div id="pending-alert" style="display:none" class="pending-alert">
+      <div>
+        <div class="pa-count" id="pa-count">0개 포스트 대기 중</div>
+        <div class="pa-text">검토 후 게시 승인하거나 수정하세요</div>
+      </div>
+      <button class="btn-review" onclick="navTo('pending')">검토하기 →</button>
+    </div>
+
+    <div class="section-header" style="margin-top:4px"><h2>블로그별 현황</h2></div>
+    <div class="cards" id="blog-stat-cards" style="margin-bottom:28px"></div>
+
+    <div class="section-header"><h2>최근 실행 이력</h2><span class="badge purple" id="last-run-badge">-</span></div>
+    <div class="table-wrap" style="margin-bottom:28px">
+      <table>
+        <thead><tr><th>날짜</th><th>블로그</th><th>키워드</th><th>생성</th><th>Blogger</th><th>수익(일)</th><th>오류</th></tr></thead>
+        <tbody id="run-history-table"></tbody>
+      </table>
+    </div>
+
+    <div class="section-header"><h2>최근 포스트</h2><a href="#" onclick="navTo('posts'); return false;" style="font-size:13px;color:var(--accent)">전체 보기 →</a></div>
+    <div class="post-grid" id="recent-posts-grid"></div>
+  </div>
+
+  <!-- Run Control -->
+  <div class="page" id="page-run">
+    <div class="page-title">▶️ 실행 제어</div>
+    <div class="run-controls">
+      <button class="mode-btn publish" id="btn-publish" onclick="startRun('publish')">🚀 게시 실행</button>
+      <button class="mode-btn draft" id="btn-draft" onclick="startRun('draft')">📋 임시저장 실행</button>
+      <button class="mode-btn preview" id="btn-preview" onclick="startRun('preview')">👁 미리보기만</button>
+      <button class="stop-btn" id="btn-stop" onclick="stopRun()" style="display:none">⏹ 중지</button>
+    </div>
+    <div class="section-header">
+      <h2>실시간 로그 <span id="run-status-badge" class="badge muted">대기 중</span></h2>
+      <button onclick="clearLog()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px">지우기</button>
+    </div>
+    <div id="log-box"></div>
+  </div>
+
+  <!-- Pending Posts -->
+  <div class="page" id="page-pending">
+    <div class="page-title">📋 게시 대기 <span class="badge yellow" id="pending-count-badge">0</span></div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px">
+      <code>--confirm</code> 모드로 생성된 포스트를 검토하고 게시하거나 수정하세요.
+    </p>
+    <div class="post-grid" id="pending-grid"></div>
+  </div>
+
+  <!-- Posts -->
+  <div class="page" id="page-posts">
+    <div class="page-title">📝 포스트 목록 <span class="badge purple" id="posts-count-badge">0</span></div>
+    <div class="search-row">
+      <input class="search-input" id="post-search" placeholder="제목, 키워드 검색..." oninput="filterPosts()" />
+      <select class="filter-select" id="post-category" onchange="filterPosts()">
+        <option value="">전체 카테고리</option>
+        <option>금융</option><option>부동산</option><option>건강</option>
+        <option>기술</option><option>여행</option><option>스포츠</option><option>교육</option><option>쇼핑</option><option>일반</option>
+      </select>
+      <select class="filter-select" id="post-blog-filter" onchange="filterPosts()">
+        <option value="">전체 블로그</option>
+      </select>
+      <select class="filter-select" id="post-type-filter" onchange="filterPosts()">
+        <option value="">전체 유형</option>
+        <option value="travel_guide">🏖 여행가이드</option>
+        <option value="sports_review">⚽ 스포츠</option>
+        <option value="drama_review">🎭 드라마</option>
+        <option value="how_to">📖 방법안내</option>
+        <option value="review">⭐ 리뷰</option>
+        <option value="comparison">⚖️ 비교</option>
+        <option value="analysis">📊 분석</option>
+        <option value="it_review">💻 IT리뷰</option>
+        <option value="tech_news">📡 IT뉴스</option>
+        <option value="finance_news">📈 금융뉴스</option>
+        <option value="government_policy">🏛 정부지원</option>
+      </select>
+    </div>
+    <div class="post-grid" id="posts-grid"></div>
+  </div>
+
+  <!-- Social -->
+  <div class="page" id="page-social">
+    <div class="page-title">📱 SNS 콘텐츠</div>
+    <div class="section-header" style="margin-bottom:16px">
+      <h2>콘텐츠 선택</h2>
+    </div>
+    <select class="filter-select" id="social-select" onchange="loadSocialContent(this.value)" style="width:100%;margin-bottom:24px;padding:12px">
+      <option value="">— 콘텐츠 선택 —</option>
+    </select>
+    <div id="social-content-area"></div>
+  </div>
+
+  <!-- Analytics -->
+  <div class="page" id="page-analytics">
+    <div class="page-title">💰 수익 분석</div>
+    <div class="cards">
+      <div class="card green"><div class="label">일 예상 수익</div><div class="value" id="an-daily">-</div><div class="sub">AdSense CTR 2.5% 기준</div></div>
+      <div class="card blue"><div class="label">월 예상 수익</div><div class="value" id="an-monthly">-</div><div class="sub">30일 기준</div></div>
+      <div class="card purple"><div class="label">연 예상 수익</div><div class="value" id="an-yearly">-</div><div class="sub">365일 기준</div></div>
+      <div class="card yellow"><div class="label">평균 CPC</div><div class="value" id="an-cpc">-</div><div class="sub">AdSense 클릭당 단가</div></div>
+    </div>
+    <div class="section-header" style="margin-top:8px"><h2>실행별 수익 이력</h2></div>
+    <div class="earnings-card" id="earnings-history"></div>
+
+    <div class="section-header" style="margin-top:24px"><h2>AdSense 카테고리 CPC 기준</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>카테고리</th><th>예상 CPC</th><th>주요 키워드</th></tr></thead>
+        <tbody>
+          <tr><td>법률</td><td><span class="badge green">$3.20</span></td><td>변호사, 소송, 이혼, 상속</td></tr>
+          <tr><td>부동산</td><td><span class="badge green">$2.80</span></td><td>아파트, 분양, 청약, 재건축</td></tr>
+          <tr><td>금융</td><td><span class="badge blue">$2.50</span></td><td>주식, 코인, 보험, 대출</td></tr>
+          <tr><td>건강</td><td><span class="badge blue">$1.80</span></td><td>다이어트, 영양제, 병원</td></tr>
+          <tr><td>기술</td><td><span class="badge purple">$1.50</span></td><td>AI, 스마트폰, 챗GPT</td></tr>
+          <tr><td>교육</td><td><span class="badge purple">$1.30</span></td><td>영어, 자격증, 취업</td></tr>
+          <tr><td>여행</td><td><span class="badge sky">$1.20</span></td><td>여행, 항공, 호텔, 관광</td></tr>
+          <tr><td>스포츠</td><td><span class="badge sports">$1.10</span></td><td>축구, 야구, 농구, 선수</td></tr>
+          <tr><td>쇼핑</td><td><span class="badge muted">$0.90</span></td><td>할인, 세일, 패션</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- GSC -->
+  <div class="page" id="page-gsc">
+    <div class="page-title">🔍 검색 성과 (Google Search Console)</div>
+    <div class="cards" id="gsc-summary-cards" style="margin-bottom:28px"></div>
+    <div id="gsc-blog-tabs" style="margin-bottom:20px"></div>
+    <div id="gsc-queries-section">
+      <div class="section-header"><h2>인기 검색어</h2><span class="badge muted" id="gsc-date-range">-</span></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>검색어</th><th>클릭</th><th>노출</th><th>CTR</th><th>평균 순위</th></tr></thead>
+          <tbody id="gsc-queries-table"></tbody>
+        </table>
+      </div>
+    </div>
+    <div style="margin-top:28px">
+      <div class="section-header"><h2>카테고리별 성과</h2></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>카테고리</th><th>클릭</th><th>노출</th><th>CTR</th></tr></thead>
+          <tbody id="gsc-category-table"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logs -->
+  <div class="page" id="page-logs">
+    <div class="page-title">🪵 로그 뷰어</div>
+    <div style="display:flex;gap:12px;margin-bottom:16px">
+      <button onclick="loadLogs()" class="mode-btn" style="padding:8px 16px;font-size:13px">🔄 새로고침</button>
+      <button onclick="clearLogView()" class="mode-btn" style="padding:8px 16px;font-size:13px">🗑 지우기</button>
+    </div>
+    <div id="log-box-static" class="log-box" style="background:#0a0c12;border:1px solid var(--border);border-radius:var(--radius);padding:16px;height:600px;overflow-y:auto;font-family:monospace;font-size:12px;line-height:1.7;"></div>
+  </div>
+
+  <!-- Config -->
+  <div class="page" id="page-config">
+    <div class="page-title">⚙️ 설정</div>
+    <div class="section-header"><h2>API 키 상태</h2></div>
+    <div id="config-list"></div>
+    <div class="section-header" style="margin-top:24px"><h2>시스템 정보</h2></div>
+    <div id="config-sys"></div>
+  </div>
+
+</div>
+
+<!-- View Modal -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal">
+    <button id="modal-close" onclick="closeModal()">✕</button>
+    <h2 id="modal-title"></h2>
+    <div class="meta" id="modal-meta"></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div id="edit-overlay" onclick="closeEditModal(event)">
+  <div id="edit-modal">
+    <button onclick="closeEditModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1">✕</button>
+    <h2 style="margin-bottom:20px;padding-right:32px">✏️ 포스트 수정</h2>
+    <input type="hidden" id="edit-post-id">
+    <div class="form-group">
+      <label class="form-label">제목</label>
+      <input class="form-input" id="edit-title" type="text" placeholder="포스트 제목" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">메타 설명 (SEO)</label>
+      <input class="form-input" id="edit-meta" type="text" placeholder="검색 결과에 표시될 설명 (150자 내외)" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">태그 (쉼표로 구분)</label>
+      <input class="form-input" id="edit-tags" type="text" placeholder="AI, 기술, 트렌드" />
+    </div>
+    <div class="form-group">
+      <label class="form-label" style="display:flex;align-items:center;justify-content:space-between">
+        <span>FAQ</span>
+        <button onclick="addFaqItem()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:3px 10px;border-radius:6px;cursor:pointer;font-size:12px">+ 추가</button>
+      </label>
+      <div id="edit-faq-list"></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">본문 HTML</label>
+      <textarea class="form-input" id="edit-content" placeholder="<p>본문 HTML...</p>"></textarea>
+    </div>
+    <div class="edit-footer">
+      <button onclick="closeEditModal()" style="padding:9px 18px;border:1px solid var(--border);background:var(--bg3);color:var(--text);border-radius:8px;cursor:pointer;font-size:13px;font-weight:600">취소</button>
+      <button onclick="saveEditedPost()" class="btn-edit" style="padding:9px 18px">💾 저장</button>
+      <button onclick="approveFromEditor()" class="btn-approve" style="padding:9px 18px">✅ 저장 후 게시</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Dialog -->
+<div id="confirm-overlay">
+  <div id="confirm-dialog">
+    <h3 id="confirm-title">확인</h3>
+    <p id="confirm-message"></p>
+    <div class="confirm-row">
+      <button id="confirm-no" onclick="resolveConfirm(false)">취소</button>
+      <button id="confirm-yes" onclick="resolveConfirm(true)">확인</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ─────────────────────────────────────────────────────────────────────
+let allPosts = []
+let allBlogs = []
+let runEventSource = null
+let isRunning = false
+let selectedBlog = ''
+let gscData = null
+let gscActiveBlog = ''
+
+// ── Blog color helper ─────────────────────────────────────────────────────────
+function blogColor(id) {
+  if (id === 'blog2') return 'sky'
+  if (id === 'blog3') return 'green'
+  return 'purple'
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+document.querySelectorAll('nav a').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); navTo(a.dataset.page) })
+})
+function navTo(page) {
+  document.querySelectorAll('nav a').forEach(a => a.classList.toggle('active', a.dataset.page === page))
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page))
+  if (page === 'dashboard') loadDashboard()
+  if (page === 'posts') loadPosts()
+  if (page === 'pending') loadPendingPosts()
+  if (page === 'social') loadSocial()
+  if (page === 'analytics') loadAnalytics()
+  if (page === 'gsc') loadGsc()
+  if (page === 'logs') loadLogs()
+  if (page === 'config') loadConfig()
+  if (page === 'run') initRunPage()
+}
+
+// ── Blog selector ─────────────────────────────────────────────────────────────
+async function loadBlogSelector() {
+  try {
+    allBlogs = await fetch('/api/blogs').then(r => r.json()).catch(() => [])
+    const sel = document.getElementById('blog-selector')
+    sel.innerHTML = '<option value="">🗂 전체 블로그</option>' +
+      allBlogs.map(b => `<option value="${b.id}">${b.name || b.id}</option>`).join('')
+    // 포스트 필터용 블로그 드롭다운도 동기화
+    const pf = document.getElementById('post-blog-filter')
+    if (pf) pf.innerHTML = '<option value="">전체 블로그</option>' +
+      allBlogs.map(b => `<option value="${b.id}">${b.name || b.id}</option>`).join('')
+  } catch {}
+}
+function onBlogFilter() {
+  selectedBlog = document.getElementById('blog-selector').value
+  const pf = document.getElementById('post-blog-filter')
+  if (pf) pf.value = selectedBlog
+
+  // 사이드바 실행 버튼 라벨 업데이트
+  const blog = allBlogs.find(b => b.id === selectedBlog)
+  const label = document.getElementById('sidebar-run-label')
+  if (label && !isRunning) {
+    label.textContent = blog ? `▶ ${blog.name} 실행` : '▶ 즉시 실행'
+  }
+
+  // 현재 활성 페이지 새로고침
+  const activePage = document.querySelector('.page.active')?.id?.replace('page-','')
+  if (activePage === 'dashboard') loadDashboard()
+  if (activePage === 'posts') filterPosts()
+  if (activePage === 'analytics') loadAnalytics()
+}
+
+// ── Dashboard ─────────────────────────────────────────────────────────────────
+async function loadDashboard() {
+  const [status, runs, posts, blogs] = await Promise.all([
+    fetch('/api/status').then(r => r.json()),
+    fetch('/api/runs').then(r => r.json()),
+    fetch('/api/posts').then(r => r.json()),
+    fetch('/api/blogs').then(r => r.json()).catch(() => []),
+  ])
+  // Pending alert
+  const pendingPosts = posts.filter(p => p.publishStatus === 'pending')
+  const alertEl = document.getElementById('pending-alert')
+  if (alertEl) {
+    alertEl.style.display = pendingPosts.length ? 'flex' : 'none'
+    const paCount = document.getElementById('pa-count')
+    if (paCount) paCount.textContent = `${pendingPosts.length}개 포스트 게시 대기 중`
+  }
+  updateNavPendingBadge(pendingPosts.length)
+
+  // 블로그 필터 적용한 포스트/실행
+  const filteredPosts = selectedBlog ? posts.filter(p => p.blogId === selectedBlog) : posts
+  const filteredRuns  = selectedBlog ? runs.filter(r => r.blogId === selectedBlog) : runs
+
+  document.getElementById('stat-posts').textContent = filteredPosts.length
+  document.getElementById('stat-revenue').textContent = '$' + (status.totalRevenue || 0).toFixed(2)
+  document.getElementById('stat-blogger').textContent = filteredRuns.reduce((s,r)=>s+(r.platforms?.blogger||0),0)
+  document.getElementById('stat-runs').textContent = filteredRuns.length || status.runCount || 0
+  const lastRun = filteredRuns[0]
+  document.getElementById('last-run-badge').textContent = lastRun
+    ? new Date(lastRun.runAt).toLocaleString('ko-KR')
+    : '실행 이력 없음'
+
+  // 블로그별 현황 mini cards
+  const blogCards = document.getElementById('blog-stat-cards')
+  if (blogCards && blogs.length) {
+    blogCards.innerHTML = blogs.map(b => `
+      <div class="card ${blogColor(b.id)}" style="cursor:pointer" onclick="document.getElementById('blog-selector').value='${b.id}';onBlogFilter()">
+        <div class="label">${b.name || b.id}</div>
+        <div class="value">${b.postCount || 0}<span style="font-size:14px;color:var(--muted)"> 포스트</span></div>
+        <div class="sub">실행 ${b.runCount || 0}회 · ${b.lastRunAt ? new Date(b.lastRunAt).toLocaleDateString('ko-KR') : '미실행'}</div>
+      </div>
+    `).join('')
+  }
+
+  // Run history table (블로그 컬럼 추가)
+  const tbody = document.getElementById('run-history-table')
+  tbody.innerHTML = filteredRuns.slice(0, 10).map(r => `
+    <tr>
+      <td>${new Date(r.runAt).toLocaleString('ko-KR')}</td>
+      <td><span class="badge ${blogColor(r.blogId)}" style="font-size:10px">${r.blogName||r.blogId||'기본'}</span></td>
+      <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.keywords||[]).join(', ')}</td>
+      <td>${r.postsGenerated || 0}개</td>
+      <td>${r.platforms?.blogger || 0}개</td>
+      <td class="${(r.earnings?.estimatedDailyRevenue||0)>0?'rising':''}">${r.earnings ? '$'+(r.earnings.estimatedDailyRevenue||0).toFixed(2) : '-'}</td>
+      <td>${r.errors > 0 ? `<span class="badge red">${r.errors}</span>` : '<span class="badge green">0</span>'}</td>
+    </tr>
+  `).join('') || '<tr><td colspan="7" class="empty">실행 이력 없음</td></tr>'
+
+  // Recent posts
+  const grid = document.getElementById('recent-posts-grid')
+  grid.innerHTML = filteredPosts.slice(0, 6).map(p => postCardHTML(p)).join('')
+}
+
+// ── Posts ─────────────────────────────────────────────────────────────────────
+async function loadPosts() {
+  const posts = await fetch('/api/posts').then(r => r.json())
+  allPosts = posts
+  document.getElementById('posts-count-badge').textContent = posts.length
+  renderPosts(posts)
+}
+function filterPosts() {
+  const q = document.getElementById('post-search').value.toLowerCase()
+  const cat = document.getElementById('post-category').value
+  const blogF = (document.getElementById('post-blog-filter')?.value) || selectedBlog || ''
+  const typeF = document.getElementById('post-type-filter')?.value || ''
+  const filtered = allPosts.filter(p =>
+    (!q || p.title.toLowerCase().includes(q) || (p.keyword||'').toLowerCase().includes(q)) &&
+    (!cat || (p.adsenseCategory || '일반').includes(cat)) &&
+    (!blogF || p.blogId === blogF) &&
+    (!typeF || p.articleType === typeF)
+  )
+  renderPosts(filtered)
+}
+function renderPosts(posts) {
+  const grid = document.getElementById('posts-grid')
+  if (!posts.length) { grid.innerHTML = '<div class="empty"><div class="icon">📭</div>포스트가 없습니다</div>'; return }
+  grid.innerHTML = posts.map(p => postCardHTML(p)).join('')
+}
+function articleTypeLabel(t) {
+  const map = {
+    travel_guide: ['sky','🏖 여행'], sports_review: ['sports','⚽ 스포츠'],
+    drama_review: ['purple','🎭 드라마'], how_to: ['blue','📖 방법'],
+    review: ['yellow','⭐ 리뷰'], comparison: ['orange','⚖️ 비교'],
+    explainer: ['muted','💡 설명'], analysis: ['muted','📊 분석'],
+    it_review: ['sky','💻 IT리뷰'], tech_news: ['blue','📡 IT뉴스'],
+    finance_news: ['green','📈 금융뉴스'], government_policy: ['green','🏛 정부지원'],
+  }
+  return map[t] || null
+}
+function postCardHTML(p) {
+  const fcBadge = p.factCheck
+    ? p.factCheck.issueCount > 0
+      ? `<span class="badge yellow">팩트수정 ${p.factCheck.issueCount}</span>`
+      : '<span class="badge green">팩트✅</span>'
+    : ''
+  const trendIcon = p.trendDirection === 'rising' ? '🚀' : p.trendDirection === 'falling' ? '📉' : '📊'
+  const statusBadge = p.publishStatus === 'pending'
+    ? '<span class="badge yellow">⏳ 대기</span>'
+    : p.publishStatus === 'rejected'
+    ? '<span class="badge red">❌ 거절</span>'
+    : p.blogUrl ? '<span class="badge green">✅ 게시됨</span>' : ''
+  const cardClass = p.publishStatus === 'pending' ? 'post-card pending' : p.publishStatus === 'rejected' ? 'post-card rejected' : 'post-card'
+  const blogBadge = p.blogName ? `<span class="badge ${blogColor(p.blogId)}" style="font-size:10px">${p.blogName}</span>` : ''
+  const atInfo = articleTypeLabel(p.articleType)
+  const atBadge = atInfo ? `<span class="badge ${atInfo[0]}" style="font-size:10px">${atInfo[1]}</span>` : ''
+  return `<div class="${cardClass}" onclick="openPost('${encodeURIComponent(p.id)}')">
+    <img class="thumb" src="/api/thumbnail/${encodeURIComponent(p.id.replace(/[·!]/g,'').split('_').slice(0,4).join('_'))}.png"
+      onerror="this.outerHTML='<div class=\\"thumb-placeholder\\">${p.articleType==='travel_guide'?'🏖':p.articleType==='sports_review'?'⚽':p.articleType==='drama_review'?'🎭':'📝'}</div>'" loading="lazy" />
+    <div class="info">
+      <div class="keyword">${trendIcon} ${p.keyword || ''}</div>
+      <div class="title">${p.title}</div>
+      <div class="footer">
+        ${statusBadge}
+        ${fcBadge}
+        ${blogBadge}
+        ${atBadge}
+        <span class="badge muted">${p.date}</span>
+        <span class="badge purple">${p.adsenseCategory || '일반'}</span>
+        ${p.wordCount ? `<span class="badge blue">${p.wordCount}자</span>` : ''}
+      </div>
+    </div>
+  </div>`
+}
+async function openPost(encodedId) {
+  const id = decodeURIComponent(encodedId)
+  const post = await fetch('/api/posts/' + id).then(r => r.json()).catch(() => null)
+  if (!post) return
+  document.getElementById('modal-title').textContent = post.title
+  document.getElementById('modal-meta').innerHTML = `
+    <span class="badge purple">${post.adsenseCategory || '일반'}</span>
+    <span class="badge blue" style="margin-left:6px">${post.date}</span>
+    ${post.wordCount ? `<span class="badge muted" style="margin-left:6px">${post.wordCount}자</span>` : ''}
+    ${post.faq?.length ? `<span class="badge green" style="margin-left:6px">FAQ ${post.faq.length}개</span>` : ''}
+  `
+  let body = ''
+  // Fact check section
+  if (post.factCheck) {
+    const fc = post.factCheck
+    body += `<div style="margin-bottom:20px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:${fc.issueCount>0?'var(--yellow)':'var(--green)'}">
+        🔍 팩트체크: ${fc.issueCount > 0 ? `${fc.issueCount}개 수정됨` : '이상 없음'} — ${fc.summary || ''}
+      </div>`
+    if (fc.issues?.length) {
+      fc.issues.forEach(issue => {
+        body += `<div class="fact-issue">
+          <div class="type">[${issue.type}]</div>
+          ${issue.original ? `<div class="original">${issue.original}</div>` : ''}
+          ${issue.corrected ? `<div class="corrected">→ ${issue.corrected}</div>` : ''}
+          ${issue.reason ? `<div class="reason">${issue.reason}</div>` : ''}
+        </div>`
+      })
+    }
+    body += '</div>'
+  }
+  // Meta description
+  if (post.metaDescription) {
+    body += `<div style="background:var(--bg3);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--muted)">${post.metaDescription}</div>`
+  }
+  // Tags
+  if (post.tags?.length) {
+    body += `<div style="margin-bottom:16px">${post.tags.map(t=>`<span class="badge purple" style="margin:2px">#${t}</span>`).join('')}</div>`
+  }
+  // FAQ
+  if (post.faq?.length) {
+    body += `<div style="margin-bottom:20px"><div style="font-weight:700;margin-bottom:10px;font-size:14px">FAQ</div>`
+    post.faq.forEach(f => {
+      body += `<div style="background:var(--bg3);border-radius:8px;padding:12px 14px;margin-bottom:8px">
+        <div style="font-weight:600;font-size:13px;margin-bottom:4px">Q. ${f.question}</div>
+        <div style="font-size:13px;color:var(--muted)">A. ${f.answer}</div>
+      </div>`
+    })
+    body += '</div>'
+  }
+  // Content preview
+  body += `<div style="font-size:13px;font-weight:700;margin-bottom:8px">본문 미리보기</div>
+    <div class="modal-content">${(post.content || '').replace(/<script[^>]*>[\s\S]*?<\/script>/gi,'').slice(0, 4000)}</div>`
+  document.getElementById('modal-body').innerHTML = body
+  document.getElementById('modal-overlay').classList.add('open')
+}
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal-overlay') || e.target === document.getElementById('modal-close')) {
+    document.getElementById('modal-overlay').classList.remove('open')
+  }
+}
+
+// ── Social ────────────────────────────────────────────────────────────────────
+async function loadSocial() {
+  const list = await fetch('/api/social').then(r => r.json())
+  const sel = document.getElementById('social-select')
+  sel.innerHTML = '<option value="">— 콘텐츠 선택 —</option>' +
+    list.map(s => `<option value="${encodeURIComponent(s.id)}">${s.date} · ${s.keyword}</option>`).join('')
+  if (list.length) { sel.value = encodeURIComponent(list[0].id); loadSocialContent(sel.value) }
+}
+async function loadSocialContent(encodedId) {
+  if (!encodedId) return
+  const id = decodeURIComponent(encodedId)
+  const data = await fetch('/api/social/' + id).then(r => r.json()).catch(() => null)
+  if (!data) return
+  const area = document.getElementById('social-content-area')
+
+  const igHashtags = [...(data.instagram?.hashtags?.popular||[]), ...(data.instagram?.hashtags?.medium||[]), ...(data.instagram?.hashtags?.niche||[])]
+  const ttHashtags = data.tiktok?.hashtags || []
+
+  area.innerHTML = `
+    <div class="sns-tabs">
+      <div class="sns-tab active" onclick="snstab(this,'ig')">📸 Instagram</div>
+      <div class="sns-tab" onclick="snstab(this,'th')">🧵 Threads</div>
+      <div class="sns-tab" onclick="snstab(this,'tt')">🎵 TikTok</div>
+    </div>
+    <div class="sns-panel active" id="sns-ig">
+      <div style="margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span style="font-size:12px;color:var(--muted)">최적 게시 시간:</span>
+        ${(data.instagram?.bestPostingTimes||[]).map(t=>`<span class="badge purple">${t}</span>`).join('')}
+        ${data.instagram?.storyHighlightTitle ? `<span class="badge blue">하이라이트: ${data.instagram.storyHighlightTitle}</span>` : ''}
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">후킹 문장</div>
+      <div style="background:rgba(124,106,247,0.1);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;font-weight:600">${data.instagram?.hookLine||''}</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:6px">전체 캡션</div>
+      <div class="sns-caption">${data.instagram?.caption||''}</div>
+      <div class="hashtag-wrap">${igHashtags.map(t=>`<span class="hashtag">${t.startsWith('#')?t:'#'+t}</span>`).join('')}</div>
+    </div>
+    <div class="sns-panel" id="sns-th">
+      <div style="margin-bottom:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span style="font-size:12px;color:var(--muted)">최적 게시 시간:</span>
+        ${(data.threads?.bestPostingTimes||[]).map(t=>`<span class="badge blue">${t}</span>`).join('')}
+      </div>
+      ${(data.threads?.posts||[]).map(p=>`
+        <div class="thread-item"><div class="thread-label">${p.label}</div>${p.content||''}</div>
+      `).join('')}
+      ${data.threads?.engagementQuestion ? `<div style="background:rgba(6,182,212,0.1);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:13px;color:var(--accent2)">💬 ${data.threads.engagementQuestion}</div>` : ''}
+    </div>
+    <div class="sns-panel" id="sns-tt">
+      <div style="margin-bottom:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span style="font-size:13px;font-weight:600">${data.tiktok?.title||''}</span>
+        ${(data.tiktok?.bestPostingTimes||[]).map(t=>`<span class="badge yellow">${t}</span>`).join('')}
+      </div>
+      ${(data.tiktok?.scenes||[]).map(s=>`
+        <div class="tiktok-scene">
+          <div class="time">⏱ ${s.time}</div>
+          <div class="text">${s.text||''}</div>
+          <div class="dir">🎬 ${s.direction||''} ${s.sound?`| 🔊 ${s.sound}`:''}</div>
+        </div>
+      `).join('')}
+      ${data.tiktok?.commentBait ? `<div style="background:rgba(251,191,36,0.1);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:13px;color:var(--yellow)">💬 ${data.tiktok.commentBait}</div>` : ''}
+      ${data.tiktok?.backgroundMusic ? `<div style="font-size:13px;color:var(--muted);margin-top:10px">🎵 BGM: ${data.tiktok.backgroundMusic.genre} — ${data.tiktok.backgroundMusic.mood}</div>` : ''}
+      <div class="hashtag-wrap">${ttHashtags.map(t=>`<span class="hashtag">${t.startsWith('#')?t:'#'+t}</span>`).join('')}</div>
+    </div>
+  `
+}
+function snstab(el, panel) {
+  el.parentElement.querySelectorAll('.sns-tab').forEach(t => t.classList.remove('active'))
+  el.classList.add('active')
+  document.querySelectorAll('.sns-panel').forEach(p => p.classList.remove('active'))
+  document.getElementById('sns-' + panel).classList.add('active')
+}
+
+// ── Analytics ─────────────────────────────────────────────────────────────────
+async function loadAnalytics() {
+  const [analytics, runs] = await Promise.all([
+    fetch('/api/analytics').then(r => r.json()),
+    fetch('/api/runs').then(r => r.json()),
+  ])
+
+  // 전체 실행 누적 집계 (마지막 1건이 아닌 전체)
+  const filteredRuns = selectedBlog ? runs.filter(r => r.blogId === selectedBlog) : runs
+  const totalDaily = filteredRuns.reduce((s, r) => s + (r.earnings?.estimatedDailyRevenue || 0), 0) / Math.max(filteredRuns.length, 1)
+  const cpcList = filteredRuns.filter(r => r.earnings?.avgCPC).map(r => r.earnings.avgCPC)
+  const avgCpc = cpcList.length ? cpcList.reduce((a, b) => a + b, 0) / cpcList.length : (analytics.avgCPC || 0)
+
+  document.getElementById('an-daily').textContent = '$' + totalDaily.toFixed(2)
+  document.getElementById('an-monthly').textContent = '$' + (totalDaily * 30).toFixed(2)
+  document.getElementById('an-yearly').textContent = '$' + (totalDaily * 365).toFixed(0)
+  document.getElementById('an-cpc').textContent = '$' + avgCpc.toFixed(2)
+
+  const hist = document.getElementById('earnings-history')
+  hist.innerHTML = filteredRuns.slice(0, 15).map(r => `
+    <div class="earnings-row">
+      <div>
+        <div style="font-size:13px;font-weight:600">
+          ${new Date(r.runAt).toLocaleDateString('ko-KR')}
+          ${r.blogName ? `<span class="badge ${blogColor(r.blogId)}" style="font-size:10px;margin-left:6px">${r.blogName}</span>` : ''}
+        </div>
+        <div style="font-size:12px;color:var(--muted)">${(r.keywords||[]).join(', ')} · ${r.postsGenerated||0}개 생성 · Blogger ${r.platforms?.blogger||0}개</div>
+      </div>
+      <div class="earnings-value">$${(r.earnings?.estimatedDailyRevenue||0).toFixed(2)}<span style="font-size:11px;color:var(--muted)">/일</span></div>
+    </div>
+  `).join('') || '<div class="empty">데이터 없음</div>'
+}
+
+// ── GSC ───────────────────────────────────────────────────────────────────────
+async function loadGsc() {
+  const data = await fetch('/api/gsc').then(r => r.json()).catch(() => null)
+  if (!data) {
+    document.getElementById('gsc-summary-cards').innerHTML = '<div class="empty"><div class="icon">🔍</div>GSC 데이터 없음</div>'
+    return
+  }
+  gscData = data
+
+  // 멀티블로그 탭
+  const sites = data.sites || {}
+  const blogIds = Object.keys(sites)
+  const tabsEl = document.getElementById('gsc-blog-tabs')
+  if (blogIds.length > 1) {
+    tabsEl.innerHTML = `<div class="sns-tabs">
+      <div class="sns-tab active" onclick="switchGscBlog('', this)">전체</div>
+      ${blogIds.map(id => {
+        const blog = allBlogs.find(b => b.id === id) || {}
+        return `<div class="sns-tab" onclick="switchGscBlog('${id}', this)">${blog.name || id}</div>`
+      }).join('')}
+    </div>`
+  } else tabsEl.innerHTML = ''
+
+  gscActiveBlog = ''
+  renderGsc(data)
+}
+
+function switchGscBlog(blogId, el) {
+  el.parentElement.querySelectorAll('.sns-tab').forEach(t => t.classList.remove('active'))
+  el.classList.add('active')
+  gscActiveBlog = blogId
+  if (blogId && gscData?.sites?.[blogId]) {
+    renderGsc(gscData.sites[blogId])
+  } else {
+    renderGsc(gscData)
+  }
+}
+
+function renderGsc(d) {
+  const dateRange = d.date_range
+  document.getElementById('gsc-date-range').textContent =
+    dateRange ? `${dateRange.start} ~ ${dateRange.end}` : '-'
+
+  // 요약 카드
+  const queries = d.top_queries || []
+  const totalClicks = queries.reduce((s, q) => s + (q.clicks || 0), 0)
+  const totalImpr = queries.reduce((s, q) => s + (q.impressions || 0), 0)
+  const avgCtr = totalImpr ? (totalClicks / totalImpr * 100).toFixed(1) : '0.0'
+  const avgPos = queries.length
+    ? (queries.reduce((s, q) => s + (q.position || 0), 0) / queries.length).toFixed(1)
+    : '-'
+
+  document.getElementById('gsc-summary-cards').innerHTML = `
+    <div class="card blue"><div class="label">총 클릭수</div><div class="value">${totalClicks.toLocaleString()}</div><div class="sub">최근 30일</div></div>
+    <div class="card purple"><div class="label">총 노출수</div><div class="value">${totalImpr.toLocaleString()}</div><div class="sub">최근 30일</div></div>
+    <div class="card green"><div class="label">평균 CTR</div><div class="value">${avgCtr}%</div><div class="sub">클릭률</div></div>
+    <div class="card yellow"><div class="label">평균 순위</div><div class="value">${avgPos}</div><div class="sub">검색 결과 위치</div></div>
+  `
+
+  // 인기 검색어 테이블
+  const tbody = document.getElementById('gsc-queries-table')
+  if (!queries.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty">데이터 없음 (GSC 연결 또는 색인 대기 중)</td></tr>'
+  } else {
+    tbody.innerHTML = queries.slice(0, 20).map(q => `
+      <tr>
+        <td style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escHtml(q.query || '')}</td>
+        <td><span class="rising">${(q.clicks||0).toLocaleString()}</span></td>
+        <td>${(q.impressions||0).toLocaleString()}</td>
+        <td>${q.ctr ? (q.ctr * 100).toFixed(1) + '%' : '-'}</td>
+        <td>${q.position ? q.position.toFixed(1) : '-'}</td>
+      </tr>
+    `).join('')
+  }
+
+  // 카테고리별 성과
+  const cats = d.category_performance || {}
+  const catRows = Object.entries(cats)
+  const catTbody = document.getElementById('gsc-category-table')
+  if (!catRows.length) {
+    catTbody.innerHTML = '<tr><td colspan="4" class="empty">카테고리 데이터 없음</td></tr>'
+  } else {
+    catTbody.innerHTML = catRows.map(([cat, v]) => `
+      <tr>
+        <td>${escHtml(cat)}</td>
+        <td>${(v.clicks||0).toLocaleString()}</td>
+        <td>${(v.impressions||0).toLocaleString()}</td>
+        <td>${v.ctr ? (v.ctr * 100).toFixed(1) + '%' : '-'}</td>
+      </tr>
+    `).join('')
+  }
+}
+
+// ── Logs ──────────────────────────────────────────────────────────────────────
+async function loadLogs() {
+  const { lines } = await fetch('/api/logs').then(r => r.json())
+  const box = document.getElementById('log-box-static')
+  box.innerHTML = lines.map(line => `<div class="${logClass(line)}">${escHtml(line)}</div>`).join('')
+  box.scrollTop = box.scrollHeight
+}
+function clearLogView() { document.getElementById('log-box-static').innerHTML = '' }
+
+// ── Config ────────────────────────────────────────────────────────────────────
+async function loadConfig() {
+  const cfg = await fetch('/api/config').then(r => r.json())
+  const rows = [
+    { key: 'Anthropic API Key', val: cfg.anthropicKey, check: !cfg.anthropicKey.includes('미설정') },
+    { key: 'Anthropic 모델', val: cfg.anthropicModel, check: true },
+    { key: 'Naver Client ID', val: cfg.naverClientId, check: !cfg.naverClientId.includes('미설정') },
+    { key: 'Google Client ID', val: cfg.googleClientId, check: !cfg.googleClientId.includes('미설정') },
+    { key: 'Google Refresh Token', val: cfg.googleRefreshToken, check: !cfg.googleRefreshToken.includes('미설정') },
+    { key: 'Blogger Blog ID', val: cfg.bloggerBlogId, check: cfg.bloggerBlogId !== '미설정' },
+  ]
+  document.getElementById('config-list').innerHTML = rows.map(r => `
+    <div class="config-row">
+      <div class="key">${r.key}</div>
+      <div class="val ${r.check ? 'set' : 'unset'}">${r.check ? '✅' : '❌'} ${r.val}</div>
+    </div>
+  `).join('')
+  document.getElementById('config-sys').innerHTML = `
+    <div class="config-row"><div class="key">포스트 수 / 실행</div><div class="val set">${cfg.postsPerRun}개</div></div>
+    <div class="config-row"><div class="key">스케줄 크론</div><div class="val set">${cfg.scheduleCron}</div></div>
+    <div class="config-row"><div class="key">대상 국가</div><div class="val set">${cfg.country}</div></div>
+    <div class="config-row"><div class="key">대시보드 포트</div><div class="val set">4000</div></div>
+  `
+}
+
+// ── Run Control ───────────────────────────────────────────────────────────────
+function initRunPage() {
+  connectRunStream()
+}
+function connectRunStream() {
+  if (runEventSource) runEventSource.close()
+  runEventSource = new EventSource('/api/run/stream')
+  runEventSource.onmessage = e => {
+    const data = JSON.parse(e.data)
+    if (data.type === 'status') updateRunStatus(data.running)
+    if (data.type === 'log') appendLog(data.line)
+  }
+}
+function updateRunStatus(running) {
+  isRunning = running
+  document.getElementById('run-indicator').style.display = running ? 'block' : 'none'
+  document.getElementById('sidebar-run-label').textContent = running ? '⏹ 실행 중...' : '▶ 즉시 실행'
+  const sideBtn = document.getElementById('sidebar-run-btn')
+  sideBtn.classList.toggle('running', running)
+  const statusBadge = document.getElementById('run-status-badge')
+  if (statusBadge) {
+    statusBadge.textContent = running ? '실행 중 🟢' : '대기 중'
+    statusBadge.className = 'badge ' + (running ? 'green' : 'muted')
+  }
+  const stopBtn = document.getElementById('btn-stop')
+  if (stopBtn) stopBtn.style.display = running ? 'flex' : 'none'
+  ;['btn-publish','btn-draft','btn-preview'].forEach(id => {
+    const btn = document.getElementById(id)
+    if (btn) btn.disabled = running
+  })
+}
+function appendLog(line) {
+  const box = document.getElementById('log-box')
+  if (!box) return
+  const div = document.createElement('div')
+  div.className = logClass(line)
+  div.textContent = line
+  box.appendChild(div)
+  box.scrollTop = box.scrollHeight
+}
+function clearLog() { const box = document.getElementById('log-box'); if (box) box.innerHTML = '' }
+async function startRun(mode) {
+  if (isRunning) return
+  clearLog()
+  const blogId = selectedBlog || ''
+  await fetch('/api/run', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ mode, blogId }),
+  })
+  updateRunStatus(true)
+}
+async function stopRun() {
+  await fetch('/api/run/stop', { method: 'POST' })
+  updateRunStatus(false)
+}
+async function quickRun() {
+  if (isRunning) { await stopRun(); return }
+  navTo('run')
+  await startRun('publish')
+}
+
+// ── Utils ─────────────────────────────────────────────────────────────────────
+function logClass(line) {
+  if (/\[error\]/i.test(line) || /error/i.test(line) && /\[/.test(line)) return 'log-error'
+  if (/\[warn\]/i.test(line)) return 'log-warn'
+  if (/\[info\]/i.test(line)) return 'log-info'
+  return 'log-default'
+}
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+
+// ── Pending Posts ─────────────────────────────────────────────────────────────
+
+async function loadPendingPosts() {
+  const posts = await fetch('/api/posts').then(r => r.json()).catch(() => [])
+  const pending = posts.filter(p => p.publishStatus === 'pending')
+  document.getElementById('pending-count-badge').textContent = pending.length
+  updateNavPendingBadge(pending.length)
+  const grid = document.getElementById('pending-grid')
+  if (!grid) return
+  if (!pending.length) {
+    grid.innerHTML = '<div class="empty"><div class="icon">✅</div>대기 중인 포스트가 없습니다<br><br><span style="font-size:12px;color:var(--muted)">npm run confirm 으로 실행하면 검토 후 게시할 수 있습니다</span></div>'
+    return
+  }
+  grid.innerHTML = pending.map(p => pendingCardHTML(p)).join('')
+}
+
+function updateNavPendingBadge(count) {
+  const badge = document.getElementById('nav-pending-badge')
+  if (!badge) return
+  badge.textContent = count
+  badge.style.display = count > 0 ? 'inline-block' : 'none'
+}
+
+function pendingCardHTML(p) {
+  const fcBadge = p.factCheck
+    ? p.factCheck.issueCount > 0
+      ? `<span class="badge yellow">팩트수정 ${p.factCheck.issueCount}</span>`
+      : '<span class="badge green">팩트✅</span>'
+    : ''
+  return `<div class="post-card pending">
+    <div class="thumb-placeholder">📝</div>
+    <div class="info">
+      <div class="keyword">⏳ ${p.keyword || ''}</div>
+      <div class="title">${escHtml(p.title)}</div>
+      <div class="footer">
+        <span class="badge yellow">게시 대기</span>
+        ${fcBadge}
+        <span class="badge muted">${p.date}</span>
+        <span class="badge purple">${p.adsenseCategory || '일반'}</span>
+        ${p.wordCount ? `<span class="badge blue">${p.wordCount}자</span>` : ''}
+      </div>
+      <div class="post-actions">
+        <button class="btn-edit" onclick="openEditModal('${encodeURIComponent(p.id)}');event.stopPropagation()">✏️ 수정</button>
+        <button class="btn-approve" onclick="confirmAndPublish('${encodeURIComponent(p.id)}','${escHtml(p.title).replace(/'/g,"\\'")}');event.stopPropagation()">✅ 게시</button>
+        <button class="btn-reject-sm" onclick="confirmAndReject('${encodeURIComponent(p.id)}','${escHtml(p.title).replace(/'/g,"\\'")}');event.stopPropagation()">❌ 거절</button>
+      </div>
+    </div>
+  </div>`
+}
+
+// ── Edit Modal ─────────────────────────────────────────────────────────────────
+
+let editingPostId = null
+
+async function openEditModal(encodedId) {
+  const id = decodeURIComponent(encodedId)
+  const post = await fetch('/api/posts/' + encodeURIComponent(id)).then(r => r.json()).catch(() => null)
+  if (!post) return showToast('포스트를 불러올 수 없습니다', true)
+  editingPostId = id
+  document.getElementById('edit-post-id').value = id
+  document.getElementById('edit-title').value = post.title || ''
+  document.getElementById('edit-meta').value = post.metaDescription || ''
+  document.getElementById('edit-tags').value = (post.tags || []).join(', ')
+  document.getElementById('edit-content').value = post.content || ''
+  renderFaqEdit(post.faq || [])
+  document.getElementById('edit-overlay').classList.add('open')
+}
+
+function renderFaqEdit(faqs) {
+  const list = document.getElementById('edit-faq-list')
+  list.innerHTML = faqs.map((f, i) => `
+    <div class="faq-item" id="fi-${i}">
+      <button class="btn-del-faq" onclick="removeFaqItem(${i})" type="button">✕</button>
+      <input placeholder="질문" value="${escHtml(f.question || '')}" id="fq-${i}" />
+      <input placeholder="답변" value="${escHtml(f.answer || '')}" id="fa-${i}" />
+    </div>`).join('')
+}
+
+function addFaqItem() {
+  const list = document.getElementById('edit-faq-list')
+  const i = Date.now()
+  const item = document.createElement('div')
+  item.className = 'faq-item'
+  item.id = `fi-${i}`
+  item.innerHTML = `<button class="btn-del-faq" onclick="document.getElementById('fi-${i}').remove()" type="button">✕</button>
+    <input placeholder="질문" id="fq-${i}" />
+    <input placeholder="답변" id="fa-${i}" />`
+  list.appendChild(item)
+}
+
+function removeFaqItem(i) {
+  document.getElementById(`fi-${i}`)?.remove()
+}
+
+function collectFaqs() {
+  return [...document.querySelectorAll('#edit-faq-list .faq-item')].reduce((acc, item) => {
+    const idx = item.id.replace('fi-', '')
+    const q = document.getElementById(`fq-${idx}`)?.value?.trim()
+    const a = document.getElementById(`fa-${idx}`)?.value?.trim()
+    if (q && a) acc.push({ question: q, answer: a })
+    return acc
+  }, [])
+}
+
+async function saveEditedPost() {
+  const id = document.getElementById('edit-post-id').value
+  const updates = {
+    title: document.getElementById('edit-title').value,
+    metaDescription: document.getElementById('edit-meta').value,
+    tags: document.getElementById('edit-tags').value.split(',').map(t => t.trim()).filter(Boolean),
+    content: document.getElementById('edit-content').value,
+    faq: collectFaqs(),
+  }
+  const res = await fetch('/api/posts/' + encodeURIComponent(id), {
+    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updates)
+  })
+  if (res.ok) { showToast('저장 완료') }
+  else { showToast('저장 실패', true) }
+  return res.ok
+}
+
+async function approveFromEditor() {
+  const title = document.getElementById('edit-title').value
+  const ok = await saveEditedPost()
+  if (!ok) return
+  const id = document.getElementById('edit-post-id').value
+  const confirmed = await showConfirm('게시 확인', `"${title}"\n\nGoogle Blogger에 게시하시겠습니까?`, '게시하기', 'var(--green)')
+  if (!confirmed) return
+  closeEditModal()
+  await publishPost(id)
+}
+
+async function confirmAndPublish(encodedId, title) {
+  const id = decodeURIComponent(encodedId)
+  const confirmed = await showConfirm('게시 확인', `"${title}"\n\nGoogle Blogger에 게시하시겠습니까?`, '게시하기', 'var(--green)')
+  if (!confirmed) return
+  await publishPost(id)
+}
+
+async function publishPost(id) {
+  showToast('게시 중...')
+  const res = await fetch('/api/posts/' + encodeURIComponent(id) + '/publish', { method: 'POST' })
+  const data = await res.json()
+  if (data.url) {
+    showToast('✅ 게시 완료!')
+    loadPendingPosts()
+    updateNavPendingBadge(0)
+  } else {
+    showToast('게시 실패: ' + (data.error || '오류'), true)
+  }
+}
+
+async function confirmAndReject(encodedId, title) {
+  const id = decodeURIComponent(encodedId)
+  const confirmed = await showConfirm('거절 확인', `"${title}"\n\n이 포스트를 거절 처리하시겠습니까?`, '거절', 'var(--red)')
+  if (!confirmed) return
+  const res = await fetch('/api/posts/' + encodeURIComponent(id), { method: 'DELETE' })
+  if (res.ok) { showToast('거절 처리 완료'); loadPendingPosts() }
+  else showToast('처리 실패', true)
+}
+
+function closeEditModal(e) {
+  if (!e || e.target === document.getElementById('edit-overlay')) {
+    document.getElementById('edit-overlay').classList.remove('open')
+  }
+}
+
+// ── Confirm Dialog ─────────────────────────────────────────────────────────────
+
+let _confirmResolve = null
+
+function showConfirm(title, message, yesText = '확인', yesColor = 'var(--accent)') {
+  return new Promise(resolve => {
+    _confirmResolve = resolve
+    document.getElementById('confirm-title').textContent = title
+    document.getElementById('confirm-message').textContent = message
+    const yesBtn = document.getElementById('confirm-yes')
+    yesBtn.textContent = yesText
+    yesBtn.style.background = yesColor
+    document.getElementById('confirm-overlay').classList.add('open')
+  })
+}
+
+function resolveConfirm(result) {
+  document.getElementById('confirm-overlay').classList.remove('open')
+  if (_confirmResolve) { _confirmResolve(result); _confirmResolve = null }
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+
+function showToast(msg, isError = false) {
+  const t = document.createElement('div')
+  t.className = 'toast'
+  t.style.background = isError ? 'var(--red)' : 'var(--green)'
+  t.style.color = '#fff'
+  t.textContent = msg
+  document.body.appendChild(t)
+  setTimeout(() => t.remove(), 3000)
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+loadBlogSelector()
+loadDashboard()
+// Poll run status every 3s
+setInterval(async () => {
+  try {
+    const { running } = await fetch('/api/run/status').then(r => r.json())
+    updateRunStatus(running)
+  } catch {}
+}, 3000)
+</script>
+</body>
+</html>

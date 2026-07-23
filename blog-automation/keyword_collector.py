@@ -15,9 +15,11 @@ import logging
 import os
 import re
 import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
 
 import requests
+from config import claude_text
 
 logger = logging.getLogger(__name__)
 
@@ -119,6 +121,253 @@ _FALLBACK_KEYWORDS_TRAVEL_SPORTS = [
     "자전거 출퇴근 3개월 해본 솔직 장단점 정리",
 ]
 
+_FALLBACK_KEYWORDS_BLOG1 = [
+    # ✈️ 국내 여행 — 숨겨진 명소·맛집·숙소 솔직 후기
+    "제주도 숨겨진 명소 현지인만 아는 곳 솔직 후기",
+    "부산 골목 맛집 관광객 없는 진짜 맛집 직접 가봤더니",
+    "강릉 여행 숙소 가성비 최고였던 곳과 실망한 곳 비교",
+    "서울 근교 당일치기 숨은 명소 계절별 추천",
+    "경주 빠지면 후회하는 야경 명소 직접 다녀온 후기",
+    "전주 한옥마을 맛집 줄 안 서는 집 솔직 추천",
+    "여수 밤바다 숙소 오션뷰 가성비 비교 직접 예약해봤더니",
+    "속초 여행 겨울에 가면 좋은 이유와 숨은 맛집",
+    "통영 하루 코스 알짜 명소와 숙소 실제 후기",
+    "남해 독일마을 방문 전 알았으면 좋을 것들",
+    "인천 차이나타운 맛집과 볼거리 직접 다녀온 솔직 평가",
+    "안동 하회마을 혼자 여행하기 좋을까 솔직 후기",
+    "춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳",
+    "담양 메타세쿼이아길 계절별 다른 매력 직접 방문 후기",
+    "포항 구룡포 과메기 거리와 숨은 맛집 솔직 추천",
+    # 🌏 해외 여행 — 항공권·호텔·패키지 정보 및 현지 체험
+    "일본 오사카 항공권 가장 싸게 사는 방법 직접 비교",
+    "베트남 다낭 패키지 vs 자유여행 비용 직접 비교해봤더니",
+    "태국 방콕 호텔 가성비 좋은 곳과 실망한 곳 솔직 후기",
+    "유럽 처음 여행 항공권 호텔 한 번에 싸게 예약하는 법",
+    "필리핀 세부 현지 체험 진짜 즐기는 방법과 주의사항",
+    "홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니",
+    "일본 도쿄 호텔 위치별 가격 차이와 추천 지역 솔직 비교",
+    "괌 패키지 여행 실제 포함 내역과 추가 비용 공개",
+    "터키 이스탄불 현지 물가와 호텔 예약 실수담",
+    "스페인 바르셀로나 항공권 최저가 잡는 타이밍 직접 경험",
+    "하와이 호텔 예약 시기와 가격 변동 직접 추적한 결과",
+    "모로코 현지 체험 여행 준비 과정과 실수담 솔직 공개",
+    # 🎬 드라마·영화 — 국내외 인기 작품 리뷰 및 등장인물 분석
+    "넷플릭스 한국 드라마 2026 지금 봐야 할 작품 추천",
+    "티빙 드라마 최신작 줄거리와 등장인물 관계도 정리",
+    "쿠팡플레이 오리지널 드라마 완주 후기 솔직 리뷰",
+    "국내 박스오피스 최신 영화 관람 후기 스포 없이",
+    "마블 DC 2026 신작 영화 기대작 사전 정보 정리",
+    "드라마 주인공 배우 실제 연기력 솔직 평가와 캐릭터 분석",
+    "OTT 드라마 몰아보기 추천 장르별 숨은 명작 정리",
+    "영화 결말 해석 보고 나서 궁금했던 것들 정리",
+    "한국 영화 vs 해외 리메이크 원작과 비교해보니",
+    "드라마 OST 빠지면 아쉬운 명곡 모음 시청자 반응",
+    # 🎵 연예·K-POP — 아이돌·배우 소식, 음반·공연 정보
+    "2026 K-POP 신보 이달의 주목 음반 솔직 리뷰",
+    "아이돌 컴백 2026 상반기 기대작 사전 정보 정리",
+    "K-POP 콘서트 티켓 예매 꿀팁 경쟁률 낮추는 방법",
+    "배우 최근 작품과 근황 솔직 팬심 없는 평가",
+    "아이돌 팬미팅 처음 가는 사람을 위한 준비 가이드",
+    "K-POP 음반 초동 판매 순위와 의미 분석",
+    "국내 음악 차트 실시간 순위 변동과 화제 신곡",
+    "연예인 화보 촬영지와 패션 스타일 따라하기",
+    "걸그룹 보이그룹 데뷔 2026 신인 주목해야 할 이유",
+    "K-POP 스트리밍 음원 성적 분석과 팬덤 반응 정리",
+]
+
+_FALLBACK_KEYWORDS_BLOG2_IT = [
+    # 🤖 AI·생성형 AI
+    "챗GPT 최신 업데이트 달라진 기능 직접 써봤더니",
+    "클로드 AI vs 챗GPT 2026 실무 활용 솔직 비교",
+    "AI 이미지 생성 무료 툴 5가지 직접 테스트 결과",
+    "생성형 AI 업무 자동화 실제로 시간 얼마나 줄었나",
+    "AI 코딩 어시스턴트 GitHub Copilot 3개월 써본 후기",
+    "구글 제미나이 실제 사용해보니 챗GPT와 다른 점",
+    "AI 동영상 생성 툴 최신 비교 실제 결과물 품질은",
+    "노코드 AI 앱 빌더 직접 만들어본 솔직 후기",
+    # 📱 스마트폰·가전
+    "갤럭시 S26 vs 아이폰 17 실사용 비교 어떤 걸 살까",
+    "아이폰 17 국내 출시 가격과 달라진 기능 정리",
+    "갤럭시 폴드 처음 사용하면서 불편했던 것들",
+    "애플워치 vs 갤럭시워치 건강 기능 직접 비교",
+    "무선 이어폰 에어팟 vs 갤럭시버즈 솔직 비교 후기",
+    "태블릿 아이패드 vs 갤럭시탭 어느 걸 사야 할까",
+    "스마트홈 기기 입문 처음 설치하면서 실수한 것들",
+    # 💻 PC·노트북
+    "맥북 에어 M4 처음 써본 윈도우 유저 솔직 후기",
+    "게이밍 노트북 100만원대 직접 써보고 추천하는 이유",
+    "SSD 업그레이드 직접 해봤더니 속도 얼마나 빨라졌나",
+    "윈도우11 업그레이드 실제로 해보니 달라진 점",
+    # 🌐 앱·서비스·플랫폼
+    "유튜브 프리미엄 1년 써본 솔직 후기 돈 값 하나",
+    "노션 AI 3개월 써보고 업무가 달라진 것들",
+    "챗GPT 플러스 vs 무료 버전 실제 차이 직접 비교",
+    "넷플릭스 vs 유튜브 OTT 요금제 2026 비교 정리",
+    "쿠팡 로켓배송 실제로 몇 시간 만에 오나 테스트해봤더니",
+    "카카오페이 vs 네이버페이 어떤 게 더 혜택 좋을까",
+    # 🔒 보안·개인정보
+    "개인정보 유출 확인하는 방법과 대처법 직접 해봤더니",
+    "VPN 무료 vs 유료 직접 써보고 추천하는 이유",
+    "스미싱 피싱 최신 수법과 실제로 당할 뻔한 경험",
+    "패스키 비밀번호 없는 로그인 직접 설정해보니",
+    # ⚡ IT 트렌드·최신 뉴스
+    "2026 IT 트렌드 직장인이 알아야 할 기술 변화",
+    "애플 구글 삼성 최신 발표 내용 핵심만 정리",
+    "전기차 자율주행 2026 실제 수준은 어디까지 왔나",
+    "메타버스 현실은 어떤가 2026 실제 사용 사례 정리",
+    "양자컴퓨터 일반인이 알아야 할 것만 쉽게 정리",
+    "5G 6G 차이와 실생활 변화 직접 체감해보니",
+    # 🛠️ IT 활용 실전 팁
+    "구글 드라이브 활용법 몰랐던 기능 써보고 놀란 것들",
+    "엑셀 대신 구글 시트 쓰면서 달라진 업무 효율",
+    "유튜브 쇼츠 AI 자동화 직접 만들어봤더니 구독자 변화",
+    "블로그 SEO 직접 적용해보고 검색 순위 변화 정리",
+]
+
+_FALLBACK_KEYWORDS_BLOG3 = [
+    # 📈 금융 뉴스·시장 동향
+    "코스피 코스닥 2026 하반기 전망 핵심 정리",
+    "미국 연준 금리 결정 한국 증시 영향 분석",
+    "원달러 환율 급등락 원인과 개인투자자 대응법",
+    "2026 금융시장 주요 이슈 직장인이 알아야 할 것",
+    "삼성전자 주가 전망 2026 실적과 주주 환원 분석",
+    "ETF 시장 최신 동향 새로 나온 상품 정리",
+    "채권 금리 상승 시대 개인 투자 전략 변화",
+    "국내외 부동산 시장 2026 금리 변화와 전망",
+    # 🏦 은행·대출·예적금
+    "2026 주요 은행 적금 금리 비교 가장 높은 곳",
+    "주택담보대출 금리 변동 2026 갈아타기 해야 할까",
+    "청년 전세자금 대출 조건과 한도 2026 최신 정리",
+    "ISA 계좌 2026 개편 내용 무엇이 달라졌나",
+    "파킹통장 금리 비교 2026 최신 순위",
+    "신용대출 금리 낮추는 방법 직접 알아본 결과",
+    "예금자보호 한도 상향 2026 내용과 활용법",
+    # 🏛️ 정부 지원 시책·복지
+    "2026 정부 지원금 총정리 놓치면 아까운 것들",
+    "청년도약계좌 가입 조건과 혜택 2026 최신 정리",
+    "청년희망적금 만기 후 다음 단계 정부 지원 정리",
+    "소상공인 정부 지원금 2026 신청 방법과 조건",
+    "근로장려금 자녀장려금 2026 신청 기간과 금액",
+    "국민취업지원제도 2026 달라진 내용과 신청법",
+    "에너지 바우처 2026 대상자 신청 방법 정리",
+    "기초생활수급자 조건 2026 변경 내용 핵심 정리",
+    "중소기업 재직자 우대 저축 공제 2026 가입 조건",
+    "주거급여 신청 조건과 금액 2026 최신 정리",
+    "출산지원금 2026 지방별 금액 차이와 신청법",
+    "육아휴직 급여 2026 인상 내용과 신청 방법",
+    "실업급여 2026 수급 조건 계산법 직접 정리",
+    "국민연금 2026 개편 내용 노후 대비 어떻게 바뀌나",
+    # 💰 세금·절세
+    "연말정산 2026 달라진 공제 항목 핵심 정리",
+    "종합소득세 신고 2026 직장인 부업 신고 방법",
+    "증여세 부모에게 받을 때 2026 공제 한도 정리",
+    "양도소득세 2026 부동산 절세 방법 핵심 정리",
+    "건강보험료 2026 직장인 지역가입자 달라진 점",
+    # 📊 경제 정책·제도 변화
+    "2026 최저임금 인상 소상공인 직장인 영향 분석",
+    "청년 주택 공급 정책 2026 달라진 내용 정리",
+    "금융투자소득세 2026 최종 결정 내용 정리",
+    "가계부채 관리 대책 2026 대출 규제 변화 정리",
+]
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 블로그별 고CPC 키워드 (주제에 녹아든 고수익 키워드)
+# 전략: 블로그 주제와 고CPC 카테고리(보험·대출·법률·부동산 등)를 자연스럽게 결합
+# 실행당 HIGH_CPC_PER_RUN 개를 기존 트렌드 키워드 사이에 주입
+# ──────────────────────────────────────────────────────────────────────────────
+
+# 실행당 고CPC 키워드 삽입 수 (기본 1개 — 환경변수로 조정 가능)
+import os as _os
+_HIGH_CPC_PER_RUN = max(0, int(_os.getenv("HIGH_CPC_PER_RUN", "1")))
+
+_HIGH_CPC_KEYWORDS_BLOG1 = [
+    # ✈️ 여행 × 보험·금융 (CPC $1.8~2.5)
+    "해외여행 실비보험 필요한지 직접 비교해봤더니",
+    "여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기",
+    "항공권 취소·지연 보상 직접 청구해보니 알게 된 것",
+    "해외여행 환전 수수료 0% 방법 직접 비교 정리",
+    "제주도 렌터카 보험 옵션 실제로 필요한 것만 고르기",
+    "패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것",
+    # ✈️ 여행 × 법률 (CPC $2.8~3.2)
+    "해외에서 사고 났을 때 대사관 신고 직접 경험한 과정",
+    "여행 중 물건 도난 경찰서 신고 후 보험 청구 방법",
+    # 🎬 드라마·연예 × OTT·쇼핑 (CPC $1.2~1.5)
+    "넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교",
+    "아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁",
+    "OTT 가족 공유 계정 정책 변경 후 가장 저렴한 선택",
+    "음원 스트리밍 멜론 vs 지니 vs 유튜브뮤직 요금 비교",
+    "드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인",
+    # 🌏 해외여행 × 부동산·교육 (CPC $1.8~2.5)
+    "제주 한 달 살기 실제 생활비와 숙소 비용 공개",
+    "동남아 한 달 살기 집 구하는 방법과 계약 주의사항",
+    "해외 어학연수 비용 현실적으로 얼마나 드나",
+    "미국 워킹홀리데이 보험과 계좌 개설 직접 준비 과정",
+]
+
+_HIGH_CPC_KEYWORDS_BLOG2_IT_HCP = [
+    # 💻 IT × AI 구독·비용 (CPC $1.8~2.5)
+    "챗GPT Plus vs Claude Pro 직접 써본 업무 효율 비교",
+    "AI 구독 서비스 월 비용 줄이는 방법 직접 정리",
+    "Copilot vs 챗GPT 코딩 실무에서 어떤 게 더 나을까",
+    "생성형 AI 기업 요금제 선택 가이드 직접 비교",
+    # 💻 IT × 보안 (CPC $2.0~3.0)
+    "VPN 추천 2026 보안·속도·가격 직접 테스트 결과",
+    "랜섬웨어 감염 대응 직접 겪어본 복구 과정 공개",
+    "개인정보 유출 확인 방법과 대처 직접 해봤더니",
+    "비밀번호 관리 앱 직접 써본 1Password vs Bitwarden 비교",
+    "공공 와이파이 보안 위험 실제로 테스트해봤더니",
+    # 💻 IT × 보험·법률 (CPC $2.0~3.2)
+    "사이버보험 소기업 가입 필요한지 직접 알아본 결과",
+    "스마트폰 파손보험 제조사 vs 통신사 직접 비교 정리",
+    "전자서명 법적 효력 직접 확인하면서 알게 된 것",
+    # 💻 IT × 금융·쇼핑 (CPC $1.5~2.0)
+    "크레딧카드 IT 혜택 최강자 2026 직접 비교 정리",
+    "노트북 구매 리스 vs 현금 구매 직접 계산해봤더니",
+    "중고 스마트폰 직거래 사기 예방 직접 경험한 방법",
+    "클라우드 저장소 월 비용 비교 Google vs iCloud vs OneDrive",
+    # 💻 IT × 교육·자격증 (CPC $1.5~2.0)
+    "정보처리기사 독학 합격 실제 공부 시간과 방법",
+    "AWS 자격증 취득 비용과 준비 과정 직접 정리",
+    "컴퓨터활용능력 1급 독학 현실적인 합격 전략",
+    "AI 관련 자격증 2026 취업에 실제로 도움 되는 것",
+    # 💻 IT × 부업·수익화 (CPC $1.5~2.5)
+    "IT 프리랜서 세금 신고 처음 할 때 실수한 것",
+    "앱 개발 외주 첫 계약서 주의사항 직접 경험 정리",
+    "유튜브 채널 수익화 신청 조건 직접 맞춰보면서 알게 된 것",
+]
+
+_HIGH_CPC_KEYWORDS_BLOG3_HCP = [
+    # 📈 금융 × 대출 (CPC $2.5~3.0) — 이미 높은 CPC이나 구체성 강화
+    "주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교",
+    "전세대출 DSR 규제 이후 한도 얼마나 줄었나 직접 계산",
+    "신용대출 한도 늘리는 방법 직접 시도해봤더니",
+    "카드론 vs 마이너스통장 금리 비교 직접 계산한 결과",
+    "대출 이자 절감 중도상환 vs 금리 갈아타기 직접 비교",
+    # 📈 금융 × 보험 (CPC $2.0~2.8)
+    "실손보험 청구 처음 해봤을 때 몰랐던 것들",
+    "종신보험 해지환급금 직접 계산해보고 결정한 이유",
+    "암보험 갱신형 vs 비갱신형 직접 비교해봤더니",
+    "운전자보험 꼭 필요한지 직접 비교 분석한 결과",
+    "저출생 시대 어린이보험 가입 체크리스트 직접 정리",
+    # 📈 금융 × 부동산 (CPC $2.5~3.0)
+    "청약통장 1순위 조건 2026 달라진 점 직접 정리",
+    "특별공급 청약 자격 직접 확인했더니 놓친 항목들",
+    "분양가 상한제 아파트 프리미엄 실제로 얼마나 붙나",
+    "재건축 조합원 입주권 매수 전 직접 알아본 주의사항",
+    "갭투자 리스크 직접 경험한 사람이 알려주는 현실",
+    # 📈 금융 × 세금·법률 (CPC $2.8~3.5)
+    "상속세 절세 사전 증여 2026 기준 직접 정리",
+    "부모님 집 증여 vs 상속 세금 계산 직접 비교",
+    "프리랜서 종합소득세 절세 경비 처리 직접 정리",
+    "법인 설립 개인사업자 세금 차이 직접 계산해봤더니",
+    "양도세 비과세 요건 2026 직접 확인한 체크리스트",
+    # 📈 금융 × 노후·연금 (CPC $2.0~2.5)
+    "퇴직연금 DC형 직접 운용 1년 수익률 솔직 공개",
+    "개인연금 세액공제 최대한 받는 방법 직접 정리",
+    "국민연금 임의가입 직접 해보고 알게 된 장단점",
+    "연금저축 vs IRP 노후 준비 직접 비교 분석",
+]
+
 _FALLBACK_KEYWORDS_EN = [
     # Finance — experience angle
     "what I learned after 1 year of dividend investing", "honest ETF investing review after 3 years",
@@ -169,6 +418,36 @@ def _save_used_keywords(used_data: dict, file_path: str = _USED_KW_FILE) -> None
         logger.error(f"키워드 이력 저장 실패: {e}")
 
 
+def _load_other_blogs_recent_keywords(current_blog_id: str, days: int = 2) -> list[str]:
+    """다른 블로그가 최근 N일 내 사용한 키워드 목록.
+
+    같은 트렌드 키워드로 3개 블로그가 같은 날 중복 글을 쓰는 것을 방지합니다
+    (유사도 필터 코퍼스에 합류 — 완전 일치가 아니어도 변형 키워드까지 차단).
+    """
+    import glob as _glob
+    cutoff = datetime.now() - timedelta(days=days)
+    result: list[str] = []
+    logs_dir = os.path.dirname(_USED_KW_FILE)
+    for path in _glob.glob(os.path.join(logs_dir, "used_keywords*.json")):
+        fname = os.path.basename(path)
+        # 현재 블로그의 파일은 제외 (자체 이력은 별도 처리됨)
+        if current_blog_id and fname == f"used_keywords_{current_blog_id}.json":
+            continue
+        if not current_blog_id and fname == "used_keywords.json":
+            continue
+        try:
+            data = json.load(open(path, encoding="utf-8"))
+        except Exception:
+            continue
+        for entry in data.get("entries", []):
+            try:
+                if datetime.fromisoformat(entry["usedAt"]) >= cutoff:
+                    result.append(entry["keyword"])
+            except (KeyError, ValueError):
+                continue
+    return result
+
+
 def _get_active_used_set(used_data: dict) -> set[str]:
     """
     아직 재사용 금지 기간(_REUSE_AFTER_DAYS)이 지나지 않은 키워드 집합을 반환합니다.
@@ -198,20 +477,36 @@ def _get_active_used_set(used_data: dict) -> set[str]:
 # 포스팅 이력 로드
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _load_recent_post_corpus(limit_runs: int = 30) -> list[str]:
+def _load_recent_post_corpus(limit_runs: int = 30, blog_id: str = "") -> list[str]:
     """
     최근 포스팅 이력에서 키워드 + 제목 코퍼스를 수집합니다.
     유사도 비교에 사용됩니다.
+    blog_id가 주어지면 해당 블로그의 이력만 사용합니다 — 주제가 겹치는
+    다른 블로그(예: blog1 재테크 ↔ blog3 금융)가 서로의 키워드를
+    중복으로 차단하지 않도록 하기 위함입니다.
+    과거 default로 기록된 이력은 blog1 소속으로 간주합니다.
     """
     if not os.path.exists(_HISTORY_FILE):
         return []
+
+    def _matches(entry_blog_id: str) -> bool:
+        if not blog_id:
+            return True
+        if entry_blog_id in ("default", ""):
+            return blog_id in ("blog1", "default")
+        return entry_blog_id == blog_id
+
     try:
         with open(_HISTORY_FILE, encoding="utf-8") as f:
             history = json.load(f)
         corpus = []
         for run in history[:limit_runs]:
-            corpus.extend(run.get("keywords", []))
+            run_blog_id = run.get("blogId", "")
+            if _matches(run_blog_id):
+                corpus.extend(run.get("keywords", []))
             for post in run.get("posts", []):
+                if not _matches(post.get("blogId", run_blog_id)):
+                    continue
                 if post.get("keyword"):
                     corpus.append(post["keyword"])
                 if post.get("title"):
@@ -292,17 +587,30 @@ def _naver_realtime_news(
     headlines: list[str] = []
     api_queries = queries if queries is not None else _NAVER_API_QUERIES
 
-    # 1) 네이버 뉴스 카테고리 RSS
+    _EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
+
+    # 1) 네이버 뉴스 카테고리 RSS — pubDate 기준 최신순 수집
     for url, name in _NAVER_RSS_FEEDS:
         try:
             r = requests.get(url, headers=_HEADERS, timeout=10)
             if r.status_code != 200:
                 continue
             root = ET.fromstring(r.content)
-            for item in root.findall(".//item")[:6]:
+            items_with_date: list[tuple[str, datetime]] = []
+            for item in root.findall(".//item"):
                 title = re.sub(r'<[^>]+>', '', item.findtext("title", "")).strip()
-                if title and len(title) >= 5:
-                    headlines.append(title)
+                if not title or len(title) < 5:
+                    continue
+                pub_str = item.findtext("pubDate", "").strip()
+                try:
+                    pub_dt = parsedate_to_datetime(pub_str)
+                except Exception:
+                    pub_dt = _EPOCH
+                items_with_date.append((title, pub_dt))
+            # 최신순 정렬 후 상위 8개
+            items_with_date.sort(key=lambda x: x[1], reverse=True)
+            for title, _ in items_with_date[:8]:
+                headlines.append(title)
             logger.debug(f"Naver RSS [{name}]: {len(headlines)}개 누적")
         except Exception as e:
             logger.debug(f"Naver RSS [{name}] 오류: {e}")
@@ -318,7 +626,7 @@ def _naver_realtime_news(
                 resp = requests.get(
                     "https://openapi.naver.com/v1/search/news.json",
                     headers=api_headers,
-                    params={"query": q, "display": 5, "sort": "date"},
+                    params={"query": q, "display": 10, "sort": "date"},
                     timeout=10,
                 )
                 if resp.status_code == 200:
@@ -342,30 +650,33 @@ def _headlines_to_keywords(headlines: list[str], count: int = 10) -> list[str]:
         return []
     try:
         import anthropic
-        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL
+        from config import claude_text, ANTHROPIC_API_KEY, CLAUDE_MODEL
         if not ANTHROPIC_API_KEY or ANTHROPIC_API_KEY.startswith("sk-ant-xxx"):
             return []
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        now_str = datetime.now().strftime("%Y년 %m월 %d일 %H시")
         headlines_text = "\n".join(f"- {h}" for h in headlines[:25])
         prompt = (
-            f"다음 네이버 실시간 뉴스 헤드라인을 분석해서 블로그 포스트 키워드 {count}개를 추출하세요.\n\n"
+            f"오늘({now_str}) 네이버 최신 뉴스 헤드라인을 분석해서 블로그 포스트 키워드 {count}개를 추출하세요.\n\n"
             "선별 기준:\n"
             "1. AdSense 안전 주제 — 정치·갈등·혐오·선정적 이슈 완전 제외\n"
             "2. 재테크·건강·IT·생활정보·여행·소비·부업 카테고리 우선\n"
-            "3. 지속 검색 가능한 주제 — 일회성 속보는 제외, 관심이 며칠 이상 이어질 내용\n"
+            "3. 검색 시점 기준 최신 이슈 반영 — 지금 사람들이 실제로 찾아볼 만한 주제 우선\n"
+            "   단, 오늘만 반짝하는 단순 사고·사건 속보는 제외하고 며칠간 관심이 이어질 내용 선택\n"
             "4. 경험/후기/방법/비교로 풀 수 있는 각도로 다듬을 것\n"
             "5. 헤드라인 그대로 쓰지 말고 블로그 검색 의도에 맞게 변환:\n"
             "   예) '삼성전자 2분기 실적 발표' → '삼성전자 주가 전망 2026 실적 분석'\n"
-            "   예) '여름 휴가철 항공료 급등' → '여름 항공권 저렴하게 구매하는 방법'\n\n"
+            "   예) '여름 휴가철 항공료 급등' → '여름 항공권 저렴하게 구매하는 방법'\n"
+            "   예) '비트코인 신고가 경신' → '비트코인 지금 사도 될까 2026 투자 판단 기준'\n\n"
             f"헤드라인 목록:\n{headlines_text}\n\n"
             f'JSON 배열만 응답 (설명 없이): ["키워드1", ..., "키워드{count}"]'
         )
         msg = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=400,
+            max_tokens=1200,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         s, e = raw.find('['), raw.rfind(']')
         if s != -1 and e > s:
             kws = json.loads(raw[s:e + 1])
@@ -415,7 +726,7 @@ def _naver_drama_news(
                 resp = requests.get(
                     "https://openapi.naver.com/v1/search/news.json",
                     headers=api_headers,
-                    params={"query": q, "display": 5, "sort": "date"},
+                    params={"query": q, "display": 10, "sort": "date"},
                     timeout=10,
                 )
                 if resp.status_code == 200:
@@ -457,10 +768,10 @@ def extract_drama_titles(headlines: list[str]) -> list[str]:
         )
         msg = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=100,
+            max_tokens=1000,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         s, e = raw.find('['), raw.rfind(']')
         if s != -1 and e > s:
             titles = json.loads(raw[s:e + 1])
@@ -549,10 +860,10 @@ def _claude_ai_keywords(
             )
         msg = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=400,
+            max_tokens=1200,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw = msg.content[0].text.strip()
+        raw = claude_text(msg).strip()
         s, e = raw.find('['), raw.rfind(']')
         if s != -1 and e > s:
             kws = json.loads(raw[s:e + 1])
@@ -575,13 +886,12 @@ def _claude_ai_keywords(
 # 시즌 예약 키워드 로드 (trend_scheduler.py가 생성한 큐)
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _load_scheduled_keywords(today: datetime | None = None) -> list[str]:
+def _load_scheduled_keywords(today: datetime | None = None, blog_id: str = "") -> list[str]:
     """
     logs/scheduled_keywords.json 큐에서 오늘 포스팅을 시작할 시즌 예약 키워드를 로드합니다.
     - scheduledFor <= 오늘 이면서 consumed=False 인 항목만 반환
+    - blog_id가 주어지면 해당 블로그 전용(blog_id 일치) 또는 공용(blog_id 빈값) 항목만 반환
     - 우선순위(priority) → trendScore 순으로 정렬
-    - 소비 표시(consumed=True)는 keyword_collector가 실제 사용 후 main.py에서 처리하거나
-      get_trending_keywords()가 result에 포함되면 자동 마킹
     """
     if today is None:
         today = datetime.now()
@@ -595,16 +905,23 @@ def _load_scheduled_keywords(today: datetime | None = None) -> list[str]:
             data = json.load(f)
 
         queue = data.get("queue", [])
-        eligible = [
-            item for item in queue
-            if not item.get("consumed", False)
-            and item.get("scheduledFor", "9999-99-99") <= today_str
-        ]
+        eligible = []
+        for item in queue:
+            if item.get("consumed", False):
+                continue
+            if item.get("scheduledFor", "9999-99-99") > today_str:
+                continue
+            # blog_id 필터: 큐 항목의 blog_id가 빈값(공용)이거나 현재 블로그와 일치할 때만 포함
+            item_blog = item.get("blog_id", "")
+            if blog_id and item_blog and item_blog != blog_id:
+                continue
+            eligible.append(item)
+
         # 우선순위(낮을수록 높음) → trendScore 내림차순 정렬
         eligible.sort(key=lambda x: (x.get("priority", 9), -x.get("trendScore", 1.0)))
         result = [item["keyword"] for item in eligible]
         if result:
-            logger.info(f"시즌 예약 키워드 {len(result)}개 로드: {result[:3]}{'...' if len(result)>3 else ''}")
+            logger.info(f"시즌 예약 키워드 {len(result)}개 로드 (blog={blog_id or '공용'}): {result[:3]}{'...' if len(result)>3 else ''}")
         return result
     except Exception as exc:
         logger.debug(f"scheduled_keywords.json 로드 실패: {exc}")
@@ -699,15 +1016,36 @@ def get_trending_keywords(
     used_data = _load_used_keywords(used_kw_file)
     active_used_set = _get_active_used_set(used_data)
 
-    # 포스팅 이력 코퍼스 (키워드 + 제목)
-    post_corpus = _load_recent_post_corpus()
-    logger.info(f"포스팅 이력 코퍼스: {len(post_corpus)}개 항목 로드 (중복 방지 기준)")
+    # 포스팅 이력 코퍼스 (키워드 + 제목) — 현재 블로그의 이력만
+    post_corpus = _load_recent_post_corpus(blog_id=blog_id)
+
+    # 다른 블로그가 최근 2일 내 사용한 키워드도 코퍼스에 합류
+    # (같은 트렌드로 3개 블로그가 같은 날 중복 글 작성 방지)
+    other_recent = _load_other_blogs_recent_keywords(blog_id, days=2)
+    if other_recent:
+        post_corpus += other_recent
+        logger.info(f"타 블로그 최근 키워드 {len(other_recent)}개 중복 방지 코퍼스 합류")
+    logger.info(f"포스팅 이력 코퍼스: {len(post_corpus)}개 항목 로드 (blog_id={blog_id or '전체'} 중복 방지 기준)")
 
     candidates: list[str] = []
     keyword_sources: dict[str, str] = {}  # 키워드별 수집 출처 추적
 
+    # 블로그 유형 식별 (고CPC 주입 및 폴백 선택에 공통 사용)
+    _BLOG1_TOPICS = {"여행", "국내여행", "해외여행", "드라마", "영화", "연예", "k-pop", "kpop"}
+    _BLOG2_IT_TOPICS = {"it", "ai", "기술", "스마트폰", "앱", "테크", "tech"}
+    _BLOG3_FIN_TOPICS = {"금융", "경제", "정부지원", "세금", "복지", "시책", "뉴스", "news"}
+    is_blog1 = blog_id in ("blog1", "default") and bool(
+        topics and _BLOG1_TOPICS.intersection(set(t.lower() for t in topics))
+    )
+    is_blog2_it = blog_id == "blog2" and bool(
+        topics and _BLOG2_IT_TOPICS.intersection(set(t.lower() for t in topics))
+    )
+    is_blog3_fin = blog_id == "blog3" and bool(
+        topics and _BLOG3_FIN_TOPICS.intersection(set(t.lower() for t in topics))
+    )
+
     # -1순위: 시즌 예약 키워드 (trend_scheduler.py가 2주 전 생성한 큐)
-    season_kws = _load_scheduled_keywords()
+    season_kws = _load_scheduled_keywords(blog_id=blog_id)
     for kw in season_kws:
         keyword_sources[kw] = "season_scheduled"
     candidates = season_kws[:]  # 최상단에 배치
@@ -719,8 +1057,10 @@ def get_trending_keywords(
         )
         naver_kws = _headlines_to_keywords(naver_headlines, count * 2)
         for kw in naver_kws:
-            keyword_sources[kw] = "naver_realtime"
-        candidates = naver_kws
+            if kw not in keyword_sources:
+                keyword_sources[kw] = "naver_realtime"
+        # season_kws가 이미 candidates에 있으므로 뒤에 추가 (시즌 키워드 보존)
+        candidates = candidates + [kw for kw in naver_kws if kw not in keyword_sources or keyword_sources[kw] == "naver_realtime"]
         logger.info(f"네이버 실시간 뉴스 키워드: {len(naver_kws)}개")
 
     # 1순위: Google Trends RSS
@@ -730,6 +1070,25 @@ def get_trending_keywords(
             keyword_sources[kw] = "google_trends"
     candidates = candidates + [kw for kw in trends_kws if kw not in keyword_sources or keyword_sources[kw] != "naver_realtime"]
 
+    # 1.5순위: 블로그별 고CPC 키워드 주입
+    if _HIGH_CPC_PER_RUN > 0:
+        if is_blog1:
+            hcp_pool = _HIGH_CPC_KEYWORDS_BLOG1
+        elif is_blog2_it:
+            hcp_pool = _HIGH_CPC_KEYWORDS_BLOG2_IT_HCP
+        elif is_blog3_fin:
+            hcp_pool = _HIGH_CPC_KEYWORDS_BLOG3_HCP
+        else:
+            hcp_pool = []
+        if hcp_pool:
+            unused_hcp = [kw for kw in hcp_pool if kw not in active_used_set]
+            inject_hcp = (unused_hcp if unused_hcp else hcp_pool)[:_HIGH_CPC_PER_RUN]
+            for kw in inject_hcp:
+                if kw not in keyword_sources:
+                    keyword_sources[kw] = "high_cpc"
+            candidates = inject_hcp + candidates
+            logger.info(f"고CPC 키워드 {len(inject_hcp)}개 주입 (blog_id={blog_id or '전체'}): {inject_hcp}")
+
     # 2순위: Claude AI (결과 부족 시)
     if len(candidates) < count * 2:
         claude_kws = _claude_ai_keywords(language, count * 2, topics=topics)
@@ -738,15 +1097,16 @@ def get_trending_keywords(
                 keyword_sources[kw] = "claude_ai"
         candidates += claude_kws
 
-    # GSC 고성과 카테고리 수집 (GSC_SITE_URL 설정 시)
+    # GSC 고성과 카테고리 수집 — 블로그별 gsc_site_url 우선, 없으면 전역 GSC_SITE_URL
     gsc_high_cats: list[str] = []
     gsc_suggested: list[str] = []
     try:
         from config import GSC_SITE_URL
-        if GSC_SITE_URL:
+        gsc_url = cfg.get("gsc_site_url") or GSC_SITE_URL
+        if gsc_url:
             from gsc_fetcher import get_high_performing_categories, get_gsc_suggested_keywords
-            gsc_high_cats = get_high_performing_categories(GSC_SITE_URL)
-            gsc_suggested = get_gsc_suggested_keywords(GSC_SITE_URL, count=count)
+            gsc_high_cats = get_high_performing_categories(gsc_url)
+            gsc_suggested = get_gsc_suggested_keywords(gsc_url, count=count)
             # GSC 추천 키워드를 후보에 추가
             for kw in gsc_suggested:
                 if kw not in keyword_sources:
@@ -756,9 +1116,18 @@ def get_trending_keywords(
         logger.debug(f"GSC 연동 생략: {e}")
 
     # 3순위: 고정 폴백 (미사용 키워드 우선 + GSC 고성과 카테고리 먼저)
-    _TRAVEL_SPORTS_TOPICS = {"여행", "스포츠", "travel", "sports"}
+    _TRAVEL_SPORTS_TOPICS = {
+        "여행", "국내여행", "해외여행", "스포츠", "스포츠이슈", "드라마", "영화",
+        "연예", "k-pop", "kpop", "travel", "sports",
+    }
     is_travel_sports = bool(topics and _TRAVEL_SPORTS_TOPICS.intersection(set(t.lower() for t in topics)))
-    if is_travel_sports:
+    if is_blog1:
+        fallback = _FALLBACK_KEYWORDS_BLOG1
+    elif is_blog2_it:
+        fallback = _FALLBACK_KEYWORDS_BLOG2_IT
+    elif is_blog3_fin:
+        fallback = _FALLBACK_KEYWORDS_BLOG3
+    elif is_travel_sports:
         fallback = _FALLBACK_KEYWORDS_TRAVEL_SPORTS
     elif language == "ko":
         fallback = _FALLBACK_KEYWORDS_KR
@@ -816,16 +1185,20 @@ def get_trending_keywords(
     if rejected_similar:
         logger.info(f"유사 주제 제외 {len(rejected_similar)}개: {rejected_similar[:5]}")
 
-    # 그래도 부족하면 유사도 기준을 낮춰서 재시도
+    # 그래도 부족하면 유사도 기준을 낮춰서 재시도 (유사도 검사는 완화된 임계값으로 재실행)
     result_set = set(result)
     if len(result) < count:
         logger.warning(f"선정 키워드 부족 ({len(result)}/{count}) — 유사도 기준 완화하여 재시도")
+        relaxed_corpus = list(session_corpus)
         for kw in candidates:
             kw = kw.strip()
             if not kw or kw in result_set or kw in active_used_set:
                 continue
+            if _is_too_similar(kw, relaxed_corpus, threshold=0.6):  # 완화된 기준 0.6 (기본 0.5보다 높음)
+                continue
             result.append(kw)
             result_set.add(kw)
+            relaxed_corpus.append(kw)
             if len(result) >= count:
                 break
 

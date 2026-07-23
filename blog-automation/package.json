@@ -1,0 +1,41 @@
+{
+  "name": "blog-automation",
+  "version": "2.0.0",
+  "description": "AI-powered blog automation system v2: keyword research, SEO content generation, thumbnail creation, SNS publishing, AdSense optimization",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "run-once": "node src/index.js --once",
+    "preview": "node src/index.js --preview",
+    "draft": "node src/index.js --draft",
+    "confirm": "node src/index.js --confirm",
+    "schedule": "node src/index.js --schedule",
+    "test-keywords": "node scripts/test-keywords.js",
+    "test-content": "node scripts/test-content.js",
+    "test-thumbnail": "node scripts/test-thumbnail.js",
+    "test-analytics": "node scripts/test-analytics.js",
+    "dashboard": "node src/web/server.js",
+    "web": "node src/web/server.js",
+    "export": "node src/web/export-static.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@napi-rs/canvas": "^0.1.56",
+    "axios": "^1.7.0",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.5",
+    "express": "^5.2.1",
+    "form-data": "^4.0.0",
+    "jsonrepair": "^3.14.0",
+    "node-cron": "^3.0.3",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "sharp": "^0.33.3",
+    "winston": "^3.13.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "MIT"
+}

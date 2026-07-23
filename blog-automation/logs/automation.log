@@ -1,127 +1,3 @@
-2026-07-22 15:40:18,446 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-22 15:40:18,447 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-22 15:40:18,450 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-22 15:40:18,464 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 178 / 실패 15 / 대기 81)
-2026-07-22 15:40:18,464 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-22 15:40:18,464 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-22 15:40:18,465 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-22 23:10:46,498 [INFO] main — ============================================================
-2026-07-22 23:10:46,498 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-22 23:10:46
-2026-07-22 23:10:46,498 [INFO] main — ============================================================
-2026-07-22 23:10:46,508 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-22 23:10:46,508 [INFO] keyword_collector — 포스팅 이력 코퍼스: 42개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-22 23:10:50,262 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-22 23:10:50,515 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:10:50,516 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-22 23:10:51,073 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-07-22 23:10:51,185 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:10:51,719 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-22 23:10:52,254 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-22 23:10:52,256 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-07-22 23:10:52,258 [INFO] keyword_collector —   [fallback] 2개: ['춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳', '담양 메타세쿼이아길 계절별 다른 매력 직접 방문 후기']
-2026-07-22 23:10:52,258 [INFO] keyword_collector — 최종 선정 키워드 2개: ['춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳', '담양 메타세쿼이아길 계절별 다른 매력 직접 방문 후기']
-2026-07-22 23:10:52,258 [INFO] main — 수집된 키워드 2개: ['춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳', '담양 메타세쿼이아길 계절별 다른 매력 직접 방문 후기']
-2026-07-22 23:10:52,263 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-07-22 23:10:52,263 [INFO] main — 단독 포스트 대상 키워드 1개: ['춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳']
-2026-07-22 23:10:52,278 [INFO] main — 
-[1/1] 키워드: '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳'
-2026-07-22 23:10:52,278 [INFO] content_generator — 포스트 생성 중: '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳'
-2026-07-22 23:10:52,394 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:10:52,395 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwWk6BKZLAGY5jCodJP'}
-2026-07-22 23:10:56,582 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳'
-2026-07-22 23:10:56,705 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:10:56,705 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwX4XCZMjFKSq5MaGQT'}
-2026-07-22 23:10:56,707 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-22 23:10:56,821 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:10:57,289 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:11:11,919 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:11:11,934 [WARNING] content_generator — 컨텐츠 너무 짧음(1222자, 최소 2500자) — 재시도 1/3
-2026-07-22 23:11:14,935 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-22 23:11:14,935 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:11:32,327 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:11:32,352 [WARNING] content_generator — 컨텐츠 너무 짧음(1671자, 최소 2500자) — 재시도 2/3
-2026-07-22 23:11:35,352 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-22 23:11:35,353 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:11:49,829 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:11:49,834 [WARNING] content_generator — 최소 분량 미달(1634자) — 재시도 소진, 해당 분량으로 진행
-2026-07-22 23:11:49,852 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:11:51,426 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:11:51,437 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-07-22 23:11:52,446 [INFO] image_fetcher — 이미지 수집 성공: '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳' → 제목='춘천 명물 '닭갈비 골목'…AI에 찬바람만 '쌩∼'' (관련성=0.50)
-2026-07-22 23:11:53,286 [INFO] image_fetcher — 이미지 수집 성공: '춘천 닭갈비 골목' → 제목='[SN여행] 춘천의 문화와 맛, '상상마당 춘천'과 '닭갈비 골목' [강' (관련성=1.00)
-2026-07-22 23:11:54,779 [INFO] image_fetcher — 대체 이미지 수집: '춘천 닭갈비 골목 찾아야 골목에 명성은' → 제목='국내산 닭다리살 태양초 춘천 닭갈비 500g 1팩+1팩 (냉동) : 춘천' (관련성=0.33)
-2026-07-22 23:11:54,779 [INFO] image_fetcher — 이미지 수집 성공: '춘천 닭갈비 골목 찾아야 골목에 명성은' → 제목='국내산 닭다리살 태양초 춘천 닭갈비 500g 1팩+1팩 (냉동) : 춘천' (관련성=0.33)
-2026-07-22 23:11:54,965 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:11:54,965 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-22 23:11:54,967 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-22 23:11:54,968 [INFO] content_generator — 포스트 생성 완료: '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳' (1634자, 이미지 3개)
-2026-07-22 23:11:54,989 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:11:57,380 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:11:57,386 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳'
-2026-07-22 23:11:57,386 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 2000자 미만이며, 독창적 경험이나 인사이트 부족
-2026-07-22 23:11:57,386 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기술 부족, 출처는 있으나 신뢰성 있는 저자 정보 또는 전문성 표현 부족
-2026-07-22 23:11:57,386 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없으므로 SEO 및 가독성 보강 필요
-2026-07-22 23:11:57,395 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-22 23:11:57,400 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-07-22 23:11:57,400 [INFO] main —   제목: 춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳
-2026-07-22 23:11:57,400 [INFO] main —   이미지: 3개 삽입
-2026-07-22 23:11:57,400 [INFO] main —   글자 수: 1634자
-2026-07-22 23:11:57,400 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳' (1634자 < 2500자)
-2026-07-22 23:11:57,425 [INFO] dashboard_exporter —   검토 대기 저장: 춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳 (7514자 HTML)
-2026-07-22 23:11:57,439 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 110개)
-2026-07-22 23:11:57,440 [INFO] main — 
-============================================================
-2026-07-22 23:11:57,440 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-22 23:11:57,440 [INFO] main — ============================================================
-2026-07-22 23:11:57,463 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-22 23:11:57,481 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-22 23:11:57,494 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-22 23:11:57,745 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-22 23:11:58,106 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-22 23:11:58,495 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-22 23:11:58,496 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-22 23:11:58,499 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-22 23:11:58,514 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 177 / 실패 15 / 대기 82)
-2026-07-22 23:11:58,514 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-22 23:11:58,514 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-22 23:11:58,515 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-22 23:12:31,635 [INFO] main — ============================================================
-2026-07-22 23:12:31,635 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-22 23:12:31
-2026-07-22 23:12:31,635 [INFO] main — ============================================================
-2026-07-22 23:12:31,644 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
-2026-07-22 23:12:31,644 [INFO] keyword_collector — 포스팅 이력 코퍼스: 38개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-22 23:12:36,124 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-07-22 23:12:36,389 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:12:36,390 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-22 23:12:36,864 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:12:37,246 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-22 23:12:37,247 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-22 23:12:37,248 [INFO] keyword_collector — 유사 주제 제외 3개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개', '강원도 캠핑 처음 해봤을 때 몰랐던 것들']
-2026-07-22 23:12:37,249 [INFO] keyword_collector —   [fallback] 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
-2026-07-22 23:12:37,249 [INFO] keyword_collector — 최종 선정 키워드 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
-2026-07-22 23:12:37,249 [INFO] main — 수집된 키워드 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
-2026-07-22 23:12:37,254 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-07-22 23:12:37,254 [INFO] main — 단독 포스트 대상 키워드 1개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
-2026-07-22 23:12:37,267 [INFO] main — 
-[1/1] 키워드: '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-22 23:12:37,267 [INFO] content_generator — 포스트 생성 중: '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-22 23:12:37,459 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:12:37,460 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHweVDh53igr1zhDFqdd'}
-2026-07-22 23:12:45,518 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-22 23:12:45,720 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:12:45,720 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdHwf6XikPCjhhrLKySAP'}
-2026-07-22 23:12:45,722 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-22 23:12:45,932 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 23:12:46,372 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:13:09,011 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:13:09,022 [WARNING] content_generator — 컨텐츠 너무 짧음(1064자, 최소 2500자) — 재시도 1/3
-2026-07-22 23:13:12,023 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-22 23:13:12,023 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:13:25,119 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 23:13:25,125 [WARNING] content_generator — 컨텐츠 너무 짧음(1106자, 최소 2500자) — 재시도 2/3
-2026-07-22 23:13:28,125 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-22 23:13:28,125 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 23:13:46,295 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-07-22 23:13:46,306 [WARNING] content_generator — 최소 분량 미달(1340자) — 재시도 소진, 해당 분량으로 진행
 2026-07-22 23:13:46,325 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
 2026-07-22 23:13:47,744 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
@@ -622,3 +498,128 @@
 2026-07-23 06:26:56,563 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-23 06:26:56,563 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-23 06:26:56,564 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-23 11:49:15,206 [INFO] main — ============================================================
+2026-07-23 11:49:15,207 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-23 11:49:15
+2026-07-23 11:49:15,207 [INFO] main — ============================================================
+2026-07-23 11:49:15,217 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-07-23 11:49:15,217 [INFO] keyword_collector — 포스팅 이력 코퍼스: 42개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-23 11:49:19,939 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-23 11:49:25,083 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:49:25,103 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-23 11:49:25,104 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-23 11:49:25,517 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-07-23 11:49:25,781 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-23 11:49:25,929 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-23 11:49:25,932 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-07-23 11:49:25,933 [INFO] keyword_collector —   [naver_realtime] 2개: ['2026년 여름휴가 호텔 항공권 저렴하게 예약하는 방법', '전국 치킨 맛집 지도로 떠나는 K치킨벨트 여행 코스']
+2026-07-23 11:49:25,933 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026년 여름휴가 호텔 항공권 저렴하게 예약하는 방법', '전국 치킨 맛집 지도로 떠나는 K치킨벨트 여행 코스']
+2026-07-23 11:49:25,933 [INFO] main — 수집된 키워드 2개: ['2026년 여름휴가 호텔 항공권 저렴하게 예약하는 방법', '전국 치킨 맛집 지도로 떠나는 K치킨벨트 여행 코스']
+2026-07-23 11:49:25,938 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-07-23 11:49:25,938 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026년 여름휴가 호텔 항공권 저렴하게 예약하는 방법']
+2026-07-23 11:49:25,956 [INFO] main — 
+[1/1] 키워드: '2026년 여름휴가 호텔 항공권 저렴하게 예약하는 방법'
+2026-07-23 11:49:25,956 [INFO] content_generator — 포스트 생성 중: '2026년 여름휴가 호텔 항공권 저렴하게 예약하는 방법'
+2026-07-23 11:49:34,710 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:49:34,711 [INFO] research_collector — 검색 의도: 2026년 여름휴가를 앞두고 호텔과 항공권을 저렴하게 예약할 수 있는 구체적인 방법과 시기, 팁을 찾으려는 
+2026-07-23 11:49:46,713 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '2026년 여름휴가 호텔 항공권 저렴하게 예약하는 방법'
+2026-07-23 11:50:00,537 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:50:00,538 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '2026년 여름휴가 호텔 항공권 저렴하게 예약하는 방법'
+2026-07-23 11:50:12,172 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:50:12,173 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'D': 5, 'X': 2}
+2026-07-23 11:50:12,176 [INFO] evidence_builder — 자료팩: 중요 사실 5개 제외 (A/B 등급 출처 없음)
+2026-07-23 11:50:12,176 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-23 11:50:14,032 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:51:44,999 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:52:02,840 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
+2026-07-23 11:52:04,114 [INFO] image_fetcher — 이미지 수집 성공: '2026 여름휴가 항공권·호텔 싸게 잡는 법' → 제목='여름 휴가 준비! 해외여행 비용 절약하는 방법은? '항공권 싸게 사는 법' (관련성=0.40)
+2026-07-23 11:52:05,012 [INFO] image_fetcher — 이미지 수집 성공: '여름휴 호텔 항공권' → 제목='보도자료- Page 5 of 6 - 스카이스캐너-항공권, 호텔, 렌터카 ' (관련성=0.67)
+2026-07-23 11:52:07,003 [INFO] image_fetcher — 이미지 수집 성공: '여름휴 호텔 여름휴가 예약 차이가 전만' → 제목='여름 휴가 호텔 예약, 모바일로 하면 최대 2만5천원 추가 할인' (관련성=0.33)
+2026-07-23 11:52:08,641 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:52:08,642 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-23 11:52:08,643 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-23 11:52:08,645 [INFO] content_generator — 포스트 생성 완료: '2026 여름휴가 항공권·호텔 싸게 잡는 법' (3384자, 이미지 3개)
+2026-07-23 11:52:09,439 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:52:17,308 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '2026 여름휴가 항공권·호텔 싸게 잡는 법'
+2026-07-23 11:52:17,308 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3384자로 분량은 충족하나 개인 경험 없이 일반론·자료 요약 위주로 구성됨
+2026-07-23 11:52:17,308 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 직접 경험 서술이 부재함
+2026-07-23 11:52:17,308 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없어 삽입 여부 불명, 텍스트만으로도 통과 가능
+2026-07-23 11:52:17,308 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 패턴화된 전개(원인-체크리스트-비교-FAQ)와 '그렇다면~' 식 전환 문구가 반복돼 AI 생성 느낌이 있음
+2026-07-23 11:52:17,317 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-23 11:52:17,318 [INFO] internal_linker —   [1/5] '호텔 예약' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_23.ht
+2026-07-23 11:52:17,320 [INFO] internal_linker —   [2/5] '해외여행' -> https://www.hoguwhat.com/2026/07/0.html
+2026-07-23 11:52:17,323 [INFO] internal_linker —   [3/5] '여행자보험' -> https://www.hoguwhat.com/2026/07/blog-post_16.html
+2026-07-23 11:52:17,326 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-07-23 11:52:17,326 [INFO] main —   제목: 2026 여름휴가 항공권·호텔 싸게 잡는 법
+2026-07-23 11:52:17,326 [INFO] main —   이미지: 3개 삽입
+2026-07-23 11:52:17,326 [INFO] main —   글자 수: 3384자
+2026-07-23 11:52:18,341 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:52:40,848 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '2026 여름휴가 항공권·호텔 싸게 잡는 법'
+2026-07-23 11:52:40,849 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 통과하나 개인 경험·구체 날짜/수치 사례 없이 '조사한 내용을 정리'한 일반 정보 재구성에 가까움
+2026-07-23 11:52:40,849 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락(가격·후기 비교 부분)이 500자 이상으로 길게 이어짐
+2026-07-23 11:52:40,849 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 직접 경험 서술이 없고 '조사·보고' 형태의 간접 정보 위주
+2026-07-23 11:52:40,849 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음 — 이미지 부재는 fail 아니며 warn으로 처리
+2026-07-23 11:52:40,849 [INFO] adsense_validator —   ❌ AI 생성 의심도: '~로 보고됩니다', '~라는 의견이 많습니다' 등 유사 헤징 문구가 반복되며 전형적 AI식 문체 패턴이 드러남
+2026-07-23 11:52:40,849 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '~로 보고됩니다', '~라는 의견이 많습니다' 등 유사 헤징 문구가 반복되며 전형적 AI식 문체 패턴이 드러남
+2026-07-23 11:52:40,849 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
+2026-07-23 11:52:40,849 [WARNING] main —      🔴 [AI 생성 의심도] '~로 보고됩니다', '~라는 의견이 많습니다' 등 유사 헤징 문구가 반복되며 전형적 AI식 문체 패턴이 드러남
+2026-07-23 11:52:40,849 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 통과하나 개인 경험·구체 날짜/수치 사례 없이 '조사한 내용을 정리'한 일반 정보 재구성에 가까움
+2026-07-23 11:52:40,849 [WARNING] main —      🟡 [구조 및 가독성] H2 7개로 구조는 양호하나 일부 단락(가격·후기 비교 부분)이 500자 이상으로 길게 이어짐
+2026-07-23 11:52:40,849 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 4개 인용은 있으나 1인칭 직접 경험 서술이 없고 '조사·보고' 형태의 간접 정보 위주
+2026-07-23 11:52:40,849 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
+2026-07-23 11:52:41,781 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:53:57,837 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-23 11:53:58,870 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:54:20,031 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3384자 → 4571자 (+1187자)
+2026-07-23 11:54:20,031 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-23 11:54:21,070 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:54:38,346 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '2026 여름휴가 항공권·호텔 싸게 잡는 법'
+2026-07-23 11:54:38,346 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 '예약 전 체크 항목' 등 일부 단락이 500자 이상으로 길게 이어짐
+2026-07-23 11:54:38,346 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음(텍스트 위주 글, 정책상 fail 아님)
+2026-07-23 11:54:38,346 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 90/100)
+2026-07-23 11:54:38,347 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-07-23 11:54:39,174 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:56:01,087 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-23 11:56:02,148 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:56:32,092 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026 여름휴가 항공권·호텔 싸게 잡는 법' → '2026년 여름휴가 항공권·호텔 저렴하게 예약하는 방법'
+2026-07-23 11:56:32,092 [INFO] final_editor —   ✏️ 메타 설명 교정 (94자)
+2026-07-23 11:56:32,092 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 스크래핑 잔여 텍스트(보도자료 문구, 광고성 문구) 제거하고 문단을 2~4문장 단위로 재구성했으며, 요약 박스·표·개인 경험 메모·주의사항·FAQ 6개·작성자 메모·내부 링크 언급을 추가해 발행 형태로 완성했습니다.
+2026-07-23 11:56:32,165 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-23 11:56:32,166 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-07-23 11:56:32,236 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-07-23 11:56:32,249 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-23 11:56:32,249 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '2026년 여름휴가 호텔 항공권 저렴하게 예약하는 방법' — 면책·팩트체크 확인 권장
+2026-07-23 11:56:32,249 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-07-23 11:56:32,785 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/2026_0805021684.html
+2026-07-23 11:56:32,798 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/2026_0805021684.html
+2026-07-23 11:57:05,377 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:57:05,378 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-23 11:57:05,378 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-23 11:57:05,387 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '2026년 여름휴가 항공권·호텔 저렴하게 예약하는 방법'
+2026-07-23 11:57:06,101 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 11:57:09,941 [INFO] comment_manager —   생성된 댓글: 글 잘 읽었습니다! 하나 팁 드리자면, 검색할 때 시크릿 모드(쿠키 삭제된 상태)로 들어가시는 것도 은근 도움돼요. 특정 항공권을 반복 검색하면...
+2026-07-23 12:00:10,033 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-23 12:00:10,034 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-07-23 12:00:10,035 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-23 12:00:10,035 [INFO] main — 
+============================================================
+2026-07-23 12:00:10,035 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-23 12:00:10,035 [INFO] main — ============================================================
+2026-07-23 12:00:10,061 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-23 12:00:10,084 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-23 12:00:10,101 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-23 12:00:10,281 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-23 12:00:10,575 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-23 12:00:10,879 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-23 12:00:10,880 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-23 12:00:10,883 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-23 12:00:10,900 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 175 / 실패 15 / 대기 84)
+2026-07-23 12:00:10,900 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-23 12:00:10,900 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-23 12:00:10,901 [INFO] main — 대시보드 데이터 업데이트 완료

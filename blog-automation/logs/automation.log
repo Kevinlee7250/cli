@@ -1,90 +1,3 @@
-2026-07-22 11:50:02,780 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-22 11:50:02,782 [INFO] keyword_collector — 유사 주제 제외 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리']
-2026-07-22 11:50:02,782 [INFO] keyword_collector —   [fallback] 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
-2026-07-22 11:50:02,782 [INFO] keyword_collector — 최종 선정 키워드 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
-2026-07-22 11:50:02,782 [INFO] main — 수집된 키워드 2개: ['미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
-2026-07-22 11:50:02,787 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
-2026-07-22 11:50:02,787 [INFO] main — 단독 포스트 대상 키워드 1개: ['미국 연준 금리 결정 한국 증시 영향 분석']
-2026-07-22 11:50:02,800 [INFO] main — 
-[1/1] 키워드: '미국 연준 금리 결정 한국 증시 영향 분석'
-2026-07-22 11:50:02,801 [INFO] content_generator — 포스트 생성 중: '미국 연준 금리 결정 한국 증시 영향 분석'
-2026-07-22 11:50:03,333 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:50:03,333 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH3bZU3icwt1q4wpP4qs'}
-2026-07-22 11:50:20,275 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '미국 연준 금리 결정 한국 증시 영향 분석'
-2026-07-22 11:50:20,482 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:50:20,482 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH3cqwmVxiSnLhb7FhTC'}
-2026-07-22 11:50:20,484 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-22 11:50:20,715 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:50:21,159 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:50:34,895 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:50:34,912 [WARNING] content_generator — 컨텐츠 너무 짧음(1025자, 최소 2500자) — 재시도 1/3
-2026-07-22 11:50:37,912 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-22 11:50:37,913 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:50:52,433 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:50:52,437 [WARNING] content_generator — 컨텐츠 너무 짧음(1118자, 최소 2500자) — 재시도 2/3
-2026-07-22 11:50:55,437 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-22 11:50:55,437 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:51:13,877 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:51:13,882 [WARNING] content_generator — 최소 분량 미달(1377자) — 재시도 소진, 해당 분량으로 진행
-2026-07-22 11:51:13,902 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:51:18,239 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:51:18,250 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-07-22 11:51:19,952 [INFO] image_fetcher — 이미지 수집 성공: '미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금 알아야 할 점' → 제목='미국 금리인하 상반기 넘길 듯…연준 "경제 어디로 튈지 모르겠다"' (관련성=0.20)
-2026-07-22 11:51:21,203 [INFO] image_fetcher — 대체 이미지 수집: '미국 연준 금리' → 제목='뉴욕증시, FOMC 결과에 안도···나스닥 4.06%↑마감' (관련성=0.00)
-2026-07-22 11:51:21,203 [INFO] image_fetcher — 이미지 수집 성공: '미국 연준 금리' → 제목='뉴욕증시, FOMC 결과에 안도···나스닥 4.06%↑마감' (관련성=0.00)
-2026-07-22 11:51:21,902 [INFO] image_fetcher — 이미지 수집 성공: '미국 연준 결정 배경과 금리를 정책은' → 제목='미국 5월 고용지표 ‘쇼크’…연준 금리 인하 압박' (관련성=0.33)
-2026-07-22 11:51:22,116 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 11:51:22,117 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-22 11:51:22,118 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-22 11:51:22,120 [INFO] content_generator — 포스트 생성 완료: '미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금 알아야 할 점' (1377자, 이미지 3개)
-2026-07-22 11:51:22,143 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-22 11:51:25,664 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-22 11:51:25,673 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금 알아야 '
-2026-07-22 11:51:25,673 [INFO] adsense_validator —   ❌ 원본성 및 품질: 글자 수가 1377자로 2000자 미만이며, 새로운 인사이트나 경험 기반 분석이 부족함.
-2026-07-22 11:51:25,673 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처는 있으나 1인칭 경험이 부족하고 저자 신뢰성에 대한 정보가 부족.
-2026-07-22 11:51:25,674 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 없기 때문에 SEO 및 가독성 측면에서 개선 가능.
-2026-07-22 11:51:25,674 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 일반적인 문체로 특정 경험이나 감정이 드러나지 않음.
-2026-07-22 11:51:25,674 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 글자 수가 1377자로 2000자 미만이며, 새로운 인사이트나 경험 기반 분석이 부족함.
-2026-07-22 11:51:25,674 [WARNING] adsense_validator —   🔴 originality
-2026-07-22 11:51:25,683 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-22 11:51:25,686 [INFO] internal_linker —   [1/5] '포인트' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0140262446
-2026-07-22 11:51:25,688 [INFO] internal_linker —   [2/5] '투자자' -> https://hoguasset.blogspot.com/2026/07/etf_0136688765.html
-2026-07-22 11:51:25,688 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-22 11:51:25,688 [INFO] main —   제목: 미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금 알아야 할 점
-2026-07-22 11:51:25,688 [INFO] main —   이미지: 3개 삽입
-2026-07-22 11:51:25,688 [INFO] main —   글자 수: 1377자
-2026-07-22 11:51:25,688 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금 알아야 할 점' (1377자 < 2500자)
-2026-07-22 11:51:25,710 [INFO] dashboard_exporter —   검토 대기 저장: 미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금 알아야 할 점 (6459자 HTML)
-2026-07-22 11:51:25,723 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 106개)
-2026-07-22 11:51:25,723 [INFO] main — 
-============================================================
-2026-07-22 11:51:25,723 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-22 11:51:25,723 [INFO] main — ============================================================
-2026-07-22 11:51:25,746 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-22 11:51:25,762 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-22 11:51:25,775 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-22 11:51:25,984 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-22 11:51:26,252 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-22 11:51:26,254 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-22 11:51:26,257 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-22 11:51:26,271 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 180 / 실패 15 / 대기 79)
-2026-07-22 11:51:26,272 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-22 11:51:26,272 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-22 11:51:26,272 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-22 12:29:23,276 [INFO] main — ============================================================
-2026-07-22 12:29:23,276 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-22 12:29:23
-2026-07-22 12:29:23,276 [INFO] main — ============================================================
-2026-07-22 12:29:23,283 [INFO] main — 수집된 키워드 1개: ['대통령도 택한 방식 강남에도 집주인 대출']
-2026-07-22 12:29:23,287 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
-2026-07-22 12:29:23,287 [INFO] main — 단독 포스트 대상 키워드 1개: ['대통령도 택한 방식 강남에도 집주인 대출']
-2026-07-22 12:29:23,298 [INFO] main — 
-[1/1] 키워드: '대통령도 택한 방식 강남에도 집주인 대출'
-2026-07-22 12:29:23,298 [INFO] content_generator — 포스트 생성 중: '대통령도 택한 방식 강남에도 집주인 대출'
-2026-07-22 12:29:23,697 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 12:29:23,698 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH6ba7arghZEFng1Y1HB'}
-2026-07-22 12:29:29,145 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '대통령도 택한 방식 강남에도 집주인 대출'
-2026-07-22 12:29:29,351 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-22 12:29:29,352 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdH6bzSZbHwNPwwheoqrL'}
 2026-07-22 12:29:29,352 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
 2026-07-22 12:29:29,555 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
 2026-07-22 12:29:29,906 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
@@ -585,3 +498,145 @@
 2026-07-23 00:00:23,991 [INFO] main —   - [blog3] 금융NEWS
 2026-07-23 00:00:23,996 [INFO] main — ⏳ 'SBS 드라마 김부장 회차별 리뷰 (7~10화)' 예약 2편 대기 중 (다음 2026-07-25)
 2026-07-23 00:00:23,996 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-07-23 05:52:37,337 [INFO] main — ============================================================
+2026-07-23 05:52:37,337 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-23 05:52:37
+2026-07-23 05:52:37,337 [INFO] main — ============================================================
+2026-07-23 05:52:37,347 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-07-23 05:52:37,347 [INFO] keyword_collector — 포스팅 이력 코퍼스: 42개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-23 05:52:40,456 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-23 05:52:47,004 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 05:52:47,029 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-23 05:52:47,029 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-23 05:52:47,467 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-07-23 05:52:47,663 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-23 05:52:47,821 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-23 05:52:47,824 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-07-23 05:52:47,825 [INFO] keyword_collector —   [naver_realtime] 2개: ['여름 폭염 피하는 국내 여행지 추천 2026', '전국 치킨 맛집 지도 K치킨벨트 총정리']
+2026-07-23 05:52:47,825 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여름 폭염 피하는 국내 여행지 추천 2026', '전국 치킨 맛집 지도 K치킨벨트 총정리']
+2026-07-23 05:52:47,825 [INFO] main — 수집된 키워드 2개: ['여름 폭염 피하는 국내 여행지 추천 2026', '전국 치킨 맛집 지도 K치킨벨트 총정리']
+2026-07-23 05:52:47,830 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-07-23 05:52:47,830 [INFO] main — 단독 포스트 대상 키워드 1개: ['여름 폭염 피하는 국내 여행지 추천 2026']
+2026-07-23 05:52:47,847 [INFO] main — 
+[1/1] 키워드: '여름 폭염 피하는 국내 여행지 추천 2026'
+2026-07-23 05:52:47,847 [INFO] content_generator — 포스트 생성 중: '여름 폭염 피하는 국내 여행지 추천 2026'
+2026-07-23 05:52:54,129 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 05:52:54,130 [INFO] research_collector — 검색 의도: 2026년 여름 폭염을 피해 시원하게 즐길 수 있는 국내 여행지 정보를 찾고자 함
+2026-07-23 05:53:05,750 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 6개) — '여름 폭염 피하는 국내 여행지 추천 2026'
+2026-07-23 05:53:20,140 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 05:53:20,141 [INFO] evidence_builder — 자료팩 생성: 사실 3개 — '여름 폭염 피하는 국내 여행지 추천 2026'
+2026-07-23 05:53:41,126 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 05:53:41,127 [INFO] source_validator — 출처 검증: 0/3개 통과, 등급 분포 {'X': 3}
+2026-07-23 05:53:41,130 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
+2026-07-23 05:53:41,130 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-23 05:53:41,882 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 05:54:37,728 [WARNING] content_generator — 컨텐츠 너무 짧음(2218자, 최소 2500자) — 재시도 1/3
+2026-07-23 05:54:40,728 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-23 05:54:42,828 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 05:56:12,813 [WARNING] content_generator — 컨텐츠 너무 짧음(2456자, 최소 2500자) — 재시도 2/3
+2026-07-23 05:56:15,813 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-23 05:56:16,584 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 05:57:37,971 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 05:57:57,823 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '동굴형 관광지는 연중 서늘한 온도를 유지한다고 알려져 있어'
+2026-07-23 05:57:57,823 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-07-23 05:57:58,295 [INFO] image_fetcher — 이미지 수집 성공: '폭염 피하는 국내 여행지, 이렇게 골랐다' → 제목='heat wave / beautiful flowers / flower b' (관련성=0.25)
+2026-07-23 05:57:58,627 [INFO] image_fetcher — 이미지 수집 성공: '여름 폭염 피하' → 제목='ice cream / ice / nature / heat / heat w' (관련성=0.50)
+2026-07-23 05:57:59,276 [INFO] image_fetcher — 대체 이미지 수집: '여름 폭염 특보 계곡만 기상청 발표를' → 제목='antigua / waves / beach / caribbean / se' (관련성=0.33)
+2026-07-23 05:57:59,276 [INFO] image_fetcher — 이미지 수집 성공: '여름 폭염 특보 계곡만 기상청 발표를' → 제목='antigua / waves / beach / caribbean / se' (관련성=0.33)
+2026-07-23 05:58:02,945 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 05:58:02,946 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-07-23 05:58:02,946 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-07-23 05:58:02,946 [INFO] image_fetcher — 제목 썸네일 생성: '폭염 피하는 국내 여행지, 이렇게 골랐다' (data URI, 983B)
+2026-07-23 05:58:03,233 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: 'ice cream / ice / nature / heat / heat w'
+2026-07-23 05:58:03,233 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-07-23 05:58:03,235 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-07-23 05:58:03,237 [INFO] content_generator — 포스트 생성 완료: '폭염 피하는 국내 여행지, 이렇게 골랐다' (2840자, 이미지 2개)
+2026-07-23 05:58:04,162 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 05:58:26,367 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '폭염 피하는 국내 여행지, 이렇게 골랐다'
+2026-07-23 05:58:26,367 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 '후기를 종합해보면', '알려져 있다' 식 재조합 위주로 구체적 1인칭 경험(날짜·인원·비용 등)이 부족함
+2026-07-23 05:58:26,367 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 유형 설명·체크리스트 단락이 500자 이상으로 다소 길게 뭉쳐있음
+2026-07-23 05:58:26,367 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개와 개인 판단 언급은 있으나 대부분 '~라고 알려져 있다' 식 간접 인용으로 전문성 신호가 약함
+2026-07-23 05:58:26,368 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 없어 저작권 위반은 없으나 이미지 부재로 가독성·SEO 측면에서 warn
+2026-07-23 05:58:26,368 [INFO] adsense_validator —   ❌ AI 생성 의심도: '알려져 있습니다됩니다', '고원지대라라' 등 미편집 AI 생성 오류와 '~후기가 많습니다' 표현의 기계적 반복이 다수 발견됨
+2026-07-23 05:58:26,368 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '알려져 있습니다됩니다', '고원지대라라' 등 미편집 AI 생성 오류와 '~후기가 많습니다' 표현의 기계적 반복이 다수 발견됨
+2026-07-23 05:58:26,368 [WARNING] adsense_validator —   🔴 본문에 '알려져 있습니다됩니다', '고원지대라라' 등 명백한 텍스트 오류(미검수 AI 생성 흔적)가 존재하여 즉시 교정 필요
+2026-07-23 05:58:26,377 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-23 05:58:26,379 [INFO] internal_linker —   [1/5] '휴가철' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0159774743
+2026-07-23 05:58:26,382 [INFO] internal_linker —   [2/5] '만족도' -> https://hogugolfntraval.blogspot.com/2026/07/2025.html
+2026-07-23 05:58:26,384 [INFO] internal_linker —   [3/5] '피서지' -> https://www.hoguwhat.com/2026/07/blog-post_19.html
+2026-07-23 05:58:26,387 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-07-23 05:58:26,387 [INFO] main —   제목: 폭염 피하는 국내 여행지, 이렇게 골랐다
+2026-07-23 05:58:26,387 [INFO] main —   이미지: 2개 삽입
+2026-07-23 05:58:26,387 [INFO] main —   글자 수: 2840자
+2026-07-23 05:58:27,243 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 05:58:50,330 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-23 05:58:51,244 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 05:58:55,608 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '폭염 피하는 국내 여행지, 이렇게 골랐다'
+2026-07-23 05:58:55,608 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 '~로 알려져 있다/후기가 많다' 식 정보 재조합이 대부분이며 구체적 날짜·수치 기반 개인 경험은 부족함
+2026-07-23 05:58:55,608 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락이 500자 이상으로 길어 가독성 저하
+2026-07-23 05:58:55,608 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개와 FAQ는 있으나 1인칭 구체 경험(날짜·장소 방문기)이 약해 신뢰 신호가 다소 부족
+2026-07-23 05:58:55,608 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음 — 정책상 이미지 부재는 warn 처리
+2026-07-23 05:58:55,608 [INFO] adsense_validator —   ❌ AI 생성 의심도: '알려져 있습니다됩니다', '낮아진다고 알려져 있는데 낮아지는 경향', '고원지대라라' 등 명백한 중복·오류 문구가 다수 발견되어 미검수 AI 생성 흔적이 뚜렷함
+2026-07-23 05:58:55,608 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '알려져 있습니다됩니다', '낮아진다고 알려져 있는데 낮아지는 경향', '고원지대라라' 등 명백한 중복·오류 문구가 다수 발견되어 미검수 AI 생성 흔적이 뚜렷함
+2026-07-23 05:58:55,608 [WARNING] adsense_validator —   🔴 본문 중 '알려져 있습니다됩니다', '낮아진다고 알려져 있는데 낮아지는 경향', '고원지대라라' 등 중복·오타 문구가 다수 발견되어 발행 전 교정 필요
+2026-07-23 05:58:55,609 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
+2026-07-23 05:58:55,609 [WARNING] main —      🔴 [AI 생성 의심도] '알려져 있습니다됩니다', '낮아진다고 알려져 있는데 낮아지는 경향', '고원지대라라' 등 명백한 중복·오류 문구가 다수 발견되어 미검수 AI 생성 흔적이 뚜렷함
+2026-07-23 05:58:55,609 [WARNING] main —      🔴 본문 중 '알려져 있습니다됩니다', '낮아진다고 알려져 있는데 낮아지는 경향', '고원지대라라' 등 중복·오타 문구가 다수 발견되어 발행 전 교정 필요
+2026-07-23 05:58:55,609 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 '~로 알려져 있다/후기가 많다' 식 정보 재조합이 대부분이며 구체적 날짜·수치 기반 개인 경험은 부족함
+2026-07-23 05:58:55,609 [WARNING] main —      🟡 [구조 및 가독성] H2 6개로 구조는 양호하나 일부 단락이 500자 이상으로 길어 가독성 저하
+2026-07-23 05:58:55,609 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 5개와 FAQ는 있으나 1인칭 구체 경험(날짜·장소 방문기)이 약해 신뢰 신호가 다소 부족
+2026-07-23 05:58:55,609 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
+2026-07-23 05:58:56,502 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 06:00:27,966 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-23 06:00:28,924 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 06:01:05,341 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2840자 → 3502자 (+662자)
+2026-07-23 06:01:05,341 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-23 06:01:06,725 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 06:01:27,383 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '폭염 피하는 국내 여행지, 이렇게 골랐다'
+2026-07-23 06:01:27,383 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 개수는 충분하나 일부 섹션(체감온도 차이, 체크리스트 등)이 단락 구분 없이 길게 이어져 가독성 저하
+2026-07-23 06:01:27,383 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 확인되지 않아 이미지 부재로 판단, 정책상 fail 아닌 warn 처리
+2026-07-23 06:01:27,383 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그런데 ~ 끝이 아닙니다' 식의 반복적인 브릿지 문장과 체크리스트식 나열 패턴이 다소 정형화됨
+2026-07-23 06:01:27,383 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 84/100)
+2026-07-23 06:01:27,383 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-07-23 06:01:28,200 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 06:02:07,847 [INFO] final_editor —   ✏️ 제목 최종 교정: '폭염 피하는 국내 여행지, 이렇게 골랐다' → '여름 폭염 피하는 국내 여행지 추천 2026, 고지대·동굴·계곡 코스'
+2026-07-23 06:02:07,847 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
+2026-07-23 06:02:07,847 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 30~45자/120~160자 기준에 맞춰 정리하고, 대표 이미지와 본문 삽입 이미지 3장의 구체적 alt text를 추가했으며, 내부 링크 주제와 참고 자료 목록을 명확히 정리했습니다.
+2026-07-23 06:02:07,932 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-23 06:02:07,932 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-07-23 06:02:08,059 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-07-23 06:02:08,073 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-23 06:02:08,073 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-07-23 06:02:08,889 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/2026_0201740258.html
+2026-07-23 06:02:08,902 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/2026_0201740258.html
+2026-07-23 06:02:42,819 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 06:02:42,820 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-23 06:02:42,820 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-23 06:02:42,829 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '여름 폭염 피하는 국내 여행지 추천 2026, 고지대·동굴·계곡 코스'
+2026-07-23 06:02:43,664 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-23 06:02:47,039 [INFO] comment_manager —   생성된 댓글: 동굴 다녀오신 분들이라면 아시겠지만, 안이 서늘해서 좋다고 얇은 옷만 입고 갔다가 5분 만에 오히려 춥게 느껴지는 경우가 꽤 있더라고요. 얇은 ...
+2026-07-23 06:05:47,113 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-23 06:05:47,114 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-07-23 06:05:47,114 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-23 06:05:47,115 [INFO] main — 
+============================================================
+2026-07-23 06:05:47,115 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-23 06:05:47,115 [INFO] main — ============================================================
+2026-07-23 06:05:47,141 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-23 06:05:47,163 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-23 06:05:47,180 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-23 06:05:47,391 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-23 06:05:47,632 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-23 06:05:47,852 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-23 06:05:47,854 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-23 06:05:47,857 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-23 06:05:47,873 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 175 / 실패 15 / 대기 84)
+2026-07-23 06:05:47,873 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-23 06:05:47,874 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-23 06:05:47,874 [INFO] main — 대시보드 데이터 업데이트 완료

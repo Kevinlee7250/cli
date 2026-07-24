@@ -1,124 +1,3 @@
-2026-07-23 12:20:30,933 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-23 12:20:30,933 [INFO] main — 
-============================================================
-2026-07-23 12:20:30,933 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-23 12:20:30,933 [INFO] main — ============================================================
-2026-07-23 12:20:30,957 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-23 12:20:30,978 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
-2026-07-23 12:20:30,993 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-23 12:20:31,224 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-23 12:20:31,488 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-23 12:20:31,489 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-23 12:20:31,491 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-23 12:20:31,508 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 174 / 실패 15 / 대기 84)
-2026-07-23 12:20:31,508 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-23 12:20:31,508 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-23 12:20:31,509 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-23 23:04:20,536 [INFO] main — ============================================================
-2026-07-23 23:04:20,537 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-23 23:04:20
-2026-07-23 23:04:20,537 [INFO] main — ============================================================
-2026-07-23 23:04:20,546 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
-2026-07-23 23:04:20,546 [INFO] keyword_collector — 포스팅 이력 코퍼스: 40개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-23 23:04:23,805 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-23 23:04:31,192 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:04:31,217 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-23 23:04:31,217 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-23 23:04:31,748 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-07-23 23:04:32,034 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-23 23:04:32,317 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-23 23:04:32,319 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-07-23 23:04:32,319 [INFO] keyword_collector — 유사 주제 제외 2개: ['전국 치킨 맛집 지도 K치킨벨트 여행 코스 추천', '2026 여름휴가 항공권 호텔 저렴하게 예약하는 방법']
-2026-07-23 23:04:32,320 [INFO] keyword_collector —   [naver_realtime] 2개: ['폭염 피하는 국내 여행지 추천 강원도 삼척 무더위 명소', '호캉스 호텔 패키지 혜택 비교 2026 여름']
-2026-07-23 23:04:32,320 [INFO] keyword_collector — 최종 선정 키워드 2개: ['폭염 피하는 국내 여행지 추천 강원도 삼척 무더위 명소', '호캉스 호텔 패키지 혜택 비교 2026 여름']
-2026-07-23 23:04:32,320 [INFO] main — 수집된 키워드 2개: ['폭염 피하는 국내 여행지 추천 강원도 삼척 무더위 명소', '호캉스 호텔 패키지 혜택 비교 2026 여름']
-2026-07-23 23:04:32,326 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
-2026-07-23 23:04:32,326 [INFO] main — 단독 포스트 대상 키워드 1개: ['폭염 피하는 국내 여행지 추천 강원도 삼척 무더위 명소']
-2026-07-23 23:04:32,342 [INFO] main — 
-[1/1] 키워드: '폭염 피하는 국내 여행지 추천 강원도 삼척 무더위 명소'
-2026-07-23 23:04:32,342 [INFO] content_generator — 포스트 생성 중: '폭염 피하는 국내 여행지 추천 강원도 삼척 무더위 명소'
-2026-07-23 23:04:40,828 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:04:40,829 [INFO] research_collector — 검색 의도: 폭염을 피해 시원하게 즐길 수 있는 강원도 삼척 지역 여행지와 명소를 찾는 검색자의 의도
-2026-07-23 23:04:51,745 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '폭염 피하는 국내 여행지 추천 강원도 삼척 무더위 명소'
-2026-07-23 23:05:11,908 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:05:11,909 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '폭염 피하는 국내 여행지 추천 강원도 삼척 무더위 명소'
-2026-07-23 23:05:27,503 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:05:27,504 [INFO] source_validator — 출처 검증: 6/8개 통과, 등급 분포 {'D': 4, 'A': 2, 'X': 2}
-2026-07-23 23:05:27,507 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-07-23 23:05:27,507 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-23 23:05:28,169 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:06:27,617 [WARNING] content_generator — 컨텐츠 너무 짧음(2463자, 최소 2500자) — 재시도 1/3
-2026-07-23 23:06:30,617 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-23 23:06:31,483 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:08:01,749 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:08:17,107 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
-2026-07-23 23:08:18,197 [INFO] image_fetcher — 이미지 수집 성공: '강원도 삼척 폭염 피하는 법 총정리' → 제목='(관동이란 강원도 일대를 일컫는 말)  3. 삼척해수욕장 (죽서루에서 버' (관련성=0.14)
-2026-07-23 23:08:18,427 [INFO] image_fetcher — 이미지 수집 성공: '폭염 피하 국내' → 제목='heat wave / beautiful flowers / flower b' (관련성=0.40)
-2026-07-23 23:08:18,829 [INFO] image_fetcher — 대체 이미지 수집: '폭염 피하 삼척이 대안지로 지역은 여름철' → 제목='fire / flames / hot / embers / grilling ' (관련성=0.25)
-2026-07-23 23:08:18,829 [INFO] image_fetcher — 이미지 수집 성공: '폭염 피하 삼척이 대안지로 지역은 여름철' → 제목='fire / flames / hot / embers / grilling ' (관련성=0.25)
-2026-07-23 23:08:19,926 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:08:19,927 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
-2026-07-23 23:08:19,927 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-07-23 23:08:19,928 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-23 23:08:19,930 [INFO] content_generator — 포스트 생성 완료: '강원도 삼척 폭염 피하는 법 총정리' (3146자, 이미지 1개)
-2026-07-23 23:08:20,594 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:08:37,202 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '강원도 삼척 폭염 피하는 법 총정리'
-2026-07-23 23:08:37,202 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 충족하나 해변·명소 나열 위주로 개인 경험보다는 '후기가 많다'는 간접 정보 재구성이 반복됨
-2026-07-23 23:08:37,202 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 개수는 충분하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 떨어짐
-2026-07-23 23:08:37,202 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개는 있으나 1인칭 직접 경험 서술이 부족하고 '후기가 많다'는 간접 인용에 의존
-2026-07-23 23:08:37,202 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 확인되지 않아 이미지 부재로 판단, 저작권 위반은 없음
-2026-07-23 23:08:37,202 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~후기가 많습니다', '~한 편입니다' 같은 유사 패턴 문장이 반복되어 AI 생성 톤이 다소 느껴짐
-2026-07-23 23:08:37,212 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-23 23:08:37,214 [INFO] internal_linker —   [1/5] '여행지' -> https://www.hoguwhat.com/2026/07/2026_0201740258.html
-2026-07-23 23:08:37,217 [INFO] internal_linker —   [2/5] '여행지' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_15.ht
-2026-07-23 23:08:37,219 [INFO] internal_linker —   [3/5] '여행지' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0159774743
-2026-07-23 23:08:37,221 [INFO] internal_linker — 내부 링크 3개 삽입 완료
-2026-07-23 23:08:37,221 [INFO] main —   제목: 강원도 삼척 폭염 피하는 법 총정리
-2026-07-23 23:08:37,221 [INFO] main —   이미지: 1개 삽입
-2026-07-23 23:08:37,221 [INFO] main —   글자 수: 3146자
-2026-07-23 23:08:38,042 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:08:58,194 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '강원도 삼척 폭염 피하는 법 총정리'
-2026-07-23 23:08:58,195 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 3146자로 기준 충족하나, 공식 홈페이지 정보 재구성 위주이고 구체적 날짜·수치 기반 개인 경험 서술이 부족함
-2026-07-23 23:08:58,195 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락(예: '왜 지금 삼척이 폭염 대안지로' 부분)이 500자 이상으로 길게 이어짐
-2026-07-23 23:08:58,195 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개는 있으나 1인칭 직접 경험 서술이 명확하지 않고 '후기가 많습니다' 식의 간접 인용 위주
-2026-07-23 23:08:58,195 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급이 없어 이미지 부재 상태 — 정책 위반은 아니나 warn 처리
-2026-07-23 23:08:58,195 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~습니다' 종결 반복과 '이제 ~할 순서입니다' 같은 전형적 AI 전환구가 다수 관찰됨
-2026-07-23 23:08:58,195 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
-2026-07-23 23:08:58,195 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 3146자로 기준 충족하나, 공식 홈페이지 정보 재구성 위주이고 구체적 날짜·수치 기반 개인 경험 서술이 부족함
-2026-07-23 23:08:58,195 [WARNING] main —      🟡 [구조 및 가독성] H2 7개로 구조는 양호하나 일부 단락(예: '왜 지금 삼척이 폭염 대안지로' 부분)이 500자 이상으로 길게 이어짐
-2026-07-23 23:08:58,195 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 2개는 있으나 1인칭 직접 경험 서술이 명확하지 않고 '후기가 많습니다' 식의 간접 인용 위주
-2026-07-23 23:08:58,195 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
-2026-07-23 23:08:58,759 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:10:23,746 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-23 23:10:24,811 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:10:55,670 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3146자 → 4404자 (+1258자)
-2026-07-23 23:10:55,670 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-23 23:10:56,412 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:11:13,661 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '강원도 삼척 폭염 피하는 법 총정리'
-2026-07-23 23:11:13,661 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개는 양호하나 일부 단락(대안지 주목 이유 등)이 500자 이상으로 길게 이어짐
-2026-07-23 23:11:13,661 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문 내 이미지 관련 언급이 없어 이미지 삽입 여부 확인 필요(부재 자체는 fail 아님)
-2026-07-23 23:11:13,661 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~할 차례입니다', '~할 순서입니다' 같은 정형화된 전환 문구가 반복되어 AI 패턴이 일부 감지됨
-2026-07-23 23:11:13,661 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
-2026-07-23 23:11:13,662 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-23 23:11:14,419 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:11:42,229 [INFO] final_editor —   ✏️ 제목 최종 교정: '강원도 삼척 폭염 피하는 법 총정리' → '폭염 피하는 국내 여행지 추천, 강원도 삼척 무더위 명소 총정리'
-2026-07-23 23:11:42,229 [INFO] final_editor —   ✏️ 메타 설명 교정 (108자)
-2026-07-23 23:11:42,229 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분할했습니다. 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모 구조를 표준 형식에 맞춰 배치하고, 이미지 3개의 위치와 구체적 alt 텍스트를 추가했습니다.
-2026-07-23 23:11:42,404 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-23 23:11:42,405 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-07-23 23:11:42,570 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-07-23 23:11:42,584 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-23 23:11:42,584 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-07-23 23:11:43,624 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_24.html
-2026-07-23 23:11:43,638 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_24.html
-2026-07-23 23:12:19,838 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-23 23:12:19,839 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-23 23:12:19,839 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-23 23:12:19,849 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '폭염 피하는 국내 여행지 추천, 강원도 삼척 무더위 명소 총정리'
-2026-07-23 23:12:21,227 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-23 23:12:25,121 [INFO] comment_manager —   생성된 댓글: 추가로 팁 드리면, 환선굴은 동굴 안이 습도가 꽤 높아서 안경 쓰시는 분들은 입구에서 잠깐 서리 찰 수 있으니 미리 닦을 천 하나 챙기시면 좋아...
 2026-07-23 23:15:25,277 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
   "error": "invalid_client",
@@ -619,3 +498,137 @@
 2026-07-24 06:11:18,465 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-24 06:11:18,465 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-24 06:11:18,466 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-24 06:11:54,944 [INFO] main — ============================================================
+2026-07-24 06:11:54,944 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-24 06:11:54
+2026-07-24 06:11:54,944 [INFO] main — ============================================================
+2026-07-24 06:11:54,953 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-07-24 06:11:54,954 [INFO] keyword_collector — 포스팅 이력 코퍼스: 42개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-24 06:11:58,601 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-24 06:12:04,958 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:12:04,982 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-24 06:12:04,983 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-24 06:12:05,306 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-24 06:12:05,871 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-24 06:12:05,872 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-24 06:12:05,874 [INFO] keyword_collector — 유사 주제 제외 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', 'Z세대 반도체주 투자 방법과 전망 2026']
+2026-07-24 06:12:05,874 [INFO] keyword_collector —   [naver_realtime] 2개: ['단일종목 레버리지 ETF 규제 예탁금 3000만원 투자자 대응법', '인플레이션 재부상 단기채 투자 전략 총정리']
+2026-07-24 06:12:05,874 [INFO] keyword_collector — 최종 선정 키워드 2개: ['단일종목 레버리지 ETF 규제 예탁금 3000만원 투자자 대응법', '인플레이션 재부상 단기채 투자 전략 총정리']
+2026-07-24 06:12:05,874 [INFO] main — 수집된 키워드 2개: ['단일종목 레버리지 ETF 규제 예탁금 3000만원 투자자 대응법', '인플레이션 재부상 단기채 투자 전략 총정리']
+2026-07-24 06:12:05,880 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
+2026-07-24 06:12:05,880 [INFO] main — 단독 포스트 대상 키워드 1개: ['단일종목 레버리지 ETF 규제 예탁금 3000만원 투자자 대응법']
+2026-07-24 06:12:05,896 [INFO] main — 
+[1/1] 키워드: '단일종목 레버리지 ETF 규제 예탁금 3000만원 투자자 대응법'
+2026-07-24 06:12:05,896 [INFO] content_generator — 포스트 생성 중: '단일종목 레버리지 ETF 규제 예탁금 3000만원 투자자 대응법'
+2026-07-24 06:12:17,226 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:12:17,227 [INFO] research_collector — 검색 의도: 단일종목 레버리지 ETF 투자 시 예탁금 3000만원 규제의 구체적 내용과 개인 투자자가 취해야 할 대응 방
+2026-07-24 06:12:30,272 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '단일종목 레버리지 ETF 규제 예탁금 3000만원 투자자 대응법'
+2026-07-24 06:12:46,230 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:12:46,231 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '단일종목 레버리지 ETF 규제 예탁금 3000만원 투자자 대응법'
+2026-07-24 06:13:08,973 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:13:08,976 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'C': 2, 'X': 3, 'D': 1}
+2026-07-24 06:13:08,979 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
+2026-07-24 06:13:08,979 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-24 06:13:09,833 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:14:33,758 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(레버리지)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-07-24 06:14:35,758 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-24 06:14:36,805 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:15:51,437 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:16:08,509 [WARNING] content_generator — 팩트체크 fix가 지시문 형태 — 적용 건너뜀: '24일 발표에 따라 31일부터 순수 현금 3000만원 예탁금 요건이 시행되며, 세부 사항은'
+2026-07-24 06:16:08,510 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 2건 자동 수정 적용
+2026-07-24 06:16:10,628 [INFO] image_fetcher — 이미지 수집 성공: '단일종목 레버리지 ETF 규제, 예탁금 3000만원 얘기가 나온 이유와 투자자 대응법' → 제목='단일종목 레버리지 조인다' (관련성=0.18)
+2026-07-24 06:16:12,721 [INFO] image_fetcher — 대체 이미지 수집: '단일종목 레버리지 ETF' → 제목='금투협, '단일종목 레버리지·인버스' 교육과정 개설' (관련성=0.67)
+2026-07-24 06:16:12,722 [INFO] image_fetcher — 이미지 수집 성공: '단일종목 레버리지 ETF' → 제목='금투협, '단일종목 레버리지·인버스' 교육과정 개설' (관련성=0.67)
+2026-07-24 06:16:13,306 [INFO] image_fetcher — 이미지 수집 성공: '단일종목 레버리지 정확히 어떤 일반적인 코스피' → 제목='"이런 말씀 죄송, 투자 멈춰야"…운용사 대표까지 말리는 단일종목 레버리' (관련성=0.33)
+2026-07-24 06:16:14,692 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:16:14,693 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-24 06:16:14,694 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-24 06:16:14,696 [INFO] content_generator — 포스트 생성 완료: '단일종목 레버리지 ETF 규제, 예탁금 3000만원 얘기가 나온 이유와 투자자 대응법' (3160자, 이미지 3개)
+2026-07-24 06:16:15,521 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:16:37,609 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '단일종목 레버리지 ETF 규제, 예탁금 3000만원 얘기가 나온'
+2026-07-24 06:16:37,609 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 충족하나 개인 경험·구체적 사례 없이 일반 정보 재구성에 가깝고, 시행 확정 여부에 대한 서술이 앞뒤로 모순됨
+2026-07-24 06:16:37,609 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 개수는 충분하나 일부 단락이 500자 이상으로 길게 이어짐
+2026-07-24 06:16:37,609 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개는 포함되나 1인칭 경험 서술 부재하고 시행 여부 모순으로 신뢰성 저하
+2026-07-24 06:16:37,609 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음 (텍스트만으로도 정책 통과 가능하나 이미지 부재는 warn)
+2026-07-24 06:16:37,609 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: ‘다음 섹션에서는’, ‘이어서 ~ 정리해보겠습니다’ 등 전형적 AI 전환 문구와 정보 모순이 반복 관찰됨
+2026-07-24 06:16:37,609 [WARNING] adsense_validator —   🔴 예탁금 3000만원 규제의 시행 여부에 대해 '아직 미확정'과 '31일부터 확정 시행'이 동시에 서술되어 정보 신뢰성에 심각한 모순 발생
+2026-07-24 06:16:37,618 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-24 06:16:37,622 [INFO] internal_linker —   [1/5] '금융위원회' -> https://hoguasset.blogspot.com/2026/07/etf-2026_01246396645.
+2026-07-24 06:16:37,628 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-24 06:16:37,628 [INFO] main —   제목: 단일종목 레버리지 ETF 규제, 예탁금 3000만원 얘기가 나온 이유와 투자자 대응법
+2026-07-24 06:16:37,628 [INFO] main —   이미지: 3개 삽입
+2026-07-24 06:16:37,628 [INFO] main —   글자 수: 3160자
+2026-07-24 06:16:39,474 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:17:03,044 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-24 06:17:04,031 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:17:08,624 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — '단일종목 레버리지 ETF 규제, 예탁금 3000만원 얘기가 나온'
+2026-07-24 06:17:08,624 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 3160자로 기준 충족하나 개인 경험·구체적 사례 없이 일반적 설명 나열에 그침
+2026-07-24 06:17:08,624 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 개수는 충분하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 떨어짐
+2026-07-24 06:17:08,624 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 예탁금 규제가 '미확정'이라 했다가 '이미 확정되어 31일 시행'이라 상반된 서술이 있어 사실관계 혼동 우려
+2026-07-24 06:17:08,625 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개와 관련 기사 인용은 있으나 1인칭 경험이나 저자 전문성 신호가 부족
+2026-07-24 06:17:08,625 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부가 확인되지 않아 SEO·가독성 측면에서 보완 필요(저작권 위반은 없음)
+2026-07-24 06:17:08,625 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서는~', '~살펴보겠습니다' 등 전형적 AI식 전환 문구와 반복되는 확인 안내 패턴이 다수 발견됨
+2026-07-24 06:17:08,625 [WARNING] adsense_validator —   🔴 본문 내
+2026-07-24 06:17:08,625 [WARNING] adsense_validator —   🔴 본문 내 '예탁금 3000만원 규제가 아직 미확정'이라는 서술과 '이미 확정되어 31일부터 시행'이라는 서술이 상충되어 투자자에게 혼란을 줄 수 있음 — 사실관계 통일 필요
+2026-07-24 06:17:08,625 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 69/100, 권장: review) — 자동 수정 시도
+2026-07-24 06:17:08,625 [WARNING] main —      🔴 본문 내
+2026-07-24 06:17:08,625 [WARNING] main —      🔴 본문 내 '예탁금 3000만원 규제가 아직 미확정'이라는 서술과 '이미 확정되어 31일부터 시행'이라는 서술이 상충되어 투자자에게 혼란을 줄 수 있음 — 사실관계 통일 필요
+2026-07-24 06:17:08,625 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 3160자로 기준 충족하나 개인 경험·구체적 사례 없이 일반적 설명 나열에 그침
+2026-07-24 06:17:08,625 [WARNING] main —      🟡 [구조 및 가독성] H2 7개로 개수는 충분하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 떨어짐
+2026-07-24 06:17:08,625 [WARNING] main —      🟡 [유해/금지 콘텐츠] 예탁금 규제가 '미확정'이라 했다가 '이미 확정되어 31일 시행'이라 상반된 서술이 있어 사실관계 혼동 우려
+2026-07-24 06:17:08,625 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 69/100, fail: 0개, warn: 6개
+2026-07-24 06:17:10,911 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:18:25,933 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-24 06:18:26,707 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:18:45,821 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3160자 → 4117자 (+957자)
+2026-07-24 06:18:45,821 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-24 06:18:46,692 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:19:03,379 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '단일종목 레버리지 ETF 규제, 예탁금 3000만원 얘기가 나온'
+2026-07-24 06:19:03,379 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 개수는 충분하나 각 섹션이 줄바꿈 없이 500자 이상 이어지는 긴 단락으로 구성됨
+2026-07-24 06:19:03,379 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 언급이 없어 이미지 부재로 판단, 저작권 위반은 없으나 가독성 측면에서 warn
+2026-07-24 06:19:03,379 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 69 → 90/100)
+2026-07-24 06:19:03,379 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-07-24 06:19:04,843 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:20:19,344 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-24 06:20:20,145 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:21:12,010 [INFO] final_editor —   ✏️ 제목 최종 교정: '단일종목 레버리지 ETF 규제, 예탁금 3000만원 얘기가 나온 이유와 투자자 대응법' → '단일종목 레버리지 ETF 예탁금 3000만원, 투자자 대응법 정리'
+2026-07-24 06:21:12,010 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
+2026-07-24 06:21:12,010 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 미완성 문단을 이어 완결하고 대응법·FAQ·마무리·작성자 메모를 추가했으며, 오탈자를 정리하고 문단을 짧게 나눠 모바일 가독성을 높였습니다. 요약 박스·표·경험 메모·주의사항 박스 형식을 규칙에 맞게 정리했습니다.
+2026-07-24 06:21:12,173 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-24 06:21:12,173 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-07-24 06:21:12,322 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-07-24 06:21:12,337 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-24 06:21:12,337 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '단일종목 레버리지 ETF 규제 예탁금 3000만원 투자자 대응법' — 면책·팩트체크 확인 권장
+2026-07-24 06:21:12,337 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-07-24 06:21:13,241 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/etf-3000.html
+2026-07-24 06:21:13,254 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/etf-3000.html
+2026-07-24 06:21:44,024 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:21:44,026 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-24 06:21:44,026 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-24 06:21:44,035 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '단일종목 레버리지 ETF 예탁금 3000만원, 투자자 대응법 정리'
+2026-07-24 06:21:45,207 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-24 06:21:49,763 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리자면, 예탁금 기준이 확정되기 전이라도 증권사마다 시행 시점이나 세부 조건이 조금씩 다르게 안내될 수 있어서 본인이 거래하는...
+2026-07-24 06:24:49,898 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-24 06:24:49,899 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-07-24 06:24:49,900 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-24 06:24:49,900 [INFO] main — 
+============================================================
+2026-07-24 06:24:49,900 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-24 06:24:49,900 [INFO] main — ============================================================
+2026-07-24 06:24:49,926 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-24 06:24:49,948 [INFO] dashboard_exporter —   시리즈: 9개 내보내기 완료
+2026-07-24 06:24:49,965 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-24 06:24:50,272 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-24 06:24:50,699 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-24 06:24:50,701 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-24 06:24:50,703 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-24 06:24:50,719 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 176 / 실패 13 / 대기 84)
+2026-07-24 06:24:50,719 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-24 06:24:50,719 [INFO] dashboard_exporter —   포스트: 93개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-24 06:24:50,720 [INFO] main — 대시보드 데이터 업데이트 완료

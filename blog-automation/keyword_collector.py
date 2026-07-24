@@ -975,6 +975,52 @@ def _migrate_used_keywords() -> None:
         logger.warning(f"used_keywords.json 마이그레이션 실패 (무시): {e}")
 
 
+_SLOT_CATEGORY_PRIORITY = {
+    "morning": "travel",  # 07시 실행 — 하루 일정 짜는 아침 시간대엔 여행 정보 수요가 높음
+    "noon": "sports",     # 12시 실행 — 점심시간엔 전날/당일 경기 결과를 확인하는 수요가 높음
+    "evening": "drama",   # 19시 실행 — 저녁엔 드라마·연예 콘텐츠 소비가 몰림
+}
+
+
+def _current_time_slot(now: datetime | None = None) -> str:
+    """현재 KST 시각 기준 시간대(morning/noon/evening)를 반환합니다.
+
+    07/12/19시(KST) 정기 실행 스케줄에 맞춰, 시간대별로 다른 주제를 우선
+    다루게 하기 위한 분류입니다. now를 명시적으로 넘기면 그 값의 hour를
+    그대로 KST 시각으로 취급합니다(테스트 편의) — None이면 실제 UTC
+    현재 시각을 KST(UTC+9)로 변환해 사용합니다.
+    """
+    if now is None:
+        now = datetime.now(timezone.utc) + timedelta(hours=9)
+    hour = now.hour
+    if hour < 11:
+        return "morning"
+    if hour < 16:
+        return "noon"
+    return "evening"
+
+
+def _prioritize_by_time_slot(keywords: list[str], blog_id: str, slot: str) -> list[str]:
+    """시간대에 맞는 카테고리 키워드를 후보 목록 앞쪽으로 우선 배치합니다.
+
+    완전히 배제하지 않고 순서만 조정 — 슬롯에 맞는 키워드가 없으면 원래
+    순서(트렌드 우선순위)대로 그대로 선정됩니다. sorted()는 안정 정렬이라
+    같은 순위 안에서는 기존 순서가 보존됩니다.
+    """
+    preferred_cat = _SLOT_CATEGORY_PRIORITY.get(slot)
+    if not preferred_cat:
+        return keywords
+    try:
+        from content_generator import _detect_content_category
+    except ImportError:
+        return keywords
+
+    def rank(kw: str) -> int:
+        return 0 if _detect_content_category(kw, blog_id) == preferred_cat else 1
+
+    return sorted(keywords, key=rank)
+
+
 def _sort_by_category(keywords: list[str], priority_cats: list[str]) -> list[str]:
     """GSC 고성과 카테고리 순서로 키워드 목록을 재정렬합니다."""
     # dashboard_exporter의 _categorize 함수 사용
@@ -1147,6 +1193,13 @@ def get_trending_keywords(
         if kw not in keyword_sources:
             keyword_sources[kw] = "fallback"
     candidates += unused_fallback
+
+    # 시간대별 주제 다양화 — 여행/스포츠/드라마·연예가 섞인 블로그는
+    # 07/12/19시 실행마다 그 시간대에 맞는 주제를 우선 배치 (아침=여행, 점심=스포츠, 저녁=드라마·연예)
+    if is_travel_sports:
+        slot = _current_time_slot()
+        candidates = _prioritize_by_time_slot(candidates, blog_id, slot)
+        logger.info(f"시간대 기반 주제 우선순위 적용: {slot} → {_SLOT_CATEGORY_PRIORITY.get(slot)}")
 
     # 중복 제거 및 유사도 필터링
     seen: set[str] = set()

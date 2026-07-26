@@ -1,6 +1,11 @@
 name: 🔎 AdSense 승인 감사·보완
 
 on:
+  # 매주 수요일 오전 8시 KST (UTC 화요일 23:00) — 전체 블로그 자동 감사·보완
+  # (월요일 09시 weekly-brief, auto-repair 02시와 겹치지 않도록 분산)
+  schedule:
+    - cron: '0 23 * * 2'
+
   workflow_dispatch:
     inputs:
       blog_id:
@@ -60,11 +65,17 @@ jobs:
         working-directory: blog-automation
         run: |
           mkdir -p logs
-          ARGS="--blog ${{ inputs.blog_id || 'blog1' }}"
-          if [ "${{ inputs.dry_run }}" = "true" ]; then
-            ARGS="$ARGS --dry-run"
-            echo "=== 검사 전용 모드 (수정 없음) ==="
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # 주간 자동 실행은 블로그 전체를 감사·자동보완 (수동 실행 없이도 최신 상태 유지)
+            ARGS="--blog all"
+          else
+            ARGS="--blog ${{ inputs.blog_id || 'blog1' }}"
+            if [ "${{ inputs.dry_run }}" = "true" ]; then
+              ARGS="$ARGS --dry-run"
+              echo "=== 검사 전용 모드 (수정 없음) ==="
+            fi
           fi
+          echo "실행 인자: $ARGS"
           python adsense_audit.py $ARGS
 
       - name: 감사 리포트 커밋

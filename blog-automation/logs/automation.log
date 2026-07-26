@@ -1,129 +1,3 @@
-2026-07-25 23:28:23,361 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-25 23:28:24,215 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-25 23:28:46,800 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '주담대 금리 8% 시대, 내 집 마련 전략은 달라져야 합니다'
-2026-07-25 23:28:46,800 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 적절하나 일부 섹션이 줄바꿈 없이 500자 이상 이어지는 긴 단락으로 구성되어 가독성이 다소 떨어짐
-2026-07-25 23:28:46,800 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 삽입 여부가 확인되지 않아 이미지 부재로 판단, 저작권 위반은 없으나 warn 처리
-2026-07-25 23:28:46,800 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서 ~살펴보겠습니다' 류의 정형화된 전환 문구가 반복되어 AI 특유의 안내식 패턴이 일부 감지됨
-2026-07-25 23:28:46,800 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
-2026-07-25 23:28:46,800 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-25 23:28:47,560 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-25 23:30:09,222 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-25 23:30:10,347 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-25 23:31:29,477 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-25 23:31:30,287 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-25 23:32:18,540 [INFO] final_editor —   ✏️ 메타 설명 교정 (142자)
-2026-07-25 23:32:18,540 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 스크랩된 기사 제목 잔여 텍스트 제거 및 영문 혼용 표현 정리, 미완성 섹션(고정·변동금리 판단, 마무리, FAQ) 완결, 템플릿 규격의 요약박스·표·개인경험메모·주의사항·작성자메모 추가, 문단을 2~4문장 단위로 재구성하고 이미지 3곳·대표이미지 alt를 구체화함.
-2026-07-25 23:32:18,692 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-25 23:32:18,692 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-07-25 23:32:18,846 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-07-25 23:32:18,859 [INFO] related_posts — 관련 포스트 2개 섹션 생성
-2026-07-25 23:32:18,859 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '주담대 금리 8% 시대 내 집 마련 전략' — 면책·팩트체크 확인 권장
-2026-07-25 23:32:18,859 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-07-25 23:32:19,650 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/8_01540367504.html
-2026-07-25 23:32:19,661 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/8_01540367504.html
-2026-07-25 23:32:53,510 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-25 23:32:53,512 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-25 23:32:53,512 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-25 23:32:53,521 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '주담대 금리 8% 시대, 내 집 마련 전략은 달라져야 합니다'
-2026-07-25 23:32:55,284 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-25 23:32:59,774 [INFO] comment_manager —   생성된 댓글: 글에서 다루신 대환대출 얘기에 하나 더 보태자면, 갈아탈 때 중도상환수수료도 꼭 확인하시길 추천드려요. 보통 3년 이내 상환 시 수수료가 붙는데...
-2026-07-25 23:35:59,938 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-25 23:35:59,938 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-07-25 23:35:59,939 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-25 23:35:59,939 [INFO] main — 
-============================================================
-2026-07-25 23:35:59,939 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-25 23:35:59,939 [INFO] main — ============================================================
-2026-07-25 23:35:59,971 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-25 23:35:59,992 [INFO] dashboard_exporter —   시리즈: 10개 내보내기 완료
-2026-07-25 23:36:00,009 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-25 23:36:00,315 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-25 23:36:00,660 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-25 23:36:00,661 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-25 23:36:00,664 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-25 23:36:00,679 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 180 / 실패 7 / 대기 85)
-2026-07-25 23:36:00,679 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-25 23:36:00,679 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-25 23:36:00,680 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-26 00:00:59,200 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-07-26 00:00:59,200 [INFO] main —   - [blog1] HOGU What?
-2026-07-26 00:00:59,200 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-07-26 00:00:59,200 [INFO] main —   - [blog3] 금융NEWS
-2026-07-26 00:00:59,206 [INFO] main — ============================================================
-2026-07-26 00:00:59,206 [INFO] main — 📅 예약 처리: 'SBS 드라마 김부장 회차별 리뷰 (7~10화)' — 오늘 도래 1편 (10화)
-2026-07-26 00:00:59,206 [INFO] main — ============================================================
-2026-07-26 00:00:59,206 [INFO] main — [HOGU What?] 시리즈 모드 시작: 'SBS 드라마 김부장' 4편
-2026-07-26 00:00:59,206 [INFO] main — ============================================================
-2026-07-26 00:00:59,207 [INFO] main — 시리즈 기획 완료: 'SBS 드라마 김부장 회차별 리뷰 (7~10화)'
-2026-07-26 00:00:59,207 [INFO] main —   편 1: [7화] SBS 드라마 김부장 7화 리뷰 — 줄거리·명장면 정리
-2026-07-26 00:00:59,208 [INFO] main —   편 2: [8화] SBS 드라마 김부장 8화 리뷰 — 줄거리·명장면 정리
-2026-07-26 00:00:59,208 [INFO] main —   편 3: [9화] SBS 드라마 김부장 9화 리뷰 — 줄거리·명장면 정리
-2026-07-26 00:00:59,208 [INFO] main —   편 4: [10화] SBS 드라마 김부장 10화 리뷰 — 줄거리·명장면 정리
-2026-07-26 00:00:59,208 [INFO] main — --- [1/4편] 이미 처리됨(done) — 건너뜀 ---
-2026-07-26 00:00:59,208 [INFO] main — --- [2/4편] 이미 처리됨(pending_review) — 건너뜀 ---
-2026-07-26 00:00:59,208 [INFO] main — --- [3/4편] 이미 처리됨(done) — 건너뜀 ---
-2026-07-26 00:00:59,208 [INFO] main — --- [4/4편] 📅 예약일 도래 — 생성 시도 ---
-2026-07-26 00:00:59,208 [INFO] main — 
---- [4/4편] 'SBS 드라마 김부장 10화 리뷰' 생성 중 ---
-2026-07-26 00:00:59,208 [INFO] content_generator — 시리즈 포스트 생성: 'SBS 드라마 김부장 10화 리뷰' (4/4편)
-2026-07-26 00:01:05,237 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-26 00:01:05,265 [INFO] research_collector — 검색 의도: SBS 드라마 '김부장' 10화의 줄거리, 주요 장면, 시청률 등을 확인하고 싶은 시청자를 위한 리뷰 정보 
-2026-07-26 00:01:12,853 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — 'SBS 드라마 김부장 10화 리뷰'
-2026-07-26 00:01:34,455 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-26 00:01:34,456 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — 'SBS 드라마 김부장 10화 리뷰'
-2026-07-26 00:01:54,158 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-26 00:01:54,161 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'X': 2, 'B': 4}
-2026-07-26 00:01:55,101 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: 'SBS 드라마 김부장 10화 리뷰'
-2026-07-26 00:01:55,101 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-26 00:01:57,736 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-26 00:03:24,266 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-26 00:03:33,601 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '이 정도 수치를 꾸준히 유지했다는 건'
-2026-07-26 00:03:33,601 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 3건 자동 수정 적용
-2026-07-26 00:03:34,579 [INFO] image_fetcher — 이미지 수집 성공: '[4편] SBS 드라마 김부장 10화 리뷰, 27.1% 찍고 완결' → 제목='black / camera / computer / digital / el' (관련성=0.00)
-2026-07-26 00:03:35,387 [INFO] image_fetcher — 대체 이미지 수집: 'SBS 드라마 김부장' → 제목='bus / bus stop / singapore / government ' (관련성=0.33)
-2026-07-26 00:03:35,387 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 김부장' → 제목='bus / bus stop / singapore / government ' (관련성=0.33)
-2026-07-26 00:03:36,502 [INFO] image_fetcher — 대체 이미지 수집: 'SBS 드라마 최종화 이렇게 점이에요 방송된' → 제목='supermarket / shelves / shopping / shelf' (관련성=0.00)
-2026-07-26 00:03:36,502 [INFO] image_fetcher — 이미지 수집 성공: 'SBS 드라마 최종화 이렇게 점이에요 방송된' → 제목='supermarket / shelves / shopping / shelf' (관련성=0.00)
-2026-07-26 00:03:37,719 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-26 00:03:37,720 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
-2026-07-26 00:03:37,720 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-07-26 00:03:37,720 [INFO] image_fetcher — 제목 썸네일 생성: '[4편] SBS 드라마 김부장 10화 리뷰, 27.1%' (data URI, 1150B)
-2026-07-26 00:03:38,223 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: 'black / camera / computer / digital / el'
-2026-07-26 00:03:38,223 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-07-26 00:03:38,227 [INFO] content_generator — 시리즈 포스트 생성 완료: '[4편] SBS 드라마 김부장 10화 리뷰, 27.1% 찍고 완결' (2797자, 이미지 2개)
-2026-07-26 00:03:38,951 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-26 00:04:01,541 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '[4편] SBS 드라마 김부장 10화 리뷰, 27.1% 찍고 완'
-2026-07-26 00:04:01,541 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족(2797자)하지만 시청률·수상소감 등 공개된 정보 재구성이 중심이고 개인 경험은 짧은 코멘트 수준에 그침
-2026-07-26 00:04:01,542 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 도입부와 초반 섹션 일부 단락이 500자 이상으로 길게 이어짐
-2026-07-26 00:04:01,542 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 삽입 여부가 확인되지 않아 이미지 부재로 판단됨(정책 위반은 아니나 가독성/SEO 개선 필요)
-2026-07-26 00:04:01,542 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 평이 많았어요/많았습니다' 및 '~ 살펴볼 차례입니다' 같은 전환 문구가 반복되어 AI 특유의 패턴이 감지됨
-2026-07-26 00:04:01,542 [WARNING] main —   ⚠️ [편 4] AdSense 검토 필요 — pending 저장 (점수: 79/100)
-2026-07-26 00:04:01,559 [INFO] dashboard_exporter —   검토 대기 저장: [4편] SBS 드라마 김부장 10화 리뷰, 27.1% 찍고 완결 (9323자 HTML)
-2026-07-26 00:04:01,574 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 119개)
-2026-07-26 00:04:01,601 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-26 00:04:01,623 [INFO] dashboard_exporter —   시리즈: 10개 내보내기 완료
-2026-07-26 00:04:01,640 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-26 00:04:01,932 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-26 00:04:02,315 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-26 00:04:02,661 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-26 00:04:02,663 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-26 00:04:02,666 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-26 00:04:02,682 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 180 / 실패 7 / 대기 85)
-2026-07-26 00:04:02,683 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-26 00:04:02,683 [INFO] dashboard_exporter —   포스트: 102개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-26 00:04:02,684 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-26 00:04:02,684 [INFO] main — 
-============================================================
-2026-07-26 00:04:02,684 [INFO] main — [HOGU What?] 시리즈 완료: 2/4편 성공
-2026-07-26 00:04:02,684 [INFO] main — ============================================================
-2026-07-26 06:03:15,226 [INFO] main — ============================================================
 2026-07-26 06:03:15,226 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-26 06:03:15
 2026-07-26 06:03:15,226 [INFO] main — ============================================================
 2026-07-26 06:03:15,239 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
@@ -624,3 +498,173 @@
 2026-07-26 11:29:27,052 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-26 11:29:27,052 [INFO] dashboard_exporter —   포스트: 105개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-26 11:29:27,053 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-26 11:29:57,229 [INFO] main — ============================================================
+2026-07-26 11:29:57,229 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-26 11:29:57
+2026-07-26 11:29:57,229 [INFO] main — ============================================================
+2026-07-26 11:29:57,239 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
+2026-07-26 11:29:57,239 [INFO] keyword_collector — 포스팅 이력 코퍼스: 39개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-26 11:30:03,491 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-07-26 11:30:07,594 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:30:07,619 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-26 11:30:07,620 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-26 11:30:08,181 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-26 11:30:08,182 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-26 11:30:08,183 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
+2026-07-26 11:30:08,184 [INFO] keyword_collector — 유사 주제 제외 1개: ['국내 로컬 여행지 추천 수도권 벗어난 곳']
+2026-07-26 11:30:08,185 [INFO] keyword_collector —   [naver_realtime] 2개: ['2026 여름휴가 항공권 숙소 할인 예약 꿀팁', '일본 여행 유류할증료 인하 항공권 예약 방법']
+2026-07-26 11:30:08,185 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 여름휴가 항공권 숙소 할인 예약 꿀팁', '일본 여행 유류할증료 인하 항공권 예약 방법']
+2026-07-26 11:30:08,185 [INFO] main — 수집된 키워드 2개: ['2026 여름휴가 항공권 숙소 할인 예약 꿀팁', '일본 여행 유류할증료 인하 항공권 예약 방법']
+2026-07-26 11:30:08,190 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-07-26 11:30:10,872 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:30:10,873 [INFO] series_planner — 자동 시리즈 키워드 선정: '2026 여름휴가 항공권 숙소 할인 예약 꿀팁'
+2026-07-26 11:30:10,873 [INFO] main — [자동 시리즈] '2026 여름휴가 항공권 숙소 할인 예약 꿀팁' 3편 기획 시작 (이후 단독 포스트 0개)
+2026-07-26 11:30:10,873 [INFO] main — ============================================================
+2026-07-26 11:30:10,873 [INFO] main — [HOGU 여행,스포츠,연예] 시리즈 모드 시작: '2026 여름휴가 항공권 숙소 할인 예약 꿀팁' 3편
+2026-07-26 11:30:10,873 [INFO] main — ============================================================
+2026-07-26 11:30:17,591 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:30:17,592 [INFO] series_planner — [blog1] 시리즈 기획 완료: '2026 여름휴가 항공권 숙소 예약 삽질기, 직접 겪고 정리한 시리즈' 3편
+2026-07-26 11:30:17,593 [INFO] main — 시리즈 기획 완료: '2026 여름휴가 항공권 숙소 예약 삽질기, 직접 겪고 정리한 시리즈'
+2026-07-26 11:30:17,593 [INFO] main —   편 1: 항공권 취소당하고 깨달은 예약의 진실
+2026-07-26 11:30:17,593 [INFO] main —   편 2: 숙소 할인, 직접 비교해보니 순위가 뒤집혔다
+2026-07-26 11:30:17,593 [INFO] main —   편 3: 2026 여름휴가 예약, 지금 정리하는 실전 체크리스트
+2026-07-26 11:30:17,594 [INFO] main — 
+--- [1/3편] '2026 여름휴가 항공권 예약 실패 취소' 생성 중 ---
+2026-07-26 11:30:17,594 [INFO] content_generator — 시리즈 포스트 생성: '2026 여름휴가 항공권 예약 실패 취소' (1/3편)
+2026-07-26 11:30:26,712 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:30:26,713 [INFO] research_collector — 검색 의도: 2026년 여름휴가 항공권 예약 실패 시 취소/환불 절차와 대처법을 알고 싶은 소비자 검색
+2026-07-26 11:30:37,154 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '2026 여름휴가 항공권 예약 실패 취소'
+2026-07-26 11:30:52,703 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:30:52,704 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '2026 여름휴가 항공권 예약 실패 취소'
+2026-07-26 11:30:58,189 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:30:58,190 [INFO] source_validator — 출처 검증: 1/5개 통과, 등급 분포 {'X': 4, 'D': 1}
+2026-07-26 11:30:58,193 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-26 11:30:58,976 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:32:12,686 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:32:23,792 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-26 11:32:24,756 [INFO] image_fetcher — 이미지 수집 성공: '[1편] 항공권 취소당하고 깨달은 예약의 진실' → 제목='뽐뿌:여행포럼 - 땡xx닷컴에서 항공권 예약했는데 질문입니다... 땡xx' (관련성=0.20)
+2026-07-26 11:32:25,631 [INFO] image_fetcher — 이미지 수집 성공: '여름휴 항공권 예약' → 제목='여름 휴가 항공권 특가 조회 방법 예약 시기 비교' (관련성=0.67)
+2026-07-26 11:32:27,011 [INFO] image_fetcher — 이미지 수집 성공: '여름휴 항공권 완료 문자 SNS 문제인지' → 제목='결제 완료 항공권 발권 거절한 여행사' (관련성=0.33)
+2026-07-26 11:32:29,906 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:32:29,907 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-07-26 11:32:29,907 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-07-26 11:32:29,910 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] 항공권 취소당하고 깨달은 예약의 진실' (2642자, 이미지 2개)
+2026-07-26 11:32:30,832 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:32:47,286 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '[1편] 항공권 취소당하고 깨달은 예약의 진실'
+2026-07-26 11:32:47,286 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 커뮤니티 후기 재조합 위주로 개인 경험의 구체성(날짜·수치·실명 사례)이 부족함
+2026-07-26 11:32:47,286 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 개수는 충분하나 본문에 500자 이상 이어지는 긴 단락이 다수 존재해 가독성 저하
+2026-07-26 11:32:47,286 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급 없음(이미지 부재는 fail 아님, 정책상 warn 처리)
+2026-07-26 11:32:47,286 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~더라고요/~습니다' 어미가 반복되고 유사한 문장 패턴이 이어져 AI 생성 의심 요소가 일부 있음
+2026-07-26 11:32:47,287 [WARNING] main —   ⚠️ [편 1] AdSense 검토 필요 — pending 저장 (점수: 79/100)
+2026-07-26 11:32:47,288 [INFO] main — 
+--- [2/3편] '2026 여름휴가 숙소 할인 예약 플랫폼 비교' 생성 중 ---
+2026-07-26 11:32:47,288 [INFO] content_generator — 시리즈 포스트 생성: '2026 여름휴가 숙소 할인 예약 플랫폼 비교' (2/3편)
+2026-07-26 11:32:54,486 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:32:54,487 [INFO] research_collector — 검색 의도: 2026년 여름휴가 숙소 예약 시 할인 혜택이 큰 예약 플랫폼을 비교하고 선택하려는 의도
+2026-07-26 11:33:07,983 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '2026 여름휴가 숙소 할인 예약 플랫폼 비교'
+2026-07-26 11:33:26,750 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:33:26,751 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '2026 여름휴가 숙소 할인 예약 플랫폼 비교'
+2026-07-26 11:33:42,422 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:33:42,423 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'X': 3, 'C': 3}
+2026-07-26 11:33:42,424 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-07-26 11:33:42,424 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-26 11:33:45,510 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:34:06,428 [WARNING] content_generator — 컨텐츠 너무 짧음(176자, 최소 2500자) — 재시도 1/3
+2026-07-26 11:34:09,428 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-26 11:34:10,055 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:34:36,820 [WARNING] content_generator — 컨텐츠 너무 짧음(254자, 최소 2500자) — 재시도 2/3
+2026-07-26 11:34:39,820 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-26 11:34:40,609 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:35:39,109 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-07-26 11:35:39,110 [WARNING] content_generator — 최소 분량 미달(2144자) — 재시도 소진, 해당 분량으로 진행
+2026-07-26 11:35:39,884 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:36:04,427 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-07-26 11:36:04,560 [INFO] image_fetcher — 이미지 수집 성공: '[2편] 숙소 예약 플랫폼 비교, 가격 순위가 뒤집혔다' → 제목='hotel / hotel rooms / home / decoration ' (관련성=0.12)
+2026-07-26 11:36:05,006 [INFO] image_fetcher — 대체 이미지 수집: '여름휴 숙소 할인' → 제목='bed / hotel / luxurious / bedroom / hote' (관련성=0.25)
+2026-07-26 11:36:05,006 [INFO] image_fetcher — 이미지 수집 성공: '여름휴 숙소 할인' → 제목='bed / hotel / luxurious / bedroom / hote' (관련성=0.25)
+2026-07-26 11:36:05,740 [INFO] image_fetcher — 대체 이미지 수집: '여름휴 숙소 같은 방인데 다른 가격이' → 제목='building / house / shops / hotel / stree' (관련성=0.14)
+2026-07-26 11:36:05,740 [INFO] image_fetcher — 이미지 수집 성공: '여름휴 숙소 같은 방인데 다른 가격이' → 제목='building / house / shops / hotel / stree' (관련성=0.14)
+2026-07-26 11:36:07,079 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:36:07,083 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-07-26 11:36:07,083 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-07-26 11:36:07,085 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 숙소 예약 플랫폼 비교, 가격 순위가 뒤집혔다' (2144자, 이미지 2개)
+2026-07-26 11:36:07,085 [WARNING] main —   ⚠️ [편 2] 글자 수 미달 (2144자 < 2500자) — pending 저장
+2026-07-26 11:36:07,086 [INFO] main — 
+--- [3/3편] '2026 여름휴가 항공권 숙소 예약 체크리스트' 생성 중 ---
+2026-07-26 11:36:07,086 [INFO] content_generator — 시리즈 포스트 생성: '2026 여름휴가 항공권 숙소 예약 체크리스트' (3/3편)
+2026-07-26 11:36:21,051 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:36:21,052 [INFO] research_collector — 검색 의도: 2026년 여름휴가를 계획 중인 사용자가 항공권과 숙소를 예약할 때 놓치지 말아야 할 체크포인트와 실용적인 
+2026-07-26 11:36:36,136 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '2026 여름휴가 항공권 숙소 예약 체크리스트'
+2026-07-26 11:36:55,120 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:36:55,121 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '2026 여름휴가 항공권 숙소 예약 체크리스트'
+2026-07-26 11:37:08,555 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:37:08,556 [INFO] source_validator — 출처 검증: 1/4개 통과, 등급 분포 {'A': 1, 'X': 3}
+2026-07-26 11:37:08,557 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-26 11:37:09,343 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:38:11,805 [WARNING] content_generator — 컨텐츠 너무 짧음(2142자, 최소 2500자) — 재시도 1/3
+2026-07-26 11:38:14,805 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-26 11:38:15,610 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:39:21,329 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:39:36,277 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
+2026-07-26 11:39:37,544 [INFO] image_fetcher — 이미지 수집 성공: '[3편] 2026 여름휴가 예약, 마지막 점검 체크리스트' → 제목='☑️ 예약 확인서와 교통편을 다시 확인했다. ☑️ 휴대용 선풍기와... ' (관련성=0.40)
+2026-07-26 11:39:39,384 [INFO] image_fetcher — 이미지 수집 성공: '여름휴 항공권 숙소' → 제목='building / house / shops / hotel / stree' (관련성=0.25)
+2026-07-26 11:39:40,257 [INFO] image_fetcher — 이미지 수집 성공: '여름휴 항공권 순서로 확인하면 완료 편에서도' → 제목='트립닷컴 응원하면, ‘비행기 속 하늘여행 항공권’ 발권 완료.' (관련성=0.33)
+2026-07-26 11:39:41,502 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:39:41,502 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
+2026-07-26 11:39:41,503 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-07-26 11:39:41,505 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 2026 여름휴가 예약, 마지막 점검 체크리스트' (2558자, 이미지 1개)
+2026-07-26 11:39:42,258 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:40:04,177 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '[3편] 2026 여름휴가 예약, 마지막 점검 체크리스트'
+2026-07-26 11:40:04,177 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 충분하나 항공권·숙소·여권 섹션 문단이 500자 이상으로 길게 이어짐
+2026-07-26 11:40:04,177 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부가 확인되지 않아 이미지 부재로 판단, 정책 위반은 아니나 가독성 보완 필요
+2026-07-26 11:40:04,177 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 첫째·둘째·셋째 식 반복 열거와 표 요약 등 정형화된 패턴이 다소 두드러짐
+2026-07-26 11:40:04,887 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:41:21,724 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-26 11:41:22,510 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-26 11:42:20,620 [INFO] final_editor —   ✏️ 제목 최종 교정: '[3편] 2026 여름휴가 예약, 마지막 점검 체크리스트' → '2026 여름휴가 항공권·숙소 예약 마지막 점검 체크리스트'
+2026-07-26 11:42:20,620 [INFO] final_editor —   ✏️ 메타 설명 교정 (130자)
+2026-07-26 11:42:20,621 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분리했으며, 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 표준 형식에 맞춰 추가했습니다. 실제 이미지 삽입 없이 위치와 구체적인 alt 텍스트만 제안했습니다.
+2026-07-26 11:42:20,691 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-26 11:42:20,691 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-07-26 11:42:20,795 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-07-26 11:42:20,809 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-26 11:42:20,809 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '2026 여름휴가 항공권 숙소 예약 체크리스트' — 면책·팩트체크 확인 권장
+2026-07-26 11:42:20,809 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-07-26 11:42:21,905 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/07/2026_0278943539.html
+2026-07-26 11:42:21,906 [INFO] main —   ✅ 편 3 업로드 완료: https://hogugolfntraval.blogspot.com/2026/07/2026_0278943539.html
+2026-07-26 11:42:21,921 [INFO] dashboard_exporter —   검토 대기 저장: [1편] 항공권 취소당하고 깨달은 예약의 진실 (8312자 HTML)
+2026-07-26 11:42:21,921 [INFO] dashboard_exporter —   검토 대기 저장: [2편] 숙소 예약 플랫폼 비교, 가격 순위가 뒤집혔다 (7132자 HTML)
+2026-07-26 11:42:21,936 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 2개 추가 (총 121개)
+2026-07-26 11:42:21,962 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-26 11:42:21,983 [INFO] dashboard_exporter —   시리즈: 11개 내보내기 완료
+2026-07-26 11:42:21,999 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-26 11:42:22,153 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-26 11:42:22,339 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-26 11:42:22,340 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-26 11:42:22,343 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-26 11:42:22,357 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 179 / 실패 8 / 대기 85)
+2026-07-26 11:42:22,358 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-26 11:42:22,358 [INFO] dashboard_exporter —   포스트: 107개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-26 11:42:22,359 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-26 11:42:22,359 [INFO] main — 
+============================================================
+2026-07-26 11:42:22,359 [INFO] main — [HOGU 여행,스포츠,연예] 시리즈 완료: 1/3편 성공
+2026-07-26 11:42:22,359 [INFO] main — ============================================================
+2026-07-26 11:42:22,359 [INFO] main — 단독 포스트 대상 키워드 0개: []
+2026-07-26 11:42:22,376 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
+2026-07-26 11:42:22,376 [INFO] main — 
+============================================================
+2026-07-26 11:42:22,376 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 0개
+2026-07-26 11:42:22,376 [INFO] main — ============================================================
+2026-07-26 11:42:22,403 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-26 11:42:22,423 [INFO] dashboard_exporter —   시리즈: 11개 내보내기 완료
+2026-07-26 11:42:22,465 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-26 11:42:22,723 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-26 11:42:22,725 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-26 11:42:22,728 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-26 11:42:22,742 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 177 / 실패 10 / 대기 85)
+2026-07-26 11:42:22,742 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-26 11:42:22,743 [INFO] dashboard_exporter —   포스트: 106개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-26 11:42:22,743 [INFO] main — 대시보드 데이터 업데이트 완료

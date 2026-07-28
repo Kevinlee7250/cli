@@ -1,120 +1,3 @@
-2026-07-27 23:12:15,796 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
-2026-07-27 23:12:15,796 [INFO] keyword_collector — 포스팅 이력 코퍼스: 48개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-27 23:12:19,358 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-27 23:12:24,610 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:12:24,636 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-27 23:12:24,636 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-27 23:12:25,116 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-07-27 23:12:25,297 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-27 23:12:25,464 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-27 23:12:25,467 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-07-27 23:12:25,468 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-07-27 23:12:25,470 [INFO] keyword_collector —   [naver_realtime] 2개: ['국내 계곡 여행지 추천 폭염 피하는 법', '전국 치킨 맛집 지도 활용 후기']
-2026-07-27 23:12:25,470 [INFO] keyword_collector — 최종 선정 키워드 2개: ['국내 계곡 여행지 추천 폭염 피하는 법', '전국 치킨 맛집 지도 활용 후기']
-2026-07-27 23:12:25,470 [INFO] main — 수집된 키워드 2개: ['국내 계곡 여행지 추천 폭염 피하는 법', '전국 치킨 맛집 지도 활용 후기']
-2026-07-27 23:12:25,475 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-07-27 23:12:25,476 [INFO] main — 단독 포스트 대상 키워드 1개: ['국내 계곡 여행지 추천 폭염 피하는 법']
-2026-07-27 23:12:25,493 [INFO] main — 
-[1/1] 키워드: '국내 계곡 여행지 추천 폭염 피하는 법'
-2026-07-27 23:12:25,493 [INFO] content_generator — 포스트 생성 중: '국내 계곡 여행지 추천 폭염 피하는 법'
-2026-07-27 23:12:31,767 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:12:31,768 [INFO] research_collector — 검색 의도: 여름철 폭염을 피해 방문할 만한 국내 계곡 여행지와 관련 정보를 찾고자 함
-2026-07-27 23:12:42,079 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '국내 계곡 여행지 추천 폭염 피하는 법'
-2026-07-27 23:13:01,970 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:13:01,971 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '국내 계곡 여행지 추천 폭염 피하는 법'
-2026-07-27 23:13:08,256 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:13:08,257 [INFO] source_validator — 출처 검증: 4/4개 통과, 등급 분포 {'B': 2, 'A': 2}
-2026-07-27 23:13:08,259 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-27 23:13:11,954 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:14:38,781 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:14:49,090 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '도심보다 선선하게 느껴진다는 체감을 이야기하는 경우가 많습니다'
-2026-07-27 23:14:49,090 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 0건 자동 수정 적용
-2026-07-27 23:14:50,273 [INFO] image_fetcher — 이미지 수집 성공: '국내 계곡 여행지 추천, 폭염 피하는 법' → 제목='가을에 가야 진가를 볼 수 있다는 국내 계곡 여행지' (관련성=0.38)
-2026-07-27 23:14:51,560 [INFO] image_fetcher — 대체 이미지 수집: '국내 계곡 여행지' → 제목='묘적사계곡 - 주변 여행 및 근처 관광 명소 - 국내 여행 정보와 관광 ' (관련성=0.33)
-2026-07-27 23:14:51,560 [INFO] image_fetcher — 이미지 수집 성공: '국내 계곡 여행지' → 제목='묘적사계곡 - 주변 여행 및 근처 관광 명소 - 국내 여행 정보와 관광 ' (관련성=0.33)
-2026-07-27 23:14:53,238 [INFO] image_fetcher — 대체 이미지 수집: '국내 계곡 여행지 필요한 도심 열대야는' → 제목='네이버 인플루언서 [네이버 인플루언서] 국내 계곡 펜션 3곳 밀양 양산 ' (관련성=0.33)
-2026-07-27 23:14:53,238 [INFO] image_fetcher — 이미지 수집 성공: '국내 계곡 여행지 필요한 도심 열대야는' → 제목='네이버 인플루언서 [네이버 인플루언서] 국내 계곡 펜션 3곳 밀양 양산 ' (관련성=0.33)
-2026-07-27 23:14:55,047 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:14:55,048 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-27 23:14:55,049 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-27 23:14:55,052 [INFO] content_generator — 포스트 생성 완료: '국내 계곡 여행지 추천, 폭염 피하는 법' (3310자, 이미지 3개)
-2026-07-27 23:14:56,223 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:15:09,631 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '국내 계곡 여행지 추천, 폭염 피하는 법'
-2026-07-27 23:15:09,631 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 정보(주소·예약사이트·시간표)는 있으나 개인 경험 없이 공개 정보 재구성에 가까움
-2026-07-27 23:15:09,631 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 양호하나 본문이 문단 구분 없이 긴 텍스트 블록으로 이어짐
-2026-07-27 23:15:09,631 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용은 있으나 1인칭 직접 경험 서술이 부족하고 후기 인용도 간접적
-2026-07-27 23:15:09,631 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 실제 이미지 삽입 여부 불명확하며 이미지 관련 alt텍스트 정보 없음
-2026-07-27 23:15:09,631 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트 나열, '다만/그런데' 반복 전환, 정형화된 소제목 패턴 등 AI 특유 구조 감지
-2026-07-27 23:15:09,640 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-27 23:15:09,642 [INFO] internal_linker —   [1/5] '강원도' -> https://www.hoguwhat.com/2026/07/blog-post_24.html
-2026-07-27 23:15:09,649 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-27 23:15:09,649 [INFO] main —   제목: 국내 계곡 여행지 추천, 폭염 피하는 법
-2026-07-27 23:15:09,650 [INFO] main —   이미지: 3개 삽입
-2026-07-27 23:15:09,650 [INFO] main —   글자 수: 3310자
-2026-07-27 23:15:10,714 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:15:28,821 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '국내 계곡 여행지 추천, 폭염 피하는 법'
-2026-07-27 23:15:28,822 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3310자로 분량은 충족하나 후기·정보 종합 위주로 개인 경험 서술이 부족해 재조합 콘텐츠에 가까움
-2026-07-27 23:15:28,822 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용은 있으나 1인칭 직접 경험과 저자 전문성 신호가 부족함
-2026-07-27 23:15:28,822 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부가 확인되지 않아 텍스트 위주 콘텐츠로 판단됨
-2026-07-27 23:15:28,822 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트식 나열과 '다만/그런데' 전환구가 반복되어 정형화된 보고서체 느낌이 있음
-2026-07-27 23:15:28,822 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-07-27 23:15:28,822 [WARNING] main —      🟡 [원본성 및 품질] 3310자로 분량은 충족하나 후기·정보 종합 위주로 개인 경험 서술이 부족해 재조합 콘텐츠에 가까움
-2026-07-27 23:15:28,822 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 2개 인용은 있으나 1인칭 직접 경험과 저자 전문성 신호가 부족함
-2026-07-27 23:15:28,822 [WARNING] main —      🟡 [이미지 정책] 이미지 삽입 여부가 확인되지 않아 텍스트 위주 콘텐츠로 판단됨
-2026-07-27 23:15:28,822 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-07-27 23:15:29,586 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:16:49,695 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-27 23:16:50,465 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:17:09,573 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3310자 → 4219자 (+909자)
-2026-07-27 23:17:09,573 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-27 23:17:10,387 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:17:24,614 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '국내 계곡 여행지 추천, 폭염 피하는 법'
-2026-07-27 23:17:24,614 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 적절하나 체크리스트·기본개념 섹션 일부 단락이 500자 이상으로 길게 이어짐
-2026-07-27 23:17:24,614 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 삽입 여부 확인 불가하며 이미지 없는 글로 판단, 저작권 위반은 없음
-2026-07-27 23:17:24,614 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-07-27 23:17:24,614 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-07-27 23:17:25,263 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:18:16,235 [INFO] final_editor —   ✏️ 제목 최종 교정: '국내 계곡 여행지 추천, 폭염 피하는 법' → '국내 계곡 여행지 추천 총정리, 폭염 피하는 법과 체크리스트'
-2026-07-27 23:18:16,235 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
-2026-07-27 23:18:16,235 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목과 메타 설명을 글자 수 기준에 맞게 다듬고, 요약 박스·표·FAQ·주의사항·작성자 메모 구조를 반영했습니다. 긴 문단을 2~4문장 단위로 분리하고 이미지 3개와 alt 텍스트, 내부 링크 후보를 구체적으로 제안했습니다.
-2026-07-27 23:18:16,330 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-27 23:18:16,330 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-07-27 23:18:16,416 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-07-27 23:18:16,429 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-27 23:18:16,429 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-07-27 23:18:17,398 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_752.html
-2026-07-27 23:18:17,410 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_752.html
-2026-07-27 23:18:54,332 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:18:54,333 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-27 23:18:54,333 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-27 23:18:54,342 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '국내 계곡 여행지 추천 총정리, 폭염 피하는 법과 체크리스트'
-2026-07-27 23:18:56,034 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-27 23:18:59,932 [INFO] comment_manager —   생성된 댓글: 덧붙이자면, 계곡 물놀이 갈 때 아이스박스에 얼음물이랑 젖은 수건 몇 장 챙겨가시는 거 추천드려요. 이동 중 차 안에서 목이나 손목에 대주면 에...
-2026-07-27 23:22:00,006 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-27 23:22:00,007 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-07-27 23:22:00,008 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-27 23:22:00,008 [INFO] main — 
-============================================================
-2026-07-27 23:22:00,008 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-27 23:22:00,008 [INFO] main — ============================================================
-2026-07-27 23:22:00,042 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-27 23:22:00,065 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
-2026-07-27 23:22:00,084 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-27 23:22:00,261 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-27 23:22:00,589 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-27 23:22:00,869 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-27 23:22:00,870 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-27 23:22:00,873 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-27 23:22:00,889 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 180 / 실패 2 / 대기 88)
-2026-07-27 23:22:00,890 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-27 23:22:00,890 [INFO] dashboard_exporter —   포스트: 104개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-27 23:22:00,891 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-07-27 23:22:41,942 [INFO] main — ============================================================
 2026-07-27 23:22:41,942 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-27 23:22:41
@@ -615,3 +498,131 @@
 2026-07-28 06:05:45,538 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-28 06:05:45,538 [INFO] dashboard_exporter —   포스트: 105개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-28 06:05:45,539 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-28 06:06:28,401 [INFO] main — ============================================================
+2026-07-28 06:06:28,401 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-28 06:06:28
+2026-07-28 06:06:28,402 [INFO] main — ============================================================
+2026-07-28 06:06:28,414 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-07-28 06:06:28,414 [INFO] keyword_collector — 포스팅 이력 코퍼스: 38개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-28 06:06:31,907 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-28 06:06:38,738 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:06:38,764 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-28 06:06:38,765 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-28 06:06:39,143 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-28 06:06:39,488 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-28 06:06:39,489 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-28 06:06:39,490 [INFO] keyword_collector —   [high_cpc] 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-28 06:06:39,491 [INFO] keyword_collector —   [naver_realtime] 1개: ['미국 주식 투자 서학개미 따라잡기 2026 전략']
+2026-07-28 06:06:39,491 [INFO] keyword_collector — 최종 선정 키워드 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '미국 주식 투자 서학개미 따라잡기 2026 전략']
+2026-07-28 06:06:39,491 [INFO] main — 수집된 키워드 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '미국 주식 투자 서학개미 따라잡기 2026 전략']
+2026-07-28 06:06:39,496 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
+2026-07-28 06:06:39,496 [INFO] main — 단독 포스트 대상 키워드 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-28 06:06:39,514 [INFO] main — 
+[1/1] 키워드: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
+2026-07-28 06:06:39,514 [INFO] content_generator — 포스트 생성 중: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
+2026-07-28 06:06:46,901 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:06:46,902 [INFO] research_collector — 검색 의도: 2026년 기준 주택담보대출 최저 금리를 제공하는 은행을 실제 발품을 팔아 비교한 후기성 정보를 찾고자 함
+2026-07-28 06:06:58,832 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
+2026-07-28 06:07:25,928 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:07:25,929 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
+2026-07-28 06:07:45,031 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:07:45,032 [INFO] source_validator — 출처 검증: 6/6개 통과, 등급 분포 {'D': 5, 'A': 1}
+2026-07-28 06:07:45,035 [INFO] evidence_builder — 자료팩: 중요 사실 5개 제외 (A/B 등급 출처 없음)
+2026-07-28 06:07:45,035 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-28 06:07:46,604 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:09:05,667 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-07-28 06:09:06,448 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:09:16,728 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-07-28 06:09:17,419 [INFO] image_fetcher — 이미지 수집 성공: '주택담보대출 금리 최저 은행 2026, 발품 팔기 전에 이것부터 확인하세요' → 제목='2026년 주택담보대출 이자 줄이는 전략 [체크리스트]' (관련성=0.11)
+2026-07-28 06:09:18,134 [INFO] image_fetcher — 이미지 수집 성공: '주택담보대출 금리 최저' → 제목='주택담보대출 금리 또 오른다' (관련성=0.67)
+2026-07-28 06:09:19,898 [INFO] image_fetcher — 대체 이미지 수집: '주택담보대출 금리 한눈에 보는 대출 주택담보' → 제목='12월 은행 주택담보대출 금리 3.63%…7년 7개월 만에 최고 | 연합' (관련성=0.29)
+2026-07-28 06:09:19,898 [INFO] image_fetcher — 이미지 수집 성공: '주택담보대출 금리 한눈에 보는 대출 주택담보' → 제목='12월 은행 주택담보대출 금리 3.63%…7년 7개월 만에 최고 | 연합' (관련성=0.29)
+2026-07-28 06:09:21,406 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:09:21,408 [INFO] image_fetcher — 이미지 관련성 검증: 3개 제거, 0개 유지
+2026-07-28 06:09:21,408 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-28 06:09:21,410 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-28 06:09:21,412 [INFO] content_generator — 포스트 생성 완료: '주택담보대출 금리 최저 은행 2026, 발품 팔기 전에 이것부터 확인하세요' (3240자, 이미지 3개)
+2026-07-28 06:09:22,386 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:09:42,784 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '주택담보대출 금리 최저 은행 2026, 발품 팔기 전에 이것부터'
+2026-07-28 06:09:42,784 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준을 충족하나 금융감독원 정보 재구성 위주로 개인 경험·구체적 사례 부족
+2026-07-28 06:09:42,784 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2는 7개로 충분하나 표 내용이 줄글로 나열되어 가독성이 떨어지는 구간 존재
+2026-07-28 06:09:42,784 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 금감원·연합뉴스 등 출처 인용은 있으나 1인칭 경험 서술이 없어 신뢰 신호 약함
+2026-07-28 06:09:42,784 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지가 확인되지 않아 저작권 위반은 없으나 이미지 부재로 warn
+2026-07-28 06:09:42,784 [INFO] adsense_validator —   ❌ AI 생성 의심도: '결론부터/결론적으로 말하면', '이처럼' 등 자동요약체 문구가 반복 사용되어 AI 생성 패턴 뚜렷
+2026-07-28 06:09:42,784 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '결론부터/결론적으로 말하면', '이처럼' 등 자동요약체 문구가 반복 사용되어 AI 생성 패턴 뚜렷
+2026-07-28 06:09:42,791 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-28 06:09:42,793 [INFO] internal_linker —   [1/5] '합니다' -> https://hoguasset.blogspot.com/2026/07/8_01540367504.html
+2026-07-28 06:09:42,795 [INFO] internal_linker —   [2/5] '금융감독원' -> https://hoguasset.blogspot.com/2026/07/etf-2026_0510486354.h
+2026-07-28 06:09:42,796 [INFO] internal_linker —   [3/5] '2026년' -> https://hoguasset.blogspot.com/2026/07/2026-mts.html
+2026-07-28 06:09:42,797 [INFO] internal_linker —   [4/5] '기준금리' -> https://hoguasset.blogspot.com/2026/07/2026_0753134477.html
+2026-07-28 06:09:42,799 [INFO] internal_linker — 내부 링크 4개 삽입 완료
+2026-07-28 06:09:42,799 [INFO] main —   제목: 주택담보대출 금리 최저 은행 2026, 발품 팔기 전에 이것부터 확인하세요
+2026-07-28 06:09:42,799 [INFO] main —   이미지: 3개 삽입
+2026-07-28 06:09:42,800 [INFO] main —   글자 수: 3240자
+2026-07-28 06:09:43,565 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:09:59,433 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '주택담보대출 금리 최저 은행 2026, 발품 팔기 전에 이것부터'
+2026-07-28 06:09:59,433 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(3240자)는 기준 충족하나 개인 경험·구체적 사례 없이 공공정보 재구성 수준에 그침
+2026-07-28 06:09:59,433 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 개수는 충분하나 단락 구분 없이 문장이 길게 이어져 가독성이 떨어짐
+2026-07-28 06:09:59,433 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 6개 인용은 있으나 1인칭 경험 서술이나 저자 전문성 신호가 없음
+2026-07-28 06:09:59,434 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 언급이 없어 이미지 부재 상태(저작권 위반은 아니므로 warn)
+2026-07-28 06:09:59,434 [INFO] adsense_validator —   ❌ AI 생성 의심도: ‘결론부터 말하면’, ‘결론적으로 말하면’, ‘이처럼’ 등 자동요약형 문구와 첫째·둘째·셋째식 나열이 반복되어 AI 생성 패턴이 뚜렷함
+2026-07-28 06:09:59,434 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] ‘결론부터 말하면’, ‘결론적으로 말하면’, ‘이처럼’ 등 자동요약형 문구와 첫째·둘째·셋째식 나열이 반복되어 AI 생성 패턴이 뚜렷함
+2026-07-28 06:09:59,434 [WARNING] adsense_validator —   🔴 결론적으로/이처럼 등 자동요약 문구와 나열식 서술이 반복되어 AI 생성 의심도가 높음 - 문체 자연화 필요
+2026-07-28 06:09:59,434 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
+2026-07-28 06:09:59,434 [WARNING] main —      🔴 [AI 생성 의심도] ‘결론부터 말하면’, ‘결론적으로 말하면’, ‘이처럼’ 등 자동요약형 문구와 첫째·둘째·셋째식 나열이 반복되어 AI 생성 패턴이 뚜렷함
+2026-07-28 06:09:59,434 [WARNING] main —      🔴 결론적으로/이처럼 등 자동요약 문구와 나열식 서술이 반복되어 AI 생성 의심도가 높음 - 문체 자연화 필요
+2026-07-28 06:09:59,434 [WARNING] main —      🟡 [원본성 및 품질] 글자수(3240자)는 기준 충족하나 개인 경험·구체적 사례 없이 공공정보 재구성 수준에 그침
+2026-07-28 06:09:59,434 [WARNING] main —      🟡 [구조 및 가독성] H2 7개로 개수는 충분하나 단락 구분 없이 문장이 길게 이어져 가독성이 떨어짐
+2026-07-28 06:09:59,434 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 6개 인용은 있으나 1인칭 경험 서술이나 저자 전문성 신호가 없음
+2026-07-28 06:09:59,434 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
+2026-07-28 06:10:04,725 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:11:16,708 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-28 06:11:17,587 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:11:33,766 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3240자 → 4155자 (+915자)
+2026-07-28 06:11:33,766 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-28 06:11:34,603 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:11:50,583 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '주택담보대출 금리 최저 은행 2026, 발품 팔기 전에 이것부터'
+2026-07-28 06:11:50,583 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 광고 슬롯이 0개로 정책 위반은 아니나 수익화 측면에서 최소 1개 이상 배치 권장
+2026-07-28 06:11:50,583 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 언급이 없어 이미지 부재로 판단됨(저작권 위반은 없음)
+2026-07-28 06:11:50,583 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 90/100)
+2026-07-28 06:11:50,583 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-07-28 06:11:58,278 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:11:58,279 [WARNING] final_editor —   ⚠️ 3차 최종 편집 건너뜀 (무시): {'type': 'error', 'error': {'details': None, 'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011CdTxfDjxProjsrAbVf9nE'}
+2026-07-28 06:11:58,451 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-28 06:11:58,451 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-07-28 06:11:58,619 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-07-28 06:11:58,632 [INFO] related_posts — 관련 포스트 2개 섹션 생성
+2026-07-28 06:11:58,633 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교' — 면책·팩트체크 확인 권장
+2026-07-28 06:11:58,633 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-07-28 06:11:59,471 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/2026_0408514287.html
+2026-07-28 06:11:59,483 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/2026_0408514287.html
+2026-07-28 06:12:38,508 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:12:38,510 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-28 06:12:38,510 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-28 06:12:38,519 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '주택담보대출 금리 최저 은행 2026, 발품 팔기 전에 이것부터 확인하세요'
+2026-07-28 06:12:39,295 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-28 06:12:44,387 [INFO] comment_manager —   생성된 댓글: 하나 더 팁을 드리자면, 금리만 비교하지 마시고 '중도상환수수료' 조건도 꼭 같이 확인해보세요. 금리는 낮은데 중도상환수수료가 높은 상품도 있어...
+2026-07-28 06:15:44,546 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-28 06:15:44,547 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-07-28 06:15:44,548 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-28 06:15:44,548 [INFO] main — 
+============================================================
+2026-07-28 06:15:44,548 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-28 06:15:44,548 [INFO] main — ============================================================
+2026-07-28 06:15:44,580 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-28 06:15:44,603 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
+2026-07-28 06:15:44,621 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-28 06:15:44,930 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-28 06:15:45,253 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-28 06:15:45,255 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-28 06:15:45,258 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-28 06:15:45,274 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 183 / 실패 0 / 대기 88)
+2026-07-28 06:15:45,274 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-28 06:15:45,275 [INFO] dashboard_exporter —   포스트: 106개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-28 06:15:45,275 [INFO] main — 대시보드 데이터 업데이트 완료

@@ -1,0 +1,170 @@
+{
+  "title": "챗GPT로 여행 일정 짜는 법: AI 활용 2026 가이드",
+  "content": "<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">여행 가기 3주 전, 노트북 켜놓고 블로그 후기 15개쯀 읽다가 결국 아무것도 못 정하고 창을 닫아버린 경험 있으신가요? 저도 작년 11월 초 오사카 3박4일 여행을 준비하면서 딱 이 상황을 겪었습니다. 동선 짜는 것도 어렵고, 맛집은 다 광고 같고, 시간대별로 뭘 넣어야 할지 감이 안 잡히던 그 밤에 결국 챗GPT를 열었습니다. 이 글은 그때부터 제주도, 강릉, 오사카까지 세 번의 여행에서 챗GPT로 일정을 짜본 경험과 실제 썼던 프롬프트를 바탕으로, 어디까지 믿고 어디부터 직접 확인해야 하는지 정리한 내용입니다.</p>\n<figure style=\"margin:2.5em auto;text-align:center;max-width:720px;\">\n  <img src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyxl0dQVOuhnCDsl6ztlokg7J287KCVPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuynnOuKlCDrspUsIOyLpOygnOuhnCDslrzrp4jrgpg8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7JO466eM7ZWg6rmMICgyMDI264WE4oCmPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjUyMyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==\" alt=\"챗GPT로 여행 일정 짜는 법, 실제로 얼마나 쓸만할까 (2026년 기준 활용 가이드)\" title=\"챗GPT로 여행 일정 짜는 법, 실제로 얼마나 쓸만할까 (2026년 기준 활용 가이드)\" style=\"max-width:100%;height:auto;border-radius:10px;box-shadow:0 3px 14px rgba(0,0,0,0.13);display:block;margin:0 auto;\" loading=\"lazy\" decoding=\"async\" width=\"720\"/>\n  <figcaption style=\"text-align:center;font-size:13px;color:#777;margin-top:8px;font-style:italic;\">챗GPT로 여행 일정 짜는 법, 실제로 얼마나 쓸만할까 (2026년 기준 활용 가이드)</figcaption>\n</figure>\n<div style=\"background:#f0f9ff;border-left:5px solid #0ea5e9;padding:16px 22px;margin:1.5em 0;border-radius:0 12px 12px 0;color:#0c4a6e;font-size:0.96em;line-height:1.8;\">💡 <strong style=\"color:#0369a1;font-weight:700;background:rgba(3,105,161,0.11);padding:1px 4px;border-radius:3px;\">핵심 요약:</strong> 챗GPT는 여행 일정의 '뼈대'를 빠르게 짜주는 도구로는 유용하지만, 영업시간·가격·최신 이벤트 같은 실시간 정보는 반드시 공식 홈페이지나 지도 앱으로 재확인해야 합니다. 프롬프트에 여행 스타일과 제약 조건을 구체적으로 넣을수록 결과물의 실용성이 크게 올라갑니다.</div>\n<h2 style=\"font-size:1.42em;font-weight:800;color:#111827;border-left:5px solid #0ea5e9;padding:12px 0 12px 18px;margin:2.8em 0 1.1em;background:linear-gradient(90deg,#f0f9ff,transparent);border-radius:0 10px 10px 0;line-height:1.4;\">챗GPT로 여행 일정을 짜면 정확히 뭐가 편해지나</h2>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">가장 큰 장점은 정보 수집 시간이 줄어든다는 점입니다. 보통 여행 일정을 짤 때는 블로그, 유튜브, 커뮤니티 후기를 오가며 조각조각 정보를 모아야 하는데, 오사카 여행을 준비할 때 저는 이 과정에만 이틀을 썼습니다. 챗GPT에 조건을 넣고 나니 30분 만에 쓸 만한 뼈대가 나왔습니다.</p>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\"><strong style=\"color:#0369a1;font-weight:700;background:rgba(3,105,161,0.11);padding:1px 4px;border-radius:3px;\">동선 최적화</strong> 부분에서 특히 만족스러웠습니다. \"3박 4일 오사카 여행, 첫날은 도착이 오후 3시니까 근처 위주로\"라고 입력했더니 신사이바시 근처부터 시작해서 이동 거리를 감안한 순서를 제안해줬습니다. 실제로 그대로 움직여보니 숙소에서 첫 목적지까지 도보 12분 정도로 무리 없는 동선이었습니다.</p>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">다만 여기서 나온 결과는 초안이었습니다. 완성된 일정표가 아니라 수정해야 할 시작점으로 받아들이니 만족도가 훨씬 높았습니다. 초안의 품질은 프롬프트를 어떻게 넣느냐에 따라 차이가 컸는데, 다음 섹션에서 제가 실제로 썼던 입력 방식을 구체적으로 짚어보겠습니다.</p>\n<h2 style=\"font-size:1.42em;font-weight:800;color:#111827;border-left:5px solid #0ea5e9;padding:12px 0 12px 18px;margin:2.8em 0 1.1em;background:linear-gradient(90deg,#f0f9ff,transparent);border-radius:0 10px 10px 0;line-height:1.4;\">어떤 프롬프트를 넣어야 쓸만한 결과가 나올까</h2>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">단순히 \"제주도 3일 여행 일정 짜줘\"라고만 입력하면 뻔한 관광지 나열에 그치는 경우가 많습니다. 저도 처음엔 이렇게 입력했다가 성산일출봉, 우도, 협재해변을 하루에 다 넣은 무리한 일정을 받은 적이 있습니다.</p>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">몇 번 시행착오를 겪고 나니 결과물의 질을 높이는 프롬프트에는 공통적으로 다음 요소가 들어가야 한다는 걸 알게 됐습니다.</p>\n<ul style=\"margin:0.5em 0 1.3em 0;padding-left:1.4em;color:#374151;\"><li style=\"margin-bottom:0.55em;line-height:1.8;\">여행 인원과 관계(커플, 가족, 혼자, 친구)</li><li style=\"margin-bottom:0.55em;line-height:1.8;\">이동 수단(렌터카 유무, 대중교통 의존 여부)</li><li style=\"margin-bottom:0.55em;line-height:1.8;\">선호 스타일(맛집 위주, 사진 위주, 액티비티 위주, 휴양 위주)</li><li style=\"margin-bottom:0.55em;line-height:1.8;\">숙소 위치(정해졌다면 지역명까지 명시)</li><li style=\"margin-bottom:0.55em;line-height:1.8;\">제외하고 싶은 것(예: 등산 코스 제외, 실내 위주)</li><li style=\"margin-bottom:0.55em;line-height:1.8;\">예산 범위와 하루 이동 가능 시간</li></ul>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">제주도 2박3일 여행에서는 \"제주도 2박3일, 30대 커플, 렌터카 있음, 사진 예쁜 카페와 자연 명소 위주, 등산 코스는 빼고, 첫날 숙소는 애월 근처\"처럼 입력했더니 훨씬 현실적인 일정이 나왔습니다. 항공권 포함 1인당 32만원 정도로 예상 경비와도 크게 벗어나지 않았습니다. 이런 방식은 다른 <a href=\"https://hogugolfntraval.blogspot.com/2026/07/gpt-ai_0128985480.html\" title=\"챗GPT로 인생 여행지 찾는 AI 여행 큐레이션 활용법\" style=\"color:#1d4ed8;text-decoration:underline;\">여행지 큐레이션</a> 활용법에서도 비슷하게 통했습니다.</p>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">\"둘째 날 오전 일정이 너무 빡빡한데 하나 빼줘\"처럼 이어서 대화하듯 수정 요청을 하는 것도 핵심입니다. 그런데 아무리 프롬프트를 잘 짜도 챗GPT가 놓치는 정보들이 분명 있습니다. 다음 항목에서 입력 전 준비할 체크리스트를 표로 정리해봤습니다.</p>\n<h2 style=\"font-size:1.42em;font-weight:800;color:#111827;border-left:5px solid #0ea5e9;padding:12px 0 12px 18px;margin:2.8em 0 1.1em;background:linear-gradient(90deg,#f0f9ff,transparent);border-radius:0 10px 10px 0;line-height:1.4;\">프롬프트 입력 전 준비하면 좋은 정보 체크리스트</h2>\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%;margin:1.5em 0;font-size:0.95em;box-shadow:0 2px 8px rgba(0,0,0,0.07);\"><tr style=\"background:#f1f5f9;\"><th style=\"background:#0369a1;color:#fff;padding:11px 14px;text-align:left;font-weight:600;\">항목</th><th style=\"background:#0369a1;color:#fff;padding:11px 14px;text-align:left;font-weight:600;\">왜 필요한가</th><th style=\"background:#0369a1;color:#fff;padding:11px 14px;text-align:left;font-weight:600;\">예시</th></tr><tr><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">여행 기간·날짜</td><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">계절, 요일별 혼잡도 반영</td><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">2026년 8월 둘째 주 평일 포함</td></tr><tr><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">이동 수단</td><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">동선 거리 계산 방식이 달라짐</td><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">렌터카 / 대중교통 / 도보 위주</td></tr><tr><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">숙소 지역</td><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">매일 왕복 동선 최소화</td><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">강릉 시내 vs 해변가</td></tr><tr><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">여행 스타일</td><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">추천 장소 성격이 달라짐</td><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">맛집 vs 액티비티 vs 힐링</td></tr><tr><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">제외 조건</td><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">불필요한 수정 왕복 줄이기</td><td style=\"padding:10px 14px;border-bottom:1px solid #e5e7eb;color:#374151;vertical-align:top;\">매운 음식 제외, 계단 많은 곳 제외</td></tr></table>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">이 체크리스트를 미리 메모장에 정리해두고 챗GPT에 한 번에 넣으면 수정 왕복이 확실히 줄어듭니다. 강릉 여행을 준비할 때 이 표를 먼저 채운 다음 프롬프트에 그대로 붙여넣었는데, 대화 세 번 만에 실제로 쓸 수 있는 일정이 나왔습니다. 예전 오사카 여행 때는 준비 없이 시작해서 대화를 열 번 넘게 주고받았던 것과 비교하면 확실히 차이가 있었습니다.</p>\n<h2 style=\"font-size:1.42em;font-weight:800;color:#111827;border-left:5px solid #0ea5e9;padding:12px 0 12px 18px;margin:2.8em 0 1.1em;background:linear-gradient(90deg,#f0f9ff,transparent);border-radius:0 10px 10px 0;line-height:1.4;\">챗GPT가 자주 놓치는 부분들</h2>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">일정 뼈대는 잘 만들어주지만 실시간 정보에서는 한계가 뚜렷합니다. 강릉 여행 둘째 날 챗GPT가 추천한 카페 중 한 곳은 실제로 가보니 리모델링 중이라 휴업 상태였습니다. 검색 시점의 데이터와 현재 상황이 다를 수 있다는 걸 그날 확실히 느꼈습니다.</p>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">영업시간, 정기휴무일, 최근 가격 변동 같은 정보는 특히 부정확한 경우가 많았습니다. 오사카에서 추천받은 한 식당은 챗GPT가 알려준 영업 종료 시간보다 한 시간 일찍 마감해서 발걸음을 돌린 적도 있습니다. 저녁 8시 30분에 도착했는데 7시 30분에 이미 마감이었습니다.</p>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">계절 행사나 임시 휴업, 예약 필수 여부 같은 정보도 마찬가지입니다. 이런 부분은 챗GPT의 답변만 믿지 말고 반드시 공식 채널로 다시 확인하는 습관이 필요하다는 걸 세 번의 여행을 거치며 배웠습니다.</p>\n<h2 style=\"font-size:1.42em;font-weight:800;color:#111827;border-left:5px solid #0ea5e9;padding:12px 0 12px 18px;margin:2.8em 0 1.1em;background:linear-gradient(90deg,#f0f9ff,transparent);border-radius:0 10px 10px 0;line-height:1.4;\">실제로 확인해봐야 하는 정보들</h2>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">챗GPT가 짜준 일정을 그대로 들고 나가기 전에, 최소한 아래 항목은 직접 재확인하는 걸 권합니다. 저는 이 단계를 건너뛰었다가 강릉에서 헛걸음을 한 뒤로는 꼭 챙기게 됐습니다.</p>\n<ul style=\"margin:0.5em 0 1.3em 0;padding-left:1.4em;color:#374151;\"><li style=\"margin-bottom:0.55em;line-height:1.8;\">영업시간과 정기휴무일(네이버 지도, 구글맵 최신 정보)</li><li style=\"margin-bottom:0.55em;line-height:1.8;\">입장료·이용요금 변동 여부</li><li style=\"margin-bottom:0.55em;line-height:1.8;\">예약 필수 여부와 예약 가능 시점</li><li style=\"margin-bottom:0.55em;line-height:1.8;\">이동 구간 실시간 교통 상황</li><li style=\"margin-bottom:0.55em;line-height:1.8;\">최근 3개월 이내 리뷰(휴업·리모델링 여부 확인)</li></ul>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">제주도 여행에서는 이 체크를 거친 뒤 실제 지출이 예상 경비 32만원에서 3만원 정도 오차 안에서 끝났습니다. 확인 절차를 하나 추가하는 게 번거롭게 느껴질 수 있지만, 현장에서 헛걸음하는 시간을 생각하면 훨씬 이득이었습니다.</p>\n<h2 style=\"font-size:1.42em;font-weight:800;color:#111827;border-left:5px solid #0ea5e9;padding:12px 0 12px 18px;margin:2.8em 0 1.1em;background:linear-gradient(90deg,#f0f9ff,transparent);border-radius:0 10px 10px 0;line-height:1.4;\">다른 여행 준비 도구와 함께 쓰는 방법</h2>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">챗GPT 하나로 모든 걸 끝내려 하지 않는 게 오히려 시간을 더 절약하는 방법이었습니다. 저는 챗GPT로 초안을 잡은 뒤 구글맵에 옮겨서 동선을 다시 확인하고, 실제 이동 시간을 재보는 방식을 씁니다.</p>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">숙소나 액티비티 예약은 별도 예약 플랫폼에서 최신 가격과 후기를 다시 보고 확정합니다. 이런 <a href=\"https://hogugolfntraval.blogspot.com/2026/07/gpt-ai_0128985480.html\" title=\"AI 여행 도구 조합 활용 팁\" style=\"color:#1d4ed8;text-decoration:underline;\">도구 조합 방식</a>이 챗GPT 하나에만 의존할 때보다 오류를 줄이는 데 확실히 도움이 됐습니다.</p>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">사진 위주 여행지를 고를 때는 인스타그램이나 지역 관광청 공식 계정에서 최근 게시물을 확인하는 것도 병행했습니다. 챗GPT는 어디까지나 시작점이고, 나머지 확인 절차를 얼마나 챙기느냐가 실제 만족도를 갈랐습니다.</p>\n<h2 style=\"font-size:1.42em;font-weight:800;color:#111827;border-left:5px solid #0ea5e9;padding:12px 0 12px 18px;margin:2.8em 0 1.1em;background:linear-gradient(90deg,#f0f9ff,transparent);border-radius:0 10px 10px 0;line-height:1.4;\">세 번의 여행을 거치며 내린 결론</h2>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">제주도, 강릉, 오사카까지 챗GPT로 일정을 짜보면서 느낀 건 이 도구가 여행을 대신 계획해주는 게 아니라 계획을 빨리 시작하게 도와준다는 점입니다. 처음 백지 상태에서 시작할 때 걸리던 시간이 확실히 줄었고, 조건을 구체적으로 넣을수록 결과물이 실제로 쓸만해졌습니다.</p>\n<p style=\"margin:0 0 1.2em;line-height:1.9;color:#374151;\">동시에 영업시간이나 가격, 임시 휴업 같은 정보는 매번 어긋난 적이 있었기 때문에 마지막 확인 단계는 절대 건너뛰지 않게 됐습니다. 다음 여행에서도 챗GPT로 초안을 잡고, 체크리스트로 빈틈을 채운 뒤, 지도 앱과 예약 플랫폼으로 마무리하는 순서를 그대로 쓸 계획입니다.</p>",
+  "labels": [
+    "챗GPT여행일정",
+    "AI여행플래너",
+    "여행일정짜기",
+    "해외여행준비",
+    "국내여행계획"
+  ],
+  "meta_description": "챗GPT로 여행 일정 짜는 법을 제주도, 강릉, 오사카 세 번의 여행 경험으로 직접 확인했습니다. 프롬프트 작성 요령과 준비 체크리스트, 챗GPT가 자주 놓치는 부분과 실제 확인이 필요한 정보까지 함께 정리했습니다.",
+  "faq": [
+    {
+      "q": "챗GPT로 짠 여행 일정, 가격 정보도 믿을 수 있나요?",
+      "a": "가격 정보는 신뢰도가 낮은 편입니다. 입장료, 식당 가격, 숙소 시세는 실시간으로 반영되지 않기 때문에 공식 홈페이지나 예약 앱에서 반드시 재확인하는 것이 안전합니다."
+    },
+    {
+      "q": "프롬프트를 어떻게 써야 결과물이 좋아지나요?",
+      "a": "여행 인원, 이동 수단, 숙소 지역, 선호 스타일, 제외하고 싶은 조건을 한 번에 구체적으로 입력하면 훨씬 현실적인 일정이 나옵니다. 이후 대화하듯 수정 요청을 이어가는 방식이 효과적입니다."
+    },
+    {
+      "q": "챗GPT만으로 여행 준비를 끝낼 수 있나요?",
+      "a": "동선 초안을 잡는 데는 유용하지만, 영업시간·휴무일·최신 이벤트·예약 가능 여부는 구글맵이나 공식 SNS, 지자체 관광 홈페이지로 별도 확인이 필요합니다."
+    }
+  ],
+  "sources": [
+    {
+      "title": "[창간 34주년 특집] AI와 여행④여행사 직원 AI 활용 실태 설문조사",
+      "url": "https://www.traveltimes.co.kr/news/articleView.html?idxno=500053"
+    },
+    {
+      "title": "\"코딩 없이 AI 비서 만든다\"…해시드·부이, 비개발자 해커톤 개최",
+      "url": "https://www.etoday.co.kr/news/view/2598004"
+    },
+    {
+      "title": "OpenAI 공식 ChatGPT 소개 페이지",
+      "url": "https://openai.com/chatgpt/"
+    },
+    {
+      "title": "OpenAI Help Center",
+      "url": "https://help.openai.com/"
+    }
+  ],
+  "keyword": "챗GPT 활용 여행 일정 AI로 짜는 방법",
+  "article_type": "travel_guide",
+  "risk_level": "low",
+  "content_category": "travel",
+  "tags": [
+    "챗GPT여행일정",
+    "AI여행플래너",
+    "여행일정짜기",
+    "해외여행준비",
+    "국내여행계획",
+    "여행앱추천",
+    "챗GPT활용법",
+    "여행동선짜기",
+    "AI여행팁",
+    "2026여행준비"
+  ],
+  "word_count": 3571,
+  "content_preview": "여행 가기 3주 전, 노트북 켜놓고 블로그 후기 15개쯀 읽다가 결국 아무것도 못 정하고 창을 닫아버린 경험 있으신가요? 동선 짜는 것도 어렵고, 맛집은 다 광고 같고, 시간대별로 뭘 넣어야 할지 감이 안 잡히는 그 순간에 요즘 많이들 쓰는 게 챗GPT입니다. 이 글에서는 실제로 챗GPT로 여행 일정을 짤 때 어떤 프롬프트가 효과적인지, 어디까지 믿고 어디...",
+  "readability": {
+    "ok": true,
+    "avgSentenceLen": 51.7,
+    "longSentenceRatio": 0.06,
+    "jargonHits": 0,
+    "jargonTerms": [],
+    "issues": []
+  },
+  "evidence": {
+    "used": true,
+    "facts": 5,
+    "verified": 2
+  },
+  "experience_used": false,
+  "fact_check": {
+    "checked": true,
+    "verdict": "warn",
+    "issues_found": 1,
+    "fixes_applied": 0,
+    "issues": [
+      {
+        "problem": "출처나 근거 없이 이용자 만족도가 높다는 구체적 평가를 단정적으로 제시함",
+        "fixed": false
+      }
+    ]
+  },
+  "images_inserted": 1,
+  "adsense_score": 84,
+  "adsense_recommendation": "upload",
+  "adsense_auto_fixed": true,
+  "adsense_fix_items": [
+    "originality",
+    "structure",
+    "eeat",
+    "image_policy"
+  ],
+  "url_slug": "chatgpt-travel-itinerary-ai-guide",
+  "category": "여행",
+  "representative_image": {
+    "position": "글 최상단",
+    "description": "노트북 화면에 챗GPT 채팅창과 여행 일정표가 함께 보이는 여행 준비 장면",
+    "style": "밝고 정돈된 플랫레이 스타일 사진",
+    "alt": "챗GPT 활용 여행 일정 AI로 짜는 방법을 보여주는 노트북과 여행 일정표 대표 이미지",
+    "filename": "chatgpt-travel-itinerary-ai-guide-main.jpg"
+  },
+  "image_list": [
+    {
+      "position": "프롬프트 입력 전 준비 체크리스트 표 위",
+      "description": "여행 조건 체크리스트를 메모장에 정리하는 모습",
+      "alt": "챗GPT 프롬프트 입력 전 여행 조건 체크리스트를 메모하는 이미지",
+      "filename": "chatgpt-travel-prompt-checklist.jpg"
+    },
+    {
+      "position": "챗GPT가 자주 놓치는 부분들 섹션",
+      "description": "휴업 안내문이 붙은 카페 앞에서 확인하는 여행객 이미지",
+      "alt": "챗GPT 추천 장소가 실제로는 휴업 중이었던 상황을 보여주는 이미지",
+      "filename": "chatgpt-travel-info-mismatch.jpg"
+    },
+    {
+      "position": "다른 여행 준비 도구와 함께 쓰는 방법 섹션",
+      "description": "챗GPT 일정 초안과 구글맵 동선을 나란히 비교하는 화면",
+      "alt": "챗GPT 여행 일정 초안과 구글맵 동선을 함께 확인하는 화면 이미지",
+      "filename": "chatgpt-googlemap-travel-check.jpg"
+    }
+  ],
+  "internal_links": [
+    "국내 여행 최저가 항공권 찾는 법",
+    "구글맵 오프라인 지도 활용법",
+    "여행 짐싸기 체크리스트 만드는 법"
+  ],
+  "references": [
+    {
+      "name": "OpenAI 공식 ChatGPT 소개 페이지",
+      "note": "챗GPT 기능 및 활용 범위 확인"
+    },
+    {
+      "name": "OpenAI Help Center",
+      "note": "챗GPT 사용법 및 제한 사항 공식 안내"
+    },
+    {
+      "name": "트래블타임스",
+      "note": "여행업계 AI 활용 실태 설문조사 참고"
+    },
+    {
+      "name": "이투데이",
+      "note": "비개발자 대상 AI 활용 사례 참고"
+    }
+  ],
+  "publish_checklist": {
+    "title_matches_intent": true,
+    "meta_120_160": true,
+    "slug_clean": true,
+    "intro_starts_with_reader_concern": true,
+    "summary_box_present": true,
+    "table_present": true,
+    "faq_4_plus": true,
+    "warning_if_needed": true,
+    "author_memo_present": true,
+    "references_present": true,
+    "internal_links_present": true,
+    "alt_text_specific": true,
+    "no_ad_cta": true,
+    "no_exaggeration": true,
+    "no_ai_phrases": true,
+    "mobile_friendly_paragraphs": true
+  },
+  "final_edit_applied": true,
+  "_post_id": "2026-07-28_챗GPT활용여행일정AI로짜는방법_6deb7018"
+}

@@ -1,123 +1,3 @@
-2026-07-29 23:43:08,888 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-07-29 23:43:08,889 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-29 23:43:08,889 [INFO] main — 
-============================================================
-2026-07-29 23:43:08,889 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-29 23:43:08,889 [INFO] main — ============================================================
-2026-07-29 23:43:08,920 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-29 23:43:08,943 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
-2026-07-29 23:43:08,960 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-29 23:43:09,187 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-29 23:43:09,481 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-29 23:43:09,482 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-29 23:43:09,485 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-29 23:43:09,500 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 182 / 실패 0 / 대기 88)
-2026-07-29 23:43:09,500 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-29 23:43:09,500 [INFO] dashboard_exporter —   포스트: 98개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-29 23:43:09,501 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-29 23:59:00,538 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-07-29 23:59:00,538 [INFO] main —   - [blog1] HOGU What?
-2026-07-29 23:59:00,538 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-07-29 23:59:00,538 [INFO] main —   - [blog3] 금융NEWS
-2026-07-29 23:59:00,544 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
-2026-07-30 05:39:47,863 [INFO] main — ============================================================
-2026-07-30 05:39:47,863 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-30 05:39:47
-2026-07-30 05:39:47,863 [INFO] main — ============================================================
-2026-07-30 05:39:47,873 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-30 05:39:47,873 [INFO] keyword_collector — 포스팅 이력 코퍼스: 39개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-07-30 05:39:51,871 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-30 05:39:55,749 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:39:55,764 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-30 05:39:55,764 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-30 05:39:56,133 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-07-30 05:39:56,590 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-30 05:39:56,973 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-30 05:39:56,975 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
-2026-07-30 05:39:56,976 [INFO] keyword_collector — 최근 사용 제외 2개: ['해외여행 실비보험 필요한지 직접 비교해봤더니', '장마철 국내 여행지 추천 코스']
-2026-07-30 05:39:56,976 [INFO] keyword_collector — 유사 주제 제외 2개: ['여름휴가 호캉스 vs 해외여행 비교', '전국 치킨 맛집 지도 활용법']
-2026-07-30 05:39:56,977 [INFO] keyword_collector —   [naver_realtime] 1개: ['여행 숙소 항공권 할인 특가 비교']
-2026-07-30 05:39:56,977 [INFO] keyword_collector —   [fallback] 1개: ['베트남 다낭 패키지 vs 자유여행 비용 직접 비교해봤더니']
-2026-07-30 05:39:56,977 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여행 숙소 항공권 할인 특가 비교', '베트남 다낭 패키지 vs 자유여행 비용 직접 비교해봤더니']
-2026-07-30 05:39:56,977 [INFO] main — 수집된 키워드 2개: ['여행 숙소 항공권 할인 특가 비교', '베트남 다낭 패키지 vs 자유여행 비용 직접 비교해봤더니']
-2026-07-30 05:39:56,980 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-07-30 05:39:56,981 [INFO] main — 단독 포스트 대상 키워드 1개: ['여행 숙소 항공권 할인 특가 비교']
-2026-07-30 05:39:56,994 [INFO] main — 
-[1/1] 키워드: '여행 숙소 항공권 할인 특가 비교'
-2026-07-30 05:39:56,994 [INFO] content_generator — 포스트 생성 중: '여행 숙소 항공권 할인 특가 비교'
-2026-07-30 05:40:04,116 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:40:04,116 [INFO] research_collector — 검색 의도: 여행 숙소와 항공권을 저렴하게 예약할 수 있는 할인 특가 정보와 비교 방법을 찾는 의도
-2026-07-30 05:40:26,063 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '여행 숙소 항공권 할인 특가 비교'
-2026-07-30 05:40:40,265 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:40:40,266 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '여행 숙소 항공권 할인 특가 비교'
-2026-07-30 05:41:00,838 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:41:00,839 [INFO] source_validator — 출처 검증: 1/5개 통과, 등급 분포 {'X': 4, 'C': 1}
-2026-07-30 05:41:00,840 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-30 05:41:01,858 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:42:28,084 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:42:46,583 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-07-30 05:42:47,465 [INFO] image_fetcher — 이미지 수집 성공: '항공권·숙소 특가 비교, 실수 없이 하는 법' → 제목='특가 항공권 📈최저가 가격비교 사이트, 가장 싸게 사는 방법은?' (관련성=0.25)
-2026-07-30 05:42:47,652 [INFO] image_fetcher — 이미지 수집 성공: '여행 숙소 항공권' → 제목='hotel / winter / season / accommodation ' (관련성=0.40)
-2026-07-30 05:42:48,133 [INFO] image_fetcher — 대체 이미지 수집: '여행 숙소 매번 비교해야 검색 가격이' → 제목='las vegas / eiffel tower / buildings / a' (관련성=0.12)
-2026-07-30 05:42:48,134 [INFO] image_fetcher — 이미지 수집 성공: '여행 숙소 매번 비교해야 검색 가격이' → 제목='las vegas / eiffel tower / buildings / a' (관련성=0.12)
-2026-07-30 05:42:49,437 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:42:49,438 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
-2026-07-30 05:42:49,438 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-07-30 05:42:49,439 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-30 05:42:49,440 [INFO] content_generator — 포스트 생성 완료: '항공권·숙소 특가 비교, 실수 없이 하는 법' (3055자, 이미지 1개)
-2026-07-30 05:42:50,961 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:43:04,438 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '항공권·숙소 특가 비교, 실수 없이 하는 법'
-2026-07-30 05:43:04,438 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 충족하나 '~로 알려져 있습니다' 식 일반론 재구성이 많고 구체적 날짜·수치 기반 개인 경험은 부족함
-2026-07-30 05:43:04,438 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 인용은 있으나 1인칭 직접 경험 서술과 저자 전문성 신호가 약함
-2026-07-30 05:43:04,438 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부가 확인되지 않아 텍스트 전용으로 판단, 정책상 warn
-2026-07-30 05:43:04,438 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~것으로 알려져 있습니다', '~볼 수 있습니다' 등 헤지 표현과 체크리스트식 나열 패턴이 반복돼 AI 생성 흔적이 느껴짐
-2026-07-30 05:43:04,444 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-30 05:43:04,445 [INFO] internal_linker —   [1/5] '여름휴가' -> https://www.hoguwhat.com/2026/07/vs_01883334561.html
-2026-07-30 05:43:04,446 [INFO] internal_linker —   [2/5] '체크리스트' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0278943539
-2026-07-30 05:43:04,448 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-30 05:43:04,448 [INFO] main —   제목: 항공권·숙소 특가 비교, 실수 없이 하는 법
-2026-07-30 05:43:04,448 [INFO] main —   이미지: 1개 삽입
-2026-07-30 05:43:04,448 [INFO] main —   글자 수: 3055자
-2026-07-30 05:43:05,189 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:43:19,680 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '항공권·숙소 특가 비교, 실수 없이 하는 법'
-2026-07-30 05:43:19,680 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 구체적 개인 경험·수치 없이 일반론과 '~로 알려져 있습니다' 식 서술이 반복됨
-2026-07-30 05:43:19,680 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 충분하나 일부 단락(할인 구조, 플랫폼 비교 부분)이 500자 이상으로 길게 이어짐
-2026-07-30 05:43:19,680 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개는 있으나 1인칭 경험 부재, '~으로 보고됩니다' 등 모호한 인용 표현이 신뢰도를 약화시킴
-2026-07-30 05:43:19,680 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 확인되지 않아 SEO·가독성 측면에서 경고(저작권 위반은 없음)
-2026-07-30 05:43:19,680 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~로 알려져 있습니다', '~로 볼 수 있습니다' 등 헤징 표현과 체크리스트식 나열 패턴이 반복되어 AI 생성 느낌이 있음
-2026-07-30 05:43:19,680 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
-2026-07-30 05:43:19,680 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 기준 충족하나 구체적 개인 경험·수치 없이 일반론과 '~로 알려져 있습니다' 식 서술이 반복됨
-2026-07-30 05:43:19,680 [WARNING] main —      🟡 [구조 및 가독성] H2 6개는 충분하나 일부 단락(할인 구조, 플랫폼 비교 부분)이 500자 이상으로 길게 이어짐
-2026-07-30 05:43:19,680 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3개는 있으나 1인칭 경험 부재, '~으로 보고됩니다' 등 모호한 인용 표현이 신뢰도를 약화시킴
-2026-07-30 05:43:19,680 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
-2026-07-30 05:43:21,343 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:44:39,603 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-30 05:44:40,522 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:44:46,956 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3055자 → 4135자 (+1080자)
-2026-07-30 05:44:46,956 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-30 05:44:52,844 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:45:07,914 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '항공권·숙소 특가 비교, 실수 없이 하는 법'
-2026-07-30 05:45:07,915 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락(가격 차이 발생 원인, 구조 설명 부분)이 500자를 넘어 다소 밀도가 높음
-2026-07-30 05:45:07,915 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 정보가 없어 이미지 부재 상태 (정책상 fail 아님)
-2026-07-30 05:45:07,915 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 90/100)
-2026-07-30 05:45:07,915 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-07-30 05:45:09,066 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:45:54,861 [INFO] final_editor —   ✏️ 제목 최종 교정: '항공권·숙소 특가 비교, 실수 없이 하는 법' → '여행 항공권·숙소 할인 특가 비교, 실수 없이 예약하는 법'
-2026-07-30 05:45:54,862 [INFO] final_editor —   ✏️ 메타 설명 교정 (107자)
-2026-07-30 05:45:54,862 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 재정리하고, 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모 구조를 확인했습니다. 이미지 3개와 대표 이미지의 alt 텍스트를 구체화하고, 내부 링크는 실제 URL 없이 텍스트 언급으로만 제안했습니다.
-2026-07-30 05:45:54,994 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-30 05:45:54,994 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-07-30 05:45:55,105 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-07-30 05:45:55,114 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-30 05:45:55,115 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-07-30 05:45:55,559 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_30.html
-2026-07-30 05:45:55,569 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_30.html
-2026-07-30 05:46:26,876 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:46:26,878 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-30 05:46:26,878 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-30 05:46:26,884 [INFO] comment_manager — 
 🌱 씨앗 댓글 작성: '여행 항공권·숙소 할인 특가 비교, 실수 없이 예약하는 법'
 2026-07-30 05:46:27,672 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-30 05:46:31,687 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리자면, 항공권은 시크릿 모드(비공개 브라우징)로 검색하는 것도 꽤 효과적이에요. 쿠키 기록 때문에 같은 노선을 반복 검색하면...
@@ -618,3 +498,138 @@
 2026-07-30 12:13:39,336 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-30 12:13:39,336 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-30 12:13:39,337 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-30 12:14:24,049 [INFO] main — ============================================================
+2026-07-30 12:14:24,049 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-30 12:14:24
+2026-07-30 12:14:24,049 [INFO] main — ============================================================
+2026-07-30 12:14:24,060 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-07-30 12:14:24,060 [INFO] keyword_collector — 포스팅 이력 코퍼스: 38개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-30 12:14:28,483 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-30 12:14:35,952 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:14:35,978 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-30 12:14:35,979 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-30 12:14:36,322 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-30 12:14:36,692 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-30 12:14:36,693 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-30 12:14:36,695 [INFO] keyword_collector — 유사 주제 제외 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-30 12:14:36,695 [INFO] keyword_collector —   [naver_realtime] 2개: ['레버리지 ETF 투자 위험성과 대응 전략 2026', '여름 휴가철 여행자보험 가입 가이드 비교']
+2026-07-30 12:14:36,695 [INFO] keyword_collector — 최종 선정 키워드 2개: ['레버리지 ETF 투자 위험성과 대응 전략 2026', '여름 휴가철 여행자보험 가입 가이드 비교']
+2026-07-30 12:14:36,695 [INFO] main — 수집된 키워드 2개: ['레버리지 ETF 투자 위험성과 대응 전략 2026', '여름 휴가철 여행자보험 가입 가이드 비교']
+2026-07-30 12:14:36,701 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
+2026-07-30 12:14:36,701 [INFO] main — 단독 포스트 대상 키워드 1개: ['레버리지 ETF 투자 위험성과 대응 전략 2026']
+2026-07-30 12:14:36,720 [INFO] main — 
+[1/1] 키워드: '레버리지 ETF 투자 위험성과 대응 전략 2026'
+2026-07-30 12:14:36,720 [INFO] content_generator — 포스트 생성 중: '레버리지 ETF 투자 위험성과 대응 전략 2026'
+2026-07-30 12:14:48,459 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:14:48,460 [INFO] research_collector — 검색 의도: 레버리지 ETF의 위험 요소를 이해하고 2026년 시장 상황에 맞는 투자 대응 전략을 찾고자 함
+2026-07-30 12:15:00,116 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 6개) — '레버리지 ETF 투자 위험성과 대응 전략 2026'
+2026-07-30 12:15:13,790 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:15:13,792 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '레버리지 ETF 투자 위험성과 대응 전략 2026'
+2026-07-30 12:15:40,091 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:15:40,092 [INFO] source_validator — 출처 검증: 2/5개 통과, 등급 분포 {'A': 1, 'X': 3, 'C': 1}
+2026-07-30 12:15:40,095 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-07-30 12:15:40,095 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-30 12:15:41,757 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:16:55,071 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(레버리지)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-07-30 12:16:57,071 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-30 12:17:00,066 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:17:57,947 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:18:12,496 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '2026년 금융위원회가 국내 우량주 레버리지 ETF 도입을 위한 시행령 '
+2026-07-30 12:18:12,496 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 2건 자동 수정 적용
+2026-07-30 12:18:14,102 [WARNING] image_fetcher — 이미지 없음: '레버리지 ETF, 왜 위험하다는 걸까? 2026년 달라지는 점까지 쉽게 정리'
+2026-07-30 12:18:14,645 [WARNING] image_fetcher — 이미지 없음: '레버리지 ETF 투자'
+2026-07-30 12:18:15,759 [WARNING] image_fetcher — 이미지 없음: '레버리지 ETF 정확히 먼저 상장지수'
+2026-07-30 12:18:15,759 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-07-30 12:18:15,759 [INFO] image_fetcher — 제목 썸네일 생성: '레버리지 ETF, 왜 위험하다는 걸까? 2026년 달라' (data URI, 1155B)
+2026-07-30 12:18:16,114 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-07-30 12:18:16,116 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-07-30 12:18:16,118 [INFO] content_generator — 포스트 생성 완료: '레버리지 ETF, 왜 위험하다는 걸까? 2026년 달라지는 점까지 쉽게 정리' (2651자, 이미지 1개)
+2026-07-30 12:18:17,038 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:18:39,357 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-30 12:18:40,305 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:18:45,255 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '레버리지 ETF, 왜 위험하다는 걸까? 2026년 달라지는 점까'
+2026-07-30 12:18:45,255 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2651자로 기준 충족하나 본문 중 문장이 그대로 중복 삽입된 오류가 있고 개인 경험보다 일반 정보 재구성에 가까움
+2026-07-30 12:18:45,255 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 헤딩 수는 충분하나 일부 단락(위험 요인, 대응 전략 섹션)이 500자 이상으로 길어 가독성이 떨어짐
+2026-07-30 12:18:45,256 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술('개인적으로는')이 한 차례뿐이고 출처 인용이 본문에 명시적으로 드러나지 않아 신뢰성 신호가 약함
+2026-07-30 12:18:45,256 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글로 정책 위반은 없으나 가독성·SEO 측면에서 경고
+2026-07-30 12:18:45,256 [INFO] adsense_validator —   ❌ AI 생성 의심도: 동일 문장중복 삽입 오류, '그렇다면~짚어보겠습니다' 식의 정형화된 전개, '~습니다' 반복 종결 등 전형적인 AI 생성 패턴이 뚜렷함
+2026-07-30 12:18:45,256 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 동일 문장중복 삽입 오류, '그렇다면~짚어보겠습니다' 식의 정형화된 전개, '~습니다' 반복 종결 등 전형적인 AI 생성 패턴이 뚜렷함
+2026-07-30 12:18:45,256 [WARNING] adsense_validator —   🔴 본문 중 '를 기초자산으로 하는 레버리지 ETF를 국내 최초로 도입하기 위해...' 문장이 중복 삽입되어 있어 즉시 수정 필요
+2026-07-30 12:18:45,262 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-30 12:18:45,264 [INFO] internal_linker —   [1/5] '금융감독원' -> https://hoguasset.blogspot.com/2026/07/etf-2026_0510486354.h
+2026-07-30 12:18:45,265 [INFO] internal_linker —   [2/5] '금융위원회' -> https://hoguasset.blogspot.com/2026/07/etf-3000.html
+2026-07-30 12:18:45,269 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-07-30 12:18:45,269 [INFO] main —   제목: 레버리지 ETF, 왜 위험하다는 걸까? 2026년 달라지는 점까지 쉽게 정리
+2026-07-30 12:18:45,269 [INFO] main —   이미지: 1개 삽입
+2026-07-30 12:18:45,269 [INFO] main —   글자 수: 2651자
+2026-07-30 12:18:46,526 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:19:03,824 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '레버리지 ETF, 왜 위험하다는 걸까? 2026년 달라지는 점까'
+2026-07-30 12:19:03,824 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 2651자로 기준 충족하나, 개인 경험이나 구체적 사례(수치·날짜) 없이 일반론 설명 위주로 구성됨
+2026-07-30 12:19:03,824 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 본문이 문단 구분 없이 길게 이어져 가독성이 떨어짐
+2026-07-30 12:19:03,824 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 금융위원회·금융감독원 언급 및 출처 2개 포함되나 1인칭 경험 서술이 약하고 출처 링크 명시 여부 불분명
+2026-07-30 12:19:03,824 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 없어 저작권 위반은 없으나 가독성·SEO 측면에서 경고
+2026-07-30 12:19:03,824 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~짚어보겠습니다', '~정리해보겠습니다' 등 정형화된 전환 문구와 유사한 '~습니다' 종결 반복이 두드러짐
+2026-07-30 12:19:03,824 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-07-30 12:19:03,824 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 2651자로 기준 충족하나, 개인 경험이나 구체적 사례(수치·날짜) 없이 일반론 설명 위주로 구성됨
+2026-07-30 12:19:03,824 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 구조는 양호하나 본문이 문단 구분 없이 길게 이어져 가독성이 떨어짐
+2026-07-30 12:19:03,824 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 금융위원회·금융감독원 언급 및 출처 2개 포함되나 1인칭 경험 서술이 약하고 출처 링크 명시 여부 불분명
+2026-07-30 12:19:03,824 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-07-30 12:19:07,834 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:20:36,943 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-30 12:20:40,692 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:20:57,065 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2651자 → 3678자 (+1027자)
+2026-07-30 12:20:57,065 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-30 12:20:57,830 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:21:15,233 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '레버리지 ETF, 왜 위험하다는 걸까? 2026년 달라지는 점까'
+2026-07-30 12:21:15,233 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 '초보자 손실' 섹션 등 500자 이상 단락이 다수 존재해 가독성 개선 필요
+2026-07-30 12:21:15,234 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 언급이 없어 이미지 부재로 판단됨(저작권 위반은 없음)
+2026-07-30 12:21:15,234 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면~짚어보겠습니다/이어서 정리해보겠습니다' 식 전환 문구가 반복되어 다소 정형화된 패턴 존재
+2026-07-30 12:21:15,234 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
+2026-07-30 12:21:15,234 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-07-30 12:21:19,914 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:22:36,846 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-30 12:22:40,483 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 12:23:01,212 [INFO] final_editor —   ✏️ 제목 최종 교정: '레버리지 ETF, 왜 위험하다는 걸까? 2026년 달라지는 점까지 쉽게 정리' → '레버리지 ETF 투자 위험성과 2026년 대응 전략 총정리'
+2026-07-30 12:23:01,212 [INFO] final_editor —   ✏️ 메타 설명 교정 (131자)
+2026-07-30 12:23:01,212 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 규격에 맞게 재정리하고, 긴 문단을 2~4문장 단위로 쪼갰으며 요약 박스·표·경험 메모·주의사항·FAQ·작성자 메모·내부 링크 언급을 모두 추가해 발행 가능한 형태로 완성했습니다.
+2026-07-30 12:23:01,379 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-30 12:23:01,379 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-07-30 12:23:01,549 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-07-30 12:23:01,554 [ERROR] blogger_uploader — ❌ 중복 포스트 감지 — 업로드 차단: '레버리지 ETF 투자 위험성과 2026년 대응 전략 총정리'
+   기존 포스트: '단일종목 레버리지 ETF 투자 위험성과 대응 전략 (2026년)' (https://hoguasset.blogspot.com/2026/07/etf-2026_01246396645.html)
+2026-07-30 12:23:01,554 [WARNING] main —   업로드 실패 — 5s 대기 후 재시도 (1/3)
+2026-07-30 12:23:06,706 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-30 12:23:06,706 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-07-30 12:23:06,876 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-07-30 12:23:06,880 [ERROR] blogger_uploader — ❌ 중복 포스트 감지 — 업로드 차단: '레버리지 ETF 투자 위험성과 2026년 대응 전략 총정리'
+   기존 포스트: '단일종목 레버리지 ETF 투자 위험성과 대응 전략 (2026년)' (https://hoguasset.blogspot.com/2026/07/etf-2026_01246396645.html)
+2026-07-30 12:23:06,880 [WARNING] main —   업로드 실패 — 10s 대기 후 재시도 (2/3)
+2026-07-30 12:23:17,034 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-30 12:23:17,034 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-07-30 12:23:17,190 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-07-30 12:23:17,194 [ERROR] blogger_uploader — ❌ 중복 포스트 감지 — 업로드 차단: '레버리지 ETF 투자 위험성과 2026년 대응 전략 총정리'
+   기존 포스트: '단일종목 레버리지 ETF 투자 위험성과 대응 전략 (2026년)' (https://hoguasset.blogspot.com/2026/07/etf-2026_01246396645.html)
+2026-07-30 12:23:17,206 [ERROR] main —   ❌ Blogger 업로드 최종 실패 (3회 시도): '레버리지 ETF, 왜 위험하다는 걸까? 2026년 달라지는 점까지 쉽게 정리'
+2026-07-30 12:23:17,206 [INFO] main — 
+============================================================
+2026-07-30 12:23:17,206 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
+2026-07-30 12:23:17,206 [INFO] main — ============================================================
+2026-07-30 12:23:17,235 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-30 12:23:17,260 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
+2026-07-30 12:23:17,279 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-30 12:23:17,559 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-30 12:23:17,905 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-30 12:23:17,906 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-30 12:23:17,909 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-30 12:23:17,925 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 180 / 실패 2 / 대기 88)
+2026-07-30 12:23:17,925 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-30 12:23:17,925 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-30 12:23:17,926 [INFO] main — 대시보드 데이터 업데이트 완료

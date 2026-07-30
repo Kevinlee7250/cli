@@ -1,138 +1,3 @@
-🌱 씨앗 댓글 작성: '여행 항공권·숙소 할인 특가 비교, 실수 없이 예약하는 법'
-2026-07-30 05:46:27,672 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:46:31,687 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리자면, 항공권은 시크릿 모드(비공개 브라우징)로 검색하는 것도 꽤 효과적이에요. 쿠키 기록 때문에 같은 노선을 반복 검색하면...
-2026-07-30 05:49:31,821 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-30 05:49:31,822 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-07-30 05:49:31,823 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-30 05:49:31,823 [INFO] main — 
-============================================================
-2026-07-30 05:49:31,823 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-30 05:49:31,823 [INFO] main — ============================================================
-2026-07-30 05:49:31,848 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-30 05:49:31,866 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
-2026-07-30 05:49:31,881 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-30 05:49:32,182 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-30 05:49:32,597 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-30 05:49:32,909 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-30 05:49:32,910 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-30 05:49:32,912 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-30 05:49:32,923 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 183 / 실패 0 / 대기 88)
-2026-07-30 05:49:32,923 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-30 05:49:32,923 [INFO] dashboard_exporter —   포스트: 98개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-30 05:49:32,924 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-30 05:50:05,700 [INFO] main — ============================================================
-2026-07-30 05:50:05,701 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-30 05:50:05
-2026-07-30 05:50:05,701 [INFO] main — ============================================================
-2026-07-30 05:50:05,712 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-30 05:50:05,712 [INFO] keyword_collector — 포스팅 이력 코퍼스: 36개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-30 05:50:13,237 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-07-30 05:50:19,862 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:50:19,883 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-30 05:50:19,884 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-30 05:50:20,641 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-30 05:50:20,642 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-30 05:50:20,643 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
-2026-07-30 05:50:20,644 [INFO] keyword_collector — 유사 주제 제외 2개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', '골프 비기너 첫 필드 나가기 전 준비 체크리스트']
-2026-07-30 05:50:20,645 [INFO] keyword_collector —   [fallback] 1개: ['KBO 야구 직관 처음 가는 사람을 위한 준비물']
-2026-07-30 05:50:20,645 [INFO] keyword_collector —   [naver_realtime] 1개: ['여름휴가 항공권 호텔 반값 예약 꿀팁 2026']
-2026-07-30 05:50:20,645 [INFO] keyword_collector — 최종 선정 키워드 2개: ['KBO 야구 직관 처음 가는 사람을 위한 준비물', '여름휴가 항공권 호텔 반값 예약 꿀팁 2026']
-2026-07-30 05:50:20,645 [INFO] main — 수집된 키워드 2개: ['KBO 야구 직관 처음 가는 사람을 위한 준비물', '여름휴가 항공권 호텔 반값 예약 꿀팁 2026']
-2026-07-30 05:50:20,651 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-07-30 05:50:20,651 [INFO] main — 단독 포스트 대상 키워드 1개: ['KBO 야구 직관 처음 가는 사람을 위한 준비물']
-2026-07-30 05:50:20,670 [INFO] main — 
-[1/1] 키워드: 'KBO 야구 직관 처음 가는 사람을 위한 준비물'
-2026-07-30 05:50:20,670 [INFO] content_generator — 포스트 생성 중: 'KBO 야구 직관 처음 가는 사람을 위한 준비물'
-2026-07-30 05:50:28,710 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:50:28,711 [INFO] research_collector — 검색 의도: KBO 야구장에 처음 직관하러 가는 초보자가 필요한 준비물과 관람 팁을 알고 싶어함
-2026-07-30 05:50:45,311 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — 'KBO 야구 직관 처음 가는 사람을 위한 준비물'
-2026-07-30 05:51:01,243 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:51:01,244 [INFO] evidence_builder — 자료팩 생성: 사실 2개 — 'KBO 야구 직관 처음 가는 사람을 위한 준비물'
-2026-07-30 05:51:14,316 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:51:14,317 [INFO] source_validator — 출처 검증: 1/2개 통과, 등급 분포 {'D': 1, 'X': 1}
-2026-07-30 05:51:14,320 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-30 05:51:15,843 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:52:36,316 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:52:41,672 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-07-30 05:52:46,652 [WARNING] image_fetcher — 이미지 없음: 'KBO 야구 직관 처음 가는 사람을 위한 준비물, 티켓만 사면 끝이 아니다'
-2026-07-30 05:52:47,273 [WARNING] image_fetcher — 이미지 없음: 'KBO 야구 직관'
-2026-07-30 05:52:48,110 [WARNING] image_fetcher — 이미지 없음: 'KBO 야구 표만 사면 야구장 후기를'
-2026-07-30 05:52:48,110 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-07-30 05:52:48,110 [INFO] image_fetcher — 제목 썸네일 생성: 'KBO 야구 직관 처음 가는 사람을 위한 준비물, 티켓' (data URI, 1164B)
-2026-07-30 05:52:48,556 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-07-30 05:52:48,558 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-30 05:52:48,559 [INFO] content_generator — 포스트 생성 완료: 'KBO 야구 직관 처음 가는 사람을 위한 준비물, 티켓만 사면 끝이 아니다' (2932자, 이미지 1개)
-2026-07-30 05:52:49,381 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:53:09,470 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — 'KBO 야구 직관 처음 가는 사람을 위한 준비물, 티켓만 사면 '
-2026-07-30 05:53:09,470 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2932자로 글자 수는 충족하나 커뮤니티 후기 요약 위주로 구체적 개인 경험(날짜·직관 구장명 등)이 부족함
-2026-07-30 05:53:09,470 [INFO] adsense_validator —   ⚠️ SEO 최적화: 핵심 키워드가 문장 내 부자연스럽게 반복 삽입되어 키워드 스터핑 경향이 보임
-2026-07-30 05:53:09,470 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 충분하나 단락 길이가 500자 이상으로 매우 길어 가독성이 떨어짐
-2026-07-30 05:53:09,470 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용은 있으나 1인칭 직접 경험 서술이 없고 후기 재인용에 그침
-2026-07-30 05:53:09,470 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부가 확인되지 않아 SEO·가독성 측면에서 보완 필요
-2026-07-30 05:53:09,470 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~할 차례입니다', '~반복적으로 나옵니다' 등 정형화된 전환 문구와 동일 패턴 문장이 반복됨
-2026-07-30 05:53:09,478 [INFO] internal_linker — 내부 링크 후보 4개 발견
-2026-07-30 05:53:09,479 [INFO] internal_linker —   [1/5] '체크리스트' -> https://hogugolfntraval.blogspot.com/2026/07/kbo.html
-2026-07-30 05:53:09,482 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-30 05:53:09,483 [INFO] main —   제목: KBO 야구 직관 처음 가는 사람을 위한 준비물, 티켓만 사면 끝이 아니다
-2026-07-30 05:53:09,483 [INFO] main —   이미지: 1개 삽입
-2026-07-30 05:53:09,483 [INFO] main —   글자 수: 2932자
-2026-07-30 05:53:10,957 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:53:34,473 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-30 05:53:35,242 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:53:37,094 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — 'KBO 야구 직관 처음 가는 사람을 위한 준비물, 티켓만 사면 '
-2026-07-30 05:53:37,094 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 커뮤니티 후기 요약 위주로 구체적 개인 경험(날짜·장소·사진 등)이 부족함
-2026-07-30 05:53:37,094 [INFO] adsense_validator —   ⚠️ SEO 최적화: 정확히 동일한 긴 키워드 문구가 2800자 내 6회 이상 반복돼 부자연스러운 밀집도를 보임
-2026-07-30 05:53:37,094 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 양호하나 단락 구분 없이 긴 문장이 연속돼 가독성이 떨어짐
-2026-07-30 05:53:37,094 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용은 있으나 1인칭 직접 경험 서술이 없고 대부분 '후기에 따르면' 식 간접 인용
-2026-07-30 05:53:37,095 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음 — 정책 위반은 아니나 이미지 부재로 warn
-2026-07-30 05:53:37,095 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '이 글에서는', '~할 차례입니다' 등 전형적 전환 문구와 반복적 키워드 삽입 패턴이 AI 생성 특징을 보임
-2026-07-30 05:53:37,095 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 69/100, 권장: review) — 자동 수정 시도
-2026-07-30 05:53:37,095 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 기준 충족하나 커뮤니티 후기 요약 위주로 구체적 개인 경험(날짜·장소·사진 등)이 부족함
-2026-07-30 05:53:37,095 [WARNING] main —      🟡 [SEO 최적화] 정확히 동일한 긴 키워드 문구가 2800자 내 6회 이상 반복돼 부자연스러운 밀집도를 보임
-2026-07-30 05:53:37,095 [WARNING] main —      🟡 [구조 및 가독성] H2 6개는 양호하나 단락 구분 없이 긴 문장이 연속돼 가독성이 떨어짐
-2026-07-30 05:53:37,095 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 69/100, fail: 0개, warn: 6개
-2026-07-30 05:53:37,767 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:55:15,010 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-30 05:55:15,943 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:55:37,297 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2932자 → 4393자 (+1461자)
-2026-07-30 05:55:37,297 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-30 05:55:38,068 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:55:57,601 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — 'KBO 야구 직관 처음 가는 사람을 위한 준비물, 티켓만 사면 '
-2026-07-30 05:55:57,601 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 충분하나 각 섹션이 문단 구분 없이 500자 이상 이어지는 긴 블록으로 가독성이 떨어짐
-2026-07-30 05:55:57,601 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 포함 여부 확인 불가(0개로 추정)로 정책상 warn 처리
-2026-07-30 05:55:57,601 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '이제 ~차례입니다' 같은 전환 문구가 섹션마다 반복되어 정형화된 AI 패턴이 감지됨
-2026-07-30 05:55:57,601 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 69 → 84/100)
-2026-07-30 05:55:57,601 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-30 05:55:59,020 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:57:21,055 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-30 05:57:22,296 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-30 05:58:27,382 [INFO] final_editor —   ✏️ 제목 최종 교정: 'KBO 야구 직관 처음 가는 사람을 위한 준비물, 티켓만 사면 끝이 아니다' → 'KBO 야구 직관 처음 가는 사람을 위한 준비물 체크리스트'
-2026-07-30 05:58:27,383 [INFO] final_editor —   ✏️ 메타 설명 교정 (125자)
-2026-07-30 05:58:27,383 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고, 요약 박스·계절별 준비물 표·개인 경험 메모·주의사항·FAQ 6개·작성자 메모·내부 링크 언급을 추가해 발행 가능한 형태로 완성했으며, KBO 공식 자료 링크를 본문에 실제 URL로 연결했습니다.
-2026-07-30 05:58:27,477 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-30 05:58:27,477 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-07-30 05:58:27,568 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-07-30 05:58:27,572 [ERROR] blogger_uploader — ❌ 중복 포스트 감지 — 업로드 차단: 'KBO 야구 직관 처음 가는 사람을 위한 준비물 체크리스트'
-   기존 포스트: 'KBO 야구 직관 처음 가는 사람을 위한 준비물 체크리스트' (https://hogugolfntraval.blogspot.com/2026/07/kbo.html)
-2026-07-30 05:58:27,573 [WARNING] main —   업로드 실패 — 5s 대기 후 재시도 (1/3)
-2026-07-30 05:58:32,646 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-30 05:58:32,647 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-07-30 05:58:32,747 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-07-30 05:58:32,751 [ERROR] blogger_uploader — ❌ 중복 포스트 감지 — 업로드 차단: 'KBO 야구 직관 처음 가는 사람을 위한 준비물 체크리스트'
-   기존 포스트: 'KBO 야구 직관 처음 가는 사람을 위한 준비물 체크리스트' (https://hogugolfntraval.blogspot.com/2026/07/kbo.html)
-2026-07-30 05:58:32,751 [WARNING] main —   업로드 실패 — 10s 대기 후 재시도 (2/3)
-2026-07-30 05:58:42,829 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
 2026-07-30 05:58:42,830 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
 2026-07-30 05:58:42,939 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
 2026-07-30 05:58:42,943 [ERROR] blogger_uploader — ❌ 중복 포스트 감지 — 업로드 차단: 'KBO 야구 직관 처음 가는 사람을 위한 준비물 체크리스트'
@@ -633,3 +498,125 @@
 2026-07-30 12:23:17,925 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-30 12:23:17,925 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-30 12:23:17,926 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-30 23:13:32,512 [INFO] main — ============================================================
+2026-07-30 23:13:32,512 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-30 23:13:32
+2026-07-30 23:13:32,512 [INFO] main — ============================================================
+2026-07-30 23:13:32,521 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
+2026-07-30 23:13:32,521 [INFO] keyword_collector — 포스팅 이력 코퍼스: 40개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-07-30 23:13:36,586 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-30 23:13:43,042 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:13:43,057 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-07-30 23:13:43,057 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-07-30 23:13:43,472 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-07-30 23:13:43,842 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-30 23:13:44,266 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-30 23:13:44,268 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-07-30 23:13:44,269 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-07-30 23:13:44,269 [INFO] keyword_collector —   [naver_realtime] 2개: ['전국 치킨 맛집 지도로 떠나는 K치킨 투어 코스', '강원도 삼척 여름 피서 명소 완벽 정리']
+2026-07-30 23:13:44,270 [INFO] keyword_collector — 최종 선정 키워드 2개: ['전국 치킨 맛집 지도로 떠나는 K치킨 투어 코스', '강원도 삼척 여름 피서 명소 완벽 정리']
+2026-07-30 23:13:44,270 [INFO] main — 수집된 키워드 2개: ['전국 치킨 맛집 지도로 떠나는 K치킨 투어 코스', '강원도 삼척 여름 피서 명소 완벽 정리']
+2026-07-30 23:13:44,273 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-07-30 23:13:44,273 [INFO] main — 단독 포스트 대상 키워드 1개: ['전국 치킨 맛집 지도로 떠나는 K치킨 투어 코스']
+2026-07-30 23:13:44,286 [INFO] main — 
+[1/1] 키워드: '전국 치킨 맛집 지도로 떠나는 K치킨 투어 코스'
+2026-07-30 23:13:44,286 [INFO] content_generator — 포스트 생성 중: '전국 치킨 맛집 지도로 떠나는 K치킨 투어 코스'
+2026-07-30 23:13:52,124 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:13:52,125 [INFO] research_collector — 검색 의도: 전국 각지의 유명 치킨 맛집을 소개하고 여행 코스로 묶어 실제 방문 계획을 세울 수 있도록 정보를 제공
+2026-07-30 23:14:14,017 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '전국 치킨 맛집 지도로 떠나는 K치킨 투어 코스'
+2026-07-30 23:14:31,371 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:14:31,372 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '전국 치킨 맛집 지도로 떠나는 K치킨 투어 코스'
+2026-07-30 23:14:38,153 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:14:38,154 [INFO] source_validator — 출처 검증: 4/4개 통과, 등급 분포 {'D': 3, 'C': 1}
+2026-07-30 23:14:38,155 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
+2026-07-30 23:14:38,155 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-30 23:14:39,352 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:15:59,818 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:16:08,545 [INFO] content_generator — 팩트체크: 통과
+2026-07-30 23:16:10,207 [INFO] image_fetcher — 이미지 수집 성공: '전국 치킨 맛집 지도로 짜는 K치킨 투어 코스' → 제목='바삭바삭 추억의 맛 전국 통닭 맛집 BEST 5' (관련성=0.25)
+2026-07-30 23:16:11,897 [INFO] image_fetcher — 대체 이미지 수집: '전국 치킨 맛집' → 제목='가장 돈 잘 버는 가맹점 ‘교촌치킨’ 전국 매장 가장 많은 곳은 ‘BBQ' (관련성=0.25)
+2026-07-30 23:16:11,897 [INFO] image_fetcher — 이미지 수집 성공: '전국 치킨 맛집' → 제목='가장 돈 잘 버는 가맹점 ‘교촌치킨’ 전국 매장 가장 많은 곳은 ‘BBQ' (관련성=0.25)
+2026-07-30 23:16:12,687 [INFO] image_fetcher — 이미지 수집 성공: '전국 치킨 지도 필요한 지역 서울에서' → 제목='치킨을 따라 떠나는 전국 미식 여행!' (관련성=0.17)
+2026-07-30 23:16:13,899 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:16:13,900 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-07-30 23:16:13,900 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-07-30 23:16:13,902 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-07-30 23:16:13,903 [INFO] content_generator — 포스트 생성 완료: '전국 치킨 맛집 지도로 짜는 K치킨 투어 코스' (2811자, 이미지 2개)
+2026-07-30 23:16:14,633 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:16:29,213 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '전국 치킨 맛집 지도로 짜는 K치킨 투어 코스'
+2026-07-30 23:16:29,213 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준(2811자) 충족하나 개인 경험·구체적 수치 없이 일반 후기 요약 위주로 구성됨
+2026-07-30 23:16:29,213 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개와 FAQ는 있으나 1인칭 직접 경험 서술이 없어 신뢰 신호가 약함
+2026-07-30 23:16:29,213 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않은 텍스트 전용 글로 정책 위반은 아니나 가독성 측면에서 경고
+2026-07-30 23:16:29,213 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '실제 사례들을 보면', '~라고 합니다', 매 섹션 전환 문구 등 전형적 AI 서술 패턴이 반복됨
+2026-07-30 23:16:29,219 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-30 23:16:29,220 [INFO] internal_linker —   [1/5] '통닭거리' -> https://www.hoguwhat.com/2026/07/blog-post_27.html
+2026-07-30 23:16:29,224 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-30 23:16:29,225 [INFO] main —   제목: 전국 치킨 맛집 지도로 짜는 K치킨 투어 코스
+2026-07-30 23:16:29,225 [INFO] main —   이미지: 2개 삽입
+2026-07-30 23:16:29,225 [INFO] main —   글자 수: 2811자
+2026-07-30 23:16:31,012 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:16:50,370 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '전국 치킨 맛집 지도로 짜는 K치킨 투어 코스'
+2026-07-30 23:16:50,370 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족(2811자)이나 개인 경험 없이 '후기를 종합하면', '실제 사례들을 보면' 식의 간접 정보 재구성이 중심임
+2026-07-30 23:16:50,370 [INFO] adsense_validator —   ⚠️ SEO 최적화: 제목('짜는')과 키워드('떠나는')가 미세하게 불일치하며 검색 의도는 유사하게 일치함
+2026-07-30 23:16:50,370 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 포함되나 1인칭 직접 경험 서술이 없고 대부분 '~라고 합니다' 식 간접 인용에 의존함
+2026-07-30 23:16:50,370 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 정보가 없어 이미지 부재로 판단됨(저작권 위반은 없음)
+2026-07-30 23:16:50,370 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '첫 번째~다섯 번째' 나열, '~궁금해지실 겁니다/궁금해질 차례입니다' 반복 전환구 등 전형적 AI 패턴이 다수 발견됨
+2026-07-30 23:16:50,370 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-07-30 23:16:50,370 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족(2811자)이나 개인 경험 없이 '후기를 종합하면', '실제 사례들을 보면' 식의 간접 정보 재구성이 중심임
+2026-07-30 23:16:50,370 [WARNING] main —      🟡 [SEO 최적화] 제목('짜는')과 키워드('떠나는')가 미세하게 불일치하며 검색 의도는 유사하게 일치함
+2026-07-30 23:16:50,370 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 4개 포함되나 1인칭 직접 경험 서술이 없고 대부분 '~라고 합니다' 식 간접 인용에 의존함
+2026-07-30 23:16:50,370 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-07-30 23:16:51,128 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:18:03,892 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2811자 → 2478자 (-333자)
+2026-07-30 23:18:03,892 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-07-30 23:18:04,648 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:18:18,381 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '전국 치킨 맛집 지도로 짜는 K치킨 투어 코스'
+2026-07-30 23:18:18,381 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 경험(날짜·가격·대기시간)은 풍부하나 글자 수가 2478자로 2500자 기준에 미달
+2026-07-30 23:18:18,381 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2가 3개로 기준(4개 이상)에 못 미치고 일부 단락이 500자 이상으로 김
+2026-07-30 23:18:18,381 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되지 않아 가독성·SEO 측면에서 보완 필요
+2026-07-30 23:18:18,381 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
+2026-07-30 23:18:18,381 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-07-30 23:18:19,559 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:19:40,371 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-30 23:19:41,163 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:19:50,711 [INFO] final_editor —   ✏️ 제목 최종 교정: '전국 치킨 맛집 지도로 짜는 K치킨 투어 코스' → '전국 치킨 맛집 지도로 떠나는 K치킨 투어 코스 가이드'
+2026-07-30 23:19:50,712 [INFO] final_editor —   ✏️ 메타 설명 교정 (82자)
+2026-07-30 23:19:50,712 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 재정비하고, 긴 문단을 2~4문장 단위로 분리했으며, 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 추가해 발행 형식을 완성했습니다.
+2026-07-30 23:19:50,839 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-30 23:19:50,839 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-07-30 23:19:50,942 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-07-30 23:19:50,951 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-07-30 23:19:50,952 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-07-30 23:19:51,442 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/k_0686047371.html
+2026-07-30 23:19:51,451 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/k_0686047371.html
+2026-07-30 23:20:24,547 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:20:24,548 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-07-30 23:20:24,548 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-07-30 23:20:24,554 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '전국 치킨 맛집 지도로 떠나는 K치킨 투어 코스 가이드'
+2026-07-30 23:20:26,605 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-30 23:20:30,950 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리면, 통닭거리나 골목 상권은 대부분 현금이나 계좌이체만 받는 오래된 가게들이 섞여 있어서 카드 결제 안 되는 곳이 꽤 많더라...
+2026-07-30 23:23:31,077 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-07-30 23:23:31,078 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-07-30 23:23:31,078 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-07-30 23:23:31,078 [INFO] main — 
+============================================================
+2026-07-30 23:23:31,078 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-30 23:23:31,078 [INFO] main — ============================================================
+2026-07-30 23:23:31,100 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-30 23:23:31,117 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
+2026-07-30 23:23:31,129 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-30 23:23:31,443 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-30 23:23:31,900 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-30 23:23:32,270 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-30 23:23:32,271 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-30 23:23:32,273 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-30 23:23:32,284 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 180 / 실패 0 / 대기 88)
+2026-07-30 23:23:32,285 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-30 23:23:32,285 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-30 23:23:32,285 [INFO] main — 대시보드 데이터 업데이트 완료

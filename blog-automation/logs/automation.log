@@ -1,72 +1,3 @@
-2026-07-31 06:27:42,092 [INFO] image_fetcher — 이미지 수집 성공: '전세값 상승기 전세' → 제목='62주째 상승중인 전세값' (관련성=0.20)
-2026-07-31 06:27:43,880 [INFO] image_fetcher — 이미지 수집 성공: '전세값 상승기 서울 만의 기준' → 제목='서울 아파트 전세값 '62주 연속 상승'' (관련성=0.40)
-2026-07-31 06:27:48,811 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:27:48,812 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-07-31 06:27:48,812 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-07-31 06:27:48,814 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-07-31 06:27:48,816 [INFO] content_generator — 포스트 생성 완료: '전세값 급등기, 계약 도장 찍기 전 확인해야 할 5가지 — 서울 12년 만의 최대 상승폭이 말해주는 것' (2883자, 이미지 2개)
-2026-07-31 06:27:51,297 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:28:13,764 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-31 06:28:17,128 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:28:19,668 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '전세값 급등기, 계약 도장 찍기 전 확인해야 할 5가지 — 서울'
-2026-07-31 06:28:19,668 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 뉴스·통계 재구성 위주로 개인 경험이나 독자적 인사이트가 부족함
-2026-07-31 06:28:19,669 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 적절하나 일부 구간이 줄바꿈 없이 긴 문단으로 뭉쳐 가독성이 떨어짐
-2026-07-31 06:28:19,669 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 3개 출처 인용과 전문가 언급은 있으나 1인칭 경험 서술이 없음
-2026-07-31 06:28:19,669 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 확인되지 않아 저작권 위반은 없으나 이미지 부재 상태
-2026-07-31 06:28:19,669 [INFO] adsense_validator —   ❌ AI 생성 의심도: ‘제기됩니다되고 있습니다’ 등 문법이 깨진 중복 문장이 존재해 미검수 AI 생성 흔적이 뚜렷함
-2026-07-31 06:28:19,669 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] ‘제기됩니다되고 있습니다’ 등 문법이 깨진 중복 문장이 존재해 미검수 AI 생성 흔적이 뚜렷함
-2026-07-31 06:28:19,669 [WARNING] adsense_validator —   🔴 본문 중 '잔금일과 전입신고일 사이에... 제기됩니다되고 있습니다' 문장이 중복·비문 상태로 미검수 AI 생성 흔적이 남아있음
-2026-07-31 06:28:19,674 [INFO] internal_linker — 내부 링크 후보 4개 발견
-2026-07-31 06:28:19,676 [INFO] internal_linker —   [1/5] '마지막' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0278943539
-2026-07-31 06:28:19,678 [INFO] internal_linker —   [2/5] '합니다' -> https://hoguasset.blogspot.com/2026/07/8_01540367504.html
-2026-07-31 06:28:19,681 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-31 06:28:19,681 [INFO] main —   제목: 전세값 급등기, 계약 도장 찍기 전 확인해야 할 5가지 — 서울 12년 만의 최대 상승폭이 말해주는 것
-2026-07-31 06:28:19,681 [INFO] main —   이미지: 2개 삽입
-2026-07-31 06:28:19,681 [INFO] main —   글자 수: 2883자
-2026-07-31 06:28:20,409 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:28:37,659 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '전세값 급등기, 계약 도장 찍기 전 확인해야 할 5가지 — 서울'
-2026-07-31 06:28:37,659 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 수치·통계는 구체적이나 개인 경험·독자적 인사이트 없이 뉴스·통계 재구성에 가까움
-2026-07-31 06:28:37,659 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 500자 이상 장문 단락이 다수 존재
-2026-07-31 06:28:37,659 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 인용되나 1인칭 경험 서술 부재, 전문가 표현은 일반화된 인용 수준
-2026-07-31 06:28:37,659 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가/부재로 저작권 위반은 없으나 시각자료 부족
-2026-07-31 06:28:37,659 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 일부 문장에 편집 오류(중복 서술)와 정형화된 격식체 패턴이 관찰됨
-2026-07-31 06:28:37,659 [WARNING] adsense_validator —   🔴 "근저당이 추가로 설정될 경우 문제가 될 수 있다는 우려가 제기됩니다되고 있습니다" 등 문장 중복·비문 오류 수정 필요
-2026-07-31 06:28:37,659 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
-2026-07-31 06:28:37,660 [WARNING] main —      🔴 "근저당이 추가로 설정될 경우 문제가 될 수 있다는 우려가 제기됩니다되고 있습니다" 등 문장 중복·비문 오류 수정 필요
-2026-07-31 06:28:37,660 [WARNING] main —      🟡 [원본성 및 품질] 수치·통계는 구체적이나 개인 경험·독자적 인사이트 없이 뉴스·통계 재구성에 가까움
-2026-07-31 06:28:37,660 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 구조는 양호하나 500자 이상 장문 단락이 다수 존재
-2026-07-31 06:28:37,660 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3개 인용되나 1인칭 경험 서술 부재, 전문가 표현은 일반화된 인용 수준
-2026-07-31 06:28:37,660 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
-2026-07-31 06:28:40,445 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:29:56,722 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-31 06:29:58,630 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:30:23,209 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2883자 → 4324자 (+1441자)
-2026-07-31 06:30:23,210 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-31 06:30:24,495 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:30:38,391 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '전세값 급등기, 계약 도장 찍기 전 확인해야 할 5가지 — 서울'
-2026-07-31 06:30:38,391 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 초반부에 500자 이상 이어지는 단락이 다수 존재해 가독성 저하
-2026-07-31 06:30:38,391 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문 내 이미지 정보 없음 — 저작권 위반은 아니나 이미지 부재로 warn 처리
-2026-07-31 06:30:38,392 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 90/100)
-2026-07-31 06:30:38,392 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-07-31 06:30:39,675 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:32:00,983 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-31 06:32:03,092 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:32:33,169 [INFO] final_editor —   ✏️ 제목 최종 교정: '전세값 급등기, 계약 도장 찍기 전 확인해야 할 5가지 — 서울 12년 만의 최대 상승폭이 말해주는 것' → '전세값 상승기, 계약 전 꼭 확인할 체크리스트 5가지'
-2026-07-31 06:32:33,169 [INFO] final_editor —   ✏️ 메타 설명 교정 (93자)
-2026-07-31 06:32:33,170 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 규격에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분할했으며, 서울 보증료 지원 사업 섹션·FAQ·주의사항·작성자 메모를 신규 작성해 발행 형태로 완성했습니다.
-2026-07-31 06:32:33,245 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-31 06:32:33,245 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-07-31 06:32:33,325 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-07-31 06:32:33,338 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-31 06:32:33,338 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '전세값 상승기 전세 계약 전 꼭 확인해야 할 체크리스트' — 면책·팩트체크 확인 권장
-2026-07-31 06:32:33,338 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-07-31 06:32:34,354 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/5.html
-2026-07-31 06:32:34,366 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/5.html
-2026-07-31 06:33:08,277 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:33:08,278 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
 2026-07-31 06:33:08,278 [INFO] main —   📱 소셜 콘텐츠 생성 완료
 2026-07-31 06:33:08,288 [INFO] comment_manager — 
 🌱 씨앗 댓글 작성: '전세값 상승기, 계약 전 꼭 확인할 체크리스트 5가지'
@@ -567,3 +498,64 @@
 2026-07-31 14:26:27,312 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-31 14:26:27,312 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-31 14:26:27,312 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-31 14:27:10,839 [INFO] main — 검토 모드 — pending_posts.json에 저장합니다
+2026-07-31 14:27:10,840 [INFO] main — ============================================================
+2026-07-31 14:27:10,840 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-31 14:27:10
+2026-07-31 14:27:10,840 [INFO] main — ============================================================
+2026-07-31 14:27:10,858 [INFO] main — 수집된 키워드 1개: ['걸그룹 리센느']
+2026-07-31 14:27:10,858 [INFO] main — 단독 포스트 대상 키워드 1개: ['걸그룹 리센느']
+2026-07-31 14:27:10,873 [INFO] main — 
+[1/1] 키워드: '걸그룹 리센느'
+2026-07-31 14:27:10,873 [INFO] content_generator — 포스트 생성 중: '걸그룹 리센느'
+2026-07-31 14:27:16,292 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:27:16,316 [INFO] research_collector — 검색 의도: 걸그룹 '리센느'에 대한 기본 정보(멤버, 데뷔일, 소속사 등)를 알고 싶은 검색 의도
+2026-07-31 14:27:28,064 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '걸그룹 리센느'
+2026-07-31 14:27:43,833 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:27:43,835 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '걸그룹 리센느'
+2026-07-31 14:28:04,013 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:28:04,014 [INFO] source_validator — 출처 검증: 6/8개 통과, 등급 분포 {'C': 2, 'B': 4, 'X': 2}
+2026-07-31 14:28:04,017 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-07-31 14:28:04,017 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-31 14:28:04,789 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:29:29,376 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-07-31 14:29:31,563 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:29:47,053 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 2건 자동 수정 적용
+2026-07-31 14:29:48,016 [INFO] image_fetcher — 이미지 수집 성공: '리센느 음방 1위 신드롬, 팬덤 경제로 보면 무슨 의미일까' → 제목=''역주행 신드롬' 리센느, 음방 1위까지 달성... 데뷔 2년만의 성과' (관련성=0.38)
+2026-07-31 14:29:48,710 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느' → 제목=''신인 걸그룹' 리센느, '대박 냄새' 풍기며 K-팝 생태계 등장(종합)' (관련성=1.00)
+2026-07-31 14:29:49,580 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느 화제인 데뷔 리센느는' → 제목='[E포토] '데뷔' 리센느, '5세대 걸그룹 대전에 출사표'' (관련성=0.60)
+2026-07-31 14:29:56,233 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:29:56,234 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-31 14:29:56,236 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-31 14:29:56,238 [INFO] content_generator — 포스트 생성 완료: '리센느 음방 1위 신드롬, 팬덤 경제로 보면 무슨 의미일까' (3091자, 이미지 3개)
+2026-07-31 14:29:57,207 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:30:12,775 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '리센느 음방 1위 신드롬, 팬덤 경제로 보면 무슨 의미일까'
+2026-07-31 14:30:12,775 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준을 충족하나 기존 뉴스·기사 내용을 재구성한 수준으로 독창적 경험이나 1차 정보는 부족함
+2026-07-31 14:30:12,775 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어짐
+2026-07-31 14:30:12,775 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 경험이나 저자 전문성 신호가 부족함
+2026-07-31 14:30:12,775 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 사용 여부 확인 불가 및 이미지 부재로 가독성·SEO 측면에서 경고
+2026-07-31 14:30:12,775 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~것으로 전해집니다', '~볼 수 있습니다' 등 보고서식 문체가 반복되어 AI 생성 톤이 다소 감지됨
+2026-07-31 14:30:12,783 [INFO] internal_linker — 내부 링크 후보 1개 발견
+2026-07-31 14:30:12,785 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-07-31 14:30:12,785 [INFO] main —   제목: 리센느 음방 1위 신드롬, 팬덤 경제로 보면 무슨 의미일까
+2026-07-31 14:30:12,785 [INFO] main —   이미지: 3개 삽입
+2026-07-31 14:30:12,785 [INFO] main —   글자 수: 3091자
+2026-07-31 14:30:12,785 [INFO] main —   [검토 모드] 업로드 건너뜀
+2026-07-31 14:30:12,797 [INFO] main — 
+============================================================
+2026-07-31 14:30:12,797 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-31 14:30:12,797 [INFO] main — ============================================================
+2026-07-31 14:30:12,811 [INFO] dashboard_exporter —   검토 대기 저장: 리센느 음방 1위 신드롬, 팬덤 경제로 보면 무슨 의미일까 (11603자 HTML)
+2026-07-31 14:30:12,829 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 132개)
+2026-07-31 14:30:12,829 [INFO] main — 검토 대기 포스트 저장 완료
+2026-07-31 14:30:12,859 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-31 14:30:12,880 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
+2026-07-31 14:30:12,896 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-31 14:30:13,049 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-31 14:30:13,261 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-31 14:30:13,468 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-31 14:30:13,469 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-31 14:30:13,472 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-31 14:30:13,487 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 175 / 실패 0 / 대기 93)
+2026-07-31 14:30:13,487 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-31 14:30:13,487 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-31 14:30:13,488 [INFO] main — 대시보드 데이터 업데이트 완료

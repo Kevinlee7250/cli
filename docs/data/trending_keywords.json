@@ -1,69 +1,75 @@
 {
-  "collectedAt": "2026-07-31T20:00:13.070088+00:00",
+  "collectedAt": "2026-07-31T21:12:09.240425+00:00",
   "sources": {
     "googleTrends": [
       {
-        "keyword": "주식시장",
+        "keyword": "대통령",
         "rank": 1,
-        "traffic": "500+",
+        "traffic": "1000+",
         "source": "google_trends"
       },
       {
-        "keyword": "birmingham vs barcelona",
+        "keyword": "아틀레티코 마드리드",
         "rank": 2,
-        "traffic": "500+",
+        "traffic": "1000+",
         "source": "google_trends"
       },
       {
-        "keyword": "버밍엄 대 바르셀로나",
+        "keyword": "주식시장",
         "rank": 3,
         "traffic": "2000+",
         "source": "google_trends"
       },
       {
-        "keyword": "사극",
+        "keyword": "birmingham vs barcelona",
         "rank": 4,
         "traffic": "500+",
         "source": "google_trends"
       },
       {
-        "keyword": "디즈니",
+        "keyword": "바르셀로나",
         "rank": 5,
         "traffic": "100+",
         "source": "google_trends"
       },
       {
-        "keyword": "제주항공",
+        "keyword": "버밍엄 대 바르셀로나",
         "rank": 6,
+        "traffic": "5000+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "사극",
+        "rank": 7,
+        "traffic": "500+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "디즈니",
+        "rank": 8,
+        "traffic": "100+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "제주항공",
+        "rank": 9,
         "traffic": "100+",
         "source": "google_trends"
       },
       {
         "keyword": "thứ hạng của đội tuyển bóng đá quốc gia việt nam gặp đội tuyển bóng đá quốc gia singapore",
-        "rank": 7,
-        "traffic": "2000+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "데드캣",
-        "rank": 8,
-        "traffic": "1000+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "넥슨",
-        "rank": 9,
-        "traffic": "500+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "복도",
         "rank": 10,
         "traffic": "2000+",
         "source": "google_trends"
       }
     ],
     "naverNews": [
+      {
+        "headline": "역대급 이익에 부실채권 확 줄여도…은행 건전성은 뒷걸음질",
+        "category": "경제",
+        "source": "naver_rss",
+        "keyword": "역대급 이익에 부실채권 줄여도 은행 건전성은"
+      },
       {
         "headline": "엔화 개입 하루 만에 다시 160엔대 … 금리 동결한 일본은행, 12월엔 올릴까",
         "category": "경제",
@@ -93,12 +99,6 @@
         "category": "경제",
         "source": "naver_rss",
         "keyword": "금감원 ETF 불완전판매 시중은행 검사 착수"
-      },
-      {
-        "headline": "한수원 '항암 원료' 자회사 세운다",
-        "category": "경제",
-        "source": "naver_rss",
-        "keyword": "한수원 항암 원료 자회사 세운다"
       },
       {
         "headline": "SOOP, 2Q 매출 1038억·영업익 126억",
@@ -171,6 +171,216 @@
         "category": "생활문화",
         "source": "naver_rss",
         "keyword": "비트코인 저리 가라 어질어질 롤러코스피"
+      },
+      {
+        "headline": "바나나 기법부터 조건검색식까지…조진표의 실전 투자 노트",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "바나나 기법부터 조건검색식까지 조진표의 실전 투자"
+      },
+      {
+        "headline": "주가 폭락 때 사표 냈다…월급 300만원→40억 부자 된 부부",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "주가 폭락 사표 냈다 월급 만원"
+      },
+      {
+        "headline": "맥주에서 훔친 샴페인…빌까르 살몽 13도의 비밀 [전형민의 와인프릭]",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "맥주에서 훔친 샴페인 빌까르 살몽 도의"
+      },
+      {
+        "headline": "“예금·주식·연금으로 5분만에 쪼개진다”…한국인이 269조 굴리는 방...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "예금 주식 연금으로 분만에 쪼개진다 한국인이"
+      },
+      {
+        "headline": "AI 고속도로 먼저 깐 아마존 통행세 급증…도로깔 때마다 돈 버는 삼전...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "AI 고속도로 먼저 아마존 통행세 급증"
+      },
+      {
+        "headline": "선우용여, ‘치매 의심’ 40억 자산가 전원주에..“돈 안 쓰고 떠나면 종...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "선우용여 치매 의심 자산가 전원주에 쓰고"
+      },
+      {
+        "headline": "소아청소년 비만 '빨간불'…당 함량별 설탕부담금 카드꺼내나",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "소아청소년 비만 빨간불 함량별 설탕부담금 카드꺼내나"
+      },
+      {
+        "headline": "“할머니도 여기서 아빠를”...무간판 한의원에 代 이어 몰려드는 난임...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "할머니도 여기서 아빠를 무간판 한의원에 이어"
+      },
+      {
+        "headline": "언제까지 임신한 여성을 방치할 겁니까",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "언제까지 임신한 여성을 방치할 겁니까"
+      },
+      {
+        "headline": "“두 달 뒤 다시 검사하세요”…보험 가입 때도 알려야 할까",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "다시 검사하세요 보험 가입 때도 알려야"
+      },
+      {
+        "headline": "美 빅테크 틈새 정조준…정밀진단 노리는 K-슬립테크 기업 살펴보니",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "빅테크 틈새 정조준 정밀진단 노리는 슬립테크"
+      },
+      {
+        "headline": "대개협, 비급여 의원 페널티 논란에 &quot;필수의료 근본대책 먼저&quot;",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "대개협 비급여 의원 페널티 논란에 quot"
+      },
+      {
+        "headline": "[인터뷰] ②송영길 &quot;호남서 '제2의 DJ'로 불려…李대통령과 AI의 길 만들...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "인터뷰 송영길 quot 호남서 DJ 불려"
+      },
+      {
+        "headline": "7500억으로 15GW AIDC 개발…SKT의 새 승부수[빛이 나는 비즈]",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "7500 억으로 GW AIDC 개발 SKT"
+      },
+      {
+        "headline": "취임 한 달 韓총리의 국정 색깔…'현장·효율·조용한 리더십'",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "취임 총리의 국정 색깔 현장 효율"
+      },
+      {
+        "headline": "美·日·韓 등 11개국, '북한 IT 인력 사기' 공동경보 발령",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "개국 북한 IT 인력 사기 공동경보"
+      },
+      {
+        "headline": "美, 北 IT 위장취업 '돈줄' 정조준…영 김, 차단법 발의",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "IT 위장취업 돈줄 정조준 차단법 발의"
+      },
+      {
+        "headline": "미 하원서 北 IT 노동자 사기성 위장취업 저지위한 초당적 법안 발의",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "하원서 IT 노동자 사기성 위장취업 저지위한"
+      },
+      {
+        "headline": "동화약품 윤인호 체제 마케팅도 바꼈다…TV줄이고 디지털↑",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "동화약품 윤인호 체제 마케팅도 바꼈다 TV"
+      },
+      {
+        "headline": "폭염에 뛰는 물가, 줄어드는 월급…실질임금 또 마이너스?",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "폭염에 뛰는 물가 줄어드는 월급 실질임금"
+      },
+      {
+        "headline": "환경재단·현대차, 인니에 ‘K-자원순환’을 심다",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "환경재단 현대차 인니에 자원순환 심다"
+      },
+      {
+        "headline": "맥도날드 불매한 도시?…20년간 떠돈 ‘폐점 미스터리’ [권용훈의 트렌...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "맥도날드 불매한 도시 년간 떠돈 폐점"
+      },
+      {
+        "headline": "'정상영업' 홈플 익스, 신선식품으로 경쟁력 입증할까",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "정상영업 홈플 익스 신선식품으로 경쟁력 입증할까"
+      },
+      {
+        "headline": "8.4배 뛴 주방 이모 시급…4000원 김밥 팔면 200원 남는다",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "주방 이모 시급 4000 김밥 팔면"
+      },
+      {
+        "headline": "&quot;행복주택 심사 통과 하려고&quot; 복권 5억 당첨금 일부러 늦게 탄 청년",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "quot 행복주택 심사 통과 하려고 quot"
+      },
+      {
+        "headline": "[제약공시 책갈피] 7월 5주차 - 동성제약·엘앤씨바이오·일양약품 外",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "제약공시 책갈피 주차 동성제약 엘앤씨바이오 일양약품"
+      },
+      {
+        "headline": "[분양캘린더] 부산 더샵트리센트 등 3034가구 분양",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "분양캘린더 부산 더샵트리센트 3034 가구 분양"
+      },
+      {
+        "headline": "[부동산캘린더] 내주 부산 '더샵트리센트' 등 전국 3천34가구 분양",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "부동산캘린더 내주 부산 더샵트리센트 전국 가구"
+      },
+      {
+        "headline": "&quot;작은 단지라도 좋아&quot;...306대 1 경쟁률 쓴 이곳 [권준호의 요·아·정]",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "quot 작은 단지라도 좋아 quot 경쟁률"
+      },
+      {
+        "headline": "부산 더샵트리센트 등 전국 3034가구 분양[분양캘린더]",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "부산 더샵트리센트 전국 3034 가구 분양"
       }
     ],
     "highCPC": [
@@ -385,12 +595,53 @@
         "source": "high_cpc"
       }
     ],
-    "aiRecommended": []
+    "aiRecommended": [
+      {
+        "keyword": "여름휴가 항공권 특가 예약 타이밍 직접 비교해보니",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "에어컨 전기요금 폭탄 피하는 법 한 달 실천 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "국내 계곡 물놀이 명소 아이와 다녀온 솔직 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "냉방병 vs 온열질환 증상 구분과 예방법 직접 겪어보니",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "미드저니 vs 스테이블디퓨전 실사용 비교 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "여름 캠핑 준비물 체크리스트 초보가 직접 다녀와서 정리",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "스마트워치 건강관리 기능 한 달 써본 솔직 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "청년도약계좌 만기 후 실제 받은 금액 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "국내 워터파크 요금 비교 실제 다녀온 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "여름철 자동차 배터리 방전 예방 점검 직접 해보니",
+        "source": "ai_generated"
+      }
+    ]
   },
   "stats": {
     "googleTrends": 10,
-    "naverNews": 18,
+    "naverNews": 48,
     "highCPC": 47,
-    "aiRecommended": 0
+    "aiRecommended": 10
   }
 }

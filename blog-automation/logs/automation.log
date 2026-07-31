@@ -1,122 +1,3 @@
-2026-07-31 06:15:33,086 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·표 형식 나열과 '그렇다면 ~까요' 반복 패턴이 AI 생성 특유의 전개 방식과 유사함
-2026-07-31 06:15:33,093 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-31 06:15:33,095 [INFO] internal_linker —   [1/5] '여행지' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_28.ht
-2026-07-31 06:15:33,097 [INFO] internal_linker —   [2/5] '지도로' -> https://www.hoguwhat.com/2026/07/blog-post_27.html
-2026-07-31 06:15:33,102 [INFO] internal_linker —   [3/5] '피하는' -> https://www.hoguwhat.com/2026/07/2026_0201740258.html
-2026-07-31 06:15:33,102 [INFO] internal_linker — 내부 링크 3개 삽입 완료
-2026-07-31 06:15:33,103 [INFO] main —   제목: 강릉 여행 직접 조사해보니 실망 포인트
-2026-07-31 06:15:33,103 [INFO] main —   이미지: 2개 삽입
-2026-07-31 06:15:33,103 [INFO] main —   글자 수: 2511자
-2026-07-31 06:15:38,412 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:15:59,400 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — '강릉 여행 직접 조사해보니 실망 포인트'
-2026-07-31 06:15:59,400 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 체크리스트·후기 종합형 서술 위주로 실제 개인 경험(날짜·장소·사진 등 1차 자료)이 부족함
-2026-07-31 06:15:59,401 [INFO] adsense_validator —   ⚠️ SEO 최적화: 제목의 '직접 조사해보니'와 키워드 '직접 가봤더니'가 불일치하고 본문에도 정확한 키워드 반복이 거의 없음
-2026-07-31 06:15:59,401 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개는 우수하나 체크리스트·후기비교 단락 일부가 500자 이상으로 길게 이어짐
-2026-07-31 06:15:59,401 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 언급되나 본문 내 명시적 인용 부족, 1인칭 직접 체험 서술이 거의 없어 경험 신뢰성 약함
-2026-07-31 06:15:59,401 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 언급이 전혀 없어 이미지 부재로 판단됨
-2026-07-31 06:15:59,401 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면 ~까요', 반복적 체크리스트·표 형식, 정형화된 질문-답 전개 등 전형적 AI 생성 패턴이 다수 관찰됨
-2026-07-31 06:15:59,401 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 69/100, 권장: review) — 자동 수정 시도
-2026-07-31 06:15:59,401 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 체크리스트·후기 종합형 서술 위주로 실제 개인 경험(날짜·장소·사진 등 1차 자료)이 부족함
-2026-07-31 06:15:59,401 [WARNING] main —      🟡 [SEO 최적화] 제목의 '직접 조사해보니'와 키워드 '직접 가봤더니'가 불일치하고 본문에도 정확한 키워드 반복이 거의 없음
-2026-07-31 06:15:59,401 [WARNING] main —      🟡 [구조 및 가독성] H2 7개는 우수하나 체크리스트·후기비교 단락 일부가 500자 이상으로 길게 이어짐
-2026-07-31 06:15:59,401 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 69/100, fail: 0개, warn: 6개
-2026-07-31 06:16:07,025 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:16:07,025 [ERROR] adsense_validator — 자동 수정 오류: {'type': 'error', 'error': {'details': None, 'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011CdZeQJv1oKzAZEqGs4uYX'}
-2026-07-31 06:16:07,026 [WARNING] main —   ⚠️ 자동 수정 불가 — pending 저장
-2026-07-31 06:16:07,026 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '강릉 여행 직접 조사해보니 실망 포인트' (점수: 69/100, 권장: review)
-2026-07-31 06:16:07,054 [INFO] dashboard_exporter —   검토 대기 저장: 강릉 여행 직접 조사해보니 실망 포인트 (14315자 HTML)
-2026-07-31 06:16:07,071 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 127개)
-2026-07-31 06:16:07,071 [INFO] main — 
-============================================================
-2026-07-31 06:16:07,071 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-31 06:16:07,071 [INFO] main — ============================================================
-2026-07-31 06:16:07,101 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-31 06:16:07,123 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
-2026-07-31 06:16:07,139 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-31 06:16:07,280 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-31 06:16:07,557 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 06:16:07,776 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 06:16:07,777 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-31 06:16:07,780 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-31 06:16:07,796 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 179 / 실패 1 / 대기 89)
-2026-07-31 06:16:07,797 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-31 06:16:07,797 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-31 06:16:07,798 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-31 06:16:45,588 [INFO] main — ============================================================
-2026-07-31 06:16:45,588 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-31 06:16:45
-2026-07-31 06:16:45,588 [INFO] main — ============================================================
-2026-07-31 06:16:45,600 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-31 06:16:45,600 [INFO] keyword_collector — 포스팅 이력 코퍼스: 34개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-31 06:16:50,899 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-07-31 06:16:56,574 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:16:56,595 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-31 06:16:56,595 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-31 06:16:57,482 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 06:16:57,482 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-31 06:16:57,484 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
-2026-07-31 06:16:57,485 [INFO] keyword_collector — 유사 주제 제외 7개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '2026 여름휴가 항공권 호텔 반값 예약 꿀팁', '일본 여행 유류할증료 인하 지금이 적기인 이유', '수도권 벗어난 국내 로컬 여행지 추천 베스트']
-2026-07-31 06:16:57,486 [INFO] keyword_collector —   [fallback] 2개: ['골프 비기너 첫 필드 나가기 전 준비 체크리스트', '부산 1박2일 혼자 여행 현실 비용 공개']
-2026-07-31 06:16:57,486 [INFO] keyword_collector — 최종 선정 키워드 2개: ['골프 비기너 첫 필드 나가기 전 준비 체크리스트', '부산 1박2일 혼자 여행 현실 비용 공개']
-2026-07-31 06:16:57,486 [INFO] main — 수집된 키워드 2개: ['골프 비기너 첫 필드 나가기 전 준비 체크리스트', '부산 1박2일 혼자 여행 현실 비용 공개']
-2026-07-31 06:16:57,491 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
-2026-07-31 06:16:57,491 [INFO] main — 단독 포스트 대상 키워드 1개: ['골프 비기너 첫 필드 나가기 전 준비 체크리스트']
-2026-07-31 06:16:57,510 [INFO] main — 
-[1/1] 키워드: '골프 비기너 첫 필드 나가기 전 준비 체크리스트'
-2026-07-31 06:16:57,510 [INFO] content_generator — 포스트 생성 중: '골프 비기너 첫 필드 나가기 전 준비 체크리스트'
-2026-07-31 06:17:09,728 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:17:09,729 [INFO] research_collector — 검색 의도: 골프 필드 데뷔를 앞둔 초보자가 준비물, 복장, 매너, 비용 등을 미리 체크하려는 의도
-2026-07-31 06:17:20,442 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '골프 비기너 첫 필드 나가기 전 준비 체크리스트'
-2026-07-31 06:17:34,321 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:17:34,322 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '골프 비기너 첫 필드 나가기 전 준비 체크리스트'
-2026-07-31 06:17:44,754 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 <none>"
-2026-07-31 06:17:44,754 [INFO] anthropic._base_client — Retrying request to /v1/messages in 0.472932 seconds
-2026-07-31 06:17:47,043 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 <none>"
-2026-07-31 06:17:47,043 [INFO] anthropic._base_client — Retrying request to /v1/messages in 0.921141 seconds
-2026-07-31 06:17:55,837 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 <none>"
-2026-07-31 06:17:55,837 [WARNING] source_validator — 주장-출처 대조 실패: Error code: 529 - {'type': 'error', 'error': {'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011CdZeYKDqkckLPTGEAwjs1'}
-2026-07-31 06:17:55,837 [INFO] source_validator — 출처 검증: 5/5개 통과, 등급 분포 {'C': 3, 'D': 2}
-2026-07-31 06:17:55,840 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-07-31 06:17:55,840 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-31 06:18:00,262 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:19:10,487 [WARNING] content_generator — 컨텐츠 너무 짧음(2242자, 최소 2500자) — 재시도 1/3
-2026-07-31 06:19:13,487 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-31 06:19:17,328 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:20:18,631 [WARNING] content_generator — 컨텐츠 너무 짧음(2443자, 최소 2500자) — 재시도 2/3
-2026-07-31 06:20:21,631 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-07-31 06:20:22,578 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:21:22,507 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-07-31 06:21:22,508 [WARNING] content_generator — 최소 분량 미달(2238자) — 재시도 소진, 해당 분량으로 진행
-2026-07-31 06:21:23,780 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:21:23,781 [WARNING] content_generator — 팩트체크 실패 (게시는 계속 진행): {'type': 'error', 'error': {'details': None, 'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011CdZep99ZRaJ6RBfckoiij'}
-2026-07-31 06:21:24,725 [INFO] image_fetcher — 이미지 수집 성공: '골프 첫 필드 나가기 전, 드레스코드부터 확인해야 하는 이유' → 제목='드레스코드에이치디 [당일출고] [바지안감] [S-2XL] 모직 치마바지 ' (관련성=0.14)
-2026-07-31 06:21:25,506 [INFO] image_fetcher — 이미지 수집 성공: '골프 비기너 필드' → 제목='빠른 골프 실력 향상을 돕는 '비기너 탈출템'' (관련성=0.67)
-2026-07-31 06:21:27,046 [INFO] image_fetcher — 이미지 수집 성공: '골프 비기너 드레스 코드부터 복장 규정의' → 제목='설레는 첫 라운딩 골프 비기너 맞춤형 스타일링' (관련성=0.33)
-2026-07-31 06:21:31,972 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:21:31,974 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-07-31 06:21:31,974 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-07-31 06:21:31,976 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-07-31 06:21:31,978 [INFO] content_generator — 포스트 생성 완료: '골프 첫 필드 나가기 전, 드레스코드부터 확인해야 하는 이유' (2238자, 이미지 2개)
-2026-07-31 06:21:32,741 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:21:50,904 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '골프 첫 필드 나가기 전, 드레스코드부터 확인해야 하는 이유'
-2026-07-31 06:21:50,904 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 2238자로 2000~2499자 구간이며, 대부분 외부 출처 정보 재구성이고 개인 경험은 짧은 의견 삽입 수준에 그침
-2026-07-31 06:21:50,904 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 단락 구분 없이 문장이 길게 이어지는 부분이 많아 가독성 저하 우려
-2026-07-31 06:21:50,904 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 4개 출처 인용은 있으나 저자의 1인칭 실제 라운드 경험 서술이 부족하고 의견 제시가 제한적임
-2026-07-31 06:21:50,904 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음 — 부재 자체는 fail 아니지만 SEO·가독성 측면에서 warn
-2026-07-31 06:21:50,905 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '정리하면' 등 자동요약형 문구와 격식체 문장이 반복되어 AI 생성 패턴 의심 요소 존재
-2026-07-31 06:21:50,913 [INFO] internal_linker — 내부 링크 후보 4개 발견
-2026-07-31 06:21:50,914 [INFO] internal_linker —   [1/5] '준비물' -> https://hogugolfntraval.blogspot.com/2026/07/kbo.html
-2026-07-31 06:21:50,917 [INFO] internal_linker —   [2/5] '2026년' -> https://hogugolfntraval.blogspot.com/2026/07/2026-lafc.html
-2026-07-31 06:21:50,917 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-31 06:21:50,917 [INFO] main —   제목: 골프 첫 필드 나가기 전, 드레스코드부터 확인해야 하는 이유
-2026-07-31 06:21:50,917 [INFO] main —   이미지: 2개 삽입
-2026-07-31 06:21:50,917 [INFO] main —   글자 수: 2238자
-2026-07-31 06:21:50,917 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '골프 첫 필드 나가기 전, 드레스코드부터 확인해야 하는 이유' (2238자 < 2500자)
-2026-07-31 06:21:50,944 [INFO] dashboard_exporter —   검토 대기 저장: 골프 첫 필드 나가기 전, 드레스코드부터 확인해야 하는 이유 (6956자 HTML)
-2026-07-31 06:21:50,961 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 128개)
-2026-07-31 06:21:50,961 [INFO] main — 
-============================================================
-2026-07-31 06:21:50,961 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-31 06:21:50,961 [INFO] main — ============================================================
 2026-07-31 06:21:50,990 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
 2026-07-31 06:21:51,009 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
 2026-07-31 06:21:51,025 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
@@ -617,3 +498,65 @@
 2026-07-31 12:26:30,662 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-31 12:26:30,662 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-31 12:26:30,663 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-31 14:19:50,234 [INFO] main — 검토 모드 — pending_posts.json에 저장합니다
+2026-07-31 14:19:50,235 [INFO] main — ============================================================
+2026-07-31 14:19:50,235 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-31 14:19:50
+2026-07-31 14:19:50,235 [INFO] main — ============================================================
+2026-07-31 14:19:50,254 [INFO] main — 수집된 키워드 1개: ['걸그룹 리센느']
+2026-07-31 14:19:50,254 [INFO] main — 단독 포스트 대상 키워드 1개: ['걸그룹 리센느']
+2026-07-31 14:19:50,269 [INFO] main — 
+[1/1] 키워드: '걸그룹 리센느'
+2026-07-31 14:19:50,269 [INFO] content_generator — 포스트 생성 중: '걸그룹 리센느'
+2026-07-31 14:19:56,410 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:19:56,439 [INFO] research_collector — 검색 의도: 걸그룹 '리센느'에 대한 기본 정보(데뷔, 멤버, 소속사 등)를 알고 싶어하는 검색 의도
+2026-07-31 14:20:08,966 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '걸그룹 리센느'
+2026-07-31 14:20:22,056 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:20:22,057 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '걸그룹 리센느'
+2026-07-31 14:20:48,078 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:20:48,080 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'B': 3, 'X': 2, 'C': 2}
+2026-07-31 14:20:49,619 [INFO] content_generator — K-POP 참고 데이터 수집 완료: '걸그룹 리센느'
+2026-07-31 14:20:49,619 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-07-31 14:20:49,620 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-31 14:20:50,594 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:21:58,425 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-07-31 14:21:59,366 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:22:14,442 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-07-31 14:22:15,263 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느 무섭노 논란 총정리' → 제목='리센느 원이, "무섭노" 한마디에 일베 논란→갑론을박 이어지자…국립국어원' (관련성=0.60)
+2026-07-31 14:22:16,061 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느' → 제목='[포토]데뷔하는 신인 걸그룹 리센느' (관련성=1.00)
+2026-07-31 14:22:16,853 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느 데뷔 차에 타고 갤럭시' → 제목='리센느 "데뷔 초 휴대전화도 반납"…'중소돌'의 눈물겨운 성장기 공개 (' (관련성=0.33)
+2026-07-31 14:22:18,423 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:22:18,424 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-31 14:22:18,426 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-31 14:22:18,428 [INFO] content_generator — 포스트 생성 완료: '걸그룹 리센느 무섭노 논란 총정리' (3002자, 이미지 3개)
+2026-07-31 14:22:19,424 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:22:36,474 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '걸그룹 리센느 무섭노 논란 총정리'
+2026-07-31 14:22:36,474 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 뉴스·후기 재조합 중심이라 개인 고유 경험·인사이트는 부족함
+2026-07-31 14:22:36,474 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 직접 경험 서술은 약하고 '자료를 조사해보니' 수준에 그침
+2026-07-31 14:22:36,474 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처·alt텍스트 정보 확인 불가, 이미지 유무 불명확하여 주의 필요
+2026-07-31 14:22:36,474 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 번호 매긴 체크리스트, '정리해보겠습니다' 등 전형적 AI 서술 패턴이 반복적으로 나타남
+2026-07-31 14:22:36,481 [INFO] internal_linker — 내부 링크 후보 1개 발견
+2026-07-31 14:22:36,483 [INFO] internal_linker —   [1/5] 'K-POP' -> https://www.hoguwhat.com/2026/07/2026-8-k-pop.html
+2026-07-31 14:22:36,483 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-31 14:22:36,484 [INFO] main —   제목: 걸그룹 리센느 무섭노 논란 총정리
+2026-07-31 14:22:36,484 [INFO] main —   이미지: 3개 삽입
+2026-07-31 14:22:36,484 [INFO] main —   글자 수: 3002자
+2026-07-31 14:22:36,484 [INFO] main —   [검토 모드] 업로드 건너뜀
+2026-07-31 14:22:36,496 [INFO] main — 
+============================================================
+2026-07-31 14:22:36,496 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-07-31 14:22:36,496 [INFO] main — ============================================================
+2026-07-31 14:22:36,509 [INFO] dashboard_exporter —   검토 대기 저장: 걸그룹 리센느 무섭노 논란 총정리 (13485자 HTML)
+2026-07-31 14:22:36,526 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 130개)
+2026-07-31 14:22:36,526 [INFO] main — 검토 대기 포스트 저장 완료
+2026-07-31 14:22:36,555 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-31 14:22:36,576 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
+2026-07-31 14:22:36,592 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-31 14:22:36,876 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-31 14:22:37,215 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-31 14:22:37,546 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-31 14:22:37,547 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-31 14:22:37,550 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-31 14:22:37,565 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 176 / 실패 0 / 대기 92)
+2026-07-31 14:22:37,565 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-31 14:22:37,566 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-31 14:22:37,567 [INFO] main — 대시보드 데이터 업데이트 완료

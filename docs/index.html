@@ -4866,6 +4866,22 @@ function setEpCount(n) {
   })
 }
 
+// 워크플로 dispatch 실패 응답을 사람이 바로 조치할 수 있는 메시지로 변환.
+// 401 "Bad credentials"는 코드 문제가 아니라 저장된 PAT 만료/폐기라서,
+// raw JSON을 그대로 보여주면 사용자가 원인을 알 수 없음 (실제로 두 번 겪은 문제).
+function _wfErrMsg(status, rawText = '') {
+  if (status === 401) {
+    return 'GitHub PAT가 만료됐거나 폐기됐습니다. GitHub → Settings → Developer settings에서 새 토큰을 발급(만료 기간 90일 이상 권장)한 뒤, 시스템 관리 → API 키 관리에서 교체해 주세요.'
+  }
+  if (status === 403) {
+    return `PAT 권한 부족(403) — 토큰에 repo·workflow 권한이 있는지 확인해 주세요. ${rawText.slice(0, 60)}`
+  }
+  if (status === 404) {
+    return '워크플로를 찾을 수 없습니다(404) — 워크플로 파일이 기본 브랜치에 등록돼 있는지 확인해 주세요.'
+  }
+  return `실행 실패 (${status}): ${rawText.slice(0, 100)}`
+}
+
 async function runSeriesNow(mode = 'series') {
   const kw = (document.getElementById('series-kw-input')?.value || '').trim()
   if (!kw) { showToast('키워드를 입력하세요', 'error'); return }
@@ -4898,7 +4914,8 @@ async function runSeriesNow(mode = 'series') {
     } else {
       const t = await resp.text()
       statusEl.className = 'status-panel error'
-      statusEl.textContent = `❌ 오류 (${resp.status}): ${t.slice(0,100)}`
+      statusEl.textContent = `❌ ${_wfErrMsg(resp.status, t)}`
+      if (resp.status === 401) { showToast('PAT 만료 — 재발급 후 교체가 필요합니다', 'error'); checkPATStatus() }
     }
   } catch (e) {
     statusEl.className = 'status-panel error'
@@ -7233,7 +7250,7 @@ function wfRunWeeklyCheck() {
     body: JSON.stringify({ ref: 'claude/blog-automation-system-KAbtE', inputs: { force_analyze: 'true' } }),
   }).then(r => {
     if (r.status === 204) showToast('주간 점검 워크플로우 실행 시작됨 (약 5분 소요)', 'success')
-    else showToast(`실행 실패 (${r.status}) — PAT 권한 확인`, 'error')
+    else showToast(_wfErrMsg(r.status), 'error')
   }).catch(() => showToast('네트워크 오류', 'error'))
 }
 
@@ -7882,7 +7899,7 @@ function wfDispatchGeneric(file, inputs, label, minutes = 3) {
     body: JSON.stringify({ ref: GH_BRANCH, inputs: inputs || {} }),
   }).then(r => {
     if (r.status === 204) showToast(`${label} 실행 시작됨 (약 ${minutes}분 소요)`, 'success')
-    else showToast(`실행 실패 (${r.status}) — PAT 권한 확인`, 'error')
+    else showToast(_wfErrMsg(r.status), 'error')
   }).catch(() => showToast('네트워크 오류', 'error'))
 }
 
@@ -7895,7 +7912,7 @@ function wfRunAutoRepair(dryRun = false) {
     body: JSON.stringify({ ref: 'claude/blog-automation-system-KAbtE', inputs: { dry_run: dryRun ? 'true' : 'false' } }),
   }).then(r => {
     if (r.status === 204) showToast(dryRun ? '진단 워크플로우 실행 시작됨 (약 2분 소요)' : '자동 수리 워크플로우 실행 시작됨 (약 3분 소요)', 'success')
-    else showToast(`실행 실패 (${r.status}) — PAT 권한 확인`, 'error')
+    else showToast(_wfErrMsg(r.status), 'error')
   }).catch(() => showToast('네트워크 오류', 'error'))
 }
 
@@ -7938,7 +7955,7 @@ function trendPreemptPublish(index) {
     }),
   }).then(r => {
     if (r.status === 204) showToast(`"${c.keyword}" 선점 발행 시작됨 (약 5~10분 소요)`, 'success')
-    else showToast(`실행 실패 (${r.status}) — PAT 권한 확인`, 'error')
+    else showToast(_wfErrMsg(r.status), 'error')
   }).catch(() => showToast('네트워크 오류', 'error'))
 }
 

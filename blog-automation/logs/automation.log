@@ -1,65 +1,3 @@
-2026-07-31 06:21:50,990 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-31 06:21:51,009 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
-2026-07-31 06:21:51,025 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-31 06:21:51,433 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-31 06:21:51,817 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 06:21:51,818 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-31 06:21:51,821 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-31 06:21:51,836 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 178 / 실패 1 / 대기 90)
-2026-07-31 06:21:51,837 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-31 06:21:51,837 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-31 06:21:51,838 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-31 06:22:26,111 [INFO] main — ============================================================
-2026-07-31 06:22:26,112 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-31 06:22:26
-2026-07-31 06:22:26,112 [INFO] main — ============================================================
-2026-07-31 06:22:26,123 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-31 06:22:26,123 [INFO] keyword_collector — 포스팅 이력 코퍼스: 38개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-31 06:22:30,858 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-31 06:22:41,255 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:22:41,280 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-31 06:22:41,280 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-31 06:22:41,809 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-31 06:22:42,053 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 06:22:42,053 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-31 06:22:42,055 [INFO] keyword_collector — 유사 주제 제외 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-31 06:22:42,055 [INFO] keyword_collector —   [naver_realtime] 2개: ['전세값 상승기 전세 계약 전 꼭 확인해야 할 체크리스트', '레버리지 ETF 규제 강화 이후 안전한 투자 전략']
-2026-07-31 06:22:42,055 [INFO] keyword_collector — 최종 선정 키워드 2개: ['전세값 상승기 전세 계약 전 꼭 확인해야 할 체크리스트', '레버리지 ETF 규제 강화 이후 안전한 투자 전략']
-2026-07-31 06:22:42,055 [INFO] main — 수집된 키워드 2개: ['전세값 상승기 전세 계약 전 꼭 확인해야 할 체크리스트', '레버리지 ETF 규제 강화 이후 안전한 투자 전략']
-2026-07-31 06:22:42,061 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-07-31 06:22:42,061 [INFO] main — 단독 포스트 대상 키워드 1개: ['전세값 상승기 전세 계약 전 꼭 확인해야 할 체크리스트']
-2026-07-31 06:22:42,076 [INFO] main — 
-[1/1] 키워드: '전세값 상승기 전세 계약 전 꼭 확인해야 할 체크리스트'
-2026-07-31 06:22:42,077 [INFO] content_generator — 포스트 생성 중: '전세값 상승기 전세 계약 전 꼭 확인해야 할 체크리스트'
-2026-07-31 06:22:52,664 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:22:52,665 [INFO] research_collector — 검색 의도: 전세값 상승기에 전세 계약을 체결하기 전 반드시 확인해야 할 사항들을 체크리스트 형태로 알고 싶음
-2026-07-31 06:23:15,735 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '전세값 상승기 전세 계약 전 꼭 확인해야 할 체크리스트'
-2026-07-31 06:23:37,901 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:23:37,902 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '전세값 상승기 전세 계약 전 꼭 확인해야 할 체크리스트'
-2026-07-31 06:23:57,884 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:23:57,885 [INFO] source_validator — 출처 검증: 6/8개 통과, 등급 분포 {'D': 6, 'X': 2}
-2026-07-31 06:23:57,887 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-07-31 06:23:57,888 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-31 06:23:58,595 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:23:58,596 [ERROR] content_generator — Claude API 오류: {'type': 'error', 'error': {'details': None, 'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011CdZf1acoYvCzekrzwJJi1'}
-2026-07-31 06:23:58,596 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-07-31 06:24:01,596 [INFO] content_generator — 포스트 생성 중: '전세값 상승기 전세 계약 전 꼭 확인해야 할 체크리스트'
-2026-07-31 06:24:16,303 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:24:16,304 [INFO] research_collector — 검색 의도: 전세값 상승기에 전세 계약을 앞둔 세입자가 사기·피해를 예방하기 위해 계약 전 반드시 점검해야 할 항목을 알
-2026-07-31 06:24:34,609 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '전세값 상승기 전세 계약 전 꼭 확인해야 할 체크리스트'
-2026-07-31 06:24:51,388 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:24:51,389 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '전세값 상승기 전세 계약 전 꼭 확인해야 할 체크리스트'
-2026-07-31 06:25:05,679 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:25:05,680 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'B': 2, 'X': 3, 'A': 1}
-2026-07-31 06:25:05,681 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-31 06:25:06,970 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:26:08,095 [WARNING] content_generator — 컨텐츠 너무 짧음(2417자, 최소 2500자) — 재시도 1/3
-2026-07-31 06:26:11,095 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-31 06:26:11,991 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:27:25,220 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 06:27:38,836 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '전세가율이 80%를 넘어서면 계약 전 더 꼼꼼한 확인이 필요하다고 설명합'
-2026-07-31 06:27:38,836 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '매매가 대비 지나치게 높은 비율이라면 위험 신호로 보는 시각이 많습니다'
-2026-07-31 06:27:38,837 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 2건 자동 수정 적용
-2026-07-31 06:27:41,012 [INFO] image_fetcher — 이미지 수집 성공: '전세값 급등기, 계약 도장 찍기 전 확인해야 할 5가지 — 서울 12년 만의 최대 상승폭이 말해주는 것' → 제목='전세값 떨어지자…계약 연장 대신 이사간다' (관련성=0.17)
 2026-07-31 06:27:42,092 [INFO] image_fetcher — 이미지 수집 성공: '전세값 상승기 전세' → 제목='62주째 상승중인 전세값' (관련성=0.20)
 2026-07-31 06:27:43,880 [INFO] image_fetcher — 이미지 수집 성공: '전세값 상승기 서울 만의 기준' → 제목='서울 아파트 전세값 '62주 연속 상승'' (관련성=0.40)
 2026-07-31 06:27:48,811 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
@@ -560,3 +498,72 @@
 2026-07-31 14:22:37,565 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-31 14:22:37,566 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-31 14:22:37,567 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-31 14:23:21,779 [INFO] main — 검토 모드 — pending_posts.json에 저장합니다
+2026-07-31 14:23:21,780 [INFO] main — ============================================================
+2026-07-31 14:23:21,780 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-31 14:23:21
+2026-07-31 14:23:21,780 [INFO] main — ============================================================
+2026-07-31 14:23:21,797 [INFO] main — 수집된 키워드 1개: ['걸그룹 리센느']
+2026-07-31 14:23:21,797 [INFO] main — 단독 포스트 대상 키워드 1개: ['걸그룹 리센느']
+2026-07-31 14:23:21,812 [INFO] main — 
+[1/1] 키워드: '걸그룹 리센느'
+2026-07-31 14:23:21,812 [INFO] content_generator — 포스트 생성 중: '걸그룹 리센느'
+2026-07-31 14:23:26,668 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:23:26,695 [INFO] research_collector — 검색 의도: 걸그룹 '리센느'에 대한 기본 정보(데뷔, 멤버, 소속사 등)를 알고 싶어하는 검색
+2026-07-31 14:23:35,348 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '걸그룹 리센느'
+2026-07-31 14:23:48,849 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:23:48,851 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '걸그룹 리센느'
+2026-07-31 14:24:11,067 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:24:11,068 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'B': 3, 'X': 2, 'C': 2}
+2026-07-31 14:24:12,268 [INFO] content_generator — K-POP 참고 데이터 수집 완료: '걸그룹 리센느'
+2026-07-31 14:24:12,269 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-07-31 14:24:12,269 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-31 14:24:14,342 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:25:31,273 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-07-31 14:25:32,397 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:25:49,997 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '데뷔 후 상당한 시간이 지난 뒤에야 음악방송 1위를 처음 차지했다는 보도'
+2026-07-31 14:25:49,998 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-07-31 14:25:51,087 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느, '무섭노' 논란부터 삼성 갤럭시 협찬까지 – 요즘 왜 화제일까' → 제목='"무섭노" 리센느 원이 '일베 말투' 논란…정치권까지 설전 [엑's 이슈' (관련성=0.22)
+2026-07-31 14:25:51,601 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느' → 제목='신인 걸그룹 리센느, '요요' 콘셉트 포토 공개…봄 느낌 물씬' (관련성=1.00)
+2026-07-31 14:25:53,636 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느 아직 이름이 RESCENE 뜻하는' → 제목='Пин от пользователя Garamie на доске RES' (관련성=0.33)
+2026-07-31 14:25:57,633 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:25:57,635 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-07-31 14:25:57,635 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-07-31 14:25:57,637 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-07-31 14:25:57,638 [INFO] content_generator — 포스트 생성 완료: '걸그룹 리센느, '무섭노' 논란부터 삼성 갤럭시 협찬까지 – 요즘 왜 화제일까' (3135자, 이미지 2개)
+2026-07-31 14:25:58,407 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:26:21,712 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-07-31 14:26:22,817 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-07-31 14:26:26,139 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '걸그룹 리센느, '무섭노' 논란부터 삼성 갤럭시 협찬까지 – 요'
+2026-07-31 14:26:26,140 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수(3135자)는 기준을 충족하나 보도 내용 재정리 위주로 개인 경험·독창적 인사이트가 부족함
+2026-07-31 14:26:26,140 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개는 인용되나 1인칭 직접 경험 서술이 없고 저자 전문성 신호가 약함
+2026-07-31 14:26:26,140 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음(이미지 부재로 간주, 저작권 위반은 없으나 warn 처리)
+2026-07-31 14:26:26,140 [INFO] adsense_validator —   ❌ AI 생성 의심도: '다음 섹션에서~짚어보겠습니다', '~라고 합니다' 등 동일 전환구가 반복되는 전형적 AI 템플릿 패턴이 두드러짐
+2026-07-31 14:26:26,140 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '다음 섹션에서~짚어보겠습니다', '~라고 합니다' 등 동일 전환구가 반복되는 전형적 AI 템플릿 패턴이 두드러짐
+2026-07-31 14:26:26,140 [WARNING] adsense_validator —   🔴 섹션 전환 문구('다음 섹션에서~짚어보겠습니다')가 기계적으로 반복되어 AI 생성 의심도가 높음
+2026-07-31 14:26:26,140 [WARNING] adsense_validator —   🔴 1인칭 경험이나 저자 고유의 취재/분석 근거가 없어 E-E-A-T 신뢰도가 낮음
+2026-07-31 14:26:26,146 [INFO] internal_linker — 내부 링크 후보 1개 발견
+2026-07-31 14:26:26,147 [INFO] internal_linker —   [1/5] '2026년' -> https://www.hoguwhat.com/2026/07/2026-8-k-pop.html
+2026-07-31 14:26:26,147 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-31 14:26:26,147 [INFO] main —   제목: 걸그룹 리센느, '무섭노' 논란부터 삼성 갤럭시 협찬까지 – 요즘 왜 화제일까
+2026-07-31 14:26:26,148 [INFO] main —   이미지: 2개 삽입
+2026-07-31 14:26:26,148 [INFO] main —   글자 수: 3135자
+2026-07-31 14:26:26,148 [INFO] main —   [검토 모드] 업로드 건너뜀
+2026-07-31 14:26:26,159 [INFO] main — 
+============================================================
+2026-07-31 14:26:26,159 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-31 14:26:26,159 [INFO] main — ============================================================
+2026-07-31 14:26:26,172 [INFO] dashboard_exporter —   검토 대기 저장: 걸그룹 리센느, '무섭노' 논란부터 삼성 갤럭시 협찬까지 – 요즘 왜 화제일까 (9256자 HTML)
+2026-07-31 14:26:26,189 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 131개)
+2026-07-31 14:26:26,189 [INFO] main — 검토 대기 포스트 저장 완료
+2026-07-31 14:26:26,217 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-31 14:26:26,238 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
+2026-07-31 14:26:26,254 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-31 14:26:26,579 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-31 14:26:26,928 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-31 14:26:27,291 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-31 14:26:27,292 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-31 14:26:27,295 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-31 14:26:27,311 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 175 / 실패 0 / 대기 93)
+2026-07-31 14:26:27,312 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-31 14:26:27,312 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-31 14:26:27,312 [INFO] main — 대시보드 데이터 업데이트 완료

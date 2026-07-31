@@ -1,132 +1,3 @@
-2026-07-31 12:01:22,471 [INFO] image_fetcher — 대체 이미지 수집: '배우 최근 수현 근황이 JTBC 수현은' → 제목=''배우 김정은' 최근 모습은?... 네티즌 수사대 찾아낸 인스타 사진 한' (관련성=0.33)
-2026-07-31 12:01:22,472 [INFO] image_fetcher — 이미지 수집 성공: '배우 최근 수현 근황이 JTBC 수현은' → 제목=''배우 김정은' 최근 모습은?... 네티즌 수사대 찾아낸 인스타 사진 한' (관련성=0.33)
-2026-07-31 12:01:24,733 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:01:24,734 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
-2026-07-31 12:01:24,734 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-07-31 12:01:24,736 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-07-31 12:01:24,738 [INFO] content_generator — 포스트 생성 완료: '수현 근황과 최근 작품, 팬심 없이 평가해보니' (2920자, 이미지 1개)
-2026-07-31 12:01:26,395 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:01:44,585 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '수현 근황과 최근 작품, 팬심 없이 평가해보니'
-2026-07-31 12:01:44,585 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2920자로 분량은 충족하나 대부분 보도 내용 재구성이며 개인 경험은 도입부 한 문장에 그침
-2026-07-31 12:01:44,585 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 개수는 충분하나 일부 단락이 500자 이상으로 길게 이어짐
-2026-07-31 12:01:44,585 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 서술과 출처 인용은 있으나 전문성·직접 취재 근거가 약해 신뢰 신호가 제한적
-2026-07-31 12:01:44,585 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 제공되지 않아 이미지 부재로 판단, 정책상 warn 처리
-2026-07-31 12:01:44,585 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트식 나열과 이모지 소제목(💡💬⚠️), 반복적 어미('~보입니다','~합니다')로 AI 패턴 신호 존재
-2026-07-31 12:01:44,593 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-31 12:01:44,598 [INFO] internal_linker —   [1/5] '드라마' -> https://www.hoguwhat.com/2026/07/blog-post_408.html
-2026-07-31 12:01:44,599 [INFO] internal_linker —   [2/5] '합니다' -> https://hoguasset.blogspot.com/2026/07/8_01540367504.html
-2026-07-31 12:01:44,601 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-31 12:01:44,601 [INFO] main —   제목: 수현 근황과 최근 작품, 팬심 없이 평가해보니
-2026-07-31 12:01:44,601 [INFO] main —   이미지: 1개 삽입
-2026-07-31 12:01:44,601 [INFO] main —   글자 수: 2920자
-2026-07-31 12:01:45,492 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:02:04,412 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '수현 근황과 최근 작품, 팬심 없이 평가해보니'
-2026-07-31 12:02:04,413 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(2920자)는 기준 충족하나 개인 경험 서술이 도입부에 짧게만 있고 대부분 보도 사실 재정리에 가까움
-2026-07-31 12:02:04,413 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험과 날짜 근거는 있으나 본문 내 출처 링크·인용 표기가 명확히 드러나지 않음
-2026-07-31 12:02:04,413 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급이 전혀 없어 이미지 부재로 판단됨(저작권 위반은 없음)
-2026-07-31 12:02:04,413 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·오해 목록 등 목록화 패턴이 반복되어 다소 정형화된 구성이 나타남
-2026-07-31 12:02:04,413 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-07-31 12:02:04,413 [WARNING] main —      🟡 [원본성 및 품질] 글자수(2920자)는 기준 충족하나 개인 경험 서술이 도입부에 짧게만 있고 대부분 보도 사실 재정리에 가까움
-2026-07-31 12:02:04,413 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 경험과 날짜 근거는 있으나 본문 내 출처 링크·인용 표기가 명확히 드러나지 않음
-2026-07-31 12:02:04,413 [WARNING] main —      🟡 [이미지 정책] 이미지 관련 언급이 전혀 없어 이미지 부재로 판단됨(저작권 위반은 없음)
-2026-07-31 12:02:04,413 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-07-31 12:02:05,746 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:03:27,497 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-31 12:03:28,261 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:03:46,281 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2920자 → 3771자 (+851자)
-2026-07-31 12:03:46,282 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-31 12:03:46,998 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:04:03,318 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '수현 근황과 최근 작품, 팬심 없이 평가해보니'
-2026-07-31 12:04:03,318 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어짐
-2026-07-31 12:04:03,318 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 삽입 여부 확인 불가하며 이미지 없는 경우 SEO·가독성 측면에서 warn
-2026-07-31 12:04:03,318 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-07-31 12:04:03,318 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-07-31 12:04:03,975 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:04:42,720 [INFO] final_editor —   ✏️ 제목 최종 교정: '수현 근황과 최근 작품, 팬심 없이 평가해보니' → '수현 근황과 최근 작품, 팬심 없이 솔직하게 평가해보니'
-2026-07-31 12:04:42,720 [INFO] final_editor —   ✏️ 메타 설명 교정 (92자)
-2026-07-31 12:04:42,720 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 재정리하고, 긴 문단을 2~4문장 단위로 분리했으며 요약 박스·체크리스트 표·FAQ·주의사항·작성자 메모를 추가해 발행 형태로 완성했습니다.
-2026-07-31 12:04:42,898 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-31 12:04:42,898 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-07-31 12:04:43,041 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-07-31 12:04:43,053 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-07-31 12:04:43,442 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_31.html
-2026-07-31 12:04:43,454 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/07/blog-post_31.html
-2026-07-31 12:05:10,799 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:05:10,800 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-31 12:05:10,800 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-31 12:05:10,808 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '수현 근황과 최근 작품, 팬심 없이 솔직하게 평가해보니'
-2026-07-31 12:05:11,679 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:05:15,340 [INFO] comment_manager —   생성된 댓글: 연예 기사 볼 때 팁 하나 드리자면, 특정 인터뷰가 '뒤늦게 재조명'되는 경우엔 원문 기사의 최초 보도 시점과 수정 이력을 함께 확인해보는 게 ...
-2026-07-31 12:08:15,472 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-31 12:08:15,473 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-07-31 12:08:15,473 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-31 12:08:15,473 [INFO] main — 
-============================================================
-2026-07-31 12:08:15,473 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-31 12:08:15,473 [INFO] main — ============================================================
-2026-07-31 12:08:15,504 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-31 12:08:15,525 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
-2026-07-31 12:08:15,542 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-31 12:08:15,868 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-31 12:08:16,325 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 12:08:16,645 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 12:08:16,646 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-31 12:08:16,649 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-31 12:08:16,664 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 178 / 실패 1 / 대기 90)
-2026-07-31 12:08:16,664 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-31 12:08:16,664 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-31 12:08:16,665 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-31 12:08:52,178 [INFO] main — ============================================================
-2026-07-31 12:08:52,178 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-31 12:08:52
-2026-07-31 12:08:52,178 [INFO] main — ============================================================
-2026-07-31 12:08:52,190 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-31 12:08:52,191 [INFO] keyword_collector — 포스팅 이력 코퍼스: 130개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-31 12:08:57,746 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-07-31 12:09:01,958 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:09:01,974 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-31 12:09:01,974 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-31 12:09:02,768 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 12:09:02,769 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-31 12:09:02,769 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
-2026-07-31 12:09:02,776 [INFO] keyword_collector — 유사 주제 제외 8개: ['여름휴가 항공권 반값 특가 예약 방법', '국내 로컬 여행지 추천 수도권 근교', '야놀자 AI 여행 추천 서비스 활용법', '일본 여행 유류할증료 인하 예약 타이밍', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
-2026-07-31 12:09:02,777 [INFO] keyword_collector —   [fallback] 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-07-31 12:09:02,777 [INFO] keyword_collector — 최종 선정 키워드 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-07-31 12:09:02,777 [INFO] main — 수집된 키워드 2개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-07-31 12:09:02,781 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-07-31 12:09:02,781 [INFO] main — 단독 포스트 대상 키워드 1개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
-2026-07-31 12:09:02,796 [INFO] main — 
-[1/1] 키워드: '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-31 12:09:02,796 [INFO] content_generator — 포스트 생성 중: '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-31 12:09:08,143 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:09:08,144 [INFO] research_collector — 검색 의도: 경주 당일치기 여행 코스와 실제 방문 후기를 통해 놓치지 말아야 할 관광지 정보를 얻으려는 의도
-2026-07-31 12:09:20,768 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-31 12:09:36,631 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:09:36,632 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서'
-2026-07-31 12:09:52,313 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:09:52,314 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'B': 3, 'A': 1, 'X': 2}
-2026-07-31 12:09:52,316 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-31 12:09:53,183 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:10:59,144 [WARNING] content_generator — 컨텐츠 너무 짧음(2280자, 최소 2500자) — 재시도 1/3
-2026-07-31 12:11:02,145 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-07-31 12:11:02,892 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:12:12,398 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:12:24,400 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 0건 자동 수정 적용
-2026-07-31 12:12:25,531 [INFO] image_fetcher — 이미지 수집 성공: '경주 당일치기, 놓치면 후회하는 코스만 골라봤습니다 (2026년 기준)' → 제목='네이버 인플루언서 [네이버 인플루언서] 당일치기 경주 가볼만한곳 여행코스' (관련성=0.29)
-2026-07-31 12:12:26,351 [INFO] image_fetcher — 이미지 수집 성공: '경주 당일치기 놓치면' → 제목='경주 당일치기 ~ | 국내여행 이야기 게시판 경주 당일치기 ~ | 국내여' (관련성=0.67)
-2026-07-31 12:12:27,204 [INFO] image_fetcher — 이미지 수집 성공: '경주 당일치기 당일치기에 여행을 다녀온' → 제목='당일치기 경주 여행을 다녀왔습니다 - DVDPrime 프라임차한잔 게시판' (관련성=0.60)
-2026-07-31 12:12:29,785 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:12:29,786 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-31 12:12:29,788 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-31 12:12:29,789 [INFO] content_generator — 포스트 생성 완료: '경주 당일치기, 놓치면 후회하는 코스만 골라봤습니다 (2026년 기준)' (2754자, 이미지 3개)
-2026-07-31 12:12:30,620 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:12:54,535 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
 2026-07-31 12:12:55,793 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-31 12:13:00,643 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '경주 당일치기, 놓치면 후회하는 코스만 골라봤습니다 (2026년'
 2026-07-31 12:13:00,643 [INFO] adsense_validator —   ❌ 원본성 및 품질: 본문에 '네이버 인플루언서', '루리웹', 'DVDPrime' 등 타 사이트 게시글 제목·캡션이 정제 없이 그대로 삽입되어 스크래핑 흔적이 뚜렷하고, 실제 경험보다 '후기를 종합해보면' 식 재조합이 대부분임
@@ -627,3 +498,84 @@
 2026-07-31 23:18:38,907 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-31 23:18:38,907 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-31 23:18:38,908 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-31 23:19:18,736 [INFO] main — ============================================================
+2026-07-31 23:19:18,736 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-31 23:19:18
+2026-07-31 23:19:18,736 [INFO] main — ============================================================
+2026-07-31 23:19:18,752 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-07-31 23:19:18,752 [INFO] keyword_collector — 포스팅 이력 코퍼스: 128개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-07-31 23:19:24,617 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-07-31 23:19:24,797 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-31 23:19:24,798 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-31 23:19:25,384 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-31 23:19:25,930 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-31 23:19:25,931 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-31 23:19:25,932 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-07-31 23:19:25,941 [INFO] keyword_collector — 유사 주제 제외 5개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개', '강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
+2026-07-31 23:19:25,941 [INFO] keyword_collector —   [fallback] 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '국내 호캉스 가성비 호텔 실제 후기 비교']
+2026-07-31 23:19:25,941 [INFO] keyword_collector — 최종 선정 키워드 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '국내 호캉스 가성비 호텔 실제 후기 비교']
+2026-07-31 23:19:25,941 [INFO] main — 수집된 키워드 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '국내 호캉스 가성비 호텔 실제 후기 비교']
+2026-07-31 23:19:25,946 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
+2026-07-31 23:19:25,946 [INFO] main — 단독 포스트 대상 키워드 1개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가']
+2026-07-31 23:19:25,964 [INFO] main — 
+[1/1] 키워드: '서울 근교 드라이브 코스 직접 가본 솔직 평가'
+2026-07-31 23:19:25,964 [INFO] content_generator — 포스트 생성 중: '서울 근교 드라이브 코스 직접 가본 솔직 평가'
+2026-07-31 23:19:26,077 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-31 23:19:26,078 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdazSrHYmRprsMRrpa4Vs'}
+2026-07-31 23:19:35,380 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '서울 근교 드라이브 코스 직접 가본 솔직 평가'
+2026-07-31 23:19:35,487 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-31 23:19:35,487 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdazTYWzNXcqNUE1A4qpA'}
+2026-07-31 23:19:35,488 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-31 23:19:35,619 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-31 23:19:36,147 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-31 23:19:53,765 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-31 23:19:53,782 [WARNING] content_generator — 컨텐츠 너무 짧음(1477자, 최소 2500자) — 재시도 1/3
+2026-07-31 23:19:56,782 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-31 23:19:56,783 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-31 23:20:13,907 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-31 23:20:13,913 [WARNING] content_generator — 컨텐츠 너무 짧음(1711자, 최소 2500자) — 재시도 2/3
+2026-07-31 23:20:16,913 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-31 23:20:16,913 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-31 23:20:29,160 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-31 23:20:29,165 [WARNING] content_generator — 최소 분량 미달(992자) — 재시도 소진, 해당 분량으로 진행
+2026-07-31 23:20:29,185 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-31 23:20:30,052 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-31 23:20:30,059 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 0건 자동 수정 적용
+2026-07-31 23:20:31,934 [INFO] image_fetcher — 이미지 수집 성공: '서울 근교 드라이브 코스 직접 가본 솔직 평가' → 제목='[카드뉴스]가슴 탁!트이는 서울 근교 드라이브 코스 8' (관련성=0.50)
+2026-07-31 23:20:33,693 [INFO] image_fetcher — 대체 이미지 수집: '서울 근교 드라이브' → 제목='주말 나들이로 딱! 서울 근교 당일치기 추천 여행지 10곳' (관련성=0.67)
+2026-07-31 23:20:33,694 [INFO] image_fetcher — 이미지 수집 성공: '서울 근교 드라이브' → 제목='주말 나들이로 딱! 서울 근교 당일치기 추천 여행지 10곳' (관련성=0.67)
+2026-07-31 23:20:36,604 [INFO] image_fetcher — 대체 이미지 수집: '서울 근교 도입부 요즘 코스를 주말이나' → 제목='선선한 바람과 함께 즐기는 서울근교 야간 산책 명소 4곳' (관련성=0.00)
+2026-07-31 23:20:36,604 [INFO] image_fetcher — 이미지 수집 성공: '서울 근교 도입부 요즘 코스를 주말이나' → 제목='선선한 바람과 함께 즐기는 서울근교 야간 산책 명소 4곳' (관련성=0.00)
+2026-07-31 23:20:36,881 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-31 23:20:36,882 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-31 23:20:36,884 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-31 23:20:36,886 [INFO] content_generator — 포스트 생성 완료: '서울 근교 드라이브 코스 직접 가본 솔직 평가' (992자, 이미지 3개)
+2026-07-31 23:20:36,907 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-31 23:20:39,893 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-31 23:20:39,894 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '서울 근교 드라이브 코스 직접 가본 솔직 평가'
+2026-07-31 23:20:39,894 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 2000자 미만이며, 독창적인 관점이 부족해 보임.
+2026-07-31 23:20:39,894 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 직접 경험 기반 서술이 부족하고 출처가 넉넉히 인용되지 않음.
+2026-07-31 23:20:39,894 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재로 인해 시각적 요소가 부족함.
+2026-07-31 23:20:39,903 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-31 23:20:39,904 [INFO] internal_linker —   [1/5] '여행지' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_28.ht
+2026-07-31 23:20:39,908 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-31 23:20:39,908 [INFO] main —   제목: 서울 근교 드라이브 코스 직접 가본 솔직 평가
+2026-07-31 23:20:39,908 [INFO] main —   이미지: 3개 삽입
+2026-07-31 23:20:39,908 [INFO] main —   글자 수: 992자
+2026-07-31 23:20:39,908 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '서울 근교 드라이브 코스 직접 가본 솔직 평가' (992자 < 2500자)
+2026-07-31 23:20:39,933 [INFO] dashboard_exporter —   검토 대기 저장: 서울 근교 드라이브 코스 직접 가본 솔직 평가 (5227자 HTML)
+2026-07-31 23:20:39,951 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 133개)
+2026-07-31 23:20:39,951 [INFO] main — 
+============================================================
+2026-07-31 23:20:39,951 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-07-31 23:20:39,951 [INFO] main — ============================================================
+2026-07-31 23:20:39,981 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-31 23:20:40,000 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
+2026-07-31 23:20:40,016 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-31 23:20:40,264 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-31 23:20:40,551 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-31 23:20:40,552 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-31 23:20:40,555 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-31 23:20:40,570 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 176 / 실패 0 / 대기 92)
+2026-07-31 23:20:40,570 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-31 23:20:40,570 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-31 23:20:40,571 [INFO] main — 대시보드 데이터 업데이트 완료

@@ -129,6 +129,12 @@ def main() -> None:
             "sources": post.get("sources", []),
         })
 
+        if result == "DUPLICATE":
+            post["status"] = "skipped"
+            post["failReason"] = "중복 제목 — 유사 제목이 이미 발행되어 건너뜀"
+            logger.warning(f"  ⏭ 중복 주제 — 건너뜀: {title[:50]}")
+            continue
+
         if result and not result.get("_error"):
             post["status"] = "published"
             post["publishedAt"] = datetime.now().isoformat()

@@ -421,7 +421,7 @@ def run_once(
         for upload_try in range(1, MAX_UPLOAD_RETRY + 1):
             result = upload_post(post_data, blog_config)
             if result:
-                break
+                break  # 성공 또는 "DUPLICATE" — 중복은 재시도해도 결과가 같으므로 즉시 중단
             if upload_try < MAX_UPLOAD_RETRY:
                 _wait = 5 * upload_try
                 logger.warning(
@@ -429,6 +429,15 @@ def run_once(
                     f"({upload_try}/{MAX_UPLOAD_RETRY})"
                 )
                 time.sleep(_wait)
+
+        if result == "DUPLICATE":
+            # 실패가 아니라 중복 가드의 정상 차단 — 실패 집계·재시도 큐에서 제외
+            msg = f"중복 주제 — 업로드 건너뜀: '{title}' (유사 제목 이미 발행됨)"
+            update_post_status(_post_id, PostStatus.SKIPPED, error=msg)
+            logger.warning(f"  ⏭ {msg}")
+            if i < len(keywords):
+                time.sleep(2)
+            continue
 
         if result:
             url = result.get("url", "")
@@ -718,7 +727,10 @@ def run_series(
             logger.debug(f"  최종 편집 건너뜀 (무시): {_fe}")
 
         result = upload_post(post_data, blog_config)
-        if result:
+        if result == "DUPLICATE":
+            ep["status"] = "skipped_duplicate"
+            logger.warning(f"  ⏭ 편 {ep_num} 중복 주제 — 업로드 건너뜀")
+        elif result:
             blogger_url = result.get("url", "")
             ep["status"] = "done"
             ep["blogger_url"] = blogger_url
@@ -736,7 +748,7 @@ def run_series(
             time.sleep(3)
 
     has_scheduled = any(ep.get("status") == "scheduled" for ep in episodes)
-    all_done = all(ep.get("status") in ("done", "pending_review") for ep in episodes)
+    all_done = all(ep.get("status") in ("done", "pending_review", "skipped_duplicate") for ep in episodes)
     if has_scheduled:
         series_plan["status"] = "scheduled_wait"  # 예약 편 대기 중 — 매일 예약 처리기가 이어감
     else:

@@ -470,6 +470,9 @@ def export_dashboard() -> None:
             "keywords": run["keywords"],
             "postsGenerated": run["postsGenerated"],
             "bloggerUploaded": run.get("bloggerUploaded", 0),
+            # 생성됐지만 품질 게이트로 검토 대기에 들어간 수 — 이 필드가 빠지면
+            # 대시보드에서 "생성 1 / 업로드 0"이 실패처럼 보이는 착시 발생
+            "pendingReview": run.get("pendingReview", 0),
             "imagesInserted": run.get("imagesInserted", 0),
             "totalWords": run.get("totalWords", 0),
             "errors": run["errors"],

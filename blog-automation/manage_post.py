@@ -141,6 +141,11 @@ def action_publish(post_id: str) -> int:
     update_post_status(post_id, Status.RETRY_QUEUED)
 
     result = upload_post(post_data, blog_config)
+    if result == "DUPLICATE":
+        update_post_status(post_id, Status.SKIPPED, error="중복 제목 — 업로드 건너뜀")
+        export_for_dashboard(os.path.abspath(DOCS_DATA))
+        logger.warning("⏭ 중복 주제 — 업로드 건너뜀 (유사 제목 이미 발행됨)")
+        return 0
     if result:
         url = result.get("url", "")
         update_post_status(post_id, Status.PUBLISHED, blog_url=url)

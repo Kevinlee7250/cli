@@ -2728,7 +2728,7 @@ function renderDashboard() {
       <div class="sb-icon">${hasErr ? '❌' : '✅'}</div>
       <div class="sb-text">
         <div class="sb-title">마지막 실행 ${hasErr ? '오류 발생' : '정상 완료'}</div>
-        <div class="sb-detail">${dt} · 생성 ${lastRun.postsGenerated || 0}개 · Blogger ${lastRun.bloggerUploaded || lastRun.platforms?.blogger || 0}개 · 오류 ${lastRun.errors || 0}개</div>
+        <div class="sb-detail">${dt} · 생성 ${lastRun.postsGenerated || 0}개 · Blogger ${lastRun.bloggerUploaded || lastRun.platforms?.blogger || 0}개${lastRun.pendingReview ? ` · ✍️ 검토대기 ${lastRun.pendingReview}개` : ''} · 오류 ${lastRun.errors || 0}개</div>
       </div>`
   }
 
@@ -2737,7 +2737,12 @@ function renderDashboard() {
     <td>${new Date(r.runAt || r.savedAt).toLocaleString('ko-KR')}</td>
     <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(r.keywords||[]).map(k=>esc(k)).join(', ')}</td>
     <td>${r.postsGenerated ?? 0}개</td>
-    <td>${r.bloggerUploaded ?? r.platforms?.blogger ?? 0}개</td>
+    <td>${(() => {
+      const up = r.bloggerUploaded ?? r.platforms?.blogger ?? 0
+      const pend = r.pendingReview ?? 0
+      if (up === 0 && pend > 0) return `<span class="badge yellow" title="품질 게이트로 검토 대기에 저장됨 — 실패 아님">✍️ 검토대기 ${pend}</span>`
+      return up + '개'
+    })()}</td>
     <td><span class="img-pill">🖼 ${r.imagesInserted || 0}</span></td>
     <td style="color:var(--green)">${r.earnings?.estimatedDailyRevenue != null ? '$'+r.earnings.estimatedDailyRevenue.toFixed(2) : '-'}</td>
     <td>${(r.errors > 0)

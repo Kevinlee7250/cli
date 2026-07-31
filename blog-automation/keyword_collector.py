@@ -511,9 +511,49 @@ def _load_recent_post_corpus(limit_runs: int = 30, blog_id: str = "") -> list[st
                     corpus.append(post["keyword"])
                 if post.get("title"):
                     corpus.append(post["title"])
+        corpus.extend(_load_registry_corpus(blog_id))
         return corpus
     except Exception as e:
         logger.debug(f"포스팅 이력 로드 실패: {e}")
+        return _load_registry_corpus(blog_id)
+
+
+_REGISTRY_FILE = os.path.join(os.path.dirname(__file__), "logs", "post_registry.json")
+
+
+def _load_registry_corpus(blog_id: str = "", days: int = 30) -> list[str]:
+    """post_registry에서 최근 30일 발행 글의 제목·키워드를 코퍼스에 합류시킵니다.
+
+    run_history 기반 코퍼스는 최근 30개 '실행'만 봐서 3개 블로그 하루 9회
+    실행 기준 약 3일치에 불과함 — 4일 전에 발행한 주제와 거의 같은 키워드가
+    계속 통과해 같은 글이 반복 생성됐음 (레버리지 ETF 7회, 항공권 예약 7회).
+    생성된 글은 업로드 직전 중복 가드에 차단되므로 토큰만 낭비됨.
+    30일 키워드 재사용 사이클과 같은 기간의 발행 이력을 함께 봐야 함.
+    """
+    if not os.path.exists(_REGISTRY_FILE):
+        return []
+    try:
+        with open(_REGISTRY_FILE, encoding="utf-8") as f:
+            registry = json.load(f)
+        cutoff = (datetime.now() - timedelta(days=days)).isoformat()
+        corpus = []
+        for p in registry:
+            if p.get("status") != "published":
+                continue
+            if p.get("createdAt", "") < cutoff:
+                continue
+            entry_blog = p.get("blogId", "")
+            if blog_id and entry_blog not in ("default", "") and entry_blog != blog_id:
+                continue
+            if blog_id and entry_blog in ("default", "") and blog_id not in ("blog1", "default"):
+                continue
+            if p.get("title"):
+                corpus.append(p["title"])
+            if p.get("keyword"):
+                corpus.append(p["keyword"])
+        return corpus
+    except Exception as e:
+        logger.debug(f"레지스트리 코퍼스 로드 실패: {e}")
         return []
 
 
@@ -534,14 +574,51 @@ def _similarity(a: str, b: str) -> float:
     return len(ta & tb) / len(ta | tb)
 
 
+# 주제 판별력이 없는 범용어 — 핵심 토큰 겹침 계산에서 제외
+# ("레버리지 ETF 완벽 정리" vs "국내여행 완벽 정리"가 '정리' 때문에 겹치면 안 됨)
+_GENERIC_TOKENS = {
+    "정리", "총정리", "방법", "후기", "추천", "가이드", "체크리스트", "완벽",
+    "핵심", "꿀팁", "비교", "분석", "전망", "이유", "확인", "공개", "솔직",
+}
+
+
+def _core_overlap(ta: set[str], tb: set[str]) -> tuple[int, float]:
+    """범용어를 제외한 핵심 토큰 겹침 개수와, 작은 쪽 대비 비율을 반환합니다."""
+    ca = ta - _GENERIC_TOKENS
+    cb = tb - _GENERIC_TOKENS
+    if not ca or not cb:
+        return 0, 0.0
+    shared = ca & cb
+    return len(shared), len(shared) / min(len(ca), len(cb))
+
+
+def _lead_tokens(text: str, n: int = 2) -> tuple[str, ...]:
+    """제목 선두의 핵심 토큰 n개 (범용어 제외, 등장 순서 유지).
+
+    한국어 제목·키워드는 주제어가 맨 앞에 오는 경향이 강함
+    ("레버리지 ETF ...", "여름휴가 항공권 ..."). 활용형 차이(위험성/위험할까/
+    위험하다는)로 집합 겹침이 안 잡혀도, 선두 2토큰이 같으면 같은 주제일
+    가능성이 매우 높음.
+    """
+    ordered = re.findall(r'[가-힣]{2,}|[a-zA-Z]{3,}', text.lower())
+    core = [t for t in ordered if t not in _GENERIC_TOKENS]
+    return tuple(core[:n])
+
+
 def _is_too_similar(candidate: str, corpus: list[str], threshold: float = _SIMILARITY_THRESHOLD) -> bool:
     """
     후보 키워드가 코퍼스 내 어느 항목과라도 너무 유사하면 True를 반환합니다.
     - 완전 일치
     - 한쪽이 다른 쪽을 포함
     - Jaccard 유사도 >= threshold
+    - 핵심 토큰(범용어 제외) 3개 이상 공유 + 작은 쪽의 절반 이상 겹침
+      (예: "레버리지 ETF 투자 위험성 대응 전략" vs "레버리지 ETF 투자 주의사항"
+       — Jaccard로는 0.3에 그쳐 통과했지만 사실상 같은 주제. 이런 변형 키워드가
+       반복 선정→생성→업로드 중복 차단으로 이어져 토큰만 낭비되던 문제 방지)
     """
     cand = candidate.strip().lower()
+    cand_tokens = _tokenize(cand)
+    cand_lead = _lead_tokens(cand)
     for item in corpus:
         item = item.strip().lower()
         if not item:
@@ -551,6 +628,11 @@ def _is_too_similar(candidate: str, corpus: list[str], threshold: float = _SIMIL
         if cand in item or item in cand:
             return True
         if _similarity(cand, item) >= threshold:
+            return True
+        shared, ratio = _core_overlap(cand_tokens, _tokenize(item))
+        if shared >= 3 and ratio >= 0.5:
+            return True
+        if len(cand_lead) == 2 and cand_lead == _lead_tokens(item):
             return True
     return False
 

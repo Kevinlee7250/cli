@@ -244,6 +244,7 @@ def test_corpus_blog_filter(tmp_path, monkeypatch):
     hist_file = tmp_path / "run_history.json"
     hist_file.write_text(json.dumps(history), encoding="utf-8")
     monkeypatch.setattr(kc, "_HISTORY_FILE", str(hist_file))
+    monkeypatch.setattr(kc, "_REGISTRY_FILE", str(tmp_path / "no_registry.json"))
 
     blog1 = kc._load_recent_post_corpus(blog_id="blog1")
     blog2 = kc._load_recent_post_corpus(blog_id="blog2")
@@ -265,6 +266,7 @@ def test_corpus_no_filter_returns_all(tmp_path, monkeypatch):
     hist_file = tmp_path / "run_history.json"
     hist_file.write_text(json.dumps(history), encoding="utf-8")
     monkeypatch.setattr(kc, "_HISTORY_FILE", str(hist_file))
+    monkeypatch.setattr(kc, "_REGISTRY_FILE", str(tmp_path / "no_registry.json"))
     assert set(kc._load_recent_post_corpus()) == {"A", "B"}
 
 

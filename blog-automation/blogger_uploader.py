@@ -512,18 +512,21 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
     if not access_token:
         return None
 
-    # 업로드 직전 제목 중복 검사 — 동일/유사 제목이 이미 게시된 경우 차단
+    # 업로드 직전 제목 중복 검사 — 동일/유사 제목이 이미 게시된 경우 차단.
+    # None(API 실패)과 구분되는 "DUPLICATE" 센티널을 반환해, 호출부가 재시도·
+    # 실패 집계 없이 '중복 건너뜀'으로 분류할 수 있게 함 (실패로 취급하면
+    # 무의미한 재시도 3회 + auto-repair critical 오탐으로 이어짐).
     _title = post_data.get("title", "")
     _blog_cfg_id = cfg.get("id", "")
     try:
         from post_manager import find_duplicate_post
         _dup = find_duplicate_post(_title, blog_id=_blog_cfg_id)
         if _dup:
-            logger.error(
-                f"❌ 중복 포스트 감지 — 업로드 차단: '{_title[:60]}'\n"
+            logger.warning(
+                f"⏭ 중복 포스트 감지 — 업로드 건너뜀: '{_title[:60]}'\n"
                 f"   기존 포스트: '{_dup.get('title', '')[:60]}' ({_dup.get('blogUrl', '')})"
             )
-            return None
+            return "DUPLICATE"
     except Exception as _de:
         logger.debug(f"중복 검사 오류 (무시): {_de}")
 

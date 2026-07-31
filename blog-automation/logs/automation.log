@@ -1,84 +1,3 @@
-2026-07-31 12:12:55,793 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:13:00,643 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '경주 당일치기, 놓치면 후회하는 코스만 골라봤습니다 (2026년'
-2026-07-31 12:13:00,643 [INFO] adsense_validator —   ❌ 원본성 및 품질: 본문에 '네이버 인플루언서', '루리웹', 'DVDPrime' 등 타 사이트 게시글 제목·캡션이 정제 없이 그대로 삽입되어 스크래핑 흔적이 뚜렷하고, 실제 경험보다 '후기를 종합해보면' 식 재조합이 대부분임
-2026-07-31 12:13:00,643 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 충분하나 일부 단락이 500자 이상으로 길어 가독성이 다소 떨어짐
-2026-07-31 12:13:00,643 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 개인 의견('개인적으로는')과 출처 인용은 있으나 직접 방문 1인칭 경험 서술이 부족하고 타 후기 종합에 의존함
-2026-07-31 12:13:00,643 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 자체는 없으나 네이버·커뮤니티 게시글 캡션이 텍스트에 그대로 남아 저작권 주의가 필요함
-2026-07-31 12:13:00,643 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서 짚어보겠습니다' 같은 전환 문구가 반복되고 문장 종결이 균일해 다소 정형화된 문체가 보이나 개인 의견 표현도 일부 섞여 있음
-2026-07-31 12:13:00,643 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 본문에 '네이버 인플루언서', '루리웹', 'DVDPrime' 등 타 사이트 게시글 제목·캡션이 정제 없이 그대로 삽입되어 스크래핑 흔적이 뚜렷하고, 실제 경험보다 '후기를 종합해보면' 식 재조합이 대부분임
-2026-07-31 12:13:00,643 [WARNING] adsense_validator —   🔴 본문에 타 사이트(네이버 인플루언서, 루리웹, DVDPrime) 게시글 제목·캡션이 정제되지 않고 그대로 삽입되어 있어 즉시 제거 및 재작성 필요
-2026-07-31 12:13:00,648 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-31 12:13:00,649 [INFO] internal_linker —   [1/5] '국내여행' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_28.ht
-2026-07-31 12:13:00,649 [INFO] internal_linker —   [2/5] '국내여행' -> https://www.hoguwhat.com/2026/07/blog-post_27.html
-2026-07-31 12:13:00,653 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-31 12:13:00,653 [INFO] main —   제목: 경주 당일치기, 놓치면 후회하는 코스만 골라봤습니다 (2026년 기준)
-2026-07-31 12:13:00,653 [INFO] main —   이미지: 3개 삽입
-2026-07-31 12:13:00,653 [INFO] main —   글자 수: 2754자
-2026-07-31 12:13:02,151 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:13:16,846 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '경주 당일치기, 놓치면 후회하는 코스만 골라봤습니다 (2026년'
-2026-07-31 12:13:16,846 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 대부분 '후기 종합/공식 사이트/보도' 재구성이며 구체적 날짜·수치 기반 1인칭 경험은 부족함
-2026-07-31 12:13:16,846 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 인용은 있으나 직접 경험 서술이 '개인적으로는' 수준으로 제한적이고 구체적 1인칭 체험 디테일 부족
-2026-07-31 12:13:16,846 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음(이미지 부재로 인한 기본 warn 처리)
-2026-07-31 12:13:16,846 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~후기가 많습니다/보입니다' 등 유사 패턴 반복과 요약형 전환 문구가 다수 존재해 AI 종합형 문체 특징이 나타남
-2026-07-31 12:13:16,846 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-07-31 12:13:16,846 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 대부분 '후기 종합/공식 사이트/보도' 재구성이며 구체적 날짜·수치 기반 1인칭 경험은 부족함
-2026-07-31 12:13:16,846 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 인용은 있으나 직접 경험 서술이 '개인적으로는' 수준으로 제한적이고 구체적 1인칭 체험 디테일 부족
-2026-07-31 12:13:16,846 [WARNING] main —      🟡 [이미지 정책] 이미지 관련 정보 없음(이미지 부재로 인한 기본 warn 처리)
-2026-07-31 12:13:16,847 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-07-31 12:13:17,515 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:14:33,790 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2754자 → 3338자 (+584자)
-2026-07-31 12:14:33,790 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-31 12:14:34,789 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:14:59,154 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-31 12:15:04,035 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:15:11,268 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — '경주 당일치기, 놓치면 후회하는 코스만 골라봤습니다 (2026년'
-2026-07-31 12:15:11,268 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 개인 경험(시간·장소·수치)은 풍부하나 본문 중간에 '네이버 인플루언서', '루리웹 게시판' 등 타 사이트 스니펫이 그대로 섞여 들어가 순수 원본성이 훼손됨
-2026-07-31 12:15:11,268 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 헤딩이 3개로 권장(4개 이상)에 못 미치며 일부 단락이 장문으로 이어짐
-2026-07-31 12:15:11,268 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 유해 내용은 없으나 타 사이트(인플루언서 블로그, 루리웹) 텍스트가 출처 표시 없이 혼입되어 저작권 침해 소지 있음
-2026-07-31 12:15:11,268 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험과 공식 출처 인용은 있으나 스크랩 흔적이 저자 신뢰성을 저해할 수 있음
-2026-07-31 12:15:11,268 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 사용 여부가 확인되지 않으며 이미지 부재 자체는 fail 아님, SEO·가독성 측면에서 warn
-2026-07-31 12:15:11,268 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 전반적으로 인간적 경험 서술이나 스크랩 스니펫 삽입은 자동 수집·조합 흔적으로 의심됨
-2026-07-31 12:15:11,268 [WARNING] adsense_validator —   🔴 본문 중 '네이버 인플루언서', '루리웹 게시판' 등 외부 사이트의 텍스트 조각이 그대로 삽입되어 있어 저작권 침해 및 콘텐츠 신뢰성 문제가 발생할 수 있음
-2026-07-31 12:15:11,268 [WARNING] main —   ⚠️ 자동 수정 후에도 기준 미달 (점수: 69/100) — pending 저장
-2026-07-31 12:15:11,268 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '경주 당일치기, 놓치면 후회하는 코스만 골라봤습니다 (2026년 기준)' (점수: 69/100, 권장: review)
-2026-07-31 12:15:11,289 [INFO] dashboard_exporter —   검토 대기 저장: 경주 당일치기, 놓치면 후회하는 코스만 골라봤습니다 (2026년 기준) (9304자 HTML)
-2026-07-31 12:15:11,304 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 129개)
-2026-07-31 12:15:11,304 [INFO] main — 
-============================================================
-2026-07-31 12:15:11,304 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-07-31 12:15:11,304 [INFO] main — ============================================================
-2026-07-31 12:15:11,327 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-31 12:15:11,344 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
-2026-07-31 12:15:11,356 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-31 12:15:11,628 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-31 12:15:12,053 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 12:15:12,054 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-31 12:15:12,056 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-31 12:15:12,068 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 177 / 실패 1 / 대기 91)
-2026-07-31 12:15:12,068 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-31 12:15:12,068 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-31 12:15:12,069 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-31 12:15:43,599 [INFO] main — ============================================================
-2026-07-31 12:15:43,599 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-31 12:15:43
-2026-07-31 12:15:43,600 [INFO] main — ============================================================
-2026-07-31 12:15:43,615 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-31 12:15:43,615 [INFO] keyword_collector — 포스팅 이력 코퍼스: 170개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-07-31 12:15:48,120 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-07-31 12:15:54,043 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:15:54,068 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-07-31 12:15:54,068 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-07-31 12:15:54,495 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-07-31 12:15:54,727 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 12:15:54,728 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-31 12:15:54,734 [INFO] keyword_collector — 유사 주제 제외 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '단일종목 레버리지 ETF 예탁금 3천만원 투자 전략 정리']
-2026-07-31 12:15:54,734 [INFO] keyword_collector —   [naver_realtime] 2개: ['코스피 사상 최대 폭등 지금 주식 사도 될까 개인투자자 대응법', '네이버 AI 부동산 시세 검색 활용법 총정리']
-2026-07-31 12:15:54,735 [INFO] keyword_collector — 최종 선정 키워드 2개: ['코스피 사상 최대 폭등 지금 주식 사도 될까 개인투자자 대응법', '네이버 AI 부동산 시세 검색 활용법 총정리']
-2026-07-31 12:15:54,735 [INFO] main — 수집된 키워드 2개: ['코스피 사상 최대 폭등 지금 주식 사도 될까 개인투자자 대응법', '네이버 AI 부동산 시세 검색 활용법 총정리']
-2026-07-31 12:15:54,740 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
-2026-07-31 12:15:54,740 [INFO] main — 단독 포스트 대상 키워드 1개: ['코스피 사상 최대 폭등 지금 주식 사도 될까 개인투자자 대응법']
-2026-07-31 12:15:54,757 [INFO] main — 
-[1/1] 키워드: '코스피 사상 최대 폭등 지금 주식 사도 될까 개인투자자 대응법'
-2026-07-31 12:15:54,757 [INFO] content_generator — 포스트 생성 중: '코스피 사상 최대 폭등 지금 주식 사도 될까 개인투자자 대응법'
 2026-07-31 12:16:03,502 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-07-31 12:16:03,503 [INFO] research_collector — 검색 의도: 코스피가 사상 최대로 폭등한 상황에서 지금 주식을 매수해도 되는지 개인투자자 관점의 대응 전략을 알고 싶어하
 2026-07-31 12:16:13,409 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '코스피 사상 최대 폭등 지금 주식 사도 될까 개인투자자 대응법'
@@ -579,3 +498,85 @@
 2026-07-31 23:20:40,570 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-07-31 23:20:40,570 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
 2026-07-31 23:20:40,571 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-07-31 23:21:23,787 [INFO] main — ============================================================
+2026-07-31 23:21:23,787 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-07-31 23:21:23
+2026-07-31 23:21:23,787 [INFO] main — ============================================================
+2026-07-31 23:21:23,801 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-07-31 23:21:23,801 [INFO] keyword_collector — 포스팅 이력 코퍼스: 166개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-07-31 23:21:27,938 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-07-31 23:21:28,175 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-31 23:21:28,176 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
+2026-07-31 23:21:28,545 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-07-31 23:21:28,698 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-31 23:21:29,016 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-31 23:21:29,017 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-07-31 23:21:29,026 [INFO] keyword_collector — 유사 주제 제외 4개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '코스피 코스닥 2026 하반기 전망 핵심 정리', '미국 연준 금리 결정 한국 증시 영향 분석', '원달러 환율 급등락 원인과 개인투자자 대응법']
+2026-07-31 23:21:29,026 [INFO] keyword_collector —   [fallback] 2개: ['2026 금융시장 주요 이슈 직장인이 알아야 할 것', '삼성전자 주가 전망 2026 실적과 주주 환원 분석']
+2026-07-31 23:21:29,026 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 금융시장 주요 이슈 직장인이 알아야 할 것', '삼성전자 주가 전망 2026 실적과 주주 환원 분석']
+2026-07-31 23:21:29,026 [INFO] main — 수집된 키워드 2개: ['2026 금융시장 주요 이슈 직장인이 알아야 할 것', '삼성전자 주가 전망 2026 실적과 주주 환원 분석']
+2026-07-31 23:21:29,030 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
+2026-07-31 23:21:29,030 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 금융시장 주요 이슈 직장인이 알아야 할 것']
+2026-07-31 23:21:29,047 [INFO] main — 
+[1/1] 키워드: '2026 금융시장 주요 이슈 직장인이 알아야 할 것'
+2026-07-31 23:21:29,047 [INFO] content_generator — 포스트 생성 중: '2026 금융시장 주요 이슈 직장인이 알아야 할 것'
+2026-07-31 23:21:29,198 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-31 23:21:29,199 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdazbvbW7uRV4ZtBRnpt3'}
+2026-07-31 23:21:36,844 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '2026 금융시장 주요 이슈 직장인이 알아야 할 것'
+2026-07-31 23:21:36,989 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-31 23:21:36,990 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdazcVvxuYJB2F1Nw9qaq'}
+2026-07-31 23:21:36,991 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-07-31 23:21:37,183 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-31 23:21:37,571 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-31 23:21:50,139 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-31 23:21:50,151 [WARNING] content_generator — 컨텐츠 너무 짧음(973자, 최소 2500자) — 재시도 1/3
+2026-07-31 23:21:53,152 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-07-31 23:21:53,152 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-31 23:21:53,853 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-31 23:21:53,856 [ERROR] content_generator — JSON 구조 없음 — 응답 앞 200자: I'm sorry, I can't assist with that request.
+2026-07-31 23:21:53,856 [WARNING] content_generator — JSON 파싱 실패 — 재시도 2/3
+2026-07-31 23:21:55,856 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-07-31 23:21:55,857 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-31 23:22:08,469 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-31 23:22:08,472 [WARNING] content_generator — 최소 분량 미달(1165자) — 재시도 소진, 해당 분량으로 진행
+2026-07-31 23:22:08,495 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-31 23:22:08,986 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-31 23:22:08,989 [INFO] content_generator — 팩트체크: 통과
+2026-07-31 23:22:10,569 [INFO] image_fetcher — 이미지 수집 성공: '2026년 직장인이 꼭 알아야 할 금융시장 주요 이슈' → 제목='밀레니얼 직장인이 꼭 알아야 할 자산관리법 3가지 밀레니얼 직장인이 꼭 ' (관련성=0.40)
+2026-07-31 23:22:11,337 [INFO] image_fetcher — 이미지 수집 성공: '금융시장 주요 이슈' → 제목='2020 금융시장 주요 이슈 및 전망' (관련성=1.00)
+2026-07-31 23:22:12,404 [INFO] image_fetcher — 이미지 수집 성공: '금융시장 주요 금리 변화 따르면 대출' → 제목='대한민국 국회도서관 | 정보검색 > 소장정보 검색 > (주간) 금융시장 ' (관련성=0.29)
+2026-07-31 23:22:12,586 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
+2026-07-31 23:22:12,586 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-07-31 23:22:12,588 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-07-31 23:22:12,590 [INFO] content_generator — 포스트 생성 완료: '2026년 직장인이 꼭 알아야 할 금융시장 주요 이슈' (1165자, 이미지 3개)
+2026-07-31 23:22:12,608 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
+2026-07-31 23:22:16,241 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-07-31 23:22:16,242 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 77/100 — '2026년 직장인이 꼭 알아야 할 금융시장 주요 이슈'
+2026-07-31 23:22:16,242 [INFO] adsense_validator —   ❌ 원본성 및 품질: 글자 수가 1165자로 2000자 미만이며, 독창적인 관점이 부족함
+2026-07-31 23:22:16,242 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처는 있으나 직접 경험 기반 내용은 부족하고, 저자 신뢰성 부족
+2026-07-31 23:22:16,242 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 부재로 SEO 및 가독성 향상이 필요
+2026-07-31 23:22:16,242 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 글자 수가 1165자로 2000자 미만이며, 독창적인 관점이 부족함
+2026-07-31 23:22:16,242 [WARNING] adsense_validator —   🔴 originality
+2026-07-31 23:22:16,250 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-07-31 23:22:16,254 [INFO] internal_linker —   [1/5] '수익률' -> https://hoguasset.blogspot.com/2026/07/2026_0831796232.html
+2026-07-31 23:22:16,254 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-07-31 23:22:16,254 [INFO] main —   제목: 2026년 직장인이 꼭 알아야 할 금융시장 주요 이슈
+2026-07-31 23:22:16,254 [INFO] main —   이미지: 3개 삽입
+2026-07-31 23:22:16,254 [INFO] main —   글자 수: 1165자
+2026-07-31 23:22:16,254 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '2026년 직장인이 꼭 알아야 할 금융시장 주요 이슈' (1165자 < 2500자)
+2026-07-31 23:22:16,280 [INFO] dashboard_exporter —   검토 대기 저장: 2026년 직장인이 꼭 알아야 할 금융시장 주요 이슈 (6230자 HTML)
+2026-07-31 23:22:16,295 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 134개)
+2026-07-31 23:22:16,296 [INFO] main — 
+============================================================
+2026-07-31 23:22:16,296 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-07-31 23:22:16,296 [INFO] main — ============================================================
+2026-07-31 23:22:16,324 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-07-31 23:22:16,342 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
+2026-07-31 23:22:16,357 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-07-31 23:22:16,614 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-07-31 23:22:16,924 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-07-31 23:22:16,925 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-07-31 23:22:16,927 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-07-31 23:22:16,940 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 175 / 실패 0 / 대기 93)
+2026-07-31 23:22:16,941 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-07-31 23:22:16,941 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
+2026-07-31 23:22:16,941 [INFO] main — 대시보드 데이터 업데이트 완료

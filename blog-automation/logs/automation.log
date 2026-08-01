@@ -1,90 +1,3 @@
-2026-07-31 12:16:03,502 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:16:03,503 [INFO] research_collector — 검색 의도: 코스피가 사상 최대로 폭등한 상황에서 지금 주식을 매수해도 되는지 개인투자자 관점의 대응 전략을 알고 싶어하
-2026-07-31 12:16:13,409 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '코스피 사상 최대 폭등 지금 주식 사도 될까 개인투자자 대응법'
-2026-07-31 12:16:42,469 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:16:42,471 [INFO] evidence_builder — 자료팩 생성: 사실 9개 — '코스피 사상 최대 폭등 지금 주식 사도 될까 개인투자자 대응법'
-2026-07-31 12:17:07,010 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:17:07,011 [INFO] source_validator — 출처 검증: 8/9개 통과, 등급 분포 {'B': 8, 'X': 1}
-2026-07-31 12:17:07,014 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-31 12:17:08,391 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:18:18,524 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:18:34,973 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 3건 자동 수정 적용
-2026-07-31 12:18:36,526 [INFO] image_fetcher — 이미지 수집 성공: '코스피 사상 최대 17.91% 폭등, 지금 주식 사도 될까? 개인투자자 체크리스트' → 제목='코스피 사상 최고가 기록' (관련성=0.17)
-2026-07-31 12:18:38,273 [INFO] image_fetcher — 대체 이미지 수집: '코스피 사상 최대' → 제목='코스피 사상 최고치 경신에 '빚투'도 최대치' (관련성=0.67)
-2026-07-31 12:18:38,273 [INFO] image_fetcher — 이미지 수집 성공: '코스피 사상 최대' → 제목='코스피 사상 최고치 경신에 '빚투'도 최대치' (관련성=0.67)
-2026-07-31 12:18:39,878 [INFO] image_fetcher — 이미지 수집 성공: '코스피 사상 한눈에 보는 먼저 최근' → 제목='사상 최고치 마감한 코스피' (관련성=0.33)
-2026-07-31 12:18:41,576 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:18:41,577 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-31 12:18:41,579 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-31 12:18:41,581 [INFO] content_generator — 포스트 생성 완료: '코스피 사상 최대 17.91% 폭등, 지금 주식 사도 될까? 개인투자자 체크리스트' (2572자, 이미지 3개)
-2026-07-31 12:18:42,827 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:19:01,323 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '코스피 사상 최대 17.91% 폭등, 지금 주식 사도 될까? 개'
-2026-07-31 12:19:01,323 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 충족하나 섹션 내 문단 구분이 약해 500자 이상 긴 문단이 존재
-2026-07-31 12:19:01,324 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 경험 서술('마린파파') 비중이 낮아 신뢰 신호 보강 필요
-2026-07-31 12:19:01,324 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 제공되지 않아 이미지 부재로 판단, 저작권 위반은 없음
-2026-07-31 12:19:01,324 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면 ~ 살펴보겠습니다', '즉' 등 반복적 전환 문구로 다소 정형화된 AI 문체 패턴이 관찰됨
-2026-07-31 12:19:01,330 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-31 12:19:01,336 [INFO] internal_linker —   [1/5] '변동성' -> https://hoguasset.blogspot.com/2026/07/blog-post_28.html
-2026-07-31 12:19:01,337 [INFO] internal_linker —   [2/5] '지금이' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_30.ht
-2026-07-31 12:19:01,338 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-31 12:19:01,339 [INFO] main —   제목: 코스피 사상 최대 17.91% 폭등, 지금 주식 사도 될까? 개인투자자 체크리스트
-2026-07-31 12:19:01,339 [INFO] main —   이미지: 3개 삽입
-2026-07-31 12:19:01,339 [INFO] main —   글자 수: 2572자
-2026-07-31 12:19:02,080 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:19:24,453 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '코스피 사상 최대 17.91% 폭등, 지금 주식 사도 될까? 개'
-2026-07-31 12:19:24,453 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수(2572자)는 기준 충족하나 개인 경험보다 시세 데이터·전문가 의견 재구성 비중이 커서 thin content 우려가 있음
-2026-07-31 12:19:24,453 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개로 개수는 충족하나 사이드카·6월 사례 설명 단락이 500자 이상으로 길게 이어짐
-2026-07-31 12:19:24,454 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개는 확보됐으나 1인칭 경험 서술이 약하고 대부분 시황 데이터·수치 요약에 그침
-2026-07-31 12:19:24,454 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 확인되지 않아 부재로 판단되며 정책상 warn 처리
-2026-07-31 12:19:24,454 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 각 섹션 말미에 '~짚어보겠습니다', '~정리해보겠습니다' 식 전환 문구가 반복되어 정형화된 AI 패턴이 보임
-2026-07-31 12:19:24,454 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
-2026-07-31 12:19:24,454 [WARNING] main —      🟡 [원본성 및 품질] 글자 수(2572자)는 기준 충족하나 개인 경험보다 시세 데이터·전문가 의견 재구성 비중이 커서 thin content 우려가 있음
-2026-07-31 12:19:24,454 [WARNING] main —      🟡 [구조 및 가독성] H2 4개로 개수는 충족하나 사이드카·6월 사례 설명 단락이 500자 이상으로 길게 이어짐
-2026-07-31 12:19:24,454 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 4개는 확보됐으나 1인칭 경험 서술이 약하고 대부분 시황 데이터·수치 요약에 그침
-2026-07-31 12:19:24,454 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
-2026-07-31 12:19:25,463 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:20:46,414 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2572자 → 3050자 (+478자)
-2026-07-31 12:20:46,414 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-31 12:20:47,166 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:21:01,526 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '코스피 사상 최대 17.91% 폭등, 지금 주식 사도 될까? 개'
-2026-07-31 12:21:01,526 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 적절하나 도입부 및 배경 설명 단락이 500자 이상으로 길게 이어지는 구간이 다수 존재
-2026-07-31 12:21:01,526 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부가 확인되지 않아 정책상 warn 처리(저작권 위반은 없음)
-2026-07-31 12:21:01,526 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 90/100)
-2026-07-31 12:21:01,526 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-07-31 12:21:02,227 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:22:18,113 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-31 12:22:19,125 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:22:45,578 [INFO] final_editor —   ✏️ 제목 최종 교정: '코스피 사상 최대 17.91% 폭등, 지금 주식 사도 될까? 개인투자자 체크리스트' → '코스피 사상 최대 17.91% 폭등, 지금 사도 될까? 개인투자자 체크리스트'
-2026-07-31 12:22:45,578 [INFO] final_editor —   ✏️ 메타 설명 교정 (110자)
-2026-07-31 12:22:45,578 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분리했습니다. 요약박스·표·개인경험 메모·주의사항·FAQ·작성자 메모를 규칙에 맞춰 추가하고 이미지 3컷의 위치와 구체적 alt text를 지정했습니다.
-2026-07-31 12:22:45,660 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-31 12:22:45,660 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-07-31 12:22:45,757 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-07-31 12:22:45,769 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-31 12:22:45,770 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '코스피 사상 최대 폭등 지금 주식 사도 될까 개인투자자 대응법' — 면책·팩트체크 확인 권장
-2026-07-31 12:22:45,770 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-07-31 12:22:46,770 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/07/1791.html
-2026-07-31 12:22:46,782 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/07/1791.html
-2026-07-31 12:23:21,336 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:23:21,337 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-07-31 12:23:21,337 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-31 12:23:21,346 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '코스피 사상 최대 17.91% 폭등, 지금 사도 될까? 개인투자자 체크리스트'
-2026-07-31 12:23:22,077 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 12:23:30,143 [INFO] comment_manager —   생성된 댓글: 글에서 다루신 수급 얘기에 덧붙이자면, 이럴 때는 신용거래융자 잔고 추이도 꼭 같이 체크해보시면 좋아요. 폭등 직후 신용잔고가 급격히 늘어난다면...
-2026-07-31 12:26:30,213 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-31 12:26:30,214 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-07-31 12:26:30,214 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-31 12:26:30,214 [INFO] main — 
-============================================================
-2026-07-31 12:26:30,214 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-07-31 12:26:30,214 [INFO] main — ============================================================
 2026-07-31 12:26:30,247 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
 2026-07-31 12:26:30,270 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
 2026-07-31 12:26:30,289 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
@@ -585,3 +498,116 @@
 2026-08-01 00:02:10,652 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-08-01 00:02:10,652 [INFO] main —   - [blog3] 금융NEWS
 2026-08-01 00:02:10,657 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-08-01 05:53:56,493 [INFO] main — ============================================================
+2026-08-01 05:53:56,493 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-01 05:53:56
+2026-08-01 05:53:56,493 [INFO] main — ============================================================
+2026-08-01 05:53:56,510 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
+2026-08-01 05:53:56,510 [INFO] keyword_collector — 포스팅 이력 코퍼스: 168개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-01 05:53:59,967 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-01 05:54:06,214 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 05:54:06,240 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-01 05:54:06,240 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-01 05:54:06,721 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-01 05:54:07,023 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-01 05:54:07,318 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-01 05:54:07,320 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
+2026-08-01 05:54:07,330 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-01 05:54:07,330 [INFO] keyword_collector — 유사 주제 제외 5개: ['강원도 삼척 여름 피서지 추천 코스', '전국 치킨 맛집 지도로 떠나는 K치킨 여행', '국내 호캉스 vs 해외여행 휴가 비용 비교', '일본 여행 숙소 예약 앱 비교 추천', '유럽 처음 여행 항공권 호텔 한 번에 싸게 예약하는 법']
+2026-08-01 05:54:07,332 [INFO] keyword_collector —   [fallback] 2개: ['홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니', '일본 도쿄 호텔 위치별 가격 차이와 추천 지역 솔직 비교']
+2026-08-01 05:54:07,332 [INFO] keyword_collector — 최종 선정 키워드 2개: ['홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니', '일본 도쿄 호텔 위치별 가격 차이와 추천 지역 솔직 비교']
+2026-08-01 05:54:07,332 [INFO] main — 수집된 키워드 2개: ['홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니', '일본 도쿄 호텔 위치별 가격 차이와 추천 지역 솔직 비교']
+2026-08-01 05:54:07,337 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
+2026-08-01 05:54:07,337 [INFO] main — 단독 포스트 대상 키워드 1개: ['홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니']
+2026-08-01 05:54:07,355 [INFO] main — 
+[1/1] 키워드: '홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니'
+2026-08-01 05:54:07,355 [INFO] content_generator — 포스트 생성 중: '홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니'
+2026-08-01 05:54:15,472 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 05:54:15,473 [INFO] research_collector — 검색 의도: 홍콩·싱가포르 항공권을 예약 시점(요일, 사전예매 기간, 성수기/비수기 등)별로 실제 가격을 추적 비교하여 
+2026-08-01 05:54:31,704 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니'
+2026-08-01 05:54:47,651 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 05:54:47,652 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니'
+2026-08-01 05:55:05,014 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 05:55:05,015 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'B': 5, 'X': 2}
+2026-08-01 05:55:05,017 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-01 05:55:05,862 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 05:56:36,957 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 05:56:55,212 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 3건 자동 수정 적용
+2026-08-01 05:56:55,954 [INFO] image_fetcher — 이미지 수집 성공: '홍콩 싱가포르 항공권 시기별 가격, 직접 추적기' → 제목='외방커뮤니티 > 여행/해외 > 홍콩-싱가포르 나홀로 여행기 1. 有' (관련성=0.29)
+2026-08-01 05:56:56,628 [INFO] image_fetcher — 이미지 수집 성공: '홍콩 싱가포르 항공권' → 제목='익스트림무비 - cu x 아시아나 시드니, 홍콩, 싱가포르 항공권 이벤트' (관련성=1.00)
+2026-08-01 05:56:57,429 [INFO] image_fetcher — 이미지 수집 성공: '홍콩 싱가포르 가격이 시기마다 홍콩과 국내' → 제목='홍콩/싱가포르 관광시장 분석 | 국회도서관 국회전자도서관' (관련성=0.33)
+2026-08-01 05:57:00,627 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 05:57:00,628 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-08-01 05:57:00,628 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-08-01 05:57:00,628 [INFO] image_fetcher — 제목 썸네일 생성: '홍콩 싱가포르 항공권 시기별 가격, 직접 추적기' (data URI, 1152B)
+2026-08-01 05:57:01,296 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: '홍콩·싱가포르, 두 도시간 항공여행 허용 합의'
+2026-08-01 05:57:01,297 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-01 05:57:01,299 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-01 05:57:01,301 [INFO] content_generator — 포스트 생성 완료: '홍콩 싱가포르 항공권 시기별 가격, 직접 추적기' (3175자, 이미지 2개)
+2026-08-01 05:57:05,754 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 05:57:26,022 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '홍콩 싱가포르 항공권 시기별 가격, 직접 추적기'
+2026-08-01 05:57:26,022 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충족하나 대부분 티몬 2018년 자료·유류할증료 보도 재인용이며 '직접 추적'이라는 제목과 달리 1인칭 실측 경험 데이터가 부족함
+2026-08-01 05:57:26,022 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 떨어짐
+2026-08-01 05:57:26,022 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용과 균형 잡힌 신중한 서술은 있으나 1인칭 실제 경험 서술이 도입부 외에는 약함
+2026-08-01 05:57:26,022 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 사용 여부 확인 불가·본문에 이미지 언급 없어 저작권 위반은 아니나 이미지 부재로 warn
+2026-08-01 05:57:26,022 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '참고 자료로 보는 게 맞습니다', '조심스럽게 추정' 등 유사한 헤지 표현이 반복돼 AI 특유의 신중한 문체 패턴이 감지됨
+2026-08-01 05:57:26,028 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-01 05:57:26,030 [INFO] internal_linker —   [1/5] '2026년' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0213604772
+2026-08-01 05:57:26,031 [INFO] internal_linker —   [2/5] '유류할증료' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_30.ht
+2026-08-01 05:57:26,031 [INFO] internal_linker —   [3/5] '2026년' -> https://hogugolfntraval.blogspot.com/2026/07/2026-7_06193386
+2026-08-01 05:57:26,032 [INFO] internal_linker —   [4/5] '여행 경비 절약' -> https://www.hoguwhat.com/2026/07/blog-post_30.html
+2026-08-01 05:57:26,034 [INFO] internal_linker —   [5/5] '여름휴가' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0278943539
+2026-08-01 05:57:26,034 [INFO] internal_linker — 내부 링크 5개 삽입 완료
+2026-08-01 05:57:26,034 [INFO] main —   제목: 홍콩 싱가포르 항공권 시기별 가격, 직접 추적기
+2026-08-01 05:57:26,034 [INFO] main —   이미지: 2개 삽입
+2026-08-01 05:57:26,034 [INFO] main —   글자 수: 3175자
+2026-08-01 05:57:26,693 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 05:57:44,637 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '홍콩 싱가포르 항공권 시기별 가격, 직접 추적기'
+2026-08-01 05:57:44,638 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치 인용은 많으나 '직접 추적' 표방과 달리 대부분 티몬·유류할증료 등 2차 자료 재구성이며 1인칭 경험은 도입부 일화 수준에 그침
+2026-08-01 05:57:44,638 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용과 균형잡힌 서술(불확실성 명시)은 긍정적이나 실제 직접 경험 근거는 약함
+2026-08-01 05:57:44,638 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 없음 — 저작권 위반은 아니나 시각 자료 부재로 warn
+2026-08-01 05:57:44,638 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-08-01 05:57:45,794 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 05:59:04,492 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-01 05:59:05,290 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 05:59:32,184 [INFO] final_editor —   ✏️ 제목 최종 교정: '홍콩 싱가포르 항공권 시기별 가격, 직접 추적기' → '홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니'
+2026-08-01 05:59:32,184 [INFO] final_editor —   ✏️ 메타 설명 교정 (91자)
+2026-08-01 05:59:32,184 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분할하고, 미완성 문장(상황별 전략 끝부분)을 자연스럽게 완성했습니다. 요약 박스·표·FAQ·주의사항·개인 경험 메모·작성자 메모를 규칙에 맞게 배치하고 이미지 3개와 alt 텍스트를 구체적으로 제안했습니다.
+2026-08-01 05:59:32,374 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-01 05:59:32,374 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-01 05:59:32,536 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-01 05:59:32,550 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-01 05:59:32,551 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-01 05:59:33,620 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_01.html
+2026-08-01 05:59:33,632 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_01.html
+2026-08-01 06:00:04,511 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:00:04,512 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-01 06:00:04,512 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-01 06:00:04,521 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니'
+2026-08-01 06:00:05,360 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:00:09,085 [INFO] comment_manager —   생성된 댓글: 덧붙이자면 유류할증료는 매달 1일에 갱신되니까, 출발일이 애매하게 걸쳐있다면 발권 타이밍만 살짝 조정해도 몇만원은 차이 나더라고요. 그리고 가격...
+2026-08-01 06:03:09,245 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-01 06:03:09,246 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-01 06:03:09,246 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-01 06:03:09,247 [INFO] main — 
+============================================================
+2026-08-01 06:03:09,247 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-08-01 06:03:09,247 [INFO] main — ============================================================
+2026-08-01 06:03:09,281 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-01 06:03:09,304 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
+2026-08-01 06:03:09,323 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-01 06:03:09,625 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-01 06:03:10,095 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-01 06:03:10,502 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-01 06:03:10,504 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-01 06:03:10,507 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-01 06:03:10,523 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 176 / 실패 0 / 대기 92)
+2026-08-01 06:03:10,523 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-01 06:03:10,523 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-01 06:03:10,524 [INFO] main — 대시보드 데이터 업데이트 완료

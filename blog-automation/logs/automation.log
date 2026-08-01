@@ -1,116 +1,3 @@
-2026-07-31 12:26:30,247 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-31 12:26:30,270 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
-2026-07-31 12:26:30,289 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-31 12:26:30,445 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-31 12:26:30,642 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 12:26:30,643 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-31 12:26:30,646 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-31 12:26:30,662 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 177 / 실패 1 / 대기 91)
-2026-07-31 12:26:30,662 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-31 12:26:30,662 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-31 12:26:30,663 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-31 14:19:50,234 [INFO] main — 검토 모드 — pending_posts.json에 저장합니다
-2026-07-31 14:19:50,235 [INFO] main — ============================================================
-2026-07-31 14:19:50,235 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-07-31 14:19:50
-2026-07-31 14:19:50,235 [INFO] main — ============================================================
-2026-07-31 14:19:50,254 [INFO] main — 수집된 키워드 1개: ['걸그룹 리센느']
-2026-07-31 14:19:50,254 [INFO] main — 단독 포스트 대상 키워드 1개: ['걸그룹 리센느']
-2026-07-31 14:19:50,269 [INFO] main — 
-[1/1] 키워드: '걸그룹 리센느'
-2026-07-31 14:19:50,269 [INFO] content_generator — 포스트 생성 중: '걸그룹 리센느'
-2026-07-31 14:19:56,410 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:19:56,439 [INFO] research_collector — 검색 의도: 걸그룹 '리센느'에 대한 기본 정보(데뷔, 멤버, 소속사 등)를 알고 싶어하는 검색 의도
-2026-07-31 14:20:08,966 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '걸그룹 리센느'
-2026-07-31 14:20:22,056 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:20:22,057 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '걸그룹 리센느'
-2026-07-31 14:20:48,078 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:20:48,080 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'B': 3, 'X': 2, 'C': 2}
-2026-07-31 14:20:49,619 [INFO] content_generator — K-POP 참고 데이터 수집 완료: '걸그룹 리센느'
-2026-07-31 14:20:49,619 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
-2026-07-31 14:20:49,620 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-31 14:20:50,594 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:21:58,425 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-07-31 14:21:59,366 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:22:14,442 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
-2026-07-31 14:22:15,263 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느 무섭노 논란 총정리' → 제목='리센느 원이, "무섭노" 한마디에 일베 논란→갑론을박 이어지자…국립국어원' (관련성=0.60)
-2026-07-31 14:22:16,061 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느' → 제목='[포토]데뷔하는 신인 걸그룹 리센느' (관련성=1.00)
-2026-07-31 14:22:16,853 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느 데뷔 차에 타고 갤럭시' → 제목='리센느 "데뷔 초 휴대전화도 반납"…'중소돌'의 눈물겨운 성장기 공개 (' (관련성=0.33)
-2026-07-31 14:22:18,423 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:22:18,424 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-07-31 14:22:18,426 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-07-31 14:22:18,428 [INFO] content_generator — 포스트 생성 완료: '걸그룹 리센느 무섭노 논란 총정리' (3002자, 이미지 3개)
-2026-07-31 14:22:19,424 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:22:36,474 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '걸그룹 리센느 무섭노 논란 총정리'
-2026-07-31 14:22:36,474 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 뉴스·후기 재조합 중심이라 개인 고유 경험·인사이트는 부족함
-2026-07-31 14:22:36,474 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 직접 경험 서술은 약하고 '자료를 조사해보니' 수준에 그침
-2026-07-31 14:22:36,474 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처·alt텍스트 정보 확인 불가, 이미지 유무 불명확하여 주의 필요
-2026-07-31 14:22:36,474 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 번호 매긴 체크리스트, '정리해보겠습니다' 등 전형적 AI 서술 패턴이 반복적으로 나타남
-2026-07-31 14:22:36,481 [INFO] internal_linker — 내부 링크 후보 1개 발견
-2026-07-31 14:22:36,483 [INFO] internal_linker —   [1/5] 'K-POP' -> https://www.hoguwhat.com/2026/07/2026-8-k-pop.html
-2026-07-31 14:22:36,483 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-07-31 14:22:36,484 [INFO] main —   제목: 걸그룹 리센느 무섭노 논란 총정리
-2026-07-31 14:22:36,484 [INFO] main —   이미지: 3개 삽입
-2026-07-31 14:22:36,484 [INFO] main —   글자 수: 3002자
-2026-07-31 14:22:36,484 [INFO] main —   [검토 모드] 업로드 건너뜀
-2026-07-31 14:22:36,496 [INFO] main — 
-============================================================
-2026-07-31 14:22:36,496 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-31 14:22:36,496 [INFO] main — ============================================================
-2026-07-31 14:22:36,509 [INFO] dashboard_exporter —   검토 대기 저장: 걸그룹 리센느 무섭노 논란 총정리 (13485자 HTML)
-2026-07-31 14:22:36,526 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 130개)
-2026-07-31 14:22:36,526 [INFO] main — 검토 대기 포스트 저장 완료
-2026-07-31 14:22:36,555 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-31 14:22:36,576 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
-2026-07-31 14:22:36,592 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-31 14:22:36,876 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-31 14:22:37,215 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 14:22:37,546 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 14:22:37,547 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-31 14:22:37,550 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-31 14:22:37,565 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 176 / 실패 0 / 대기 92)
-2026-07-31 14:22:37,565 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-31 14:22:37,566 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-31 14:22:37,567 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-31 14:23:21,779 [INFO] main — 검토 모드 — pending_posts.json에 저장합니다
-2026-07-31 14:23:21,780 [INFO] main — ============================================================
-2026-07-31 14:23:21,780 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-31 14:23:21
-2026-07-31 14:23:21,780 [INFO] main — ============================================================
-2026-07-31 14:23:21,797 [INFO] main — 수집된 키워드 1개: ['걸그룹 리센느']
-2026-07-31 14:23:21,797 [INFO] main — 단독 포스트 대상 키워드 1개: ['걸그룹 리센느']
-2026-07-31 14:23:21,812 [INFO] main — 
-[1/1] 키워드: '걸그룹 리센느'
-2026-07-31 14:23:21,812 [INFO] content_generator — 포스트 생성 중: '걸그룹 리센느'
-2026-07-31 14:23:26,668 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:23:26,695 [INFO] research_collector — 검색 의도: 걸그룹 '리센느'에 대한 기본 정보(데뷔, 멤버, 소속사 등)를 알고 싶어하는 검색
-2026-07-31 14:23:35,348 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '걸그룹 리센느'
-2026-07-31 14:23:48,849 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:23:48,851 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '걸그룹 리센느'
-2026-07-31 14:24:11,067 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:24:11,068 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'B': 3, 'X': 2, 'C': 2}
-2026-07-31 14:24:12,268 [INFO] content_generator — K-POP 참고 데이터 수집 완료: '걸그룹 리센느'
-2026-07-31 14:24:12,269 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
-2026-07-31 14:24:12,269 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-31 14:24:14,342 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:25:31,273 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-07-31 14:25:32,397 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:25:49,997 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '데뷔 후 상당한 시간이 지난 뒤에야 음악방송 1위를 처음 차지했다는 보도'
-2026-07-31 14:25:49,998 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
-2026-07-31 14:25:51,087 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느, '무섭노' 논란부터 삼성 갤럭시 협찬까지 – 요즘 왜 화제일까' → 제목='"무섭노" 리센느 원이 '일베 말투' 논란…정치권까지 설전 [엑's 이슈' (관련성=0.22)
-2026-07-31 14:25:51,601 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느' → 제목='신인 걸그룹 리센느, '요요' 콘셉트 포토 공개…봄 느낌 물씬' (관련성=1.00)
-2026-07-31 14:25:53,636 [INFO] image_fetcher — 이미지 수집 성공: '걸그룹 리센느 아직 이름이 RESCENE 뜻하는' → 제목='Пин от пользователя Garamie на доске RES' (관련성=0.33)
-2026-07-31 14:25:57,633 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:25:57,635 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-07-31 14:25:57,635 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-07-31 14:25:57,637 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-07-31 14:25:57,638 [INFO] content_generator — 포스트 생성 완료: '걸그룹 리센느, '무섭노' 논란부터 삼성 갤럭시 협찬까지 – 요즘 왜 화제일까' (3135자, 이미지 2개)
-2026-07-31 14:25:58,407 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:26:21,712 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-31 14:26:22,817 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 14:26:26,139 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '걸그룹 리센느, '무섭노' 논란부터 삼성 갤럭시 협찬까지 – 요'
-2026-07-31 14:26:26,140 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수(3135자)는 기준을 충족하나 보도 내용 재정리 위주로 개인 경험·독창적 인사이트가 부족함
-2026-07-31 14:26:26,140 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개는 인용되나 1인칭 직접 경험 서술이 없고 저자 전문성 신호가 약함
-2026-07-31 14:26:26,140 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음(이미지 부재로 간주, 저작권 위반은 없으나 warn 처리)
-2026-07-31 14:26:26,140 [INFO] adsense_validator —   ❌ AI 생성 의심도: '다음 섹션에서~짚어보겠습니다', '~라고 합니다' 등 동일 전환구가 반복되는 전형적 AI 템플릿 패턴이 두드러짐
 2026-07-31 14:26:26,140 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '다음 섹션에서~짚어보겠습니다', '~라고 합니다' 등 동일 전환구가 반복되는 전형적 AI 템플릿 패턴이 두드러짐
 2026-07-31 14:26:26,140 [WARNING] adsense_validator —   🔴 섹션 전환 문구('다음 섹션에서~짚어보겠습니다')가 기계적으로 반복되어 AI 생성 의심도가 높음
 2026-07-31 14:26:26,140 [WARNING] adsense_validator —   🔴 1인칭 경험이나 저자 고유의 취재/분석 근거가 없어 E-E-A-T 신뢰도가 낮음
@@ -611,3 +498,126 @@
 2026-08-01 06:03:10,523 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-01 06:03:10,523 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-01 06:03:10,524 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-01 06:03:48,408 [INFO] main — ============================================================
+2026-08-01 06:03:48,409 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-01 06:03:48
+2026-08-01 06:03:48,409 [INFO] main — ============================================================
+2026-08-01 06:03:48,424 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-01 06:03:48,424 [INFO] keyword_collector — 포스팅 이력 코퍼스: 130개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-08-01 06:03:52,924 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-08-01 06:03:58,131 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:03:58,153 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-01 06:03:58,153 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-01 06:03:58,872 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-01 06:03:58,873 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-01 06:03:58,874 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
+2026-08-01 06:03:58,885 [INFO] keyword_collector — 유사 주제 제외 13개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '골프 비기너 첫 필드 나가기 전 준비 체크리스트', '여름휴가 항공권 숙소 저렴하게 예약하는 방법 2026', '일본 여행 유류할증료 인하 지금이 적기인 이유']
+2026-08-01 06:03:58,885 [INFO] keyword_collector —   [fallback] 2개: ['국내 호캉스 가성비 호텔 실제 후기 비교', '남해 여행 봄에 가면 좋은 이유와 준비물']
+2026-08-01 06:03:58,885 [INFO] keyword_collector — 최종 선정 키워드 2개: ['국내 호캉스 가성비 호텔 실제 후기 비교', '남해 여행 봄에 가면 좋은 이유와 준비물']
+2026-08-01 06:03:58,885 [INFO] main — 수집된 키워드 2개: ['국내 호캉스 가성비 호텔 실제 후기 비교', '남해 여행 봄에 가면 좋은 이유와 준비물']
+2026-08-01 06:03:58,890 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
+2026-08-01 06:03:58,890 [INFO] main — 단독 포스트 대상 키워드 1개: ['국내 호캉스 가성비 호텔 실제 후기 비교']
+2026-08-01 06:03:58,907 [INFO] main — 
+[1/1] 키워드: '국내 호캉스 가성비 호텔 실제 후기 비교'
+2026-08-01 06:03:58,907 [INFO] content_generator — 포스트 생성 중: '국내 호캉스 가성비 호텔 실제 후기 비교'
+2026-08-01 06:04:05,530 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:04:05,531 [INFO] research_collector — 검색 의도: 국내에서 가격 대비 만족도가 높은 호캉스 호텔을 실제 이용 후기 기반으로 비교하고 선택하려는 의도
+2026-08-01 06:04:18,315 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '국내 호캉스 가성비 호텔 실제 후기 비교'
+2026-08-01 06:04:29,693 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:04:29,694 [INFO] evidence_builder — 자료팩 생성: 사실 3개 — '국내 호캉스 가성비 호텔 실제 후기 비교'
+2026-08-01 06:04:38,114 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:04:38,116 [INFO] source_validator — 출처 검증: 1/3개 통과, 등급 분포 {'X': 2, 'D': 1}
+2026-08-01 06:04:38,118 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-01 06:04:38,940 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:05:59,755 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:06:09,565 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-08-01 06:06:10,326 [INFO] image_fetcher — 이미지 수집 성공: '국내 호캉스 가성비 호텔, 서울·부산·제주 실제 후기 비교하고 고르는 법' → 제목='네이버 인플루언서 [네이버 인플루언서] 부산 호캉스 가성비호텔 추천💓' (관련성=0.18)
+2026-08-01 06:06:11,157 [INFO] image_fetcher — 이미지 수집 성공: '국내 호캉스 가성비' → 제목='네이버 인플루언서 [네이버 인플루언서] 해외여행 대신 다녀오기 좋은 국내' (관련성=0.67)
+2026-08-01 06:06:11,861 [INFO] image_fetcher — 이미지 수집 성공: '국내 호캉스 기준부터 다시 누군가에 게는' → 제목='‘늦가을·초겨울’ 국내 호캉스↑ 코로나前의 2배' (관련성=0.33)
+2026-08-01 06:06:13,305 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:06:13,306 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-08-01 06:06:13,308 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-08-01 06:06:13,310 [INFO] content_generator — 포스트 생성 완료: '국내 호캉스 가성비 호텔, 서울·부산·제주 실제 후기 비교하고 고르는 법' (3222자, 이미지 3개)
+2026-08-01 06:06:14,193 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:06:33,904 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '국내 호캉스 가성비 호텔, 서울·부산·제주 실제 후기 비교하고 '
+2026-08-01 06:06:33,904 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 trip.com 가이드 재구성 비중이 크고 구체적 개인 경험(날짜·비용 등)이 부족함
+2026-08-01 06:06:33,904 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 개수는 충분하나 일부 단락이 줄바꿈 없이 길게 이어져 가독성이 다소 떨어짐
+2026-08-01 06:06:33,904 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 1개(trip.com)만 인용되고 개인 경험 언급(마린파파)이 구체성 부족해 전문성 신호가 약함
+2026-08-01 06:06:33,904 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급이 없어 삽입 여부 불명확, 저작권 위반은 없으나 이미지 부재로 warn
+2026-08-01 06:06:33,905 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 점', '~는 편입니다' 등 유사 패턴 반복과 전형적 블로그 전개 방식이 AI 생성 의심 신호로 보임
+2026-08-01 06:06:33,910 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-01 06:06:33,911 [INFO] internal_linker —   [1/5] '해외여행' -> https://www.hoguwhat.com/2026/08/blog-post.html
+2026-08-01 06:06:33,914 [INFO] internal_linker —   [2/5] '가이드' -> https://www.hoguwhat.com/2026/07/vs.html
+2026-08-01 06:06:33,916 [INFO] internal_linker —   [3/5] '가이드' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_28.ht
+2026-08-01 06:06:33,916 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-08-01 06:06:33,916 [INFO] main —   제목: 국내 호캉스 가성비 호텔, 서울·부산·제주 실제 후기 비교하고 고르는 법
+2026-08-01 06:06:33,916 [INFO] main —   이미지: 3개 삽입
+2026-08-01 06:06:33,916 [INFO] main —   글자 수: 3222자
+2026-08-01 06:06:34,563 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:06:56,269 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '국내 호캉스 가성비 호텔, 서울·부산·제주 실제 후기 비교하고 '
+2026-08-01 06:06:56,270 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충족하나 trip.com 가이드 재구성 위주이고 구체적 날짜·수치 기반 개인 경험 사례가 부족함
+2026-08-01 06:06:56,270 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2는 8개로 충분하나 단락 구분 없이 긴 텍스트 블록이 이어져 가독성이 떨어짐
+2026-08-01 06:06:56,270 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 견해와 출처 1개는 있으나 출처가 단일해 신뢰 신호가 약함
+2026-08-01 06:06:56,270 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문 내 이미지 관련 언급 없음 — 이미지 부재로 warn 처리
+2026-08-01 06:06:56,270 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 본문 중간에 '네이버 인플루언서' 등 출처 불명 텍스트가 어색하게 섞여 있어 스크래핑/자동생성 흔적 의심
+2026-08-01 06:06:56,270 [WARNING] adsense_validator —   🔴 본문 중 '네이버 인플루언서 [네이버 인플루언서] ...' 형태의 텍스트가 원문 그대로 혼입되어 있어 타 콘텐츠 스크래핑 또는 편집 오류로 보이며 저작권·원본성 문제 소지가 있음
+2026-08-01 06:06:56,270 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-08-01 06:06:56,270 [WARNING] main —      🔴 본문 중 '네이버 인플루언서 [네이버 인플루언서] ...' 형태의 텍스트가 원문 그대로 혼입되어 있어 타 콘텐츠 스크래핑 또는 편집 오류로 보이며 저작권·원본성 문제 소지가 있음
+2026-08-01 06:06:56,270 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 충족하나 trip.com 가이드 재구성 위주이고 구체적 날짜·수치 기반 개인 경험 사례가 부족함
+2026-08-01 06:06:56,270 [WARNING] main —      🟡 [구조 및 가독성] H2는 8개로 충분하나 단락 구분 없이 긴 텍스트 블록이 이어져 가독성이 떨어짐
+2026-08-01 06:06:56,270 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 견해와 출처 1개는 있으나 출처가 단일해 신뢰 신호가 약함
+2026-08-01 06:06:56,270 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-08-01 06:06:57,155 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:08:16,909 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-01 06:08:17,679 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:08:51,313 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3222자 → 5193자 (+1971자)
+2026-08-01 06:08:51,313 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-01 06:08:52,043 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:09:09,253 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '국내 호캉스 가성비 호텔, 서울·부산·제주 실제 후기 비교하고 '
+2026-08-01 06:09:09,253 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 개수는 충분하나 일부 단락이 여러 문장이 구분 없이 이어져 500자 이상으로 보이는 단락이 존재함
+2026-08-01 06:09:09,253 [INFO] adsense_validator —   ⚠️ 이미지 정책: 네이버 인플루언서 게시물 캡처로 추정되는 이미지가 포함되어 저작권 출처 확인이 필요함
+2026-08-01 06:09:09,253 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 90/100)
+2026-08-01 06:09:09,253 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-01 06:09:10,007 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:10:31,745 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-01 06:10:32,534 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:11:06,768 [INFO] final_editor —   ✏️ 제목 최종 교정: '국내 호캉스 가성비 호텔, 서울·부산·제주 실제 후기 비교하고 고르는 법' → '국내 호캉스 가성비 호텔, 서울·부산·제주 후기 비교'
+2026-08-01 06:11:06,768 [INFO] final_editor —   ✏️ 메타 설명 교정 (92자)
+2026-08-01 06:11:06,768 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 이미지 placeholder 텍스트 제거 및 별도 이미지 리스트로 분리, 긴 문단을 2~4문장 단위로 재구성, 미완성 섹션(체크포인트·비교표·취소환불·결론·FAQ) 완성, 요약박스·표·개인경험메모·주의사항·작성자메모 규격 적용.
+2026-08-01 06:11:06,899 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-01 06:11:06,900 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-01 06:11:07,013 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-01 06:11:07,026 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-01 06:11:07,026 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-08-01 06:11:08,011 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post.html
+2026-08-01 06:11:08,023 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post.html
+2026-08-01 06:11:38,577 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:11:38,579 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-01 06:11:38,579 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-01 06:11:38,588 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '국내 호캉스 가성비 호텔, 서울·부산·제주 후기 비교'
+2026-08-01 06:11:40,729 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 06:11:43,989 [INFO] comment_manager —   생성된 댓글: 하나 더 팁 드리자면, 예약 전에 호텔 공식 인스타그램이나 블로그 최근 게시물로 리모델링 여부나 공사 소음 이슈를 확인해보시는 것도 추천드려요....
+2026-08-01 06:14:44,095 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-01 06:14:44,096 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-01 06:14:44,096 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-01 06:14:44,097 [INFO] main — 
+============================================================
+2026-08-01 06:14:44,097 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-08-01 06:14:44,097 [INFO] main — ============================================================
+2026-08-01 06:14:44,130 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-01 06:14:44,148 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
+2026-08-01 06:14:44,164 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-01 06:14:44,378 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-01 06:14:44,681 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-01 06:14:44,683 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-01 06:14:44,686 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-01 06:14:44,699 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 177 / 실패 0 / 대기 92)
+2026-08-01 06:14:44,700 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-01 06:14:44,700 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-01 06:14:44,701 [INFO] main — 대시보드 데이터 업데이트 완료

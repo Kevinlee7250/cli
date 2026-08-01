@@ -1,131 +1,3 @@
-2026-07-31 23:12:31,256 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 23:12:39,907 [INFO] content_generator — 팩트체크: 통과
-2026-07-31 23:12:41,245 [INFO] image_fetcher — 이미지 수집 성공: '방콕 호텔 가성비 후기, 지역별로 갈렸다' → 제목='방콕 가성비 숙소. 람부뜨리 빌리지 호텔 후기' (관련성=0.67)
-2026-07-31 23:12:42,181 [INFO] image_fetcher — 이미지 수집 성공: '태국 방콕 호텔' → 제목='태국 방콕 프라람 9 병원 근처 호텔 베스트 10 태국 프라람 9 병원 ' (관련성=1.00)
-2026-07-31 23:12:43,561 [INFO] image_fetcher — 이미지 수집 성공: '태국 방콕 예약 위치부터 BTS MRT' → 제목='코모 메트로폴리탄 방콕, 싸톤 (2024-08-05~2024-08-06,' (관련성=0.33)
-2026-07-31 23:12:48,196 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 23:12:48,197 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-07-31 23:12:48,197 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-07-31 23:12:48,199 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-07-31 23:12:48,201 [INFO] content_generator — 포스트 생성 완료: '방콕 호텔 가성비 후기, 지역별로 갈렸다' (2758자, 이미지 2개)
-2026-07-31 23:12:49,161 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 23:13:11,813 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '방콕 호텔 가성비 후기, 지역별로 갈렸다'
-2026-07-31 23:13:11,813 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 대부분 일반적 지역 특징·체크리스트 나열이며 개인 경험은 호텔명/날짜 1건 정도로 빈약함
-2026-07-31 23:13:11,813 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락(지역별 후기 비교 등)이 500자 이상으로 길게 이어짐
-2026-07-31 23:13:11,813 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개와 구체적 호텔 사례가 있으나 1인칭 경험 서술이 거의 없어 저자 전문성 신호가 약함
-2026-07-31 23:13:11,813 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 제공되지 않아 이미지 부재로 판단, 정책 위반은 아니나 가독성 보완 필요
-2026-07-31 23:13:11,813 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면', '이제 ~궁금해질 겁니다' 같은 정형화된 전환 문구와 체크리스트식 나열 패턴이 반복되어 AI 생성 흔적이 감지됨
-2026-07-31 23:13:11,821 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-07-31 23:13:11,825 [INFO] internal_linker —   [1/5] '예약하는' -> https://www.hoguwhat.com/2026/07/2026_0805021684.html
-2026-07-31 23:13:11,827 [INFO] internal_linker —   [2/5] '항공권' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0213604772
-2026-07-31 23:13:11,830 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-07-31 23:13:11,830 [INFO] main —   제목: 방콕 호텔 가성비 후기, 지역별로 갈렸다
-2026-07-31 23:13:11,830 [INFO] main —   이미지: 2개 삽입
-2026-07-31 23:13:11,830 [INFO] main —   글자 수: 2758자
-2026-07-31 23:13:12,479 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 23:13:28,795 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '방콕 호텔 가성비 후기, 지역별로 갈렸다'
-2026-07-31 23:13:28,795 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준을 충족하나 특정 날짜/숙소명 하나만 파편적으로 삽입되고 대부분 지역별 일반 정보 재구성에 그침
-2026-07-31 23:13:28,795 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 실제 체류 경험 서술이 부족하고 '후기에 따르면' 식 간접 인용 위주
-2026-07-31 23:13:28,795 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 삽입 여부가 확인되지 않아 이미지 부재로 판단
-2026-07-31 23:13:28,795 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·지역 비교 나열 패턴과 '이런 패턴을 알고 나면' 류 전환 문구가 반복되어 정형화된 느낌
-2026-07-31 23:13:28,795 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-07-31 23:13:28,795 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 기준을 충족하나 특정 날짜/숙소명 하나만 파편적으로 삽입되고 대부분 지역별 일반 정보 재구성에 그침
-2026-07-31 23:13:28,795 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 실제 체류 경험 서술이 부족하고 '후기에 따르면' 식 간접 인용 위주
-2026-07-31 23:13:28,795 [WARNING] main —      🟡 [이미지 정책] 본문에 이미지 삽입 여부가 확인되지 않아 이미지 부재로 판단
-2026-07-31 23:13:28,795 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-07-31 23:13:29,776 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-07-31 23:14:57,190 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-07-31 23:14:57,504 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-31 23:14:57,985 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-31 23:15:25,736 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-31 23:15:25,750 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2758자 → 1980자 (-778자)
-2026-07-31 23:15:25,750 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-07-31 23:15:25,768 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-31 23:15:28,852 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-31 23:15:28,860 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '방콕 호텔 가성비 후기, 지역별로 갈렸다'
-2026-07-31 23:15:28,860 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수가 1980자로 기준 미달입니다.
-2026-07-31 23:15:28,860 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 헤딩이 3개로 기준에 미달합니다.
-2026-07-31 23:15:28,860 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 언급이 없어 저작권 관련 주의 필요합니다.
-2026-07-31 23:15:28,861 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
-2026-07-31 23:15:28,861 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-07-31 23:15:28,880 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-31 23:15:35,435 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-31 23:15:35,439 [INFO] final_editor —   ✏️ 제목 최종 교정: '방콕 호텔 가성비 후기, 지역별로 갈렸다' → '방콕 호텔 가성비 비교 & 실망 후기'
-2026-07-31 23:15:35,439 [INFO] final_editor —   ✏️ 메타 설명 교정 (74자)
-2026-07-31 23:15:35,440 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 본문 구조를 모바일 친화적으로 개선하고, 추가 정보 구성을 통해 SEO 최적화를 진행했습니다.
-2026-07-31 23:15:35,440 [WARNING] final_editor —   ⚠️ 발행 전 체크리스트 미충족 항목: warning_if_needed
-2026-07-31 23:15:35,519 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-31 23:15:35,519 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-07-31 23:15:35,599 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-07-31 23:15:35,612 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-07-31 23:15:35,612 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-07-31 23:15:36,211 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post.html
-2026-07-31 23:15:36,224 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post.html
-2026-07-31 23:15:36,355 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-31 23:15:36,356 [ERROR] social_publisher — 소셜 콘텐츠 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011Cdaz9v6mNjxvDJGmtLUFd'}
-2026-07-31 23:15:36,356 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-07-31 23:15:36,365 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '방콕 호텔 가성비 비교 & 실망 후기'
-2026-07-31 23:15:36,382 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-31 23:15:37,937 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-31 23:15:37,947 [INFO] comment_manager —   생성된 댓글: 방콕에서 숙소를 예약할 때, 호텔에서 제공하는 조식의 품질이나 뷰도 고려해보세요. 특히 리버사이드 쪽은 아침 식사 시 강가를 보며 여유로운 시간...
-2026-07-31 23:18:38,014 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-07-31 23:18:38,015 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-07-31 23:18:38,016 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-07-31 23:18:38,016 [INFO] main — 
-============================================================
-2026-07-31 23:18:38,016 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-07-31 23:18:38,016 [INFO] main — ============================================================
-2026-07-31 23:18:38,049 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-07-31 23:18:38,069 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
-2026-07-31 23:18:38,086 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-07-31 23:18:38,447 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-07-31 23:18:38,671 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 23:18:38,888 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 23:18:38,889 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-07-31 23:18:38,892 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-07-31 23:18:38,907 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 176 / 실패 0 / 대기 92)
-2026-07-31 23:18:38,907 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-07-31 23:18:38,907 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
-2026-07-31 23:18:38,908 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-07-31 23:19:18,736 [INFO] main — ============================================================
-2026-07-31 23:19:18,736 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-07-31 23:19:18
-2026-07-31 23:19:18,736 [INFO] main — ============================================================
-2026-07-31 23:19:18,752 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-07-31 23:19:18,752 [INFO] keyword_collector — 포스팅 이력 코퍼스: 128개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-07-31 23:19:24,617 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-07-31 23:19:24,797 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-31 23:19:24,798 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 0개
-2026-07-31 23:19:25,384 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-31 23:19:25,930 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-07-31 23:19:25,931 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-07-31 23:19:25,932 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-07-31 23:19:25,941 [INFO] keyword_collector — 유사 주제 제외 5개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개', '강원도 캠핑 처음 해봤을 때 몰랐던 것들', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서', '전주 한옥마을 사람 적은 시간대와 숨은 맛집']
-2026-07-31 23:19:25,941 [INFO] keyword_collector —   [fallback] 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '국내 호캉스 가성비 호텔 실제 후기 비교']
-2026-07-31 23:19:25,941 [INFO] keyword_collector — 최종 선정 키워드 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '국내 호캉스 가성비 호텔 실제 후기 비교']
-2026-07-31 23:19:25,941 [INFO] main — 수집된 키워드 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '국내 호캉스 가성비 호텔 실제 후기 비교']
-2026-07-31 23:19:25,946 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-07-31 23:19:25,946 [INFO] main — 단독 포스트 대상 키워드 1개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-07-31 23:19:25,964 [INFO] main — 
-[1/1] 키워드: '서울 근교 드라이브 코스 직접 가본 솔직 평가'
-2026-07-31 23:19:25,964 [INFO] content_generator — 포스트 생성 중: '서울 근교 드라이브 코스 직접 가본 솔직 평가'
-2026-07-31 23:19:26,077 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-31 23:19:26,078 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdazSrHYmRprsMRrpa4Vs'}
-2026-07-31 23:19:35,380 [INFO] research_collector — 자료 조사: 5개 수집 (신뢰 도메인 0개) — '서울 근교 드라이브 코스 직접 가본 솔직 평가'
-2026-07-31 23:19:35,487 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-31 23:19:35,487 [WARNING] evidence_builder — 자료팩 생성 실패: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'You have reached your specified API usage limits. You will regain access on 2026-08-01 at 00:00 UTC.'}, 'request_id': 'req_011CdazTYWzNXcqNUE1A4qpA'}
-2026-07-31 23:19:35,488 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-07-31 23:19:35,619 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 400 Bad Request"
-2026-07-31 23:19:36,147 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
-2026-07-31 23:19:53,765 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2026-07-31 23:19:53,782 [WARNING] content_generator — 컨텐츠 너무 짧음(1477자, 최소 2500자) — 재시도 1/3
-2026-07-31 23:19:56,782 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
 2026-07-31 23:19:56,783 [WARNING] config — Claude 사용 한도 도달 — OpenAI(gpt-4o)로 자동 폴백
 2026-07-31 23:20:13,907 [INFO] httpx — HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
 2026-07-31 23:20:13,913 [WARNING] content_generator — 컨텐츠 너무 짧음(1711자, 최소 2500자) — 재시도 2/3
@@ -626,3 +498,137 @@
 2026-08-01 06:25:50,272 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-01 06:25:50,272 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-01 06:25:50,273 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-01 11:15:28,075 [INFO] main — ============================================================
+2026-08-01 11:15:28,076 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-01 11:15:28
+2026-08-01 11:15:28,076 [INFO] main — ============================================================
+2026-08-01 11:15:28,089 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-01 11:15:28,089 [INFO] keyword_collector — 포스팅 이력 코퍼스: 172개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-01 11:15:31,992 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-01 11:15:36,564 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:15:36,581 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-01 11:15:36,581 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-01 11:15:36,866 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-01 11:15:37,143 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-01 11:15:37,623 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-01 11:15:37,624 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
+2026-08-01 11:15:37,629 [INFO] keyword_collector — 최근 사용 제외 2개: ['해외여행 실비보험 필요한지 직접 비교해봤더니', '전국 치킨 맛집 지도 K치킨벨트 총정리']
+2026-08-01 11:15:37,629 [INFO] keyword_collector — 유사 주제 제외 1개: ['장마철 국내 여행지 추천 강원도 삼척 계곡 폭포']
+2026-08-01 11:15:37,630 [INFO] keyword_collector —   [naver_realtime] 2개: ['여름 휴가 국내 로컬 여행 vs 해외여행 비교', '호캉스 특가 예약 방법 면세점 휴가철 혜택']
+2026-08-01 11:15:37,630 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여름 휴가 국내 로컬 여행 vs 해외여행 비교', '호캉스 특가 예약 방법 면세점 휴가철 혜택']
+2026-08-01 11:15:37,630 [INFO] main — 수집된 키워드 2개: ['여름 휴가 국내 로컬 여행 vs 해외여행 비교', '호캉스 특가 예약 방법 면세점 휴가철 혜택']
+2026-08-01 11:15:37,635 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
+2026-08-01 11:15:37,635 [INFO] main — 단독 포스트 대상 키워드 1개: ['여름 휴가 국내 로컬 여행 vs 해외여행 비교']
+2026-08-01 11:15:37,649 [INFO] main — 
+[1/1] 키워드: '여름 휴가 국내 로컬 여행 vs 해외여행 비교'
+2026-08-01 11:15:37,649 [INFO] content_generator — 포스트 생성 중: '여름 휴가 국내 로컬 여행 vs 해외여행 비교'
+2026-08-01 11:15:52,031 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:15:52,032 [INFO] research_collector — 검색 의도: 여름 휴가철에 국내 로컬 여행과 해외여행 중 어떤 선택이 비용, 만족도, 편의성 면에서 더 나은지 비교 정보
+2026-08-01 11:16:03,124 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '여름 휴가 국내 로컬 여행 vs 해외여행 비교'
+2026-08-01 11:16:17,067 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:16:17,068 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '여름 휴가 국내 로컬 여행 vs 해외여행 비교'
+2026-08-01 11:16:26,945 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:16:26,946 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'B': 4, 'X': 1}
+2026-08-01 11:16:26,947 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-01 11:16:27,748 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:17:47,203 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(노쇼)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-08-01 11:17:49,203 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-08-01 11:17:50,091 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:19:21,951 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:19:42,588 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-08-01 11:19:44,011 [INFO] image_fetcher — 이미지 수집 성공: '여름휴가 국내여행 vs 해외여행 뭐가 남나' → 제목='여기가 국내 여행지라구여..?  산책길도 너무 예쁘고  날씨도 물도 맑았' (관련성=0.40)
+2026-08-01 11:19:44,170 [INFO] image_fetcher — 이미지 수집 성공: '여름 휴가 국내' → 제목='cap / straw hat / summer / grain / spike' (관련성=0.25)
+2026-08-01 11:19:44,507 [INFO] image_fetcher — 대체 이미지 수집: '여름 휴가 올여름 고민이 가까이 최근' → 제목='grass / sunset / field / river / summer ' (관련성=0.14)
+2026-08-01 11:19:44,507 [INFO] image_fetcher — 이미지 수집 성공: '여름 휴가 올여름 고민이 가까이 최근' → 제목='grass / sunset / field / river / summer ' (관련성=0.14)
+2026-08-01 11:19:46,002 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:19:46,003 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
+2026-08-01 11:19:46,003 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-08-01 11:19:46,005 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-08-01 11:19:46,007 [INFO] content_generator — 포스트 생성 완료: '여름휴가 국내여행 vs 해외여행 뭐가 남나' (3231자, 이미지 1개)
+2026-08-01 11:19:46,728 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:20:02,705 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '여름휴가 국내여행 vs 해외여행 뭐가 남나'
+2026-08-01 11:20:02,706 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 통계 인용은 풍부하나 1인칭 실제 경험(직접 다녀온 여행 사례)이 빠져 정보 재조합에 가까움
+2026-08-01 11:20:02,706 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개는 인용됐으나 저자 본인의 직접 경험 서술이 약함
+2026-08-01 11:20:02,706 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 사용 여부·출처 불명확, 이미지 부재 자체는 감점 아님
+2026-08-01 11:20:02,706 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '쉽게 말하면', '그런데' 등 정형화된 전환구 반복과 체크리스트식 나열 패턴이 다소 보임
+2026-08-01 11:20:02,712 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-01 11:20:02,716 [INFO] internal_linker —   [1/5] '2026년' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0213604772
+2026-08-01 11:20:02,717 [INFO] internal_linker —   [2/5] '여행지' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_28.ht
+2026-08-01 11:20:02,718 [INFO] internal_linker —   [3/5] '휴가지' -> https://www.hoguwhat.com/2026/07/blog-post_279.html
+2026-08-01 11:20:02,718 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-08-01 11:20:02,718 [INFO] main —   제목: 여름휴가 국내여행 vs 해외여행 뭐가 남나
+2026-08-01 11:20:02,718 [INFO] main —   이미지: 1개 삽입
+2026-08-01 11:20:02,718 [INFO] main —   글자 수: 3231자
+2026-08-01 11:20:03,844 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:20:28,105 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-01 11:20:28,827 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:20:29,863 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '여름휴가 국내여행 vs 해외여행 뭐가 남나'
+2026-08-01 11:20:29,863 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 통과하지만 통계 나열 위주이며 실제 개인 경험(날짜·장소·사진)은 없고 SNS 캡션이 어색하게 삽입됨
+2026-08-01 11:20:29,863 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락(환율·감염병 설명부)이 500자 이상으로 길게 이어짐
+2026-08-01 11:20:29,863 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 질병관리청·문체부 등 출처 인용은 있으나 1인칭 경험 서술과 저자 전문성 신호 부족
+2026-08-01 11:20:29,863 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 없이 텍스트로만 구성됨(정책 위반은 아니나 가독성·SEO 측면에서 보완 필요)
+2026-08-01 11:20:29,863 [INFO] adsense_validator —   ❌ AI 생성 의심도: '올해 연간 외국인 관광객이 올해 연간 외국인 관광객 수가' 중복 오류와 '쉽게 말하면' 반복 등 전형적 AI 생성 흔적 발견
+2026-08-01 11:20:29,863 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '올해 연간 외국인 관광객이 올해 연간 외국인 관광객 수가' 중복 오류와 '쉽게 말하면' 반복 등 전형적 AI 생성 흔적 발견
+2026-08-01 11:20:29,863 [WARNING] adsense_validator —   🔴 본문 중 문장 중복 오류('올해 연간 외국인 관광객이 올해 연간 외국인 관광객 수가 늘어날 것으로 내다봤습니다') 수정 필요
+2026-08-01 11:20:29,864 [WARNING] adsense_validator —   🔴 SNS 캡션(#국내여행 #힐링 등)이 본문 흐름과 무관하게 삽입되어 출처 불명 콘텐츠 도용 우려
+2026-08-01 11:20:29,864 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
+2026-08-01 11:20:29,864 [WARNING] main —      🔴 [AI 생성 의심도] '올해 연간 외국인 관광객이 올해 연간 외국인 관광객 수가' 중복 오류와 '쉽게 말하면' 반복 등 전형적 AI 생성 흔적 발견
+2026-08-01 11:20:29,864 [WARNING] main —      🔴 본문 중 문장 중복 오류('올해 연간 외국인 관광객이 올해 연간 외국인 관광객 수가 늘어날 것으로 내다봤습니다') 수정 필요
+2026-08-01 11:20:29,864 [WARNING] main —      🔴 SNS 캡션(#국내여행 #힐링 등)이 본문 흐름과 무관하게 삽입되어 출처 불명 콘텐츠 도용 우려
+2026-08-01 11:20:29,864 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 통과하지만 통계 나열 위주이며 실제 개인 경험(날짜·장소·사진)은 없고 SNS 캡션이 어색하게 삽입됨
+2026-08-01 11:20:29,864 [WARNING] main —      🟡 [구조 및 가독성] H2 7개로 구조는 양호하나 일부 단락(환율·감염병 설명부)이 500자 이상으로 길게 이어짐
+2026-08-01 11:20:29,864 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 질병관리청·문체부 등 출처 인용은 있으나 1인칭 경험 서술과 저자 전문성 신호 부족
+2026-08-01 11:20:29,864 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
+2026-08-01 11:20:30,564 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:21:52,128 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-01 11:21:52,860 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:22:23,364 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3231자 → 3771자 (+540자)
+2026-08-01 11:22:23,365 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-01 11:22:24,269 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:22:42,916 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '여름휴가 국내여행 vs 해외여행 뭐가 남나'
+2026-08-01 11:22:42,916 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개는 우수하나 환율·통계 설명 단락이 500자 이상으로 길게 뭉쳐 있어 가독성 저하
+2026-08-01 11:22:42,916 [INFO] adsense_validator —   ⚠️ 이미지 정책: 사진 언급은 있으나 실제 이미지 삽입·alt텍스트·출처 표기 여부 불명확
+2026-08-01 11:22:42,916 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 90/100)
+2026-08-01 11:22:42,916 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-01 11:22:43,593 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:23:28,164 [INFO] final_editor —   ✏️ 제목 최종 교정: '여름휴가 국내여행 vs 해외여행 뭐가 남나' → '여름휴가 국내 로컬여행 vs 해외여행, 실제 비용 비교'
+2026-08-01 11:23:28,164 [INFO] final_editor —   ✏️ 메타 설명 교정 (132자)
+2026-08-01 11:23:28,164 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 본문 말미가 중단되어 있던 결론부(상황별 추천 대상), 자주 묻는 질문 4개, 주의사항 박스, 작성자 메모, 관련 글 언급을 보완해 발행 가능한 형태로 완성했습니다. 제목·메타 설명·슬러그를 글자 수 기준에 맞게 정리하고, 이미지 3종의 위치와 구체적인 alt 텍스트를 추가했습니다.
+2026-08-01 11:23:28,299 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-01 11:23:28,299 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-01 11:23:28,434 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-01 11:23:28,444 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-01 11:23:28,444 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-01 11:23:28,810 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/vs.html
+2026-08-01 11:23:28,820 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/vs.html
+2026-08-01 11:23:59,424 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:23:59,425 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-01 11:23:59,425 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-01 11:23:59,432 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '여름휴가 국내 로컬여행 vs 해외여행, 실제 비용 비교'
+2026-08-01 11:24:00,077 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-01 11:24:05,260 [INFO] comment_manager —   생성된 댓글: 글 잘 봤습니다! 하나 더 팁을 드리자면, 해외여행 가실 때 여행자보험에서 감염병·식중독 관련 보장 항목까지 꼼꼼히 확인하시는 걸 추천드려요. ...
+2026-08-01 11:27:05,386 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-01 11:27:05,387 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-01 11:27:05,388 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-01 11:27:05,388 [INFO] main — 
+============================================================
+2026-08-01 11:27:05,388 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-08-01 11:27:05,388 [INFO] main — ============================================================
+2026-08-01 11:27:05,416 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-01 11:27:05,434 [INFO] dashboard_exporter —   시리즈: 12개 내보내기 완료
+2026-08-01 11:27:05,449 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-01 11:27:05,728 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-01 11:27:06,269 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-01 11:27:06,531 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-01 11:27:06,532 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-01 11:27:06,534 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-01 11:27:06,547 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 179 / 실패 0 / 대기 91)
+2026-08-01 11:27:06,547 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-01 11:27:06,548 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-01 11:27:06,548 [INFO] main — 대시보드 데이터 업데이트 완료

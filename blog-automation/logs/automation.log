@@ -1,128 +1,3 @@
-2026-08-01 11:46:11,991 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 11:46:55,499 [WARNING] content_generator — 컨텐츠 너무 짧음(1858자, 최소 2500자) — 재시도 2/3
-2026-08-01 11:46:58,499 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-08-01 11:46:59,213 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 11:47:50,536 [WARNING] content_generator — 최소 분량 미달(2164자) — 재시도 소진, 해당 분량으로 진행
-2026-08-01 11:47:51,314 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 11:47:59,281 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-08-01 11:47:59,949 [INFO] image_fetcher — 이미지 수집 성공: '삼성전자 자사주 90조 매입, 실적 근거 총정리' → 제목='댓글 : 삼성전자 : 자사주 90조 매입이 주가에 미치는 영향' (관련성=0.33)
-2026-08-01 11:48:00,514 [INFO] image_fetcher — 이미지 수집 성공: '삼성전자 실적 발표' → 제목='[그래픽] 삼성전자 분기별 실적 추이' (관련성=0.67)
-2026-08-01 11:48:01,176 [INFO] image_fetcher — 이미지 수집 성공: '삼성전자 실적 조원 규모 니다 발단은' → 제목='삼성전자, 분기 순익 10 조원 돌파 예상 ㄷㄷㄷ | 보배드림 국산차게시' (관련성=0.33)
-2026-08-01 11:48:05,359 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 11:48:05,360 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-08-01 11:48:05,360 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-08-01 11:48:05,363 [INFO] content_generator — 시리즈 포스트 생성 완료: '삼성전자 자사주 90조 매입, 실적 근거 총정리' (2164자, 이미지 2개)
-2026-08-01 11:48:05,363 [WARNING] main —   ⚠️ [편 2] 글자 수 미달 (2164자 < 2500자) — pending 저장
-2026-08-01 11:48:05,364 [INFO] main — 
---- [3/3편] '삼성전자 주주환원 정책 공시 확인방법' 생성 중 ---
-2026-08-01 11:48:05,364 [INFO] content_generator — 시리즈 포스트 생성: '삼성전자 주주환원 정책 공시 확인방법' (3/3편)
-2026-08-01 11:48:15,595 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 11:48:15,596 [INFO] research_collector — 검색 의도: 삼성전자의 배당·자사주 매입 등 주주환원 정책을 공식 공시자료(DART, IR)를 통해 직접 확인하는 방법을
-2026-08-01 11:48:23,904 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '삼성전자 주주환원 정책 공시 확인방법'
-2026-08-01 11:48:40,938 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 11:48:40,939 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '삼성전자 주주환원 정책 공시 확인방법'
-2026-08-01 11:48:48,494 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 11:48:48,495 [INFO] source_validator — 출처 검증: 1/5개 통과, 등급 분포 {'X': 4, 'A': 1}
-2026-08-01 11:48:48,496 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-01 11:48:49,144 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 11:49:46,399 [WARNING] content_generator — 컨텐츠 너무 짧음(2231자, 최소 2500자) — 재시도 1/3
-2026-08-01 11:49:49,399 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-08-01 11:49:50,879 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 11:50:51,071 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 11:51:01,660 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-08-01 11:51:02,691 [INFO] image_fetcher — 이미지 수집 성공: '삼성전자 주주환원 공시 DART 확인법 총정리' → 제목='삼성전자 ‘올해 20조’ 주주환원 통 크게 쏜다' (관련성=0.33)
-2026-08-01 11:51:03,452 [INFO] image_fetcher — 이미지 수집 성공: '삼성전자 주주환원 정책' → 제목='삼성전자 ‘특별 주주환원’ 나설까' (관련성=0.50)
-2026-08-01 11:51:04,880 [INFO] image_fetcher — 대체 이미지 수집: '삼성전자 주주환원 DART 에서 금융감독' → 제목='삼성전자, 주주환원 박차.. 통큰 배당으로 ‘주가 사수’' (관련성=0.40)
-2026-08-01 11:51:04,880 [INFO] image_fetcher — 이미지 수집 성공: '삼성전자 주주환원 DART 에서 금융감독' → 제목='삼성전자, 주주환원 박차.. 통큰 배당으로 ‘주가 사수’' (관련성=0.40)
-2026-08-01 11:51:08,690 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 11:51:08,691 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-08-01 11:51:08,693 [INFO] content_generator — 시리즈 포스트 생성 완료: '삼성전자 주주환원 공시 DART 확인법 총정리' (2785자, 이미지 3개)
-2026-08-01 11:51:09,829 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 11:51:24,656 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '삼성전자 주주환원 공시 DART 확인법 총정리'
-2026-08-01 11:51:24,656 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 DART 이용법 설명이 일반 정보 재구성 위주이며 구체적 개인 경험(날짜·수치)이 부족함
-2026-08-01 11:51:24,656 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 본문 중 500자 이상 이어지는 서술형 단락이 다수 존재
-2026-08-01 11:51:24,656 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 삽입 흔적이 없어 이미지 없는 글로 판단됨
-2026-08-01 11:51:24,656 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 1·2·3 번호 나열식 구조와 '~짚어보겠습니다' 류의 정형화된 문체가 반복됨
-2026-08-01 11:51:24,656 [WARNING] main —   ⚠️ [편 3] AdSense 검토 필요 — pending 저장 (점수: 79/100)
-2026-08-01 11:51:24,673 [INFO] dashboard_exporter —   검토 대기 저장: 삼성전자 배당금 지급일 2026, 통보서 보고 알아봤다 (8135자 HTML)
-2026-08-01 11:51:24,673 [INFO] dashboard_exporter —   검토 대기 저장: 삼성전자 자사주 90조 매입, 실적 근거 총정리 (9374자 HTML)
-2026-08-01 11:51:24,673 [INFO] dashboard_exporter —   검토 대기 저장: 삼성전자 주주환원 공시 DART 확인법 총정리 (7618자 HTML)
-2026-08-01 11:51:24,691 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 3개 추가 (총 137개)
-2026-08-01 11:51:24,723 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-01 11:51:24,745 [INFO] dashboard_exporter —   시리즈: 13개 내보내기 완료
-2026-08-01 11:51:24,763 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-01 11:51:25,090 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-01 11:51:25,481 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-01 11:51:25,482 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-01 11:51:25,485 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-01 11:51:25,499 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 180 / 실패 0 / 대기 90)
-2026-08-01 11:51:25,500 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-01 11:51:25,500 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-01 11:51:25,501 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-01 11:51:25,501 [INFO] main — 
-============================================================
-2026-08-01 11:51:25,501 [INFO] main — [금융NEWS] 시리즈 완료: 0/3편 성공
-2026-08-01 11:51:25,501 [INFO] main — ============================================================
-2026-08-01 11:51:25,501 [INFO] main — 단독 포스트 대상 키워드 0개: []
-2026-08-01 11:51:25,519 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
-2026-08-01 11:51:25,520 [INFO] main — 
-============================================================
-2026-08-01 11:51:25,520 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 0개
-2026-08-01 11:51:25,520 [INFO] main — ============================================================
-2026-08-01 11:51:25,550 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-01 11:51:25,604 [INFO] dashboard_exporter —   시리즈: 13개 내보내기 완료
-2026-08-01 11:51:25,620 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-01 11:51:26,180 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-01 11:51:26,182 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-01 11:51:26,185 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-01 11:51:26,200 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 180 / 실패 3 / 대기 88)
-2026-08-01 11:51:26,200 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-01 11:51:26,200 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-01 11:51:26,201 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-01 23:00:13,237 [INFO] main — ============================================================
-2026-08-01 23:00:13,237 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-01 23:00:13
-2026-08-01 23:00:13,238 [INFO] main — ============================================================
-2026-08-01 23:00:13,253 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-01 23:00:13,253 [INFO] keyword_collector — 포스팅 이력 코퍼스: 171개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-08-01 23:00:17,291 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-01 23:00:22,449 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 23:00:22,474 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-01 23:00:22,475 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-01 23:00:22,929 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-01 23:00:23,214 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-01 23:00:23,462 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-01 23:00:23,464 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-08-01 23:00:23,472 [INFO] keyword_collector — 최근 사용 제외 2개: ['해외여행 실비보험 필요한지 직접 비교해봤더니', '전국 치킨 맛집 지도 K치킨벨트 총정리']
-2026-08-01 23:00:23,472 [INFO] keyword_collector — 유사 주제 제외 3개: ['여름 휴가철 강원도 삼척 피서 명소 추천', '여름휴가 국내 숙소 예약 꿀팁과 특가 정보', '유럽 처음 여행 항공권 호텔 한 번에 싸게 예약하는 법']
-2026-08-01 23:00:23,473 [INFO] keyword_collector —   [naver_realtime] 1개: ['엔저 시대 일본 여행 저렴하게 가는 방법']
-2026-08-01 23:00:23,473 [INFO] keyword_collector —   [fallback] 1개: ['괌 패키지 여행 실제 포함 내역과 추가 비용 공개']
-2026-08-01 23:00:23,473 [INFO] keyword_collector — 최종 선정 키워드 2개: ['엔저 시대 일본 여행 저렴하게 가는 방법', '괌 패키지 여행 실제 포함 내역과 추가 비용 공개']
-2026-08-01 23:00:23,473 [INFO] main — 수집된 키워드 2개: ['엔저 시대 일본 여행 저렴하게 가는 방법', '괌 패키지 여행 실제 포함 내역과 추가 비용 공개']
-2026-08-01 23:00:23,479 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-08-01 23:00:23,479 [INFO] main — 단독 포스트 대상 키워드 1개: ['엔저 시대 일본 여행 저렴하게 가는 방법']
-2026-08-01 23:00:23,497 [INFO] main — 
-[1/1] 키워드: '엔저 시대 일본 여행 저렴하게 가는 방법'
-2026-08-01 23:00:23,497 [INFO] content_generator — 포스트 생성 중: '엔저 시대 일본 여행 저렴하게 가는 방법'
-2026-08-01 23:00:31,088 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 23:00:31,089 [INFO] research_collector — 검색 의도: 엔저(엔화 약세) 상황을 활용해 일본 여행 비용을 절약하는 구체적인 방법과 정보를 찾으려는 의도
-2026-08-01 23:00:43,024 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '엔저 시대 일본 여행 저렴하게 가는 방법'
-2026-08-01 23:01:06,426 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 23:01:06,427 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '엔저 시대 일본 여행 저렴하게 가는 방법'
-2026-08-01 23:01:25,205 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 23:01:25,206 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'B': 3, 'X': 2, 'D': 1}
-2026-08-01 23:01:25,208 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-08-01 23:01:25,208 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-01 23:01:26,040 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 23:03:16,043 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 23:03:45,173 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '성수기 직전보다 여유를 두고 미리 예약하면 상대적으로 저렴한 경우가 많다'
-2026-08-01 23:03:45,173 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 0건 자동 수정 적용
-2026-08-01 23:03:47,093 [INFO] image_fetcher — 이미지 수집 성공: '엔저 시대 일본여행 저렴하게 가는 법' → 제목='"물가 싸서 일본 갔는데"...‘슈퍼 엔저’ 시대 저무나' (관련성=0.40)
-2026-08-01 23:03:47,911 [INFO] image_fetcher — 이미지 수집 성공: '엔저 시대 일본' → 제목='大 엔저 시대, 소비자 체감할 변화는? [알기쉬운 경제]' (관련성=0.67)
-2026-08-01 23:03:48,683 [INFO] image_fetcher — 이미지 수집 성공: '엔저 시대 엔저인데 요즘 환율은 이후' → 제목='엔저 우려로 사흘째 하락' (관련성=0.17)
-2026-08-01 23:03:50,224 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-01 23:03:50,225 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-08-01 23:03:50,227 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-08-01 23:03:50,230 [INFO] content_generator — 포스트 생성 완료: '엔저 시대 일본여행 저렴하게 가는 법' (3068자, 이미지 3개)
 2026-08-01 23:03:51,138 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-08-01 23:04:08,416 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '엔저 시대 일본여행 저렴하게 가는 법'
 2026-08-01 23:04:08,416 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충족하나 뉴스·환율 정보 재구성 위주로 개인 경험적 인사이트가 제한적임
@@ -623,3 +498,127 @@
 2026-08-02 06:06:50,214 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-02 06:06:50,214 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-02 06:06:50,215 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-02 06:07:27,724 [INFO] main — ============================================================
+2026-08-02 06:07:27,724 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-02 06:07:27
+2026-08-02 06:07:27,724 [INFO] main — ============================================================
+2026-08-02 06:07:27,741 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
+2026-08-02 06:07:27,741 [INFO] keyword_collector — 포스팅 이력 코퍼스: 137개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-08-02 06:07:32,250 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-08-02 06:07:37,558 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:07:37,584 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-02 06:07:37,584 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-02 06:07:38,487 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-02 06:07:38,488 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-02 06:07:38,489 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
+2026-08-02 06:07:38,503 [INFO] keyword_collector — 유사 주제 제외 16개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '골프 비기너 첫 필드 나가기 전 준비 체크리스트', '2026 여름휴가 항공권 숙소 반값 예약 꿀팁', '엔저 시대 일본 여행 경비 절약 방법']
+2026-08-02 06:07:38,504 [INFO] keyword_collector —   [fallback] 2개: ['설악산 단풍 트레킹 초보자가 가도 괜찮을까', '일본 오사카 여행 2026 달라진 점과 환전 꿀팁']
+2026-08-02 06:07:38,504 [INFO] keyword_collector — 최종 선정 키워드 2개: ['설악산 단풍 트레킹 초보자가 가도 괜찮을까', '일본 오사카 여행 2026 달라진 점과 환전 꿀팁']
+2026-08-02 06:07:38,504 [INFO] main — 수집된 키워드 2개: ['설악산 단풍 트레킹 초보자가 가도 괜찮을까', '일본 오사카 여행 2026 달라진 점과 환전 꿀팁']
+2026-08-02 06:07:38,509 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
+2026-08-02 06:07:38,509 [INFO] main — 단독 포스트 대상 키워드 1개: ['설악산 단풍 트레킹 초보자가 가도 괜찮을까']
+2026-08-02 06:07:38,528 [INFO] main — 
+[1/1] 키워드: '설악산 단풍 트레킹 초보자가 가도 괜찮을까'
+2026-08-02 06:07:38,528 [INFO] content_generator — 포스트 생성 중: '설악산 단풍 트레킹 초보자가 가도 괜찮을까'
+2026-08-02 06:07:46,518 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:07:46,519 [INFO] research_collector — 검색 의도: 설악산 단풍 시즌에 등산 초보자도 무리 없이 트레킹할 수 있는지 코스 난이도와 준비사항을 확인하려는 의도
+2026-08-02 06:07:55,632 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '설악산 단풍 트레킹 초보자가 가도 괜찮을까'
+2026-08-02 06:08:17,667 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:08:17,668 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '설악산 단풍 트레킹 초보자가 가도 괜찮을까'
+2026-08-02 06:08:39,294 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:08:39,296 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'A': 1, 'X': 2, 'D': 1, 'B': 2}
+2026-08-02 06:08:39,298 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-08-02 06:08:39,298 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-02 06:08:40,379 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:09:36,925 [WARNING] content_generator — 컨텐츠 너무 짧음(2261자, 최소 2500자) — 재시도 1/3
+2026-08-02 06:09:39,925 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-08-02 06:09:40,591 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:10:46,930 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:11:07,476 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
+2026-08-02 06:11:10,298 [INFO] image_fetcher — 이미지 수집 성공: '설악산 단풍 트레킹, 등산 초보자도 정말 갈 수 있을까 (2026 가을 기준 점검)' → 제목='2주 뒤 절정 달하는 ′설악산 단풍′…정보 및 실황 안내?' (관련성=0.17)
+2026-08-02 06:11:11,454 [INFO] image_fetcher — 대체 이미지 수집: '설악산 단풍 트레킹' → 제목='설악산 단풍과 함께하는, 제53회 설악문화제 산악페스티벌,,트래블투데이,' (관련성=0.33)
+2026-08-02 06:11:11,454 [INFO] image_fetcher — 이미지 수집 성공: '설악산 단풍 트레킹' → 제목='설악산 단풍과 함께하는, 제53회 설악문화제 산악페스티벌,,트래블투데이,' (관련성=0.33)
+2026-08-02 06:11:12,101 [INFO] image_fetcher — 이미지 수집 성공: '설악산 단풍 흘림골 주전골 대청봉 설악산이' → 제목='설악산 단풍' (관련성=0.33)
+2026-08-02 06:11:13,200 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:11:13,201 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-08-02 06:11:13,203 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-08-02 06:11:13,204 [INFO] content_generator — 포스트 생성 완료: '설악산 단풍 트레킹, 등산 초보자도 정말 갈 수 있을까 (2026 가을 기준 점검)' (2781자, 이미지 3개)
+2026-08-02 06:11:13,931 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:11:24,099 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '설악산 단풍 트레킹, 등산 초보자도 정말 갈 수 있을까 (202'
+2026-08-02 06:11:24,099 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2781자로 분량은 충족하나 대부분 보도자료·기사 재구성이며 저자 1인칭 실경험은 부족함
+2026-08-02 06:11:24,099 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 pass 기준이나 일부 단락이 500자 이상으로 길게 이어짐
+2026-08-02 06:11:24,099 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 4개 출처 인용은 있으나 필자 직접 경험 서술이 약하고 후기 인용 위주로 전문성 신호 부족
+2026-08-02 06:11:24,099 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 언급 없음 — 정책상 자동 warn 처리
+2026-08-02 06:11:24,099 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면', '이는 ~라는 뜻입니다' 등 전형적 AI 연결 패턴과 요약형 문장 반복이 다소 보임
+2026-08-02 06:11:24,107 [INFO] internal_linker — 내부 링크 후보 4개 발견
+2026-08-02 06:11:24,112 [INFO] internal_linker —   [1/5] '2026년' -> https://hogugolfntraval.blogspot.com/2026/07/2026-lafc.html
+2026-08-02 06:11:24,112 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-08-02 06:11:24,112 [INFO] main —   제목: 설악산 단풍 트레킹, 등산 초보자도 정말 갈 수 있을까 (2026 가을 기준 점검)
+2026-08-02 06:11:24,113 [INFO] main —   이미지: 3개 삽입
+2026-08-02 06:11:24,113 [INFO] main —   글자 수: 2781자
+2026-08-02 06:11:24,809 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:11:40,782 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '설악산 단풍 트레킹, 등산 초보자도 정말 갈 수 있을까 (202'
+2026-08-02 06:11:40,782 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2781자로 분량은 충족하나 후기·보도자료 재구성 중심이라 1인칭 실경험이 부족함
+2026-08-02 06:11:40,782 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어짐
+2026-08-02 06:11:40,782 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 인용은 있으나 저자 본인의 직접 경험 서술이 없고 후기 인용에 의존
+2026-08-02 06:11:40,782 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 확인되지 않아 SEO/가독성 측면에서 보완 필요
+2026-08-02 06:11:40,782 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 각 섹션 말미마다 '그렇다면', '~점도 염두에 둬야 합니다' 등 전형적 전환 문구 반복 패턴 존재
+2026-08-02 06:11:40,783 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-08-02 06:11:40,783 [WARNING] main —      🟡 [원본성 및 품질] 2781자로 분량은 충족하나 후기·보도자료 재구성 중심이라 1인칭 실경험이 부족함
+2026-08-02 06:11:40,783 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어짐
+2026-08-02 06:11:40,783 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 인용은 있으나 저자 본인의 직접 경험 서술이 없고 후기 인용에 의존
+2026-08-02 06:11:40,783 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-08-02 06:11:42,205 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:12:52,451 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2781자 → 3880자 (+1099자)
+2026-08-02 06:12:52,451 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-02 06:12:53,174 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:13:09,231 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '설악산 단풍 트레킹, 등산 초보자도 정말 갈 수 있을까 (202'
+2026-08-02 06:13:09,231 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 양호하나 예약제·챗봇 설명 단락 일부가 500자 이상으로 길게 이어짐
+2026-08-02 06:13:09,231 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 언급이 없어 이미지 부재로 판단됨(저작권 위반은 없음)
+2026-08-02 06:13:09,231 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 90/100)
+2026-08-02 06:13:09,231 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-02 06:13:10,136 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:14:40,245 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-02 06:14:42,938 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:16:01,689 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-02 06:16:02,480 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:16:10,161 [INFO] final_editor —   ✏️ 제목 최종 교정: '설악산 단풍 트레킹, 등산 초보자도 정말 갈 수 있을까 (2026 가을 기준 점검)' → '설악산 단풍 트레킹, 초보자도 가도 될까? 2026 점검'
+2026-08-02 06:16:10,161 [INFO] final_editor —   ✏️ 메타 설명 교정 (100자)
+2026-08-02 06:16:10,161 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 본문에 섞여 있던 무관한 뉴스 문구를 제거하고 문단을 2~4문장 단위로 재구성했으며, 요약 박스·코스 정보표·개인 경험 메모·주의사항·FAQ 6개·마무리·작성자 메모를 신규 추가해 발행 가능한 완성본으로 정리했습니다.
+2026-08-02 06:16:10,249 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-02 06:16:10,249 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-02 06:16:10,341 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-02 06:16:10,355 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-02 06:16:10,355 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-08-02 06:16:11,516 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026.html
+2026-08-02 06:16:11,529 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026.html
+2026-08-02 06:16:44,183 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:16:44,185 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-02 06:16:44,185 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-02 06:16:44,194 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '설악산 단풍 트레킹, 초보자도 가도 될까? 2026 점검'
+2026-08-02 06:16:45,219 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-02 06:16:49,605 [INFO] comment_manager —   생성된 댓글: 덧붙이자면 흘림골은 하산 전용이 아니라 코스 특성상 역방향(주전골→흘림골)으로는 예약이 안 되거나 제한되는 경우가 많으니, 방향까지 꼭 확인하고...
+2026-08-02 06:19:49,679 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-02 06:19:49,680 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-02 06:19:49,680 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-02 06:19:49,681 [INFO] main — 
+============================================================
+2026-08-02 06:19:49,681 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-08-02 06:19:49,681 [INFO] main — ============================================================
+2026-08-02 06:19:49,720 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-02 06:19:49,746 [INFO] dashboard_exporter —   시리즈: 13개 내보내기 완료
+2026-08-02 06:19:49,768 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-02 06:19:49,940 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-02 06:19:50,170 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-02 06:19:50,171 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-02 06:19:50,174 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-02 06:19:50,191 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 187 / 실패 0 / 대기 84)
+2026-08-02 06:19:50,192 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-02 06:19:50,192 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-02 06:19:50,193 [INFO] main — 대시보드 데이터 업데이트 완료

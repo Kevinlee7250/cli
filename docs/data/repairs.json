@@ -1,5 +1,32 @@
 [
   {
+    "timestamp": "2026-08-03T18:46:02.269125",
+    "health_score": 93,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "adsense_not_configured",
+        "level": "warning",
+        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "context": {},
+        "fix": null
+      }
+    ],
+    "repairs_applied": 0,
+    "repairs": [
+      {
+        "issue_id": "adsense_not_configured",
+        "issue_level": "warning",
+        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "fix_applied": null,
+        "timestamp": "2026-08-03T18:46:02.268985",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-03T13:36:15.145699",
     "health_score": 93,
     "issues_found": 1,
@@ -2094,33 +2121,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-19T10:39:24.905374",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-18T17:52:07.472530",
-    "health_score": 93,
-    "issues_found": 1,
-    "issues": [
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 0,
-    "repairs": [
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-18T17:52:07.472421",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

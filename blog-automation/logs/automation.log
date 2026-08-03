@@ -1,124 +1,3 @@
-2026-08-03 06:31:45,164 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 06:31:47,641 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '[3편] 유부녀 킬러 결말 총평 및 별점 완벽 정리'
-2026-08-03 06:31:47,641 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 실제 결말 미방영 상태에서 예측·일반론 위주로 구체적 개인 경험/수치가 부족함
-2026-08-03 06:31:47,641 [INFO] adsense_validator —   ⚠️ SEO 최적화: 제목은 '결말 총평'이나 본문에서 드라마가 아직 완결 전임을 밝혀 제목과 내용 간 기대 불일치 소지 있음
-2026-08-03 06:31:47,641 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개로 기준 충족하나 '원작 웹툰 기준' 섹션 등 500자 이상 장문 단락이 다수 존재
-2026-08-03 06:31:47,641 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 언급 없음 — 텍스트만으로도 정책 통과 가능하나 이미지 부재로 warn 처리
-2026-08-03 06:31:47,641 [INFO] adsense_validator —   ❌ AI 생성 의심도: '화제가 됐고이 됐고' 등 중복 문구 오류, 각 섹션 말미 '그럼 ~살펴볼게요' 반복 패턴 등 AI 생성 흔적이 뚜렷함
-2026-08-03 06:31:47,641 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '화제가 됐고이 됐고' 등 중복 문구 오류, 각 섹션 말미 '그럼 ~살펴볼게요' 반복 패턴 등 AI 생성 흔적이 뚜렷함
-2026-08-03 06:31:47,641 [WARNING] adsense_validator —   🔴 '정준원의 한 예능 출연 분량이 온라인에서 화제가 됐고이 됐고' 등 문장 중복/오류가 그대로 노출되어 있어 AI 생성 후 검수 누락이 의심됨
-2026-08-03 06:31:47,641 [WARNING] adsense_validator —   🔴 제목이 '결말 총평'을 내세우나 본문에서 드라마가 미완결 상태임을 명시해 클릭베이트성 제목으로 오인될 소지 있음
-2026-08-03 06:31:47,641 [WARNING] main —   ⚠️ [편 3] AdSense 검토 필요 — pending 저장 (점수: 67/100)
-2026-08-03 06:31:47,661 [INFO] dashboard_exporter —   검토 대기 저장: [1편] 유부녀 킬러 첫인상, 공효진 킹피셔 되다 (13234자 HTML)
-2026-08-03 06:31:47,661 [INFO] dashboard_exporter —   검토 대기 저장: [2편] 유부녀 킬러 등장인물 분석, 공효진·정준원 케미 실화냐 (13059자 HTML)
-2026-08-03 06:31:47,661 [INFO] dashboard_exporter —   검토 대기 저장: [3편] 유부녀 킬러 결말 총평 및 별점 완벽 정리 (7104자 HTML)
-2026-08-03 06:31:47,680 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 3개 추가 (총 144개)
-2026-08-03 06:31:47,712 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-03 06:31:47,734 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
-2026-08-03 06:31:47,750 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-03 06:31:48,366 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-03 06:31:49,056 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-03 06:31:49,569 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-03 06:31:49,570 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-03 06:31:49,573 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-03 06:31:49,587 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 192 / 실패 3 / 대기 77)
-2026-08-03 06:31:49,588 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-03 06:31:49,588 [INFO] dashboard_exporter —   포스트: 100개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-03 06:31:49,589 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-03 06:31:49,589 [INFO] main — 
-============================================================
-2026-08-03 06:31:49,589 [INFO] main — [HOGU What?] 시리즈 완료: 0/3편 성공
-2026-08-03 06:31:49,589 [INFO] main — ============================================================
-2026-08-03 06:31:49,589 [INFO] main — 단독 포스트 대상 키워드 0개: []
-2026-08-03 06:31:49,607 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
-2026-08-03 06:31:49,608 [INFO] main — 
-============================================================
-2026-08-03 06:31:49,608 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
-2026-08-03 06:31:49,608 [INFO] main — ============================================================
-2026-08-03 06:31:49,638 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-03 06:31:49,683 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
-2026-08-03 06:31:49,700 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-03 06:31:50,122 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-03 06:31:50,123 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-03 06:31:50,126 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-03 06:31:50,141 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 190 / 실패 6 / 대기 76)
-2026-08-03 06:31:50,141 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-03 06:31:50,141 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-03 06:31:50,142 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-03 06:32:35,304 [INFO] main — ============================================================
-2026-08-03 06:32:35,304 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-03 06:32:35
-2026-08-03 06:32:35,304 [INFO] main — ============================================================
-2026-08-03 06:32:35,322 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-03 06:32:35,322 [INFO] keyword_collector — 포스팅 이력 코퍼스: 141개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-08-03 06:32:40,824 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-08-03 06:32:46,911 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 06:32:46,933 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-03 06:32:46,933 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-03 06:32:48,098 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-03 06:32:48,099 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-03 06:32:48,100 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
-2026-08-03 06:32:48,116 [INFO] keyword_collector — 유사 주제 제외 17개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '엔저 시대 일본 여행 경비 절약하는 방법 2026', '여름휴가 항공권 호텔 반값 예약 꿀팁', '챗GPT로 여행 계획 짜는 법 AI 여행 큐레이션 활용']
-2026-08-03 06:32:48,117 [INFO] keyword_collector —   [fallback] 2개: ['골프 비기너 첫 필드 나가기 전 준비 체크리스트', '베트남 다낭 4박5일 실제 비용 솔직 후기']
-2026-08-03 06:32:48,117 [INFO] keyword_collector — 최종 선정 키워드 2개: ['골프 비기너 첫 필드 나가기 전 준비 체크리스트', '베트남 다낭 4박5일 실제 비용 솔직 후기']
-2026-08-03 06:32:48,117 [INFO] main — 수집된 키워드 2개: ['골프 비기너 첫 필드 나가기 전 준비 체크리스트', '베트남 다낭 4박5일 실제 비용 솔직 후기']
-2026-08-03 06:32:48,122 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
-2026-08-03 06:32:48,122 [INFO] main — 단독 포스트 대상 키워드 1개: ['골프 비기너 첫 필드 나가기 전 준비 체크리스트']
-2026-08-03 06:32:48,141 [INFO] main — 
-[1/1] 키워드: '골프 비기너 첫 필드 나가기 전 준비 체크리스트'
-2026-08-03 06:32:48,141 [INFO] content_generator — 포스트 생성 중: '골프 비기너 첫 필드 나가기 전 준비 체크리스트'
-2026-08-03 06:32:57,979 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 06:32:57,980 [INFO] research_collector — 검색 의도: 골프 초보자가 처음 필드(라운딩)에 나가기 전에 무엇을 준비하고 확인해야 하는지 알고 싶어함
-2026-08-03 06:33:05,695 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '골프 비기너 첫 필드 나가기 전 준비 체크리스트'
-2026-08-03 06:33:27,672 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 06:33:27,673 [INFO] evidence_builder — 자료팩 생성: 사실 3개 — '골프 비기너 첫 필드 나가기 전 준비 체크리스트'
-2026-08-03 06:33:32,074 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 06:33:32,077 [INFO] source_validator — 출처 검증: 0/3개 통과, 등급 분포 {'X': 3}
-2026-08-03 06:33:32,079 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-03 06:33:33,385 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 06:34:28,934 [WARNING] content_generator — 컨텐츠 너무 짧음(1994자, 최소 2500자) — 재시도 1/3
-2026-08-03 06:34:31,934 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-08-03 06:34:33,425 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 06:35:32,251 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-08-03 06:35:32,252 [WARNING] content_generator — 컨텐츠 너무 짧음(2274자, 최소 2500자) — 재시도 2/3
-2026-08-03 06:35:35,252 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-08-03 06:35:36,472 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 06:36:35,405 [WARNING] content_generator — 최소 분량 미달(2308자) — 재시도 소진, 해당 분량으로 진행
-2026-08-03 06:36:36,289 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 06:36:51,006 [INFO] content_generator — 팩트체크: 통과
-2026-08-03 06:36:51,814 [INFO] image_fetcher — 이미지 수집 성공: '골프 첫 필드 나가기 전, 이것만은 꼭 체크하고 가세요' → 제목='[혼마골프 레슨①] 필드 나가기 전에 리듬감을 높여라' (관련성=0.33)
-2026-08-03 06:36:52,604 [INFO] image_fetcher — 이미지 수집 성공: '골프 비기너 필드' → 제목='[사용기] 골프센스 체험단 사용 후기.. from 비기너.. : 클리앙' (관련성=0.33)
-2026-08-03 06:36:54,167 [INFO] image_fetcher — 이미지 수집 성공: '골프 비기너 국내 골프장 골프장은 비기너가' → 제목='비기너 시리즈 골프 레슨 006: 풀스윙 | 명품스윙 에이미 조 | Go' (관련성=0.33)
-2026-08-03 06:36:55,485 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 06:36:55,486 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-08-03 06:36:55,488 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-08-03 06:36:55,490 [INFO] content_generator — 포스트 생성 완료: '골프 첫 필드 나가기 전, 이것만은 꼭 체크하고 가세요' (2308자, 이미지 3개)
-2026-08-03 06:36:56,245 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 06:37:14,252 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '골프 첫 필드 나가기 전, 이것만은 꼭 체크하고 가세요'
-2026-08-03 06:37:14,252 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2308자로 경계선 글자수이며, 개인 경험담 없이 일반적 정보를 재구성한 수준
-2026-08-03 06:37:14,252 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 충족하나 드레스코드·준비물·매너 단락이 각각 500자 이상으로 길게 이어짐
-2026-08-03 06:37:14,252 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 언급은 있으나 구체적 인용·링크나 1인칭 경험 서술이 부족함
-2026-08-03 06:37:14,252 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가(본문에 이미지 캡션만 텍스트로 존재), 부재 시 SEO상 warn
-2026-08-03 06:37:14,252 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라고 합니다', '~것 같습니다' 등 전형적 AI 어투와 정형화된 전환 문장이 반복됨
-2026-08-03 06:37:14,260 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-03 06:37:14,262 [INFO] internal_linker —   [1/5] '체크리스트' -> https://hogugolfntraval.blogspot.com/2026/07/kbo.html
-2026-08-03 06:37:14,264 [INFO] internal_linker —   [2/5] '준비물' -> https://hogugolfntraval.blogspot.com/2026/08/blog-post_01.ht
-2026-08-03 06:37:14,266 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-08-03 06:37:14,266 [INFO] main —   제목: 골프 첫 필드 나가기 전, 이것만은 꼭 체크하고 가세요
-2026-08-03 06:37:14,267 [INFO] main —   이미지: 3개 삽입
-2026-08-03 06:37:14,267 [INFO] main —   글자 수: 2308자
-2026-08-03 06:37:14,267 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '골프 첫 필드 나가기 전, 이것만은 꼭 체크하고 가세요' (2308자 < 2500자)
-2026-08-03 06:37:14,295 [INFO] dashboard_exporter —   검토 대기 저장: 골프 첫 필드 나가기 전, 이것만은 꼭 체크하고 가세요 (7723자 HTML)
-2026-08-03 06:37:14,315 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 145개)
-2026-08-03 06:37:14,315 [INFO] main — 
-============================================================
-2026-08-03 06:37:14,315 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-08-03 06:37:14,315 [INFO] main — ============================================================
-2026-08-03 06:37:14,349 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-03 06:37:14,369 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
-2026-08-03 06:37:14,387 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-03 06:37:14,835 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-03 06:37:15,170 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-03 06:37:15,172 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
 2026-08-03 06:37:15,174 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
 2026-08-03 06:37:15,189 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 189 / 실패 6 / 대기 77)
 2026-08-03 06:37:15,189 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
@@ -619,3 +498,84 @@
 2026-08-03 13:29:28,018 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-03 13:29:28,018 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-03 13:29:28,019 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-03 13:30:07,483 [INFO] main — ============================================================
+2026-08-03 13:30:07,483 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-03 13:30:07
+2026-08-03 13:30:07,484 [INFO] main — ============================================================
+2026-08-03 13:30:07,498 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-03 13:30:07,498 [INFO] keyword_collector — 포스팅 이력 코퍼스: 143개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-08-03 13:30:12,217 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-08-03 13:30:18,019 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-03 13:30:18,044 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-03 13:30:18,044 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-03 13:30:18,574 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-03 13:30:18,574 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-03 13:30:18,576 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
+2026-08-03 13:30:18,592 [INFO] keyword_collector — 유사 주제 제외 15개: ['여름휴가 항공권 호텔 반값 특가 예약 방법 2026', '엔저 일본 여행 지금 가도 될까 비용 비교', '군산 목포 국내 로컬 여행지 추천 코스', '챗GPT AI로 여행 일정 짜는 방법 야놀자 활용법', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
+2026-08-03 13:30:18,592 [INFO] keyword_collector —   [fallback] 2개: ['베트남 다낭 4박5일 실제 비용 솔직 후기', '태국 방콕 처음 가는 사람이 꼭 알아야 할 것']
+2026-08-03 13:30:18,592 [INFO] keyword_collector — 최종 선정 키워드 2개: ['베트남 다낭 4박5일 실제 비용 솔직 후기', '태국 방콕 처음 가는 사람이 꼭 알아야 할 것']
+2026-08-03 13:30:18,592 [INFO] main — 수집된 키워드 2개: ['베트남 다낭 4박5일 실제 비용 솔직 후기', '태국 방콕 처음 가는 사람이 꼭 알아야 할 것']
+2026-08-03 13:30:18,597 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
+2026-08-03 13:30:18,598 [INFO] main — 단독 포스트 대상 키워드 1개: ['베트남 다낭 4박5일 실제 비용 솔직 후기']
+2026-08-03 13:30:18,615 [INFO] main — 
+[1/1] 키워드: '베트남 다낭 4박5일 실제 비용 솔직 후기'
+2026-08-03 13:30:18,615 [INFO] content_generator — 포스트 생성 중: '베트남 다낭 4박5일 실제 비용 솔직 후기'
+2026-08-03 13:30:25,603 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-03 13:30:25,604 [INFO] research_collector — 검색 의도: 다낭 여행 실제 예산을 파악하여 자신의 여행 경비를 계획하려는 의도
+2026-08-03 13:30:34,185 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '베트남 다낭 4박5일 실제 비용 솔직 후기'
+2026-08-03 13:30:47,426 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-03 13:30:47,427 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '베트남 다낭 4박5일 실제 비용 솔직 후기'
+2026-08-03 13:30:57,524 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-03 13:30:57,525 [INFO] source_validator — 출처 검증: 2/4개 통과, 등급 분포 {'X': 2, 'C': 2}
+2026-08-03 13:30:57,527 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-08-03 13:30:57,527 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-03 13:30:58,319 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-03 13:32:09,184 [WARNING] content_generator — 컨텐츠 너무 짧음(2447자, 최소 2500자) — 재시도 1/3
+2026-08-03 13:32:12,184 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-08-03 13:32:14,023 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-03 13:33:28,315 [WARNING] content_generator — 컨텐츠 너무 짧음(2447자, 최소 2500자) — 재시도 2/3
+2026-08-03 13:33:31,316 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-08-03 13:33:32,410 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-03 13:34:44,860 [WARNING] content_generator — 최소 분량 미달(2327자) — 재시도 소진, 해당 분량으로 진행
+2026-08-03 13:34:46,811 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-03 13:34:57,534 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-08-03 13:34:58,519 [INFO] image_fetcher — 이미지 수집 성공: '베트남 다낭 4박5일 실제 비용 솔직 후기 – 항공권부터 현지투어까지 항목별 정리' → 제목='네이버 인플루언서 [네이버 인플루언서] 다낭 여행｜3박 5일 vs 4박 ' (관련성=0.10)
+2026-08-03 13:34:59,184 [INFO] image_fetcher — 이미지 수집 성공: '베트남 다낭 실제' → 제목='베트남 다낭 호숫가에서 아오자이 입은 처자를 만나다 | 네이트 판' (관련성=0.67)
+2026-08-03 13:35:03,010 [INFO] image_fetcher — 이미지 수집 성공: '베트남 다낭 여행 비용 비용을' → 제목='다낭 주간 시티투어 | NOL 인터파크투어 프리야 여행정보 [베트남>다낭' (관련성=0.33)
+2026-08-03 13:35:06,333 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-03 13:35:06,334 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-08-03 13:35:06,334 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-03 13:35:06,336 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-03 13:35:06,338 [INFO] content_generator — 포스트 생성 완료: '베트남 다낭 4박5일 실제 비용 솔직 후기 – 항공권부터 현지투어까지 항목별 정리' (2327자, 이미지 2개)
+2026-08-03 13:35:07,532 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-03 13:35:24,209 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '베트남 다낭 4박5일 실제 비용 솔직 후기 – 항공권부터 현지투'
+2026-08-03 13:35:24,209 [INFO] adsense_validator —   ❌ 원본성 및 품질: 제목은 '실제 비용 솔직 후기'를 내세우지만 실제 금액·날짜·개인 지출 내역이 전혀 없고 일반 후기 종합·안내 수준에 그침
+2026-08-03 13:35:24,209 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드가 자연스럽게 분산되어 있으나 제목이 약속한 '실제 비용' 정보가 본문에 부재해 제목-내용 불일치 소지
+2026-08-03 13:35:24,209 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 의견 일부 있으나 직접 경험 수치·날짜 부재, 출처 1개 인용 외 근거 빈약
+2026-08-03 13:35:24,209 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 정보 없음 — 이미지 부재로 판단, 저작권 위반은 없으나 warn 처리
+2026-08-03 13:35:24,210 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면', '~라는 걸 알 수 있습니다' 등 정형화된 요약·전환 문구와 보고서식 서술이 반복됨
+2026-08-03 13:35:24,210 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 제목은 '실제 비용 솔직 후기'를 내세우지만 실제 금액·날짜·개인 지출 내역이 전혀 없고 일반 후기 종합·안내 수준에 그침
+2026-08-03 13:35:24,210 [WARNING] adsense_validator —   🔴 제목이 '실제 비용 솔직 후기'를 표방하지만 구체적 항공권/숙소/식비/투어 금액이 전혀 제시되지 않아 검색 의도 기만 소지 있음
+2026-08-03 13:35:24,218 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-03 13:35:24,223 [INFO] internal_linker —   [1/5] '항목별로' -> https://hogugolfntraval.blogspot.com/2026/08/23.html
+2026-08-03 13:35:24,223 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-08-03 13:35:24,223 [INFO] main —   제목: 베트남 다낭 4박5일 실제 비용 솔직 후기 – 항공권부터 현지투어까지 항목별 정리
+2026-08-03 13:35:24,223 [INFO] main —   이미지: 2개 삽입
+2026-08-03 13:35:24,223 [INFO] main —   글자 수: 2327자
+2026-08-03 13:35:24,223 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '베트남 다낭 4박5일 실제 비용 솔직 후기 – 항공권부터 현지투어까지 항목별 정리' (2327자 < 2500자)
+2026-08-03 13:35:24,250 [INFO] dashboard_exporter —   검토 대기 저장: 베트남 다낭 4박5일 실제 비용 솔직 후기 – 항공권부터 현지투어까지 항목별 정리 (7691자 HTML)
+2026-08-03 13:35:24,269 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 146개)
+2026-08-03 13:35:24,269 [INFO] main — 
+============================================================
+2026-08-03 13:35:24,269 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-08-03 13:35:24,269 [INFO] main — ============================================================
+2026-08-03 13:35:24,300 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-03 13:35:24,321 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
+2026-08-03 13:35:24,338 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-03 13:35:24,513 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-03 13:35:24,714 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-03 13:35:24,715 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-03 13:35:24,718 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-03 13:35:24,733 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 189 / 실패 6 / 대기 77)
+2026-08-03 13:35:24,733 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-03 13:35:24,733 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-03 13:35:24,734 [INFO] main — 대시보드 데이터 업데이트 완료

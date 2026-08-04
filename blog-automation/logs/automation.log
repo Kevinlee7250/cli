@@ -1,121 +1,3 @@
-2026-08-03 23:23:30,438 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:23:30,464 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-03 23:23:30,464 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-03 23:23:31,196 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-03 23:23:31,197 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-03 23:23:31,198 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-08-03 23:23:31,211 [INFO] keyword_collector — 유사 주제 제외 8개: ['여름휴가 호텔 항공권 반값 특가 예약하는 방법', '국내 여행 숨은 명소 찾는 법 로컬 여행지 추천', '야놀자 챗GPT AI 여행 일정 짜기 활용법', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개']
-2026-08-03 23:23:31,212 [INFO] keyword_collector —   [naver_realtime] 1개: ['엔저 일본 여행 지금 가도 될까 2026 항공권 숙소 가격 비교']
-2026-08-03 23:23:31,212 [INFO] keyword_collector —   [fallback] 1개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-08-03 23:23:31,212 [INFO] keyword_collector — 최종 선정 키워드 2개: ['엔저 일본 여행 지금 가도 될까 2026 항공권 숙소 가격 비교', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-08-03 23:23:31,212 [INFO] main — 수집된 키워드 2개: ['엔저 일본 여행 지금 가도 될까 2026 항공권 숙소 가격 비교', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-08-03 23:23:31,217 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-08-03 23:23:31,218 [INFO] main — 단독 포스트 대상 키워드 1개: ['엔저 일본 여행 지금 가도 될까 2026 항공권 숙소 가격 비교']
-2026-08-03 23:23:31,235 [INFO] main — 
-[1/1] 키워드: '엔저 일본 여행 지금 가도 될까 2026 항공권 숙소 가격 비교'
-2026-08-03 23:23:31,236 [INFO] content_generator — 포스트 생성 중: '엔저 일본 여행 지금 가도 될까 2026 항공권 숙소 가격 비교'
-2026-08-03 23:23:40,436 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:23:40,437 [INFO] research_collector — 검색 의도: 2026년 현재 엔저 상황에서 일본 여행이 여전히 경제적으로 유리한지, 항공권과 숙소 가격 동향을 파악해 여
-2026-08-03 23:23:49,766 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '엔저 일본 여행 지금 가도 될까 2026 항공권 숙소 가격 비교'
-2026-08-03 23:24:04,076 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:24:04,077 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '엔저 일본 여행 지금 가도 될까 2026 항공권 숙소 가격 비교'
-2026-08-03 23:24:15,709 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:24:15,710 [INFO] source_validator — 출처 검증: 2/5개 통과, 등급 분포 {'X': 3, 'B': 1, 'C': 1}
-2026-08-03 23:24:15,712 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-08-03 23:24:15,712 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-03 23:24:17,721 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:25:41,009 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:25:48,654 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '출발일 기준 몇 주 전부터 가격을 미리 확인하고'
-2026-08-03 23:25:48,654 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
-2026-08-03 23:25:50,706 [INFO] image_fetcher — 이미지 수집 성공: '2026년 엔저, 일본 여행 지금 가도 될까? 항공권·숙소 가격 비교로 따져봤다' → 제목='‘엔저’ ‘버핏 효과’ 투자자 몰리는 일본…잃어버린 30년 벗어날까' (관련성=0.15)
-2026-08-03 23:25:52,290 [INFO] image_fetcher — 대체 이미지 수집: '엔저 일본 여행' → 제목='여기어때, 엔저 현상에 일본 여행 수요 2.7배 증가' (관련성=0.75)
-2026-08-03 23:25:52,290 [INFO] image_fetcher — 이미지 수집 성공: '엔저 일본 여행' → 제목='여기어때, 엔저 현상에 일본 여행 수요 2.7배 증가' (관련성=0.75)
-2026-08-03 23:25:52,823 [INFO] image_fetcher — 이미지 수집 성공: '엔저 일본 요즘 엔화 이야기가 나오면' → 제목='계속되는 '엔저'에 일본여행 급증' (관련성=0.17)
-2026-08-03 23:25:55,051 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:25:55,052 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-08-03 23:25:55,054 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-08-03 23:25:55,056 [INFO] content_generator — 포스트 생성 완료: '2026년 엔저, 일본 여행 지금 가도 될까? 항공권·숙소 가격 비교로 따져봤다' (3162자, 이미지 3개)
-2026-08-03 23:25:55,810 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:26:16,649 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '2026년 엔저, 일본 여행 지금 가도 될까? 항공권·숙소 가격'
-2026-08-03 23:26:16,649 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 도입부 개인 일화는 있으나 이후 대부분 '후기에 따르면' 식 재인용이 반복돼 독창적 인사이트가 약함
-2026-08-03 23:26:16,649 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 충분하나 일부 단락이 500자 이상으로 길게 이어짐
-2026-08-03 23:26:16,649 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문 내 이미지 언급 확인 불가로 이미지 부재 가능성, 정책 위반은 아니나 가독성 측면 주의
-2026-08-03 23:26:16,649 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 후기가 많다'는 유사 문형 반복과 질문-답변식 전환 패턴이 다소 정형화됨
-2026-08-03 23:26:16,658 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-03 23:26:16,659 [INFO] internal_linker —   [1/5] '일본여행' -> https://www.hoguwhat.com/2026/08/2026.html
-2026-08-03 23:26:16,661 [INFO] internal_linker —   [2/5] '예약하는' -> https://www.hoguwhat.com/2026/07/blog-post_30.html
-2026-08-03 23:26:16,662 [INFO] internal_linker —   [3/5] '유류할증료' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_30.ht
-2026-08-03 23:26:16,663 [INFO] internal_linker —   [4/5] '체크리스트' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0278943539
-2026-08-03 23:26:16,665 [INFO] internal_linker — 내부 링크 4개 삽입 완료
-2026-08-03 23:26:16,665 [INFO] main —   제목: 2026년 엔저, 일본 여행 지금 가도 될까? 항공권·숙소 가격 비교로 따져봤다
-2026-08-03 23:26:16,665 [INFO] main —   이미지: 3개 삽입
-2026-08-03 23:26:16,665 [INFO] main —   글자 수: 3162자
-2026-08-03 23:26:17,420 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:26:31,920 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '2026년 엔저, 일본 여행 지금 가도 될까? 항공권·숙소 가격'
-2026-08-03 23:26:31,920 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 대부분 '후기에 따르면' 식 일반론 재조합이 많고 개인 경험은 도입부 일화 정도에 그침
-2026-08-03 23:26:31,920 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개와 일화는 있으나 전문성 신호가 약하고 대부분 2차 후기 인용에 의존
-2026-08-03 23:26:31,921 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 언급이 없어 이미지 부재로 판단됨
-2026-08-03 23:26:31,921 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 후기가 많습니다/평가도 있습니다' 같은 유사 패턴이 반복되어 정형화된 톤이 느껴짐
-2026-08-03 23:26:31,921 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-03 23:26:31,921 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 기준 충족하나 대부분 '후기에 따르면' 식 일반론 재조합이 많고 개인 경험은 도입부 일화 정도에 그침
-2026-08-03 23:26:31,921 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3개와 일화는 있으나 전문성 신호가 약하고 대부분 2차 후기 인용에 의존
-2026-08-03 23:26:31,921 [WARNING] main —      🟡 [이미지 정책] 본문에 이미지 관련 언급이 없어 이미지 부재로 판단됨
-2026-08-03 23:26:31,921 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-03 23:26:33,573 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:27:52,978 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-03 23:27:54,678 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:28:09,725 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3162자 → 4513자 (+1351자)
-2026-08-03 23:28:09,725 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-03 23:28:10,468 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:28:25,548 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '2026년 엔저, 일본 여행 지금 가도 될까? 항공권·숙소 가격'
-2026-08-03 23:28:25,548 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 적절하나 일부 도입부 단락이 500자를 넘는 긴 서술형 문단임
-2026-08-03 23:28:25,548 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 캡션만 언급되고 실제 alt텍스트·출처 확인 불가
-2026-08-03 23:28:25,548 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-08-03 23:28:25,549 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-08-03 23:28:29,065 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:28:59,827 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026년 엔저, 일본 여행 지금 가도 될까? 항공권·숙소 가격 비교로 따져봤다' → '2026 엔저 일본 여행, 항공권·숙소 가격 비교로 점검'
-2026-08-03 23:28:59,828 [INFO] final_editor —   ✏️ 메타 설명 교정 (109자)
-2026-08-03 23:28:59,828 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타 설명을 글자 수 기준에 맞춰 다듬고 장문 단락을 2~4문장 단위로 분리했으며, 요약 박스·비교 표·개인 경험 메모·FAQ·주의사항·작성자 메모를 표준 형식에 맞춰 추가하고 이미지 3컷의 위치와 구체적 alt 텍스트를 지정했습니다.
-2026-08-03 23:28:59,993 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-03 23:28:59,993 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-03 23:29:00,158 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-03 23:29:00,171 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-03 23:29:00,171 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-08-03 23:29:01,034 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026_01998688713.html
-2026-08-03 23:29:01,047 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026_01998688713.html
-2026-08-03 23:29:33,862 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:29:33,863 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-03 23:29:33,863 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-03 23:29:33,872 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '2026 엔저 일본 여행, 항공권·숙소 가격 비교로 점검'
-2026-08-03 23:29:34,548 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-03 23:29:38,590 [INFO] comment_manager —   생성된 댓글: 하나 더 팁 드리자면, 항공권 결제할 때 카드사마다 해외 결제 수수료랑 환율 적용 시점이 달라서 같은 날 검색해도 실제 청구 금액이 차이 나는 ...
-2026-08-03 23:32:38,747 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-03 23:32:38,748 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-03 23:32:38,749 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-03 23:32:38,749 [INFO] main — 
-============================================================
-2026-08-03 23:32:38,749 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-08-03 23:32:38,749 [INFO] main — ============================================================
-2026-08-03 23:32:38,786 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-03 23:32:38,810 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
-2026-08-03 23:32:38,830 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-03 23:32:39,129 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-03 23:32:39,435 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-03 23:32:39,436 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-03 23:32:39,439 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-03 23:32:39,455 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 195 / 실패 0 / 대기 77)
-2026-08-03 23:32:39,455 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-03 23:32:39,455 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-03 23:32:39,456 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-03 23:33:17,014 [INFO] main — ============================================================
-2026-08-03 23:33:17,014 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-08-03 23:33:17
 2026-08-03 23:33:17,014 [INFO] main — ============================================================
 2026-08-03 23:33:17,027 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
 2026-08-03 23:33:17,027 [INFO] keyword_collector — 포스팅 이력 코퍼스: 178개 항목 로드 (blog_id=blog3 중복 방지 기준)
@@ -616,3 +498,127 @@
 2026-08-04 06:16:47,290 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-04 06:16:47,291 [INFO] dashboard_exporter —   포스트: 98개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-04 06:16:47,291 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-04 12:01:39,370 [INFO] main — ============================================================
+2026-08-04 12:01:39,370 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-04 12:01:39
+2026-08-04 12:01:39,370 [INFO] main — ============================================================
+2026-08-04 12:01:39,389 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
+2026-08-04 12:01:39,389 [INFO] keyword_collector — 포스팅 이력 코퍼스: 184개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-04 12:01:45,108 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-04 12:01:51,874 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:01:51,896 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-04 12:01:51,897 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-04 12:01:52,186 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-04 12:01:52,435 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-04 12:01:52,642 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-04 12:01:52,644 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
+2026-08-04 12:01:52,650 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-04 12:01:52,651 [INFO] keyword_collector — 유사 주제 제외 4개: ['여름 폭염 피하기 좋은 국내 여행지 추천 - 강원도 삼척', '전국 치킨 맛집 여행 코스 K치킨벨트 완전정리', '엔저 시대 일본 여행 저렴하게 다녀오는 방법 2026', '유럽 처음 여행 항공권 호텔 한 번에 싸게 예약하는 법']
+2026-08-04 12:01:52,651 [WARNING] keyword_collector — 선정 키워드 부족 (1/2) — 유사도 기준 완화하여 재시도
+2026-08-04 12:01:52,654 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (1/2) — 이전 사용 키워드 일부 허용
+2026-08-04 12:01:52,656 [INFO] keyword_collector —   [naver_realtime] 1개: ['해외여행 항공료 아끼는 꿀팁 및 예약 타이밍']
+2026-08-04 12:01:52,656 [INFO] keyword_collector —   [high_cpc] 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-04 12:01:52,656 [INFO] keyword_collector — 최종 선정 키워드 2개: ['해외여행 항공료 아끼는 꿀팁 및 예약 타이밍', '해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-04 12:01:52,656 [INFO] main — 수집된 키워드 2개: ['해외여행 항공료 아끼는 꿀팁 및 예약 타이밍', '해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-04 12:01:52,662 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
+2026-08-04 12:01:52,662 [INFO] main — 단독 포스트 대상 키워드 1개: ['해외여행 항공료 아끼는 꿀팁 및 예약 타이밍']
+2026-08-04 12:01:52,679 [INFO] main — 
+[1/1] 키워드: '해외여행 항공료 아끼는 꿀팁 및 예약 타이밍'
+2026-08-04 12:01:52,679 [INFO] content_generator — 포스트 생성 중: '해외여행 항공료 아끼는 꿀팁 및 예약 타이밍'
+2026-08-04 12:02:00,247 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:02:00,248 [INFO] research_collector — 검색 의도: 해외여행 항공권을 저렴하게 구매하는 방법과 최적의 예약 시점을 알고 싶은 검색 의도
+2026-08-04 12:02:08,062 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '해외여행 항공료 아끼는 꿀팁 및 예약 타이밍'
+2026-08-04 12:02:26,190 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:02:26,191 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '해외여행 항공료 아끼는 꿀팁 및 예약 타이밍'
+2026-08-04 12:02:38,746 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:02:38,747 [INFO] source_validator — 출처 검증: 1/4개 통과, 등급 분포 {'B': 1, 'X': 3}
+2026-08-04 12:02:38,749 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-04 12:02:40,359 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:04:05,816 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:04:21,497 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-08-04 12:04:22,396 [INFO] image_fetcher — 이미지 수집 성공: '해외여행 항공료 아끼는 예약 타이밍 정리' → 제목='항공권, 타이밍만 알아도 가격이 달라집니다... 방법 정리해봤어요! 여행' (관련성=0.17)
+2026-08-04 12:04:23,272 [INFO] image_fetcher — 이미지 수집 성공: '해외여행 항공료 아끼' → 제목='항공료 싸졌다 날개돋친 해외여행 - 아시아경제' (관련성=0.67)
+2026-08-04 12:04:24,177 [INFO] image_fetcher — 이미지 수집 성공: '해외여행 항공료 항공권 가격이 항공료는' → 제목='"가격이 왜 떨어졌지?" 경비 부담에 해외여행 미뤘는데…유럽 내 항공권 ' (관련성=0.60)
+2026-08-04 12:04:26,677 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:04:26,679 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-08-04 12:04:26,681 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-08-04 12:04:26,683 [INFO] content_generator — 포스트 생성 완료: '해외여행 항공료 아끼는 예약 타이밍 정리' (3136자, 이미지 3개)
+2026-08-04 12:04:27,506 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:04:48,598 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '해외여행 항공료 아끼는 예약 타이밍 정리'
+2026-08-04 12:04:48,599 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 후기·보도자료 재구성 위주로 저자만의 구체적 개인 경험(직접 예약 사례 등)이 부족함
+2026-08-04 12:04:48,599 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용은 있으나 1인칭 직접 경험 서술이 약하고 저자 전문성 신호 부족
+2026-08-04 12:04:48,599 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급이 전혀 없어 삽입 여부 불확실 (기본 warn 처리)
+2026-08-04 12:04:48,599 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 출처 스니펫이 그대로 붙은 흔적(따옴표 제목 반복 등)과 전형적 전환문구가 반복돼 스크랩·조합형 콘텐츠 의심
+2026-08-04 12:04:48,606 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-04 12:04:48,607 [INFO] internal_linker —   [1/5] '여름휴가' -> https://hogugolfntraval.blogspot.com/2026/07/2026_0213604772
+2026-08-04 12:04:48,610 [INFO] internal_linker —   [2/5] '유류할증료' -> https://hogugolfntraval.blogspot.com/2026/07/blog-post_30.ht
+2026-08-04 12:04:48,612 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-08-04 12:04:48,613 [INFO] main —   제목: 해외여행 항공료 아끼는 예약 타이밍 정리
+2026-08-04 12:04:48,613 [INFO] main —   이미지: 3개 삽입
+2026-08-04 12:04:48,613 [INFO] main —   글자 수: 3136자
+2026-08-04 12:04:49,330 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:05:07,717 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '해외여행 항공료 아끼는 예약 타이밍 정리'
+2026-08-04 12:05:07,718 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 개인 경험보다는 매체 사례·커뮤니티 후기 재구성 위주로 thin content 우려
+2026-08-04 12:05:07,718 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 체크리스트·원리 설명 단락이 500자 이상으로 길게 이어짐
+2026-08-04 12:05:07,718 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용은 있으나 1인칭 직접 경험 서술이 약하고 저자 전문성 신호 부족
+2026-08-04 12:05:07,718 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 없어 삽입 여부 불명, 이미지 없는 글은 warn 처리
+2026-08-04 12:05:07,718 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트식 전면 목록화와 '~정리해봤습니다' 류 정형화된 정리체 문장이 반복됨
+2026-08-04 12:05:07,718 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-08-04 12:05:07,718 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 개인 경험보다는 매체 사례·커뮤니티 후기 재구성 위주로 thin content 우려
+2026-08-04 12:05:07,718 [WARNING] main —      🟡 [구조 및 가독성] H2 7개로 구조는 양호하나 체크리스트·원리 설명 단락이 500자 이상으로 길게 이어짐
+2026-08-04 12:05:07,718 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 2개 인용은 있으나 1인칭 직접 경험 서술이 약하고 저자 전문성 신호 부족
+2026-08-04 12:05:07,718 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-08-04 12:05:09,417 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:06:29,036 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-04 12:06:30,746 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:06:54,699 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3136자 → 3997자 (+861자)
+2026-08-04 12:06:54,699 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-04 12:06:55,587 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:07:09,097 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '해외여행 항공료 아끼는 예약 타이밍 정리'
+2026-08-04 12:07:09,097 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락이 500자 이상으로 다소 길게 이어짐
+2026-08-04 12:07:09,098 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가하며 이미지 없는 글은 정책상 warn 처리
+2026-08-04 12:07:09,098 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 90/100)
+2026-08-04 12:07:09,098 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-04 12:07:10,397 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:07:59,035 [INFO] final_editor —   ✏️ 제목 최종 교정: '해외여행 항공료 아끼는 예약 타이밍 정리' → '해외여행 항공료 아끼는 꿀팁과 항공권 예약 타이밍 완벽 정리'
+2026-08-04 12:07:59,035 [INFO] final_editor —   ✏️ 메타 설명 교정 (120자)
+2026-08-04 12:07:59,035 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분리했습니다. 요약박스·비교표·개인경험메모·FAQ·주의사항·작성자메모 구조를 추가하고 이미지 alt를 구체화했습니다.
+2026-08-04 12:07:59,133 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-04 12:07:59,133 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-04 12:07:59,223 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-04 12:07:59,236 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-04 12:07:59,237 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '해외여행 항공료 아끼는 꿀팁 및 예약 타이밍' — 면책·팩트체크 확인 권장
+2026-08-04 12:07:59,237 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-04 12:07:59,891 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_460.html
+2026-08-04 12:07:59,904 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_460.html
+2026-08-04 12:08:35,006 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:08:35,007 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-04 12:08:35,007 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-04 12:08:35,016 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '해외여행 항공료 아끼는 꿀팁과 항공권 예약 타이밍 완벽 정리'
+2026-08-04 12:08:39,920 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-04 12:08:43,188 [INFO] comment_manager —   생성된 댓글: 글 잘 봤습니다! 하나 덧붙이면, 검색할 때 시크릿모드(비공개 브라우징)로 들어가시는 것도 도움 될 수 있어요. 같은 항공권을 계속 검색하면 쿠...
+2026-08-04 12:11:43,265 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-04 12:11:43,265 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-04 12:11:43,266 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-04 12:11:43,266 [INFO] main — 
+============================================================
+2026-08-04 12:11:43,266 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-08-04 12:11:43,266 [INFO] main — ============================================================
+2026-08-04 12:11:43,306 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-04 12:11:43,331 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
+2026-08-04 12:11:43,353 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-04 12:11:43,525 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-04 12:11:43,799 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-04 12:11:44,126 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-04 12:11:44,127 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-04 12:11:44,130 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-04 12:11:44,146 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 198 / 실패 0 / 대기 74)
+2026-08-04 12:11:44,146 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-04 12:11:44,146 [INFO] dashboard_exporter —   포스트: 98개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-04 12:11:44,147 [INFO] main — 대시보드 데이터 업데이트 완료

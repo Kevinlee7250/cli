@@ -1,131 +1,3 @@
-2026-08-04 23:20:15,391 [INFO] main — ============================================================
-2026-08-04 23:20:15,403 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-04 23:20:15,403 [INFO] keyword_collector — 포스팅 이력 코퍼스: 156개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-08-04 23:20:20,865 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-08-04 23:20:28,915 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:20:28,930 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-04 23:20:28,930 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-04 23:20:29,840 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-04 23:20:29,841 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-04 23:20:29,842 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-08-04 23:20:29,852 [INFO] keyword_collector — 유사 주제 제외 15개: ['일본 여행 엔저 저렴하게 가는 법 2026', '군산 목포 국내 로컬 여행지 추천', '여름휴가 숙소 항공권 특가 예약 꿀팁', 'AI 여행 추천 서비스 활용법 비교', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
-2026-08-04 23:20:29,852 [INFO] keyword_collector —   [fallback] 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '태국 방콕 처음 가는 사람이 꼭 알아야 할 것']
-2026-08-04 23:20:29,852 [INFO] keyword_collector — 최종 선정 키워드 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '태국 방콕 처음 가는 사람이 꼭 알아야 할 것']
-2026-08-04 23:20:29,852 [INFO] main — 수집된 키워드 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '태국 방콕 처음 가는 사람이 꼭 알아야 할 것']
-2026-08-04 23:20:29,855 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-08-04 23:20:29,855 [INFO] main — 단독 포스트 대상 키워드 1개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-08-04 23:20:29,869 [INFO] main — 
-[1/1] 키워드: '서울 근교 드라이브 코스 직접 가본 솔직 평가'
-2026-08-04 23:20:29,869 [INFO] content_generator — 포스트 생성 중: '서울 근교 드라이브 코스 직접 가본 솔직 평가'
-2026-08-04 23:20:38,189 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:20:38,189 [INFO] research_collector — 검색 의도: 서울 근교에서 실제로 다녀온 사람의 후기를 바탕으로 신뢰할 수 있는 드라이브 코스 정보를 얻고자 함
-2026-08-04 23:20:51,510 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '서울 근교 드라이브 코스 직접 가본 솔직 평가'
-2026-08-04 23:21:09,377 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:21:09,378 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '서울 근교 드라이브 코스 직접 가본 솔직 평가'
-2026-08-04 23:21:25,706 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:21:25,707 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'D': 2, 'C': 1, 'X': 3}
-2026-08-04 23:21:25,708 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-08-04 23:21:25,708 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-04 23:21:30,951 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:22:46,206 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:23:02,507 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '체감상 훨씬 오래 걸린다는 경험담도 많습니다'
-2026-08-04 23:23:02,507 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 0건 자동 수정 적용
-2026-08-04 23:23:03,484 [INFO] image_fetcher — 이미지 수집 성공: '서울 근교 드라이브 코스, 후기까지 다 뜯어본 솔직 비교 (2026년)' → 제목='네이버 인플루언서 [네이버 인플루언서] 여행 고수들이 추천하는 후회 없는' (관련성=0.38)
-2026-08-04 23:23:04,158 [INFO] image_fetcher — 이미지 수집 성공: '서울 근교 드라이브' → 제목='서울 근교 언택트 당일치기 드라이브 코스 TOP 5' (관련성=1.00)
-2026-08-04 23:23:04,939 [INFO] image_fetcher — 이미지 수집 성공: '서울 근교 양평 북한강로 방향' → 제목='서울 근교 힐링 여행, 양평 가볼 만한 곳' (관련성=0.60)
-2026-08-04 23:23:06,130 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:23:06,131 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-08-04 23:23:06,133 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-08-04 23:23:06,134 [INFO] content_generator — 포스트 생성 완료: '서울 근교 드라이브 코스, 후기까지 다 뜯어본 솔직 비교 (2026년)' (2649자, 이미지 3개)
-2026-08-04 23:23:06,866 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:23:22,786 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '서울 근교 드라이브 코스, 후기까지 다 뜯어본 솔직 비교 (20'
-2026-08-04 23:23:22,786 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 대부분 '후기에 따르면' 식 요약이며 구체적 날짜·수치 기반 개인 경험은 거의 없음
-2026-08-04 23:23:22,786 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 6개 출처 인용은 있으나 '솔직 평가' 제목 대비 1인칭 직접 경험 서술이 부족함
-2026-08-04 23:23:22,787 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 없어 확인 불가, 부재 자체는 fail 아님
-2026-08-04 23:23:22,787 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면~까요', '~라는 후기가 많다' 등 반복적 전환구와 정형화된 패턴이 다수 발견됨
-2026-08-04 23:23:22,793 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-04 23:23:22,795 [INFO] internal_linker —   [1/5] '당일치기' -> https://hogugolfntraval.blogspot.com/2026/08/blog-post_829.h
-2026-08-04 23:23:22,798 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-08-04 23:23:22,798 [INFO] main —   제목: 서울 근교 드라이브 코스, 후기까지 다 뜯어본 솔직 비교 (2026년)
-2026-08-04 23:23:22,798 [INFO] main —   이미지: 3개 삽입
-2026-08-04 23:23:22,798 [INFO] main —   글자 수: 2649자
-2026-08-04 23:23:23,687 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:23:47,560 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-04 23:23:48,314 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:23:50,444 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '서울 근교 드라이브 코스, 후기까지 다 뜯어본 솔직 비교 (20'
-2026-08-04 23:23:50,444 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(2649자)는 기준 충족하나 실제 방문 경험보다 후기·공식정보 재조합 위주로 구체적 1인칭 경험(날짜, 비용, 소요시간 등 수치)이 부족함
-2026-08-04 23:23:50,444 [INFO] adsense_validator —   ⚠️ SEO 최적화: 제목·키워드는 '직접 가본 솔직 평가'를 내세우나 본문은 '후기와 공식 관광 정보를 바탕으로 조사'라고 명시해 제목과 실제 내용이 불일치
-2026-08-04 23:23:50,444 [INFO] adsense_validator —   ❌ E-E-A-T 신뢰도: '직접 가본' 표방과 달리 본문이 '후기 종합·공식정보 조사'임을 자인해 1인칭 직접경험 신뢰 신호가 사실상 부재함
-2026-08-04 23:23:50,444 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 존재 여부가 확인되지 않아 이미지 없는 글로 간주, 저작권 위반은 없으나 가독성/SEO 보강 필요
-2026-08-04 23:23:50,444 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면 ~까요', '다만 ~후기도 있다' 같은 형식적 전환 문구가 섹션마다 반복돼 정형화된 AI 패턴이 느껴짐
-2026-08-04 23:23:50,444 [WARNING] adsense_validator —   🔴 [E-E-A-T 신뢰도] '직접 가본' 표방과 달리 본문이 '후기 종합·공식정보 조사'임을 자인해 1인칭 직접경험 신뢰 신호가 사실상 부재함
-2026-08-04 23:23:50,444 [WARNING] adsense_validator —   🔴 제목/키워드는 '직접 가본 솔직 평가'를 주장하나 본문에서 '후기와 공식 관광 정보를 바탕으로 조사'했다고 명시해 E-E-A-T 및 제목 신뢰성에 심각한 모순 발생
-2026-08-04 23:23:50,444 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
-2026-08-04 23:23:50,444 [WARNING] main —      🔴 [E-E-A-T 신뢰도] '직접 가본' 표방과 달리 본문이 '후기 종합·공식정보 조사'임을 자인해 1인칭 직접경험 신뢰 신호가 사실상 부재함
-2026-08-04 23:23:50,444 [WARNING] main —      🔴 제목/키워드는 '직접 가본 솔직 평가'를 주장하나 본문에서 '후기와 공식 관광 정보를 바탕으로 조사'했다고 명시해 E-E-A-T 및 제목 신뢰성에 심각한 모순 발생
-2026-08-04 23:23:50,444 [WARNING] main —      🟡 [원본성 및 품질] 글자수(2649자)는 기준 충족하나 실제 방문 경험보다 후기·공식정보 재조합 위주로 구체적 1인칭 경험(날짜, 비용, 소요시간 등 수치)이 부족함
-2026-08-04 23:23:50,444 [WARNING] main —      🟡 [SEO 최적화] 제목·키워드는 '직접 가본 솔직 평가'를 내세우나 본문은 '후기와 공식 관광 정보를 바탕으로 조사'라고 명시해 제목과 실제 내용이 불일치
-2026-08-04 23:23:50,444 [WARNING] main —      🟡 [이미지 정책] 이미지 존재 여부가 확인되지 않아 이미지 없는 글로 간주, 저작권 위반은 없으나 가독성/SEO 보강 필요
-2026-08-04 23:23:50,444 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
-2026-08-04 23:23:51,701 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:25:07,040 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2649자 → 3265자 (+616자)
-2026-08-04 23:25:07,040 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-04 23:25:07,784 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:25:24,434 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '서울 근교 드라이브 코스, 후기까지 다 뜯어본 솔직 비교 (20'
-2026-08-04 23:25:24,434 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 개수는 충분하나 각 코스 설명 단락이 500자 이상으로 길게 이어지는 구간이 다수 존재
-2026-08-04 23:25:24,434 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 관련 언급이 없어 이미지 부재로 판단, 저작권 위반은 없으나 warn 처리
-2026-08-04 23:25:24,434 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 90/100)
-2026-08-04 23:25:24,434 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-08-04 23:25:25,914 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:26:48,726 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-04 23:26:50,436 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:28:09,083 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-04 23:28:10,968 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:28:20,597 [INFO] final_editor —   ✏️ 제목 최종 교정: '서울 근교 드라이브 코스, 후기까지 다 뜯어본 솔직 비교 (2026년)' → '서울 근교 드라이브 코스, 직접 가본 솔직 평가 총정리'
-2026-08-04 23:28:20,598 [INFO] final_editor —   ✏️ 메타 설명 교정 (121자)
-2026-08-04 23:28:20,598 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분할하고 요약 박스·비교표·개인 경험 메모·주의사항·FAQ·작성자 메모를 추가했으며, 제목·메타 설명·슬러그를 발행 기준에 맞게 정리했습니다.
-2026-08-04 23:28:20,717 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-04 23:28:20,717 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-04 23:28:20,840 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-04 23:28:20,849 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-04 23:28:20,849 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-08-04 23:28:21,998 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post_05.html
-2026-08-04 23:28:22,006 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post_05.html
-2026-08-04 23:28:58,995 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:28:58,996 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-04 23:28:58,996 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-04 23:28:59,002 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '서울 근교 드라이브 코스, 직접 가본 솔직 평가 총정리'
-2026-08-04 23:28:59,668 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-04 23:29:03,408 [INFO] comment_manager —   생성된 댓글: 덧붙이자면, 양평 쪽은 네이버 지도나 티맵 실시간 교통 상황을 출발 전에 한 번 더 체크하시는 걸 추천드려요. 특히 주말 오후 2시~4시 사이는...
-2026-08-04 23:32:03,508 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-04 23:32:03,509 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-04 23:32:03,509 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-04 23:32:03,509 [INFO] main — 
-============================================================
-2026-08-04 23:32:03,509 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-08-04 23:32:03,509 [INFO] main — ============================================================
-2026-08-04 23:32:03,536 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-04 23:32:03,552 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
-2026-08-04 23:32:03,565 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-04 23:32:03,869 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-04 23:32:04,204 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-04 23:32:04,205 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-04 23:32:04,207 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-04 23:32:04,217 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 201 / 실패 0 / 대기 72)
-2026-08-04 23:32:04,218 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-04 23:32:04,218 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-04 23:32:04,218 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-04 23:32:35,607 [INFO] main — ============================================================
-2026-08-04 23:32:35,607 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-08-04 23:32:35
-2026-08-04 23:32:35,608 [INFO] main — ============================================================
-2026-08-04 23:32:35,625 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
 2026-08-04 23:32:35,625 [INFO] keyword_collector — 포스팅 이력 코퍼스: 181개 항목 로드 (blog_id=blog3 중복 방지 기준)
 2026-08-04 23:32:39,926 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
 2026-08-04 23:32:46,827 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
@@ -626,3 +498,132 @@
 2026-08-05 06:23:04,078 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-05 06:23:04,078 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-05 06:23:04,079 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-05 11:58:31,773 [INFO] main — ============================================================
+2026-08-05 11:58:31,773 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-05 11:58:31
+2026-08-05 11:58:31,773 [INFO] main — ============================================================
+2026-08-05 11:58:31,791 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-05 11:58:31,791 [INFO] keyword_collector — 포스팅 이력 코퍼스: 193개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-05 11:58:35,520 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-05 11:58:42,658 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 11:58:42,680 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-05 11:58:42,680 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-05 11:58:43,154 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-05 11:58:43,450 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-05 11:58:43,699 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-05 11:58:43,701 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
+2026-08-05 11:58:43,707 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-05 11:58:43,708 [INFO] keyword_collector — 유사 주제 제외 4개: ['강원도 삼척 여름 피서 명소 추천 코스', '전국 치킨 맛집 지도 활용법 치킨투어 코스', '삼성 월렛 트래블로그 체크카드 해외여행 혜택 총정리', '유럽 처음 여행 항공권 호텔 한 번에 싸게 예약하는 법']
+2026-08-05 11:58:43,708 [WARNING] keyword_collector — 선정 키워드 부족 (1/2) — 유사도 기준 완화하여 재시도
+2026-08-05 11:58:43,711 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (1/2) — 이전 사용 키워드 일부 허용
+2026-08-05 11:58:43,713 [INFO] keyword_collector —   [naver_realtime] 1개: ['5060 럭셔리 여행 소비 트렌드와 알뜰 여행 비교']
+2026-08-05 11:58:43,713 [INFO] keyword_collector —   [high_cpc] 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-05 11:58:43,713 [INFO] keyword_collector — 최종 선정 키워드 2개: ['5060 럭셔리 여행 소비 트렌드와 알뜰 여행 비교', '해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-05 11:58:43,713 [INFO] main — 수집된 키워드 2개: ['5060 럭셔리 여행 소비 트렌드와 알뜰 여행 비교', '해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-05 11:58:43,718 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
+2026-08-05 11:58:43,718 [INFO] main — 단독 포스트 대상 키워드 1개: ['5060 럭셔리 여행 소비 트렌드와 알뜰 여행 비교']
+2026-08-05 11:58:43,734 [INFO] main — 
+[1/1] 키워드: '5060 럭셔리 여행 소비 트렌드와 알뜰 여행 비교'
+2026-08-05 11:58:43,735 [INFO] content_generator — 포스트 생성 중: '5060 럭셔리 여행 소비 트렌드와 알뜰 여행 비교'
+2026-08-05 11:58:51,948 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 11:58:51,949 [INFO] research_collector — 검색 의도: 50~60대 소비층의 럭셔리 여행 트렌드와 알뜰(저가) 여행 소비 패턴을 비교하여 정보를 얻으려는 의도
+2026-08-05 11:59:06,073 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '5060 럭셔리 여행 소비 트렌드와 알뜰 여행 비교'
+2026-08-05 11:59:27,789 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 11:59:27,790 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '5060 럭셔리 여행 소비 트렌드와 알뜰 여행 비교'
+2026-08-05 11:59:45,731 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 11:59:45,732 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'B': 5, 'X': 2}
+2026-08-05 11:59:45,734 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-05 11:59:46,744 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 12:00:50,849 [WARNING] content_generator — 컨텐츠 너무 짧음(2450자, 최소 2500자) — 재시도 1/3
+2026-08-05 12:00:53,849 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-08-05 12:00:59,988 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 12:02:01,445 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-08-05 12:02:02,925 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 12:02:18,832 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '럭셔리 호텔 공급은 최근 10년간 꾸준히 늘어난 것으로 알려져 있습니다'
+2026-08-05 12:02:18,833 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-08-05 12:02:25,138 [INFO] image_fetcher — 이미지 수집 성공: '5060 럭셔리 여행 vs 알뜰 여행 비교 총정리' → 제목='fantasy / to travel / travel / vacations' (관련성=0.17)
+2026-08-05 12:02:30,457 [INFO] image_fetcher — 대체 이미지 수집: '럭셔리 여행 소비' → 제목='airport / woman / flight / boarding / tr' (관련성=0.00)
+2026-08-05 12:02:30,457 [INFO] image_fetcher — 이미지 수집 성공: '럭셔리 여행 소비' → 제목='airport / woman / flight / boarding / tr' (관련성=0.00)
+2026-08-05 12:02:38,945 [INFO] image_fetcher — 대체 이미지 수집: '럭셔리 여행 트렌드 갑자기 비우러 떠나는' → 제목='mountain / nature / travel / exploration' (관련성=0.14)
+2026-08-05 12:02:38,945 [INFO] image_fetcher — 이미지 수집 성공: '럭셔리 여행 트렌드 갑자기 비우러 떠나는' → 제목='mountain / nature / travel / exploration' (관련성=0.14)
+2026-08-05 12:02:42,943 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 12:02:42,944 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-08-05 12:02:42,944 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-05 12:02:42,947 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-05 12:02:42,949 [INFO] content_generator — 포스트 생성 완료: '5060 럭셔리 여행 vs 알뜰 여행 비교 총정리' (2658자, 이미지 2개)
+2026-08-05 12:02:44,301 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 12:02:58,199 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '5060 럭셔리 여행 vs 알뜰 여행 비교 총정리'
+2026-08-05 12:02:58,199 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수(2658자)는 기준을 충족하나 저자 직접 체험이 아닌 보도자료·후기 재구성 위주로 독창적 인사이트가 약함
+2026-08-05 12:02:58,199 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 직접 경험이 명시적으로 배제되어 있고 출처는 있으나 저자 전문성 신호 약함
+2026-08-05 12:02:58,199 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급이 없어 이미지 부재로 판단됨(정책상 fail 아님)
+2026-08-05 12:02:58,199 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~것으로 보입니다', '짚어보겠습니다' 등 반복되는 정형화된 전환 문구와 목록화 패턴이 다수 관찰됨
+2026-08-05 12:02:58,205 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-05 12:02:58,207 [INFO] internal_linker —   [1/5] '프리미엄' -> https://www.hoguwhat.com/2026/08/5060.html
+2026-08-05 12:02:58,208 [INFO] internal_linker —   [2/5] '항공권' -> https://hogugolfntraval.blogspot.com/2026/08/2026_0199868871
+2026-08-05 12:02:58,212 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-08-05 12:02:58,212 [INFO] main —   제목: 5060 럭셔리 여행 vs 알뜰 여행 비교 총정리
+2026-08-05 12:02:58,212 [INFO] main —   이미지: 2개 삽입
+2026-08-05 12:02:58,212 [INFO] main —   글자 수: 2658자
+2026-08-05 12:02:59,877 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 12:03:15,611 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '5060 럭셔리 여행 vs 알뜰 여행 비교 총정리'
+2026-08-05 12:03:15,611 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(2658자)는 기준 충족하나 체험 없이 보도자료·후기 재정리 위주로 개인 인사이트 부족
+2026-08-05 12:03:15,611 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 체험 없음을 스스로 명시했고 출처 3개는 있으나 저자 전문성 신호 약함
+2026-08-05 12:03:15,611 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 언급이 없어 이미지 부재 상태(정책 위반은 아니나 warn 처리)
+2026-08-05 12:03:15,611 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~것으로 보입니다', '다음 섹션에서 짚어보겠습니다' 등 반복 전환구와 보고서체 패턴이 다수 관찰됨
+2026-08-05 12:03:15,611 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-05 12:03:15,611 [WARNING] main —      🟡 [원본성 및 품질] 글자수(2658자)는 기준 충족하나 체험 없이 보도자료·후기 재정리 위주로 개인 인사이트 부족
+2026-08-05 12:03:15,611 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 체험 없음을 스스로 명시했고 출처 3개는 있으나 저자 전문성 신호 약함
+2026-08-05 12:03:15,611 [WARNING] main —      🟡 [이미지 정책] 본문에 이미지 언급이 없어 이미지 부재 상태(정책 위반은 아니나 warn 처리)
+2026-08-05 12:03:15,611 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-05 12:03:16,452 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 12:04:18,318 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2658자 → 2703자 (+45자)
+2026-08-05 12:04:18,318 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-05 12:04:19,240 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 12:04:34,082 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '5060 럭셔리 여행 vs 알뜰 여행 비교 총정리'
+2026-08-05 12:04:34,082 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2가 3개로 기준 미달이며 문단 구분 없이 긴 서술이 이어짐
+2026-08-05 12:04:34,082 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 불명확하고 alt텍스트 확인 불가하여 안전하게 warn
+2026-08-05 12:04:34,082 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 💡💬 이모지 박스와 표 형식 등 정형화된 AI 템플릿 패턴이 일부 감지됨
+2026-08-05 12:04:34,082 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
+2026-08-05 12:04:34,083 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-08-05 12:04:35,500 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 12:05:15,327 [INFO] final_editor —   ✏️ 제목 최종 교정: '5060 럭셔리 여행 vs 알뜰 여행 비교 총정리' → '5060 럭셔리 여행과 알뜰 여행, 실제 소비 트렌드 비교'
+2026-08-05 12:05:15,327 [INFO] final_editor —   ✏️ 메타 설명 교정 (126자)
+2026-08-05 12:05:15,327 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목과 메타 설명을 SEO 규격에 맞게 재정리하고, 긴 본문을 짧은 문단으로 나눠 모바일 가독성을 높였습니다. 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모·내부 링크 언급을 규칙에 맞게 구성했습니다.
+2026-08-05 12:05:15,493 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-05 12:05:15,493 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-05 12:05:15,648 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-05 12:05:15,662 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-05 12:05:15,662 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-05 12:05:16,157 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/5060_01741188341.html
+2026-08-05 12:05:16,169 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/5060_01741188341.html
+2026-08-05 12:05:48,724 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 12:05:48,725 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-05 12:05:48,725 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-05 12:05:48,733 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '5060 럭셔리 여행과 알뜰 여행, 실제 소비 트렌드 비교'
+2026-08-05 12:05:55,845 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-05 12:05:59,733 [INFO] comment_manager —   생성된 댓글: 글에서 다루진 않았지만, 실제로 예약해보니 럭셔리 호텔도 평일-주말 가격 차이가 크고, 특히 조식 포함 여부에 따라 총액이 꽤 달라지더라구요. ...
+2026-08-05 12:08:59,877 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-05 12:08:59,878 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-05 12:08:59,878 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-05 12:08:59,878 [INFO] main — 
+============================================================
+2026-08-05 12:08:59,878 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-08-05 12:08:59,878 [INFO] main — ============================================================
+2026-08-05 12:08:59,913 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-05 12:08:59,936 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
+2026-08-05 12:08:59,991 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-05 12:09:00,450 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-05 12:09:00,773 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-05 12:09:01,112 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-05 12:09:01,114 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-05 12:09:01,116 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-05 12:09:01,132 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 203 / 실패 0 / 대기 70)
+2026-08-05 12:09:01,132 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-05 12:09:01,132 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-05 12:09:01,133 [INFO] main — 대시보드 데이터 업데이트 완료

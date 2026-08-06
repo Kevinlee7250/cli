@@ -1,123 +1,3 @@
-2026-08-05 23:08:52,220 [WARNING] keyword_collector — 선정 키워드 부족 (0/2) — 유사도 기준 완화하여 재시도
-2026-08-05 23:08:52,226 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (0/2) — 이전 사용 키워드 일부 허용
-2026-08-05 23:08:52,228 [INFO] keyword_collector —   [high_cpc] 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-05 23:08:52,228 [INFO] keyword_collector —   [naver_realtime] 1개: ['강원도 삼척 계곡 폭포 여름 피서지 추천']
-2026-08-05 23:08:52,228 [INFO] keyword_collector — 최종 선정 키워드 2개: ['해외여행 실비보험 필요한지 직접 비교해봤더니', '강원도 삼척 계곡 폭포 여름 피서지 추천']
-2026-08-05 23:08:52,228 [INFO] main — 수집된 키워드 2개: ['해외여행 실비보험 필요한지 직접 비교해봤더니', '강원도 삼척 계곡 폭포 여름 피서지 추천']
-2026-08-05 23:08:52,233 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-08-05 23:08:52,233 [INFO] main — 단독 포스트 대상 키워드 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-05 23:08:52,251 [INFO] main — 
-[1/1] 키워드: '해외여행 실비보험 필요한지 직접 비교해봤더니'
-2026-08-05 23:08:52,251 [INFO] content_generator — 포스트 생성 중: '해외여행 실비보험 필요한지 직접 비교해봤더니'
-2026-08-05 23:09:01,608 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:09:01,609 [INFO] research_collector — 검색 의도: 해외여행 시 실비보험(실손의료보험)이 실제로 필요한지, 여행자보험과 비교해 어떤 이점이 있는지 알고 싶어하는
-2026-08-05 23:09:22,000 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '해외여행 실비보험 필요한지 직접 비교해봤더니'
-2026-08-05 23:09:36,383 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:09:36,384 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '해외여행 실비보험 필요한지 직접 비교해봤더니'
-2026-08-05 23:10:05,015 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:10:05,016 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'B': 2, 'X': 3, 'D': 1}
-2026-08-05 23:10:05,019 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-08-05 23:10:05,019 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-05 23:10:05,769 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:11:54,922 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:12:06,847 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-08-05 23:12:07,764 [INFO] image_fetcher — 이미지 수집 성공: '해외여행 실비보험 필요한지 비교해봤더니' → 제목='실비보험 비교 부탁드려요!뽐뿌:보험상담실 - 실비보험 비교 부탁드려요!' (관련성=0.25)
-2026-08-05 23:12:08,660 [INFO] image_fetcher — 이미지 수집 성공: '해외여행 실비보험 필요한지' → 제목='해외여행 중 질병을 얻었다면 실비보험 보장을 받을 수 있다? 없다?' (관련성=0.67)
-2026-08-05 23:12:10,483 [INFO] image_fetcher — 대체 이미지 수집: '해외여행 실비보험 앞두고 고민이 여행 준비를' → 제목='현대해상 다이렉트 해외여행보험' (관련성=0.00)
-2026-08-05 23:12:10,483 [INFO] image_fetcher — 이미지 수집 성공: '해외여행 실비보험 앞두고 고민이 여행 준비를' → 제목='현대해상 다이렉트 해외여행보험' (관련성=0.00)
-2026-08-05 23:12:14,953 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:12:14,954 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-08-05 23:12:14,954 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-08-05 23:12:14,957 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-08-05 23:12:14,959 [INFO] content_generator — 포스트 생성 완료: '해외여행 실비보험 필요한지 비교해봤더니' (2935자, 이미지 2개)
-2026-08-05 23:12:15,643 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:12:31,869 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '해외여행 실비보험 필요한지 비교해봤더니'
-2026-08-05 23:12:31,869 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 삽입 여부가 확인되지 않아 이미지 부재로 판단됨
-2026-08-05 23:12:31,869 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·표 등 목록화 패턴이 많고 일부 문장이 정형화된 정리체로 AI 생성 느낌이 있음
-2026-08-05 23:12:31,879 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-05 23:12:31,883 [INFO] internal_linker —   [1/5] '항공권' -> https://www.hoguwhat.com/2026/08/blog-post_01.html
-2026-08-05 23:12:31,890 [INFO] internal_linker —   [2/5] '항공권' -> https://www.hoguwhat.com/2026/08/blog-post_460.html
-2026-08-05 23:12:31,892 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-08-05 23:12:31,892 [INFO] main —   제목: 해외여행 실비보험 필요한지 비교해봤더니
-2026-08-05 23:12:31,893 [INFO] main —   이미지: 2개 삽입
-2026-08-05 23:12:31,893 [INFO] main —   글자 수: 2935자
-2026-08-05 23:12:33,875 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:12:54,983 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '해외여행 실비보험 필요한지 비교해봤더니'
-2026-08-05 23:12:54,983 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락(제도 변화 설명부 등)이 500자 이상으로 길게 이어짐
-2026-08-05 23:12:54,983 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 존재 여부가 불명확하고 alt텍스트·출처 정보가 확인되지 않음
-2026-08-05 23:12:54,983 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·표 형식의 정형화된 나열이 많고 일부 구간에서 정리형 문체가 반복됨
-2026-08-05 23:12:54,983 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-08-05 23:12:55,758 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:14:06,290 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-05 23:14:07,541 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:14:51,738 [INFO] final_editor —   ✏️ 제목 최종 교정: '해외여행 실비보험 필요한지 비교해봤더니' → '해외여행 실비보험 필요한지 직접 비교해봤더니, 2026년 개선안까지'
-2026-08-05 23:14:51,738 [INFO] final_editor —   ✏️ 메타 설명 교정 (121자)
-2026-08-05 23:14:51,738 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분리했습니다. 요약 박스·비교 표·개인 경험 메모·주의사항·FAQ·작성자 메모·내부 링크 언급을 모두 추가해 발행 가능한 형태로 완성했습니다.
-2026-08-05 23:14:51,831 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-05 23:14:51,832 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-05 23:14:51,929 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-05 23:14:51,943 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-05 23:14:51,943 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-08-05 23:14:52,559 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/2026_02059100424.html
-2026-08-05 23:14:52,572 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/2026_02059100424.html
-2026-08-05 23:15:30,932 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:15:30,933 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-05 23:15:30,934 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-05 23:15:30,944 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '해외여행 실비보험 필요한지 직접 비교해봤더니, 2026년 개선안까지'
-2026-08-05 23:15:33,050 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:15:37,321 [INFO] comment_manager —   생성된 댓글: 좋은 글 잘 봤습니다! 하나 덧붙이면, 해외여행자보험 가입하실 때 '치료비 보장 한도'뿐만 아니라 '현지 병원비 선지급 vs 귀국 후 청구' 방...
-2026-08-05 23:18:37,396 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-05 23:18:37,397 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-05 23:18:37,397 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-05 23:18:37,398 [INFO] main — 
-============================================================
-2026-08-05 23:18:37,398 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-08-05 23:18:37,398 [INFO] main — ============================================================
-2026-08-05 23:18:37,438 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-05 23:18:37,462 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
-2026-08-05 23:18:37,484 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-05 23:18:37,664 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-05 23:18:38,001 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-05 23:18:38,350 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-05 23:18:38,352 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-05 23:18:38,354 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-05 23:18:38,371 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 203 / 실패 0 / 대기 70)
-2026-08-05 23:18:38,371 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-05 23:18:38,371 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-05 23:18:38,372 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-05 23:19:12,026 [INFO] main — ============================================================
-2026-08-05 23:19:12,026 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-05 23:19:12
-2026-08-05 23:19:12,026 [INFO] main — ============================================================
-2026-08-05 23:19:12,044 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-05 23:19:12,045 [INFO] keyword_collector — 포스팅 이력 코퍼스: 160개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-08-05 23:19:18,149 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-08-05 23:19:24,593 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:19:24,616 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-05 23:19:24,616 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-05 23:19:25,218 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-05 23:19:25,219 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-05 23:19:25,220 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-08-05 23:19:25,236 [INFO] keyword_collector — 유사 주제 제외 16개: ['국내 로컬 여행지 추천 2026 수도권 벗어난 숨은 명소', '엔저 일본여행 지금이 기회 유류할증료 인하 정보', '여름휴가 숙소 항공권 반값 예약 꿀팁', '챗GPT로 여행 코스 짜는 방법 AI 여행 계획 활용법', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
-2026-08-05 23:19:25,236 [INFO] keyword_collector —   [fallback] 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '유럽 배낭여행 처음 준비하면서 실수한 것들']
-2026-08-05 23:19:25,236 [INFO] keyword_collector — 최종 선정 키워드 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '유럽 배낭여행 처음 준비하면서 실수한 것들']
-2026-08-05 23:19:25,236 [INFO] main — 수집된 키워드 2개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집', '유럽 배낭여행 처음 준비하면서 실수한 것들']
-2026-08-05 23:19:25,242 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-08-05 23:19:25,242 [INFO] main — 단독 포스트 대상 키워드 1개: ['전주 한옥마을 사람 적은 시간대와 숨은 맛집']
-2026-08-05 23:19:25,258 [INFO] main — 
-[1/1] 키워드: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-08-05 23:19:25,258 [INFO] content_generator — 포스트 생성 중: '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-08-05 23:19:34,152 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:19:34,153 [INFO] research_collector — 검색 의도: 전주 한옥마을을 붐비지 않게 여유롭게 즐기고 싶은 사람들을 위한 방문 시간대 추천과 잘 알려지지 않은 맛집 
-2026-08-05 23:20:14,352 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
-2026-08-05 23:20:36,046 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-05 23:20:36,047 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '전주 한옥마을 사람 적은 시간대와 숨은 맛집'
 2026-08-05 23:21:31,553 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-08-05 23:21:31,554 [INFO] source_validator — 출처 검증: 2/7개 통과, 등급 분포 {'X': 5, 'D': 1, 'C': 1}
 2026-08-05 23:21:31,556 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
@@ -618,3 +498,107 @@
 2026-08-06 06:13:46,678 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-06 06:13:46,678 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-06 06:13:46,679 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-06 06:14:30,009 [INFO] main — ============================================================
+2026-08-06 06:14:30,009 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-08-06 06:14:30
+2026-08-06 06:14:30,009 [INFO] main — ============================================================
+2026-08-06 06:14:30,027 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-06 06:14:30,027 [INFO] keyword_collector — 포스팅 이력 코퍼스: 185개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-08-06 06:14:35,169 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-06 06:14:41,240 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-06 06:14:41,262 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-06 06:14:41,262 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-06 06:14:41,662 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-08-06 06:14:41,941 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-06 06:14:41,942 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-06 06:14:41,952 [INFO] keyword_collector — 유사 주제 제외 5개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', 'ISA 계좌 단점 보완하는 자산관리 방법', '엔저 시대 엔화 환전 타이밍 잡는 법', '레버리지 ETF 투자 시 위험 관리 방법', '코스피 코스닥 2026 하반기 전망 핵심 정리']
+2026-08-06 06:14:41,952 [INFO] keyword_collector —   [naver_realtime] 1개: ['퇴직연금 로보어드바이저 수익률 비교']
+2026-08-06 06:14:41,952 [INFO] keyword_collector —   [fallback] 1개: ['미국 연준 금리 결정 한국 증시 영향 분석']
+2026-08-06 06:14:41,953 [INFO] keyword_collector — 최종 선정 키워드 2개: ['퇴직연금 로보어드바이저 수익률 비교', '미국 연준 금리 결정 한국 증시 영향 분석']
+2026-08-06 06:14:41,953 [INFO] main — 수집된 키워드 2개: ['퇴직연금 로보어드바이저 수익률 비교', '미국 연준 금리 결정 한국 증시 영향 분석']
+2026-08-06 06:14:41,958 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-08-06 06:14:41,958 [INFO] main — 단독 포스트 대상 키워드 1개: ['퇴직연금 로보어드바이저 수익률 비교']
+2026-08-06 06:14:41,975 [INFO] main — 
+[1/1] 키워드: '퇴직연금 로보어드바이저 수익률 비교'
+2026-08-06 06:14:41,975 [INFO] content_generator — 포스트 생성 중: '퇴직연금 로보어드바이저 수익률 비교'
+2026-08-06 06:14:54,855 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-06 06:14:54,857 [INFO] research_collector — 검색 의도: 퇴직연금(DC/IRP)을 로보어드바이저로 운용할 때 업체별·상품별 실제 수익률을 비교해보고 어디가 유리한지 
+2026-08-06 06:15:08,086 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '퇴직연금 로보어드바이저 수익률 비교'
+2026-08-06 06:15:27,285 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-06 06:15:27,286 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '퇴직연금 로보어드바이저 수익률 비교'
+2026-08-06 06:15:56,827 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-06 06:15:56,828 [INFO] source_validator — 출처 검증: 3/8개 통과, 등급 분포 {'X': 5, 'B': 2, 'C': 1}
+2026-08-06 06:15:56,831 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-06 06:15:58,937 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-06 06:17:01,378 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-06 06:17:20,674 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-08-06 06:17:22,096 [INFO] image_fetcher — 이미지 수집 성공: '퇴직연금 로보어드바이저 수익률 비교, 지금 확인해야 하는 이유' → 제목='로보어드바이저 특명: 퇴직연금 수익률을 높여라' (관련성=0.25)
+2026-08-06 06:17:22,826 [INFO] image_fetcher — 이미지 수집 성공: '퇴직연금 로보어드바이저 수익률' → 제목='NH투자, 퇴직연금 로보어드바이저 테스트베드서 수익률 20%대 달성' (관련성=1.00)
+2026-08-06 06:17:23,943 [INFO] image_fetcher — 이미지 수집 성공: '퇴직연금 로보어드바이저 가입액 조원 MTS HTS' → 제목='퇴직연금 로보어드바이저 일임 도입 앞두고 업계 분주' (관련성=0.33)
+2026-08-06 06:17:26,046 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-06 06:17:26,047 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-08-06 06:17:26,050 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-08-06 06:17:26,051 [INFO] content_generator — 포스트 생성 완료: '퇴직연금 로보어드바이저 수익률 비교, 지금 확인해야 하는 이유' (2870자, 이미지 3개)
+2026-08-06 06:17:27,161 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-06 06:17:44,869 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '퇴직연금 로보어드바이저 수익률 비교, 지금 확인해야 하는 이유'
+2026-08-06 06:17:44,870 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 대부분 기존 보도(파운트 1위, 로보Wrap 출시) 재구성이며 개인 경험은 한 문장 정도로 빈약함
+2026-08-06 06:17:44,870 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 3개 출처 인용은 있으나 1인칭 경험 서술이 매우 제한적이고 대부분 타사 보도 인용에 의존
+2026-08-06 06:17:44,870 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음 — 이미지 부재로 인한 기본 warn 처리
+2026-08-06 06:17:44,870 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서 짚어보겠습니다' 등 정형화된 전환구와 단계별 리스트 패턴이 반복돼 AI 생성 느낌이 있음
+2026-08-06 06:17:44,878 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-06 06:17:44,880 [INFO] internal_linker —   [1/5] 'IRP' -> https://hoguasset.blogspot.com/2026/07/2026_0831796232.html
+2026-08-06 06:17:44,881 [INFO] internal_linker —   [2/5] '포트폴리오' -> https://hoguasset.blogspot.com/2026/08/ai.html
+2026-08-06 06:17:44,883 [INFO] internal_linker —   [3/5] '2026년' -> https://www.hoguwhat.com/2026/08/2026_02059100424.html
+2026-08-06 06:17:44,884 [INFO] internal_linker —   [4/5] '2026년' -> https://hoguasset.blogspot.com/2026/08/2026_02124758306.html
+2026-08-06 06:17:44,886 [INFO] internal_linker — 내부 링크 4개 삽입 완료
+2026-08-06 06:17:44,886 [INFO] main —   제목: 퇴직연금 로보어드바이저 수익률 비교, 지금 확인해야 하는 이유
+2026-08-06 06:17:44,886 [INFO] main —   이미지: 3개 삽입
+2026-08-06 06:17:44,886 [INFO] main —   글자 수: 2870자
+2026-08-06 06:17:46,688 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-06 06:18:03,234 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '퇴직연금 로보어드바이저 수익률 비교, 지금 확인해야 하는 이유'
+2026-08-06 06:18:03,235 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2870자로 기준 충족하나 대부분 보도자료 재구성이며 개인 경험적 통찰은 제한적
+2026-08-06 06:18:03,235 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음(저작권 위반은 없으나 이미지 부재로 warn)
+2026-08-06 06:18:03,235 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서 짚어보겠습니다' 등 동일 전환구 반복 및 정형화된 리스트 나열 패턴 존재
+2026-08-06 06:18:03,235 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-08-06 06:18:06,155 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-06 06:18:50,068 [INFO] final_editor —   ✏️ 제목 최종 교정: '퇴직연금 로보어드바이저 수익률 비교, 지금 확인해야 하는 이유' → '퇴직연금 로보어드바이저 수익률 비교, 가입 전 확인할 점'
+2026-08-06 06:18:50,069 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
+2026-08-06 06:18:50,069 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분할하고, 표와 요약박스·개인경험메모·주의사항·FAQ·작성자메모를 구조화해 발행 형식에 맞게 정리했습니다. 제목과 메타 설명을 글자 수 기준에 맞춰 재작성하고 이미지 위치·alt·내부링크 후보를 구체화했습니다.
+2026-08-06 06:18:50,160 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-06 06:18:50,160 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-06 06:18:50,246 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-06 06:18:50,261 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-06 06:18:50,261 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '퇴직연금 로보어드바이저 수익률 비교' — 면책·팩트체크 확인 권장
+2026-08-06 06:18:50,261 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-08-06 06:18:51,521 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/blog-post_06.html
+2026-08-06 06:18:51,534 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/blog-post_06.html
+2026-08-06 06:19:28,223 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-06 06:19:28,224 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-06 06:19:28,224 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-06 06:19:28,233 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '퇴직연금 로보어드바이저 수익률 비교, 가입 전 확인할 점'
+2026-08-06 06:19:31,380 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-06 06:19:36,136 [INFO] comment_manager —   생성된 댓글: 좋은 정리 감사합니다! 하나 덧붙이면, 로보어드바이저 수익률 비교할 때 '수익률'만 보지 말고 총비용(운용수수료+플랫폼 이용료)을 같이 따져보시...
+2026-08-06 06:22:36,226 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-06 06:22:36,227 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-06 06:22:36,228 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-06 06:22:36,228 [INFO] main — 
+============================================================
+2026-08-06 06:22:36,228 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-08-06 06:22:36,228 [INFO] main — ============================================================
+2026-08-06 06:22:36,266 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-06 06:22:36,293 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
+2026-08-06 06:22:36,315 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-06 06:22:36,521 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-06 06:22:36,744 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-06 06:22:36,746 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-06 06:22:36,748 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-06 06:22:36,765 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 208 / 실패 0 / 대기 66)
+2026-08-06 06:22:36,766 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-06 06:22:36,766 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-06 06:22:36,767 [INFO] main — 대시보드 데이터 업데이트 완료

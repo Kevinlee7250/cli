@@ -1,133 +1,3 @@
-2026-08-06 06:01:58,509 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-06 06:01:58,512 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-06 06:01:58,528 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 206 / 실패 0 / 대기 67)
-2026-08-06 06:01:58,528 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-06 06:01:58,528 [INFO] dashboard_exporter —   포스트: 95개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-06 06:01:58,529 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-06 06:02:38,183 [INFO] main — ============================================================
-2026-08-06 06:02:38,184 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-06 06:02:38
-2026-08-06 06:02:38,184 [INFO] main — ============================================================
-2026-08-06 06:02:38,198 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-06 06:02:38,198 [INFO] keyword_collector — 포스팅 이력 코퍼스: 158개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-08-06 06:02:42,716 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-08-06 06:02:48,047 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:02:48,064 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-06 06:02:48,064 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-06 06:02:48,907 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-06 06:02:48,908 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-06 06:02:48,909 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
-2026-08-06 06:02:48,922 [INFO] keyword_collector — 유사 주제 제외 20개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '골프 비기너 첫 필드 나가기 전 준비 체크리스트', '국내 로컬 여행지 추천 수도권 벗어난 숨은 명소', '엔저 시대 일본 여행 경비 절약하는 방법']
-2026-08-06 06:02:48,923 [INFO] keyword_collector —   [fallback] 2개: ['유럽 배낭여행 처음 준비하면서 실수한 것들', '괌 패키지 vs 자유여행 직접 비교해봤더니']
-2026-08-06 06:02:48,923 [INFO] keyword_collector — 최종 선정 키워드 2개: ['유럽 배낭여행 처음 준비하면서 실수한 것들', '괌 패키지 vs 자유여행 직접 비교해봤더니']
-2026-08-06 06:02:48,923 [INFO] main — 수집된 키워드 2개: ['유럽 배낭여행 처음 준비하면서 실수한 것들', '괌 패키지 vs 자유여행 직접 비교해봤더니']
-2026-08-06 06:02:48,927 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-08-06 06:02:48,927 [INFO] main — 단독 포스트 대상 키워드 1개: ['유럽 배낭여행 처음 준비하면서 실수한 것들']
-2026-08-06 06:02:48,940 [INFO] main — 
-[1/1] 키워드: '유럽 배낭여행 처음 준비하면서 실수한 것들'
-2026-08-06 06:02:48,940 [INFO] content_generator — 포스트 생성 중: '유럽 배낭여행 처음 준비하면서 실수한 것들'
-2026-08-06 06:02:58,431 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:02:58,432 [INFO] research_collector — 검색 의도: 유럽 배낭여행을 처음 준비하는 사람이 흔히 하는 실수를 미리 알고 피하고 싶어서 검색
-2026-08-06 06:03:05,494 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '유럽 배낭여행 처음 준비하면서 실수한 것들'
-2026-08-06 06:03:21,619 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:03:21,620 [INFO] evidence_builder — 자료팩 생성: 사실 3개 — '유럽 배낭여행 처음 준비하면서 실수한 것들'
-2026-08-06 06:03:27,433 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:03:27,434 [INFO] source_validator — 출처 검증: 1/3개 통과, 등급 분포 {'X': 2, 'C': 1}
-2026-08-06 06:03:27,436 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-08-06 06:03:27,436 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-06 06:03:28,975 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:04:49,771 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:05:01,644 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-08-06 06:05:02,483 [INFO] image_fetcher — 이미지 수집 성공: '유럽 배낭여행 처음 준비하면서 실수한 것들, 후기 모아보니 다들 비슷했다' → 제목='유럽 여행 시 가져갈 장비 조언 부탁드립니다. - 소니 Talk 유럽 여' (관련성=0.10)
-2026-08-06 06:05:03,064 [INFO] image_fetcher — 이미지 수집 성공: '유럽 배낭여행 준비하면서' → 제목='소매치기 안녕 👋 안전하고 우아한 유럽 여행을 위해 짐싸는 법 - 202' (관련성=0.67)
-2026-08-06 06:05:04,320 [INFO] image_fetcher — 이미지 수집 성공: '유럽 배낭여행 일정 욕심이 여행 커뮤니티' → 제목='뽐뿌:여행포럼 - 유럽 30일 일정 봐주실분!!!' (관련성=0.29)
-2026-08-06 06:05:09,842 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:05:09,843 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-08-06 06:05:09,843 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-08-06 06:05:09,845 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-08-06 06:05:09,846 [INFO] content_generator — 포스트 생성 완료: '유럽 배낭여행 처음 준비하면서 실수한 것들, 후기 모아보니 다들 비슷했다' (2728자, 이미지 2개)
-2026-08-06 06:05:12,033 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:05:28,738 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '유럽 배낭여행 처음 준비하면서 실수한 것들, 후기 모아보니 다들'
-2026-08-06 06:05:28,738 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2728자로 기준 충족하나 '후기에 따르면' 식 일반론 재조합이 많고 구체적 날짜·수치·개인 경험 사례가 부족함
-2026-08-06 06:05:28,738 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 포함되나 1인칭 경험 서술이 약하고 대부분 '커뮤니티 후기 종합' 형태로 전문성 신호 부족
-2026-08-06 06:05:28,738 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가하며 본문 내 이미지 설명 없어 이미지 부재로 판단
-2026-08-06 06:05:28,738 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '결국', '그런데 이것만으로는 부족합니다' 등 전형적 전환구와 표 나열 패턴이 다수 발견되어 AI 생성 의심 요소 존재
-2026-08-06 06:05:28,745 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-06 06:05:28,749 [INFO] internal_linker —   [1/5] '체크리스트' -> https://www.hoguwhat.com/2026/08/blog-post_06.html
-2026-08-06 06:05:28,750 [INFO] internal_linker —   [2/5] '실제로' -> https://hogugolfntraval.blogspot.com/2026/08/blog-post_06.ht
-2026-08-06 06:05:28,752 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-08-06 06:05:28,752 [INFO] main —   제목: 유럽 배낭여행 처음 준비하면서 실수한 것들, 후기 모아보니 다들 비슷했다
-2026-08-06 06:05:28,752 [INFO] main —   이미지: 2개 삽입
-2026-08-06 06:05:28,752 [INFO] main —   글자 수: 2728자
-2026-08-06 06:05:30,196 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:05:53,959 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '유럽 배낭여행 처음 준비하면서 실수한 것들, 후기 모아보니 다들'
-2026-08-06 06:05:53,959 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충분하나 '후기를 종합하면' 식 타인 경험 재정리가 중심이고 구체적 날짜·수치 기반의 저자 본인 경험은 부족함
-2026-08-06 06:05:53,959 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 인용되었으나 1인칭 직접 경험 서술이 얕고 대부분 타인 후기 요약에 의존
-2026-08-06 06:05:53,959 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음(부재 자체는 fail 아님, 이미지·alt 추가 권장)
-2026-08-06 06:05:53,959 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '후기를 보면/종합하면' 식 동일 패턴 문구가 전 섹션에 반복되어 템플릿화된 느낌
-2026-08-06 06:05:53,959 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-06 06:05:53,959 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 충분하나 '후기를 종합하면' 식 타인 경험 재정리가 중심이고 구체적 날짜·수치 기반의 저자 본인 경험은 부족함
-2026-08-06 06:05:53,959 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3개 인용되었으나 1인칭 직접 경험 서술이 얕고 대부분 타인 후기 요약에 의존
-2026-08-06 06:05:53,959 [WARNING] main —      🟡 [이미지 정책] 이미지 관련 정보 없음(부재 자체는 fail 아님, 이미지·alt 추가 권장)
-2026-08-06 06:05:53,959 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-06 06:05:55,025 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:06:58,921 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2728자 → 2745자 (+17자)
-2026-08-06 06:06:58,921 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-06 06:07:01,269 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:07:18,882 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '유럽 배낭여행 처음 준비하면서 실수한 것들, 후기 모아보니 다들'
-2026-08-06 06:07:18,882 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 충족하나 일부 단락이 500자 이상으로 길게 이어져 가독성 저해
-2026-08-06 06:07:18,882 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 부재 및 본문 중 커뮤니티/핀터레스트 캡션 텍스트가 섞여 출처 확인 필요
-2026-08-06 06:07:18,882 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-08-06 06:07:18,882 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-08-06 06:07:20,736 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:08:37,559 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-06 06:08:39,480 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:09:54,044 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-06 06:09:56,014 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:10:02,180 [INFO] final_editor —   ✏️ 제목 최종 교정: '유럽 배낭여행 처음 준비하면서 실수한 것들, 후기 모아보니 다들 비슷했다' → '유럽 배낭여행 처음 준비하면서 실수한 것들 정리'
-2026-08-06 06:10:02,180 [INFO] final_editor —   ✏️ 메타 설명 교정 (115자)
-2026-08-06 06:10:02,180 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 발행 규격에 맞게 정리하고, 요약 박스·표 2개·개인 경험 메모·주의사항·FAQ 5개·작성자 메모를 추가했습니다. 모든 문단을 2~4문장으로 나눠 모바일 가독성을 높이고, 이미지 위치와 alt 텍스트를 구체적으로 명시했습니다.
-2026-08-06 06:10:02,288 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-06 06:10:02,288 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-06 06:10:02,398 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-06 06:10:02,409 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-06 06:10:02,409 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-08-06 06:10:03,381 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post_963.html
-2026-08-06 06:10:03,391 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post_963.html
-2026-08-06 06:10:41,609 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:10:41,610 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-06 06:10:41,610 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-06 06:10:41,617 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '유럽 배낭여행 처음 준비하면서 실수한 것들 정리'
-2026-08-06 06:10:42,261 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-06 06:10:45,939 [INFO] comment_manager —   생성된 댓글: 글 정말 공감하면서 읽었어요, 특히 환승 시간 55분 부분에서 저도 심장 쫄깃했던 기억이 스쳐가네요. 하나 팁 드리자면 유레일패스나 국가 간 기...
-2026-08-06 06:13:46,064 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-06 06:13:46,065 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-06 06:13:46,066 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-06 06:13:46,066 [INFO] main — 
-============================================================
-2026-08-06 06:13:46,066 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-08-06 06:13:46,066 [INFO] main — ============================================================
-2026-08-06 06:13:46,098 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-06 06:13:46,117 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
-2026-08-06 06:13:46,135 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-06 06:13:46,384 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-06 06:13:46,662 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-06 06:13:46,663 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-06 06:13:46,665 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-06 06:13:46,678 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 207 / 실패 0 / 대기 67)
-2026-08-06 06:13:46,678 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-06 06:13:46,678 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-06 06:13:46,679 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-06 06:14:30,009 [INFO] main — ============================================================
-2026-08-06 06:14:30,009 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-08-06 06:14:30
-2026-08-06 06:14:30,009 [INFO] main — ============================================================
-2026-08-06 06:14:30,027 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
 2026-08-06 06:14:30,027 [INFO] keyword_collector — 포스팅 이력 코퍼스: 185개 항목 로드 (blog_id=blog3 중복 방지 기준)
 2026-08-06 06:14:35,169 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
 2026-08-06 06:14:41,240 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
@@ -628,3 +498,115 @@
 2026-08-06 12:41:44,657 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-06 12:41:44,658 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-06 12:41:44,659 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-07 01:31:36,375 [INFO] main — ============================================================
+2026-08-07 01:31:36,376 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-07 01:31:36
+2026-08-07 01:31:36,376 [INFO] main — ============================================================
+2026-08-07 01:31:36,395 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
+2026-08-07 01:31:36,395 [INFO] keyword_collector — 포스팅 이력 코퍼스: 189개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-07 01:31:40,651 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-07 01:31:51,076 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-07 01:31:51,098 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-07 01:31:51,098 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-07 01:31:51,647 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-07 01:31:51,945 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-07 01:31:52,424 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-07 01:31:52,426 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-08-07 01:31:52,431 [INFO] keyword_collector — 최근 사용 제외 2개: ['해외여행 실비보험 필요한지 직접 비교해봤더니', '전국 치킨 맛집 지도 K치킨벨트 총정리']
+2026-08-07 01:31:52,431 [INFO] keyword_collector — 유사 주제 제외 4개: ['장마철 국내 여행지 추천 강원도 삼척 폭포 명소', '여름 휴가철 항공권 유류할증료 저렴하게 예약하는 방법', '삼성 월렛 트래블로그 체크카드 해외여행 혜택 정리', '유럽 처음 여행 항공권 호텔 한 번에 싸게 예약하는 법']
+2026-08-07 01:31:52,431 [WARNING] keyword_collector — 선정 키워드 부족 (0/2) — 유사도 기준 완화하여 재시도
+2026-08-07 01:31:52,434 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (0/2) — 이전 사용 키워드 일부 허용
+2026-08-07 01:31:52,436 [INFO] keyword_collector —   [high_cpc] 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-07 01:31:52,436 [INFO] keyword_collector —   [naver_realtime] 1개: ['장마철 국내 여행지 추천 강원도 삼척 폭포 명소']
+2026-08-07 01:31:52,436 [INFO] keyword_collector — 최종 선정 키워드 2개: ['해외여행 실비보험 필요한지 직접 비교해봤더니', '장마철 국내 여행지 추천 강원도 삼척 폭포 명소']
+2026-08-07 01:31:52,436 [INFO] main — 수집된 키워드 2개: ['해외여행 실비보험 필요한지 직접 비교해봤더니', '장마철 국내 여행지 추천 강원도 삼척 폭포 명소']
+2026-08-07 01:31:52,442 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-08-07 01:31:52,442 [INFO] main — 단독 포스트 대상 키워드 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-07 01:31:52,459 [INFO] main — 
+[1/1] 키워드: '해외여행 실비보험 필요한지 직접 비교해봤더니'
+2026-08-07 01:31:52,459 [INFO] content_generator — 포스트 생성 중: '해외여행 실비보험 필요한지 직접 비교해봤더니'
+2026-08-07 01:32:05,534 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-07 01:32:05,535 [INFO] research_collector — 검색 의도: 해외여행 시 기존 실손의료보험(실비보험)이 적용되는지, 별도 여행자보험 가입이 필요한지 확인하려는 의도
+2026-08-07 01:32:20,210 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '해외여행 실비보험 필요한지 직접 비교해봤더니'
+2026-08-07 01:32:33,144 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-07 01:32:33,145 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '해외여행 실비보험 필요한지 직접 비교해봤더니'
+2026-08-07 01:32:41,544 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-07 01:32:41,545 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'C': 3, 'X': 3}
+2026-08-07 01:32:41,547 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-08-07 01:32:41,547 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-07 01:32:42,197 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-07 01:34:00,585 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-07 01:34:15,127 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 2건 자동 수정 적용
+2026-08-07 01:34:16,279 [INFO] image_fetcher — 이미지 수집 성공: '해외여행 실비보험 필요한지 비교해보니' → 제목='실비보험 비교 부탁드려요!뽐뿌:보험상담실 - 실비보험 비교 부탁드려요!' (관련성=0.25)
+2026-08-07 01:34:17,110 [INFO] image_fetcher — 이미지 수집 성공: '해외여행 실비보험 필요한지' → 제목='리그오브레전드 인벤 : 실비보험 바꿀껄ㅜㅜ - LOL 인벤 자유 게시판2' (관련성=0.33)
+2026-08-07 01:34:17,920 [INFO] image_fetcher — 이미지 수집 성공: '해외여행 실비보험 이미 있는데 직장인들 회사' → 제목='실비보험 - velog' (관련성=0.17)
+2026-08-07 01:34:22,817 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-07 01:34:22,818 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-08-07 01:34:22,818 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-08-07 01:34:22,818 [INFO] image_fetcher — 제목 썸네일 생성: '해외여행 실비보험 필요한지 비교해보니' (data URI, 983B)
+2026-08-07 01:34:23,628 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: '하나손해보험, 해외여행보험 동반가입시 최대 10% 할인'
+2026-08-07 01:34:23,628 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-07 01:34:23,631 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-07 01:34:23,633 [INFO] content_generator — 포스트 생성 완료: '해외여행 실비보험 필요한지 비교해보니' (2759자, 이미지 2개)
+2026-08-07 01:34:25,617 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-07 01:34:41,501 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '해외여행 실비보험 필요한지 비교해보니'
+2026-08-07 01:34:41,501 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 구체적 날짜·수치·개인 사례 없이 일반적 비교 정보 중심으로 구성됨
+2026-08-07 01:34:41,501 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개와 FAQ는 있으나 1인칭 구체 경험(가입 시점·상품명·비용)이 부족함
+2026-08-07 01:34:41,501 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 언급이 없어 저작권 위반은 없으나 이미지 부재로 warn
+2026-08-07 01:34:41,509 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-07 01:34:41,511 [INFO] internal_linker —   [1/5] '해외여행자보험' -> https://www.hoguwhat.com/2026/08/2026_02059100424.html
+2026-08-07 01:34:41,512 [INFO] internal_linker —   [2/5] '여행자보험' -> https://www.hoguwhat.com/2026/08/blog-post_77.html
+2026-08-07 01:34:41,518 [INFO] internal_linker —   [3/5] '항공권' -> https://www.hoguwhat.com/2026/08/blog-post_01.html
+2026-08-07 01:34:41,518 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-08-07 01:34:41,518 [INFO] main —   제목: 해외여행 실비보험 필요한지 비교해보니
+2026-08-07 01:34:41,518 [INFO] main —   이미지: 2개 삽입
+2026-08-07 01:34:41,518 [INFO] main —   글자 수: 2759자
+2026-08-07 01:34:42,709 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-07 01:34:57,443 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '해외여행 실비보험 필요한지 비교해보니'
+2026-08-07 01:34:57,444 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 체크리스트와 비교 정리는 있으나 구체적 수치·날짜 기반 개인 경험 사례가 부족해 일반 정보 재구성에 가까움
+2026-08-07 01:34:57,444 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 의견은 일부 있으나 구체적 전문성·직접 경험 사례가 약하고 출처 인용이 본문에 명시적으로 드러나지 않음
+2026-08-07 01:34:57,444 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 언급이 전혀 없어 이미지 부재 상태
+2026-08-07 01:34:57,444 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 대시(—) 나열식 체크리스트와 정형화된 설명 패턴이 반복되어 AI 생성 톤이 다소 느껴짐
+2026-08-07 01:34:57,444 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-07 01:34:57,444 [WARNING] main —      🟡 [원본성 및 품질] 체크리스트와 비교 정리는 있으나 구체적 수치·날짜 기반 개인 경험 사례가 부족해 일반 정보 재구성에 가까움
+2026-08-07 01:34:57,444 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 의견은 일부 있으나 구체적 전문성·직접 경험 사례가 약하고 출처 인용이 본문에 명시적으로 드러나지 않음
+2026-08-07 01:34:57,444 [WARNING] main —      🟡 [이미지 정책] 이미지 관련 언급이 전혀 없어 이미지 부재 상태
+2026-08-07 01:34:57,444 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-07 01:34:58,340 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-07 01:36:23,810 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2759자 → 2589자 (-170자)
+2026-08-07 01:36:23,810 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-07 01:36:24,873 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-07 01:36:41,535 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '해외여행 실비보험 필요한지 비교해보니'
+2026-08-07 01:36:41,535 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2가 3개로 4개 기준에 미달, 일부 단락이 500자 이상으로 길게 이어짐
+2026-08-07 01:36:41,535 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 언급은 있으나 alt 텍스트·출처 명시 여부 불명확하여 주의 필요
+2026-08-07 01:36:41,535 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트형 나열과 '정리해봤습니다' 등 요약형 문구가 일부 반복되어 AI 패턴 소지 있음
+2026-08-07 01:36:41,535 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
+2026-08-07 01:36:41,535 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-08-07 01:36:42,355 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-07 01:37:57,961 [INFO] final_editor —   ✏️ 제목 최종 교정: '해외여행 실비보험 필요한지 비교해보니' → '해외여행 실비보험 필요한지 직접 비교해봤더니 정리한 후기'
+2026-08-07 01:37:57,962 [INFO] final_editor —   ✏️ 메타 설명 교정 (84자)
+2026-08-07 01:37:57,962 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 규격에 맞춰 추가했으며, 제목·메타·슬러그를 SEO 기준에 맞게 재정리했습니다.
+2026-08-07 01:37:58,134 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-07 01:37:58,134 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-07 01:37:58,303 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-07 01:37:58,308 [WARNING] blogger_uploader — ⏭ 중복 포스트 감지 — 업로드 건너뜀: '해외여행 실비보험 필요한지 직접 비교해봤더니 정리한 후기'
+   기존 포스트: '해외여행 실비보험 필요한지 직접 비교해봤더니, 2026년 개선안까지' (https://www.hoguwhat.com/2026/08/2026_02059100424.html)
+2026-08-07 01:37:58,319 [WARNING] main —   ⏭ 중복 주제 — 업로드 건너뜀: '해외여행 실비보험 필요한지 비교해보니' (유사 제목 이미 발행됨)
+2026-08-07 01:37:58,319 [INFO] main — 
+============================================================
+2026-08-07 01:37:58,319 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
+2026-08-07 01:37:58,319 [INFO] main — ============================================================
+2026-08-07 01:37:58,360 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-07 01:37:58,387 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
+2026-08-07 01:37:58,410 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-07 01:37:58,719 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-07 01:37:59,252 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-07 01:37:59,624 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-07 01:37:59,626 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-07 01:37:59,628 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-07 01:37:59,644 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 209 / 실패 0 / 대기 65)
+2026-08-07 01:37:59,645 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-07 01:37:59,645 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-07 01:37:59,646 [INFO] main — 대시보드 데이터 업데이트 완료

@@ -1,5 +1,56 @@
 [
   {
+    "timestamp": "2026-08-07T17:43:25.729885",
+    "health_score": 90,
+    "issues_found": 2,
+    "issues": [
+      {
+        "id": "adsense_not_configured",
+        "level": "warning",
+        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "context": {},
+        "fix": null
+      },
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 15개",
+        "context": {
+          "count": 15,
+          "titles": [
+            "SBS 드라마 김부장 정주행 후기, 회사원이라 더 아팠",
+            "SBS 김부장 정주행 후기, 솔직히 제 감상 남겨봅니다",
+            "SBS 드라마 김부장 보면서 든 직장인 재테크 생각 ("
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "adsense_not_configured",
+        "issue_level": "warning",
+        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "fix_applied": null,
+        "timestamp": "2026-08-07T17:43:25.667800",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      },
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 15개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-08-07T17:43:25.667918",
+        "success": true,
+        "detail": "대기 포스트 15개 → expired 처리",
+        "expired": 15
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-05T18:16:32.658015",
     "health_score": 93,
     "issues_found": 1,
@@ -2021,58 +2072,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-19T12:05:12.002723",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-19T11:26:06.012863",
-    "health_score": 63,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "consecutive_upload_failures",
-        "level": "critical",
-        "message": "최근 5회 연속 업로드 실패 (0건 업로드)",
-        "context": {
-          "fail_count": 5,
-          "recent_dates": [
-            "2026-07-19",
-            "2026-07-19",
-            "2026-07-19",
-            "2026-07-19",
-            "2026-07-19"
-          ]
-        },
-        "fix": "check_blogger_connection"
-      },
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "consecutive_upload_failures",
-        "issue_level": "critical",
-        "issue_message": "최근 5회 연속 업로드 실패 (0건 업로드)",
-        "fix_applied": "check_blogger_connection",
-        "timestamp": "2026-07-19T11:26:05.448824",
-        "success": true,
-        "detail": "Blogger 연결 정상: HOGU What? (https://www.hoguwhat.com/) — 업로드 파라미터 문제 가능성"
-      },
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-19T11:26:05.994964",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

@@ -1,5 +1,56 @@
 [
   {
+    "timestamp": "2026-08-08T17:23:40.389485",
+    "health_score": 90,
+    "issues_found": 2,
+    "issues": [
+      {
+        "id": "adsense_not_configured",
+        "level": "warning",
+        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "context": {},
+        "fix": null
+      },
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 6개",
+        "context": {
+          "count": 6,
+          "titles": [
+            "프리랜서 종합소득세 첫 신고, 저는 이렇게 실수했습니다",
+            "장마철 여행 다니다 컨디션 난리났던 제 얘기 (2026",
+            "직장인 월 30만원 ETF 투자, 1년 해보고 솔직 후"
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "adsense_not_configured",
+        "issue_level": "warning",
+        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
+        "fix_applied": null,
+        "timestamp": "2026-08-08T17:23:40.328271",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      },
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 6개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-08-08T17:23:40.328373",
+        "success": true,
+        "detail": "대기 포스트 6개 → expired 처리",
+        "expired": 6
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-07T17:43:25.729885",
     "health_score": 90,
     "issues_found": 2,
@@ -2020,58 +2071,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-19T12:20:32.912246",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-19T12:05:12.021458",
-    "health_score": 63,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "consecutive_upload_failures",
-        "level": "critical",
-        "message": "최근 5회 연속 업로드 실패 (0건 업로드)",
-        "context": {
-          "fail_count": 5,
-          "recent_dates": [
-            "2026-07-19",
-            "2026-07-19",
-            "2026-07-19",
-            "2026-07-19",
-            "2026-07-19"
-          ]
-        },
-        "fix": "check_blogger_connection"
-      },
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "consecutive_upload_failures",
-        "issue_level": "critical",
-        "issue_message": "최근 5회 연속 업로드 실패 (0건 업로드)",
-        "fix_applied": "check_blogger_connection",
-        "timestamp": "2026-07-19T12:05:11.463947",
-        "success": true,
-        "detail": "Blogger 연결 정상: HOGU What? (https://www.hoguwhat.com/) — 업로드 파라미터 문제 가능성"
-      },
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-19T12:05:12.002723",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

@@ -1,0 +1,94 @@
+name: ✨ FAQ·출처 자동 보강
+
+on:
+  workflow_dispatch:
+    inputs:
+      blog_id:
+        description: '블로그 ID (blog1/blog2/blog3/all)'
+        required: false
+        default: 'blog2'
+      limit:
+        description: '이번 실행에서 보강할 최대 글 수'
+        required: false
+        default: '10'
+      dry_run:
+        description: '대상만 확인 (실제 수정 없음)'
+        type: boolean
+        required: false
+        default: false
+      faq_only:
+        description: 'FAQ만 보강 (출처 생략)'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: enrich-posts
+  cancel-in-progress: false
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          NAVER_CLIENT_ID="${{ secrets.NAVER_CLIENT_ID }}"
+          NAVER_CLIENT_SECRET="${{ secrets.NAVER_CLIENT_SECRET }}"
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: FAQ·출처 보강 실행
+        working-directory: blog-automation
+        run: |
+          mkdir -p logs
+          ARGS="--blog ${{ inputs.blog_id || 'blog2' }} --limit ${{ inputs.limit || '10' }}"
+          [ "${{ inputs.dry_run }}" = "true" ] && ARGS="$ARGS --dry-run"
+          [ "${{ inputs.faq_only }}" = "true" ] && ARGS="$ARGS --faq-only"
+          echo "실행 인자: $ARGS"
+          python enrich_posts.py $ARGS
+
+      - name: 보강 리포트 커밋
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          [ -f docs/data/enrich_report.json ] && git add -f docs/data/enrich_report.json
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "✨ FAQ·출처 보강 리포트 (#${{ github.run_number }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE && break
+              sleep $((i * 3))
+            done
+          fi

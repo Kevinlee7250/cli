@@ -80,6 +80,9 @@ def test_get_trending_keywords_applies_time_slot_for_mixed_topic_blog(monkeypatc
     monkeypatch.setattr(kc, "_get_active_used_set", lambda data: set())
     monkeypatch.setattr(kc, "_load_recent_post_corpus", lambda blog_id="": [])
     monkeypatch.setattr(kc, "_load_other_blogs_recent_keywords", lambda blog_id, days=2: [])
+    # 실제 logs/used_keywords_blog2.json에 쓰지 않도록 차단 —
+    # 테스트가 운영 상태 파일을 오염시키면 "이 키워드 사용함"이 30일간 잘못 기록됨
+    monkeypatch.setattr(kc, "_save_used_keywords", lambda used_data, file_path=None: None)
 
     cfg = {"id": "blog2", "topics": ["국내여행", "해외여행", "스포츠", "드라마", "영화", "연예", "K-POP"]}
     result = kc.get_trending_keywords(country="KR", language="ko", count=3, blog_config=cfg)

@@ -64,6 +64,7 @@ def _ddg_images(keyword: str, count: int) -> list[dict]:
                 "title": item.get("title", keyword),
                 "width": item.get("width", 800),
                 "height": item.get("height", 450),
+                "source": "ddg",
             })
             if len(images) >= count:
                 break
@@ -160,6 +161,7 @@ def _naver_images(keyword: str, count: int, client_id: str, client_secret: str) 
                     "title": re.sub(r"<[^>]+>", "", item.get("title", keyword)).strip(),
                     "width": width,
                     "height": height,
+                    "source": "naver",
                 })
             if len(images) >= count:
                 break
@@ -214,6 +216,8 @@ def _wikimedia_images(keyword: str, count: int) -> list[dict]:
                             "title": title.replace("File:", ""),
                             "width": info.get("width", 800),
                             "height": info.get("height", 450),
+                            "source": "wikimedia",
+                            "page_url": f"https://commons.wikimedia.org/wiki/{title.replace(' ', '_')}",
                         })
                         break
             if len(images) >= count:
@@ -872,19 +876,56 @@ def _safe_caption(img: dict, alt: str) -> str:
     return title
 
 
+# 이미지 출처 표기 — 저작권 정책 리스크 예방 + 콘텐츠 성의 신호(E-E-A-T).
+# 링크는 소스 사이트 메인이 아니라 실제 자료 페이지가 있을 때만 검다
+# (AdSense '탐색' 정책상 관련 없는 페이지로 보내면 안 됨).
+_SOURCE_LABELS = {
+    "pixabay": "Pixabay",
+    "wikimedia": "Wikimedia Commons",
+    "naver": "네이버 이미지 검색",
+    "ddg": "웹 검색",
+    "ai_generated": "AI 생성 이미지",
+    "generated_thumbnail": "직접 제작",
+}
+
+
+def _attribution_text(img: dict) -> str:
+    """이미지 출처 표기 문구를 반환합니다 (알 수 없는 소스면 빈 문자열)."""
+    label = _SOURCE_LABELS.get((img.get("source") or "").strip())
+    return f"이미지 출처: {label}" if label else ""
+
+
 def _make_img_html(img: dict, alt: str, caption: str = "") -> str:
-    """이미지 SEO 최적화 HTML 생성."""
+    """이미지 SEO 최적화 HTML 생성 (출처 표기 포함)."""
     alt_safe = html.escape(alt, quote=True)
     caption_safe = html.escape(caption, quote=True)
+    attribution = _attribution_text(img)
     fig_style = "margin:2.5em auto;text-align:center;max-width:720px;"
     img_style = (
         "max-width:100%;height:auto;border-radius:10px;"
         "box-shadow:0 3px 14px rgba(0,0,0,0.13);display:block;margin:0 auto;"
     )
+    # 캡션 본문 + 출처를 한 figcaption 안에 배치 (출처만 있어도 표기)
+    cap_parts = []
+    if caption:
+        cap_parts.append(
+            f'<span style="font-style:italic;">{caption_safe}</span>'
+        )
+    if attribution:
+        page_url = (img.get("page_url") or "").strip()
+        attr_safe = html.escape(attribution, quote=True)
+        attr_html = (
+            f'<a href="{html.escape(page_url, quote=True)}" target="_blank" '
+            f'rel="nofollow noopener" style="color:#999;text-decoration:none;">{attr_safe}</a>'
+            if page_url.startswith("http") else attr_safe
+        )
+        cap_parts.append(
+            f'<span style="font-size:11px;color:#999;">{attr_html}</span>'
+        )
     cap_html = (
         f'<figcaption style="text-align:center;font-size:13px;color:#777;'
-        f'margin-top:8px;font-style:italic;">{caption_safe}</figcaption>'
-        if caption else ""
+        f'margin-top:8px;line-height:1.6;">' + "<br>".join(cap_parts) + '</figcaption>'
+        if cap_parts else ""
     )
     return (
         f'\n<figure style="{fig_style}">'

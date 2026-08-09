@@ -461,6 +461,47 @@ def _engagement_block(keyword: str = "", blog_id: str = "") -> str:
   이후 섹션에서 근거·사례·디테일을 순차적으로 전개할 것"""
 
 
+# 주간 학습(weekly_learning.py)이 저장한 글쓰기 지침 — 쓰기와 배우기를 잇는 폐루프.
+# 지금까지는 성과 분석 결과가 리포트로만 남고 다음 글에 반영되지 않았음.
+_WRITING_TIPS_FILE = os.path.join(os.path.dirname(__file__), "logs", "learned_writing_tips.json")
+_WRITING_TIPS_MAX_AGE_DAYS = 35   # 이보다 오래된 지침은 무시 (낡은 판단이 계속 남는 것 방지)
+
+
+def _learned_guidelines_block() -> str:
+    """지난 주 학습에서 도출된 글쓰기 지침을 프롬프트 블록으로 반환합니다.
+
+    파일이 없거나 오래됐으면 빈 문자열 — 학습 데이터가 없어도 글 생성은
+    평소대로 동작해야 하므로 어떤 오류도 밖으로 던지지 않습니다.
+    """
+    try:
+        if not os.path.exists(_WRITING_TIPS_FILE):
+            return ""
+        with open(_WRITING_TIPS_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        guidelines = [str(g).strip() for g in (data.get("guidelines") or []) if str(g).strip()]
+        if not guidelines:
+            return ""
+
+        generated_at = data.get("generated_at", "")
+        if generated_at:
+            from datetime import datetime as _dt, timedelta as _td
+            age = _dt.now() - _dt.fromisoformat(generated_at)
+            if age > _td(days=_WRITING_TIPS_MAX_AGE_DAYS):
+                logger.debug(f"학습 지침이 오래됨({age.days}일) — 적용 생략")
+                return ""
+
+        items = "\n".join(f"- {g}" for g in guidelines[:5])
+        return f"""
+
+━━━ 지난 주 성과 분석에서 도출된 글쓰기 지침 ━━━
+아래는 실제 성과 데이터를 분석해 얻은 이번 주 반영 사항입니다. 위의 다른 지침과
+충돌하지 않는 범위에서 우선 반영하세요.
+{items}"""
+    except Exception as e:
+        logger.debug(f"학습 지침 로드 실패 (무시): {e}")
+        return ""
+
+
 def _author_name() -> str:
     """author_profile.json의 저자 필명 (없으면 빈 문자열)."""
     try:
@@ -983,7 +1024,7 @@ JSON만 응답 (마크다운 없이):
 def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
     blog_id = (blog_config or {}).get("id", "")
     # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (모든 블로그 공통)
-    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block(keyword, blog_id)
+    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block(keyword, blog_id) + _learned_guidelines_block()
 
     # blog1 (HOGU What?) 전용 프롬프트
     if blog_id == "blog1":
@@ -1851,7 +1892,7 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict, blog_
     from datetime import datetime
     blog_id = (blog_config or {}).get("id", "")
     # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (가짜 체험담·목차 반복 방지)
-    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block(keyword, blog_id)
+    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block(keyword, blog_id) + _learned_guidelines_block()
     if blog_id == "blog3":
         return _build_series_prompt_finance(keyword, traffic, series_context, blog_config) + style_block
     # blog1 또는 미지정

@@ -1,122 +1,3 @@
-2026-08-08 22:53:48,646 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 인용은 있으나 1인칭 경험이나 저자 전문성 신호가 부족함
-2026-08-08 22:53:48,646 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 포함되지 않아 SEO·가독성 측면에서 보완 필요
-2026-08-08 22:53:48,646 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 다음 섹션 예고, 정리형 전환구 등 전형적 AI 서술 패턴이 반복됨
-2026-08-08 22:53:48,653 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-08 22:53:48,661 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-08-08 22:53:48,661 [INFO] main —   제목: 성시경 10kg 감량으로 다시 본 건강하게 다이어트하는 방법
-2026-08-08 22:53:48,661 [INFO] main —   이미지: 3개 삽입
-2026-08-08 22:53:48,661 [INFO] main —   글자 수: 2928자
-2026-08-08 22:53:49,332 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 22:54:06,764 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — '성시경 10kg 감량으로 다시 본 건강하게 다이어트하는 방법'
-2026-08-08 22:54:06,764 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 개인 경험 없이 보도자료·연구 재구성 위주로 구성됨
-2026-08-08 22:54:06,764 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드가 문법 어색하게 반복 삽입된 흔적('방법 을' 등)이 보여 자연스러움이 다소 부족함
-2026-08-08 22:54:06,764 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 충분하나 일부 단락이 500자 이상으로 길게 이어짐
-2026-08-08 22:54:06,764 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 직접 경험 서술이 없어 전문성 신호가 약함
-2026-08-08 22:54:06,764 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 포함 여부 확인 불가·본문상 이미지 언급 없음
-2026-08-08 22:54:06,764 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 첫째·둘째·셋째·넷째식 체크리스트 나열과 표 형식 등 전형적 AI 패턴 및 어색한 키워드 삽입 흔적 존재
-2026-08-08 22:54:06,764 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 69/100, 권장: review) — 자동 수정 시도
-2026-08-08 22:54:06,764 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 개인 경험 없이 보도자료·연구 재구성 위주로 구성됨
-2026-08-08 22:54:06,765 [WARNING] main —      🟡 [SEO 최적화] 키워드가 문법 어색하게 반복 삽입된 흔적('방법 을' 등)이 보여 자연스러움이 다소 부족함
-2026-08-08 22:54:06,765 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 개수는 충분하나 일부 단락이 500자 이상으로 길게 이어짐
-2026-08-08 22:54:06,765 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 69/100, fail: 0개, warn: 6개
-2026-08-08 22:54:08,258 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 22:55:25,813 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-08 22:55:29,486 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 22:55:45,924 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2928자 → 4031자 (+1103자)
-2026-08-08 22:55:45,925 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-08 22:55:46,861 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 22:56:01,112 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '성시경 10kg 감량으로 다시 본 건강하게 다이어트하는 방법'
-2026-08-08 22:56:01,112 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 다소 떨어짐
-2026-08-08 22:56:01,112 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 제공되지 않아 이미지 없는 글로 판단됨
-2026-08-08 22:56:01,112 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: "다음 섹션에서 살펴보겠습니다" 류의 전환 문구가 반복되어 다소 정형화된 패턴이 보임
-2026-08-08 22:56:01,112 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 69 → 84/100)
-2026-08-08 22:56:01,113 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-08-08 22:56:02,822 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 22:57:18,972 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-08 22:57:21,348 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 22:58:34,734 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-08 22:58:36,548 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 22:58:46,100 [INFO] final_editor —   ✏️ 제목 최종 교정: '성시경 10kg 감량으로 다시 본 건강하게 다이어트하는 방법' → '성시경 10kg 감량 사례로 본 건강하게 다이어트하는 방법'
-2026-08-08 22:58:46,100 [INFO] final_editor —   ✏️ 메타 설명 교정 (125자)
-2026-08-08 22:58:46,100 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 규격에 맞게 다듬고, 중복된 제목 텍스트와 키워드 스팸 문구를 본문에서 제거했습니다. 요약 박스·비교표·개인 경험 메모·주의사항·FAQ·작성자 메모를 표준 형식으로 추가하고, 모든 문단을 2~4문장으로 재구성했습니다.
-2026-08-08 22:58:46,262 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-08 22:58:46,262 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-08 22:58:46,435 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-08 22:58:46,453 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-08 22:58:46,453 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '10kg 감량 건강하게 다이어트하는 방법' — 면책·팩트체크 확인 권장
-2026-08-08 22:58:46,453 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-08-08 22:58:47,377 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/10kg.html
-2026-08-08 22:58:47,390 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/10kg.html
-2026-08-08 22:59:19,603 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 22:59:19,604 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-08 22:59:19,604 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-08 22:59:19,614 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '성시경 10kg 감량 사례로 본 건강하게 다이어트하는 방법'
-2026-08-08 22:59:21,207 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 22:59:25,145 [INFO] comment_manager —   생성된 댓글: 단백질 챙기시는 분들이 자주 놓치는 게 '끼니마다 골고루 분산'하는 부분이에요. 한 끼에 몰아서 먹기보다 매 끼니 20g 내외로 나눠 섭취해야 ...
-2026-08-08 23:02:25,302 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-08 23:02:25,302 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-08 23:02:25,303 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-08 23:02:25,303 [INFO] main — 
-============================================================
-2026-08-08 23:02:25,303 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-08-08 23:02:25,303 [INFO] main — ============================================================
-2026-08-08 23:02:25,340 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-08 23:02:25,365 [INFO] dashboard_exporter —   시리즈: 15개 내보내기 완료
-2026-08-08 23:02:25,386 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-08 23:02:25,730 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-08 23:02:26,062 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-08 23:02:26,063 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-08 23:02:26,066 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-08 23:02:26,082 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 220 / 실패 0 / 대기 56)
-2026-08-08 23:02:26,082 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-08 23:02:26,082 [INFO] dashboard_exporter —   포스트: 98개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-08 23:02:26,083 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-08 23:03:06,020 [INFO] main — ============================================================
-2026-08-08 23:03:06,021 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-08-08 23:03:06
-2026-08-08 23:03:06,021 [INFO] main — ============================================================
-2026-08-08 23:03:06,039 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
-2026-08-08 23:03:06,039 [INFO] keyword_collector — 포스팅 이력 코퍼스: 191개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-08-08 23:03:09,921 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-08 23:03:18,749 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 23:03:18,771 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-08 23:03:18,771 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-08 23:03:19,148 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-08-08 23:03:19,479 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-08 23:03:19,480 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-08 23:03:19,493 [INFO] keyword_collector — 유사 주제 제외 5개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', 'ISA 계좌 개편 2026 투자자가 꼭 알아야 할 변경 사항', '서학개미 미국 주식 투자 전략 레버리지 대신 기술주로 바꾸는 이유', '폭염 40도 시대 여름철 건강 관리 및 온열질환 예방법', '코스피 코스닥 2026 하반기 전망 핵심 정리']
-2026-08-08 23:03:19,493 [INFO] keyword_collector —   [naver_realtime] 1개: ['신혼부부 정책대출 소득기준 완화 2026 신청 방법 총정리']
-2026-08-08 23:03:19,493 [INFO] keyword_collector —   [fallback] 1개: ['미국 연준 금리 결정 한국 증시 영향 분석']
-2026-08-08 23:03:19,493 [INFO] keyword_collector — 최종 선정 키워드 2개: ['신혼부부 정책대출 소득기준 완화 2026 신청 방법 총정리', '미국 연준 금리 결정 한국 증시 영향 분석']
-2026-08-08 23:03:19,494 [INFO] main — 수집된 키워드 2개: ['신혼부부 정책대출 소득기준 완화 2026 신청 방법 총정리', '미국 연준 금리 결정 한국 증시 영향 분석']
-2026-08-08 23:03:19,499 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
-2026-08-08 23:03:26,158 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 23:03:26,160 [INFO] series_planner — 자동 시리즈 키워드 선정: '미국 연준 금리 결정 한국 증시 영향 분석'
-2026-08-08 23:03:26,160 [INFO] main — [자동 시리즈] '미국 연준 금리 결정 한국 증시 영향 분석' 3편 기획 시작 (이후 단독 포스트 0개)
-2026-08-08 23:03:26,160 [INFO] main — ============================================================
-2026-08-08 23:03:26,160 [INFO] main — [금융NEWS] 시리즈 모드 시작: '미국 연준 금리 결정 한국 증시 영향 분석' 3편
-2026-08-08 23:03:26,160 [INFO] main — ============================================================
-2026-08-08 23:03:33,136 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 23:03:33,137 [INFO] series_planner — [blog3 금융] 시리즈 기획 완료: '미국 연준 금리 결정 한국 증시 영향 직접 알아본 정리 시리즈' 3편
-2026-08-08 23:03:33,138 [INFO] main — 시리즈 기획 완료: '미국 연준 금리 결정 한국 증시 영향 직접 알아본 정리 시리즈'
-2026-08-08 23:03:33,138 [INFO] main —   편 1: [1편] 연준 금리 발표에 계좌가 흔들린 이유
-2026-08-08 23:03:33,138 [INFO] main —   편 2: [2편] 금리와 환율 코스피 연결구조 총정리
-2026-08-08 23:03:33,138 [INFO] main —   편 3: [3편] 직접 대응해본 후 느낀 주의사항 정리
-2026-08-08 23:03:33,139 [INFO] main — 
---- [1/3편] '미국 연준 금리 결정 한국 증시 영향' 생성 중 ---
-2026-08-08 23:03:33,139 [INFO] content_generator — 시리즈 포스트 생성: '미국 연준 금리 결정 한국 증시 영향' (1/3편)
-2026-08-08 23:03:40,855 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 23:03:40,857 [INFO] research_collector — 검색 의도: 미국 연준의 최근 금리 결정 내용과 그것이 한국 증시(코스피/코스닥)에 미치는 영향을 파악하려는 검색 의도
-2026-08-08 23:03:52,212 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '미국 연준 금리 결정 한국 증시 영향'
-2026-08-08 23:04:10,343 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-08 23:04:10,346 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '미국 연준 금리 결정 한국 증시 영향'
-2026-08-08 23:04:35,234 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-08-08 23:04:35,236 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'C': 1, 'B': 3, 'X': 1}
 2026-08-08 23:04:35,239 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
 2026-08-08 23:04:35,239 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
@@ -617,3 +498,139 @@
 2026-08-09 04:51:04,158 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-09 04:51:04,159 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-09 04:51:04,160 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-09 10:32:38,831 [INFO] main — ============================================================
+2026-08-09 10:32:38,831 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-09 10:32:38
+2026-08-09 10:32:38,831 [INFO] main — ============================================================
+2026-08-09 10:32:38,849 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-09 10:32:38,849 [INFO] keyword_collector — 포스팅 이력 코퍼스: 204개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-09 10:32:38,850 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['광복절 연휴 국내여행 숙소 솔직 비교', '여름 끝 여행 가성비 코스 추천 방법', '광복절 연휴 3박4일 코스 솔직 비교']...
+2026-08-09 10:32:43,430 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-09 10:32:52,285 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:32:52,307 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-09 10:32:52,307 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-09 10:32:52,855 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-09 10:32:53,038 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-09 10:32:53,200 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-09 10:32:53,203 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
+2026-08-09 10:32:53,218 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-09 10:32:53,218 [INFO] keyword_collector — 유사 주제 제외 12개: ['광복절 연휴 국내여행 숙소 솔직 비교', '여름 끝 여행 가성비 코스 추천 방법', '광복절 연휴 3박4일 코스 솔직 비교', '여름 끝 여행 숙소 가격 비교 후기', '2026 광복절 연휴 인파 없는 여행지 추천']
+2026-08-09 10:32:53,218 [WARNING] keyword_collector — 선정 키워드 부족 (1/2) — 유사도 기준 완화하여 재시도
+2026-08-09 10:32:53,231 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (1/2) — 이전 사용 키워드 일부 허용
+2026-08-09 10:32:53,233 [INFO] keyword_collector —   [naver_realtime] 1개: ['10kg 감량 다이어트 성공 후기와 건강검진 체크포인트']
+2026-08-09 10:32:53,233 [INFO] keyword_collector —   [high_cpc] 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-09 10:32:53,233 [INFO] keyword_collector — 최종 선정 키워드 2개: ['10kg 감량 다이어트 성공 후기와 건강검진 체크포인트', '해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-09 10:32:53,233 [INFO] main — 수집된 키워드 2개: ['10kg 감량 다이어트 성공 후기와 건강검진 체크포인트', '해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-09 10:32:53,238 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
+2026-08-09 10:32:53,239 [INFO] main — 단독 포스트 대상 키워드 1개: ['10kg 감량 다이어트 성공 후기와 건강검진 체크포인트']
+2026-08-09 10:32:53,256 [INFO] main — 
+[1/1] 키워드: '10kg 감량 다이어트 성공 후기와 건강검진 체크포인트'
+2026-08-09 10:32:53,256 [INFO] content_generator — 포스트 생성 중: '10kg 감량 다이어트 성공 후기와 건강검진 체크포인트'
+2026-08-09 10:33:01,574 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:33:01,576 [INFO] research_collector — 검색 의도: 10kg 감량에 성공한 실제 경험담과 함께, 체중 감량 전후 확인해야 할 건강검진 항목 및 체크포인트를 알고
+2026-08-09 10:33:20,647 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '10kg 감량 다이어트 성공 후기와 건강검진 체크포인트'
+2026-08-09 10:33:36,169 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:33:36,170 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '10kg 감량 다이어트 성공 후기와 건강검진 체크포인트'
+2026-08-09 10:34:16,393 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:34:16,394 [INFO] source_validator — 출처 검증: 5/6개 통과, 등급 분포 {'B': 3, 'D': 1, 'C': 1, 'X': 1}
+2026-08-09 10:34:16,397 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-08-09 10:34:16,397 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-09 10:34:18,136 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:35:49,437 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:36:01,412 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '천천히 체중을 줄이는 방식이'
+2026-08-09 10:36:01,412 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-08-09 10:36:01,985 [INFO] image_fetcher — 이미지 수집 성공: '10kg 감량 다이어트 후기와 건강검진 체크리스트' → 제목='straw bale / 1000 kg / agriculture / big' (관련성=0.00)
+2026-08-09 10:36:02,612 [INFO] image_fetcher — 대체 이미지 수집: 'kg 감량 다이어트' → 제목='physiotherapy / weight training / dumbbe' (관련성=0.00)
+2026-08-09 10:36:02,612 [INFO] image_fetcher — 이미지 수집 성공: 'kg 감량 다이어트' → 제목='physiotherapy / weight training / dumbbe' (관련성=0.00)
+2026-08-09 10:36:03,306 [INFO] image_fetcher — 대체 이미지 수집: 'kg 감량 성공담이 유난히 연예계에 서는' → 제목='scale / weigh / kg / mass / weight' (관련성=0.00)
+2026-08-09 10:36:03,307 [INFO] image_fetcher — 이미지 수집 성공: 'kg 감량 성공담이 유난히 연예계에 서는' → 제목='scale / weigh / kg / mass / weight' (관련성=0.00)
+2026-08-09 10:36:06,666 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:36:06,667 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-08-09 10:36:06,667 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-09 10:36:06,670 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-09 10:36:06,672 [INFO] content_generator — 포스트 생성 완료: '10kg 감량 다이어트 후기와 건강검진 체크리스트' (2644자, 이미지 2개)
+2026-08-09 10:36:07,852 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:36:28,332 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '10kg 감량 다이어트 후기와 건강검진 체크리스트'
+2026-08-09 10:36:28,332 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 1인칭 실제 경험 없이 보도 사례 재구성 위주로 '후기' 타이틀과 괴리됨
+2026-08-09 10:36:28,332 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어짐
+2026-08-09 10:36:28,332 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개 인용은 있으나 저자의 직접 경험 서술이 부재해 '후기' 신뢰도 신호 약함
+2026-08-09 10:36:28,332 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음(이미지 부재 자체는 경고 대상)
+2026-08-09 10:36:28,332 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 콜아웃·체크리스트 반복·'~로 보도되고 있습니다' 등 정형화된 문구 패턴이 다수 발견됨
+2026-08-09 10:36:28,339 [INFO] internal_linker — 내부 링크 후보 4개 발견
+2026-08-09 10:36:28,342 [INFO] internal_linker —   [1/5] '사례로' -> https://hogugolfntraval.blogspot.com/2026/08/10kg.html
+2026-08-09 10:36:28,343 [INFO] internal_linker —   [2/5] '여름휴가' -> https://www.hoguwhat.com/2026/08/10kg-8.html
+2026-08-09 10:36:28,345 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-08-09 10:36:28,345 [INFO] main —   제목: 10kg 감량 다이어트 후기와 건강검진 체크리스트
+2026-08-09 10:36:28,345 [INFO] main —   이미지: 2개 삽입
+2026-08-09 10:36:28,345 [INFO] main —   글자 수: 2644자
+2026-08-09 10:36:29,676 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:36:51,704 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '10kg 감량 다이어트 후기와 건강검진 체크리스트'
+2026-08-09 10:36:51,704 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수 2644자로 기준은 충족하나 보도 사례 재구성 위주로 실제 개인 경험 서술이 부족함
+2026-08-09 10:36:51,704 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 충분하나 일부 단락(사례 설명부)이 500자 이상으로 길게 이어짐
+2026-08-09 10:36:51,704 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 5개 출처 인용은 있으나 1인칭 직접 경험 서술이 없어 Experience 신호가 약함
+2026-08-09 10:36:51,704 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 전혀 포함되지 않아 가독성·SEO 측면에서 보완 필요
+2026-08-09 10:36:51,704 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '체격이 컸다는 내용이었습니다이었다가' 등 어색한 중복 문장과 정형화된 전환구가 AI 생성 흔적을 보임
+2026-08-09 10:36:51,704 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-08-09 10:36:51,704 [WARNING] main —      🟡 [원본성 및 품질] 글자수 2644자로 기준은 충족하나 보도 사례 재구성 위주로 실제 개인 경험 서술이 부족함
+2026-08-09 10:36:51,704 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 개수는 충분하나 일부 단락(사례 설명부)이 500자 이상으로 길게 이어짐
+2026-08-09 10:36:51,704 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 5개 출처 인용은 있으나 1인칭 직접 경험 서술이 없어 Experience 신호가 약함
+2026-08-09 10:36:51,704 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-08-09 10:36:53,552 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:38:08,678 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-09 10:38:10,395 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:38:19,685 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2644자 → 3717자 (+1073자)
+2026-08-09 10:38:19,685 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-09 10:38:21,359 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:38:40,634 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '10kg 감량 다이어트 후기와 건강검진 체크리스트'
+2026-08-09 10:38:40,634 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 pass 기준이나 본문이 단락 구분 없이 길게 이어져 500자 이상 블록이 다수 존재
+2026-08-09 10:38:40,634 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보가 전혀 없어 저작권 위반은 없으나 이미지 부재로 warn 처리
+2026-08-09 10:38:40,634 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 개인 경험이 자연스럽게 녹아있으나 7가지 체크포인트 나열 등 목록화 패턴과 다소 정형화된 연결 문구가 일부 존재
+2026-08-09 10:38:40,634 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
+2026-08-09 10:38:40,634 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-08-09 10:38:42,044 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:39:57,984 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-09 10:39:59,566 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:41:17,472 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-09 10:41:19,494 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:42:03,876 [INFO] final_editor —   ✏️ 제목 최종 교정: '10kg 감량 다이어트 후기와 건강검진 체크리스트' → '10kg 감량 다이어트 후기, 건강검진 체크포인트 총정리'
+2026-08-09 10:42:03,877 [INFO] final_editor —   ✏️ 메타 설명 교정 (121자)
+2026-08-09 10:42:03,877 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 정리하고, 목차 중복 표기를 제거했으며, 긴 문단을 2~4문장 단위로 분할했습니다. 사례 비교표와 건강검진 체크포인트표 2개를 추가하고, 개인 경험 메모·주의사항·FAQ 5개·작성자 메모·이미지 3곳을 새로 배치했습니다.
+2026-08-09 10:42:03,976 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-09 10:42:03,976 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-09 10:42:04,071 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-09 10:42:04,085 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-09 10:42:04,085 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '10kg 감량 다이어트 성공 후기와 건강검진 체크포인트' — 면책·팩트체크 확인 권장
+2026-08-09 10:42:04,086 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-09 10:42:04,620 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/10kg.html
+2026-08-09 10:42:04,633 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/10kg.html
+2026-08-09 10:42:40,286 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:42:40,287 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-09 10:42:40,287 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-09 10:42:40,296 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '10kg 감량 다이어트 후기, 건강검진 체크포인트 총정리'
+2026-08-09 10:42:42,002 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-09 10:42:45,089 [INFO] comment_manager —   생성된 댓글: 감량 후 건강검진 받으실 때 여성분들은 여성호르몬(FSH, 에스트라디올) 수치도 같이 체크해보시는 걸 추천드려요. 생리불순만 보고 넘기다가 나중...
+2026-08-09 10:45:45,166 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-09 10:45:45,167 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-09 10:45:45,168 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-09 10:45:45,168 [INFO] main — 
+============================================================
+2026-08-09 10:45:45,168 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-08-09 10:45:45,168 [INFO] main — ============================================================
+2026-08-09 10:45:45,213 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-09 10:45:45,239 [INFO] dashboard_exporter —   시리즈: 16개 내보내기 완료
+2026-08-09 10:45:45,262 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-09 10:45:45,437 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-09 10:45:45,638 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-09 10:45:45,880 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-09 10:45:45,881 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-09 10:45:45,884 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-09 10:45:45,901 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 221 / 실패 3 / 대기 55)
+2026-08-09 10:45:45,901 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-09 10:45:45,902 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-09 10:45:45,903 [INFO] main — 대시보드 데이터 업데이트 완료

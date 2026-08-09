@@ -18,6 +18,7 @@ from config import (
 from coupang_affiliate import inject_affiliate_section
 from image_fetcher import fetch_images_for_queries, inject_images_into_content
 from readability_checker import assess_readability, readability_escalation_note
+from title_policy import check_title, sanitize_title, title_escalation_note
 
 logger = logging.getLogger(__name__)
 _client: anthropic.Anthropic | None = None
@@ -2269,6 +2270,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
 
     prev_wc = 0
     last_readability: dict | None = None
+    last_title_violations: list[str] = []
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
@@ -2295,7 +2297,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                     "You are a blogger who writes well-researched, trustworthy posts. Never fabricate personal experiences. "
                     "Write naturally, like a real person — not an AI report. JSON only."
                 )
-            escalation = _retry_escalation_note(attempt, prev_wc) + readability_escalation_note(last_readability)
+            escalation = _retry_escalation_note(attempt, prev_wc) + readability_escalation_note(last_readability) + title_escalation_note(last_title_violations)
             logger.info(f"  AI 제공자: {ai_provider.upper()} (시도 {attempt + 1}/3)")
             raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
             if not raw:
@@ -2349,6 +2351,21 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                     time.sleep(2)
                     continue
                 logger.warning(f"읽기 난이도 기준 미달({last_readability['issues']}) — 재시도 소진, 해당 상태로 진행")
+
+            # 제목 정책 검사 — 클릭 유도·과장 표현은 AdSense "오해의 소지가 있는 콘텐츠" 위반 소지.
+            # 발행 후 감사에서 발견하면 이미 노출된 뒤라, 생성 단계에서 재작성을 요청한다.
+            last_title_violations = check_title(post_data.get("title", ""))
+            if last_title_violations:
+                if attempt < 2:
+                    logger.warning(f"제목 정책 위반({last_title_violations}) — 재작성 요청 {attempt + 1}/3")
+                    time.sleep(2)
+                    continue
+                _orig_title = post_data.get("title", "")
+                post_data["title"] = sanitize_title(_orig_title)
+                logger.warning(
+                    f"제목 정책 위반 — 재시도 소진, 표현 제거 후 진행: "
+                    f"'{_orig_title}' → '{post_data['title']}'"
+                )
 
             if not isinstance(post_data.get("sources"), list):
                 post_data["sources"] = []
@@ -2659,6 +2676,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
     ai_provider = _resolve_ai_provider(blog_config)
     prev_wc = 0
     last_readability: dict | None = None
+    last_title_violations: list[str] = []
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
@@ -2688,7 +2706,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                     "For events after your knowledge cutoff, use 'according to recent trends'. "
                     "JSON only."
                 )
-            escalation = _retry_escalation_note(attempt, prev_wc) + readability_escalation_note(last_readability)
+            escalation = _retry_escalation_note(attempt, prev_wc) + readability_escalation_note(last_readability) + title_escalation_note(last_title_violations)
             logger.info(f"  AI 제공자: {ai_provider.upper()} (시도 {attempt + 1}/3)")
             raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
             if not raw:
@@ -2743,6 +2761,21 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                     time.sleep(2)
                     continue
                 logger.warning(f"읽기 난이도 기준 미달({last_readability['issues']}) — 재시도 소진, 해당 상태로 진행")
+
+            # 제목 정책 검사 — 클릭 유도·과장 표현은 AdSense "오해의 소지가 있는 콘텐츠" 위반 소지.
+            # 발행 후 감사에서 발견하면 이미 노출된 뒤라, 생성 단계에서 재작성을 요청한다.
+            last_title_violations = check_title(post_data.get("title", ""))
+            if last_title_violations:
+                if attempt < 2:
+                    logger.warning(f"제목 정책 위반({last_title_violations}) — 재작성 요청 {attempt + 1}/3")
+                    time.sleep(2)
+                    continue
+                _orig_title = post_data.get("title", "")
+                post_data["title"] = sanitize_title(_orig_title)
+                logger.warning(
+                    f"제목 정책 위반 — 재시도 소진, 표현 제거 후 진행: "
+                    f"'{_orig_title}' → '{post_data['title']}'"
+                )
 
             # sources 필드 유효성 검증 (hallucinated URL 필터링)
             if not isinstance(post_data.get("sources"), list):

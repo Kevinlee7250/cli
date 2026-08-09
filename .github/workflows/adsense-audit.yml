@@ -17,6 +17,11 @@ on:
         type: boolean
         required: false
         default: false
+      draft_short:
+        description: '2500자 미만 글을 draft로 전환 (AdSense 최소 콘텐츠 요건 대응)'
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -73,6 +78,10 @@ jobs:
             if [ "${{ inputs.dry_run }}" = "true" ]; then
               ARGS="$ARGS --dry-run"
               echo "=== 검사 전용 모드 (수정 없음) ==="
+            fi
+            if [ "${{ inputs.draft_short }}" = "true" ]; then
+              ARGS="$ARGS --draft-short"
+              echo "=== 글자수 미달 글 draft 전환 활성화 ==="
             fi
           fi
           echo "실행 인자: $ARGS"

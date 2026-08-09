@@ -1,8 +1,16 @@
-name: 📦 blog1 구주제 글 이전·보관
+name: 📦 구주제 글 이전·보관
 
 on:
   workflow_dispatch:
     inputs:
+      blog_id:
+        description: '대상 블로그 (blog1 / blog2)'
+        type: choice
+        required: false
+        default: 'blog1'
+        options:
+          - 'blog1'
+          - 'blog2'
       dry_run:
         description: '분류 결과만 확인 (실제 변경 없음)'
         type: boolean
@@ -61,11 +69,12 @@ jobs:
       - name: 구주제 글 이전·보관 실행
         working-directory: blog-automation
         run: |
-          ARGS=""
+          ARGS="--blog ${{ inputs.blog_id || 'blog1' }}"
           if [ "${{ inputs.dry_run }}" != "false" ]; then
-            ARGS="--dry-run"
+            ARGS="$ARGS --dry-run"
             echo "=== 분류 미리보기 모드 (변경 없음) ==="
           fi
+          echo "실행 인자: $ARGS"
           python migrate_offtopic.py $ARGS
 
       - name: 결과 커밋

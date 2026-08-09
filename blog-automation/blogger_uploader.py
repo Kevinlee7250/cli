@@ -319,6 +319,10 @@ def _build_full_content(post_data: dict, blog_config: dict | None = None) -> str
         logger.warning(f'related_section 생성 실패: {_rp_e}')
         related_section = ''
 
+    # ⑥.5 저자 소개 박스 (E-E-A-T) — 누가 썼는지 밝히는 것은 AdSense·검색 품질
+    # 평가에서 신뢰도 신호로 작동한다. author_profile.json에 필명이 없으면 생략.
+    author_section = _author_box(blog_config)
+
     footer = """
 <div style="margin-top:3em;padding:18px 20px;background:#fff3cd;border-radius:10px;
 border-left:4px solid #ffc107;">
@@ -339,8 +343,53 @@ border-left:4px solid #ffc107;">
         + related_section
         + tag_section
         + sources_section
+        + author_section
         + footer
         + '</div>'
+    )
+
+
+def _author_box(blog_config: dict | None = None) -> str:
+    """저자 소개 박스 HTML (E-E-A-T 신뢰도 신호).
+
+    author_profile.json의 필명·소개를 사용하며, 필명이 없으면 빈 문자열을
+    반환해 아무것도 삽입하지 않는다(가짜 저자 정보를 만들지 않기 위함).
+    """
+    try:
+        from config import get_author_profile
+        profile = get_author_profile()
+    except Exception:
+        return ""
+
+    name = str(profile.get("name", "")).strip()
+    if not name:
+        return ""
+
+    bio = str(profile.get("bio", "")).strip()
+    if not bio:
+        cfg = blog_config or {}
+        topics = [t for t in (cfg.get("topics") or []) if t][:4]
+        bio = (
+            f"{', '.join(topics)} 주제를 직접 조사해 정리합니다."
+            if topics else "관심 주제를 직접 조사해 정리합니다."
+        )
+
+    return (
+        '<div style="margin:2.5em 0;padding:18px 20px;background:#f8f9fa;'
+        'border-radius:10px;border-left:4px solid #1a73e8;">'
+        '<p style="font-weight:700;font-size:14px;margin:0 0 6px;color:#202124;">'
+        f'✍️ 글쓴이 · {_html_escape(name)}</p>'
+        f'<p style="font-size:13px;color:#5f6368;margin:0;line-height:1.8;">{_html_escape(bio)}</p>'
+        '<p style="font-size:12px;color:#80868b;margin:8px 0 0;">'
+        '이 글은 공개된 자료를 조사·확인해 작성했으며, 확인되지 않은 내용은 포함하지 않습니다.</p>'
+        '</div>'
+    )
+
+
+def _html_escape(text: str) -> str:
+    return (
+        str(text).replace("&", "&amp;").replace("<", "&lt;")
+        .replace(">", "&gt;").replace('"', "&quot;")
     )
 
 

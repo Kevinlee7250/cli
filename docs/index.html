@@ -1551,6 +1551,7 @@
         </select>
         <button onclick="adsenseAuditRun(false)" style="padding:6px 14px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:var(--green);font-size:12px;cursor:pointer;font-weight:600">🔎 감사+자동보완</button>
         <button onclick="adsenseAuditRun(true)" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 검사만</button>
+        <button onclick="enrichPostsRun()" style="padding:6px 14px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.35);border-radius:8px;color:var(--yellow);font-size:12px;cursor:pointer;font-weight:600">✨ FAQ·출처 보강</button>
       </div>
     </div>
     <p style="font-size:12px;color:var(--muted);margin-bottom:8px;line-height:1.7">
@@ -5633,6 +5634,13 @@ async function migrateOfftopicRun(dryRun = false) {
   }
 }
 
+// FAQ·출처 자동 보강 — AdSense "가치가 별로 없는 콘텐츠" 대응 (감사에서 자동보완 안 되는 두 항목)
+function enrichPostsRun() {
+  const blogId = document.getElementById('audit-blog-select')?.value || 'blog2'
+  if (!confirm(`[${blogId}] FAQ 없는 글에 본문 기반 FAQ를, 출처 없는 글에 실존 뉴스 출처를 자동 삽입합니다 (이번 실행 최대 10개, Blogger에 즉시 반영). 진행할까요?`)) return
+  wfDispatchGeneric('enrich-posts.yml', { blog_id: blogId, limit: '10', dry_run: 'false' }, 'FAQ·출처 보강', 15)
+}
+
 async function adsenseAuditRun(dryRun = false) {
   const pat = getPAT()
   if (!pat) { showToast('PAT를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
@@ -9266,6 +9274,8 @@ const BOT_RUN_ACTIONS = {
     fn: () => wfDispatchGeneric('weekly-brief.yml', {}, '주간 운영 브리핑', 2) },
   '실행:트렌드선점감지': { label: '트렌드 선점 발행 후보 감지',
     fn: () => { navTo('keywords'); wfDispatchGeneric('trend-preempt.yml', {}, '트렌드 선점 감지', 3) } },
+  '실행:FAQ출처보강':   { label: 'FAQ·출처 자동 보강 (blog2)', sensitive: true,
+    fn: () => wfDispatchGeneric('enrich-posts.yml', { blog_id: 'blog2', limit: '10', dry_run: 'false' }, 'FAQ·출처 보강', 15) },
 }
 
 function botAction(cmd) {

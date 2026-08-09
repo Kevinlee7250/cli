@@ -1,11 +1,16 @@
 {
-  "checked_at": "2026-08-08T17:23:40.172924+00:00",
-  "all_ok": true,
+  "checked_at": "2026-08-09T17:25:06.865687+00:00",
+  "all_ok": false,
   "checks": [
     {
       "name": "google_oauth",
       "ok": true,
       "error": null
+    },
+    {
+      "name": "ads_txt",
+      "ok": false,
+      "error": "ADSENSE_CLIENT_ID 미설정 — 게시자 ID를 확인할 수 없음"
     }
   ],
   "client_id": "310114393483-rtotnsftmbbat8l3pua3suer3juv91o6.apps.googleusercontent.com"

@@ -2387,7 +2387,7 @@ async function loadAll(silent = false) {
   purgeLegacyOAuthStorage()  // 보안: 과거 저장된 장기 토큰 제거
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts] = await Promise.all([
+  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, adsenseRevenue] = await Promise.all([
     fetch(base + '/posts.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/runs.json' + ts).then(r => r.json()).catch(() => []),
     fetch(base + '/analytics.json' + ts).then(r => r.json()).catch(() => ({})),
@@ -2412,8 +2412,9 @@ async function loadAll(silent = false) {
     fetch(base + '/adsense_audit.json' + ts).then(r => r.json()).catch(() => null),
     fetch(base + '/pending_report.json' + ts).then(r => r.json()).catch(() => null),
     fetch(base + '/alerts.json' + ts).then(r => r.json()).catch(() => null),
+    fetch(base + '/adsense_revenue.json' + ts).then(r => r.json()).catch(() => null),
   ])
-  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts }
+  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, adsenseRevenue }
 
   // 아카이브 포스트 백그라운드 병합 (posts.json은 최근 300개만 유지 — 초기 로딩 속도 확보)
   fetch(base + '/posts_archive.json' + ts).then(r => r.ok ? r.json() : []).then(archive => {
@@ -6298,9 +6299,18 @@ function renderSystemStatusGrid() {
       hasPAT ? 'Actions 워크플로우 실행 가능' : '실행 제어 탭에서 설정 필요',
       hasPAT ? 'var(--green)' : 'var(--red)',
       hasPAT ? 'var(--green)' : 'var(--red)'),
-    statusCard('💰', 'AdSense 추정 수익', '$' + ((meta.totalRevenue || 0)).toFixed(2),
-      '누적 추정 수익',
-      'var(--yellow)', 'var(--yellow)'),
+    (() => {
+      // 실제 AdSense 수익이 있으면 추정치 대신 실측을 보여준다 —
+      // 추정은 카테고리 CPC 가정값이라 실제와 자릿수가 다를 수 있음
+      const rev = DATA.adsenseRevenue
+      if (rev && rev.available)
+        return statusCard('💰', 'AdSense 실제 수익', '$' + (rev.totalEarnings || 0).toFixed(2),
+          `최근 ${rev.periodDays || 30}일 실측 (${rev.collectedAt || ''})`,
+          'var(--green)', 'var(--green)')
+      return statusCard('💰', 'AdSense 추정 수익', '$' + ((meta.totalRevenue || 0)).toFixed(2),
+        rev && rev.error ? '추정치 — 실측 연동 안 됨' : '누적 추정 수익',
+        'var(--yellow)', 'var(--yellow)')
+    })(),
   ].join('')
 
   // 알림 뱃지: 이슈 있으면 nav에 표시

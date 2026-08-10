@@ -22,6 +22,9 @@ REDIRECT_URI = "http://localhost:8080"
 SCOPE = " ".join([
     "https://www.googleapis.com/auth/blogger",
     "https://www.googleapis.com/auth/webmasters.readonly",
+    # 실제 AdSense 수익 조회 (adsense_revenue.py) — 기존 토큰에는 없으므로
+    # 실제 수익을 쓰려면 이 스크립트를 다시 실행해 재발급해야 합니다
+    "https://www.googleapis.com/auth/adsense.readonly",
 ])
 
 _auth_code = None

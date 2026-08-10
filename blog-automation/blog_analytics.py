@@ -362,15 +362,36 @@ def calculate_grade(
 # Feature C: 수익 재계산
 # ──────────────────────────────────────────────────────────────────────────────
 
+def _domain_of(url: str) -> str:
+    """수익 매칭용 도메인 (www·스킴 제거)."""
+    host = str(url or "").split("//")[-1].split("/")[0].lower()
+    return host[4:] if host.startswith("www.") else host
+
+
 def calculate_revenue(
     estimated_views_30d: int,
     adsense_category: str,
     cpc: float = 0.0,
+    real_rpm: float = 0.0,
 ) -> dict[str, float]:
     """
     실제 조회수 기반 수익을 재계산합니다.
     반환값: {"estimated30d": 1.23, "estimatedMonthly": 1.23, "cpc": 0.9}
+
+    real_rpm(AdSense 실측 RPM)이 있으면 CPC×가정CTR 대신 실측을 씁니다 —
+    카테고리 CPC 표는 가정값이라 실제 수익과 자릿수가 다를 수 있습니다.
     """
+    if real_rpm and real_rpm > 0:
+        revenue_30d = round(estimated_views_30d / 1000 * real_rpm, 4)
+        return {
+            "estimated30d": revenue_30d,
+            "estimatedMonthly": revenue_30d,
+            "cpc": 0.0,
+            "rpm": round(real_rpm, 2),
+            "revenueSource": "adsense",
+            "estimatedClicks30d": round(estimated_views_30d * _ADSENSE_CTR, 1),
+        }
+
     effective_cpc = cpc if cpc > 0 else _CPC_MAP.get(adsense_category, _DEFAULT_CPC)
     clicks = estimated_views_30d * _ADSENSE_CTR
     revenue_30d = round(clicks * effective_cpc, 4)
@@ -378,6 +399,7 @@ def calculate_revenue(
         "estimated30d": revenue_30d,
         "estimatedMonthly": revenue_30d,  # 30일 = 월 수익
         "cpc": round(effective_cpc, 2),
+        "revenueSource": "estimate",
         "estimatedClicks30d": round(clicks, 1),
     }
 
@@ -480,6 +502,16 @@ def run_analytics(
 
     # ── 블로그별로 실제 조회수·GSC 데이터 수집 ──────────────────────────────
     grade_counts: dict[str, int] = {"S": 0, "A": 0, "B": 0, "C": 0}
+    # AdSense 실측 RPM이 있으면 CPC 가정 대신 실제 값으로 수익을 계산합니다.
+    # 권한·데이터가 없으면 빈 dict이고, 기존 추정 로직이 그대로 돌아갑니다.
+    try:
+        from adsense_revenue import load_real_rpm
+        _real_rpm = load_real_rpm()
+    except Exception as exc:            # 수익 연동 실패가 분석 전체를 막으면 안 됨
+        logger.debug(f"실측 RPM 로드 생략: {exc}")
+        _real_rpm = {}
+    if _real_rpm:
+        logger.info(f"💰 AdSense 실측 RPM 적용: {len(_real_rpm)}개 도메인")
     total_revenue_30d = 0.0
     total_blog_views_30d_all = 0
     total_blog_views_7d_all = 0
@@ -546,7 +578,10 @@ def run_analytics(
                 clicks, impressions, ctr, position, est_views, post_date
             )
 
-            revenue = calculate_revenue(est_views, category, cpc)
+            revenue = calculate_revenue(
+                est_views, category, cpc,
+                real_rpm=_real_rpm.get(_domain_of(post_url), 0.0),
+            )
             total_revenue_30d += revenue["estimated30d"]
 
             post.update({
@@ -623,6 +658,9 @@ def run_analytics(
         "totalGscClicks30d": total_gsc_clicks_all,
         "totalEstimatedRevenue30d": round(total_revenue_30d, 4),
         "totalEstimatedRevenueMonthly": round(total_revenue_30d, 4),
+        # 수익이 실측(AdSense RPM)인지 CPC 가정 추정인지 — 대시보드가 구분해 표시
+        "revenueSource": "adsense" if _real_rpm else "estimate",
+        "revenueRpmDomains": len(_real_rpm),
         "gradeDistribution": grade_counts,
         "gradePercentage": {
             g: round(cnt / len(posts) * 100, 1)

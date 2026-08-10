@@ -1,131 +1,3 @@
-2026-08-09 10:45:45,168 [INFO] main — ============================================================
-2026-08-09 10:45:45,213 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-09 10:45:45,239 [INFO] dashboard_exporter —   시리즈: 16개 내보내기 완료
-2026-08-09 10:45:45,262 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-09 10:45:45,437 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-09 10:45:45,638 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-09 10:45:45,880 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-09 10:45:45,881 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-09 10:45:45,884 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-09 10:45:45,901 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 221 / 실패 3 / 대기 55)
-2026-08-09 10:45:45,901 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-09 10:45:45,902 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-09 10:45:45,903 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-09 10:46:18,574 [INFO] main — ============================================================
-2026-08-09 10:46:18,574 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-09 10:46:18
-2026-08-09 10:46:18,575 [INFO] main — ============================================================
-2026-08-09 10:46:18,590 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
-2026-08-09 10:46:18,590 [INFO] keyword_collector — 포스팅 이력 코퍼스: 167개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-08-09 10:46:23,053 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-08-09 10:46:29,351 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:46:29,374 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-09 10:46:29,374 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-09 10:46:30,168 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-09 10:46:30,169 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-09 10:46:30,170 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
-2026-08-09 10:46:30,190 [INFO] keyword_collector — 유사 주제 제외 20개: ['일본 여행 저렴하게 가는 법 2026 엔저 활용 팁', '수도권 벗어난 국내 로컬 여행지 추천', 'AI로 여행 계획 짜는 법 챗GPT 활용 후기', '여름휴가 숙소 항공권 특가 예약 방법 비교', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
-2026-08-09 10:46:30,191 [INFO] keyword_collector —   [fallback] 2개: ['하와이 허니문 실제 비용과 아낄 수 있는 방법', '홍콩 싱가포르 중 여행지 선택 기준 직접 비교']
-2026-08-09 10:46:30,191 [INFO] keyword_collector — 최종 선정 키워드 2개: ['하와이 허니문 실제 비용과 아낄 수 있는 방법', '홍콩 싱가포르 중 여행지 선택 기준 직접 비교']
-2026-08-09 10:46:30,191 [INFO] main — 수집된 키워드 2개: ['하와이 허니문 실제 비용과 아낄 수 있는 방법', '홍콩 싱가포르 중 여행지 선택 기준 직접 비교']
-2026-08-09 10:46:30,196 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
-2026-08-09 10:46:30,196 [INFO] main — 단독 포스트 대상 키워드 1개: ['하와이 허니문 실제 비용과 아낄 수 있는 방법']
-2026-08-09 10:46:30,212 [INFO] main — 
-[1/1] 키워드: '하와이 허니문 실제 비용과 아낄 수 있는 방법'
-2026-08-09 10:46:30,212 [INFO] content_generator — 포스트 생성 중: '하와이 허니문 실제 비용과 아낄 수 있는 방법'
-2026-08-09 10:46:37,824 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:46:37,825 [INFO] research_collector — 검색 의도: 하와이로 신혼여행을 계획 중인 예비부부가 실제 소요 비용과 절약 팁을 알고 싶어함
-2026-08-09 10:46:46,804 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '하와이 허니문 실제 비용과 아낄 수 있는 방법'
-2026-08-09 10:47:07,102 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:47:07,103 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '하와이 허니문 실제 비용과 아낄 수 있는 방법'
-2026-08-09 10:47:20,633 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:47:20,635 [INFO] source_validator — 출처 검증: 6/8개 통과, 등급 분포 {'B': 6, 'X': 2}
-2026-08-09 10:47:20,638 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-09 10:47:21,928 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:48:32,534 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:48:50,109 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '최근 국제선 유류할증료가 33단계에서 6단계로'
-2026-08-09 10:48:50,110 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
-2026-08-09 10:48:50,811 [INFO] image_fetcher — 이미지 수집 성공: '하와이 허니문 실제 비용, 2026년 기준으로 따져보니 (아끼는 방법 총정리)' → 제목='팜투어 허니문전문 컨설턴트가 추천하는 '하와이 신혼여행' 꿀 TIP' (관련성=0.11)
-2026-08-09 10:48:51,530 [INFO] image_fetcher — 이미지 수집 성공: '하와이 허니문 실제' → 제목='최근 3년 허니문 1위는 하와이, 장거리 여행 인기에 경유 여행 수요도 ' (관련성=0.67)
-2026-08-09 10:48:52,215 [INFO] image_fetcher — 이미지 수집 성공: '하와이 허니문 항공권 비용부터 비용을 계산할' → 제목='상품상세정보 하와이 항공권' (관련성=0.33)
-2026-08-09 10:48:54,550 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:48:54,551 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-08-09 10:48:54,554 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-08-09 10:48:54,556 [INFO] content_generator — 포스트 생성 완료: '하와이 허니문 실제 비용, 2026년 기준으로 따져보니 (아끼는 방법 총정리)' (2845자, 이미지 3개)
-2026-08-09 10:48:55,325 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:49:14,925 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '하와이 허니문 실제 비용, 2026년 기준으로 따져보니 (아끼는'
-2026-08-09 10:49:14,925 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 2845자로 기준 충족하나, 대부분 외부 통계·뉴스 재구성이며 개인 경험은 도입부 언급 수준에 그침
-2026-08-09 10:49:14,925 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 충분하나 단락 구분 없이 정보가 길게 이어져 가독성이 떨어짐
-2026-08-09 10:49:14,925 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 정보가 없어 삽입 여부 확인 불가, 부재 자체는 fail 아님
-2026-08-09 10:49:14,925 [INFO] adsense_validator —   ❌ AI 생성 의심도: '~라는 뜻입니다', '~는 의견도 있습니다' 등 반복 패턴과 문법 오류 문장('밝혀지지 않았습니다으로 알려져 있습니다')이 미편집 AI 산출물 흔적을 보임
-2026-08-09 10:49:14,925 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '~라는 뜻입니다', '~는 의견도 있습니다' 등 반복 패턴과 문법 오류 문장('밝혀지지 않았습니다으로 알려져 있습니다')이 미편집 AI 산출물 흔적을 보임
-2026-08-09 10:49:14,925 [WARNING] adsense_validator —   🔴 본문 중 '이는 구체적인 인하 배경은 밝혀지지 않았습니다으로 알려져 있습니다' 등 비문·오류 문장 존재로 품질 신뢰도 저하
-2026-08-09 10:49:14,934 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-09 10:49:14,936 [INFO] internal_linker —   [1/5] '유류할증료' -> https://www.hoguwhat.com/2026/08/blog-post_06.html
-2026-08-09 10:49:14,941 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-08-09 10:49:14,941 [INFO] main —   제목: 하와이 허니문 실제 비용, 2026년 기준으로 따져보니 (아끼는 방법 총정리)
-2026-08-09 10:49:14,941 [INFO] main —   이미지: 3개 삽입
-2026-08-09 10:49:14,941 [INFO] main —   글자 수: 2845자
-2026-08-09 10:49:17,294 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:49:40,517 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '하와이 허니문 실제 비용, 2026년 기준으로 따져보니 (아끼는'
-2026-08-09 10:49:40,517 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 통계·뉴스 재구성 위주로 실제 개인 경험(직접 하와이 다녀온 사례)은 부족함
-2026-08-09 10:49:40,517 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 충분하나 각 섹션이 줄바꿈 없이 500자 이상 이어지는 긴 단락으로 가독성 저하
-2026-08-09 10:49:40,518 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 인용은 있으나 '마린파파' 개인 경험은 간접적(지인 사례)이고 일부 문장이 근거 불명확('구체적 배경 밝혀지지 않음')
-2026-08-09 10:49:40,518 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음 — 이미지 부재로 warn 처리(정책상 fail 아님)
-2026-08-09 10:49:40,518 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~짚어보겠습니다', '~정리해보겠습니다' 등 전형적 전환 문구와 과도한 헤징 표현('의견도 있습니다')이 반복돼 AI 생성 패턴 의심
-2026-08-09 10:49:40,518 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
-2026-08-09 10:49:40,518 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 기준 충족하나 통계·뉴스 재구성 위주로 실제 개인 경험(직접 하와이 다녀온 사례)은 부족함
-2026-08-09 10:49:40,518 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 개수는 충분하나 각 섹션이 줄바꿈 없이 500자 이상 이어지는 긴 단락으로 가독성 저하
-2026-08-09 10:49:40,518 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3개 인용은 있으나 '마린파파' 개인 경험은 간접적(지인 사례)이고 일부 문장이 근거 불명확('구체적 배경 밝혀지지 않음')
-2026-08-09 10:49:40,518 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
-2026-08-09 10:49:41,345 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:50:56,308 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2845자 → 3846자 (+1001자)
-2026-08-09 10:50:56,308 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-09 10:50:57,433 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:51:15,558 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '하와이 허니문 실제 비용, 2026년 기준으로 따져보니 (아끼는'
-2026-08-09 10:51:15,558 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 기준 충족이나 단락 구분 없이 500자 이상 이어지는 블록이 다수 존재해 가독성이 떨어짐
-2026-08-09 10:51:15,558 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 캡션성 문구는 있으나 alt텍스트·출처 확인 불가, 이미지 부재로 간주되어 warn
-2026-08-09 10:51:15,558 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심요약 박스와 '다음 항목에서 짚어보겠습니다' 류의 정형화된 전환 문구가 반복돼 AI 특유의 안내식 구성이 감지됨
-2026-08-09 10:51:15,558 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
-2026-08-09 10:51:15,559 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-08-09 10:51:17,412 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:52:31,629 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-09 10:52:33,415 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:53:45,392 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-09 10:53:48,358 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:54:17,470 [INFO] final_editor —   ✏️ 제목 최종 교정: '하와이 허니문 실제 비용, 2026년 기준으로 따져보니 (아끼는 방법 총정리)' → '하와이 허니문 실제 비용, 2026년 기준 아끼는 방법 총정리'
-2026-08-09 10:54:17,470 [INFO] final_editor —   ✏️ 메타 설명 교정 (127자)
-2026-08-09 10:54:17,470 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고 H3 소제목을 추가해 흐름을 명확히 했으며, 요약 박스·비교 표·개인 경험 메모·주의사항·FAQ 6개·작성자 메모·이미지 3곳(대표 이미지 포함 4곳)을 구조화해 발행 가능한 형태로 정리했습니다.
-2026-08-09 10:54:17,587 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-09 10:54:17,587 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-09 10:54:17,704 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-09 10:54:17,720 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-09 10:54:17,721 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-08-09 10:54:18,654 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026_01859855954.html
-2026-08-09 10:54:18,667 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026_01859855954.html
-2026-08-09 10:54:55,610 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:54:55,611 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-09 10:54:55,611 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-09 10:54:55,620 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '하와이 허니문 실제 비용, 2026년 기준 아끼는 방법 총정리'
-2026-08-09 10:54:57,698 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-09 10:55:02,145 [INFO] comment_manager —   생성된 댓글: 글 잘 봤습니다! 참고로 유류할증료는 발권일 기준으로 확정되는 경우가 많아서, 같은 항공사라도 예약 시점을 며칠만 조정해도 요금 구간이 달라질 ...
-2026-08-09 10:58:02,281 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-09 10:58:02,282 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-09 10:58:02,283 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-09 10:58:02,283 [INFO] main — 
-============================================================
-2026-08-09 10:58:02,283 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-08-09 10:58:02,283 [INFO] main — ============================================================
-2026-08-09 10:58:02,318 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-09 10:58:02,342 [INFO] dashboard_exporter —   시리즈: 16개 내보내기 완료
-2026-08-09 10:58:02,362 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-09 10:58:02,596 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
 2026-08-09 10:58:02,838 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
 2026-08-09 10:58:02,839 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
 2026-08-09 10:58:02,842 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
@@ -626,3 +498,133 @@
 2026-08-09 23:30:54,395 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-08-09 23:30:54,395 [INFO] main —   - [blog3] 금융NEWS
 2026-08-09 23:30:54,400 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-08-10 04:28:19,685 [INFO] main — ============================================================
+2026-08-10 04:28:19,685 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-10 04:28:19
+2026-08-10 04:28:19,686 [INFO] main — ============================================================
+2026-08-10 04:28:19,703 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
+2026-08-10 04:28:19,703 [INFO] keyword_collector — 포스팅 이력 코퍼스: 206개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-10 04:28:19,703 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['광복절 연휴 국내여행 숙소 솔직 비교', '여름 끝 여행 가성비 코스 추천 방법', '광복절 연휴 3박4일 코스 솔직 비교']...
+2026-08-10 04:28:23,069 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-10 04:28:27,063 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:28:27,089 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-10 04:28:27,090 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-10 04:28:27,438 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-10 04:28:27,734 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-10 04:28:28,016 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-10 04:28:28,018 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
+2026-08-10 04:28:28,032 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-10 04:28:28,032 [INFO] keyword_collector — 유사 주제 제외 12개: ['광복절 연휴 국내여행 숙소 솔직 비교', '여름 끝 여행 가성비 코스 추천 방법', '광복절 연휴 3박4일 코스 솔직 비교', '여름 끝 여행 숙소 가격 비교 후기', '2026 광복절 연휴 인파 없는 여행지 추천']
+2026-08-10 04:28:28,032 [WARNING] keyword_collector — 선정 키워드 부족 (1/2) — 유사도 기준 완화하여 재시도
+2026-08-10 04:28:28,042 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (1/2) — 이전 사용 키워드 일부 허용
+2026-08-10 04:28:28,045 [INFO] keyword_collector —   [season_scheduled] 1개: ['8월 여행지 추천 저렴하게 다녀온 곳']
+2026-08-10 04:28:28,045 [INFO] keyword_collector —   [high_cpc] 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-10 04:28:28,045 [INFO] keyword_collector — 최종 선정 키워드 2개: ['8월 여행지 추천 저렴하게 다녀온 곳', '해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-10 04:28:28,045 [INFO] main — 수집된 키워드 2개: ['8월 여행지 추천 저렴하게 다녀온 곳', '해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-10 04:28:28,051 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
+2026-08-10 04:28:28,051 [INFO] main — 단독 포스트 대상 키워드 1개: ['8월 여행지 추천 저렴하게 다녀온 곳']
+2026-08-10 04:28:28,069 [INFO] main — 
+[1/1] 키워드: '8월 여행지 추천 저렴하게 다녀온 곳'
+2026-08-10 04:28:28,069 [INFO] content_generator — 포스트 생성 중: '8월 여행지 추천 저렴하게 다녀온 곳'
+2026-08-10 04:28:36,332 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:28:36,333 [INFO] research_collector — 검색 의도: 8월에 저렴하게 다녀올 수 있는 국내외 여행지와 실제 비용 정보를 찾는 의도
+2026-08-10 04:28:47,924 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '8월 여행지 추천 저렴하게 다녀온 곳'
+2026-08-10 04:29:04,291 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:29:04,292 [INFO] evidence_builder — 자료팩 생성: 사실 3개 — '8월 여행지 추천 저렴하게 다녀온 곳'
+2026-08-10 04:29:11,957 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:29:11,958 [INFO] source_validator — 출처 검증: 1/3개 통과, 등급 분포 {'X': 2, 'C': 1}
+2026-08-10 04:29:11,962 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-08-10 04:29:11,962 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-10 04:29:12,902 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:30:33,585 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-08-10 04:30:33,586 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(노쇼)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-08-10 04:30:35,587 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-08-10 04:30:36,995 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:31:47,447 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:32:02,203 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-08-10 04:32:03,156 [INFO] image_fetcher — 이미지 수집 성공: '8월 국내 여행지 추천, 이렇게 하면 저렴합니다' → 제목='네이버 인플루언서 [네이버 인플루언서] 8월 여름 국내 여행지 추천ㅣ화순' (관련성=0.50)
+2026-08-10 04:32:03,794 [INFO] image_fetcher — 이미지 수집 성공: '여행지 저렴하게' → 제목='호주에서 가장 저렴하게 방문할 수 있는 여행지 7곳' (관련성=1.00)
+2026-08-10 04:32:04,764 [INFO] image_fetcher — 이미지 수집 성공: '여행지 저렴하게 여행이 저렴해질 여름 휴가는' → 제목='가볍게 떠나요! 국내 여행을 저렴하게 즐기는 방법 3' (관련성=0.14)
+2026-08-10 04:32:09,405 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:32:09,407 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-08-10 04:32:09,407 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-10 04:32:09,410 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-10 04:32:09,412 [INFO] content_generator — 포스트 생성 완료: '8월 국내 여행지 추천, 이렇게 하면 저렴합니다' (2725자, 이미지 2개)
+2026-08-10 04:32:10,663 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:32:32,818 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '8월 국내 여행지 추천, 이렇게 하면 저렴합니다'
+2026-08-10 04:32:32,818 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2725자로 기준 충족하나 커뮤니티 후기 재구성 수준이며 구체적 개인 경험(날짜·비용 실측치)이 없음
+2026-08-10 04:32:32,818 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 직접 경험 서술이 없고 '커뮤니티 후기 종합' 식 모호한 출처 인용에 그침
+2026-08-10 04:32:32,818 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색 기반으로 저작권 주의 필요
+2026-08-10 04:32:32,818 [INFO] adsense_validator —   ❌ AI 생성 의심도: '쉽게 말하면' 반복, 각 섹션 말미의 정형화된 전환 문구('~보겠습니다')가 반복되어 AI 생성 패턴이 뚜렷함
+2026-08-10 04:32:32,818 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '쉽게 말하면' 반복, 각 섹션 말미의 정형화된 전환 문구('~보겠습니다')가 반복되어 AI 생성 패턴이 뚜렷함
+2026-08-10 04:32:32,818 [WARNING] adsense_validator —   🔴 이미지가 네이버 검색 결과 기반으로 삽입되어 저작권 침해 소지가 있음
+2026-08-10 04:32:32,819 [WARNING] adsense_validator —   🔴 각 섹션 전환 문구('~살펴보겠습니다', '~짚어보겠습니다')가 기계적으로 반복되어 AI 생성 의심도가 높음
+2026-08-10 04:32:32,827 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-10 04:32:32,836 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-08-10 04:32:32,836 [INFO] main —   제목: 8월 국내 여행지 추천, 이렇게 하면 저렴합니다
+2026-08-10 04:32:32,836 [INFO] main —   이미지: 2개 삽입
+2026-08-10 04:32:32,836 [INFO] main —   글자 수: 2725자
+2026-08-10 04:32:33,942 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:32:47,593 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '8월 국내 여행지 추천, 이렇게 하면 저렴합니다'
+2026-08-10 04:32:47,593 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 커뮤니티 후기 재조합 위주로 실제 개인 경험·구체적 날짜/비용 데이터가 부족함
+2026-08-10 04:32:47,593 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 직접 경험 서술이 없고 '후기 종합' 형태로 출처 인용이 본문 내 명확히 드러나지 않음
+2026-08-10 04:32:47,593 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 명시되어 저작권 주의 필요
+2026-08-10 04:32:47,594 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '쉽게 말하면', '~짚어보겠습니다' 등 전형적 전환 문구와 목록화 패턴이 반복돼 AI 생성 티가 남
+2026-08-10 04:32:47,594 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-10 04:32:47,594 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 커뮤니티 후기 재조합 위주로 실제 개인 경험·구체적 날짜/비용 데이터가 부족함
+2026-08-10 04:32:47,594 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 직접 경험 서술이 없고 '후기 종합' 형태로 출처 인용이 본문 내 명확히 드러나지 않음
+2026-08-10 04:32:47,594 [WARNING] main —      🟡 [이미지 정책] 이미지 출처가 네이버 이미지 검색으로 명시되어 저작권 주의 필요
+2026-08-10 04:32:47,594 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-10 04:32:49,084 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:34:03,650 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2725자 → 2798자 (+73자)
+2026-08-10 04:34:03,650 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-10 04:34:05,450 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:34:24,691 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '8월 국내 여행지 추천, 이렇게 하면 저렴합니다'
+2026-08-10 04:34:24,691 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 블로그·검색 기반으로 표기되어 저작권 주의 필요, alt텍스트 명시 여부 불확실
+2026-08-10 04:34:24,691 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '정리하면', '다음 부분에서는 ~ 풀어보겠습니다' 등 전환 문구와 체크리스트 나열식 구성이 다소 정형화된 패턴을 보임
+2026-08-10 04:34:24,691 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
+2026-08-10 04:34:24,691 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-10 04:34:27,571 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:35:43,577 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-10 04:35:44,986 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:36:50,177 [INFO] final_editor —   ✏️ 제목 최종 교정: '8월 국내 여행지 추천, 이렇게 하면 저렴합니다' → '8월 여행지 추천, 저렴하게 다녀온 곳 실제 후기와 체크리스트'
+2026-08-10 04:36:50,177 [INFO] final_editor —   ✏️ 메타 설명 교정 (121자)
+2026-08-10 04:36:50,177 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 요약 박스, 체크리스트 소제목화, 개인 경험 메모, 주의사항, FAQ 5개, 작성자 메모를 추가하고 광고성 teaser 문구를 자연스러운 내부 링크 언급으로 교체했습니다. 모든 문단을 2~4문장 이내로 재구성하고 표와 이미지 alt를 구체화했습니다.
+2026-08-10 04:36:50,348 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-10 04:36:50,348 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-10 04:36:50,515 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-10 04:36:50,532 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-10 04:36:50,532 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-10 04:36:51,591 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/8.html
+2026-08-10 04:36:51,604 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/8.html
+2026-08-10 04:37:25,502 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:37:25,503 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-10 04:37:25,503 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-10 04:37:25,512 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '8월 여행지 추천, 저렴하게 다녀온 곳 실제 후기와 체크리스트'
+2026-08-10 04:37:27,168 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 04:37:31,457 [INFO] comment_manager —   생성된 댓글: 글 잘 읽었습니다! 하나 덧붙이면, 숙박 플랫폼에서 '가격 알림' 기능 설정해두시면 원하는 숙소의 가격 변동을 자동으로 알려줘서 매일 들어가서 ...
+2026-08-10 04:40:31,637 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-10 04:40:31,638 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-10 04:40:31,638 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-10 04:40:31,638 [INFO] main — 
+============================================================
+2026-08-10 04:40:31,638 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-08-10 04:40:31,639 [INFO] main — ============================================================
+2026-08-10 04:40:31,680 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-10 04:40:31,707 [INFO] dashboard_exporter —   시리즈: 16개 내보내기 완료
+2026-08-10 04:40:31,730 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-10 04:40:32,027 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-10 04:40:32,376 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-10 04:40:32,730 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-10 04:40:32,731 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-10 04:40:32,734 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-10 04:40:32,751 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 228 / 실패 0 / 대기 54)
+2026-08-10 04:40:32,751 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-10 04:40:32,751 [INFO] dashboard_exporter —   포스트: 102개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-10 04:40:32,752 [INFO] main — 대시보드 데이터 업데이트 완료

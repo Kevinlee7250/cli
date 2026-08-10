@@ -110,7 +110,11 @@ def fetch_blogger_pageviews(blog_id: str, token: str) -> dict[str, int]:
     headers = {"Authorization": f"Bearer {token}"}
     result: dict[str, int] = {"total_30d": 0, "total_7d": 0, "total_1d": 0}
 
-    for range_label, key in [("30DAYS", "total_30d"), ("7DAYS", "total_7d"), ("1DAYS", "total_1d")]:
+    # 요청 파라미터는 30DAYS/7DAYS지만 응답의 timeRange는 THIRTY_DAYS/SEVEN_DAYS 형식이라
+    # 둘을 == 로 비교하면 영원히 매칭되지 않아 조회수가 항상 0이 됐음 (2026-08-10 발견).
+    # 한 번에 한 range만 요청하므로 응답 counts의 첫 항목을 그대로 쓴다.
+    # ("1DAYS"는 Blogger가 지원하지 않는 값이라 400을 냄 — 호출하지 않는다)
+    for range_label, key in [("30DAYS", "total_30d"), ("7DAYS", "total_7d")]:
         try:
             url = f"{BLOGGER_API_BASE}/blogs/{blog_id}/pageviews"
             resp = requests.get(
@@ -120,22 +124,21 @@ def fetch_blogger_pageviews(blog_id: str, token: str) -> dict[str, int]:
                 timeout=15,
             )
             if resp.status_code == 200:
-                counts = resp.json().get("counts", [])
-                for item in counts:
-                    if item.get("timeRange") == range_label:
-                        result[key] = int(item.get("count", 0))
-                        break
+                counts = resp.json().get("counts", []) or []
+                if counts:
+                    result[key] = int(counts[0].get("count", 0) or 0)
+                else:
+                    logger.warning(f"Blogger 조회수 [{range_label}]: counts 비어 있음 — 통계 미집계 상태일 수 있음")
             elif resp.status_code == 403:
                 logger.warning("Blogger 조회수 API 권한 없음 (블로그 소유자 확인 필요)")
                 break
             else:
-                logger.debug(f"Blogger 조회수 [{range_label}]: HTTP {resp.status_code}")
+                logger.warning(f"Blogger 조회수 [{range_label}]: HTTP {resp.status_code} — {resp.text[:150]}")
         except Exception as exc:
-            logger.debug(f"Blogger 조회수 API 오류 [{range_label}]: {exc}")
+            logger.warning(f"Blogger 조회수 API 오류 [{range_label}]: {exc}")
 
     logger.info(
-        f"Blogger 실제 조회수 — 30일: {result['total_30d']:,} | "
-        f"7일: {result['total_7d']:,} | 1일: {result['total_1d']:,}"
+        f"Blogger 실제 조회수 — 30일: {result['total_30d']:,} | 7일: {result['total_7d']:,}"
     )
     return result
 
@@ -225,6 +228,30 @@ def fetch_gsc_page_data(
 # Feature B/C: 포스트별 추정 조회수 계산
 # ──────────────────────────────────────────────────────────────────────────────
 
+def _normalize_url(url: str) -> str:
+    """URL 비교용 정규화 — 스킴·www·트레일링 슬래시·쿼리 차이를 흡수합니다.
+
+    GSC가 돌려주는 URL과 posts.json의 blogUrl이 문자열로 정확히 같아야만
+    매칭되던 구조라, 커스텀 도메인 전환(blogspot→자체도메인)이나 www 유무
+    차이만으로도 성과가 전부 0으로 집계될 수 있었습니다.
+    """
+    if not url:
+        return ""
+    from urllib.parse import urlparse
+    try:
+        p = urlparse(url.strip())
+    except Exception:
+        return url.strip().lower()
+    netloc = (p.netloc or "").lower().removeprefix("www.")
+    path = (p.path or "").rstrip("/")
+    return f"{netloc}{path}" if netloc else path
+
+
+def _build_gsc_lookup(gsc_page_data: dict[str, dict]) -> dict[str, dict]:
+    """정규화 키로 조회 가능한 GSC 데이터 사본을 만듭니다."""
+    return {_normalize_url(u): v for u, v in (gsc_page_data or {}).items() if u}
+
+
 def estimate_post_pageviews(
     post_url: str,
     gsc_page_data: dict[str, dict],
@@ -240,7 +267,9 @@ def estimate_post_pageviews(
       GSC 데이터 없음: blog_total / total_posts (균등 배분)
       Blogger API 조회수 없음: GSC 클릭 × 경험적 배율(15배)
     """
-    post_gsc = gsc_page_data.get(post_url, {})
+    post_gsc = gsc_page_data.get(post_url)
+    if post_gsc is None:
+        post_gsc = _build_gsc_lookup(gsc_page_data).get(_normalize_url(post_url), {})
     post_clicks = post_gsc.get("clicks", 0)
 
     if total_blog_views_30d > 0 and total_gsc_clicks > 0:
@@ -464,6 +493,7 @@ def run_analytics(
     content_category_breakdown: dict[str, dict] = {}
     # 검색의도별 성과 — 어떤 의도의 글이 실제로 잘 나가는지 비교용 (search_intent.py)
     search_intent_breakdown: dict[str, dict] = {}
+    total_gsc_urls_seen = 0   # GSC가 돌려준 URL 총 개수 (블로그 전체 누적)
     any_gsc_data = False
 
     cfg_by_id = {c.get("id", "blog1"): c for c in blog_configs}
@@ -486,6 +516,8 @@ def run_analytics(
         total_blog_views_7d_all += blogger_views["total_7d"]
         total_gsc_clicks_all += blog_gsc_clicks
 
+        gsc_lookup = _build_gsc_lookup(gsc_page_data)
+        total_gsc_urls_seen += len(gsc_page_data or {})
         blog_bd = {"posts": len(blog_posts), "grade_counts": {"S": 0, "A": 0, "B": 0, "C": 0},
                    "pageviews30d": blog_views_30d, "gscClicks30d": blog_gsc_clicks}
 
@@ -497,7 +529,9 @@ def run_analytics(
             cpc = float(post.get("estimatedCPC", 0))
             post_date = post.get("date", "2020-01-01")
 
-            gsc_info = gsc_page_data.get(post_url, {})
+            gsc_info = gsc_page_data.get(post_url)
+            if gsc_info is None:
+                gsc_info = gsc_lookup.get(_normalize_url(post_url), {})
             clicks = gsc_info.get("clicks", 0)
             impressions = gsc_info.get("impressions", 0)
             ctr = gsc_info.get("ctr", 0.0)
@@ -603,6 +637,13 @@ def run_analytics(
             "bloggerApi": total_blog_views_30d_all > 0,
             "gscPageData": any_gsc_data,
             "gscUrlsMatched": sum(1 for p in posts if p.get("grade") and p.get("gscClicks30d", 0) > 0),
+            # GSC가 데이터를 돌려줬는데 우리 글과 매칭된 비율 — 도메인 전환·URL 형식
+            # 불일치로 성과가 조용히 0으로 집계되는 것을 감지하기 위한 지표
+            "gscUrlsSeen": total_gsc_urls_seen,
+            "gscMatchRate": round(
+                sum(1 for p in posts if p.get("gscImpressions30d", 0) > 0) / len(posts) * 100, 1
+            ) if posts else 0.0,
+            "postsWithoutUrl": sum(1 for p in posts if not p.get("blogUrl")),
         },
     }
 

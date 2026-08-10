@@ -462,6 +462,8 @@ def run_analytics(
     # 글작성 고도화 실험(카테고리별 도입부 후킹) 효과 비교용 — content_generator.py의
     # _detect_content_category()가 남긴 태그별로 등급 분포를 집계
     content_category_breakdown: dict[str, dict] = {}
+    # 검색의도별 성과 — 어떤 의도의 글이 실제로 잘 나가는지 비교용 (search_intent.py)
+    search_intent_breakdown: dict[str, dict] = {}
     any_gsc_data = False
 
     cfg_by_id = {c.get("id", "blog1"): c for c in blog_configs}
@@ -491,6 +493,7 @@ def run_analytics(
             post_url = post.get("blogUrl", "")
             category = post.get("adsenseCategory", "일반")
             content_category = post.get("contentCategory", "")
+            post_intent = post.get("searchIntent", "")
             cpc = float(post.get("estimatedCPC", 0))
             post_date = post.get("date", "2020-01-01")
 
@@ -535,6 +538,16 @@ def run_analytics(
                 cc_bd["posts"] += 1
                 cc_bd["grade_counts"][grade] += 1
                 cc_bd["totalPageviews30d"] += est_views
+
+            if post_intent:
+                si_bd = search_intent_breakdown.setdefault(
+                    post_intent, {"posts": 0, "grade_counts": {"S": 0, "A": 0, "B": 0, "C": 0},
+                                  "totalPageviews30d": 0, "totalClicks30d": 0}
+                )
+                si_bd["posts"] += 1
+                si_bd["grade_counts"][grade] += 1
+                si_bd["totalPageviews30d"] += est_views
+                si_bd["totalClicks30d"] += clicks
 
             if grade == "C":
                 rewrite_targets.append({
@@ -583,6 +596,7 @@ def run_analytics(
         },
         "blogBreakdown": blog_breakdown,
         "contentCategoryBreakdown": content_category_breakdown,
+        "searchIntentBreakdown": search_intent_breakdown,
         "rewriteTargets": rewrite_targets[:20],       # 상위 20개 C급
         "topPerformers": top_performers[:10],           # 상위 10개 S급
         "dataSource": {

@@ -19,6 +19,8 @@ from coupang_affiliate import inject_affiliate_section
 from image_fetcher import fetch_images_for_queries, inject_images_into_content
 from readability_checker import assess_readability, readability_escalation_note
 from title_policy import check_title, sanitize_title, title_escalation_note
+from search_intent import detect_intent, intent_prompt_block
+from snippet_optimizer import ensure_summary_box, snippet_prompt_block
 
 logger = logging.getLogger(__name__)
 _client: anthropic.Anthropic | None = None
@@ -1024,7 +1026,10 @@ JSON만 응답 (마크다운 없이):
 def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
     blog_id = (blog_config or {}).get("id", "")
     # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (모든 블로그 공통)
-    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block(keyword, blog_id) + _learned_guidelines_block()
+    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + (
+        _engagement_block(keyword, blog_id) + _learned_guidelines_block()
+        + intent_prompt_block(keyword) + snippet_prompt_block()
+    )
 
     # blog1 (HOGU What?) 전용 프롬프트
     if blog_id == "blog1":
@@ -1892,7 +1897,10 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict, blog_
     from datetime import datetime
     blog_id = (blog_config or {}).get("id", "")
     # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (가짜 체험담·목차 반복 방지)
-    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block(keyword, blog_id) + _learned_guidelines_block()
+    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + (
+        _engagement_block(keyword, blog_id) + _learned_guidelines_block()
+        + intent_prompt_block(keyword) + snippet_prompt_block()
+    )
     if blog_id == "blog3":
         return _build_series_prompt_finance(keyword, traffic, series_context, blog_config) + style_block
     # blog1 또는 미지정
@@ -2363,10 +2371,16 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             # 발행 후 GSC 지표·등급과 비교할 수 있게 함 (weekly_learning.py가 집계)
             content_category = _detect_content_category(keyword, (blog_config or {}).get("id", ""))
             post_data["content_category"] = content_category
+            # 검색의도 태그 — 발행 후 어떤 의도의 글이 잘 나갔는지 비교하기 위해 기록
+            post_data["search_intent"] = detect_intent(keyword)
             # 표준 스키마: tags는 labels의 별칭 (내부 링크·대시보드 공용)
             post_data["tags"] = list(post_data.get("labels", []) or [])
             post_data["series_id"] = series_context.get("series_id", "")
             post_data["episode"] = episode
+
+            # 검색 스니펫용 핵심 요약 박스 보장 (모델이 빠뜨렸으면 본문에서 생성)
+            if ensure_summary_box(post_data):
+                logger.info("  📌 핵심 요약 박스 삽입")
 
             content_html = post_data.get("content", "")
             post_data["word_count"] = _word_count(content_html)
@@ -2773,8 +2787,14 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             # 발행 후 GSC 지표·등급과 비교할 수 있게 함 (weekly_learning.py가 집계)
             content_category = _detect_content_category(keyword, (blog_config or {}).get("id", ""))
             post_data["content_category"] = content_category
+            # 검색의도 태그 — 발행 후 어떤 의도의 글이 잘 나갔는지 비교하기 위해 기록
+            post_data["search_intent"] = detect_intent(keyword)
             # 표준 스키마: tags는 labels의 별칭 (내부 링크·대시보드 공용)
             post_data["tags"] = list(post_data.get("labels", []) or [])
+
+            # 검색 스니펫용 핵심 요약 박스 보장 (모델이 빠뜨렸으면 본문에서 생성)
+            if ensure_summary_box(post_data):
+                logger.info("  📌 핵심 요약 박스 삽입")
 
             # 글자 수 및 미리보기 추가
             content_html = post_data.get("content", "")

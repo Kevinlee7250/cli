@@ -125,6 +125,7 @@ def register_post(
         "contentPreview": (post_data.get("content_preview") or post_data.get("meta_description", ""))[:300],
         "articleType":   post_data.get("article_type", ""),
         "contentCategory": post_data.get("content_category", ""),
+        "searchIntent": post_data.get("search_intent", ""),
     }
 
     registry = load_registry()

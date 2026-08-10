@@ -138,6 +138,7 @@ def log_run(
                 "articleType": r.get("article_type", ""),
                 "riskLevel": r.get("risk_level", ""),
                 "contentCategory": r.get("content_category", ""),
+                "searchIntent": r.get("search_intent", ""),
                 "blogId": cfg.get("id", "blog1"),
                 "blogName": cfg.get("name", ""),
                 # 소셜 미디어 콘텐츠 (social_publisher.generate_social_content() 반환값)
@@ -449,6 +450,7 @@ def export_dashboard() -> None:
                 "articleType": p.get("articleType", ""),
                 "riskLevel": p.get("riskLevel", ""),
                 "contentCategory": p.get("contentCategory", ""),
+                "searchIntent": p.get("searchIntent", ""),
                 "trendDirection": "rising",
                 "factCheck": p.get("factCheck"),
                 "tags": p.get("labels", [])[:7],
@@ -615,6 +617,7 @@ def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> 
             "articleType": r.get("article_type", ""),
             "riskLevel": r.get("risk_level", ""),
             "contentCategory": r.get("content_category", ""),
+            "searchIntent": r.get("search_intent", ""),
             "status": "pending",
             "blogId": cfg.get("id", r.get("blogId", "blog1")),
             "blogName": cfg.get("name", r.get("blogName", "")),

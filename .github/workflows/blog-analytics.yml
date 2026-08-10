@@ -75,9 +75,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/data/posts.json \
-                  docs/data/analytics_summary.json \
-                  blog-automation/logs/analytics_report.json 2>/dev/null || true
+          # docs/.gitignore가 docs/* 를 무시하므로 -f 필수 —
+          # 없으면 analytics_summary.json이 조용히 커밋에서 누락된다
+          git add -f docs/data/posts.json \
+                     docs/data/analytics_summary.json \
+                     blog-automation/logs/analytics_report.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "변경 없음 — 커밋 생략"
           else

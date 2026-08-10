@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-08-09T17:25:06.865687+00:00",
+  "checked_at": "2026-08-10T17:46:12.491384+00:00",
   "all_ok": false,
   "checks": [
     {
@@ -8,9 +8,19 @@
       "error": null
     },
     {
-      "name": "ads_txt",
+      "name": "ads_txt:HOGU What?",
       "ok": false,
-      "error": "ADSENSE_CLIENT_ID 미설정 — 게시자 ID를 확인할 수 없음"
+      "error": "HTTP 429 — Blogger 설정 → 수익에서 맞춤 ads.txt를 켜세요"
+    },
+    {
+      "name": "ads_txt:HOGU 여행,스포츠,연예",
+      "ok": true,
+      "error": null
+    },
+    {
+      "name": "ads_txt:금융NEWS",
+      "ok": false,
+      "error": "HTTP 429 — Blogger 설정 → 수익에서 맞춤 ads.txt를 켜세요"
     }
   ],
   "client_id": "310114393483-rtotnsftmbbat8l3pua3suer3juv91o6.apps.googleusercontent.com"

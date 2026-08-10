@@ -1,117 +1,3 @@
-2026-08-10 05:01:09,711 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개가 '직접 제작'으로 저작권 문제는 없으나 alt 텍스트 여부가 확인되지 않아 주의 필요
-2026-08-10 05:01:09,712 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서 ~보겠습니다' 식의 반복적 전환 문구와 보고서체 구조가 다수 나타남
-2026-08-10 05:01:09,712 [WARNING] adsense_validator —   🔴 본문 중 '뜻입니다나 펀드를 추가로...'와 같이 문장이 깨진 오류 구간이 있어 즉시 수정 필요
-2026-08-10 05:01:09,712 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
-2026-08-10 05:01:09,712 [WARNING] main —      🔴 본문 중 '뜻입니다나 펀드를 추가로...'와 같이 문장이 깨진 오류 구간이 있어 즉시 수정 필요
-2026-08-10 05:01:09,712 [WARNING] main —      🟡 [원본성 및 품질] 2998자로 분량은 충분하나 통계 재구성 위주이며 개인 경험이 없고 본문 중 문장이 깨진 부분(오류 문구)이 품질을 저해함
-2026-08-10 05:01:09,712 [WARNING] main —      🟡 [구조 및 가독성] H2는 5개로 충분하나 표 설명 단락 등 500자 이상 긴 단락이 다수 존재함
-2026-08-10 05:01:09,712 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 미래에셋증권 등 구체 출처 인용은 있으나 1인칭 경험이나 저자 전문성 신호가 부족함
-2026-08-10 05:01:09,712 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
-2026-08-10 05:01:10,708 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-10 05:02:36,495 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-10 05:02:38,019 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-10 05:02:49,733 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2998자 → 3349자 (+351자)
-2026-08-10 05:02:49,733 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-10 05:02:52,776 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-10 05:03:14,507 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '퇴직연금 ETF 포트폴리오, 2026년에는 이렇게 짜야 하는 이'
-2026-08-10 05:03:14,507 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 기준은 충족하나 일부 섹션 단락이 500자 이상으로 길어 가독성이 다소 떨어짐
-2026-08-10 05:03:14,508 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장('직접 제작')만 언급되고 alt 텍스트 여부 확인 불가, 이미지 수도 적어 warn
-2026-08-10 05:03:14,508 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 💡 핵심 포인트 콜아웃, 반복되는 '다음 섹션에서는~보겠습니다' 전환구 등 템플릿화된 AI 패턴이 일부 감지됨
-2026-08-10 05:03:14,508 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
-2026-08-10 05:03:14,508 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-08-10 05:03:16,858 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-10 05:03:54,300 [INFO] final_editor —   ✏️ 제목 최종 교정: '퇴직연금 ETF 포트폴리오, 2026년에는 이렇게 짜야 하는 이유' → '2026년 퇴직연금 ETF 포트폴리오 구성 방법과 70% 한도 대응법'
-2026-08-10 05:03:54,300 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
-2026-08-10 05:03:54,300 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 규격에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분리했습니다. 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모·참고자료 블록을 추가해 발행 완성도를 높였습니다.
-2026-08-10 05:03:54,435 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-10 05:03:54,435 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-10 05:03:54,543 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-10 05:03:54,559 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-10 05:03:54,560 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '퇴직연금 ETF 포트폴리오 구성 방법 2026' — 면책·팩트체크 확인 권장
-2026-08-10 05:03:54,560 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-08-10 05:03:55,505 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026-etf-70.html
-2026-08-10 05:03:55,518 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026-etf-70.html
-2026-08-10 05:04:32,289 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-10 05:04:32,290 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-10 05:04:32,290 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-10 05:04:32,299 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '2026년 퇴직연금 ETF 포트폴리오 구성 방법과 70% 한도 대응법'
-2026-08-10 05:04:34,007 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-10 05:04:38,962 [INFO] comment_manager —   생성된 댓글: 글 읽으시면서 "그럼 70% 넘긴 계좌는 그냥 손 놓고 있어야 하나?" 궁금하신 분들도 계실 것 같아요. 실제로는 위험자산 비중이 초과돼도 안전...
-2026-08-10 05:07:39,076 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-10 05:07:39,077 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-10 05:07:39,078 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-10 05:07:39,078 [INFO] main — 
-============================================================
-2026-08-10 05:07:39,078 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-08-10 05:07:39,078 [INFO] main — ============================================================
-2026-08-10 05:07:39,117 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-10 05:07:39,145 [INFO] dashboard_exporter —   시리즈: 17개 내보내기 완료
-2026-08-10 05:07:39,167 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-10 05:07:39,451 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-10 05:07:39,738 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-10 05:07:39,739 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-10 05:07:39,742 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-10 05:07:39,758 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 229 / 실패 1 / 대기 52)
-2026-08-10 05:07:39,759 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-10 05:07:39,759 [INFO] dashboard_exporter —   포스트: 104개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-10 05:07:39,760 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-10 11:06:26,793 [INFO] main — ============================================================
-2026-08-10 11:06:26,793 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-10 11:06:26
-2026-08-10 11:06:26,793 [INFO] main — ============================================================
-2026-08-10 11:06:26,811 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
-2026-08-10 11:06:26,811 [INFO] keyword_collector — 포스팅 이력 코퍼스: 207개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-08-10 11:06:26,812 [INFO] keyword_collector — 시즌 예약 키워드 7개 로드 (blog=blog1): ['광복절 연휴 국내여행 숙소 솔직 비교', '여름 끝 여행 가성비 코스 추천 방법', '광복절 연휴 3박4일 코스 솔직 비교']...
-2026-08-10 11:06:29,865 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-10 11:06:38,326 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-10 11:06:38,352 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-10 11:06:38,352 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-10 11:06:38,654 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-10 11:06:38,833 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-10 11:06:38,991 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-10 11:06:38,993 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
-2026-08-10 11:06:39,007 [INFO] keyword_collector — 최근 사용 제외 2개: ['해외여행 실비보험 필요한지 직접 비교해봤더니', '전국 치킨 맛집 여행지도 추천 코스']
-2026-08-10 11:06:39,007 [INFO] keyword_collector — 유사 주제 제외 10개: ['광복절 연휴 국내여행 숙소 솔직 비교', '여름 끝 여행 가성비 코스 추천 방법', '광복절 연휴 3박4일 코스 솔직 비교', '여름 끝 여행 숙소 가격 비교 후기', '2026 광복절 연휴 인파 없는 여행지 추천']
-2026-08-10 11:06:39,007 [WARNING] keyword_collector — 선정 키워드 부족 (1/2) — 유사도 기준 완화하여 재시도
-2026-08-10 11:06:39,019 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (1/2) — 이전 사용 키워드 일부 허용
-2026-08-10 11:06:39,020 [INFO] keyword_collector —   [naver_realtime] 1개: ['추석 연휴 국내 여행 할인 정보 모음 2026']
-2026-08-10 11:06:39,020 [INFO] keyword_collector —   [high_cpc] 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-10 11:06:39,021 [INFO] keyword_collector — 최종 선정 키워드 2개: ['추석 연휴 국내 여행 할인 정보 모음 2026', '해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-10 11:06:39,021 [INFO] main — 수집된 키워드 2개: ['추석 연휴 국내 여행 할인 정보 모음 2026', '해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-10 11:06:39,026 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
-2026-08-10 11:06:41,812 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 40개
-2026-08-10 11:06:44,679 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-10 11:06:44,680 [INFO] keyword_collector — 화제 드라마 감지: ['사랑이 온다', '오싹한 연애', '복수의 여왕']
-2026-08-10 11:06:44,680 [INFO] main — [자동 드라마 시리즈] '사랑이 온다' 감지 — 리뷰 시리즈 기획 시작
-2026-08-10 11:06:49,940 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-10 11:06:49,941 [INFO] series_planner — 드라마 시리즈 기획 완료: '사랑이 온다 드라마 리뷰 시리즈' 3편
-2026-08-10 11:06:49,941 [INFO] main — [자동 시리즈] '사랑이 온다' 3편 기획 시작 (이후 단독 포스트 0개)
-2026-08-10 11:06:49,942 [INFO] main — ============================================================
-2026-08-10 11:06:49,942 [INFO] main — [HOGU What?] 시리즈 모드 시작: '사랑이 온다' 3편
-2026-08-10 11:06:49,942 [INFO] main — ============================================================
-2026-08-10 11:06:49,943 [INFO] main — 시리즈 기획 완료: '사랑이 온다 드라마 리뷰 시리즈'
-2026-08-10 11:06:49,943 [INFO] main —   편 1: 사랑이 온다 첫인상 솔직 리뷰
-2026-08-10 11:06:49,943 [INFO] main —   편 2: 사랑이 온다 등장인물 총정리 분석
-2026-08-10 11:06:49,943 [INFO] main —   편 3: 사랑이 온다 결말 총평 별점 공개
-2026-08-10 11:06:49,943 [INFO] main — 
---- [1/3편] '사랑이 온다 첫인상 리뷰' 생성 중 ---
-2026-08-10 11:06:49,944 [INFO] content_generator — 시리즈 포스트 생성: '사랑이 온다 첫인상 리뷰' (1/3편)
-2026-08-10 11:06:56,693 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-10 11:06:56,694 [INFO] research_collector — 검색 의도: 드라마/프로그램 '사랑이 온다' 첫 회 방송 후 초반 인상과 평가를 확인하려는 의도
-2026-08-10 11:07:05,407 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '사랑이 온다 첫인상 리뷰'
-2026-08-10 11:07:15,883 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-10 11:07:15,884 [INFO] evidence_builder — 자료팩 생성: 사실 3개 — '사랑이 온다 첫인상 리뷰'
-2026-08-10 11:07:18,601 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-10 11:07:18,602 [INFO] source_validator — 출처 검증: 0/3개 통과, 등급 분포 {'X': 3}
-2026-08-10 11:07:18,604 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
-2026-08-10 11:07:18,605 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-10 11:07:19,728 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-08-10 11:08:40,428 [INFO] content_generator — 출처 검증: 1개 유효 / 1개 제거
 2026-08-10 11:08:42,541 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-08-10 11:08:56,871 [INFO] content_generator — 팩트체크: 통과
@@ -612,3 +498,106 @@
 2026-08-10 22:53:47,744 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-10 22:53:47,744 [INFO] dashboard_exporter —   포스트: 104개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-10 22:53:47,745 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-10 22:54:22,409 [INFO] main — ============================================================
+2026-08-10 22:54:22,409 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-10 22:54:22
+2026-08-10 22:54:22,409 [INFO] main — ============================================================
+2026-08-10 22:54:22,427 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-10 22:54:22,427 [INFO] keyword_collector — 포스팅 이력 코퍼스: 177개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-08-10 22:54:28,671 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-08-10 22:54:36,770 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 22:54:36,796 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-10 22:54:36,796 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-10 22:54:37,512 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-10 22:54:37,513 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-10 22:54:37,515 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-08-10 22:54:37,541 [INFO] keyword_collector — 유사 주제 제외 23개: ['엔저 시대 일본 여행 저렴하게 가는 방법 2026', '수도권 벗어난 국내 로컬 여행지 추천', '여름휴가 숙소 항공권 반값에 예약하는 방법', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개']
+2026-08-10 22:54:37,541 [INFO] keyword_collector —   [naver_realtime] 1개: ['건강하게 10kg 감량하는 방법과 식단 관리']
+2026-08-10 22:54:37,541 [INFO] keyword_collector —   [fallback] 1개: ['프리미어리그 중계 무료로 보는 합법적인 방법']
+2026-08-10 22:54:37,541 [INFO] keyword_collector — 최종 선정 키워드 2개: ['건강하게 10kg 감량하는 방법과 식단 관리', '프리미어리그 중계 무료로 보는 합법적인 방법']
+2026-08-10 22:54:37,541 [INFO] main — 수집된 키워드 2개: ['건강하게 10kg 감량하는 방법과 식단 관리', '프리미어리그 중계 무료로 보는 합법적인 방법']
+2026-08-10 22:54:37,547 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
+2026-08-10 22:54:37,547 [INFO] main — 단독 포스트 대상 키워드 1개: ['건강하게 10kg 감량하는 방법과 식단 관리']
+2026-08-10 22:54:37,564 [INFO] main — 
+[1/1] 키워드: '건강하게 10kg 감량하는 방법과 식단 관리'
+2026-08-10 22:54:37,565 [INFO] content_generator — 포스트 생성 중: '건강하게 10kg 감량하는 방법과 식단 관리'
+2026-08-10 22:54:45,203 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 22:54:45,204 [INFO] research_collector — 검색 의도: 건강을 해치지 않고 안전하게 10kg을 감량하기 위한 구체적인 방법과 식단 정보를 찾고자 함
+2026-08-10 22:55:12,116 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '건강하게 10kg 감량하는 방법과 식단 관리'
+2026-08-10 22:55:36,632 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 22:55:36,633 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '건강하게 10kg 감량하는 방법과 식단 관리'
+2026-08-10 22:55:53,819 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 22:55:53,820 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'D': 4, 'X': 2, 'B': 1}
+2026-08-10 22:55:53,822 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
+2026-08-10 22:55:53,822 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-10 22:55:55,449 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 22:57:22,883 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-10 22:57:24,864 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 22:57:43,104 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '내분비내과 전문의 우창윤 원장은 한 매체 인터뷰에서'
+2026-08-10 22:57:43,104 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 0건 자동 수정 적용
+2026-08-10 22:57:43,578 [INFO] image_fetcher — 이미지 수집 성공: '10kg 감량, 운동선수들은 어떻게 건강하게 해낼까 – 단계별 식단 관리법' → 제목='straw bale / 1000 kg / agriculture / big' (관련성=0.00)
+2026-08-10 22:57:45,020 [INFO] image_fetcher — 대체 이미지 수집: '건강하게 kg 감량하' → 제목='physiotherapy / weight training / dumbbe' (관련성=0.00)
+2026-08-10 22:57:45,020 [INFO] image_fetcher — 이미지 수집 성공: '건강하게 kg 감량하' → 제목='physiotherapy / weight training / dumbbe' (관련성=0.00)
+2026-08-10 22:57:45,598 [INFO] image_fetcher — 대체 이미지 수집: '건강하게 kg 감량 격투기나 복싱처럼' → 제목='scale / weigh / kg / mass / weight' (관련성=0.00)
+2026-08-10 22:57:45,598 [INFO] image_fetcher — 이미지 수집 성공: '건강하게 kg 감량 격투기나 복싱처럼' → 제목='scale / weigh / kg / mass / weight' (관련성=0.00)
+2026-08-10 22:57:48,844 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 22:57:48,845 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-08-10 22:57:48,845 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-10 22:57:48,848 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-10 22:57:48,850 [INFO] content_generator — 포스트 생성 완료: '10kg 감량, 운동선수들은 어떻게 건강하게 해낼까 – 단계별 식단 관리법' (2911자, 이미지 2개)
+2026-08-10 22:57:50,746 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 22:58:08,727 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '10kg 감량, 운동선수들은 어떻게 건강하게 해낼까 – 단계별 '
+2026-08-10 22:58:08,727 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2911자로 분량은 충족하나 개인 경험보다는 일반론적 조언과 외부 전문가 인용 재구성 위주
+2026-08-10 22:58:08,727 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 전문의 인용과 5개 출처는 있으나 1인칭 직접 경험 서술이 부족함
+2026-08-10 22:58:08,727 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지는 있으나 alt텍스트 여부 불명확, 이미지 수 적음
+2026-08-10 22:58:08,727 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 단계별 '흔한 실수는~' 반복 패턴과 요약 구조가 전형적인 AI 작성 형식을 보임
+2026-08-10 22:58:08,734 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-10 22:58:08,736 [INFO] internal_linker —   [1/5] '다이어트' -> https://www.hoguwhat.com/2026/08/10kg-8.html
+2026-08-10 22:58:08,737 [INFO] internal_linker —   [2/5] '다이어트' -> https://hogugolfntraval.blogspot.com/2026/08/10kg.html
+2026-08-10 22:58:08,740 [INFO] internal_linker —   [3/5] '다이어트' -> https://www.hoguwhat.com/2026/08/10kg.html
+2026-08-10 22:58:08,742 [INFO] internal_linker —   [4/5] '근손실' -> https://hogugolfntraval.blogspot.com/2026/08/10kg_0206104649
+2026-08-10 22:58:08,742 [INFO] internal_linker — 내부 링크 4개 삽입 완료
+2026-08-10 22:58:08,742 [INFO] main —   제목: 10kg 감량, 운동선수들은 어떻게 건강하게 해낼까 – 단계별 식단 관리법
+2026-08-10 22:58:08,742 [INFO] main —   이미지: 2개 삽입
+2026-08-10 22:58:08,742 [INFO] main —   글자 수: 2911자
+2026-08-10 22:58:10,645 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 22:58:26,339 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '10kg 감량, 운동선수들은 어떻게 건강하게 해낼까 – 단계별 '
+2026-08-10 22:58:26,339 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충족하나 1인칭 실경험 사례 없이 전문가 인용과 일반론적 서술 중심
+2026-08-10 22:58:26,339 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 광고 슬롯 0개로 정책 위반은 없으나 수익화 관점에서 최소 배치 권장
+2026-08-10 22:58:26,339 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 전문가 인용과 출처 5개는 있으나 저자의 직접 경험 서술이 없음
+2026-08-10 22:58:26,339 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처로 저작권 문제는 없으나 alt텍스트 명시 여부 불명확
+2026-08-10 22:58:26,339 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 1~5단계식 목록화와 '~라는 의견이 많습니다' 같은 정형화된 서술 패턴이 반복됨
+2026-08-10 22:58:26,339 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-08-10 22:58:26,339 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 충족하나 1인칭 실경험 사례 없이 전문가 인용과 일반론적 서술 중심
+2026-08-10 22:58:26,339 [WARNING] main —      🟡 [광고 배치 적합성] 광고 슬롯 0개로 정책 위반은 없으나 수익화 관점에서 최소 배치 권장
+2026-08-10 22:58:26,340 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 전문가 인용과 출처 5개는 있으나 저자의 직접 경험 서술이 없음
+2026-08-10 22:58:26,340 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-08-10 22:58:28,009 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 22:59:40,966 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2911자 → 3510자 (+599자)
+2026-08-10 22:59:40,967 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-10 22:59:42,241 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-10 23:00:00,160 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '10kg 감량, 운동선수들은 어떻게 건강하게 해낼까 – 단계별 '
+2026-08-10 23:00:00,160 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 헤딩이 3개로 기준(4개 이상)에 못 미치며 일부 단락이 500자 이상으로 다소 김
+2026-08-10 23:00:00,160 [INFO] adsense_validator —   ❌ 광고 배치 적합성: 3510자 분량 대비 광고 슬롯 8개는 과도하여 콘텐츠 흐름을 심각하게 방해할 가능성이 큼
+2026-08-10 23:00:00,160 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 사용으로 저작권 문제는 적으나 정책상 이미지 관련 항목은 기본 warn 처리
+2026-08-10 23:00:00,160 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 각 단계마다 '흔한 실수는~' 패턴이 반복되어 다소 정형화된 템플릿 느낌이 있음
+2026-08-10 23:00:00,160 [WARNING] adsense_validator —   🔴 [광고 배치 적합성] 3510자 분량 대비 광고 슬롯 8개는 과도하여 콘텐츠 흐름을 심각하게 방해할 가능성이 큼
+2026-08-10 23:00:00,160 [WARNING] adsense_validator —   🔴 광고 슬롯 8개는 콘텐츠 길이(3510자) 대비 과도하여 AdSense 사용자 경험 정책 위반 우려가 있음 - 4개 이하로 축소 권장
+2026-08-10 23:00:00,160 [WARNING] main —   ⚠️ 자동 수정 후에도 기준 미달 (점수: 72/100) — pending 저장
+2026-08-10 23:00:00,161 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '10kg 감량, 운동선수들은 어떻게 건강하게 해낼까 – 단계별 식단 관리법' (점수: 72/100, 권장: review)
+2026-08-10 23:00:00,191 [INFO] dashboard_exporter —   검토 대기 저장: 10kg 감량, 운동선수들은 어떻게 건강하게 해낼까 – 단계별 식단 관리법 (9329자 HTML)
+2026-08-10 23:00:00,211 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 153개)
+2026-08-10 23:00:00,212 [INFO] main — 
+============================================================
+2026-08-10 23:00:00,212 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-08-10 23:00:00,212 [INFO] main — ============================================================
+2026-08-10 23:00:00,249 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-10 23:00:00,272 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
+2026-08-10 23:00:00,290 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-10 23:00:00,461 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-10 23:00:00,732 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-10 23:00:00,733 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-10 23:00:00,736 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-10 23:00:00,751 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 230 / 실패 0 / 대기 51)
+2026-08-10 23:00:00,751 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-10 23:00:00,751 [INFO] dashboard_exporter —   포스트: 104개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-10 23:00:00,752 [INFO] main — 대시보드 데이터 업데이트 완료

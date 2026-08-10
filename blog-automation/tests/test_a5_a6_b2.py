@@ -225,3 +225,49 @@ def test_weekly_learning_skips_empty_guidelines(tmp_path, monkeypatch):
 
     wl._auto_apply({"writing_guidelines": ["", "  "]})
     assert not tips.exists()
+
+
+# ── A5 추가: 일시적 응답(429/5xx) 구분 (2026-08-10 점검에서 발견) ────────────────
+
+def test_ads_txt_429_marked_transient_not_config_error():
+    """429는 설정 문제가 아님 — 멀쩡한 설정을 건드리게 만드는 오안내 방지."""
+    import auth_health_check as ahc
+    resp = MagicMock(status_code=429, text="")
+    with patch("requests.get", return_value=resp), patch("time.sleep"):
+        r = ahc.check_ads_txt("https://x.com/", "블로그", "pub-123")
+    assert r["ok"] is False
+    assert r.get("transient") is True
+    assert "설정 문제 아님" in r["error"]
+
+
+def test_ads_txt_retries_once_on_429():
+    import auth_health_check as ahc
+    responses = [MagicMock(status_code=429, text=""),
+                 MagicMock(status_code=200, text="google.com, pub-123, DIRECT, x")]
+    with patch("requests.get", side_effect=responses), patch("time.sleep"):
+        r = ahc.check_ads_txt("https://x.com/", "블로그", "pub-123")
+    assert r["ok"] is True
+
+
+def test_ads_txt_404_still_reports_config_action():
+    """404는 진짜 미설정 — 조치 안내가 나와야 함."""
+    import auth_health_check as ahc
+    with patch("requests.get", return_value=MagicMock(status_code=404, text="")), \
+         patch("time.sleep"):
+        r = ahc.check_ads_txt("https://x.com/", "블로그", "pub-123")
+    assert r.get("transient") is not True
+    assert "맞춤 ads.txt" in r["error"]
+
+
+def test_run_all_ok_ignores_transient_failures(monkeypatch, tmp_path):
+    """레이트 리밋 때문에 '인증 문제 감지' 경보가 뜨면 안 됨."""
+    import auth_health_check as ahc
+    monkeypatch.setattr(ahc, "_DOCS_DATA", str(tmp_path))
+    with patch.object(ahc, "check_google_oauth", return_value={"name": "google_oauth", "ok": True, "error": None}), \
+         patch.object(ahc, "check_all_ads_txt", return_value=[
+             {"name": "ads_txt:A", "ok": True, "error": None},
+             {"name": "ads_txt:B", "ok": False, "transient": True, "error": "HTTP 429"},
+         ]):
+        report = ahc.run()
+    assert report["all_ok"] is True
+

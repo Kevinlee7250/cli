@@ -15,6 +15,7 @@ Usage:
 import json
 import logging
 import os
+import time
 from datetime import datetime, timezone
 
 import requests
@@ -77,14 +78,32 @@ def check_ads_txt(blog_url: str, blog_name: str, publisher_id: str) -> dict:
         return {"name": name, "ok": False, "error": "블로그 URL 없음"}
 
     url = blog_url.rstrip("/") + "/ads.txt"
-    try:
-        resp = requests.get(url, timeout=15)
-    except requests.exceptions.RequestException as e:
-        return {"name": name, "ok": False, "error": f"요청 실패: {e}"}
+
+    # 429(레이트 리밋)·5xx는 설정 문제가 아니라 일시적 응답 — 한 번 쉬고 재시도한다.
+    # 여러 블로그를 연달아 조회하면 Blogger가 429를 주므로, 이걸 "설정 안 됨"으로
+    # 보고하면 멀쩡한 설정을 건드리게 만드는 잘못된 안내가 된다.
+    resp = None
+    for attempt in range(2):
+        try:
+            resp = requests.get(url, timeout=15)
+        except requests.exceptions.RequestException as e:
+            return {"name": name, "ok": False, "error": f"요청 실패: {e}"}
+        if resp.status_code not in (429, 500, 502, 503, 504):
+            break
+        if attempt == 0:
+            time.sleep(3)
+
+    if resp.status_code in (429, 500, 502, 503, 504):
+        return {"name": name, "ok": False, "transient": True,
+                "error": f"HTTP {resp.status_code} — 일시적 응답 제한으로 확인 못 함 "
+                         f"(설정 문제 아님, 다음 실행에서 재확인)"}
+
+    if resp.status_code == 404:
+        return {"name": name, "ok": False,
+                "error": "ads.txt 없음(404) — Blogger 설정 → 수익에서 맞춤 ads.txt를 켜세요"}
 
     if resp.status_code != 200:
-        return {"name": name, "ok": False,
-                "error": f"HTTP {resp.status_code} — Blogger 설정 → 수익에서 맞춤 ads.txt를 켜세요"}
+        return {"name": name, "ok": False, "error": f"HTTP {resp.status_code} — 확인 실패"}
 
     body = resp.text or ""
     if "google.com" not in body.lower():
@@ -113,15 +132,19 @@ def check_all_ads_txt() -> list[dict]:
             continue
         # 커스텀 도메인이 있으면 그쪽이 실제 서빙 주소
         url = (b.get("gsc_site_url") or b.get("blog_url") or "").strip()
+        if results:
+            time.sleep(2)   # 연속 조회로 스스로 429를 유발하지 않도록
         results.append(check_ads_txt(url, b.get("name") or b.get("id", ""), pub_id))
     return results or [{"name": "ads_txt", "ok": False, "error": "확인할 블로그 없음"}]
 
 
 def run() -> dict:
     checks = [check_google_oauth()] + check_all_ads_txt()
+    # 일시적 응답(429/5xx)은 설정 문제가 아니므로 전체 상태를 실패로 만들지 않는다 —
+    # 그러지 않으면 레이트 리밋 때마다 "인증 문제 감지" 경보가 뜬다.
     report = {
         "checked_at": datetime.now(timezone.utc).isoformat(),
-        "all_ok": all(c["ok"] for c in checks),
+        "all_ok": all(c["ok"] or c.get("transient") for c in checks),
         "checks": checks,
         # client_id는 공개돼도 무해함(OAuth 재인증 URL을 대시보드에서 바로 구성하기 위해 노출) —
         # client_secret/refresh_token은 절대 여기 포함하지 않는다.
@@ -131,6 +154,8 @@ def run() -> dict:
     for c in checks:
         if c["ok"]:
             logger.info(f"✅ {c['name']}: 정상")
+        elif c.get("transient"):
+            logger.warning(f"⏳ {c['name']}: {c['error']}")
         else:
             logger.error(f"❌ {c['name']}: {c['error']}")
 

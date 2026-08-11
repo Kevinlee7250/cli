@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-08-10T17:46:12.491384+00:00",
-  "all_ok": false,
+  "checked_at": "2026-08-11T17:53:51.220165+00:00",
+  "all_ok": true,
   "checks": [
     {
       "name": "google_oauth",
@@ -9,18 +9,20 @@
     },
     {
       "name": "ads_txt:HOGU What?",
-      "ok": false,
-      "error": "HTTP 429 — Blogger 설정 → 수익에서 맞춤 ads.txt를 켜세요"
-    },
-    {
-      "name": "ads_txt:HOGU 여행,스포츠,연예",
       "ok": true,
       "error": null
     },
     {
+      "name": "ads_txt:HOGU 여행,스포츠,연예",
+      "ok": false,
+      "transient": true,
+      "error": "HTTP 429 — 일시적 응답 제한으로 확인 못 함 (설정 문제 아님, 다음 실행에서 재확인)"
+    },
+    {
       "name": "ads_txt:금융NEWS",
       "ok": false,
-      "error": "HTTP 429 — Blogger 설정 → 수익에서 맞춤 ads.txt를 켜세요"
+      "transient": true,
+      "error": "HTTP 429 — 일시적 응답 제한으로 확인 못 함 (설정 문제 아님, 다음 실행에서 재확인)"
     }
   ],
   "client_id": "310114393483-rtotnsftmbbat8l3pua3suer3juv91o6.apps.googleusercontent.com"

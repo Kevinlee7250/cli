@@ -1,5 +1,39 @@
 [
   {
+    "timestamp": "2026-08-12T15:16:33.034681",
+    "health_score": 97,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 2개",
+        "context": {
+          "count": 2,
+          "titles": [
+            "장마철 건강 관리, 2026년 직접 겪고 정리한 실전 ",
+            "여름휴가 펜션 에어컨 전기세, 직접 겪어보니 이렇게 절"
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 2개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-08-12T15:16:32.970239",
+        "success": true,
+        "detail": "대기 포스트 2개 → expired 처리",
+        "expired": 2
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-11T17:53:51.390487",
     "health_score": 97,
     "issues_found": 1,
@@ -1960,58 +1994,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-19T15:59:04.783747",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-19T14:39:06.964361",
-    "health_score": 63,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "consecutive_upload_failures",
-        "level": "critical",
-        "message": "최근 5회 연속 업로드 실패 (0건 업로드)",
-        "context": {
-          "fail_count": 5,
-          "recent_dates": [
-            "2026-07-19",
-            "2026-07-19",
-            "2026-07-19",
-            "2026-07-19",
-            "2026-07-19"
-          ]
-        },
-        "fix": "check_blogger_connection"
-      },
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "consecutive_upload_failures",
-        "issue_level": "critical",
-        "issue_message": "최근 5회 연속 업로드 실패 (0건 업로드)",
-        "fix_applied": "check_blogger_connection",
-        "timestamp": "2026-07-19T14:39:06.470164",
-        "success": true,
-        "detail": "Blogger 연결 정상: HOGU What? (https://www.hoguwhat.com/) — 업로드 파라미터 문제 가능성"
-      },
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-19T14:39:06.948030",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

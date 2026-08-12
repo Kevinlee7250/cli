@@ -1,93 +1,3 @@
-2026-08-12 04:54:15,810 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-12 04:54:15,898 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-12 04:54:15,903 [WARNING] blogger_uploader — ⏭ 중복 포스트 감지 — 업로드 건너뜀: '해외여행 실비보험, 정말 필요한지 직접 비교해봤더니'
-   기존 포스트: '해외여행 실비보험 필요한지 직접 비교해봤더니, 2026년 개선안까지' (https://www.hoguwhat.com/2026/08/2026_02059100424.html)
-2026-08-12 04:54:15,915 [WARNING] main —   ⏭ 중복 주제 — 업로드 건너뜀: '해외여행 실비보험 필요한지 직접 비교해봤더니' (유사 제목 이미 발행됨)
-2026-08-12 04:54:15,915 [INFO] main — 
-============================================================
-2026-08-12 04:54:15,915 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
-2026-08-12 04:54:15,915 [INFO] main — ============================================================
-2026-08-12 04:54:15,959 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-12 04:54:15,988 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
-2026-08-12 04:54:16,011 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-12 04:54:16,203 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-12 04:54:16,427 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-12 04:54:16,636 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-12 04:54:16,637 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-12 04:54:16,640 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-12 04:54:16,657 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 232 / 실패 0 / 대기 49)
-2026-08-12 04:54:16,657 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-12 04:54:16,657 [INFO] dashboard_exporter —   포스트: 103개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-12 04:54:16,659 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-12 04:54:53,500 [INFO] main — ============================================================
-2026-08-12 04:54:53,500 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-12 04:54:53
-2026-08-12 04:54:53,500 [INFO] main — ============================================================
-2026-08-12 04:54:53,519 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-12 04:54:53,519 [INFO] keyword_collector — 포스팅 이력 코퍼스: 177개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-08-12 04:54:53,519 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기', '명절 선물 세트 가성비 솔직 비교']...
-2026-08-12 04:54:58,568 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-08-12 04:55:07,751 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 04:55:07,773 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-12 04:55:07,773 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-12 04:55:08,669 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-12 04:55:08,669 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-12 04:55:08,670 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
-2026-08-12 04:55:08,707 [INFO] keyword_collector — 유사 주제 제외 32개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '골프 비기너 첫 필드 나가기 전 준비 체크리스트', '2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기']
-2026-08-12 04:55:08,708 [INFO] keyword_collector —   [fallback] 2개: ['류현진 복귀 후 성적 분석 실제로 달라진 점', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-12 04:55:08,708 [INFO] keyword_collector — 최종 선정 키워드 2개: ['류현진 복귀 후 성적 분석 실제로 달라진 점', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-12 04:55:08,708 [INFO] main — 수집된 키워드 2개: ['류현진 복귀 후 성적 분석 실제로 달라진 점', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-12 04:55:08,713 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-08-12 04:55:08,713 [INFO] main — 단독 포스트 대상 키워드 1개: ['류현진 복귀 후 성적 분석 실제로 달라진 점']
-2026-08-12 04:55:08,730 [INFO] main — 
-[1/1] 키워드: '류현진 복귀 후 성적 분석 실제로 달라진 점'
-2026-08-12 04:55:08,730 [INFO] content_generator — 포스트 생성 중: '류현진 복귀 후 성적 분석 실제로 달라진 점'
-2026-08-12 04:55:16,663 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 04:55:16,664 [INFO] research_collector — 검색 의도: 류현진이 부상/이적 복귀 이후 실제 성적 변화(구속, 구위, 성적 지표)를 확인하려는 의도
-2026-08-12 04:55:25,387 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '류현진 복귀 후 성적 분석 실제로 달라진 점'
-2026-08-12 04:55:39,536 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 04:55:39,537 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '류현진 복귀 후 성적 분석 실제로 달라진 점'
-2026-08-12 04:55:43,735 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 04:55:43,736 [INFO] source_validator — 출처 검증: 0/4개 통과, 등급 분포 {'X': 4}
-2026-08-12 04:55:43,738 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-08-12 04:55:43,738 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-12 04:55:44,885 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 04:57:06,329 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-12 04:57:07,487 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 04:57:21,242 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '메이저리그 활동 당시 패스트볼 구속이 지금보다 빨랐던 것으로 알려져 있는'
-2026-08-12 04:57:21,242 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
-2026-08-12 04:57:21,997 [INFO] image_fetcher — 이미지 수집 성공: '류현진 복귀 후 성적 분석, 실제로 달라진 점은 무엇일까' → 제목='류현진 '달라진 모습 보여드릴게요'[포토]' (관련성=0.25)
-2026-08-12 04:57:22,717 [INFO] image_fetcher — 이미지 수집 성공: '류현진 복귀 성적' → 제목='전문가들이 본 류현진 복귀 등판' (관련성=0.67)
-2026-08-12 04:57:23,611 [INFO] image_fetcher — 이미지 수집 성공: '류현진 복귀 다시 KBO 류현진의' → 제목='류현진 복귀? 정규시즌 최종전 등판설 '솔솔'' (관련성=0.40)
-2026-08-12 04:57:27,021 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 04:57:27,022 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-08-12 04:57:27,025 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-08-12 04:57:27,026 [INFO] content_generator — 포스트 생성 완료: '류현진 복귀 후 성적 분석, 실제로 달라진 점은 무엇일까' (2863자, 이미지 3개)
-2026-08-12 04:57:28,602 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 04:57:47,107 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '류현진 복귀 후 성적 분석, 실제로 달라진 점은 무엇일까'
-2026-08-12 04:57:47,107 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 개인 경험·구체적 수치 없이 일반론적 평가 문구가 반복 재조합됨
-2026-08-12 04:57:47,107 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개는 있으나 본문 내 인용 표기 부재, 1인칭 경험도 형식적 수준
-2026-08-12 04:57:47,107 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색 기반으로 저작권 주의 필요
-2026-08-12 04:57:47,107 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 평가가 많다' 등 정형화된 문구 반복 및 문장 중복 오류('전해집니다가 있었고') 발견
-2026-08-12 04:57:47,115 [INFO] internal_linker — 내부 링크 후보 4개 발견
-2026-08-12 04:57:47,116 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguasset.blogspot.com/2026/08/2026_02072899182.html
-2026-08-12 04:57:47,120 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-08-12 04:57:47,121 [INFO] main —   제목: 류현진 복귀 후 성적 분석, 실제로 달라진 점은 무엇일까
-2026-08-12 04:57:47,121 [INFO] main —   이미지: 3개 삽입
-2026-08-12 04:57:47,121 [INFO] main —   글자 수: 2863자
-2026-08-12 04:57:48,767 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 04:58:12,173 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-12 04:58:14,023 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 04:58:14,906 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '류현진 복귀 후 성적 분석, 실제로 달라진 점은 무엇일까'
-2026-08-12 04:58:14,906 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 통과하나 '평가가 많다/분석이 나온다' 식 일반화된 서술 반복이며 구체적 수치·경기일자·개인 경험 사례가 부족함
-2026-08-12 04:58:14,906 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 언급은 있으나 출처 4개가 본문 내 명시적 인용으로 드러나지 않고 문장 오류(비문)로 신뢰성 저하
-2026-08-12 04:58:14,906 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 모두 네이버 이미지 검색으로 저작권 주의 필요
-2026-08-12 04:58:14,906 [INFO] adsense_validator —   ❌ AI 생성 의심도: '관중이 크게 늘었다는 이야기가 종종 전해집니다가 있었고' 등 문장 중복/비문 오류가 AI 생성 미교정 흔적을 강하게 시사
-2026-08-12 04:58:14,906 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '관중이 크게 늘었다는 이야기가 종종 전해집니다가 있었고' 등 문장 중복/비문 오류가 AI 생성 미교정 흔적을 강하게 시사
-2026-08-12 04:58:14,906 [WARNING] adsense_validator —   🔴 '류현진이 등판하는 날 관중이 크게 늘었다는 이야기가 종종 전해집니다가 있었고' 부분은 문장이 중복·비문 상태로 즉시 수정 필요
-2026-08-12 04:58:14,906 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 72/100, 권장: review) — 자동 수정 시도
-2026-08-12 04:58:14,906 [WARNING] main —      🔴 [AI 생성 의심도] '관중이 크게 늘었다는 이야기가 종종 전해집니다가 있었고' 등 문장 중복/비문 오류가 AI 생성 미교정 흔적을 강하게 시사
-2026-08-12 04:58:14,906 [WARNING] main —      🔴 '류현진이 등판하는 날 관중이 크게 늘었다는 이야기가 종종 전해집니다가 있었고' 부분은 문장이 중복·비문 상태로 즉시 수정 필요
-2026-08-12 04:58:14,906 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 통과하나 '평가가 많다/분석이 나온다' 식 일반화된 서술 반복이며 구체적 수치·경기일자·개인 경험 사례가 부족함
 2026-08-12 04:58:14,906 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 언급은 있으나 출처 4개가 본문 내 명시적 인용으로 드러나지 않고 문장 오류(비문)로 신뢰성 저하
 2026-08-12 04:58:14,906 [WARNING] main —      🟡 [이미지 정책] 이미지 출처가 모두 네이버 이미지 검색으로 저작권 주의 필요
 2026-08-12 04:58:14,906 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 72/100, fail: 1개, warn: 3개
@@ -588,3 +498,114 @@
 2026-08-12 11:24:46,555 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-12 11:24:46,555 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-12 11:24:46,556 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-12 15:06:32,430 [INFO] main — ============================================================
+2026-08-12 15:06:32,430 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-08-12 15:06:32
+2026-08-12 15:06:32,430 [INFO] main — ============================================================
+2026-08-12 15:06:32,450 [INFO] main — 수집된 키워드 1개: ['당권주자 송영길 부동산 손대지']
+2026-08-12 15:06:32,456 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-08-12 15:06:32,456 [INFO] main — 단독 포스트 대상 키워드 1개: ['당권주자 송영길 부동산 손대지']
+2026-08-12 15:06:32,473 [INFO] main — 
+[1/1] 키워드: '당권주자 송영길 부동산 손대지'
+2026-08-12 15:06:32,473 [INFO] content_generator — 포스트 생성 중: '당권주자 송영길 부동산 손대지'
+2026-08-12 15:06:40,680 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 <none>"
+2026-08-12 15:06:40,680 [INFO] anthropic._base_client — Retrying request to /v1/messages in 0.380980 seconds
+2026-08-12 15:06:49,364 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 <none>"
+2026-08-12 15:06:49,365 [INFO] anthropic._base_client — Retrying request to /v1/messages in 0.984410 seconds
+2026-08-12 15:06:58,657 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 <none>"
+2026-08-12 15:06:58,657 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 529 - {'type': 'error', 'error': {'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011Cdy4bAddSaJ6aHyYsToVk'}
+2026-08-12 15:07:04,011 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '당권주자 송영길 부동산 손대지'
+2026-08-12 15:07:21,206 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 15:07:21,231 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '당권주자 송영길 부동산 손대지'
+2026-08-12 15:07:47,432 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 15:07:47,433 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'X': 3, 'B': 3}
+2026-08-12 15:07:47,436 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-12 15:07:50,407 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 15:08:58,143 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-12 15:09:00,831 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 15:09:13,294 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
+2026-08-12 15:09:13,567 [INFO] image_fetcher — 이미지 수집 성공: '송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수정 요구까지 나온 이유' → 제목='skyscrapers / skyline / city / buildings' (관련성=0.12)
+2026-08-12 15:09:14,416 [INFO] image_fetcher — 이미지 수집 성공: '당권주자 송영길 부동산' → 제목='본경선 진출한 민주당 당권주자 송영길' (관련성=0.40)
+2026-08-12 15:09:15,087 [INFO] image_fetcher — 이미지 수집 성공: '당권주자 송영길 정부 세제 관련' → 제목='송영길 “대표 결단 존중해야”…야당·기재부에 ‘전국민 재난지원금’ 압박' (관련성=0.20)
+2026-08-12 15:09:19,280 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 15:09:19,281 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-08-12 15:09:19,281 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-12 15:09:19,284 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-12 15:09:19,286 [INFO] content_generator — 포스트 생성 완료: '송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수정 요구까지 나온 이유' (2524자, 이미지 2개)
+2026-08-12 15:09:22,090 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 15:09:46,361 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수'
+2026-08-12 15:09:46,361 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 보도 재정리 위주로 개인적 인사이트·독창적 분석이 부족함
+2026-08-12 15:09:46,361 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 2026년 미래 시점 사건을 이미 발생한 사실처럼 서술해 사실 정확성에 의문 있음
+2026-08-12 15:09:46,361 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 인용은 있으나 1인칭 경험·전문성 신호 부재, 날짜 불일치로 신뢰도 저하
+2026-08-12 15:09:46,361 [INFO] adsense_validator —   ⚠️ 이미지 정책: 네이버 이미지 검색 기반 이미지 사용으로 저작권 주의 필요
+2026-08-12 15:09:46,361 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '관련 보도에 따르면에 따르면' 등 중복·기계적 문구와 정형화된 표 구조가 AI 생성 패턴을 시사함
+2026-08-12 15:09:46,361 [WARNING] adsense_validator —   🔴 2026년 8월 12일이라는 미래 날짜를 이미 발생한 사건처럼 서술해 사실관계 혼란 및 신뢰성 저하 우려
+2026-08-12 15:09:46,361 [WARNING] adsense_validator —   🔴 '관련 보도에 따르면에 따르면' 등 문구 중복 오류 존재
+2026-08-12 15:09:46,368 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-12 15:09:46,372 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguasset.blogspot.com/2026/08/2026_02072899182.html
+2026-08-12 15:09:46,373 [INFO] internal_linker —   [2/5] '양도소득세' -> https://hoguasset.blogspot.com/2026/08/2026_01325784700.html
+2026-08-12 15:09:46,375 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-08-12 15:09:46,375 [INFO] main —   제목: 송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수정 요구까지 나온 이유
+2026-08-12 15:09:46,375 [INFO] main —   이미지: 2개 삽입
+2026-08-12 15:09:46,376 [INFO] main —   글자 수: 2524자
+2026-08-12 15:09:48,697 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 15:10:12,920 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수'
+2026-08-12 15:10:12,920 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2524자로 기준 충족하나 뉴스 인용 재구성 위주로 개인 경험·독창적 인사이트 부족
+2026-08-12 15:10:12,920 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 3개 출처 인용으로 근거는 있으나 1인칭 경험이나 전문가적 관점 부재
+2026-08-12 15:10:12,920 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처 중 하나가 '네이버 이미지 검색' 기반으로 저작권 주의 필요
+2026-08-12 15:10:12,920 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '관련 보도에 따르면에 따르면' 등 중복 어구 오류와 정형화된 요약 박스 패턴이 AI 생성 흔적을 드러냄
+2026-08-12 15:10:12,920 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-12 15:10:12,920 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 2524자로 기준 충족하나 뉴스 인용 재구성 위주로 개인 경험·독창적 인사이트 부족
+2026-08-12 15:10:12,920 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 3개 출처 인용으로 근거는 있으나 1인칭 경험이나 전문가적 관점 부재
+2026-08-12 15:10:12,920 [WARNING] main —      🟡 [이미지 정책] 이미지 출처 중 하나가 '네이버 이미지 검색' 기반으로 저작권 주의 필요
+2026-08-12 15:10:12,920 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-12 15:10:15,770 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 15:11:28,934 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2524자 → 3017자 (+493자)
+2026-08-12 15:11:28,934 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-12 15:11:30,454 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 15:11:44,777 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수'
+2026-08-12 15:11:44,777 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2가 3개로 기준 미달이며 500자 이상 긴 단락이 다수 존재
+2026-08-12 15:11:44,777 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지는 문제 없으나 alt 텍스트 여부 확인 불가로 주의 필요
+2026-08-12 15:11:44,777 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
+2026-08-12 15:11:44,778 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-12 15:11:53,077 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 15:11:53,078 [WARNING] final_editor —   ⚠️ 3차 최종 편집 건너뜀 (무시): {'type': 'error', 'error': {'details': None, 'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011Cdy4xsap5nDPdBKiNu9pA'}
+2026-08-12 15:11:53,252 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-12 15:11:53,252 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-12 15:11:53,444 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-12 15:11:53,459 [INFO] related_posts — 관련 포스트 2개 섹션 생성
+2026-08-12 15:11:53,459 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '당권주자 송영길 부동산 손대지' — 면책·팩트체크 확인 권장
+2026-08-12 15:11:53,460 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-08-12 15:11:54,309 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/blog-post_13.html
+2026-08-12 15:11:54,321 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/blog-post_13.html
+2026-08-12 15:12:26,515 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 15:12:26,517 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-12 15:12:26,517 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-12 15:12:26,526 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수정 요구까지 나온 '
+2026-08-12 15:12:28,569 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 15:12:33,025 [INFO] comment_manager —   생성된 댓글: 세제 개편안이 확정되기 전이라도 미리 체크해두면 좋은 게, 국세청 홈택스에서 '보유세 예상 세액 조회' 기능으로 현재 기준 세액을 한번 계산해보...
+2026-08-12 15:15:33,193 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-12 15:15:33,194 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-12 15:15:33,195 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-12 15:15:33,195 [INFO] main — 
+============================================================
+2026-08-12 15:15:33,195 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-08-12 15:15:33,195 [INFO] main — ============================================================
+2026-08-12 15:15:33,239 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-12 15:15:33,267 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
+2026-08-12 15:15:33,289 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-12 15:15:33,622 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-12 15:15:34,022 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-12 15:15:34,407 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-12 15:15:34,408 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-12 15:15:34,411 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-12 15:15:34,428 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 232 / 실패 0 / 대기 50)
+2026-08-12 15:15:34,428 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-12 15:15:34,428 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-12 15:15:34,429 [INFO] main — 대시보드 데이터 업데이트 완료

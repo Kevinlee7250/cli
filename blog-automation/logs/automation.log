@@ -1,124 +1,3 @@
-2026-08-11 11:12:56,788 [INFO] content_generator — 포스트 생성 중: 'KB Pay 신용관리 서비스 활용법 총정리'
-2026-08-11 11:13:04,666 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:13:04,667 [INFO] research_collector — 검색 의도: KB Pay 앱에서 제공하는 신용관리 서비스의 기능과 활용 방법을 알고 싶어함
-2026-08-11 11:13:16,393 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — 'KB Pay 신용관리 서비스 활용법 총정리'
-2026-08-11 11:13:31,980 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:13:31,982 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — 'KB Pay 신용관리 서비스 활용법 총정리'
-2026-08-11 11:13:38,893 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:13:38,894 [INFO] source_validator — 출처 검증: 4/4개 통과, 등급 분포 {'D': 4}
-2026-08-11 11:13:38,897 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-08-11 11:13:38,897 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-11 11:13:40,561 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:14:51,969 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-11 11:14:53,364 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:15:00,042 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-08-11 11:15:00,186 [INFO] image_fetcher — 이미지 수집 성공: 'KB Pay 신용관리 서비스 활용법 총정리 - 자산관리 메뉴 이렇게 쓰세요' → 제목='clock / pocket watch / clockwork / watch' (관련성=0.11)
-2026-08-11 11:15:00,465 [INFO] image_fetcher — 대체 이미지 수집: 'KB Pay 신용관리' → 제목='shoe / age shoe / boots / from the shoes' (관련성=0.00)
-2026-08-11 11:15:00,465 [INFO] image_fetcher — 이미지 수집 성공: 'KB Pay 신용관리' → 제목='shoe / age shoe / boots / from the shoes' (관련성=0.00)
-2026-08-11 11:15:00,715 [INFO] image_fetcher — 대체 이미지 수집: 'KB Pay 자산관리 원래' → 제목='tar / road / mark / yellow / central str' (관련성=0.00)
-2026-08-11 11:15:00,715 [INFO] image_fetcher — 이미지 수집 성공: 'KB Pay 자산관리 원래' → 제목='tar / road / mark / yellow / central str' (관련성=0.00)
-2026-08-11 11:15:02,604 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:15:02,605 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
-2026-08-11 11:15:02,605 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-08-11 11:15:02,605 [INFO] image_fetcher — 제목 썸네일 생성: 'KB Pay 신용관리 서비스 활용법 총정리 - 자산관리' (data URI, 1170B)
-2026-08-11 11:15:02,723 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: 'clock / pocket watch / clockwork / watch'
-2026-08-11 11:15:02,723 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-08-11 11:15:02,726 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-08-11 11:15:02,728 [INFO] content_generator — 포스트 생성 완료: 'KB Pay 신용관리 서비스 활용법 총정리 - 자산관리 메뉴 이렇게 쓰세요' (2961자, 이미지 2개)
-2026-08-11 11:15:04,675 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:15:21,340 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — 'KB Pay 신용관리 서비스 활용법 총정리 - 자산관리 메뉴 이'
-2026-08-11 11:15:21,340 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2961자로 기준 충족하나 개인 경험·구체 사례 없이 기능 나열 위주의 일반 정보 재구성에 가까움
-2026-08-11 11:15:21,340 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개는 있으나 1인칭 직접 경험 서술이 없고 신용점수 산정 관련은 단정을 피하는 수준에 그침
-2026-08-11 11:15:21,340 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay·직접제작 출처는 명시됐으나 alt 텍스트 여부 확인 불가하고 이미지 수가 적음
-2026-08-11 11:15:21,340 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서 ~짚어보겠습니다' 류의 전환 문구와 요약박스 패턴이 반복되어 AI 생성 톤이 감지됨
-2026-08-11 11:15:21,349 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-11 11:15:21,359 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-08-11 11:15:21,359 [INFO] main —   제목: KB Pay 신용관리 서비스 활용법 총정리 - 자산관리 메뉴 이렇게 쓰세요
-2026-08-11 11:15:21,360 [INFO] main —   이미지: 2개 삽입
-2026-08-11 11:15:21,360 [INFO] main —   글자 수: 2961자
-2026-08-11 11:15:23,577 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:15:41,845 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — 'KB Pay 신용관리 서비스 활용법 총정리 - 자산관리 메뉴 이'
-2026-08-11 11:15:41,845 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2961자로 기준 충족하나 개인 경험·구체적 수치 없이 앱 기능 나열 위주의 일반 정보성 콘텐츠임
-2026-08-11 11:15:41,845 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 인용은 있으나 1인칭 직접 경험 서술이나 전문성 신호가 부족함
-2026-08-11 11:15:41,845 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay·직접제작 이미지로 저작권 문제는 없으나 alt 텍스트 포함 여부 확인 불가
-2026-08-11 11:15:41,845 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서 설명하겠습니다' 등 반복적 전환구와 정형화된 안내형 문체가 AI 생성 패턴과 유사함
-2026-08-11 11:15:41,845 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-11 11:15:41,845 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 2961자로 기준 충족하나 개인 경험·구체적 수치 없이 앱 기능 나열 위주의 일반 정보성 콘텐츠임
-2026-08-11 11:15:41,845 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3개 인용은 있으나 1인칭 직접 경험 서술이나 전문성 신호가 부족함
-2026-08-11 11:15:41,845 [WARNING] main —      🟡 [이미지 정책] Pixabay·직접제작 이미지로 저작권 문제는 없으나 alt 텍스트 포함 여부 확인 불가
-2026-08-11 11:15:41,845 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-11 11:15:43,868 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:17:11,818 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-11 11:17:13,867 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:17:39,101 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2961자 → 3559자 (+598자)
-2026-08-11 11:17:39,101 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-11 11:17:40,857 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:17:59,740 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — 'KB Pay 신용관리 서비스 활용법 총정리 - 자산관리 메뉴 이'
-2026-08-11 11:17:59,741 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay·직접 제작 출처로 저작권 위반은 없으나 alt 텍스트 확인 불가로 warn
-2026-08-11 11:17:59,741 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 95/100)
-2026-08-11 11:17:59,741 [INFO] main —   ✅ AdSense 검증 통과 (점수: 95/100) — 업로드
-2026-08-11 11:18:01,479 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:18:40,650 [INFO] final_editor —   ✏️ 제목 최종 교정: 'KB Pay 신용관리 서비스 활용법 총정리 - 자산관리 메뉴 이렇게 쓰세요' → 'KB Pay 신용관리 서비스 활용법 총정리, 자산관리 메뉴 사용법'
-2026-08-11 11:18:40,650 [INFO] final_editor —   ✏️ 메타 설명 교정 (100자)
-2026-08-11 11:18:40,651 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타 설명·슬러그를 SEO 기준에 맞게 정리하고, 잘려있던 참고자료 문장과 HTML 특수문자 오류(&#x27; 등)를 수정했습니다. 긴 문단을 2~4문장 단위로 분리하고, 주의사항 박스와 작성자 메모, 구체적인 이미지 alt 텍스트를 추가해 발행 형태를 완성했습니다.
-2026-08-11 11:18:40,734 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-11 11:18:40,735 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-11 11:18:40,813 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-11 11:18:40,829 [INFO] related_posts — 관련 포스트 1개 섹션 생성
-2026-08-11 11:18:40,829 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-08-11 11:18:41,812 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/kb-pay.html
-2026-08-11 11:18:41,826 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/kb-pay.html
-2026-08-11 11:19:13,341 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:19:13,342 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-11 11:19:13,342 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-11 11:19:13,351 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: 'KB Pay 신용관리 서비스 활용법 총정리, 자산관리 메뉴 사용법'
-2026-08-11 11:19:14,728 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 11:19:18,115 [INFO] comment_manager —   생성된 댓글: 신용점수는 조회한다고 해서 점수가 깎이지 않으니 부담 없이 자주 확인해보셔도 괜찮아요. 저는 한 달에 한 번씩 알림 설정해두고 변동 있을 때마다...
-2026-08-11 11:22:18,180 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-11 11:22:18,181 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-11 11:22:18,181 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-11 11:22:18,182 [INFO] main — 
-============================================================
-2026-08-11 11:22:18,182 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-08-11 11:22:18,182 [INFO] main — ============================================================
-2026-08-11 11:22:18,225 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-11 11:22:18,254 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
-2026-08-11 11:22:18,280 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-11 11:22:18,444 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-11 11:22:18,622 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-11 11:22:18,624 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-11 11:22:18,626 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-11 11:22:18,643 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 233 / 실패 0 / 대기 49)
-2026-08-11 11:22:18,643 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-11 11:22:18,643 [INFO] dashboard_exporter —   포스트: 104개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-11 11:22:18,644 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-11 22:52:17,377 [INFO] main — ============================================================
-2026-08-11 22:52:17,377 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-11 22:52:17
-2026-08-11 22:52:17,377 [INFO] main — ============================================================
-2026-08-11 22:52:17,396 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
-2026-08-11 22:52:17,396 [INFO] keyword_collector — 포스팅 이력 코퍼스: 215개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-08-11 22:52:17,396 [INFO] keyword_collector — 시즌 예약 키워드 11개 로드 (blog=blog1): ['여름 끝 여행 가성비 코스 추천 방법', '2026 추석 연휴 여행지 솔직 비교', '광복절 연휴 3박4일 코스 솔직 비교']...
-2026-08-11 22:52:22,184 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-11 22:52:28,409 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-11 22:52:28,430 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-11 22:52:28,430 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-11 22:52:28,913 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-11 22:52:29,104 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-11 22:52:29,334 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-11 22:52:29,336 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-08-11 22:52:29,357 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-11 22:52:29,357 [INFO] keyword_collector — 유사 주제 제외 16개: ['여름 끝 여행 가성비 코스 추천 방법', '2026 추석 연휴 여행지 솔직 비교', '광복절 연휴 3박4일 코스 솔직 비교', '여름 끝 여행 숙소 가격 비교 후기', '2026 광복절 연휴 인파 없는 여행지 추천']
-2026-08-11 22:52:29,357 [WARNING] keyword_collector — 선정 키워드 부족 (0/2) — 유사도 기준 완화하여 재시도
-2026-08-11 22:52:29,378 [WARNING] keyword_collector — 선정 키워드 여전히 부족 (0/2) — 이전 사용 키워드 일부 허용
-2026-08-11 22:52:29,380 [INFO] keyword_collector —   [high_cpc] 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-11 22:52:29,380 [INFO] keyword_collector —   [season_scheduled] 1개: ['여름 끝 여행 가성비 코스 추천 방법']
 2026-08-11 22:52:29,380 [INFO] keyword_collector — 최종 선정 키워드 2개: ['해외여행 실비보험 필요한지 직접 비교해봤더니', '여름 끝 여행 가성비 코스 추천 방법']
 2026-08-11 22:52:29,380 [INFO] main — 수집된 키워드 2개: ['해외여행 실비보험 필요한지 직접 비교해봤더니', '여름 끝 여행 가성비 코스 추천 방법']
 2026-08-11 22:52:29,386 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
@@ -619,3 +498,128 @@
 2026-08-12 04:54:16,657 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-12 04:54:16,657 [INFO] dashboard_exporter —   포스트: 103개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-12 04:54:16,659 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-12 04:54:53,500 [INFO] main — ============================================================
+2026-08-12 04:54:53,500 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-12 04:54:53
+2026-08-12 04:54:53,500 [INFO] main — ============================================================
+2026-08-12 04:54:53,519 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-12 04:54:53,519 [INFO] keyword_collector — 포스팅 이력 코퍼스: 177개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-08-12 04:54:53,519 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기', '명절 선물 세트 가성비 솔직 비교']...
+2026-08-12 04:54:58,568 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-08-12 04:55:07,751 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 04:55:07,773 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-12 04:55:07,773 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-12 04:55:08,669 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-12 04:55:08,669 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-12 04:55:08,670 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
+2026-08-12 04:55:08,707 [INFO] keyword_collector — 유사 주제 제외 32개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '골프 비기너 첫 필드 나가기 전 준비 체크리스트', '2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기']
+2026-08-12 04:55:08,708 [INFO] keyword_collector —   [fallback] 2개: ['류현진 복귀 후 성적 분석 실제로 달라진 점', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
+2026-08-12 04:55:08,708 [INFO] keyword_collector — 최종 선정 키워드 2개: ['류현진 복귀 후 성적 분석 실제로 달라진 점', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
+2026-08-12 04:55:08,708 [INFO] main — 수집된 키워드 2개: ['류현진 복귀 후 성적 분석 실제로 달라진 점', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
+2026-08-12 04:55:08,713 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
+2026-08-12 04:55:08,713 [INFO] main — 단독 포스트 대상 키워드 1개: ['류현진 복귀 후 성적 분석 실제로 달라진 점']
+2026-08-12 04:55:08,730 [INFO] main — 
+[1/1] 키워드: '류현진 복귀 후 성적 분석 실제로 달라진 점'
+2026-08-12 04:55:08,730 [INFO] content_generator — 포스트 생성 중: '류현진 복귀 후 성적 분석 실제로 달라진 점'
+2026-08-12 04:55:16,663 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 04:55:16,664 [INFO] research_collector — 검색 의도: 류현진이 부상/이적 복귀 이후 실제 성적 변화(구속, 구위, 성적 지표)를 확인하려는 의도
+2026-08-12 04:55:25,387 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '류현진 복귀 후 성적 분석 실제로 달라진 점'
+2026-08-12 04:55:39,536 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 04:55:39,537 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '류현진 복귀 후 성적 분석 실제로 달라진 점'
+2026-08-12 04:55:43,735 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 04:55:43,736 [INFO] source_validator — 출처 검증: 0/4개 통과, 등급 분포 {'X': 4}
+2026-08-12 04:55:43,738 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
+2026-08-12 04:55:43,738 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-12 04:55:44,885 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 04:57:06,329 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-12 04:57:07,487 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 04:57:21,242 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '메이저리그 활동 당시 패스트볼 구속이 지금보다 빨랐던 것으로 알려져 있는'
+2026-08-12 04:57:21,242 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
+2026-08-12 04:57:21,997 [INFO] image_fetcher — 이미지 수집 성공: '류현진 복귀 후 성적 분석, 실제로 달라진 점은 무엇일까' → 제목='류현진 '달라진 모습 보여드릴게요'[포토]' (관련성=0.25)
+2026-08-12 04:57:22,717 [INFO] image_fetcher — 이미지 수집 성공: '류현진 복귀 성적' → 제목='전문가들이 본 류현진 복귀 등판' (관련성=0.67)
+2026-08-12 04:57:23,611 [INFO] image_fetcher — 이미지 수집 성공: '류현진 복귀 다시 KBO 류현진의' → 제목='류현진 복귀? 정규시즌 최종전 등판설 '솔솔'' (관련성=0.40)
+2026-08-12 04:57:27,021 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 04:57:27,022 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-08-12 04:57:27,025 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-08-12 04:57:27,026 [INFO] content_generator — 포스트 생성 완료: '류현진 복귀 후 성적 분석, 실제로 달라진 점은 무엇일까' (2863자, 이미지 3개)
+2026-08-12 04:57:28,602 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 04:57:47,107 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '류현진 복귀 후 성적 분석, 실제로 달라진 점은 무엇일까'
+2026-08-12 04:57:47,107 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 개인 경험·구체적 수치 없이 일반론적 평가 문구가 반복 재조합됨
+2026-08-12 04:57:47,107 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개는 있으나 본문 내 인용 표기 부재, 1인칭 경험도 형식적 수준
+2026-08-12 04:57:47,107 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색 기반으로 저작권 주의 필요
+2026-08-12 04:57:47,107 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 평가가 많다' 등 정형화된 문구 반복 및 문장 중복 오류('전해집니다가 있었고') 발견
+2026-08-12 04:57:47,115 [INFO] internal_linker — 내부 링크 후보 4개 발견
+2026-08-12 04:57:47,116 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguasset.blogspot.com/2026/08/2026_02072899182.html
+2026-08-12 04:57:47,120 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-08-12 04:57:47,121 [INFO] main —   제목: 류현진 복귀 후 성적 분석, 실제로 달라진 점은 무엇일까
+2026-08-12 04:57:47,121 [INFO] main —   이미지: 3개 삽입
+2026-08-12 04:57:47,121 [INFO] main —   글자 수: 2863자
+2026-08-12 04:57:48,767 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 04:58:12,173 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-12 04:58:14,023 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 04:58:14,906 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '류현진 복귀 후 성적 분석, 실제로 달라진 점은 무엇일까'
+2026-08-12 04:58:14,906 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 통과하나 '평가가 많다/분석이 나온다' 식 일반화된 서술 반복이며 구체적 수치·경기일자·개인 경험 사례가 부족함
+2026-08-12 04:58:14,906 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 언급은 있으나 출처 4개가 본문 내 명시적 인용으로 드러나지 않고 문장 오류(비문)로 신뢰성 저하
+2026-08-12 04:58:14,906 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 모두 네이버 이미지 검색으로 저작권 주의 필요
+2026-08-12 04:58:14,906 [INFO] adsense_validator —   ❌ AI 생성 의심도: '관중이 크게 늘었다는 이야기가 종종 전해집니다가 있었고' 등 문장 중복/비문 오류가 AI 생성 미교정 흔적을 강하게 시사
+2026-08-12 04:58:14,906 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '관중이 크게 늘었다는 이야기가 종종 전해집니다가 있었고' 등 문장 중복/비문 오류가 AI 생성 미교정 흔적을 강하게 시사
+2026-08-12 04:58:14,906 [WARNING] adsense_validator —   🔴 '류현진이 등판하는 날 관중이 크게 늘었다는 이야기가 종종 전해집니다가 있었고' 부분은 문장이 중복·비문 상태로 즉시 수정 필요
+2026-08-12 04:58:14,906 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 72/100, 권장: review) — 자동 수정 시도
+2026-08-12 04:58:14,906 [WARNING] main —      🔴 [AI 생성 의심도] '관중이 크게 늘었다는 이야기가 종종 전해집니다가 있었고' 등 문장 중복/비문 오류가 AI 생성 미교정 흔적을 강하게 시사
+2026-08-12 04:58:14,906 [WARNING] main —      🔴 '류현진이 등판하는 날 관중이 크게 늘었다는 이야기가 종종 전해집니다가 있었고' 부분은 문장이 중복·비문 상태로 즉시 수정 필요
+2026-08-12 04:58:14,906 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 통과하나 '평가가 많다/분석이 나온다' 식 일반화된 서술 반복이며 구체적 수치·경기일자·개인 경험 사례가 부족함
+2026-08-12 04:58:14,906 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 언급은 있으나 출처 4개가 본문 내 명시적 인용으로 드러나지 않고 문장 오류(비문)로 신뢰성 저하
+2026-08-12 04:58:14,906 [WARNING] main —      🟡 [이미지 정책] 이미지 출처가 모두 네이버 이미지 검색으로 저작권 주의 필요
+2026-08-12 04:58:14,906 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 72/100, fail: 1개, warn: 3개
+2026-08-12 04:58:16,024 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 04:59:25,661 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2863자 → 3367자 (+504자)
+2026-08-12 04:59:25,661 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-12 04:59:27,166 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 04:59:45,153 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '류현진 복귀 후 성적 분석, 실제로 달라진 점은 무엇일까'
+2026-08-12 04:59:45,153 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 충분하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 떨어짐
+2026-08-12 04:59:45,153 [INFO] adsense_validator —   ⚠️ 이미지 정책: '이미지 검색 결과' 표기로 출처가 불명확해 저작권 주의가 필요함
+2026-08-12 04:59:45,153 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 72 → 90/100)
+2026-08-12 04:59:45,153 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-12 04:59:46,346 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 05:01:00,617 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-12 05:01:02,066 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 05:03:00,571 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-12 05:03:01,982 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 05:03:40,337 [INFO] final_editor —   ✏️ 메타 설명 교정 (120자)
+2026-08-12 05:03:40,337 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 요약 박스·비교표·개인 경험 메모·주의사항·FAQ·작성자 메모를 표준 서식에 맞춰 추가하고, 저작권 우려가 있는 실제 기사 사진 캡션을 본문에서 제거해 일러스트형 이미지 제안으로 대체했으며, 긴 문단을 2~4문장 단위로 재분할했습니다.
+2026-08-12 05:03:40,532 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-12 05:03:40,532 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-12 05:03:40,696 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-12 05:03:40,710 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-08-12 05:03:41,659 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post_598.html
+2026-08-12 05:03:41,671 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post_598.html
+2026-08-12 05:04:11,589 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 05:04:11,590 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-12 05:04:11,590 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-12 05:04:11,598 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '류현진 복귀 후 성적 분석, 실제로 달라진 점은 무엇일까'
+2026-08-12 05:04:13,397 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-12 05:04:17,825 [INFO] comment_manager —   생성된 댓글: 스탯티즈에서 류현진 기록 볼 때 팁 하나 드리면, 단순 평균자책점보다 이닝당 투구수(P/IP)를 같이 확인하시면 완급 조절 스타일이 더 체감되실...
+2026-08-12 05:07:17,967 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-12 05:07:17,968 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-12 05:07:17,969 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-12 05:07:17,969 [INFO] main — 
+============================================================
+2026-08-12 05:07:17,969 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-08-12 05:07:17,969 [INFO] main — ============================================================
+2026-08-12 05:07:18,004 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-12 05:07:18,031 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
+2026-08-12 05:07:18,051 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-12 05:07:18,375 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-12 05:07:19,249 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-12 05:07:19,250 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-12 05:07:19,252 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-12 05:07:19,268 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 232 / 실패 0 / 대기 49)
+2026-08-12 05:07:19,268 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-12 05:07:19,268 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-12 05:07:19,269 [INFO] main — 대시보드 데이터 업데이트 완료

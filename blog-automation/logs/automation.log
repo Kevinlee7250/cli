@@ -1,115 +1,3 @@
-2026-08-12 11:11:05,663 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 각 섹션 말미 '다음으로 넘어가보겠습니다'식 전환문과 요약박스 패턴이 AI 생성 특징에 부합
-2026-08-12 11:11:05,663 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-12 11:11:05,663 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 개인 경험은 도입부 감상 수준이고 이후는 공공기관 정보 재구성에 가까움
-2026-08-12 11:11:05,663 [WARNING] main —      🟡 [구조 및 가독성] H2 5개는 양호하나 일부 단락이 500자를 초과해 가독성이 다소 떨어짐
-2026-08-12 11:11:05,663 [WARNING] main —      🟡 [이미지 정책] 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
-2026-08-12 11:11:05,663 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-12 11:11:07,322 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:12:26,149 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-12 11:12:27,986 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:12:39,631 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2874자 → 3456자 (+582자)
-2026-08-12 11:12:39,631 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-12 11:12:40,970 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:13:00,552 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '이적시장 메디컬테스트로 알아보는 건강검진 혈액검사 정상수치 확인'
-2026-08-12 11:13:00,552 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 '결과지 항목' 및 '헷갈릴 때 확인법' 단락이 500자 이상으로 길게 이어짐
-2026-08-12 11:13:00,552 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개(힐팁 출처)만 확인되고 alt텍스트 여부 불명확하여 저작권 안전성 확정 불가
-2026-08-12 11:13:00,552 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌·💡 이모지 요약박스와 표 형식이 전형적 AI 블로그 포맷 패턴에 해당함
-2026-08-12 11:13:00,552 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
-2026-08-12 11:13:00,552 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-08-12 11:13:02,145 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:14:15,278 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-12 11:14:17,169 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:14:53,660 [INFO] final_editor —   ✏️ 제목 최종 교정: '이적시장 메디컬테스트로 알아보는 건강검진 혈액검사 정상수치 확인법 2026' → '건강검진 혈액검사 정상수치 확인법 2026, 제대로 읽는 법'
-2026-08-12 11:14:53,661 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
-2026-08-12 11:14:53,661 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분리했습니다. 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 규정된 형식에 맞춰 추가하고, 이미지 3곳과 대표 이미지에 구체적인 alt 텍스트를 지정했습니다.
-2026-08-12 11:14:53,800 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-12 11:14:53,800 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-12 11:14:53,909 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-12 11:14:53,918 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-12 11:14:53,919 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '건강검진 혈액검사 정상수치 확인법 2026' — 면책·팩트체크 확인 권장
-2026-08-12 11:14:53,919 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-08-12 11:14:55,151 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026_0892721154.html
-2026-08-12 11:14:55,160 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026_0892721154.html
-2026-08-12 11:15:33,437 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:15:33,438 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-12 11:15:33,438 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-12 11:15:33,444 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '건강검진 혈액검사 정상수치 확인법 2026, 제대로 읽는 법'
-2026-08-12 11:15:35,138 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:15:39,331 [INFO] comment_manager —   생성된 댓글: 같은 항목이라도 검진 시기에 따라 수치가 꽤 달라질 수 있다는 점도 함께 참고하시면 좋을 것 같아요. 예를 들어 공복 유지 시간이 짧았거나 전날...
-2026-08-12 11:18:39,454 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-12 11:18:39,455 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-12 11:18:39,455 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-12 11:18:39,455 [INFO] main — 
-============================================================
-2026-08-12 11:18:39,455 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-08-12 11:18:39,455 [INFO] main — ============================================================
-2026-08-12 11:18:39,482 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-12 11:18:39,498 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
-2026-08-12 11:18:39,538 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-12 11:18:40,058 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-12 11:18:40,370 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-12 11:18:40,371 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-12 11:18:40,372 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-12 11:18:40,383 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 231 / 실패 0 / 대기 50)
-2026-08-12 11:18:40,383 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-12 11:18:40,383 [INFO] dashboard_exporter —   포스트: 102개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-12 11:18:40,384 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-12 11:19:21,292 [INFO] main — ============================================================
-2026-08-12 11:19:21,293 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-08-12 11:19:21
-2026-08-12 11:19:21,293 [INFO] main — ============================================================
-2026-08-12 11:19:21,314 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-12 11:19:21,314 [INFO] keyword_collector — 포스팅 이력 코퍼스: 193개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-08-12 11:19:21,314 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드 (blog=blog3): ['2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기', '명절 선물 세트 가성비 솔직 비교']...
-2026-08-12 11:19:24,646 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-12 11:19:34,021 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:19:34,043 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-12 11:19:34,043 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-12 11:19:34,597 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-08-12 11:19:35,003 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-12 11:19:35,004 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-12 11:19:35,033 [INFO] keyword_collector — 유사 주제 제외 16개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기', '명절 선물 세트 가성비 솔직 비교', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-12 11:19:35,033 [INFO] keyword_collector —   [naver_realtime] 1개: ['엔화 환율 전망과 엔테크 저축 노하우 2026']
-2026-08-12 11:19:35,033 [INFO] keyword_collector —   [fallback] 1개: ['2026 주요 은행 적금 금리 비교 가장 높은 곳']
-2026-08-12 11:19:35,034 [INFO] keyword_collector — 최종 선정 키워드 2개: ['엔화 환율 전망과 엔테크 저축 노하우 2026', '2026 주요 은행 적금 금리 비교 가장 높은 곳']
-2026-08-12 11:19:35,034 [INFO] main — 수집된 키워드 2개: ['엔화 환율 전망과 엔테크 저축 노하우 2026', '2026 주요 은행 적금 금리 비교 가장 높은 곳']
-2026-08-12 11:19:35,039 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-08-12 11:19:35,039 [INFO] main — 단독 포스트 대상 키워드 1개: ['엔화 환율 전망과 엔테크 저축 노하우 2026']
-2026-08-12 11:19:35,057 [INFO] main — 
-[1/1] 키워드: '엔화 환율 전망과 엔테크 저축 노하우 2026'
-2026-08-12 11:19:35,057 [INFO] content_generator — 포스트 생성 중: '엔화 환율 전망과 엔테크 저축 노하우 2026'
-2026-08-12 11:19:43,220 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:19:43,221 [INFO] research_collector — 검색 의도: 2026년 엔화 환율 전망을 파악하고 엔화 예금·환전을 통한 엔테크(엔화 재테크) 방법과 노하우를 알고 싶어
-2026-08-12 11:20:01,415 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '엔화 환율 전망과 엔테크 저축 노하우 2026'
-2026-08-12 11:20:17,628 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:20:17,629 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '엔화 환율 전망과 엔테크 저축 노하우 2026'
-2026-08-12 11:20:44,959 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:20:44,960 [INFO] source_validator — 출처 검증: 2/7개 통과, 등급 분포 {'X': 5, 'A': 1, 'D': 1}
-2026-08-12 11:20:44,963 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-08-12 11:20:44,963 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-12 11:20:46,414 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:22:12,903 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-12 11:22:12,905 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(파생상품)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
-2026-08-12 11:22:14,905 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-08-12 11:22:16,235 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:23:38,471 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-12 11:23:40,421 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:23:55,878 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-08-12 11:23:56,774 [INFO] image_fetcher — 이미지 수집 성공: '엔화 환율 전망 2026, 지금 엔테크 시작해도 될까? 은행별 엔화 예금 비교' → 제목='일본 엔화 환율이 7월 20일 장중 100엔당 909.82원까지 내려가며' (관련성=0.10)
-2026-08-12 11:23:57,378 [INFO] image_fetcher — 이미지 수집 성공: '엔화 환율 전망과' → 제목='당분간 엔화 환율 안 오른다는데…지금 ‘엔테크’ 시작해도 될까' (관련성=0.67)
-2026-08-12 11:23:57,989 [INFO] image_fetcher — 이미지 수집 성공: '엔화 환율 환율이 이렇게 엔화가 환율이란' → 제목='엔·달러 환율 151.97엔까지 올라…34년 만 최고' (관련성=0.17)
-2026-08-12 11:24:00,477 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:24:00,478 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-08-12 11:24:00,481 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-08-12 11:24:00,483 [INFO] content_generator — 포스트 생성 완료: '엔화 환율 전망 2026, 지금 엔테크 시작해도 될까? 은행별 엔화 예금 비교' (3022자, 이미지 3개)
-2026-08-12 11:24:02,215 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:24:21,910 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '엔화 환율 전망 2026, 지금 엔테크 시작해도 될까? 은행별 '
 2026-08-12 11:24:21,910 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 3022자로 기준 충족하나 개인 경험 없이 일반 정보 재조합 수준이며 문장 일부가 어색하게 중복(오류) 표현됨
 2026-08-12 11:24:21,910 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 경험 서술이 전혀 없어 신뢰도 신호 부족
 2026-08-12 11:24:21,910 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
@@ -610,3 +498,134 @@
 2026-08-12 23:40:17,998 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-08-12 23:40:17,998 [INFO] main —   - [blog3] 금융NEWS
 2026-08-12 23:40:18,003 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-08-13 04:49:48,537 [INFO] main — ============================================================
+2026-08-13 04:49:48,537 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-13 04:49:48
+2026-08-13 04:49:48,537 [INFO] main — ============================================================
+2026-08-13 04:49:48,555 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
+2026-08-13 04:49:48,555 [INFO] keyword_collector — 포스팅 이력 코퍼스: 205개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-13 04:49:48,556 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['여름 끝 여행 숙소 가격 비교 후기', '2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기']...
+2026-08-13 04:49:53,023 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-13 04:49:59,610 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:49:59,631 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-13 04:49:59,631 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-13 04:50:00,089 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기']
+2026-08-13 04:50:00,276 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-13 04:50:00,535 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-13 04:50:00,536 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
+2026-08-13 04:50:00,549 [INFO] keyword_collector — 유사 주제 제외 6개: ['여름 끝 여행 숙소 가격 비교 후기', '2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기']
+2026-08-13 04:50:00,560 [INFO] keyword_collector —   [high_cpc] 1개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기']
+2026-08-13 04:50:00,560 [INFO] keyword_collector —   [season_scheduled] 1개: ['명절 선물 세트 가성비 솔직 비교']
+2026-08-13 04:50:00,560 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기', '명절 선물 세트 가성비 솔직 비교']
+2026-08-13 04:50:00,560 [INFO] main — 수집된 키워드 2개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기', '명절 선물 세트 가성비 솔직 비교']
+2026-08-13 04:50:00,568 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
+2026-08-13 04:50:00,568 [INFO] main — 단독 포스트 대상 키워드 1개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기']
+2026-08-13 04:50:00,587 [INFO] main — 
+[1/1] 키워드: '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-08-13 04:50:00,587 [INFO] content_generator — 포스트 생성 중: '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-08-13 04:50:07,006 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:50:07,007 [INFO] research_collector — 검색 의도: 여행자보험 가입 필요성과 실제 보상 사례를 통해 가입 여부를 결정하고 싶은 의도
+2026-08-13 04:50:33,733 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-08-13 04:50:56,524 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:50:56,525 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-08-13 04:51:25,531 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:51:25,532 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'X': 2, 'C': 1, 'D': 2}
+2026-08-13 04:51:25,534 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
+2026-08-13 04:51:25,534 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-13 04:51:27,252 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:53:04,253 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-13 04:53:05,613 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:53:30,150 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-08-13 04:53:31,265 [INFO] image_fetcher — 이미지 수집 성공: '여행자보험 가입 꼭 해야 할까 보상 후기 정리' → 제목='여행자보험 가입으로 혹시 모를 사고에 대비...여행자보험 가입 시 보장 ' (관련성=0.29)
+2026-08-13 04:53:32,205 [INFO] image_fetcher — 이미지 수집 성공: '여행자보험 가입 해야' → 제목='휴가철 필수 여행자보험, 온라인서 쉽고 싸게 가입' (관련성=0.67)
+2026-08-13 04:53:33,095 [INFO] image_fetcher — 이미지 수집 성공: '여행자보험 가입 어떤 상황에서 여행자보 가면' → 제목='여행 가기 전에 꼭, 여행자보험 어디까지 보장될까? | 1boon 여행 ' (관련성=0.17)
+2026-08-13 04:53:34,367 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:53:34,368 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-08-13 04:53:34,371 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-08-13 04:53:34,373 [INFO] content_generator — 포스트 생성 완료: '여행자보험 가입 꼭 해야 할까 보상 후기 정리' (2762자, 이미지 3개)
+2026-08-13 04:53:35,148 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:53:58,652 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-13 04:53:59,488 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:54:01,952 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 65/100 — '여행자보험 가입 꼭 해야 할까 보상 후기 정리'
+2026-08-13 04:54:01,952 [INFO] adsense_validator —   ❌ 원본성 및 품질: 글자수는 2762자로 기준 충족하나 '~라고 알려져 있습니다' 식 일반론 나열뿐이며 구체적 날짜·금액·1인칭 경험 사례가 없어 재조합 콘텐츠에 가까움
+2026-08-13 04:54:01,952 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술이 없고 '후기가 많았다'는 식의 간접 인용만 있어 신뢰 신호가 약함
+2026-08-13 04:54:01,952 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 모두 '네이버 이미지 검색'으로 명시돼 저작권 주의 필요
+2026-08-13 04:54:01,952 [INFO] adsense_validator —   ❌ AI 생성 의심도: '형성되는 경우가 많다고 알려져 있습니다으로 형성되는 경우가 많다고 알려져 있습니다' 등 문장 중복 오류와 정형화된 요약 패턴이 AI 생성 흔적을 강하게 시사함
+2026-08-13 04:54:01,952 [WARNING] adsense_validator —   🔴 [원본성 및 품질] 글자수는 2762자로 기준 충족하나 '~라고 알려져 있습니다' 식 일반론 나열뿐이며 구체적 날짜·금액·1인칭 경험 사례가 없어 재조합 콘텐츠에 가까움
+2026-08-13 04:54:01,952 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '형성되는 경우가 많다고 알려져 있습니다으로 형성되는 경우가 많다고 알려져 있습니다' 등 문장 중복 오류와 정형화된 요약 패턴이 AI 생성 흔적을 강하게 시사함
+2026-08-13 04:54:01,952 [WARNING] adsense_validator —   🔴 본문 중 문장이 그대로 중복 출력된 오류(편집 누락)가 발견되어 즉시 수정 필요
+2026-08-13 04:54:01,952 [WARNING] adsense_validator —   🔴 이미지 출처가 네이버 검색 결과로 표기되어 저작권 침해 리스크 존재
+2026-08-13 04:54:01,959 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-13 04:54:01,963 [INFO] internal_linker —   [1/5] '필요한지' -> https://www.hoguwhat.com/2026/08/blog-post_12.html
+2026-08-13 04:54:01,966 [INFO] internal_linker —   [2/5] '해외여행' -> https://www.hoguwhat.com/2026/08/blog-post_08.html
+2026-08-13 04:54:01,968 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-08-13 04:54:01,968 [INFO] main —   제목: 여행자보험 가입 꼭 해야 할까 보상 후기 정리
+2026-08-13 04:54:01,968 [INFO] main —   이미지: 3개 삽입
+2026-08-13 04:54:01,968 [INFO] main —   글자 수: 2762자
+2026-08-13 04:54:03,577 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:54:19,511 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '여행자보험 가입 꼭 해야 할까 보상 후기 정리'
+2026-08-13 04:54:19,511 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 통과하지만 개인 경험 없이 커뮤니티 후기 요약과 표로 구성된 일반론 재조합에 가까움
+2026-08-13 04:54:19,511 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 직접 경험 서술 없이 '후기를 조사해보니' 식 간접 인용에 그침, 출처 5개는 있으나 본문 내 인용 표시 미확인
+2026-08-13 04:54:19,511 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
+2026-08-13 04:54:19,511 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라고 알려져 있습니다' 반복과 문장 중복 오류(보험료 문단)가 AI 생성 흔적으로 의심됨
+2026-08-13 04:54:19,511 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-13 04:54:19,511 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 기준 통과하지만 개인 경험 없이 커뮤니티 후기 요약과 표로 구성된 일반론 재조합에 가까움
+2026-08-13 04:54:19,511 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 직접 경험 서술 없이 '후기를 조사해보니' 식 간접 인용에 그침, 출처 5개는 있으나 본문 내 인용 표시 미확인
+2026-08-13 04:54:19,511 [WARNING] main —      🟡 [이미지 정책] 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
+2026-08-13 04:54:19,511 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-13 04:54:20,190 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:55:27,534 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2762자 → 3235자 (+473자)
+2026-08-13 04:55:27,534 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-13 04:55:29,207 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:55:46,338 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '여행자보험 가입 꼭 해야 할까 보상 후기 정리'
+2026-08-13 04:55:46,338 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 헤딩 3개로 권장(4개 이상)에 못 미치며 일부 단락이 500자 이상으로 길게 이어짐
+2026-08-13 04:55:46,338 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 '뉴스 보도자료 활용'으로 표기되어 저작권 확인 필요하며 alt 텍스트 명시 없음
+2026-08-13 04:55:46,338 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌💡 요약박스, 표 형식 체크리스트 등 전형적인 AI 블로그 포맷 패턴이 반복적으로 사용됨
+2026-08-13 04:55:46,338 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
+2026-08-13 04:55:46,338 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-08-13 04:55:47,993 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:57:12,454 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-13 04:57:14,172 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:58:28,661 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-13 04:58:30,800 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:58:56,121 [INFO] final_editor —   ✏️ 제목 최종 교정: '여행자보험 가입 꼭 해야 할까 보상 후기 정리' → '여행자보험 가입 꼭 해야 할까? 실제 보상 경험 후기 정리'
+2026-08-13 04:58:56,121 [INFO] final_editor —   ✏️ 메타 설명 교정 (123자)
+2026-08-13 04:58:56,121 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고 인라인 이미지 언급을 제거해 이미지 메타데이터로 분리했으며, 표를 항목/내용/체크포인트 형식으로 재구성하고 FAQ 6개와 주의사항·작성자 메모를 추가해 발행 형식을 완성했습니다.
+2026-08-13 04:58:56,243 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-13 04:58:56,243 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-13 04:58:56,329 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-13 04:58:56,344 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-13 04:58:56,344 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-13 04:58:56,920 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_13.html
+2026-08-13 04:58:56,933 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_13.html
+2026-08-13 04:59:29,307 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:59:29,309 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-13 04:59:29,309 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-13 04:59:29,318 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '여행자보험 가입 꼭 해야 할까? 실제 보상 경험 후기 정리'
+2026-08-13 04:59:30,018 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 04:59:35,189 [INFO] comment_manager —   생성된 댓글: 혹시 카드사 부가서비스에 여행자보험이 자동으로 포함된 경우도 있으니, 가입 전에 본인 카드 혜택부터 한번 확인해보시는 것도 추천드려요! 그리고 ...
+2026-08-13 05:02:35,265 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-13 05:02:35,266 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-13 05:02:35,267 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-13 05:02:35,267 [INFO] main — 
+============================================================
+2026-08-13 05:02:35,267 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-08-13 05:02:35,267 [INFO] main — ============================================================
+2026-08-13 05:02:35,306 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-13 05:02:35,336 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
+2026-08-13 05:02:35,358 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-13 05:02:35,549 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-13 05:02:35,806 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-13 05:02:36,032 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-13 05:02:36,033 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-13 05:02:36,036 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-13 05:02:36,054 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 232 / 실패 0 / 대기 49)
+2026-08-13 05:02:36,054 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-13 05:02:36,054 [INFO] dashboard_exporter —   포스트: 100개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-13 05:02:36,055 [INFO] main — 대시보드 데이터 업데이트 완료

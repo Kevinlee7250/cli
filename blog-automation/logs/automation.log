@@ -1,126 +1,3 @@
-2026-08-12 22:57:27,920 [INFO] main — 
-============================================================
-2026-08-12 22:57:27,920 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
-2026-08-12 22:57:27,920 [INFO] main — ============================================================
-2026-08-12 22:57:27,961 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-12 22:57:27,985 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
-2026-08-12 22:57:28,005 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-12 22:57:28,199 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-12 22:57:28,496 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-12 22:57:28,757 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-12 22:57:28,758 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-12 22:57:28,760 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-12 22:57:28,776 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 231 / 실패 0 / 대기 50)
-2026-08-12 22:57:28,777 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-12 22:57:28,777 [INFO] dashboard_exporter —   포스트: 100개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-12 22:57:28,778 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-12 22:58:08,907 [INFO] main — ============================================================
-2026-08-12 22:58:08,907 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-12 22:58:08
-2026-08-12 22:58:08,907 [INFO] main — ============================================================
-2026-08-12 22:58:08,925 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-12 22:58:08,926 [INFO] keyword_collector — 포스팅 이력 코퍼스: 179개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-08-12 22:58:08,926 [INFO] keyword_collector — 시즌 예약 키워드 4개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기', '명절 선물 세트 가성비 솔직 비교']...
-2026-08-12 22:58:15,335 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-08-12 22:58:21,867 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 22:58:21,893 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-12 22:58:21,893 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-12 22:58:22,627 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-12 22:58:22,628 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-12 22:58:22,629 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-08-12 22:58:22,664 [INFO] keyword_collector — 유사 주제 제외 29개: ['2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기', '명절 선물 세트 가성비 솔직 비교', '추석 선물 저렴하게 사는 꿀팁 정리', '엔저 시대 일본 여행 저렴하게 가는 방법 2026']
-2026-08-12 22:58:22,665 [INFO] keyword_collector —   [fallback] 2개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-12 22:58:22,665 [INFO] keyword_collector — 최종 선정 키워드 2개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-12 22:58:22,665 [INFO] main — 수집된 키워드 2개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-12 22:58:22,670 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-08-12 22:58:22,671 [INFO] main — 단독 포스트 대상 키워드 1개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
-2026-08-12 22:58:22,688 [INFO] main — 
-[1/1] 키워드: '제주도 여행 현지인처럼 즐기는 방법 솔직 후기'
-2026-08-12 22:58:22,688 [INFO] content_generator — 포스트 생성 중: '제주도 여행 현지인처럼 즐기는 방법 솔직 후기'
-2026-08-12 22:58:29,161 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 22:58:29,162 [INFO] research_collector — 검색 의도: 제주도를 관광지 위주가 아닌 현지인의 시각으로 경험하는 실질적인 방법과 솔직한 후기를 알고 싶음
-2026-08-12 22:58:45,175 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '제주도 여행 현지인처럼 즐기는 방법 솔직 후기'
-2026-08-12 22:59:06,451 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 22:59:06,453 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '제주도 여행 현지인처럼 즐기는 방법 솔직 후기'
-2026-08-12 22:59:28,434 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 22:59:28,435 [INFO] source_validator — 출처 검증: 6/6개 통과, 등급 분포 {'D': 6}
-2026-08-12 22:59:28,437 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-08-12 22:59:28,437 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-12 22:59:29,891 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 23:01:04,902 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-12 23:01:05,981 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 23:01:10,967 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '이 정보는 조사 시점 기준 자료이므로'
-2026-08-12 23:01:10,967 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 0건 자동 수정 적용
-2026-08-12 23:01:11,579 [WARNING] image_fetcher — 이미지 없음: '제주도 여행 현지인처럼 즐기는 방법, 데이터로 조사해 솔직하게 정리'
-2026-08-12 23:01:12,018 [WARNING] image_fetcher — 이미지 없음: '제주도 여행 현지인처럼'
-2026-08-12 23:01:12,341 [INFO] image_fetcher — 이미지 수집 성공: '제주도 여행 현지인 맛집 입니다 여행을' → 제목='japan / osaka / city / urban / neon / ni' (관련성=0.12)
-2026-08-12 23:01:12,341 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-08-12 23:01:12,344 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-08-12 23:01:12,346 [INFO] content_generator — 포스트 생성 완료: '제주도 여행 현지인처럼 즐기는 방법, 데이터로 조사해 솔직하게 정리' (2713자, 이미지 1개)
-2026-08-12 23:01:13,536 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 23:01:29,769 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '제주도 여행 현지인처럼 즐기는 방법, 데이터로 조사해 솔직하게 '
-2026-08-12 23:01:29,769 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 대부분 '후기에 따르면', '~라는 의견도 있다' 식 간접 재구성이며 1인칭 실제 경험(날짜·구체적 지출액 등)은 부족함
-2026-08-12 23:01:29,770 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 양호하나 각 섹션 본문이 줄바꿈 없이 500자 이상 이어지는 긴 단락이 다수 존재함
-2026-08-12 23:01:29,770 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 한국관광공사 데이터랩 등 출처 인용은 있으나 직접 방문 경험 서술이 약하고 대부분 간접 후기 인용에 의존함
-2026-08-12 23:01:29,770 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 Pixabay 출처 1건만 언급되고 alt텍스트 여부 불명확하여 보강 필요
-2026-08-12 23:01:29,770 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 표 형식 반복, '핵심 요약' 박스, '그런데 ~부족합니다' 식 전환구 패턴이 반복되어 AI 생성 느낌이 다소 있음
-2026-08-12 23:01:29,778 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-12 23:01:29,786 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-08-12 23:01:29,787 [INFO] main —   제목: 제주도 여행 현지인처럼 즐기는 방법, 데이터로 조사해 솔직하게 정리
-2026-08-12 23:01:29,787 [INFO] main —   이미지: 1개 삽입
-2026-08-12 23:01:29,787 [INFO] main —   글자 수: 2713자
-2026-08-12 23:01:30,918 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 23:01:39,768 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '제주도 여행 현지인처럼 즐기는 방법, 데이터로 조사해 솔직하게 '
-2026-08-12 23:01:39,768 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2713자로 분량 기준은 통과하나 데이터랩·시장 정보 재구성 위주로 1인칭 실제 경험(방문 날짜·구체적 상호명)은 부족함
-2026-08-12 23:01:39,768 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 5개 출처 인용은 있으나 1인칭 직접 경험 서술이 약하고 '~후기에 따르면' 식 간접 인용 위주
-2026-08-12 23:01:39,768 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개(Pixabay 출처)뿐이며 alt텍스트 명시 없음, 저작권 위반은 없으나 이미지 부족
-2026-08-12 23:01:39,768 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 표 형식 나열과 '~습니다' 반복, 요약 정리형 문장 패턴이 AI 생성 특징과 유사
-2026-08-12 23:01:39,768 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-12 23:01:39,768 [WARNING] main —      🟡 [원본성 및 품질] 2713자로 분량 기준은 통과하나 데이터랩·시장 정보 재구성 위주로 1인칭 실제 경험(방문 날짜·구체적 상호명)은 부족함
-2026-08-12 23:01:39,768 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 5개 출처 인용은 있으나 1인칭 직접 경험 서술이 약하고 '~후기에 따르면' 식 간접 인용 위주
-2026-08-12 23:01:39,768 [WARNING] main —      🟡 [이미지 정책] 이미지 1개(Pixabay 출처)뿐이며 alt텍스트 명시 없음, 저작권 위반은 없으나 이미지 부족
-2026-08-12 23:01:39,769 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-12 23:01:40,919 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 23:02:52,926 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2713자 → 2711자 (-2자)
-2026-08-12 23:02:52,926 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-12 23:02:53,676 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 23:03:10,845 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '제주도 여행 현지인처럼 즐기는 방법, 데이터로 조사해 솔직하게 '
-2026-08-12 23:03:10,845 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2가 3개로 기준(4개 이상)에 못 미쳐 세분화 여지가 있음
-2026-08-12 23:03:10,845 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개뿐이며 alt 텍스트 명시 부족, Pixabay 참고용 표기는 있으나 개수 부족
-2026-08-12 23:03:10,845 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '정리하면' 등 자동요약성 문구와 표 형식 나열이 일부 반복돼 AI 패턴 요소 존재
-2026-08-12 23:03:10,845 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
-2026-08-12 23:03:10,845 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-08-12 23:03:11,552 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 23:04:06,548 [INFO] final_editor —   ✏️ 제목 최종 교정: '제주도 여행 현지인처럼 즐기는 방법, 데이터로 조사해 솔직하게 정리' → '제주도 여행 현지인처럼 즐기는 방법, 데이터로 본 솔직 후기'
-2026-08-12 23:04:06,548 [INFO] final_editor —   ✏️ 메타 설명 교정 (115자)
-2026-08-12 23:04:06,548 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞춰 재정리하고, 긴 문단을 2~4문장 단위로 분리했으며 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모·이미지 alt를 발행 형식에 맞춰 보강했습니다.
-2026-08-12 23:04:06,632 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-12 23:04:06,632 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-12 23:04:06,715 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-12 23:04:06,729 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-12 23:04:06,730 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-08-12 23:04:07,854 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post_13.html
-2026-08-12 23:04:07,867 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post_13.html
-2026-08-12 23:04:42,461 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 23:04:42,462 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-12 23:04:42,463 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-12 23:04:42,472 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '제주도 여행 현지인처럼 즐기는 방법, 데이터로 본 솔직 후기'
-2026-08-12 23:04:44,244 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 23:04:48,199 [INFO] comment_manager —   생성된 댓글: 데이터랩 순위 확인하실 때 팁 하나 더 드리면, 월별로도 순위가 꽤 바뀌더라고요. 특히 제철 음식 파는 곳들은 시즌 지나면 순위 밖으로 밀리는 ...
-2026-08-12 23:07:48,271 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-12 23:07:48,272 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-12 23:07:48,272 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-12 23:07:48,273 [INFO] main — 
-============================================================
-2026-08-12 23:07:48,273 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-08-12 23:07:48,273 [INFO] main — ============================================================
-2026-08-12 23:07:48,314 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
 2026-08-12 23:07:48,339 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
 2026-08-12 23:07:48,360 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
 2026-08-12 23:07:48,577 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
@@ -621,3 +498,128 @@
 2026-08-13 05:23:26,659 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-13 05:23:26,659 [INFO] dashboard_exporter —   포스트: 100개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-13 05:23:26,660 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-13 10:59:34,487 [INFO] main — ============================================================
+2026-08-13 10:59:34,488 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-13 10:59:34
+2026-08-13 10:59:34,488 [INFO] main — ============================================================
+2026-08-13 10:59:34,506 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
+2026-08-13 10:59:34,506 [INFO] keyword_collector — 포스팅 이력 코퍼스: 207개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-13 10:59:34,506 [INFO] keyword_collector — 시즌 예약 키워드 7개 로드 (blog=blog1): ['여름 끝 여행 숙소 가격 비교 후기', '2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기']...
+2026-08-13 10:59:37,889 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-13 10:59:45,646 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 10:59:45,672 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-13 10:59:45,672 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-13 10:59:46,106 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['항공권 취소·지연 보상 직접 청구해보니 알게 된 것']
+2026-08-13 10:59:46,347 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-13 10:59:46,513 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-13 10:59:46,515 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
+2026-08-13 10:59:46,532 [INFO] keyword_collector — 최근 사용 제외 1개: ['여행 혜택 좋은 신용카드 비교 2026']
+2026-08-13 10:59:46,532 [INFO] keyword_collector — 유사 주제 제외 10개: ['여름 끝 여행 숙소 가격 비교 후기', '2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기']
+2026-08-13 10:59:46,534 [INFO] keyword_collector —   [high_cpc] 1개: ['항공권 취소·지연 보상 직접 청구해보니 알게 된 것']
+2026-08-13 10:59:46,534 [INFO] keyword_collector —   [fallback] 1개: ['제주도 숨겨진 명소 현지인만 아는 곳 솔직 후기']
+2026-08-13 10:59:46,534 [INFO] keyword_collector — 최종 선정 키워드 2개: ['항공권 취소·지연 보상 직접 청구해보니 알게 된 것', '제주도 숨겨진 명소 현지인만 아는 곳 솔직 후기']
+2026-08-13 10:59:46,534 [INFO] main — 수집된 키워드 2개: ['항공권 취소·지연 보상 직접 청구해보니 알게 된 것', '제주도 숨겨진 명소 현지인만 아는 곳 솔직 후기']
+2026-08-13 10:59:46,539 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
+2026-08-13 10:59:46,540 [INFO] main — 단독 포스트 대상 키워드 1개: ['항공권 취소·지연 보상 직접 청구해보니 알게 된 것']
+2026-08-13 10:59:46,557 [INFO] main — 
+[1/1] 키워드: '항공권 취소·지연 보상 직접 청구해보니 알게 된 것'
+2026-08-13 10:59:46,557 [INFO] content_generator — 포스트 생성 중: '항공권 취소·지연 보상 직접 청구해보니 알게 된 것'
+2026-08-13 10:59:55,526 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 10:59:55,528 [INFO] research_collector — 검색 의도: 항공권 취소·지연 시 보상금을 직접 청구한 실제 경험과 절차, 유의사항을 알고 싶어하는 의도
+2026-08-13 11:00:07,868 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '항공권 취소·지연 보상 직접 청구해보니 알게 된 것'
+2026-08-13 11:00:20,998 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:00:20,999 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '항공권 취소·지연 보상 직접 청구해보니 알게 된 것'
+2026-08-13 11:00:41,080 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:00:41,081 [INFO] source_validator — 출처 검증: 0/4개 통과, 등급 분포 {'X': 4}
+2026-08-13 11:00:41,084 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
+2026-08-13 11:00:41,084 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-13 11:00:41,974 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:02:02,247 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-13 11:02:04,062 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:02:22,671 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 3건 자동 수정 적용
+2026-08-13 11:02:23,660 [INFO] image_fetcher — 이미지 수집 성공: '항공권 취소·지연 보상 직접 청구해보니 알게 된 것' → 제목='취소·지연 항공권 환불 쉬워진다' (관련성=0.43)
+2026-08-13 11:02:24,339 [INFO] image_fetcher — 이미지 수집 성공: '항공권 취소 지연' → 제목='"휴가 하루 앞두고 항공권 취소"…티몬 정산 지연 사태에 '발 동동'' (관련성=1.00)
+2026-08-13 11:02:25,037 [INFO] image_fetcher — 이미지 수집 성공: '항공권 취소 청구 유독 청구가 어렵게' → 제목='“‘1년 뒤 환불’ 믿었는데”...항공권 467만원 날릴 뻔한 사연[호갱' (관련성=0.17)
+2026-08-13 11:02:28,885 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:02:28,886 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-08-13 11:02:28,886 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-13 11:02:28,889 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-13 11:02:28,891 [INFO] content_generator — 포스트 생성 완료: '항공권 취소·지연 보상 직접 청구해보니 알게 된 것' (3310자, 이미지 2개)
+2026-08-13 11:02:30,598 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:02:48,821 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '항공권 취소·지연 보상 직접 청구해보니 알게 된 것'
+2026-08-13 11:02:48,821 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 '후기 종합·조사' 형태로 실제 1인칭 청구 경험이나 구체적 날짜·금액 없이 일반 정보를 재구성한 수준
+2026-08-13 11:02:48,821 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개는 인용됐으나 '~라고 알려진 사례' 식 간접 서술로 실제 1인칭 경험 신호 부족
+2026-08-13 11:02:48,821 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
+2026-08-13 11:02:48,821 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·요약박스·FAQ 등 전형적 AI 블로그 템플릿 패턴과 정형화된 '~습니다' 종결 반복이 두드러짐
+2026-08-13 11:02:48,829 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-13 11:02:48,831 [INFO] internal_linker —   [1/5] '여행자보험' -> https://www.hoguwhat.com/2026/08/blog-post_13.html
+2026-08-13 11:02:48,833 [INFO] internal_linker —   [2/5] '여행자보험' -> https://www.hoguwhat.com/2026/08/blog-post_12.html
+2026-08-13 11:02:48,837 [INFO] internal_linker —   [3/5] '해외여행' -> https://www.hoguwhat.com/2026/08/blog-post_08.html
+2026-08-13 11:02:48,840 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-08-13 11:02:48,840 [INFO] main —   제목: 항공권 취소·지연 보상 직접 청구해보니 알게 된 것
+2026-08-13 11:02:48,840 [INFO] main —   이미지: 2개 삽입
+2026-08-13 11:02:48,840 [INFO] main —   글자 수: 3310자
+2026-08-13 11:02:50,820 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:03:10,740 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '항공권 취소·지연 보상 직접 청구해보니 알게 된 것'
+2026-08-13 11:03:10,740 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준을 충족하나 '조사해봤다', '후기를 종합해보면' 식의 2차 정보 재구성이 중심이라 구체적 개인 경험(날짜·금액·항공사명 등)이 부족함
+2026-08-13 11:03:10,740 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 실제 경험 서술이 없고, '서울시 발표 자료'와 소비자분쟁해결기준 인용이 뒤섞여 출처 신뢰성이 불명확함
+2026-08-13 11:03:10,740 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
+2026-08-13 11:03:10,740 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·요약형 목록화 패턴과 '조사해와 정리해봤습니다' 같은 AI 특유의 종합형 문체가 반복됨
+2026-08-13 11:03:10,740 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-13 11:03:10,741 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 기준을 충족하나 '조사해봤다', '후기를 종합해보면' 식의 2차 정보 재구성이 중심이라 구체적 개인 경험(날짜·금액·항공사명 등)이 부족함
+2026-08-13 11:03:10,741 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 실제 경험 서술이 없고, '서울시 발표 자료'와 소비자분쟁해결기준 인용이 뒤섞여 출처 신뢰성이 불명확함
+2026-08-13 11:03:10,741 [WARNING] main —      🟡 [이미지 정책] 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
+2026-08-13 11:03:10,741 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-13 11:03:11,906 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:04:30,880 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-13 11:04:32,191 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:04:50,243 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3310자 → 3289자 (-21자)
+2026-08-13 11:04:50,243 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-13 11:04:51,019 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:05:03,510 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '항공권 취소·지연 보상 직접 청구해보니 알게 된 것'
+2026-08-13 11:05:03,510 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2가 3개로 기준(4개 이상 pass)에 못 미쳐 구조 세분화가 다소 부족함
+2026-08-13 11:05:03,510 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 뉴스 기사 캡처 기반으로 표시되어 저작권 주의 필요
+2026-08-13 11:05:03,510 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
+2026-08-13 11:05:03,511 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-13 11:05:05,464 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:05:48,552 [INFO] final_editor —   ✏️ 제목 최종 교정: '항공권 취소·지연 보상 직접 청구해보니 알게 된 것' → '항공권 취소·지연 보상 직접 청구해보니 알게 된 것들 총정리'
+2026-08-13 11:05:48,552 [INFO] final_editor —   ✏️ 메타 설명 교정 (138자)
+2026-08-13 11:05:48,552 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타 설명을 SEO 기준(30~45자/120~160자)에 맞게 재정리하고, 긴 문단을 2~4문장 단위로 분리했습니다. 요약 박스, 비교 표, 개인 경험 메모, 주의사항, FAQ, 작성자 메모, 참고자료를 추가하고 이미지 3장의 alt text를 구체화했습니다.
+2026-08-13 11:05:48,652 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-13 11:05:48,652 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-13 11:05:48,739 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-13 11:05:48,754 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-13 11:05:48,754 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-13 11:05:49,759 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_490.html
+2026-08-13 11:05:49,772 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_490.html
+2026-08-13 11:06:26,698 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:06:26,699 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-13 11:06:26,700 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-13 11:06:26,709 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '항공권 취소·지연 보상 직접 청구해보니 알게 된 것들 총정리'
+2026-08-13 11:06:28,423 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 11:06:32,609 [INFO] comment_manager —   생성된 댓글: 하나 더 팁을 드리자면, 콜센터 접수 후에는 반드시 접수번호와 상담원 이름, 통화 시각을 메모해두시는 게 좋습니다. 나중에 처리가 지연되거나 담...
+2026-08-13 11:09:32,683 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-13 11:09:32,684 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-13 11:09:32,684 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-13 11:09:32,685 [INFO] main — 
+============================================================
+2026-08-13 11:09:32,685 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-08-13 11:09:32,685 [INFO] main — ============================================================
+2026-08-13 11:09:32,724 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-13 11:09:32,746 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
+2026-08-13 11:09:32,789 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-13 11:09:32,969 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-13 11:09:33,204 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-13 11:09:33,456 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-13 11:09:33,457 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-13 11:09:33,460 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-13 11:09:33,475 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 232 / 실패 0 / 대기 49)
+2026-08-13 11:09:33,475 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-13 11:09:33,475 [INFO] dashboard_exporter —   포스트: 98개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-13 11:09:33,476 [INFO] main — 대시보드 데이터 업데이트 완료

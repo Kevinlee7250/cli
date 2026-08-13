@@ -1,127 +1,3 @@
-2026-08-13 05:02:36,036 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-13 05:02:36,054 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 232 / 실패 0 / 대기 49)
-2026-08-13 05:02:36,054 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-13 05:02:36,054 [INFO] dashboard_exporter —   포스트: 100개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-13 05:02:36,055 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-13 05:03:07,511 [INFO] main — ============================================================
-2026-08-13 05:03:07,511 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-13 05:03:07
-2026-08-13 05:03:07,511 [INFO] main — ============================================================
-2026-08-13 05:03:07,530 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-13 05:03:07,530 [INFO] keyword_collector — 포스팅 이력 코퍼스: 179개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-08-13 05:03:07,530 [INFO] keyword_collector — 시즌 예약 키워드 3개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-13 05:03:13,837 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-08-13 05:03:22,301 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:03:22,327 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-13 05:03:22,327 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-13 05:03:23,123 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-13 05:03:23,124 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-13 05:03:23,125 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
-2026-08-13 05:03:23,164 [INFO] keyword_collector — 유사 주제 제외 31개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '골프 비기너 첫 필드 나가기 전 준비 체크리스트', '2026 추석 연휴 여행지 추천 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-13 05:03:23,164 [INFO] keyword_collector —   [season_scheduled] 1개: ['2026 추석 선물 세트 직접 비교 후기']
-2026-08-13 05:03:23,165 [INFO] keyword_collector —   [fallback] 1개: ['NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-13 05:03:23,165 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 추석 선물 세트 직접 비교 후기', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-13 05:03:23,165 [INFO] main — 수집된 키워드 2개: ['2026 추석 선물 세트 직접 비교 후기', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-13 05:03:23,170 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-08-13 05:03:23,170 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 추석 선물 세트 직접 비교 후기']
-2026-08-13 05:03:23,188 [INFO] main — 
-[1/1] 키워드: '2026 추석 선물 세트 직접 비교 후기'
-2026-08-13 05:03:23,189 [INFO] content_generator — 포스트 생성 중: '2026 추석 선물 세트 직접 비교 후기'
-2026-08-13 05:03:30,287 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:03:30,288 [INFO] research_collector — 검색 의도: 2026년 추석 선물 세트를 실제로 구매/비교하여 가격, 품질, 구성을 확인하고 최적의 선택을 하려는 소비자
-2026-08-13 05:03:45,192 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '2026 추석 선물 세트 직접 비교 후기'
-2026-08-13 05:04:04,051 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:04:04,053 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '2026 추석 선물 세트 직접 비교 후기'
-2026-08-13 05:04:13,494 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:04:13,495 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'X': 1, 'B': 4}
-2026-08-13 05:04:13,498 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-13 05:04:15,291 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:05:49,507 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-13 05:05:50,686 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:06:08,858 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
-2026-08-13 05:06:09,924 [INFO] image_fetcher — 이미지 수집 성공: '2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 뭐가 다른가' → 제목='백화점 업계 추석 선물 본판매 시작' (관련성=0.18)
-2026-08-13 05:06:10,713 [INFO] image_fetcher — 이미지 수집 성공: '추석 선물 세트' → 제목='최상급 담양한과 유과 약과 추석 설 명절 구정 한과 선물 세트 수제 찹쌀' (관련성=1.00)
-2026-08-13 05:06:11,723 [INFO] image_fetcher — 이미지 수집 성공: '추석 선물 시점에서 확인할 글을 쓰는' → 제목='추석 선물, 카카오톡 선물하기가 골라드려요' (관련성=0.33)
-2026-08-13 05:06:14,539 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:06:14,540 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
-2026-08-13 05:06:14,540 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-08-13 05:06:14,543 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-08-13 05:06:14,545 [INFO] content_generator — 포스트 생성 완료: '2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 뭐가 다른가' (2836자, 이미지 1개)
-2026-08-13 05:06:15,986 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:06:36,585 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 '
-2026-08-13 05:06:36,585 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(2836자)는 기준 충족이나 실제 구매·비교 경험 없이 2025년 뉴스 데이터 재구성에 머무름
-2026-08-13 05:06:36,586 [INFO] adsense_validator —   ⚠️ SEO 최적화: 제목의 '직접 비교 후기'와 달리 실제 2026년 데이터·직접 경험이 없어 제목-내용 간 다소 괴리
-2026-08-13 05:06:36,586 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 긍정적이나 1인칭 실경험 부재로 '후기' 신뢰성 약함
-2026-08-13 05:06:36,586 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
-2026-08-13 05:06:36,586 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~있습니다입니다' 등 문법 오류와 반복적 전환구('그런데', '~다는 지적') 패턴이 AI 생성 흔적을 보임
-2026-08-13 05:06:36,595 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-13 05:06:36,597 [INFO] internal_linker —   [1/5] '현대백화점' -> https://www.hoguwhat.com/2026/08/blog-post_464.html
-2026-08-13 05:06:36,599 [INFO] internal_linker —   [2/5] '선물세트' -> https://hoguasset.blogspot.com/2026/08/blog-post_11.html
-2026-08-13 05:06:36,602 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-08-13 05:06:36,602 [INFO] main —   제목: 2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 뭐가 다른가
-2026-08-13 05:06:36,602 [INFO] main —   이미지: 1개 삽입
-2026-08-13 05:06:36,603 [INFO] main —   글자 수: 2836자
-2026-08-13 05:06:37,283 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:06:54,983 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — '2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 '
-2026-08-13 05:06:54,983 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충족하나 실제로는 2025년 보도자료 재구성이며 '직접 비교 후기'라는 제목과 달리 실사용 경험이 없음
-2026-08-13 05:06:54,983 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드 분산은 자연스러우나 '직접 비교 후기' 제목에 비해 실질적 직접 비교 체험이 없어 검색의도와 다소 불일치
-2026-08-13 05:06:54,983 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 pass 수준이나 표 형식이 텍스트로 뭉쳐 있고 500자 이상 단락이 다수 존재
-2026-08-13 05:06:54,983 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 서술과 연합뉴스 출처 인용은 있으나 실제 구매·체험 기반 경험이 아닌 보도자료 요약 수준
-2026-08-13 05:06:54,983 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 '네이버 이미지 검색'으로 명시되어 저작권 주의 필요
-2026-08-13 05:06:54,983 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~입니다입니다' 같은 문법 오류와 단조로운 서술 패턴이 AI 생성 흔적을 시사
-2026-08-13 05:06:54,983 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 69/100, 권장: review) — 자동 수정 시도
-2026-08-13 05:06:54,983 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 충족하나 실제로는 2025년 보도자료 재구성이며 '직접 비교 후기'라는 제목과 달리 실사용 경험이 없음
-2026-08-13 05:06:54,983 [WARNING] main —      🟡 [SEO 최적화] 키워드 분산은 자연스러우나 '직접 비교 후기' 제목에 비해 실질적 직접 비교 체험이 없어 검색의도와 다소 불일치
-2026-08-13 05:06:54,983 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 개수는 pass 수준이나 표 형식이 텍스트로 뭉쳐 있고 500자 이상 단락이 다수 존재
-2026-08-13 05:06:54,983 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 69/100, fail: 0개, warn: 6개
-2026-08-13 05:06:55,606 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:08:08,898 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-13 05:08:09,704 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:08:25,563 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2836자 → 3181자 (+345자)
-2026-08-13 05:08:25,563 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-13 05:08:26,261 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:08:47,175 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 '
-2026-08-13 05:08:47,176 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 다소 떨어짐
-2026-08-13 05:08:47,176 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 '네이버 이미지 검색'으로 명시되어 저작권 주의 필요
-2026-08-13 05:08:47,176 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌💡 요약박스 형식과 일부 정형화된 비교 서술 패턴이 AI 생성 콘텐츠 특징과 유사함
-2026-08-13 05:08:47,176 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 69 → 84/100)
-2026-08-13 05:08:47,176 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-08-13 05:08:48,791 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:09:33,519 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 뭐가 다른가' → '2026 추석 선물 세트 직접 비교 후기: 롯데·현대·신세계 차이'
-2026-08-13 05:09:33,519 [INFO] final_editor —   ✏️ 메타 설명 교정 (149자)
-2026-08-13 05:09:33,520 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목과 메타 설명을 글자 수 규칙에 맞게 다듬고, 긴 문단을 2~4문장 단위로 분리하여 모바일 가독성을 높였습니다. 표·요약박스·개인경험메모·주의사항·FAQ·작성자메모를 규칙에 맞는 형태로 배치하고, 구체적인 alt text를 가진 이미지 3장과 대표 이미지를 제안했습니다.
-2026-08-13 05:09:33,602 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-13 05:09:33,602 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-13 05:09:33,673 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-13 05:09:33,691 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-13 05:09:33,691 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-08-13 05:09:34,937 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026_0727474562.html
-2026-08-13 05:09:34,950 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026_0727474562.html
-2026-08-13 05:10:06,428 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:10:06,429 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-13 05:10:06,429 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-13 05:10:06,438 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '2026 추석 선물 세트 직접 비교 후기: 롯데·현대·신세계 차이'
-2026-08-13 05:10:07,521 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 05:10:11,831 [INFO] comment_manager —   생성된 댓글: 글에 못 담은 팁 하나 더 드리자면, 백화점 앱이나 멤버십으로 사전 예약하면 매장 방문 없이도 첫날 물량을 확보할 수 있어서 인기 세트 품절을 ...
-2026-08-13 05:13:11,896 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-13 05:13:11,896 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-13 05:13:11,897 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-13 05:13:11,897 [INFO] main — 
-============================================================
-2026-08-13 05:13:11,897 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-08-13 05:13:11,897 [INFO] main — ============================================================
-2026-08-13 05:13:11,938 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-13 05:13:11,964 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
-2026-08-13 05:13:11,986 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-13 05:13:12,134 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-13 05:13:12,364 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-13 05:13:12,366 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
 2026-08-13 05:13:12,368 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
 2026-08-13 05:13:12,385 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 232 / 실패 0 / 대기 49)
 2026-08-13 05:13:12,385 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
@@ -622,3 +498,211 @@
 2026-08-13 11:35:33,988 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-13 11:35:33,988 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-13 11:35:33,989 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-13 12:03:03,745 [INFO] main — ============================================================
+2026-08-13 12:03:03,745 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-13 12:03:03
+2026-08-13 12:03:03,745 [INFO] main — ============================================================
+2026-08-13 12:03:03,765 [INFO] main — 수집된 키워드 2개: ['여름휴가 성수기 끝난 후 저렴한 국내 여행지 추천', '황정민 폭로녀']
+2026-08-13 12:03:03,770 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-08-13 12:03:03,770 [INFO] main — 단독 포스트 대상 키워드 2개: ['여름휴가 성수기 끝난 후 저렴한 국내 여행지 추천', '황정민 폭로녀']
+2026-08-13 12:03:03,786 [INFO] main — 
+[1/2] 키워드: '여름휴가 성수기 끝난 후 저렴한 국내 여행지 추천'
+2026-08-13 12:03:03,786 [INFO] content_generator — 포스트 생성 중: '여름휴가 성수기 끝난 후 저렴한 국내 여행지 추천'
+2026-08-13 12:03:11,278 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:03:11,297 [INFO] research_collector — 검색 의도: 여름 성수기가 끝난 시기(9월~10월 초)에 가격이 저렴해지는 국내 여행지와 숙소, 항공/교통편 정보를 찾으
+2026-08-13 12:03:36,932 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '여름휴가 성수기 끝난 후 저렴한 국내 여행지 추천'
+2026-08-13 12:03:54,497 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:03:54,498 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '여름휴가 성수기 끝난 후 저렴한 국내 여행지 추천'
+2026-08-13 12:04:11,045 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:04:11,046 [INFO] source_validator — 출처 검증: 6/7개 통과, 등급 분포 {'C': 5, 'X': 1, 'D': 1}
+2026-08-13 12:04:11,048 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
+2026-08-13 12:04:11,048 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-13 12:04:13,060 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:05:15,440 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-13 12:05:15,441 [WARNING] content_generator — 컨텐츠 너무 짧음(2461자, 최소 2500자) — 재시도 1/3
+2026-08-13 12:05:18,441 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-08-13 12:05:20,554 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:06:28,745 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-13 12:06:28,745 [WARNING] content_generator — 컨텐츠 너무 짧음(2223자, 최소 2500자) — 재시도 2/3
+2026-08-13 12:06:31,745 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-08-13 12:06:33,002 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:07:34,884 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-13 12:07:36,808 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:07:49,800 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '성수기 대비 눈에 띄게 낮아진 수준까지 요금이 내려간'
+2026-08-13 12:07:49,800 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
+2026-08-13 12:07:50,613 [INFO] image_fetcher — 이미지 수집 성공: '여름휴가 성수기 끝난 후 저렴한 국내 여행지, 8월 말~9월 초 노려야 하는 이유' → 제목='[8월 27일 마케팅 뉴스클리핑] 9월 광고시장, 가을철 성수기 돌입 외' (관련성=0.11)
+2026-08-13 12:07:52,843 [INFO] image_fetcher — 이미지 수집 성공: '여름휴 성수기 끝난' → 제목='다가올 7월 9일 정말 위험은 끝난 것인가' (관련성=0.33)
+2026-08-13 12:07:53,895 [INFO] image_fetcher — 이미지 수집 성공: '여름휴 성수기 말이 지나면 여행 수요가' → 제목='보드장소식 - 말이 필요없다 그냥 성수기' (관련성=0.29)
+2026-08-13 12:07:56,497 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:07:56,498 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-08-13 12:07:56,498 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-08-13 12:07:56,498 [INFO] image_fetcher — 제목 썸네일 생성: '여름휴가 성수기 끝난 후 저렴한 국내 여행지, 8월 말' (data URI, 1180B)
+2026-08-13 12:07:57,713 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-08-13 12:07:57,716 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-08-13 12:07:57,717 [INFO] content_generator — 포스트 생성 완료: '여름휴가 성수기 끝난 후 저렴한 국내 여행지, 8월 말~9월 초 노려야 하는 이유' (2652자, 이미지 1개)
+2026-08-13 12:07:59,679 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:08:24,129 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-13 12:08:26,467 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:08:30,682 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '여름휴가 성수기 끝난 후 저렴한 국내 여행지, 8월 말~9월 초'
+2026-08-13 12:08:30,682 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2652자로 기준 충족하나 개인 경험보다 업계 인터뷰·후기 종합에 의존해 깊이가 다소 얕음
+2026-08-13 12:08:30,682 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 충족하나 '온도차' 및 '지역별' 섹션 단락이 500자 이상으로 다소 길어 가독성 저하
+2026-08-13 12:08:30,682 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 업계 관계자 인용과 4개 출처는 있으나 1인칭 직접 경험 서술이 부족함
+2026-08-13 12:08:30,682 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 1개뿐이며 '직접 제작' 출처는 안전하지만 이미지 수가 적어 가독성 측면에서 보완 필요
+2026-08-13 12:08:30,682 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌💡 이모지 요약 박스와 '먼저·다음으로·그그렇다면' 식의 정형화된 전환 문구, '핵심 요약' 박스 등 템플릿화된 구조가 AI 작성 패턴과 유사함
+2026-08-13 12:08:30,687 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-13 12:08:30,689 [INFO] internal_linker —   [1/5] '저렴하게' -> https://www.hoguwhat.com/2026/08/8.html
+2026-08-13 12:08:30,692 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-08-13 12:08:30,692 [INFO] main —   제목: 여름휴가 성수기 끝난 후 저렴한 국내 여행지, 8월 말~9월 초 노려야 하는 이유
+2026-08-13 12:08:30,692 [INFO] main —   이미지: 1개 삽입
+2026-08-13 12:08:30,692 [INFO] main —   글자 수: 2652자
+2026-08-13 12:08:32,704 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:08:50,959 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '여름휴가 성수기 끝난 후 저렴한 국내 여행지, 8월 말~9월 초'
+2026-08-13 12:08:50,959 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 업계 인터뷰·커뮤니티 후기 재구성 위주로 필자 개인 경험은 약함
+2026-08-13 12:08:50,959 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개로 구조는 갖췄으나 단락 구분 없이 텍스트가 길게 이어져 가독성 저하
+2026-08-13 12:08:50,959 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개와 업계 인용은 있으나 1인칭 직접 경험 서술이 부족함
+2026-08-13 12:08:50,959 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개뿐이며 alt텍스트 정보 확인 불가, 이미지 부족으로 경고
+2026-08-13 12:08:50,959 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다시 말해', '정리해보겠습니다' 등 전형적 요약·전환 문구와 불릿 목록화 패턴이 반복됨
+2026-08-13 12:08:50,959 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-08-13 12:08:50,959 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 업계 인터뷰·커뮤니티 후기 재구성 위주로 필자 개인 경험은 약함
+2026-08-13 12:08:50,959 [WARNING] main —      🟡 [구조 및 가독성] H2 4개로 구조는 갖췄으나 단락 구분 없이 텍스트가 길게 이어져 가독성 저하
+2026-08-13 12:08:50,959 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 4개와 업계 인용은 있으나 1인칭 직접 경험 서술이 부족함
+2026-08-13 12:08:50,960 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-08-13 12:08:53,339 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:10:35,082 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-13 12:10:37,401 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:11:42,960 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2652자 → 4013자 (+1361자)
+2026-08-13 12:11:42,960 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-13 12:11:45,306 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:12:04,910 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '여름휴가 성수기 끝난 후 저렴한 국내 여행지, 8월 말~9월 초'
+2026-08-13 12:12:04,910 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 기준 충족하나 소제목 사이 단락이 500자 이상으로 길게 이어지는 구간이 존재
+2026-08-13 12:12:04,910 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처는 '직접 제작'으로 저작권 문제는 없으나 alt 텍스트 여부가 명시되지 않아 warn
+2026-08-13 12:12:04,910 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 90/100)
+2026-08-13 12:12:04,910 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-13 12:12:07,020 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:13:21,620 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-13 12:13:23,826 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:14:04,090 [INFO] final_editor —   ✏️ 제목 최종 교정: '여름휴가 성수기 끝난 후 저렴한 국내 여행지, 8월 말~9월 초 노려야 하는 이유' → '여름휴가 성수기 끝난 후 저렴한 국내 여행지, 8월 말이 답'
+2026-08-13 12:14:04,090 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
+2026-08-13 12:14:04,090 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고, 요약 박스·비교 표·개인 경험 메모·주의사항·FAQ·작성자 메모를 추가해 발행 형식에 맞게 재구성했습니다. 제목과 메타 설명, 슬러그를 SEO 기준에 맞춰 정리하고 이미지 alt 텍스트를 구체화했습니다.
+2026-08-13 12:14:04,252 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-13 12:14:04,252 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-13 12:14:04,374 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-13 12:14:04,387 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-13 12:14:04,388 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-08-13 12:14:05,306 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/8.html
+2026-08-13 12:14:05,317 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/8.html
+2026-08-13 12:14:40,973 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:14:40,974 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-13 12:14:40,974 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-13 12:14:40,981 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '여름휴가 성수기 끝난 후 저렴한 국내 여행지, 8월 말이 답'
+2026-08-13 12:14:41,911 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:14:45,925 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리면, 예약 취소 알림 서비스(네이버 알림이나 호텔 앱 자체 기능)를 켜두시면 비수기 진입 직후 취소표가 확 풀리는 타이밍에 ...
+2026-08-13 12:17:46,031 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-13 12:17:46,032 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-13 12:17:46,032 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-13 12:17:48,032 [INFO] main — 
+[2/2] 키워드: '황정민 폭로녀'
+2026-08-13 12:17:48,033 [INFO] content_generator — 포스트 생성 중: '황정민 폭로녀'
+2026-08-13 12:17:57,551 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:17:57,552 [INFO] research_collector — 검색 의도: 배우 황정민과 관련된 '폭로녀' 논란의 실제 사실관계와 배경을 확인하려는 검색
+2026-08-13 12:18:06,700 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '황정민 폭로녀'
+2026-08-13 12:18:27,351 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:18:27,352 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '황정민 폭로녀'
+2026-08-13 12:18:54,021 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:18:54,022 [INFO] source_validator — 출처 검증: 7/7개 통과, 등급 분포 {'B': 5, 'D': 1, 'C': 1}
+2026-08-13 12:18:54,023 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-08-13 12:18:54,023 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-13 12:18:56,341 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:20:03,501 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-13 12:20:05,797 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:20:17,937 [WARNING] content_generator — 팩트체크 fix가 지시문 형태 — 적용 건너뜀: '구체적인 제안 내용에 대해서는 언론 보도를 통해 추가 확인이 필요합니다'
+2026-08-13 12:20:17,938 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-08-13 12:20:18,668 [INFO] image_fetcher — 이미지 수집 성공: '황정민 폭로녀 논란 정리, 스토킹 고소와 정식 재판까지 뭐가 사실인가' → 제목='황정민 폭로글 등장에 소속사 초강수 “스토킹 피의자였다”' (관련성=0.20)
+2026-08-13 12:20:19,349 [INFO] image_fetcher — 이미지 수집 성공: '황정민 폭로녀' → 제목='황정민 폭로녀 '관계 은폐하려 멀티프로필…교제 언급 왜 했나' 또 주장 ' (관련성=1.00)
+2026-08-13 12:20:20,020 [INFO] image_fetcher — 이미지 수집 성공: '황정민 폭로녀 논란 지금까지 먼저 용어부터' → 제목='황정민 폭로 A씨, 계속되는 돌출 행위...미성년 子 이어 칸에도 연락 ' (관련성=0.33)
+2026-08-13 12:20:21,345 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:20:21,346 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-08-13 12:20:21,349 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-08-13 12:20:21,350 [INFO] content_generator — 포스트 생성 완료: '황정민 폭로녀 논란 정리, 스토킹 고소와 정식 재판까지 뭐가 사실인가' (2761자, 이미지 3개)
+2026-08-13 12:20:23,640 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:20:40,825 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '황정민 폭로녀 논란 정리, 스토킹 고소와 정식 재판까지 뭐가 사'
+2026-08-13 12:20:40,825 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 통과(2761자)이나 언론 보도 재구성 위주로 개인 경험·독창적 인사이트가 부족함
+2026-08-13 12:20:40,825 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 5개 출처 인용은 있으나 1인칭 경험이나 저자 전문성 신호가 부족함
+2026-08-13 12:20:40,825 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 모두 네이버 이미지 검색으로 저작권 주의 필요
+2026-08-13 12:20:40,825 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 요약박스, '다음 섹션에서 짚어보겠습니다' 류 반복 전환구 등 전형적 AI 작성 패턴이 보임
+2026-08-13 12:20:40,829 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-13 12:20:40,837 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-08-13 12:20:40,837 [INFO] main —   제목: 황정민 폭로녀 논란 정리, 스토킹 고소와 정식 재판까지 뭐가 사실인가
+2026-08-13 12:20:40,837 [INFO] main —   이미지: 3개 삽입
+2026-08-13 12:20:40,837 [INFO] main —   글자 수: 2761자
+2026-08-13 12:20:42,602 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:20:57,709 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '황정민 폭로녀 논란 정리, 스토킹 고소와 정식 재판까지 뭐가 사'
+2026-08-13 12:20:57,709 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2761자로 기준 통과하나 대부분 언론 인용 재구성이며 필자 고유 경험·해석은 부족함
+2026-08-13 12:20:57,709 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 경향신문·주간조선 등 출처 인용은 있으나 1인칭 경험이나 전문가 검증 신호는 없음
+2026-08-13 12:20:57,709 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 모두 '네이버 이미지 검색'으로 저작권 주의 필요
+2026-08-13 12:20:57,709 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 요약박스·표·전환문구('그렇다면','이렇게 보면') 패턴이 전형적 AI 생성 구조와 유사
+2026-08-13 12:20:57,709 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-13 12:20:57,709 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 2761자로 기준 통과하나 대부분 언론 인용 재구성이며 필자 고유 경험·해석은 부족함
+2026-08-13 12:20:57,709 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 경향신문·주간조선 등 출처 인용은 있으나 1인칭 경험이나 전문가 검증 신호는 없음
+2026-08-13 12:20:57,709 [WARNING] main —      🟡 [이미지 정책] 이미지 출처가 모두 '네이버 이미지 검색'으로 저작권 주의 필요
+2026-08-13 12:20:57,709 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-13 12:21:00,173 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:22:14,876 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2761자 → 3343자 (+582자)
+2026-08-13 12:22:14,876 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-13 12:22:16,924 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:22:37,613 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '황정민 폭로녀 논란 정리, 스토킹 고소와 정식 재판까지 뭐가 사'
+2026-08-13 12:22:37,613 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 헤딩이 3개로 기준(4개 이상)에 못 미침
+2026-08-13 12:22:37,613 [INFO] adsense_validator —   ⚠️ 이미지 정책: 뉴스·커뮤니티 캡처 이미지 사용으로 저작권 주의 필요(출처 표기는 있음)
+2026-08-13 12:22:37,613 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '📌 지금까지 확인한 사실', '💡 정리하면' 등 정형화된 요약 박스 패턴이 AI 생성 의심 신호로 감지됨
+2026-08-13 12:22:37,613 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
+2026-08-13 12:22:37,613 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-08-13 12:22:38,403 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:24:01,141 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-13 12:24:01,994 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:24:29,277 [INFO] final_editor —   ✏️ 제목 최종 교정: '황정민 폭로녀 논란 정리, 스토킹 고소와 정식 재판까지 뭐가 사실인가' → '황정민 폭로녀 논란 정리, 스토킹 고소부터 정식 재판까지'
+2026-08-13 12:24:29,277 [INFO] final_editor —   ✏️ 메타 설명 교정 (100자)
+2026-08-13 12:24:29,277 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 저작권 우려가 있는 실제 언론 캡처 이미지 설명을 삭제하고 일러스트형 이미지 제안으로 대체했으며, 긴 문단을 2~4문장 단위로 분리하고 요약박스·표·FAQ·개인경험메모·주의사항·작성자메모를 규정 형식에 맞게 정리했습니다.
+2026-08-13 12:24:29,392 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-13 12:24:29,392 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-13 12:24:29,538 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-13 12:24:29,548 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-08-13 12:24:30,301 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post_167.html
+2026-08-13 12:24:30,312 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post_167.html
+2026-08-13 12:25:02,424 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:25:02,425 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-13 12:25:02,426 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-13 12:25:02,426 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '황정민 폭로녀 논란 정리, 스토킹 고소부터 정식 재판까지'
+2026-08-13 12:25:03,873 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 12:25:08,099 [INFO] comment_manager —   생성된 댓글: 덧붙이자면, 약식명령 불복 후 정식 재판 청구 시 결과가 오히려 더 무거워질 수도 있다는 점(불이익변경금지 원칙이 적용 안 되는 경우도 있어서)...
+2026-08-13 12:28:08,217 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-13 12:28:08,218 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-13 12:28:08,218 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (2개)
+2026-08-13 12:28:08,219 [INFO] main — 
+============================================================
+2026-08-13 12:28:08,219 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 2개 / 실패 0개
+2026-08-13 12:28:08,219 [INFO] main — ============================================================
+2026-08-13 12:28:08,254 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-13 12:28:08,275 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
+2026-08-13 12:28:08,315 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-13 12:28:08,558 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-13 12:28:08,838 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-13 12:28:09,106 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-13 12:28:09,108 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-13 12:28:09,110 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-13 12:28:09,123 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 234 / 실패 0 / 대기 47)
+2026-08-13 12:28:09,124 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-13 12:28:09,124 [INFO] dashboard_exporter —   포스트: 98개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-13 12:28:09,125 [INFO] main — 대시보드 데이터 업데이트 완료

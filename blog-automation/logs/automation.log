@@ -1,134 +1,3 @@
-2026-08-12 11:24:21,910 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 3022자로 기준 충족하나 개인 경험 없이 일반 정보 재조합 수준이며 문장 일부가 어색하게 중복(오류) 표현됨
-2026-08-12 11:24:21,910 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 경험 서술이 전혀 없어 신뢰도 신호 부족
-2026-08-12 11:24:21,910 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
-2026-08-12 11:24:21,910 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 요약박스(📌💡)와 형식화된 '핵심 요약/핵심 포인트' 패턴 및 문장 중복 오류가 AI 생성 흔적으로 보임
-2026-08-12 11:24:21,916 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-12 11:24:21,918 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguasset.blogspot.com/2026/08/2026_02072899182.html
-2026-08-12 11:24:21,920 [INFO] internal_linker —   [2/5] '타이밍' -> https://hoguasset.blogspot.com/2026/08/1300.html
-2026-08-12 11:24:21,923 [INFO] internal_linker —   [3/5] '한국은행' -> https://hoguasset.blogspot.com/2026/08/2026_01494899100.html
-2026-08-12 11:24:21,924 [INFO] internal_linker —   [4/5] '2026년' -> https://www.hoguwhat.com/2026/08/2026.html
-2026-08-12 11:24:21,924 [INFO] internal_linker — 내부 링크 4개 삽입 완료
-2026-08-12 11:24:21,924 [INFO] main —   제목: 엔화 환율 전망 2026, 지금 엔테크 시작해도 될까? 은행별 엔화 예금 비교
-2026-08-12 11:24:21,924 [INFO] main —   이미지: 3개 삽입
-2026-08-12 11:24:21,924 [INFO] main —   글자 수: 3022자
-2026-08-12 11:24:23,752 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 11:24:45,766 [INFO] adsense_validator — AdSense 검증 ❌ [REJECT] 점수: 61/100 — '엔화 환율 전망 2026, 지금 엔테크 시작해도 될까? 은행별 '
-2026-08-12 11:24:45,766 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 3022자로 기준을 충족하지만 개인 경험 없이 일반 정보를 재조합한 수준이며 문장 중복·어색한 표현(중복된 '알려져 있습니다' 구절)이 발견됨
-2026-08-12 11:24:45,766 [INFO] adsense_validator —   ⚠️ SEO 최적화: 제목과 본문 주제는 일치하나 키워드 문구('엔화 환율 전망과 엔테크 저축 노하우 2026')가 본문에 자연스럽게 그대로 배치되지 않고 조합이 부자연스러움
-2026-08-12 11:24:45,766 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 pass 기준이나 일부 단락(엔테크 설명, 은행 비교 설명)이 500자 이상으로 길게 이어짐
-2026-08-12 11:24:45,766 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술 없이 한국은행 보고서 등 출처 인용은 있으나 저자 고유 전문성 신호가 약함
-2026-08-12 11:24:45,766 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색 기반으로 저작권 주의가 필요한 전형적 warn 사례
-2026-08-12 11:24:45,766 [INFO] adsense_validator —   ❌ AI 생성 의심도: 문장 중복 오류('한때~알려져 있습니다를 기억하는')와 '핵심 요약/핵심 포인트' 등 정형화된 요약 패턴, 딱딱한 보고서체가 두드러져 AI 생성 의심이 높음
-2026-08-12 11:24:45,766 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 문장 중복 오류('한때~알려져 있습니다를 기억하는')와 '핵심 요약/핵심 포인트' 등 정형화된 요약 패턴, 딱딱한 보고서체가 두드러져 AI 생성 의심이 높음
-2026-08-12 11:24:45,766 [WARNING] adsense_validator —   🔴 본문 도입부에 문장이 어색하게 중복·깨져있는 부분('한때 100엔당 원화 환율이 크게 하락했던 시기로 알려져 있습니다를 기억하는 분들이 많습니다') 수정 필요
-2026-08-12 11:24:45,766 [ERROR] main —   ❌ AdSense 유해 콘텐츠 감지 — 업로드 취소: '엔화 환율 전망 2026, 지금 엔테크 시작해도 될까? 은행별 엔화 예금 비교' (점수: 61/100)
-2026-08-12 11:24:45,766 [ERROR] main —      🔴 [AI 생성 의심도] 문장 중복 오류('한때~알려져 있습니다를 기억하는')와 '핵심 요약/핵심 포인트' 등 정형화된 요약 패턴, 딱딱한 보고서체가 두드러져 AI 생성 의심이 높음
-2026-08-12 11:24:45,767 [ERROR] main —      🔴 본문 도입부에 문장이 어색하게 중복·깨져있는 부분('한때 100엔당 원화 환율이 크게 하락했던 시기로 알려져 있습니다를 기억하는 분들이 많습니다') 수정 필요
-2026-08-12 11:24:45,779 [INFO] main — 
-============================================================
-2026-08-12 11:24:45,779 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
-2026-08-12 11:24:45,779 [INFO] main — ============================================================
-2026-08-12 11:24:45,821 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-12 11:24:45,844 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
-2026-08-12 11:24:45,863 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-12 11:24:46,173 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-12 11:24:46,535 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-12 11:24:46,536 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-12 11:24:46,539 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-12 11:24:46,555 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 231 / 실패 0 / 대기 50)
-2026-08-12 11:24:46,555 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-12 11:24:46,555 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-12 11:24:46,556 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-12 15:06:32,430 [INFO] main — ============================================================
-2026-08-12 15:06:32,430 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-08-12 15:06:32
-2026-08-12 15:06:32,430 [INFO] main — ============================================================
-2026-08-12 15:06:32,450 [INFO] main — 수집된 키워드 1개: ['당권주자 송영길 부동산 손대지']
-2026-08-12 15:06:32,456 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-08-12 15:06:32,456 [INFO] main — 단독 포스트 대상 키워드 1개: ['당권주자 송영길 부동산 손대지']
-2026-08-12 15:06:32,473 [INFO] main — 
-[1/1] 키워드: '당권주자 송영길 부동산 손대지'
-2026-08-12 15:06:32,473 [INFO] content_generator — 포스트 생성 중: '당권주자 송영길 부동산 손대지'
-2026-08-12 15:06:40,680 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 <none>"
-2026-08-12 15:06:40,680 [INFO] anthropic._base_client — Retrying request to /v1/messages in 0.380980 seconds
-2026-08-12 15:06:49,364 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 <none>"
-2026-08-12 15:06:49,365 [INFO] anthropic._base_client — Retrying request to /v1/messages in 0.984410 seconds
-2026-08-12 15:06:58,657 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 529 <none>"
-2026-08-12 15:06:58,657 [WARNING] research_collector — 검색 의도 분석 실패: Error code: 529 - {'type': 'error', 'error': {'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011Cdy4bAddSaJ6aHyYsToVk'}
-2026-08-12 15:07:04,011 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '당권주자 송영길 부동산 손대지'
-2026-08-12 15:07:21,206 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 15:07:21,231 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '당권주자 송영길 부동산 손대지'
-2026-08-12 15:07:47,432 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 15:07:47,433 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'X': 3, 'B': 3}
-2026-08-12 15:07:47,436 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-12 15:07:50,407 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 15:08:58,143 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-12 15:09:00,831 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 15:09:13,294 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
-2026-08-12 15:09:13,567 [INFO] image_fetcher — 이미지 수집 성공: '송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수정 요구까지 나온 이유' → 제목='skyscrapers / skyline / city / buildings' (관련성=0.12)
-2026-08-12 15:09:14,416 [INFO] image_fetcher — 이미지 수집 성공: '당권주자 송영길 부동산' → 제목='본경선 진출한 민주당 당권주자 송영길' (관련성=0.40)
-2026-08-12 15:09:15,087 [INFO] image_fetcher — 이미지 수집 성공: '당권주자 송영길 정부 세제 관련' → 제목='송영길 “대표 결단 존중해야”…야당·기재부에 ‘전국민 재난지원금’ 압박' (관련성=0.20)
-2026-08-12 15:09:19,280 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 15:09:19,281 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-08-12 15:09:19,281 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-08-12 15:09:19,284 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-08-12 15:09:19,286 [INFO] content_generator — 포스트 생성 완료: '송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수정 요구까지 나온 이유' (2524자, 이미지 2개)
-2026-08-12 15:09:22,090 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 15:09:46,361 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수'
-2026-08-12 15:09:46,361 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 보도 재정리 위주로 개인적 인사이트·독창적 분석이 부족함
-2026-08-12 15:09:46,361 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 2026년 미래 시점 사건을 이미 발생한 사실처럼 서술해 사실 정확성에 의문 있음
-2026-08-12 15:09:46,361 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 인용은 있으나 1인칭 경험·전문성 신호 부재, 날짜 불일치로 신뢰도 저하
-2026-08-12 15:09:46,361 [INFO] adsense_validator —   ⚠️ 이미지 정책: 네이버 이미지 검색 기반 이미지 사용으로 저작권 주의 필요
-2026-08-12 15:09:46,361 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '관련 보도에 따르면에 따르면' 등 중복·기계적 문구와 정형화된 표 구조가 AI 생성 패턴을 시사함
-2026-08-12 15:09:46,361 [WARNING] adsense_validator —   🔴 2026년 8월 12일이라는 미래 날짜를 이미 발생한 사건처럼 서술해 사실관계 혼란 및 신뢰성 저하 우려
-2026-08-12 15:09:46,361 [WARNING] adsense_validator —   🔴 '관련 보도에 따르면에 따르면' 등 문구 중복 오류 존재
-2026-08-12 15:09:46,368 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-12 15:09:46,372 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguasset.blogspot.com/2026/08/2026_02072899182.html
-2026-08-12 15:09:46,373 [INFO] internal_linker —   [2/5] '양도소득세' -> https://hoguasset.blogspot.com/2026/08/2026_01325784700.html
-2026-08-12 15:09:46,375 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-08-12 15:09:46,375 [INFO] main —   제목: 송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수정 요구까지 나온 이유
-2026-08-12 15:09:46,375 [INFO] main —   이미지: 2개 삽입
-2026-08-12 15:09:46,376 [INFO] main —   글자 수: 2524자
-2026-08-12 15:09:48,697 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 15:10:12,920 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수'
-2026-08-12 15:10:12,920 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2524자로 기준 충족하나 뉴스 인용 재구성 위주로 개인 경험·독창적 인사이트 부족
-2026-08-12 15:10:12,920 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 3개 출처 인용으로 근거는 있으나 1인칭 경험이나 전문가적 관점 부재
-2026-08-12 15:10:12,920 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처 중 하나가 '네이버 이미지 검색' 기반으로 저작권 주의 필요
-2026-08-12 15:10:12,920 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '관련 보도에 따르면에 따르면' 등 중복 어구 오류와 정형화된 요약 박스 패턴이 AI 생성 흔적을 드러냄
-2026-08-12 15:10:12,920 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-12 15:10:12,920 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 2524자로 기준 충족하나 뉴스 인용 재구성 위주로 개인 경험·독창적 인사이트 부족
-2026-08-12 15:10:12,920 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 3개 출처 인용으로 근거는 있으나 1인칭 경험이나 전문가적 관점 부재
-2026-08-12 15:10:12,920 [WARNING] main —      🟡 [이미지 정책] 이미지 출처 중 하나가 '네이버 이미지 검색' 기반으로 저작권 주의 필요
-2026-08-12 15:10:12,920 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-12 15:10:15,770 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 15:11:28,934 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2524자 → 3017자 (+493자)
-2026-08-12 15:11:28,934 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-12 15:11:30,454 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 15:11:44,777 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수'
-2026-08-12 15:11:44,777 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2가 3개로 기준 미달이며 500자 이상 긴 단락이 다수 존재
-2026-08-12 15:11:44,777 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지는 문제 없으나 alt 텍스트 여부 확인 불가로 주의 필요
-2026-08-12 15:11:44,777 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-08-12 15:11:44,778 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-08-12 15:11:53,077 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 15:11:53,078 [WARNING] final_editor —   ⚠️ 3차 최종 편집 건너뜀 (무시): {'type': 'error', 'error': {'details': None, 'type': 'overloaded_error', 'message': 'Overloaded'}, 'request_id': 'req_011Cdy4xsap5nDPdBKiNu9pA'}
-2026-08-12 15:11:53,252 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-12 15:11:53,252 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-12 15:11:53,444 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-12 15:11:53,459 [INFO] related_posts — 관련 포스트 2개 섹션 생성
-2026-08-12 15:11:53,459 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '당권주자 송영길 부동산 손대지' — 면책·팩트체크 확인 권장
-2026-08-12 15:11:53,460 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-08-12 15:11:54,309 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/blog-post_13.html
-2026-08-12 15:11:54,321 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/blog-post_13.html
-2026-08-12 15:12:26,515 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 15:12:26,517 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-12 15:12:26,517 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-12 15:12:26,526 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '송영길 "부동산 세금 손대지 마라" 발언, 세제 개편안 전면 수정 요구까지 나온 '
-2026-08-12 15:12:28,569 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-12 15:12:33,025 [INFO] comment_manager —   생성된 댓글: 세제 개편안이 확정되기 전이라도 미리 체크해두면 좋은 게, 국세청 홈택스에서 '보유세 예상 세액 조회' 기능으로 현재 기준 세액을 한번 계산해보...
-2026-08-12 15:15:33,193 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
   "error": "invalid_client",
   "error_description": "The OAuth client was not found."
 }
@@ -629,3 +498,127 @@
 2026-08-13 05:02:36,054 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-13 05:02:36,054 [INFO] dashboard_exporter —   포스트: 100개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-13 05:02:36,055 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-13 05:03:07,511 [INFO] main — ============================================================
+2026-08-13 05:03:07,511 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-13 05:03:07
+2026-08-13 05:03:07,511 [INFO] main — ============================================================
+2026-08-13 05:03:07,530 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-13 05:03:07,530 [INFO] keyword_collector — 포스팅 이력 코퍼스: 179개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-08-13 05:03:07,530 [INFO] keyword_collector — 시즌 예약 키워드 3개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-13 05:03:13,837 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-08-13 05:03:22,301 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:03:22,327 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-13 05:03:22,327 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-13 05:03:23,123 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-13 05:03:23,124 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-13 05:03:23,125 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
+2026-08-13 05:03:23,164 [INFO] keyword_collector — 유사 주제 제외 31개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '골프 비기너 첫 필드 나가기 전 준비 체크리스트', '2026 추석 연휴 여행지 추천 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-13 05:03:23,164 [INFO] keyword_collector —   [season_scheduled] 1개: ['2026 추석 선물 세트 직접 비교 후기']
+2026-08-13 05:03:23,165 [INFO] keyword_collector —   [fallback] 1개: ['NBA 2026 플레이오프 관전 포인트와 예상 결과']
+2026-08-13 05:03:23,165 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 추석 선물 세트 직접 비교 후기', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
+2026-08-13 05:03:23,165 [INFO] main — 수집된 키워드 2개: ['2026 추석 선물 세트 직접 비교 후기', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
+2026-08-13 05:03:23,170 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-08-13 05:03:23,170 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 추석 선물 세트 직접 비교 후기']
+2026-08-13 05:03:23,188 [INFO] main — 
+[1/1] 키워드: '2026 추석 선물 세트 직접 비교 후기'
+2026-08-13 05:03:23,189 [INFO] content_generator — 포스트 생성 중: '2026 추석 선물 세트 직접 비교 후기'
+2026-08-13 05:03:30,287 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:03:30,288 [INFO] research_collector — 검색 의도: 2026년 추석 선물 세트를 실제로 구매/비교하여 가격, 품질, 구성을 확인하고 최적의 선택을 하려는 소비자
+2026-08-13 05:03:45,192 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '2026 추석 선물 세트 직접 비교 후기'
+2026-08-13 05:04:04,051 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:04:04,053 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '2026 추석 선물 세트 직접 비교 후기'
+2026-08-13 05:04:13,494 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:04:13,495 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'X': 1, 'B': 4}
+2026-08-13 05:04:13,498 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-13 05:04:15,291 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:05:49,507 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-13 05:05:50,686 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:06:08,858 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-08-13 05:06:09,924 [INFO] image_fetcher — 이미지 수집 성공: '2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 뭐가 다른가' → 제목='백화점 업계 추석 선물 본판매 시작' (관련성=0.18)
+2026-08-13 05:06:10,713 [INFO] image_fetcher — 이미지 수집 성공: '추석 선물 세트' → 제목='최상급 담양한과 유과 약과 추석 설 명절 구정 한과 선물 세트 수제 찹쌀' (관련성=1.00)
+2026-08-13 05:06:11,723 [INFO] image_fetcher — 이미지 수집 성공: '추석 선물 시점에서 확인할 글을 쓰는' → 제목='추석 선물, 카카오톡 선물하기가 골라드려요' (관련성=0.33)
+2026-08-13 05:06:14,539 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:06:14,540 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
+2026-08-13 05:06:14,540 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-08-13 05:06:14,543 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-08-13 05:06:14,545 [INFO] content_generator — 포스트 생성 완료: '2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 뭐가 다른가' (2836자, 이미지 1개)
+2026-08-13 05:06:15,986 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:06:36,585 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 '
+2026-08-13 05:06:36,585 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(2836자)는 기준 충족이나 실제 구매·비교 경험 없이 2025년 뉴스 데이터 재구성에 머무름
+2026-08-13 05:06:36,586 [INFO] adsense_validator —   ⚠️ SEO 최적화: 제목의 '직접 비교 후기'와 달리 실제 2026년 데이터·직접 경험이 없어 제목-내용 간 다소 괴리
+2026-08-13 05:06:36,586 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 긍정적이나 1인칭 실경험 부재로 '후기' 신뢰성 약함
+2026-08-13 05:06:36,586 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
+2026-08-13 05:06:36,586 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~있습니다입니다' 등 문법 오류와 반복적 전환구('그런데', '~다는 지적') 패턴이 AI 생성 흔적을 보임
+2026-08-13 05:06:36,595 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-13 05:06:36,597 [INFO] internal_linker —   [1/5] '현대백화점' -> https://www.hoguwhat.com/2026/08/blog-post_464.html
+2026-08-13 05:06:36,599 [INFO] internal_linker —   [2/5] '선물세트' -> https://hoguasset.blogspot.com/2026/08/blog-post_11.html
+2026-08-13 05:06:36,602 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-08-13 05:06:36,602 [INFO] main —   제목: 2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 뭐가 다른가
+2026-08-13 05:06:36,602 [INFO] main —   이미지: 1개 삽입
+2026-08-13 05:06:36,603 [INFO] main —   글자 수: 2836자
+2026-08-13 05:06:37,283 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:06:54,983 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — '2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 '
+2026-08-13 05:06:54,983 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충족하나 실제로는 2025년 보도자료 재구성이며 '직접 비교 후기'라는 제목과 달리 실사용 경험이 없음
+2026-08-13 05:06:54,983 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드 분산은 자연스러우나 '직접 비교 후기' 제목에 비해 실질적 직접 비교 체험이 없어 검색의도와 다소 불일치
+2026-08-13 05:06:54,983 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 pass 수준이나 표 형식이 텍스트로 뭉쳐 있고 500자 이상 단락이 다수 존재
+2026-08-13 05:06:54,983 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 서술과 연합뉴스 출처 인용은 있으나 실제 구매·체험 기반 경험이 아닌 보도자료 요약 수준
+2026-08-13 05:06:54,983 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 '네이버 이미지 검색'으로 명시되어 저작권 주의 필요
+2026-08-13 05:06:54,983 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~입니다입니다' 같은 문법 오류와 단조로운 서술 패턴이 AI 생성 흔적을 시사
+2026-08-13 05:06:54,983 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 69/100, 권장: review) — 자동 수정 시도
+2026-08-13 05:06:54,983 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 충족하나 실제로는 2025년 보도자료 재구성이며 '직접 비교 후기'라는 제목과 달리 실사용 경험이 없음
+2026-08-13 05:06:54,983 [WARNING] main —      🟡 [SEO 최적화] 키워드 분산은 자연스러우나 '직접 비교 후기' 제목에 비해 실질적 직접 비교 체험이 없어 검색의도와 다소 불일치
+2026-08-13 05:06:54,983 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 개수는 pass 수준이나 표 형식이 텍스트로 뭉쳐 있고 500자 이상 단락이 다수 존재
+2026-08-13 05:06:54,983 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 69/100, fail: 0개, warn: 6개
+2026-08-13 05:06:55,606 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:08:08,898 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-13 05:08:09,704 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:08:25,563 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2836자 → 3181자 (+345자)
+2026-08-13 05:08:25,563 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-13 05:08:26,261 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:08:47,175 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 '
+2026-08-13 05:08:47,176 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 다소 떨어짐
+2026-08-13 05:08:47,176 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 '네이버 이미지 검색'으로 명시되어 저작권 주의 필요
+2026-08-13 05:08:47,176 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌💡 요약박스 형식과 일부 정형화된 비교 서술 패턴이 AI 생성 콘텐츠 특징과 유사함
+2026-08-13 05:08:47,176 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 69 → 84/100)
+2026-08-13 05:08:47,176 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-08-13 05:08:48,791 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:09:33,519 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026 추석 선물 세트 직접 비교 후기 - 롯데·현대·신세계 뭐가 다른가' → '2026 추석 선물 세트 직접 비교 후기: 롯데·현대·신세계 차이'
+2026-08-13 05:09:33,519 [INFO] final_editor —   ✏️ 메타 설명 교정 (149자)
+2026-08-13 05:09:33,520 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목과 메타 설명을 글자 수 규칙에 맞게 다듬고, 긴 문단을 2~4문장 단위로 분리하여 모바일 가독성을 높였습니다. 표·요약박스·개인경험메모·주의사항·FAQ·작성자메모를 규칙에 맞는 형태로 배치하고, 구체적인 alt text를 가진 이미지 3장과 대표 이미지를 제안했습니다.
+2026-08-13 05:09:33,602 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-13 05:09:33,602 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-13 05:09:33,673 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-13 05:09:33,691 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-13 05:09:33,691 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-08-13 05:09:34,937 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026_0727474562.html
+2026-08-13 05:09:34,950 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026_0727474562.html
+2026-08-13 05:10:06,428 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:10:06,429 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-13 05:10:06,429 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-13 05:10:06,438 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '2026 추석 선물 세트 직접 비교 후기: 롯데·현대·신세계 차이'
+2026-08-13 05:10:07,521 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-13 05:10:11,831 [INFO] comment_manager —   생성된 댓글: 글에 못 담은 팁 하나 더 드리자면, 백화점 앱이나 멤버십으로 사전 예약하면 매장 방문 없이도 첫날 물량을 확보할 수 있어서 인기 세트 품절을 ...
+2026-08-13 05:13:11,896 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-13 05:13:11,896 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-13 05:13:11,897 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-13 05:13:11,897 [INFO] main — 
+============================================================
+2026-08-13 05:13:11,897 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-08-13 05:13:11,897 [INFO] main — ============================================================
+2026-08-13 05:13:11,938 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-13 05:13:11,964 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
+2026-08-13 05:13:11,986 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-13 05:13:12,134 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-13 05:13:12,364 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-13 05:13:12,366 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-13 05:13:12,368 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-13 05:13:12,385 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 232 / 실패 0 / 대기 49)
+2026-08-13 05:13:12,385 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-13 05:13:12,385 [INFO] dashboard_exporter —   포스트: 100개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-13 05:13:12,386 [INFO] main — 대시보드 데이터 업데이트 완료

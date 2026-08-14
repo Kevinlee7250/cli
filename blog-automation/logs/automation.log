@@ -1,137 +1,3 @@
-2026-08-13 23:14:57,182 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-13 23:14:57,182 [INFO] keyword_collector — 포스팅 이력 코퍼스: 194개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-08-13 23:14:57,182 [INFO] keyword_collector — 시즌 예약 키워드 3개 로드 (blog=blog3): ['2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-13 23:15:00,375 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-13 23:15:08,346 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:15:08,368 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-13 23:15:08,368 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-13 23:15:08,850 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-08-13 23:15:09,133 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-13 23:15:09,134 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-13 23:15:09,148 [INFO] keyword_collector — 유사 주제 제외 6개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '코스피 5일 연속 상승, 지금 투자해도 될까']
-2026-08-13 23:15:09,148 [INFO] keyword_collector —   [naver_realtime] 2개: ['2026 수도권 23만호 공급대책 청약 전략', '금리 인상기 대출 관리 방법과 서민 재테크 팁']
-2026-08-13 23:15:09,148 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 수도권 23만호 공급대책 청약 전략', '금리 인상기 대출 관리 방법과 서민 재테크 팁']
-2026-08-13 23:15:09,148 [INFO] main — 수집된 키워드 2개: ['2026 수도권 23만호 공급대책 청약 전략', '금리 인상기 대출 관리 방법과 서민 재테크 팁']
-2026-08-13 23:15:09,153 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-08-13 23:15:09,153 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 수도권 23만호 공급대책 청약 전략']
-2026-08-13 23:15:09,172 [INFO] main — 
-[1/1] 키워드: '2026 수도권 23만호 공급대책 청약 전략'
-2026-08-13 23:15:09,172 [INFO] content_generator — 포스트 생성 중: '2026 수도권 23만호 공급대책 청약 전략'
-2026-08-13 23:15:19,663 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:15:19,664 [INFO] research_collector — 검색 의도: 2026년 수도권 23만호 주택 공급대책의 세부 내용과 청약 전략(입지, 자격요건, 일정)을 파악하려는 실수
-2026-08-13 23:15:33,977 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '2026 수도권 23만호 공급대책 청약 전략'
-2026-08-13 23:15:46,306 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:15:46,307 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '2026 수도권 23만호 공급대책 청약 전략'
-2026-08-13 23:16:04,248 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:16:04,250 [INFO] source_validator — 출처 검증: 8/8개 통과, 등급 분포 {'A': 8}
-2026-08-13 23:16:04,252 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-13 23:16:05,071 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:17:12,936 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-13 23:17:13,823 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:17:19,361 [INFO] content_generator — 팩트체크: 통과
-2026-08-13 23:17:20,565 [INFO] image_fetcher — 이미지 수집 성공: '2026 수도권 23만호+α 공급대책, 청약 전략 어떻게 세워야 할까' → 제목='[8·4 공급대책] 택지 발굴·50층 허용···수도권 19만호 추가 공급' (관련성=0.30)
-2026-08-13 23:17:21,861 [INFO] image_fetcher — 대체 이미지 수집: '수도권 만호 공급대책' → 제목='확진자 3분의1 고령층… 사망자 2주간 43명 ↑' (관련성=0.00)
-2026-08-13 23:17:21,861 [INFO] image_fetcher — 이미지 수집 성공: '수도권 만호 공급대책' → 제목='확진자 3분의1 고령층… 사망자 2주간 43명 ↑' (관련성=0.00)
-2026-08-13 23:17:22,422 [INFO] image_fetcher — 이미지 수집 성공: '수도권 만호 공급대책이란 국토교통 이번에' → 제목='[사진] 김현미 국토부 장관, '수도권 주택공급 확대 방안' 발표' (관련성=0.20)
-2026-08-13 23:17:24,330 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:17:24,332 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-08-13 23:17:24,332 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-08-13 23:17:24,335 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-08-13 23:17:24,337 [INFO] content_generator — 포스트 생성 완료: '2026 수도권 23만호+α 공급대책, 청약 전략 어떻게 세워야 할까' (2997자, 이미지 2개)
-2026-08-13 23:17:25,074 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:17:40,392 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '2026 수도권 23만호+α 공급대책, 청약 전략 어떻게 세워야'
-2026-08-13 23:17:40,392 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 정부 발표·해명자료 재구성 중심으로 개인 경험·독자적 인사이트가 부족함
-2026-08-13 23:17:40,392 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용은 있으나 1인칭 경험 서술이나 저자 전문성 신호가 부족함
-2026-08-13 23:17:40,392 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
-2026-08-13 23:17:40,392 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약 박스, 표 정리, '~살펴보겠습니다' 식 전형적 AI 보고서 문체 패턴이 반복됨
-2026-08-13 23:17:40,399 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-13 23:17:40,400 [INFO] internal_linker —   [1/5] '국토교통부' -> https://hoguasset.blogspot.com/2026/08/blog-post_712.html
-2026-08-13 23:17:40,406 [INFO] internal_linker —   [2/5] '2026년' -> https://www.hoguwhat.com/2026/08/2026_02093586280.html
-2026-08-13 23:17:40,406 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-08-13 23:17:40,407 [INFO] main —   제목: 2026 수도권 23만호+α 공급대책, 청약 전략 어떻게 세워야 할까
-2026-08-13 23:17:40,407 [INFO] main —   이미지: 2개 삽입
-2026-08-13 23:17:40,407 [INFO] main —   글자 수: 2997자
-2026-08-13 23:17:41,148 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:17:56,141 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '2026 수도권 23만호+α 공급대책, 청약 전략 어떻게 세워야'
-2026-08-13 23:17:56,141 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 정부 발표자료 재정리 위주로 개인 경험·독창적 관점이 부족함
-2026-08-13 23:17:56,142 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 인용은 있으나 1인칭 경험 서술이나 저자 전문성 신호가 부족함
-2026-08-13 23:17:56,142 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 저작권 주의 필요
-2026-08-13 23:17:56,142 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 표·요약박스·단정적 전환어(그렇다면, 즉) 사용 등 정형화된 보고서 문체 패턴이 다소 나타남
-2026-08-13 23:17:56,142 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-13 23:17:56,142 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 정부 발표자료 재정리 위주로 개인 경험·독창적 관점이 부족함
-2026-08-13 23:17:56,142 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 2개 인용은 있으나 1인칭 경험 서술이나 저자 전문성 신호가 부족함
-2026-08-13 23:17:56,142 [WARNING] main —      🟡 [이미지 정책] 이미지 출처가 네이버 이미지 검색으로 저작권 주의 필요
-2026-08-13 23:17:56,142 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-13 23:17:57,421 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:19:04,368 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2997자 → 2648자 (-349자)
-2026-08-13 23:19:04,368 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-13 23:19:05,340 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:19:20,293 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '2026 수도권 23만호+α 공급대책, 청약 전략 어떻게 세워야'
-2026-08-13 23:19:20,293 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2가 3개로 기준(4개 이상) 미달이며 500자 이상의 긴 단락이 다수 존재
-2026-08-13 23:19:20,294 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문에 이미지 캡션만 존재하고 실제 alt텍스트·출처 명시가 없어 확인 불가
-2026-08-13 23:19:20,294 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 요약박스(📌, 💡) 패턴이 전형적 AI 콘텐츠 구조를 연상시킴
-2026-08-13 23:19:20,294 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
-2026-08-13 23:19:20,294 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-08-13 23:19:21,231 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:19:55,725 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026 수도권 23만호+α 공급대책, 청약 전략 어떻게 세워야 할까' → '2026 수도권 23만호+α 공급대책 청약 전략 세우기'
-2026-08-13 23:19:55,725 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
-2026-08-13 23:19:55,725 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분할하고 요약 박스·표·FAQ·주의사항·작성자 메모 구조를 표준 형식에 맞춰 재구성했으며, 이미지 alt text를 구체화하고 제목·메타·슬러그를 SEO 기준에 맞게 정리했습니다.
-2026-08-13 23:19:55,852 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-13 23:19:55,852 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-13 23:19:55,979 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-13 23:19:55,993 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-13 23:19:55,994 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '2026 수도권 23만호 공급대책 청약 전략' — 면책·팩트체크 확인 권장
-2026-08-13 23:19:55,994 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-08-13 23:19:56,823 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026-23.html
-2026-08-13 23:19:56,836 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026-23.html
-2026-08-13 23:20:31,144 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:20:31,145 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-13 23:20:31,145 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-13 23:20:31,154 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '2026 수도권 23만호+α 공급대책 청약 전략 세우기'
-2026-08-13 23:20:31,910 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-13 23:20:36,471 [INFO] comment_manager —   생성된 댓글: 과 시절 대책 발표 후에 청약 커뮤니티나 국토부 보도자료 페이지를 즐겨찾기 해두시면, 후속 발표(입주자모집공고, 지구지정 등) 나올 때마다 놓치...
-2026-08-13 23:23:36,570 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-13 23:23:36,571 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-13 23:23:36,572 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-13 23:23:36,572 [INFO] main — 
-============================================================
-2026-08-13 23:23:36,572 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-08-13 23:23:36,572 [INFO] main — ============================================================
-2026-08-13 23:23:36,613 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-13 23:23:36,638 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
-2026-08-13 23:23:36,660 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-13 23:23:36,896 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-13 23:23:37,164 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-13 23:23:37,166 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-13 23:23:37,169 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-13 23:23:37,184 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 234 / 실패 0 / 대기 47)
-2026-08-13 23:23:37,184 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-13 23:23:37,184 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-13 23:23:37,185 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-13 23:39:56,602 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-08-13 23:39:56,602 [INFO] main —   - [blog1] HOGU What?
-2026-08-13 23:39:56,602 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-08-13 23:39:56,602 [INFO] main —   - [blog3] 금융NEWS
-2026-08-13 23:39:56,608 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
-2026-08-14 04:46:55,188 [INFO] main — ============================================================
-2026-08-14 04:46:55,188 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-14 04:46:55
-2026-08-14 04:46:55,188 [INFO] main — ============================================================
-2026-08-14 04:46:55,207 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
-2026-08-14 04:46:55,207 [INFO] keyword_collector — 포스팅 이력 코퍼스: 203개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-08-14 04:46:55,208 [INFO] keyword_collector — 시즌 예약 키워드 7개 로드 (blog=blog1): ['여름 끝 여행 숙소 가격 비교 후기', '2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기']...
-2026-08-14 04:46:59,811 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-14 04:47:02,456 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 04:47:02,477 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-14 04:47:02,477 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-14 04:47:02,758 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['제주도 렌터카 보험 옵션 실제로 필요한 것만 고르기']
-2026-08-14 04:47:03,003 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
 2026-08-14 04:47:03,231 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
 2026-08-14 04:47:03,233 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
 2026-08-14 04:47:03,242 [INFO] keyword_collector —   [high_cpc] 1개: ['제주도 렌터카 보험 옵션 실제로 필요한 것만 고르기']
@@ -632,3 +498,109 @@
 2026-08-14 11:07:05,155 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-14 11:07:05,155 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-14 11:07:05,156 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-14 11:07:47,084 [INFO] main — ============================================================
+2026-08-14 11:07:47,084 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-14 11:07:47
+2026-08-14 11:07:47,084 [INFO] main — ============================================================
+2026-08-14 11:07:47,102 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-14 11:07:47,102 [INFO] keyword_collector — 포스팅 이력 코퍼스: 189개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-08-14 11:07:47,102 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-14 11:07:51,593 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-08-14 11:07:56,182 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:07:56,207 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-14 11:07:56,208 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-14 11:07:57,073 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-14 11:07:57,074 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-14 11:07:57,075 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
+2026-08-14 11:07:57,112 [INFO] keyword_collector — 유사 주제 제외 30개: ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '10kg 감량 다이어트 방법과 건강검진 체크리스트', '엔저 시대 일본 여행 저렴하게 가는 방법', '국내 로컬 여행지 추천 수도권 근교 숨은 명소']
+2026-08-14 11:07:57,112 [INFO] keyword_collector —   [fallback] 2개: ['NBA 2026 플레이오프 관전 포인트와 예상 결과', '국내 프로축구 K리그 직관 좌석 추천과 관람 팁']
+2026-08-14 11:07:57,112 [INFO] keyword_collector — 최종 선정 키워드 2개: ['NBA 2026 플레이오프 관전 포인트와 예상 결과', '국내 프로축구 K리그 직관 좌석 추천과 관람 팁']
+2026-08-14 11:07:57,112 [INFO] main — 수집된 키워드 2개: ['NBA 2026 플레이오프 관전 포인트와 예상 결과', '국내 프로축구 K리그 직관 좌석 추천과 관람 팁']
+2026-08-14 11:07:57,117 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-08-14 11:07:57,117 [INFO] main — 단독 포스트 대상 키워드 1개: ['NBA 2026 플레이오프 관전 포인트와 예상 결과']
+2026-08-14 11:07:57,136 [INFO] main — 
+[1/1] 키워드: 'NBA 2026 플레이오프 관전 포인트와 예상 결과'
+2026-08-14 11:07:57,137 [INFO] content_generator — 포스트 생성 중: 'NBA 2026 플레이오프 관전 포인트와 예상 결과'
+2026-08-14 11:08:07,376 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:08:07,377 [INFO] research_collector — 검색 의도: 2026년 NBA 플레이오프의 주요 관전 포인트와 우승 예상 팀/선수에 대한 정보를 얻고자 하는 검색
+2026-08-14 11:08:17,573 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — 'NBA 2026 플레이오프 관전 포인트와 예상 결과'
+2026-08-14 11:08:32,642 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:08:32,643 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — 'NBA 2026 플레이오프 관전 포인트와 예상 결과'
+2026-08-14 11:08:43,195 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:08:43,196 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'C': 3, 'X': 1, 'B': 1}
+2026-08-14 11:08:43,198 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
+2026-08-14 11:08:43,198 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-14 11:08:44,699 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:10:14,899 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-14 11:10:16,547 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:10:34,388 [INFO] content_generator — 팩트체크: 통과
+2026-08-14 11:10:34,768 [INFO] image_fetcher — 이미지 수집 성공: 'NBA 2026 플레이오프 관전 포인트와 예상 결과, 지금까지 확인된 것만 짚어본다' → 제목='basketball / team / players / match / nb' (관련성=0.10)
+2026-08-14 11:10:35,306 [INFO] image_fetcher — 대체 이미지 수집: 'NBA 플레이오프 관전' → 제목='basketball / net / backboard / sports / ' (관련성=0.33)
+2026-08-14 11:10:35,306 [INFO] image_fetcher — 이미지 수집 성공: 'NBA 플레이오프 관전' → 제목='basketball / net / backboard / sports / ' (관련성=0.33)
+2026-08-14 11:10:35,723 [INFO] image_fetcher — 대체 이미지 수집: 'NBA 플레이오프 구조부터 정확히 정규시즌 컨퍼런스' → 제목='basketball / professional / nba / action' (관련성=0.17)
+2026-08-14 11:10:35,723 [INFO] image_fetcher — 이미지 수집 성공: 'NBA 플레이오프 구조부터 정확히 정규시즌 컨퍼런스' → 제목='basketball / professional / nba / action' (관련성=0.17)
+2026-08-14 11:10:38,463 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:10:38,464 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-08-14 11:10:38,467 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-08-14 11:10:38,469 [INFO] content_generator — 포스트 생성 완료: 'NBA 2026 플레이오프 관전 포인트와 예상 결과, 지금까지 확인된 것만 짚어본다' (2737자, 이미지 3개)
+2026-08-14 11:10:40,675 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:11:02,927 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — 'NBA 2026 플레이오프 관전 포인트와 예상 결과, 지금까지 '
+2026-08-14 11:11:02,927 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2737자로 기준 통과하나, 내용은 확인된 사실 재조합과 일반적 분석 나열이 많아 독창적 인사이트가 제한적
+2026-08-14 11:11:02,927 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락(핵심요약, 표 설명 등)이 500자 이상으로 길게 이어짐
+2026-08-14 11:11:02,927 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처로 저작권 문제는 없으나 alt 텍스트 적용 여부가 확인되지 않음
+2026-08-14 11:11:02,927 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 표·리스트 위주 정형화된 구성과 '정리해보겠습니다' 류의 요약체 표현이 반복되어 AI 패턴이 일부 감지됨
+2026-08-14 11:11:02,934 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-14 11:11:02,935 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguasset.blogspot.com/2026/08/2026_02072899182.html
+2026-08-14 11:11:02,940 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-08-14 11:11:02,941 [INFO] main —   제목: NBA 2026 플레이오프 관전 포인트와 예상 결과, 지금까지 확인된 것만 짚어본다
+2026-08-14 11:11:02,941 [INFO] main —   이미지: 3개 삽입
+2026-08-14 11:11:02,941 [INFO] main —   글자 수: 2737자
+2026-08-14 11:11:04,755 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:11:24,904 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — 'NBA 2026 플레이오프 관전 포인트와 예상 결과, 지금까지 '
+2026-08-14 11:11:24,904 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2737자로 기준 통과하나, 대부분 일반적으로 알려진 정보(경기 방식, 르브론 기록)의 재구성이며 개인 경험은 짧은 의견 삽입 수준에 그침
+2026-08-14 11:11:24,904 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처로 저작권 문제는 없으나 이미지 관련 정책상 기본 warn 처리
+2026-08-14 11:11:24,904 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 요약박스·표·체크리스트 등 정형화된 구조와 '~라고 생각합니다' 식 반복 패턴이 다소 기계적으로 느껴짐
+2026-08-14 11:11:24,904 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-08-14 11:11:26,243 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:12:41,968 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-14 11:12:43,725 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:13:04,973 [INFO] final_editor —   ✏️ 제목 최종 교정: 'NBA 2026 플레이오프 관전 포인트와 예상 결과, 지금까지 확인된 것만 짚어본다' → 'NBA 2026 플레이오프 관전 포인트와 예상 결과 총정리'
+2026-08-14 11:13:04,973 [INFO] final_editor —   ✏️ 메타 설명 교정 (110자)
+2026-08-14 11:13:04,973 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목과 메타 설명을 글자수 기준에 맞춰 재작성하고, 긴 문단을 2~4문장 단위로 분리했습니다. 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 HTML 스타일로 추가하고 이미지 3개 위치와 구체적 alt 텍스트를 제안했습니다.
+2026-08-14 11:13:05,102 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-14 11:13:05,102 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-14 11:13:05,196 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-14 11:13:05,211 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-14 11:13:05,211 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-08-14 11:13:05,947 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/nba-2026.html
+2026-08-14 11:13:05,960 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/nba-2026.html
+2026-08-14 11:13:34,629 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:13:34,630 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-14 11:13:34,630 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-14 11:13:34,639 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: 'NBA 2026 플레이오프 관전 포인트와 예상 결과 총정리'
+2026-08-14 11:13:35,487 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 11:13:39,174 [INFO] comment_manager —   생성된 댓글: 글 잘 봤습니다! 팁 하나 드리자면, 플레이오프 매치업 예측할 때 정규시즌 상대 전적만 보고 판단하면 오히려 헷갈릴 수 있더라고요. 정규시즌은 ...
+2026-08-14 11:16:39,248 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-14 11:16:39,249 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-14 11:16:39,250 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-14 11:16:39,250 [INFO] main — 
+============================================================
+2026-08-14 11:16:39,250 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-08-14 11:16:39,250 [INFO] main — ============================================================
+2026-08-14 11:16:39,293 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-14 11:16:39,319 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
+2026-08-14 11:16:39,341 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-14 11:16:39,516 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-14 11:16:39,734 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-14 11:16:39,735 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-14 11:16:39,738 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-14 11:16:39,754 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 237 / 실패 0 / 대기 46)
+2026-08-14 11:16:39,754 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-14 11:16:39,755 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-14 11:16:39,756 [INFO] main — 대시보드 데이터 업데이트 완료

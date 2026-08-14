@@ -1,132 +1,3 @@
-2026-08-14 04:58:20,020 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-14 04:58:20,021 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-14 04:58:20,024 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-14 04:58:20,041 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 234 / 실패 0 / 대기 47)
-2026-08-14 04:58:20,041 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-14 04:58:20,041 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-14 04:58:20,042 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-14 04:58:59,425 [INFO] main — ============================================================
-2026-08-14 04:58:59,426 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-14 04:58:59
-2026-08-14 04:58:59,426 [INFO] main — ============================================================
-2026-08-14 04:58:59,444 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-14 04:58:59,444 [INFO] keyword_collector — 포스팅 이력 코퍼스: 187개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-08-14 04:58:59,444 [INFO] keyword_collector — 시즌 예약 키워드 3개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '2026 추석 연휴 여행지 추천 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-14 04:59:03,854 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-08-14 04:59:08,180 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 04:59:08,206 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-14 04:59:08,206 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-14 04:59:09,011 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-14 04:59:09,012 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-14 04:59:09,013 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
-2026-08-14 04:59:09,051 [INFO] keyword_collector — 유사 주제 제외 31개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '골프 비기너 첫 필드 나가기 전 준비 체크리스트', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-14 04:59:09,052 [INFO] keyword_collector —   [season_scheduled] 1개: ['2026 추석 연휴 여행지 추천 후기']
-2026-08-14 04:59:09,052 [INFO] keyword_collector —   [fallback] 1개: ['NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-14 04:59:09,052 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 추석 연휴 여행지 추천 후기', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-14 04:59:09,052 [INFO] main — 수집된 키워드 2개: ['2026 추석 연휴 여행지 추천 후기', 'NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-14 04:59:09,057 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
-2026-08-14 04:59:09,057 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 추석 연휴 여행지 추천 후기']
-2026-08-14 04:59:09,077 [INFO] main — 
-[1/1] 키워드: '2026 추석 연휴 여행지 추천 후기'
-2026-08-14 04:59:09,077 [INFO] content_generator — 포스트 생성 중: '2026 추석 연휴 여행지 추천 후기'
-2026-08-14 04:59:15,274 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 04:59:15,276 [INFO] research_collector — 검색 의도: 2026년 추석 연휴 기간과 여행지 추천 정보를 얻으려는 검색 의도
-2026-08-14 04:59:23,473 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '2026 추석 연휴 여행지 추천 후기'
-2026-08-14 04:59:39,881 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 04:59:39,882 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '2026 추석 연휴 여행지 추천 후기'
-2026-08-14 04:59:55,231 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 04:59:55,232 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'D': 1, 'C': 3, 'X': 1}
-2026-08-14 04:59:55,234 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-08-14 04:59:55,234 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-14 04:59:55,979 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 05:01:13,308 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-14 05:01:13,309 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(얼리버드)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
-2026-08-14 05:01:15,310 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-08-14 05:01:16,089 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 05:02:19,625 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-14 05:02:20,441 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 05:02:48,364 [WARNING] content_generator — 팩트체크 fix가 지시문 형태 — 적용 건너뜀: '3일 연휴이므로 짧은 해외 여행은 일정 조율이 필요합니다'
-2026-08-14 05:02:48,364 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '가격이 크게 올랐다는 후기도 있습니다'
-2026-08-14 05:02:48,364 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 1건 자동 수정 적용
-2026-08-14 05:02:49,097 [INFO] image_fetcher — 이미지 수집 성공: '2026 추석 연휴 여행지 추천, 후기로 알아본 선택 기준' → 제목='네이버 인플루언서 [네이버 인플루언서] 너무나도 긴 연휴 어디갈지 고민이' (관련성=0.50)
-2026-08-14 05:02:49,814 [INFO] image_fetcher — 이미지 수집 성공: '추석 연휴 여행지' → 제목='경기관광공사, 긴 추석 연휴 '당일치기 여행지' 추천' (관련성=1.00)
-2026-08-14 05:02:50,496 [INFO] image_fetcher — 이미지 수집 성공: '추석 연휴 정확히 며칠 매년 추석은' → 제목='며칠 지나면 추석 연휴네요. > 자유게시판 며칠 지나면 추석 연휴네요. ' (관련성=0.33)
-2026-08-14 05:02:52,950 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 05:02:52,951 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-08-14 05:02:52,951 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-08-14 05:02:52,954 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-08-14 05:02:52,956 [INFO] content_generator — 포스트 생성 완료: '2026 추석 연휴 여행지 추천, 후기로 알아본 선택 기준' (2554자, 이미지 2개)
-2026-08-14 05:02:53,713 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 05:03:12,223 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '2026 추석 연휴 여행지 추천, 후기로 알아본 선택 기준'
-2026-08-14 05:03:12,224 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 충족하나 '후기에 따르면' 식 요약이 대부분이며 구체적 날짜·수치·개인 경험 사례가 부족함
-2026-08-14 05:03:12,224 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 일부 단락(국내/해외 섹션)이 500자 이상으로 길게 이어짐
-2026-08-14 05:03:12,224 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 서술은 있으나 대부분 타인 후기 인용이며 저자 본인의 직접 방문 경험 근거가 약함
-2026-08-14 05:03:12,224 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색 기반으로 저작권 주의 필요
-2026-08-14 05:03:12,224 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그럼~살펴보겠습니다', '여기까지 보면' 등 정형화된 전환 문구와 요약 패턴이 반복됨
-2026-08-14 05:03:12,232 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-14 05:03:12,234 [INFO] internal_linker —   [1/5] '저렴한' -> https://hogugolfntraval.blogspot.com/2026/08/8.html
-2026-08-14 05:03:12,236 [INFO] internal_linker —   [2/5] '저렴하게' -> https://www.hoguwhat.com/2026/08/8.html
-2026-08-14 05:03:12,237 [INFO] internal_linker —   [3/5] '강원도' -> https://hogugolfntraval.blogspot.com/2026/08/blog-post_539.h
-2026-08-14 05:03:12,238 [INFO] internal_linker — 내부 링크 3개 삽입 완료
-2026-08-14 05:03:12,238 [INFO] main —   제목: 2026 추석 연휴 여행지 추천, 후기로 알아본 선택 기준
-2026-08-14 05:03:12,238 [INFO] main —   이미지: 2개 삽입
-2026-08-14 05:03:12,238 [INFO] main —   글자 수: 2554자
-2026-08-14 05:03:14,501 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 05:03:31,351 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '2026 추석 연휴 여행지 추천, 후기로 알아본 선택 기준'
-2026-08-14 05:03:31,351 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 '후기에 따르면', '많은 후기에서' 식의 2차 정보 재조합이 많고 구체적 개인 경험(날짜·비용 등)이 부족함
-2026-08-14 05:03:31,352 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 서술은 있으나 대부분 타인 후기 요약이며 직접 경험의 구체성이 약함
-2026-08-14 05:03:31,352 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 '네이버 이미지 검색'으로 표기되어 저작권 주의 필요
-2026-08-14 05:03:31,352 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '핵심 요약' 중복, '그럼 ~살펴보겠습니다' 식 전형적 전환 문구 반복 등 AI 작성 패턴이 감지됨
-2026-08-14 05:03:31,352 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-14 05:03:31,352 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 '후기에 따르면', '많은 후기에서' 식의 2차 정보 재조합이 많고 구체적 개인 경험(날짜·비용 등)이 부족함
-2026-08-14 05:03:31,352 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 서술은 있으나 대부분 타인 후기 요약이며 직접 경험의 구체성이 약함
-2026-08-14 05:03:31,352 [WARNING] main —      🟡 [이미지 정책] 이미지 출처가 '네이버 이미지 검색'으로 표기되어 저작권 주의 필요
-2026-08-14 05:03:31,352 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-14 05:03:32,196 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 05:04:36,255 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2554자 → 3084자 (+530자)
-2026-08-14 05:04:36,255 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-14 05:04:37,075 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 05:04:51,586 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '2026 추석 연휴 여행지 추천, 후기로 알아본 선택 기준'
-2026-08-14 05:04:51,586 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 적절하나 국내/해외 여행 섹션의 일부 단락이 500자 이상으로 다소 길게 이어짐
-2026-08-14 05:04:51,586 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 '해당 게시물 원문', '경기관광공사 보도자료'로 명확한 alt텍스트 및 저작권 확인 근거 부족
-2026-08-14 05:04:51,586 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-08-14 05:04:51,586 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-08-14 05:04:52,397 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 05:05:40,935 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026 추석 연휴 여행지 추천, 후기로 알아본 선택 기준' → '2026 추석 연휴 여행지 추천 후기, 강릉·해외 비교'
-2026-08-14 05:05:40,935 [INFO] final_editor —   ✏️ 메타 설명 교정 (126자)
-2026-08-14 05:05:40,935 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타 설명·슬러그를 SEO 기준에 맞춰 정리하고, 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 추가해 발행 형식을 완성했습니다. 긴 문단을 2~4문장 단위로 분할하고 이미지 3장의 위치와 구체적 alt 텍스트를 제안했습니다.
-2026-08-14 05:05:41,045 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-14 05:05:41,045 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-14 05:05:41,177 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-14 05:05:41,190 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-14 05:05:41,191 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-08-14 05:05:42,008 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026_0137733991.html
-2026-08-14 05:05:42,021 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/2026_0137733991.html
-2026-08-14 05:06:19,195 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 05:06:19,196 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-14 05:06:19,197 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-14 05:06:19,206 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '2026 추석 연휴 여행지 추천 후기, 강릉·해외 비교'
-2026-08-14 05:06:19,968 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 05:06:23,110 [INFO] comment_manager —   생성된 댓글: 강릉 가시는 분들 많으실 텐데, 주차 스트레스 줄이려면 안목해변보다 조금 떨어진 강릉역 인근이나 경포 쪽 숙소 잡고 자전거나 버스로 이동하는 것...
-2026-08-14 05:09:23,232 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-14 05:09:23,233 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-14 05:09:23,233 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-14 05:09:23,234 [INFO] main — 
-============================================================
-2026-08-14 05:09:23,234 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-08-14 05:09:23,234 [INFO] main — ============================================================
-2026-08-14 05:09:23,276 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-14 05:09:23,302 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
-2026-08-14 05:09:23,323 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-14 05:09:23,544 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-14 05:09:23,842 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-14 05:09:23,843 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
 2026-08-14 05:09:23,845 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
 2026-08-14 05:09:23,861 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 235 / 실패 0 / 대기 47)
 2026-08-14 05:09:23,862 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
@@ -627,3 +498,128 @@
 2026-08-14 11:31:45,462 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-14 11:31:45,462 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-14 11:31:45,463 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-14 22:31:04,530 [INFO] main — ============================================================
+2026-08-14 22:31:04,530 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-14 22:31:04
+2026-08-14 22:31:04,530 [INFO] main — ============================================================
+2026-08-14 22:31:04,549 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-14 22:31:04,549 [INFO] keyword_collector — 포스팅 이력 코퍼스: 209개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-14 22:31:04,549 [INFO] keyword_collector — 시즌 예약 키워드 5개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
+2026-08-14 22:31:10,259 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-14 22:31:14,895 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:31:14,920 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-14 22:31:14,920 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-14 22:31:15,386 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외에서 사고 났을 때 대사관 신고 직접 경험한 과정']
+2026-08-14 22:31:15,566 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-14 22:31:15,707 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-14 22:31:15,709 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-08-14 22:31:15,718 [INFO] keyword_collector — 유사 주제 제외 5개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-14 22:31:15,720 [INFO] keyword_collector —   [high_cpc] 1개: ['해외에서 사고 났을 때 대사관 신고 직접 경험한 과정']
+2026-08-14 22:31:15,720 [INFO] keyword_collector —   [naver_realtime] 1개: ['여름철 10kg 건강하게 감량하는 방법과 관리 팁']
+2026-08-14 22:31:15,720 [INFO] keyword_collector — 최종 선정 키워드 2개: ['해외에서 사고 났을 때 대사관 신고 직접 경험한 과정', '여름철 10kg 건강하게 감량하는 방법과 관리 팁']
+2026-08-14 22:31:15,720 [INFO] main — 수집된 키워드 2개: ['해외에서 사고 났을 때 대사관 신고 직접 경험한 과정', '여름철 10kg 건강하게 감량하는 방법과 관리 팁']
+2026-08-14 22:31:15,726 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-08-14 22:31:15,726 [INFO] main — 단독 포스트 대상 키워드 1개: ['해외에서 사고 났을 때 대사관 신고 직접 경험한 과정']
+2026-08-14 22:31:15,745 [INFO] main — 
+[1/1] 키워드: '해외에서 사고 났을 때 대사관 신고 직접 경험한 과정'
+2026-08-14 22:31:15,745 [INFO] content_generator — 포스트 생성 중: '해외에서 사고 났을 때 대사관 신고 직접 경험한 과정'
+2026-08-14 22:31:23,633 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:31:23,634 [INFO] research_collector — 검색 의도: 해외 사고 발생 시 대사관 신고 절차와 실제 경험담을 알고 싶어함
+2026-08-14 22:31:57,204 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '해외에서 사고 났을 때 대사관 신고 직접 경험한 과정'
+2026-08-14 22:32:15,274 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:32:15,275 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '해외에서 사고 났을 때 대사관 신고 직접 경험한 과정'
+2026-08-14 22:32:46,562 [INFO] source_validator — 출처 검증: 0/4개 통과, 등급 분포 {'X': 4}
+2026-08-14 22:32:46,565 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
+2026-08-14 22:32:46,565 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-14 22:32:48,051 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:34:01,356 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-14 22:34:02,578 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:34:31,360 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '재외국민보호를 위한 재외공관의 영사업무 처리지침 등을 근거로 재외국민 보'
+2026-08-14 22:34:31,361 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 3건 자동 수정 적용
+2026-08-14 22:34:32,627 [INFO] image_fetcher — 이미지 수집 성공: '해외 사고 시 대사관 신고, 실제 절차 정리' → 제목='해외 법인 설립 절차 및 필수 준비 서류는?' (관련성=0.29)
+2026-08-14 22:34:33,511 [INFO] image_fetcher — 이미지 수집 성공: '해외에서 사고 났을' → 제목='해외에서 사고났을때 외교부가 도와줄수 있는 일 / 도와주지 못하는 일 -' (관련성=0.33)
+2026-08-14 22:34:35,160 [INFO] image_fetcher — 이미지 수집 성공: '해외에서 사고 대사관부터 떠올릴까 여행 연락해야' → 제목='제5회 해외에서 겪은 사건사고 경험담 공모전 상세보기|영사공지 | 주이라' (관련성=0.14)
+2026-08-14 22:34:36,769 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:34:36,770 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-08-14 22:34:36,770 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-14 22:34:36,773 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-14 22:34:36,775 [INFO] content_generator — 포스트 생성 완료: '해외 사고 시 대사관 신고, 실제 절차 정리' (2621자, 이미지 2개)
+2026-08-14 22:34:37,637 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:34:54,693 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '해외 사고 시 대사관 신고, 실제 절차 정리'
+2026-08-14 22:34:54,693 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 개인 경험담 대신 커뮤니티 후기·일반 가이드를 종합한 내용이 대부분
+2026-08-14 22:34:54,693 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드 '직접 경험한 과정'과 달리 실제 1인칭 경험 서술이 부족해 제목-내용 간 다소 불일치
+2026-08-14 22:34:54,693 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개는 인용되나 '~라고 합니다', '후기를 종합하면' 식 간접 서술뿐 1인칭 경험 근거 약함
+2026-08-14 22:34:54,693 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 명시되어 저작권 리스크 존재
+2026-08-14 22:34:54,693 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그런데 이것만으로는 부족합니다', '~하면 더 구체적인 그림이 그려집니다' 등 전형적 AI 연결 패턴 반복
+2026-08-14 22:34:54,693 [WARNING] adsense_validator —   🔴 제목·키워드에 '직접 경험'을 내세웠으나 실제로는 타 출처 요약 위주로 오해 소지 있음
+2026-08-14 22:34:54,694 [WARNING] adsense_validator —   🔴 이미지 출처가 네이버 이미지 검색 기반이라 저작권 침해 가능성 존재
+2026-08-14 22:34:54,700 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-14 22:34:54,709 [INFO] internal_linker —   [1/5] '여행자보험' -> https://www.hoguwhat.com/2026/08/blog-post_12.html
+2026-08-14 22:34:54,709 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-08-14 22:34:54,709 [INFO] main —   제목: 해외 사고 시 대사관 신고, 실제 절차 정리
+2026-08-14 22:34:54,709 [INFO] main —   이미지: 2개 삽입
+2026-08-14 22:34:54,709 [INFO] main —   글자 수: 2621자
+2026-08-14 22:34:55,745 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:35:12,905 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '해외 사고 시 대사관 신고, 실제 절차 정리'
+2026-08-14 22:35:12,906 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 실제 내용은 커뮤니티 후기·공식 안내 종합에 가까워 '직접 경험' 요소가 약함
+2026-08-14 22:35:12,906 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개 인용은 있으나 1인칭 직접 경험 서술이 부족해 제목의 '직접 경험'과 괴리
+2026-08-14 22:35:12,906 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 명시되어 저작권 주의 필요
+2026-08-14 22:35:12,906 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그런데', '즉', '~다는 점' 등 전형적 요약 연결구와 과도한 표 나열 패턴이 반복됨
+2026-08-14 22:35:12,906 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-14 22:35:12,906 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 실제 내용은 커뮤니티 후기·공식 안내 종합에 가까워 '직접 경험' 요소가 약함
+2026-08-14 22:35:12,906 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 5개 인용은 있으나 1인칭 직접 경험 서술이 부족해 제목의 '직접 경험'과 괴리
+2026-08-14 22:35:12,906 [WARNING] main —      🟡 [이미지 정책] 이미지 출처가 네이버 이미지 검색으로 명시되어 저작권 주의 필요
+2026-08-14 22:35:12,906 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-14 22:35:13,600 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:36:34,273 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2621자 → 3081자 (+460자)
+2026-08-14 22:36:34,273 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-14 22:36:36,291 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:36:49,100 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '해외 사고 시 대사관 신고, 실제 절차 정리'
+2026-08-14 22:36:49,100 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2가 3개로 다소 부족하고 일부 단락이 500자 이상으로 길어 가독성 개선 필요
+2026-08-14 22:36:49,100 [INFO] adsense_validator —   ⚠️ 이미지 정책: 본문 내 이미지 삽입 여부 불명확하며 이미지 부재 시 가독성 보완 필요
+2026-08-14 22:36:49,100 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
+2026-08-14 22:36:49,100 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-14 22:36:50,529 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:38:16,500 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-14 22:38:17,431 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:39:10,497 [INFO] final_editor —   ✏️ 제목 최종 교정: '해외 사고 시 대사관 신고, 실제 절차 정리' → '해외에서 사고 났을 때 대사관 신고, 제가 겪은 실제 절차'
+2026-08-14 22:39:10,497 [INFO] final_editor —   ✏️ 메타 설명 교정 (92자)
+2026-08-14 22:39:10,497 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 커뮤니티 캡처 이미지 언급을 삭제하고 직접 제작 가능한 이미지 3종으로 대체했으며, 긴 문단을 2~4문장 단위로 분리하고 요약박스·표·개인경험메모·주의사항·FAQ(6개)·작성자메모·내부링크 언급을 규칙대로 추가해 발행 가능한 형태로 정리했습니다.
+2026-08-14 22:39:10,600 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-14 22:39:10,600 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-14 22:39:10,673 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-14 22:39:10,688 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-14 22:39:10,688 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-14 22:39:11,311 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_15.html
+2026-08-14 22:39:11,323 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_15.html
+2026-08-14 22:39:51,527 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:39:51,528 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-14 22:39:51,528 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-14 22:39:51,537 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '해외에서 사고 났을 때 대사관 신고, 제가 겪은 실제 절차'
+2026-08-14 22:39:52,274 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-14 22:39:56,247 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리자면, 사고 현장 사진이나 영수증은 그 순간엔 정신없어서 놓치기 쉬운데 나중에 보험 청구나 여권 재발급 시 생각보다 큰 도움...
+2026-08-14 22:42:56,310 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-14 22:42:56,311 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-14 22:42:56,311 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-14 22:42:56,311 [INFO] main — 
+============================================================
+2026-08-14 22:42:56,311 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-08-14 22:42:56,311 [INFO] main — ============================================================
+2026-08-14 22:42:56,350 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-14 22:42:56,376 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
+2026-08-14 22:42:56,397 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-14 22:42:56,572 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-14 22:42:56,787 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-14 22:42:57,002 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-14 22:42:57,004 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-14 22:42:57,006 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-14 22:42:57,022 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 237 / 실패 0 / 대기 46)
+2026-08-14 22:42:57,022 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-14 22:42:57,023 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-14 22:42:57,024 [INFO] main — 대시보드 데이터 업데이트 완료

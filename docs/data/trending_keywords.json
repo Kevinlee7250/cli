@@ -1,69 +1,81 @@
 {
-  "collectedAt": "2026-08-15T09:46:52.169494+00:00",
+  "collectedAt": "2026-08-15T11:17:25.505646+00:00",
   "sources": {
     "googleTrends": [
       {
-        "keyword": "lg전자",
+        "keyword": "수원 대 수원fc",
         "rank": 1,
         "traffic": "2000+",
         "source": "google_trends"
       },
       {
-        "keyword": "학원",
+        "keyword": "한화 대 삼성",
         "rank": 2,
-        "traffic": "200+",
+        "traffic": "5000+",
         "source": "google_trends"
       },
       {
-        "keyword": "박경혜",
+        "keyword": "선수",
         "rank": 3,
-        "traffic": "100+",
+        "traffic": "500+",
         "source": "google_trends"
       },
       {
-        "keyword": "타짜",
+        "keyword": "경제",
         "rank": 4,
-        "traffic": "100+",
+        "traffic": "5000+",
         "source": "google_trends"
       },
       {
-        "keyword": "티웨이홀딩스",
+        "keyword": "체포",
         "rank": 5,
-        "traffic": "200+",
+        "traffic": "1000+",
         "source": "google_trends"
       },
       {
-        "keyword": "추가경정예산",
+        "keyword": "콜 오브 듀티",
         "rank": 6,
-        "traffic": "200+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "롯데손해보험",
-        "rank": 7,
-        "traffic": "200+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "메르세데스-벤츠 e 클래스",
-        "rank": 8,
-        "traffic": "200+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "카자흐스탄",
-        "rank": 9,
         "traffic": "100+",
         "source": "google_trends"
       },
       {
-        "keyword": "박현경",
-        "rank": 10,
+        "keyword": "장인화",
+        "rank": 7,
         "traffic": "2000+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "fc 서울 대 대전",
+        "rank": 8,
+        "traffic": "2000+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "제주 대 안양",
+        "rank": 9,
+        "traffic": "1000+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "전지",
+        "rank": 10,
+        "traffic": "200+",
         "source": "google_trends"
       }
     ],
     "naverNews": [
+      {
+        "headline": "“매달 20만원 그냥 나가는데”…아파트 관리비 할인카드 따져보니",
+        "category": "경제",
+        "source": "naver_rss",
+        "keyword": "매달 만원 그냥 나가는데 아파트 관리비"
+      },
+      {
+        "headline": "“자동차 보험료가 30% 올랐네요”…할증 높이는 주요 원인 보니",
+        "category": "경제",
+        "source": "naver_rss",
+        "keyword": "자동차 보험료가 올랐네요 할증 높이는 주요"
+      },
       {
         "headline": "“10년 뒤엔 지금보다 훨씬”…한국인 절반 ‘韓·日 경제 역전’ 예측",
         "category": "경제",
@@ -87,18 +99,6 @@
         "category": "경제",
         "source": "naver_rss",
         "keyword": "무분별한 지방 분산 실무에 악영향 은행권"
-      },
-      {
-        "headline": "세계 방산 4강인데 … 신형 소총·조준경 보급은 ‘거북이’",
-        "category": "경제",
-        "source": "naver_rss",
-        "keyword": "세계 방산 강인데 신형 소총 조준경"
-      },
-      {
-        "headline": "美상무부, 대미투자 조기집행 '최후통첩'",
-        "category": "경제",
-        "source": "naver_rss",
-        "keyword": "상무부 대미투자 조기집행 최후통첩"
       },
       {
         "headline": "한빛소프트, 2Q 매출 68억·영업익 6억…“하반기 ‘그라나도 에스파다M’ 지역 확장”",
@@ -171,6 +171,216 @@
         "category": "생활문화",
         "source": "naver_rss",
         "keyword": "결혼 창업 자금 날렸다 외신도 놀란"
+      },
+      {
+        "headline": "‘5만전자 주주’ 김종국 “30년 동안 재테크 한 번도 한 적 없어” (옥...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "만전자 주주 김종국 동안 재테크 번도"
+      },
+      {
+        "headline": "“빌려서라도 지금 투자해야”, 증시 훈풍에 늘어난 20대 ‘빚투’",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "빌려서라도 투자해야 증시 훈풍에 늘어난 빚투"
+      },
+      {
+        "headline": "오늘은 어떤 문제가 나왔나… '8월 15일' 캐시닥 용돈퀴즈 정답은?",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "오늘은 어떤 문제가 나왔나 캐시닥 용돈퀴즈"
+      },
+      {
+        "headline": "퀴즈 맞혀보세요… '8월 15일' 캐시워크 문제 정답은?",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "퀴즈 맞혀보세요 캐시워크 문제 정답은"
+      },
+      {
+        "headline": "[김이코의 시장분석]분위기 바뀐 8월 증시…또다시 '삼전닉스' 위주로 ...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "김이코의 시장분석 분위기 바뀐 증시 또다시"
+      },
+      {
+        "headline": "주우재 “요즘 주식 안 하면 진짜 바보야?” 저축 외길 인생의 고뇌(옥...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "주우재 요즘 주식 하면 진짜 바보야"
+      },
+      {
+        "headline": "갑작스러운 옆구리 통증에 혈뇨까지…여름철 ‘요로결석’ 주의",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "갑작스러운 옆구리 통증에 혈뇨까지 여름철 요로결석"
+      },
+      {
+        "headline": "강화군-인하대 의대, 알레르기질환 예방관리 업무협약 체결",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "강화군 인하대 의대 알레르기질환 예방관리 업무협약"
+      },
+      {
+        "headline": "'다큐On', 한국인 최초 WHO 수장 이종욱 박사 조명...남겨진 '현장 정신...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "다큐 On 한국인 최초 WHO 수장"
+      },
+      {
+        "headline": "'혁신형 바이오뱅크' 수집 범위에 사망 기증자 정상조직 분야 추가",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "혁신형 바이오뱅크 수집 범위에 사망 기증자"
+      },
+      {
+        "headline": "롯데, NC 임지민 부상 관련 절차 개선 약속…&quot;구급차 진입 시간 단축할...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "롯데 NC 임지민 부상 절차 개선"
+      },
+      {
+        "headline": "“ㅇㅇ역 3번 출구로 오세요” 병원의 은밀한 안내…무좀치료로 보험금...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "출구로 오세요 병원의 은밀한 안내 무좀치료로"
+      },
+      {
+        "headline": "티오리 AI 모의해킹 솔루션 '진트', 'IDC 이노베이터' 선정",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "티오리 AI 모의해킹 솔루션 진트 IDC"
+      },
+      {
+        "headline": "안양시, 제81주년 광복절 경축식 성료…시민 600여명 광복 의미 되새겨",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "안양시 주년 광복절 경축식 성료 시민"
+      },
+      {
+        "headline": "앤트로픽 '워터마크' 도입에 사용자 반발…'클로드' 구독 취소 확산",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "앤트로픽 워터마크 도입에 사용자 반발 클로드"
+      },
+      {
+        "headline": "제품 인증만 챙겼다면 늦었다…EU 수출 스타트업의 새 복병 ‘PPWR’",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "제품 인증만 챙겼다면 늦었다 EU 수출"
+      },
+      {
+        "headline": "金 &quot;광주는 제 영혼&quot; 鄭 &quot;호남의 사위&quot; 宋 &quot;호남의 아들&quot;",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "quot 광주는 영혼 quot quot 호남의"
+      },
+      {
+        "headline": "[단독] 서울경찰청, 광주IT업체 '대북송금' 압색 등 수사…정원주 대우...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "서울경찰청 광주 IT 업체 대북송금 압색"
+      },
+      {
+        "headline": "'전남편 132억 사기 고소' 정가은 &quot;나쁜 남자 좋아했다가 이 꼴 당해&quot; 씁...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "전남편 사기 고소 정가은 quot 나쁜"
+      },
+      {
+        "headline": "월소득 320만 중 198만원 쓰면서 7년 내 5억? 30대 한결씨 허황된 꿈",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "월소득 만원 쓰면서 한결씨 허황된"
+      },
+      {
+        "headline": "신세계 실적이 달라졌다… 명품부터 외국인까지 매출 '쑥쑥'",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "신세계 실적이 달라졌다 명품부터 외국인까지 매출"
+      },
+      {
+        "headline": "‘정책 데뷔전’ 통해 존재감 보인 조유진 영등포구청장·류삼영 동작구...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "정책 데뷔전 존재감 보인 조유진 영등포구청장"
+      },
+      {
+        "headline": "서해에 조피볼락 약 42만 7000마리 긴급 방류…이유는?",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "서해에 조피볼락 7000 마리 긴급 방류"
+      },
+      {
+        "headline": "[바이오 브리핑] 한미약품, GC녹십자엠에스, 동국제약",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "바이오 브리핑 한미약품 GC 녹십자엠에스 동국제약"
+      },
+      {
+        "headline": "[데일리안 오늘뉴스 종합] 최태원 '9440억 재산분할' 재상고, 李, 3대 '평...",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "데일리안 오늘뉴스 최태원 9440 재산분할 재상고"
+      },
+      {
+        "headline": "8·13 부동산 대책...'닥공 속도전' 선언 효과볼까?",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "부동산 대책 닥공 속도전 선언 효과볼까"
+      },
+      {
+        "headline": "[내집마련 캘린더] 신길서 2개 단지 맞대결… 충정로도 청약",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "내집마련 캘린더 신길서 단지 맞대결 충정로도"
+      },
+      {
+        "headline": "두산건설 '두산위브더제니스 부천' 구름인파… 견본주택 방문객 발길 이...",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "두산건설 두산위브더제니스 부천 구름인파 견본주택 방문객"
+      },
+      {
+        "headline": "“학동역 출퇴근 딱” 돌 앞둔 아기도 엄마랑 왔다…‘써밋 클라비온’...",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "학동역 출퇴근 앞둔 아기도 엄마랑 왔다"
+      },
+      {
+        "headline": "[靑春노트] '식은 민심·끓는 부동산' 앞에 선 李",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "노트 식은 민심 끓는 부동산 앞에"
       }
     ],
     "highCPC": [
@@ -385,12 +595,53 @@
         "source": "high_cpc"
       }
     ],
-    "aiRecommended": []
+    "aiRecommended": [
+      {
+        "keyword": "ISA 계좌 만기 후 갈아타기 직접 해본 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "연금저축펀드 세액공제 한도 늘어난 2026년 절세 전략",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "폭염 온열질환 예방과 응급처치 직접 겪어본 이야기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "환절기 알레르기 비염 관리법 직접 해봤더니",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "갤럭시 언팩 2026 신제품 사전예약 혜택 비교",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "재택근무 노트북 발열 문제 해결법 직접 써본 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "가을 이사 견적 비교 앱 3곳 직접 써봤더니",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "신학기 준비물 알뜰하게 사는 법 정리",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "9월 항공권 특가 예약 꿀팁 직접 비교",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "태풍철 국내여행 취소 환불 규정 직접 확인해봤다",
+        "source": "ai_generated"
+      }
+    ]
   },
   "stats": {
     "googleTrends": 10,
-    "naverNews": 18,
+    "naverNews": 48,
     "highCPC": 47,
-    "aiRecommended": 0
+    "aiRecommended": 10
   }
 }

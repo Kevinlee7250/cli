@@ -1,123 +1,3 @@
-}
-2026-08-14 11:07:04,015 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-14 11:07:04,015 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-14 11:07:04,016 [INFO] main — 
-============================================================
-2026-08-14 11:07:04,016 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-08-14 11:07:04,016 [INFO] main — ============================================================
-2026-08-14 11:07:04,060 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-14 11:07:04,087 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
-2026-08-14 11:07:04,108 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-14 11:07:04,411 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-14 11:07:04,755 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-14 11:07:05,134 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-14 11:07:05,136 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-14 11:07:05,138 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-14 11:07:05,155 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 237 / 실패 0 / 대기 46)
-2026-08-14 11:07:05,155 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-14 11:07:05,155 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-14 11:07:05,156 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-14 11:07:47,084 [INFO] main — ============================================================
-2026-08-14 11:07:47,084 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-14 11:07:47
-2026-08-14 11:07:47,084 [INFO] main — ============================================================
-2026-08-14 11:07:47,102 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-14 11:07:47,102 [INFO] keyword_collector — 포스팅 이력 코퍼스: 189개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-08-14 11:07:47,102 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-14 11:07:51,593 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-08-14 11:07:56,182 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:07:56,207 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-14 11:07:56,208 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-14 11:07:57,073 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-14 11:07:57,074 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-14 11:07:57,075 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
-2026-08-14 11:07:57,112 [INFO] keyword_collector — 유사 주제 제외 30개: ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '10kg 감량 다이어트 방법과 건강검진 체크리스트', '엔저 시대 일본 여행 저렴하게 가는 방법', '국내 로컬 여행지 추천 수도권 근교 숨은 명소']
-2026-08-14 11:07:57,112 [INFO] keyword_collector —   [fallback] 2개: ['NBA 2026 플레이오프 관전 포인트와 예상 결과', '국내 프로축구 K리그 직관 좌석 추천과 관람 팁']
-2026-08-14 11:07:57,112 [INFO] keyword_collector — 최종 선정 키워드 2개: ['NBA 2026 플레이오프 관전 포인트와 예상 결과', '국내 프로축구 K리그 직관 좌석 추천과 관람 팁']
-2026-08-14 11:07:57,112 [INFO] main — 수집된 키워드 2개: ['NBA 2026 플레이오프 관전 포인트와 예상 결과', '국내 프로축구 K리그 직관 좌석 추천과 관람 팁']
-2026-08-14 11:07:57,117 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
-2026-08-14 11:07:57,117 [INFO] main — 단독 포스트 대상 키워드 1개: ['NBA 2026 플레이오프 관전 포인트와 예상 결과']
-2026-08-14 11:07:57,136 [INFO] main — 
-[1/1] 키워드: 'NBA 2026 플레이오프 관전 포인트와 예상 결과'
-2026-08-14 11:07:57,137 [INFO] content_generator — 포스트 생성 중: 'NBA 2026 플레이오프 관전 포인트와 예상 결과'
-2026-08-14 11:08:07,376 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:08:07,377 [INFO] research_collector — 검색 의도: 2026년 NBA 플레이오프의 주요 관전 포인트와 우승 예상 팀/선수에 대한 정보를 얻고자 하는 검색
-2026-08-14 11:08:17,573 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — 'NBA 2026 플레이오프 관전 포인트와 예상 결과'
-2026-08-14 11:08:32,642 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:08:32,643 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — 'NBA 2026 플레이오프 관전 포인트와 예상 결과'
-2026-08-14 11:08:43,195 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:08:43,196 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'C': 3, 'X': 1, 'B': 1}
-2026-08-14 11:08:43,198 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-08-14 11:08:43,198 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-14 11:08:44,699 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:10:14,899 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-14 11:10:16,547 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:10:34,388 [INFO] content_generator — 팩트체크: 통과
-2026-08-14 11:10:34,768 [INFO] image_fetcher — 이미지 수집 성공: 'NBA 2026 플레이오프 관전 포인트와 예상 결과, 지금까지 확인된 것만 짚어본다' → 제목='basketball / team / players / match / nb' (관련성=0.10)
-2026-08-14 11:10:35,306 [INFO] image_fetcher — 대체 이미지 수집: 'NBA 플레이오프 관전' → 제목='basketball / net / backboard / sports / ' (관련성=0.33)
-2026-08-14 11:10:35,306 [INFO] image_fetcher — 이미지 수집 성공: 'NBA 플레이오프 관전' → 제목='basketball / net / backboard / sports / ' (관련성=0.33)
-2026-08-14 11:10:35,723 [INFO] image_fetcher — 대체 이미지 수집: 'NBA 플레이오프 구조부터 정확히 정규시즌 컨퍼런스' → 제목='basketball / professional / nba / action' (관련성=0.17)
-2026-08-14 11:10:35,723 [INFO] image_fetcher — 이미지 수집 성공: 'NBA 플레이오프 구조부터 정확히 정규시즌 컨퍼런스' → 제목='basketball / professional / nba / action' (관련성=0.17)
-2026-08-14 11:10:38,463 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:10:38,464 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-08-14 11:10:38,467 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-08-14 11:10:38,469 [INFO] content_generator — 포스트 생성 완료: 'NBA 2026 플레이오프 관전 포인트와 예상 결과, 지금까지 확인된 것만 짚어본다' (2737자, 이미지 3개)
-2026-08-14 11:10:40,675 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:11:02,927 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — 'NBA 2026 플레이오프 관전 포인트와 예상 결과, 지금까지 '
-2026-08-14 11:11:02,927 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2737자로 기준 통과하나, 내용은 확인된 사실 재조합과 일반적 분석 나열이 많아 독창적 인사이트가 제한적
-2026-08-14 11:11:02,927 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락(핵심요약, 표 설명 등)이 500자 이상으로 길게 이어짐
-2026-08-14 11:11:02,927 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처로 저작권 문제는 없으나 alt 텍스트 적용 여부가 확인되지 않음
-2026-08-14 11:11:02,927 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 표·리스트 위주 정형화된 구성과 '정리해보겠습니다' 류의 요약체 표현이 반복되어 AI 패턴이 일부 감지됨
-2026-08-14 11:11:02,934 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-14 11:11:02,935 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguasset.blogspot.com/2026/08/2026_02072899182.html
-2026-08-14 11:11:02,940 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-08-14 11:11:02,941 [INFO] main —   제목: NBA 2026 플레이오프 관전 포인트와 예상 결과, 지금까지 확인된 것만 짚어본다
-2026-08-14 11:11:02,941 [INFO] main —   이미지: 3개 삽입
-2026-08-14 11:11:02,941 [INFO] main —   글자 수: 2737자
-2026-08-14 11:11:04,755 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:11:24,904 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — 'NBA 2026 플레이오프 관전 포인트와 예상 결과, 지금까지 '
-2026-08-14 11:11:24,904 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2737자로 기준 통과하나, 대부분 일반적으로 알려진 정보(경기 방식, 르브론 기록)의 재구성이며 개인 경험은 짧은 의견 삽입 수준에 그침
-2026-08-14 11:11:24,904 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처로 저작권 문제는 없으나 이미지 관련 정책상 기본 warn 처리
-2026-08-14 11:11:24,904 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 요약박스·표·체크리스트 등 정형화된 구조와 '~라고 생각합니다' 식 반복 패턴이 다소 기계적으로 느껴짐
-2026-08-14 11:11:24,904 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-08-14 11:11:26,243 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:12:41,968 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-14 11:12:43,725 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:13:04,973 [INFO] final_editor —   ✏️ 제목 최종 교정: 'NBA 2026 플레이오프 관전 포인트와 예상 결과, 지금까지 확인된 것만 짚어본다' → 'NBA 2026 플레이오프 관전 포인트와 예상 결과 총정리'
-2026-08-14 11:13:04,973 [INFO] final_editor —   ✏️ 메타 설명 교정 (110자)
-2026-08-14 11:13:04,973 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목과 메타 설명을 글자수 기준에 맞춰 재작성하고, 긴 문단을 2~4문장 단위로 분리했습니다. 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 HTML 스타일로 추가하고 이미지 3개 위치와 구체적 alt 텍스트를 제안했습니다.
-2026-08-14 11:13:05,102 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-14 11:13:05,102 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-14 11:13:05,196 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-14 11:13:05,211 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-14 11:13:05,211 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-08-14 11:13:05,947 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/nba-2026.html
-2026-08-14 11:13:05,960 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/nba-2026.html
-2026-08-14 11:13:34,629 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:13:34,630 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-14 11:13:34,630 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-14 11:13:34,639 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: 'NBA 2026 플레이오프 관전 포인트와 예상 결과 총정리'
-2026-08-14 11:13:35,487 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-14 11:13:39,174 [INFO] comment_manager —   생성된 댓글: 글 잘 봤습니다! 팁 하나 드리자면, 플레이오프 매치업 예측할 때 정규시즌 상대 전적만 보고 판단하면 오히려 헷갈릴 수 있더라고요. 정규시즌은 ...
-2026-08-14 11:16:39,248 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-14 11:16:39,249 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-14 11:16:39,250 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-14 11:16:39,250 [INFO] main — 
-============================================================
-2026-08-14 11:16:39,250 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-08-14 11:16:39,250 [INFO] main — ============================================================
-2026-08-14 11:16:39,293 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-14 11:16:39,319 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
-2026-08-14 11:16:39,341 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-14 11:16:39,516 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-14 11:16:39,734 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-14 11:16:39,735 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
 2026-08-14 11:16:39,738 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
 2026-08-14 11:16:39,754 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 237 / 실패 0 / 대기 46)
 2026-08-14 11:16:39,754 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
@@ -618,3 +498,128 @@
 2026-08-14 23:20:50,190 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-08-14 23:20:50,191 [INFO] main —   - [blog3] 금융NEWS
 2026-08-14 23:20:50,196 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-08-15 03:37:08,324 [INFO] main — ============================================================
+2026-08-15 03:37:08,324 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-15 03:37:08
+2026-08-15 03:37:08,324 [INFO] main — ============================================================
+2026-08-15 03:37:08,343 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-15 03:37:08,343 [INFO] keyword_collector — 포스팅 이력 코퍼스: 207개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-15 03:37:08,344 [INFO] keyword_collector — 시즌 예약 키워드 5개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
+2026-08-15 03:37:13,083 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-15 03:37:21,238 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:37:21,263 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-15 03:37:21,263 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-15 03:37:21,597 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법']
+2026-08-15 03:37:21,840 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-15 03:37:21,972 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-15 03:37:21,974 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
+2026-08-15 03:37:21,987 [INFO] keyword_collector — 유사 주제 제외 7개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-15 03:37:21,989 [INFO] keyword_collector —   [high_cpc] 1개: ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법']
+2026-08-15 03:37:21,989 [INFO] keyword_collector —   [naver_realtime] 1개: ['여름휴가 신용카드 여행 혜택 비교 2026']
+2026-08-15 03:37:21,989 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법', '여름휴가 신용카드 여행 혜택 비교 2026']
+2026-08-15 03:37:21,989 [INFO] main — 수집된 키워드 2개: ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법', '여름휴가 신용카드 여행 혜택 비교 2026']
+2026-08-15 03:37:21,995 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-08-15 03:37:21,995 [INFO] main — 단독 포스트 대상 키워드 1개: ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법']
+2026-08-15 03:37:22,014 [INFO] main — 
+[1/1] 키워드: '여행 중 물건 도난 경찰서 신고 후 보험 청구 방법'
+2026-08-15 03:37:22,014 [INFO] content_generator — 포스트 생성 중: '여행 중 물건 도난 경찰서 신고 후 보험 청구 방법'
+2026-08-15 03:37:32,524 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:37:32,525 [INFO] research_collector — 검색 의도: 여행 중 도난 사고 발생 시 경찰서 신고 절차와 이를 바탕으로 여행자보험을 청구하는 구체적인 방법을 알고 싶
+2026-08-15 03:37:50,950 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 6개) — '여행 중 물건 도난 경찰서 신고 후 보험 청구 방법'
+2026-08-15 03:38:08,211 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:38:08,212 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '여행 중 물건 도난 경찰서 신고 후 보험 청구 방법'
+2026-08-15 03:38:29,996 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:38:29,999 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'D': 3, 'X': 3}
+2026-08-15 03:38:30,002 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-08-15 03:38:30,002 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-15 03:38:30,800 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:39:45,789 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-15 03:39:46,556 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:39:58,677 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '해외에서는 경찰서에 신고해 분실·도난 신고서를 받아야 하고, 국내에서는 '
+2026-08-15 03:39:58,677 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 0건 자동 수정 적용
+2026-08-15 03:39:58,849 [INFO] image_fetcher — 이미지 수집 성공: '여행 중 도난 경찰서 신고부터 보험 청구까지' → 제목='mercedes / model / nostalgic / automobil' (관련성=0.25)
+2026-08-15 03:39:59,289 [WARNING] image_fetcher — 이미지 없음: '여행 물건 도난'
+2026-08-15 03:39:59,781 [WARNING] image_fetcher — 이미지 없음: '여행 물건 당한 직후 도난은 당황스러'
+2026-08-15 03:39:59,781 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-08-15 03:39:59,784 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-08-15 03:39:59,786 [INFO] content_generator — 포스트 생성 완료: '여행 중 도난 경찰서 신고부터 보험 청구까지' (2784자, 이미지 1개)
+2026-08-15 03:40:00,555 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:40:17,716 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '여행 중 도난 경찰서 신고부터 보험 청구까지'
+2026-08-15 03:40:17,716 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준을 충족하나 실제 개인 경험보다 '후기 종합' 형태의 일반화된 서술이 많음
+2026-08-15 03:40:17,716 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 5~6단계 설명 단락이 500자 이상으로 길게 이어짐
+2026-08-15 03:40:17,716 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 직접 경험 서술이 없고 '후기에 따르면' 식 간접 인용 위주, 출처 2개는 확보됨
+2026-08-15 03:40:17,716 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장(Pixabay 출처)만 존재하고 alt 텍스트 여부 불명확
+2026-08-15 03:40:17,716 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 단계별 번호 나열과 정형화된 목록·격식체 문장 패턴이 다수 반복됨
+2026-08-15 03:40:17,723 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-15 03:40:17,725 [INFO] internal_linker —   [1/5] '여행자보험' -> https://www.hoguwhat.com/2026/08/blog-post_13.html
+2026-08-15 03:40:17,726 [INFO] internal_linker —   [2/5] '여행자보험' -> https://www.hoguwhat.com/2026/08/blog-post_12.html
+2026-08-15 03:40:17,727 [INFO] internal_linker —   [3/5] '여행자보험' -> https://hogugolfntraval.blogspot.com/2026/08/12.html
+2026-08-15 03:40:17,728 [INFO] internal_linker —   [4/5] '여행자보험' -> https://www.hoguwhat.com/2026/08/blog-post_08.html
+2026-08-15 03:40:17,730 [INFO] internal_linker —   [5/5] '여행지' -> https://hogugolfntraval.blogspot.com/2026/08/ai-2026.html
+2026-08-15 03:40:17,730 [INFO] internal_linker — 내부 링크 5개 삽입 완료
+2026-08-15 03:40:17,730 [INFO] main —   제목: 여행 중 도난 경찰서 신고부터 보험 청구까지
+2026-08-15 03:40:17,730 [INFO] main —   이미지: 1개 삽입
+2026-08-15 03:40:17,730 [INFO] main —   글자 수: 2784자
+2026-08-15 03:40:18,828 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:40:32,209 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '여행 중 도난 경찰서 신고부터 보험 청구까지'
+2026-08-15 03:40:32,210 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 충족하나 개인 경험 대신 '후기에 따르면' 식 일반화된 정보 재구성이 대부분임
+2026-08-15 03:40:32,210 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 실제 경험 서술이 없고 '후기에 따르면' 식 간접 인용에 의존, 출처 2개는 있으나 본문에 명시적 인용 부족
+2026-08-15 03:40:32,210 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처로 저작권 문제는 없으나 이미지 1개뿐이고 alt 텍스트 확인 불가
+2026-08-15 03:40:32,210 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '1단계~6단계' 기계적 구조와 '~것으로 보입니다·~라는 후기가 많습니다' 반복 패턴이 AI 생성 특유의 문체를 드러냄
+2026-08-15 03:40:32,210 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-15 03:40:32,210 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 충족하나 개인 경험 대신 '후기에 따르면' 식 일반화된 정보 재구성이 대부분임
+2026-08-15 03:40:32,210 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 실제 경험 서술이 없고 '후기에 따르면' 식 간접 인용에 의존, 출처 2개는 있으나 본문에 명시적 인용 부족
+2026-08-15 03:40:32,210 [WARNING] main —      🟡 [이미지 정책] Pixabay 출처로 저작권 문제는 없으나 이미지 1개뿐이고 alt 텍스트 확인 불가
+2026-08-15 03:40:32,210 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-15 03:40:32,887 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:41:59,789 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2784자 → 3960자 (+1176자)
+2026-08-15 03:41:59,789 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-15 03:42:00,569 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:42:18,984 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '여행 중 도난 경찰서 신고부터 보험 청구까지'
+2026-08-15 03:42:18,984 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개만 확인되며 저작권 위반은 없으나 이미지 수가 적어 warn 처리
+2026-08-15 03:42:18,984 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 95/100)
+2026-08-15 03:42:18,984 [INFO] main —   ✅ AdSense 검증 통과 (점수: 95/100) — 업로드
+2026-08-15 03:42:19,901 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:43:44,327 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-15 03:43:45,130 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:45:04,510 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-15 03:45:05,522 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:46:16,759 [WARNING] final_editor —   ⚠️ 3차 최종 편집 건너뜀 (무시): Expecting value: line 1 column 1 (char 0)
+2026-08-15 03:46:16,831 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-15 03:46:16,831 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-15 03:46:16,904 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-15 03:46:16,918 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-15 03:46:16,918 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-15 03:46:17,432 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_361.html
+2026-08-15 03:46:17,445 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_361.html
+2026-08-15 03:46:51,079 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:46:51,080 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-15 03:46:51,080 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-15 03:46:51,089 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '여행 중 도난 경찰서 신고부터 보험 청구까지'
+2026-08-15 03:46:51,750 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 03:46:55,255 [INFO] comment_manager —   생성된 댓글: 글에서 언급하신 신고서 관련해서 하나 덧붙이자면, 신고서를 영어(또는 국제적으로 통용되는 언어)로 발급받을 수 있는지 꼭 확인해보시는 걸 추천드...
+2026-08-15 03:49:55,313 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-15 03:49:55,314 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-15 03:49:55,315 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-15 03:49:55,315 [INFO] main — 
+============================================================
+2026-08-15 03:49:55,315 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-08-15 03:49:55,315 [INFO] main — ============================================================
+2026-08-15 03:49:55,357 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-15 03:49:55,382 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
+2026-08-15 03:49:55,403 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-15 03:49:55,567 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-15 03:49:55,811 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-15 03:49:56,089 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-15 03:49:56,090 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-15 03:49:56,093 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-15 03:49:56,109 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 237 / 실패 0 / 대기 46)
+2026-08-15 03:49:56,109 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-15 03:49:56,109 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-15 03:49:56,110 [INFO] main — 대시보드 데이터 업데이트 완료

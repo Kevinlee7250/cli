@@ -1,69 +1,75 @@
 {
-  "collectedAt": "2026-08-15T04:00:25.521454+00:00",
+  "collectedAt": "2026-08-15T05:14:41.905206+00:00",
   "sources": {
     "googleTrends": [
       {
-        "keyword": "영웅",
+        "keyword": "페라리",
         "rank": 1,
+        "traffic": "100+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "sl vs ind",
+        "rank": 2,
         "traffic": "200+",
         "source": "google_trends"
       },
       {
-        "keyword": "최태원",
-        "rank": 2,
+        "keyword": "삼성sdi",
+        "rank": 3,
         "traffic": "1000+",
         "source": "google_trends"
       },
       {
-        "keyword": "이슬람 마카체프",
-        "rank": 3,
+        "keyword": "서강대",
+        "rank": 4,
         "traffic": "200+",
         "source": "google_trends"
       },
       {
-        "keyword": "결혼식",
-        "rank": 4,
-        "traffic": "500+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "주거",
+        "keyword": "백두산",
         "rank": 5,
-        "traffic": "20000+",
+        "traffic": "100+",
         "source": "google_trends"
       },
       {
-        "keyword": "이천수",
+        "keyword": "하객",
         "rank": 6,
         "traffic": "2000+",
         "source": "google_trends"
       },
       {
-        "keyword": "유병재",
+        "keyword": "티웨이항공",
         "rank": 7,
-        "traffic": "200+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "도시 재개발",
-        "rank": 8,
-        "traffic": "200+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "퇴직",
-        "rank": 9,
-        "traffic": "200+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "여한구",
-        "rank": 10,
         "traffic": "500+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "온유",
+        "rank": 8,
+        "traffic": "1000+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "금융감독원",
+        "rank": 9,
+        "traffic": "100+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "최태원",
+        "rank": 10,
+        "traffic": "2000+",
         "source": "google_trends"
       }
     ],
     "naverNews": [
+      {
+        "headline": "“교육부-예산처 장관직 걸겠다”…최교진-박홍근, 교부금 전화 담판도 결렬",
+        "category": "경제",
+        "source": "naver_rss",
+        "keyword": "교육부 예산처 장관직 걸겠다 최교진 박홍근"
+      },
       {
         "headline": "“자녀들 커서 넓은집 전세 갔더니 투기?”…‘실거주 인정해달라’ 불만 폭주",
         "category": "경제",
@@ -93,12 +99,6 @@
         "category": "경제",
         "source": "naver_rss",
         "keyword": "외국환율고시표"
-      },
-      {
-        "headline": "현대해상 상반기 순익 36% 쑥 … 수익성 높은 장기보험이 견인",
-        "category": "경제",
-        "source": "naver_rss",
-        "keyword": "현대해상 상반기 순익 수익성 높은 장기보험이"
       },
       {
         "headline": "한빛소프트, 2Q 매출 68억·영업익 6억…“하반기 ‘그라나도 에스파다M’ 지역 확장”",
@@ -171,6 +171,216 @@
         "category": "생활문화",
         "source": "naver_rss",
         "keyword": "결혼 창업 자금 날렸다 외신도 놀란"
+      },
+      {
+        "headline": "[김이코의 시장분석]분위기 바뀐 8월 증시…또다시 '삼전닉스' 위주로 ...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "김이코의 시장분석 분위기 바뀐 증시 또다시"
+      },
+      {
+        "headline": "주우재 “요즘 주식 안 하면 진짜 바보야?” 저축 외길 인생의 고뇌(옥...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "주우재 요즘 주식 하면 진짜 바보야"
+      },
+      {
+        "headline": "'저축왕' 김종국, 알고 보니 &quot;5만전자 주주&quot;..최고민수 &quot;2028년까지 삼전...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "저축왕 김종국 알고 보니 quot 만전자"
+      },
+      {
+        "headline": "‘저축 외길’ 김종국, 삼성전자 5만원대 매수 “안 팔아” (옥문아)",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "저축 외길 김종국 삼성전자 만원대 매수"
+      },
+      {
+        "headline": "'옥문아' 김숙, &quot;ETF, -38%&quot; 고백...최고민수 &quot;전쟁에는 답이 없다&quot; [종합...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "옥문아 김숙 quot ETF quot 고백"
+      },
+      {
+        "headline": "배우자의 외도, 이혼 준비에서 가장 중요한 것",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "배우자의 외도 이혼 준비에서 가장 중요한"
+      },
+      {
+        "headline": "소말리아 바이도아 실향민 어린이 2명 중 1명 영양실조",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "소말리아 바이도아 실향민 어린이 영양실조"
+      },
+      {
+        "headline": "[오피셜]'타구 강타' 임지민, 턱뼈 분쇄골절 수술...보여줄 것이 더 많이...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "오피셜 타구 강타 임지민 턱뼈 분쇄골절"
+      },
+      {
+        "headline": "&quot;입주민 건강까지 챙긴다&quot;…9월 분양 챔피언스시티, 의료서비스 연계",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "quot 입주민 건강까지 챙긴다 quot 분양"
+      },
+      {
+        "headline": "[오피셜]&quot;악!&quot; 레이예스 타구에 안면 강타 → 쏟아진 피에 충격…끝내 ...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "오피셜 quot quot 레이예스 타구에 안면"
+      },
+      {
+        "headline": "경기도, 보건교사 1,655명 대상 알레르기 응급대응 교육…학교 안전망 ...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "경기도 보건교사 대상 알레르기 응급대응 교육"
+      },
+      {
+        "headline": "사직 얼어붙게 한 타구 ‘안면 강타’…NC 임지민 ‘아래턱뼈 분쇄골절...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "사직 얼어붙게 타구 안면 강타 NC"
+      },
+      {
+        "headline": "중부발전, 해외 발전소를 '수출 교두보'로…K-발전 생태계 해외 영토 넓...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "중부발전 해외 발전소를 수출 교두보 발전"
+      },
+      {
+        "headline": "딥엑스 &quot;국산 NPU 양산 첫 해 77개국 수주&quot;",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "딥엑스 quot 국산 NPU 양산 개국"
+      },
+      {
+        "headline": "챗GPT에 &quot;전여친 죽이겠다&quot;던 美 남성, 오픈AI 신고로 체포",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "GPT quot 전여친 죽이겠다 quot 남성"
+      },
+      {
+        "headline": "충북 학생들, 지역에서 키운 배움 세계로 넓힌다",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "충북 학생들 지역에서 키운 배움 세계로"
+      },
+      {
+        "headline": "‘군웅할거’ AI 모델, ‘자본 경쟁’으로 선별 시동 [트럼프 스톡커]",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "군웅할거 AI 모델 자본 경쟁 으로"
+      },
+      {
+        "headline": "챗GPT에 남몰래 털어놓은 살인 계획…오픈AI가 FBI에 넘겼다",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "GPT 남몰래 털어놓은 살인 계획 오픈"
+      },
+      {
+        "headline": "강릉시 자원순환과, '소비촉진 이어가기 캠페인' 돌입…지역 상권·소상...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "강릉시 자원순환과 소비촉진 이어가기 캠페인 돌입"
+      },
+      {
+        "headline": "[바이오사이언스] 약이 음료·젤리로…스테디셀러의 무한 변신",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "바이오사이언스 약이 음료 젤리로 스테디셀러의 무한"
+      },
+      {
+        "headline": "&quot;당대당 싸움&quot; vs &quot;주차장이 더 효과적&quot;",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "quot 당대당 싸움 quot vs quot"
+      },
+      {
+        "headline": "태극기마저 중국산에 내줬다… 국내 제조업체 3곳, ‘국산 우선구매법’...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "태극기마저 중국산에 내줬다 국내 제조업체 국산"
+      },
+      {
+        "headline": "[위클립] 8월 2주",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "위클립"
+      },
+      {
+        "headline": "[문화다양성 시대] ③다문화사회, '다름'이 새로운 경쟁력으로",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "문화다양성 시대 다문화사회 다름 새로운 경쟁력으로"
+      },
+      {
+        "headline": "두산건설 '두산위브더제니스 부천' 구름인파… 견본주택 방문객 발길 이...",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "두산건설 두산위브더제니스 부천 구름인파 견본주택 방문객"
+      },
+      {
+        "headline": "“학동역 출퇴근 딱” 돌 앞둔 아기도 엄마랑 왔다…‘써밋 클라비온’...",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "학동역 출퇴근 앞둔 아기도 엄마랑 왔다"
+      },
+      {
+        "headline": "[靑春노트] '식은 민심·끓는 부동산' 앞에 선 李",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "노트 식은 민심 끓는 부동산 앞에"
+      },
+      {
+        "headline": "내주 서울 신길동 써밋클라비온 등 3천788가구 분양",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "내주 서울 신길동 써밋클라비온 가구 분양"
+      },
+      {
+        "headline": "신길동 ‘써밋클라비온’ 출격…다음주 3788가구 분양 [부동산360]",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "신길동 써밋클라비온 출격 다음주 3788 가구"
+      },
+      {
+        "headline": "신길동 '써밋클라비온'·중림동 '충정로역자이르네' 출격[분양캘린더]",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "신길동 써밋클라비온 중림동 충정로역자이르네 출격 분양캘린더"
       }
     ],
     "highCPC": [
@@ -385,12 +595,53 @@
         "source": "high_cpc"
       }
     ],
-    "aiRecommended": []
+    "aiRecommended": [
+      {
+        "keyword": "에어컨 전기요금 누진세 폭탄 피한 절약 방법 직접 해봤다",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "9월 신학기 준비물 리스트와 실제 지출 비용 공개",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "추석 선물세트 미리 예약하고 알게 된 가격 비교",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "태풍철 대비 집안 점검 체크리스트 직접 해보니",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "청년도약계좌 만기 후 실제 수령액 공개",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "여름 휴가 실비보험 청구 직접 해본 절차와 팁",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "냉방병 증상과 예방법 직접 겪고 나서 알게 된 것",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "스마트폰 배터리 여름철 급격히 닳는 이유와 관리법",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "국내 계곡 피서지 8월 말 다녀온 후기와 혼잡도 비교",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "가을 이사 견적 3곳 비교하고 알게 된 것",
+        "source": "ai_generated"
+      }
+    ]
   },
   "stats": {
     "googleTrends": 10,
-    "naverNews": 18,
+    "naverNews": 48,
     "highCPC": 47,
-    "aiRecommended": 0
+    "aiRecommended": 10
   }
 }

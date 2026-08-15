@@ -1,127 +1,3 @@
-2026-08-15 10:20:39,629 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-15 10:20:40,024 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-15 10:20:40,026 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
-2026-08-15 10:20:40,042 [INFO] keyword_collector — 유사 주제 제외 9개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-15 10:20:40,043 [INFO] keyword_collector —   [high_cpc] 1개: ['넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교']
-2026-08-15 10:20:40,043 [INFO] keyword_collector —   [fallback] 1개: ['부산 골목 맛집 관광객 없는 진짜 맛집 직접 가봤더니']
-2026-08-15 10:20:40,044 [INFO] keyword_collector — 최종 선정 키워드 2개: ['넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교', '부산 골목 맛집 관광객 없는 진짜 맛집 직접 가봤더니']
-2026-08-15 10:20:40,044 [INFO] main — 수집된 키워드 2개: ['넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교', '부산 골목 맛집 관광객 없는 진짜 맛집 직접 가봤더니']
-2026-08-15 10:20:40,049 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
-2026-08-15 10:20:40,049 [INFO] main — 단독 포스트 대상 키워드 1개: ['넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교']
-2026-08-15 10:20:40,069 [INFO] main — 
-[1/1] 키워드: '넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교'
-2026-08-15 10:20:40,069 [INFO] content_generator — 포스트 생성 중: '넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교'
-2026-08-15 10:20:48,256 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:20:48,257 [INFO] research_collector — 검색 의도: 넷플릭스, 티빙, 웨이브의 구독 요금제별 가격과 제공 콘텐츠를 비교해 어떤 서비스가 가성비 좋은지 판단하려는
-2026-08-15 10:20:59,253 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교'
-2026-08-15 10:21:18,976 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:21:18,977 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교'
-2026-08-15 10:21:32,960 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:21:32,963 [INFO] source_validator — 출처 검증: 6/7개 통과, 등급 분포 {'B': 2, 'C': 3, 'D': 1, 'X': 1}
-2026-08-15 10:21:34,792 [INFO] content_generator — 드라마/영화 참고 데이터 수집 완료: '넷플릭스 vs 티빙 vs 웨이브 구독료 대비 콘텐츠 직접 비교'
-2026-08-15 10:21:34,792 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-08-15 10:21:34,792 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-15 10:21:35,751 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:22:50,601 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-15 10:22:51,345 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:23:02,092 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 2건 자동 수정 적용
-2026-08-15 10:23:03,360 [INFO] image_fetcher — 이미지 수집 성공: '넷플릭스 티빙 웨이브 구독료 콘텐츠 비교' → 제목='2026년 OTT 구독료 비교 | 넷플릭스 티빙 웨이브 디즈니플러스 왓챠' (관련성=0.83)
-2026-08-15 10:23:03,690 [INFO] image_fetcher — 이미지 수집 성공: '넷플릭스 vs 티빙' → 제목='bamboo / juknokwon / damyang / green / n' (관련성=0.00)
-2026-08-15 10:23:04,253 [INFO] image_fetcher — 이미지 수집 성공: '넷플릭스 vs 합병 소식에 SK 열린' → 제목='shorinji / kempo / defense / aamm / mart' (관련성=0.00)
-2026-08-15 10:23:05,429 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:23:05,430 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
-2026-08-15 10:23:05,430 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-08-15 10:23:05,433 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-08-15 10:23:05,435 [INFO] content_generator — 포스트 생성 완료: '넷플릭스 티빙 웨이브 구독료 콘텐츠 비교' (3155자, 이미지 1개)
-2026-08-15 10:23:06,464 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:23:22,383 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '넷플릭스 티빙 웨이브 구독료 콘텐츠 비교'
-2026-08-15 10:23:22,383 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(3155자)는 기준 충족하나 개인 경험 서술이 '개인적으로는' 한 문장 수준에 그쳐 일반 정보 재구성 성격이 강함
-2026-08-15 10:23:22,384 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 6개와 날짜·인물명 등 근거는 있으나 저자의 직접 경험·전문성 신호는 약함
-2026-08-15 10:23:22,384 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 '네이버 이미지 검색'으로 명시돼 저작권 리스크 있음
-2026-08-15 10:23:22,384 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '📌 핵심 요약', '💡 핵심 포인트', '여기까지가 ~라면 다음은' 등 전형적 AI 전환구·요약 패턴 다수 사용
-2026-08-15 10:23:22,392 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-15 10:23:22,393 [INFO] internal_linker —   [1/5] '2026년' -> https://hogugolfntraval.blogspot.com/2026/08/vs-2026-34.html
-2026-08-15 10:23:22,397 [INFO] internal_linker —   [2/5] '총정리' -> https://hoguasset.blogspot.com/2026/08/2026_0367169192.html
-2026-08-15 10:23:22,401 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-08-15 10:23:22,401 [INFO] main —   제목: 넷플릭스 티빙 웨이브 구독료 콘텐츠 비교
-2026-08-15 10:23:22,401 [INFO] main —   이미지: 1개 삽입
-2026-08-15 10:23:22,401 [INFO] main —   글자 수: 3155자
-2026-08-15 10:23:23,270 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:23:44,512 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '넷플릭스 티빙 웨이브 구독료 콘텐츠 비교'
-2026-08-15 10:23:44,512 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 뉴스·표 정보 재구성이 중심이고 개인 경험 서술은 소량에 그침
-2026-08-15 10:23:44,512 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 6개 인용은 긍정적이나 1인칭 경험 서술이 '개인적으로는' 한 문장 수준으로 제한적
-2026-08-15 10:23:44,512 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 명시되어 저작권 주의 필요
-2026-08-15 10:23:44,512 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심요약/핵심포인트 박스, 반복적 전환문구, '~습니다으로' 등 어색한 문장 패턴이 AI 생성 흔적을 시사
-2026-08-15 10:23:44,512 [WARNING] adsense_validator —   🔴 '비슷한 가격대로 알려져 있습니다으로 가격이 같습니다' 등 문법 오류 문장 수정 필요
-2026-08-15 10:23:44,512 [WARNING] adsense_validator —   🔴 네이버 이미지 검색 출처 이미지는 저작권 침해 소지가 있어 자체 제작 또는 라이선스 확인된 이미지로 교체 필요
-2026-08-15 10:23:44,512 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-15 10:23:44,512 [WARNING] main —      🔴 '비슷한 가격대로 알려져 있습니다으로 가격이 같습니다' 등 문법 오류 문장 수정 필요
-2026-08-15 10:23:44,512 [WARNING] main —      🔴 네이버 이미지 검색 출처 이미지는 저작권 침해 소지가 있어 자체 제작 또는 라이선스 확인된 이미지로 교체 필요
-2026-08-15 10:23:44,512 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 뉴스·표 정보 재구성이 중심이고 개인 경험 서술은 소량에 그침
-2026-08-15 10:23:44,512 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 6개 인용은 긍정적이나 1인칭 경험 서술이 '개인적으로는' 한 문장 수준으로 제한적
-2026-08-15 10:23:44,512 [WARNING] main —      🟡 [이미지 정책] 이미지 출처가 네이버 이미지 검색으로 명시되어 저작권 주의 필요
-2026-08-15 10:23:44,512 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-15 10:23:45,298 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:24:50,906 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3155자 → 3089자 (-66자)
-2026-08-15 10:24:50,906 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-15 10:24:51,665 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:25:10,458 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '넷플릭스 티빙 웨이브 구독료 콘텐츠 비교'
-2026-08-15 10:25:10,458 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 충족하나 문단 구분(줄바꿈)이 거의 없어 하나의 긴 블록처럼 이어져 가독성이 떨어짐
-2026-08-15 10:25:10,459 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개('자체 제작 인포그래픽')만 언급되고 alt 텍스트 여부 확인 불가
-2026-08-15 10:25:10,459 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 개인 경험 서술은 자연스러우나 '~짚어보겠습니다', '이런 배경을 알고 나면' 등 전환구가 반복되는 패턴 존재
-2026-08-15 10:25:10,459 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
-2026-08-15 10:25:10,459 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-08-15 10:25:11,157 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:26:24,003 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-15 10:26:24,889 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:27:24,376 [INFO] final_editor —   ✏️ 제목 최종 교정: '넷플릭스 티빙 웨이브 구독료 콘텐츠 비교' → '넷플릭스 티빙 웨이브 구독료 대비 콘텐츠 비교 총정리'
-2026-08-15 10:27:24,377 [INFO] final_editor —   ✏️ 메타 설명 교정 (131자)
-2026-08-15 10:27:24,377 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고 H3 소제목을 추가했으며, 개인 경험 메모·주의사항·FAQ 5개·이미지 4곳·내부 링크 문구를 신설해 발행 형식에 맞게 정리했습니다.
-2026-08-15 10:27:24,447 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-15 10:27:24,448 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-15 10:27:24,549 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-15 10:27:24,564 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-15 10:27:24,564 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-08-15 10:27:25,160 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_165.html
-2026-08-15 10:27:25,173 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_165.html
-2026-08-15 10:27:59,085 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:27:59,087 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-15 10:27:59,087 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-15 10:27:59,096 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '넷플릭스 티빙 웨이브 구독료 대비 콘텐츠 비교 총정리'
-2026-08-15 10:27:59,797 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 10:28:02,981 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리자면, 매달 새로 결제하기보다 특정 시즌에만 몰아서 구독하고 바로 해지하는 것도 방법이에요. 티빙·웨이브는 원하는 시즌 끝나...
-2026-08-15 10:31:03,039 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-15 10:31:03,040 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-15 10:31:03,040 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-15 10:31:03,040 [INFO] main — 
-============================================================
-2026-08-15 10:31:03,040 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-08-15 10:31:03,041 [INFO] main — ============================================================
-2026-08-15 10:31:03,085 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-15 10:31:03,111 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
-2026-08-15 10:31:03,133 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-15 10:31:03,285 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-15 10:31:03,533 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-15 10:31:03,717 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-15 10:31:03,718 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-15 10:31:03,721 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-15 10:31:03,737 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 238 / 실패 0 / 대기 45)
-2026-08-15 10:31:03,737 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-15 10:31:03,737 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-15 10:31:03,739 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-15 10:31:39,528 [INFO] main — ============================================================
-2026-08-15 10:31:39,528 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-15 10:31:39
-2026-08-15 10:31:39,528 [INFO] main — ============================================================
-2026-08-15 10:31:39,544 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
-2026-08-15 10:31:39,544 [INFO] keyword_collector — 포스팅 이력 코퍼스: 197개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-08-15 10:31:39,544 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
 2026-08-15 10:31:44,758 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
 2026-08-15 10:31:52,260 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-08-15 10:31:52,280 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
@@ -622,3 +498,129 @@
 2026-08-15 22:48:03,089 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-15 22:48:03,089 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-15 22:48:03,090 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-15 22:48:39,149 [INFO] main — ============================================================
+2026-08-15 22:48:39,149 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-08-15 22:48:39
+2026-08-15 22:48:39,149 [INFO] main — ============================================================
+2026-08-15 22:48:39,168 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
+2026-08-15 22:48:39,168 [INFO] keyword_collector — 포스팅 이력 코퍼스: 195개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-08-15 22:48:39,169 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog3): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-15 22:48:43,138 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-15 22:48:50,477 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:48:50,503 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-15 22:48:50,503 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-15 22:48:50,860 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-08-15 22:48:51,143 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-15 22:48:51,144 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-15 22:48:51,155 [INFO] keyword_collector — 유사 주제 제외 5개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '레버리지 ETF 투자 손실 복구하는 법 2026', '미국 주식 직접투자 vs ISA 계좌 비교 분석']
+2026-08-15 22:48:51,155 [INFO] keyword_collector —   [naver_realtime] 2개: ['금 투자 세금 계산법 2026 양도소득세 정리', '20대 빚투 전에 알아야 할 리스크 관리 방법']
+2026-08-15 22:48:51,155 [INFO] keyword_collector — 최종 선정 키워드 2개: ['금 투자 세금 계산법 2026 양도소득세 정리', '20대 빚투 전에 알아야 할 리스크 관리 방법']
+2026-08-15 22:48:51,155 [INFO] main — 수집된 키워드 2개: ['금 투자 세금 계산법 2026 양도소득세 정리', '20대 빚투 전에 알아야 할 리스크 관리 방법']
+2026-08-15 22:48:51,161 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
+2026-08-15 22:48:51,161 [INFO] main — 단독 포스트 대상 키워드 1개: ['금 투자 세금 계산법 2026 양도소득세 정리']
+2026-08-15 22:48:51,181 [INFO] main — 
+[1/1] 키워드: '금 투자 세금 계산법 2026 양도소득세 정리'
+2026-08-15 22:48:51,181 [INFO] content_generator — 포스트 생성 중: '금 투자 세금 계산법 2026 양도소득세 정리'
+2026-08-15 22:49:02,895 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:49:02,897 [INFO] research_collector — 검색 의도: 2026년 기준 금 투자 시 발생하는 양도소득세 등 세금 계산 방법과 최신 세법 개정 내용을 알고 싶어함
+2026-08-15 22:49:15,150 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '금 투자 세금 계산법 2026 양도소득세 정리'
+2026-08-15 22:49:24,782 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:49:24,783 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '금 투자 세금 계산법 2026 양도소득세 정리'
+2026-08-15 22:49:38,229 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:49:38,230 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'X': 2, 'B': 3}
+2026-08-15 22:49:38,233 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-15 22:49:40,189 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:51:05,426 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-15 22:51:05,428 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(파생상품)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-08-15 22:51:07,428 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-08-15 22:51:08,140 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:52:44,805 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-15 22:52:45,508 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:53:03,874 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-08-15 22:53:04,331 [INFO] image_fetcher — 이미지 수집 성공: '금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부가세 뭐가 다를까' → 제목='coins / currency / investment / insuranc' (관련성=0.18)
+2026-08-15 22:53:04,669 [INFO] image_fetcher — 대체 이미지 수집: '투자 세금 계산법' → 제목='calculator / calculation / insurance / f' (관련성=0.20)
+2026-08-15 22:53:04,669 [INFO] image_fetcher — 이미지 수집 성공: '투자 세금 계산법' → 제목='calculator / calculation / insurance / f' (관련성=0.20)
+2026-08-15 22:53:05,235 [INFO] image_fetcher — 대체 이미지 수집: '투자 세금 방법에 따라 KRX ETF' → 제목='tax / forms / income / business / paperw' (관련성=0.00)
+2026-08-15 22:53:05,235 [INFO] image_fetcher — 이미지 수집 성공: '투자 세금 방법에 따라 KRX ETF' → 제목='tax / forms / income / business / paperw' (관련성=0.00)
+2026-08-15 22:53:08,186 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:53:08,187 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-08-15 22:53:08,190 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-08-15 22:53:08,192 [INFO] content_generator — 포스트 생성 완료: '금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부가세 뭐가 다를까' (3630자, 이미지 3개)
+2026-08-15 22:53:08,934 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:53:25,690 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부'
+2026-08-15 22:53:25,690 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 개인 경험·구체적 사례 없이 일반 정보를 '~로 알려져 있다' 식으로 재구성한 수준
+2026-08-15 22:53:25,690 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 충분하나 골드바·KRX 섹션 일부 단락이 500자 이상으로 길게 이어짐
+2026-08-15 22:53:25,690 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 경험 서술 부재, 대부분 '~로 알려져 있다'는 간접 인용 방식
+2026-08-15 22:53:25,690 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 사용되나 alt 텍스트 명시 없음, 정책상 이미지 관련 warn 처리
+2026-08-15 22:53:25,690 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~로 알려져 있습니다', '다만' 반복 및 이모지 소제목(📌💡) 등 전형적 AI 블로그 패턴 감지
+2026-08-15 22:53:25,698 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-15 22:53:25,700 [INFO] internal_linker —   [1/5] '골드뱅킹' -> https://hoguasset.blogspot.com/2026/08/2026_079286805.html
+2026-08-15 22:53:25,701 [INFO] internal_linker —   [2/5] '골드뱅킹' -> https://hoguasset.blogspot.com/2026/08/2026-4400.html
+2026-08-15 22:53:25,707 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-08-15 22:53:25,707 [INFO] main —   제목: 금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부가세 뭐가 다를까
+2026-08-15 22:53:25,707 [INFO] main —   이미지: 3개 삽입
+2026-08-15 22:53:25,707 [INFO] main —   글자 수: 3630자
+2026-08-15 22:53:26,384 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:53:46,329 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부'
+2026-08-15 22:53:46,329 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 3630자로 기준 충족하나 '~로 알려져 있습니다' 식 일반 정보 재정리 위주로 개인 경험·구체 사례 부족
+2026-08-15 22:53:46,329 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개는 있으나 1인칭 경험 서술이 없고 전반적으로 추측성 표현('~로 알려져 있습니다')에 의존
+2026-08-15 22:53:46,329 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 이미지 출처는 명시했으나 alt텍스트 확인 불가 및 이미지 정책상 기본 warn 처리
+2026-08-15 22:53:46,329 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '📌 핵심 요약', '💡 핵심 포인트' 같은 정형화된 요약 박스와 반복적 헤지 표현이 AI 생성 패턴을 시사
+2026-08-15 22:53:46,329 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-15 22:53:46,329 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 3630자로 기준 충족하나 '~로 알려져 있습니다' 식 일반 정보 재정리 위주로 개인 경험·구체 사례 부족
+2026-08-15 22:53:46,329 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 4개는 있으나 1인칭 경험 서술이 없고 전반적으로 추측성 표현('~로 알려져 있습니다')에 의존
+2026-08-15 22:53:46,329 [WARNING] main —      🟡 [이미지 정책] Pixabay 이미지 출처는 명시했으나 alt텍스트 확인 불가 및 이미지 정책상 기본 warn 처리
+2026-08-15 22:53:46,329 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-15 22:53:47,046 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:55:03,315 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3630자 → 3743자 (+113자)
+2026-08-15 22:55:03,316 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-15 22:55:04,386 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:55:23,360 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부'
+2026-08-15 22:55:23,360 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 pass 기준 충족하나 골드바·KRX 섹션 단락이 500자 이상으로 길게 이어져 가독성 저하
+2026-08-15 22:55:23,360 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 Pixabay로 저작권 위반은 없으나 alt 텍스트 명시 여부 불명확
+2026-08-15 22:55:23,360 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
+2026-08-15 22:55:23,360 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-15 22:55:24,059 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:56:38,006 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-15 22:56:38,817 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:57:17,183 [INFO] final_editor —   ✏️ 제목 최종 교정: '금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부가세 뭐가 다를까' → '금 투자 세금 계산법 2026, 양도소득세와 부가세 총정리'
+2026-08-15 22:57:17,183 [INFO] final_editor —   ✏️ 메타 설명 교정 (133자)
+2026-08-15 22:57:17,183 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 잘려있던 본문을 완성하고, 요약 박스·비교표·개인 경험 메모·주의사항·FAQ 6개·마무리·작성자 메모를 추가했으며 모든 문단을 2~4문장으로 재정리했습니다.
+2026-08-15 22:57:17,273 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-15 22:57:17,274 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-15 22:57:17,363 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-15 22:57:17,377 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-15 22:57:17,377 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '금 투자 세금 계산법 2026 양도소득세 정리' — 면책·팩트체크 확인 권장
+2026-08-15 22:57:17,377 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-08-15 22:57:18,021 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026_01879066088.html
+2026-08-15 22:57:18,033 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026_01879066088.html
+2026-08-15 22:57:49,809 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:57:49,810 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-15 22:57:49,810 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-15 22:57:49,819 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '금 투자 세금 계산법 2026, 양도소득세와 부가세 총정리'
+2026-08-15 22:57:50,562 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-15 22:57:54,524 [INFO] comment_manager —   생성된 댓글: 하나 덧붙이자면, 실물 골드바는 매도할 때 부가세 환급이 안 되는 대신 매입 시 세금계산서나 영수증을 꼭 챙겨두셔야 나중에 되팔 때 순도·중량 ...
+2026-08-15 23:00:54,597 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-15 23:00:54,598 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-15 23:00:54,598 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-15 23:00:54,598 [INFO] main — 
+============================================================
+2026-08-15 23:00:54,598 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-08-15 23:00:54,598 [INFO] main — ============================================================
+2026-08-15 23:00:54,642 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-15 23:00:54,667 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
+2026-08-15 23:00:54,689 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-15 23:00:54,909 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-15 23:00:55,230 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-15 23:00:55,232 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-15 23:00:55,234 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-15 23:00:55,250 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 240 / 실패 0 / 대기 43)
+2026-08-15 23:00:55,251 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-15 23:00:55,251 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-15 23:00:55,252 [INFO] main — 대시보드 데이터 업데이트 완료

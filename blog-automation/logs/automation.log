@@ -1,130 +1,3 @@
-2026-08-15 22:53:04,331 [INFO] image_fetcher — 이미지 수집 성공: '금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부가세 뭐가 다를까' → 제목='coins / currency / investment / insuranc' (관련성=0.18)
-2026-08-15 22:53:04,669 [INFO] image_fetcher — 대체 이미지 수집: '투자 세금 계산법' → 제목='calculator / calculation / insurance / f' (관련성=0.20)
-2026-08-15 22:53:04,669 [INFO] image_fetcher — 이미지 수집 성공: '투자 세금 계산법' → 제목='calculator / calculation / insurance / f' (관련성=0.20)
-2026-08-15 22:53:05,235 [INFO] image_fetcher — 대체 이미지 수집: '투자 세금 방법에 따라 KRX ETF' → 제목='tax / forms / income / business / paperw' (관련성=0.00)
-2026-08-15 22:53:05,235 [INFO] image_fetcher — 이미지 수집 성공: '투자 세금 방법에 따라 KRX ETF' → 제목='tax / forms / income / business / paperw' (관련성=0.00)
-2026-08-15 22:53:08,186 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 22:53:08,187 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
-2026-08-15 22:53:08,190 [INFO] content_generator — 이미지 3개 본문 삽입 완료
-2026-08-15 22:53:08,192 [INFO] content_generator — 포스트 생성 완료: '금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부가세 뭐가 다를까' (3630자, 이미지 3개)
-2026-08-15 22:53:08,934 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 22:53:25,690 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부'
-2026-08-15 22:53:25,690 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 개인 경험·구체적 사례 없이 일반 정보를 '~로 알려져 있다' 식으로 재구성한 수준
-2026-08-15 22:53:25,690 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 충분하나 골드바·KRX 섹션 일부 단락이 500자 이상으로 길게 이어짐
-2026-08-15 22:53:25,690 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용은 있으나 1인칭 경험 서술 부재, 대부분 '~로 알려져 있다'는 간접 인용 방식
-2026-08-15 22:53:25,690 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 사용되나 alt 텍스트 명시 없음, 정책상 이미지 관련 warn 처리
-2026-08-15 22:53:25,690 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~로 알려져 있습니다', '다만' 반복 및 이모지 소제목(📌💡) 등 전형적 AI 블로그 패턴 감지
-2026-08-15 22:53:25,698 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-15 22:53:25,700 [INFO] internal_linker —   [1/5] '골드뱅킹' -> https://hoguasset.blogspot.com/2026/08/2026_079286805.html
-2026-08-15 22:53:25,701 [INFO] internal_linker —   [2/5] '골드뱅킹' -> https://hoguasset.blogspot.com/2026/08/2026-4400.html
-2026-08-15 22:53:25,707 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-08-15 22:53:25,707 [INFO] main —   제목: 금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부가세 뭐가 다를까
-2026-08-15 22:53:25,707 [INFO] main —   이미지: 3개 삽입
-2026-08-15 22:53:25,707 [INFO] main —   글자 수: 3630자
-2026-08-15 22:53:26,384 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 22:53:46,329 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부'
-2026-08-15 22:53:46,329 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 3630자로 기준 충족하나 '~로 알려져 있습니다' 식 일반 정보 재정리 위주로 개인 경험·구체 사례 부족
-2026-08-15 22:53:46,329 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개는 있으나 1인칭 경험 서술이 없고 전반적으로 추측성 표현('~로 알려져 있습니다')에 의존
-2026-08-15 22:53:46,329 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 이미지 출처는 명시했으나 alt텍스트 확인 불가 및 이미지 정책상 기본 warn 처리
-2026-08-15 22:53:46,329 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '📌 핵심 요약', '💡 핵심 포인트' 같은 정형화된 요약 박스와 반복적 헤지 표현이 AI 생성 패턴을 시사
-2026-08-15 22:53:46,329 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-15 22:53:46,329 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 3630자로 기준 충족하나 '~로 알려져 있습니다' 식 일반 정보 재정리 위주로 개인 경험·구체 사례 부족
-2026-08-15 22:53:46,329 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 4개는 있으나 1인칭 경험 서술이 없고 전반적으로 추측성 표현('~로 알려져 있습니다')에 의존
-2026-08-15 22:53:46,329 [WARNING] main —      🟡 [이미지 정책] Pixabay 이미지 출처는 명시했으나 alt텍스트 확인 불가 및 이미지 정책상 기본 warn 처리
-2026-08-15 22:53:46,329 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-15 22:53:47,046 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 22:55:03,315 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3630자 → 3743자 (+113자)
-2026-08-15 22:55:03,316 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-15 22:55:04,386 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 22:55:23,360 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부'
-2026-08-15 22:55:23,360 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 pass 기준 충족하나 골드바·KRX 섹션 단락이 500자 이상으로 길게 이어져 가독성 저하
-2026-08-15 22:55:23,360 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 Pixabay로 저작권 위반은 없으나 alt 텍스트 명시 여부 불명확
-2026-08-15 22:55:23,360 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-08-15 22:55:23,360 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-08-15 22:55:24,059 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 22:56:38,006 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-15 22:56:38,817 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 22:57:17,183 [INFO] final_editor —   ✏️ 제목 최종 교정: '금 투자 세금 계산법 2026 완벽 정리 – 양도소득세 vs 부가세 뭐가 다를까' → '금 투자 세금 계산법 2026, 양도소득세와 부가세 총정리'
-2026-08-15 22:57:17,183 [INFO] final_editor —   ✏️ 메타 설명 교정 (133자)
-2026-08-15 22:57:17,183 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 잘려있던 본문을 완성하고, 요약 박스·비교표·개인 경험 메모·주의사항·FAQ 6개·마무리·작성자 메모를 추가했으며 모든 문단을 2~4문장으로 재정리했습니다.
-2026-08-15 22:57:17,273 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-15 22:57:17,274 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-15 22:57:17,363 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-15 22:57:17,377 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-15 22:57:17,377 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '금 투자 세금 계산법 2026 양도소득세 정리' — 면책·팩트체크 확인 권장
-2026-08-15 22:57:17,377 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-08-15 22:57:18,021 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026_01879066088.html
-2026-08-15 22:57:18,033 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026_01879066088.html
-2026-08-15 22:57:49,809 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 22:57:49,810 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-15 22:57:49,810 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-15 22:57:49,819 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '금 투자 세금 계산법 2026, 양도소득세와 부가세 총정리'
-2026-08-15 22:57:50,562 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-15 22:57:54,524 [INFO] comment_manager —   생성된 댓글: 하나 덧붙이자면, 실물 골드바는 매도할 때 부가세 환급이 안 되는 대신 매입 시 세금계산서나 영수증을 꼭 챙겨두셔야 나중에 되팔 때 순도·중량 ...
-2026-08-15 23:00:54,597 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-15 23:00:54,598 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-15 23:00:54,598 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-15 23:00:54,598 [INFO] main — 
-============================================================
-2026-08-15 23:00:54,598 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-08-15 23:00:54,598 [INFO] main — ============================================================
-2026-08-15 23:00:54,642 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-15 23:00:54,667 [INFO] dashboard_exporter —   시리즈: 18개 내보내기 완료
-2026-08-15 23:00:54,689 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-15 23:00:54,909 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-15 23:00:55,230 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-15 23:00:55,232 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-15 23:00:55,234 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-15 23:00:55,250 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 240 / 실패 0 / 대기 43)
-2026-08-15 23:00:55,251 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-15 23:00:55,251 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-15 23:00:55,252 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-15 23:19:44,628 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-08-15 23:19:44,628 [INFO] main —   - [blog1] HOGU What?
-2026-08-15 23:19:44,628 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-08-15 23:19:44,629 [INFO] main —   - [blog3] 금융NEWS
-2026-08-15 23:19:44,634 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
-2026-08-16 03:46:19,693 [INFO] main — ============================================================
-2026-08-16 03:46:19,693 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-16 03:46:19
-2026-08-16 03:46:19,693 [INFO] main — ============================================================
-2026-08-16 03:46:19,712 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-16 03:46:19,712 [INFO] keyword_collector — 포스팅 이력 코퍼스: 211개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-08-16 03:46:19,712 [INFO] keyword_collector — 시즌 예약 키워드 5개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
-2026-08-16 03:46:23,131 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-16 03:46:29,732 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 03:46:29,758 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-16 03:46:29,758 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-16 03:46:30,336 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
-2026-08-16 03:46:30,673 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-16 03:46:30,943 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-16 03:46:30,945 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
-2026-08-16 03:46:30,961 [INFO] keyword_collector — 유사 주제 제외 8개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-16 03:46:30,963 [INFO] keyword_collector —   [high_cpc] 1개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
-2026-08-16 03:46:30,963 [INFO] keyword_collector —   [naver_realtime] 1개: ['10kg 건강하게 감량하는 다이어트 방법']
-2026-08-16 03:46:30,963 [INFO] keyword_collector — 최종 선정 키워드 2개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁', '10kg 건강하게 감량하는 다이어트 방법']
-2026-08-16 03:46:30,963 [INFO] main — 수집된 키워드 2개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁', '10kg 건강하게 감량하는 다이어트 방법']
-2026-08-16 03:46:30,969 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-08-16 03:46:30,969 [INFO] main — 단독 포스트 대상 키워드 1개: ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
-2026-08-16 03:46:30,988 [INFO] main — 
-[1/1] 키워드: '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
-2026-08-16 03:46:30,988 [INFO] content_generator — 포스트 생성 중: '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
-2026-08-16 03:46:37,837 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 03:46:37,838 [INFO] research_collector — 검색 의도: 아이돌 콘서트 티켓 예매 시 앱별 수수료 차이와 절약 팁을 알고 싶어하는 검색 의도
-2026-08-16 03:46:49,450 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
-2026-08-16 03:47:01,649 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 03:47:01,650 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁'
-2026-08-16 03:47:14,140 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 03:47:14,141 [INFO] source_validator — 출처 검증: 4/4개 통과, 등급 분포 {'C': 3, 'D': 1}
-2026-08-16 03:47:15,320 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-08-16 03:47:15,320 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-16 03:47:16,133 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-08-16 03:48:58,489 [INFO] content_generator —   📌 핵심 요약 박스 삽입
 2026-08-16 03:48:59,295 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-08-16 03:49:12,437 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: 'NOL 포인트 또는 I-Point까지 결제 수단으로 지원합니다'
@@ -625,3 +498,122 @@
 2026-08-16 10:30:42,008 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-16 10:30:42,008 [INFO] dashboard_exporter —   포스트: 100개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-16 10:30:42,009 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-16 10:31:23,022 [INFO] main — ============================================================
+2026-08-16 10:31:23,022 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-16 10:31:23
+2026-08-16 10:31:23,023 [INFO] main — ============================================================
+2026-08-16 10:31:23,040 [INFO] keyword_collector — 타 블로그 최근 키워드 14개 중복 방지 코퍼스 합류
+2026-08-16 10:31:23,041 [INFO] keyword_collector — 포스팅 이력 코퍼스: 195개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-08-16 10:31:23,041 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-16 10:31:26,702 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-08-16 10:31:33,190 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:31:33,215 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-16 10:31:33,215 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-16 10:31:33,830 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-16 10:31:33,830 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-16 10:31:33,832 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
+2026-08-16 10:31:33,876 [INFO] keyword_collector — 유사 주제 제외 36개: ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '엔저 시대 일본여행 저렴하게 가는 방법', '10kg 감량 다이어트 성공 후기 및 건강검진 관리법', '수도권 벗어난 국내 로컬 여행지 추천']
+2026-08-16 10:31:33,876 [INFO] keyword_collector —   [fallback] 2개: ['러닝화 처음 구매할 때 나이키 vs 아디다스 비교', '홈트레이닝 기구 6개월 써본 솔직한 후기']
+2026-08-16 10:31:33,876 [INFO] keyword_collector — 최종 선정 키워드 2개: ['러닝화 처음 구매할 때 나이키 vs 아디다스 비교', '홈트레이닝 기구 6개월 써본 솔직한 후기']
+2026-08-16 10:31:33,876 [INFO] main — 수집된 키워드 2개: ['러닝화 처음 구매할 때 나이키 vs 아디다스 비교', '홈트레이닝 기구 6개월 써본 솔직한 후기']
+2026-08-16 10:31:33,882 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
+2026-08-16 10:31:33,882 [INFO] main — 단독 포스트 대상 키워드 1개: ['러닝화 처음 구매할 때 나이키 vs 아디다스 비교']
+2026-08-16 10:31:33,902 [INFO] main — 
+[1/1] 키워드: '러닝화 처음 구매할 때 나이키 vs 아디다스 비교'
+2026-08-16 10:31:33,902 [INFO] content_generator — 포스트 생성 중: '러닝화 처음 구매할 때 나이키 vs 아디다스 비교'
+2026-08-16 10:31:42,617 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:31:42,618 [INFO] research_collector — 검색 의도: 러닝화를 처음 구매하는 초보자가 나이키와 아디다스 중 어떤 브랜드를 선택해야 할지 비교 정보를 찾음
+2026-08-16 10:31:51,877 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '러닝화 처음 구매할 때 나이키 vs 아디다스 비교'
+2026-08-16 10:32:19,543 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:32:19,544 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '러닝화 처음 구매할 때 나이키 vs 아디다스 비교'
+2026-08-16 10:32:32,587 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:32:32,588 [INFO] source_validator — 출처 검증: 7/8개 통과, 등급 분포 {'C': 2, 'D': 5, 'X': 1}
+2026-08-16 10:32:32,590 [INFO] evidence_builder — 자료팩: 중요 사실 7개 제외 (A/B 등급 출처 없음)
+2026-08-16 10:32:32,590 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-16 10:32:33,342 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:33:54,287 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-16 10:33:55,073 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:34:28,937 [INFO] content_generator — 팩트체크: 통과
+2026-08-16 10:34:30,770 [INFO] image_fetcher — 이미지 수집 성공: '러닝화 처음 살 때 나이키 vs 아디다스, 뭐부터 봐야 할까' → 제목='나이키 여성 발편한 쿠셔닝 가벼운 트레이닝 스포츠 데일리 러닝화 운동화 ' (관련성=0.29)
+2026-08-16 10:34:31,480 [INFO] image_fetcher — 이미지 수집 성공: '러닝화 구매할 나이키' → 제목='나이키 이니시에이터 러닝화 헬스화 마라톤화 커플 운동화 : 슈커밍' (관련성=0.67)
+2026-08-16 10:34:32,160 [INFO] image_fetcher — 이미지 수집 성공: '러닝화 구매할 고를 먼저 브랜드를 비교하기' → 제목='첫 발을 내딛는 순간 느껴진다, 러닝판 뒤집을 신상 러닝화 5' (관련성=0.17)
+2026-08-16 10:34:33,391 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:34:33,392 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-08-16 10:34:33,395 [INFO] content_generator — 이미지 3개 본문 삽입 완료
+2026-08-16 10:34:33,397 [INFO] content_generator — 포스트 생성 완료: '러닝화 처음 살 때 나이키 vs 아디다스, 뭐부터 봐야 할까' (3098자, 이미지 3개)
+2026-08-16 10:34:34,170 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:34:52,174 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '러닝화 처음 살 때 나이키 vs 아디다스, 뭐부터 봐야 할까'
+2026-08-16 10:34:52,174 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 충분하나 대부분 일반적으로 알려진 브랜드 정보와 후기 재조합이며 구체적 개인 경험(날짜·직접 착용 수치 등)이 없음
+2026-08-16 10:34:52,174 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 우수하나 500자 이상의 긴 단락이 3개 이상 존재해 가독성 저하
+2026-08-16 10:34:52,174 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개 인용은 있으나 1인칭 직접 착용 경험 서술이 없고 대부분 '후기에 따르면' 식 간접 인용
+2026-08-16 10:34:52,174 [INFO] adsense_validator —   ⚠️ 이미지 정책: 모든 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요, alt 텍스트 정보 확인 불가
+2026-08-16 10:34:52,174 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그럼 이제~보겠습니다', '그런데~' 식 전환 문구와 유사한 '~다는 후기가 많습니다' 패턴이 반복되어 정형화된 AI 문체 느낌
+2026-08-16 10:34:52,181 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-16 10:34:52,184 [INFO] internal_linker —   [1/5] '마라톤' -> https://hogugolfntraval.blogspot.com/2026/08/blog-post_16.ht
+2026-08-16 10:34:52,185 [INFO] internal_linker —   [2/5] '헷갈리는' -> https://hogugolfntraval.blogspot.com/2026/08/blog-post_236.h
+2026-08-16 10:34:52,191 [INFO] internal_linker —   [3/5] '실제로' -> https://hogugolfntraval.blogspot.com/2026/08/blog-post_946.h
+2026-08-16 10:34:52,191 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-08-16 10:34:52,191 [INFO] main —   제목: 러닝화 처음 살 때 나이키 vs 아디다스, 뭐부터 봐야 할까
+2026-08-16 10:34:52,191 [INFO] main —   이미지: 3개 삽입
+2026-08-16 10:34:52,191 [INFO] main —   글자 수: 3098자
+2026-08-16 10:34:53,123 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:35:07,258 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '러닝화 처음 살 때 나이키 vs 아디다스, 뭐부터 봐야 할까'
+2026-08-16 10:35:07,258 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 개인 실사용 경험(구체적 수치·날짜)이 없고 커뮤니티 후기 재정리 수준에 머묾
+2026-08-16 10:35:07,258 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 실사용 경험 서술이 없고 공식 홈페이지·커뮤니티 후기 인용에 그침
+2026-08-16 10:35:07,258 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색 기반으로 저작권 주의 필요
+2026-08-16 10:35:07,259 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약 박스 반복, '그런데~' 전환구, 정형화된 표 정리 등 AI 특유 패턴이 보임
+2026-08-16 10:35:07,259 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-16 10:35:07,259 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 기준 충족하나 개인 실사용 경험(구체적 수치·날짜)이 없고 커뮤니티 후기 재정리 수준에 머묾
+2026-08-16 10:35:07,259 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 실사용 경험 서술이 없고 공식 홈페이지·커뮤니티 후기 인용에 그침
+2026-08-16 10:35:07,259 [WARNING] main —      🟡 [이미지 정책] 이미지 출처가 네이버 이미지 검색 기반으로 저작권 주의 필요
+2026-08-16 10:35:07,259 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-16 10:35:07,982 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:36:20,509 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3098자 → 3314자 (+216자)
+2026-08-16 10:36:20,509 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-16 10:36:21,349 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:36:37,443 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '러닝화 처음 살 때 나이키 vs 아디다스, 뭐부터 봐야 할까'
+2026-08-16 10:36:37,443 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 충족하나 문단 구분 없이 500자 이상 이어지는 긴 단락이 다수 존재
+2026-08-16 10:36:37,443 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 삽입되어 있으나 alt텍스트가 키워드 나열식이며 출처 표기 불명확
+2026-08-16 10:36:37,443 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
+2026-08-16 10:36:37,443 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-16 10:36:38,199 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:37:11,773 [INFO] final_editor —   ✏️ 제목 최종 교정: '러닝화 처음 살 때 나이키 vs 아디다스, 뭐부터 봐야 할까' → '러닝화 처음 구매할 때 나이키 vs 아디다스 비교 가이드'
+2026-08-16 10:37:11,773 [INFO] final_editor —   ✏️ 메타 설명 교정 (97자)
+2026-08-16 10:37:11,773 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분할하고 요약 박스, 비교 표, 개인 경험 메모, 주의사항, FAQ, 작성자 메모를 추가해 발행 형식에 맞게 구조화했습니다. 제목과 메타 설명, URL 슬러그를 글자 수 기준에 맞게 재정리했습니다.
+2026-08-16 10:37:11,892 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-16 10:37:11,893 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-16 10:37:12,040 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-16 10:37:12,055 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-16 10:37:12,055 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-08-16 10:37:12,972 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/vs.html
+2026-08-16 10:37:12,985 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/vs.html
+2026-08-16 10:37:45,578 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:37:45,580 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-16 10:37:45,580 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-16 10:37:45,589 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '러닝화 처음 구매할 때 나이키 vs 아디다스 비교 가이드'
+2026-08-16 10:37:46,364 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-16 10:37:50,945 [INFO] comment_manager —   생성된 댓글: 본문에 미처 못 넣은 팁인데, 매장에서 신어볼 때는 오후 시간대에 가시는 걸 추천드려요. 발이 하루 종일 쓰이면서 오전보다 살짝 붓기 때문에 그...
+2026-08-16 10:40:51,042 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-16 10:40:51,043 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-16 10:40:51,043 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-16 10:40:51,043 [INFO] main — 
+============================================================
+2026-08-16 10:40:51,044 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-08-16 10:40:51,044 [INFO] main — ============================================================
+2026-08-16 10:40:51,087 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-16 10:40:51,114 [INFO] dashboard_exporter —   시리즈: 19개 내보내기 완료
+2026-08-16 10:40:51,136 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-16 10:40:51,357 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-16 10:40:51,619 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-16 10:40:51,621 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-16 10:40:51,623 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-16 10:40:51,639 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 237 / 실패 3 / 대기 43)
+2026-08-16 10:40:51,640 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-16 10:40:51,640 [INFO] dashboard_exporter —   포스트: 100개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-16 10:40:51,641 [INFO] main — 대시보드 데이터 업데이트 완료

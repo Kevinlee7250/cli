@@ -1,129 +1,3 @@
-2026-08-16 22:53:07,201 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 241 / 실패 0 / 대기 43)
-2026-08-16 22:53:07,201 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-16 22:53:07,201 [INFO] dashboard_exporter —   포스트: 100개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-16 22:53:07,202 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-16 22:53:47,059 [INFO] main — ============================================================
-2026-08-16 22:53:47,059 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-08-16 22:53:47
-2026-08-16 22:53:47,059 [INFO] main — ============================================================
-2026-08-16 22:53:47,076 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-16 22:53:47,076 [INFO] keyword_collector — 포스팅 이력 코퍼스: 203개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-08-16 22:53:47,077 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog3): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-16 22:53:50,485 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-16 22:53:57,188 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 22:53:57,214 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-16 22:53:57,215 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-16 22:53:57,556 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-08-16 22:53:57,924 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-16 22:53:57,925 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-16 22:53:57,935 [INFO] keyword_collector — 유사 주제 제외 3개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-16 22:53:57,935 [INFO] keyword_collector —   [naver_realtime] 2개: ['AI 재무상담 서비스 믿을 수 있나 장단점 비교', '주식 빚투 신용거래 위험성과 안전한 대응법']
-2026-08-16 22:53:57,936 [INFO] keyword_collector — 최종 선정 키워드 2개: ['AI 재무상담 서비스 믿을 수 있나 장단점 비교', '주식 빚투 신용거래 위험성과 안전한 대응법']
-2026-08-16 22:53:57,936 [INFO] main — 수집된 키워드 2개: ['AI 재무상담 서비스 믿을 수 있나 장단점 비교', '주식 빚투 신용거래 위험성과 안전한 대응법']
-2026-08-16 22:53:57,941 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
-2026-08-16 22:53:57,941 [INFO] main — 단독 포스트 대상 키워드 1개: ['AI 재무상담 서비스 믿을 수 있나 장단점 비교']
-2026-08-16 22:53:57,961 [INFO] main — 
-[1/1] 키워드: 'AI 재무상담 서비스 믿을 수 있나 장단점 비교'
-2026-08-16 22:53:57,962 [INFO] content_generator — 포스트 생성 중: 'AI 재무상담 서비스 믿을 수 있나 장단점 비교'
-2026-08-16 22:54:05,179 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 22:54:05,180 [INFO] research_collector — 검색 의도: AI 재무상담 서비스의 신뢰성과 실제 장단점을 비교하여 이용 여부를 판단하려는 의도
-2026-08-16 22:54:31,921 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — 'AI 재무상담 서비스 믿을 수 있나 장단점 비교'
-2026-08-16 22:54:45,286 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 22:54:45,287 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — 'AI 재무상담 서비스 믿을 수 있나 장단점 비교'
-2026-08-16 22:54:52,275 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 22:54:52,276 [INFO] source_validator — 출처 검증: 2/4개 통과, 등급 분포 {'X': 2, 'B': 2}
-2026-08-16 22:54:52,279 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-16 22:54:53,462 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 22:55:48,754 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-16 22:55:48,755 [WARNING] content_generator — 컨텐츠 너무 짧음(2484자, 최소 2500자) — 재시도 1/3
-2026-08-16 22:55:51,755 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-08-16 22:55:52,788 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 22:56:46,654 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-16 22:56:46,654 [WARNING] content_generator — 컨텐츠 너무 짧음(2441자, 최소 2500자) — 재시도 2/3
-2026-08-16 22:56:49,655 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-08-16 22:56:50,887 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 22:57:58,997 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-16 22:58:00,887 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 22:58:14,427 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-08-16 22:58:15,004 [INFO] image_fetcher — 이미지 수집 성공: 'AI 재무상담 서비스 믿을 수 있나? 로보어드바이저 장단점과 사람 PB 비교' → 제목='ibanez rg8pb / guitar / djent / blue / b' (관련성=0.00)
-2026-08-16 22:58:15,340 [INFO] image_fetcher — 이미지 수집 성공: 'AI 재무상담 서비스' → 제목='forest / dawn / dusk / mountains / mist ' (관련성=0.00)
-2026-08-16 22:58:16,227 [INFO] image_fetcher — 대체 이미지 수집: 'AI 재무상담 정확히 ETF' → 제목='ai / robot / artificial intelligence / c' (관련성=0.00)
-2026-08-16 22:58:16,227 [INFO] image_fetcher — 이미지 수집 성공: 'AI 재무상담 정확히 ETF' → 제목='ai / robot / artificial intelligence / c' (관련성=0.00)
-2026-08-16 22:58:17,353 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 22:58:17,354 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
-2026-08-16 22:58:17,354 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-08-16 22:58:17,354 [INFO] image_fetcher — 제목 썸네일 생성: 'AI 재무상담 서비스 믿을 수 있나? 로보어드바이저 장' (data URI, 1168B)
-2026-08-16 22:58:17,587 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: 'forest / dawn / dusk / mountains / mist '
-2026-08-16 22:58:17,587 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-08-16 22:58:17,590 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-08-16 22:58:17,592 [INFO] content_generator — 포스트 생성 완료: 'AI 재무상담 서비스 믿을 수 있나? 로보어드바이저 장단점과 사람 PB 비교' (3036자, 이미지 2개)
-2026-08-16 22:58:18,667 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 22:58:34,995 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — 'AI 재무상담 서비스 믿을 수 있나? 로보어드바이저 장단점과 사'
-2026-08-16 22:58:34,995 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 전문가 인용과 비교표는 있으나 필자 개인의 실제 경험·구체적 사례 서술이 부족해 일반 정보 재구성에 가까움
-2026-08-16 22:58:34,996 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 도입부 단락이 지나치게 길어 가독성이 떨어짐
-2026-08-16 22:58:34,996 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 전문가 실명 인용과 출처 3개는 있으나 저자의 1인칭 경험 서술이 없어 전문성 신호가 인용에만 의존함
-2026-08-16 22:58:34,996 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay·직접 제작 이미지로 저작권 문제는 없으나 alt 텍스트 명시 여부가 불명확함
-2026-08-16 22:58:34,996 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 비교표 반복 구조와 '~습니다' 어미의 다소 정형화된 설명체가 반복돼 AI 생성 패턴이 일부 감지됨
-2026-08-16 22:58:35,004 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-16 22:58:35,006 [INFO] internal_linker —   [1/5] '맡겨도' -> https://hogugolfntraval.blogspot.com/2026/08/ai-ai.html
-2026-08-16 22:58:35,008 [INFO] internal_linker —   [2/5] '확인할' -> https://hoguasset.blogspot.com/2026/08/blog-post_06.html
-2026-08-16 22:58:35,013 [INFO] internal_linker —   [3/5] '수수료' -> https://www.hoguwhat.com/2026/08/blog-post_16.html
-2026-08-16 22:58:35,013 [INFO] internal_linker — 내부 링크 3개 삽입 완료
-2026-08-16 22:58:35,013 [INFO] main —   제목: AI 재무상담 서비스 믿을 수 있나? 로보어드바이저 장단점과 사람 PB 비교
-2026-08-16 22:58:35,013 [INFO] main —   이미지: 2개 삽입
-2026-08-16 22:58:35,014 [INFO] main —   글자 수: 3036자
-2026-08-16 22:58:36,690 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 22:59:01,384 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-16 22:59:02,472 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 22:59:09,317 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — 'AI 재무상담 서비스 믿을 수 있나? 로보어드바이저 장단점과 사'
-2026-08-16 22:59:09,317 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준(2500+) 충족하나 전문가 인용·표 재구성 위주로 1인칭 경험이나 구체적 사례가 부족함
-2026-08-16 22:59:09,317 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 전문가 인용과 출처 3건은 확보됐으나 저자 본인의 1인칭 경험 서술이 부재함
-2026-08-16 22:59:09,317 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay·직접 제작 이미지로 저작권 문제는 없으나 alt 텍스트 명시 여부 확인 불가
-2026-08-16 22:59:09,317 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심요약·핵심포인트 박스와 정형화된 전환문구('다음으로는~따져봐야 합니다') 반복 패턴이 AI 생성 특징을 보임
-2026-08-16 22:59:09,317 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-16 22:59:09,318 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준(2500+) 충족하나 전문가 인용·표 재구성 위주로 1인칭 경험이나 구체적 사례가 부족함
-2026-08-16 22:59:09,318 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 전문가 인용과 출처 3건은 확보됐으나 저자 본인의 1인칭 경험 서술이 부재함
-2026-08-16 22:59:09,318 [WARNING] main —      🟡 [이미지 정책] Pixabay·직접 제작 이미지로 저작권 문제는 없으나 alt 텍스트 명시 여부 확인 불가
-2026-08-16 22:59:09,318 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-16 22:59:10,501 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 23:00:37,016 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-16 23:00:40,436 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 23:02:03,432 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-16 23:02:04,908 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 23:03:10,734 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3036자 → 3421자 (+385자)
-2026-08-16 23:03:10,734 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-16 23:03:11,848 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 23:03:31,031 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — 'AI 재무상담 서비스 믿을 수 있나? 로보어드바이저 장단점과 사'
-2026-08-16 23:03:31,031 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 기준 충족하나 도입부와 서비스 설명 단락이 500자 이상으로 길어 가독성 저하
-2026-08-16 23:03:31,031 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처(Pixabay, 직접 제작)는 명시됐으나 alt텍스트 여부 불명확하여 warn 처리
-2026-08-16 23:03:31,031 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-08-16 23:03:31,032 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-08-16 23:03:31,749 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 23:04:50,606 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-16 23:04:51,369 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 23:05:12,632 [INFO] final_editor —   ✏️ 제목 최종 교정: 'AI 재무상담 서비스 믿을 수 있나? 로보어드바이저 장단점과 사람 PB 비교' → 'AI 재무상담 믿을 수 있나? 로보어드바이저 장단점 비교'
-2026-08-16 23:05:12,632 [INFO] final_editor —   ✏️ 메타 설명 교정 (114자)
-2026-08-16 23:05:12,632 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고, 본문 흐름에 맞춰 요약 박스·개인 경험 메모·주의사항·FAQ·작성자 메모를 추가했습니다. 표를 실제 HTML 표로 정리하고 이미지 3개의 위치·alt를 구체적으로 명시했으며, 제목·메타 설명·슬러그를 최종 발행 기준에 맞게 다듬었습니다.
-2026-08-16 23:05:12,831 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-16 23:05:12,832 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-16 23:05:13,013 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-16 23:05:13,028 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-16 23:05:13,028 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-08-16 23:05:14,192 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/ai_01610622956.html
-2026-08-16 23:05:14,205 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/ai_01610622956.html
-2026-08-16 23:05:48,108 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 23:05:48,110 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-16 23:05:48,110 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-16 23:05:48,119 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: 'AI 재무상담 믿을 수 있나? 로보어드바이저 장단점 비교'
-2026-08-16 23:05:48,836 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-16 23:05:52,373 [INFO] comment_manager —   생성된 댓글: 글 쓰면서 빼놓은 팁 하나 남겨봅니다 — 리밸런싱 알림 받으실 때 매매 수수료나 세금(과세 대상 상품이라면 매도 시 발생하는)이 얼마나 빠지는지...
-2026-08-16 23:08:52,523 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
 2026-08-16 23:08:52,524 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
 2026-08-16 23:08:52,524 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
 2026-08-16 23:08:52,525 [INFO] main — 
@@ -624,3 +498,178 @@
 2026-08-17 10:40:37,215 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-17 10:40:37,215 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-17 10:40:37,216 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-17 10:41:13,591 [INFO] main — ============================================================
+2026-08-17 10:41:13,591 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-17 10:41:13
+2026-08-17 10:41:13,591 [INFO] main — ============================================================
+2026-08-17 10:41:13,610 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-17 10:41:13,610 [INFO] keyword_collector — 포스팅 이력 코퍼스: 193개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-08-17 10:41:13,610 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-17 10:41:19,505 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-08-17 10:41:27,161 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:41:27,192 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-17 10:41:27,192 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-17 10:41:27,884 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-17 10:41:27,885 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-17 10:41:27,886 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
+2026-08-17 10:41:27,932 [INFO] keyword_collector — 유사 주제 제외 38개: ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '엔저 시대 일본여행 저렴하게 가는 방법', '건강하게 10kg 감량하는 다이어트 방법', 'AI로 여행 일정 짜는 법 챗GPT 활용 후기']
+2026-08-17 10:41:27,932 [INFO] keyword_collector —   [fallback] 2개: ['수영 초보가 1km 완주하기까지 걸린 시간과 방법', '자전거 출퇴근 3개월 해본 솔직 장단점 정리']
+2026-08-17 10:41:27,932 [INFO] keyword_collector — 최종 선정 키워드 2개: ['수영 초보가 1km 완주하기까지 걸린 시간과 방법', '자전거 출퇴근 3개월 해본 솔직 장단점 정리']
+2026-08-17 10:41:27,932 [INFO] main — 수집된 키워드 2개: ['수영 초보가 1km 완주하기까지 걸린 시간과 방법', '자전거 출퇴근 3개월 해본 솔직 장단점 정리']
+2026-08-17 10:41:27,938 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-08-17 10:41:39,088 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:41:39,089 [INFO] series_planner — 자동 시리즈 키워드 선정: '수영 초보가 1km 완주하기까지 걸린 시간과 방법'
+2026-08-17 10:41:39,089 [INFO] main — [자동 시리즈] '수영 초보가 1km 완주하기까지 걸린 시간과 방법' 3편 기획 시작 (이후 단독 포스트 0개)
+2026-08-17 10:41:39,089 [INFO] main — ============================================================
+2026-08-17 10:41:39,089 [INFO] main — [HOGU 여행,스포츠,연예] 시리즈 모드 시작: '수영 초보가 1km 완주하기까지 걸린 시간과 방법' 3편
+2026-08-17 10:41:39,089 [INFO] main — ============================================================
+2026-08-17 10:41:45,314 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:41:45,315 [INFO] series_planner — [blog1] 시리즈 기획 완료: '수영 초보가 1km 완주하기까지 걸린 시간과 방법 직접 해보고 정리한 시리즈' 3편
+2026-08-17 10:41:45,317 [INFO] main — 시리즈 기획 완료: '수영 초보가 1km 완주하기까지 걸린 시간과 방법 직접 해보고 정리한 시리즈'
+2026-08-17 10:41:45,317 [INFO] main —   편 1: [1편] 물 무서워하던 내가 수영을 시작한 이유
+2026-08-17 10:41:45,317 [INFO] main —   편 2: [2편] 25m도 못 가던 내가 1km까지 간 호흡법
+2026-08-17 10:41:45,317 [INFO] main —   편 3: [3편] 1km 완주까지 걸린 시간, 솔직한 총정리
+2026-08-17 10:41:45,317 [INFO] main — 
+--- [1/3편] '수영 초보 시작 계기 물 공포증 극복' 생성 중 ---
+2026-08-17 10:41:45,317 [INFO] content_generator — 시리즈 포스트 생성: '수영 초보 시작 계기 물 공포증 극복' (1/3편)
+2026-08-17 10:41:51,139 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:41:51,140 [INFO] research_collector — 검색 의도: 수영을 처음 시작하려는 사람이 물 공포증을 극복하고 수영을 배우는 계기와 방법을 알고 싶어함
+2026-08-17 10:42:02,076 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '수영 초보 시작 계기 물 공포증 극복'
+2026-08-17 10:42:14,020 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:42:14,021 [INFO] evidence_builder — 자료팩 생성: 사실 3개 — '수영 초보 시작 계기 물 공포증 극복'
+2026-08-17 10:42:25,394 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:42:25,395 [INFO] source_validator — 출처 검증: 2/3개 통과, 등급 분포 {'X': 1, 'C': 1, 'D': 1}
+2026-08-17 10:42:25,397 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-17 10:42:26,871 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:44:12,256 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-08-17 10:44:12,257 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-17 10:44:13,094 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:44:26,200 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-08-17 10:44:28,575 [INFO] image_fetcher — 이미지 수집 성공: '[1편] 물 공포증 극복하려 수영 등록했다가 겪은 첫 좌절' → 제목='전) 올림픽 수영 국가대표가 알려주는 물 공포증 극복 꿀팁 - 숨고, 숨' (관련성=0.33)
+2026-08-17 10:44:29,589 [INFO] image_fetcher — 이미지 수집 성공: '수영 초보 시작' → 제목='수영, 누구나 시작할 수 있는 평생 운동' (관련성=0.33)
+2026-08-17 10:44:30,514 [INFO] image_fetcher — 이미지 수집 성공: '수영 초보 정확히 어떤 공포증이 경우가' → 제목='TI수영 1:1 개인레슨 마음챙김 물공포증 : Smart Swim' (관련성=0.17)
+2026-08-17 10:44:32,474 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:44:32,475 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-08-17 10:44:32,475 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-17 10:44:32,480 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] 물 공포증 극복하려 수영 등록했다가 겪은 첫 좌절' (3380자, 이미지 2개)
+2026-08-17 10:44:34,025 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:44:49,480 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '[1편] 물 공포증 극복하려 수영 등록했다가 겪은 첫 좌절'
+2026-08-17 10:44:49,480 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 '네이버 이미지 검색'으로 명시되어 저작권 주의가 필요함
+2026-08-17 10:44:50,939 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:45:52,586 [INFO] final_editor —   ✏️ 제목 최종 교정: '[1편] 물 공포증 극복하려 수영 등록했다가 겪은 첫 좌절' → '수영 초보 시작 계기, 물 공포증 극복하려다 겪은 첫 좌절 [1편]'
+2026-08-17 10:45:52,586 [INFO] final_editor —   ✏️ 메타 설명 교정 (131자)
+2026-08-17 10:45:52,586 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목을 30~45자 규격에 맞게 조정하고 메타 설명을 120~160자로 새로 작성했으며, 태그를 5개로 정리하고 이미지 3~4개의 위치와 구체적인 alt 텍스트를 지정했습니다. 긴 문단을 2~4문장 단위로 재구성하고 FAQ·주의사항·작성자 메모 등 필수 요소를 반영해 발행 준비를 완료했습니다.
+2026-08-17 10:45:52,650 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-17 10:45:52,650 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-17 10:45:52,722 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-17 10:45:52,741 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-08-17 10:45:54,049 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/1.html
+2026-08-17 10:45:54,050 [INFO] main —   ✅ 편 1 업로드 완료: https://hogugolfntraval.blogspot.com/2026/08/1.html
+2026-08-17 10:45:57,052 [INFO] main — 
+--- [2/3편] '수영 호흡법 초보 25m 완영 팁' 생성 중 ---
+2026-08-17 10:45:57,052 [INFO] content_generator — 시리즈 포스트 생성: '수영 호흡법 초보 25m 완영 팁' (2/3편)
+2026-08-17 10:46:06,858 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:46:06,858 [INFO] research_collector — 검색 의도: 수영 초보자가 25m를 끝까지 완영하기 위해 필요한 올바른 호흡법과 실전 팁을 알고자 함
+2026-08-17 10:46:52,865 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '수영 호흡법 초보 25m 완영 팁'
+2026-08-17 10:47:14,417 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:47:14,418 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '수영 호흡법 초보 25m 완영 팁'
+2026-08-17 10:47:36,367 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:47:36,368 [INFO] source_validator — 출처 검증: 1/5개 통과, 등급 분포 {'X': 4, 'D': 1}
+2026-08-17 10:47:36,369 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-17 10:47:37,101 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:49:16,608 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-17 10:49:17,430 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:49:24,319 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
+2026-08-17 10:49:26,075 [INFO] image_fetcher — 이미지 수집 성공: '[2편] 25m 완영 못하던 이유, 수영 호흡법으로 뚫었다' → 제목='일본 100세 할머니 수영대회서 1.5km 완영' (관련성=0.17)
+2026-08-17 10:49:27,137 [INFO] image_fetcher — 이미지 수집 성공: '수영 호흡법 초보' → 제목='영법별 호흡법 - 수영 미니 갤러리' (관련성=0.67)
+2026-08-17 10:49:28,034 [INFO] image_fetcher — 이미지 수집 성공: '수영 호흡법 가고 멈추 강습 후기들을' → 제목='수영 다닌지 2주차 수면호흡 넘힘듬..' (관련성=0.17)
+2026-08-17 10:49:31,605 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:49:31,605 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-08-17 10:49:31,606 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-17 10:49:31,609 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 25m 완영 못하던 이유, 수영 호흡법으로 뚫었다' (3158자, 이미지 2개)
+2026-08-17 10:49:33,086 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:49:48,361 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '[2편] 25m 완영 못하던 이유, 수영 호흡법으로 뚫었다'
+2026-08-17 10:49:48,361 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 3158자로 기준 충족하나 내용이 '후기 종합·조사'에 의존해 개인 실제 경험(구체 날짜·수치)이 부족함
+2026-08-17 10:49:48,361 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개는 있으나 1인칭 직접 경험보다 '후기 종합' 형태가 중심이라 Experience 신호 약함
+2026-08-17 10:49:48,361 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
+2026-08-17 10:49:50,752 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:50:50,036 [INFO] final_editor —   ✏️ 제목 최종 교정: '[2편] 25m 완영 못하던 이유, 수영 호흡법으로 뚫었다' → '수영 호흡법 초보 25m 완영 팁, 호흡 타이밍 교정하기'
+2026-08-17 10:50:50,037 [INFO] final_editor —   ✏️ 메타 설명 교정 (129자)
+2026-08-17 10:50:50,037 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 출처 불명확한 네이버 이미지 검색 이미지를 구체적 alt text가 있는 자체 제작 이미지 제안으로 교체하고, 긴 문단을 2~4문장 단위로 분할해 모바일 가독성을 개선했습니다. 요약 박스·표·FAQ·주의사항·작성자 메모를 규칙에 맞게 정리하고 제목·메타설명·슬러그를 SEO 기준에 맞게 최종 확정했습니다.
+2026-08-17 10:50:50,097 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-17 10:50:50,097 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-17 10:50:50,177 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-17 10:50:50,190 [INFO] related_posts — 관련 포스트 1개 섹션 생성
+2026-08-17 10:50:50,190 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-08-17 10:50:51,361 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/25m.html
+2026-08-17 10:50:51,362 [INFO] main —   ✅ 편 2 업로드 완료: https://hogugolfntraval.blogspot.com/2026/08/25m.html
+2026-08-17 10:50:54,364 [INFO] main — 
+--- [3/3편] '수영 1km 완주 기간 초보 훈련 계획' 생성 중 ---
+2026-08-17 10:50:54,364 [INFO] content_generator — 시리즈 포스트 생성: '수영 1km 완주 기간 초보 훈련 계획' (3/3편)
+2026-08-17 10:51:01,656 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:51:01,657 [INFO] research_collector — 검색 의도: 수영 초보자가 1km를 완주하기까지 걸리는 기간과 구체적인 훈련 계획을 알고 싶어함
+2026-08-17 10:51:18,504 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '수영 1km 완주 기간 초보 훈련 계획'
+2026-08-17 10:51:24,577 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:51:24,578 [INFO] evidence_builder — 자료팩 생성: 사실 0개 — '수영 1km 완주 기간 초보 훈련 계획'
+2026-08-17 10:51:24,578 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-17 10:51:26,166 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:52:47,293 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-17 10:52:48,792 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:52:57,887 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
+2026-08-17 10:52:58,182 [INFO] image_fetcher — 이미지 수집 성공: '[3편] 수영 1km 완주 기간, 초보 8주 훈련 계획 총정리' → 제목='odometer / car / dashboard / km hour / c' (관련성=0.00)
+2026-08-17 10:52:58,590 [INFO] image_fetcher — 대체 이미지 수집: '수영 km 완주' → 제목='crash test / collision / rear-end collis' (관련성=0.00)
+2026-08-17 10:52:58,590 [INFO] image_fetcher — 이미지 수집 성공: '수영 km 완주' → 제목='crash test / collision / rear-end collis' (관련성=0.00)
+2026-08-17 10:52:58,975 [INFO] image_fetcher — 대체 이미지 수집: '수영 km 초보 사람마다 개월' → 제목='sign / distance / km / kilometre / green' (관련성=0.00)
+2026-08-17 10:52:58,976 [INFO] image_fetcher — 이미지 수집 성공: '수영 km 초보 사람마다 개월' → 제목='sign / distance / km / kilometre / green' (관련성=0.00)
+2026-08-17 10:53:01,806 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:53:01,807 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-08-17 10:53:01,807 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-08-17 10:53:01,807 [INFO] image_fetcher — 제목 썸네일 생성: '[3편] 수영 1km 완주 기간, 초보 8주 훈련 계획' (data URI, 1154B)
+2026-08-17 10:53:01,900 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: 'odometer / car / dashboard / km hour / c'
+2026-08-17 10:53:01,900 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-17 10:53:01,904 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 수영 1km 완주 기간, 초보 8주 훈련 계획 총정리' (3199자, 이미지 2개)
+2026-08-17 10:53:03,378 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-17 10:53:19,174 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '[3편] 수영 1km 완주 기간, 초보 8주 훈련 계획 총정리'
+2026-08-17 10:53:19,174 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 '후기·커뮤니티 종합' 형태로 구체적 개인 수치·날짜 경험이 부족해 재구성형 콘텐츠에 가까움
+2026-08-17 10:53:19,174 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술은 있으나 출처 3개가 본문에 구체적으로 인용되지 않아 신뢰 신호가 약함
+2026-08-17 10:53:19,174 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처(Pixabay/직접 제작)는 있으나 alt 텍스트 언급이 없어 보완 필요
+2026-08-17 10:53:19,174 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~인 것으로 보입니다', '~라는 후기가 많았습니다' 등 헤지 표현이 반복되어 AI 톤이 다소 감지됨
+2026-08-17 10:53:19,174 [WARNING] main —   ⚠️ [편 3] AdSense 검토 필요 — pending 저장 (점수: 79/100)
+2026-08-17 10:53:19,193 [INFO] dashboard_exporter —   검토 대기 저장: [3편] 수영 1km 완주 기간, 초보 8주 훈련 계획 총정리 (13000자 HTML)
+2026-08-17 10:53:19,214 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 159개)
+2026-08-17 10:53:19,251 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-17 10:53:19,274 [INFO] dashboard_exporter —   시리즈: 20개 내보내기 완료
+2026-08-17 10:53:19,294 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-17 10:53:19,447 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-17 10:53:19,638 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-17 10:53:19,639 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-17 10:53:19,642 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-17 10:53:19,657 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 241 / 실패 0 / 대기 44)
+2026-08-17 10:53:19,657 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-17 10:53:19,657 [INFO] dashboard_exporter —   포스트: 103개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-17 10:53:19,659 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-17 10:53:19,659 [INFO] main — 
+============================================================
+2026-08-17 10:53:19,659 [INFO] main — [HOGU 여행,스포츠,연예] 시리즈 완료: 2/3편 성공
+2026-08-17 10:53:19,659 [INFO] main — ============================================================
+2026-08-17 10:53:19,659 [INFO] main — 단독 포스트 대상 키워드 0개: []
+2026-08-17 10:53:19,707 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
+2026-08-17 10:53:19,707 [INFO] main — 
+============================================================
+2026-08-17 10:53:19,707 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 0개
+2026-08-17 10:53:19,707 [INFO] main — ============================================================
+2026-08-17 10:53:19,743 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-17 10:53:19,766 [INFO] dashboard_exporter —   시리즈: 20개 내보내기 완료
+2026-08-17 10:53:19,784 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-17 10:53:19,926 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-17 10:53:19,927 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-17 10:53:19,929 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-17 10:53:19,945 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 241 / 실패 1 / 대기 43)
+2026-08-17 10:53:19,945 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-17 10:53:19,945 [INFO] dashboard_exporter —   포스트: 102개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-17 10:53:19,946 [INFO] main — 대시보드 데이터 업데이트 완료

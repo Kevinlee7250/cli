@@ -1,5 +1,38 @@
 [
   {
+    "timestamp": "2026-08-17T17:21:54.024906",
+    "health_score": 97,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 1개",
+        "context": {
+          "count": 1,
+          "titles": [
+            "ETF 첫 투자, 다들 이 실수부터 합니다 — 360조"
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 1개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-08-17T17:21:53.958394",
+        "success": true,
+        "detail": "대기 포스트 1개 → expired 처리",
+        "expired": 1
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-16T17:14:31.190007",
     "health_score": 97,
     "issues_found": 1,
@@ -1859,33 +1892,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-20T04:41:38.170953",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-20T03:55:25.900390",
-    "health_score": 93,
-    "issues_found": 1,
-    "issues": [
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 0,
-    "repairs": [
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-20T03:55:25.900291",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

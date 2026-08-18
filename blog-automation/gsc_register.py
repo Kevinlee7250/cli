@@ -66,7 +66,7 @@ def add_site(token: str, site_url: str) -> bool:
     if r.status_code == 403 and "insufficient" in r.text.lower():
         logger.error(
             f"❌ 권한 부족: {site_url} — OAuth 토큰에 webmasters 스코프가 없습니다. "
-            "get-oauth-token 워크플로우로 토큰을 재발급할 때 "
+            "로컬에서 get_refresh_token.py를 실행해 재발급할 때 "
             "https://www.googleapis.com/auth/webmasters 스코프를 포함하세요."
         )
         return False

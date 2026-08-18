@@ -6788,7 +6788,7 @@ async function sysTestOAuth() {
   const el = document.getElementById('sys-oauth-test-result')
   if (el) {
     el.style.display = 'block'; el.style.color = 'var(--muted)'
-    el.textContent = 'ℹ️ 브라우저 OAuth는 보안 정책으로 제거됨 — 토큰은 GitHub Secrets에서만 사용됩니다 (get-oauth-token.yml로 발급 확인)'
+    el.textContent = 'ℹ️ 토큰 발급은 로컬에서만 합니다 — blog-automation/get_refresh_token.py 실행 후 GOOGLE_REFRESH_TOKEN 시크릿에 저장하세요 (공개 저장소이므로 Actions에서 교환 금지)'
   }
 }
 

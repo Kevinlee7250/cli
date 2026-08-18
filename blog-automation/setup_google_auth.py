@@ -36,7 +36,9 @@ import urllib.request
 import webbrowser
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-REDIRECT_URI = "http://localhost:8080"
+DEFAULT_PORT = 8080
+# 실행 시 --port로 바꿀 수 있습니다 (콘솔에 등록된 리디렉션 URI와 반드시 일치해야 함)
+REDIRECT_URI = f"http://localhost:{DEFAULT_PORT}"
 TOKEN_URL = "https://oauth2.googleapis.com/token"
 AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
 GSC_SITES_API = "https://www.googleapis.com/webmasters/v3/sites"
@@ -74,6 +76,17 @@ class _Handler(BaseHTTPRequestHandler):
 
     def log_message(self, *args):
         pass
+
+
+def set_port(port: int) -> None:
+    """리디렉션 포트를 바꿉니다.
+
+    Google Cloud Console에 등록된 URI와 글자 하나까지 같아야 하며,
+    다르면 redirect_uri_mismatch가 납니다.
+    """
+    global REDIRECT_URI, DEFAULT_PORT
+    DEFAULT_PORT = port
+    REDIRECT_URI = f"http://localhost:{port}"
 
 
 def _port_is_free(port: int = 8080) -> bool:
@@ -158,9 +171,9 @@ def preflight() -> tuple[str, str]:
 
     client_id, client_secret = _validate_credentials(client_id, client_secret)
 
-    if not _port_is_free():
-        print("\n❌ 8080 포트를 다른 프로그램이 쓰고 있습니다.")
-        print("   해당 프로그램을 종료한 뒤 다시 실행하세요.")
+    if not _port_is_free(DEFAULT_PORT):
+        print(f"\n❌ {DEFAULT_PORT} 포트를 다른 프로그램이 쓰고 있습니다.")
+        print("   해당 프로그램을 종료하거나 --port 로 다른 포트를 지정하세요.")
         sys.exit(1)
 
     print("\n[사전 확인] Google Cloud Console에 아래 리디렉션 URI가 등록돼 있어야 합니다:")
@@ -193,7 +206,7 @@ def authorize(client_id: str) -> str:
         pass
 
     print("브라우저에서 로그인·동의를 기다리는 중...")
-    HTTPServer(("localhost", 8080), _Handler).handle_request()
+    HTTPServer(("localhost", DEFAULT_PORT), _Handler).handle_request()
 
     if _result.get("error"):
         print(f"\n❌ 인증이 거부되었습니다: {_result['error']}")
@@ -276,7 +289,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Google 인증 설정")
     parser.add_argument("--save-env", action="store_true",
                         help="로컬 .env에도 저장 (git에 커밋되지 않음)")
+    parser.add_argument("--port", type=int, default=DEFAULT_PORT,
+                        help=f"리디렉션 포트 (기본 {DEFAULT_PORT}) — "
+                             "Google Cloud Console의 승인된 리디렉션 URI와 일치해야 합니다")
     args = parser.parse_args()
+    set_port(args.port)
 
     client_id, client_secret = preflight()
     code = authorize(client_id)

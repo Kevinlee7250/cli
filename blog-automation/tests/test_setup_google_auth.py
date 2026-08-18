@@ -112,3 +112,19 @@ def test_mask_never_reveals_whole_secret():
     from setup_google_auth import _mask
     masked = _mask(VALID_SECRET)
     assert VALID_SECRET not in masked and "…" in masked
+
+
+def test_set_port_updates_redirect_uri():
+    """콘솔에 등록된 URI와 한 글자라도 다르면 redirect_uri_mismatch가 남."""
+    import setup_google_auth as sg
+    original = sg.DEFAULT_PORT
+    try:
+        sg.set_port(9090)
+        assert sg.REDIRECT_URI == "http://localhost:9090"
+    finally:
+        sg.set_port(original)
+
+
+def test_default_redirect_uri_has_port():
+    import setup_google_auth as sg
+    assert sg.REDIRECT_URI == f"http://localhost:{sg.DEFAULT_PORT}"

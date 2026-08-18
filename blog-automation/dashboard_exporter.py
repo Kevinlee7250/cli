@@ -399,10 +399,44 @@ def _export_series(docs_dir: str) -> None:
         logger.warning(f"시리즈 데이터 내보내기 실패 (무시): {exc}")
 
 
+# blog_analytics가 posts.json에 덧붙이는 분석 필드.
+# posts.json은 발행 때마다 실행 이력에서 새로 만들어지는데, 그때 이 필드들을
+# 옮겨 담지 않으면 주 1회 붙는 등급이 몇 시간 만에 지워집니다
+# (2026-08-18 점검에서 103개 포스트 전부 등급 없음으로 확인).
+_ANALYTICS_FIELDS = (
+    "grade", "gradeScore", "gradeHint",
+    "gscClicks30d", "gscImpressions30d", "gscCTR30d", "gscPosition30d",
+    "estimatedPageviews30d", "estimatedRevenue30d", "revenueUpdatedAt",
+)
+
+
+def _load_previous_analytics() -> dict[str, dict]:
+    """기존 posts.json에서 분석 필드만 {post_id: {...}} 로 뽑아 둡니다."""
+    out: dict[str, dict] = {}
+    # posts.json은 최근 300개만 담고 나머지는 archive로 넘어가므로 둘 다 읽습니다
+    for name in ("posts.json", "posts_archive.json"):
+        path = os.path.join(DOCS_DATA_DIR, name)
+        if not os.path.exists(path):
+            continue
+        try:
+            with open(path, encoding="utf-8") as f:
+                previous = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            continue
+        if not isinstance(previous, list):
+            continue
+        for p in previous:
+            kept = {k: p[k] for k in _ANALYTICS_FIELDS if k in p}
+            if kept and p.get("id"):
+                out.setdefault(p["id"], kept)
+    return out
+
+
 def export_dashboard() -> None:
     """대시보드용 JSON을 docs/data/에 내보냅니다."""
     os.makedirs(DOCS_DATA_DIR, exist_ok=True)
     history = _load_history()
+    prev_analytics = _load_previous_analytics()
 
     # posts.json 생성
     posts = []
@@ -462,6 +496,16 @@ def export_dashboard() -> None:
                 "blogId": p.get("blogId", run_blog_id),
                 "blogName": p.get("blogName", run_blog_name),
             })
+    # 직전 분석 결과 이어붙이기 — 없으면 아무것도 하지 않으므로 최초 실행에도 안전
+    if prev_analytics:
+        restored = 0
+        for p in posts:
+            kept = prev_analytics.get(p["id"])
+            if kept:
+                p.update(kept)
+                restored += 1
+        logger.info(f"분석 필드 유지: {restored}/{len(posts)}개 (등급·조회수·수익)")
+
     posts.sort(key=lambda x: x["date"], reverse=True)
 
     # runs.json 생성

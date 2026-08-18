@@ -1,5 +1,40 @@
 [
   {
+    "timestamp": "2026-08-18T17:21:14.182730",
+    "health_score": 97,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 7개",
+        "context": {
+          "count": 7,
+          "titles": [
+            "부산 1박2일 혼자 여행 현실 비용 공개, 실제로 얼마",
+            "2026 여름 휴가철 인기 여행지, 빅데이터가 가리키는",
+            "[2편] 삼성전자 배당금 자사주 소각 2026 총정리"
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 7개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-08-18T17:21:14.119532",
+        "success": true,
+        "detail": "대기 포스트 7개 → expired 처리",
+        "expired": 7
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-17T17:21:54.024906",
     "health_score": 97,
     "issues_found": 1,
@@ -1865,33 +1900,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-20T05:20:14.274293",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-20T04:41:38.171045",
-    "health_score": 93,
-    "issues_found": 1,
-    "issues": [
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 0,
-    "repairs": [
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-20T04:41:38.170953",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

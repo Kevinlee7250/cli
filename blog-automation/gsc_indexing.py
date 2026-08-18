@@ -164,7 +164,25 @@ def _recent_published(blogs: list[dict], limit: int) -> list[dict]:
             "published_at": p.get("publishedAt") or p.get("createdAt", ""),
         })
     items.sort(key=lambda x: x.get("published_at") or "", reverse=True)
-    return items[:limit]
+    return _sample_spread(items, limit)
+
+
+def _sample_spread(items: list[dict], limit: int) -> list[dict]:
+    """최신 절반 + 오래된 글에서 고르게 절반을 뽑습니다.
+
+    최신순으로만 자르면 검사 대상이 항상 1~2일 된 글뿐이라, 발행 직후에는
+    원래 색인이 안 되는 게 정상이므로 "미색인 20건"이 무엇을 뜻하는지 알 수
+    없습니다. 정작 궁금한 건 "몇 주 지난 글이 색인됐는가"인데 그 표본이
+    한 번도 포함되지 않았습니다 (2026-08-18 확인: 검사 20건 전부 1~2일 글).
+    """
+    if limit <= 0 or len(items) <= limit:
+        return items[:limit] if limit > 0 else []
+    recent_n = max(1, limit // 2)
+    recent = items[:recent_n]
+    older = items[recent_n:]
+    step = max(1, len(older) // (limit - recent_n))
+    spread = older[::step][:limit - recent_n]
+    return recent + spread
 
 
 def inspect_recent(blogs: list[dict], limit: int = 20, token: str | None = None) -> dict:

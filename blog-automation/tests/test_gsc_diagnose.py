@@ -158,3 +158,42 @@ def test_submit_sitemaps_retries_on_property_mismatch():
         r = submit_sitemaps([{"id": "b1", "name": "블로그", "url": "https://a.com"}], token="tok")
     assert r["submitted"] == 1 and r["scopeDenied"] == 0
     assert m.call_count == 2
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 검사 표본 — 최신 글만 보면 "미색인"이 무엇을 뜻하는지 알 수 없음
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _items(n):
+    return [{"url": f"u{i}", "published_at": f"2026-08-{(30 - i):02d}"} for i in range(n)]
+
+
+def test_sample_includes_older_posts():
+    """최신순으로만 자르면 1~2일 된 글만 검사하게 됨 (2026-08-18 실제 문제)."""
+    from gsc_indexing import _sample_spread
+    picked = _sample_spread(_items(100), 20)
+    assert len(picked) == 20
+    assert picked[-1]["url"] != "u19"          # 최신 20개 그대로가 아님
+    assert any(int(p["url"][1:]) > 50 for p in picked)   # 오래된 글도 포함
+
+
+def test_sample_keeps_newest_half():
+    from gsc_indexing import _sample_spread
+    picked = _sample_spread(_items(100), 20)
+    assert [p["url"] for p in picked[:10]] == [f"u{i}" for i in range(10)]
+
+
+def test_sample_returns_all_when_fewer_than_limit():
+    from gsc_indexing import _sample_spread
+    assert len(_sample_spread(_items(5), 20)) == 5
+
+
+def test_sample_handles_zero_limit():
+    from gsc_indexing import _sample_spread
+    assert _sample_spread(_items(5), 0) == []
+
+
+def test_sample_has_no_duplicates():
+    from gsc_indexing import _sample_spread
+    picked = _sample_spread(_items(60), 20)
+    assert len({p["url"] for p in picked}) == len(picked)

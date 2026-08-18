@@ -64,3 +64,51 @@ def test_save_env_does_not_duplicate_and_is_ignored(tmp_path, monkeypatch):
     assert text.count("GOOGLE_REFRESH_TOKEN=") == 1   # 옛 줄이 남으면 옛 토큰이 계속 쓰임
     assert "new-token" in text
     assert 'OTHER="x"' in text                        # 다른 설정은 보존
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 자격증명 형식 검증 — 구글은 401 invalid_client만 주고 이유를 말해주지 않음
+# ──────────────────────────────────────────────────────────────────────────────
+
+VALID_ID = "123-abc.apps.googleusercontent.com"
+VALID_SECRET = "GOCSPX-abcdef123456"
+
+
+def test_valid_credentials_pass_through():
+    from setup_google_auth import _validate_credentials
+    assert _validate_credentials(VALID_ID, VALID_SECRET) == (VALID_ID, VALID_SECRET)
+
+
+def test_quotes_from_cmd_set_are_stripped():
+    """cmd의 set X="값" 은 따옴표까지 값에 넣어버림."""
+    from setup_google_auth import _validate_credentials
+    cid, sec = _validate_credentials(f'"{VALID_ID}"', f'"{VALID_SECRET}"')
+    assert cid == VALID_ID and sec == VALID_SECRET
+
+
+def test_placeholder_text_is_rejected():
+    """안내문의 자리표시자를 그대로 넣은 경우 (실제로 발생)."""
+    import pytest
+    from setup_google_auth import _validate_credentials
+    with pytest.raises(SystemExit):
+        _validate_credentials("여기에_실제_클라이언트_ID", VALID_SECRET)
+
+
+def test_wrong_id_suffix_is_rejected():
+    import pytest
+    from setup_google_auth import _validate_credentials
+    with pytest.raises(SystemExit):
+        _validate_credentials("123456", VALID_SECRET)
+
+
+def test_old_style_secret_only_warns():
+    """옛 형식 시크릿은 정상일 수 있으므로 경고만 하고 진행."""
+    from setup_google_auth import _validate_credentials
+    cid, sec = _validate_credentials(VALID_ID, "old-style-secret")
+    assert cid == VALID_ID and sec == "old-style-secret"
+
+
+def test_mask_never_reveals_whole_secret():
+    from setup_google_auth import _mask
+    masked = _mask(VALID_SECRET)
+    assert VALID_SECRET not in masked and "…" in masked

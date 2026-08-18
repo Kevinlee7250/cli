@@ -86,6 +86,55 @@ def _port_is_free(port: int = 8080) -> bool:
             return False
 
 
+def _mask(value: str) -> str:
+    """값을 알아볼 수 있을 만큼만 보여줍니다 (전체 노출 금지)."""
+    if len(value) <= 12:
+        return value[:4] + "…" + f" (길이 {len(value)})"
+    return f"{value[:12]}…{value[-6:]} (길이 {len(value)})"
+
+
+def _validate_credentials(client_id: str, client_secret: str) -> tuple[str, str]:
+    """자격증명 형식을 확인합니다.
+
+    형식이 틀리면 구글은 "401 invalid_client"만 돌려주고 이유를 말해주지 않아,
+    자리표시자를 그대로 넣었는지 따옴표가 섞였는지 알 수 없습니다.
+    브라우저를 열기 전에 여기서 걸러냅니다.
+    """
+    # cmd에서 set X="값" 으로 넣으면 따옴표까지 값에 포함됨
+    stripped_id = client_id.strip().strip('"').strip("'")
+    stripped_secret = client_secret.strip().strip('"').strip("'")
+    if stripped_id != client_id or stripped_secret != client_secret:
+        print("\n⚠️ 값에 따옴표가 섞여 있어 제거했습니다.")
+        print("   (cmd의 set은 따옴표를 값의 일부로 취급합니다 — set X=값 형태로 넣으세요)")
+        client_id, client_secret = stripped_id, stripped_secret
+
+    problems = []
+    if not client_id.endswith(".apps.googleusercontent.com"):
+        problems.append(
+            "GOOGLE_CLIENT_ID가 '.apps.googleusercontent.com'으로 끝나지 않습니다"
+        )
+    if not client_secret.startswith("GOCSPX-"):
+        # 예전에 발급된 시크릿은 다른 형식일 수 있어 경고만 합니다
+        print("\n⚠️ GOOGLE_CLIENT_SECRET이 'GOCSPX-'로 시작하지 않습니다 "
+              "(오래된 클라이언트라면 정상일 수 있습니다)")
+    if any(ord(c) > 127 for c in client_id):
+        problems.append("GOOGLE_CLIENT_ID에 한글이 들어 있습니다 — 안내문을 그대로 붙여넣지 않았는지 확인하세요")
+
+    print("\n[자격증명 확인]")
+    print(f"    client_id     : {_mask(client_id)}")
+    print(f"    client_secret : {_mask(client_secret)}")
+
+    if problems:
+        print("\n❌ 이 값으로는 구글이 '401 invalid_client'를 돌려줍니다:")
+        for p in problems:
+            print(f"    · {p}")
+        print("\n   https://console.cloud.google.com/apis/credentials 에서")
+        print("   OAuth 2.0 클라이언트 ID 항목을 열어 값을 다시 복사하세요.")
+        sys.exit(1)
+
+    return client_id, client_secret
+
+
 def preflight() -> tuple[str, str]:
     """자격증명과 실행 환경을 확인합니다. 실패하면 종료."""
     print("=" * 64)
@@ -106,6 +155,8 @@ def preflight() -> tuple[str, str]:
     if not (client_id and client_secret):
         print("\n❌ client id/secret이 없으면 진행할 수 없습니다.")
         sys.exit(1)
+
+    client_id, client_secret = _validate_credentials(client_id, client_secret)
 
     if not _port_is_free():
         print("\n❌ 8080 포트를 다른 프로그램이 쓰고 있습니다.")

@@ -74,12 +74,23 @@ def _domain_property_for(site_url: str) -> str:
     return f"sc-domain:{netloc}" if netloc else site_url
 
 
+def _is_scope_error(text: str) -> bool:
+    """403이 권한(스코프) 부족 때문인지 판별합니다.
+
+    같은 403이라도 원인이 둘입니다: (a) 토큰에 쓰기 권한이 없음,
+    (b) 속성 유형이 URL-프리픽스가 아니라 도메인 속성임.
+    (a)를 (b)로 오해하면 엉뚱한 재시도만 반복하게 됩니다.
+    """
+    low = (text or "").lower()
+    return "insufficient" in low or "scope" in low or "permission" in low
+
+
 def submit_sitemaps(blogs: list[dict], token: str | None = None) -> dict:
     """각 블로그의 sitemap.xml을 GSC에 (재)제출합니다. 멱등 — 반복 호출 안전."""
     token = token or _access_token()
     if not token:
-        return {"submitted": 0, "failed": 0}
-    submitted = failed = 0
+        return {"submitted": 0, "failed": 0, "scopeDenied": 0}
+    submitted = failed = scope_denied = 0
     for cfg in blogs:
         site = _site_url_for(cfg)
         name = cfg.get("name") or cfg.get("id", "?")
@@ -96,20 +107,34 @@ def submit_sitemaps(blogs: list[dict], token: str | None = None) -> dict:
 
         try:
             r = _submit(site)
-            if r.status_code == 403:
+            if r.status_code == 403 and not _is_scope_error(r.text):
                 domain_property = _domain_property_for(site)
                 logger.info(f"[{name}] URL-프리픽스 속성 403 — 도메인 속성으로 재시도: {domain_property}")
                 r = _submit(domain_property)
             if r.status_code in (200, 204):
                 logger.info(f"✅ [{name}] 사이트맵 제출: {sitemap}")
                 submitted += 1
+            elif r.status_code == 403 and _is_scope_error(r.text):
+                # 속성 유형 문제로 오해하면 엉뚱한 곳을 고치게 됨 — 원인을 명시한다
+                logger.error(
+                    f"❌ [{name}] 사이트맵 제출 권한 없음 — refresh_token이 읽기 전용입니다. "
+                    "로컬에서 get_refresh_token.py를 다시 실행해 "
+                    "https://www.googleapis.com/auth/webmasters (읽기 전용 아님) 권한으로 재발급하세요."
+                )
+                scope_denied += 1
+                failed += 1
             else:
                 logger.warning(f"⚠️ [{name}] 사이트맵 제출 실패 [{r.status_code}]: {r.text[:150]}")
                 failed += 1
         except Exception as e:
             logger.warning(f"⚠️ [{name}] 사이트맵 제출 오류: {e}")
             failed += 1
-    return {"submitted": submitted, "failed": failed}
+    if scope_denied:
+        logger.error(
+            f"🚨 사이트맵 {scope_denied}건이 권한 부족으로 제출되지 않았습니다 — "
+            "구글이 새 글을 발견하지 못하는 직접 원인입니다"
+        )
+    return {"submitted": submitted, "failed": failed, "scopeDenied": scope_denied}
 
 
 def _recent_published(blogs: list[dict], limit: int) -> list[dict]:

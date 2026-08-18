@@ -178,5 +178,6 @@ def test_gsc_indexing_sitemap_submit_domain_fallback():
             token="token",
         )
 
-    assert result == {"submitted": 1, "failed": 0}
+    assert result["submitted"] == 1 and result["failed"] == 0
+    assert result["scopeDenied"] == 0   # 속성 유형 문제지 권한 문제가 아님
     assert any("sc-domain" in c for c in calls)

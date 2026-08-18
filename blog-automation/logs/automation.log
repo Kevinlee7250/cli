@@ -1,129 +1,3 @@
-2026-08-17 22:36:22,646 [INFO] final_editor —   ✏️ 제목 최종 교정: '[1편] 아파트 첫인상 솔직 후기, 이 정도면 볼만할까' → 'JTBC 아파트 드라마 1회 첫인상 후기, 볼만한지 솔직 정리'
-2026-08-17 22:36:22,646 [INFO] final_editor —   ✏️ 메타 설명 교정 (94자)
-2026-08-17 22:36:22,646 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 중복 문장 및 오탈자를 정리하고 문단을 2~4문장 단위로 재구성했으며, 요약 박스·비교 표·개인 경험 메모·FAQ·작성자 메모를 규칙에 맞게 정비했습니다.
-2026-08-17 22:36:22,722 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-17 22:36:22,722 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-17 22:36:22,817 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-17 22:36:22,835 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-17 22:36:22,836 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-08-17 22:36:23,524 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/jtbc-1.html
-2026-08-17 22:36:23,525 [INFO] main —   ✅ 편 1 업로드 완료: https://www.hoguwhat.com/2026/08/jtbc-1.html
-2026-08-17 22:36:26,527 [INFO] main — 
---- [2/3편] '아파트 드라마 등장인물 배우 연기력' 생성 중 ---
-2026-08-17 22:36:26,527 [INFO] content_generator — 시리즈 포스트 생성: '아파트 드라마 등장인물 배우 연기력' (2/3편)
-2026-08-17 22:36:35,904 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:36:35,905 [INFO] research_collector — 검색 의도: 드라마 '아파트' 등장인물과 배우진의 연기력에 대한 정보 및 평가를 찾고자 함
-2026-08-17 22:36:48,390 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '아파트 드라마 등장인물 배우 연기력'
-2026-08-17 22:37:06,325 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:37:06,326 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '아파트 드라마 등장인물 배우 연기력'
-2026-08-17 22:37:24,189 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:37:24,190 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'B': 3, 'X': 3, 'C': 1}
-2026-08-17 22:37:25,700 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '아파트 드라마 등장인물 배우 연기력'
-2026-08-17 22:37:25,701 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-17 22:37:27,203 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:39:03,131 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-17 22:39:03,132 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(복선)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
-2026-08-17 22:39:05,133 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-08-17 22:39:06,896 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:40:18,996 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-17 22:40:20,931 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:40:31,029 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '꾸준히 주연으로 활동을 이어가고 있다는 점도 눈에 띕니다'
-2026-08-17 22:40:31,029 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
-2026-08-17 22:40:31,917 [INFO] image_fetcher — 이미지 수집 성공: '[2편] 아파트 등장인물 관계도와 배우 연기력 총정리' → 제목='소개x인물관계도 - 인스티즈(instiz) 드라마/영화/배우 카테고리 [' (관련성=0.50)
-2026-08-17 22:40:32,097 [INFO] image_fetcher — 이미지 수집 성공: '아파트 드라마 등장인물' → 제목='actor / bangkok / asia / arts / ancient ' (관련성=0.25)
-2026-08-17 22:40:33,168 [INFO] image_fetcher — 이미지 수집 성공: '아파트 드라마 강하리와 강하정 JTBC SLL' → 제목='류현경, JTBC드라마 ‘아파트’ 캐스팅... 아파트 관리실 경리과장 강' (관련성=0.67)
-2026-08-17 22:40:36,453 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:40:36,454 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-08-17 22:40:36,454 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-08-17 22:40:36,457 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 아파트 등장인물 관계도와 배우 연기력 총정리' (3403자, 이미지 2개)
-2026-08-17 22:40:37,249 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:40:56,844 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '[2편] 아파트 등장인물 관계도와 배우 연기력 총정리'
-2026-08-17 22:40:56,844 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3403자로 분량은 충족하나 개인 경험이 피상적이고 일반적 정보 재구성 비중이 높음
-2026-08-17 22:40:56,844 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 의견과 전문가 인용(김헌식)은 있으나 근거 출처 표기가 명확하지 않음
-2026-08-17 22:40:56,844 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
-2026-08-17 22:40:56,844 [INFO] adsense_validator —   ❌ AI 생성 의심도: 문장 중복·꼬임 현상(예: '시작했다는 평가를 받았습니다 시작했습니다')이 다수 발견되어 미편집 AI 산출물 흔적이 뚜렷함
-2026-08-17 22:40:56,844 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 문장 중복·꼬임 현상(예: '시작했다는 평가를 받았습니다 시작했습니다')이 다수 발견되어 미편집 AI 산출물 흔적이 뚜렷함
-2026-08-17 22:40:56,844 [WARNING] adsense_validator —   🔴 본문 중 문장이 중복·꼬여 있어 가독성과 신뢰도를 심각하게 저해함 (예: '결정적인 역할을 했다는 평가가 나왔습니다하는 데 결정적인 역할을 했다는 평가가 나왔습니다')
-2026-08-17 22:40:56,844 [WARNING] adsense_validator —   🔴 이미지 출처가 네이버 이미지 검색으로 표기되어 있어 저작권 침해 우려가 있음
-2026-08-17 22:40:56,844 [WARNING] main —   ⚠️ [편 2] AdSense 검토 필요 — pending 저장 (점수: 72/100)
-2026-08-17 22:40:56,846 [INFO] main — 
---- [3/3편] '아파트 드라마 결말 후기 별점' 생성 중 ---
-2026-08-17 22:40:56,846 [INFO] content_generator — 시리즈 포스트 생성: '아파트 드라마 결말 후기 별점' (3/3편)
-2026-08-17 22:41:03,023 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:41:03,024 [INFO] research_collector — 검색 의도: 아파트 드라마의 결말 내용과 시청자 반응, 평점을 확인하려는 의도
-2026-08-17 22:41:14,503 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '아파트 드라마 결말 후기 별점'
-2026-08-17 22:41:31,733 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:41:31,734 [INFO] evidence_builder — 자료팩 생성: 사실 3개 — '아파트 드라마 결말 후기 별점'
-2026-08-17 22:41:36,177 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:41:36,178 [INFO] source_validator — 출처 검증: 2/3개 통과, 등급 분포 {'X': 1, 'C': 1, 'D': 1}
-2026-08-17 22:41:38,462 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '아파트 드라마 결말 후기 별점'
-2026-08-17 22:41:38,462 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-08-17 22:41:38,462 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-17 22:41:39,326 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:42:57,117 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-17 22:42:57,118 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 2개(떡밥, 카타르시스)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
-2026-08-17 22:42:59,119 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-08-17 22:43:01,027 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:44:10,871 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-17 22:44:11,604 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:44:33,324 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '화면이 꺼지는 순간 멍해질 만한 결말이라는 반응이 많았습니다'
-2026-08-17 22:44:33,324 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 3건 자동 수정 적용
-2026-08-17 22:44:34,704 [INFO] image_fetcher — 이미지 수집 성공: '[3편] 아파트 결말 후기 별점, 시즌2 떡밥 진짜였다' → 제목='아파트 209 결말 어떻길래 "세라 운명은?"' (관련성=0.29)
-2026-08-17 22:44:34,847 [INFO] image_fetcher — 이미지 수집 성공: '아파트 드라마 결말' → 제목='actor / bangkok / asia / arts / ancient ' (관련성=0.25)
-2026-08-17 22:44:35,446 [INFO] image_fetcher — 대체 이미지 수집: '아파트 드라마 실제로 이렇게 완전히 니다' → 제목='gun / gangster / mafia / crime / crimina' (관련성=0.00)
-2026-08-17 22:44:35,447 [INFO] image_fetcher — 이미지 수집 성공: '아파트 드라마 실제로 이렇게 완전히 니다' → 제목='gun / gangster / mafia / crime / crimina' (관련성=0.00)
-2026-08-17 22:44:37,239 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:44:37,240 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
-2026-08-17 22:44:37,240 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-08-17 22:44:37,243 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 아파트 결말 후기 별점, 시즌2 떡밥 진짜였다' (2718자, 이미지 1개)
-2026-08-17 22:44:39,094 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:44:56,569 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '[3편] 아파트 결말 후기 별점, 시즌2 떡밥 진짜였다'
-2026-08-17 22:44:56,569 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 명시되어 저작권 주의 필요
-2026-08-17 22:44:57,423 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:46:15,610 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-17 22:46:16,453 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-17 22:46:39,382 [INFO] final_editor —   ✏️ 제목 최종 교정: '[3편] 아파트 결말 후기 별점, 시즌2 떡밥 진짜였다' → '아파트 드라마 결말 후기 별점 총정리, 시즌2 떡밥이었다'
-2026-08-17 22:46:39,382 [INFO] final_editor —   ✏️ 메타 설명 교정 (78자)
-2026-08-17 22:46:39,382 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 30~45자/120~160자 기준으로 정리하고, 미완성 결말 문장을 마무리했으며 요약박스·비교표·FAQ 6개·주의사항·개인경험메모·작성자메모·내부링크 언급을 추가하고 전 문단을 2~4문장으로 재구성했습니다.
-2026-08-17 22:46:39,481 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-17 22:46:39,481 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-17 22:46:39,570 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-17 22:46:39,582 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-17 22:46:39,582 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-08-17 22:46:40,154 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/2_0920732281.html
-2026-08-17 22:46:40,156 [INFO] main —   ✅ 편 3 업로드 완료: https://www.hoguwhat.com/2026/08/2_0920732281.html
-2026-08-17 22:46:40,176 [INFO] dashboard_exporter —   검토 대기 저장: [2편] 아파트 등장인물 관계도와 배우 연기력 총정리 (10493자 HTML)
-2026-08-17 22:46:40,198 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 160개)
-2026-08-17 22:46:40,239 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-17 22:46:40,262 [INFO] dashboard_exporter —   시리즈: 21개 내보내기 완료
-2026-08-17 22:46:40,281 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-17 22:46:40,456 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-17 22:46:40,689 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-17 22:46:40,941 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-17 22:46:40,942 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-17 22:46:40,944 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-17 22:46:40,960 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 243 / 실패 0 / 대기 42)
-2026-08-17 22:46:40,960 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-17 22:46:40,960 [INFO] dashboard_exporter —   포스트: 104개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-17 22:46:40,961 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-17 22:46:40,961 [INFO] main — 
-============================================================
-2026-08-17 22:46:40,962 [INFO] main — [HOGU What?] 시리즈 완료: 2/3편 성공
-2026-08-17 22:46:40,962 [INFO] main — ============================================================
-2026-08-17 22:46:40,962 [INFO] main — 단독 포스트 대상 키워드 0개: []
-2026-08-17 22:46:40,982 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
-2026-08-17 22:46:40,982 [INFO] main — 
-============================================================
-2026-08-17 22:46:40,982 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
-2026-08-17 22:46:40,982 [INFO] main — ============================================================
-2026-08-17 22:46:41,043 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-17 22:46:41,066 [INFO] dashboard_exporter —   시리즈: 21개 내보내기 완료
 2026-08-17 22:46:41,084 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
 2026-08-17 22:46:41,231 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
 2026-08-17 22:46:41,232 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
@@ -624,3 +498,134 @@
 2026-08-18 04:04:58,408 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-18 04:04:58,408 [INFO] dashboard_exporter —   포스트: 103개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-18 04:04:58,409 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-18 04:05:38,652 [INFO] main — ============================================================
+2026-08-18 04:05:38,652 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-08-18 04:05:38
+2026-08-18 04:05:38,652 [INFO] main — ============================================================
+2026-08-18 04:05:38,669 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-18 04:05:38,669 [INFO] keyword_collector — 포스팅 이력 코퍼스: 201개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-08-18 04:05:38,670 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog3): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-18 04:05:41,766 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-18 04:05:47,453 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:05:47,479 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-18 04:05:47,479 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-18 04:05:47,779 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-08-18 04:05:48,079 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-18 04:05:48,080 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-18 04:05:48,104 [INFO] keyword_collector — 유사 주제 제외 14개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', 'S&P500·나스닥100 ETF 투자 비교 어떤 게 나을까', '금값 전망 2026 지금 사도 될까 투자 판단 기준']
+2026-08-18 04:05:48,104 [INFO] keyword_collector —   [naver_realtime] 1개: ['미국 국채 금리 급등 이유와 내 자산 지키는 방법 2026']
+2026-08-18 04:05:48,104 [INFO] keyword_collector —   [fallback] 1개: ['2026 주요 은행 적금 금리 비교 가장 높은 곳']
+2026-08-18 04:05:48,104 [INFO] keyword_collector — 최종 선정 키워드 2개: ['미국 국채 금리 급등 이유와 내 자산 지키는 방법 2026', '2026 주요 은행 적금 금리 비교 가장 높은 곳']
+2026-08-18 04:05:48,104 [INFO] main — 수집된 키워드 2개: ['미국 국채 금리 급등 이유와 내 자산 지키는 방법 2026', '2026 주요 은행 적금 금리 비교 가장 높은 곳']
+2026-08-18 04:05:48,110 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
+2026-08-18 04:05:48,110 [INFO] main — 단독 포스트 대상 키워드 1개: ['미국 국채 금리 급등 이유와 내 자산 지키는 방법 2026']
+2026-08-18 04:05:48,130 [INFO] main — 
+[1/1] 키워드: '미국 국채 금리 급등 이유와 내 자산 지키는 방법 2026'
+2026-08-18 04:05:48,130 [INFO] content_generator — 포스트 생성 중: '미국 국채 금리 급등 이유와 내 자산 지키는 방법 2026'
+2026-08-18 04:05:59,283 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:05:59,284 [INFO] research_collector — 검색 의도: 2026년 미국 국채 금리가 급등한 원인을 이해하고, 이로 인한 개인 자산(예금, 주식, 부동산 등)에 미치
+2026-08-18 04:06:14,702 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '미국 국채 금리 급등 이유와 내 자산 지키는 방법 2026'
+2026-08-18 04:06:28,090 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:06:28,091 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '미국 국채 금리 급등 이유와 내 자산 지키는 방법 2026'
+2026-08-18 04:06:55,598 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:06:55,599 [INFO] source_validator — 출처 검증: 1/5개 통과, 등급 분포 {'X': 4, 'B': 1}
+2026-08-18 04:06:55,602 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-18 04:06:57,411 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:08:09,156 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-18 04:08:09,156 [WARNING] content_generator — 컨텐츠 너무 짧음(2494자, 최소 2500자) — 재시도 1/3
+2026-08-18 04:08:12,157 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-08-18 04:08:14,277 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:09:19,579 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-18 04:09:20,427 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:09:27,868 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-08-18 04:09:29,268 [INFO] image_fetcher — 이미지 수집 성공: '미국 국채 금리 급등 이유, 5.3% 쇼크가 내 자산에 미치는 영향과 대응법 (2026)' → 제목='미국 10년물 국채 금리 역사이래 최저점 갱신 | 블록미디어' (관련성=0.30)
+2026-08-18 04:09:30,388 [INFO] image_fetcher — 대체 이미지 수집: '미국 국채 금리' → 제목='미국 국채금리 급등에 코스피 2.8% 급락' (관련성=0.33)
+2026-08-18 04:09:30,388 [INFO] image_fetcher — 이미지 수집 성공: '미국 국채 금리' → 제목='미국 국채금리 급등에 코스피 2.8% 급락' (관련성=0.33)
+2026-08-18 04:09:30,927 [INFO] image_fetcher — 이미지 수집 성공: '미국 국채 뉴욕 채권시장 금리가 먼저' → 제목='다우 2% 급락…미국 정부 부채 우려 재부각, 국채금리 급등[뉴욕마감]' (관련성=0.17)
+2026-08-18 04:09:32,685 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:09:32,686 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-08-18 04:09:32,686 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-18 04:09:32,689 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-18 04:09:32,692 [INFO] content_generator — 포스트 생성 완료: '미국 국채 금리 급등 이유, 5.3% 쇼크가 내 자산에 미치는 영향과 대응법 (2026)' (2649자, 이미지 2개)
+2026-08-18 04:09:33,839 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:09:53,865 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '미국 국채 금리 급등 이유, 5.3% 쇼크가 내 자산에 미치는 '
+2026-08-18 04:09:53,865 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준을 충족하나 개인 경험 없이 뉴스 정보를 재구성한 일반론 수준의 콘텐츠
+2026-08-18 04:09:53,865 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 실경험 서술이 없고 출처도 1개뿐이라 전문성·신뢰 신호가 약함
+2026-08-18 04:09:53,865 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
+2026-08-18 04:09:53,866 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약 박스, 단계별 나열, 격식체 문장 등 전형적인 AI 생성 패턴이 다수 관찰됨
+2026-08-18 04:09:53,873 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-18 04:09:53,876 [INFO] internal_linker —   [1/5] '포트폴리오' -> https://hoguasset.blogspot.com/2026/08/2026_079286805.html
+2026-08-18 04:09:53,877 [INFO] internal_linker —   [2/5] '체크리스트' -> https://hoguasset.blogspot.com/2026/08/2026_01325784700.html
+2026-08-18 04:09:53,878 [INFO] internal_linker —   [3/5] '2026년' -> https://hoguasset.blogspot.com/2026/08/2026_0421915996.html
+2026-08-18 04:09:53,880 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-08-18 04:09:53,880 [INFO] main —   제목: 미국 국채 금리 급등 이유, 5.3% 쇼크가 내 자산에 미치는 영향과 대응법 (2026)
+2026-08-18 04:09:53,880 [INFO] main —   이미지: 2개 삽입
+2026-08-18 04:09:53,880 [INFO] main —   글자 수: 2649자
+2026-08-18 04:09:54,769 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:10:10,304 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '미국 국채 금리 급등 이유, 5.3% 쇼크가 내 자산에 미치는 '
+2026-08-18 04:10:10,304 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 뉴스 요약과 일반론적 점검 가이드 재조합 위주로 개인 경험이 부족함
+2026-08-18 04:10:10,304 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 충족하나 '왜 지금 급등했나' 등 500자 이상 장문 단락이 다수 존재
+2026-08-18 04:10:10,304 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 경험 서술이 없고 출처는 1개뿐이나 단정 대신 '~라는 분석' 식 균형 서술은 있음
+2026-08-18 04:10:10,304 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 네이버 이미지 검색으로 표기되어 저작권 주의 필요
+2026-08-18 04:10:10,304 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 1~4단계 나열식 구조와 '~라는 게 일반적 해석' 등 반복적 헤징 표현이 AI 문체 느낌을 줌
+2026-08-18 04:10:10,304 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-08-18 04:10:10,305 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 기준 충족하나 뉴스 요약과 일반론적 점검 가이드 재조합 위주로 개인 경험이 부족함
+2026-08-18 04:10:10,305 [WARNING] main —      🟡 [구조 및 가독성] H2 4개는 충족하나 '왜 지금 급등했나' 등 500자 이상 장문 단락이 다수 존재
+2026-08-18 04:10:10,305 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 경험 서술이 없고 출처는 1개뿐이나 단정 대신 '~라는 분석' 식 균형 서술은 있음
+2026-08-18 04:10:10,305 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-08-18 04:10:11,442 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:11:24,665 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-18 04:11:25,886 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:11:37,159 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2649자 → 3657자 (+1008자)
+2026-08-18 04:11:37,159 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-18 04:11:38,997 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:12:02,374 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-18 04:12:03,459 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:12:05,652 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '미국 국채 금리 급등 이유, 5.3% 쇼크가 내 자산에 미치는 '
+2026-08-18 04:12:05,652 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 기준 충족하나 '왜 지금 급등했나' 및 '자산 점검' 섹션 일부 단락이 500자 이상으로 길게 이어짐
+2026-08-18 04:12:05,652 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 뉴스 보도 화면 캡처로 추정되어 저작권 출처 명시 및 재게시 권한 확인 필요
+2026-08-18 04:12:05,652 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 1~3단계 나열, '핵심 요약/핵심 포인트' 박스 등 정형화된 리스트 패턴이 일부 AI 작성 특징과 유사함
+2026-08-18 04:12:05,652 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
+2026-08-18 04:12:05,652 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-08-18 04:12:06,511 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:12:47,977 [INFO] final_editor —   ✏️ 제목 최종 교정: '미국 국채 금리 급등 이유, 5.3% 쇼크가 내 자산에 미치는 영향과 대응법 (2026)' → '미국 국채 금리 5.3% 급등, 내 자산 지키는 방법 (2026)'
+2026-08-18 04:12:47,977 [INFO] final_editor —   ✏️ 메타 설명 교정 (129자)
+2026-08-18 04:12:47,977 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타 설명·슬러그를 규격에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분리했으며 FAQ·주의사항·작성자 메모·이미지 alt·내부 링크 항목을 추가 정비했습니다.
+2026-08-18 04:12:48,070 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-18 04:12:48,070 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-18 04:12:48,164 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-18 04:12:48,178 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-18 04:12:48,179 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '미국 국채 금리 급등 이유와 내 자산 지키는 방법 2026' — 면책·팩트체크 확인 권장
+2026-08-18 04:12:48,179 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-08-18 04:12:48,970 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/53-2026.html
+2026-08-18 04:12:48,983 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/53-2026.html
+2026-08-18 04:13:23,057 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:13:23,059 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-18 04:13:23,059 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-18 04:13:23,068 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '미국 국채 금리 5.3% 급등, 내 자산 지키는 방법 (2026)'
+2026-08-18 04:13:23,880 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-18 04:13:27,336 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리면, 변동금리 대출 쓰시는 분들은 은행 앱에서 '금리인하요구권' 신청이 가능한지도 같이 체크해보시는 걸 추천드려요. 소득이나...
+2026-08-18 04:16:27,448 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-18 04:16:27,449 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-18 04:16:27,450 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-18 04:16:27,450 [INFO] main — 
+============================================================
+2026-08-18 04:16:27,450 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-08-18 04:16:27,450 [INFO] main — ============================================================
+2026-08-18 04:16:27,489 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-18 04:16:27,511 [INFO] dashboard_exporter —   시리즈: 21개 내보내기 완료
+2026-08-18 04:16:27,530 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-18 04:16:27,726 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
+2026-08-18 04:16:27,966 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-18 04:16:27,967 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-18 04:16:27,970 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-18 04:16:27,985 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 243 / 실패 1 / 대기 41)
+2026-08-18 04:16:27,985 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-18 04:16:27,985 [INFO] dashboard_exporter —   포스트: 103개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-18 04:16:27,986 [INFO] main — 대시보드 데이터 업데이트 완료

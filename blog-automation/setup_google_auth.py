@@ -285,15 +285,75 @@ def save_env(refresh_token: str) -> None:
     print(f"\n💾 {path} 에 저장했습니다 (git이 무시하는 파일입니다)")
 
 
+def check_existing(client_id: str, client_secret: str, refresh_token: str) -> int:
+    """이미 가진 refresh_token의 권한을 확인합니다 (브라우저 불필요).
+
+    재발급은 되돌릴 수 없는 작업(기존 토큰 교체)이므로, 정말 필요한지
+    먼저 확인할 수 있어야 합니다.
+    """
+    print("\n[기존 토큰 검사] 브라우저 없이 권한만 확인합니다\n")
+    data = urllib.parse.urlencode({
+        "client_id": client_id,
+        "client_secret": client_secret,
+        "refresh_token": refresh_token,
+        "grant_type": "refresh_token",
+    }).encode()
+    req = urllib.request.Request(
+        TOKEN_URL, data=data,
+        headers={"Content-Type": "application/x-www-form-urlencoded"})
+    try:
+        with urllib.request.urlopen(req) as resp:
+            tokens = json.loads(resp.read())
+    except urllib.error.HTTPError as e:
+        body = e.read().decode("utf-8", errors="replace")
+        print(f"❌ 토큰이 유효하지 않습니다 (HTTP {e.code}): {body[:200]}")
+        print("   → 재발급이 필요합니다: python setup_google_auth.py")
+        return 1
+
+    granted = tokens.get("scope", "")
+    if not granted:
+        print("⚠️ 응답에 scope가 없어 권한을 확인할 수 없습니다.")
+        print("   아래 Search Console 조회 결과로 판단하세요.")
+    else:
+        print("부여된 권한:")
+        for s in granted.split():
+            mark = "✅" if s in SCOPES else "  "
+            print(f"    {mark} {s}")
+
+    missing = verify_scopes(granted) if granted else []
+    verify_live(tokens.get("access_token", ""))
+
+    print("\n" + "=" * 64)
+    if missing:
+        print("❌ 다음 권한이 없어 재발급이 필요합니다:")
+        for s in missing:
+            print(f"    · {s.rsplit('/', 1)[-1]}  → {_SCOPE_PURPOSE[s]}")
+        print("\n   python setup_google_auth.py")
+        return 1
+    if granted:
+        print("✅ 필요한 권한이 모두 있습니다 — 재발급하지 않아도 됩니다.")
+        print("   색인 문제의 원인은 다른 곳입니다 (GSC 속성 등록 여부 등).")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Google 인증 설정")
     parser.add_argument("--save-env", action="store_true",
                         help="로컬 .env에도 저장 (git에 커밋되지 않음)")
+    parser.add_argument("--check", action="store_true",
+                        help="이미 가진 refresh_token의 권한만 확인 (브라우저 없이, 재발급 안 함)")
     parser.add_argument("--port", type=int, default=DEFAULT_PORT,
                         help=f"리디렉션 포트 (기본 {DEFAULT_PORT}) — "
                              "Google Cloud Console의 승인된 리디렉션 URI와 일치해야 합니다")
     args = parser.parse_args()
     set_port(args.port)
+
+    if args.check:
+        client_id = (os.getenv("GOOGLE_CLIENT_ID") or "").strip() or input("GOOGLE_CLIENT_ID: ").strip()
+        client_secret = (os.getenv("GOOGLE_CLIENT_SECRET") or "").strip() or input("GOOGLE_CLIENT_SECRET: ").strip()
+        refresh_token = (os.getenv("GOOGLE_REFRESH_TOKEN") or "").strip() or input("GOOGLE_REFRESH_TOKEN: ").strip()
+        client_id, client_secret = _validate_credentials(client_id, client_secret)
+        return check_existing(client_id, client_secret, refresh_token)
 
     client_id, client_secret = preflight()
     code = authorize(client_id)

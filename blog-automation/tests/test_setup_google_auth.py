@@ -128,3 +128,54 @@ def test_set_port_updates_redirect_uri():
 def test_default_redirect_uri_has_port():
     import setup_google_auth as sg
     assert sg.REDIRECT_URI == f"http://localhost:{sg.DEFAULT_PORT}"
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 기존 토큰 검사 — 재발급이 정말 필요한지 먼저 확인
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _token_response(scope):
+    import io, json as _j
+    return io.BytesIO(_j.dumps({"access_token": "at", "scope": scope}).encode())
+
+
+def test_check_existing_passes_when_scopes_complete(monkeypatch, capsys):
+    import setup_google_auth as sg
+    monkeypatch.setattr(sg.urllib.request, "urlopen",
+                        lambda *a, **k: _ctx(_token_response(f"{BLOGGER} {WRITE} {ADSENSE}")))
+    monkeypatch.setattr(sg, "verify_live", lambda *_: None)
+    assert sg.check_existing(VALID_ID, VALID_SECRET, "rt") == 0
+    assert "재발급하지 않아도" in capsys.readouterr().out
+
+
+def test_check_existing_reports_missing_write_scope(monkeypatch, capsys):
+    """읽기 전용으로 발급된 토큰이면 재발급이 필요하다고 말해야 함."""
+    import setup_google_auth as sg
+    monkeypatch.setattr(sg.urllib.request, "urlopen",
+                        lambda *a, **k: _ctx(_token_response(f"{BLOGGER} {READONLY}")))
+    monkeypatch.setattr(sg, "verify_live", lambda *_: None)
+    assert sg.check_existing(VALID_ID, VALID_SECRET, "rt") == 1
+    assert "재발급이 필요" in capsys.readouterr().out
+
+
+def test_check_existing_handles_invalid_token(monkeypatch, capsys):
+    import urllib.error
+    import setup_google_auth as sg
+
+    def boom(*a, **k):
+        raise urllib.error.HTTPError("u", 400, "Bad Request", {}, _token_response(""))
+
+    monkeypatch.setattr(sg.urllib.request, "urlopen", boom)
+    assert sg.check_existing(VALID_ID, VALID_SECRET, "rt") == 1
+    assert "유효하지 않" in capsys.readouterr().out
+
+
+class _ctx:
+    """urlopen의 컨텍스트 매니저 흉내."""
+    def __init__(self, stream): self._s = stream
+    def __enter__(self): return self._s
+    def __exit__(self, *a): return False
+
+
+BLOGGER = "https://www.googleapis.com/auth/blogger"
+ADSENSE = "https://www.googleapis.com/auth/adsense.readonly"

@@ -1,0 +1,115 @@
+name: 🔒 무단 이미지 교체
+
+# 발행된 글에서 저작권 화이트리스트 밖 이미지를 찾아 안전한 이미지로 교체합니다.
+# 2026-08-19 감사 기준 위반 이미지 약 590장 (전체 835장의 71%).
+#
+# 스케줄 실행은 두지 않습니다 — 라이브 글을 직접 수정하므로 반드시
+# dry_run으로 대상을 먼저 확인한 뒤 사람이 판단해서 돌려야 합니다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      blog_id:
+        description: '블로그 ID (blog1 / blog2 / blog3, 비워두면 전체)'
+        required: false
+        default: ''
+      limit:
+        description: '이번 실행에서 수정할 최대 글 수 (0=제한 없음). 나눠 돌리는 것을 권장'
+        required: false
+        default: '20'
+      dry_run:
+        description: '대상만 확인 (실제 수정 없음) — 첫 실행은 반드시 체크'
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fix-unlicensed-images
+  cancel-in-progress: false
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
+          PIXABAY_API_KEY="${{ secrets.PIXABAY_API_KEY }}"
+          IMGBB_API_KEY="${{ secrets.IMGBB_API_KEY }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          LOG_LEVEL=info
+          LOG_FILE=./logs/automation.log
+          ENVEOF
+
+      - name: 로그 디렉토리 생성
+        working-directory: blog-automation
+        run: mkdir -p logs
+
+      - name: 무단 이미지 스캔·교체
+        working-directory: blog-automation
+        run: |
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ -n "${{ inputs.blog_id }}" ]; then
+            ARGS="$ARGS --blog ${{ inputs.blog_id }}"
+          fi
+          ARGS="$ARGS --limit ${{ inputs.limit || '20' }}"
+          echo "실행: python fix_unlicensed_images.py $ARGS"
+          python fix_unlicensed_images.py $ARGS
+
+      - name: 리포트 커밋 & 푸시
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # docs/.gitignore(npm/cli 템플릿)가 docs/*를 무시하므로 -f 필수.
+          # 이걸 빠뜨리면 리포트가 조용히 누락됩니다.
+          git add -f docs/data/unlicensed_images.json || true
+          git add blog-automation/logs/used_images.json || true
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "🔒 무단 이미지 교체 리포트 (#${{ github.run_number }})"
+            git pull --rebase origin claude/blog-automation-system-KAbtE || true
+            git push origin HEAD:claude/blog-automation-system-KAbtE
+          fi
+
+      - name: 실행 로그 아티팩트
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unlicensed-images-${{ github.run_number }}
+          path: |
+            blog-automation/logs/
+            docs/data/unlicensed_images.json
+          retention-days: 14

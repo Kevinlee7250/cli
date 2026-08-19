@@ -207,9 +207,15 @@ def inspect_recent(blogs: list[dict], limit: int = 20, token: str | None = None)
                     timeout=20,
                 )
 
-            r = _inspect(p["site"])
+            # 어느 속성 형식이 통했는지 기록해 둡니다. 대시보드가 GSC
+            # "URL 검사" 딥링크를 만들 때 resource_id로 그대로 써야 하는데,
+            # 속성 형식(URL-프리픽스 vs sc-domain)을 틀리면 링크가 열리지
+            # 않습니다. 여기서 실제로 200을 받은 값이 유일하게 확실한 정답입니다.
+            used_property = p["site"]
+            r = _inspect(used_property)
             if r.status_code == 403:
-                r = _inspect(_domain_property_for(p["site"]))
+                used_property = _domain_property_for(p["site"])
+                r = _inspect(used_property)
             if r.status_code != 200:
                 logger.debug(f"검사 실패 [{r.status_code}]: {p['url']} {r.text[:100]}")
                 results.append({**p, "verdict": "unknown", "coverage": f"API {r.status_code}"})
@@ -225,7 +231,8 @@ def inspect_recent(blogs: list[dict], limit: int = 20, token: str | None = None)
             mark = "🟢" if indexed else "🟡"
             logger.info(f"{mark} [{p['blog']}] {coverage or verdict}: {p['title'][:40]}")
             results.append({**p, "verdict": "indexed" if indexed else "not_indexed",
-                            "coverage": coverage, "last_crawl": last_crawl[:10]})
+                            "coverage": coverage, "last_crawl": last_crawl[:10],
+                            "gsc_property": used_property})
         except Exception as e:
             logger.debug(f"검사 오류: {p['url']} — {e}")
             results.append({**p, "verdict": "unknown", "coverage": str(e)[:60]})

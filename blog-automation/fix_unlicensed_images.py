@@ -143,6 +143,66 @@ def _replace_image(content: str, old_url: str, new_img: dict) -> str:
     return _IMG_TAG_RE.sub(_sub, content)
 
 
+# 캡션 안의 출처 표기 — "이미지 출처: 네이버 블로그 nowand4eva" 같은 조각을 찾습니다.
+# <br> 또는 태그 경계 앞까지를 한 덩어리로 봅니다.
+_ATTR_IN_CAPTION_RE = re.compile(r'이미지\s*출처\s*:\s*[^<]*', re.I)
+_FIGURE_BLOCK_RE = re.compile(r'(<figure\b[^>]*>)(.*?)(</figure>)', re.I | re.S)
+_FIGCAPTION_RE = re.compile(r'(<figcaption\b[^>]*>)(.*?)(</figcaption>)', re.I | re.S)
+
+
+def sync_captions(content: str) -> tuple[str, int]:
+    """figcaption의 출처 표기를 실제 이미지 src에 맞게 다시 씁니다.
+
+    왜 필요한가
+    ──────────
+    _replace_image()는 <img>의 src/alt/title만 바꿉니다. figure 안의
+    figcaption은 그대로 남아서, Pixabay 사진 밑에 "이미지 출처: 네이버 블로그
+    nowand4eva"가 그대로 붙어 있는 상태가 됩니다. 실제와 다른 출처를 적어둔
+    것이라 AdSense 심사에서는 여전히 무단 사용으로 읽히고, 원 저작자에게도
+    부적절합니다.
+
+    이미 교체가 끝난 글에도 소급 적용할 수 있도록 src URL만 보고 판정합니다
+    (발행된 HTML에는 source 필드가 남지 않기 때문입니다).
+
+    Returns: (수정된 content, 고친 캡션 수)
+    """
+    from image_fetcher import source_label_for_url
+
+    fixed = 0
+
+    def _fix_figure(m: re.Match) -> str:
+        nonlocal fixed
+        open_tag, inner, close_tag = m.group(1), m.group(2), m.group(3)
+
+        img_m = _IMG_TAG_RE.search(inner)
+        if not img_m:
+            return m.group(0)
+        src_m = _SRC_RE.search(img_m.group(0))
+        if not src_m:
+            return m.group(0)
+        label = source_label_for_url(src_m.group(1))
+
+        def _fix_caption(cm: re.Match) -> str:
+            nonlocal fixed
+            c_open, c_inner, c_close = cm.group(1), cm.group(2), cm.group(3)
+            if not _ATTR_IN_CAPTION_RE.search(c_inner):
+                return cm.group(0)
+            if label:
+                new_inner = _ATTR_IN_CAPTION_RE.sub(f'이미지 출처: {label}', c_inner)
+            else:
+                # 라이선스를 모르는 이미지 → 출처 줄을 통째로 지웁니다.
+                # 앞의 <br>까지 같이 지워야 빈 줄이 남지 않습니다.
+                new_inner = re.sub(r'(?:<br\s*/?>)?\s*이미지\s*출처\s*:\s*[^<]*', '',
+                                   c_inner, flags=re.I)
+            if new_inner != c_inner:
+                fixed += 1
+            return c_open + new_inner + c_close
+
+        return open_tag + _FIGCAPTION_RE.sub(_fix_caption, inner) + close_tag
+
+    return _FIGURE_BLOCK_RE.sub(_fix_figure, content or ""), fixed
+
+
 def _remove_image(content: str, url: str) -> str:
     """대체 이미지를 못 구했을 때 해당 이미지를 본문에서 제거합니다.
 
@@ -169,6 +229,7 @@ def scan_and_fix(blogs: list[dict], dry_run: bool, limit: int = 0) -> dict:
     fixed = 0
     failed = 0
     removed_total = 0
+    captions_total = 0
     replaced_total = 0
     host_counts: dict[str, int] = {}
     report_items: list[dict] = []
@@ -196,7 +257,14 @@ def scan_and_fix(blogs: list[dict], dry_run: bool, limit: int = 0) -> dict:
             content = post.get("content", "") or ""
             title = post.get("title", "") or ""
             unsafe = _extract_unsafe_urls(content)
-            if not unsafe:
+
+            # 이미지가 이미 안전해도 캡션에 옛 출처가 남아 있을 수 있습니다.
+            # 1회차에서 202장을 교체하면서 figcaption을 손대지 않아
+            # Pixabay 사진 밑에 "이미지 출처: 네이버 블로그"가 남았습니다.
+            # 그래서 위반 이미지가 없는 글도 캡션은 확인합니다.
+            _, stale_captions = sync_captions(content)
+
+            if not unsafe and not stale_captions:
                 continue
 
             for u in unsafe:
@@ -204,13 +272,17 @@ def scan_and_fix(blogs: list[dict], dry_run: bool, limit: int = 0) -> dict:
                 host_counts[h] = host_counts.get(h, 0) + 1
 
             if dry_run:
-                logger.info(f"  [dry-run] '{title[:45]}' — 위반 이미지 {len(unsafe)}장")
-                for u in unsafe:
-                    logger.info(f"      · {u[:90]}")
+                if unsafe:
+                    logger.info(f"  [dry-run] '{title[:45]}' — 위반 이미지 {len(unsafe)}장")
+                    for u in unsafe:
+                        logger.info(f"      · {u[:90]}")
+                if stale_captions:
+                    logger.info(f"  [dry-run] '{title[:45]}' — 출처 표기 불일치 {stale_captions}건")
                 fixed += 1
                 report_items.append({
                     "title": title[:60], "url": post.get("url", ""),
                     "unsafe": [u[:100] for u in unsafe],
+                    "stale_captions": stale_captions,
                 })
                 continue
 
@@ -229,6 +301,14 @@ def scan_and_fix(blogs: list[dict], dry_run: bool, limit: int = 0) -> dict:
                     actions.append({"old": old_url[:80], "new": "", "action": "removed"})
                     removed_total += 1
                     logger.warning(f"    ⚠️ 대체 실패 → 이미지 제거: {old_url[:70]}")
+
+            # 이미지 교체가 끝난 뒤 캡션을 실제 src에 맞춰 다시 씁니다.
+            content, n_cap = sync_captions(content)
+            if n_cap:
+                captions_total += n_cap
+                actions.append({"old": "", "new": "", "action": "caption_synced",
+                                "count": n_cap})
+                logger.info(f"    ✏️ 출처 표기 {n_cap}건 정정")
 
             pr = requests.patch(
                 f"{BLOGGER_API_BASE}/blogs/{blog_id}/posts/{post['id']}",
@@ -258,6 +338,7 @@ def scan_and_fix(blogs: list[dict], dry_run: bool, limit: int = 0) -> dict:
         "posts_with_violations": fixed,
         "images_replaced": replaced_total,
         "images_removed": removed_total,
+        "captions_synced": captions_total,
         "posts_failed": failed,
         "violating_hosts": dict(sorted(host_counts.items(), key=lambda x: -x[1])),
         "items": report_items[:100],
@@ -295,7 +376,7 @@ def main() -> int:
         f"{mode}완료 — 글 {report['scanned_posts']}건 스캔 / "
         f"위반 글 {report['posts_with_violations']}건 / "
         f"교체 {report['images_replaced']}장 / 제거 {report['images_removed']}장 / "
-        f"실패 {report['posts_failed']}건"
+        f"출처표기 정정 {report['captions_synced']}건 / 실패 {report['posts_failed']}건"
     )
     if report["violating_hosts"]:
         logger.info("위반 출처 분포:")

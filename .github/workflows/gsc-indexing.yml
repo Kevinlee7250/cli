@@ -64,13 +64,16 @@ jobs:
           python gsc_diagnose.py
           python gsc_indexing.py --submit
           python gsc_indexing.py --inspect "${{ inputs.inspect_count || '20' }}"
+          # 색인 요청은 자동화할 수 없으므로(웹 UI 전용·하루 10건),
+          # 무엇을 먼저 넣을지 우선순위만 뽑아 둡니다
+          python index_priority.py
 
       - name: 리포트 커밋 & 푸시
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f docs/data/index_status.json docs/data/gsc_diagnosis.json 2>/dev/null || true
+          git add -f docs/data/index_status.json docs/data/gsc_diagnosis.json docs/data/index_priority.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else

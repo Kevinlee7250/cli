@@ -46,6 +46,17 @@ jobs:
         working-directory: blog-automation
         run: pip install -r requirements.txt
 
+      # 실측 RPM을 먼저 받아둬야 아래 분석이 추정 대신 실제 수익으로 계산합니다.
+      # 권한(adsense.readonly)이 없으면 조용히 건너뛰고 기존 추정치를 씁니다.
+      - name: Collect real AdSense revenue
+        working-directory: blog-automation
+        continue-on-error: true
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+        run: python adsense_revenue.py --days 30
+
       - name: Run blog analytics
         working-directory: blog-automation
         env:
@@ -75,9 +86,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/data/posts.json \
-                  docs/data/analytics_summary.json \
-                  blog-automation/logs/analytics_report.json 2>/dev/null || true
+          # docs/.gitignore가 docs/* 를 무시하므로 -f 필수 —
+          # 없으면 analytics_summary.json이 조용히 커밋에서 누락된다
+          git add -f docs/data/posts.json \
+                     docs/data/analytics_summary.json \
+                     docs/data/adsense_revenue.json \
+                     blog-automation/logs/analytics_report.json \
+                     blog-automation/logs/adsense_rpm.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "변경 없음 — 커밋 생략"
           else

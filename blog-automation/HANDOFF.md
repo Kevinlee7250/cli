@@ -5,7 +5,7 @@
 - 저장소: `Kevinlee7250/cli` (npm/cli의 **공개 포크**)
 - 작업 브랜치: `claude/blog-automation-system-KAbtE`
 - 기본 브랜치: `latest`
-- 테스트: `cd blog-automation && python -m pytest tests/ -q` → **393건 통과**
+- 테스트: `cd blog-automation && python -m pytest tests/ -q` → **403건 통과** (2026-08-20)
 
 ---
 
@@ -84,17 +84,11 @@ AdSense는 **미승인**이며 **신청 보류 중**입니다. 색인률이 회�
 
 ## 🔜 다음 할 일
 
-### 1. `index_priority.py` 재업로드 (미완료 — 확인 필요)
+### 1. ~~`index_priority.py` 재업로드~~ → **완료** (2026-08-20, `5fb5523c`)
 
-원격 버전에 `gscProperty` 필드 추가분이 빠져 있습니다. 옛 파일이 올라간
-상태라, 다음 색인 점검이 돌면 대시보드 색인 패널의 속성 값이 비게 됩니다.
-`git show origin/<branch>:blog-automation/index_priority.py | grep gscProperty`로
-확인하고, 없으면 `build_queue()`의 candidates.append에 아래를 추가하세요.
-
-```python
-site = it.get("site", "")
-# ... candidates.append({... "site": site, "gscProperty": it.get("gsc_property") or site, ...})
-```
+누락이 사실이었고 `site`·`gscProperty`를 모두 내보내도록 고쳤습니다.
+현재 `index_status.json`에 `gsc_property` 키가 없는 것은 파일이 해당
+변경 이전에 생성됐기 때문이며, 다음 색인 점검부터 채워집니다.
 
 ### 2. 매일 색인 요청 10건 (사용자 작업)
 
@@ -102,9 +96,9 @@ site = it.get("site", "")
 → `▶️ 다음 URL 열기` → GSC 검사창에 `Ctrl+V` → Enter → **색인 생성 요청**.
 진행 상황은 localStorage에 저장되고 날짜가 바뀌면 자동 초기화됩니다.
 
-### 3. `docs/index (1).html` 삭제
+### 3. ~~`docs/index (1).html` 삭제~~ → **완료** (2026-08-20, `5fb5523c`)
 
-잘못된 이름으로 업로드된 잔여 파일입니다. 동작에는 지장 없지만 정리 필요.
+`docs/index.html`과 바이트 단위로 동일함을 확인하고 삭제했습니다.
 
 ### 4. 2~4주 후 색인 재점검
 
@@ -116,18 +110,38 @@ Actions → `🔍 구글 색인 점검` 실행 → 색인률 확인.
 https://github.com/Kevinlee7250/cli/pull/12 — Draft 상태.
 기본 브랜치에 워크플로를 동기화하는 PR입니다.
 
-### 6. 기존 발행글의 주제 중복 (미해결)
+### 6. 기존 발행글의 주제 중복 → **보류 결정** (2026-08-20)
 
-`blogs.json` 설정은 분리했지만 **이미 발행된 글은 그대로**입니다.
-blog1 travel 62건 / blog2 travel 61건으로 여전히 겹칩니다.
-`migrate_offtopic.py`로 이전하거나 비공개 처리하는 방안 검토.
+조사 결과 **실제 중복 콘텐츠가 아니었습니다.** blog1·blog2 발행글의
+제목 완전 일치 **0건**, 키워드 중복 **1건**(추석 선물세트)뿐입니다.
+겹치는 것은 카테고리일 뿐 서로 다른 글이므로 중복 콘텐츠 정책 대상이
+아닙니다.
 
-### 7. blog1의 GSC 데이터 누락 (미해결)
+비공개 처리 시 규모(post_registry 최근 300건 기준, 그 이전 글 미집계):
 
-`docs/data/gsc.json`의 `sites`에 blog2·blog3만 있고 blog1이 없습니다.
-커스텀 도메인이 도메인 속성(`sc-domain:`)으로 등록돼 있을 가능성.
-`gsc_indexing.py`의 `_domain_property_for()` 폴백이 blog1에 실제로
-적용되는지 확인 필요.
+| blog2 분류 | 건수 |
+|---|---|
+| 여행 (주제 이탈) | 65 |
+| 건강·일반 (주제 이탈) | 6 |
+| 스포츠 (주제 부합) | 9 |
+
+주제 이탈분을 모두 내리면 blog2에 **9건만** 남아 "콘텐츠 부족"으로
+AdSense 거절 위험이 오히려 커집니다. 사용자 판단으로 **보류**하고
+색인 회복을 우선하기로 했습니다. 신규 발행은 이미 주제별로 분리돼
+있으므로 시간이 지나면 비중이 자연히 정상화됩니다.
+
+⚠️ `migrate_offtopic.py`는 **blog1 전용이며 주제 키워드가 하드코딩**돼
+있습니다. 그 정의는 blog1이 여행+연예를 함께 다루던 시절 것이라 현재
+설정(blog1=여행 / blog2=스포츠·연예)과 다릅니다. 그대로 실행하면
+오분류하므로, 쓰려면 먼저 blogs.json의 topics를 읽도록 고쳐야 합니다.
+
+### 7. ~~blog1의 GSC 데이터 누락~~ → **완료** (2026-08-20, `4d54f49f`)
+
+원인은 `gsc_fetcher.py`에만 도메인 속성 폴백이 없던 것이었습니다.
+`blog_analytics`·`gsc_indexing`에는 있는 `sc-domain:` 재시도가 빠져 있어
+커스텀 도메인인 blog1이 403을 받고 그대로 포기했습니다. 색인 검사에서는
+blog1이 정상 조회되고 있어(7건) 문제가 이 모듈에 한정됨을 확인했습니다.
+다음 GSC 수집부터 `gsc.json`에 blog1이 포함됩니다.
 
 ---
 
@@ -168,6 +182,7 @@ blog-automation/ADSENSE_AUDIT_20260819.md         # 전체 점검 보고서
 | 색인 0/20 = 심각한 장애 | `index_status.json` | 표본이 전부 1~2일 된 글. 실제 GSC는 색인 4건 |
 | FAQ 없는 58건 = 생성 버그 | 2차 세션 | 대부분 07-20 이전 레거시 글 |
 | GSC inspect 딥링크로 직행 가능 | 3차 세션 (내 실수) | 실제로 눌러보니 404 |
+| blog1·blog2 주제 중복이 정책 문제 | 3차 세션 | 제목 일치 0건·키워드 중복 1건 — 카테고리만 겹침 |
 
 **교훈**: 산출물(`docs/data/*.json`)과 라이브 페이지를 직접 확인하기 전에
 원인을 단정하지 마세요. 이 저장소에서 세 번 연속 첫 가설이 틀렸습니다.

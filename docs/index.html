@@ -5477,38 +5477,52 @@ function idxMarkDone(url, done) {
   loadIndexPriority()
 }
 
-function idxInspectUrl(c) {
-  // resource_id는 gsc_indexing이 실제로 200을 받은 속성 문자열입니다.
-  // 형식(URL-프리픽스 vs sc-domain)을 틀리면 GSC가 속성을 못 찾습니다.
-  const prop = c.gscProperty || c.site || ''
-  return 'https://search.google.com/search-console/inspect?resource_id='
-    + encodeURIComponent(prop) + '&id=' + encodeURIComponent(c.url || '')
+function idxGscHome(c) {
+  // GSC "URL 검사" 딥링크(/search-console/inspect?resource_id=…&id=…)는
+  // 2026-08-19 실제로 눌러 보니 구글이 404를 반환했습니다. 문서화된 형식이
+  // 아니라 재현되는 규격을 확인할 수 없어, 추측한 주소로 사용자를 보내는
+  // 대신 확실히 존재하는 Search Console 홈으로 보냅니다.
+  // 검사할 주소는 클립보드에 넣어 두므로 상단 검사창에 붙여넣기만 하면 됩니다.
+  const prop = (c && (c.gscProperty || c.site)) || ''
+  return prop
+    ? 'https://search.google.com/search-console?resource_id=' + encodeURIComponent(prop)
+    : 'https://search.google.com/search-console'
+}
+
+function idxToast(msg) {
+  let el = document.getElementById('idx-toast')
+  if (!el) {
+    el = document.createElement('div')
+    el.id = 'idx-toast'
+    el.style.cssText = 'position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:9999;'
+      + 'background:#171a21;border:1px solid #2563eb;color:#e6e8eb;padding:12px 20px;border-radius:10px;'
+      + 'font-size:13px;line-height:1.6;box-shadow:0 8px 28px rgba(0,0,0,.45);max-width:min(92vw,520px);text-align:center'
+    document.body.appendChild(el)
+  }
+  el.innerHTML = msg
+  el.style.display = 'block'
+  clearTimeout(window.__idxToastT)
+  window.__idxToastT = setTimeout(() => { el.style.display = 'none' }, 8000)
 }
 
 function idxOpenOne(url) {
   const c = (window.__idxQueue || []).find(x => x.url === url)
   if (!c) return
-  window.open(idxInspectUrl(c), '_blank', 'noopener')
-  idxMarkDone(url, true)
+  // 창 이름을 고정하면 매번 새 탭이 아니라 같은 탭을 재사용합니다.
+  // 10건을 처리해도 탭이 하나만 열립니다.
+  const go = () => {
+    window.open(idxGscHome(c), 'gscInspect')
+    idxToast('📋 주소를 복사했습니다.<br>Search Console 상단 <b>검사창에 붙여넣기(Ctrl+V) → Enter</b> → <b>색인 생성 요청</b>')
+    idxMarkDone(url, true)
+  }
+  navigator.clipboard.writeText(c.url).then(go).catch(go)
 }
 
 function idxOpenNext() {
   const st = idxDoneState()
   const next = (window.__idxQueue || []).find(c => !st.urls.includes(c.url))
-  if (!next) { alert('오늘 할당량을 모두 처리했습니다. 내일 다시 이어서 진행하세요.'); return }
+  if (!next) { idxToast('✅ 오늘 할당량을 모두 처리했습니다. 내일 이어서 진행하세요.'); return }
   idxOpenOne(next.url)
-}
-
-function idxOpenAll() {
-  const st = idxDoneState()
-  const rest = (window.__idxQueue || []).filter(c => !st.urls.includes(c.url))
-  if (!rest.length) { alert('남은 항목이 없습니다.'); return }
-  if (!confirm(`${rest.length}개 탭을 한번에 엽니다.\n브라우저가 팝업을 차단하면 주소창의 차단 아이콘을 눌러 허용해 주세요.`)) return
-  rest.forEach(c => window.open(idxInspectUrl(c), '_blank', 'noopener'))
-  const s2 = idxDoneState()
-  rest.forEach(c => { if (!s2.urls.includes(c.url)) s2.urls.push(c.url) })
-  try { localStorage.setItem(IDX_DONE_KEY, JSON.stringify(s2)) } catch {}
-  loadIndexPriority()
 }
 
 function idxCopyAll() {
@@ -5572,7 +5586,7 @@ async function loadIndexPriority() {
       </div>
       <button onclick="idxOpenOne('${esc(c.url)}')"
               style="flex:none;padding:6px 12px;border-radius:7px;border:1px solid var(--border);background:${done ? 'transparent' : 'var(--accent)'};color:${done ? 'var(--muted)' : '#fff'};font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap">
-        ${done ? '다시 열기' : '색인 요청 →'}
+        ${done ? '다시 열기' : '📋 복사 &amp; 열기'}
       </button>
     </div>`
   }).join('')
@@ -5585,8 +5599,6 @@ async function loadIndexPriority() {
           <button onclick="idxOpenNext()" ${allDone ? 'disabled' : ''}
                   style="padding:7px 16px;border-radius:7px;border:none;background:${allDone ? 'var(--border)' : 'var(--accent)'};color:#fff;font-size:12px;font-weight:700;cursor:${allDone ? 'default' : 'pointer'}">
             ${allDone ? '✅ 오늘 완료' : '▶️ 다음 URL 열기'}</button>
-          <button onclick="idxOpenAll()" ${allDone ? 'disabled' : ''}
-                  style="padding:7px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text);font-size:12px;font-weight:600;cursor:pointer">전체 열기</button>
           <button onclick="idxCopyAll()"
                   style="padding:7px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text);font-size:12px;font-weight:600;cursor:pointer">주소 복사</button>
           <button onclick="idxResetToday()" title="오늘 진행 표시 초기화"
@@ -5597,8 +5609,8 @@ async function loadIndexPriority() {
         <div style="height:100%;width:${pct}%;background:${allDone ? 'var(--green,#4ade80)' : 'var(--accent)'};transition:width .25s"></div>
       </div>
       <div style="font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.6">
-        버튼을 누르면 해당 글의 Search Console <b>URL 검사</b> 화면이 열립니다 →
-        <b>"색인 생성 요청"</b>을 누르면 끝입니다.
+        버튼을 누르면 <b>주소가 복사되고</b> Search Console이 열립니다 (탭 1개 재사용) →
+        상단 <b>검사창에 붙여넣기(Ctrl+V) → Enter</b> → <b>"색인 생성 요청"</b>.
         구글은 색인 요청 API를 제공하지 않아 마지막 클릭만은 직접 하셔야 합니다
         (속성당 하루 ${d.dailyQuota ?? 10}건 내외).<br>
         진행 상황은 이 브라우저에 저장되며 <b>날짜가 바뀌면 자동으로 초기화</b>됩니다.

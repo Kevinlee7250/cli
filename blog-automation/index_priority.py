@@ -131,11 +131,17 @@ def build_queue(limit: int = DAILY_QUOTA) -> dict:
             skipped_fresh += 1
             continue
         score, reasons = score_candidate(it, post)
+        # 대시보드 색인 패널이 어느 Search Console 속성을 열지 판단할 때 씁니다.
+        # gsc_indexing이 실제로 200을 받은 속성(URL-프리픽스 또는 sc-domain)이
+        # 유일하게 확실한 값이고, 없으면 사이트 URL로 대체합니다.
+        site = it.get("site", "")
         candidates.append({
             "url": it.get("url", ""),
             "title": (post.get("title") or it.get("title") or "")[:80],
             "blog": it.get("blog", ""),
             "coverage": it.get("coverage", ""),
+            "site": site,
+            "gscProperty": it.get("gsc_property") or site,
             "score": score,
             "reasons": reasons,
         })

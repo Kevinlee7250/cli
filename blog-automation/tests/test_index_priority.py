@@ -120,3 +120,29 @@ def test_run_writes_report(tmp_path, monkeypatch):
     ip.run(10)
     saved = json.loads((tmp_path / "index_priority.json").read_text(encoding="utf-8"))
     assert saved["queue"][0]["url"] == "a"
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# GSC 속성 전달 — 대시보드 색인 패널이 어느 속성을 열지 판단하는 근거
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_gsc_property_is_passed_through(tmp_path, monkeypatch):
+    """검사 때 실제로 통한 속성을 그대로 넘겨야 함 (sc-domain일 수 있음)."""
+    item = dict(_item("a"), site="https://www.hoguwhat.com/",
+                gsc_property="sc-domain:hoguwhat.com")
+    ip = _setup(tmp_path, monkeypatch, [item], [_post("a")])
+    c = ip.build_queue(10)["queue"][0]
+    assert c["gscProperty"] == "sc-domain:hoguwhat.com"
+    assert c["site"] == "https://www.hoguwhat.com/"
+
+
+def test_gsc_property_falls_back_to_site(tmp_path, monkeypatch):
+    """옛 리포트에는 gsc_property가 없으므로 site로 대체해야 함."""
+    item = dict(_item("a"), site="https://a.blogspot.com/")
+    ip = _setup(tmp_path, monkeypatch, [item], [_post("a")])
+    assert ip.build_queue(10)["queue"][0]["gscProperty"] == "https://a.blogspot.com/"
+
+
+def test_gsc_property_empty_when_no_site(tmp_path, monkeypatch):
+    ip = _setup(tmp_path, monkeypatch, [_item("a")], [_post("a")])
+    assert ip.build_queue(10)["queue"][0]["gscProperty"] == ""

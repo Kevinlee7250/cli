@@ -105,10 +105,15 @@ AdSense는 **미승인**이며 **신청 보류 중**입니다. 색인률이 회�
 Actions → `🔍 구글 색인 점검` 실행 → 색인률 확인.
 **색인률 15~30% 도달 시 AdSense 재신청 검토.**
 
-### 5. PR #12 머지 (사용자 승인 필요)
+### 5. ~~PR #12 머지~~ → **머지 완료** (2026-08-20, `8ac57400`)
 
-https://github.com/Kevinlee7250/cli/pull/12 — Draft 상태.
-기본 브랜치에 워크플로를 동기화하는 PR입니다.
+기본 브랜치에 반영된 것:
+- 신규: `pending-cleanup.yml`(주 1회), `alert-watchdog.yml`(6시간마다)
+- 수정: `blog-analytics.yml`(`git add -f` + 수익 수집), `gsc-indexing.yml`(진단 + 색인 우선순위)
+- 삭제: `get-oauth-token.yml` — 공개 저장소에서 refresh_token을 교환·업로드하던 경로
+
+이제 위 스케줄이 실제로 돕니다. 머지 전 `blog-run.yml`(발행량 감축)과
+`fix-unlicensed-images.yml`이 되돌아가지 않는지 파일 단위로 확인했습니다.
 
 ### 6. 기존 발행글의 주제 중복 → **보류 결정** (2026-08-20)
 

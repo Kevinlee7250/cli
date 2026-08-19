@@ -1031,6 +1031,36 @@ _SOURCE_LABELS = {
 }
 
 
+# URL 호스트 → 출처 라벨. 이미지가 교체된 뒤 캡션을 다시 쓸 때 씁니다.
+# img dict의 "source" 필드는 교체 시점에만 있고 발행된 HTML에는 남지 않으므로,
+# 사후 정리는 src URL만 보고 판정해야 합니다.
+_HOST_SOURCE_LABELS = (
+    ("pixabay.com", "Pixabay (Pixabay Content License)"),
+    ("wikimedia.org", "Wikimedia Commons"),
+    ("unsplash.com", "Unsplash (Unsplash License)"),
+    ("ibb.co", "직접 제작"),
+)
+
+
+def source_label_for_url(url: str) -> str:
+    """이미지 URL만 보고 출처 라벨을 판정합니다.
+
+    화이트리스트 밖 URL은 빈 문자열을 반환합니다 — 라이선스를 확인하지 않은
+    이미지에 그럴듯한 출처를 붙이면 안 됩니다.
+    """
+    u = (url or "").strip()
+    if u.startswith("data:image/"):
+        return "직접 제작"
+    m = re.match(r'https?://([^/:]+)', u, re.I)
+    if not m:
+        return ""
+    host = m.group(1).lower()
+    for needle, label in _HOST_SOURCE_LABELS:
+        if host == needle or host.endswith("." + needle):
+            return label
+    return ""
+
+
 def _attribution_text(img: dict) -> str:
     """이미지 출처 표기 문구를 반환합니다 (알 수 없는 소스면 빈 문자열)."""
     label = _SOURCE_LABELS.get((img.get("source") or "").strip())

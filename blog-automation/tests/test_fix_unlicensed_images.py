@@ -147,3 +147,107 @@ class TestFindSafeReplacement:
         monkeypatch.setattr(image_fetcher, "generate_fallback_image",
                             lambda *a, **k: {"url": PIXA})
         assert fx._find_safe_replacement("제목")["url"] == WIKI
+
+
+class TestSyncCaptions:
+    """1회차(2026-08-19)에서 실제로 발생한 버그의 회귀 테스트.
+
+    이미지는 Pixabay로 교체됐는데 figcaption에 "이미지 출처: 네이버 블로그
+    nowand4eva"가 그대로 남아, Pixabay 사진에 남의 블로그 출처가 붙었습니다.
+    """
+
+    def test_stale_attribution_is_rewritten(self):
+        from fix_unlicensed_images import sync_captions
+
+        content = (
+            f'<figure><img src="{PIXA}" alt="여행">'
+            f'<figcaption>화순 여행 풍경 (참고 이미지)<br>'
+            f'이미지 출처: 네이버 블로그 nowand4eva</figcaption></figure>'
+        )
+        out, n = sync_captions(content)
+        assert n == 1
+        assert "네이버 블로그" not in out
+        assert "Pixabay" in out
+        assert "화순 여행 풍경 (참고 이미지)" in out, "본문 캡션은 보존돼야 합니다"
+
+    def test_wikimedia_gets_its_own_label(self):
+        from fix_unlicensed_images import sync_captions
+
+        content = (
+            f'<figure><img src="{WIKI}">'
+            f'<figcaption>설명<br>이미지 출처: 트리플(Triple) 여행 콘텐츠</figcaption></figure>'
+        )
+        out, n = sync_captions(content)
+        assert n == 1
+        assert "Wikimedia Commons" in out
+        assert "트리플" not in out
+
+    def test_data_uri_thumbnail_labeled_as_own_work(self):
+        from fix_unlicensed_images import sync_captions
+
+        content = (
+            '<figure><img src="data:image/svg+xml;base64,PHN2Zz4=">'
+            '<figcaption>제목<br>이미지 출처: 다음 카페</figcaption></figure>'
+        )
+        out, n = sync_captions(content)
+        assert n == 1
+        assert "직접 제작" in out
+        assert "다음 카페" not in out
+
+    def test_unknown_host_drops_attribution_line(self):
+        """라이선스를 모르는 이미지에 그럴듯한 출처를 붙이면 안 됩니다."""
+        from fix_unlicensed_images import sync_captions
+
+        content = (
+            f'<figure><img src="{NAVER}">'
+            f'<figcaption>설명<br>이미지 출처: 네이버 이미지 검색</figcaption></figure>'
+        )
+        out, n = sync_captions(content)
+        assert n == 1
+        assert "이미지 출처" not in out
+        assert "설명" in out
+
+    def test_caption_without_attribution_untouched(self):
+        from fix_unlicensed_images import sync_captions
+
+        content = f'<figure><img src="{PIXA}"><figcaption>그냥 설명</figcaption></figure>'
+        out, n = sync_captions(content)
+        assert n == 0
+        assert out == content
+
+    def test_multiple_figures_each_get_correct_label(self):
+        from fix_unlicensed_images import sync_captions
+
+        content = (
+            f'<figure><img src="{PIXA}"><figcaption>A<br>이미지 출처: 네이버</figcaption></figure>'
+            f'<figure><img src="{WIKI}"><figcaption>B<br>이미지 출처: 다음</figcaption></figure>'
+        )
+        out, n = sync_captions(content)
+        assert n == 2
+        assert "Pixabay" in out and "Wikimedia Commons" in out
+        assert "네이버" not in out and "다음" not in out
+
+    def test_already_correct_label_is_noop(self):
+        """두 번 돌려도 안전해야 합니다 (멱등)."""
+        from fix_unlicensed_images import sync_captions
+
+        content = (
+            f'<figure><img src="{PIXA}"><figcaption>A<br>'
+            f'이미지 출처: Pixabay (Pixabay Content License)</figcaption></figure>'
+        )
+        out, n = sync_captions(content)
+        assert n == 0
+        assert out == content
+
+    def test_figure_without_img_is_untouched(self):
+        from fix_unlicensed_images import sync_captions
+
+        content = '<figure><figcaption>이미지 출처: 어딘가</figcaption></figure>'
+        out, n = sync_captions(content)
+        assert n == 0
+
+    def test_handles_empty_content(self):
+        from fix_unlicensed_images import sync_captions
+
+        assert sync_captions("") == ("", 0)
+        assert sync_captions(None) == ("", 0)

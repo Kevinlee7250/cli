@@ -76,6 +76,16 @@ def _save_cache(data: dict, site_url: str = "") -> None:
 # API 호출
 # ─────────────────────────────────────────────
 
+def _domain_property_for(site_url: str) -> str:
+    """URL-프리픽스 사이트 URL을 도메인 속성(sc-domain:) 식별자로 바꿉니다.
+
+    gsc_indexing._domain_property_for와 같은 규칙입니다.
+    """
+    from urllib.parse import urlparse
+    netloc = urlparse(site_url).netloc.removeprefix("www.")
+    return f"sc-domain:{netloc}" if netloc else site_url
+
+
 def fetch_search_analytics(site_url: str, days: int = 30, row_limit: int = 100) -> dict | None:
     """
     Search Console API로 검색 분석 데이터를 가져옵니다.
@@ -105,18 +115,33 @@ def fetch_search_analytics(site_url: str, days: int = 30, row_limit: int = 100) 
         "orderBy": [{"fieldName": "clicks", "sortOrder": "DESCENDING"}],
     }
 
-    encoded_url = requests.utils.quote(site_url, safe="")
-    url = f"{GSC_API_BASE}/sites/{encoded_url}/searchAnalytics/query"
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 
+    def _query(property_id: str):
+        encoded = requests.utils.quote(property_id, safe="")
+        return requests.post(f"{GSC_API_BASE}/sites/{encoded}/searchAnalytics/query",
+                             json=payload, headers=headers, timeout=30)
+
     try:
-        resp = requests.post(url, json=payload, headers=headers, timeout=30)
+        resp = _query(site_url)
+        # 커스텀 도메인은 Search Console에 도메인 속성(sc-domain:)으로 등록된
+        # 경우가 많아 URL-프리픽스 형식으로 물으면 403이 납니다. blog_analytics·
+        # gsc_indexing에는 이 폴백이 있는데 여기만 빠져 있어, blog1(커스텀 도메인)이
+        # gsc.json에서 통째로 누락돼 있었습니다 (2026-08-20 확인).
+        if resp.status_code == 403:
+            domain_property = _domain_property_for(site_url)
+            if domain_property != site_url:
+                logger.info(f"GSC URL-프리픽스 403 — 도메인 속성으로 재시도: {domain_property}")
+                retry = _query(domain_property)
+                if retry.status_code == 200:
+                    resp = retry
     except requests.exceptions.RequestException as e:
         logger.warning(f"GSC API 요청 오류: {e}")
         return None
 
     if resp.status_code == 403:
-        logger.warning("GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요")
+        logger.warning(f"GSC 권한 없음 ({site_url}) — Search Console 등록 여부와 "
+                       "속성 유형(도메인 vs URL-프리픽스)을 확인하세요")
         return None
     if resp.status_code != 200:
         logger.warning(f"GSC API 오류: {resp.status_code} {resp.text[:200]}")

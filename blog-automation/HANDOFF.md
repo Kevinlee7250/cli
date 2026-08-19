@@ -1,4 +1,8 @@
-# 인수인계 — 2026-08-18 시점
+# 인수인계 — 2026-08-18 시점 (2차 갱신)
+
+> **⚠️ 이 문서의 초판에 있던 "원인 후보 A(client_id가 낡은 값)"는 반증되었습니다.**
+> 아래 [원인 후보 재검증](#원인-후보-재검증-2026-08-18-2차) 절을 먼저 읽으세요.
+> **GitHub Secrets의 `GOOGLE_CLIENT_ID`를 바꾸지 마세요.** 현재 값은 정상 동작 중입니다.
 
 새 세션(Cowork 포함)이 이 문서만 읽고 작업을 이어갈 수 있도록 정리했습니다.
 
@@ -46,49 +50,86 @@
 발행 직후 미색인은 정상입니다. `_sample_spread()`로 최신 절반 + 오래된 글
 절반을 검사하도록 고쳤으니, **다음 실행 결과부터 진짜 상태**를 볼 수 있습니다.
 
-### 원인 후보 (아직 확정 안 됨)
+### 원인 후보 재검증 (2026-08-18 2차)
 
-| 후보 | 근거 | 상태 |
+초판의 후보 A·B·C를 실제 산출물로 대조한 결과입니다.
+
+| 후보 | 초판 판정 | **재검증 결과** | 근거 |
+|---|---|---|---|
+| A. client_id가 낡은 값 | "가장 유력" | ❌ **반증** | `docs/data/auth_health.json` (08-17 17:21) → `google_oauth: ok=true` |
+| B. 토큰에 webmasters 쓰기 권한 없음 | "불확실" | ⚠️ **읽기는 확인, 쓰기는 미확인** | `docs/data/gsc.json` (08-18 11:02) 정상 수집 → readonly 이상 보유 |
+| C. GSC 속성 미등록 | "확인 안 됨" | ⚠️ **blog1만 누락** | `gsc.json`의 `sites`에 blog2·blog3만 있고 blog1 없음 |
+
+#### A가 반증된 이유
+
+`auth_health_check.py`의 `check_google_oauth()`는 **GitHub Secrets의
+`GOOGLE_CLIENT_ID` + `GOOGLE_CLIENT_SECRET` + `GOOGLE_REFRESH_TOKEN`으로
+실제 `grant_type=refresh_token` 교환을 시도**하고 200일 때만 `ok=true`를
+씁니다. 즉 `ok=true`는 세 값이 **서로 정합하고 클라이언트가 살아 있다**는
+직접 증거입니다. Actions의 구글 작업이 인증 단계에서 실패해 왔다는
+초판의 추론은 성립하지 않습니다.
+
+#### 클라이언트가 2개 존재합니다 (혼동의 실제 원인)
+
+같은 GCP 프로젝트(`310114393483`)에 OAuth 클라이언트가 둘 있습니다.
+
+| 구분 | client_id | 상태 |
 |---|---|---|
-| **A. client_id가 낡은 값** | 사용자가 보관 중인 `GOOGLE_CLIENT_ID`로 토큰 갱신 시 `invalid_client: The OAuth client was not found` 발생 | **가장 유력** — 확인 중 |
-| B. 토큰에 사이트맵 쓰기 권한 없음 | `get_refresh_token.py`가 `webmasters.readonly`만 요청했음 | 가능하지만 불확실 |
-| C. GSC 속성 미등록 | 확인 안 됨 | `gsc_diagnose.py`로 확인 가능 |
+| **Actions에서 동작 중** | `310114393483-rtotnsftmbbat8l3pua3suer3juv91o6...` | ✅ 정상 (`auth_health.json`에 기록됨) |
+| 콘솔 화면에서 본 값 | `310114393483-gtn7a6736ilf1kisdv0j6rse27gct2sn...` | 별개 클라이언트 |
 
-**B에 대한 주의**: 삭제한 `get-oauth-token.yml`은 **전체 `webmasters`**를
-요청하고 있었습니다. 현재 토큰이 어느 경로로 발급됐는지 불명확하므로
-"권한 부족"이라고 단정하면 안 됩니다. 실제 403 로그는 확인된 바 없습니다.
+사용자 로컬에서 난 `invalid_client`는 **`gtn7a...` ID에 다른 클라이언트의
+secret을 짝지어 넣어서** 생긴 불일치입니다. 클라이언트가 낡아서가 아닙니다.
 
-**A가 맞다면** GitHub Secrets의 `GOOGLE_CLIENT_ID`도 낡은 값일 가능성이 높고,
-그러면 Actions의 모든 구글 작업(사이트맵 제출, 색인 검사, 조회수 수집)이
-인증 단계에서 실패해 온 것이 됩니다. 이쪽이 색인 문제를 더 잘 설명합니다.
+> **로컬 검증 시에는 `rtotns...` 쪽을 쓰세요.** 콘솔 값을 쓰면 secret이
+> 맞지 않아 같은 오류가 반복됩니다.
 
-콘솔에서 확인된 실제 클라이언트 ID (공개 식별자):
-```
-310114393483-gtn7a6736ilf1kisdv0j6rse27gct2sn.apps.googleusercontent.com
-```
+#### 그래서 색인 실패의 진짜 원인은 인증이 아닙니다
+
+`index_status.json`의 20건은 전부 `Discovered - currently not indexed`입니다.
+이 문자열은 **구글이 URL을 이미 알고 있다**는 뜻입니다 — 사이트맵 제출이
+실패했다면 나올 수 없는 값입니다. 즉 발견 단계가 아니라 **크롤 우선순위
+단계에서 밀리고 있는 것**이며, 사이트맵 권한(후보 B)을 고쳐도 해결되지
+않습니다. 콘텐츠 품질신호 쪽에서 원인을 찾아야 합니다.
+
+관측된 품질신호 문제:
+
+- **blog1·blog2의 `topics`가 거의 동일** (국내여행·해외여행·드라마·영화·
+  연예·K-POP 6개 중복). 자기 블로그끼리 같은 주제로 경쟁하는 구조 →
+  중복성 신호. `blogs.json`에서 주제 분리 필요.
+- blog3에 **FAQ 없는 글 58건**.
+- GSC 30일 노출: blog2 **3회**, blog3 **0회**, blog1 **데이터 없음**.
 
 ---
 
 ## 🔜 다음 할 일 (순서대로)
 
-### 1. 원인 확정 — 사용자 로컬에서 실행 (진행 중)
+### 1. 색인 검사 재실행 — 판단 근거 확보 (최우선)
+
+현재 `index_status.json`은 **08-18 00:31** 것으로, 표본 편향을 고친
+커밋 `7ed742f3`보다 **먼저** 생성됐습니다. 즉 "색인 0/20"은 발행 직후
+글만 본 결과라 신뢰할 수 없습니다.
+
+```
+GitHub → Actions → gsc-indexing → Run workflow
+```
+
+`_sample_spread()` 적용 후 결과가 나와야 **진짜 색인율**을 알 수 있습니다.
+이 수치 없이 다음 판단을 하지 마세요.
+
+### 1-B. (선택) 토큰 쓰기 권한 확인 — 로컬
 
 ```
 python setup_google_auth.py --check
 ```
-브라우저 없이 기존 토큰의 스코프와 GSC 속성을 확인합니다. 아무것도 바꾸지
-않습니다. **콘솔 화면의 client_id**를 넣어야 합니다(보관 중인 값 말고).
 
-결과 해석:
-- 권한 목록 출력 → 보관 중이던 client_id가 낡은 값. **GitHub Secrets의
-  `GOOGLE_CLIENT_ID`도 콘솔 값으로 갱신**해야 함
-- `invalid_client` + `Unauthorized` → 보안 비밀번호가 그 클라이언트 것이 아님
-  → 콘솔에서 새 비밀번호 발급 필요
-- 권한 부족 표시 → 재발급 필요 (`python setup_google_auth.py`)
+`rtotns...` client_id를 사용하세요(콘솔의 `gtn7a...` 아님).
+읽기 권한은 이미 확인됐으므로, 이 검사는 **사이트맵 제출용 쓰기 권한**
+유무만 판별하는 용도입니다. 색인 문제의 주원인은 아니므로 우선순위 낮음.
 
-재발급 시 사전 준비: 콘솔의 **승인된 리디렉션 URI**에 `http://localhost:8080`
-추가 (현재 `http://localhost`와 github.io 주소만 등록돼 있음).
-기존 보안 비밀번호는 다시 볼 수 없으므로 필요 시 새로 발급.
+재발급이 필요할 경우 사전 준비: 콘솔의 **승인된 리디렉션 URI**에
+`http://localhost:8080` 추가 (현재 `http://localhost`와 github.io 주소만
+등록돼 있음). 기존 보안 비밀번호는 다시 볼 수 없으므로 필요 시 새로 발급.
 
 ### 2. PR #12 머지 (사용자 승인 필요)
 
@@ -111,6 +152,23 @@ https://github.com/Kevinlee7250/cli/pull/12 — 초안, `mergeable_state: clean`
 소개·개인정보처리방침·문의 페이지가 3개 블로그 전부에 있는지
 (`page_creator.py` 존재). AdSense 승인 요건.
 
+### 5. blog1·blog2 주제 중복 해소 (신규 — 2차에서 발견)
+
+`blogs.json`에서 두 블로그의 `topics`가 6개 겹칩니다
+(국내여행·해외여행·드라마·영화·연예·K-POP). 같은 운영자의 두 사이트가
+같은 키워드로 경쟁하면 중복성 신호가 되어 색인·순위 모두 불리합니다.
+
+권고: blog1은 여행 전담, blog2는 스포츠·연예 전담처럼 **배타적으로 분리**.
+이미 발행된 중복 주제 글은 `migrate_offtopic.py` 참고.
+
+### 6. blog1의 GSC 데이터 누락 확인 (신규 — 2차에서 발견)
+
+`gsc.json`의 `sites`에 blog2·blog3만 있고 **blog1이 없습니다**.
+`blogs.json`의 blog1 `gsc_site_url`은 `https://www.hoguwhat.com/`
+(커스텀 도메인)인데, 과거 인시던트에 **도메인 속성(`sc-domain:`)을
+URL-프리픽스로 조회하면 403**이 난 기록이 있습니다.
+`_domain_property_for()` 헬퍼가 blog1에 실제로 적용되는지 확인 필요.
+
 ---
 
 ## 📌 이번 세션에서 고친 것 (모두 커밋·푸시됨)
@@ -126,6 +184,12 @@ https://github.com/Kevinlee7250/cli/pull/12 — 초안, `mergeable_state: clean`
 | `4a39c349` | **공개 저장소에서 토큰 교환하던 워크플로 삭제** |
 | `7ed742f3` | `index_priority.py` + 색인 검사 표본 편향 수정 |
 | `3568151a` | `setup_google_auth.py --check` |
+
+### 2차 세션에서 한 것 (2026-08-18, 코드 변경 없음)
+
+산출물 대조로 **원인 후보 A를 반증**하고, 색인 실패의 성격을
+"인증 실패"에서 "크롤 우선순위 밀림"으로 재정의했습니다.
+신규 발견 2건(주제 중복, blog1 GSC 누락)을 다음 할 일 5·6번에 추가.
 
 ### 아직 유효한 관찰
 

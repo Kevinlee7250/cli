@@ -1,128 +1,3 @@
-2026-08-19 10:26:23,455 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
-2026-08-19 10:26:23,455 [INFO] keyword_collector — 포스팅 이력 코퍼스: 219개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-08-19 10:26:23,456 [INFO] keyword_collector — 시즌 예약 키워드 9개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
-2026-08-19 10:26:26,711 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-19 10:26:31,748 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:26:31,774 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-19 10:26:31,774 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-19 10:26:32,168 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-19 10:26:32,484 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-19 10:26:32,837 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-19 10:26:32,840 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: evening → drama
-2026-08-19 10:26:32,857 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-19 10:26:32,858 [INFO] keyword_collector — 유사 주제 제외 11개: ['2026 가을 컴백 시즌 아이돌 신보 정리 후기', '9월 아이돌 신보 발매일 솔직 비교', '2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']
-2026-08-19 10:26:32,859 [INFO] keyword_collector —   [naver_realtime] 2개: ['카드사 여행 혜택 비교 호캉스 항공권 할인카드 추천', '카카오톡 PC버전 챗GPT 활용법 업무 생산성 높이기']
-2026-08-19 10:26:32,859 [INFO] keyword_collector — 최종 선정 키워드 2개: ['카드사 여행 혜택 비교 호캉스 항공권 할인카드 추천', '카카오톡 PC버전 챗GPT 활용법 업무 생산성 높이기']
-2026-08-19 10:26:32,860 [INFO] main — 수집된 키워드 2개: ['카드사 여행 혜택 비교 호캉스 항공권 할인카드 추천', '카카오톡 PC버전 챗GPT 활용법 업무 생산성 높이기']
-2026-08-19 10:26:32,865 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-08-19 10:26:32,865 [INFO] main — 단독 포스트 대상 키워드 1개: ['카드사 여행 혜택 비교 호캉스 항공권 할인카드 추천']
-2026-08-19 10:26:32,892 [INFO] main — 
-[1/1] 키워드: '카드사 여행 혜택 비교 호캉스 항공권 할인카드 추천'
-2026-08-19 10:26:32,892 [INFO] content_generator — 포스트 생성 중: '카드사 여행 혜택 비교 호캉스 항공권 할인카드 추천'
-2026-08-19 10:26:40,216 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:26:40,217 [INFO] research_collector — 검색 의도: 여행 특화 카드사 혜택(호캉스, 항공권 할인)을 비교해 최적의 카드를 추천받으려는 의도
-2026-08-19 10:26:50,362 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '카드사 여행 혜택 비교 호캉스 항공권 할인카드 추천'
-2026-08-19 10:27:13,793 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:27:13,794 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '카드사 여행 혜택 비교 호캉스 항공권 할인카드 추천'
-2026-08-19 10:27:25,118 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:27:25,119 [INFO] source_validator — 출처 검증: 5/6개 통과, 등급 분포 {'D': 3, 'C': 2, 'X': 1}
-2026-08-19 10:27:25,121 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-08-19 10:27:25,121 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-19 10:27:26,900 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:28:30,925 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-19 10:28:34,214 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:28:47,848 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-08-19 10:28:48,137 [INFO] image_fetcher — 이미지 수집 성공: '카드사 여행 혜택 비교, 항공권·호캉스 카드 고르는 법' → 제목='passport / wallet / money / finances / c' (관련성=0.18)
-2026-08-19 10:28:48,549 [INFO] image_fetcher — 대체 이미지 수집: '카드사 여행 혜택' → 제목='work / study / office / flower / romanti' (관련성=0.33)
-2026-08-19 10:28:48,549 [INFO] image_fetcher — 이미지 수집 성공: '카드사 여행 혜택' → 제목='work / study / office / flower / romanti' (관련성=0.33)
-2026-08-19 10:28:48,963 [INFO] image_fetcher — 대체 이미지 수집: '카드사 여행 카드 아무거나 해외에서 카드를' → 제목='credit cards / denim / jeans / blue jean' (관련성=0.11)
-2026-08-19 10:28:48,963 [INFO] image_fetcher — 이미지 수집 성공: '카드사 여행 카드 아무거나 해외에서 카드를' → 제목='credit cards / denim / jeans / blue jean' (관련성=0.11)
-2026-08-19 10:28:51,318 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:28:51,319 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-08-19 10:28:51,319 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-08-19 10:28:51,322 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-08-19 10:28:51,325 [INFO] content_generator — 포스트 생성 완료: '카드사 여행 혜택 비교, 항공권·호캉스 카드 고르는 법' (3028자, 이미지 2개)
-2026-08-19 10:28:52,054 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:29:02,273 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '카드사 여행 혜택 비교, 항공권·호캉스 카드 고르는 법'
-2026-08-19 10:29:02,273 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 충족하나 개인 경험이 구체적 수치·날짜 없이 일반론 수준에 머무름
-2026-08-19 10:29:02,273 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처는 명시했으나 alt 텍스트 여부 불명확
-2026-08-19 10:29:02,273 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 리스트 나열과 '그렇다면·다음은' 같은 정형화된 전환 패턴이 반복됨
-2026-08-19 10:29:02,280 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-19 10:29:02,281 [INFO] internal_linker —   [1/5] '정리해봤습니다' -> https://www.hoguwhat.com/2026/08/0.html
-2026-08-19 10:29:02,282 [INFO] internal_linker —   [2/5] '트래블로그' -> https://www.hoguwhat.com/2026/08/vs_012717459.html
-2026-08-19 10:29:02,283 [INFO] internal_linker —   [3/5] '트래블로그' -> https://hogugolfntraval.blogspot.com/2026/08/blog-post_17.ht
-2026-08-19 10:29:02,286 [INFO] internal_linker — 내부 링크 3개 삽입 완료
-2026-08-19 10:29:02,287 [INFO] main —   제목: 카드사 여행 혜택 비교, 항공권·호캉스 카드 고르는 법
-2026-08-19 10:29:02,287 [INFO] main —   이미지: 2개 삽입
-2026-08-19 10:29:02,287 [INFO] main —   글자 수: 3028자
-2026-08-19 10:29:04,240 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:29:25,272 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '카드사 여행 혜택 비교, 항공권·호캉스 카드 고르는 법'
-2026-08-19 10:29:25,272 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 3028자로 기준 충족하나 대부분 일반적 카드 비교 정보 재구성이며 구체적 수치·날짜·개인 경험 사례가 부족함
-2026-08-19 10:29:25,272 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 4개 출처와 개인 의견 일부 포함되나 1인칭 직접 경험 서술이 한 문장 수준으로 얕음
-2026-08-19 10:29:25,272 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 명시로 저작권 위반은 없으나 alt 텍스트 명시 여부가 불확실함
-2026-08-19 10:29:25,272 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면 이제', '결국' 등 정형화된 전환구와 목록 나열 패턴이 반복되어 AI 생성 흔적이 느껴짐
-2026-08-19 10:29:25,272 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-19 10:29:25,272 [WARNING] main —      🟡 [원본성 및 품질] 글자수는 3028자로 기준 충족하나 대부분 일반적 카드 비교 정보 재구성이며 구체적 수치·날짜·개인 경험 사례가 부족함
-2026-08-19 10:29:25,272 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 4개 출처와 개인 의견 일부 포함되나 1인칭 직접 경험 서술이 한 문장 수준으로 얕음
-2026-08-19 10:29:25,272 [WARNING] main —      🟡 [이미지 정책] Pixabay 출처 명시로 저작권 위반은 없으나 alt 텍스트 명시 여부가 불확실함
-2026-08-19 10:29:25,272 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-19 10:29:27,016 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:30:32,977 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3028자 → 2884자 (-144자)
-2026-08-19 10:30:32,977 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-19 10:30:34,541 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:30:51,148 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '카드사 여행 혜택 비교, 항공권·호캉스 카드 고르는 법'
-2026-08-19 10:30:51,148 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 헤딩이 3개로 권장치(4개 이상)에 못 미침
-2026-08-19 10:30:51,149 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처로 저작권 문제는 없으나 alt 텍스트 명시 여부 불명확하여 warn
-2026-08-19 10:30:51,149 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-08-19 10:30:51,149 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-08-19 10:30:51,862 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:32:08,075 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-19 10:32:08,884 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:32:16,499 [INFO] final_editor —   ✏️ 제목 최종 교정: '카드사 여행 혜택 비교, 항공권·호캉스 카드 고르는 법' → '카드사 여행 혜택 비교로 항공권·호캉스 카드 고르는 법'
-2026-08-19 10:32:16,499 [INFO] final_editor —   ✏️ 메타 설명 교정 (94자)
-2026-08-19 10:32:16,499 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고, 요약박스·표·개인경험메모·주의사항·FAQ·작성자메모·내부링크 언급을 규격에 맞춰 추가했습니다. 제목과 메타 설명 길이를 기준에 맞게 조정하고 이미지 3장의 위치와 구체적인 alt 텍스트를 제안했습니다.
-2026-08-19 10:32:16,667 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-19 10:32:16,667 [WARNING] blogger_uploader — [blog1] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-19 10:32:16,840 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-19 10:32:16,855 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-19 10:32:16,855 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-08-19 10:32:17,816 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_639.html
-2026-08-19 10:32:17,829 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_639.html
-2026-08-19 10:32:53,527 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:32:53,528 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-19 10:32:53,528 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-19 10:32:53,537 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '카드사 여행 혜택 비교로 항공권·호캉스 카드 고르는 법'
-2026-08-19 10:32:55,845 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:32:59,647 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리자면, 해외 결제할 때 결제 통화를 무조건 '현지 통화'로 선택하시는 게 좋아요. 원화로 즉시 환산해서 결제하는 DCC(Dy...
-2026-08-19 10:35:59,805 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-19 10:35:59,805 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-19 10:35:59,806 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-19 10:35:59,806 [INFO] main — 
-============================================================
-2026-08-19 10:35:59,806 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-08-19 10:35:59,806 [INFO] main — ============================================================
-2026-08-19 10:35:59,848 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-19 10:35:59,876 [INFO] dashboard_exporter —   시리즈: 21개 내보내기 완료
-2026-08-19 10:35:59,896 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-19 10:36:00,198 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-19 10:36:00,574 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-19 10:36:00,939 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-19 10:36:00,940 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-19 10:36:00,942 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-19 10:36:00,959 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 250 / 실패 0 / 대기 34)
-2026-08-19 10:36:00,959 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-19 10:36:00,959 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-19 10:36:00,960 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-19 10:36:41,244 [INFO] main — ============================================================
-2026-08-19 10:36:41,244 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-19 10:36:41
-2026-08-19 10:36:41,244 [INFO] main — ============================================================
 2026-08-19 10:36:41,262 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
 2026-08-19 10:36:41,262 [INFO] keyword_collector — 포스팅 이력 코퍼스: 199개 항목 로드 (blog_id=blog2 중복 방지 기준)
 2026-08-19 10:36:41,262 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
@@ -623,3 +498,134 @@
 2026-08-19 22:54:08,137 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-19 22:54:08,137 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-19 22:54:08,139 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-19 22:56:48,750 [INFO] main — ============================================================
+2026-08-19 22:56:48,750 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-08-19 22:56:48
+2026-08-19 22:56:48,750 [INFO] main — ============================================================
+2026-08-19 22:56:48,767 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-19 22:56:48,767 [INFO] keyword_collector — 포스팅 이력 코퍼스: 205개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-08-19 22:56:48,768 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog3): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-19 22:56:52,395 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-19 22:56:58,081 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 22:56:58,108 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-19 22:56:58,108 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-19 22:56:58,576 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-08-19 22:56:59,023 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-19 22:56:59,024 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-19 22:56:59,049 [INFO] keyword_collector — 유사 주제 제외 16개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', 'ETF 투자전략 2026 변동성 대응법 완벽 정리', '금 시세 전망 2026 지금 사도 될까']
+2026-08-19 22:56:59,050 [INFO] keyword_collector —   [naver_realtime] 1개: ['미국 국채금리 급등 내 자산에 미치는 영향과 대응법']
+2026-08-19 22:56:59,050 [INFO] keyword_collector —   [fallback] 1개: ['청년 전세자금 대출 조건과 한도 2026 최신 정리']
+2026-08-19 22:56:59,050 [INFO] keyword_collector — 최종 선정 키워드 2개: ['미국 국채금리 급등 내 자산에 미치는 영향과 대응법', '청년 전세자금 대출 조건과 한도 2026 최신 정리']
+2026-08-19 22:56:59,050 [INFO] main — 수집된 키워드 2개: ['미국 국채금리 급등 내 자산에 미치는 영향과 대응법', '청년 전세자금 대출 조건과 한도 2026 최신 정리']
+2026-08-19 22:56:59,055 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-08-19 22:56:59,056 [INFO] main — 단독 포스트 대상 키워드 1개: ['미국 국채금리 급등 내 자산에 미치는 영향과 대응법']
+2026-08-19 22:56:59,075 [INFO] main — 
+[1/1] 키워드: '미국 국채금리 급등 내 자산에 미치는 영향과 대응법'
+2026-08-19 22:56:59,075 [INFO] content_generator — 포스트 생성 중: '미국 국채금리 급등 내 자산에 미치는 영향과 대응법'
+2026-08-19 22:57:08,748 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 22:57:08,749 [INFO] research_collector — 검색 의도: 미국 국채금리 급등 원인과 이것이 국내외 주식, 채권, 부동산, 환율 등 개인 자산에 미치는 영향을 이해하고
+2026-08-19 22:57:15,799 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '미국 국채금리 급등 내 자산에 미치는 영향과 대응법'
+2026-08-19 22:57:29,086 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 22:57:29,087 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '미국 국채금리 급등 내 자산에 미치는 영향과 대응법'
+2026-08-19 22:57:45,045 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 22:57:45,046 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'X': 3, 'B': 4}
+2026-08-19 22:57:45,048 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-19 22:57:45,718 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 22:59:11,695 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-19 22:59:11,697 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 3개(듀레이션, 레버리지, 변동성지수)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-08-19 22:59:13,697 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-08-19 22:59:19,315 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 23:00:31,657 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-19 23:00:32,388 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 23:00:51,724 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-08-19 23:00:52,106 [INFO] image_fetcher — 이미지 수집 성공: '미국 국채금리 급등, 내 자산에 미치는 영향과 대응법 (2026년 8월 기준)' → 제목='calipers / minus interest / miniature fi' (관련성=0.18)
+2026-08-19 23:00:52,820 [INFO] image_fetcher — 대체 이미지 수집: '미국 국채금리 급등' → 제목='savings / real estate / mortgage bond / ' (관련성=0.00)
+2026-08-19 23:00:52,820 [INFO] image_fetcher — 이미지 수집 성공: '미국 국채금리 급등' → 제목='savings / real estate / mortgage bond / ' (관련성=0.00)
+2026-08-19 23:00:53,204 [INFO] image_fetcher — 대체 이미지 수집: '미국 국채금리 국채 시장에서 돈을 니다' → 제목='save up / piggy bank / money / economica' (관련성=0.20)
+2026-08-19 23:00:53,204 [INFO] image_fetcher — 이미지 수집 성공: '미국 국채금리 국채 시장에서 돈을 니다' → 제목='save up / piggy bank / money / economica' (관련성=0.20)
+2026-08-19 23:00:57,586 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 23:00:57,587 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-08-19 23:00:57,587 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-08-19 23:00:57,587 [INFO] image_fetcher — 제목 썸네일 생성: '미국 국채금리 급등, 내 자산에 미치는 영향과 대응법 ' (data URI, 1174B)
+2026-08-19 23:00:57,798 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: 'calipers / minus interest / miniature fi'
+2026-08-19 23:00:57,798 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-19 23:00:57,802 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-19 23:00:57,804 [INFO] content_generator — 포스트 생성 완료: '미국 국채금리 급등, 내 자산에 미치는 영향과 대응법 (2026년 8월 기준)' (2870자, 이미지 2개)
+2026-08-19 23:00:59,544 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 23:01:15,781 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '미국 국채금리 급등, 내 자산에 미치는 영향과 대응법 (2026'
+2026-08-19 23:01:15,781 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 대부분 조선일보·SBS·매일경제 보도 재구성이며 개인 경험은 한두 문장에 불과함
+2026-08-19 23:01:15,781 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 4개 출처 인용은 있으나 1인칭 경험 서술과 저자 전문성 신호가 약함
+2026-08-19 23:01:15,781 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지와 직접 제작 이미지가 있으나 alt 텍스트 명시 여부 확인 불가
+2026-08-19 23:01:15,781 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면', '핵심 요약/포인트' 등 정형화된 전환구와 요약 패턴이 반복적으로 나타남
+2026-08-19 23:01:15,788 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-19 23:01:15,799 [INFO] internal_linker —   [1/5] '다릅니다' -> https://hoguasset.blogspot.com/2026/08/3-etf.html
+2026-08-19 23:01:15,799 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-08-19 23:01:15,799 [INFO] main —   제목: 미국 국채금리 급등, 내 자산에 미치는 영향과 대응법 (2026년 8월 기준)
+2026-08-19 23:01:15,800 [INFO] main —   이미지: 2개 삽입
+2026-08-19 23:01:15,800 [INFO] main —   글자 수: 2870자
+2026-08-19 23:01:17,070 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 23:01:37,721 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '미국 국채금리 급등, 내 자산에 미치는 영향과 대응법 (2026'
+2026-08-19 23:01:37,721 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2870자로 분량 기준은 충족하나 4개 언론 보도 요약·재구성이 중심이라 독창적 경험치는 낮음
+2026-08-19 23:01:37,721 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 4개 출처 인용은 있으나 1인칭 경험 서술은 '개인적으로는' 한 문장 수준으로 미약함
+2026-08-19 23:01:37,721 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지와 직접 제작 이미지 사용은 양호하나 alt텍스트 명시 여부 불확실
+2026-08-19 23:01:37,721 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면~살펴보겠습니다' 식 반복적 전환 질문과 정형화된 보고서체 패턴이 다수 발견됨
+2026-08-19 23:01:37,721 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-19 23:01:37,721 [WARNING] main —      🟡 [원본성 및 품질] 2870자로 분량 기준은 충족하나 4개 언론 보도 요약·재구성이 중심이라 독창적 경험치는 낮음
+2026-08-19 23:01:37,722 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 4개 출처 인용은 있으나 1인칭 경험 서술은 '개인적으로는' 한 문장 수준으로 미약함
+2026-08-19 23:01:37,722 [WARNING] main —      🟡 [이미지 정책] Pixabay 라이선스 이미지와 직접 제작 이미지 사용은 양호하나 alt텍스트 명시 여부 불확실
+2026-08-19 23:01:37,722 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-19 23:01:38,491 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 23:03:10,781 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-19 23:03:11,633 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 23:03:24,428 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2870자 → 3891자 (+1021자)
+2026-08-19 23:03:24,428 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-19 23:03:30,341 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 23:03:43,323 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '미국 국채금리 급등, 내 자산에 미치는 영향과 대응법 (2026'
+2026-08-19 23:03:43,323 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay·직접 제작 이미지 사용으로 저작권 문제는 없으나 alt 텍스트 여부 불명확
+2026-08-19 23:03:43,323 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 95/100)
+2026-08-19 23:03:43,323 [INFO] main —   ✅ AdSense 검증 통과 (점수: 95/100) — 업로드
+2026-08-19 23:03:44,100 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 23:05:01,749 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-19 23:05:03,481 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 23:06:04,211 [INFO] final_editor —   ✏️ 제목 최종 교정: '미국 국채금리 급등, 내 자산에 미치는 영향과 대응법 (2026년 8월 기준)' → '미국 국채금리 급등, 내 자산에 미치는 영향과 대응법 (2026년 8월)'
+2026-08-19 23:06:04,211 [INFO] final_editor —   ✏️ 메타 설명 교정 (126자)
+2026-08-19 23:06:04,212 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분할하고, 자산별 영향 비교 표와 FAQ 5개, 개인 경험 메모, 주의사항, 작성자 메모, 내부 링크 제안을 추가해 발행 가능한 형태로 정리했습니다. 제목과 메타 설명 길이를 기준에 맞게 조정했습니다.
+2026-08-19 23:06:04,389 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-19 23:06:04,390 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-19 23:06:04,565 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-19 23:06:04,579 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-19 23:06:04,580 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '미국 국채금리 급등 내 자산에 미치는 영향과 대응법' — 면책·팩트체크 확인 권장
+2026-08-19 23:06:04,580 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-08-19 23:06:05,484 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026-8.html
+2026-08-19 23:06:05,496 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026-8.html
+2026-08-19 23:06:40,111 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 23:06:40,113 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-19 23:06:40,113 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-19 23:06:40,122 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '미국 국채금리 급등, 내 자산에 미치는 영향과 대응법 (2026년 8월)'
+2026-08-19 23:06:40,940 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-19 23:06:44,056 [INFO] comment_manager —   생성된 댓글: 글 쓰면서 하나 더 확인해보니, 채권형 ETF는 '듀레이션'이 길수록 금리 변동에 더 민감하게 반응하더라고요. 그래서 지금처럼 금리가 출렁이는 ...
+2026-08-19 23:09:44,216 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-19 23:09:44,217 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-19 23:09:44,218 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-19 23:09:44,218 [INFO] main — 
+============================================================
+2026-08-19 23:09:44,218 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-08-19 23:09:44,218 [INFO] main — ============================================================
+2026-08-19 23:09:44,260 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-19 23:09:44,289 [INFO] dashboard_exporter —   시리즈: 21개 내보내기 완료
+2026-08-19 23:09:44,344 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-19 23:09:44,686 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-08-19 23:09:44,938 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
+2026-08-19 23:09:45,353 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-19 23:09:45,354 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-19 23:09:45,357 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-19 23:09:45,375 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 254 / 실패 0 / 대기 30)
+2026-08-19 23:09:45,375 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-19 23:09:45,375 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-19 23:09:45,376 [INFO] main — 대시보드 데이터 업데이트 완료

@@ -35,7 +35,13 @@
 5. 테스트가 `blog-automation/logs/used_images.json`을 오염시킵니다.
    커밋 전 `git checkout -- blog-automation/logs/used_images.json`.
 
-6. **색인 요청 자동화 코드를 만들지 마세요.** Google Indexing API는 문서상
+6. **사이트맵 API의 `indexed` 필드를 색인률로 읽지 마세요.** 구글이 지원을
+   중단한 값이라 **항상 0**입니다. `gsc_diagnosis.json`에서는
+   `indexedUrlsDeprecated`로 이름 붙이고 `note`에 경고를 실어 두었습니다.
+   색인 여부는 `index_status.json`(URL 검사 API)이나 Search Console 화면으로
+   판단하세요. "제출 421 / 색인 0 = 0%"는 틀린 계산입니다.
+
+7. **색인 요청 자동화 코드를 만들지 마세요.** Google Indexing API는 문서상
    채용공고·방송이벤트 전용이고, Search Console API에는 색인 요청 엔드포인트가
    없습니다. 웹 UI 버튼뿐이며 속성당 하루 10건 내외입니다.
    또한 **`/search-console/inspect?resource_id=…&id=…` 딥링크는 404가 납니다**
@@ -74,11 +80,29 @@ AdSense는 **미승인**이며 **신청 보류 중**입니다. 색인률이 회�
 | ads.txt · 사이트맵 | ✅ 정상 |
 | 이미지 저작권 | ✅ 100% 안전 |
 
-### 남은 병목: 색인
+### 남은 병목: 색인 — **설정 문제 아님이 확인됨** (2026-08-19 실행 #40)
 
-`docs/data/index_status.json`은 색인 0/20이지만 **표본이 최근 글에 치우쳐
-있습니다**. 실제 GSC 화면에서는 blog2 기준 색인 4 / 미색인 130입니다.
-발행량 감축(08-19) 효과가 나타나기 시작한 단계이며, 회복에 2~4주가 걸립니다.
+`gsc_diagnose.py` 첫 실행 결과 **문제 0건**입니다:
+
+| 블로그 | GSC 속성 | 사이트맵 |
+|---|---|---|
+| HOGU What? | `sc-domain:hoguwhat.com` | 등록·크롤 정상 (08-18) |
+| HOGU 여행,스포츠,연예 | `https://hogugolfntraval.blogspot.com/` | 정상 (08-19) |
+| 금융NEWS | `https://hoguasset.blogspot.com/` | 정상 (08-19) |
+
+- **쓰기 권한 `canWrite: true`** — 1차 세션의 "사이트맵 권한 부족" 가설 최종 반증
+- **blog1이 실제로 도메인 속성** — `gsc_fetcher` 폴백 수정(7번)이 옳았음을 확인
+- 사이트맵 오류 0, 제출 URL 421개
+
+표본 편향을 고친 뒤 검사 대상이 07-25 ~ 08-19로 고르게 퍼졌고, 그 결과는
+**색인 0 / 20**(Discovered 16 · URL unknown 4)입니다. 3.5주 지난 글도
+색인되지 않았으므로 이제 이 0은 "신규 글이라 아직"이 아닌 실제 상태입니다.
+GSC 화면 수치(blog2 색인 4 / 미색인 130 ≈ 3%)와도 일관됩니다.
+
+즉 병목은 설정이 아니라 **구글의 크롤 예산 배정**입니다.
+`Discovered - currently not indexed`가 다수인 것이 그 신호이며, 보통
+사이트 신뢰도가 낮을 때(신생·백링크 없음·대량 자동 발행 이력) 나타납니다.
+발행량 감축(08-19) 효과가 나타나는 데 2~4주가 필요합니다.
 
 ---
 
@@ -188,6 +212,7 @@ blog-automation/ADSENSE_AUDIT_20260819.md         # 전체 점검 보고서
 | FAQ 없는 58건 = 생성 버그 | 2차 세션 | 대부분 07-20 이전 레거시 글 |
 | GSC inspect 딥링크로 직행 가능 | 3차 세션 (내 실수) | 실제로 눌러보니 404 |
 | blog1·blog2 주제 중복이 정책 문제 | 3차 세션 | 제목 일치 0건·키워드 중복 1건 — 카테고리만 겹침 |
+| 사이트맵 "제출 421 / 색인 0" = 색인률 0% | 4차 세션 (하마터면) | `indexed`는 구글이 지원 중단한 필드로 항상 0 |
 
 **교훈**: 산출물(`docs/data/*.json`)과 라이브 페이지를 직접 확인하기 전에
 원인을 단정하지 마세요. 이 저장소에서 세 번 연속 첫 가설이 틀렸습니다.

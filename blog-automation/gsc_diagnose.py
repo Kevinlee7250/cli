@@ -1,9 +1,14 @@
 """GSC 연결 진단 — "왜 색인이 안 되는가"를 한 번에 보여줍니다.
 
-2026-08-18 점검에서 색인 0/20, 상당수가 "URL is unknown to Google"이었습니다.
-구글이 글의 존재조차 모른다는 뜻이고, 사이트맵이 전달되지 않았다는 신호입니다.
-그런데 기존 로그로는 원인을 알 수 없었습니다 — 사이트맵 제출 실패가 403 한 줄로
-지나갔고, 그 403이 '권한 부족'인지 '속성 유형 불일치'인지 구분하지 않았습니다.
+2026-08-18 점검에서 색인 0/20이 나왔고, 원인을 로그로 좁힐 수 없었습니다.
+사이트맵 제출 실패가 403 한 줄로 지나갔고, 그 403이 '권한 부족'인지
+'속성 유형 불일치'인지 구분하지 않았기 때문입니다.
+
+2026-08-19 첫 실행 결과 설정에는 문제가 없었습니다 — 쓰기 권한 있음,
+3개 블로그 모두 GSC 속성 매칭, 사이트맵 등록·크롤 정상, 오류 0.
+즉 병목은 설정이 아니라 구글의 크롤 예산 배정입니다. 그래도 이 모듈은
+계속 필요합니다: 설정이 깨졌을 때 조용히 넘어가지 않게 하는 안전망이고,
+"설정 문제가 아니다"를 매번 근거로 확인해 주기 때문입니다.
 
 이 모듈은 추측 대신 사실을 확인합니다:
   1) 토큰이 실제로 가진 권한 (쓰기 가능한가)
@@ -96,7 +101,15 @@ def match_property(site_url: str, properties: list[dict]) -> str:
 
 
 def sitemap_state(token: str, property_id: str, site_url: str) -> dict:
-    """해당 속성에 등록된 사이트맵 상태를 요약합니다."""
+    """해당 속성에 등록된 사이트맵 상태를 요약합니다.
+
+    ⚠️ 응답의 contents[].indexed는 구글이 지원을 중단한 필드로 **항상 0**입니다.
+    실제 색인 수가 아닙니다. 이 값을 색인률로 읽으면 "제출 421 / 색인 0 = 0%"
+    같은 잘못된 결론에 이릅니다 (2026-08-19에 실제로 그럴 뻔했음).
+    색인 여부는 URL 검사 API 결과(docs/data/index_status.json)나
+    Search Console 화면으로 판단하세요. 그래서 아래에서는 이 값을
+    indexedUrlsDeprecated로 이름 붙이고 경고 문구를 함께 실어 보냅니다.
+    """
     try:
         r = requests.get(f"{GSC_API_BASE}/sites/{quote(property_id, safe='')}/sitemaps",
                          headers={"Authorization": f"Bearer {token}"}, timeout=20)
@@ -120,12 +133,21 @@ def sitemap_state(token: str, property_id: str, site_url: str) -> dict:
             "errors": int(s.get("errors", 0) or 0),
             "warnings": int(s.get("warnings", 0) or 0),
             "submittedUrls": submitted,
-            "indexedUrls": indexed,
+            # 이름에 Deprecated를 박아 둔 이유는 위 docstring 참고 — 항상 0입니다
+            "indexedUrlsDeprecated": indexed,
             "isPending": bool(s.get("isPending")),
         })
     never_read = all(not s["lastDownloaded"] for s in out)
-    return {"ok": not never_read, "registered": len(out), "sitemaps": out,
-            "error": "등록됐지만 구글이 한 번도 읽지 않았습니다" if never_read else ""}
+    return {
+        "ok": not never_read,
+        "registered": len(out),
+        "sitemaps": out,
+        # 리포트를 나중에 읽는 사람이 indexedUrlsDeprecated=0을 색인률로
+        # 오해하지 않도록, 데이터 옆에 경고를 붙여 둡니다
+        "note": ("indexedUrlsDeprecated는 구글이 지원 중단한 필드로 항상 0입니다 — "
+                 "색인 여부는 index_status.json(URL 검사)으로 판단하세요"),
+        "error": "등록됐지만 구글이 한 번도 읽지 않았습니다" if never_read else "",
+    }
 
 
 def run() -> dict:

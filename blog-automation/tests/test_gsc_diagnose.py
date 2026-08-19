@@ -114,7 +114,8 @@ def test_healthy_sitemap_reports_counts():
         s = sitemap_state("tok", "sc-domain:a.com", "https://a.com/")
     assert s["ok"] is True
     assert s["sitemaps"][0]["submittedUrls"] == 100
-    assert s["sitemaps"][0]["indexedUrls"] == 80
+    # 구글이 지원을 중단한 필드라 실제로는 늘 0이지만, 값 자체는 그대로 실어 나른다
+    assert s["sitemaps"][0]["indexedUrlsDeprecated"] == 80
 
 
 def test_sitemap_api_error_does_not_raise():
@@ -197,3 +198,32 @@ def test_sample_has_no_duplicates():
     from gsc_indexing import _sample_spread
     picked = _sample_spread(_items(60), 20)
     assert len({p["url"] for p in picked}) == len(picked)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 사이트맵 indexed 필드는 구글이 지원 중단 — 색인률로 읽으면 안 됨
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_deprecated_indexed_field_is_named_and_annotated():
+    """indexedUrls라는 이름으로 두면 다음 사람이 색인률로 오해함."""
+    from gsc_diagnose import sitemap_state
+    payload = {"sitemap": [{
+        "path": "https://a.com/sitemap.xml",
+        "lastDownloaded": "2026-08-19T00:00:00Z",
+        "contents": [{"submitted": "421", "indexed": "0"}],
+    }]}
+    with patch("requests.get", return_value=_resp(200, payload)):
+        s = sitemap_state("tok", "sc-domain:a.com", "https://a.com/")
+    sm = s["sitemaps"][0]
+    assert sm["submittedUrls"] == 421
+    assert sm["indexedUrlsDeprecated"] == 0
+    assert "indexedUrls" not in sm            # 오해를 부르는 옛 이름은 없어야 함
+    assert "지원 중단" in s["note"]
+
+
+def test_note_absent_when_no_sitemap_registered():
+    """등록 자체가 없으면 색인 수 해석 여지도 없음 — 경고는 실제 데이터에만."""
+    from gsc_diagnose import sitemap_state
+    with patch("requests.get", return_value=_resp(200, {"sitemap": []})):
+        s = sitemap_state("tok", "sc-domain:a.com", "https://a.com/")
+    assert "note" not in s

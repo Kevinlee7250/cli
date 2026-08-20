@@ -25,6 +25,7 @@ import argparse
 import json
 import logging
 import os
+import re
 import sys
 from datetime import datetime, timedelta
 
@@ -108,6 +109,15 @@ def prune_terminal(pending: list[dict], keep_days: int = CONTENT_KEEP_DAYS) -> i
 # 2) 대기 글 재검증
 # ──────────────────────────────────────────────────────────────────────────────
 
+def _word_count(entry: dict) -> int:
+    """엔트리의 글자 수. 저장된 값이 없으면 본문에서 태그를 걷어내고 셉니다."""
+    saved = entry.get("wordCount") or entry.get("word_count")
+    if isinstance(saved, (int, float)) and saved > 0:
+        return int(saved)
+    text = re.sub(r"<[^>]+>", "", entry.get("content") or "")
+    return len(text.strip())
+
+
 def _is_unvalidated(result: dict) -> bool:
     """검증기가 실제로 평가하지 못한 결과인지 판별합니다.
 
@@ -147,6 +157,11 @@ def revalidate_pending(pending: list[dict], limit: int = 0) -> dict:
                 "faq": e.get("faq", []),
                 "meta_description": e.get("metaDescription", ""),
                 "sources": e.get("sources", []),
+                # 검증기는 분량을 word_count 키로 읽습니다. 이걸 빼먹으면 0자로
+                # 판정돼 모든 글이 "글자 수 0자 — 분량 미달"로 떨어집니다
+                # (2026-08-20 확인: 재검증 30건 전부 이 이유로 미달 처리됨).
+                # 엔트리에 값이 없으면 본문 태그를 걷어내고 직접 셉니다.
+                "word_count": _word_count(e),
             })
         except Exception as exc:
             logger.warning(f"재검증 실패 '{e.get('title','')[:40]}': {exc}")

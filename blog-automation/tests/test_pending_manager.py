@@ -187,3 +187,41 @@ def test_run_reports_ready_to_publish(tmp_path, monkeypatch):
 
     assert len(report["readyToPublish"]) == 1
     assert report["readyToPublish"][0]["score"] == 95
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 분량 전달 — 빠뜨리면 모든 글이 "0자 미달"로 떨어짐 (2026-08-20 실제 발생)
+# ──────────────────────────────────────────────────────────────────────────────
+
+def test_word_count_uses_saved_value():
+    from pending_manager import _word_count
+    assert _word_count({"wordCount": 3200, "content": "<p>짧음</p>"}) == 3200
+
+
+def test_word_count_falls_back_to_content_without_tags():
+    from pending_manager import _word_count
+    n = _word_count({"content": "<p>가나다</p><div>라마바</div>"})
+    assert n == 6      # 태그를 뺀 실제 글자 수
+
+
+def test_word_count_ignores_zero_saved_value():
+    """저장값이 0이면 신뢰하지 말고 본문에서 세야 함."""
+    from pending_manager import _word_count
+    assert _word_count({"wordCount": 0, "content": "<p>" + "가" * 500 + "</p>"}) == 500
+
+
+def test_revalidate_passes_word_count_to_validator():
+    """이 값이 안 넘어가면 검증기가 0자로 보고 전부 미달 처리함."""
+    from unittest.mock import patch
+    from pending_manager import revalidate_pending
+    captured = {}
+
+    def fake_validate(data):
+        captured.update(data)
+        return {"score": 90, "recommendation": "upload",
+                "checks": {"a": {"note": "ok"}}, "warnings": [], "issues": []}
+
+    entries = [_entry("pending", 5, content="<p>" + "글" * 3000 + "</p>", wordCount=3000)]
+    with patch("adsense_validator.validate_adsense", side_effect=fake_validate):
+        revalidate_pending(entries)
+    assert captured["word_count"] == 3000

@@ -1,136 +1,3 @@
-2026-08-19 10:48:23,190 [INFO] keyword_collector —   [naver_realtime] 2개: ['2026 ETF 투자전략 파킹형 혼합형 연금ETF 비교', '미국 장기금리 상승이 한국 주담대 금리에 미치는 영향']
-2026-08-19 10:48:23,190 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 ETF 투자전략 파킹형 혼합형 연금ETF 비교', '미국 장기금리 상승이 한국 주담대 금리에 미치는 영향']
-2026-08-19 10:48:23,190 [INFO] main — 수집된 키워드 2개: ['2026 ETF 투자전략 파킹형 혼합형 연금ETF 비교', '미국 장기금리 상승이 한국 주담대 금리에 미치는 영향']
-2026-08-19 10:48:23,195 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-08-19 10:48:23,195 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 ETF 투자전략 파킹형 혼합형 연금ETF 비교']
-2026-08-19 10:48:23,215 [INFO] main — 
-[1/1] 키워드: '2026 ETF 투자전략 파킹형 혼합형 연금ETF 비교'
-2026-08-19 10:48:23,215 [INFO] content_generator — 포스트 생성 중: '2026 ETF 투자전략 파킹형 혼합형 연금ETF 비교'
-2026-08-19 10:48:33,195 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:48:33,196 [INFO] research_collector — 검색 의도: 2026년 ETF 투자전략을 세우기 위해 파킹형·혼합형·연금형 ETF의 특징과 수익률, 세제 혜택을 비교하려
-2026-08-19 10:48:45,889 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '2026 ETF 투자전략 파킹형 혼합형 연금ETF 비교'
-2026-08-19 10:49:02,020 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:49:02,021 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '2026 ETF 투자전략 파킹형 혼합형 연금ETF 비교'
-2026-08-19 10:49:13,507 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:49:13,508 [INFO] source_validator — 출처 검증: 1/5개 통과, 등급 분포 {'B': 1, 'X': 4}
-2026-08-19 10:49:13,511 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-19 10:49:15,472 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:50:43,750 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-19 10:50:44,689 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:51:01,935 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-08-19 10:51:02,495 [WARNING] image_fetcher — 이미지 없음: '2026 ETF 투자전략: 파킹형·혼합형·연금ETF, 계좌별로 이렇게 다릅니다'
-2026-08-19 10:51:03,082 [WARNING] image_fetcher — 이미지 없음: 'ETF 투자전략 파킹형'
-2026-08-19 10:51:03,645 [WARNING] image_fetcher — 이미지 없음: 'ETF 투자전략 연금 기준으로 가지'
-2026-08-19 10:51:03,645 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-08-19 10:51:03,645 [INFO] image_fetcher — 제목 썸네일 생성: '2026 ETF 투자전략: 파킹형·혼합형·연금ETF, ' (data URI, 1142B)
-2026-08-19 10:51:04,033 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-08-19 10:51:04,037 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-08-19 10:51:04,038 [INFO] content_generator — 포스트 생성 완료: '2026 ETF 투자전략: 파킹형·혼합형·연금ETF, 계좌별로 이렇게 다릅니다' (2619자, 이미지 1개)
-2026-08-19 10:51:04,892 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:51:27,495 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '2026 ETF 투자전략: 파킹형·혼합형·연금ETF, 계좌별로 '
-2026-08-19 10:51:27,495 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2619자로 기준 충족하나 특정 인물 인용 외에는 일반적 금융 정보 재구성에 가까움
-2026-08-19 10:51:27,495 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개로 기준은 충족하나 세금 관련 섹션 등 일부 단락이 500자 이상으로 길게 이어짐
-2026-08-19 10:51:27,495 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 방송 인용(날짜·소속·성명)은 신뢰도를 높이나 1인칭 직접 경험 서술은 부재
-2026-08-19 10:51:27,495 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장('직접 제작' 표기)만 있고 alt 텍스트 정보 확인 불가
-2026-08-19 10:51:27,495 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '정리하면', '그럼 ~짚어보겠습니다' 등 전형적인 AI 전환 문구와 예고형 구조가 반복됨
-2026-08-19 10:51:27,501 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-19 10:51:27,503 [INFO] internal_linker —   [1/5] '2026년' -> https://hoguasset.blogspot.com/2026/08/2026-etf-70.html
-2026-08-19 10:51:27,509 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-08-19 10:51:27,510 [INFO] main —   제목: 2026 ETF 투자전략: 파킹형·혼합형·연금ETF, 계좌별로 이렇게 다릅니다
-2026-08-19 10:51:27,510 [INFO] main —   이미지: 1개 삽입
-2026-08-19 10:51:27,510 [INFO] main —   글자 수: 2619자
-2026-08-19 10:51:28,412 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:51:45,658 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '2026 ETF 투자전략: 파킹형·혼합형·연금ETF, 계좌별로 '
-2026-08-19 10:51:45,658 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 기준(2619자)은 충족하나 개인 경험이 '알려져 있다'는 식의 모호한 진술뿐이라 실질적 독창성이 부족함
-2026-08-19 10:51:45,658 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 실명·방송사·날짜가 명시된 출처 인용은 좋으나 1인칭 경험 서술이 사실상 없음
-2026-08-19 10:51:45,658 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처 '직접 제작'으로 저작권 문제는 없으나 alt텍스트 등 세부정보 불명확하여 기본 warn
-2026-08-19 10:51:45,658 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: ‘정리하면’, ‘그런데 여기서’ 등 전형적 전환 문구와 도식적 구조가 반복되어 AI 작성 패턴 소지
-2026-08-19 10:51:45,658 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-19 10:51:45,658 [WARNING] main —      🟡 [원본성 및 품질] 글자 수 기준(2619자)은 충족하나 개인 경험이 '알려져 있다'는 식의 모호한 진술뿐이라 실질적 독창성이 부족함
-2026-08-19 10:51:45,658 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 실명·방송사·날짜가 명시된 출처 인용은 좋으나 1인칭 경험 서술이 사실상 없음
-2026-08-19 10:51:45,658 [WARNING] main —      🟡 [이미지 정책] 이미지 출처 '직접 제작'으로 저작권 문제는 없으나 alt텍스트 등 세부정보 불명확하여 기본 warn
-2026-08-19 10:51:45,658 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-19 10:51:47,216 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:53:15,590 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-19 10:53:17,463 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:53:33,236 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2619자 → 3379자 (+760자)
-2026-08-19 10:53:33,236 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-19 10:53:34,499 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:53:51,925 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '2026 ETF 투자전략: 파킹형·혼합형·연금ETF, 계좌별로 '
-2026-08-19 10:53:51,926 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개로 기준은 충족하나 핵심요약과 핵심포인트 박스가 중복 서술되고 일부 단락이 500자 이상으로 다소 김
-2026-08-19 10:53:51,926 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개(직접 제작)만 언급되고 alt 텍스트 정보 확인 불가, 전반적으로 이미지가 적음
-2026-08-19 10:53:51,926 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌 핵심 요약과 💡 핵심 포인트가 거의 동일한 문장으로 중복 반복되어 기계적 요약 패턴이 드러남
-2026-08-19 10:53:51,926 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
-2026-08-19 10:53:51,926 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-08-19 10:53:53,827 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:55:12,936 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-19 10:55:14,714 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:56:28,781 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-19 10:56:30,802 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:56:45,848 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026 ETF 투자전략: 파킹형·혼합형·연금ETF, 계좌별로 이렇게 다릅니다' → '2026 ETF 투자전략, 파킹형·혼합형·연금ETF 계좌별 비교'
-2026-08-19 10:56:45,848 [INFO] final_editor —   ✏️ 메타 설명 교정 (120자)
-2026-08-19 10:56:45,848 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 도입부를 독자 고민형 문장으로 재구성하고 모든 문단을 2~4문장으로 분할했으며, 요약박스·표·개인경험메모·주의사항·FAQ 6개·작성자메모·내부링크 언급을 추가해 발행 형식을 완성했습니다.
-2026-08-19 10:56:45,937 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-19 10:56:45,937 [WARNING] blogger_uploader — [blog3] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
-2026-08-19 10:56:46,027 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
-2026-08-19 10:56:46,041 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-19 10:56:46,042 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '2026 ETF 투자전략 파킹형 혼합형 연금ETF 비교' — 면책·팩트체크 확인 권장
-2026-08-19 10:56:46,042 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-08-19 10:56:47,244 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026-etf-etf.html
-2026-08-19 10:56:47,258 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026-etf-etf.html
-2026-08-19 10:57:23,979 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:57:23,981 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
-2026-08-19 10:57:23,981 [INFO] main —   📱 소셜 콘텐츠 생성 완료
-2026-08-19 10:57:23,990 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '2026 ETF 투자전략, 파킹형·혼합형·연금ETF 계좌별 비교'
-2026-08-19 10:57:25,619 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 10:57:30,452 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리면, 파킹형 ETF는 자유롭게 사고팔 수 있지만 매도 후 실제 계좌에 현금이 들어오는 데 T+2일 정도 걸리는 경우가 많아서...
-2026-08-19 11:00:30,543 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
-  "error": "invalid_client",
-  "error_description": "The OAuth client was not found."
-}
-2026-08-19 11:00:30,543 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
-2026-08-19 11:00:30,544 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-19 11:00:30,544 [INFO] main — 
-============================================================
-2026-08-19 11:00:30,544 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-08-19 11:00:30,544 [INFO] main — ============================================================
-2026-08-19 11:00:30,589 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-19 11:00:30,620 [INFO] dashboard_exporter —   시리즈: 21개 내보내기 완료
-2026-08-19 11:00:30,641 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-19 11:00:30,831 [WARNING] gsc_fetcher — GSC 권한 없음 — 사이트가 Search Console에 등록됐는지 확인하세요
-2026-08-19 11:00:31,131 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-19 11:00:31,133 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-19 11:00:31,136 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-19 11:00:31,152 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 252 / 실패 0 / 대기 32)
-2026-08-19 11:00:31,153 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-19 11:00:31,153 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-19 11:00:31,154 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-19 22:31:54,019 [INFO] main — ============================================================
-2026-08-19 22:31:54,019 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-19 22:31:54
-2026-08-19 22:31:54,019 [INFO] main — ============================================================
-2026-08-19 22:31:54,037 [INFO] keyword_collector — 타 블로그 최근 키워드 10개 중복 방지 코퍼스 합류
-2026-08-19 22:31:54,037 [INFO] keyword_collector — 포스팅 이력 코퍼스: 219개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-08-19 22:31:54,038 [INFO] keyword_collector — 시즌 예약 키워드 9개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
-2026-08-19 22:31:58,534 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-19 22:32:05,050 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-19 22:32:05,090 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-19 22:32:05,091 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-19 22:32:05,591 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-19 22:32:05,761 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-08-19 22:32:05,957 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
-2026-08-19 22:32:05,958 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-19 22:32:05,959 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-08-19 22:32:05,977 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-19 22:32:05,978 [INFO] keyword_collector — 유사 주제 제외 9개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-19 22:32:05,979 [INFO] keyword_collector —   [naver_realtime] 2개: ['여행 특화 신용카드 혜택 비교 2026 항공 숙박 할인', '경기도 숨은 여름 여행지 노을 명소 추천']
-2026-08-19 22:32:05,980 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여행 특화 신용카드 혜택 비교 2026 항공 숙박 할인', '경기도 숨은 여름 여행지 노을 명소 추천']
-2026-08-19 22:32:05,980 [INFO] main — 수집된 키워드 2개: ['여행 특화 신용카드 혜택 비교 2026 항공 숙박 할인', '경기도 숨은 여름 여행지 노을 명소 추천']
-2026-08-19 22:32:05,985 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-08-19 22:32:05,985 [INFO] main — 단독 포스트 대상 키워드 1개: ['여행 특화 신용카드 혜택 비교 2026 항공 숙박 할인']
 2026-08-19 22:32:06,005 [INFO] main — 
 [1/1] 키워드: '여행 특화 신용카드 혜택 비교 2026 항공 숙박 할인'
 2026-08-19 22:32:06,005 [INFO] content_generator — 포스트 생성 중: '여행 특화 신용카드 혜택 비교 2026 항공 숙박 할인'
@@ -631,3 +498,136 @@
 2026-08-20 03:56:00,341 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-08-20 03:56:00,341 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
 2026-08-20 03:56:00,342 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-20 03:56:36,618 [INFO] main — ============================================================
+2026-08-20 03:56:36,618 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-20 03:56:36
+2026-08-20 03:56:36,618 [INFO] main — ============================================================
+2026-08-20 03:56:36,635 [INFO] keyword_collector — 타 블로그 최근 키워드 12개 중복 방지 코퍼스 합류
+2026-08-20 03:56:36,635 [INFO] keyword_collector — 포스팅 이력 코퍼스: 203개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-08-20 03:56:36,636 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-20 03:56:42,646 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-08-20 03:56:52,405 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 03:56:52,432 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-20 03:56:52,432 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-20 03:56:53,280 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-20 03:56:53,281 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-20 03:56:53,282 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
+2026-08-20 03:56:53,293 [INFO] keyword_collector — 유사 주제 제외 7개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '골프 비기너 첫 필드 나가기 전 준비 체크리스트', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-20 03:56:53,293 [INFO] keyword_collector —   [naver_realtime] 2개: ['가을 시즌 마트 아울렛 세일 정보 총정리', 'OTT 구독료 절약하는 방법 비교']
+2026-08-20 03:56:53,293 [INFO] keyword_collector — 최종 선정 키워드 2개: ['가을 시즌 마트 아울렛 세일 정보 총정리', 'OTT 구독료 절약하는 방법 비교']
+2026-08-20 03:56:53,293 [INFO] main — 수집된 키워드 2개: ['가을 시즌 마트 아울렛 세일 정보 총정리', 'OTT 구독료 절약하는 방법 비교']
+2026-08-20 03:56:53,299 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
+2026-08-20 03:56:53,299 [INFO] main — 단독 포스트 대상 키워드 1개: ['가을 시즌 마트 아울렛 세일 정보 총정리']
+2026-08-20 03:56:53,317 [INFO] main — 
+[1/1] 키워드: '가을 시즌 마트 아울렛 세일 정보 총정리'
+2026-08-20 03:56:53,317 [INFO] content_generator — 포스트 생성 중: '가을 시즌 마트 아울렛 세일 정보 총정리'
+2026-08-20 03:57:00,974 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 03:57:00,975 [INFO] research_collector — 검색 의도: 가을 시즌에 진행되는 마트 및 아울렛의 세일 정보를 한눈에 파악하고 싶은 소비자의 정보 탐색 의도
+2026-08-20 03:57:16,189 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '가을 시즌 마트 아울렛 세일 정보 총정리'
+2026-08-20 03:57:23,874 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 03:57:23,875 [INFO] evidence_builder — 자료팩 생성: 사실 2개 — '가을 시즌 마트 아울렛 세일 정보 총정리'
+2026-08-20 03:57:28,772 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 03:57:28,773 [INFO] source_validator — 출처 검증: 2/2개 통과, 등급 분포 {'C': 2}
+2026-08-20 03:57:28,775 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-08-20 03:57:28,775 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-20 03:57:29,531 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 03:59:00,335 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-20 03:59:04,024 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 03:59:30,660 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
+2026-08-20 03:59:30,861 [INFO] image_fetcher — 이미지 수집 성공: '가을 시즌 마트 아울렛 세일, 골프·스포츠용품은 얼마나 저렴해질까' → 제목='golf / autumn / par 3 / green / louis hi' (관련성=0.18)
+2026-08-20 03:59:31,004 [INFO] image_fetcher — 이미지 수집 성공: '가을 시즌 마트' → 제목='autumn / leaves / foliage / autumn leave' (관련성=0.25)
+2026-08-20 03:59:31,163 [INFO] image_fetcher — 이미지 수집 성공: '가을 시즌 정기세일이란 정확히 정기세일 유통업체' → 제목='trees / avenue / fall / path / mood / ou' (관련성=0.14)
+2026-08-20 03:59:35,336 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 03:59:35,338 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
+2026-08-20 03:59:35,338 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-08-20 03:59:35,341 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-08-20 03:59:35,343 [INFO] content_generator — 포스트 생성 완료: '가을 시즌 마트 아울렛 세일, 골프·스포츠용품은 얼마나 저렴해질까' (3258자, 이미지 1개)
+2026-08-20 03:59:38,325 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 04:00:02,741 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-20 04:00:03,608 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 04:00:07,505 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '가을 시즌 마트 아울렛 세일, 골프·스포츠용품은 얼마나 저렴해질'
+2026-08-20 04:00:07,506 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3258자로 분량은 충족하나 2024년 보도자료 재구성이 중심이며 개인 경험은 도입부 수준에 그침
+2026-08-20 04:00:07,506 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 본문 중 문장 중복 오류로 가독성 저하
+2026-08-20 04:00:07,506 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 2026년 미확정 사실을 명시한 점은 긍정적이나 출처 인용이 '보도가 있었습니다' 수준으로 모호함
+2026-08-20 04:00:07,506 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장, Pixabay 라이선스 명시로 저작권 문제는 없으나 이미지 수가 적음
+2026-08-20 04:00:07,506 [INFO] adsense_validator —   ❌ AI 생성 의심도: 문장 중복 오류(동일 내용 반복 서술)와 '그럼~보겠습니다' 전환구 반복 패턴이 AI 생성 흔적을 강하게 시사
+2026-08-20 04:00:07,506 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 문장 중복 오류(동일 내용 반복 서술)와 '그럼~보겠습니다' 전환구 반복 패턴이 AI 생성 흔적을 강하게 시사
+2026-08-20 04:00:07,506 [WARNING] adsense_validator —   🔴 본문 중 문장이 중복/오류로 삽입된 부분 존재(예: '풀리는 경우가 있다는 반응이 보입니다 풀리는 경우가 많다는 반응이 자주 보입니다') - 즉시 수정 필요
+2026-08-20 04:00:07,512 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-20 04:00:07,514 [INFO] internal_linker —   [1/5] '저렴하게' -> https://www.hoguwhat.com/2026/08/blog-post_19.html
+2026-08-20 04:00:07,521 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-08-20 04:00:07,521 [INFO] main —   제목: 가을 시즌 마트 아울렛 세일, 골프·스포츠용품은 얼마나 저렴해질까
+2026-08-20 04:00:07,521 [INFO] main —   이미지: 1개 삽입
+2026-08-20 04:00:07,521 [INFO] main —   글자 수: 3258자
+2026-08-20 04:00:08,546 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 04:00:30,533 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '가을 시즌 마트 아울렛 세일, 골프·스포츠용품은 얼마나 저렴해질'
+2026-08-20 04:00:30,533 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 3258자로 분량은 충족하나 2024년 보도 재구성이 중심이라 개인 고유 경험·수치 근거가 얕음
+2026-08-20 04:00:30,533 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개는 pass 조건이나 일부 단락이 500자 이상으로 길게 이어짐
+2026-08-20 04:00:30,533 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 1인칭 도입부와 출처 1개는 있으나 구체적 출처 링크·전문성 신호 부족
+2026-08-20 04:00:30,533 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개 사용되나 alt텍스트 명시 여부 불명확
+2026-08-20 04:00:30,533 [INFO] adsense_validator —   ❌ AI 생성 의심도: 본문 중 '풀리는 경우가 있다는 반응이 보입니다 풀리는 경우가 많다는 반응이 자주 보입니다' 등 명백한 AI 생성 중복 오류 발견
+2026-08-20 04:00:30,533 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 본문 중 '풀리는 경우가 있다는 반응이 보입니다 풀리는 경우가 많다는 반응이 자주 보입니다' 등 명백한 AI 생성 중복 오류 발견
+2026-08-20 04:00:30,533 [WARNING] adsense_validator —   🔴 본문 중 문장이 중복 삽입된 오류가 있어 AI 자동생성 흔적이 뚜렷함 (교정 필요)
+2026-08-20 04:00:30,533 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
+2026-08-20 04:00:30,533 [WARNING] main —      🔴 [AI 생성 의심도] 본문 중 '풀리는 경우가 있다는 반응이 보입니다 풀리는 경우가 많다는 반응이 자주 보입니다' 등 명백한 AI 생성 중복 오류 발견
+2026-08-20 04:00:30,533 [WARNING] main —      🔴 본문 중 문장이 중복 삽입된 오류가 있어 AI 자동생성 흔적이 뚜렷함 (교정 필요)
+2026-08-20 04:00:30,533 [WARNING] main —      🟡 [원본성 및 품질] 3258자로 분량은 충족하나 2024년 보도 재구성이 중심이라 개인 고유 경험·수치 근거가 얕음
+2026-08-20 04:00:30,534 [WARNING] main —      🟡 [구조 및 가독성] H2 7개는 pass 조건이나 일부 단락이 500자 이상으로 길게 이어짐
+2026-08-20 04:00:30,534 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 1인칭 도입부와 출처 1개는 있으나 구체적 출처 링크·전문성 신호 부족
+2026-08-20 04:00:30,534 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
+2026-08-20 04:00:32,052 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 04:01:51,537 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-20 04:01:52,362 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 04:02:18,438 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3258자 → 4311자 (+1053자)
+2026-08-20 04:02:18,438 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-20 04:02:20,211 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 04:02:45,785 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-20 04:02:46,683 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 04:02:52,162 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '가을 시즌 마트 아울렛 세일, 골프·스포츠용품은 얼마나 저렴해질'
+2026-08-20 04:02:52,162 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처는 적법하나 이미지 1장뿐이고 alt 텍스트 명시 여부 불확실
+2026-08-20 04:02:52,162 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 67 → 95/100)
+2026-08-20 04:02:52,162 [INFO] main —   ✅ AdSense 검증 통과 (점수: 95/100) — 업로드
+2026-08-20 04:02:52,926 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 04:04:09,639 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-08-20 04:04:10,506 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 04:05:14,437 [INFO] final_editor —   ✏️ 제목 최종 교정: '가을 시즌 마트 아울렛 세일, 골프·스포츠용품은 얼마나 저렴해질까' → '가을 시즌 마트 아울렛 세일 정보 총정리와 골프용품 할인'
+2026-08-20 04:05:14,437 [INFO] final_editor —   ✏️ 메타 설명 교정 (143자)
+2026-08-20 04:05:14,437 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 본문 문단을 2~4문장 단위로 재구성하고 표를 완성했으며, 방문 전 체크리스트 섹션과 FAQ 5개, 주의사항·작성자 메모·내부 링크 언급을 신규 추가해 발행 가능한 형태로 마무리했습니다.
+2026-08-20 04:05:14,522 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-20 04:05:14,522 [WARNING] blogger_uploader — [blog2] 블로그별 OAuth 크리덴셜 실패 — 기본 GOOGLE_* Secret으로 폴백 시도
+2026-08-20 04:05:14,625 [WARNING] blogger_uploader — ⚠️ 기본 크리덴셜로 발급 성공 — BLOGS_CONFIG Secret의 client_id/client_secret/refresh_token 값을 점검하세요 (invalid_client)
+2026-08-20 04:05:14,640 [INFO] related_posts — 관련 포스트 2개 섹션 생성
+2026-08-20 04:05:14,640 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-08-20 04:05:15,543 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post_20.html
+2026-08-20 04:05:15,555 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/08/blog-post_20.html
+2026-08-20 04:05:51,537 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 04:05:51,538 [INFO] social_publisher — 소셜 콘텐츠 생성 완료: IG + Threads(5개) + TikTok(5씬)
+2026-08-20 04:05:51,538 [INFO] main —   📱 소셜 콘텐츠 생성 완료
+2026-08-20 04:05:51,547 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '가을 시즌 마트 아울렛 세일 정보 총정리와 골프용품 할인'
+2026-08-20 04:05:53,801 [INFO] httpx — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-20 04:05:59,584 [INFO] comment_manager —   생성된 댓글: 세일 시작 전날 미리 매장에 전화해서 원하는 사이즈 재고가 있는지 확인하고, 가능하면 '방문 예약'이나 '온라인 픽업' 서비스를 이용하면 오픈런...
+2026-08-20 04:08:59,700 [ERROR] comment_manager — 토큰 발급 실패 [401]: {
+  "error": "invalid_client",
+  "error_description": "The OAuth client was not found."
+}
+2026-08-20 04:08:59,701 [WARNING] comment_manager —   OAuth 토큰 없음 — 큐잉
+2026-08-20 04:08:59,702 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-20 04:08:59,702 [INFO] main — 
+============================================================
+2026-08-20 04:08:59,702 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-08-20 04:08:59,702 [INFO] main — ============================================================
+2026-08-20 04:08:59,741 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
+2026-08-20 04:08:59,772 [INFO] dashboard_exporter —   시리즈: 21개 내보내기 완료
+2026-08-20 04:08:59,820 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-20 04:09:00,112 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-08-20 04:09:00,892 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
+2026-08-20 04:09:01,372 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-20 04:09:01,374 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-20 04:09:01,376 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-20 04:09:01,393 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 256 / 실패 0 / 대기 28)
+2026-08-20 04:09:01,393 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-20 04:09:01,393 [INFO] dashboard_exporter —   포스트: 101개 / 실행 이력: 100개 / 블로그: 3개
+2026-08-20 04:09:01,394 [INFO] main — 대시보드 데이터 업데이트 완료

@@ -67,13 +67,16 @@ jobs:
           # 색인 요청은 자동화할 수 없으므로(웹 UI 전용·하루 10건),
           # 무엇을 먼저 넣을지 우선순위만 뽑아 둡니다
           python index_priority.py
+          # 내부 링크 구조 진단 (읽기 전용) — 들어오는 링크가 0개인 고아 페이지는
+          # "Discovered - currently not indexed"의 대표적 원인입니다
+          python internal_link_audit.py
 
       - name: 리포트 커밋 & 푸시
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f docs/data/index_status.json docs/data/gsc_diagnosis.json docs/data/index_priority.json 2>/dev/null || true
+          git add -f docs/data/index_status.json docs/data/gsc_diagnosis.json docs/data/index_priority.json docs/data/internal_links.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else

@@ -1621,6 +1621,16 @@
     </p>
     <div id="gsc-diagnosis-wrap" style="margin-bottom:14px"></div>
     <div id="index-priority-wrap" style="margin-bottom:14px"></div>
+
+    <!-- 내부 링크 구조 — 고아 페이지(들어오는 링크 0개) -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>🔗 내부 링크 구조</h2>
+      <div style="display:flex;gap:8px">
+        <button onclick="inboundLinksRun(true)" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 미리보기</button>
+        <button onclick="inboundLinksRun(false)" style="padding:6px 14px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer;font-weight:600">🔗 링크 생성</button>
+      </div>
+    </div>
+    <div id="internal-links-wrap" style="margin-bottom:28px"></div>
     <div id="index-status-wrap" style="margin-bottom:28px">
       <div style="color:var(--muted);font-size:13px;padding:16px;text-align:center;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)">색인 데이터를 로드하려면 새로고침을 누르세요. 첫 리포트는 다음 색인 점검 실행 후 생성됩니다.</div>
     </div>
@@ -5620,9 +5630,62 @@ async function loadIndexPriority() {
     </div>`
 }
 
+// ── 내부 링크 구조 — 고아 페이지 현황 ────────────────────────────────────────
+async function loadInternalLinks() {
+  const wrap = document.getElementById('internal-links-wrap')
+  if (!wrap) return
+  let d = null
+  try {
+    const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
+    const r = await fetch(`${base}/internal_links.json?t=${Date.now()}`)
+    if (r.ok) d = await r.json()
+  } catch {}
+  if (!d || !d.totalPosts) {
+    wrap.innerHTML = `<div style="color:var(--muted);font-size:13px;padding:16px;text-align:center;border:1px dashed var(--border);border-radius:12px">아직 진단 기록이 없습니다 — 색인 점검이 실행되면 생성됩니다</div>`
+    return
+  }
+  const rows = (d.orphans || []).slice(0, 10).map(o => `
+    <div style="padding:6px 12px;background:rgba(255,255,255,.03);border-radius:8px;margin-bottom:4px;font-size:12px">
+      <span style="color:var(--muted);font-size:11px">${esc(o.published || '')}</span>
+      ${esc(o.title || '')}
+      <span style="color:var(--muted);font-size:11px">· ${esc(o.blog || '')}</span>
+    </div>`).join('')
+  const byBlog = Object.entries(d.byBlog || {}).map(([b, v]) =>
+    `<span style="margin-right:12px">${esc(b)} <strong>${v.orphans}</strong>/${v.posts}</span>`).join('')
+  wrap.innerHTML = `
+    <div style="padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.02)">
+      <div style="font-size:13px;margin-bottom:6px">
+        발행 ${d.totalPosts}건 중 <strong style="color:#f59e0b">고아 ${d.orphanCount}건 (${d.orphanRate}%)</strong>
+        <span style="color:var(--muted);font-size:12px">· 인바운드 평균 ${d.avgInbound} / 최대 ${d.maxInbound}</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px">${byBlog}</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.6">
+        고아 = 사이트 안에서 아무도 가리키지 않는 글. 구조상 개선 대상이지만,
+        색인과의 인과는 아직 확인되지 않았습니다(검사 표본이 전부 미색인).
+      </div>
+      ${rows}
+    </div>`
+}
+
+async function inboundLinksRun(dryRun = true) {
+  const pat = getPAT()
+  if (!pat) { showToast('PAT를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
+  const raw = prompt(`이번 실행에서 처리할 고아 글 수 (1~30)` +
+    (dryRun ? '\n※ 미리보기 — 글을 수정하지 않고 대상만 확인합니다' : ''), '10')
+  if (raw === null) return
+  const limit = Math.min(30, Math.max(1, parseInt(raw, 10) || 10))
+  if (!dryRun && !confirm(
+      `고아 글 ${limit}건에 들어오는 링크를 만듭니다.\n` +
+      `기존 발행 글의 본문이 수정되며 Blogger에 즉시 반영됩니다. 진행할까요?`)) return
+  wfDispatchGeneric('inbound-links.yml',
+    { apply: dryRun ? 'false' : 'true', limit: String(limit), blog_id: '' },
+    dryRun ? '역방향 링크 미리보기' : '역방향 링크 생성', 10)
+}
+
 async function loadIndexStatus() {
   loadGscDiagnosis()
   loadIndexPriority()
+  loadInternalLinks()
   const wrap = document.getElementById('index-status-wrap')
   if (!wrap) return
   let data = null

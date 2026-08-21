@@ -1,16 +1,59 @@
 name: 대시보드 GitHub Pages 배포
 
 on:
-  # blog-run.yml 완료 후 자동 배포
+  # docs/data/** 를 쓰는 워크플로가 끝나면 배포합니다.
+  #
+  # 아래 push 트리거만으로는 충분하지 않습니다. GitHub Actions가 기본
+  # GITHUB_TOKEN으로 만든 커밋은 다른 워크플로를 트리거하지 않기 때문입니다
+  # (무한 루프 방지를 위한 GitHub의 의도된 동작). 그래서 자동화가 만든
+  # 데이터 커밋은 push 조건을 영원히 만족시키지 못하고, 대시보드는 blog-run이
+  # 돌 때까지 낡은 값을 보여줍니다 — 이미지 검증 결과가 09:21에 커밋됐는데
+  # 화면은 08:16에 머물러 있던 이유입니다 (2026-08-21 확인).
+  #
+  # workflow_run은 커밋이 아니라 "워크플로 완료"에 반응하므로 토큰과 무관하게
+  # 동작합니다. 데이터를 쓰는 워크플로를 추가하면 여기에도 이름을 넣으세요.
   workflow_run:
-    workflows: ["블로그 자동화 실행"]
+    workflows:
+      - "블로그 자동화 실행"
+      - "🖼️ 게시글 이미지 검증"
+      - "🔍 구글 색인 점검 (사이트맵 제출 + 색인 상태)"
+      - "🔗 역방향 내부 링크 (고아 페이지 해소)"
+      - "🧹 검토 대기 글 정리·재검증"
+      - "🔎 AdSense 승인 감사·보완"
+      - "📋 AdSense 정책 자동 업데이트"
+      - "🚨 운영 알림 워치독"
+      - "🔧 시스템 자동 수리"
+      - "☁️ Google Drive 자동 백업"
+      - "📊 Blog Analytics — Grade & Revenue"
+      - "링크 클러스터 빌드"
+      - "💬 블로그 댓글 자동화"
+      - "블로그 최적화 (주 1회 — GSC CTR 개선)"
+      - "스케줄 모니터링 (실행 이력 수집 + 실패 알림)"
+      - "사이트맵 생성 (블로그 포스트 업데이트 후 자동 실행)"
+      - "게시 완료글 검증 + 자동 재게시"
+      - "🤖 시스템 관리봇 응답"
+      - "🗑️ 저성과 등급 글 삭제 (S/A/B/C)"
+      - "✨ FAQ·출처 자동 보강"
+      - "🔗 죽은 링크 스캔·수정 (AdSense 탐색 정책)"
+      - "🖼️ 중복 이미지 교체 (발행 글 일괄)"
+      - "🔄 AdSense 미달 포스트 일괄 수정"
+      - "🔒 무단 이미지 교체"
+      - "수동 포스트 게시"
+      - "📦 구주제 글 이전·보관"
+      - "📋 포스트 단건 관리 (발행·보관·삭제·복원)"
+      - "📅 시리즈 발행 예약 처리"
+      - "🎬 쇼츠 스크립트 생성"
+      - "✍️ 블로그별 주제 글 작성 (일회성)"
+      - "🔥 트렌드 선점 발행 감지"
+      - "📋 주간 운영 브리핑"
+      - "주간 학습 및 시스템 점검"
     types: [completed]
     branches: [claude/blog-automation-system-KAbtE]
 
   # 수동 배포
   workflow_dispatch:
 
-  # docs/ 변경 시 즉시 배포
+  # 사람이 docs/를 직접 고쳤을 때 (자동화 커밋은 위 workflow_run이 담당)
   push:
     branches: [claude/blog-automation-system-KAbtE]
     paths:
@@ -28,8 +71,10 @@ concurrency:
 
 jobs:
   deploy:
-    # workflow_run 트리거는 blog-run 성공 시에만 배포 (push/dispatch는 항상 배포)
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    # 취소된 실행에는 반응하지 않되, 실패한 실행에는 배포합니다. 워크플로가
+    # 중간에 실패해도 그때까지 커밋된 데이터는 보여주는 편이 낫고, 특히
+    # 실패 알림·진단 결과는 실패했을 때 봐야 하는 값입니다.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion != 'cancelled'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

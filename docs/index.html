@@ -4946,6 +4946,11 @@ function _wfErrMsg(status, rawText = '') {
   if (status === 404) {
     return '워크플로를 찾을 수 없습니다(404) — 워크플로 파일이 기본 브랜치에 등록돼 있는지 확인해 주세요.'
   }
+  if (status >= 500) {
+    return `GitHub 서버 오류 (${status}) — 저장소나 워크플로 문제가 아니라 GitHub 쪽 ` +
+           `일시 장애일 가능성이 높습니다. 잠시 뒤 다시 눌러 보시고, 계속되면 ` +
+           `githubstatus.com을 확인하세요. ${rawText.slice(0, 100)}`
+  }
   return `실행 실패 (${status}): ${rawText.slice(0, 100)}`
 }
 
@@ -8324,17 +8329,39 @@ function apiKeyClear(id) {
 
 // ── 자동 수리 워크플로우 실행 ─────────────────────────────────────────────────
 // 범용 워크플로 dispatch — 관리봇/버튼 액션에서 공용으로 사용
-function wfDispatchGeneric(file, inputs, label, minutes = 3) {
+async function wfDispatchGeneric(file, inputs, label, minutes = 3) {
   const pat = getPAT()
   if (!pat) { showToast('GitHub PAT가 필요합니다 (실행 제어 탭에서 설정)', 'error'); navTo('run'); return }
-  fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${file}/dispatches`, {
+  const url = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${file}/dispatches`
+  const opts = {
     method: 'POST',
     headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ ref: GH_BRANCH, inputs: inputs || {} }),
-  }).then(r => {
-    if (r.status === 204) showToast(`${label} 실행 시작됨 (약 ${minutes}분 소요)`, 'success')
-    else showToast(_wfErrMsg(r.status), 'error')
-  }).catch(() => showToast('네트워크 오류', 'error'))
+  }
+  // 5xx는 GitHub 쪽 일시 장애라 한 번 더 시도합니다. 그래도 실패하면 응답
+  // 본문을 함께 보여줍니다 — 예전에는 상태 코드만 띄워서 "실행 실패 (500)"
+  // 외에 아무 단서도 남지 않았습니다 (2026-08-21).
+  for (let attempt = 0; attempt < 2; attempt++) {
+    let r
+    try {
+      r = await fetch(url, opts)
+    } catch {
+      showToast('네트워크 오류', 'error')
+      return
+    }
+    if (r.status === 204) {
+      showToast(`${label} 실행 시작됨 (약 ${minutes}분 소요)`, 'success')
+      return
+    }
+    if (r.status >= 500 && attempt === 0) {
+      showToast(`GitHub 일시 오류 (${r.status}) — 다시 시도합니다`, 'error')
+      await new Promise(res => setTimeout(res, 2000))
+      continue
+    }
+    const body = await r.text().catch(() => '')
+    showToast(_wfErrMsg(r.status, body), 'error')
+    return
+  }
 }
 
 function wfRunAutoRepair(dryRun = false) {

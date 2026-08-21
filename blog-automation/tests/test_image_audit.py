@@ -277,3 +277,37 @@ def test_readable_filename_still_drives_the_score():
 def test_is_informative_rejects_pure_hash():
     assert image_audit._is_informative("ga5f45e80d7217b99888f565ea03eb3ca") is False
     assert image_audit._is_informative("여행 카드") is True
+
+
+# ── 한국어 조사·복합어 대조 (2026-08-21 suspect 오탐) ────────────────────────
+# 대조 근거를 화면에 찍어 보고서야 드러난 문제입니다. _core_terms가 "비교로"의
+# 조사를 못 떼고, "카드사"가 alt의 "카드"와 매칭되지 않아 관련 있는 이미지가
+# 0.0을 받았습니다.
+
+_CARD_TITLE = "카드사 여행 혜택 비교로 항공권·호캉스 카드 고르는 법"
+
+
+def test_korean_particle_does_not_block_match():
+    assert image_audit._term_hits("비교로", "카드 비교 정리") is True
+
+
+def test_compound_noun_matches_its_stem():
+    assert image_audit._term_hits("카드사", "신용 카드 이미지") is True
+
+
+def test_stem_must_stay_at_least_two_chars():
+    # "여행"에서 한 자를 떼면 "여" 하나만 남으므로 그런 매칭은 하지 않습니다
+    assert image_audit._term_hits("여행", "여수 밤바다") is False
+
+
+def test_related_korean_alt_escapes_suspect_threshold():
+    img = {"url": "https://pixabay.com/get/ga5f45e80d_1280.jpg",
+           "alt": "해외 결제 시 발생하는 카드 수수료 구조를 보여주는 영수증과 카드"}
+    assert image_audit.relevance_score(img, _CARD_TITLE) >= image_audit.RELEVANCE_SUSPECT
+
+
+def test_english_alt_against_korean_title_stays_suspect():
+    """언어가 다르면 부분 문자열로는 판단할 수 없습니다 — AI 판정 대상입니다."""
+    img = {"url": "https://pixabay.com/get/gb029af834b_1280.jpg",
+           "alt": "checklist document signing"}
+    assert image_audit.relevance_score(img, _CARD_TITLE) < image_audit.RELEVANCE_SUSPECT

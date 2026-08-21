@@ -162,6 +162,27 @@ def _is_informative(haystack: str) -> bool:
     return False
 
 
+def _term_hits(term: str, haystack: str) -> bool:
+    """핵심어가 이미지 설명에 나타나는지 — 어미 한두 자를 떼어 가며 봅니다.
+
+    한국어는 조사가 붙어 오는데 image_fetcher._TRAILING_JOSA에는 "로"가
+    없어 "비교로" 같은 형태가 그대로 남습니다. 그 함수는 이미지 검색에도
+    쓰여서 조사를 늘리면 "고속도로 → 고속도" 같은 부작용이 나므로, 대조하는
+    쪽에서 어간을 줄여가며 맞춰봅니다. "카드사"가 alt의 "카드"와 맞는 것도
+    같은 이유로 필요합니다 (2026-08-21 오탐 확인).
+
+    맞는 쪽으로 관대한 게 안전합니다 — 놓친 관련성은 이미지를 남기지만,
+    놓친 매칭은 멀쩡한 이미지를 삭제 후보로 만듭니다.
+    """
+    if not term:
+        return False
+    t = term.lower()
+    for end in (len(t), len(t) - 1, len(t) - 2):
+        if end >= 2 and t[:end] in haystack:
+            return True
+    return False
+
+
 def relevance_score(img: dict, title: str, keyword: str = "") -> float:
     """0.0~1.0. 이미지 정보와 글 주제가 겹치는 정도.
 
@@ -186,7 +207,7 @@ def relevance_score(img: dict, title: str, keyword: str = "") -> float:
         # suspect로 잡히고, --ai를 돌려도 Claude가 보는 건 같은 해시뿐이라
         # 근거 없이 "무관"이 확정될 수 있습니다 (2026-08-21 15건 확인).
         return 1.0
-    hits = sum(1 for t in terms if t and t.lower() in haystack)
+    hits = sum(1 for t in terms if _term_hits(t, haystack))
     return round(hits / len(terms), 3)
 
 

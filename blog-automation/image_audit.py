@@ -235,6 +235,8 @@ def judge_with_ai(img: dict, title: str, excerpt: str) -> tuple[bool, str]:
 
 def audit_post(post: dict, use_ai: bool = False) -> dict:
     """글 하나를 검사해 문제 목록을 돌려줍니다 (변경하지 않음)."""
+    from image_fetcher import _core_terms
+
     content = post.get("content", "")
     title = post.get("title", "")
     images = extract_images(content)
@@ -264,9 +266,15 @@ def audit_post(post: dict, use_ai: bool = False) -> dict:
             issues.append({"type": "irrelevant", "url": img["url"],
                            "detail": f"AI 판정: {reason}", "score": score})
         else:
+            # 무엇과 무엇을 대조해 낮게 나왔는지 남깁니다. 이게 없으면 점수만
+            # 보고 원인을 추측하게 되는데, 실제로 그러다 "alt가 비어 있다"고
+            # 잘못 단정한 적이 있습니다 (2026-08-21).
             issues.append({"type": "suspect", "url": img["url"],
                            "detail": f"관련성 낮음 (점수 {score}) — --ai로 확정 판정",
-                           "score": score})
+                           "score": score,
+                           "alt": img.get("alt", ""),
+                           "imageTerms": _image_terms(img)[:120],
+                           "postTerms": _core_terms(f"{title} {post.get('keyword', '')}", 6)})
 
     return {"title": title[:70], "url": post.get("url", ""),
             "images": len(images), "needed": need, "issues": issues}

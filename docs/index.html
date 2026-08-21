@@ -5672,6 +5672,10 @@ async function loadImageAudit() {
       <div style="font-size:11px;color:#f59e0b;margin-top:2px">
         ${(p.issues || []).map(i => esc(`${_IMG_ISSUE_LABEL[i.type] || i.type}: ${i.detail || ''}`)).join(' · ')}
       </div>
+      ${(p.issues || []).filter(i => i.imageTerms !== undefined).map(i => `
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">
+          대조: 이미지 「${esc(i.imageTerms || '(정보 없음)')}」 ↔ 글 「${esc((i.postTerms || []).join(', '))}」
+        </div>`).join('')}
       ${(p.actions || []).length ? `<div style="font-size:11px;color:var(--green);margin-top:2px">${(p.actions || []).map(esc).join(' / ')}</div>` : ''}
     </div>`).join('')
   wrap.innerHTML = `

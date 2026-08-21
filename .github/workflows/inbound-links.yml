@@ -1,0 +1,104 @@
+name: 🔗 역방향 내부 링크 (고아 페이지 해소)
+
+on:
+  # 매주 토요일 오전 8시 KST (UTC 금요일 23:00) — 다른 주간 작업과 분산
+  schedule:
+    - cron: '0 23 * * 5'
+
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: '실제 반영 (끄면 대상만 확인 — 글을 수정하지 않음)'
+        type: boolean
+        required: false
+        default: false
+      limit:
+        description: '이번 실행에서 처리할 고아 글 수'
+        required: false
+        default: '10'
+      blog_id:
+        description: '특정 블로그만 (blog1/blog2/blog3, 비우면 전체)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: inbound-links
+  cancel-in-progress: false
+
+jobs:
+  link:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: 고아 페이지 현황 갱신
+        working-directory: blog-automation
+        run: |
+          # 링크를 만들기 전에 최신 고아 목록이 필요합니다 (읽기 전용)
+          python internal_link_audit.py
+
+      - name: 역방향 링크 생성
+        working-directory: blog-automation
+        run: |
+          ARGS="--limit ${{ inputs.limit || '10' }}"
+          if [ -n "${{ inputs.blog_id }}" ]; then
+            ARGS="$ARGS --blog ${{ inputs.blog_id }}"
+          fi
+          # 스케줄 실행은 반영, 수동 실행은 명시적으로 켤 때만 반영합니다.
+          # 발행된 글을 수정하는 작업이므로 기본값을 미리보기로 둡니다.
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.apply }}" = "true" ]; then
+            ARGS="$ARGS --apply"
+          else
+            echo "=== 미리보기 모드 (글을 수정하지 않음) ==="
+          fi
+          echo "실행 인자: $ARGS"
+          python inbound_linker.py $ARGS
+
+      - name: 리포트 커밋 & 푸시
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # docs/.gitignore(npm/cli 템플릿)가 docs/* 를 무시하므로 -f 필요
+          git add -f docs/data/inbound_links.json docs/data/internal_links.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "🔗 역방향 내부 링크 (#${{ github.run_number }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE && break
+              sleep $((i * 3))
+            done
+          fi

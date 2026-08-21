@@ -1622,6 +1622,17 @@
     <div id="gsc-diagnosis-wrap" style="margin-bottom:14px"></div>
     <div id="index-priority-wrap" style="margin-bottom:14px"></div>
 
+    <!-- 게시글 이미지 검증 -->
+    <div class="section-header" style="margin-bottom:12px">
+      <h2>🖼️ 게시글 이미지 검증</h2>
+      <div style="display:flex;gap:8px">
+        <button onclick="imageAuditRun(true, false)" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 검사만</button>
+        <button onclick="imageAuditRun(true, true)" style="padding:6px 14px;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3);border-radius:8px;color:#a78bfa;font-size:12px;cursor:pointer">🤖 AI 관련성 판정</button>
+        <button onclick="imageAuditRun(false, false)" style="padding:6px 14px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.35);border-radius:8px;color:var(--yellow);font-size:12px;cursor:pointer;font-weight:600">🛠️ 수정 실행</button>
+      </div>
+    </div>
+    <div id="image-audit-wrap" style="margin-bottom:28px"></div>
+
     <!-- 내부 링크 구조 — 고아 페이지(들어오는 링크 0개) -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>🔗 내부 링크 구조</h2>
@@ -5630,6 +5641,74 @@ async function loadIndexPriority() {
     </div>`
 }
 
+// ── 게시글 이미지 검증 ───────────────────────────────────────────────────────
+const _IMG_ISSUE_LABEL = {
+  missing: '이미지 없음', insufficient: '이미지 부족',
+  broken: '링크 깨짐', irrelevant: '내용과 무관', suspect: '관련성 의심',
+}
+
+async function loadImageAudit() {
+  const wrap = document.getElementById('image-audit-wrap')
+  if (!wrap) return
+  let d = null
+  try {
+    const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
+    const r = await fetch(`${base}/image_audit.json?t=${Date.now()}`)
+    if (r.ok) d = await r.json()
+  } catch {}
+  if (!d || !d.scanned) {
+    wrap.innerHTML = `<div style="color:var(--muted);font-size:13px;padding:16px;text-align:center;border:1px dashed var(--border);border-radius:12px">아직 검사 기록이 없습니다 — "검사만"을 눌러보세요 (글을 수정하지 않습니다)</div>`
+    return
+  }
+  const at = (d.auditedAt || '').slice(0, 16).replace('T', ' ')
+  const counts = Object.entries(d.issueCounts || {}).map(([k, v]) =>
+    `<span style="margin-right:12px">${esc(_IMG_ISSUE_LABEL[k] || k)} <strong>${v}</strong></span>`).join('')
+  const rows = (d.posts || []).slice(0, 15).map(p => `
+    <div style="padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;margin-bottom:5px">
+      <div style="font-size:12px">
+        <a href="${esc(p.url || '#')}" target="_blank" style="color:inherit;text-decoration:none">${esc(p.title || '')}</a>
+        <span style="color:var(--muted);font-size:11px">· 이미지 ${p.images}/${p.needed}장 · ${esc(p.blog || '')}</span>
+      </div>
+      <div style="font-size:11px;color:#f59e0b;margin-top:2px">
+        ${(p.issues || []).map(i => esc(`${_IMG_ISSUE_LABEL[i.type] || i.type}: ${i.detail || ''}`)).join(' · ')}
+      </div>
+      ${(p.actions || []).length ? `<div style="font-size:11px;color:var(--green);margin-top:2px">${(p.actions || []).map(esc).join(' / ')}</div>` : ''}
+    </div>`).join('')
+  wrap.innerHTML = `
+    <div style="padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.02)">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px">
+        마지막 검사: ${at} UTC${d.applied ? '' : ' (검사만 — 수정 안 됨)'}${d.aiJudged ? ' · AI 판정 사용' : ''}
+      </div>
+      <div style="font-size:13px;margin-bottom:6px">
+        검사 ${d.scanned}건 · 문제 <strong style="color:#f59e0b">${d.withIssues}건</strong>${d.fixed ? ` · 수정 <strong style="color:var(--green)">${d.fixed}건</strong>` : ''}
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px">${counts}</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;line-height:1.6">
+        "관련성 의심"은 확정 판정 전이라 손대지 않습니다 — AI 판정을 돌려야 교체·삭제 대상이 됩니다.
+        판단이 서지 않는 이미지는 항상 유지합니다(오삭제 방지).
+      </div>
+      ${rows}
+    </div>`
+}
+
+async function imageAuditRun(dryRun = true, useAi = false) {
+  const pat = getPAT()
+  if (!pat) { showToast('PAT를 먼저 설정하세요 (실행 제어 탭)', 'error'); navTo('run'); return }
+  const raw = prompt('검사할 글 수 (0=전체)' +
+    (dryRun ? '\n※ 글을 수정하지 않습니다' : '\n※ 발행된 글이 실제로 수정됩니다') +
+    (useAi ? '\n※ AI 판정 — Claude 호출 비용이 발생합니다' : ''), '50')
+  if (raw === null) return
+  const limit = Math.max(0, parseInt(raw, 10) || 0)
+  if (!dryRun && !confirm(
+      `이미지 문제를 실제로 고칩니다.\n` +
+      `· 이미지 없음 → 첨부\n· 링크 깨짐 → 교체 (대체 없으면 삭제)\n` +
+      `Blogger에 즉시 반영됩니다. 진행할까요?`)) return
+  wfDispatchGeneric('image-audit.yml',
+    { apply: dryRun ? 'false' : 'true', ai: useAi ? 'true' : 'false',
+      limit: String(limit), blog_id: '' },
+    dryRun ? (useAi ? '이미지 AI 관련성 판정' : '이미지 검사') : '이미지 수정', 20)
+}
+
 // ── 내부 링크 구조 — 고아 페이지 현황 ────────────────────────────────────────
 async function loadInternalLinks() {
   const wrap = document.getElementById('internal-links-wrap')
@@ -5686,6 +5765,7 @@ async function loadIndexStatus() {
   loadGscDiagnosis()
   loadIndexPriority()
   loadInternalLinks()
+  loadImageAudit()
   const wrap = document.getElementById('index-status-wrap')
   if (!wrap) return
   let data = null

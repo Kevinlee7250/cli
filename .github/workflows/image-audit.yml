@@ -1,0 +1,112 @@
+name: 🖼️ 게시글 이미지 검증
+
+on:
+  # 매주 일요일 오전 7시 KST (UTC 토요일 22:00) — 다른 주간 작업과 분산
+  schedule:
+    - cron: '0 22 * * 6'
+
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: '실제 수정 (끄면 검사만 — 글을 바꾸지 않음)'
+        type: boolean
+        required: false
+        default: false
+      ai:
+        description: '관련성이 애매한 이미지를 AI로 확정 판정 (비용 발생)'
+        type: boolean
+        required: false
+        default: false
+      limit:
+        description: '검사할 최대 글 수 (0=전체)'
+        required: false
+        default: '50'
+      blog_id:
+        description: '특정 블로그만 (blog1/blog2/blog3, 비우면 전체)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: image-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          PIXABAY_API_KEY="${{ secrets.PIXABAY_API_KEY }}"
+          ADSENSE_CLIENT_ID="${{ secrets.ADSENSE_CLIENT_ID }}"
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: 이미지 검증
+        working-directory: blog-automation
+        run: |
+          mkdir -p logs
+          ARGS="--limit ${{ inputs.limit || '50' }}"
+          if [ -n "${{ inputs.blog_id }}" ]; then
+            ARGS="$ARGS --blog ${{ inputs.blog_id }}"
+          fi
+          if [ "${{ inputs.ai }}" = "true" ]; then
+            ARGS="$ARGS --ai"
+          fi
+          # 발행된 글을 수정하는 작업이므로 수동 실행 기본값은 검사 전용입니다.
+          # 스케줄 실행은 반영하되, AI 판정 없이 broken/missing만 고칩니다
+          # (관련성 의심은 suspect로 남아 손대지 않음 — 오삭제 방지).
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.apply }}" = "true" ]; then
+            ARGS="$ARGS --apply"
+          else
+            echo "=== 검사 전용 모드 (글을 수정하지 않음) ==="
+          fi
+          echo "실행 인자: $ARGS"
+          python image_audit.py $ARGS
+
+      - name: 리포트 커밋 & 푸시
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # docs/.gitignore(npm/cli 템플릿)가 docs/* 를 무시하므로 -f 필요
+          git add -f docs/data/image_audit.json 2>/dev/null || true
+          git add blog-automation/logs/used_images.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "🖼️ 이미지 검증 (#${{ github.run_number }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
+                && git push origin claude/blog-automation-system-KAbtE && break
+              sleep $((i * 3))
+            done
+          fi

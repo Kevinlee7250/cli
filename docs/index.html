@@ -5656,6 +5656,7 @@ async function loadIndexPriority() {
 const _IMG_ISSUE_LABEL = {
   missing: '이미지 없음', insufficient: '이미지 부족',
   broken: '링크 깨짐', irrelevant: '내용과 무관', suspect: '관련성 의심',
+  weak_alt: 'alt 설명 부실',
 }
 
 async function loadImageAudit() {
@@ -5724,6 +5725,7 @@ async function imageAuditRun(dryRun = true, useAi = false) {
   if (!dryRun && !confirm(
       `대상: ${scope}\n\n이미지 문제를 실제로 고칩니다.\n` +
       `· 이미지 없음 → 첨부\n· 링크 깨짐 → 교체 (대체 없으면 삭제)\n` +
+      `· alt 설명 부실 → 설명·캡션 다시 작성 (이미지는 그대로)\n` +
       `Blogger에 즉시 반영됩니다. 진행할까요?`)) return
   const label = (dryRun ? (useAi ? '이미지 AI 관련성 판정' : '이미지 검사') : '이미지 수정')
     + ` (${scope})`

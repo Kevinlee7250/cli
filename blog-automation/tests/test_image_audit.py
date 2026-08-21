@@ -350,3 +350,74 @@ def test_empty_filter_means_all_blogs():
          patch("image_audit._save"):
         report = image_audit.run(blog_filter="")
     assert report["blogFilter"] == "" and report["blogsAudited"] == ["A", "B"]
+
+
+# ── alt·캡션 설명 수정 ───────────────────────────────────────────────────────
+# 발행된 글에 alt 없는 <img>와 "사진" 한 단어짜리 캡션이 남아 있었습니다.
+# 화면 낭독기에도 검색엔진에도 쓸모가 없고, 이미지를 건드리지 않고 고칠 수
+# 있는 문제라 검사·수정 대상에 넣었습니다.
+
+_FIG_SRC = ('<figure><img src="{url}"{alt}/>'
+            '<figcaption>{cap}<br>이미지 출처: Pixabay</figcaption></figure>')
+
+
+def test_missing_alt_is_flagged():
+    assert "없음" in image_audit.alt_problem({"url": "https://a/x.jpg", "alt": ""}, "제목")
+
+
+def test_too_short_alt_is_flagged():
+    assert image_audit.alt_problem({"url": "https://a/x.jpg", "alt": "사진"}, "제목")
+
+
+def test_descriptive_alt_is_left_alone():
+    img = {"url": "https://a/x.jpg", "alt": "K-POP 컴백 무대 사진"}
+    assert image_audit.alt_problem(img, "2026 K-POP 컴백 정보 확인법") == ""
+
+
+def test_compose_alt_keeps_hyphenated_words():
+    """부제 자르기가 'K-POP'을 'K'로 만들면 안 됩니다."""
+    assert "K-POP" in image_audit.compose_alt("2026 K-POP 컴백 정보 확인법")
+
+
+def test_compose_alt_drops_subtitle_after_dash():
+    alt = image_audit.compose_alt("당뇨 초기 증상 7가지 — 2026년 완벽 정리")
+    assert "2026년 완벽 정리" not in alt and "당뇨" in alt
+
+
+def test_alt_is_added_when_attribute_absent():
+    """_replace_image는 alt 속성이 있을 때만 씁니다 — 없으면 넣어야 합니다."""
+    content = _FIG_SRC.format(url="https://a/x.jpg", alt="", cap="사진")
+    out, done = image_audit.fix_alt(content, "https://a/x.jpg", "당뇨 초기 증상 자가진단")
+    assert done and 'alt="당뇨 초기 증상 자가진단 관련 이미지"' in out
+
+
+def test_caption_description_changes_but_source_is_kept():
+    content = _FIG_SRC.format(url="https://a/x.jpg", alt=' alt="사진"', cap="사진")
+    out, _ = image_audit.fix_alt(content, "https://a/x.jpg", "당뇨 초기 증상")
+    assert "이미지 출처: Pixabay" in out          # 출처는 보존
+    assert "<figcaption>당뇨 초기 증상 관련 이미지<br>" in out
+
+
+def test_other_images_are_untouched():
+    content = (_FIG_SRC.format(url="https://a/x.jpg", alt="", cap="사진")
+               + _FIG_SRC.format(url="https://a/keep.jpg", alt=' alt="그대로"', cap="그대로"))
+    out, _ = image_audit.fix_alt(content, "https://a/x.jpg", "제목입니다")
+    assert 'alt="그대로"' in out and "<figcaption>그대로<br>" in out
+
+
+def test_weak_alt_is_audited_and_fixed():
+    content = "<p>" + "가" * 1500 + "</p>" + _FIG_SRC.format(
+        url="https://a/diabetes-check.jpg", alt="", cap="사진")
+    with patch("requests.head", return_value=_resp()):
+        a = image_audit.audit_post({"title": "당뇨 초기 증상 자가진단", "content": content})
+    assert any(i["type"] == "weak_alt" for i in a["issues"])
+
+    post = {"title": "당뇨 초기 증상 자가진단", "content": content}
+    out, actions = image_audit.fix_post(post, a)
+    assert any("alt 재작성" in x for x in actions)
+
+
+def test_alt_fix_never_removes_the_image():
+    content = _FIG_SRC.format(url="https://a/x.jpg", alt="", cap="사진")
+    out, _ = image_audit.fix_alt(content, "https://a/x.jpg", "제목입니다")
+    assert 'src="https://a/x.jpg"' in out

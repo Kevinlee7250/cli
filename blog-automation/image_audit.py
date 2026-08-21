@@ -10,11 +10,12 @@
 교체·삭제·캡션 동기화는 fix_unlicensed_images의 검증된 함수를 그대로
 재사용합니다. 같은 규칙을 두 번 구현하면 반드시 어긋나기 때문입니다.
 
-판정 5종:
+판정 6종:
   missing      이미지가 하나도 없음            → 첨부
   insufficient 본문 길이 대비 부족             → 보고만 (--attach-insufficient로 첨부)
   broken       URL이 죽었거나 이미지가 아님     → 교체
   irrelevant   본문 주제와 무관 (AI 확정)      → 교체, 대체 실패 시 삭제
+  weak_alt     alt가 없거나 내용을 설명 못함    → alt·title·캡션 재작성 (이미지 유지)
   suspect      관련성 낮아 보임 (미확정)       → 절대 손대지 않음
 
 관련성 판단은 2단계입니다:
@@ -251,6 +252,150 @@ def judge_with_ai(img: dict, title: str, excerpt: str) -> tuple[bool, str]:
 
 
 # ──────────────────────────────────────────────────────────────────────────────
+# 4) alt·캡션 설명
+# ──────────────────────────────────────────────────────────────────────────────
+
+#: 이보다 짧은 alt는 화면 낭독기에도, 검색엔진에도 쓸모가 없습니다
+ALT_MIN_LEN = 6
+#: 내용을 전혀 설명하지 않는 상투어 — 있으나 마나 한 alt
+_ALT_FLUFF = {"이미지", "사진", "그림", "image", "photo", "picture", "thumbnail", "썸네일"}
+
+
+def alt_problem(img: dict, title: str, keyword: str = "") -> str:
+    """alt가 부실한 이유. 문제가 없으면 빈 문자열."""
+    alt = (img.get("alt") or "").strip()
+    if not alt:
+        return "alt 설명 없음"
+    if len(alt) < ALT_MIN_LEN:
+        return f"alt가 너무 짧음 ({len(alt)}자: \"{alt}\")"
+    if alt.lower() in _ALT_FLUFF:
+        return f"내용을 설명하지 않는 alt (\"{alt}\")"
+    # 본문과 아무 접점이 없는 alt는 그 글의 이미지를 설명한다고 보기 어렵습니다.
+    # 다만 여기서 이미지를 지우지는 않습니다 — 글을 설명하도록 다시 쓸 뿐입니다.
+    if relevance_score(img, title, keyword) <= 0.0:
+        return f"본문과 겹치는 말이 없는 alt (\"{alt[:30]}\")"
+    return ""
+
+
+def compose_alt(title: str, keyword: str = "") -> str:
+    """글 주제로 alt 문구를 만듭니다 (AI 없이, 항상 같은 결과).
+
+    핵심어를 이어 붙이면 "컴백 정보 정리해본 관련 이미지"처럼 동사 조각이
+    섞여 읽히지 않습니다. 제목은 사람이 쓴 완성된 구절이므로 그대로 씁니다.
+    """
+    base = (title or keyword or "").strip()
+    if not base:
+        return ""
+    # 부제는 잘라냅니다 ("… — 2026년 완벽 정리"). 구분자 양쪽에 공백이 있을
+    # 때만입니다 — 그러지 않으면 "K-POP"이 "K"로 잘립니다.
+    base = re.split(r'\s+[—–|]\s+|\s+-\s+', base)[0].strip()
+    return f"{base} 관련 이미지"[:120]
+
+
+def compose_alt_with_ai(title: str, excerpt: str, keyword: str = "") -> str:
+    """본문을 읽고 이미지 설명을 짓습니다. 실패하면 규칙 기반으로 돌아갑니다."""
+    fallback = compose_alt(title, keyword)
+    try:
+        import anthropic
+        from config import ANTHROPIC_API_KEY, CLAUDE_MODEL, claude_generate
+    except ImportError:
+        return fallback
+    if not ANTHROPIC_API_KEY:
+        return fallback
+
+    prompt = (
+        "블로그 글에 들어간 이미지의 대체 텍스트(alt)를 한 줄로 지어 주세요.\n\n"
+        f"글 제목: {title}\n본문 발췌: {excerpt[:400]}\n\n"
+        "조건: 한국어, 40자 이내, 명사구로 끝낼 것, "
+        "\"이미지\"·\"사진\" 같은 말로 시작하지 말 것, 설명만 출력할 것."
+    )
+    try:
+        client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        text = (claude_generate(
+            client, model=CLAUDE_MODEL, max_tokens=120,
+            messages=[{"role": "user", "content": prompt}],
+        ) or "").strip().strip('"').splitlines()[0].strip()
+    except Exception as e:
+        logger.debug(f"alt 생성 실패: {e}")
+        return fallback
+    return text[:120] if len(text) >= ALT_MIN_LEN else fallback
+
+
+def _set_alt(content: str, url: str, new_alt: str) -> tuple[str, bool]:
+    """해당 이미지의 alt·title을 다시 씁니다. 속성이 없으면 새로 넣습니다.
+
+    fix_unlicensed_images._replace_image는 alt 속성이 이미 있을 때만 고칩니다.
+    alt가 아예 없는 <img>가 그대로 남던 이유입니다.
+    """
+    esc = html.escape(new_alt, quote=True)
+    changed = False
+
+    def _sub(m: re.Match) -> str:
+        nonlocal changed
+        tag = m.group(0)
+        if f'src="{url}"' not in tag:
+            return tag
+        for attr in ("alt", "title"):
+            if re.search(rf'\b{attr}="[^"]*"', tag, re.I):
+                tag = re.sub(rf'\b{attr}="[^"]*"', f'{attr}="{esc}"', tag, flags=re.I)
+            else:
+                tag = re.sub(r'(<img\b)', rf'\1 {attr}="{esc}"', tag, count=1, flags=re.I)
+        changed = True
+        return tag
+
+    return _IMG_TAG_RE.sub(_sub, content), changed
+
+
+# figure/figcaption 구조는 fix_unlicensed_images와 같은 정규식을 씁니다.
+# 같은 HTML 모양을 두 번 정의하면 한쪽만 고쳐질 때 반드시 어긋납니다.
+from fix_unlicensed_images import _FIGCAPTION_RE, _FIGURE_BLOCK_RE  # noqa: E402
+
+#: figcaption 안에서 출처 표기를 뺀 앞부분 설명 — sync_captions는 출처만 봅니다
+_CAPTION_DESC_RE = re.compile(r'^(.*?)(?=(?:<br\s*/?>)?\s*이미지\s*출처|$)', re.I | re.S)
+
+
+def _set_caption_desc(content: str, url: str, new_desc: str) -> tuple[str, bool]:
+    """그 이미지를 담은 figure의 캡션 설명만 바꿉니다 (출처 표기는 보존)."""
+    esc = html.escape(new_desc)
+    changed = False
+
+    def _fix_figure(m: re.Match) -> str:
+        nonlocal changed
+        open_tag, inner, close_tag = m.group(1), m.group(2), m.group(3)
+        img_m = _IMG_TAG_RE.search(inner)
+        if not img_m or f'src="{url}"' not in img_m.group(0):
+            return m.group(0)
+
+        def _fix_caption(cm: re.Match) -> str:
+            nonlocal changed
+            c_open, c_inner, c_close = cm.group(1), cm.group(2), cm.group(3)
+            desc_m = _CAPTION_DESC_RE.search(c_inner)
+            if not desc_m:
+                return cm.group(0)
+            rest = c_inner[desc_m.end():]
+            changed = True
+            return f"{c_open}{esc}{rest}{c_close}"
+
+        return open_tag + _FIGCAPTION_RE.sub(_fix_caption, inner, count=1) + close_tag
+
+    return _FIGURE_BLOCK_RE.sub(_fix_figure, content), changed
+
+
+def fix_alt(content: str, url: str, title: str, keyword: str = "",
+            use_ai: bool = False) -> tuple[str, str]:
+    """이미지의 alt·title·캡션 설명을 글 주제에 맞게 다시 씁니다. (본문, 수행 내역)"""
+    new_alt = (compose_alt_with_ai(title, _plain_text(content)[:400], keyword)
+               if use_ai else compose_alt(title, keyword))
+    if not new_alt:
+        return content, ""
+    content, alt_done = _set_alt(content, url, new_alt)
+    content, cap_done = _set_caption_desc(content, url, new_alt)
+    if not alt_done:
+        return content, ""
+    return content, f'alt 재작성 → "{new_alt}"' + (" (캡션 포함)" if cap_done else "")
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 # 검사
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -276,6 +421,13 @@ def audit_post(post: dict, use_ai: bool = False) -> dict:
         if not alive:
             issues.append({"type": "broken", "url": img["url"], "detail": why})
             continue
+
+        # 살아 있는 이미지라도 alt가 비었거나 내용을 설명하지 못하면 고칩니다.
+        # 이미지를 건드리지 않고 설명만 다시 쓰는 것이라 삭제 위험이 없습니다.
+        why_alt = alt_problem(img, title, post.get("keyword", ""))
+        if why_alt:
+            issues.append({"type": "weak_alt", "url": img["url"], "detail": why_alt,
+                           "alt": img.get("alt", "")})
 
         score = relevance_score(img, title, post.get("keyword", ""))
         if score >= RELEVANCE_SUSPECT:
@@ -322,10 +474,11 @@ def attach_image(content: str, title: str, keyword: str = "") -> tuple[str, bool
 #: 손댈 문제 유형의 기본값. insufficient(권장 장수 미달)는 빠져 있습니다 —
 #: 첫 검사에서 431건 중 282건이 여기 걸려, 기본으로 두면 사실상 전 게시글에
 #: 이미지를 한 장씩 밀어 넣게 됩니다. 필요하면 --attach-insufficient로 켜세요.
-DEFAULT_FIX_KINDS = ("missing", "broken", "irrelevant")
+DEFAULT_FIX_KINDS = ("missing", "broken", "irrelevant", "weak_alt")
 
 
-def fix_post(post: dict, audit: dict, kinds: tuple[str, ...] = DEFAULT_FIX_KINDS) -> tuple[str, list[str]]:
+def fix_post(post: dict, audit: dict, kinds: tuple[str, ...] = DEFAULT_FIX_KINDS,
+             use_ai: bool = False) -> tuple[str, list[str]]:
     """검사 결과에 따라 본문을 고칩니다. (수정된 본문, 수행 내역)
 
     kinds에 없는 유형은 건드리지 않습니다. suspect는 확정 판정 전이라
@@ -348,9 +501,22 @@ def fix_post(post: dict, audit: dict, kinds: tuple[str, ...] = DEFAULT_FIX_KINDS
             actions.append(f"첨부: {why}" if ok else f"첨부 실패: {why}")
             continue
 
+        if kind == "weak_alt":
+            content, done = fix_alt(content, issue["url"], title, keyword, use_ai)
+            if done:
+                actions.append(done)
+            continue
+
         new_img = _find_safe_replacement(title, keyword)
         if new_img:
             content = _replace_image(content, issue["url"], new_img)
+            # _replace_image는 alt 속성이 이미 있을 때만 씁니다. 교체해 놓고
+            # 설명은 옛 이미지 것이거나 아예 없는 상태가 남지 않도록 확인합니다.
+            new_url = new_img["url"]
+            if alt_problem({"url": new_url, "alt": new_img.get("alt_text", "")}, title, keyword):
+                content, _ = _set_alt(content, new_url, compose_alt(title, keyword))
+            content, _ = _set_caption_desc(content, new_url,
+                                           new_img.get("alt_text") or compose_alt(title, keyword))
             actions.append(f"{kind} 교체 → {new_img.get('source', '?')}")
         else:
             content = _remove_image(content, issue["url"])
@@ -415,7 +581,7 @@ def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
                         f"{', '.join(i['type'] for i in audit['issues'])}")
 
             if apply_changes:
-                updated, actions = fix_post(post, audit, fix_kinds)
+                updated, actions = fix_post(post, audit, fix_kinds, use_ai)
                 if actions and updated != post.get("content", ""):
                     r = requests.patch(
                         f"{BLOGGER_API_BASE}/blogs/{blogger_id}/posts/{post['id']}",

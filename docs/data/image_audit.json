@@ -1,14 +1,19 @@
 {
-  "auditedAt": "2026-08-21T08:16:28.425462+00:00",
+  "auditedAt": "2026-08-21T09:21:10.766050+00:00",
   "applied": false,
   "aiJudged": false,
+  "fixKinds": [
+    "missing",
+    "broken",
+    "irrelevant"
+  ],
   "scanned": 431,
-  "withIssues": 341,
+  "withIssues": 295,
   "fixed": 0,
   "issueCounts": {
     "insufficient": 282,
-    "broken": 227,
-    "suspect": 15
+    "suspect": 15,
+    "broken": 3
   },
   "posts": [
     {
@@ -20,11 +25,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmUxODVkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjQ3MmI2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn461PC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7qsIDsnYQgSy1QT1Ag7Lu067CxPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuydvOyglSDtmZXsnbjrspUg7LSd7KCV66asPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjQ4NCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -65,11 +65,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmUxODVkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjQ3MmI2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn461PC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj4yMDI2IEstUE9QIOy7tOuwsTwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM5NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7soJXrs7Qg7KeB7KCRIOygleumrO2VtOuztOuLiDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI0ODQiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2ZjZTdmMyIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -96,11 +91,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNmQyOGQ5Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjYTc4YmZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn46sPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7slYTtjIztirg0MDQg65Ox7J6l7J2466y8PC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuuwsOyasCDsl7DquLDroKUg7IaU7KeBIOumrOu3sDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI0ODQiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2YzZThmZiIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -114,11 +104,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 4장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmUxODVkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjQ3MmI2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn461PC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj457JuUIOyVhOydtOuPjCDsi6Drs7Q8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzOTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+67mE6rWQ7ZWY64qUIOuylSDstJ3soJXrpqw8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNDg0IiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNmY2U3ZjMiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -163,25 +148,6 @@
       "blog": "HOGU What?"
     },
     {
-      "title": "제주 한 달 살기, 한 달 지내며 정산한 실제 생활비와 숙소 비용 공개",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_17.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuygnOyjvCDtlZwg64usIOyCtOq4sCwg7ZWcPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuuLrCDsp4DrgrTrqbAg7KCV7IKw7ZWcIOyLpOygnDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7sg53tmZzruYTsmYAg7IiZ7IaMIOu5hOyaqSDqs7XqsJw8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNlMGYyZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuygnOyjvCDtlZwg64usIOyCtOq4sCwg7ZWcPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuuLrCDsp4DrgrTrqbAg7KCV7IKw7ZWcIOyLpOygnDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7sg53tmZzruYTsmYAg7IiZ7IaMIOu5hOyaqSDqs7XqsJw8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNlMGYyZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
       "title": "멜론 vs 지니 vs 유튜브뮤직 요금 비교, 3개월 직접 써본 후기",
       "url": "https://www.hoguwhat.com/2026/08/vs-vs-3.html",
       "images": 2,
@@ -208,25 +174,6 @@
       "blog": "HOGU What?"
     },
     {
-      "title": "콘서트 티켓팅 앱별 수수료 비교와 꿀팁",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_16.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmUxODVkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjQ3MmI2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn461PC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7svZjshJztirgg7Yuw7LyT7YyFIOyVseuzhDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM5NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7siJjsiJjro4wg67mE6rWQ7JmAIOq/gO2MgTwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI0ODQiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2ZjZTdmMyIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmUxODVkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjQ3MmI2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn461PC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7svZjshJztirgg7Yuw7LyT7YyFIOyVseuzhDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM5NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7siJjsiJjro4wg67mE6rWQ7JmAIOq/gO2MgTwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI0ODQiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2ZjZTdmMyIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
       "title": "넷플릭스 티빙 웨이브 구독료 대비 콘텐츠 비교 총정리",
       "url": "https://www.hoguwhat.com/2026/08/blog-post_165.html",
       "images": 1,
@@ -235,11 +182,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNmQyOGQ5Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjYTc4YmZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn46sPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rhLftlIzrpq3siqQg7Yuw67mZIOybqOydtOu4jDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7qtazrj4Xro4wg64yA67mEIOy9mO2FkOy4oCDruYTqtZA8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7LSd7KCV66asPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjUyMyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -331,11 +273,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMzE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2VtOyZuOyXrO2WiSDsi6TruYTrs7Ttl5g8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzOTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7ZWE7JqU7ZWc7KeAIOyngeygkSDruYTqtZDtlbTrs7Tri4g8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNDg0IiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNlMGYyZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -380,49 +317,6 @@
       "blog": "HOGU What?"
     },
     {
-      "title": "사랑이 온다 결말 후기 총정리, 별점과 OST까지 완벽 정리",
-      "url": "https://www.hoguwhat.com/2026/08/ost.html",
-      "images": 3,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNmQyOGQ5Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjYTc4YmZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn46sPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7sgqzrnpHsnbQg7Jio64ukIOqysOunkCDtm4TquLA8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7LSd7KCV66asLCDrs4TsoJDqs7w8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+T1NU6rmM7KeAIOyZhOuyvSDsoJXrpqw8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNmM2U4ZmYiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNmQyOGQ5Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjYTc4YmZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn46sPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7sgqzrnpHsnbQg7Jio64ukIOqysOunkCDtm4TquLA8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7LSd7KCV66asLCDrs4TsoJDqs7w8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+T1NU6rmM7KeAIOyZhOuyvSDsoJXrpqw8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNmM2U4ZmYiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
-      "title": "[2편] 사랑이 온다 등장인물 관계도, 헷갈리는 가족관계 총정리",
-      "url": "https://www.hoguwhat.com/2026/08/2.html",
-      "images": 3,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj5bMu2OuF0g7IKs656R7J20IOyYqOuLpDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rk7HsnqXsnbjrrLwg6rSA6rOE64+ELDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7tl7fqsIjrpqzripQg6rCA7KGx6rSA6rOEIOy0neygleumrDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj5bMu2OuF0g7IKs656R7J20IOyYqOuLpDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rk7HsnqXsnbjrrLwg6rSA6rOE64+ELDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7tl7fqsIjrpqzripQg6rCA7KGx6rSA6rOEIOy0neygleumrDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj5bMu2OuF0g7IKs656R7J20IOyYqOuLpDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rk7HsnqXsnbjrrLwg6rSA6rOE64+ELDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7tl7fqsIjrpqzripQg6rCA7KGx6rSA6rOEIOy0neygleumrDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
       "title": "해외여행 실비보험 정말 필요한지 직접 비교해본 솔직 후기",
       "url": "https://www.hoguwhat.com/2026/08/blog-post_08.html",
       "images": 2,
@@ -431,20 +325,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
-      "title": "5060세대 프리미엄 여행 완판템이 뜨는 이유와 예약 꿀팁",
-      "url": "https://www.hoguwhat.com/2026/08/5060_01709827763.html",
-      "images": 4,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMzE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPjUwNjDshLjrjIAg7ZSE66as66+47JeEPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyXrO2WiSDsmYTtjJDthZwg65yo64qUIOydtOycoDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI0ODQiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2UwZjJmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -463,20 +343,6 @@
       "blog": "HOGU What?"
     },
     {
-      "title": "해외여행 실비보험 필요할까? 방콕 여행으로 직접 비교해봤더니",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_77.html",
-      "images": 3,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMzE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2VtOyZuOyXrO2WiSDsi6TruYTrs7Ttl5gg6rytPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2VhOyalO2VoOq5jCDruYTqtZDtlbTrs7Tri4g8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNDg0IiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNlMGYyZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
       "title": "해외여행 실비보험 필요한지 직접 비교해봤더니, 2026년 개선안까지",
       "url": "https://www.hoguwhat.com/2026/08/2026_02059100424.html",
       "images": 2,
@@ -485,25 +351,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
-      "title": "삼성 월렛 트래블로그 체크카드 해외여행 환전 활용법 총정리",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_05.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyCvOyEsSDsm5TroJsg7Yq4656Y67iU66Gc6re4PC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyytO2BrOy5tOuTnCDtlbTsmbjsl6ztlokg7ZmY7KCEPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2ZnOyaqeuylSDstJ3soJXrpqw8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNlMGYyZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMzE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyCvOyEsSDsm5TroJsg7Yq4656Y67iU66Gc6re4PC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyytO2BrOy5tOuTnCDtmZjsoIQg7Zmc7Jqp67KVPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjQ4NCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -543,30 +390,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmUxODVkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjQ3MmI2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn461PC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj4yMDI2IOyLoOyduCDqsbjqt7jro7k8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+67O07J206re466O5IOuNsOu3lCwg7KeA6riIPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyjvOuqqe2VtOyVvCDtlaAg7J207JygPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjUyMyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmUxODVkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjQ3MmI2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn461PC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj4yMDI2IOyLoOyduCDqsbjqt7jro7k8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+67O07J206re466O5IOuNsOu3lCwg7KeA6riIPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyjvOuqqe2VtOyVvCDtlaAg7J207JygPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjUyMyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
-      "title": "국내 음악 차트 실시간 순위 변동, 왜 이렇게 자주 바뀔까?",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_04.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmUxODVkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjQ3MmI2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn461PC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7qta3rgrQg7J2M7JWFIOywqO2KuCDsi6Tsi5zqsIQ8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7Iic7JyELCDsmZwg7J2066CH6rKMIOyekOyjvDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rsJTrgJTquYw8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNmY2U3ZjMiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -580,11 +403,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNmQyOGQ5Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjYTc4YmZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn46sPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7snKDrtoDrhYAg7YKs65+sIOqysOunkCDstJ3tj4ksPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyLnOyyreyekCDrsJjsnZHsnYAg7J20656s64ukPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjQ4NCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -624,11 +442,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 4장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmUxODVkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjQ3MmI2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn461PC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj5LLVBPUCDsvZjshJztirgg7Yuw7LyTPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyYiOunpCDqv4DtjIEsIOqyveyfgeuloDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rgq7stpTripQg67KVPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjUyMyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -649,30 +462,6 @@
       "blog": "HOGU What?"
     },
     {
-      "title": "엔저 시대 일본 여행 저렴하게 가는 방법, 환율부터 항공권까지 총정리",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_02.html",
-      "images": 3,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyXlOyggCDsi5zrjIAg7J2867O4IOyXrO2WiTwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7soIDroLTtlZjqsowg6rCA64qUIOuwqeuylSw8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7ZmY7Jyo67aA7YSwIO2Vreqzteq2jOq5jOyngOKApjwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2UwZjJmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyXlOyggCDsi5zrjIAg7J2867O4IOyXrO2WiTwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7soIDroLTtlZjqsowg6rCA64qUIOuwqeuylSw8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7ZmY7Jyo67aA7YSwIO2Vreqzteq2jOq5jOyngOKApjwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2UwZjJmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyXlOyggCDsi5zrjIAg7J2867O4IOyXrO2WiTwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7soIDroLTtlZjqsowg6rCA64qUIOuwqeuylSw8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7ZmY7Jyo67aA7YSwIO2Vreqzteq2jOq5jOyngOKApjwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2UwZjJmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
       "title": "여름휴가 국내 로컬여행 vs 해외여행, 실제 비용 비교",
       "url": "https://www.hoguwhat.com/2026/08/vs.html",
       "images": 1,
@@ -686,20 +475,6 @@
       "blog": "HOGU What?"
     },
     {
-      "title": "홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_01.html",
-      "images": 3,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2Zjey9qSDsi7HqsIDtj6zrpbQg7ZWt6rO16raMPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyLnOq4sOuzhCDqsIDqsqksIOyngeygkTwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7stpTsoIHquLA8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNlMGYyZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
       "title": "수현 근황과 최근 작품, 팬심 없이 솔직하게 평가해보니",
       "url": "https://www.hoguwhat.com/2026/07/blog-post_31.html",
       "images": 1,
@@ -708,25 +483,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7siJjtmIQg6re87Zmp6rO8IOy1nOq3vCDsnpHtkogsPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2MrOyLrCDsl4bsnbQg7IaU7KeB7ZWY6rKMPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2PieqwgO2VtOuztOuLiDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
-      "title": "2026년 8월 이달의 주목 K-POP 신보, 키키·알파드라이브원",
-      "url": "https://www.hoguwhat.com/2026/07/2026-8-k-pop.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmUxODVkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjQ3MmI2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZmNlN2YzIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn461PC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj4yMDI264WEIDjsm5Q8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+Sy1QT1Ag7Iug67O0LDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7tgqTtgqTCt+yVjO2MjOuTnOudvOydtOu4jOybkCDssrTtgaw8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNmY2U3ZjMiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -745,25 +501,6 @@
       "blog": "HOGU What?"
     },
     {
-      "title": "강원도 삼척 무더위 피서지 15곳 추천 코스 짜는 법 총정리",
-      "url": "https://www.hoguwhat.com/2026/07/15.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7qsJXsm5Drj4Qg7IK87LKZIOustOuNlOychDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7tlLzshJzsp4AgMTXqs7Mg7LaU7LKcIOy9lOyKpDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7sp5zripQg67KVIOy0neygleumrDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7qsJXsm5Drj4Qg7IK87LKZIOustOuNlOychDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7tlLzshJzsp4AgMTXqs7Mg7LaU7LKcIOy9lOyKpDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7sp5zripQg67KVIOy0neygleumrDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
       "title": "한국 영화 vs 해외 리메이크 원작과 비교해보니, 무엇이 달랐나",
       "url": "https://www.hoguwhat.com/2026/07/vs_01253193136.html",
       "images": 1,
@@ -772,34 +509,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
-      "title": "여름 휴가철 호캉스 vs 해외여행 비용 비교, 상하이 실제 견적 후기",
-      "url": "https://www.hoguwhat.com/2026/07/vs_01883334561.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2YuOy6ieyKpCB2cyDtlbTsmbjsl6ztlok8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+67mE7JqpLCDsg4HtlZjsnbTroZw8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+67mE6rWQ7ZW067O064uIPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjUyMyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
-      "title": "전국 치킨 맛집 지도 활용법 총정리 – 헛걸음 줄이는 확인 순서",
-      "url": "https://www.hoguwhat.com/2026/07/blog-post_29.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMzE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyghOq1rSDsuZjtgqgg66eb7KeRIOyngOuPhDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM5NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7tmZzsmqnrspUg7LSd7KCV66asPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjQ4NCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -826,11 +535,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMzE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2YuOy6ieyKpCB2cyDtlbTsmbjsl6ztlok8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzOTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+67mE7JqpIOu5hOq1kO2VtOuztOuLiDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI0ODQiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2UwZjJmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -857,11 +561,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNmQyOGQ5Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjYTc4YmZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn46sPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7quYDrtoDsnqUg6rKw66eQIOy0ne2PiSwg7KCcPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuuzhOygkOydgCDsnbTroIfsirXri4jri6Q8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNDg0IiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNmM2U4ZmYiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -875,11 +574,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7quYDrtoDsnqUg7LKr7J247IOBIOumrOu3sCw8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzOTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7Iuk7KCcIOuwmOydkSDrqqjslYTrtKTslrTsmpQ8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNDg0IiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNkYmVhZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -893,11 +587,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNmQyOGQ5Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjYTc4YmZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn46sPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rp4jruJQgREMgMjAyNiDsi6DsnpE8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzOTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7JiB7ZmUIOq4sOuMgOyekSDstJ3soJXrpqw8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNDg0IiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNmM2U4ZmYiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -929,44 +618,6 @@
       "blog": "HOGU What?"
     },
     {
-      "title": "전국 치킨 맛집 지도 따라가기, K치킨벨트 완벽 추천 코스",
-      "url": "https://www.hoguwhat.com/2026/07/k.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMzE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyghOq1rSDsuZjtgqgg66eb7KeRIOyngOuPhCw8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzOTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+S+y5mO2CqOuyqO2KuCDrlLDrnbzqsIDripQg67KVPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjQ4NCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
-      "title": "동남아 대신 뜨는 국내 여름 휴가지 예약 꿀팁과 비용 비교",
-      "url": "https://www.hoguwhat.com/2026/07/blog-post_279.html",
-      "images": 3,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rj5nrgqjslYQg64yA7IugIOucqOuKlCDqta3rgrQ8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7Jes66aEIO2ctOqwgOyngCDsmIjslb0g6r+A7YyB6rO8PC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuu5hOyaqSDruYTqtZA8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNkYmVhZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rj5nrgqjslYQg64yA7IugIOucqOuKlCDqta3rgrQ8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7Jes66aEIO2ctOqwgOyngCDsmIjslb0g6r+A7YyB6rO8PC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuu5hOyaqSDruYTqtZA8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNkYmVhZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rj5nrgqjslYQg64yA7IugIOucqOuKlCDqta3rgrQ8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7Jes66aEIO2ctOqwgOyngCDsmIjslb0g6r+A7YyB6rO8PC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuu5hOyaqSDruYTqtZA8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNkYmVhZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
       "title": "SBS 드라마 김부장 9화 리뷰, 용두사미 논란과 반전",
       "url": "https://www.hoguwhat.com/2026/07/sbs-9_0822494990.html",
       "images": 2,
@@ -975,11 +626,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNmQyOGQ5Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjYTc4YmZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn46sPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj5bM+2OuF0gU0JTIOuTnOudvOuniDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7quYDrtoDsnqUgOe2ZlCDrpqzrt7Ag4oCUPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyaqeuRkOyCrOuvuCDrhbzrnoAg7IaNIOuwmOyghDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2YzZThmZiIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -993,11 +639,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjNmQyOGQ5Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjYTc4YmZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZjNlOGZmIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn46sPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj5bMe2OuF0gU0JTIOq5gOu2gOyepTwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj437ZmUIOumrOu3sCwg7JWI6rK9IOyTtDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7slYTruaAgM+yduOuwqeydmCDsoJXssrQ8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNmM2U4ZmYiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1055,20 +696,6 @@
       "blog": "HOGU What?"
     },
     {
-      "title": "여름 폭염 피하는 국내 여행지 추천 2026, 고지대·동굴·계곡 코스",
-      "url": "https://www.hoguwhat.com/2026/07/2026_0201740258.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMzE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2PreyXvCDtlLztlZjripQg6rWt64K0PC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyXrO2WieyngCwg7J2066CH6rKMIOqzqOuekOuLpDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI0ODQiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2UwZjJmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
       "title": "직장인 월 30만원 ETF 투자 후기 및 전략",
       "url": "https://www.hoguwhat.com/2026/07/30-etf.html",
       "images": 1,
@@ -1077,11 +704,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWQ0ZWQ4Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjM2I4MmY2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OIPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7sp4HsnqXsnbgg7JuUIDMw66eM7JuQPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzk2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPkVURiDtiKzsnpAg7IaU7KeBIO2bhOq4sDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI0ODQiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1149,16 +771,6 @@
           "url": "https://pixabay.com/get/gc4ead82d178b2842a27c431ca2b4709092a926190d50c4c7faf1a55ac67c9c40bdb45dc2d331ee67b4de640c7eed5fd88808ce1b634db7003ad4f35de24a1b7b_1280.jpg",
           "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
           "score": 0.0
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rj5nrgqjslYQg7ZWcIOuLrCDsgrTquLAg7KeRPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuq1rO2VmOuKlCDrspXqs7wg6rOE7JW9PC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyjvOydmOyCrO2VrTwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rj5nrgqjslYQg7ZWcIOuLrCDsgrTquLAg7KeRPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuq1rO2VmOuKlCDrspXqs7wg6rOE7JW9PC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyjvOydmOyCrO2VrTwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1230,11 +842,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuygnOyjvOuPhCDroIzthLDsubQg67O07ZeYPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyYteyFmCwg7Iuk7KCc66GcIO2VhOyalO2VnDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7qsoPrp4wg6rOg66W064qUIOuylTwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2UwZjJmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1248,11 +855,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2VtOyZuOyXrO2WiSDtmZjsoIQg7IiY7IiY66OMPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPjAlIOuwqeuylSDsp4HsoJEg67mE6rWQPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuygleumrDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2UwZjJmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1266,11 +868,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyXrO2WieyekOuztO2XmCDqsIDsnoUg6rytIO2VtOyVvDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7tlaDquYw/IOyLpOygnCDrs7Tsg4E8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+6rK97ZeY7Jy866GcIOyVjOyVhOuzuCDtm4TquLA8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNlMGYyZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1298,11 +895,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuydvOuzuCDsl6ztlokg7JeU7ZmUIO2ZmOyghCw8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7KeB7KCRIO2VtOuzuCDqsIDsnqUg7Iu8IOuwqeuylTwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj4oMjAyNik8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNlMGYyZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1316,11 +908,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rrLTsnbjrj4Qg7Lqg7ZWRIOyngeygkTwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7qsIDrtKTrjZTri4gg7JWE66y064+EIOunkCDslYg8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7ZW07KSAIOqyg+uTpCAoMjAyNuKApjwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1334,11 +921,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7rr7jrnbztgbTrqqjri50gMzDsnbwg7Iuk7LKcPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2bhCDshpTsp4Eg7ZuE6riwIOKAlCDri6zrnbzsp4Q8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+6rKD6rO8IOyViCDri6zrnbzsp4Qg6rKDPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjUyMyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1352,11 +934,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7qta3rgrQg7Lqg7ZWR7J6lIOyngeygkTwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7qsIDrtKTrjZTri4gg6rSR6rOg656RIOuLrOuekOuNmDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7soJAg7IaU7KeBIO2bhOq4sOKApjwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1370,11 +947,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7ri6zrn6wg7ZmY7KCEIO2DgOydtOuwjSw8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+MjAyNuuFhOyXkCDsp4HsoJEg7ZW067O066mwPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuuKkOuCgCDqsoPrk6Q8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNkYmVhZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1388,11 +960,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7sg4Hsho0g67aE7J+BLCDsp4HsoJE8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+6rKq7Ja067O064uIIOydtOugh+qyjCDtkoDroLjslrTsmpQ8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+KDIwMjbrhYQg7ZiE7IukIOygleumrCk8L3RleHQ+CjxyZWN0IHg9IjUwMCIgeT0iNTIzIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjUiIHJ4PSIyLjUiIGZpbGw9IiNkYmVhZmUiIG9wYWNpdHk9IjAuODUiLz4KPC9zdmc+",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1406,11 +973,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7th7Tsp4HquIggSVJQIOuEo+qzoCDrgpjshJw8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7ZuE7ZqM7ZWcIOydtOycoCDigJQ8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+MjAyNuuFhCDshpTsp4Eg7ZuE6riwPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjUyMyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1424,11 +986,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7sp4HsnqXsnbggTuyeoeufrOqwgDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7sooXtlanshozrk53shLgg7Iug6rOg7JeQ7IScPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuyggOyngOuluCDsp4Tsp5wg7Iuk7IiY65Ok4oCmPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjUyMyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1442,11 +999,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7ssqsg7JuU7IS4IOqzhOyVvSDsp4HsoJE8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7ZW067Sk642U64uIIOynhOynnCDrhpPss6TrjZg8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+6rKD65OkICgyMDI264WE4oCmPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjUyMyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1460,11 +1012,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7ssq3slb3thrXsnqUgMTDrhYQg64Sj6rOgPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuuWqOyWtOynhCDshpTsp4Eg7ZuE6riwIOKAlDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj4yMDI264WE7JeQ7JW8IOq5qOuLrOydgOKApjwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1478,11 +1025,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMDM2OWExIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVhNWU5Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7inIjvuI88L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPjIwMjYg7Jes66aE7Zy06rCALCDsnbQ8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+6rOzIOyViCDqsIDrqbQg7KeE7KecPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iNDM1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPu2bhO2ajO2VtOyalCDigJQg6rWt64K07Jm44oCmPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjUyMyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZTBmMmZlIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
@@ -1501,20 +1043,6 @@
       "blog": "HOGU What?"
     },
     {
-      "title": "자동차보험 신규가입 최저가 비교, 처음이라 헷갈렸던 것들 정리",
-      "url": "https://www.hoguwhat.com/2026/06/blog-post_24.html",
-      "images": 1,
-      "needed": 1,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7snpDrj5nssKjrs7Ttl5gg7Iug6rec6rCA7J6FPC90ZXh0Pjx0ZXh0IHg9IjYwMCIgeT0iMzU3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPuy1nOyggOqwgCDruYTqtZAsIOyymOydjOydtOudvDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7tl7fqsIjroLjrjZgg6rKD65OkIOygleumrDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
       "title": "ETF 처음 샀을 때 내가 한 실수 3가지 (2026년 직접 경험 후기)",
       "url": "https://www.hoguwhat.com/2026/06/etf-3-2026.html",
       "images": 1,
@@ -1528,48 +1056,6 @@
       "blog": "HOGU What?"
     },
     {
-      "title": "2026년 주식 투자 초보 몰랐던 5가지 비밀",
-      "url": "https://www.hoguwhat.com/2026/06/2026-5_0516230554.html",
-      "images": 1,
-      "needed": 1,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWQ0ZWQ4Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjM2I4MmY2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OIPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjMxOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj4yMDI264WEIOyjvOyLnSDtiKzsnpA8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzOTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7LSI67O0IOuqsOuekOuNmCA16rCA7KeAIOu5hOuwgDwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI0ODQiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
-      "title": "젠슨황 수혜주 완벽 정리 2026 | 국내외 핵심 종목 비교 & 선택 기준",
-      "url": "https://www.hoguwhat.com/2026/06/2026_01162624778.html",
-      "images": 1,
-      "needed": 1,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWUzYThhIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNjBhNWZhIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OdPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7soKDsiqjtmakg7IiY7Zic7KO8IOyZhOuyvSDsoJXrpqw8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+MjAyNiB8IOq1reuCtOyZuCDtlbXsi6w8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSI0MzUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7KKF66qpIOu5hOq1kCAmYW1wOyDshKDtg50g6riw7KSAPC90ZXh0Pgo8cmVjdCB4PSI1MDAiIHk9IjUyMyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSI1IiByeD0iMi41IiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjg1Ii8+Cjwvc3ZnPg==",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
-      "title": "2026 월드컵 축구 완벽 가이드: 일정·중계·관람 꿀팁 총정리",
-      "url": "https://www.hoguwhat.com/2026/06/2026_01440451298.html",
-      "images": 1,
-      "needed": 1,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZGMyNjI2Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZjg3MTcxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZmVlMmUyIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZmVlMmUyIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7imr08L3RleHQ+Cjx0ZXh0IHg9IjYwMCIgeT0iMjc5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iJ05vdG8gU2FucyBLUicsJ0FwcGxlIFNEIEdvdGhpYyBOZW8nLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNTYiIGZvbnQtd2VpZ2h0PSI4MDAiIGZpbGw9IiNmZmZmZmYiPjIwMjYg7JuU65Oc7Lu1IOy2leq1rDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjM1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7smYTrsr0g6rCA7J2065OcOjwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7snbzsoJXCt+ykkeqzhMK36rSA656MIOq/gO2MgeKApjwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2ZlZTJlMiIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
-        }
-      ],
-      "blog": "HOGU What?"
-    },
-    {
       "title": "국내 저비용 ETF 추천 순위 2026 — 수수료 아끼고 수익 높이는 5단계 투자법",
       "url": "https://www.hoguwhat.com/2026/06/etf-2026-5.html",
       "images": 1,
@@ -1578,14 +1064,284 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjYzMCIgdmlld0JveD0iMCAwIDEyMDAgNjMwIj4KPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMWQ0ZWQ4Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjM2I4MmY2Ii8+CiAgPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MzAiIGZpbGw9InVybCgjYmcpIi8+CjxjaXJjbGUgY3g9IjEwODAiIGN5PSI5MCIgcj0iMTgwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEzIi8+CjxjaXJjbGUgY3g9IjExMCIgY3k9IjU2MCIgcj0iMTQwIiBmaWxsPSIjZGJlYWZlIiBvcGFjaXR5PSIwLjEwIi8+Cjx0ZXh0IHg9IjYwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjcyIj7wn5OIPC90ZXh0Pgo8dGV4dCB4PSI2MDAiIHk9IjI3OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7qta3rgrQg7KCA67mE7JqpIEVURiDstpTsspw8L3RleHQ+PHRleHQgeD0iNjAwIiB5PSIzNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSInTm90byBTYW5zIEtSJywnQXBwbGUgU0QgR290aGljIE5lbycsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI1NiIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiI+7Iic7JyEIDIwMjYg4oCUIOyImOyImOujjDwvdGV4dD48dGV4dCB4PSI2MDAiIHk9IjQzNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IidOb3RvIFNhbnMgS1InLCdBcHBsZSBTRCBHb3RoaWMgTmVvJyxzYW5zLXNlcmlmIiBmb250LXNpemU9IjU2IiBmb250LXdlaWdodD0iODAwIiBmaWxsPSIjZmZmZmZmIj7slYTrgbzqs6Ag7IiY7J21IOuGkuydtOuKlOKApjwvdGV4dD4KPHJlY3QgeD0iNTAwIiB5PSI1MjMiIHdpZHRoPSIyMDAiIGhlaWdodD0iNSIgcng9IjIuNSIgZmlsbD0iI2RiZWFmZSIgb3BhY2l0eT0iMC44NSIvPgo8L3N2Zz4=",
-          "detail": "URL 형식 아님"
         }
       ],
       "blog": "HOGU What?"
+    },
+    {
+      "title": "2026 ISA계좌 세금혜택 총정리 5가지 핵심 전략",
+      "url": "https://www.hoguwhat.com/2026/06/2026-isa-5.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?"
+    },
+    {
+      "title": "SK하이닉스 주가 전망 분석: 투자 판단을 위한 5단계 핵심 가이드",
+      "url": "https://www.hoguwhat.com/2026/06/sk-5.html",
+      "images": 3,
+      "needed": 1,
+      "issues": [
+        {
+          "type": "suspect",
+          "url": "https://source.unsplash.com/1200x675/?3&sig=0",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0
+        }
+      ],
+      "blog": "HOGU What?"
+    },
+    {
+      "title": "2026 주식 투자 초보 시작 방법 5단계 완벽 정리",
+      "url": "https://www.hoguwhat.com/2026/06/2026-5_0906654488.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?"
+    },
+    {
+      "title": "당뇨 초기 증상 자가진단 방법 7가지 — 2026년 완벽 정리",
+      "url": "https://www.hoguwhat.com/2026/06/7-2026.html",
+      "images": 2,
+      "needed": 4,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 4장)"
+        }
+      ],
+      "blog": "HOGU What?"
+    },
+    {
+      "title": "2026년 금리 인하 수혜주 추천 TOP 7 완벽 정리 (충격 수익률)",
+      "url": "https://www.hoguwhat.com/2026/06/2026-top-7_0905179738.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?"
+    },
+    {
+      "title": "2026년 부동산 투자 전략 TOP 5 완벽 정리 (충격 수익률)",
+      "url": "https://www.hoguwhat.com/2026/06/2026-top-5_0477851388.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?"
+    },
+    {
+      "title": "주식 투자 초보 완벽 정리 2026년 몰랐던 5가지 비밀",
+      "url": "https://www.hoguwhat.com/2026/06/2026-5_0470200812.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?"
+    },
+    {
+      "title": "2026년 재테크 방법 TOP 7 완벽 정리 (몰랐던 비밀 공개)",
+      "url": "https://www.hoguwhat.com/2026/06/2026-top-7_01291915069.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?"
+    },
+    {
+      "title": "2026년 여름 옷 완벽 가이드: 스타일·소재·코디 꿀팁 12가지",
+      "url": "https://www.hoguwhat.com/2026/06/2026-12.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?"
+    },
+    {
+      "title": "가을 시즌 마트 아울렛 세일 정보 총정리와 골프용품 할인",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/blog-post_20.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예"
+    },
+    {
+      "title": "가을 단풍 골프장 추천 라운딩 코스 베스트 2026",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/2026_0315998499.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예"
+    },
+    {
+      "title": "AI 컨시어지 호텔 서비스 이용법과 장점 완전 정리(실사용 후기)",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/ai.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예"
+    },
+    {
+      "title": "2026 추석 선물 세트 직접 비교 후기 – 여행 상품권 편",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/2026_01770298294.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예"
+    },
+    {
+      "title": "손흥민 토트넘 2026 최신 경기 분석과 전망, 부상병동 이슈",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/2026_02013513354.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예"
+    },
+    {
+      "title": "자전거 출퇴근 3개월 해본 솔직 장단점 정리 (따릉이 vs 개인 자전거)",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/3-vs.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예"
+    },
+    {
+      "title": "수영 1km 완주, 초보 훈련 계획 현실적으로",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/1km.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예"
+    },
+    {
+      "title": "수영 호흡법 초보 25m 완영 팁, 호흡 타이밍 교정하기",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/25m.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예"
+    },
+    {
+      "title": "등산 초보의 지리산 종주 도전기, 실제로 배운 것들 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/blog-post_946.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예"
+    },
+    {
+      "title": "마라톤 처음 완주한 사람이 알려주는 훈련법 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/blog-post_16.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예"
+    },
+    {
+      "title": "국내 프로축구 K리그 직관 좌석 추천과 관람 팁 총정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/k.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예"
+    },
+    {
+      "title": "2026 추석 연휴 여행지 추천 후기, 강릉·해외 비교",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/2026_0137733991.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예"
     }
   ]
 }

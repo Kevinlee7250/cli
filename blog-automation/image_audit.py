@@ -10,10 +10,12 @@
 교체·삭제·캡션 동기화는 fix_unlicensed_images의 검증된 함수를 그대로
 재사용합니다. 같은 규칙을 두 번 구현하면 반드시 어긋나기 때문입니다.
 
-판정 3종:
-  missing    이미지가 하나도 없음            → 첨부
-  broken     URL이 죽었거나 이미지가 아님     → 교체
-  irrelevant 본문 주제와 무관                → 교체, 대체 실패 시 삭제
+판정 5종:
+  missing      이미지가 하나도 없음            → 첨부
+  insufficient 본문 길이 대비 부족             → 보고만 (--attach-insufficient로 첨부)
+  broken       URL이 죽었거나 이미지가 아님     → 교체
+  irrelevant   본문 주제와 무관 (AI 확정)      → 교체, 대체 실패 시 삭제
+  suspect      관련성 낮아 보임 (미확정)       → 절대 손대지 않음
 
 관련성 판단은 2단계입니다:
   1) 파일명·alt·캡션·출처 페이지 제목을 본문 키워드와 대조 (무료·즉시)
@@ -105,7 +107,16 @@ def check_alive(url: str, timeout: int = 10) -> tuple[bool, str]:
     네트워크 일시 오류로 멀쩡한 이미지를 지우면 안 되므로,
     확실히 죽은 경우(404/410)에만 False를 돌려줍니다.
     """
-    if not url or not url.startswith("http"):
+    if not url:
+        return False, "URL 없음"
+    # 이 시스템이 만드는 썸네일은 data:image/svg+xml;base64,... 로 본문에 박혀
+    # 있습니다. 파일이 아니라 본문 그 자체이므로 죽을 수가 없습니다.
+    # 이 갈래가 없어서 첫 실행 때 멀쩡한 썸네일 227장이 broken으로 잡혔습니다.
+    if url.startswith("data:"):
+        if url.startswith("data:image/"):
+            return True, ""
+        return False, "이미지가 아닌 data URI"
+    if not url.startswith("http"):
         return False, "URL 형식 아님"
     try:
         r = requests.head(url, timeout=timeout, allow_redirects=True)
@@ -130,7 +141,10 @@ def check_alive(url: str, timeout: int = 10) -> tuple[bool, str]:
 
 def _image_terms(img: dict) -> str:
     """이미지가 스스로 말하는 정보 — 파일명·alt를 한 덩어리로."""
-    name = unquote(os.path.basename(urlparse(img.get("url", "")).path))
+    url = img.get("url", "")
+    if url.startswith("data:"):
+        return img.get("alt", "").strip()   # base64 덩어리는 파일명이 아닙니다
+    name = unquote(os.path.basename(urlparse(url).path))
     name = re.sub(r"\.(jpg|jpeg|png|gif|webp|svg)$", "", name, flags=re.I)
     name = re.sub(r"[_\-/]+", " ", name)
     return f"{img.get('alt', '')} {name}".strip()
@@ -144,7 +158,9 @@ def relevance_score(img: dict, title: str, keyword: str = "") -> float:
     from image_fetcher import _core_terms
 
     url = img.get("url", "")
-    if "/ai_generated/" in url or img.get("source") in ("ai_generated", "generated_thumbnail"):
+    # data URI 썸네일도 그 글을 위해 생성된 것이므로 무관할 수 없습니다
+    if (url.startswith("data:image/") or "/ai_generated/" in url
+            or img.get("source") in ("ai_generated", "generated_thumbnail")):
         return 1.0
 
     terms = _core_terms(f"{title} {keyword}", 6)
@@ -258,8 +274,18 @@ def attach_image(content: str, title: str, keyword: str = "") -> tuple[str, bool
     return updated, True, f"{img.get('source', '?')} 이미지 1장 첨부"
 
 
-def fix_post(post: dict, audit: dict) -> tuple[str, list[str]]:
-    """검사 결과에 따라 본문을 고칩니다. (수정된 본문, 수행 내역)"""
+#: 손댈 문제 유형의 기본값. insufficient(권장 장수 미달)는 빠져 있습니다 —
+#: 첫 검사에서 431건 중 282건이 여기 걸려, 기본으로 두면 사실상 전 게시글에
+#: 이미지를 한 장씩 밀어 넣게 됩니다. 필요하면 --attach-insufficient로 켜세요.
+DEFAULT_FIX_KINDS = ("missing", "broken", "irrelevant")
+
+
+def fix_post(post: dict, audit: dict, kinds: tuple[str, ...] = DEFAULT_FIX_KINDS) -> tuple[str, list[str]]:
+    """검사 결과에 따라 본문을 고칩니다. (수정된 본문, 수행 내역)
+
+    kinds에 없는 유형은 건드리지 않습니다. suspect는 확정 판정 전이라
+    어떤 경우에도 제외됩니다.
+    """
     from fix_unlicensed_images import _find_safe_replacement, _remove_image, _replace_image, sync_captions
 
     content = post.get("content", "")
@@ -269,14 +295,13 @@ def fix_post(post: dict, audit: dict) -> tuple[str, list[str]]:
 
     for issue in audit["issues"]:
         kind = issue["type"]
+        if kind == "suspect" or kind not in kinds:
+            continue
 
         if kind in ("missing", "insufficient"):
             content, ok, why = attach_image(content, title, keyword)
             actions.append(f"첨부: {why}" if ok else f"첨부 실패: {why}")
             continue
-
-        if kind not in ("broken", "irrelevant"):
-            continue        # suspect는 확정 판정 전이므로 건드리지 않음
 
         new_img = _find_safe_replacement(title, keyword)
         if new_img:
@@ -299,10 +324,12 @@ def fix_post(post: dict, audit: dict) -> tuple[str, list[str]]:
 # ──────────────────────────────────────────────────────────────────────────────
 
 def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
-        use_ai: bool = False) -> dict:
+        use_ai: bool = False, attach_insufficient: bool = False) -> dict:
     from config import get_blog_configs
     from blogger_uploader import _get_access_token
     from fix_unlicensed_images import _iter_posts
+
+    fix_kinds = DEFAULT_FIX_KINDS + (("insufficient",) if attach_insufficient else ())
 
     blogs = get_blog_configs()
     if blog_filter:
@@ -336,7 +363,7 @@ def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
                         f"{', '.join(i['type'] for i in audit['issues'])}")
 
             if apply_changes:
-                updated, actions = fix_post(post, audit)
+                updated, actions = fix_post(post, audit, fix_kinds)
                 if actions and updated != post.get("content", ""):
                     r = requests.patch(
                         f"{BLOGGER_API_BASE}/blogs/{blogger_id}/posts/{post['id']}",
@@ -359,6 +386,7 @@ def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
         "auditedAt": datetime.now(timezone.utc).isoformat(),
         "applied": apply_changes,
         "aiJudged": use_ai,
+        "fixKinds": list(fix_kinds),
         **totals,
         "issueCounts": counts,
         "posts": results[:100],
@@ -388,8 +416,10 @@ def main() -> int:
                         help="관련성이 애매한 이미지를 Claude로 확정 판정 (비용 발생)")
     parser.add_argument("--limit", type=int, default=0, help="검사할 최대 글 수 (0=전체)")
     parser.add_argument("--blog", default="", help="특정 블로그 ID만")
+    parser.add_argument("--attach-insufficient", action="store_true",
+                        help="권장 장수에 못 미치는 글에도 이미지를 추가 (기본은 건너뜀)")
     args = parser.parse_args()
-    run(args.blog, args.limit, args.apply, args.ai)
+    run(args.blog, args.limit, args.apply, args.ai, args.attach_insufficient)
     return 0
 
 

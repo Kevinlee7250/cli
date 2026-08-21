@@ -82,8 +82,10 @@ jobs:
             ARGS="$ARGS --ai"
           fi
           # 발행된 글을 수정하는 작업이므로 수동 실행 기본값은 검사 전용입니다.
-          # 스케줄 실행은 반영하되, AI 판정 없이 broken/missing만 고칩니다
-          # (관련성 의심은 suspect로 남아 손대지 않음 — 오삭제 방지).
+          # 스케줄 실행은 반영하되 AI 판정이 없으므로 missing/broken만 고칩니다.
+          # insufficient(권장 장수 미달)는 DEFAULT_FIX_KINDS에서 빠져 있어
+          # --attach-insufficient 없이는 손대지 않고, 관련성 의심은 suspect로
+          # 남아 확정 판정 전까지 그대로 둡니다 (오삭제 방지).
           if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.apply }}" = "true" ]; then
             ARGS="$ARGS --apply"
           else

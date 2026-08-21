@@ -12,6 +12,8 @@ from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
+import image_audit  # noqa: E402
+
 FIG = ('<figure><img src="{url}" alt="{alt}"/>'
        '<figcaption>설명</figcaption></figure>')
 
@@ -201,3 +203,49 @@ def test_no_issues_means_no_changes():
     post = {"title": "골프", "content": "<p>본문</p>"}
     content, actions = fix_post(post, {"issues": []})
     assert content == "<p>본문</p>" and actions == []
+
+
+# ── data URI 썸네일 회귀 (2026-08-21 첫 실행에서 227건 오판) ──────────────────
+# 이 시스템의 썸네일은 <img src="data:image/svg+xml;base64,..."> 로 본문에
+# 박혀 있습니다. 파일이 아니라 본문 자체라 죽을 수가 없는데, 초기 구현이
+# startswith("http")만 봐서 전부 broken으로 잡았습니다.
+
+_DATA_SVG = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0i"
+
+
+def test_data_uri_image_is_alive():
+    alive, why = image_audit.check_alive(_DATA_SVG)
+    assert alive is True
+    assert why == ""
+
+
+def test_non_image_data_uri_is_broken():
+    alive, _ = image_audit.check_alive("data:text/html;base64,PGh0bWw+")
+    assert alive is False
+
+
+def test_data_uri_is_always_relevant():
+    assert image_audit.relevance_score({"url": _DATA_SVG, "alt": ""}, "전혀 다른 제목") == 1.0
+
+
+def test_data_uri_terms_do_not_include_base64_blob():
+    terms = image_audit._image_terms({"url": _DATA_SVG, "alt": "썸네일"})
+    assert "PHN2ZyB4bWxucz0i" not in terms
+    assert terms == "썸네일"
+
+
+def test_insufficient_is_not_fixed_by_default():
+    post = {"content": "<p>본문</p>", "title": "제목"}
+    audit = {"issues": [{"type": "insufficient", "detail": "이미지 2장 (권장 3장)"}]}
+    _, actions = image_audit.fix_post(post, audit)
+    assert actions == []
+
+
+def test_insufficient_is_fixed_when_opted_in(monkeypatch):
+    monkeypatch.setattr(image_audit, "attach_image",
+                        lambda c, t, k="": (c + "<img>", True, "테스트 첨부"))
+    post = {"content": "<p>본문</p>", "title": "제목"}
+    audit = {"issues": [{"type": "insufficient", "detail": ""}]}
+    _, actions = image_audit.fix_post(
+        post, audit, image_audit.DEFAULT_FIX_KINDS + ("insufficient",))
+    assert any("첨부" in a for a in actions)

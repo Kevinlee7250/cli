@@ -311,3 +311,42 @@ def test_english_alt_against_korean_title_stays_suspect():
     img = {"url": "https://pixabay.com/get/gb029af834b_1280.jpg",
            "alt": "checklist document signing"}
     assert image_audit.relevance_score(img, _CARD_TITLE) < image_audit.RELEVANCE_SUSPECT
+
+
+# ── 블로그 선택 (대시보드에서 전체/개별을 고를 수 있게 된 뒤) ────────────────
+
+def _blog(bid, name):
+    return {"id": bid, "name": name, "blog_id": "1", "url": ""}
+
+
+def test_unknown_blog_filter_raises_instead_of_auditing_everything():
+    """폴백으로 전체를 도는 건 --apply와 만나면 사고입니다."""
+    import pytest
+    blogs = [_blog("blog1", "A"), _blog("blog2", "B")]
+    with patch("config.get_blog_configs", return_value=blogs), \
+         patch("blogger_uploader._get_access_token", return_value="t"), \
+         patch("fix_unlicensed_images._iter_posts", return_value=[]):
+        with pytest.raises(ValueError) as e:
+            image_audit.run(blog_filter="blog9")
+    assert "blog9" in str(e.value) and "blog1" in str(e.value)
+
+
+def test_blog_filter_limits_scope_and_is_recorded():
+    blogs = [_blog("blog1", "A"), _blog("blog2", "B")]
+    with patch("config.get_blog_configs", return_value=blogs), \
+         patch("blogger_uploader._get_access_token", return_value="t"), \
+         patch("fix_unlicensed_images._iter_posts", return_value=[]), \
+         patch("image_audit._save"):
+        report = image_audit.run(blog_filter="blog2")
+    assert report["blogFilter"] == "blog2"
+    assert report["blogsAudited"] == ["B"]
+
+
+def test_empty_filter_means_all_blogs():
+    blogs = [_blog("blog1", "A"), _blog("blog2", "B")]
+    with patch("config.get_blog_configs", return_value=blogs), \
+         patch("blogger_uploader._get_access_token", return_value="t"), \
+         patch("fix_unlicensed_images._iter_posts", return_value=[]), \
+         patch("image_audit._save"):
+        report = image_audit.run(blog_filter="")
+    assert report["blogFilter"] == "" and report["blogsAudited"] == ["A", "B"]

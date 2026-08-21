@@ -378,7 +378,14 @@ def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
 
     blogs = get_blog_configs()
     if blog_filter:
-        blogs = [b for b in blogs if b.get("id") == blog_filter] or blogs
+        # 못 찾으면 전체로 되돌리던 코드가 있었습니다. 대시보드에서 블로그를
+        # 골라 --apply까지 누른 경우, 오타 하나로 고르지도 않은 블로그의 글이
+        # 수정됩니다. 조용히 넓히지 않고 멈춥니다.
+        selected = [b for b in blogs if b.get("id") == blog_filter]
+        if not selected:
+            known = ", ".join(b.get("id", "?") for b in blogs)
+            raise ValueError(f"블로그 '{blog_filter}'를 찾을 수 없습니다 (등록된 ID: {known})")
+        blogs = selected
 
     results, totals = [], {"scanned": 0, "withIssues": 0, "fixed": 0}
     counts: dict[str, int] = {}
@@ -431,6 +438,10 @@ def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
         "auditedAt": datetime.now(timezone.utc).isoformat(),
         "applied": apply_changes,
         "aiJudged": use_ai,
+        # 어떤 범위를 봤는지 남기지 않으면 blog1만 돌린 숫자가 전체 수치처럼
+        # 읽힙니다 (검사 431건 → 120건으로 줄었는데 이유를 알 수 없게 됨)
+        "blogFilter": blog_filter,
+        "blogsAudited": [b.get("name") or b.get("id", "") for b in blogs],
         "fixKinds": list(fix_kinds),
         **totals,
         "issueCounts": counts,

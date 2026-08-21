@@ -150,6 +150,18 @@ def _image_terms(img: dict) -> str:
     return f"{img.get('alt', '')} {name}".strip()
 
 
+#: 20자 이상 이어지는 영숫자 덩어리는 사람이 붙인 이름이 아니라 CDN 해시입니다
+_HASH_RE = re.compile(r"^[0-9a-f]{16,}$|^[a-z0-9]{20,}$", re.I)
+
+
+def _is_informative(haystack: str) -> bool:
+    """관련성을 따질 만한 단어가 하나라도 있는지."""
+    for token in haystack.split():
+        if len(token) >= 2 and not _HASH_RE.match(token) and not token.isdigit():
+            return True
+    return False
+
+
 def relevance_score(img: dict, title: str, keyword: str = "") -> float:
     """0.0~1.0. 이미지 정보와 글 주제가 겹치는 정도.
 
@@ -168,8 +180,12 @@ def relevance_score(img: dict, title: str, keyword: str = "") -> float:
         return 1.0                       # 비교 기준이 없으면 판단하지 않음
 
     haystack = _image_terms(img).lower()
-    if not haystack:
-        return 0.0
+    if not _is_informative(haystack):
+        # 해시 파일명 + alt 없음 = 대조할 정보가 없다는 뜻이지, 무관하다는
+        # 뜻이 아닙니다. 0.0을 주면 Pixabay·Unsplash CDN 이미지가 전부
+        # suspect로 잡히고, --ai를 돌려도 Claude가 보는 건 같은 해시뿐이라
+        # 근거 없이 "무관"이 확정될 수 있습니다 (2026-08-21 15건 확인).
+        return 1.0
     hits = sum(1 for t in terms if t and t.lower() in haystack)
     return round(hits / len(terms), 3)
 

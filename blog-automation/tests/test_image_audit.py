@@ -113,7 +113,9 @@ def test_matching_filename_scores_high():
 
 def test_unrelated_image_scores_zero():
     from image_audit import relevance_score
-    assert relevance_score({"url": "https://a/12345.jpg", "alt": ""},
+    # 파일명이 읽히는 단어여야 "무관"을 말할 수 있습니다. 숫자·해시 파일명은
+    # 정보가 없다는 뜻이라 1.0(유지)이 됩니다 — test_hashed_cdn_url_… 참고
+    assert relevance_score({"url": "https://a/seoul-subway-map.jpg", "alt": ""},
                            "가을 단풍 골프장 추천") == 0.0
 
 
@@ -132,7 +134,7 @@ def test_no_comparable_terms_keeps_image():
 def test_low_relevance_is_suspect_not_irrelevant_without_ai():
     """AI 판정 없이 '무관'으로 확정하면 오삭제가 납니다."""
     from image_audit import audit_post
-    content = "<p>" + "가" * 2000 + "</p>" + FIG.format(url="https://a/9999.jpg", alt="")
+    content = "<p>" + "가" * 2000 + "</p>" + FIG.format(url="https://a/seoul-subway-map.jpg", alt="")
     with patch("requests.head", return_value=_resp()):
         a = audit_post({"title": "가을 단풍 골프장 추천", "content": content}, use_ai=False)
     types = [i["type"] for i in a["issues"]]
@@ -172,7 +174,7 @@ def test_broken_image_is_removed_when_no_alternative():
 def test_suspect_is_never_touched():
     """확정 판정 전에는 손대지 않습니다."""
     from image_audit import fix_post
-    original = FIG.format(url="https://a/9999.jpg", alt="")
+    original = FIG.format(url="https://a/seoul-subway-map.jpg", alt="")
     post = {"title": "골프", "content": original}
     audit = {"issues": [{"type": "suspect", "url": "https://a/9999.jpg"}]}
     content, actions = fix_post(post, audit)
@@ -249,3 +251,29 @@ def test_insufficient_is_fixed_when_opted_in(monkeypatch):
     _, actions = image_audit.fix_post(
         post, audit, image_audit.DEFAULT_FIX_KINDS + ("insufficient",))
     assert any("첨부" in a for a in actions)
+
+
+# ── 정보 없는 CDN 해시 URL (2026-08-21 suspect 15건이 전부 이 경우) ──────────
+# 점수 0.0은 "무관"이 아니라 "대조할 정보 없음"입니다. --ai를 돌려도 Claude가
+# 보는 건 같은 해시뿐이라, 근거 없이 무관으로 확정되면 안 됩니다.
+
+def test_hashed_cdn_url_without_alt_is_not_suspect():
+    img = {"url": "https://pixabay.com/get/ga5f45e80d7217b99888f565ea03eb3ca7c1f7b11.jpg",
+           "alt": ""}
+    assert image_audit.relevance_score(img, "카드사 여행 혜택 비교") == 1.0
+
+
+def test_alt_text_still_drives_the_score():
+    img = {"url": "https://pixabay.com/get/ga5f45e80d7217b99888f565ea03eb3ca7c1f7b11.jpg",
+           "alt": "고양이 사진"}
+    assert image_audit.relevance_score(img, "카드사 여행 혜택 비교") < 1.0
+
+
+def test_readable_filename_still_drives_the_score():
+    img = {"url": "https://example.com/photos/travel-card-benefits.jpg", "alt": ""}
+    assert image_audit.relevance_score(img, "카드사 travel 혜택 비교") > 0.0
+
+
+def test_is_informative_rejects_pure_hash():
+    assert image_audit._is_informative("ga5f45e80d7217b99888f565ea03eb3ca") is False
+    assert image_audit._is_informative("여행 카드") is True

@@ -1,5 +1,38 @@
 [
   {
+    "timestamp": "2026-08-21T17:22:34.882407",
+    "tracebacks_found": 2,
+    "critical_errors": 7,
+    "critical_samples": [
+      "2026-08-20 22:36:06,156 [ERROR] content_generator — 포스트 생성 오류: Messages.stream() got an unexpected keyword argument 'temperature'",
+      "2026-08-20 22:36:52,811 [ERROR] content_generator — 포스트 생성 오류: Messages.stream() got an unexpected keyword argument 'temperature'",
+      "2026-08-20 22:36:52,812 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): 'OTT 구독료 비교 및 요금제 절약 방법'"
+    ],
+    "repairs": [
+      {
+        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
+        "file": "content_generator.py",
+        "line": "2766",
+        "timestamp": "2026-08-21T17:22:34.243131",
+        "dry_run": false,
+        "result": "error",
+        "detail": "Claude API 오류"
+      },
+      {
+        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
+        "file": "content_generator.py",
+        "line": "2766",
+        "timestamp": "2026-08-21T17:22:34.880073",
+        "dry_run": false,
+        "result": "error",
+        "detail": "Claude API 오류"
+      }
+    ],
+    "auto_fixed": 0,
+    "manual_required": 0,
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-20T17:23:01.272862",
     "tracebacks_found": 0,
     "critical_errors": 5,
@@ -253,15 +286,6 @@
   },
   {
     "timestamp": "2026-07-26T18:04:15.770988",
-    "tracebacks_found": 0,
-    "critical_errors": 4,
-    "repairs": [],
-    "auto_fixed": 0,
-    "manual_required": 0,
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-25T18:01:56.442241",
     "tracebacks_found": 0,
     "critical_errors": 4,
     "repairs": [],

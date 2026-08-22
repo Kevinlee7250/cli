@@ -328,8 +328,14 @@ def _diagnose_from_logs() -> list[dict]:
     try:
         with open(LOG_FILE, encoding="utf-8", errors="replace") as f:
             lines = f.readlines()[-300:]
-        log_tail = "".join(lines)
-        tb_count = log_tail.count("Traceback (most recent call last):")
+        # 이미 분석·수리한 예외까지 세면 고친 오류가 며칠씩 "최근 오류"로
+        # 남습니다. code_repair의 판정을 그대로 씁니다 — 같은 규칙을 두 번
+        # 구현하면 한쪽만 고쳐질 때 어긋납니다.
+        try:
+            from code_repair import new_tracebacks
+            tb_count = len(new_tracebacks())
+        except Exception:
+            tb_count = "".join(lines).count("Traceback (most recent call last):")
         if tb_count > 0:
             issues.append({
                 "id": "python_exception_in_log",

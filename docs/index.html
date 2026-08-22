@@ -4,7 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>블로그 자동화 대시보드</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<!-- 차트 라이브러리. CDN이 흔들리면 못 옵니다 — onerror로 그 사실을 기록해 두고
+     차트 자리에만 안내를 띄웁니다. 이게 없으면 renderCharts()가 던지는 예외에
+     이후 패널 렌더가 전부 끌려 내려갑니다(빈 대시보드). -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"
+        onerror="window.__chartLoadFailed = true"></script>
 <style>
   :root {
     --bg:#0f1117;--bg2:#1a1d27;--bg3:#22263a;--border:#2d3350;
@@ -631,6 +635,8 @@
     </div>
 
     <div id="dashboard-content" style="display:none">
+      <!-- 차트 라이브러리 로드 실패 안내 (평소에는 숨김) -->
+      <div id="chart-lib-notice" style="display:none;margin-bottom:16px;padding:12px 16px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.35);border-radius:10px;color:var(--yellow);font-size:13px;line-height:1.7"></div>
       <div class="cards">
         <div class="card purple"><div class="label">총 포스트</div><div class="value" id="s-posts">-</div><div class="sub">생성된 전체 포스트</div></div>
         <div class="card green"><div class="label">누적 예상 수익</div><div class="value" id="s-revenue">-</div><div class="sub">AdSense 추정치 (USD) <span id="s-revenue-trend"></span></div></div>
@@ -2678,22 +2684,36 @@ async function loadAll(silent = false) {
   if (cfgEl && meta.systemVersion) cfgEl.textContent = meta.systemVersion
   document.getElementById('dashboard-skeleton').style.display = 'none'
   document.getElementById('dashboard-content').style.display = 'block'
-  renderDashboard()
-  kwRenderSuggests()       // 추천 키워드 갱신
-  populateRunBlogSelect()  // 블로그 선택 드롭다운 갱신
-  renderLearningReport()
-  renderAuthHealth()
-  renderRepairReport()
-  renderCodeRepairReport()
-  renderWeeklyBrief()
-  renderTrendPreempt()
-  renderAdsenseAudit()
-  renderPendingReport()
-  renderAlerts()
-  renderFreshnessPanel()   // 어떤 파일이 언제 것인지
-  applyFreshBadges()       // 패널 제목 옆 신선도 배지
-  _botCheckErrors()    // 봇 오류 자동 감지
-  if (!silent) showToast('데이터를 불러왔습니다', 'success')
+  // 패널을 하나씩 따로 그립니다. 예전에는 한 줄로 이어져 있어서, 앞쪽에서
+  // 예외가 하나 나면 뒤따르는 패널이 전부 안 그려졌습니다(차트 라이브러리
+  // 로드 실패 때 대시보드 전체가 빈 화면). 한 패널의 실패는 그 패널에서
+  // 끝나야 합니다.
+  const failures = []
+  for (const [label, fn] of [
+    ['대시보드', renderDashboard],
+    ['추천 키워드', kwRenderSuggests],
+    ['블로그 선택', populateRunBlogSelect],
+    ['주간 학습', renderLearningReport],
+    ['인증 헬스체크', renderAuthHealth],
+    ['자동 수리', renderRepairReport],
+    ['코드 자동 수리', renderCodeRepairReport],
+    ['주간 브리핑', renderWeeklyBrief],
+    ['트렌드 선점', renderTrendPreempt],
+    ['AdSense 감사', renderAdsenseAudit],
+    ['검토 대기 리포트', renderPendingReport],
+    ['운영 알림', renderAlerts],
+    ['차트 안내', renderChartLibNotice],
+    ['데이터 신선도', renderFreshnessPanel],
+    ['신선도 배지', applyFreshBadges],
+    ['봇 오류 감지', _botCheckErrors],
+  ]) {
+    try { fn() } catch (e) { failures.push(label); console.error(`[${label}] 렌더 실패:`, e) }
+  }
+  if (failures.length) {
+    showToast(`일부 패널을 그리지 못했습니다: ${failures.join(', ')}`, 'error')
+  } else if (!silent) {
+    showToast('데이터를 불러왔습니다', 'success')
+  }
 }
 
 function manualRefresh() {
@@ -3112,6 +3132,78 @@ function updateCountdown() {
 }
 
 // ── Charts ─────────────────────────────────────────────────────────────────────
+
+// Chart.js는 CDN에서 옵니다. 못 받았을 때 new Chart(...)를 그대로 부르면
+// ReferenceError가 나고, 그 예외가 renderDashboard 밖으로 새어 나가 뒤따르는
+// 패널 렌더가 전부 중단됩니다. 실제로 CDN이 막힌 환경에서 대시보드 전체가
+// 빈 화면이 됐습니다. 차트 하나가 안 그려지는 것과 대시보드가 안 뜨는 것은
+// 완전히 다른 문제라, 여기서 갈라놓습니다.
+function chartLibReady() {
+  return typeof Chart !== 'undefined' && !window.__chartLoadFailed
+}
+
+function _chartFallback(canvas) {
+  if (!canvas || !canvas.parentElement) return
+  const holder = canvas.parentElement
+  if (holder.querySelector('.chart-fallback')) return
+  canvas.style.display = 'none'
+  const div = document.createElement('div')
+  div.className = 'chart-fallback'
+  div.style.cssText = 'display:flex;align-items:center;justify-content:center;min-height:120px;padding:20px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7;border:1px dashed var(--border);border-radius:8px'
+  div.innerHTML = '📉 차트를 그릴 수 없습니다<br><span style="font-size:12px">차트 라이브러리(CDN)를 불러오지 못했습니다. 수치 자체는 아래 표와 카드에 그대로 있습니다.</span>'
+  holder.appendChild(div)
+}
+
+// 모든 차트는 이 함수를 거칩니다. 라이브러리가 없으면 자리만 안내로 바꾸고,
+// 설정이 잘못돼 던지더라도 호출부까지 번지지 않게 잡습니다.
+function makeChart(canvas, config) {
+  if (!canvas) return null
+  if (!chartLibReady()) { _chartFallback(canvas); return null }
+  try {
+    // 같은 캔버스에 이미 붙어 있는 차트를 정리합니다. 호출부마다 전역 변수를
+    // 들고 destroy를 부르던 것을 Chart.js가 가진 등록부로 대신합니다 —
+    // 변수와 캔버스가 어긋나면 "Canvas is already in use"로 터집니다.
+    const existing = typeof Chart.getChart === 'function' ? Chart.getChart(canvas) : null
+    if (existing) existing.destroy()
+    return new Chart(canvas, config)
+  } catch (e) {
+    console.error('차트 생성 실패:', e)
+    _chartFallback(canvas)
+    return null
+  }
+}
+
+// 차트를 못 그리는 상황을 화면 위쪽에 한 번만 알립니다. 차트 자리마다
+// 안내가 뜨더라도, 왜 그런지는 한 곳에서 설명해야 합니다.
+function renderChartLibNotice() {
+  const host = document.getElementById('chart-lib-notice')
+  if (!host) return
+  if (chartLibReady()) { host.style.display = 'none'; return }
+  host.style.display = 'block'
+  host.innerHTML = '⚠️ 차트 라이브러리를 불러오지 못했습니다 (CDN 차단 또는 네트워크 오류). ' +
+    '차트만 표시되지 않으며 나머지 데이터는 정상입니다. ' +
+    '<button onclick="retryChartLib()" style="margin-left:8px;padding:4px 12px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);border-radius:6px;color:var(--yellow);font-size:12px;cursor:pointer;font-weight:600">다시 시도</button>'
+}
+
+async function retryChartLib() {
+  try {
+    await _loadScript('https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js')
+    window.__chartLoadFailed = false
+  } catch (e) { /* 여전히 안 되면 안내를 그대로 둡니다 */ }
+  if (chartLibReady()) {
+    document.querySelectorAll('.chart-fallback').forEach(el => {
+      const c = el.parentElement && el.parentElement.querySelector('canvas')
+      if (c) c.style.display = ''
+      el.remove()
+    })
+    renderChartLibNotice()
+    renderDashboard()
+    showToast('차트를 다시 불러왔습니다', 'success')
+  } else {
+    showToast('차트 라이브러리를 여전히 불러올 수 없습니다', 'error')
+  }
+}
+
 function renderCharts() {
   renderRevenueChart()
   renderCategoryChart()
@@ -3127,8 +3219,7 @@ function renderRevenueChart() {
   const values = recent.map(r => r.earnings?.estimatedDailyRevenue || 0)
   const ctx = document.getElementById('chart-revenue')
   if (!ctx) return
-  if (revenueChart) revenueChart.destroy()
-  revenueChart = new Chart(ctx, {
+  revenueChart = makeChart(ctx, {
     type: 'line',
     data: { labels, datasets: [{ label: '일 예상 수익 ($)', data: values, borderColor: '#34d399', backgroundColor: 'rgba(52,211,153,.1)', tension: 0.4, fill: true, pointBackgroundColor: '#34d399', pointRadius: 4 }] },
     options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#8892b0', font: { size: 10 } }, grid: { color: '#2d3350' } }, y: { ticks: { color: '#8892b0', font: { size: 10 }, callback: v => '$'+v.toFixed(2) }, grid: { color: '#2d3350' } } } }
@@ -3144,9 +3235,8 @@ function renderCategoryChart() {
   const colors = ['#7c6af7','#06b6d4','#34d399','#fbbf24','#fb923c','#f87171','#a78bfa','#60a5fa']
   const ctx = document.getElementById('chart-category')
   if (!ctx) return
-  if (categoryChart) categoryChart.destroy()
   if (!labels.length) return
-  categoryChart = new Chart(ctx, {
+  categoryChart = makeChart(ctx, {
     type: 'doughnut',
     data: { labels, datasets: [{ data: values, backgroundColor: colors.slice(0, labels.length), borderColor: '#1a1d27', borderWidth: 2 }] },
     options: { responsive: true, plugins: { legend: { position: 'right', labels: { color: '#8892b0', font: { size: 11 }, padding: 10 } } } }
@@ -3160,8 +3250,7 @@ function renderAnalyticsChart() {
   const values = recent.map(r => r.earnings?.estimatedDailyRevenue || 0)
   const ctx = document.getElementById('chart-revenue-analytics')
   if (!ctx) return
-  if (analyticsChart) analyticsChart.destroy()
-  analyticsChart = new Chart(ctx, {
+  analyticsChart = makeChart(ctx, {
     type: 'bar',
     data: { labels, datasets: [{ label: '일 예상 수익 ($)', data: values, backgroundColor: 'rgba(124,106,247,.5)', borderColor: '#7c6af7', borderWidth: 1, borderRadius: 4 }] },
     options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#8892b0', font: { size: 10 } }, grid: { color: '#2d3350' } }, y: { ticks: { color: '#8892b0', font: { size: 10 }, callback: v => '$'+v.toFixed(2) }, grid: { color: '#2d3350' } } } }
@@ -3181,8 +3270,7 @@ function renderCumulativeChart() {
   })
   const ctx = document.getElementById('chart-cumulative')
   if (!ctx) return
-  if (cumulativeChart) cumulativeChart.destroy()
-  cumulativeChart = new Chart(ctx, {
+  cumulativeChart = makeChart(ctx, {
     type: 'line',
     data: { labels, datasets: [{ label: '누적 포스트', data: values, borderColor: '#06b6d4', backgroundColor: 'rgba(6,182,212,.1)', tension: 0.3, fill: true, pointRadius: 3, pointBackgroundColor: '#06b6d4' }] },
     options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#8892b0', font: { size: 10 } }, grid: { color: '#2d3350' } }, y: { ticks: { color: '#8892b0', font: { size: 10 } }, grid: { color: '#2d3350' }, beginAtZero: true } } }
@@ -3194,8 +3282,7 @@ function renderKeywordsChart(kwData) {
   const top10 = kwData.slice(0, 10)
   const ctx = document.getElementById('chart-keywords')
   if (!ctx) return
-  if (keywordsChart) keywordsChart.destroy()
-  keywordsChart = new Chart(ctx, {
+  keywordsChart = makeChart(ctx, {
     type: 'bar',
     data: {
       labels: top10.map(k => k.keyword),
@@ -4032,8 +4119,7 @@ function renderCatRevenueChart() {
   const values = sorted.map(([, v]) => +(v.count * v.cpc * 80 * 0.025 * v.cpc).toFixed(2))
   const ctx = document.getElementById('chart-cat-revenue')
   if (!ctx) return
-  if (chartCatRevenue) chartCatRevenue.destroy()
-  chartCatRevenue = new Chart(ctx, {
+  chartCatRevenue = makeChart(ctx, {
     type: 'bar',
     data: {
       labels,
@@ -4059,8 +4145,7 @@ function renderGSCCategoryChart() {
   catBox.style.display = 'block'
   const labels = entries.map(([c]) => c)
   const clicks = entries.map(([,v]) => v.clicks)
-  if (chartGSCCats) chartGSCCats.destroy()
-  chartGSCCats = new Chart(ctx, {
+  chartGSCCats = makeChart(ctx, {
     type: 'bar',
     data: {
       labels,
@@ -7757,8 +7842,7 @@ function renderForecastChart() {
   const histDataset = [...histValues, ...Array(PROJ).fill(null)]
   const projDataset = [...Array(n - 1).fill(null), histValues[n-1], ...projValues]
 
-  if (forecastChart) forecastChart.destroy()
-  forecastChart = new Chart(ctx, {
+  forecastChart = makeChart(ctx, {
     type: 'line',
     data: {
       labels: allLabels,

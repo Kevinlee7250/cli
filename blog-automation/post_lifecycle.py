@@ -324,8 +324,8 @@ def run() -> dict:
     }
 
     os.makedirs(OUTPUT_FILE.parent, exist_ok=True)
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        json.dump(output, f, ensure_ascii=False, indent=2)
+    from dashboard_exporter import write_data
+    write_data(str(OUTPUT_FILE), output)      # 대시보드가 받아 가는 파일 — 들여쓰기 없음
     os.makedirs(HISTORY_FILE.parent, exist_ok=True)
     with open(HISTORY_FILE, "w", encoding="utf-8") as f:
         json.dump(history, f, ensure_ascii=False, indent=2)

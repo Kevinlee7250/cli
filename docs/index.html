@@ -2527,6 +2527,16 @@ async function fetchData(base, name, fallback) {
   }
 }
 
+// 특정 탭에서만 쓰는 큰 파일은 그 탭을 열 때 받습니다. social.json 하나가
+// 282KB인데 소셜 탭을 열지 않으면 한 번도 쓰이지 않습니다. 첫 화면이 뜨는
+// 속도에 그대로 얹혀 있던 무게입니다.
+const _deferred = {}
+async function ensureData(base, name, fallback) {
+  if (_deferred[name] !== undefined) return _deferred[name]
+  _deferred[name] = await fetchData(base, name, fallback)
+  return _deferred[name]
+}
+
 // 개별 패널이 직접 받아 쓰는 파일용. Response를 그대로 돌려주므로 호출부는
 // 기존처럼 r.ok / await r.json()을 씁니다. 시각만 옆에서 기록합니다.
 async function fetchStamped(base, name) {
@@ -2635,12 +2645,11 @@ async function loadAll(silent = false) {
   purgeLegacyOAuthStorage()  // 보안: 과거 저장된 장기 토큰 제거
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, adsenseRevenue] = await Promise.all([
+  const [posts, runs, analytics, meta, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, adsenseRevenue] = await Promise.all([
     fetchData(base, 'posts.json', []),
     fetchData(base, 'runs.json', []),
     fetchData(base, 'analytics.json', ({})),
     fetchData(base, 'meta.json', ({})),
-    fetchData(base, 'social.json', []),
     fetchData(base, 'pending_posts.json', []),
     fetchData(base, 'series.json', []),
     fetchData(base, 'gsc.json', ({})),
@@ -2662,7 +2671,7 @@ async function loadAll(silent = false) {
     fetchData(base, 'alerts.json', null),
     fetchData(base, 'adsense_revenue.json', null),
   ])
-  DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, adsenseRevenue }
+  DATA = { posts, runs, analytics, meta, social: DATA.social || [], pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, adsenseRevenue }
 
   // 아카이브 포스트 백그라운드 병합 (posts.json은 최근 300개만 유지 — 초기 로딩 속도 확보)
   fetch(base + '/posts_archive.json' + ts).then(r => r.ok ? r.json() : []).then(archive => {
@@ -3606,9 +3615,21 @@ function postCardHTML(p) {
   </div>`
 }
 
-function openPost(id) {
+// FAQ·출처는 이 모달에서만 씁니다. 목록에는 개수만 있고 내용은
+// post_details.json에 따로 있어, 글을 열 때 한 번만 받아 옵니다.
+async function _ensurePostDetail(p) {
+  if (p.faq || p.sources) return p
+  const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
+  const details = await ensureData(base, 'post_details.json', {})
+  const d = details && details[p.id]
+  if (d) { p.faq = d.faq || []; p.sources = d.sources || [] }
+  return p
+}
+
+async function openPost(id) {
   const p = DATA.posts.find(x => x.id === id)
   if (!p) return
+  await _ensurePostDetail(p)
   document.getElementById('modal-title').textContent = p.title
   const g = qualityGrade(p)
   document.getElementById('modal-meta').innerHTML =
@@ -4296,9 +4317,12 @@ async function loadShortsScripts() {
   }).join('')
 }
 
-function renderSocial() {
+async function renderSocial() {
   _shortsFillPostSelect()
   loadShortsScripts()
+  // 소셜 콘텐츠는 이 탭에서만 씁니다 — 여기서 처음 받아 옵니다.
+  const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
+  DATA.social = await ensureData(base, 'social.json', [])
   const { social } = DATA
   if (!social.length) {
     ['instagram','threads','tiktok'].forEach(t => {

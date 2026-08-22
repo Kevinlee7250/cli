@@ -61,6 +61,7 @@ def dashboard_reads() -> set[str]:
     html = _read(_DASHBOARD)
     names = set()
     names |= set(re.findall(r"fetchData\(base,\s*'([a-z_]+\.json)'", html))
+    names |= set(re.findall(r"ensureData\(base,\s*'([a-z_]+\.json)'", html))
     names |= set(re.findall(r"fetchStamped\(base,\s*'([a-z_]+\.json)'", html))
     names |= set(re.findall(r"base \+ '/([a-z_]+\.json)", html))
     names |= set(re.findall(r"/data/([a-z_]+\.json)", html))
@@ -150,7 +151,7 @@ def test_freshness_meta_covers_what_the_dashboard_loads():
     # 화면에 수치를 그리지 않는 보조 파일은 나이를 표시할 자리가 없습니다
     auxiliary = {"pending_bodies.json", "pending_archive.json", "posts_archive.json",
                  "affiliate_links.json", "bot_reply.json", "adsense_revenue.json",
-                 "shorts_scripts.json"}
+                 "shorts_scripts.json", "post_details.json"}
     uncovered = sorted(dashboard_reads() - covered - auxiliary)
     assert not uncovered, (
         "신선도 표시에서 빠진 파일: " + ", ".join(uncovered) +

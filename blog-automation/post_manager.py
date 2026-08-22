@@ -318,8 +318,8 @@ def export_for_dashboard(docs_data_dir: str) -> None:
     dst = os.path.join(docs_data_dir, "post_registry.json")
     registry = load_registry()
     try:
-        with open(dst, "w", encoding="utf-8") as f:
-            json.dump(registry, f, ensure_ascii=False, indent=2)
+        from dashboard_exporter import write_data
+        write_data(dst, registry)
         summary = get_status_summary()
         logger.info(
             f"  포스트 레지스트리: 전체 {summary['total']}개 "

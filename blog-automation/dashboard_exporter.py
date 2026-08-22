@@ -18,6 +18,16 @@ DOCS_DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "docs", "data")
 PENDING_FILE = os.path.join(os.path.dirname(__file__), "..", "docs", "data", "pending_posts.json")
 
 
+#: 대시보드가 받아 가는 파일은 들여쓰기를 넣지 않습니다. 기계가 만들고 기계가
+#: 읽는 데이터인데 들여쓰기가 파일의 60%를 차지했습니다 (post_registry 512KB
+#: 중 실제 내용은 196KB). 브라우저가 그만큼 더 받아야 하고, git diff도 어차피
+#: 300건이 통째로 바뀌어 읽을 수 없기는 마찬가지입니다.
+def write_data(path: str, data) -> None:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
+
+
 def _load_history() -> list[dict]:
     if os.path.exists(HISTORY_FILE):
         try:
@@ -179,12 +189,10 @@ def _export_repairs(docs_dir: str) -> None:
         if os.path.exists(src):
             with open(src, encoding="utf-8") as f:
                 data = json.load(f)
-            with open(dst, "w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
+            write_data(dst, data)
             logger.info(f"  수리 이력: {len(data)}건 내보내기 완료")
         else:
-            with open(dst, "w", encoding="utf-8") as f:
-                json.dump([], f)
+            write_data(dst, [])
     except Exception as exc:
         logger.debug(f"수리 데이터 내보내기 생략: {exc}")
 
@@ -197,12 +205,10 @@ def _export_learning(docs_dir: str) -> None:
         if os.path.exists(src):
             with open(src, encoding="utf-8") as f:
                 data = json.load(f)
-            with open(dst, "w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
+            write_data(dst, data)
             logger.info(f"  학습 이력: {len(data)}주 내보내기 완료")
         else:
-            with open(dst, "w", encoding="utf-8") as f:
-                json.dump([], f)
+            write_data(dst, [])
     except Exception as exc:
         logger.debug(f"학습 데이터 내보내기 생략: {exc}")
 
@@ -353,8 +359,7 @@ def _export_social(docs_dir: str) -> None:
         entries.sort(key=lambda e: e.get("date", ""), reverse=True)
         entries = entries[:50]
 
-        with open(dst, "w", encoding="utf-8") as f:
-            json.dump(entries, f, ensure_ascii=False, indent=2)
+        write_data(dst, entries)
         logger.info(f"  SNS 데이터: {len(entries)}개 내보내기 완료")
     except Exception as exc:
         logger.debug(f"SNS 데이터 내보내기 생략: {exc}")
@@ -393,8 +398,7 @@ def _export_series(docs_dir: str) -> None:
             }
             for s in series_list
         ]
-        with open(series_dst, "w", encoding="utf-8") as f:
-            json.dump(export, f, ensure_ascii=False, indent=2)
+        write_data(series_dst, export)
         logger.info(f"  시리즈: {len(export)}개 내보내기 완료")
     except Exception as exc:
         logger.warning(f"시리즈 데이터 내보내기 실패 (무시): {exc}")
@@ -487,7 +491,6 @@ def export_dashboard() -> None:
                 "contentCategory": p.get("contentCategory", ""),
                 "searchIntent": p.get("searchIntent", ""),
                 "trendDirection": "rising",
-                "factCheck": p.get("factCheck"),
                 "tags": p.get("labels", [])[:7],
                 "blogUrl": p.get("blogUrl", ""),
                 "metaDescription": p.get("metaDescription", ""),
@@ -590,12 +593,26 @@ def export_dashboard() -> None:
             new_items = [p for p in posts_overflow if p.get("id") not in seen_ids]
             if new_items:
                 archive = new_items + archive
-                with open(archive_path, "w", encoding="utf-8") as f:
-                    json.dump(archive, f, ensure_ascii=False, indent=2)
+                write_data(archive_path, archive)
                 logger.info(f"  아카이브: {len(new_items)}개 이동 (총 {len(archive)}개)")
         except Exception as _ae:
             logger.warning(f"posts_archive.json 저장 실패 — posts.json에 전체 유지: {_ae}")
             posts_recent = posts
+
+    # 글 목록에서 상세 필드를 떼어 냅니다. faq·sources는 상세 모달에서만 쓰는데
+    # 합쳐서 80KB가 넘고, 목록만 보는 사람도 매번 받아 갔습니다. factCheck는
+    # 대시보드가 어디서도 참조하지 않아 아예 내보내지 않습니다 (원본은
+    # run_history.json에 그대로 남습니다).
+    post_details = {}
+    for post in posts_recent:
+        faq = post.pop("faq", []) or []
+        sources = post.pop("sources", []) or []
+        post.pop("factCheck", None)
+        post["faqCount"] = len(faq)
+        post["sourceCount"] = len(sources)
+        if (faq or sources) and post.get("id"):
+            post_details[post["id"]] = {"faq": faq, "sources": sources}
+    write_data(os.path.join(DOCS_DATA_DIR, "post_details.json"), post_details)
 
     for name, data in [
         ("posts.json", posts_recent),
@@ -604,9 +621,7 @@ def export_dashboard() -> None:
         ("meta.json", meta),
         ("blogs.json", blogs_export),
     ]:
-        path = os.path.join(DOCS_DATA_DIR, name)
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+        write_data(os.path.join(DOCS_DATA_DIR, name), data)
 
     _export_series(DOCS_DATA_DIR)
     _export_social(DOCS_DATA_DIR)

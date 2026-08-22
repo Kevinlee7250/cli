@@ -917,23 +917,47 @@ def test_all_publishes_failed_exits_nonzero():
     import main
     with pytest.raises(SystemExit) as e:
         main._exit_on_publish_failure(
-            [{"blog": "A", "attempted": 1, "success": 0, "failed": 1,
-              "errors": ["콘텐츠 생성 최종 실패"]}])
+            [{"blog": "A", "attempted": 1, "published": 0, "pending": 0,
+              "success": 0, "failed": 1, "errors": ["콘텐츠 생성 최종 실패"]}])
     assert e.value.code == 1
+
+
+def test_everything_diverted_to_pending_is_a_failure(caplog):
+    """블로그에 한 편도 안 올라갔으면 pending 저장은 성공이 아닙니다.
+
+    success_count는 pending 저장까지 성공으로 세기 때문에, 이 구분이 없으면
+    "성공 1건"인데 블로그는 비어 있는 상태를 영영 놓칩니다.
+    """
+    import pytest
+    import main
+    with caplog.at_level("ERROR"), pytest.raises(SystemExit):
+        main._exit_on_publish_failure(
+            [{"blog": "A", "attempted": 1, "published": 0, "pending": 1,
+              "success": 1, "failed": 0, "errors": []}])
+    assert "검토 대기" in caplog.text
+
+
+def test_published_post_passes_even_with_pending_siblings():
+    import main
+    main._exit_on_publish_failure(
+        [{"blog": "A", "attempted": 3, "published": 1, "pending": 2,
+          "success": 3, "failed": 0, "errors": []}])
 
 
 def test_partial_success_does_not_fail():
     """한 편이라도 올라갔으면 실패가 아닙니다."""
     import main
     main._exit_on_publish_failure(
-        [{"blog": "A", "attempted": 2, "success": 1, "failed": 1, "errors": []}])
+        [{"blog": "A", "attempted": 2, "published": 1, "pending": 0,
+          "success": 1, "failed": 1, "errors": []}])
 
 
 def test_nothing_attempted_is_not_a_failure():
     """할 일이 없던 것과 하려다 실패한 것은 다릅니다."""
     import main
     main._exit_on_publish_failure(
-        [{"blog": "A", "attempted": 0, "success": 0, "failed": 0, "errors": []}])
+        [{"blog": "A", "attempted": 0, "published": 0, "pending": 0,
+          "success": 0, "failed": 0, "errors": []}])
 
 
 def test_failure_across_blogs_is_aggregated():
@@ -941,8 +965,10 @@ def test_failure_across_blogs_is_aggregated():
     import main
     with pytest.raises(SystemExit):
         main._exit_on_publish_failure([
-            {"blog": "A", "attempted": 1, "success": 0, "failed": 1, "errors": ["x"]},
-            {"blog": "B", "attempted": 1, "success": 0, "failed": 1, "errors": ["y"]},
+            {"blog": "A", "attempted": 1, "published": 0, "pending": 0,
+             "success": 0, "failed": 1, "errors": ["x"]},
+            {"blog": "B", "attempted": 1, "published": 0, "pending": 0,
+             "success": 0, "failed": 1, "errors": ["y"]},
         ])
 
 
@@ -951,7 +977,8 @@ def test_error_messages_are_logged(caplog):
     import main
     with caplog.at_level("ERROR"), pytest.raises(SystemExit):
         main._exit_on_publish_failure(
-            [{"blog": "금융NEWS", "attempted": 1, "success": 0, "failed": 1,
+            [{"blog": "금융NEWS", "attempted": 1, "published": 0, "pending": 0,
+              "success": 0, "failed": 1,
               "errors": ["콘텐츠 생성 최종 실패: '사이드카 발동'"]}])
     text = caplog.text
     assert "금융NEWS" in text and "사이드카 발동" in text

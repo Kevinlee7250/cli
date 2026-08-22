@@ -522,6 +522,12 @@ def run_once(
     return {
         "blog": cfg.get("name") or "기본",
         "attempted": success_count + fail_count,
+        # success_count는 pending 저장(품질 미달·글자 수 미달)까지 성공으로 셉니다.
+        # 블로그에 실제로 올라간 건수는 blogger_count뿐이라, 발행 여부를 판단할
+        # 때는 반드시 이 값을 봐야 합니다. 이걸 구분하지 않으면 "성공 1건"인데
+        # 블로그는 비어 있는 상태를 놓칩니다 (2026-08-22 확인).
+        "published": blogger_count,
+        "pending": max(0, success_count - blogger_count),
         "success": success_count,
         "failed": fail_count,
         "errors": list(error_messages),
@@ -1105,18 +1111,24 @@ def _exit_on_publish_failure(summaries: list[dict]) -> None:
     할 일이 없던 것과 하려다 실패한 것은 구분해야 합니다.
     """
     attempted = sum(s.get("attempted", 0) for s in summaries)
-    success = sum(s.get("success", 0) for s in summaries)
+    published = sum(s.get("published", 0) for s in summaries)
+    pending = sum(s.get("pending", 0) for s in summaries)
     failed = sum(s.get("failed", 0) for s in summaries)
 
     if attempted == 0:
         logger.info("발행 시도 없음 — 처리할 키워드가 없었습니다")
         return
-    if success > 0:
-        logger.info(f"발행 요약: 성공 {success}건 / 실패 {failed}건")
+    if published > 0:
+        logger.info(f"발행 요약: 게시 {published}건 / 검토 대기 {pending}건 / 실패 {failed}건")
         return
 
+    # 여기부터는 블로그에 한 편도 올라가지 않은 경우입니다.
     logger.error("=" * 60)
-    logger.error(f"❌ 발행 0건 — {attempted}건 시도해 전부 실패했습니다")
+    if failed:
+        logger.error(f"❌ 게시 0건 — {attempted}건 시도, 오류 {failed}건")
+    else:
+        logger.error(f"❌ 게시 0건 — 생성은 됐지만 {pending}건 모두 검토 대기로 빠졌습니다")
+        logger.error("   품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다")
     for s in summaries:
         for msg in (s.get("errors") or [])[:3]:
             logger.error(f"   [{s.get('blog')}] {msg}")

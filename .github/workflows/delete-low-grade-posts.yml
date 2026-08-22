@@ -86,7 +86,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f docs/data/grade_cleanup.json docs/data/posts.json docs/data/post_details.json docs/data/post_registry.json \
+          git add -f docs/data/grade_cleanup.json docs/data/posts.json docs/data/post_details.json docs/data/feature_flags.json docs/data/post_registry.json \
                      blog-automation/logs/post_registry.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음"

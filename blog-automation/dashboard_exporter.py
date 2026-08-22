@@ -164,9 +164,47 @@ def log_run(
         ],
     }
     history.insert(0, entry)
-    history = history[:100]
+    history = _trim_history(history)
     _save_history(history)
     logger.info(f"실행 이력 저장 완료 (총 {len(history)}개)")
+
+
+#: 이력 보존 기간(일). 100건 고정이던 시절에는 하루 9건씩 쌓여 12일치밖에
+#: 남지 않았고, 월 단위 추세를 볼 수 없었습니다.
+HISTORY_KEEP_DAYS = 90
+#: 오래된 기록에서 통째로 버릴 필드. 개별 글 정보는 시간이 지나면 안 보고,
+#: 파일 크기의 대부분을 차지합니다. 실행 건수·업로드 수 같은 집계는 남습니다.
+HISTORY_DETAIL_KEEP_DAYS = 30
+#: 대시보드로 내보낼 실행 이력 건수. 보존은 90일로 늘리되 브라우저가 받는
+#: 양은 묶어 둡니다 — 화면의 타임라인·차트는 최근 것만 씁니다. 더 긴 분석은
+#: logs/run_history.json을 직접 읽는 weekly_learning이 담당합니다.
+RUNS_EXPORT_LIMIT = 120
+
+
+def _trim_history(history: list[dict], now: datetime | None = None) -> list[dict]:
+    """90일치를 남기되, 30일이 지난 기록은 요약만 남깁니다.
+
+    건수로 자르면 발행량이 늘 때 보존 기간이 저절로 짧아집니다. 기간으로
+    자르고, 오래된 것은 posts 배열을 버려 파일이 커지지 않게 합니다.
+    """
+    now = now or datetime.now()
+    kept: list[dict] = []
+    for entry in history:
+        raw = entry.get("runAt") or ""
+        try:
+            age = (now - datetime.fromisoformat(raw)).days
+        except (TypeError, ValueError):
+            # 시각을 못 읽으면 버리지 않습니다. 판단이 안 될 때는 남기는 쪽이
+            # 안전합니다 — 지운 기록은 되돌릴 수 없습니다.
+            kept.append(entry)
+            continue
+        if age > HISTORY_KEEP_DAYS:
+            continue
+        if age > HISTORY_DETAIL_KEEP_DAYS and entry.get("posts"):
+            entry = {k: v for k, v in entry.items() if k != "posts"}
+            entry["postsTrimmed"] = True
+        kept.append(entry)
+    return kept
 
 
 def _load_analytics_summary() -> dict:
@@ -365,6 +403,20 @@ def _export_social(docs_dir: str) -> None:
         logger.debug(f"SNS 데이터 내보내기 생략: {exc}")
 
 
+def _export_feature_flags(docs_dir: str) -> None:
+    """기능 on/off 상태를 대시보드로 내보냅니다.
+
+    feature_flags.json은 blog-automation 아래에 있어 GitHub Pages가 서빙하지
+    않습니다. 꺼진 기능을 화면에서 알 수 없으면 "왜 댓글이 안 달리지" 하고
+    처음부터 다시 파게 됩니다 — 그걸 막으려고 내보냅니다.
+    """
+    try:
+        from feature_flags import load_flags
+        write_data(os.path.join(docs_dir, "feature_flags.json"), load_flags())
+    except Exception as exc:
+        logger.debug(f"기능 스위치 내보내기 생략: {exc}")
+
+
 def _export_series(docs_dir: str) -> None:
     """시리즈 기획 데이터를 docs/data/series.json으로 내보냅니다."""
     series_src = os.path.join(os.path.dirname(__file__), "logs", "series.json")
@@ -531,7 +583,7 @@ def export_dashboard() -> None:
             "platforms": run.get("platforms", {}),
             "earnings": run.get("earnings", {}),
         }
-        for run in history
+        for run in history[:RUNS_EXPORT_LIMIT]
     ]
 
     # analytics.json — 최신 실행의 누적 수익 추정치 사용 (모든 포스트 기반)
@@ -623,6 +675,7 @@ def export_dashboard() -> None:
     ]:
         write_data(os.path.join(DOCS_DATA_DIR, name), data)
 
+    _export_feature_flags(DOCS_DATA_DIR)
     _export_series(DOCS_DATA_DIR)
     _export_social(DOCS_DATA_DIR)
     _export_gsc(DOCS_DATA_DIR)

@@ -88,7 +88,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # docs/.gitignore가 docs/* 를 무시하므로 -f 필수 —
           # 없으면 analytics_summary.json이 조용히 커밋에서 누락된다
-          git add -f docs/data/posts.json docs/data/post_details.json \
+          git add -f docs/data/posts.json docs/data/post_details.json docs/data/feature_flags.json \
                      docs/data/analytics_summary.json \
                      docs/data/adsense_revenue.json \
                      blog-automation/logs/analytics_report.json \

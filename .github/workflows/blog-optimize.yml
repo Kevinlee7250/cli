@@ -85,7 +85,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           # 변경된 파일만 스테이징
-          git add -f docs/data/posts.json docs/data/post_details.json blog-automation/logs/gsc_optimized.json 2>/dev/null || true
+          git add -f docs/data/posts.json docs/data/post_details.json docs/data/feature_flags.json blog-automation/logs/gsc_optimized.json 2>/dev/null || true
 
           if git diff --staged --quiet; then
             echo "변경 사항 없음 — 커밋 건너뜀"

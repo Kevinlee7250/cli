@@ -1313,6 +1313,15 @@
       <div style="height:80px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);animation:pulse-skeleton 1.5s infinite"></div>
     </div>
 
+    <!-- ①-A 기능 스위치 -->
+    <div class="section-header" style="margin-bottom:6px"><h2 data-fresh="feature_flags.json">🎚️ 기능 스위치</h2></div>
+    <div id="feature-flags-note" style="font-size:12px;color:var(--muted);margin-bottom:12px">
+      꺼진 기능은 워크플로가 통째로 건너뜁니다. blog-automation/feature_flags.json에서 켭니다.
+    </div>
+    <div id="feature-flags-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-bottom:28px">
+      <!-- filled by renderFeatureFlags() -->
+    </div>
+
     <!-- ① -B API 키 관리 -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>🔑 API 키 관리</h2>
@@ -2464,6 +2473,7 @@ const SOURCE_META = {
   'duplicate_images.json':   ['중복 이미지', 168],
   'offtopic_migration.json': ['구주제 정리', 168],
   'templates.json':          ['글 템플릿', 168],
+  'feature_flags.json':      ['기능 스위치', 168],
   'post_registry.json':      ['포스트 레지스트리', 24],
   'pending_report.json':     ['검토 대기 리포트', 168],
   'index_priority.json':     ['색인 우선순위', 168],
@@ -2608,6 +2618,122 @@ function applyFreshBadges() {
   })
 }
 
+// ── 시스템 탭 3층 정리 ────────────────────────────────────────────────────────
+// 26개 섹션이 한 화면에 평평하게 놓여 있어서, 매일 보는 것과 1년에 한 번 쓰는
+// 것이 같은 비중으로 보였습니다. 보는 주기로 묶고 아래 두 층은 접어 둡니다.
+// HTML을 옮기지 않고 렌더 후에 감싸기만 합니다 — 섹션이 늘어도 이 표만
+// 고치면 되고, 표에 없는 섹션은 1층에 남으므로 새 패널이 숨겨지지 않습니다.
+const SYSTEM_TIERS = [
+  { id: 'today', label: '오늘 확인', desc: '매일 보는 것', open: true, items: [
+    '전체 상태 모니터', '운영 알림', '인증 헬스체크',
+    '자동 수리 리포트', '코드 자동 수리', '기능 스위치',
+  ]},
+  { id: 'weekly', label: '주간 점검', desc: '주 1회면 충분한 것', open: false, items: [
+    '데이터 신선도', '데이터 현황', 'AI 토큰 사용량', '주간 학습 리포트',
+    '주간 운영 브리핑', 'AdSense 승인 감사', '구글 색인 현황',
+    '게시글 이미지 검증', '내부 링크 구조',
+  ]},
+  { id: 'tools', label: '도구·설정', desc: '필요할 때만', open: false, items: [
+    'API 키 관리', '로컬 설정 관리', '모듈별 상태', '구주제 글 정리',
+    '중복 목차 정리', '중복 이미지 교체', 'Google Drive 백업',
+    '블로그 관리', '쿠팡파트너스 링크 관리',
+  ]},
+]
+
+function _tierOf(title) {
+  for (const tier of SYSTEM_TIERS) {
+    if (tier.items.some(name => title.includes(name))) return tier.id
+  }
+  return null   // 표에 없으면 그 자리에 그대로 둡니다
+}
+
+let _systemGrouped = false
+function groupSystemPanels() {
+  const page = document.getElementById('page-system')
+  if (!page || _systemGrouped) return
+  // 섹션 헤더를 기준으로 [헤더 ~ 다음 헤더 직전]을 한 덩어리로 봅니다
+  const nodes = [...page.children]
+  const blocks = []
+  let current = null
+  for (const node of nodes) {
+    const h2 = node.querySelector && node.querySelector('h2')
+    if (h2 && node.classList.contains('section-header')) {
+      current = { title: h2.textContent.trim(), nodes: [node] }
+      blocks.push(current)
+    } else if (current) {
+      current.nodes.push(node)
+    } else {
+      blocks.push({ title: null, nodes: [node] })   // 첫 헤더 앞 내용
+    }
+  }
+  if (blocks.length < 5) return   // 구조가 예상과 다르면 건드리지 않습니다
+
+  const groups = {}
+  for (const tier of SYSTEM_TIERS) {
+    const box = document.createElement('details')
+    box.id = 'systier-' + tier.id
+    box.open = _tierOpen(tier)
+    box.style.cssText = 'margin-bottom:20px'
+    box.addEventListener('toggle', () => {
+      try { localStorage.setItem('systier_' + tier.id, box.open ? '1' : '0') } catch (e) {}
+    })
+    const sum = document.createElement('summary')
+    sum.style.cssText = 'cursor:pointer;padding:10px 14px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;font-size:14px;font-weight:700;color:var(--text);user-select:none;margin-bottom:12px'
+    sum.innerHTML = `${esc(tier.label)} <span style="font-size:12px;font-weight:500;color:var(--muted);margin-left:6px">${esc(tier.desc)}</span>`
+    box.appendChild(sum)
+    groups[tier.id] = box
+  }
+
+  for (const block of blocks) {
+    const tierId = block.title ? _tierOf(block.title) : null
+    if (!tierId) continue
+    block.nodes.forEach(n => groups[tierId].appendChild(n))
+  }
+  // 남은(분류 안 된) 것들 뒤에 층을 붙입니다 — 순서상 위쪽이 1층입니다
+  for (const tier of SYSTEM_TIERS) {
+    if (groups[tier.id].children.length > 1) page.appendChild(groups[tier.id])
+  }
+  _systemGrouped = true
+  applyFreshBadges()   // 옮겨진 제목에도 배지가 남아 있는지 확인
+}
+
+function _tierOpen(tier) {
+  try {
+    const v = localStorage.getItem('systier_' + tier.id)
+    if (v !== null) return v === '1'
+  } catch (e) {}
+  return tier.open
+}
+
+//: 스위치 이름 → 사람이 읽는 설명. 파일에 있는데 여기 없으면 이름 그대로 씁니다.
+const FEATURE_LABELS = {
+  comment_automation: ['댓글 자동화', '씨앗 댓글 작성 + 독자 댓글 자동 답변'],
+}
+
+function renderFeatureFlags() {
+  const grid = document.getElementById('feature-flags-grid')
+  if (!grid) return
+  const flags = DATA.featureFlags
+  if (!flags || !Object.keys(flags).length) {
+    grid.innerHTML = '<div style="color:var(--muted);font-size:13px">스위치 정보가 없습니다 (모든 기능 기본 켜짐).</div>'
+    return
+  }
+  grid.innerHTML = Object.entries(flags).map(([name, on]) => {
+    const [label, desc] = FEATURE_LABELS[name] || [name, '']
+    const [bg, color, border] = on
+      ? ['rgba(52,211,153,.13)', 'var(--green)', 'rgba(52,211,153,.3)']
+      : ['rgba(248,113,113,.13)', 'var(--red)', 'rgba(248,113,113,.35)']
+    return `<div style="padding:12px 14px;background:var(--bg2);border:1px solid ${on ? 'var(--border)' : border};border-radius:8px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <span style="font-size:13px;font-weight:700;color:var(--text)">${esc(label)}</span>
+        <span style="flex-shrink:0;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;background:${bg};color:${color};border:1px solid ${border}">${on ? '켜짐' : '꺼짐'}</span>
+      </div>
+      ${desc ? `<div style="font-size:12px;color:var(--muted);margin-top:5px;line-height:1.6">${esc(desc)}</div>` : ''}
+      <div style="font-size:11px;color:var(--muted);margin-top:5px;font-family:ui-monospace,monospace">${esc(name)}</div>
+    </div>`
+  }).join('')
+}
+
 // 전체 목록 — 어떤 파일이 언제 것인지 한 화면에서 봅니다.
 function renderFreshnessPanel() {
   const wrap = document.getElementById('freshness-grid')
@@ -2645,7 +2771,7 @@ async function loadAll(silent = false) {
   purgeLegacyOAuthStorage()  // 보안: 과거 저장된 장기 토큰 제거
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, adsenseRevenue] = await Promise.all([
+  const [posts, runs, analytics, meta, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, featureFlags, adsenseRevenue] = await Promise.all([
     fetchData(base, 'posts.json', []),
     fetchData(base, 'runs.json', []),
     fetchData(base, 'analytics.json', ({})),
@@ -2669,9 +2795,10 @@ async function loadAll(silent = false) {
     fetchData(base, 'adsense_audit.json', null),
     fetchData(base, 'pending_report.json', null),
     fetchData(base, 'alerts.json', null),
+    fetchData(base, 'feature_flags.json', null),
     fetchData(base, 'adsense_revenue.json', null),
   ])
-  DATA = { posts, runs, analytics, meta, social: DATA.social || [], pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, adsenseRevenue }
+  DATA = { posts, runs, analytics, meta, social: DATA.social || [], pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, featureFlags, adsenseRevenue }
 
   // 아카이브 포스트 백그라운드 병합 (posts.json은 최근 300개만 유지 — 초기 로딩 속도 확보)
   fetch(base + '/posts_archive.json' + ts).then(r => r.ok ? r.json() : []).then(archive => {
@@ -2711,6 +2838,8 @@ async function loadAll(silent = false) {
     ['AdSense 감사', renderAdsenseAudit],
     ['검토 대기 리포트', renderPendingReport],
     ['운영 알림', renderAlerts],
+    ['기능 스위치', renderFeatureFlags],
+    ['시스템 탭 정리', groupSystemPanels],
     ['차트 안내', renderChartLibNotice],
     ['데이터 신선도', renderFreshnessPanel],
     ['신선도 배지', applyFreshBadges],

@@ -1107,7 +1107,8 @@ def main() -> None:
 
 
 def _save_publish_summary(attempted: int, published: int, pending: int,
-                          failed: int, summaries: list[dict]) -> None:
+                          failed: int, summaries: list[dict],
+                          path: str | None = None) -> None:
     """이번 실행의 발행 결과를 워크플로가 읽을 수 있게 남깁니다.
 
     후속 단계(사이트맵 제출 등)가 "발행이 있었는가"로 갈리는데, 지금까지는
@@ -1115,8 +1116,15 @@ def _save_publish_summary(attempted: int, published: int, pending: int,
     단계 순서가 바뀔 때 조용히 어긋나므로 값을 명시적으로 남깁니다.
     """
     import json as _json
+    import sys as _sys
     from datetime import datetime, timezone
-    path = os.path.join(os.path.dirname(__file__), "logs", "last_publish_summary.json")
+    if path is None:
+        # 테스트가 실제 logs/를 오염시키지 않도록 — 검증이 필요한 테스트는
+        # path를 직접 넘깁니다
+        if "pytest" in _sys.modules:
+            return
+        path = os.path.join(os.path.dirname(__file__), "logs",
+                            "last_publish_summary.json")
     try:
         os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path, "w", encoding="utf-8") as f:

@@ -1212,12 +1212,23 @@ def test_zero_submitted_is_not_ok(tmp_path, monkeypatch):
 
 # ── 발행 요약을 워크플로가 읽을 수 있게 (사이트맵 제출 여부 판단용) ──────────
 
-def test_publish_summary_is_written(tmp_path, monkeypatch):
+def test_publish_summary_is_written(tmp_path):
     import main
-    monkeypatch.setattr(main.os.path, "dirname", lambda _: str(tmp_path))
+    out = tmp_path / "last_publish_summary.json"
     main._save_publish_summary(
         2, 1, 1, 0,
-        [{"blog": "A", "published": 1, "pending": 1, "failed": 0}])
-    d = json.loads((tmp_path / "logs" / "last_publish_summary.json").read_text(encoding="utf-8"))
+        [{"blog": "A", "published": 1, "pending": 1, "failed": 0}],
+        path=str(out))
+    d = json.loads(out.read_text(encoding="utf-8"))
     assert d["published"] == 1 and d["pending"] == 1
     assert d["blogs"][0]["blog"] == "A"
+
+
+def test_publish_summary_does_not_pollute_real_logs():
+    """path를 안 주면 테스트 중에는 아무것도 쓰지 않아야 합니다."""
+    import main
+    real = os.path.join(os.path.dirname(main.__file__), "logs",
+                        "last_publish_summary.json")
+    before = os.path.exists(real)
+    main._save_publish_summary(1, 0, 1, 0, [])
+    assert os.path.exists(real) == before

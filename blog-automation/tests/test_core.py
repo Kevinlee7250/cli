@@ -890,3 +890,19 @@ def test_unrelated_type_error_is_not_swallowed():
 
     with pytest.raises(TypeError):
         config._stream_final_message(Boom(), [], {"model": "m"})
+
+
+# ── 게시 검증 리포트 출력 (blog-verify 38회 전량 실패의 한 원인) ─────────────
+
+def test_print_report_survives_null_last_updated(capsys):
+    """키가 있고 값이 None이면 .get의 기본값은 쓰이지 않습니다."""
+    import post_verifier
+    post_verifier.print_report({"last_updated": None, "results": {}, "summary": {}})
+    assert "없음" in capsys.readouterr().out
+
+
+def test_print_report_shows_timestamp_when_present(capsys):
+    import post_verifier
+    post_verifier.print_report(
+        {"last_updated": "2026-08-22T04:00:00.123", "results": {}, "summary": {}})
+    assert "2026-08-22T04:00" in capsys.readouterr().out

@@ -5,7 +5,9 @@ on:
   workflow_run:
     workflows: ["블로그 자동화 실행"]
     types: [completed]
-    branches: [claude/blog-automation-system-KAbtE]
+    # blog-run은 스케줄로 돌 때 기본 브랜치(latest)에서 실행됩니다. 여기에
+    # 기능 브랜치만 적혀 있어 2026-08-13 이후로는 아예 트리거되지 않았습니다.
+    branches: [latest, claude/blog-automation-system-KAbtE]
 
   # 수동 실행
   workflow_dispatch:
@@ -112,8 +114,11 @@ jobs:
           [ "$NO_ISSUE"  = "true" ] && FLAGS="$FLAGS --no-issue"
 
           echo "=== 검증 실행: python post_verifier.py $FLAGS ==="
-          python post_verifier.py $FLAGS
-          EXIT_CODE=$?
+          # 이 스텝은 bash -e로 돌아갑니다. 그냥 호출하면 아래 "의도된" 종료
+          # 코드 1·2에서 스텝이 그 자리에서 죽어, EXIT_CODE 기록도 재게시
+          # 단계도 영영 실행되지 않습니다. 38번 실행이 전부 실패한 원인입니다.
+          EXIT_CODE=0
+          python post_verifier.py $FLAGS || EXIT_CODE=$?
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
 
           # exit 코드 설명:

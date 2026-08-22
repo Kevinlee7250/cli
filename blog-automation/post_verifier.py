@@ -514,7 +514,10 @@ def print_report(report: dict):
 
     print("\n" + "="*65)
     print("✅ 게시 완료글 검증 리포트")
-    print(f"   마지막 업데이트: {report.get('last_updated', '없음')[:16]}")
+    # .get의 기본값은 키가 없을 때만 쓰입니다. 키가 있고 값이 None이면
+    # None이 그대로 나와 [:16]에서 죽습니다 (실제로 리포트 출력이 이걸로
+    # 매번 터졌습니다).
+    print(f"   마지막 업데이트: {(report.get('last_updated') or '없음')[:16]}")
     print("="*65)
 
     grade_icon = {"S": "🏆", "A": "✅", "B": "🟡", "C": "🟠", "F": "❌"}

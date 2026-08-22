@@ -1,5 +1,69 @@
 [
   {
+    "timestamp": "2026-08-22T08:09:23.818708",
+    "tracebacks_found": 4,
+    "critical_errors": 5,
+    "critical_samples": [
+      "2026-08-21 22:34:28,160 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '국내 증시 사이드카 발동 의미와 개인투자자 대응법'",
+      "2026-08-22 06:15:33,079 [ERROR] blogger_uploader — 토큰 발급 실패: 401 {",
+      "2026-08-22 06:19:09,405 [ERROR] comment_manager — 토큰 발급 실패 [401]: {"
+    ],
+    "skipped_already_analyzed": 0,
+    "repairs": [
+      {
+        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
+        "file": "content_generator.py",
+        "line": "2766",
+        "timestamp": "2026-08-22T08:08:36.635838",
+        "dry_run": false,
+        "root_cause": "config.py의 claude_generate 함수에서 client.messages.stream() 호출 시 사용 중인 anthropic SDK 버전이 stream() 메서드에 temperature 키워드 인자를 지원하지 않아 TypeError가 발생함",
+        "fix_summary": "실제 오류는 content_generator.py가 아닌 config.py의 claude_generate 함수 내부에 있으며, temperature를 stream() 호출 인자에서 분리하거나 client.messages.create(..., stream=True) 방식으로 변경해야 하지만 해당 파일 내용이 제공되지 않아 정확한 수정 위치를 특정할 수 없음",
+        "confidence": 0.3,
+        "result": "manual_required",
+        "detail": "수동 수정 필요 (확신도 30%): config.py의 claude_generate 함수에서 client.messages.stream() 호출 시 사용 중인 anthropic SDK 버전이 stream() 메서드에 temperature 키워드 인자를 지원하지 않아 TypeError가 발생함"
+      },
+      {
+        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
+        "file": "content_generator.py",
+        "line": "2766",
+        "timestamp": "2026-08-22T08:08:48.616380",
+        "dry_run": false,
+        "root_cause": "config.py의 claude_generate 함수가 client.messages.stream() 호출 시 temperature 키워드 인자를 지원하지 않는 방식으로 kwargs를 전달하여 TypeError가 발생함",
+        "fix_summary": "content_generator.py의 _ai_generate에서 claude_generate 호출 시 temperature 인자를 제거하여 stream() 호출과의 충돌을 방지",
+        "confidence": 0.55,
+        "result": "manual_required",
+        "detail": "수동 수정 필요 (확신도 55%): config.py의 claude_generate 함수가 client.messages.stream() 호출 시 temperature 키워드 인자를 지원하지 않는 방식으로 kwargs를 전달하여 TypeError가 발생함"
+      },
+      {
+        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
+        "file": "content_generator.py",
+        "line": "2766",
+        "timestamp": "2026-08-22T08:08:53.233242",
+        "dry_run": false,
+        "root_cause": "content_generator.py의 _ai_generate가 claude_generate에 temperature 인자를 넘기고, 이 값이 config.py에서 client.messages.stream() 호출에 그대로 전달되는데 현재 설치된 anthropic SDK의 stream() 메서드는 temperature 키워드 인자를 지원하지 않아 TypeError가 발생함",
+        "fix_summary": "claude_generate 호출 시 stream()이 지원하지 않는 temperature 인자를 제거하여 TypeError를 방지",
+        "confidence": 0.55,
+        "result": "manual_required",
+        "detail": "수동 수정 필요 (확신도 55%): content_generator.py의 _ai_generate가 claude_generate에 temperature 인자를 넘기고, 이 값이 config.py에서 client.messages.stream() 호출에 그대로 전달되는데 현재 설치된 anthropic SDK의 stream() 메서드는 temperature 키워드 인자를 지원하지 않아 TypeError가 발생함"
+      },
+      {
+        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
+        "file": "content_generator.py",
+        "line": "2766",
+        "timestamp": "2026-08-22T08:09:13.561356",
+        "dry_run": false,
+        "root_cause": "config.py의 claude_generate가 받은 temperature 키워드 인자를 그대로 kwargs에 담아 anthropic 클라이언트의 messages.stream()에 전달하는데, 해당 SDK 버전의 stream() 메서드는 temperature 키워드 인자를 지원하지 않아 TypeError가 발생함",
+        "fix_summary": "content_generator.py에서 claude_generate 호출 시 전달하는 temperature 인자를 제거하여 stream() 호출에 temperature가 전달되지 않도록 함",
+        "confidence": 0.55,
+        "result": "manual_required",
+        "detail": "수동 수정 필요 (확신도 55%): config.py의 claude_generate가 받은 temperature 키워드 인자를 그대로 kwargs에 담아 anthropic 클라이언트의 messages.stream()에 전달하는데, 해당 SDK 버전의 stream() 메서드는 temperature 키워드 인자를 지원하지 않아 TypeError가 발생함"
+      }
+    ],
+    "auto_fixed": 0,
+    "manual_required": 4,
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-22T06:44:41.682882",
     "tracebacks_found": 4,
     "critical_errors": 5,
@@ -729,15 +793,6 @@
     "timestamp": "2026-08-03T18:48:01.153731",
     "tracebacks_found": 0,
     "critical_errors": 5,
-    "repairs": [],
-    "auto_fixed": 0,
-    "manual_required": 0,
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-02T17:56:59.324553",
-    "tracebacks_found": 0,
-    "critical_errors": 4,
     "repairs": [],
     "auto_fixed": 0,
     "manual_required": 0,

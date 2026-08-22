@@ -1,5 +1,5 @@
 {
-  "auditedAt": "2026-08-22T03:55:47.476528+00:00",
+  "auditedAt": "2026-08-22T08:13:36.934064+00:00",
   "applied": true,
   "aiJudged": false,
   "blogFilter": "blog1",
@@ -13,17 +13,15 @@
     "weak_alt"
   ],
   "scanned": 50,
-  "withIssues": 32,
-  "fixed": 2,
+  "withIssues": 30,
+  "fixed": 0,
   "issueCounts": {
-    "insufficient": 30,
-    "weak_alt": 3,
-    "suspect": 2
+    "insufficient": 30
   },
   "posts": [
     {
-      "title": "가을 K-POP 컴백 일정 확인 방법 3가지 완벽 정리",
-      "url": "https://www.hoguwhat.com/2026/08/k-pop-3.html",
+      "title": "경기도 여름 가볼만한 곳, 해안 드라이브 노을 명소 추천",
+      "url": "https://www.hoguwhat.com/2026/08/blog-post_359.html",
       "images": 2,
       "needed": 3,
       "issues": [
@@ -38,60 +36,35 @@
       ]
     },
     {
-      "title": "카드사 여행 혜택 비교로 항공권·호캉스 카드 고르는 법",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_639.html",
-      "images": 4,
-      "needed": 2,
+      "title": "벌초 대행 서비스 비용, 산림조합으로 비교해보니",
+      "url": "https://www.hoguwhat.com/2026/08/blog-post_22.html",
+      "images": 1,
+      "needed": 3,
       "issues": [
         {
-          "type": "weak_alt",
-          "url": "https://pixabay.com/get/g5fda1b9347caf36a976e778955dc8f77a2a6a568fd4da03ce8749bfa0c1bad4418dd72bac55b569c1af415b686bfd9fff99c1efb70f443f4a29b99063f1444e5_1280.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"credit card travel\")",
-          "alt": "credit card travel"
-        },
-        {
-          "type": "suspect",
-          "url": "https://pixabay.com/get/g5fda1b9347caf36a976e778955dc8f77a2a6a568fd4da03ce8749bfa0c1bad4418dd72bac55b569c1af415b686bfd9fff99c1efb70f443f4a29b99063f1444e5_1280.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "credit card travel",
-          "imageTerms": "credit card travel g5fda1b9347caf36a976e778955dc8f77a2a6a568fd4da03ce8749bfa0c1bad4418dd72bac55b569c1af415b686bfd9fff99c",
-          "postTerms": [
-            "카드사",
-            "여행",
-            "혜택",
-            "비교로",
-            "항공권",
-            "호캉스"
-          ]
-        },
-        {
-          "type": "weak_alt",
-          "url": "https://pixabay.com/get/gb029af834b48d17277ec9f8b557d1dd76bcfd08af9cc174423e235a4d1c5b61349558a7b009261606c20fc6745d92b9dc57e4fe37481519690430498882fbc0f_1280.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"checklist document signing\")",
-          "alt": "checklist document signing"
-        },
-        {
-          "type": "suspect",
-          "url": "https://pixabay.com/get/gb029af834b48d17277ec9f8b557d1dd76bcfd08af9cc174423e235a4d1c5b61349558a7b009261606c20fc6745d92b9dc57e4fe37481519690430498882fbc0f_1280.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "checklist document signing",
-          "imageTerms": "checklist document signing gb029af834b48d17277ec9f8b557d1dd76bcfd08af9cc174423e235a4d1c5b61349558a7b009261606c20fc6745d9",
-          "postTerms": [
-            "카드사",
-            "여행",
-            "혜택",
-            "비교로",
-            "항공권",
-            "호캉스"
-          ]
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "alt 재작성 → \"카드사 여행 혜택 비교로 항공권·호캉스 카드 고르는 법 관련 이미지\" (캡션 포함)",
-        "alt 재작성 → \"카드사 여행 혜택 비교로 항공권·호캉스 카드 고르는 법 관련 이미지\" (캡션 포함)"
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "가을 K-POP 컴백 일정 확인 방법 3가지 완벽 정리",
+      "url": "https://www.hoguwhat.com/2026/08/k-pop-3.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
       ]
     },
     {
@@ -511,58 +484,8 @@
       ]
     },
     {
-      "title": "국내 음악 차트 실시간 순위 변동, 왜 이렇게 자주 바뀔까?",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_04.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "weak_alt",
-          "url": "https://pixabay.com/get/g0833bb6b240b0d4f20f18c5cba8589c556ff6b6775919fba51aa3ff3c2a9bb9a6b4ac12aa84aa28b5a4850943817ad126f102f8f621e04042c163dd92eb9c700_1280.jpg",
-          "detail": "alt가 너무 짧음 (5자: \"국내 음악\")",
-          "alt": "국내 음악"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "alt 재작성 → \"국내 음악 차트 실시간 순위 변동, 왜 이렇게 자주 바뀔까? 관련 이미지\" (캡션 포함)"
-      ]
-    },
-    {
       "title": "유부녀 킬러 결말 총평, 시청자 반응은 이랬다",
       "url": "https://www.hoguwhat.com/2026/08/blog-post_436.html",
-      "images": 1,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 1장 (권장 2장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "변경 없음"
-      ]
-    },
-    {
-      "title": "유부녀 킬러 등장인물, 찾아보니 이랬다",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_540.html",
-      "images": 1,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 1장 (권장 3장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "변경 없음"
-      ]
-    },
-    {
-      "title": "유부녀 킬러 첫인상, 진짜 관상이 있을까",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_03.html",
       "images": 1,
       "needed": 2,
       "issues": [

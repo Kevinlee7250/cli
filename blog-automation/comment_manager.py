@@ -674,6 +674,12 @@ if __name__ == "__main__":
         parser.print_help()
         sys.exit(1)
 
+    # 기능이 꺼져 있으면 아무것도 게시하지 않고 정상 종료합니다.
+    # --status는 위에서 이미 처리했으므로 현황 확인은 꺼진 상태에서도 됩니다.
+    from feature_flags import require
+    if not require("comment_automation"):
+        sys.exit(0)
+
     if args.seed:
         seed_recent_posts(configs, hours=args.hours, dry_run=args.dry)
 

@@ -33,6 +33,12 @@ on:
         default: 'false'
         type: choice
         options: ['false', 'true']
+      force:
+        description: '기능 스위치가 꺼져 있어도 실행'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
 
 concurrency:
   group: blog-comment-automation
@@ -42,7 +48,33 @@ permissions:
   contents: write
 
 jobs:
+  # 기능 스위치 확인 — blog-automation/feature_flags.json의 comment_automation.
+  # 꺼져 있으면 아래 작업 전체가 건너뛰어집니다(러너 시간도 쓰지 않음).
+  # 다시 켜려면 그 파일에서 true로 바꾸거나, 수동 실행 시 force를 true로 두세요.
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      enabled: ${{ steps.flag.outputs.enabled }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+      - id: flag
+        working-directory: blog-automation
+        run: |
+          if [ "${{ inputs.force }}" = "true" ]; then
+            echo "수동 강제 실행 — 스위치 무시"
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          ENABLED=$(python feature_flags.py comment_automation)
+          echo "comment_automation = $ENABLED"
+          echo "enabled=$ENABLED" >> "$GITHUB_OUTPUT"
+
   comment-automation:
+    needs: gate
+    if: needs.gate.outputs.enabled == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
 

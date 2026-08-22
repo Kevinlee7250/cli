@@ -1289,3 +1289,40 @@ def test_real_scope_403_is_reported_without_retry():
         r = gi.submit_sitemaps(blogs, token="t")
     assert len(calls) == 1, "진짜 스코프 부족이면 재시도가 무의미합니다"
     assert r["scopeDenied"] == 1 and r["failed"] == 1
+
+
+# ── 댓글 인증이 업로드와 갈리던 문제 (2026-08-22) ────────────────────────────
+# BLOGS_CONFIG의 blog1 크리덴셜이 invalid_client인데, 업로드는 기본 시크릿
+# 폴백으로 성공하고 댓글은 폴백이 없어 "토큰 없음 — 큐잉"으로 멈췄습니다.
+# 같은 인증을 두 번 구현한 탓입니다.
+
+def test_comment_manager_uses_the_uploader_token():
+    import blogger_uploader
+    import comment_manager
+    cfg = {"id": "blog1", "client_id": "bad"}
+    with patch.object(blogger_uploader, "_get_access_token",
+                      return_value="tok") as m:
+        assert comment_manager._get_access_token(cfg) == "tok"
+    m.assert_called_once_with(cfg)
+
+
+def test_comment_manager_inherits_the_fallback():
+    """블로그별 크리덴셜이 죽어도 기본 시크릿으로 이어져야 합니다."""
+    import comment_manager
+    calls = []
+
+    def _req(cid, secret, refresh):
+        calls.append(cid)
+        if cid == "bad":
+            return None, '401 {"error":"invalid_client"}'
+        return "fallback-token", ""
+
+    with patch("blogger_uploader._request_token", _req), \
+         patch("blogger_uploader.BLOGGER_CLIENT_ID", "good"), \
+         patch("blogger_uploader.BLOGGER_CLIENT_SECRET", "s"), \
+         patch("blogger_uploader.BLOGGER_REFRESH_TOKEN", "r"):
+        got = comment_manager._get_access_token({"id": "blog1", "client_id": "bad",
+                                                 "client_secret": "x",
+                                                 "refresh_token": "y"})
+    assert got == "fallback-token"
+    assert calls == ["bad", "good"], "블로그별 → 기본 순으로 시도해야 합니다"

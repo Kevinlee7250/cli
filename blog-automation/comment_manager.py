@@ -63,33 +63,17 @@ _MAX_SEEDS_PER_RUN   = 5
 # ─── OAuth ────────────────────────────────────────────────────────────────────
 
 def _get_access_token(blog_config: dict) -> str | None:
-    """blog_config의 OAuth 크리덴셜로 액세스 토큰을 발급합니다."""
-    cfg = blog_config or {}
-    client_id     = cfg.get("client_id")     or os.getenv("GOOGLE_CLIENT_ID", "")
-    client_secret = cfg.get("client_secret") or os.getenv("GOOGLE_CLIENT_SECRET", "")
-    refresh_token = cfg.get("refresh_token") or os.getenv("GOOGLE_REFRESH_TOKEN", "")
+    """blog_config의 OAuth 크리덴셜로 액세스 토큰을 발급합니다.
 
-    if not all([client_id, client_secret, refresh_token]):
-        logger.error("OAuth 크리덴셜 미설정 (client_id / client_secret / refresh_token)")
-        return None
-
-    try:
-        resp = requests.post(TOKEN_URL, data={
-            "client_id":     client_id,
-            "client_secret": client_secret,
-            "refresh_token": refresh_token,
-            "grant_type":    "refresh_token",
-        }, timeout=15)
-        if resp.status_code == 200:
-            return resp.json().get("access_token")
-        body = resp.text
-        if "invalid_grant" in body:
-            logger.error("refresh_token 만료 — get_refresh_token.py 재실행 필요")
-        else:
-            logger.error(f"토큰 발급 실패 [{resp.status_code}]: {body[:200]}")
-    except Exception as e:
-        logger.error(f"토큰 요청 오류: {e}")
-    return None
+    blogger_uploader의 것을 그대로 씁니다. 여기에 같은 로직을 따로 두고
+    있었는데, 그쪽에만 "블로그별 크리덴셜 실패 시 기본 GOOGLE_* Secret으로
+    폴백"이 있어 결과가 갈렸습니다 — 2026-08-22 실행에서 BLOGS_CONFIG의
+    blog1 크리덴셜이 invalid_client인데 업로드는 폴백으로 성공하고 댓글은
+    "토큰 없음 — 큐잉"으로 조용히 멈췄습니다. 같은 인증을 두 번 구현하면
+    반드시 이렇게 어긋납니다.
+    """
+    from blogger_uploader import _get_access_token as _shared_token
+    return _shared_token(blog_config)
 
 
 def _auth_headers(token: str) -> dict:

@@ -826,3 +826,67 @@ def test_auto_repair_backup_and_rollback(tmp_path, monkeypatch):
 
     # 정상 파일은 롤백하지 않음
     assert ar._validate_and_rollback(backup_dir) == []
+
+
+# ── anthropic SDK 시그니처 변화 대응 (2026-08-21 발행 전량 실패) ─────────────
+# requirements가 anthropic을 >=0.40.0으로만 묶어 둬 SDK가 조용히 올라갔고,
+# 새 stream()이 temperature를 받지 않으면서 TypeError로 콘텐츠 생성이 100%
+# 실패했습니다. 블로그 발행이 이틀간 0건이었습니다.
+
+class _SigStream:
+    def __init__(self, msg): self._msg = msg
+    def __enter__(self): return self
+    def __exit__(self, *a): return False
+    def get_final_message(self): return self._msg
+
+
+class _SigMessages:
+    """temperature를 거부하는 SDK를 흉내 냅니다."""
+    def __init__(self, rejects=("temperature",)):
+        self.rejects = rejects
+        self.calls = []
+
+    def stream(self, **kwargs):
+        for bad in self.rejects:
+            if bad in kwargs:
+                raise TypeError(f"Messages.stream() got an unexpected keyword argument '{bad}'")
+        self.calls.append(kwargs)
+        return _SigStream(object())
+
+
+class _SigClient:
+    def __init__(self, rejects=("temperature",)):
+        self.messages = _SigMessages(rejects)
+
+
+def test_stream_drops_kwarg_the_sdk_rejects():
+    import config
+    c = _SigClient()
+    config._stream_final_message(c, [{"role": "user", "content": "안녕"}],
+                                 {"model": "m", "max_tokens": 10, "temperature": 1.0})
+    assert len(c.messages.calls) == 1
+    assert "temperature" not in c.messages.calls[0]
+    assert c.messages.calls[0]["max_tokens"] == 10      # 나머지 인자는 보존
+
+
+def test_stream_drops_several_rejected_kwargs():
+    import config
+    c = _SigClient(rejects=("temperature", "top_p"))
+    config._stream_final_message(c, [], {"model": "m", "temperature": 1.0, "top_p": 0.9})
+    sent = c.messages.calls[0]
+    assert "temperature" not in sent and "top_p" not in sent
+    assert sent["model"] == "m"
+
+
+def test_unrelated_type_error_is_not_swallowed():
+    """인자 문제가 아닌 TypeError까지 삼키면 진짜 버그를 놓칩니다."""
+    import pytest
+    import config
+
+    class Boom:
+        class messages:
+            @staticmethod
+            def stream(**kw): raise TypeError("이건 다른 문제입니다")
+
+    with pytest.raises(TypeError):
+        config._stream_final_message(Boom(), [], {"model": "m"})

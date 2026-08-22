@@ -339,6 +339,69 @@ _AUTO_FIX_MAX_HTML = 40000
 _AUTO_FIX_MAX_TOKENS = 32000
 
 
+def repair_images(post_data: dict, html: str) -> tuple[str, list[str]]:
+    """이미지 정책 지적을 규칙으로 고칩니다. (본문, 수행 내역)
+
+    왜 별도인가
+    ──────────
+    자동 수정은 Claude에게 본문 HTML을 다시 쓰게 하는 방식이라 이미지 항목을
+    고치지 못합니다. 없는 이미지를 만들어 낼 수도, 출처 표기를 실제 src에
+    맞출 수도 없습니다. 실제로 2026-08-22 검증에서 "이미지 1개만 확인되며
+    alt텍스트·출처 명확성 부족"이 계속 감점 사유로 남았습니다.
+
+    image_audit의 검증된 함수를 그대로 씁니다 — alt 판정·재작성 규칙을
+    두 번 구현하면 반드시 어긋납니다.
+    """
+    from image_audit import (
+        attach_image, alt_problem, extract_images, fix_alt, needed_image_count,
+    )
+    from fix_unlicensed_images import sync_captions
+
+    title = post_data.get("title", "")
+    keyword = post_data.get("keyword", "")
+    notes: list[str] = []
+
+    # 1) 부족한 장수 채우기 — 한 번에 한 장씩, 권장 수까지만
+    need = needed_image_count(html)
+    for _ in range(max(0, need - len(extract_images(html)))):
+        html, ok, why = attach_image(html, title, keyword)
+        if not ok:
+            notes.append(f"이미지 첨부 실패: {why}")
+            break
+        notes.append(f"이미지 첨부: {why}")
+
+    # 2) alt·캡션 설명 — 비었거나 내용을 설명하지 못하는 것만
+    for img in extract_images(html):
+        if not alt_problem(img, title, keyword):
+            continue
+        html, done = fix_alt(html, img["url"], title, keyword)
+        if done:
+            notes.append(done)
+
+    # 3) 출처 표기를 실제 src에 맞춤 ("출처 명확성 부족" 지적에 대응)
+    html, fixed = sync_captions(html)
+    if fixed:
+        notes.append(f"출처 표기 동기화 {fixed}건")
+
+    return html, notes
+
+
+def _build_fixed(post_data: dict, html: str, original_html: str,
+                 fail_items: list, warn_items: list,
+                 image_notes: list[str]) -> dict | None:
+    """수정 결과를 post_data 형태로 포장합니다. 바뀐 게 없으면 None."""
+    if html == original_html:
+        return None
+    fixed = dict(post_data)
+    fixed["content"] = html
+    fixed["word_count"] = len(re.sub(r'<[^>]+>', '', html))
+    fixed["adsense_auto_fixed"] = True
+    fixed["adsense_fix_items"] = [k for k, _ in fail_items + warn_items[:4]]
+    if image_notes:
+        fixed["adsense_image_fixes"] = image_notes
+    return fixed
+
+
 def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
     """AdSense 검증 결과를 바탕으로 포스트 내용을 자동 수정합니다.
 
@@ -383,6 +446,16 @@ def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
     title   = post_data.get("title", "")
     html    = post_data.get("content", "")
     keyword = post_data.get("keyword", "")
+    original_html = html
+
+    # 이미지 항목은 Claude가 고칠 수 없으므로 규칙으로 먼저 처리하고, 그
+    # 결과를 텍스트 재작성의 입력으로 넘깁니다. 순서를 뒤집으면 재작성이
+    # 방금 넣은 이미지를 지울 수 있습니다.
+    image_notes: list[str] = []
+    if checks.get("image_policy", {}).get("status") in ("warn", "fail"):
+        html, image_notes = repair_images(post_data, html)
+        for n in image_notes:
+            logger.info(f"  🖼️ {n}")
 
     # 원본 글자 수
     orig_word_count = post_data.get("word_count", len(re.sub(r'<[^>]+>', '', html)))
@@ -395,10 +468,12 @@ def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
     # 조용히 잘라 보내면 뒷부분이 사라진 글이 발행될 수 있습니다.
     if len(html) > _AUTO_FIX_MAX_HTML:
         logger.warning(
-            f"본문이 너무 길어 자동 수정을 건너뜁니다 "
-            f"({len(html):,}자 > {_AUTO_FIX_MAX_HTML:,}자) — 원본 유지"
+            f"본문이 너무 길어 텍스트 자동 수정을 건너뜁니다 "
+            f"({len(html):,}자 > {_AUTO_FIX_MAX_HTML:,}자)"
         )
-        return None
+        # 텍스트는 못 고쳐도 이미지 보수는 이미 끝났을 수 있습니다
+        return _build_fixed(post_data, html, original_html, fail_items,
+                            warn_items, image_notes)
 
     policy_ctx = _get_policy_context()
     policy_note = f"\n\n최신 AdSense 정책:\n{policy_ctx}" if policy_ctx else ""
@@ -450,18 +525,18 @@ def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
             # 왜 짧은지 숫자를 남깁니다. 이 로그가 없어서 "너무 짧음"만 반복
             # 출력되는 동안 원인(입력 절단)을 아무도 알 수 없었습니다.
             logger.warning(
-                f"자동 수정 결과가 너무 짧음 — 원본 유지 "
+                f"텍스트 자동 수정 결과가 너무 짧음 — 텍스트는 원본 유지 "
                 f"(원본 {len(html):,}자 / 결과 {len(fixed_html):,}자 / "
                 f"요구 {int(len(html) * 0.5):,}자 이상, 출력 예산 {budget:,}토큰)"
             )
-            return None
+            # 텍스트가 실패해도 이미지 보수는 살립니다
+            return _build_fixed(post_data, html, original_html, fail_items,
+                                warn_items, image_notes)
 
-        # 수정된 내용 적용
-        fixed = dict(post_data)
-        fixed["content"] = fixed_html
-        fixed["word_count"] = len(re.sub(r'<[^>]+>', '', fixed_html))
-        fixed["adsense_auto_fixed"] = True
-        fixed["adsense_fix_items"] = [k for k, _ in fail_items + warn_items[:4]]
+        fixed = _build_fixed(post_data, fixed_html, original_html, fail_items,
+                             warn_items, image_notes)
+        if fixed is None:
+            return None
 
         improvement = fixed["word_count"] - orig_word_count
         logger.info(
@@ -471,5 +546,7 @@ def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
         return fixed
 
     except Exception as e:
-        logger.error(f"자동 수정 오류: {e}")
-        return None
+        logger.error(f"텍스트 자동 수정 오류: {e}")
+        # 이미지 보수까지 버릴 이유는 없습니다
+        return _build_fixed(post_data, html, original_html, fail_items,
+                            warn_items, image_notes)

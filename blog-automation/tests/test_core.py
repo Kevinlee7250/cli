@@ -1026,8 +1026,9 @@ def test_auto_fix_succeeds_on_a_16k_post():
     """예전에는 이 길이가 항상 '너무 짧음'으로 폐기됐습니다."""
     import adsense_validator as av
     post = _long_post()
+    improved = post["content"].replace("<p>", "<p>실제로 써본 결과, ", 1)
     with patch("anthropic.Anthropic"), \
-         patch("config.claude_generate", lambda c, **kw: post["content"]), \
+         patch("config.claude_generate", lambda c, **kw: improved), \
          patch("config.ANTHROPIC_API_KEY", "k"):
         fixed = av.fix_adsense_issues(post, _validation())
     assert fixed is not None and fixed.get("adsense_auto_fixed") is True
@@ -1053,3 +1054,77 @@ def test_short_result_is_still_rejected():
          patch("config.claude_generate", lambda c, **kw: "<p>짧음</p>"), \
          patch("config.ANTHROPIC_API_KEY", "k"):
         assert av.fix_adsense_issues(post, _validation()) is None
+
+
+# ── 이미지 정책 지적을 규칙으로 보수 (2026-08-22) ────────────────────────────
+# 자동 수정은 Claude에게 본문을 다시 쓰게 하는 방식이라 이미지 항목을 고칠
+# 수 없습니다. "이미지 1개만 확인되며 alt텍스트·출처 명확성 부족"이 계속
+# 감점으로 남았습니다.
+
+_IMG_WARN = {"score": 79, "recommendation": "review",
+             "checks": {"image_policy": {"status": "warn",
+                                         "note": "이미지 1개, alt 없음"}}}
+
+
+def test_repair_images_fills_in_missing_alt():
+    import adsense_validator as av
+    html = ('<p>' + '가' * 1200 + '</p>'
+            '<figure><img src="https://a/x.jpg"/>'
+            '<figcaption>사진</figcaption></figure>')
+    post = {"title": "당뇨 초기 증상 자가진단", "keyword": "", "content": html}
+    with patch("image_audit.attach_image", lambda c, t, k="": (c, False, "생략")):
+        out, notes = av.repair_images(post, html)
+    assert 'alt="당뇨 초기 증상 자가진단 관련 이미지"' in out
+    assert any("alt" in n for n in notes)
+
+
+def test_repair_images_does_not_touch_good_alt():
+    import adsense_validator as av
+    html = ('<p>' + '가' * 1200 + '</p>'
+            '<figure><img src="https://a/x.jpg" alt="당뇨 자가진단 키트 사진"/>'
+            '<figcaption>설명</figcaption></figure>')
+    post = {"title": "당뇨 초기 증상 자가진단", "keyword": "", "content": html}
+    with patch("image_audit.attach_image", lambda c, t, k="": (c, False, "생략")):
+        out, _ = av.repair_images(post, html)
+    assert 'alt="당뇨 자가진단 키트 사진"' in out
+
+
+def test_image_repair_runs_even_when_text_fix_fails():
+    """텍스트 수정이 실패해도 이미지 보수까지 버릴 이유는 없습니다."""
+    import adsense_validator as av
+    html = ('<p>' + '가' * 1200 + '</p>'
+            '<figure><img src="https://a/x.jpg"/>'
+            '<figcaption>사진</figcaption></figure>')
+    post = {"title": "당뇨 초기 증상", "keyword": "", "content": html,
+            "word_count": 1200}
+    with patch("anthropic.Anthropic"), \
+         patch("config.ANTHROPIC_API_KEY", "k"), \
+         patch("config.claude_generate", side_effect=RuntimeError("API 오류")), \
+         patch("image_audit.attach_image", lambda c, t, k="": (c, False, "생략")):
+        fixed = av.fix_adsense_issues(post, _IMG_WARN)
+    assert fixed is not None
+    assert 'alt="당뇨 초기 증상 관련 이미지"' in fixed["content"]
+    assert fixed.get("adsense_image_fixes")
+
+
+def test_image_repair_skipped_when_policy_is_pass():
+    """이미지 항목이 지적되지 않았으면 이미지는 건드리지 않습니다."""
+    import adsense_validator as av
+    html = ('<p>' + '가' * 1200 + '</p>'
+            '<figure><img src="https://a/x.jpg"/>'
+            '<figcaption>사진</figcaption></figure>')
+    post = {"title": "제목입니다", "keyword": "", "content": html,
+            "word_count": 1200}
+    # 이미지는 pass, 다른 항목만 warn → 자동 수정 흐름에는 들어가되
+    # repair_images는 호출되지 않아야 합니다
+    val = {"score": 79, "recommendation": "review",
+           "checks": {"image_policy": {"status": "pass", "note": ""},
+                      "eeat": {"status": "warn", "note": "출처 부족"}}}
+    called = []
+    with patch("anthropic.Anthropic"), \
+         patch("config.ANTHROPIC_API_KEY", "k"), \
+         patch("config.claude_generate", side_effect=RuntimeError("x")), \
+         patch("adsense_validator.repair_images",
+               lambda p, h: called.append(1) or (h, [])):
+        av.fix_adsense_issues(post, val)
+    assert not called

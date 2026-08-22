@@ -906,3 +906,52 @@ def test_print_report_shows_timestamp_when_present(capsys):
     post_verifier.print_report(
         {"last_updated": "2026-08-22T04:00:00.123", "results": {}, "summary": {}})
     assert "2026-08-22T04:00" in capsys.readouterr().out
+
+
+# ── 발행 0건이면 워크플로를 실제로 실패시키기 ───────────────────────────────
+# 2026-08-20~22 이틀간 콘텐츠 생성이 100% 실패했는데도 워크플로는 계속
+# success로 끝났습니다. 실패 알림도, 대시보드 표시도 없었습니다.
+
+def test_all_publishes_failed_exits_nonzero():
+    import pytest
+    import main
+    with pytest.raises(SystemExit) as e:
+        main._exit_on_publish_failure(
+            [{"blog": "A", "attempted": 1, "success": 0, "failed": 1,
+              "errors": ["콘텐츠 생성 최종 실패"]}])
+    assert e.value.code == 1
+
+
+def test_partial_success_does_not_fail():
+    """한 편이라도 올라갔으면 실패가 아닙니다."""
+    import main
+    main._exit_on_publish_failure(
+        [{"blog": "A", "attempted": 2, "success": 1, "failed": 1, "errors": []}])
+
+
+def test_nothing_attempted_is_not_a_failure():
+    """할 일이 없던 것과 하려다 실패한 것은 다릅니다."""
+    import main
+    main._exit_on_publish_failure(
+        [{"blog": "A", "attempted": 0, "success": 0, "failed": 0, "errors": []}])
+
+
+def test_failure_across_blogs_is_aggregated():
+    import pytest
+    import main
+    with pytest.raises(SystemExit):
+        main._exit_on_publish_failure([
+            {"blog": "A", "attempted": 1, "success": 0, "failed": 1, "errors": ["x"]},
+            {"blog": "B", "attempted": 1, "success": 0, "failed": 1, "errors": ["y"]},
+        ])
+
+
+def test_error_messages_are_logged(caplog):
+    import pytest
+    import main
+    with caplog.at_level("ERROR"), pytest.raises(SystemExit):
+        main._exit_on_publish_failure(
+            [{"blog": "금융NEWS", "attempted": 1, "success": 0, "failed": 1,
+              "errors": ["콘텐츠 생성 최종 실패: '사이드카 발동'"]}])
+    text = caplog.text
+    assert "금융NEWS" in text and "사이드카 발동" in text

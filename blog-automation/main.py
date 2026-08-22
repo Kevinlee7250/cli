@@ -116,8 +116,13 @@ def run_once(
     dry_run: bool = False,
     review: bool = False,
     blog_config: dict | None = None,
-) -> None:
-    """키워드를 수집해 포스트를 생성하고 Blogger에 업로드합니다."""
+) -> dict:
+    """키워드를 수집해 포스트를 생성하고 Blogger에 업로드합니다.
+
+    Returns: {"blog", "attempted", "success", "failed", "errors"}
+    호출부가 성공 0건을 감지해 종료 코드로 올릴 수 있도록 집계를 돌려줍니다.
+    예전에는 None을 반환해 무엇이 실패해도 워크플로가 success로 끝났습니다.
+    """
     # 구버전 used_keywords.json 포맷 자동 마이그레이션
     _migrate_used_keywords()
 
@@ -513,6 +518,14 @@ def run_once(
         logger.info("대시보드 데이터 업데이트 완료")
     except Exception as e:
         logger.warning(f"대시보드 업데이트 실패 (무시): {e}")
+
+    return {
+        "blog": cfg.get("name") or "기본",
+        "attempted": success_count + fail_count,
+        "success": success_count,
+        "failed": fail_count,
+        "errors": list(error_messages),
+    }
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -1074,10 +1087,41 @@ def main() -> None:
         return
 
     if args.once or args.interactive or keywords:
-        for blog_cfg in target_blogs:
-            run_once(keywords=keywords, blog_config=blog_cfg)
+        summaries = [run_once(keywords=keywords, blog_config=blog_cfg)
+                     for blog_cfg in target_blogs]
+        _exit_on_publish_failure(summaries)
     else:
         run_scheduled()
+
+
+def _exit_on_publish_failure(summaries: list[dict]) -> None:
+    """한 편도 못 올렸으면 0이 아닌 코드로 끝냅니다.
+
+    이게 없어서 2026-08-20~22 이틀 동안 콘텐츠 생성이 100% 실패하는데도
+    워크플로가 계속 success로 끝났습니다. 실패 알림도 뜨지 않았고 대시보드
+    어디에도 표시되지 않아, 발행이 멈춘 걸 아무도 몰랐습니다.
+
+    시도 자체가 0건인 경우(오늘 처리할 예약이 없음 등)는 실패가 아닙니다 —
+    할 일이 없던 것과 하려다 실패한 것은 구분해야 합니다.
+    """
+    attempted = sum(s.get("attempted", 0) for s in summaries)
+    success = sum(s.get("success", 0) for s in summaries)
+    failed = sum(s.get("failed", 0) for s in summaries)
+
+    if attempted == 0:
+        logger.info("발행 시도 없음 — 처리할 키워드가 없었습니다")
+        return
+    if success > 0:
+        logger.info(f"발행 요약: 성공 {success}건 / 실패 {failed}건")
+        return
+
+    logger.error("=" * 60)
+    logger.error(f"❌ 발행 0건 — {attempted}건 시도해 전부 실패했습니다")
+    for s in summaries:
+        for msg in (s.get("errors") or [])[:3]:
+            logger.error(f"   [{s.get('blog')}] {msg}")
+    logger.error("=" * 60)
+    sys.exit(1)
 
 
 if __name__ == "__main__":

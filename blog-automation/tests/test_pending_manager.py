@@ -145,40 +145,43 @@ def test_expire_skips_revalidated_passers():
 # run — 기본은 리포트만, --apply에서만 파일 변경
 # ──────────────────────────────────────────────────────────────────────────────
 
-def test_run_without_apply_does_not_write_pending(tmp_path, monkeypatch):
+def _use_tmp_store(tmp_path, monkeypatch, records):
+    """검토 대기 저장소를 임시 경로로 돌립니다.
+
+    pending_manager는 pending_store를 거쳐 읽고 쓰므로, 저장소 쪽 경로를
+    바꿔야 실제 저장소 파일을 건드리지 않습니다.
+    """
     import pending_manager as pm
-    pending_file = tmp_path / "pending.json"
-    original = [_entry("published", 30)]
-    pending_file.write_text(json.dumps(original, ensure_ascii=False), encoding="utf-8")
-    monkeypatch.setattr(pm, "PENDING_FILE", str(pending_file))
+    import pending_store as ps
+    monkeypatch.setattr(ps, "INDEX_FILE", str(tmp_path / "pending_posts.json"))
+    monkeypatch.setattr(ps, "BODIES_FILE", str(tmp_path / "pending_bodies.json"))
+    monkeypatch.setattr(ps, "ARCHIVE_FILE", str(tmp_path / "pending_archive.json"))
     monkeypatch.setattr(pm, "REPORT_PATH", str(tmp_path / "report.json"))
+    ps.save(records)
+    return pm, ps
+
+
+def test_run_without_apply_does_not_write_pending(tmp_path, monkeypatch):
+    pm, ps = _use_tmp_store(tmp_path, monkeypatch, [_entry("published", 30)])
 
     with patch("adsense_validator.validate_adsense", return_value=_UNVALIDATED):
         report = pm.run(apply_changes=False, expire_days=30, revalidate_limit=0)
 
-    assert json.loads(pending_file.read_text(encoding="utf-8"))[0]["content"]  # 그대로
+    assert ps.load()[0]["content"]  # 그대로
     assert report["pruned"] == 1        # 리포트에는 예정 건수가 나옴
 
 
 def test_run_with_apply_writes_changes(tmp_path, monkeypatch):
-    import pending_manager as pm
-    pending_file = tmp_path / "pending.json"
-    pending_file.write_text(json.dumps([_entry("published", 30)], ensure_ascii=False), encoding="utf-8")
-    monkeypatch.setattr(pm, "PENDING_FILE", str(pending_file))
-    monkeypatch.setattr(pm, "REPORT_PATH", str(tmp_path / "report.json"))
+    pm, ps = _use_tmp_store(tmp_path, monkeypatch, [_entry("published", 30)])
 
     with patch("adsense_validator.validate_adsense", return_value=_UNVALIDATED):
         pm.run(apply_changes=True, expire_days=30, revalidate_limit=0)
 
-    assert json.loads(pending_file.read_text(encoding="utf-8"))[0]["content"] == ""
+    assert ps.load()[0].get("content", "") == ""
 
 
 def test_run_reports_ready_to_publish(tmp_path, monkeypatch):
-    import pending_manager as pm
-    pending_file = tmp_path / "pending.json"
-    pending_file.write_text(json.dumps([_entry("pending", 5)], ensure_ascii=False), encoding="utf-8")
-    monkeypatch.setattr(pm, "PENDING_FILE", str(pending_file))
-    monkeypatch.setattr(pm, "REPORT_PATH", str(tmp_path / "report.json"))
+    pm, _ = _use_tmp_store(tmp_path, monkeypatch, [_entry("pending", 5)])
 
     good = {"score": 95, "recommendation": "upload", "checks": {"a": {"note": "ok"}},
             "warnings": [], "issues": []}

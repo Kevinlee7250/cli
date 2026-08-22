@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 HISTORY_FILE = os.path.join(os.path.dirname(__file__), "logs", "run_history.json")
 DOCS_DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "docs", "data")
+# 검토 대기 글의 파일 경로·분리 규칙은 pending_store가 갖습니다.
 PENDING_FILE = os.path.join(os.path.dirname(__file__), "..", "docs", "data", "pending_posts.json")
 
 
@@ -626,13 +627,8 @@ def export_dashboard() -> None:
 
 def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> None:
     """생성된 포스트를 검토 대기 목록으로 저장합니다 (Blogger 업로드 없이)."""
-    pending: list[dict] = []
-    if os.path.exists(PENDING_FILE):
-        try:
-            with open(PENDING_FILE, encoding="utf-8") as f:
-                pending = json.load(f)
-        except (json.JSONDecodeError, OSError):
-            pending = []
+    import pending_store
+    pending = pending_store.load()
 
     cfg = blog_config or {}
     initial_pending_len = len(pending)
@@ -669,9 +665,7 @@ def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> 
         logger.info(f"  검토 대기 저장: {title[:60]} ({len(content)}자 HTML)")
 
     try:
-        os.makedirs(os.path.dirname(PENDING_FILE), exist_ok=True)
-        with open(PENDING_FILE, "w", encoding="utf-8") as f:
-            json.dump(pending, f, ensure_ascii=False, indent=2)
+        pending_store.save(pending)
         logger.info(f"검토 대기 포스트 저장 완료: {len(pending) - initial_pending_len}개 추가 (총 {len(pending)}개)")
     except OSError as e:
         logger.error(f"검토 대기 파일 저장 실패: {e}")

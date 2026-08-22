@@ -833,7 +833,7 @@
 
     <!-- Run History Timeline -->
     <div class="section-header" style="margin-top:4px">
-      <h2>📅 실행 이력 타임라인</h2>
+      <h2 data-fresh="runs.json">📅 실행 이력 타임라인</h2>
       <button onclick="renderRunTimeline()" style="background:none;border:none;color:var(--accent);font-size:13px;cursor:pointer">🔄 새로고침</button>
     </div>
     <div class="run-timeline" id="run-timeline">
@@ -931,7 +931,7 @@
 
     <!-- 트렌드 선점 발행 후보 -->
     <div class="section-header" style="margin-bottom:12px;margin-top:20px">
-      <h2>🔥 트렌드 선점 발행 후보</h2>
+      <h2 data-fresh="trend_preempt.json">🔥 트렌드 선점 발행 후보</h2>
       <button onclick="wfDispatchGeneric('trend-preempt.yml', {}, '트렌드 선점 감지', 3)" style="padding:6px 14px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.4);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">🔄 지금 감지 실행</button>
     </div>
     <div id="trend-preempt-wrap" style="margin-bottom:28px">
@@ -1076,7 +1076,7 @@
 
     <!-- GSC Section -->
     <div class="section-header" style="margin-top:32px">
-      <h2>🔍 Google Search Console 데이터</h2>
+      <h2 data-fresh="gsc.json">🔍 Google Search Console 데이터</h2>
       <span id="gsc-fetch-time" style="font-size:12px;color:var(--muted)"></span>
     </div>
     <div id="gsc-not-configured" class="alert-box" style="display:none">
@@ -1205,7 +1205,7 @@
 
     <!-- Pending Posts -->
     <div class="section-header">
-      <h2>📋 검토 대기 포스트</h2>
+      <h2 data-fresh="pending_posts.json">📋 검토 대기 포스트</h2>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="csv-btn" onclick="loadPendingPosts()" style="font-size:12px;padding:7px 14px">🔄 새로고침</button>
         <button onclick="pendingCleanupRun(false)" style="padding:7px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 정리 미리보기</button>
@@ -1243,7 +1243,7 @@
 
     <!-- 발행 예약 현황 -->
     <div id="series-schedule-panel" style="display:none;margin-bottom:20px">
-      <div class="section-header" style="margin-bottom:10px"><h2>📅 발행 예약 현황</h2></div>
+      <div class="section-header" style="margin-bottom:10px"><h2 data-fresh="series.json">📅 발행 예약 현황</h2></div>
       <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.6">
         미방영 회차는 방영일 익일 아침(8시 KST)에 자동으로 리뷰가 작성·게시됩니다.
         방영 직후 기사가 부족하면 다음 날로 자동 재예약됩니다 (최대 7회).
@@ -1432,6 +1432,13 @@
     </div>
 
     <!-- ④ 데이터 현황 -->
+    <!-- ④-a 데이터 신선도 — 어떤 파일이 언제 것인지 한 곳에서 -->
+    <div class="section-header" style="margin-bottom:6px"><h2>📅 데이터 신선도</h2></div>
+    <div id="freshness-summary" style="font-size:13px;color:var(--muted);margin-bottom:12px">확인 중...</div>
+    <div id="freshness-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-bottom:28px">
+      <!-- filled by renderFreshnessPanel() -->
+    </div>
+
     <div class="section-header" style="margin-bottom:12px"><h2>🗄️ 데이터 현황</h2></div>
     <div id="data-status-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-bottom:28px">
       <!-- filled by renderSystemPage() -->
@@ -1476,7 +1483,7 @@
 
     <!-- ⑦ 주간 학습 리포트 -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>🧠 주간 학습 리포트</h2>
+      <h2 data-fresh="learning.json">🧠 주간 학습 리포트</h2>
       <button onclick="wfRunWeeklyCheck()" style="padding:6px 14px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.4);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">🔍 지금 점검 실행</button>
     </div>
     <div id="learning-report-wrap" style="margin-bottom:28px">
@@ -1485,7 +1492,7 @@
 
     <!-- ⑩ 주간 운영 브리핑 -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>📋 주간 운영 브리핑</h2>
+      <h2 data-fresh="weekly_brief.json">📋 주간 운영 브리핑</h2>
       <button onclick="wfDispatchGeneric('weekly-brief.yml', {}, '주간 운영 브리핑', 2)" style="padding:6px 14px;background:rgba(124,106,247,.15);border:1px solid rgba(124,106,247,.4);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">📋 지금 생성</button>
     </div>
     <div id="weekly-brief-wrap" style="margin-bottom:28px">
@@ -1494,7 +1501,7 @@
 
     <!-- ⑦-0 운영 알림 워치독 -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>🚨 운영 알림</h2>
+      <h2 data-fresh="alerts.json">🚨 운영 알림</h2>
       <div style="display:flex;gap:8px;align-items:center">
         <div style="font-size:12px;color:var(--muted)">6시간마다 전체 워크플로 실패를 감시해 텔레그램으로 알립니다</div>
         <button onclick="wfRunAlertWatchdog()" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 지금 점검</button>
@@ -1506,7 +1513,7 @@
 
     <!-- ⑦-A 인증 헬스체크 -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>🔐 인증 헬스체크</h2>
+      <h2 data-fresh="auth_health.json">🔐 인증 헬스체크</h2>
       <div style="font-size:12px;color:var(--muted)">Google OAuth 자격증명이 조용히 만료되지 않았는지 매일 확인</div>
     </div>
     <div id="auth-health-wrap" style="margin-bottom:28px">
@@ -1515,7 +1522,7 @@
 
     <!-- ⑦-B 자동 수리 리포트 -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>🔧 자동 수리 리포트</h2>
+      <h2 data-fresh="repairs.json">🔧 자동 수리 리포트</h2>
       <div style="display:flex;gap:8px">
         <button onclick="wfRunAutoRepair(false)" style="padding:6px 14px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:8px;color:var(--green);font-size:12px;cursor:pointer;font-weight:600">🔧 지금 수리 실행</button>
         <button onclick="wfRunAutoRepair(true)" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 진단만</button>
@@ -1527,7 +1534,7 @@
 
     <!-- ⑦-C 코드 자동 수리 리포트 -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>🧠 코드 자동 수리 (Claude AI)</h2>
+      <h2 data-fresh="code_repairs.json">🧠 코드 자동 수리 (Claude AI)</h2>
       <div style="font-size:12px;color:var(--muted)">Python 예외 감지 → Claude가 분석·수정 → 자동 커밋</div>
     </div>
     <div id="code-repair-report-wrap" style="margin-bottom:28px">
@@ -1536,7 +1543,7 @@
 
     <!-- ⑦.D AI 토큰 사용량 -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>🤖 AI 토큰 사용량</h2>
+      <h2 data-fresh="ai_usage.json">🤖 AI 토큰 사용량</h2>
       <button onclick="loadAiUsage()" style="padding:6px 14px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.3);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">🔄 새로고침</button>
     </div>
     <div id="ai-usage-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:12px">
@@ -1555,7 +1562,7 @@
 
     <!-- ⑦.3 구주제 글 정리 -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>📦 구주제 글 정리</h2>
+      <h2 data-fresh="offtopic_migration.json">📦 구주제 글 정리</h2>
       <div style="display:flex;gap:8px;align-items:center">
         <select id="offtopic-blog-select" style="padding:6px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
           <option value="blog1">blog1 (HOGU What?)</option>
@@ -1575,7 +1582,7 @@
 
     <!-- ⑦.4 AdSense 승인 감사 -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>🔎 AdSense 승인 감사</h2>
+      <h2 data-fresh="adsense_audit.json">🔎 AdSense 승인 감사</h2>
       <div style="display:flex;gap:8px;align-items:center">
         <select id="audit-blog-select" style="padding:6px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
           <option value="blog1">blog1 (HOGU What?)</option>
@@ -1616,7 +1623,7 @@
 
     <!-- ⑦.55 구글 색인 현황 -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>🔍 구글 색인 현황</h2>
+      <h2 data-fresh="index_status.json">🔍 구글 색인 현황</h2>
       <button onclick="loadIndexStatus()" style="padding:6px 14px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer;font-weight:600">🔄 새로고침</button>
     </div>
     <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.7">
@@ -1628,7 +1635,7 @@
 
     <!-- 게시글 이미지 검증 -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>🖼️ 게시글 이미지 검증</h2>
+      <h2 data-fresh="image_audit.json">🖼️ 게시글 이미지 검증</h2>
       <div style="display:flex;gap:8px;align-items:center">
         <select id="image-audit-blog-select" style="padding:6px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
           <option value="all">전체 블로그</option>
@@ -1645,7 +1652,7 @@
 
     <!-- 내부 링크 구조 — 고아 페이지(들어오는 링크 0개) -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>🔗 내부 링크 구조</h2>
+      <h2 data-fresh="internal_links.json">🔗 내부 링크 구조</h2>
       <div style="display:flex;gap:8px">
         <button onclick="inboundLinksRun(true)" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 미리보기</button>
         <button onclick="inboundLinksRun(false)" style="padding:6px 14px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);border-radius:8px;color:var(--accent2);font-size:12px;cursor:pointer;font-weight:600">🔗 링크 생성</button>
@@ -1658,7 +1665,7 @@
 
     <!-- ⑦.6 중복 이미지 교체 -->
     <div class="section-header" style="margin-bottom:12px">
-      <h2>🖼️ 중복 이미지 교체</h2>
+      <h2 data-fresh="duplicate_images.json">🖼️ 중복 이미지 교체</h2>
       <div style="display:flex;gap:8px">
         <button onclick="fixDupImagesRun(false)" style="padding:6px 14px;background:rgba(124,106,247,.12);border:1px solid rgba(124,106,247,.3);border-radius:8px;color:var(--accent);font-size:12px;cursor:pointer;font-weight:600">🖼️ 지금 교체</button>
         <button onclick="fixDupImagesRun(true)" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔍 미리보기</button>
@@ -2411,6 +2418,207 @@ let _regLookup = null          // registry lookup cache
 const POSTS_PER_PAGE = 12
 let postsFiltered = []
 
+// ── 데이터 신선도 ─────────────────────────────────────────────────────────────
+// 왜 필요한가: 한 달 전에 멈춘 파일과 2분 전에 갱신된 파일이 화면에서 똑같이
+// 보였습니다. 숫자만 있고 "언제 것인지"가 없으면 낡은 값을 현재로 읽게 됩니다.
+// 여기서 파일마다 수집 시각과 기대 주기를 함께 들고 다닙니다.
+
+const DATA_STAMPS = {}   // { 파일명: {at: Date|null, via: 'field'|'header'} }
+
+//: 파일별 라벨과 기대 갱신 주기(시간). 주기의 2배를 넘기면 '지연',
+//: 4배를 넘기면 '중단'으로 봅니다. 주기를 모르면 0 — 나이만 표시합니다.
+const SOURCE_META = {
+  'posts.json':              ['발행 글', 24],
+  'runs.json':               ['실행 이력', 24],
+  'meta.json':               ['요약', 24],
+  'pending_posts.json':      ['검토 대기', 24],
+  'blogs.json':              ['블로그 목록', 168],
+  'analytics.json':          ['조회수 분석', 24],
+  'gsc.json':                ['Search Console', 24],
+  'index_status.json':       ['색인 현황', 24],
+  'gsc_diagnosis.json':      ['GSC 진단', 24],
+  'sitemap_status.json':     ['사이트맵 제출', 24],
+  'alerts.json':             ['운영 알림', 6],
+  'auth_health.json':        ['인증 헬스체크', 24],
+  'repairs.json':            ['자동 수리', 24],
+  'code_repairs.json':       ['코드 자동 수리', 24],
+  'ai_usage.json':           ['AI 토큰 사용량', 24],
+  'trending_keywords.json':  ['트렌드 키워드', 3],
+  'trend_preempt.json':      ['트렌드 선점 후보', 24],
+  'image_audit.json':        ['이미지 검증', 168],
+  'adsense_audit.json':      ['AdSense 감사', 168],
+  'internal_links.json':     ['내부 링크', 168],
+  'lifecycle.json':          ['생애주기', 24],
+  'series.json':             ['시리즈 예약', 168],
+  'social.json':             ['소셜 콘텐츠', 24],
+  'learning.json':           ['주간 학습', 168],
+  'weekly_brief.json':       ['주간 브리핑', 168],
+  'title_changes.json':      ['제목 최적화', 168],
+  'dead_links.json':         ['죽은 링크', 168],
+  'duplicate_images.json':   ['중복 이미지', 168],
+  'offtopic_migration.json': ['구주제 정리', 168],
+  'templates.json':          ['글 템플릿', 168],
+  'post_registry.json':      ['포스트 레지스트리', 24],
+  'pending_report.json':     ['검토 대기 리포트', 168],
+  'index_priority.json':     ['색인 우선순위', 168],
+}
+
+//: JSON 본문에서 수집 시각으로 쓸 만한 키들 (생산자마다 이름이 다릅니다)
+const STAMP_KEYS = ['checkedAt', 'checked_at', 'auditedAt', 'audited_at', 'exportedAt',
+                    'generatedAt', 'generated_at', 'updatedAt', 'updated_at',
+                    'lastRunAt', 'collectedAt']
+
+//: 누적 기록의 각 항목이 쓰는 시각 키 (가장 최근 것을 파일의 시각으로 봅니다)
+const ITEM_STAMP_KEYS = ['runAt', 'savedAt', 'checkedAt', 'publishedAt', 'date']
+
+function _pickStamp(obj, keys) {
+  if (!obj || typeof obj !== 'object') return null
+  for (const k of keys) {
+    const v = obj[k]
+    if (typeof v === 'string' && v.length >= 8) {
+      const d = new Date(v)
+      if (!isNaN(d)) return d
+    }
+  }
+  return null
+}
+
+function _stampFromBody(data) {
+  // 배열(누적 기록)은 가장 최근 항목의 시각을 씁니다. 첫 항목을 쓰면 정렬
+  // 방향에 따라 가장 오래된 값을 잡습니다 — 방금 쓴 검토 대기 목록이
+  // "29일 전"으로 보이던 이유입니다. Last-Modified로 대신할 수도 없습니다.
+  // GitHub Pages는 배포 시각을 주므로, 데이터가 2주째 멈춰 있어도 항상
+  // "방금"이 됩니다. 정확히 감추려던 그 상태입니다.
+  if (Array.isArray(data)) {
+    let newest = null
+    for (const item of data.slice(0, 300)) {
+      const d = _pickStamp(item, ITEM_STAMP_KEYS)
+      if (d && (!newest || d > newest)) newest = d
+    }
+    return newest
+  }
+  return _pickStamp(data, STAMP_KEYS)
+}
+
+// 모든 데이터 파일은 이 함수를 거쳐 받습니다. 받는 김에 수집 시각을
+// 기록해 두면 패널마다 따로 타임스탬프를 파낼 필요가 없습니다.
+async function fetchData(base, name, fallback) {
+  try {
+    const r = await fetch(base + '/' + name + '?t=' + Date.now())
+    if (!r.ok) throw new Error('HTTP ' + r.status)
+    const data = await r.json()
+    let at = _stampFromBody(data), via = 'field'
+    if (!at) {
+      // 본문에 시각이 없으면 서버가 주는 파일 수정 시각을 씁니다.
+      const lm = r.headers.get('last-modified')
+      if (lm) { const d = new Date(lm); if (!isNaN(d)) { at = d; via = 'header' } }
+    }
+    DATA_STAMPS[name] = { at, via }
+    return data
+  } catch (e) {
+    DATA_STAMPS[name] = { at: null, via: 'none', error: String(e.message || e) }
+    return fallback
+  }
+}
+
+// 개별 패널이 직접 받아 쓰는 파일용. Response를 그대로 돌려주므로 호출부는
+// 기존처럼 r.ok / await r.json()을 씁니다. 시각만 옆에서 기록합니다.
+async function fetchStamped(base, name) {
+  const r = await fetch(base + '/' + name + '?t=' + Date.now())
+  if (r.ok) {
+    try {
+      const data = await r.clone().json()
+      let at = _stampFromBody(data), via = 'field'
+      if (!at) {
+        const lm = r.headers.get('last-modified')
+        if (lm) { const d = new Date(lm); if (!isNaN(d)) { at = d; via = 'header' } }
+      }
+      DATA_STAMPS[name] = { at, via }
+    } catch (e) { /* 시각 기록 실패는 패널 렌더를 막지 않습니다 */ }
+  } else {
+    DATA_STAMPS[name] = { at: null, via: 'none' }
+  }
+  // 이 파일들은 해당 탭을 열 때 처음 받아옵니다. 그때 배지도 함께 갱신해야
+  // 첫 로딩 시점에 "시각 없음"으로 굳어 있지 않습니다.
+  if (typeof applyFreshBadges === 'function') applyFreshBadges()
+  return r
+}
+
+//: 나이(시간) → {cls, text}. cls는 ok | late | stale | unknown
+function freshness(name) {
+  const st = DATA_STAMPS[name]
+  const expect = (SOURCE_META[name] || [null, 0])[1]
+  if (!st || !st.at) return { cls: 'unknown', text: '시각 없음', hours: null }
+  const hours = (Date.now() - st.at.getTime()) / 36e5
+  let text
+  if (hours < 1) text = '방금'
+  else if (hours < 24) text = Math.round(hours) + '시간 전'
+  else text = Math.round(hours / 24) + '일 전'
+  let cls = 'ok'
+  if (expect) {
+    if (hours > expect * 4) cls = 'stale'
+    else if (hours > expect * 2) cls = 'late'
+  } else if (hours > 24 * 30) cls = 'stale'
+  return { cls, text, hours, expect }
+}
+
+const FRESH_STYLE = {
+  ok:      ['rgba(52,211,153,.13)', 'var(--green)',  'rgba(52,211,153,.3)'],
+  late:    ['rgba(251,191,36,.13)', 'var(--yellow)', 'rgba(251,191,36,.35)'],
+  stale:   ['rgba(248,113,113,.13)', 'var(--red)',   'rgba(248,113,113,.35)'],
+  unknown: ['var(--bg3)',            'var(--muted)', 'var(--border)'],
+}
+
+function freshBadgeHtml(name) {
+  const f = freshness(name)
+  const [bg, color, border] = FRESH_STYLE[f.cls]
+  const mark = f.cls === 'stale' ? '⚠️ ' : ''
+  const tip = f.expect ? `기대 주기 ${f.expect >= 24 ? (f.expect / 24) + '일' : f.expect + '시간'}` : '주기 미지정'
+  return `<span class="fresh-badge" title="${name} · ${tip}" style="margin-left:8px;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;background:${bg};color:${color};border:1px solid ${border};vertical-align:middle">${mark}${f.text}</span>`
+}
+
+// data-fresh="파일명" 이 붙은 제목 옆에 배지를 답니다. 패널 렌더 함수를
+// 하나하나 고치지 않아도 되도록 속성 하나로 연결합니다.
+function applyFreshBadges() {
+  document.querySelectorAll('[data-fresh]').forEach(el => {
+    const name = el.getAttribute('data-fresh')
+    if (!name) return
+    let badge = el.querySelector(':scope > .fresh-badge')
+    if (!badge) {
+      badge = document.createElement('span')
+      el.appendChild(badge)
+    }
+    badge.outerHTML = freshBadgeHtml(name)
+  })
+}
+
+// 전체 목록 — 어떤 파일이 언제 것인지 한 화면에서 봅니다.
+function renderFreshnessPanel() {
+  const wrap = document.getElementById('freshness-grid')
+  if (!wrap) return
+  const rows = Object.keys(SOURCE_META)
+    .filter(n => DATA_STAMPS[n])
+    .map(n => ({ name: n, label: SOURCE_META[n][0], f: freshness(n) }))
+    .sort((a, b) => (b.f.hours ?? 1e9) - (a.f.hours ?? 1e9))
+  const bad = rows.filter(r => r.f.cls === 'stale' || r.f.cls === 'late')
+  const sum = document.getElementById('freshness-summary')
+  if (sum) {
+    sum.innerHTML = bad.length
+      ? `<span style="color:var(--yellow)">${bad.length}개 파일이 기대 주기를 넘겼습니다</span> · 전체 ${rows.length}개`
+      : `<span style="color:var(--green)">전체 ${rows.length}개 파일이 최신입니다</span>`
+  }
+  wrap.innerHTML = rows.map(r => {
+    const [bg, color, border] = FRESH_STYLE[r.f.cls]
+    return `<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--bg2);border:1px solid ${r.f.cls === 'stale' ? border : 'var(--border)'};border-radius:8px">
+      <div style="min-width:0">
+        <div style="font-size:13px;font-weight:600;color:var(--text)">${r.label}</div>
+        <div style="font-size:11px;color:var(--muted);font-family:ui-monospace,monospace">${r.name}</div>
+      </div>
+      <span style="flex-shrink:0;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;background:${bg};color:${color};border:1px solid ${border}">${r.f.cls === 'stale' ? '⚠️ ' : ''}${r.f.text}</span>
+    </div>`
+  }).join('')
+}
+
 // ── Load ──────────────────────────────────────────────────────────────────────
 async function loadAll(silent = false) {
   if (!silent) document.getElementById('last-updated-label').textContent = '로딩 중...'
@@ -2422,31 +2630,31 @@ async function loadAll(silent = false) {
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
   const [posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, adsenseRevenue] = await Promise.all([
-    fetch(base + '/posts.json' + ts).then(r => r.json()).catch(() => []),
-    fetch(base + '/runs.json' + ts).then(r => r.json()).catch(() => []),
-    fetch(base + '/analytics.json' + ts).then(r => r.json()).catch(() => ({})),
-    fetch(base + '/meta.json' + ts).then(r => r.json()).catch(() => ({})),
-    fetch(base + '/social.json' + ts).then(r => r.json()).catch(() => []),
-    fetch(base + '/pending_posts.json' + ts).then(r => r.json()).catch(() => []),
-    fetch(base + '/series.json' + ts).then(r => r.json()).catch(() => []),
-    fetch(base + '/gsc.json' + ts).then(r => r.json()).catch(() => ({})),
-    fetch(base + '/blogs.json' + ts).then(r => r.json()).catch(() => []),
-    fetch(base + '/learning.json' + ts).then(r => r.json()).catch(() => []),
-    fetch(base + '/repairs.json' + ts).then(r => r.json()).catch(() => []),
-    fetch(base + '/post_registry.json' + ts).then(r => r.json()).catch(() => []),
-    fetch(base + '/code_repairs.json' + ts).then(r => r.json()).catch(() => []),
-    fetch(base + '/trending_keywords.json' + ts).then(r => r.json()).catch(() => null),
-    fetch(base + '/lifecycle.json' + ts).then(r => r.json()).catch(() => null),
-    fetch(base + '/title_changes.json' + ts).then(r => r.json()).catch(() => null),
-    fetch(base + '/ai_usage.json' + ts).then(r => r.json()).catch(() => null),
-    fetch(base + '/dead_links.json' + ts).then(r => r.json()).catch(() => null),
-    fetch(base + '/auth_health.json' + ts).then(r => r.json()).catch(() => null),
-    fetch(base + '/weekly_brief.json' + ts).then(r => r.json()).catch(() => null),
-    fetch(base + '/trend_preempt.json' + ts).then(r => r.json()).catch(() => null),
-    fetch(base + '/adsense_audit.json' + ts).then(r => r.json()).catch(() => null),
-    fetch(base + '/pending_report.json' + ts).then(r => r.json()).catch(() => null),
-    fetch(base + '/alerts.json' + ts).then(r => r.json()).catch(() => null),
-    fetch(base + '/adsense_revenue.json' + ts).then(r => r.json()).catch(() => null),
+    fetchData(base, 'posts.json', []),
+    fetchData(base, 'runs.json', []),
+    fetchData(base, 'analytics.json', ({})),
+    fetchData(base, 'meta.json', ({})),
+    fetchData(base, 'social.json', []),
+    fetchData(base, 'pending_posts.json', []),
+    fetchData(base, 'series.json', []),
+    fetchData(base, 'gsc.json', ({})),
+    fetchData(base, 'blogs.json', []),
+    fetchData(base, 'learning.json', []),
+    fetchData(base, 'repairs.json', []),
+    fetchData(base, 'post_registry.json', []),
+    fetchData(base, 'code_repairs.json', []),
+    fetchData(base, 'trending_keywords.json', null),
+    fetchData(base, 'lifecycle.json', null),
+    fetchData(base, 'title_changes.json', null),
+    fetchData(base, 'ai_usage.json', null),
+    fetchData(base, 'dead_links.json', null),
+    fetchData(base, 'auth_health.json', null),
+    fetchData(base, 'weekly_brief.json', null),
+    fetchData(base, 'trend_preempt.json', null),
+    fetchData(base, 'adsense_audit.json', null),
+    fetchData(base, 'pending_report.json', null),
+    fetchData(base, 'alerts.json', null),
+    fetchData(base, 'adsense_revenue.json', null),
   ])
   DATA = { posts, runs, analytics, meta, social, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, adsenseRevenue }
 
@@ -2482,6 +2690,8 @@ async function loadAll(silent = false) {
   renderAdsenseAudit()
   renderPendingReport()
   renderAlerts()
+  renderFreshnessPanel()   // 어떤 파일이 언제 것인지
+  applyFreshBadges()       // 패널 제목 옆 신선도 배지
   _botCheckErrors()    // 봇 오류 자동 감지
   if (!silent) showToast('데이터를 불러왔습니다', 'success')
 }
@@ -4778,10 +4988,12 @@ function renderPendingPosts() {
 
   container.innerHTML = infoBar + filtered.map(p => {
     const safeId = p.id.replace(/[^a-zA-Z0-9_-]/g, '_')
-    const excerpt = stripHtml(p.content).substring(0, 220)
+    // 목록에는 본문이 실려 오지 않습니다 (pending_bodies.json으로 분리).
+    // 저장된 발췌를 쓰되, 옛 형식 기록은 본문에서 뽑습니다.
+    const excerpt = (p.excerpt || stripHtml(p.content)).substring(0, 220)
     const excerptHtml = excerpt ? `<div style="font-size:12px;color:var(--muted);line-height:1.7;margin-top:10px;border-left:3px solid var(--border);padding-left:10px">${esc(excerpt)}…</div>` : ''
     const metaHtml = p.metaDescription ? `<div style="font-size:12px;color:var(--muted);line-height:1.6;margin-top:6px"><strong style="color:var(--accent2)">Meta:</strong> ${esc(p.metaDescription)}</div>` : ''
-    const hasContent = !!(p.content && p.content.trim())
+    const hasContent = !!(p.contentLength || (p.content && p.content.trim()))
     return `<div class="run-panel" id="rpost-${safeId}" style="margin-bottom:16px">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;flex-wrap:wrap">
         <div style="flex:1;min-width:0;cursor:pointer" onclick="openPendingPreview(${jsonq(p.id)})">
@@ -4807,9 +5019,33 @@ function renderPendingPosts() {
   }).join('')
 }
 
-function openPendingPreview(id) {
+// 본문은 pending_bodies.json에 따로 있습니다. 미리보기·게시처럼 실제로
+// 본문이 필요한 순간에 한 번만 받아 와서 캐시합니다. 목록 화면에서는
+// 받지 않으므로 첫 로딩에 744KB를 아낍니다.
+let _pendingBodies = null
+async function loadPendingBodies() {
+  if (_pendingBodies) return _pendingBodies
+  const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
+  try {
+    const r = await fetch(base + '/pending_bodies.json?t=' + Date.now())
+    _pendingBodies = r.ok ? await r.json() : {}
+  } catch (e) {
+    _pendingBodies = {}
+  }
+  return _pendingBodies
+}
+
+async function ensurePendingBody(post) {
+  if (!post || (post.content && post.content.trim())) return post
+  const bodies = await loadPendingBodies()
+  if (bodies[post.id]) post.content = bodies[post.id]
+  return post
+}
+
+async function openPendingPreview(id) {
   const post = pendingPosts.find(p => p.id === id)
   if (!post) return
+  await ensurePendingBody(post)
   document.getElementById('modal-title').textContent = post.title
   document.getElementById('modal-meta').innerHTML =
     `<span class="badge purple">${esc(post.keyword)}</span> ` +
@@ -4887,11 +5123,18 @@ async function publishPostViaActions(id) {
 async function pollPublishResult(safeId, postId) {
   const statusEl = document.getElementById('rstatus-' + safeId)
   if (statusEl) { statusEl.innerHTML = statusEl.innerHTML.replace(/⏳.*$/, '') + '<br><span class="pulse" style="font-size:12px;color:var(--muted)">⏳ 결과 확인 중...</span>' }
-  // Reload pending_posts.json to check if published
+  // 게시 여부 확인 — 게시된 기록은 목록에서 빠져 pending_archive.json으로
+  // 옮겨가므로 두 파일을 모두 봐야 합니다. 목록만 보면 성공한 게시를
+  // 영영 못 찾고 4분 뒤 "시간 초과"로 끝납니다.
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
-  const fresh = await fetch(base + '/pending_posts.json?t=' + Date.now()).then(r => r.json()).catch(() => null)
+  const ts2 = '?t=' + Date.now()
+  const [fresh, archived] = await Promise.all([
+    fetch(base + '/pending_posts.json' + ts2).then(r => r.json()).catch(() => null),
+    fetch(base + '/pending_archive.json' + ts2).then(r => r.ok ? r.json() : []).catch(() => []),
+  ])
   if (!fresh) return
-  const post = fresh.find(p => p.id === postId)
+  const post = fresh.find(p => p.id === postId) ||
+               (Array.isArray(archived) ? archived.find(p => p.id === postId) : null)
   if (post?.status === 'published') {
     if (statusEl) {
       statusEl.className = 'status-panel success'
@@ -5174,7 +5417,7 @@ function deleteSeries(srIdx) {
 
 let _serEpModal = { srIdx: -1, epIdx: -1, postId: null }
 
-function openSerEpModal(srIdx, epIdx) {
+async function openSerEpModal(srIdx, epIdx) {
   const series = DATA.series || []
   const sr = series[srIdx]
   if (!sr) return
@@ -5207,6 +5450,8 @@ function openSerEpModal(srIdx, epIdx) {
   if (!matched) matched = pending.find(p => p.keyword === sr.keyword || p.keyword === ep.search_keyword)
 
   _serEpModal.postId = matched?.id || null
+  // 본문은 목록에 실려 오지 않으므로 여기서 받아 옵니다
+  if (matched) await ensurePendingBody(matched)
 
   // 메타 정보
   const metaEl = document.getElementById('ser-ep-modal-meta')
@@ -5472,14 +5717,14 @@ async function loadGscDiagnosis() {
   let d = null
   try {
     const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
-    const r = await fetch(`${base}/gsc_diagnosis.json?t=${Date.now()}`)
+    const r = await fetchStamped(base, 'gsc_diagnosis.json')
     if (r.ok) d = await r.json()
   } catch {}
   // 사이트맵 재제출 결과 — 워크플로가 실패를 삼키므로 여기서만 보입니다
   let sm = null
   try {
     const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
-    const rs = await fetch(`${base}/sitemap_status.json?t=${Date.now()}`)
+    const rs = await fetchStamped(base, 'sitemap_status.json')
     if (rs.ok) sm = await rs.json()
   } catch {}
   const smLine = _sitemapStatusLine(sm)
@@ -5606,7 +5851,7 @@ async function loadIndexPriority() {
   let d = null
   try {
     const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
-    const r = await fetch(`${base}/index_priority.json?t=${Date.now()}`)
+    const r = await fetchStamped(base, 'index_priority.json')
     if (r.ok) d = await r.json()
   } catch {}
   if (!d || !(d.queue || []).length) {
@@ -5695,7 +5940,7 @@ async function loadImageAudit() {
   let d = null
   try {
     const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
-    const r = await fetch(`${base}/image_audit.json?t=${Date.now()}`)
+    const r = await fetchStamped(base, 'image_audit.json')
     if (r.ok) d = await r.json()
   } catch {}
   if (!d || !d.scanned) {
@@ -5772,7 +6017,7 @@ async function loadInternalLinks() {
   let d = null
   try {
     const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
-    const r = await fetch(`${base}/internal_links.json?t=${Date.now()}`)
+    const r = await fetchStamped(base, 'internal_links.json')
     if (r.ok) d = await r.json()
   } catch {}
   if (!d || !d.totalPosts) {
@@ -5827,7 +6072,7 @@ async function loadIndexStatus() {
   let data = null
   try {
     const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
-    const r = await fetch(`${base}/index_status.json?t=${Date.now()}`)
+    const r = await fetchStamped(base, 'index_status.json')
     if (r.ok) data = await r.json()
   } catch {}
   if (!data || !data.items) {
@@ -6646,7 +6891,7 @@ async function loadTemplates() {
   if (_TPL) return _TPL
   try {
     const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
-    const r = await fetch(`${base}/templates.json?t=${Date.now()}`)
+    const r = await fetchStamped(base, 'templates.json')
     if (r.ok) _TPL = await r.json()
   } catch {}
   if (!_TPL) return null

@@ -154,7 +154,7 @@ jobs:
           # 저장소에 남지 않았습니다 — 워크플로는 성공으로 끝나고요 (2026-08-22).
           git add -f \
             docs/data/verify_report.json \
-            docs/data/pending_posts.json \
+            docs/data/pending_posts.json docs/data/pending_bodies.json docs/data/pending_archive.json \
             2>/dev/null || true
 
           if git diff --staged --quiet; then

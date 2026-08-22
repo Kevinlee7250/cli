@@ -223,7 +223,10 @@ def _summarize(pending: list[dict]) -> dict:
 
 
 def run(apply_changes: bool, expire_days: int, revalidate_limit: int) -> dict:
-    pending = _load(PENDING_FILE, [])
+    # 목록·본문·보관이 나뉘어 있으므로 저장소를 거쳐 읽습니다 (본문이 합쳐져 옴).
+    # 끝난 기록의 본문 정리도 이 모듈 담당이라 보관본까지 함께 받습니다.
+    import pending_store
+    pending = pending_store.load()
     if not isinstance(pending, list):
         logger.error("pending_posts.json 형식 오류")
         return {"error": "형식 오류"}
@@ -265,7 +268,7 @@ def run(apply_changes: bool, expire_days: int, revalidate_limit: int) -> dict:
     }
 
     if apply_changes:
-        _save(PENDING_FILE, pending)
+        pending_store.save(pending)
         logger.info(f"✅ pending_posts.json 반영 완료 (본문 보유 {before['withContent']} → {after['withContent']}건)")
     else:
         logger.info("🔍 리포트 전용 모드 — 파일 변경 없음 (--apply 로 반영)")

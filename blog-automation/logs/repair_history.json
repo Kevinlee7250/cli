@@ -1,5 +1,14 @@
 [
   {
+    "timestamp": "2026-08-22T17:15:21.604190",
+    "health_score": 100,
+    "issues_found": 0,
+    "issues": [],
+    "repairs_applied": 0,
+    "repairs": [],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-22T08:21:18.571518",
     "health_score": 100,
     "issues_found": 0,
@@ -1581,58 +1590,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-22T14:12:54.721606",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-22T12:33:08.189549",
-    "health_score": 86,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "consecutive_pending_review",
-        "level": "warning",
-        "message": "최근 5회 연속 검토 대기 전환 (분량/AdSense 점수 미달)",
-        "context": {
-          "pending_count": 5,
-          "recent_dates": [
-            "2026-07-22",
-            "2026-07-22",
-            "2026-07-22",
-            "2026-07-22",
-            "2026-07-22"
-          ]
-        },
-        "fix": null
-      },
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 0,
-    "repairs": [
-      {
-        "issue_id": "consecutive_pending_review",
-        "issue_level": "warning",
-        "issue_message": "최근 5회 연속 검토 대기 전환 (분량/AdSense 점수 미달)",
-        "fix_applied": null,
-        "timestamp": "2026-07-22T12:33:08.189439",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      },
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-22T12:33:08.189499",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

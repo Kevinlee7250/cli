@@ -106,6 +106,40 @@ def _default_pass() -> dict:
     }
 
 
+def _mode_rules(post_data: dict) -> tuple[str, str]:
+    """글의 성격에 맞는 채점 기준을 돌려줍니다. (originality용, eeat용)
+
+    왜 필요한가
+    ──────────
+    생성 프롬프트는 "하지 않은 경험을 한 것처럼 쓰지 않는다"를 원칙으로 삼고,
+    author_profile.json에 실제 경험 자료가 없는 주제는 전부 조사·분석형으로
+    씁니다. 그런데 검증 기준은 1인칭 경험 서술을 요구해, 조사형 글은
+    originality·eeat 두 항목이 구조적으로 warn 고정이었습니다. 12점 만점에
+    warn이 7점이니 -10점이 확정돼 79점 언저리가 상한이 됩니다
+    (2026-08-22 확인).
+
+    경험을 지어내게 만드는 건 답이 아닙니다. AdSense가 요구하는 건 개인
+    경험이 아니라 독창적 가치이고, E-E-A-T의 Experience는 넷 중 하나일
+    뿐입니다. 조사형 글은 출처의 구체성·데이터 정확성·균형 잡힌 시각으로
+    같은 신뢰를 얻을 수 있으므로, 그 기준으로 채점합니다.
+    """
+    if post_data.get("experience_mode") == "experience":
+        return (
+            "(이 글은 저자의 실제 경험 자료를 근거로 쓴 '경험형'입니다 — "
+            "1인칭 경험이 구체적 수치·기간과 함께 담겼는지 보세요)",
+            "• 직접 경험 기반 내용이 구체적으로 서술됐는가? (1인칭 경험)",
+        )
+    return (
+        "(이 글은 저자가 겪지 않은 주제를 다루는 '조사·분석형'입니다. "
+        "1인칭 경험담이 없는 것은 정직한 서술이므로 감점 사유가 아닙니다. "
+        "대신 조사의 깊이·자료의 구체성·해석의 독창성으로 판단하세요)",
+        "• 조사형 글이므로 1인칭 경험 유무로 감점하지 마세요.\n"
+        "     대신 이렇게 보세요: 구체적 수치·날짜가 출처와 함께 제시됐는가, "
+        "여러 자료를 교차 확인해 해석을 더했는가, 불확실한 부분을 "
+        "불확실하다고 밝혔는가",
+    )
+
+
 def _log_result(title: str, result: dict) -> None:
     rec = result["recommendation"]
     icon_map = {"upload": "✅", "review": "⚠️", "reject": "❌"}
@@ -157,6 +191,7 @@ def validate_adsense(post_data: dict) -> dict:
 
         policy_ctx = _get_policy_context()
         policy_section = f"\n\n최신 정책 업데이트:\n{policy_ctx}" if policy_ctx else ""
+        mode_rule_originality, mode_rule_eeat = _mode_rules(post_data)
 
         prompt = f"""Google AdSense 최신 정책 기준으로 다음 블로그 포스트를 8개 항목 검증하세요.{policy_section}
 
@@ -177,7 +212,8 @@ def validate_adsense(post_data: dict) -> dict:
 
 1. originality — 원본성 및 품질 (AdSense Valuable Inventory / 가치 없는 콘텐츠 정책)
    판단 기준:
-   • 독창적 관점·개인 경험이 구체적 수치·날짜·사례와 함께 실제로 포함됐는가?
+   • 독창적 가치가 구체적 수치·날짜·사례와 함께 실제로 포함됐는가?
+     {mode_rule_originality}
    • 다른 사이트의 정보를 그대로 나열만 하지 않는가? (thin content 금지)
    • 글자 수 2500자 이상이면 pass, 2000~2499자면 warn, 2000자 미만이면 fail
      (글자 수는 위 '포스트 정보'의 값을 기준으로 판단 — 본문 미리보기는 앞부분만 제공됨)
@@ -211,8 +247,8 @@ def validate_adsense(post_data: dict) -> dict:
 
 6. eeat — E-E-A-T 신뢰도 (Google 품질 평가 기준)
    판단 기준:
-   • 직접 경험 기반 내용이 포함됐는가? (1인칭 경험 서술)
-   • 출처·참고자료가 인용됐는가?
+   {mode_rule_eeat}
+   • 출처·참고자료가 인용됐는가? (기관명·시점이 본문에 함께 밝혀졌으면 가점)
    • 과도한 단정적 주장 없이 균형 잡힌 시각인가?
    • 저자 신뢰성 신호가 있는가? (전문 지식 표현)
 

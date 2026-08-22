@@ -2384,6 +2384,16 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
 
             content_html = post_data.get("content", "")
             post_data["word_count"] = _word_count(content_html)
+            # 이 글이 실제 경험 자료를 근거로 쓴 것인지, 조사·분석형인지 기록합니다.
+            # AdSense 검증기가 이 값으로 채점 기준을 맞춥니다 — 조사형 글에
+            # 1인칭 경험이 없다고 감점하면 "하지 않은 경험을 쓰지 않는다"는
+            # 생성 원칙과 정면 충돌합니다 (2026-08-22: originality·eeat 두 항목이
+            # 구조적으로 warn 고정돼 79점 상한이 생겼습니다).
+            post_data["experience_mode"] = (
+                "experience"
+                if _match_experience(keyword, (blog_config or {}).get("id", ""))
+                else "research"
+            )
             post_data["content_preview"] = _content_preview(content_html)
 
             prev_wc = post_data["word_count"]
@@ -2799,6 +2809,16 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             # 글자 수 및 미리보기 추가
             content_html = post_data.get("content", "")
             post_data["word_count"] = _word_count(content_html)
+            # 이 글이 실제 경험 자료를 근거로 쓴 것인지, 조사·분석형인지 기록합니다.
+            # AdSense 검증기가 이 값으로 채점 기준을 맞춥니다 — 조사형 글에
+            # 1인칭 경험이 없다고 감점하면 "하지 않은 경험을 쓰지 않는다"는
+            # 생성 원칙과 정면 충돌합니다 (2026-08-22: originality·eeat 두 항목이
+            # 구조적으로 warn 고정돼 79점 상한이 생겼습니다).
+            post_data["experience_mode"] = (
+                "experience"
+                if _match_experience(keyword, (blog_config or {}).get("id", ""))
+                else "research"
+            )
             post_data["content_preview"] = _content_preview(content_html)
 
             # 컨텐츠 유효성 검사 — AdSense thin content 방지 (최소 2500자)

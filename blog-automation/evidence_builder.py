@@ -164,6 +164,15 @@ def format_evidence_for_prompt(pack: dict | None) -> str:
             f"   출처{grade}: {f.get('source_title', '')}{pub} — {f.get('source_url', '')}"
         )
     facts_text = "\n".join(lines)
+    # 인용 예시는 실제 자료팩의 첫 출처로 만듭니다 — 추상적인 예시보다
+    # 이 글에 바로 쓸 수 있는 형태여야 지시가 지켜집니다.
+    _first = usable[0]
+    _org = (_first.get("source_title") or "공식 발표").split(" - ")[0][:24]
+    _when = _first.get("published_at") or ""
+    _when_txt = f"{_when} 기준 " if _when else ""
+    cite_example = f"{_org} 자료를 보면 {_when_txt}○○입니다"
+    bad_example = "○○라고 합니다 (출처 없이 수치만 제시)"
+    min_cite = min(3, len(usable))
     return f"""
 ━━━ 검증된 자료팩 (사실 작성의 유일한 근거) ━━━
 아래는 이 키워드에 대해 실제 자료에서 추출·검증한 사실입니다.
@@ -174,4 +183,17 @@ def format_evidence_for_prompt(pack: dict | None) -> str:
 1. 숫자·날짜·정책 변경 내용은 위 자료팩에 있는 것만 사용하세요
 2. 자료팩에 없는 수치·통계·한도·일정을 임의로 만들어 쓰지 마세요
 3. 자료팩에 없는 내용이 필요하면 "공식 발표를 확인하세요" 등으로 안내
-4. sources 필드에는 위 자료팩의 출처(URL 그대로)를 우선 사용하세요"""
+4. sources 필드에는 위 자료팩의 출처(URL 그대로)를 우선 사용하세요
+
+━━━ 본문 인용 규칙 (신뢰도의 핵심) ━━━
+겪지 않은 주제를 다루는 글은 1인칭 경험 대신 '조사의 구체성'으로 신뢰를
+얻습니다. 출처를 sources 필드에만 넣고 본문에서 밝히지 않으면, 독자에게는
+근거 없는 주장으로 읽힙니다.
+
+5. 위 사실 중 최소 {min_cite}개는 본문에 직접 녹여 쓰세요
+6. 수치를 쓸 때는 어디서 온 값인지 본문에 함께 밝히세요
+   ✓ "{cite_example}"
+   ✗ "{bad_example}"
+7. 자료 간 값이 다르거나 불확실하면 그 사실을 그대로 쓰세요
+   ✓ "자료마다 기준이 달라 A는 ○○, B는 △△로 나옵니다"
+8. 오래된 자료를 인용할 때는 시점을 밝히고 최신 확인을 권하세요"""

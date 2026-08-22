@@ -1128,3 +1128,50 @@ def test_image_repair_skipped_when_policy_is_pass():
                lambda p, h: called.append(1) or (h, [])):
         av.fix_adsense_issues(post, val)
     assert not called
+
+
+# ── 글 성격에 맞춘 AdSense 채점 (2026-08-22: 79점 상한의 원인) ──────────────
+# 생성 프롬프트는 "하지 않은 경험을 쓰지 않는다"를 원칙으로 삼는데 검증
+# 기준은 1인칭 경험을 요구해, 조사형 글은 originality·eeat 두 항목이
+# 구조적으로 warn 고정이었습니다 (12점 만점에 warn 7점 → -10점 확정).
+
+def test_research_mode_does_not_demand_first_person():
+    import adsense_validator as av
+    orig, eeat = av._mode_rules({"experience_mode": "research"})
+    assert "감점 사유가 아닙니다" in orig
+    assert "감점하지 마세요" in eeat
+
+
+def test_experience_mode_still_checks_first_person():
+    import adsense_validator as av
+    orig, eeat = av._mode_rules({"experience_mode": "experience"})
+    assert "경험형" in orig and "1인칭 경험" in eeat
+
+
+def test_unknown_mode_defaults_to_research():
+    """표식이 없는 옛 글까지 경험을 요구하면 같은 감점이 되살아납니다."""
+    import adsense_validator as av
+    orig, _ = av._mode_rules({})
+    assert "조사·분석형" in orig
+
+
+def test_evidence_prompt_requires_inline_citation():
+    from evidence_builder import format_evidence_for_prompt
+    pack = {"facts": [
+        {"claim": "비용은 8만~15만원", "verified": True, "grade": "A",
+         "source_title": "산림조합중앙회 - 안내", "published_at": "2026-07-01",
+         "source_url": "https://x"},
+        {"claim": "예약은 8월 중순까지", "verified": True, "grade": "B",
+         "source_title": "농협 안내", "source_url": "https://y"},
+    ]}
+    out = format_evidence_for_prompt(pack)
+    assert "본문에 직접 녹여 쓰세요" in out
+    assert "산림조합중앙회" in out, "인용 예시는 실제 출처로 만들어야 합니다"
+    assert "최소 2개" in out
+
+
+def test_evidence_prompt_without_pack_has_no_citation_rule():
+    """자료팩이 없으면 인용을 요구할 수 없습니다."""
+    from evidence_builder import format_evidence_for_prompt
+    out = format_evidence_for_prompt({"facts": []})
+    assert "본문 인용 규칙" not in out

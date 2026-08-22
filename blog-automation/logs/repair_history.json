@@ -1,5 +1,58 @@
 [
   {
+    "timestamp": "2026-08-22T03:40:47.064543",
+    "health_score": 82,
+    "issues_found": 2,
+    "issues": [
+      {
+        "id": "python_exception_in_log",
+        "level": "high",
+        "message": "최근 로그에서 Python 예외 4건 감지 — 코드 자동 수리 대상",
+        "context": {
+          "tb_count": 4
+        },
+        "fix": "code_repair_pending"
+      },
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 9개",
+        "context": {
+          "count": 9,
+          "titles": [
+            "인천 차이나타운의 맛집과 볼거리 솔직 평가",
+            "강원도 캠핑에서 처음 알게 된 것들: 놓치기 쉬운 팁들",
+            "미국 연준 금리 결정이 한국 증시에 미치는 영향: 지금"
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "python_exception_in_log",
+        "issue_level": "high",
+        "issue_message": "최근 로그에서 Python 예외 4건 감지 — 코드 자동 수리 대상",
+        "fix_applied": "code_repair_pending",
+        "timestamp": "2026-08-22T03:40:47.018317",
+        "success": null,
+        "detail": "코드 수리는 code_repair.py 워크플로우 스텝에서 처리됩니다."
+      },
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 9개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-08-22T03:40:47.018411",
+        "success": true,
+        "detail": "대기 포스트 9개 → expired 처리",
+        "expired": 9
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-21T17:22:31.741955",
     "health_score": 85,
     "issues_found": 1,
@@ -1819,57 +1872,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-20T23:00:06.597174",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-20T22:40:17.091969",
-    "health_score": 63,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "consecutive_upload_failures",
-        "level": "critical",
-        "message": "최근 4회 연속 업로드 실패 (0건 업로드)",
-        "context": {
-          "fail_count": 4,
-          "recent_dates": [
-            "2026-07-20",
-            "2026-07-20",
-            "2026-07-20",
-            "2026-07-20"
-          ]
-        },
-        "fix": "check_blogger_connection"
-      },
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "consecutive_upload_failures",
-        "issue_level": "critical",
-        "issue_message": "최근 4회 연속 업로드 실패 (0건 업로드)",
-        "fix_applied": "check_blogger_connection",
-        "timestamp": "2026-07-20T22:40:16.543329",
-        "success": true,
-        "detail": "Blogger 연결 정상: HOGU What? (https://www.hoguwhat.com/) — 업로드 파라미터 문제 가능성"
-      },
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-20T22:40:17.073913",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

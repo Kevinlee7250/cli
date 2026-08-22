@@ -1,5 +1,56 @@
 [
   {
+    "timestamp": "2026-08-22T03:40:50.242942",
+    "tracebacks_found": 4,
+    "critical_errors": 8,
+    "critical_samples": [
+      "2026-08-21 22:33:23,702 [ERROR] content_generator — 포스트 생성 오류: Messages.stream() got an unexpected keyword argument 'temperature'",
+      "2026-08-21 22:34:28,159 [ERROR] content_generator — 포스트 생성 오류: Messages.stream() got an unexpected keyword argument 'temperature'",
+      "2026-08-21 22:34:28,160 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '국내 증시 사이드카 발동 의미와 개인투자자 대응법'"
+    ],
+    "repairs": [
+      {
+        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
+        "file": "content_generator.py",
+        "line": "2766",
+        "timestamp": "2026-08-22T03:40:49.597473",
+        "dry_run": false,
+        "result": "error",
+        "detail": "Claude API 오류"
+      },
+      {
+        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
+        "file": "content_generator.py",
+        "line": "2766",
+        "timestamp": "2026-08-22T03:40:50.236096",
+        "dry_run": false,
+        "result": "error",
+        "detail": "Claude API 오류"
+      },
+      {
+        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
+        "file": "content_generator.py",
+        "line": "2766",
+        "timestamp": "2026-08-22T03:40:50.238674",
+        "dry_run": false,
+        "result": "error",
+        "detail": "Claude API 오류"
+      },
+      {
+        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
+        "file": "content_generator.py",
+        "line": "2766",
+        "timestamp": "2026-08-22T03:40:50.240990",
+        "dry_run": false,
+        "result": "error",
+        "detail": "Claude API 오류"
+      }
+    ],
+    "auto_fixed": 0,
+    "manual_required": 0,
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-21T17:22:34.882407",
     "tracebacks_found": 2,
     "critical_errors": 7,
@@ -279,15 +330,6 @@
     "timestamp": "2026-07-27T18:26:44.337048",
     "tracebacks_found": 0,
     "critical_errors": 6,
-    "repairs": [],
-    "auto_fixed": 0,
-    "manual_required": 0,
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-26T18:04:15.770988",
-    "tracebacks_found": 0,
-    "critical_errors": 4,
     "repairs": [],
     "auto_fixed": 0,
     "manual_required": 0,

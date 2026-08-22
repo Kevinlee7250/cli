@@ -1232,3 +1232,60 @@ def test_publish_summary_does_not_pollute_real_logs():
     before = os.path.exists(real)
     main._save_publish_summary(1, 0, 1, 0, [])
     assert os.path.exists(real) == before
+
+
+# ── 403 원인 구분 (2026-08-22: 권한 있는데 "재발급하세요"로 오진) ────────────
+# 스코프 부족과 속성 유형 불일치는 둘 다 403이고 둘 다 "permission"을
+# 포함합니다. 단어로 판별하면 후자를 전자로 오해해 도메인 속성 재시도를
+# 건너뛰고, 멀쩡한 토큰을 재발급 대상으로 몰아갑니다.
+
+from unittest.mock import MagicMock  # noqa: E402
+
+_SCOPE_403 = ('{"error":{"code":403,"message":"Request had insufficient '
+              'authentication scopes.","status":"PERMISSION_DENIED"}}')
+_PROPERTY_403 = ('{"error":{"code":403,"message":"User does not have sufficient '
+                 "permission for site 'https://www.hoguwhat.com/'.\"}}")
+
+
+def test_scope_error_is_detected():
+    import gsc_indexing as gi
+    assert gi._is_scope_error(_SCOPE_403) is True
+
+
+def test_property_mismatch_is_not_a_scope_error():
+    """이걸 스코프 오류로 읽어 sc-domain 재시도를 건너뛰고 있었습니다."""
+    import gsc_indexing as gi
+    assert gi._is_scope_error(_PROPERTY_403) is False
+
+
+def test_domain_property_retry_runs_on_property_403():
+    import gsc_indexing as gi
+    calls = []
+
+    def _put(url, **kw):
+        calls.append(url)
+        first = len(calls) == 1
+        return MagicMock(status_code=403 if first else 200,
+                         text=_PROPERTY_403 if first else "")
+
+    blogs = [{"id": "blog1", "name": "A", "url": "https://www.hoguwhat.com/"}]
+    with patch("requests.put", _put):
+        r = gi.submit_sitemaps(blogs, token="t")
+    assert len(calls) == 2, "URL-프리픽스 403이면 도메인 속성으로 재시도해야 합니다"
+    assert "sc-domain" in calls[1]
+    assert r["submitted"] == 1 and r["scopeDenied"] == 0
+
+
+def test_real_scope_403_is_reported_without_retry():
+    import gsc_indexing as gi
+    calls = []
+
+    def _put(url, **kw):
+        calls.append(url)
+        return MagicMock(status_code=403, text=_SCOPE_403)
+
+    blogs = [{"id": "blog1", "name": "A", "url": "https://www.hoguwhat.com/"}]
+    with patch("requests.put", _put):
+        r = gi.submit_sitemaps(blogs, token="t")
+    assert len(calls) == 1, "진짜 스코프 부족이면 재시도가 무의미합니다"
+    assert r["scopeDenied"] == 1 and r["failed"] == 1

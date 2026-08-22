@@ -79,10 +79,25 @@ def _is_scope_error(text: str) -> bool:
 
     같은 403이라도 원인이 둘입니다: (a) 토큰에 쓰기 권한이 없음,
     (b) 속성 유형이 URL-프리픽스가 아니라 도메인 속성임.
-    (a)를 (b)로 오해하면 엉뚱한 재시도만 반복하게 됩니다.
+
+    두 응답 모두 "permission"이라는 단어를 담고 있어, 그 단어로 판별하면
+    (b)를 (a)로 오해합니다. 실제로 그랬습니다 — blog1은 sc-domain 속성인데
+    URL-프리픽스로 제출해 403을 받았고, 메시지의 "sufficient permission for
+    site"를 스코프 부족으로 읽어 도메인 속성 재시도를 건너뛰었습니다.
+    토큰에는 쓰기 권한(webmasters)이 멀쩡히 있었는데도요 (2026-08-22 확인).
+
+      (a) 스코프: "Request had insufficient authentication scopes."
+                  reason=ACCESS_TOKEN_SCOPE_INSUFFICIENT
+      (b) 속성:   "User does not have sufficient permission for site '...'"
+
+    그래서 스코프에만 나타나는 표현으로 좁힙니다. 애매하면 (b)로 봐서
+    재시도하는 편이 안전합니다 — 재시도는 멱등이고, 오진은 멀쩡한 권한을
+    "재발급하세요"로 몰아갑니다.
     """
     low = (text or "").lower()
-    return "insufficient" in low or "scope" in low or "permission" in low
+    return ("authentication scope" in low
+            or "access_token_scope_insufficient" in low
+            or "insufficientpermissions" in low)
 
 
 def submit_sitemaps(blogs: list[dict], token: str | None = None) -> dict:

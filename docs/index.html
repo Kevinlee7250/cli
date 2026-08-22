@@ -1337,7 +1337,11 @@
             <option value="3">3편</option>
           </select>
         </div>
-        <input id="wf-live-kw" placeholder="키워드 (빈칸=자동)" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:10px;box-sizing:border-box">
+        <input id="wf-live-kw" placeholder="키워드 (빈칸=자동)" oninput="tplSuggest()" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:8px;box-sizing:border-box">
+        <select id="wf-live-tpl" onchange="tplDescribe()" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:6px">
+          <option value="auto">📐 글 구조: 자동 판정</option>
+        </select>
+        <div id="wf-live-tpl-hint" style="font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:10px;min-height:16px"></div>
         <button class="run-btn" style="width:100%;padding:9px" onclick="wfRunLive()">▶ 지금 실행</button>
         <div id="wf-live-status" class="status-panel" style="display:none;margin-top:8px;font-size:12px"></div>
       </div>
@@ -2502,7 +2506,7 @@ function navTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page))
   if (page === 'posts') { postsCurrentPage = 1; filterPosts() }
   if (page === 'analytics') renderAnalytics()
-  if (page === 'run') { checkPATStatus(); loadGHRuns(); kwRenderSuggests(); renderRunTimeline(); populateRunBlogSelect(); kwUpdateCollectedAt(); kwRenderSourceList() }
+  if (page === 'run') { checkPATStatus(); loadGHRuns(); kwRenderSuggests(); renderRunTimeline(); populateRunBlogSelect(); kwUpdateCollectedAt(); kwRenderSourceList(); loadTemplates() }
   if (page === 'social') renderSocial()
   if (page === 'keywords') { renderKeywords(); renderCategoryGap(); renderTrendPreempt() }
   if (page === 'review') {
@@ -6605,12 +6609,93 @@ document.getElementById('affiliate-modal-overlay')?.addEventListener('click', fu
   if (e.target === this) closeAffiliateModal()
 })
 
+
+// ── 글 구조 템플릿 추천 ───────────────────────────────────────────────────────
+// 판정 규칙(신호 단어)은 파이썬 content_generator.TYPE_SIGNALS 하나만 씁니다.
+// 여기서는 template_advisor가 내보낸 templates.json을 받아 문자열 포함 검사만
+// 합니다 — 규칙을 JS에 다시 적으면 한쪽만 고쳐질 때 반드시 어긋납니다.
+let _TPL = null
+
+async function loadTemplates() {
+  if (_TPL) return _TPL
+  try {
+    const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
+    const r = await fetch(`${base}/templates.json?t=${Date.now()}`)
+    if (r.ok) _TPL = await r.json()
+  } catch {}
+  if (!_TPL) return null
+  const sel = document.getElementById('wf-live-tpl')
+  if (sel && sel.options.length <= 1) {
+    const order = _TPL.order || Object.keys(_TPL.templates)
+    const seen = new Set()
+    order.forEach(id => {
+      const t = _TPL.templates[id]
+      if (!t || seen.has(id)) return
+      seen.add(id)
+      const o = document.createElement('option')
+      o.value = id
+      o.textContent = `${t.name} — ${t.summary}`
+      sel.appendChild(o)
+    })
+  }
+  tplSuggest()
+  return _TPL
+}
+
+/** 키워드 신호에 걸리는 첫 유형 — 파이썬 _detect_article_type과 같은 순서 */
+function _tplDetect(kw) {
+  if (!_TPL) return ''
+  const low = (kw || '').toLowerCase()
+  for (const id of (_TPL.order || [])) {
+    const t = _TPL.templates[id]
+    if (t && (t.signals || []).some(w => low.includes(w))) return id
+  }
+  return _TPL.defaultType || ''
+}
+
+function tplSuggest() {
+  const sel = document.getElementById('wf-live-tpl')
+  const hint = document.getElementById('wf-live-tpl-hint')
+  if (!sel || !hint || !_TPL) return
+  const kw = (document.getElementById('wf-live-kw')?.value || '').trim()
+  if (!kw) { hint.textContent = '키워드를 입력하면 어울리는 구조를 추천합니다'; return }
+  const rec = _tplDetect(kw)
+  const t = _TPL.templates[rec]
+  if (!t) { hint.textContent = ''; return }
+  // 추천만 하고 고르는 건 사람이 합니다 — 선택값을 임의로 바꾸지 않습니다
+  if (sel.value === 'auto') {
+    hint.innerHTML = `자동 판정 → <strong>${esc(t.name)}</strong> · ${esc(t.summary)}`
+      + `<br><span style="color:var(--muted)">${esc(t.best_for)}</span>`
+  } else {
+    tplDescribe()
+  }
+}
+
+function tplDescribe() {
+  const sel = document.getElementById('wf-live-tpl')
+  const hint = document.getElementById('wf-live-tpl-hint')
+  if (!sel || !hint || !_TPL) return
+  if (sel.value === 'auto') { tplSuggest(); return }
+  const t = _TPL.templates[sel.value]
+  if (!t) { hint.textContent = ''; return }
+  const kw = (document.getElementById('wf-live-kw')?.value || '').trim()
+  const auto = kw ? _tplDetect(kw) : ''
+  const differs = auto && auto !== sel.value
+    ? `<br><span style="color:var(--yellow)">⚠️ 자동 판정(${esc(_TPL.templates[auto]?.name || auto)})과 다릅니다 — 의도한 선택인지 확인하세요</span>`
+    : ''
+  hint.innerHTML = `<strong>${esc(t.summary)}</strong>`
+    + `<br><span style="color:var(--muted)">언제: ${esc(t.best_for)}</span>`
+    + `<br><span style="color:var(--muted)">피할 때: ${esc(t.avoid_when)}</span>${differs}`
+}
+
 // ── 블로그별 실행 / 필터 ──────────────────────────────────────────────────────
 function wfRunForBlog(blogId) {
   const mode = document.getElementById('wf-live-mode')?.value || 'live'
   const count = document.getElementById('wf-live-count')?.value || '1'
   const kw = document.getElementById('wf-live-kw')?.value || ''
-  _wfDispatch(mode, { posts_per_run: count, keyword: kw, blog_id: blogId }, 'wf-live-status', 'wf-live-dot')
+  const tpl = document.getElementById('wf-live-tpl')?.value || 'auto'
+  _wfDispatch(mode, { posts_per_run: count, keyword: kw, blog_id: blogId,
+                      article_type: tpl }, 'wf-live-status', 'wf-live-dot')
 }
 
 function filterByBlog(blogId) {
@@ -7031,7 +7116,9 @@ function wfRunLive() {
   const mode = document.getElementById('wf-live-mode')?.value || 'live'
   const count = document.getElementById('wf-live-count')?.value || '1'
   const kw = document.getElementById('wf-live-kw')?.value.trim() || ''
-  _wfDispatch(mode, { keyword: kw, posts_per_run: count }, 'wf-live-status', 'wf-live-dot')
+  const tpl = document.getElementById('wf-live-tpl')?.value || 'auto'
+  _wfDispatch(mode, { keyword: kw, posts_per_run: count, article_type: tpl },
+              'wf-live-status', 'wf-live-dot')
 }
 
 function wfSeriesTypeChanged() {

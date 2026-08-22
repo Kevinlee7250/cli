@@ -6,6 +6,7 @@ import logging
 import os
 import re
 import time
+from contextlib import contextmanager
 
 import anthropic
 
@@ -150,47 +151,71 @@ def _ai_generate(system: str, prompt: str, ai_provider: str) -> str:
     )
 
 
-def _detect_article_type(keyword: str) -> str:
-    """키워드 기반 아티클 유형 감지"""
-    kw = keyword.lower()
+#: 키워드 → 아티클 유형 판정 규칙 (순서가 우선순위입니다)
+#: 대시보드도 이 표를 docs/data/templates.json으로 받아 씁니다.
+#: 같은 규칙을 JS에 다시 적어 두면 한쪽만 고쳐질 때 반드시 어긋납니다.
+TYPE_SIGNALS: list[tuple[str, list[str]]] = [
     # K-POP·연예 — 드라마보다 먼저 체크 (아이돌·컴백·시상식 등)
-    if any(w in kw for w in ["아이돌", "컴백", "k-pop", "kpop", "k pop", "음반", "신보", "신곡",
-                              "팬미팅", "콘서트 티켓", "티케팅", "시상식", "mama", "멜론어워드",
-                              "초동", "음원 차트", "걸그룹", "보이그룹", "데뷔",
-                              "월드투어", "내한공연", "팬덤"]):
-        return "kpop_review"
-    # 드라마·영화 리뷰
-    if any(w in kw for w in ["드라마", "영화", "넷플릭스", "티빙", "쿠팡플레이", "ott", "왓챠",
-                              "결말", "등장인물", "인물관계도", "출연진", "몇부작", "시청률",
-                              "다시보기", "ost 추천", "명장면", "영화 리뷰", "영화 후기",
-                              "박스오피스", "개봉"]):
-        return "drama_review"
-    # 여행 가이드
-    if any(w in kw for w in ["여행", "관광", "투어", "코스", "명소", "숙소", "호텔", "맛집",
-                              "공항", "항공권", "항공", "비자", "패키지", "자유여행", "배낭", "현지"]):
-        return "travel_guide"
-    # 투자형 — 종목·시장 분석
-    if any(w in kw for w in ["주가", "투자", "종목", "시장 전망", "매수", "매도", "포트폴리오",
-                              "etf", "펀드", "배당", "코인", "실적"]):
-        return "investment"
-    # 뉴스 해설 — 사건·발표·이슈 해설
-    if any(w in kw for w in ["발표", "개정", "시행", "논란", "이슈", "속보", "확정", "폐지",
-                              "인상", "인하", "변경사항", "달라지는"]):
-        return "news_analysis"
-    # 스포츠 분석·리뷰
-    if any(w in kw for w in ["경기", "축구", "야구", "농구", "테니스", "골프", "k리그", "kbo",
-                              "nba", "epl", "선수", "감독", "시즌", "분석", "전망", "순위",
-                              "스포츠", "마라톤", "트레킹", "등산", "러닝", "수영", "자전거"]):
-        return "sports_review"
-    if any(w in kw for w in ["방법", "하는법", "어떻게", "가이드", "절차", "단계"]):
-        return "how_to"
-    if any(w in kw for w in ["후기", "리뷰", "써봤", "직접", "경험", "솔직히", "추천"]):
-        return "review"
-    if any(w in kw for w in ["비교", "vs", "차이", "장단점", "선택"]):
-        return "comparison"
-    if any(w in kw for w in ["뭐야", "란", "이란", "개념", "정의", "이해", "알아보"]):
-        return "explainer"
-    return "analysis"
+    ("kpop_review", ["아이돌", "컴백", "k-pop", "kpop", "k pop", "음반", "신보", "신곡",
+                     "팬미팅", "콘서트 티켓", "티케팅", "시상식", "mama", "멜론어워드",
+                     "초동", "음원 차트", "걸그룹", "보이그룹", "데뷔",
+                     "월드투어", "내한공연", "팬덤"]),
+    ("drama_review", ["드라마", "영화", "넷플릭스", "티빙", "쿠팡플레이", "ott", "왓챠",
+                      "결말", "등장인물", "인물관계도", "출연진", "몇부작", "시청률",
+                      "다시보기", "ost 추천", "명장면", "영화 리뷰", "영화 후기",
+                      "박스오피스", "개봉"]),
+    ("travel_guide", ["여행", "관광", "투어", "코스", "명소", "숙소", "호텔", "맛집",
+                      "공항", "항공권", "항공", "비자", "패키지", "자유여행", "배낭", "현지"]),
+    ("investment", ["주가", "투자", "종목", "시장 전망", "매수", "매도", "포트폴리오",
+                    "etf", "펀드", "배당", "코인", "실적"]),
+    ("news_analysis", ["발표", "개정", "시행", "논란", "이슈", "속보", "확정", "폐지",
+                       "인상", "인하", "변경사항", "달라지는"]),
+    ("sports_review", ["경기", "축구", "야구", "농구", "테니스", "골프", "k리그", "kbo",
+                       "nba", "epl", "선수", "감독", "시즌", "분석", "전망", "순위",
+                       "스포츠", "마라톤", "트레킹", "등산", "러닝", "수영", "자전거"]),
+    ("how_to", ["방법", "하는법", "어떻게", "가이드", "절차", "단계"]),
+    ("review", ["후기", "리뷰", "써봤", "직접", "경험", "솔직히", "추천"]),
+    ("comparison", ["비교", "vs", "차이", "장단점", "선택"]),
+    ("explainer", ["뭐야", "란", "이란", "개념", "정의", "이해", "알아보"]),
+]
+
+#: 어느 신호에도 걸리지 않을 때
+DEFAULT_ARTICLE_TYPE = "analysis"
+
+
+#: 사람이 템플릿을 직접 고른 경우 그 값이 여기 들어갑니다 (수동 발행 전용).
+#: 판정 호출처가 8곳이라 인자를 전부 뚫는 대신 한 곳에서 존중하게 했습니다.
+#: 반드시 article_type_override() 컨텍스트로만 설정하세요 — 직접 대입하면
+#: 다음 글까지 끌고 갑니다.
+_ARTICLE_TYPE_OVERRIDE: str | None = None
+
+
+@contextmanager
+def article_type_override(article_type: str | None):
+    """이 블록 안에서만 아티클 유형을 고정합니다."""
+    global _ARTICLE_TYPE_OVERRIDE
+    prev = _ARTICLE_TYPE_OVERRIDE
+    if article_type and article_type != "auto":
+        _ARTICLE_TYPE_OVERRIDE = article_type
+        logger.info(f"  📐 템플릿 지정: {article_type}")
+    try:
+        yield
+    finally:
+        _ARTICLE_TYPE_OVERRIDE = prev
+
+
+def _detect_article_type(keyword: str) -> str:
+    """키워드 기반 아티클 유형 감지 (TYPE_SIGNALS 순서대로 첫 일치).
+
+    사람이 고른 값이 있으면 그것을 그대로 씁니다.
+    """
+    if _ARTICLE_TYPE_OVERRIDE:
+        return _ARTICLE_TYPE_OVERRIDE
+    kw = keyword.lower()
+    for article_type, words in TYPE_SIGNALS:
+        if any(w in kw for w in words):
+            return article_type
+    return DEFAULT_ARTICLE_TYPE
 
 
 # 유형별 구조 가이드

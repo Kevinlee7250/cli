@@ -892,6 +892,9 @@ def main() -> None:
     parser.add_argument("--test", action="store_true", help="글 생성만 (업로드 없음)")
     parser.add_argument("--review", action="store_true", help="검토 모드 — 글 생성 후 pending_posts.json에 저장 (업로드 없음)")
     parser.add_argument("--keyword", type=str, help="특정 키워드로 실행 (쉼표로 복수 지정)")
+    parser.add_argument("--article-type", default="auto",
+                        help="글 구조 템플릿 지정 (auto=키워드로 자동 판정). "
+                             "후보는 python template_advisor.py '<키워드>' 로 확인")
     parser.add_argument("--interactive", "-i", action="store_true", help="키워드 직접 입력 후 즉시 실행")
     parser.add_argument("--series", action="store_true", help="시리즈 모드 — 주제를 N편으로 분할 기획·생성·게시 (--keyword 필수)")
     parser.add_argument("--series-count", type=int, default=4, metavar="N", help="시리즈 편수 (2~5, 회차별 리뷰는 1~8, 기본값 4)")
@@ -1093,8 +1096,11 @@ def main() -> None:
         return
 
     if args.once or args.interactive or keywords:
-        summaries = [run_once(keywords=keywords, blog_config=blog_cfg)
-                     for blog_cfg in target_blogs]
+        # 사람이 고른 템플릿은 이 실행 동안만 유지됩니다 (수동 발행 전용)
+        from content_generator import article_type_override
+        with article_type_override(getattr(args, "article_type", "auto")):
+            summaries = [run_once(keywords=keywords, blog_config=blog_cfg)
+                         for blog_cfg in target_blogs]
         _exit_on_publish_failure(summaries)
     else:
         run_scheduled()

@@ -48,6 +48,7 @@ KNOWN_UNDISPLAYED = {
     "schedule_config.json": "사람이 정리하는 스케줄 설정 (schedule_manager 입력)",
     "analytics_summary.json": "dashboard_exporter 입력 — 화면에는 analytics.json으로 나감",
     "schedule_history.json": "스케줄 실행 이력 — 아직 패널 없음",
+    "link_clusters.json": "related_posts가 관련 글 링크를 넣을 때 쓰는 파이프라인 파일",
 }
 
 

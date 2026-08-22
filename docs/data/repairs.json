@@ -1,5 +1,34 @@
 [
   {
+    "timestamp": "2026-08-22T03:57:23.887502",
+    "health_score": 85,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "python_exception_in_log",
+        "level": "high",
+        "message": "최근 로그에서 Python 예외 4건 감지 — 코드 자동 수리 대상",
+        "context": {
+          "tb_count": 4
+        },
+        "fix": "code_repair_pending"
+      }
+    ],
+    "repairs_applied": 0,
+    "repairs": [
+      {
+        "issue_id": "python_exception_in_log",
+        "issue_level": "high",
+        "issue_message": "최근 로그에서 Python 예외 4건 감지 — 코드 자동 수리 대상",
+        "fix_applied": "code_repair_pending",
+        "timestamp": "2026-08-22T03:57:23.863994",
+        "success": null,
+        "detail": "코드 수리는 code_repair.py 워크플로우 스텝에서 처리됩니다."
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-22T03:50:36.507626",
     "health_score": 85,
     "issues_found": 1,
@@ -1798,58 +1827,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-21T06:31:54.678534",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-21T05:28:01.925183",
-    "health_score": 63,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "consecutive_upload_failures",
-        "level": "critical",
-        "message": "최근 5회 연속 업로드 실패 (0건 업로드)",
-        "context": {
-          "fail_count": 5,
-          "recent_dates": [
-            "2026-07-20",
-            "2026-07-20",
-            "2026-07-20",
-            "2026-07-20",
-            "2026-07-20"
-          ]
-        },
-        "fix": "check_blogger_connection"
-      },
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "consecutive_upload_failures",
-        "issue_level": "critical",
-        "issue_message": "최근 5회 연속 업로드 실패 (0건 업로드)",
-        "fix_applied": "check_blogger_connection",
-        "timestamp": "2026-07-21T05:28:01.395002",
-        "success": true,
-        "detail": "Blogger 연결 정상: HOGU What? (https://www.hoguwhat.com/) — 업로드 파라미터 문제 가능성"
-      },
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-21T05:28:01.908431",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

@@ -1175,3 +1175,49 @@ def test_evidence_prompt_without_pack_has_no_citation_rule():
     from evidence_builder import format_evidence_for_prompt
     out = format_evidence_for_prompt({"facts": []})
     assert "본문 인용 규칙" not in out
+
+
+# ── 사이트맵 재제출 결과를 남기기 (2026-08-22) ───────────────────────────────
+# 워크플로가 `|| true`로 이 단계를 감싸 403·404로 실패해도 초록으로 끝납니다.
+# 발행을 막을 이유는 없지만 결과가 어딘가에는 남아야 합니다.
+
+def test_sitemap_status_is_saved(tmp_path, monkeypatch):
+    import gsc_indexing as gi
+    out = tmp_path / "sitemap_status.json"
+    monkeypatch.setattr(gi, "SITEMAP_STATUS_PATH", str(out))
+    gi.save_sitemap_status({"submitted": 3, "failed": 0, "scopeDenied": 0},
+                           [{"name": "A"}, {"id": "blog2"}])
+    d = json.loads(out.read_text(encoding="utf-8"))
+    assert d["ok"] is True and d["submitted"] == 3
+    assert d["blogs"] == ["A", "blog2"] and d["checkedAt"]
+
+
+def test_sitemap_status_marks_failure(tmp_path, monkeypatch):
+    import gsc_indexing as gi
+    out = tmp_path / "s.json"
+    monkeypatch.setattr(gi, "SITEMAP_STATUS_PATH", str(out))
+    gi.save_sitemap_status({"submitted": 1, "failed": 2, "scopeDenied": 2}, [])
+    d = json.loads(out.read_text(encoding="utf-8"))
+    assert d["ok"] is False and d["scopeDenied"] == 2
+
+
+def test_zero_submitted_is_not_ok(tmp_path, monkeypatch):
+    """토큰이 없어 한 건도 못 보낸 것을 정상으로 읽으면 안 됩니다."""
+    import gsc_indexing as gi
+    out = tmp_path / "s.json"
+    monkeypatch.setattr(gi, "SITEMAP_STATUS_PATH", str(out))
+    gi.save_sitemap_status({"submitted": 0, "failed": 0, "scopeDenied": 0}, [])
+    assert json.loads(out.read_text(encoding="utf-8"))["ok"] is False
+
+
+# ── 발행 요약을 워크플로가 읽을 수 있게 (사이트맵 제출 여부 판단용) ──────────
+
+def test_publish_summary_is_written(tmp_path, monkeypatch):
+    import main
+    monkeypatch.setattr(main.os.path, "dirname", lambda _: str(tmp_path))
+    main._save_publish_summary(
+        2, 1, 1, 0,
+        [{"blog": "A", "published": 1, "pending": 1, "failed": 0}])
+    d = json.loads((tmp_path / "logs" / "last_publish_summary.json").read_text(encoding="utf-8"))
+    assert d["published"] == 1 and d["pending"] == 1
+    assert d["blogs"][0]["blog"] == "A"

@@ -258,6 +258,34 @@ def inspect_recent(blogs: list[dict], limit: int = 20, token: str | None = None)
     return report
 
 
+SITEMAP_STATUS_PATH = os.path.join(
+    os.path.dirname(__file__), "..", "docs", "data", "sitemap_status.json")
+
+
+def save_sitemap_status(result: dict, blogs: list[dict]) -> None:
+    """사이트맵 제출 결과를 산출물로 남깁니다.
+
+    워크플로가 `|| true`로 이 단계를 감싸고 있어, 403·404로 실패해도
+    실행은 성공으로 끝납니다. 발행을 막을 이유는 없지만 결과가 어딘가에는
+    남아야 합니다 — 지금은 로그에만 있어 대시보드에도 알림에도 안 나옵니다
+    (2026-08-22 확인. 같은 패턴으로 발행 중단·검증 실패를 며칠씩 놓쳤습니다).
+    """
+    from datetime import datetime, timezone
+    payload = {
+        "checkedAt": datetime.now(timezone.utc).isoformat(),
+        "blogs": [b.get("name") or b.get("id", "") for b in blogs],
+        **result,
+        "ok": result.get("failed", 0) == 0 and result.get("submitted", 0) > 0,
+    }
+    path = os.path.normpath(SITEMAP_STATUS_PATH)
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+    except OSError as e:
+        logger.warning(f"사이트맵 상태 저장 실패 (무시): {e}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="구글 색인 가속")
     parser.add_argument("--submit", action="store_true", help="사이트맵 제출만")
@@ -279,11 +307,23 @@ def main() -> int:
     do_submit = args.submit or args.inspect is None
     do_inspect = args.inspect is not None or not args.submit
 
+    exit_code = 0
     if do_submit:
-        submit_sitemaps(blogs, token)
+        result = submit_sitemaps(blogs, token)
+        save_sitemap_status(result, blogs)
+        if result.get("failed"):
+            # 워크플로가 || true로 감싸므로 발행을 막지는 않습니다.
+            # 다만 종료 코드는 사실대로 돌려줘야 나중에 판단할 수 있습니다.
+            logger.error(
+                f"사이트맵 제출 실패 {result['failed']}건 "
+                f"(성공 {result.get('submitted', 0)}건"
+                + (f", 권한 부족 {result['scopeDenied']}건" if result.get("scopeDenied") else "")
+                + ")"
+            )
+            exit_code = 1
     if do_inspect:
         inspect_recent(blogs, args.inspect or 20, token)
-    return 0
+    return exit_code
 
 
 if __name__ == "__main__":

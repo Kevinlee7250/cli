@@ -1106,6 +1106,32 @@ def main() -> None:
         run_scheduled()
 
 
+def _save_publish_summary(attempted: int, published: int, pending: int,
+                          failed: int, summaries: list[dict]) -> None:
+    """이번 실행의 발행 결과를 워크플로가 읽을 수 있게 남깁니다.
+
+    후속 단계(사이트맵 제출 등)가 "발행이 있었는가"로 갈리는데, 지금까지는
+    종료 코드에만 의존해 암묵적으로 건너뛰어졌습니다. 부수효과에 기대면
+    단계 순서가 바뀔 때 조용히 어긋나므로 값을 명시적으로 남깁니다.
+    """
+    import json as _json
+    from datetime import datetime, timezone
+    path = os.path.join(os.path.dirname(__file__), "logs", "last_publish_summary.json")
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            _json.dump({
+                "ranAt": datetime.now(timezone.utc).isoformat(),
+                "attempted": attempted, "published": published,
+                "pending": pending, "failed": failed,
+                "blogs": [{"blog": s.get("blog"), "published": s.get("published", 0),
+                           "pending": s.get("pending", 0), "failed": s.get("failed", 0)}
+                          for s in summaries],
+            }, f, ensure_ascii=False, indent=2)
+    except OSError as e:
+        logger.warning(f"발행 요약 저장 실패 (무시): {e}")
+
+
 def _exit_on_publish_failure(summaries: list[dict]) -> None:
     """한 편도 못 올렸으면 0이 아닌 코드로 끝냅니다.
 
@@ -1120,6 +1146,7 @@ def _exit_on_publish_failure(summaries: list[dict]) -> None:
     published = sum(s.get("published", 0) for s in summaries)
     pending = sum(s.get("pending", 0) for s in summaries)
     failed = sum(s.get("failed", 0) for s in summaries)
+    _save_publish_summary(attempted, published, pending, failed, summaries)
 
     if attempted == 0:
         logger.info("발행 시도 없음 — 처리할 키워드가 없었습니다")

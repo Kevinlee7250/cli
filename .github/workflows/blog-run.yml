@@ -260,9 +260,22 @@ jobs:
         working-directory: blog-automation
         run: python -c "from config import export_ai_usage_to_docs; export_ai_usage_to_docs()" || true
 
-      - name: 구글 색인 요청 — 사이트맵 제출 (blog1)
+      # 이름과 달리 개별 URL 색인 요청이 아니라 sitemap.xml 재제출입니다.
+      # Indexing API는 JobPosting·BroadcastEvent 전용이고 GSC API에는 색인
+      # 요청 엔드포인트가 없어, 개별 URL 요청은 자동화할 수 없습니다.
+      - name: 사이트맵 재제출 (blog1)
+        if: always()
         working-directory: blog-automation
-        run: python gsc_indexing.py --submit --blog blog1 || true
+        run: |
+          PUB=$(python -c "import json;print(json.load(open('logs/last_publish_summary.json'))['published'])" 2>/dev/null || echo 0)
+          if [ "$PUB" = "0" ]; then
+            echo "발행 0건 — 사이트맵 재제출 건너뜀 (새로 알릴 URL이 없음)"
+            exit 0
+          fi
+          # 제출 실패가 발행을 막을 이유는 없지만 흔적은 남깁니다.
+          # 결과는 docs/data/sitemap_status.json에 기록됩니다.
+          python gsc_indexing.py --submit --blog blog1 \
+            || echo "⚠️ 사이트맵 제출 실패 — docs/data/sitemap_status.json 확인"
 
       - name: 대시보드 데이터 커밋 & 푸시 (blog1)
         if: always()
@@ -276,7 +289,7 @@ jobs:
             docs/data/gsc.json docs/data/blogs.json docs/data/learning.json \
             docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
             docs/data/affiliate_links.json docs/data/ai_usage.json docs/ads.txt \
-            docs/data/templates.json \
+            docs/data/templates.json docs/data/sitemap_status.json \
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
             blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
@@ -458,9 +471,22 @@ jobs:
         working-directory: blog-automation
         run: python -c "from config import export_ai_usage_to_docs; export_ai_usage_to_docs()" || true
 
-      - name: 구글 색인 요청 — 사이트맵 제출 (blog2)
+      # 이름과 달리 개별 URL 색인 요청이 아니라 sitemap.xml 재제출입니다.
+      # Indexing API는 JobPosting·BroadcastEvent 전용이고 GSC API에는 색인
+      # 요청 엔드포인트가 없어, 개별 URL 요청은 자동화할 수 없습니다.
+      - name: 사이트맵 재제출 (blog2)
+        if: always()
         working-directory: blog-automation
-        run: python gsc_indexing.py --submit --blog blog2 || true
+        run: |
+          PUB=$(python -c "import json;print(json.load(open('logs/last_publish_summary.json'))['published'])" 2>/dev/null || echo 0)
+          if [ "$PUB" = "0" ]; then
+            echo "발행 0건 — 사이트맵 재제출 건너뜀 (새로 알릴 URL이 없음)"
+            exit 0
+          fi
+          # 제출 실패가 발행을 막을 이유는 없지만 흔적은 남깁니다.
+          # 결과는 docs/data/sitemap_status.json에 기록됩니다.
+          python gsc_indexing.py --submit --blog blog2 \
+            || echo "⚠️ 사이트맵 제출 실패 — docs/data/sitemap_status.json 확인"
 
       - name: 대시보드 데이터 커밋 & 푸시 (blog2)
         if: always()
@@ -474,7 +500,7 @@ jobs:
             docs/data/gsc.json docs/data/blogs.json docs/data/learning.json \
             docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
             docs/data/affiliate_links.json docs/data/ai_usage.json docs/ads.txt \
-            docs/data/templates.json \
+            docs/data/templates.json docs/data/sitemap_status.json \
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
             blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
@@ -654,9 +680,22 @@ jobs:
         working-directory: blog-automation
         run: python -c "from config import export_ai_usage_to_docs; export_ai_usage_to_docs()" || true
 
-      - name: 구글 색인 요청 — 사이트맵 제출 (blog3)
+      # 이름과 달리 개별 URL 색인 요청이 아니라 sitemap.xml 재제출입니다.
+      # Indexing API는 JobPosting·BroadcastEvent 전용이고 GSC API에는 색인
+      # 요청 엔드포인트가 없어, 개별 URL 요청은 자동화할 수 없습니다.
+      - name: 사이트맵 재제출 (blog3)
+        if: always()
         working-directory: blog-automation
-        run: python gsc_indexing.py --submit --blog blog3 || true
+        run: |
+          PUB=$(python -c "import json;print(json.load(open('logs/last_publish_summary.json'))['published'])" 2>/dev/null || echo 0)
+          if [ "$PUB" = "0" ]; then
+            echo "발행 0건 — 사이트맵 재제출 건너뜀 (새로 알릴 URL이 없음)"
+            exit 0
+          fi
+          # 제출 실패가 발행을 막을 이유는 없지만 흔적은 남깁니다.
+          # 결과는 docs/data/sitemap_status.json에 기록됩니다.
+          python gsc_indexing.py --submit --blog blog3 \
+            || echo "⚠️ 사이트맵 제출 실패 — docs/data/sitemap_status.json 확인"
 
       - name: 대시보드 데이터 커밋 & 푸시 (blog3)
         if: always()
@@ -670,7 +709,7 @@ jobs:
             docs/data/gsc.json docs/data/blogs.json docs/data/learning.json \
             docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
             docs/data/affiliate_links.json docs/data/ai_usage.json docs/ads.txt \
-            docs/data/templates.json \
+            docs/data/templates.json docs/data/sitemap_status.json \
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
             blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \

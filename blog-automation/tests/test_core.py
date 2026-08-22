@@ -982,3 +982,74 @@ def test_error_messages_are_logged(caplog):
               "errors": ["콘텐츠 생성 최종 실패: '사이드카 발동'"]}])
     text = caplog.text
     assert "금융NEWS" in text and "사이드카 발동" in text
+
+
+# ── AdSense 자동 수정 (2026-08-22: 16,000자 넘는 글은 100% 실패했음) ─────────
+# html[:8000]만 보내 놓고 결과를 len(html)*0.5와 비교해, 긴 글은 구조적으로
+# 통과가 불가능했습니다. 통과했다면 뒷부분이 잘린 글이 발행됐을 겁니다.
+
+from unittest.mock import patch  # noqa: E402
+
+
+def _validation(score=79):
+    return {"score": score, "recommendation": "review",
+            "checks": {"originality": {"status": "warn", "note": "1인칭 경험 부족"}}}
+
+
+def _long_post(chars=16228):
+    body = "<p>" + "가" * (chars - 7) + "</p>"
+    return {"title": "제목", "keyword": "키워드", "content": body,
+            "word_count": chars}
+
+
+def test_auto_fix_sends_full_html_not_a_prefix():
+    """잘라 보내면 잘린 만큼만 돌아옵니다."""
+    import adsense_validator as av
+    post = _long_post()
+    seen = {}
+
+    def _fake(client, **kw):
+        seen["prompt"] = kw["messages"][0]["content"]
+        seen["max_tokens"] = kw["max_tokens"]
+        return post["content"]
+
+    with patch("anthropic.Anthropic"), \
+         patch("config.claude_generate", _fake), \
+         patch("config.ANTHROPIC_API_KEY", "k"):
+        av.fix_adsense_issues(post, _validation())
+
+    assert post["content"] in seen["prompt"], "본문 전체가 프롬프트에 실려야 합니다"
+    assert seen["max_tokens"] > 8000, "긴 글에는 출력 예산도 커야 합니다"
+
+
+def test_auto_fix_succeeds_on_a_16k_post():
+    """예전에는 이 길이가 항상 '너무 짧음'으로 폐기됐습니다."""
+    import adsense_validator as av
+    post = _long_post()
+    with patch("anthropic.Anthropic"), \
+         patch("config.claude_generate", lambda c, **kw: post["content"]), \
+         patch("config.ANTHROPIC_API_KEY", "k"):
+        fixed = av.fix_adsense_issues(post, _validation())
+    assert fixed is not None and fixed.get("adsense_auto_fixed") is True
+
+
+def test_auto_fix_skips_instead_of_truncating_huge_posts():
+    """감당 못 할 길이는 자르지 말고 건너뛰어야 합니다 — 잘린 글 발행 방지."""
+    import adsense_validator as av
+    post = _long_post(av._AUTO_FIX_MAX_HTML + 1000)
+    called = []
+    with patch("anthropic.Anthropic"), \
+         patch("config.claude_generate", lambda c, **kw: called.append(1) or ""), \
+         patch("config.ANTHROPIC_API_KEY", "k"):
+        assert av.fix_adsense_issues(post, _validation()) is None
+    assert not called, "건너뛰기로 했으면 AI를 부르지 않아야 합니다"
+
+
+def test_short_result_is_still_rejected():
+    """진짜로 짧게 돌아온 결과는 여전히 버려야 합니다."""
+    import adsense_validator as av
+    post = _long_post()
+    with patch("anthropic.Anthropic"), \
+         patch("config.claude_generate", lambda c, **kw: "<p>짧음</p>"), \
+         patch("config.ANTHROPIC_API_KEY", "k"):
+        assert av.fix_adsense_issues(post, _validation()) is None

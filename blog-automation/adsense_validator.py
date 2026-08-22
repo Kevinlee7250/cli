@@ -333,6 +333,12 @@ JSON만 응답 (설명 없이):
 
 # ─── 자동 수정 ────────────────────────────────────────────────────────────────
 
+#: 이보다 긴 본문은 자동 수정을 시도하지 않습니다 (자르지 않고 건너뜀)
+_AUTO_FIX_MAX_HTML = 40000
+#: 출력 예산 상한 — 본문 길이에 비례해 잡되 여기서 멈춥니다
+_AUTO_FIX_MAX_TOKENS = 32000
+
+
 def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
     """AdSense 검증 결과를 바탕으로 포스트 내용을 자동 수정합니다.
 
@@ -381,6 +387,19 @@ def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
     # 원본 글자 수
     orig_word_count = post_data.get("word_count", len(re.sub(r'<[^>]+>', '', html)))
 
+    # 본문을 잘라 보내면 잘린 만큼만 돌아오고, 그 결과를 원본 전체 길이와
+    # 비교하니 통과할 수가 없습니다. 실제로 html[:8000]을 보내면서 결과를
+    # len(html)*0.5와 견줘, HTML이 16,000자를 넘는 글은 자동 수정이 100%
+    # 실패했습니다 (2026-08-22: 16,228자 글이 "너무 짧음"으로 폐기).
+    # 이제 전문을 보냅니다. 감당 못 할 길이면 자르지 말고 건너뜁니다 —
+    # 조용히 잘라 보내면 뒷부분이 사라진 글이 발행될 수 있습니다.
+    if len(html) > _AUTO_FIX_MAX_HTML:
+        logger.warning(
+            f"본문이 너무 길어 자동 수정을 건너뜁니다 "
+            f"({len(html):,}자 > {_AUTO_FIX_MAX_HTML:,}자) — 원본 유지"
+        )
+        return None
+
     policy_ctx = _get_policy_context()
     policy_note = f"\n\n최신 AdSense 정책:\n{policy_ctx}" if policy_ctx else ""
 
@@ -405,7 +424,7 @@ def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
 현재 점수: {score}/100
 
 ━━━ 현재 본문 HTML ━━━
-{html[:8000]}
+{html}
 
 ━━━ 요청 ━━━
 수정된 본문 HTML 전체를 그대로 출력하세요. 설명이나 주석 없이 HTML만 출력합니다.
@@ -416,15 +435,25 @@ def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
         from config import ANTHROPIC_API_KEY, CLAUDE_MODEL, claude_generate
 
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        # 원본 이상 길이를 요구하면서 출력 예산을 8000으로 묶어 두면 잘립니다.
+        # 한국어 HTML은 대략 1자 ≈ 1토큰이라 본문 길이에 여유를 얹어 잡습니다.
+        # (claude_generate가 max_tokens 잘림을 감지해 이어쓰기까지 합니다)
+        budget = max(8000, min(_AUTO_FIX_MAX_TOKENS, int(len(html) * 1.3)))
         fixed_html = claude_generate(
             client,
             model=CLAUDE_MODEL,
-            max_tokens=8000,
+            max_tokens=budget,
             messages=[{"role": "user", "content": prompt}],
         ).strip()
 
         if not fixed_html or len(fixed_html) < len(html) * 0.5:
-            logger.warning("자동 수정 결과가 너무 짧음 — 원본 유지")
+            # 왜 짧은지 숫자를 남깁니다. 이 로그가 없어서 "너무 짧음"만 반복
+            # 출력되는 동안 원인(입력 절단)을 아무도 알 수 없었습니다.
+            logger.warning(
+                f"자동 수정 결과가 너무 짧음 — 원본 유지 "
+                f"(원본 {len(html):,}자 / 결과 {len(fixed_html):,}자 / "
+                f"요구 {int(len(html) * 0.5):,}자 이상, 출력 예산 {budget:,}토큰)"
+            )
             return None
 
         # 수정된 내용 적용

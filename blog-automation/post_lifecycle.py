@@ -208,7 +208,7 @@ def estimate_model_cost(word_count: int) -> float:
 
     한국어 1자 ≈ 1.5 토큰, 재시도·팩트체크·이미지 검증 오버헤드 ×2 가정.
     """
-    model = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
+    model = os.getenv("CLAUDE_MODEL") or "claude-sonnet-5"
     price = _MODEL_PRICE_OUT.get(model, 15.0)
     est_tokens = word_count * 1.5 * 2
     return round(est_tokens / 1_000_000 * price, 4)

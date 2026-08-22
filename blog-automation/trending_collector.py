@@ -246,7 +246,7 @@ def _generate_ai_keywords(count: int = 10) -> list[dict]:
     try:
         import anthropic
         client = anthropic.Anthropic(api_key=api_key)
-        model = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
+        model = os.getenv("CLAUDE_MODEL") or "claude-sonnet-5"
         now_str = datetime.now().strftime("%Y년 %m월 %d일")
         used = _load_used_keywords()
         used_text = ", ".join(list(used)[:30]) if used else "없음"

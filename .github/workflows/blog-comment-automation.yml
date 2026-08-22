@@ -73,7 +73,7 @@ jobs:
           GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
           BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
           BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
-          CLAUDE_MODEL="${{ secrets.CLAUDE_MODEL }}"
+          CLAUDE_MODEL="${{ secrets.CLAUDE_MODEL || 'claude-sonnet-5' }}"
           ENVEOF
 
       - name: 로그 디렉토리 생성

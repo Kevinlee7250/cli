@@ -10,7 +10,11 @@ _cfg_log = logging.getLogger(__name__)
 
 # Claude API
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
+# 빈 문자열도 미설정으로 취급합니다. GitHub Actions가 `CLAUDE_MODEL="${{ secrets.CLAUDE_MODEL }}"`
+# 형태로 .env를 쓰는데, 시크릿이 없으면 빈 값이 들어가 getenv의 기본값이 무시됩니다.
+# 2026-08-22 댓글 자동화가 이 때문에 400 "model: String should have at least 1 character"로
+# 전부 실패했습니다.
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL") or "claude-sonnet-5"
 
 # OpenAI API
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
@@ -298,7 +302,8 @@ def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
     _log = _logging.getLogger(__name__)
 
     messages = list(kwargs.pop("messages"))
-    model = kwargs.get("model", CLAUDE_MODEL)
+    model = kwargs.get("model") or CLAUDE_MODEL
+    kwargs["model"] = model      # 호출부가 빈 모델을 넘겨도 400이 나지 않게 보정
     _fb_args = (
         kwargs.get("system", ""), messages,
         kwargs.get("max_tokens", 8000), kwargs.get("temperature", 1.0),

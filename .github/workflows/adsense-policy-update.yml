@@ -55,7 +55,7 @@ jobs:
         run: |
           cat > .env << 'ENVEOF'
           ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
-          CLAUDE_MODEL="${{ secrets.CLAUDE_MODEL }}"
+          CLAUDE_MODEL="${{ secrets.CLAUDE_MODEL || 'claude-sonnet-5' }}"
           ENVEOF
 
       - name: 로그 디렉토리 생성

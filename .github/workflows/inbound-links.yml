@@ -1,9 +1,15 @@
 name: 🔗 역방향 내부 링크 (고아 페이지 해소)
 
 on:
-  # 매주 토요일 오전 8시 KST (UTC 금요일 23:00) — 다른 주간 작업과 분산
+  # 매일 오전 8시 KST (UTC 23:00).
+  #
+  # 주 1회 10건이던 것을 매일로 올립니다. 2026-08-24 기준 고아가 172건인데
+  # 주간 배치로는 밀린 물량을 따라잡을 수 없습니다 — 발행 때마다 새 고아가
+  # 하나씩 생기므로 순감소가 주당 몇 건에 그쳤습니다(8/21 165건 → 8/24 172건,
+  # 오히려 늘었습니다). 밀린 것을 다 걷어내면 발행 직후 단계(blog-run)가
+  # 새 고아를 그때그때 처리하므로 이 배치는 보조로 남습니다.
   schedule:
-    - cron: '0 23 * * 5'
+    - cron: '0 23 * * *'
 
   workflow_dispatch:
     inputs:
@@ -15,7 +21,7 @@ on:
       limit:
         description: '이번 실행에서 처리할 고아 글 수'
         required: false
-        default: '10'
+        default: '25'
       blog_id:
         description: '특정 블로그만 (blog1/blog2/blog3, 비우면 전체)'
         required: false
@@ -71,7 +77,9 @@ jobs:
       - name: 역방향 링크 생성
         working-directory: blog-automation
         run: |
-          ARGS="--limit ${{ inputs.limit || '10' }}"
+          # 스케줄 실행에는 inputs가 없어 이 기본값이 실제로 쓰입니다.
+          # 위 입력란의 default는 수동 실행에만 적용되므로 둘을 맞춰 둡니다.
+          ARGS="--limit ${{ inputs.limit || '25' }}"
           if [ -n "${{ inputs.blog_id }}" ]; then
             ARGS="$ARGS --blog ${{ inputs.blog_id }}"
           fi

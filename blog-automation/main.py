@@ -452,8 +452,16 @@ def run_once(
 
             # ── ⑥ 소셜 미디어 콘텐츠 생성 (완전 non-blocking) ──────────────────────
             try:
+                from feature_flags import is_enabled as _flag
                 from social_publisher import publish_all, generate_social_content
-                if SOCIAL_AUTO_PUBLISH:
+                if not _flag("social_content"):
+                    # 스위치가 꺼져 있으면 생성 자체를 하지 않습니다. 지금까지는
+                    # SOCIAL_AUTO_PUBLISH=false여도 콘텐츠는 매번 만들어 두고
+                    # 게시만 건너뛰었습니다 — 한 번도 쓰이지 않는 것을 만드느라
+                    # Claude 호출과 356KB를 계속 썼습니다.
+                    logger.info("  📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀")
+                    social_result = None
+                elif SOCIAL_AUTO_PUBLISH:
                     _img_m = re.search(r'<img[^>]+src="([^"]+)"', post_data.get("content", ""))
                     social_result = publish_all(
                         post_data, blog_url=url,
@@ -467,10 +475,11 @@ def run_once(
                         "instagram": _skip, "threads": _skip, "tiktok": _skip,
                     }
                     logger.info(f"  📱 소셜 콘텐츠 생성 완료")
-                post_data["socialContent"]    = social_result.get("socialContent")
-                post_data["social_instagram"] = social_result.get("instagram")
-                post_data["social_threads"]   = social_result.get("threads")
-                post_data["social_tiktok"]    = social_result.get("tiktok")
+                if social_result:
+                    post_data["socialContent"]    = social_result.get("socialContent")
+                    post_data["social_instagram"] = social_result.get("instagram")
+                    post_data["social_threads"]   = social_result.get("threads")
+                    post_data["social_tiktok"]    = social_result.get("tiktok")
             except Exception as _se:
                 logger.warning(f"  ⚠️ 소셜 콘텐츠 생성 실패 (무시): {_se}")
 

@@ -2706,9 +2706,64 @@ function _tierOpen(tier) {
   return tier.open
 }
 
-//: 스위치 이름 → 사람이 읽는 설명. 파일에 있는데 여기 없으면 이름 그대로 씁니다.
+//: 스위치 이름 → [이름, 설명, 껐을 때 아끼는 것]. 파일에 있는데 여기 없으면
+//: 이름 그대로 씁니다 — 새 스위치가 생겨도 화면에는 바로 나옵니다.
 const FEATURE_LABELS = {
-  comment_automation: ['댓글 자동화', '씨앗 댓글 작성 + 독자 댓글 자동 답변'],
+  comment_automation: ['댓글 자동화', '씨앗 댓글 작성 + 독자 댓글 자동 답변',
+                       '4시간마다 도는 워크플로'],
+  social_content: ['소셜 콘텐츠 생성', '인스타·스레드·틱톡용 문구를 글마다 생성',
+                   '글마다 Claude 호출 1회'],
+}
+
+// 스위치를 저장소에 씁니다. 대시보드는 정적 페이지라 파일을 직접 못 고치므로
+// GitHub API로 커밋합니다 (쿠팡 링크 저장과 같은 방식). 실제 판정은 러너가
+// blog-automation/feature_flags.json을 읽어 하므로, 그쪽이 원본입니다.
+const FEATURE_FLAGS_PATH = 'blog-automation/feature_flags.json'
+
+async function toggleFeature(name, turnOn) {
+  const pat = getPAT()
+  if (!pat) {
+    showToast('GitHub PAT가 없습니다 — 시스템 관리 → API 키 관리에서 설정하세요', 'error')
+    return
+  }
+  const label = (FEATURE_LABELS[name] || [name])[0]
+  const btn = document.getElementById('flag-btn-' + name)
+  if (btn) { btn.disabled = true; btn.textContent = '저장 중...' }
+  const url = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${FEATURE_FLAGS_PATH}`
+  try {
+    // 최신 내용을 받아 그 위에 바꿉니다. 화면의 사본으로 덮어쓰면 그 사이
+    // 다른 곳에서 켠 스위치를 되돌려 버립니다.
+    const getRes = await fetch(url + `?ref=${GH_BRANCH}&t=${Date.now()}`, {
+      headers: { Authorization: `token ${pat}`, Accept: 'application/vnd.github.v3+json' }
+    })
+    if (!getRes.ok) throw new Error(`현재 파일을 읽지 못했습니다 (HTTP ${getRes.status})`)
+    const meta = await getRes.json()
+    const current = JSON.parse(decodeURIComponent(escape(atob((meta.content || '').replace(/\n/g, '')))))
+    current[name] = !!turnOn
+
+    const body = {
+      message: `🎚️ ${label} ${turnOn ? '켜기' : '끄기'} (대시보드)`,
+      content: btoa(unescape(encodeURIComponent(JSON.stringify(current, null, 2) + '\n'))),
+      branch: GH_BRANCH,
+      sha: meta.sha,
+    }
+    const putRes = await fetch(url, {
+      method: 'PUT',
+      headers: { Authorization: `token ${pat}`, Accept: 'application/vnd.github.v3+json',
+                 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    if (!putRes.ok) {
+      const t = await putRes.text()
+      throw new Error(`저장 실패 (HTTP ${putRes.status}) ${t.slice(0, 120)}`)
+    }
+    DATA.featureFlags = current
+    renderFeatureFlags()
+    showToast(`${label}을(를) ${turnOn ? '켰습니다' : '껐습니다'} — 다음 실행부터 적용됩니다`, 'success')
+  } catch (e) {
+    showToast('스위치 저장 실패: ' + e.message, 'error')
+    renderFeatureFlags()
+  }
 }
 
 function renderFeatureFlags() {
@@ -2719,20 +2774,36 @@ function renderFeatureFlags() {
     grid.innerHTML = '<div style="color:var(--muted);font-size:13px">스위치 정보가 없습니다 (모든 기능 기본 켜짐).</div>'
     return
   }
+  const hasPat = !!getPAT()
   grid.innerHTML = Object.entries(flags).map(([name, on]) => {
-    const [label, desc] = FEATURE_LABELS[name] || [name, '']
+    const [label, desc, saves] = FEATURE_LABELS[name] || [name, '', '']
     const [bg, color, border] = on
       ? ['rgba(52,211,153,.13)', 'var(--green)', 'rgba(52,211,153,.3)']
       : ['rgba(248,113,113,.13)', 'var(--red)', 'rgba(248,113,113,.35)']
+    const btnStyle = on
+      ? 'background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35);color:var(--red)'
+      : 'background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);color:var(--green)'
     return `<div style="padding:12px 14px;background:var(--bg2);border:1px solid ${on ? 'var(--border)' : border};border-radius:8px">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
         <span style="font-size:13px;font-weight:700;color:var(--text)">${esc(label)}</span>
         <span style="flex-shrink:0;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;background:${bg};color:${color};border:1px solid ${border}">${on ? '켜짐' : '꺼짐'}</span>
       </div>
       ${desc ? `<div style="font-size:12px;color:var(--muted);margin-top:5px;line-height:1.6">${esc(desc)}</div>` : ''}
-      <div style="font-size:11px;color:var(--muted);margin-top:5px;font-family:ui-monospace,monospace">${esc(name)}</div>
+      ${!on && saves ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">아끼는 중: ${esc(saves)}</div>` : ''}
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:9px">
+        <span style="font-size:11px;color:var(--muted);font-family:ui-monospace,monospace">${esc(name)}</span>
+        <button id="flag-btn-${esc(name)}" ${hasPat ? '' : 'disabled'}
+          title="${hasPat ? '저장소의 feature_flags.json을 고칩니다 — 다음 실행부터 적용' : 'GitHub PAT가 필요합니다 (API 키 관리)'}"
+          onclick="toggleFeature(${jsonq(name)}, ${on ? 'false' : 'true'})"
+          style="flex-shrink:0;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:${hasPat ? 'pointer' : 'not-allowed'};opacity:${hasPat ? 1 : .45};${btnStyle}">${on ? '끄기' : '켜기'}</button>
+      </div>
     </div>`
   }).join('')
+  const note = document.getElementById('feature-flags-note')
+  if (note && !hasPat) {
+    note.innerHTML = '꺼진 기능은 워크플로가 통째로 건너뜁니다. ' +
+      '<span style="color:var(--yellow)">여기서 바꾸려면 GitHub PAT가 필요합니다 — 시스템 관리 → API 키 관리</span>'
+  }
 }
 
 // 전체 목록 — 어떤 파일이 언제 것인지 한 화면에서 봅니다.

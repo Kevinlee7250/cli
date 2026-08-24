@@ -277,6 +277,25 @@ jobs:
           python gsc_indexing.py --submit --blog blog1 \
             || echo "⚠️ 사이트맵 제출 실패 — docs/data/sitemap_status.json 확인"
 
+      # 방금 올린 글은 아무도 가리키지 않는 고아 상태로 태어납니다. 내부 링크는
+      # 글을 쓸 때 "새 글 → 기존 글" 한 방향으로만 걸리기 때문입니다. 발행 직후
+      # 역방향 링크를 만들어 두지 않으면 고아가 발행 속도만큼 계속 쌓입니다
+      # (2026-08-24 측정: 435건 중 172건 고아, 주간 배치는 10건/주라 역부족).
+      - name: 역방향 내부 링크 (blog1)
+        if: always()
+        working-directory: blog-automation
+        run: |
+          PUB=$(python -c "import json;print(json.load(open('logs/last_publish_summary.json'))['published'])" 2>/dev/null || echo 0)
+          if [ "$PUB" = "0" ]; then
+            echo "발행 0건 — 역방향 링크 건너뜀"
+            exit 0
+          fi
+          # 고아 목록을 다시 만든 뒤(방금 올린 글이 여기 들어옵니다) 링크를 겁니다.
+          # 발행을 막을 이유는 없으므로 실패해도 경고만 남깁니다.
+          python internal_link_audit.py --blog blog1 || echo "⚠️ 내부 링크 진단 실패"
+          python inbound_linker.py --blog blog1 --limit 5 --apply \
+            || echo "⚠️ 역방향 링크 생성 실패 — docs/data/inbound_links.json 확인"
+
       - name: 대시보드 데이터 커밋 & 푸시 (blog1)
         if: always()
         run: |
@@ -287,6 +306,7 @@ jobs:
             docs/data/analytics.json \
             docs/data/meta.json docs/data/pending_posts.json docs/data/pending_bodies.json docs/data/pending_archive.json docs/data/series.json \
             docs/data/gsc.json docs/data/blogs.json docs/data/learning.json \
+            docs/data/internal_links.json docs/data/inbound_links.json \
             docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
             docs/data/affiliate_links.json docs/data/ai_usage.json docs/ads.txt \
             docs/data/templates.json docs/data/sitemap_status.json \
@@ -488,6 +508,25 @@ jobs:
           python gsc_indexing.py --submit --blog blog2 \
             || echo "⚠️ 사이트맵 제출 실패 — docs/data/sitemap_status.json 확인"
 
+      # 방금 올린 글은 아무도 가리키지 않는 고아 상태로 태어납니다. 내부 링크는
+      # 글을 쓸 때 "새 글 → 기존 글" 한 방향으로만 걸리기 때문입니다. 발행 직후
+      # 역방향 링크를 만들어 두지 않으면 고아가 발행 속도만큼 계속 쌓입니다
+      # (2026-08-24 측정: 435건 중 172건 고아, 주간 배치는 10건/주라 역부족).
+      - name: 역방향 내부 링크 (blog2)
+        if: always()
+        working-directory: blog-automation
+        run: |
+          PUB=$(python -c "import json;print(json.load(open('logs/last_publish_summary.json'))['published'])" 2>/dev/null || echo 0)
+          if [ "$PUB" = "0" ]; then
+            echo "발행 0건 — 역방향 링크 건너뜀"
+            exit 0
+          fi
+          # 고아 목록을 다시 만든 뒤(방금 올린 글이 여기 들어옵니다) 링크를 겁니다.
+          # 발행을 막을 이유는 없으므로 실패해도 경고만 남깁니다.
+          python internal_link_audit.py --blog blog2 || echo "⚠️ 내부 링크 진단 실패"
+          python inbound_linker.py --blog blog2 --limit 5 --apply \
+            || echo "⚠️ 역방향 링크 생성 실패 — docs/data/inbound_links.json 확인"
+
       - name: 대시보드 데이터 커밋 & 푸시 (blog2)
         if: always()
         run: |
@@ -498,6 +537,7 @@ jobs:
             docs/data/analytics.json \
             docs/data/meta.json docs/data/pending_posts.json docs/data/pending_bodies.json docs/data/pending_archive.json docs/data/series.json \
             docs/data/gsc.json docs/data/blogs.json docs/data/learning.json \
+            docs/data/internal_links.json docs/data/inbound_links.json \
             docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
             docs/data/affiliate_links.json docs/data/ai_usage.json docs/ads.txt \
             docs/data/templates.json docs/data/sitemap_status.json \
@@ -697,6 +737,25 @@ jobs:
           python gsc_indexing.py --submit --blog blog3 \
             || echo "⚠️ 사이트맵 제출 실패 — docs/data/sitemap_status.json 확인"
 
+      # 방금 올린 글은 아무도 가리키지 않는 고아 상태로 태어납니다. 내부 링크는
+      # 글을 쓸 때 "새 글 → 기존 글" 한 방향으로만 걸리기 때문입니다. 발행 직후
+      # 역방향 링크를 만들어 두지 않으면 고아가 발행 속도만큼 계속 쌓입니다
+      # (2026-08-24 측정: 435건 중 172건 고아, 주간 배치는 10건/주라 역부족).
+      - name: 역방향 내부 링크 (blog3)
+        if: always()
+        working-directory: blog-automation
+        run: |
+          PUB=$(python -c "import json;print(json.load(open('logs/last_publish_summary.json'))['published'])" 2>/dev/null || echo 0)
+          if [ "$PUB" = "0" ]; then
+            echo "발행 0건 — 역방향 링크 건너뜀"
+            exit 0
+          fi
+          # 고아 목록을 다시 만든 뒤(방금 올린 글이 여기 들어옵니다) 링크를 겁니다.
+          # 발행을 막을 이유는 없으므로 실패해도 경고만 남깁니다.
+          python internal_link_audit.py --blog blog3 || echo "⚠️ 내부 링크 진단 실패"
+          python inbound_linker.py --blog blog3 --limit 5 --apply \
+            || echo "⚠️ 역방향 링크 생성 실패 — docs/data/inbound_links.json 확인"
+
       - name: 대시보드 데이터 커밋 & 푸시 (blog3)
         if: always()
         run: |
@@ -707,6 +766,7 @@ jobs:
             docs/data/analytics.json \
             docs/data/meta.json docs/data/pending_posts.json docs/data/pending_bodies.json docs/data/pending_archive.json docs/data/series.json \
             docs/data/gsc.json docs/data/blogs.json docs/data/learning.json \
+            docs/data/internal_links.json docs/data/inbound_links.json \
             docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
             docs/data/affiliate_links.json docs/data/ai_usage.json docs/ads.txt \
             docs/data/templates.json docs/data/sitemap_status.json \

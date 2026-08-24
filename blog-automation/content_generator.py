@@ -353,6 +353,12 @@ def _match_experience(keyword: str, blog_id: str = "") -> dict | None:
     for exp in profile.get("experiences", []) or []:
         if not isinstance(exp, dict):
             continue
+        # 자료 없는 항목은 매칭하지 않습니다. summary가 비어 있으면 프롬프트가
+        # "아래는 글쓴이의 실제 경험 자료입니다" 라고 선언해 놓고 그 아래에
+        # 아무것도 못 넣은 채 1인칭을 허용하게 됩니다 — 근거 없이 허가만
+        # 내주는 셈이라 가짜 체험담을 막으려던 장치가 거꾸로 뚫립니다.
+        if not str(exp.get("summary", "")).strip():
+            continue
         blogs = exp.get("blogs") or []
         if blog_id and blogs and blog_id not in blogs:
             continue

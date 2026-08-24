@@ -2462,6 +2462,7 @@ const SOURCE_META = {
   'trend_preempt.json':      ['트렌드 선점 후보', 24],
   'image_audit.json':        ['이미지 검증', 168],
   'adsense_audit.json':      ['AdSense 감사', 168],
+  'required_pages.json':     ['필수 페이지 확인', 168],
   'internal_links.json':     ['내부 링크', 168],
   'lifecycle.json':          ['생애주기', 24],
   'series.json':             ['시리즈 예약', 168],
@@ -2771,7 +2772,7 @@ async function loadAll(silent = false) {
   purgeLegacyOAuthStorage()  // 보안: 과거 저장된 장기 토큰 제거
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, featureFlags, adsenseRevenue] = await Promise.all([
+  const [posts, runs, analytics, meta, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, requiredPages, pendingReport, alerts, featureFlags, adsenseRevenue] = await Promise.all([
     fetchData(base, 'posts.json', []),
     fetchData(base, 'runs.json', []),
     fetchData(base, 'analytics.json', ({})),
@@ -2793,12 +2794,13 @@ async function loadAll(silent = false) {
     fetchData(base, 'weekly_brief.json', null),
     fetchData(base, 'trend_preempt.json', null),
     fetchData(base, 'adsense_audit.json', null),
+    fetchData(base, 'required_pages.json', null),
     fetchData(base, 'pending_report.json', null),
     fetchData(base, 'alerts.json', null),
     fetchData(base, 'feature_flags.json', null),
     fetchData(base, 'adsense_revenue.json', null),
   ])
-  DATA = { posts, runs, analytics, meta, social: DATA.social || [], pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, pendingReport, alerts, featureFlags, adsenseRevenue }
+  DATA = { posts, runs, analytics, meta, social: DATA.social || [], pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, requiredPages, pendingReport, alerts, featureFlags, adsenseRevenue }
 
   // 아카이브 포스트 백그라운드 병합 (posts.json은 최근 300개만 유지 — 초기 로딩 속도 확보)
   fetch(base + '/posts_archive.json' + ts).then(r => r.ok ? r.json() : []).then(archive => {
@@ -9296,12 +9298,38 @@ function renderPendingReport() {
     </div>`
 }
 
+// 심사 필수 페이지 상태를 감사 패널 위에 한 줄로 얹습니다. 없으면 심사에서
+// 바로 걸리는 항목인데 지금까지 화면 어디에도 나오지 않았습니다.
+function _requiredPagesLine() {
+  const d = DATA.requiredPages
+  if (!d) return ''
+  const box = (bg, color, border, text) =>
+    `<div style="margin-bottom:12px;padding:10px 14px;background:${bg};border:1px solid ${border};border-radius:8px;color:${color};font-size:13px;line-height:1.7">${text}</div>`
+  if (d.unknown && !d.blogsChecked) {
+    return box('var(--bg3)', 'var(--muted)', 'var(--border)',
+      `❓ 필수 페이지 확인 불가 — 블로그 ${d.unknown}개의 자격증명을 확인하세요`)
+  }
+  if (d.blogsWithMissing) {
+    const missing = (d.blogs || []).filter(b => (b.missing || []).length)
+      .map(b => `${esc(b.blog)}: ${b.missing.map(esc).join('·')}`).join(' / ')
+    return box('rgba(248,113,113,.12)', 'var(--red)', 'rgba(248,113,113,.35)',
+      `❌ AdSense 심사 필수 페이지 누락 — ${esc(missing)}` +
+      `<br><span style="font-size:12px;color:var(--muted)">만들려면 <code>python main.py --setup --blog &lt;blogId&gt;</code> (발행 중인 블로그를 수정하므로 확인 후 실행)</span>`)
+  }
+  if (d.ok) {
+    return box('rgba(52,211,153,.12)', 'var(--green)', 'rgba(52,211,153,.3)',
+      `✅ 필수 페이지(개인정보처리방침·소개·문의) 블로그 ${d.blogsChecked}개 모두 확인`)
+  }
+  return ''
+}
+
 function renderAdsenseAudit() {
   const wrap = document.getElementById('adsense-audit-wrap')
   if (!wrap) return
+  const pagesLine = _requiredPagesLine()
   const d = DATA.adsenseAudit
   if (!d || !Array.isArray(d.results) || !d.results.length) {
-    wrap.innerHTML = `<div style="color:var(--muted);font-size:13px;padding:24px;text-align:center;border:1px dashed var(--border);border-radius:12px">감사 기록 없음 — "감사+자동보완" 또는 "검사만"을 실행해 주세요</div>`
+    wrap.innerHTML = pagesLine + `<div style="color:var(--muted);font-size:13px;padding:24px;text-align:center;border:1px dashed var(--border);border-radius:12px">감사 기록 없음 — "감사+자동보완" 또는 "검사만"을 실행해 주세요</div>`
     return
   }
   const auditedAt = d.auditedAt ? new Date(d.auditedAt).toLocaleString('ko-KR') : '알 수 없음'
@@ -9326,7 +9354,7 @@ function renderAdsenseAudit() {
     </div>`).join('')
   const moreNote = flagged.length > 30 ? `<div style="font-size:11px;color:var(--muted);margin-top:6px">외 ${flagged.length - 30}건 더 — 전체는 docs/data/adsense_audit.json 참고</div>` : ''
 
-  wrap.innerHTML = `
+  wrap.innerHTML = pagesLine + `
     <div style="font-size:11px;color:var(--muted);margin-bottom:10px">마지막 감사: ${auditedAt}${d.dryRun ? ' (검사만, 자동보완 없음)' : ''}</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">${summaryCards}</div>
     ${rows || '<div style="font-size:12px;color:var(--muted)">확인이 필요한 글이 없습니다 🎉</div>'}

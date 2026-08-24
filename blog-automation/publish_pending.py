@@ -31,24 +31,20 @@ PENDING_FILE = os.path.join(os.path.dirname(__file__), "..", "docs", "data", "pe
 
 
 def load_pending() -> list[dict]:
-    if not os.path.exists(PENDING_FILE):
-        logger.error(f"pending_posts.json 없음: {PENDING_FILE}")
-        return []
-    try:
-        with open(PENDING_FILE, encoding="utf-8") as f:
-            return json.load(f)
-    except (json.JSONDecodeError, OSError) as e:
-        logger.error(f"pending_posts.json 로드 실패: {e}")
-        return []
+    """검토 대기 목록 (본문 포함). 저장소가 목록·본문을 합쳐서 돌려줍니다."""
+    import pending_store
+    pending = pending_store.load()
+    if not pending:
+        logger.error(f"검토 대기 목록이 비어 있습니다: {pending_store.INDEX_FILE}")
+    return pending
 
 
 def save_pending(pending: list[dict]) -> None:
+    import pending_store
     try:
-        os.makedirs(os.path.dirname(PENDING_FILE), exist_ok=True)
-        with open(PENDING_FILE, "w", encoding="utf-8") as f:
-            json.dump(pending, f, ensure_ascii=False, indent=2)
+        pending_store.save(pending)
     except OSError as e:
-        logger.error(f"pending_posts.json 저장 실패: {e}")
+        logger.error(f"검토 대기 저장 실패: {e}")
 
 
 def upload_with_log_capture(post_data: dict) -> tuple[dict | None, str]:
@@ -128,6 +124,12 @@ def main() -> None:
             "meta_description": post.get("metaDescription", ""),
             "sources": post.get("sources", []),
         })
+
+        if result == "DUPLICATE":
+            post["status"] = "skipped"
+            post["failReason"] = "중복 제목 — 유사 제목이 이미 발행되어 건너뜀"
+            logger.warning(f"  ⏭ 중복 주제 — 건너뜀: {title[:50]}")
+            continue
 
         if result and not result.get("_error"):
             post["status"] = "published"

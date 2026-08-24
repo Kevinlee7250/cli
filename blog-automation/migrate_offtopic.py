@@ -59,10 +59,28 @@ _ARCHIVE_KW = {  # 기타 구주제 — 보관
 }
 
 
-def classify(title: str, labels: list[str]) -> str:
-    """keep / migrate_blog3 / archive / review 분류."""
+# blog2(HOGU 여행,스포츠,연예) 유지 주제 — blog1 주제 + 스포츠
+_KEEP_KW_BLOG2 = _KEEP_KW | {
+    "스포츠", "축구", "야구", "농구", "배구", "골프", "테니스", "마라톤",
+    "경기", "선수", "리그", "구단", "감독", "올림픽", "월드컵", "대회",
+    "kbo", "k리그", "epl", "mlb", "nba", "직관", "중계", "이적", "우승",
+}
+
+_KEEP_KW_BY_BLOG = {
+    "blog1": _KEEP_KW,
+    "blog2": _KEEP_KW_BLOG2,
+}
+
+
+def classify(title: str, labels: list[str], blog_id: str = "blog1") -> str:
+    """keep / migrate_blog3 / archive / review 분류.
+
+    blog_id에 따라 '유지' 기준이 달라진다 — blog2는 스포츠도 현재 주제이므로
+    blog1 기준으로 판단하면 정상 글이 보관 대상으로 잘못 분류된다.
+    """
     hay = (title + " " + " ".join(labels or [])).lower()
-    keep    = sum(1 for w in _KEEP_KW if w in hay)
+    keep_kw = _KEEP_KW_BY_BLOG.get(blog_id, _KEEP_KW)
+    keep    = sum(1 for w in keep_kw if w in hay)
     finance = sum(1 for w in _FINANCE_KW if w in hay)
     archive = sum(1 for w in _ARCHIVE_KW if w in hay)
 
@@ -107,14 +125,14 @@ def _create_on_blog3(api: str, blog3_id: str, post: dict, token: str) -> str:
     return ""
 
 
-def _sync_registry(title: str, action: str, new_url: str = "") -> None:
+def _sync_registry(title: str, action: str, new_url: str = "", src_blog_id: str = "blog1") -> None:
     """post_registry를 최선껏 동기화 (실패해도 무시)."""
     try:
         from post_manager import load_registry, save_registry, export_for_dashboard
         registry = load_registry()
         changed = False
         for p in registry:
-            if p.get("title") == title and p.get("blogId") == "blog1":
+            if p.get("title") == title and p.get("blogId") == src_blog_id:
                 if action == "migrate":
                     p["blogId"], p["blogName"] = "blog3", "금융NEWS"
                     if new_url:
@@ -122,7 +140,7 @@ def _sync_registry(title: str, action: str, new_url: str = "") -> None:
                     p["migratedAt"] = datetime.now().isoformat()
                 elif action == "archive":
                     p["status"] = "skipped"
-                    p["errorMessage"] = "blog1 주제 개편 — 보관"
+                    p["errorMessage"] = f"{src_blog_id} 주제 개편 — 보관"
                 changed = True
         if changed:
             save_registry(registry)
@@ -132,17 +150,20 @@ def _sync_registry(title: str, action: str, new_url: str = "") -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="blog1 구주제 글 이전·보관")
+    parser = argparse.ArgumentParser(description="구주제 글 이전·보관 (blog1/blog2)")
     parser.add_argument("--dry-run", action="store_true", help="분류만 하고 변경 없음")
+    parser.add_argument("--blog", default="blog1", choices=["blog1", "blog2"],
+                        help="대상 블로그 (기본: blog1)")
     args = parser.parse_args()
 
     from config import get_blog_configs
     from blogger_uploader import _get_access_token
 
+    src_id = args.blog
     blogs = {b.get("id"): b for b in get_blog_configs()}
-    b1, b3 = blogs.get("blog1"), blogs.get("blog3")
+    b1, b3 = blogs.get(src_id), blogs.get("blog3")
     if not b1 or not b3:
-        logger.error("BLOGS_CONFIG에 blog1/blog3이 필요합니다")
+        logger.error(f"BLOGS_CONFIG에 {src_id}/blog3이 필요합니다")
         return 1
 
     token1 = _get_access_token(b1)
@@ -152,6 +173,7 @@ def main() -> int:
         return 1
 
     b1_id, b3_id = b1["blog_id"], b3["blog_id"]
+    logger.info(f"══ [{b1.get('name', src_id)}] 구주제 글 정리 시작 ══")
 
     counts = {"keep": 0, "migrate_blog3": 0, "archive": 0, "review": 0, "failed": 0}
     actions = []
@@ -165,13 +187,13 @@ def main() -> int:
         r = requests.get(f"{BLOGGER_API_BASE}/blogs/{b1_id}/posts",
                          headers={"Authorization": f"Bearer {token1}"}, params=params, timeout=30)
         if r.status_code != 200:
-            logger.error(f"blog1 글 목록 조회 실패 [{r.status_code}]: {r.text[:200]}")
+            logger.error(f"{src_id} 글 목록 조회 실패 [{r.status_code}]: {r.text[:200]}")
             return 1
         data = r.json()
 
         for post in data.get("items", []):
             title = post.get("title", "")
-            cat = classify(title, post.get("labels", []))
+            cat = classify(title, post.get("labels", []), src_id)
             counts[cat] = counts.get(cat, 0) + 1
             entry = {"title": title, "url": post.get("url", ""), "action": cat}
 
@@ -190,7 +212,7 @@ def main() -> int:
                 if new_url and _revert_to_draft(BLOGGER_API_BASE, b1_id, post["id"], token1):
                     logger.info(f"    ✅ 이전 완료: {new_url}")
                     entry["newUrl"] = new_url
-                    _sync_registry(title, "migrate", new_url)
+                    _sync_registry(title, "migrate", new_url, src_blog_id=src_id)
                 else:
                     counts["failed"] += 1
                     entry["action"] = "failed"
@@ -199,7 +221,7 @@ def main() -> int:
             elif cat == "archive":
                 if _revert_to_draft(BLOGGER_API_BASE, b1_id, post["id"], token1):
                     logger.info("    ✅ 보관 완료 (draft 전환 — Blogger 관리자에서 복원 가능)")
-                    _sync_registry(title, "archive")
+                    _sync_registry(title, "archive", src_blog_id=src_id)
                 else:
                     counts["failed"] += 1
                     entry["action"] = "failed"
@@ -213,6 +235,8 @@ def main() -> int:
 
     report = {
         "migratedAt": datetime.now().isoformat(),
+        "blogId": src_id,
+        "blogName": b1.get("name", src_id),
         "dryRun": args.dry_run,
         "counts": counts,
         "actions": actions,

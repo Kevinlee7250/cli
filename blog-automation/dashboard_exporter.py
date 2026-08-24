@@ -14,7 +14,18 @@ logger = logging.getLogger(__name__)
 
 HISTORY_FILE = os.path.join(os.path.dirname(__file__), "logs", "run_history.json")
 DOCS_DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "docs", "data")
+# 검토 대기 글의 파일 경로·분리 규칙은 pending_store가 갖습니다.
 PENDING_FILE = os.path.join(os.path.dirname(__file__), "..", "docs", "data", "pending_posts.json")
+
+
+#: 대시보드가 받아 가는 파일은 들여쓰기를 넣지 않습니다. 기계가 만들고 기계가
+#: 읽는 데이터인데 들여쓰기가 파일의 60%를 차지했습니다 (post_registry 512KB
+#: 중 실제 내용은 196KB). 브라우저가 그만큼 더 받아야 하고, git diff도 어차피
+#: 300건이 통째로 바뀌어 읽을 수 없기는 마찬가지입니다.
+def write_data(path: str, data) -> None:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
 
 
 def _load_history() -> list[dict]:
@@ -138,6 +149,7 @@ def log_run(
                 "articleType": r.get("article_type", ""),
                 "riskLevel": r.get("risk_level", ""),
                 "contentCategory": r.get("content_category", ""),
+                "searchIntent": r.get("search_intent", ""),
                 "blogId": cfg.get("id", "blog1"),
                 "blogName": cfg.get("name", ""),
                 # 소셜 미디어 콘텐츠 (social_publisher.generate_social_content() 반환값)
@@ -152,9 +164,47 @@ def log_run(
         ],
     }
     history.insert(0, entry)
-    history = history[:100]
+    history = _trim_history(history)
     _save_history(history)
     logger.info(f"실행 이력 저장 완료 (총 {len(history)}개)")
+
+
+#: 이력 보존 기간(일). 100건 고정이던 시절에는 하루 9건씩 쌓여 12일치밖에
+#: 남지 않았고, 월 단위 추세를 볼 수 없었습니다.
+HISTORY_KEEP_DAYS = 90
+#: 오래된 기록에서 통째로 버릴 필드. 개별 글 정보는 시간이 지나면 안 보고,
+#: 파일 크기의 대부분을 차지합니다. 실행 건수·업로드 수 같은 집계는 남습니다.
+HISTORY_DETAIL_KEEP_DAYS = 30
+#: 대시보드로 내보낼 실행 이력 건수. 보존은 90일로 늘리되 브라우저가 받는
+#: 양은 묶어 둡니다 — 화면의 타임라인·차트는 최근 것만 씁니다. 더 긴 분석은
+#: logs/run_history.json을 직접 읽는 weekly_learning이 담당합니다.
+RUNS_EXPORT_LIMIT = 120
+
+
+def _trim_history(history: list[dict], now: datetime | None = None) -> list[dict]:
+    """90일치를 남기되, 30일이 지난 기록은 요약만 남깁니다.
+
+    건수로 자르면 발행량이 늘 때 보존 기간이 저절로 짧아집니다. 기간으로
+    자르고, 오래된 것은 posts 배열을 버려 파일이 커지지 않게 합니다.
+    """
+    now = now or datetime.now()
+    kept: list[dict] = []
+    for entry in history:
+        raw = entry.get("runAt") or ""
+        try:
+            age = (now - datetime.fromisoformat(raw)).days
+        except (TypeError, ValueError):
+            # 시각을 못 읽으면 버리지 않습니다. 판단이 안 될 때는 남기는 쪽이
+            # 안전합니다 — 지운 기록은 되돌릴 수 없습니다.
+            kept.append(entry)
+            continue
+        if age > HISTORY_KEEP_DAYS:
+            continue
+        if age > HISTORY_DETAIL_KEEP_DAYS and entry.get("posts"):
+            entry = {k: v for k, v in entry.items() if k != "posts"}
+            entry["postsTrimmed"] = True
+        kept.append(entry)
+    return kept
 
 
 def _load_analytics_summary() -> dict:
@@ -177,12 +227,10 @@ def _export_repairs(docs_dir: str) -> None:
         if os.path.exists(src):
             with open(src, encoding="utf-8") as f:
                 data = json.load(f)
-            with open(dst, "w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
+            write_data(dst, data)
             logger.info(f"  수리 이력: {len(data)}건 내보내기 완료")
         else:
-            with open(dst, "w", encoding="utf-8") as f:
-                json.dump([], f)
+            write_data(dst, [])
     except Exception as exc:
         logger.debug(f"수리 데이터 내보내기 생략: {exc}")
 
@@ -195,12 +243,10 @@ def _export_learning(docs_dir: str) -> None:
         if os.path.exists(src):
             with open(src, encoding="utf-8") as f:
                 data = json.load(f)
-            with open(dst, "w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
+            write_data(dst, data)
             logger.info(f"  학습 이력: {len(data)}주 내보내기 완료")
         else:
-            with open(dst, "w", encoding="utf-8") as f:
-                json.dump([], f)
+            write_data(dst, [])
     except Exception as exc:
         logger.debug(f"학습 데이터 내보내기 생략: {exc}")
 
@@ -351,11 +397,24 @@ def _export_social(docs_dir: str) -> None:
         entries.sort(key=lambda e: e.get("date", ""), reverse=True)
         entries = entries[:50]
 
-        with open(dst, "w", encoding="utf-8") as f:
-            json.dump(entries, f, ensure_ascii=False, indent=2)
+        write_data(dst, entries)
         logger.info(f"  SNS 데이터: {len(entries)}개 내보내기 완료")
     except Exception as exc:
         logger.debug(f"SNS 데이터 내보내기 생략: {exc}")
+
+
+def _export_feature_flags(docs_dir: str) -> None:
+    """기능 on/off 상태를 대시보드로 내보냅니다.
+
+    feature_flags.json은 blog-automation 아래에 있어 GitHub Pages가 서빙하지
+    않습니다. 꺼진 기능을 화면에서 알 수 없으면 "왜 댓글이 안 달리지" 하고
+    처음부터 다시 파게 됩니다 — 그걸 막으려고 내보냅니다.
+    """
+    try:
+        from feature_flags import load_flags
+        write_data(os.path.join(docs_dir, "feature_flags.json"), load_flags())
+    except Exception as exc:
+        logger.debug(f"기능 스위치 내보내기 생략: {exc}")
 
 
 def _export_series(docs_dir: str) -> None:
@@ -391,17 +450,50 @@ def _export_series(docs_dir: str) -> None:
             }
             for s in series_list
         ]
-        with open(series_dst, "w", encoding="utf-8") as f:
-            json.dump(export, f, ensure_ascii=False, indent=2)
+        write_data(series_dst, export)
         logger.info(f"  시리즈: {len(export)}개 내보내기 완료")
     except Exception as exc:
         logger.warning(f"시리즈 데이터 내보내기 실패 (무시): {exc}")
+
+
+# blog_analytics가 posts.json에 덧붙이는 분석 필드.
+# posts.json은 발행 때마다 실행 이력에서 새로 만들어지는데, 그때 이 필드들을
+# 옮겨 담지 않으면 주 1회 붙는 등급이 몇 시간 만에 지워집니다
+# (2026-08-18 점검에서 103개 포스트 전부 등급 없음으로 확인).
+_ANALYTICS_FIELDS = (
+    "grade", "gradeScore", "gradeHint",
+    "gscClicks30d", "gscImpressions30d", "gscCTR30d", "gscPosition30d",
+    "estimatedPageviews30d", "estimatedRevenue30d", "revenueUpdatedAt",
+)
+
+
+def _load_previous_analytics() -> dict[str, dict]:
+    """기존 posts.json에서 분석 필드만 {post_id: {...}} 로 뽑아 둡니다."""
+    out: dict[str, dict] = {}
+    # posts.json은 최근 300개만 담고 나머지는 archive로 넘어가므로 둘 다 읽습니다
+    for name in ("posts.json", "posts_archive.json"):
+        path = os.path.join(DOCS_DATA_DIR, name)
+        if not os.path.exists(path):
+            continue
+        try:
+            with open(path, encoding="utf-8") as f:
+                previous = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            continue
+        if not isinstance(previous, list):
+            continue
+        for p in previous:
+            kept = {k: p[k] for k in _ANALYTICS_FIELDS if k in p}
+            if kept and p.get("id"):
+                out.setdefault(p["id"], kept)
+    return out
 
 
 def export_dashboard() -> None:
     """대시보드용 JSON을 docs/data/에 내보냅니다."""
     os.makedirs(DOCS_DATA_DIR, exist_ok=True)
     history = _load_history()
+    prev_analytics = _load_previous_analytics()
 
     # posts.json 생성
     posts = []
@@ -449,8 +541,8 @@ def export_dashboard() -> None:
                 "articleType": p.get("articleType", ""),
                 "riskLevel": p.get("riskLevel", ""),
                 "contentCategory": p.get("contentCategory", ""),
+                "searchIntent": p.get("searchIntent", ""),
                 "trendDirection": "rising",
-                "factCheck": p.get("factCheck"),
                 "tags": p.get("labels", [])[:7],
                 "blogUrl": p.get("blogUrl", ""),
                 "metaDescription": p.get("metaDescription", ""),
@@ -460,6 +552,16 @@ def export_dashboard() -> None:
                 "blogId": p.get("blogId", run_blog_id),
                 "blogName": p.get("blogName", run_blog_name),
             })
+    # 직전 분석 결과 이어붙이기 — 없으면 아무것도 하지 않으므로 최초 실행에도 안전
+    if prev_analytics:
+        restored = 0
+        for p in posts:
+            kept = prev_analytics.get(p["id"])
+            if kept:
+                p.update(kept)
+                restored += 1
+        logger.info(f"분석 필드 유지: {restored}/{len(posts)}개 (등급·조회수·수익)")
+
     posts.sort(key=lambda x: x["date"], reverse=True)
 
     # runs.json 생성
@@ -470,6 +572,9 @@ def export_dashboard() -> None:
             "keywords": run["keywords"],
             "postsGenerated": run["postsGenerated"],
             "bloggerUploaded": run.get("bloggerUploaded", 0),
+            # 생성됐지만 품질 게이트로 검토 대기에 들어간 수 — 이 필드가 빠지면
+            # 대시보드에서 "생성 1 / 업로드 0"이 실패처럼 보이는 착시 발생
+            "pendingReview": run.get("pendingReview", 0),
             "imagesInserted": run.get("imagesInserted", 0),
             "totalWords": run.get("totalWords", 0),
             "errors": run["errors"],
@@ -478,7 +583,7 @@ def export_dashboard() -> None:
             "platforms": run.get("platforms", {}),
             "earnings": run.get("earnings", {}),
         }
-        for run in history
+        for run in history[:RUNS_EXPORT_LIMIT]
     ]
 
     # analytics.json — 최신 실행의 누적 수익 추정치 사용 (모든 포스트 기반)
@@ -540,12 +645,26 @@ def export_dashboard() -> None:
             new_items = [p for p in posts_overflow if p.get("id") not in seen_ids]
             if new_items:
                 archive = new_items + archive
-                with open(archive_path, "w", encoding="utf-8") as f:
-                    json.dump(archive, f, ensure_ascii=False, indent=2)
+                write_data(archive_path, archive)
                 logger.info(f"  아카이브: {len(new_items)}개 이동 (총 {len(archive)}개)")
         except Exception as _ae:
             logger.warning(f"posts_archive.json 저장 실패 — posts.json에 전체 유지: {_ae}")
             posts_recent = posts
+
+    # 글 목록에서 상세 필드를 떼어 냅니다. faq·sources는 상세 모달에서만 쓰는데
+    # 합쳐서 80KB가 넘고, 목록만 보는 사람도 매번 받아 갔습니다. factCheck는
+    # 대시보드가 어디서도 참조하지 않아 아예 내보내지 않습니다 (원본은
+    # run_history.json에 그대로 남습니다).
+    post_details = {}
+    for post in posts_recent:
+        faq = post.pop("faq", []) or []
+        sources = post.pop("sources", []) or []
+        post.pop("factCheck", None)
+        post["faqCount"] = len(faq)
+        post["sourceCount"] = len(sources)
+        if (faq or sources) and post.get("id"):
+            post_details[post["id"]] = {"faq": faq, "sources": sources}
+    write_data(os.path.join(DOCS_DATA_DIR, "post_details.json"), post_details)
 
     for name, data in [
         ("posts.json", posts_recent),
@@ -554,10 +673,9 @@ def export_dashboard() -> None:
         ("meta.json", meta),
         ("blogs.json", blogs_export),
     ]:
-        path = os.path.join(DOCS_DATA_DIR, name)
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+        write_data(os.path.join(DOCS_DATA_DIR, name), data)
 
+    _export_feature_flags(DOCS_DATA_DIR)
     _export_series(DOCS_DATA_DIR)
     _export_social(DOCS_DATA_DIR)
     _export_gsc(DOCS_DATA_DIR)
@@ -575,24 +693,31 @@ def export_dashboard() -> None:
     logger.info(f"  포스트: {len(posts)}개 / 실행 이력: {len(runs_export)}개 / 블로그: {len(blogs_export)}개")
 
 
-def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> None:
-    """생성된 포스트를 검토 대기 목록으로 저장합니다 (Blogger 업로드 없이)."""
-    pending: list[dict] = []
-    if os.path.exists(PENDING_FILE):
-        try:
-            with open(PENDING_FILE, encoding="utf-8") as f:
-                pending = json.load(f)
-        except (json.JSONDecodeError, OSError):
-            pending = []
+def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> list[str]:
+    """생성된 포스트를 검토 대기 목록으로 저장하고, 배정한 id를 돌려줍니다.
+
+    id를 돌려주는 이유: 시리즈 회차가 "이 글이 내 회차다"를 기록할 방법이
+    제목밖에 없었습니다. 그런데 final_editor가 생성 후 제목을 교정하므로
+    (`post_data["title"] = new_title`) 링크가 그 순간 끊깁니다. 실제로
+    series.json의 pending_review 41편 중 35편이 어느 목록에서도 제목으로
+    찾히지 않았습니다. 호출부가 id를 받아 저장할 수 있어야 합니다.
+
+    반환 순서는 results 순서와 같습니다. 제목·본문이 비어 건너뛴 항목은
+    빈 문자열이 들어가 자리를 지킵니다 — 그래야 zip으로 짝지을 수 있습니다.
+    """
+    import pending_store
+    pending = pending_store.load()
 
     cfg = blog_config or {}
     initial_pending_len = len(pending)
     now = datetime.now()
+    assigned: list[str] = []
     for idx, r in enumerate(results):
         title = r.get("title", "")
         content = r.get("content", "")
         if not title or not content:
             logger.warning(f"포스트 #{idx+1} 제목 또는 본문 비어있음 — 건너뜀 (title={repr(title[:30])})")
+            assigned.append("")      # 자리를 지켜 호출부가 zip으로 짝지을 수 있게
             continue
         safe_kw = re.sub(r"[^\w가-힣]", "_", r.get("keyword", ""))[:20]
         uid = f"{now.strftime('%Y%m%d%H%M%S')}_{idx:02d}_{safe_kw}"
@@ -612,16 +737,17 @@ def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> 
             "articleType": r.get("article_type", ""),
             "riskLevel": r.get("risk_level", ""),
             "contentCategory": r.get("content_category", ""),
+            "searchIntent": r.get("search_intent", ""),
             "status": "pending",
             "blogId": cfg.get("id", r.get("blogId", "blog1")),
             "blogName": cfg.get("name", r.get("blogName", "")),
         })
+        assigned.append(uid)
         logger.info(f"  검토 대기 저장: {title[:60]} ({len(content)}자 HTML)")
 
     try:
-        os.makedirs(os.path.dirname(PENDING_FILE), exist_ok=True)
-        with open(PENDING_FILE, "w", encoding="utf-8") as f:
-            json.dump(pending, f, ensure_ascii=False, indent=2)
+        pending_store.save(pending)
         logger.info(f"검토 대기 포스트 저장 완료: {len(pending) - initial_pending_len}개 추가 (총 {len(pending)}개)")
     except OSError as e:
         logger.error(f"검토 대기 파일 저장 실패: {e}")
+    return assigned

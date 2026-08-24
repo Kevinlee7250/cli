@@ -1,64 +1,158 @@
 {
-  "generatedAt": "2026-07-21T16:24:52.421017",
+  "generatedAt": "2026-08-17T00:59:47.865917",
   "period": "30days",
-  "totalPosts": 91,
-  "bloggerPageviews30d": 0,
-  "bloggerPageviews7d": 0,
-  "totalGscClicks30d": 0,
-  "totalEstimatedRevenue30d": 0.0,
-  "totalEstimatedRevenueMonthly": 0.0,
+  "totalPosts": 100,
+  "bloggerPageviews30d": 3081,
+  "bloggerPageviews7d": 527,
+  "totalGscClicks30d": 2,
+  "totalEstimatedRevenue30d": 118.9425,
+  "totalEstimatedRevenueMonthly": 118.9425,
+  "revenueSource": "estimate",
+  "revenueRpmDomains": 0,
   "gradeDistribution": {
     "S": 0,
-    "A": 0,
-    "B": 91,
+    "A": 1,
+    "B": 99,
     "C": 0
   },
   "gradePercentage": {
     "S": 0.0,
-    "A": 0.0,
-    "B": 100.0,
+    "A": 1.0,
+    "B": 99.0,
     "C": 0.0
   },
   "blogBreakdown": {
-    "blog1": {
-      "posts": 32,
-      "grade_counts": {
-        "S": 0,
-        "A": 0,
-        "B": 32,
-        "C": 0
-      },
-      "pageviews30d": 0,
-      "gscClicks30d": 0
-    },
     "blog3": {
-      "posts": 31,
+      "posts": 35,
       "grade_counts": {
         "S": 0,
         "A": 0,
-        "B": 31,
+        "B": 35,
         "C": 0
       },
-      "pageviews30d": 0,
+      "pageviews30d": 354,
       "gscClicks30d": 0
     },
     "blog2": {
-      "posts": 28,
+      "posts": 35,
       "grade_counts": {
         "S": 0,
         "A": 0,
-        "B": 28,
+        "B": 35,
         "C": 0
       },
-      "pageviews30d": 0,
+      "pageviews30d": 317,
       "gscClicks30d": 0
+    },
+    "blog1": {
+      "posts": 30,
+      "grade_counts": {
+        "S": 0,
+        "A": 1,
+        "B": 29,
+        "C": 0
+      },
+      "pageviews30d": 2410,
+      "gscClicks30d": 2
+    }
+  },
+  "contentCategoryBreakdown": {
+    "finance": {
+      "posts": 35,
+      "grade_counts": {
+        "S": 0,
+        "A": 0,
+        "B": 35,
+        "C": 0
+      },
+      "totalPageviews30d": 350
+    },
+    "travel": {
+      "posts": 63,
+      "grade_counts": {
+        "S": 0,
+        "A": 1,
+        "B": 62,
+        "C": 0
+      },
+      "totalPageviews30d": 2752
+    },
+    "drama": {
+      "posts": 2,
+      "grade_counts": {
+        "S": 0,
+        "A": 0,
+        "B": 2,
+        "C": 0
+      },
+      "totalPageviews30d": 2
+    }
+  },
+  "searchIntentBreakdown": {
+    "comparison": {
+      "posts": 11,
+      "grade_counts": {
+        "S": 0,
+        "A": 0,
+        "B": 11,
+        "C": 0
+      },
+      "totalPageviews30d": 62,
+      "totalClicks30d": 0
+    },
+    "informational": {
+      "posts": 21,
+      "grade_counts": {
+        "S": 0,
+        "A": 0,
+        "B": 21,
+        "C": 0
+      },
+      "totalPageviews30d": 193,
+      "totalClicks30d": 0
+    },
+    "experience": {
+      "posts": 12,
+      "grade_counts": {
+        "S": 0,
+        "A": 0,
+        "B": 12,
+        "C": 0
+      },
+      "totalPageviews30d": 79,
+      "totalClicks30d": 0
+    },
+    "howto": {
+      "posts": 7,
+      "grade_counts": {
+        "S": 0,
+        "A": 0,
+        "B": 7,
+        "C": 0
+      },
+      "totalPageviews30d": 57,
+      "totalClicks30d": 0
+    },
+    "transactional": {
+      "posts": 7,
+      "grade_counts": {
+        "S": 0,
+        "A": 0,
+        "B": 7,
+        "C": 0
+      },
+      "totalPageviews30d": 24,
+      "totalClicks30d": 0
     }
   },
   "rewriteTargets": [],
   "topPerformers": [],
   "dataSource": {
-    "bloggerApi": false,
+    "bloggerApi": true,
     "gscPageData": true,
-    "gscUrlsMatched": 0
+    "gscUrlsMatched": 1,
+    "gscUrlsSeen": 30,
+    "gscMatchRate": 4.0,
+    "postsWithoutUrl": 11
   }
 }

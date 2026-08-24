@@ -106,6 +106,40 @@ def _default_pass() -> dict:
     }
 
 
+def _mode_rules(post_data: dict) -> tuple[str, str]:
+    """글의 성격에 맞는 채점 기준을 돌려줍니다. (originality용, eeat용)
+
+    왜 필요한가
+    ──────────
+    생성 프롬프트는 "하지 않은 경험을 한 것처럼 쓰지 않는다"를 원칙으로 삼고,
+    author_profile.json에 실제 경험 자료가 없는 주제는 전부 조사·분석형으로
+    씁니다. 그런데 검증 기준은 1인칭 경험 서술을 요구해, 조사형 글은
+    originality·eeat 두 항목이 구조적으로 warn 고정이었습니다. 12점 만점에
+    warn이 7점이니 -10점이 확정돼 79점 언저리가 상한이 됩니다
+    (2026-08-22 확인).
+
+    경험을 지어내게 만드는 건 답이 아닙니다. AdSense가 요구하는 건 개인
+    경험이 아니라 독창적 가치이고, E-E-A-T의 Experience는 넷 중 하나일
+    뿐입니다. 조사형 글은 출처의 구체성·데이터 정확성·균형 잡힌 시각으로
+    같은 신뢰를 얻을 수 있으므로, 그 기준으로 채점합니다.
+    """
+    if post_data.get("experience_mode") == "experience":
+        return (
+            "(이 글은 저자의 실제 경험 자료를 근거로 쓴 '경험형'입니다 — "
+            "1인칭 경험이 구체적 수치·기간과 함께 담겼는지 보세요)",
+            "• 직접 경험 기반 내용이 구체적으로 서술됐는가? (1인칭 경험)",
+        )
+    return (
+        "(이 글은 저자가 겪지 않은 주제를 다루는 '조사·분석형'입니다. "
+        "1인칭 경험담이 없는 것은 정직한 서술이므로 감점 사유가 아닙니다. "
+        "대신 조사의 깊이·자료의 구체성·해석의 독창성으로 판단하세요)",
+        "• 조사형 글이므로 1인칭 경험 유무로 감점하지 마세요.\n"
+        "     대신 이렇게 보세요: 구체적 수치·날짜가 출처와 함께 제시됐는가, "
+        "여러 자료를 교차 확인해 해석을 더했는가, 불확실한 부분을 "
+        "불확실하다고 밝혔는가",
+    )
+
+
 def _log_result(title: str, result: dict) -> None:
     rec = result["recommendation"]
     icon_map = {"upload": "✅", "review": "⚠️", "reject": "❌"}
@@ -157,6 +191,7 @@ def validate_adsense(post_data: dict) -> dict:
 
         policy_ctx = _get_policy_context()
         policy_section = f"\n\n최신 정책 업데이트:\n{policy_ctx}" if policy_ctx else ""
+        mode_rule_originality, mode_rule_eeat = _mode_rules(post_data)
 
         prompt = f"""Google AdSense 최신 정책 기준으로 다음 블로그 포스트를 8개 항목 검증하세요.{policy_section}
 
@@ -177,7 +212,8 @@ def validate_adsense(post_data: dict) -> dict:
 
 1. originality — 원본성 및 품질 (AdSense Valuable Inventory / 가치 없는 콘텐츠 정책)
    판단 기준:
-   • 독창적 관점·개인 경험이 구체적 수치·날짜·사례와 함께 실제로 포함됐는가?
+   • 독창적 가치가 구체적 수치·날짜·사례와 함께 실제로 포함됐는가?
+     {mode_rule_originality}
    • 다른 사이트의 정보를 그대로 나열만 하지 않는가? (thin content 금지)
    • 글자 수 2500자 이상이면 pass, 2000~2499자면 warn, 2000자 미만이면 fail
      (글자 수는 위 '포스트 정보'의 값을 기준으로 판단 — 본문 미리보기는 앞부분만 제공됨)
@@ -211,8 +247,8 @@ def validate_adsense(post_data: dict) -> dict:
 
 6. eeat — E-E-A-T 신뢰도 (Google 품질 평가 기준)
    판단 기준:
-   • 직접 경험 기반 내용이 포함됐는가? (1인칭 경험 서술)
-   • 출처·참고자료가 인용됐는가?
+   {mode_rule_eeat}
+   • 출처·참고자료가 인용됐는가? (기관명·시점이 본문에 함께 밝혀졌으면 가점)
    • 과도한 단정적 주장 없이 균형 잡힌 시각인가?
    • 저자 신뢰성 신호가 있는가? (전문 지식 표현)
 
@@ -333,6 +369,75 @@ JSON만 응답 (설명 없이):
 
 # ─── 자동 수정 ────────────────────────────────────────────────────────────────
 
+#: 이보다 긴 본문은 자동 수정을 시도하지 않습니다 (자르지 않고 건너뜀)
+_AUTO_FIX_MAX_HTML = 40000
+#: 출력 예산 상한 — 본문 길이에 비례해 잡되 여기서 멈춥니다
+_AUTO_FIX_MAX_TOKENS = 32000
+
+
+def repair_images(post_data: dict, html: str) -> tuple[str, list[str]]:
+    """이미지 정책 지적을 규칙으로 고칩니다. (본문, 수행 내역)
+
+    왜 별도인가
+    ──────────
+    자동 수정은 Claude에게 본문 HTML을 다시 쓰게 하는 방식이라 이미지 항목을
+    고치지 못합니다. 없는 이미지를 만들어 낼 수도, 출처 표기를 실제 src에
+    맞출 수도 없습니다. 실제로 2026-08-22 검증에서 "이미지 1개만 확인되며
+    alt텍스트·출처 명확성 부족"이 계속 감점 사유로 남았습니다.
+
+    image_audit의 검증된 함수를 그대로 씁니다 — alt 판정·재작성 규칙을
+    두 번 구현하면 반드시 어긋납니다.
+    """
+    from image_audit import (
+        attach_image, alt_problem, extract_images, fix_alt, needed_image_count,
+    )
+    from fix_unlicensed_images import sync_captions
+
+    title = post_data.get("title", "")
+    keyword = post_data.get("keyword", "")
+    notes: list[str] = []
+
+    # 1) 부족한 장수 채우기 — 한 번에 한 장씩, 권장 수까지만
+    need = needed_image_count(html)
+    for _ in range(max(0, need - len(extract_images(html)))):
+        html, ok, why = attach_image(html, title, keyword)
+        if not ok:
+            notes.append(f"이미지 첨부 실패: {why}")
+            break
+        notes.append(f"이미지 첨부: {why}")
+
+    # 2) alt·캡션 설명 — 비었거나 내용을 설명하지 못하는 것만
+    for img in extract_images(html):
+        if not alt_problem(img, title, keyword):
+            continue
+        html, done = fix_alt(html, img["url"], title, keyword)
+        if done:
+            notes.append(done)
+
+    # 3) 출처 표기를 실제 src에 맞춤 ("출처 명확성 부족" 지적에 대응)
+    html, fixed = sync_captions(html)
+    if fixed:
+        notes.append(f"출처 표기 동기화 {fixed}건")
+
+    return html, notes
+
+
+def _build_fixed(post_data: dict, html: str, original_html: str,
+                 fail_items: list, warn_items: list,
+                 image_notes: list[str]) -> dict | None:
+    """수정 결과를 post_data 형태로 포장합니다. 바뀐 게 없으면 None."""
+    if html == original_html:
+        return None
+    fixed = dict(post_data)
+    fixed["content"] = html
+    fixed["word_count"] = len(re.sub(r'<[^>]+>', '', html))
+    fixed["adsense_auto_fixed"] = True
+    fixed["adsense_fix_items"] = [k for k, _ in fail_items + warn_items[:4]]
+    if image_notes:
+        fixed["adsense_image_fixes"] = image_notes
+    return fixed
+
+
 def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
     """AdSense 검증 결과를 바탕으로 포스트 내용을 자동 수정합니다.
 
@@ -377,9 +482,34 @@ def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
     title   = post_data.get("title", "")
     html    = post_data.get("content", "")
     keyword = post_data.get("keyword", "")
+    original_html = html
+
+    # 이미지 항목은 Claude가 고칠 수 없으므로 규칙으로 먼저 처리하고, 그
+    # 결과를 텍스트 재작성의 입력으로 넘깁니다. 순서를 뒤집으면 재작성이
+    # 방금 넣은 이미지를 지울 수 있습니다.
+    image_notes: list[str] = []
+    if checks.get("image_policy", {}).get("status") in ("warn", "fail"):
+        html, image_notes = repair_images(post_data, html)
+        for n in image_notes:
+            logger.info(f"  🖼️ {n}")
 
     # 원본 글자 수
     orig_word_count = post_data.get("word_count", len(re.sub(r'<[^>]+>', '', html)))
+
+    # 본문을 잘라 보내면 잘린 만큼만 돌아오고, 그 결과를 원본 전체 길이와
+    # 비교하니 통과할 수가 없습니다. 실제로 html[:8000]을 보내면서 결과를
+    # len(html)*0.5와 견줘, HTML이 16,000자를 넘는 글은 자동 수정이 100%
+    # 실패했습니다 (2026-08-22: 16,228자 글이 "너무 짧음"으로 폐기).
+    # 이제 전문을 보냅니다. 감당 못 할 길이면 자르지 말고 건너뜁니다 —
+    # 조용히 잘라 보내면 뒷부분이 사라진 글이 발행될 수 있습니다.
+    if len(html) > _AUTO_FIX_MAX_HTML:
+        logger.warning(
+            f"본문이 너무 길어 텍스트 자동 수정을 건너뜁니다 "
+            f"({len(html):,}자 > {_AUTO_FIX_MAX_HTML:,}자)"
+        )
+        # 텍스트는 못 고쳐도 이미지 보수는 이미 끝났을 수 있습니다
+        return _build_fixed(post_data, html, original_html, fail_items,
+                            warn_items, image_notes)
 
     policy_ctx = _get_policy_context()
     policy_note = f"\n\n최신 AdSense 정책:\n{policy_ctx}" if policy_ctx else ""
@@ -405,7 +535,7 @@ def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
 현재 점수: {score}/100
 
 ━━━ 현재 본문 HTML ━━━
-{html[:8000]}
+{html}
 
 ━━━ 요청 ━━━
 수정된 본문 HTML 전체를 그대로 출력하세요. 설명이나 주석 없이 HTML만 출력합니다.
@@ -416,23 +546,33 @@ def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
         from config import ANTHROPIC_API_KEY, CLAUDE_MODEL, claude_generate
 
         client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        # 원본 이상 길이를 요구하면서 출력 예산을 8000으로 묶어 두면 잘립니다.
+        # 한국어 HTML은 대략 1자 ≈ 1토큰이라 본문 길이에 여유를 얹어 잡습니다.
+        # (claude_generate가 max_tokens 잘림을 감지해 이어쓰기까지 합니다)
+        budget = max(8000, min(_AUTO_FIX_MAX_TOKENS, int(len(html) * 1.3)))
         fixed_html = claude_generate(
             client,
             model=CLAUDE_MODEL,
-            max_tokens=8000,
+            max_tokens=budget,
             messages=[{"role": "user", "content": prompt}],
         ).strip()
 
         if not fixed_html or len(fixed_html) < len(html) * 0.5:
-            logger.warning("자동 수정 결과가 너무 짧음 — 원본 유지")
-            return None
+            # 왜 짧은지 숫자를 남깁니다. 이 로그가 없어서 "너무 짧음"만 반복
+            # 출력되는 동안 원인(입력 절단)을 아무도 알 수 없었습니다.
+            logger.warning(
+                f"텍스트 자동 수정 결과가 너무 짧음 — 텍스트는 원본 유지 "
+                f"(원본 {len(html):,}자 / 결과 {len(fixed_html):,}자 / "
+                f"요구 {int(len(html) * 0.5):,}자 이상, 출력 예산 {budget:,}토큰)"
+            )
+            # 텍스트가 실패해도 이미지 보수는 살립니다
+            return _build_fixed(post_data, html, original_html, fail_items,
+                                warn_items, image_notes)
 
-        # 수정된 내용 적용
-        fixed = dict(post_data)
-        fixed["content"] = fixed_html
-        fixed["word_count"] = len(re.sub(r'<[^>]+>', '', fixed_html))
-        fixed["adsense_auto_fixed"] = True
-        fixed["adsense_fix_items"] = [k for k, _ in fail_items + warn_items[:4]]
+        fixed = _build_fixed(post_data, fixed_html, original_html, fail_items,
+                             warn_items, image_notes)
+        if fixed is None:
+            return None
 
         improvement = fixed["word_count"] - orig_word_count
         logger.info(
@@ -442,5 +582,7 @@ def fix_adsense_issues(post_data: dict, validation: dict) -> dict | None:
         return fixed
 
     except Exception as e:
-        logger.error(f"자동 수정 오류: {e}")
-        return None
+        logger.error(f"텍스트 자동 수정 오류: {e}")
+        # 이미지 보수까지 버릴 이유는 없습니다
+        return _build_fixed(post_data, html, original_html, fail_items,
+                            warn_items, image_notes)

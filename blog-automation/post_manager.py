@@ -125,6 +125,7 @@ def register_post(
         "contentPreview": (post_data.get("content_preview") or post_data.get("meta_description", ""))[:300],
         "articleType":   post_data.get("article_type", ""),
         "contentCategory": post_data.get("content_category", ""),
+        "searchIntent": post_data.get("search_intent", ""),
     }
 
     registry = load_registry()
@@ -317,8 +318,8 @@ def export_for_dashboard(docs_data_dir: str) -> None:
     dst = os.path.join(docs_data_dir, "post_registry.json")
     registry = load_registry()
     try:
-        with open(dst, "w", encoding="utf-8") as f:
-            json.dump(registry, f, ensure_ascii=False, indent=2)
+        from dashboard_exporter import write_data
+        write_data(dst, registry)
         summary = get_status_summary()
         logger.info(
             f"  포스트 레지스트리: 전체 {summary['total']}개 "
@@ -392,6 +393,13 @@ def retry_failed_posts(
         # 업로드 시도
         update_post_status(post_id, Status.RETRY_QUEUED)
         result = upload_post(post_data, blog_config)
+
+        if result == "DUPLICATE":
+            update_post_status(post_id, Status.SKIPPED, error="중복 제목 — 업로드 건너뜀")
+            delete_draft(post_id)
+            counts["skipped"] += 1
+            logger.warning(f"  ⏭ 중복 주제 — 건너뜀: '{keyword}'")
+            continue
 
         if result:
             url = result.get("url", "")

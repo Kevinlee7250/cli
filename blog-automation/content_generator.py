@@ -6,6 +6,7 @@ import logging
 import os
 import re
 import time
+from contextlib import contextmanager
 
 import anthropic
 
@@ -18,6 +19,9 @@ from config import (
 from coupang_affiliate import inject_affiliate_section
 from image_fetcher import fetch_images_for_queries, inject_images_into_content
 from readability_checker import assess_readability, readability_escalation_note
+from title_policy import check_title, sanitize_title, title_escalation_note
+from search_intent import detect_intent, intent_prompt_block
+from snippet_optimizer import ensure_summary_box, snippet_prompt_block
 
 logger = logging.getLogger(__name__)
 _client: anthropic.Anthropic | None = None
@@ -147,47 +151,71 @@ def _ai_generate(system: str, prompt: str, ai_provider: str) -> str:
     )
 
 
-def _detect_article_type(keyword: str) -> str:
-    """키워드 기반 아티클 유형 감지"""
-    kw = keyword.lower()
+#: 키워드 → 아티클 유형 판정 규칙 (순서가 우선순위입니다)
+#: 대시보드도 이 표를 docs/data/templates.json으로 받아 씁니다.
+#: 같은 규칙을 JS에 다시 적어 두면 한쪽만 고쳐질 때 반드시 어긋납니다.
+TYPE_SIGNALS: list[tuple[str, list[str]]] = [
     # K-POP·연예 — 드라마보다 먼저 체크 (아이돌·컴백·시상식 등)
-    if any(w in kw for w in ["아이돌", "컴백", "k-pop", "kpop", "k pop", "음반", "신보", "신곡",
-                              "팬미팅", "콘서트 티켓", "티케팅", "시상식", "mama", "멜론어워드",
-                              "초동", "음원 차트", "걸그룹", "보이그룹", "데뷔",
-                              "월드투어", "내한공연", "팬덤"]):
-        return "kpop_review"
-    # 드라마·영화 리뷰
-    if any(w in kw for w in ["드라마", "영화", "넷플릭스", "티빙", "쿠팡플레이", "ott", "왓챠",
-                              "결말", "등장인물", "인물관계도", "출연진", "몇부작", "시청률",
-                              "다시보기", "ost 추천", "명장면", "영화 리뷰", "영화 후기",
-                              "박스오피스", "개봉"]):
-        return "drama_review"
-    # 여행 가이드
-    if any(w in kw for w in ["여행", "관광", "투어", "코스", "명소", "숙소", "호텔", "맛집",
-                              "공항", "항공권", "항공", "비자", "패키지", "자유여행", "배낭", "현지"]):
-        return "travel_guide"
-    # 투자형 — 종목·시장 분석
-    if any(w in kw for w in ["주가", "투자", "종목", "시장 전망", "매수", "매도", "포트폴리오",
-                              "etf", "펀드", "배당", "코인", "실적"]):
-        return "investment"
-    # 뉴스 해설 — 사건·발표·이슈 해설
-    if any(w in kw for w in ["발표", "개정", "시행", "논란", "이슈", "속보", "확정", "폐지",
-                              "인상", "인하", "변경사항", "달라지는"]):
-        return "news_analysis"
-    # 스포츠 분석·리뷰
-    if any(w in kw for w in ["경기", "축구", "야구", "농구", "테니스", "골프", "k리그", "kbo",
-                              "nba", "epl", "선수", "감독", "시즌", "분석", "전망", "순위",
-                              "스포츠", "마라톤", "트레킹", "등산", "러닝", "수영", "자전거"]):
-        return "sports_review"
-    if any(w in kw for w in ["방법", "하는법", "어떻게", "가이드", "절차", "단계"]):
-        return "how_to"
-    if any(w in kw for w in ["후기", "리뷰", "써봤", "직접", "경험", "솔직히", "추천"]):
-        return "review"
-    if any(w in kw for w in ["비교", "vs", "차이", "장단점", "선택"]):
-        return "comparison"
-    if any(w in kw for w in ["뭐야", "란", "이란", "개념", "정의", "이해", "알아보"]):
-        return "explainer"
-    return "analysis"
+    ("kpop_review", ["아이돌", "컴백", "k-pop", "kpop", "k pop", "음반", "신보", "신곡",
+                     "팬미팅", "콘서트 티켓", "티케팅", "시상식", "mama", "멜론어워드",
+                     "초동", "음원 차트", "걸그룹", "보이그룹", "데뷔",
+                     "월드투어", "내한공연", "팬덤"]),
+    ("drama_review", ["드라마", "영화", "넷플릭스", "티빙", "쿠팡플레이", "ott", "왓챠",
+                      "결말", "등장인물", "인물관계도", "출연진", "몇부작", "시청률",
+                      "다시보기", "ost 추천", "명장면", "영화 리뷰", "영화 후기",
+                      "박스오피스", "개봉"]),
+    ("travel_guide", ["여행", "관광", "투어", "코스", "명소", "숙소", "호텔", "맛집",
+                      "공항", "항공권", "항공", "비자", "패키지", "자유여행", "배낭", "현지"]),
+    ("investment", ["주가", "투자", "종목", "시장 전망", "매수", "매도", "포트폴리오",
+                    "etf", "펀드", "배당", "코인", "실적"]),
+    ("news_analysis", ["발표", "개정", "시행", "논란", "이슈", "속보", "확정", "폐지",
+                       "인상", "인하", "변경사항", "달라지는"]),
+    ("sports_review", ["경기", "축구", "야구", "농구", "테니스", "골프", "k리그", "kbo",
+                       "nba", "epl", "선수", "감독", "시즌", "분석", "전망", "순위",
+                       "스포츠", "마라톤", "트레킹", "등산", "러닝", "수영", "자전거"]),
+    ("how_to", ["방법", "하는법", "어떻게", "가이드", "절차", "단계"]),
+    ("review", ["후기", "리뷰", "써봤", "직접", "경험", "솔직히", "추천"]),
+    ("comparison", ["비교", "vs", "차이", "장단점", "선택"]),
+    ("explainer", ["뭐야", "란", "이란", "개념", "정의", "이해", "알아보"]),
+]
+
+#: 어느 신호에도 걸리지 않을 때
+DEFAULT_ARTICLE_TYPE = "analysis"
+
+
+#: 사람이 템플릿을 직접 고른 경우 그 값이 여기 들어갑니다 (수동 발행 전용).
+#: 판정 호출처가 8곳이라 인자를 전부 뚫는 대신 한 곳에서 존중하게 했습니다.
+#: 반드시 article_type_override() 컨텍스트로만 설정하세요 — 직접 대입하면
+#: 다음 글까지 끌고 갑니다.
+_ARTICLE_TYPE_OVERRIDE: str | None = None
+
+
+@contextmanager
+def article_type_override(article_type: str | None):
+    """이 블록 안에서만 아티클 유형을 고정합니다."""
+    global _ARTICLE_TYPE_OVERRIDE
+    prev = _ARTICLE_TYPE_OVERRIDE
+    if article_type and article_type != "auto":
+        _ARTICLE_TYPE_OVERRIDE = article_type
+        logger.info(f"  📐 템플릿 지정: {article_type}")
+    try:
+        yield
+    finally:
+        _ARTICLE_TYPE_OVERRIDE = prev
+
+
+def _detect_article_type(keyword: str) -> str:
+    """키워드 기반 아티클 유형 감지 (TYPE_SIGNALS 순서대로 첫 일치).
+
+    사람이 고른 값이 있으면 그것을 그대로 씁니다.
+    """
+    if _ARTICLE_TYPE_OVERRIDE:
+        return _ARTICLE_TYPE_OVERRIDE
+    kw = keyword.lower()
+    for article_type, words in TYPE_SIGNALS:
+        if any(w in kw for w in words):
+            return article_type
+    return DEFAULT_ARTICLE_TYPE
 
 
 # 유형별 구조 가이드
@@ -325,6 +353,12 @@ def _match_experience(keyword: str, blog_id: str = "") -> dict | None:
     for exp in profile.get("experiences", []) or []:
         if not isinstance(exp, dict):
             continue
+        # 자료 없는 항목은 매칭하지 않습니다. summary가 비어 있으면 프롬프트가
+        # "아래는 글쓴이의 실제 경험 자료입니다" 라고 선언해 놓고 그 아래에
+        # 아무것도 못 넣은 채 1인칭을 허용하게 됩니다 — 근거 없이 허가만
+        # 내주는 셈이라 가짜 체험담을 막으려던 장치가 거꾸로 뚫립니다.
+        if not str(exp.get("summary", "")).strip():
+            continue
         blogs = exp.get("blogs") or []
         if blog_id and blogs and blog_id not in blogs:
             continue
@@ -458,6 +492,47 @@ def _engagement_block(keyword: str = "", blog_id: str = "") -> str:
 검색 의도 우선 충족 (뒤로가기 방지):
 - 독자가 찾는 핵심 답은 요약 박스 또는 첫 H2에서 먼저 제시하고,
   이후 섹션에서 근거·사례·디테일을 순차적으로 전개할 것"""
+
+
+# 주간 학습(weekly_learning.py)이 저장한 글쓰기 지침 — 쓰기와 배우기를 잇는 폐루프.
+# 지금까지는 성과 분석 결과가 리포트로만 남고 다음 글에 반영되지 않았음.
+_WRITING_TIPS_FILE = os.path.join(os.path.dirname(__file__), "logs", "learned_writing_tips.json")
+_WRITING_TIPS_MAX_AGE_DAYS = 35   # 이보다 오래된 지침은 무시 (낡은 판단이 계속 남는 것 방지)
+
+
+def _learned_guidelines_block() -> str:
+    """지난 주 학습에서 도출된 글쓰기 지침을 프롬프트 블록으로 반환합니다.
+
+    파일이 없거나 오래됐으면 빈 문자열 — 학습 데이터가 없어도 글 생성은
+    평소대로 동작해야 하므로 어떤 오류도 밖으로 던지지 않습니다.
+    """
+    try:
+        if not os.path.exists(_WRITING_TIPS_FILE):
+            return ""
+        with open(_WRITING_TIPS_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        guidelines = [str(g).strip() for g in (data.get("guidelines") or []) if str(g).strip()]
+        if not guidelines:
+            return ""
+
+        generated_at = data.get("generated_at", "")
+        if generated_at:
+            from datetime import datetime as _dt, timedelta as _td
+            age = _dt.now() - _dt.fromisoformat(generated_at)
+            if age > _td(days=_WRITING_TIPS_MAX_AGE_DAYS):
+                logger.debug(f"학습 지침이 오래됨({age.days}일) — 적용 생략")
+                return ""
+
+        items = "\n".join(f"- {g}" for g in guidelines[:5])
+        return f"""
+
+━━━ 지난 주 성과 분석에서 도출된 글쓰기 지침 ━━━
+아래는 실제 성과 데이터를 분석해 얻은 이번 주 반영 사항입니다. 위의 다른 지침과
+충돌하지 않는 범위에서 우선 반영하세요.
+{items}"""
+    except Exception as e:
+        logger.debug(f"학습 지침 로드 실패 (무시): {e}")
+        return ""
 
 
 def _author_name() -> str:
@@ -982,7 +1057,10 @@ JSON만 응답 (마크다운 없이):
 def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
     blog_id = (blog_config or {}).get("id", "")
     # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (모든 블로그 공통)
-    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block(keyword, blog_id)
+    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + (
+        _engagement_block(keyword, blog_id) + _learned_guidelines_block()
+        + intent_prompt_block(keyword) + snippet_prompt_block()
+    )
 
     # blog1 (HOGU What?) 전용 프롬프트
     if blog_id == "blog1":
@@ -1850,7 +1928,10 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict, blog_
     from datetime import datetime
     blog_id = (blog_config or {}).get("id", "")
     # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (가짜 체험담·목차 반복 방지)
-    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + _engagement_block(keyword, blog_id)
+    style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + (
+        _engagement_block(keyword, blog_id) + _learned_guidelines_block()
+        + intent_prompt_block(keyword) + snippet_prompt_block()
+    )
     if blog_id == "blog3":
         return _build_series_prompt_finance(keyword, traffic, series_context, blog_config) + style_block
     # blog1 또는 미지정
@@ -2269,6 +2350,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
 
     prev_wc = 0
     last_readability: dict | None = None
+    last_title_violations: list[str] = []
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
@@ -2295,7 +2377,7 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                     "You are a blogger who writes well-researched, trustworthy posts. Never fabricate personal experiences. "
                     "Write naturally, like a real person — not an AI report. JSON only."
                 )
-            escalation = _retry_escalation_note(attempt, prev_wc) + readability_escalation_note(last_readability)
+            escalation = _retry_escalation_note(attempt, prev_wc) + readability_escalation_note(last_readability) + title_escalation_note(last_title_violations)
             logger.info(f"  AI 제공자: {ai_provider.upper()} (시도 {attempt + 1}/3)")
             raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
             if not raw:
@@ -2320,13 +2402,29 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
             # 발행 후 GSC 지표·등급과 비교할 수 있게 함 (weekly_learning.py가 집계)
             content_category = _detect_content_category(keyword, (blog_config or {}).get("id", ""))
             post_data["content_category"] = content_category
+            # 검색의도 태그 — 발행 후 어떤 의도의 글이 잘 나갔는지 비교하기 위해 기록
+            post_data["search_intent"] = detect_intent(keyword)
             # 표준 스키마: tags는 labels의 별칭 (내부 링크·대시보드 공용)
             post_data["tags"] = list(post_data.get("labels", []) or [])
             post_data["series_id"] = series_context.get("series_id", "")
             post_data["episode"] = episode
 
+            # 검색 스니펫용 핵심 요약 박스 보장 (모델이 빠뜨렸으면 본문에서 생성)
+            if ensure_summary_box(post_data):
+                logger.info("  📌 핵심 요약 박스 삽입")
+
             content_html = post_data.get("content", "")
             post_data["word_count"] = _word_count(content_html)
+            # 이 글이 실제 경험 자료를 근거로 쓴 것인지, 조사·분석형인지 기록합니다.
+            # AdSense 검증기가 이 값으로 채점 기준을 맞춥니다 — 조사형 글에
+            # 1인칭 경험이 없다고 감점하면 "하지 않은 경험을 쓰지 않는다"는
+            # 생성 원칙과 정면 충돌합니다 (2026-08-22: originality·eeat 두 항목이
+            # 구조적으로 warn 고정돼 79점 상한이 생겼습니다).
+            post_data["experience_mode"] = (
+                "experience"
+                if _match_experience(keyword, (blog_config or {}).get("id", ""))
+                else "research"
+            )
             post_data["content_preview"] = _content_preview(content_html)
 
             prev_wc = post_data["word_count"]
@@ -2349,6 +2447,21 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
                     time.sleep(2)
                     continue
                 logger.warning(f"읽기 난이도 기준 미달({last_readability['issues']}) — 재시도 소진, 해당 상태로 진행")
+
+            # 제목 정책 검사 — 클릭 유도·과장 표현은 AdSense "오해의 소지가 있는 콘텐츠" 위반 소지.
+            # 발행 후 감사에서 발견하면 이미 노출된 뒤라, 생성 단계에서 재작성을 요청한다.
+            last_title_violations = check_title(post_data.get("title", ""))
+            if last_title_violations:
+                if attempt < 2:
+                    logger.warning(f"제목 정책 위반({last_title_violations}) — 재작성 요청 {attempt + 1}/3")
+                    time.sleep(2)
+                    continue
+                _orig_title = post_data.get("title", "")
+                post_data["title"] = sanitize_title(_orig_title)
+                logger.warning(
+                    f"제목 정책 위반 — 재시도 소진, 표현 제거 후 진행: "
+                    f"'{_orig_title}' → '{post_data['title']}'"
+                )
 
             if not isinstance(post_data.get("sources"), list):
                 post_data["sources"] = []
@@ -2659,6 +2772,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
     ai_provider = _resolve_ai_provider(blog_config)
     prev_wc = 0
     last_readability: dict | None = None
+    last_title_violations: list[str] = []
     for attempt in range(3):
         try:
             from datetime import datetime as _dt
@@ -2688,7 +2802,7 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                     "For events after your knowledge cutoff, use 'according to recent trends'. "
                     "JSON only."
                 )
-            escalation = _retry_escalation_note(attempt, prev_wc) + readability_escalation_note(last_readability)
+            escalation = _retry_escalation_note(attempt, prev_wc) + readability_escalation_note(last_readability) + title_escalation_note(last_title_violations)
             logger.info(f"  AI 제공자: {ai_provider.upper()} (시도 {attempt + 1}/3)")
             raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
             if not raw:
@@ -2714,12 +2828,28 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
             # 발행 후 GSC 지표·등급과 비교할 수 있게 함 (weekly_learning.py가 집계)
             content_category = _detect_content_category(keyword, (blog_config or {}).get("id", ""))
             post_data["content_category"] = content_category
+            # 검색의도 태그 — 발행 후 어떤 의도의 글이 잘 나갔는지 비교하기 위해 기록
+            post_data["search_intent"] = detect_intent(keyword)
             # 표준 스키마: tags는 labels의 별칭 (내부 링크·대시보드 공용)
             post_data["tags"] = list(post_data.get("labels", []) or [])
+
+            # 검색 스니펫용 핵심 요약 박스 보장 (모델이 빠뜨렸으면 본문에서 생성)
+            if ensure_summary_box(post_data):
+                logger.info("  📌 핵심 요약 박스 삽입")
 
             # 글자 수 및 미리보기 추가
             content_html = post_data.get("content", "")
             post_data["word_count"] = _word_count(content_html)
+            # 이 글이 실제 경험 자료를 근거로 쓴 것인지, 조사·분석형인지 기록합니다.
+            # AdSense 검증기가 이 값으로 채점 기준을 맞춥니다 — 조사형 글에
+            # 1인칭 경험이 없다고 감점하면 "하지 않은 경험을 쓰지 않는다"는
+            # 생성 원칙과 정면 충돌합니다 (2026-08-22: originality·eeat 두 항목이
+            # 구조적으로 warn 고정돼 79점 상한이 생겼습니다).
+            post_data["experience_mode"] = (
+                "experience"
+                if _match_experience(keyword, (blog_config or {}).get("id", ""))
+                else "research"
+            )
             post_data["content_preview"] = _content_preview(content_html)
 
             # 컨텐츠 유효성 검사 — AdSense thin content 방지 (최소 2500자)
@@ -2743,6 +2873,21 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
                     time.sleep(2)
                     continue
                 logger.warning(f"읽기 난이도 기준 미달({last_readability['issues']}) — 재시도 소진, 해당 상태로 진행")
+
+            # 제목 정책 검사 — 클릭 유도·과장 표현은 AdSense "오해의 소지가 있는 콘텐츠" 위반 소지.
+            # 발행 후 감사에서 발견하면 이미 노출된 뒤라, 생성 단계에서 재작성을 요청한다.
+            last_title_violations = check_title(post_data.get("title", ""))
+            if last_title_violations:
+                if attempt < 2:
+                    logger.warning(f"제목 정책 위반({last_title_violations}) — 재작성 요청 {attempt + 1}/3")
+                    time.sleep(2)
+                    continue
+                _orig_title = post_data.get("title", "")
+                post_data["title"] = sanitize_title(_orig_title)
+                logger.warning(
+                    f"제목 정책 위반 — 재시도 소진, 표현 제거 후 진행: "
+                    f"'{_orig_title}' → '{post_data['title']}'"
+                )
 
             # sources 필드 유효성 검증 (hallucinated URL 필터링)
             if not isinstance(post_data.get("sources"), list):

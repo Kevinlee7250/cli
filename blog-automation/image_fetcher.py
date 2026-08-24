@@ -64,6 +64,7 @@ def _ddg_images(keyword: str, count: int) -> list[dict]:
                 "title": item.get("title", keyword),
                 "width": item.get("width", 800),
                 "height": item.get("height", 450),
+                "source": "ddg",
             })
             if len(images) >= count:
                 break
@@ -160,6 +161,7 @@ def _naver_images(keyword: str, count: int, client_id: str, client_secret: str) 
                     "title": re.sub(r"<[^>]+>", "", item.get("title", keyword)).strip(),
                     "width": width,
                     "height": height,
+                    "source": "naver",
                 })
             if len(images) >= count:
                 break
@@ -214,6 +216,8 @@ def _wikimedia_images(keyword: str, count: int) -> list[dict]:
                             "title": title.replace("File:", ""),
                             "width": info.get("width", 800),
                             "height": info.get("height", 450),
+                            "source": "wikimedia",
+                            "page_url": f"https://commons.wikimedia.org/wiki/{title.replace(' ', '_')}",
                         })
                         break
             if len(images) >= count:
@@ -294,30 +298,89 @@ def _score_title_relevance(img: dict, query: str) -> float:
     return len(query_words & title_words) / len(query_words)
 
 
+# ──────────────────────────────────────────────────────────────
+# 저작권 화이트리스트 — 여기 없는 도메인의 이미지는 본문에 넣지 않습니다.
+# ──────────────────────────────────────────────────────────────
+# 2026-08-19 감사에서 사용 이미지 835장 중 71%가 무단 저작물로 확인됐습니다
+# (imgnews.naver.net 299장, 다음·핀터레스트·나무위키·유튜브 썸네일,
+#  한국경제·동아일보, 뽐뿌·보배드림·인스티즈 등).
+# AdSense 정책상 저작권은 감점이 아니라 즉시 탈락 요건이고, 승인 후
+# 발견되면 계정 정지 사유입니다. 그래서 "관련성 좋은 이미지"보다
+# "권리가 확실한 이미지"를 우선합니다 — 못 찾으면 직접 만듭니다.
+#
+# ⚠️ 이 목록에 도메인을 추가할 때는 그 서비스의 라이선스가 상업적 재사용을
+#    허용하는지 반드시 확인하세요. "출처를 적으면 된다"는 라이선스가 아닙니다.
+_ALLOWED_IMAGE_HOSTS = (
+    "pixabay.com",            # Pixabay Content License — 상업적 사용 가능
+    "cdn.pixabay.com",
+    "upload.wikimedia.org",   # Wikimedia Commons — CC / 퍼블릭 도메인
+    "commons.wikimedia.org",
+    "unsplash.com",           # Unsplash License — 상업적 사용 가능
+    "images.unsplash.com",
+    "source.unsplash.com",
+    "i.ibb.co",               # ImgBB — 우리가 직접 업로드한 AI 이미지·썸네일
+    "ibb.co",
+)
+
+# 화이트리스트를 끄는 스위치는 두지 않습니다. 저작권은 설정으로 켜고 끌
+# 성질의 것이 아니고, 급할 때 꺼두고 잊는 것이 바로 지금 상태를 만들었습니다.
+
+
+def is_license_safe(url: str) -> bool:
+    """이미지 URL이 저작권 안전 화이트리스트에 속하는지 판정합니다.
+
+    data URI(직접 생성한 SVG 썸네일)는 우리가 만든 것이므로 항상 허용합니다.
+    """
+    u = (url or "").strip()
+    if not u:
+        return False
+    if u.startswith("data:image/"):
+        return True
+    m = re.match(r'https?://([^/:]+)', u, re.I)
+    if not m:
+        return False
+    host = m.group(1).lower()
+    return any(host == h or host.endswith("." + h) for h in _ALLOWED_IMAGE_HOSTS)
+
+
+def filter_license_safe(images: list[dict]) -> list[dict]:
+    """화이트리스트 밖 이미지를 걸러내고, 걸러낸 건 로그에 남깁니다."""
+    kept, dropped = [], []
+    for img in images or []:
+        (kept if is_license_safe(img.get("url", "")) else dropped).append(img)
+    if dropped:
+        hosts = {re.sub(r'^https?://([^/:]+).*', r'\1', d.get("url", ""))[:40] for d in dropped}
+        logger.warning(
+            f"🚫 저작권 화이트리스트 밖 이미지 {len(dropped)}장 차단: {', '.join(sorted(hosts))}"
+        )
+    return kept
+
+
 def _search_all_sources(
     query: str,
-    naver_client_id: str,
-    naver_client_secret: str,
-    n_candidates: int,
+    naver_client_id: str = "",
+    naver_client_secret: str = "",
+    n_candidates: int = 4,
     pixabay_api_key: str = "",
 ) -> list[dict]:
-    """Pixabay → 네이버 → DDG → Wikimedia 순으로 검색합니다."""
-    # 1순위: Pixabay (저작권 무료, 고품질)
+    """저작권 안전 소스만 순서대로 검색합니다: Pixabay → Unsplash → Wikimedia.
+
+    네이버 이미지 검색과 DuckDuckGo는 2026-08-19에 검색 경로에서 제거했습니다.
+    두 소스 모두 "웹에 있는 이미지"를 반환할 뿐 라이선스를 보장하지 않으며,
+    실제로 언론사 뉴스 사진과 커뮤니티 게시물을 대량으로 끌어왔습니다.
+    naver_client_id / naver_client_secret 인자는 호출부 호환을 위해 남겨두었고
+    사용하지 않습니다.
+
+    여기서 결과가 없으면 호출부가 AI 생성 이미지 → SVG 제목 썸네일 순으로
+    폴백합니다(generate_fallback_image). 둘 다 우리가 만든 것이라 안전합니다.
+    """
+    # 1순위: Pixabay (Pixabay Content License)
     if pixabay_api_key:
-        candidates = _pixabay_images(query, n_candidates, pixabay_api_key)
+        candidates = filter_license_safe(_pixabay_images(query, n_candidates, pixabay_api_key))
         if candidates:
             return candidates
-    # 2순위: 네이버 이미지 API
-    if naver_client_id and naver_client_secret:
-        candidates = _naver_images(query, n_candidates, naver_client_id, naver_client_secret)
-        if candidates:
-            return candidates
-    # 3순위: DuckDuckGo
-    candidates = _ddg_images(query, n_candidates)
-    if candidates:
-        return candidates
-    # 4순위: Wikimedia Commons
-    return _wikimedia_images(query, n_candidates)
+    # 2순위: Wikimedia Commons (CC / 퍼블릭 도메인)
+    return filter_license_safe(_wikimedia_images(query, n_candidates))
 
 
 # 관련성 최소 임계값 — 이 미만이면 엉뚱한 이미지(Wikimedia 잡음 등)로 판단하고 버림
@@ -333,47 +396,113 @@ def _is_korean_query(text: str) -> bool:
     return ko / len(words) >= 0.5
 
 
+# 한국어 → 영어 범용 매핑 (이미지 검색 친화적 카테고리)
+#
+# 2026-08-19 확장: 네이버·DDG를 검색 경로에서 제거하면서 Pixabay 적중률이
+# 곧 이미지 확보율이 됐습니다. 기존 매핑은 금융·시사 어휘가 얇아
+# "종부세 개편", "가계부채 2000조", "국채 금리" 같은 실제 키워드에서
+# 전부 빈 문자열을 반환했고, 그래서 네이버 뉴스 사진으로 떨어졌습니다.
+# 세 블로그에서 실제로 쓰인 어휘를 기준으로 보강했습니다.
+_KO_EN = {
+    # 건강·생활
+    "건강": "health", "의료": "healthcare", "운동": "exercise", "다이어트": "diet",
+    "체중": "weight loss", "수영": "swimming", "마라톤": "marathon", "헬스": "gym",
+    "검진": "medical checkup", "영양": "nutrition", "수면": "sleep",
+    # 금융·경제 (대폭 보강)
+    "투자": "investment", "주식": "stock market", "ETF": "ETF", "금융": "finance",
+    "부동산": "real estate", "경제": "economy", "재테크": "personal finance",
+    "금리": "interest rate", "환율": "exchange rate", "적금": "savings account",
+    "예금": "bank deposit", "은행": "bank", "채권": "bonds", "국채": "government bonds",
+    "증시": "stock exchange", "코스피": "stock index", "지수": "market index",
+    "배당": "dividend", "수익률": "investment return", "자산": "assets",
+    "가계부채": "household debt", "부채": "debt", "신용": "credit",
+    "종부세": "property tax", "소득세": "income tax", "세제": "taxation",
+    "청약": "housing subscription", "분양": "apartment sales", "공급": "housing supply",
+    "전세": "rental housing", "월세": "monthly rent", "임대": "lease",
+    "아파트": "apartment building", "빌라": "townhouse", "주택": "house",
+    "그린벨트": "green belt land", "재건축": "reconstruction",
+    "비트코인": "bitcoin", "가상자산": "cryptocurrency", "코인": "cryptocurrency",
+    "금": "gold bullion", "유가": "oil price", "원유": "crude oil", "달러": "us dollar",
+    "반도체": "semiconductor", "물가": "inflation", "인플레이션": "inflation",
+    "가계부": "household budget", "지출": "spending", "결제": "payment",
+    "카드": "credit card", "포인트": "reward points",
+    # 여행·숙박
+    "여행": "travel", "관광": "tourism", "맛집": "restaurant", "숙소": "hotel",
+    "항공권": "airplane travel", "항공": "airplane", "공항": "airport",
+    "호텔": "hotel", "리조트": "resort", "펜션": "guest house",
+    "해외": "overseas travel", "국내": "domestic travel", "명소": "landmark",
+    "온천": "hot spring", "바다": "sea beach", "섬": "island",
+    "축제": "festival", "연휴": "holiday", "추석": "harvest festival",
+    # 취미·스포츠
+    "캠프": "camp", "캠핑": "camping", "글램핑": "glamping", "차박": "car camping",
+    "등산": "hiking", "자전거": "cycling", "골프": "golf", "라운딩": "golf course",
+    "스포츠": "sports", "축구": "soccer", "야구": "baseball", "농구": "basketball",
+    "테니스": "tennis", "경기": "sports stadium", "선수": "athlete",
+    # 문화·연예
+    "드라마": "drama", "영화": "movie", "음악": "music", "공연": "concert",
+    "아이돌": "stage performance", "앨범": "music album", "배우": "theater stage",
+    "리뷰": "review notebook", "후기": "review notebook",
+    # 일상·계절
+    "독서": "reading books", "책": "books", "교육": "education", "학습": "learning",
+    "요리": "cooking", "음식": "food", "카페": "cafe", "커피": "coffee",
+    "패션": "fashion", "뷰티": "beauty", "화장": "makeup", "스킨케어": "skincare",
+    "육아": "parenting", "아이": "child", "가족": "family",
+    "여름": "summer", "봄": "spring", "가을": "autumn", "겨울": "winter",
+    "장마": "rainy season", "폭염": "heat wave", "날씨": "weather",
+    "선물": "gift box", "쇼핑": "shopping",
+    # 일·제도
+    "취업": "job", "직장": "workplace", "창업": "startup", "부업": "side job",
+    "세금": "tax", "연금": "pension", "보험": "insurance", "대출": "loan",
+    "절약": "saving money", "절세": "tax saving", "공부": "studying",
+    "노후": "retirement", "임신": "pregnancy", "출산": "childbirth",
+    "정책": "policy", "지원": "support", "혜택": "benefit", "신청": "application",
+    "이사": "moving house", "제도": "government policy", "개편": "policy reform",
+    "전망": "business forecast", "분석": "data analysis", "비교": "comparison chart",
+    "전략": "strategy planning", "계획": "planning", "체크리스트": "checklist",
+    # 기술
+    "AI": "artificial intelligence", "기술": "technology", "스마트폰": "smartphone",
+    "방학": "school vacation", "대비": "preparation", "관리": "management",
+}
+
+# 긴 표제어부터 검사해야 "가계부채"가 "가계부"로 잘못 매칭되지 않습니다.
+_KO_EN_KEYS = sorted(_KO_EN, key=len, reverse=True)
+
+
+def _ko_en_lookup(word: str) -> str:
+    """한 단어를 영어로 변환합니다. 정확히 일치하지 않으면 부분 일치를 시도합니다.
+
+    한국어는 조사·접미사가 붙어 "절세법", "1주택자", "금리는"처럼 변형되므로
+    정확 일치만으로는 대부분 놓칩니다. 표제어가 단어 안에 포함돼 있으면
+    같은 뜻으로 봅니다 — 이미지 검색어 생성이라 이 정도 근사면 충분합니다.
+    """
+    if word in _KO_EN:
+        return _KO_EN[word]
+    for key in _KO_EN_KEYS:
+        if len(key) >= 2 and key in word:
+            return _KO_EN[key]
+    return ""
+
+
 def _ko_to_en_query(query: str) -> str:
-    """한국어 핵심 명사를 기반으로 Pixabay/DDG용 영어 쿼리를 생성합니다.
-    단순 영단어 추출이 없으면 범용 카테고리어로 대체합니다."""
+    """한국어 핵심 명사를 기반으로 Pixabay용 영어 쿼리를 생성합니다.
+
+    매핑되는 단어가 없으면 빈 문자열을 반환합니다 — 범용어("lifestyle blog" 등)로
+    검색하면 주제와 무관한 동일 인기 이미지가 모든 글에 반복 첨부되므로,
+    차라리 검색을 건너뛰고 AI 생성 이미지·제목 썸네일로 폴백하는 편이 낫습니다.
+    """
     # 영어 단어가 있으면 우선 사용
     en_words = re.findall(r'[A-Za-z][A-Za-z0-9]{2,}', query)
     if en_words:
         return " ".join(en_words[:3])
 
-    # 한국어 → 영어 범용 매핑 (이미지 검색 친화적 카테고리)
-    _KO_EN = {
-        "건강": "health", "의료": "healthcare", "운동": "exercise", "다이어트": "diet",
-        "투자": "investment", "주식": "stock market", "ETF": "ETF", "금융": "finance",
-        "부동산": "real estate", "경제": "economy", "재테크": "personal finance",
-        "여행": "travel", "관광": "tourism", "맛집": "restaurant", "숙소": "hotel",
-        "독서": "reading books", "책": "books", "교육": "education", "학습": "learning",
-        "요리": "cooking", "음식": "food", "카페": "cafe", "커피": "coffee",
-        "패션": "fashion", "뷰티": "beauty", "화장": "makeup", "스킨케어": "skincare",
-        "육아": "parenting", "아이": "child", "가족": "family",
-        "여름": "summer", "봄": "spring", "가을": "autumn", "겨울": "winter",
-        "장마": "rainy season", "폭염": "heat wave", "날씨": "weather",
-        "캠프": "camp", "캠핑": "camping", "등산": "hiking", "자전거": "cycling",
-        "스포츠": "sports", "축구": "soccer", "야구": "baseball", "테니스": "tennis",
-        "드라마": "drama", "영화": "movie", "음악": "music", "공연": "concert",
-        "취업": "job", "직장": "workplace", "창업": "startup", "부업": "side job",
-        "세금": "tax", "연금": "pension", "보험": "insurance", "대출": "loan",
-        "AI": "artificial intelligence", "기술": "technology", "스마트폰": "smartphone",
-        "방학": "school vacation", "대비": "preparation", "관리": "management",
-        "절약": "saving money", "절세": "tax saving", "공부": "studying",
-        "노후": "retirement", "임신": "pregnancy", "출산": "childbirth",
-        "정책": "policy", "지원": "support", "혜택": "benefit", "신청": "application",
-        "이사": "moving house", "전세": "rental housing", "청약": "housing subscription",
-    }
     ko_words = re.findall(r'[가-힣]{2,}', query)
-    en_terms = []
+    en_terms: list[str] = []
     for w in ko_words:
-        if w in _KO_EN:
-            en_terms.append(_KO_EN[w])
+        term = _ko_en_lookup(w)
+        if term and term not in en_terms:
+            en_terms.append(term)
         if len(en_terms) >= 2:
             break
-    # 매핑되는 단어가 없으면 빈 문자열 — 범용어("lifestyle blog" 등)로 검색하면
-    # 주제와 무관한 동일 인기 이미지가 모든 글에 반복 첨부되므로 검색을 건너뛴다
     return " ".join(en_terms)
 
 
@@ -778,8 +907,12 @@ def fetch_images_for_queries(
     pixabay_api_key: str = "",
     title: str = "",
 ) -> list[dict]:
-    """섹션별 쿼리 목록에 맞춰 이미지를 검색(Pixabay → 네이버 → DDG → Wikimedia)하고 Claude로 최종 검증합니다.
-    모든 검색이 실패하면 제목 기반 SVG 썸네일을 생성해 대체합니다 (title 제공 시)."""
+    """섹션별 쿼리로 저작권 안전 이미지(Pixabay → Wikimedia)를 검색하고 Claude로 최종 검증합니다.
+
+    검색 결과가 없으면 AI 생성 이미지 → 제목 기반 SVG 썸네일 순으로 대체합니다.
+    반환 직전에 화이트리스트를 한 번 더 적용합니다 — 검색 단계에서 이미 걸렀지만,
+    폴백 경로나 앞으로 추가될 경로가 이 관문을 우회하지 못하게 하는 최종 방어선입니다.
+    """
     images = []
     seen_urls: set[str] = set()
     seen_titles: set[str] = set()  # 같은 사진이 다른 URL로 반복 선택되는 것 방지 (태그 문자열 기준)
@@ -854,6 +987,16 @@ def fetch_images_for_queries(
                 images.append(real_img)
             images.append(thumb)
 
+    # 최종 관문 — 화이트리스트 밖 이미지는 여기서 반드시 걸러집니다.
+    images = filter_license_safe(images)
+
+    # 필터 결과가 비었는데 만들 재료(title/keyword)가 있으면 썸네일이라도 붙입니다.
+    # 이미지 없는 글보다는 직접 만든 썸네일이 낫습니다.
+    if not images and (title or keyword):
+        thumb = generate_fallback_image(title, keyword)
+        if thumb and is_license_safe(thumb.get("url", "")):
+            images.append(thumb)
+
     return images
 
 
@@ -872,19 +1015,89 @@ def _safe_caption(img: dict, alt: str) -> str:
     return title
 
 
+# 이미지 출처 표기 — 저작권 정책 리스크 예방 + 콘텐츠 성의 신호(E-E-A-T).
+# 링크는 소스 사이트 메인이 아니라 실제 자료 페이지가 있을 때만 검다
+# (AdSense '탐색' 정책상 관련 없는 페이지로 보내면 안 됨).
+#
+# ⚠️ "네이버 이미지 검색", "웹 검색" 같은 값은 출처가 아니라 검색 경로일 뿐이며,
+#    적어둔다고 사용 권리가 생기지 않습니다. 두 소스를 검색 경로에서 제거하면서
+#    라벨도 함께 지웠습니다. 라이선스를 확인한 소스만 여기 둡니다.
+_SOURCE_LABELS = {
+    "pixabay": "Pixabay (Pixabay Content License)",
+    "wikimedia": "Wikimedia Commons",
+    "unsplash": "Unsplash (Unsplash License)",
+    "ai_generated": "AI 생성 이미지",
+    "generated_thumbnail": "직접 제작",
+}
+
+
+# URL 호스트 → 출처 라벨. 이미지가 교체된 뒤 캡션을 다시 쓸 때 씁니다.
+# img dict의 "source" 필드는 교체 시점에만 있고 발행된 HTML에는 남지 않으므로,
+# 사후 정리는 src URL만 보고 판정해야 합니다.
+_HOST_SOURCE_LABELS = (
+    ("pixabay.com", "Pixabay (Pixabay Content License)"),
+    ("wikimedia.org", "Wikimedia Commons"),
+    ("unsplash.com", "Unsplash (Unsplash License)"),
+    ("ibb.co", "직접 제작"),
+)
+
+
+def source_label_for_url(url: str) -> str:
+    """이미지 URL만 보고 출처 라벨을 판정합니다.
+
+    화이트리스트 밖 URL은 빈 문자열을 반환합니다 — 라이선스를 확인하지 않은
+    이미지에 그럴듯한 출처를 붙이면 안 됩니다.
+    """
+    u = (url or "").strip()
+    if u.startswith("data:image/"):
+        return "직접 제작"
+    m = re.match(r'https?://([^/:]+)', u, re.I)
+    if not m:
+        return ""
+    host = m.group(1).lower()
+    for needle, label in _HOST_SOURCE_LABELS:
+        if host == needle or host.endswith("." + needle):
+            return label
+    return ""
+
+
+def _attribution_text(img: dict) -> str:
+    """이미지 출처 표기 문구를 반환합니다 (알 수 없는 소스면 빈 문자열)."""
+    label = _SOURCE_LABELS.get((img.get("source") or "").strip())
+    return f"이미지 출처: {label}" if label else ""
+
+
 def _make_img_html(img: dict, alt: str, caption: str = "") -> str:
-    """이미지 SEO 최적화 HTML 생성."""
+    """이미지 SEO 최적화 HTML 생성 (출처 표기 포함)."""
     alt_safe = html.escape(alt, quote=True)
     caption_safe = html.escape(caption, quote=True)
+    attribution = _attribution_text(img)
     fig_style = "margin:2.5em auto;text-align:center;max-width:720px;"
     img_style = (
         "max-width:100%;height:auto;border-radius:10px;"
         "box-shadow:0 3px 14px rgba(0,0,0,0.13);display:block;margin:0 auto;"
     )
+    # 캡션 본문 + 출처를 한 figcaption 안에 배치 (출처만 있어도 표기)
+    cap_parts = []
+    if caption:
+        cap_parts.append(
+            f'<span style="font-style:italic;">{caption_safe}</span>'
+        )
+    if attribution:
+        page_url = (img.get("page_url") or "").strip()
+        attr_safe = html.escape(attribution, quote=True)
+        attr_html = (
+            f'<a href="{html.escape(page_url, quote=True)}" target="_blank" '
+            f'rel="nofollow noopener" style="color:#999;text-decoration:none;">{attr_safe}</a>'
+            if page_url.startswith("http") else attr_safe
+        )
+        cap_parts.append(
+            f'<span style="font-size:11px;color:#999;">{attr_html}</span>'
+        )
     cap_html = (
         f'<figcaption style="text-align:center;font-size:13px;color:#777;'
-        f'margin-top:8px;font-style:italic;">{caption_safe}</figcaption>'
-        if caption else ""
+        f'margin-top:8px;line-height:1.6;">' + "<br>".join(cap_parts) + '</figcaption>'
+        if cap_parts else ""
     )
     return (
         f'\n<figure style="{fig_style}">'

@@ -21,7 +21,13 @@ if not CLIENT_ID or not CLIENT_SECRET:
 REDIRECT_URI = "http://localhost:8080"
 SCOPE = " ".join([
     "https://www.googleapis.com/auth/blogger",
-    "https://www.googleapis.com/auth/webmasters.readonly",
+    # 읽기 전용(webmasters.readonly)으로는 사이트맵 제출·사이트 등록이 403이 납니다.
+    # 이 권한이 없던 탓에 사이트맵이 한 번도 등록되지 않아 구글이 글을 발견하지
+    # 못했습니다 (2026-08-18 점검: 색인 0건, "URL is unknown to Google").
+    # 전체 webmasters는 readonly를 포함하므로 따로 둘 필요가 없습니다.
+    "https://www.googleapis.com/auth/webmasters",
+    # 실제 AdSense 수익 조회 (adsense_revenue.py) — AdSense 승인 후에 쓰입니다
+    "https://www.googleapis.com/auth/adsense.readonly",
 ])
 
 _auth_code = None

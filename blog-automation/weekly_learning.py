@@ -39,6 +39,8 @@ LEARNING_FILE = os.path.join(_BASE, "logs", "learning.json")
 HISTORY_FILE = os.path.join(_BASE, "logs", "run_history.json")
 KEYWORDS_USED_FILE = os.path.join(_BASE, "logs", "used_keywords.json")
 LEARNED_KW_FILE = os.path.join(_BASE, "logs", "learned_keywords.json")
+# 주간 학습 → 다음 주 글쓰기 프롬프트에 자동 주입되는 지침 (content_generator가 읽음)
+WRITING_TIPS_FILE = os.path.join(_BASE, "logs", "learned_writing_tips.json")
 DOCS_DATA_DIR = os.path.join(_BASE, "..", "docs", "data")
 ANALYTICS_SUMMARY_FILE = os.path.join(DOCS_DATA_DIR, "analytics_summary.json")
 
@@ -227,6 +229,12 @@ def _analyze_with_claude(summary: dict, api_key: str, prev_summary: dict | None 
   "recommended_categories": ["다음 주 집중 카테고리 1", "카테고리 2"],
   "recommended_keywords": ["추천 키워드 1", "키워드 2", "키워드 3", "키워드 4", "키워드 5"],
   "keyword_reason": "위 키워드를 추천하는 이유 (real_performance가 있으면 실제 클릭/수익 근거로 설명)",
+  "writing_guidelines": [
+    "다음 주 글쓰기에 바로 반영할 지침 (성과가 좋았던 글의 실제 공통점 기반, 한 문장 명령형)",
+    "지침 2 (예: '도입부 첫 문장에 구체적 수치를 넣을 것 — 클릭률 높은 글의 공통점')",
+    "지침 3"
+  ],
+  "guidelines_reason": "위 글쓰기 지침을 도출한 근거 (어떤 글이 왜 잘됐는지)",
   "auto_apply": {{
     "posts_per_run_recommendation": 3,
     "focus_category": "가장 집중할 카테고리",
@@ -272,6 +280,21 @@ def _auto_apply(analysis: dict) -> list[str]:
         _save(LEARNED_KW_FILE, merged)
         applied.append(f"추천 키워드 {len(rec_kws)}개 학습 저장: {', '.join(rec_kws[:3])}…")
         logger.info(f"  ✅ 학습 키워드 저장: {rec_kws}")
+
+    # 1.5 글쓰기 지침 → learned_writing_tips.json (다음 주 글 생성 프롬프트에 자동 주입)
+    guidelines = [
+        str(g).strip() for g in (analysis.get("writing_guidelines") or [])
+        if str(g).strip()
+    ][:5]
+    if guidelines:
+        _save(WRITING_TIPS_FILE, {
+            "generated_at": datetime.now().isoformat(),
+            "guidelines": guidelines,
+            "reason": str(analysis.get("guidelines_reason", "")).strip(),
+        })
+        applied.append(f"글쓰기 지침 {len(guidelines)}개 저장 → 다음 주 글부터 자동 반영")
+        for g in guidelines:
+            logger.info(f"  ✍️ 지침: {g}")
 
     # 2. 포스트 수 추천 → auto_apply 섹션에 저장 (실제 변경은 사람이 확인 후)
     aa = analysis.get("auto_apply", {})

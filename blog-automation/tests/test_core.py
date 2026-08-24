@@ -244,6 +244,7 @@ def test_corpus_blog_filter(tmp_path, monkeypatch):
     hist_file = tmp_path / "run_history.json"
     hist_file.write_text(json.dumps(history), encoding="utf-8")
     monkeypatch.setattr(kc, "_HISTORY_FILE", str(hist_file))
+    monkeypatch.setattr(kc, "_REGISTRY_FILE", str(tmp_path / "no_registry.json"))
 
     blog1 = kc._load_recent_post_corpus(blog_id="blog1")
     blog2 = kc._load_recent_post_corpus(blog_id="blog2")
@@ -265,6 +266,7 @@ def test_corpus_no_filter_returns_all(tmp_path, monkeypatch):
     hist_file = tmp_path / "run_history.json"
     hist_file.write_text(json.dumps(history), encoding="utf-8")
     monkeypatch.setattr(kc, "_HISTORY_FILE", str(hist_file))
+    monkeypatch.setattr(kc, "_REGISTRY_FILE", str(tmp_path / "no_registry.json"))
     assert set(kc._load_recent_post_corpus()) == {"A", "B"}
 
 
@@ -824,3 +826,503 @@ def test_auto_repair_backup_and_rollback(tmp_path, monkeypatch):
 
     # 정상 파일은 롤백하지 않음
     assert ar._validate_and_rollback(backup_dir) == []
+
+
+# ── anthropic SDK 시그니처 변화 대응 (2026-08-21 발행 전량 실패) ─────────────
+# requirements가 anthropic을 >=0.40.0으로만 묶어 둬 SDK가 조용히 올라갔고,
+# 새 stream()이 temperature를 받지 않으면서 TypeError로 콘텐츠 생성이 100%
+# 실패했습니다. 블로그 발행이 이틀간 0건이었습니다.
+
+class _SigStream:
+    def __init__(self, msg): self._msg = msg
+    def __enter__(self): return self
+    def __exit__(self, *a): return False
+    def get_final_message(self): return self._msg
+
+
+class _SigMessages:
+    """temperature를 거부하는 SDK를 흉내 냅니다."""
+    def __init__(self, rejects=("temperature",)):
+        self.rejects = rejects
+        self.calls = []
+
+    def stream(self, **kwargs):
+        for bad in self.rejects:
+            if bad in kwargs:
+                raise TypeError(f"Messages.stream() got an unexpected keyword argument '{bad}'")
+        self.calls.append(kwargs)
+        return _SigStream(object())
+
+
+class _SigClient:
+    def __init__(self, rejects=("temperature",)):
+        self.messages = _SigMessages(rejects)
+
+
+def test_stream_drops_kwarg_the_sdk_rejects():
+    import config
+    c = _SigClient()
+    config._stream_final_message(c, [{"role": "user", "content": "안녕"}],
+                                 {"model": "m", "max_tokens": 10, "temperature": 1.0})
+    assert len(c.messages.calls) == 1
+    assert "temperature" not in c.messages.calls[0]
+    assert c.messages.calls[0]["max_tokens"] == 10      # 나머지 인자는 보존
+
+
+def test_stream_drops_several_rejected_kwargs():
+    import config
+    c = _SigClient(rejects=("temperature", "top_p"))
+    config._stream_final_message(c, [], {"model": "m", "temperature": 1.0, "top_p": 0.9})
+    sent = c.messages.calls[0]
+    assert "temperature" not in sent and "top_p" not in sent
+    assert sent["model"] == "m"
+
+
+def test_unrelated_type_error_is_not_swallowed():
+    """인자 문제가 아닌 TypeError까지 삼키면 진짜 버그를 놓칩니다."""
+    import pytest
+    import config
+
+    class Boom:
+        class messages:
+            @staticmethod
+            def stream(**kw): raise TypeError("이건 다른 문제입니다")
+
+    with pytest.raises(TypeError):
+        config._stream_final_message(Boom(), [], {"model": "m"})
+
+
+# ── 게시 검증 리포트 출력 (blog-verify 38회 전량 실패의 한 원인) ─────────────
+
+def test_print_report_survives_null_last_updated(capsys):
+    """키가 있고 값이 None이면 .get의 기본값은 쓰이지 않습니다."""
+    import post_verifier
+    post_verifier.print_report({"last_updated": None, "results": {}, "summary": {}})
+    assert "없음" in capsys.readouterr().out
+
+
+def test_print_report_shows_timestamp_when_present(capsys):
+    import post_verifier
+    post_verifier.print_report(
+        {"last_updated": "2026-08-22T04:00:00.123", "results": {}, "summary": {}})
+    assert "2026-08-22T04:00" in capsys.readouterr().out
+
+
+# ── 발행 0건이면 워크플로를 실제로 실패시키기 ───────────────────────────────
+# 2026-08-20~22 이틀간 콘텐츠 생성이 100% 실패했는데도 워크플로는 계속
+# success로 끝났습니다. 실패 알림도, 대시보드 표시도 없었습니다.
+
+def test_all_publishes_failed_exits_nonzero():
+    import pytest
+    import main
+    with pytest.raises(SystemExit) as e:
+        main._exit_on_publish_failure(
+            [{"blog": "A", "attempted": 1, "published": 0, "pending": 0,
+              "success": 0, "failed": 1, "errors": ["콘텐츠 생성 최종 실패"]}])
+    assert e.value.code == 1
+
+
+def test_everything_diverted_to_pending_is_a_failure(caplog):
+    """블로그에 한 편도 안 올라갔으면 pending 저장은 성공이 아닙니다.
+
+    success_count는 pending 저장까지 성공으로 세기 때문에, 이 구분이 없으면
+    "성공 1건"인데 블로그는 비어 있는 상태를 영영 놓칩니다.
+    """
+    import pytest
+    import main
+    with caplog.at_level("ERROR"), pytest.raises(SystemExit):
+        main._exit_on_publish_failure(
+            [{"blog": "A", "attempted": 1, "published": 0, "pending": 1,
+              "success": 1, "failed": 0, "errors": []}])
+    assert "검토 대기" in caplog.text
+
+
+def test_published_post_passes_even_with_pending_siblings():
+    import main
+    main._exit_on_publish_failure(
+        [{"blog": "A", "attempted": 3, "published": 1, "pending": 2,
+          "success": 3, "failed": 0, "errors": []}])
+
+
+def test_partial_success_does_not_fail():
+    """한 편이라도 올라갔으면 실패가 아닙니다."""
+    import main
+    main._exit_on_publish_failure(
+        [{"blog": "A", "attempted": 2, "published": 1, "pending": 0,
+          "success": 1, "failed": 1, "errors": []}])
+
+
+def test_nothing_attempted_is_not_a_failure():
+    """할 일이 없던 것과 하려다 실패한 것은 다릅니다."""
+    import main
+    main._exit_on_publish_failure(
+        [{"blog": "A", "attempted": 0, "published": 0, "pending": 0,
+          "success": 0, "failed": 0, "errors": []}])
+
+
+def test_failure_across_blogs_is_aggregated():
+    import pytest
+    import main
+    with pytest.raises(SystemExit):
+        main._exit_on_publish_failure([
+            {"blog": "A", "attempted": 1, "published": 0, "pending": 0,
+             "success": 0, "failed": 1, "errors": ["x"]},
+            {"blog": "B", "attempted": 1, "published": 0, "pending": 0,
+             "success": 0, "failed": 1, "errors": ["y"]},
+        ])
+
+
+def test_error_messages_are_logged(caplog):
+    import pytest
+    import main
+    with caplog.at_level("ERROR"), pytest.raises(SystemExit):
+        main._exit_on_publish_failure(
+            [{"blog": "금융NEWS", "attempted": 1, "published": 0, "pending": 0,
+              "success": 0, "failed": 1,
+              "errors": ["콘텐츠 생성 최종 실패: '사이드카 발동'"]}])
+    text = caplog.text
+    assert "금융NEWS" in text and "사이드카 발동" in text
+
+
+# ── AdSense 자동 수정 (2026-08-22: 16,000자 넘는 글은 100% 실패했음) ─────────
+# html[:8000]만 보내 놓고 결과를 len(html)*0.5와 비교해, 긴 글은 구조적으로
+# 통과가 불가능했습니다. 통과했다면 뒷부분이 잘린 글이 발행됐을 겁니다.
+
+from unittest.mock import patch  # noqa: E402
+
+
+def _validation(score=79):
+    return {"score": score, "recommendation": "review",
+            "checks": {"originality": {"status": "warn", "note": "1인칭 경험 부족"}}}
+
+
+def _long_post(chars=16228):
+    body = "<p>" + "가" * (chars - 7) + "</p>"
+    return {"title": "제목", "keyword": "키워드", "content": body,
+            "word_count": chars}
+
+
+def test_auto_fix_sends_full_html_not_a_prefix():
+    """잘라 보내면 잘린 만큼만 돌아옵니다."""
+    import adsense_validator as av
+    post = _long_post()
+    seen = {}
+
+    def _fake(client, **kw):
+        seen["prompt"] = kw["messages"][0]["content"]
+        seen["max_tokens"] = kw["max_tokens"]
+        return post["content"]
+
+    with patch("anthropic.Anthropic"), \
+         patch("config.claude_generate", _fake), \
+         patch("config.ANTHROPIC_API_KEY", "k"):
+        av.fix_adsense_issues(post, _validation())
+
+    assert post["content"] in seen["prompt"], "본문 전체가 프롬프트에 실려야 합니다"
+    assert seen["max_tokens"] > 8000, "긴 글에는 출력 예산도 커야 합니다"
+
+
+def test_auto_fix_succeeds_on_a_16k_post():
+    """예전에는 이 길이가 항상 '너무 짧음'으로 폐기됐습니다."""
+    import adsense_validator as av
+    post = _long_post()
+    improved = post["content"].replace("<p>", "<p>실제로 써본 결과, ", 1)
+    with patch("anthropic.Anthropic"), \
+         patch("config.claude_generate", lambda c, **kw: improved), \
+         patch("config.ANTHROPIC_API_KEY", "k"):
+        fixed = av.fix_adsense_issues(post, _validation())
+    assert fixed is not None and fixed.get("adsense_auto_fixed") is True
+
+
+def test_auto_fix_skips_instead_of_truncating_huge_posts():
+    """감당 못 할 길이는 자르지 말고 건너뛰어야 합니다 — 잘린 글 발행 방지."""
+    import adsense_validator as av
+    post = _long_post(av._AUTO_FIX_MAX_HTML + 1000)
+    called = []
+    with patch("anthropic.Anthropic"), \
+         patch("config.claude_generate", lambda c, **kw: called.append(1) or ""), \
+         patch("config.ANTHROPIC_API_KEY", "k"):
+        assert av.fix_adsense_issues(post, _validation()) is None
+    assert not called, "건너뛰기로 했으면 AI를 부르지 않아야 합니다"
+
+
+def test_short_result_is_still_rejected():
+    """진짜로 짧게 돌아온 결과는 여전히 버려야 합니다."""
+    import adsense_validator as av
+    post = _long_post()
+    with patch("anthropic.Anthropic"), \
+         patch("config.claude_generate", lambda c, **kw: "<p>짧음</p>"), \
+         patch("config.ANTHROPIC_API_KEY", "k"):
+        assert av.fix_adsense_issues(post, _validation()) is None
+
+
+# ── 이미지 정책 지적을 규칙으로 보수 (2026-08-22) ────────────────────────────
+# 자동 수정은 Claude에게 본문을 다시 쓰게 하는 방식이라 이미지 항목을 고칠
+# 수 없습니다. "이미지 1개만 확인되며 alt텍스트·출처 명확성 부족"이 계속
+# 감점으로 남았습니다.
+
+_IMG_WARN = {"score": 79, "recommendation": "review",
+             "checks": {"image_policy": {"status": "warn",
+                                         "note": "이미지 1개, alt 없음"}}}
+
+
+def test_repair_images_fills_in_missing_alt():
+    import adsense_validator as av
+    html = ('<p>' + '가' * 1200 + '</p>'
+            '<figure><img src="https://a/x.jpg"/>'
+            '<figcaption>사진</figcaption></figure>')
+    post = {"title": "당뇨 초기 증상 자가진단", "keyword": "", "content": html}
+    with patch("image_audit.attach_image", lambda c, t, k="": (c, False, "생략")):
+        out, notes = av.repair_images(post, html)
+    assert 'alt="당뇨 초기 증상 자가진단 관련 이미지"' in out
+    assert any("alt" in n for n in notes)
+
+
+def test_repair_images_does_not_touch_good_alt():
+    import adsense_validator as av
+    html = ('<p>' + '가' * 1200 + '</p>'
+            '<figure><img src="https://a/x.jpg" alt="당뇨 자가진단 키트 사진"/>'
+            '<figcaption>설명</figcaption></figure>')
+    post = {"title": "당뇨 초기 증상 자가진단", "keyword": "", "content": html}
+    with patch("image_audit.attach_image", lambda c, t, k="": (c, False, "생략")):
+        out, _ = av.repair_images(post, html)
+    assert 'alt="당뇨 자가진단 키트 사진"' in out
+
+
+def test_image_repair_runs_even_when_text_fix_fails():
+    """텍스트 수정이 실패해도 이미지 보수까지 버릴 이유는 없습니다."""
+    import adsense_validator as av
+    html = ('<p>' + '가' * 1200 + '</p>'
+            '<figure><img src="https://a/x.jpg"/>'
+            '<figcaption>사진</figcaption></figure>')
+    post = {"title": "당뇨 초기 증상", "keyword": "", "content": html,
+            "word_count": 1200}
+    with patch("anthropic.Anthropic"), \
+         patch("config.ANTHROPIC_API_KEY", "k"), \
+         patch("config.claude_generate", side_effect=RuntimeError("API 오류")), \
+         patch("image_audit.attach_image", lambda c, t, k="": (c, False, "생략")):
+        fixed = av.fix_adsense_issues(post, _IMG_WARN)
+    assert fixed is not None
+    assert 'alt="당뇨 초기 증상 관련 이미지"' in fixed["content"]
+    assert fixed.get("adsense_image_fixes")
+
+
+def test_image_repair_skipped_when_policy_is_pass():
+    """이미지 항목이 지적되지 않았으면 이미지는 건드리지 않습니다."""
+    import adsense_validator as av
+    html = ('<p>' + '가' * 1200 + '</p>'
+            '<figure><img src="https://a/x.jpg"/>'
+            '<figcaption>사진</figcaption></figure>')
+    post = {"title": "제목입니다", "keyword": "", "content": html,
+            "word_count": 1200}
+    # 이미지는 pass, 다른 항목만 warn → 자동 수정 흐름에는 들어가되
+    # repair_images는 호출되지 않아야 합니다
+    val = {"score": 79, "recommendation": "review",
+           "checks": {"image_policy": {"status": "pass", "note": ""},
+                      "eeat": {"status": "warn", "note": "출처 부족"}}}
+    called = []
+    with patch("anthropic.Anthropic"), \
+         patch("config.ANTHROPIC_API_KEY", "k"), \
+         patch("config.claude_generate", side_effect=RuntimeError("x")), \
+         patch("adsense_validator.repair_images",
+               lambda p, h: called.append(1) or (h, [])):
+        av.fix_adsense_issues(post, val)
+    assert not called
+
+
+# ── 글 성격에 맞춘 AdSense 채점 (2026-08-22: 79점 상한의 원인) ──────────────
+# 생성 프롬프트는 "하지 않은 경험을 쓰지 않는다"를 원칙으로 삼는데 검증
+# 기준은 1인칭 경험을 요구해, 조사형 글은 originality·eeat 두 항목이
+# 구조적으로 warn 고정이었습니다 (12점 만점에 warn 7점 → -10점 확정).
+
+def test_research_mode_does_not_demand_first_person():
+    import adsense_validator as av
+    orig, eeat = av._mode_rules({"experience_mode": "research"})
+    assert "감점 사유가 아닙니다" in orig
+    assert "감점하지 마세요" in eeat
+
+
+def test_experience_mode_still_checks_first_person():
+    import adsense_validator as av
+    orig, eeat = av._mode_rules({"experience_mode": "experience"})
+    assert "경험형" in orig and "1인칭 경험" in eeat
+
+
+def test_unknown_mode_defaults_to_research():
+    """표식이 없는 옛 글까지 경험을 요구하면 같은 감점이 되살아납니다."""
+    import adsense_validator as av
+    orig, _ = av._mode_rules({})
+    assert "조사·분석형" in orig
+
+
+def test_evidence_prompt_requires_inline_citation():
+    from evidence_builder import format_evidence_for_prompt
+    pack = {"facts": [
+        {"claim": "비용은 8만~15만원", "verified": True, "grade": "A",
+         "source_title": "산림조합중앙회 - 안내", "published_at": "2026-07-01",
+         "source_url": "https://x"},
+        {"claim": "예약은 8월 중순까지", "verified": True, "grade": "B",
+         "source_title": "농협 안내", "source_url": "https://y"},
+    ]}
+    out = format_evidence_for_prompt(pack)
+    assert "본문에 직접 녹여 쓰세요" in out
+    assert "산림조합중앙회" in out, "인용 예시는 실제 출처로 만들어야 합니다"
+    assert "최소 2개" in out
+
+
+def test_evidence_prompt_without_pack_has_no_citation_rule():
+    """자료팩이 없으면 인용을 요구할 수 없습니다."""
+    from evidence_builder import format_evidence_for_prompt
+    out = format_evidence_for_prompt({"facts": []})
+    assert "본문 인용 규칙" not in out
+
+
+# ── 사이트맵 재제출 결과를 남기기 (2026-08-22) ───────────────────────────────
+# 워크플로가 `|| true`로 이 단계를 감싸 403·404로 실패해도 초록으로 끝납니다.
+# 발행을 막을 이유는 없지만 결과가 어딘가에는 남아야 합니다.
+
+def test_sitemap_status_is_saved(tmp_path, monkeypatch):
+    import gsc_indexing as gi
+    out = tmp_path / "sitemap_status.json"
+    monkeypatch.setattr(gi, "SITEMAP_STATUS_PATH", str(out))
+    gi.save_sitemap_status({"submitted": 3, "failed": 0, "scopeDenied": 0},
+                           [{"name": "A"}, {"id": "blog2"}])
+    d = json.loads(out.read_text(encoding="utf-8"))
+    assert d["ok"] is True and d["submitted"] == 3
+    assert d["blogs"] == ["A", "blog2"] and d["checkedAt"]
+
+
+def test_sitemap_status_marks_failure(tmp_path, monkeypatch):
+    import gsc_indexing as gi
+    out = tmp_path / "s.json"
+    monkeypatch.setattr(gi, "SITEMAP_STATUS_PATH", str(out))
+    gi.save_sitemap_status({"submitted": 1, "failed": 2, "scopeDenied": 2}, [])
+    d = json.loads(out.read_text(encoding="utf-8"))
+    assert d["ok"] is False and d["scopeDenied"] == 2
+
+
+def test_zero_submitted_is_not_ok(tmp_path, monkeypatch):
+    """토큰이 없어 한 건도 못 보낸 것을 정상으로 읽으면 안 됩니다."""
+    import gsc_indexing as gi
+    out = tmp_path / "s.json"
+    monkeypatch.setattr(gi, "SITEMAP_STATUS_PATH", str(out))
+    gi.save_sitemap_status({"submitted": 0, "failed": 0, "scopeDenied": 0}, [])
+    assert json.loads(out.read_text(encoding="utf-8"))["ok"] is False
+
+
+# ── 발행 요약을 워크플로가 읽을 수 있게 (사이트맵 제출 여부 판단용) ──────────
+
+def test_publish_summary_is_written(tmp_path):
+    import main
+    out = tmp_path / "last_publish_summary.json"
+    main._save_publish_summary(
+        2, 1, 1, 0,
+        [{"blog": "A", "published": 1, "pending": 1, "failed": 0}],
+        path=str(out))
+    d = json.loads(out.read_text(encoding="utf-8"))
+    assert d["published"] == 1 and d["pending"] == 1
+    assert d["blogs"][0]["blog"] == "A"
+
+
+def test_publish_summary_does_not_pollute_real_logs():
+    """path를 안 주면 테스트 중에는 아무것도 쓰지 않아야 합니다."""
+    import main
+    real = os.path.join(os.path.dirname(main.__file__), "logs",
+                        "last_publish_summary.json")
+    before = os.path.exists(real)
+    main._save_publish_summary(1, 0, 1, 0, [])
+    assert os.path.exists(real) == before
+
+
+# ── 403 원인 구분 (2026-08-22: 권한 있는데 "재발급하세요"로 오진) ────────────
+# 스코프 부족과 속성 유형 불일치는 둘 다 403이고 둘 다 "permission"을
+# 포함합니다. 단어로 판별하면 후자를 전자로 오해해 도메인 속성 재시도를
+# 건너뛰고, 멀쩡한 토큰을 재발급 대상으로 몰아갑니다.
+
+from unittest.mock import MagicMock  # noqa: E402
+
+_SCOPE_403 = ('{"error":{"code":403,"message":"Request had insufficient '
+              'authentication scopes.","status":"PERMISSION_DENIED"}}')
+_PROPERTY_403 = ('{"error":{"code":403,"message":"User does not have sufficient '
+                 "permission for site 'https://www.hoguwhat.com/'.\"}}")
+
+
+def test_scope_error_is_detected():
+    import gsc_indexing as gi
+    assert gi._is_scope_error(_SCOPE_403) is True
+
+
+def test_property_mismatch_is_not_a_scope_error():
+    """이걸 스코프 오류로 읽어 sc-domain 재시도를 건너뛰고 있었습니다."""
+    import gsc_indexing as gi
+    assert gi._is_scope_error(_PROPERTY_403) is False
+
+
+def test_domain_property_retry_runs_on_property_403():
+    import gsc_indexing as gi
+    calls = []
+
+    def _put(url, **kw):
+        calls.append(url)
+        first = len(calls) == 1
+        return MagicMock(status_code=403 if first else 200,
+                         text=_PROPERTY_403 if first else "")
+
+    blogs = [{"id": "blog1", "name": "A", "url": "https://www.hoguwhat.com/"}]
+    with patch("requests.put", _put):
+        r = gi.submit_sitemaps(blogs, token="t")
+    assert len(calls) == 2, "URL-프리픽스 403이면 도메인 속성으로 재시도해야 합니다"
+    assert "sc-domain" in calls[1]
+    assert r["submitted"] == 1 and r["scopeDenied"] == 0
+
+
+def test_real_scope_403_is_reported_without_retry():
+    import gsc_indexing as gi
+    calls = []
+
+    def _put(url, **kw):
+        calls.append(url)
+        return MagicMock(status_code=403, text=_SCOPE_403)
+
+    blogs = [{"id": "blog1", "name": "A", "url": "https://www.hoguwhat.com/"}]
+    with patch("requests.put", _put):
+        r = gi.submit_sitemaps(blogs, token="t")
+    assert len(calls) == 1, "진짜 스코프 부족이면 재시도가 무의미합니다"
+    assert r["scopeDenied"] == 1 and r["failed"] == 1
+
+
+# ── 댓글 인증이 업로드와 갈리던 문제 (2026-08-22) ────────────────────────────
+# BLOGS_CONFIG의 blog1 크리덴셜이 invalid_client인데, 업로드는 기본 시크릿
+# 폴백으로 성공하고 댓글은 폴백이 없어 "토큰 없음 — 큐잉"으로 멈췄습니다.
+# 같은 인증을 두 번 구현한 탓입니다.
+
+def test_comment_manager_uses_the_uploader_token():
+    import blogger_uploader
+    import comment_manager
+    cfg = {"id": "blog1", "client_id": "bad"}
+    with patch.object(blogger_uploader, "_get_access_token",
+                      return_value="tok") as m:
+        assert comment_manager._get_access_token(cfg) == "tok"
+    m.assert_called_once_with(cfg)
+
+
+def test_comment_manager_inherits_the_fallback():
+    """블로그별 크리덴셜이 죽어도 기본 시크릿으로 이어져야 합니다."""
+    import comment_manager
+    calls = []
+
+    def _req(cid, secret, refresh):
+        calls.append(cid)
+        if cid == "bad":
+            return None, '401 {"error":"invalid_client"}'
+        return "fallback-token", ""
+
+    with patch("blogger_uploader._request_token", _req), \
+         patch("blogger_uploader.BLOGGER_CLIENT_ID", "good"), \
+         patch("blogger_uploader.BLOGGER_CLIENT_SECRET", "s"), \
+         patch("blogger_uploader.BLOGGER_REFRESH_TOKEN", "r"):
+        got = comment_manager._get_access_token({"id": "blog1", "client_id": "bad",
+                                                 "client_secret": "x",
+                                                 "refresh_token": "y"})
+    assert got == "fallback-token"
+    assert calls == ["bad", "good"], "블로그별 → 기본 순으로 시도해야 합니다"

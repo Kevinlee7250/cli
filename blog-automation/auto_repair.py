@@ -157,6 +157,67 @@ def _diagnose_keyword_exhaustion(used_kw: dict) -> list[dict]:
     return issues
 
 
+ANALYTICS_SUMMARY = os.path.join(_DOCS, "analytics_summary.json")
+
+
+def _diagnose_measurement_health() -> list[dict]:
+    """성과 측정이 조용히 죽어 있는지 감지합니다.
+
+    등급·삭제·주간학습·프롬프트 폐루프가 전부 이 데이터 위에 서 있는데,
+    Blogger 조회수 파싱 버그처럼 조용히 0이 되면 리포트는 정상으로 보이고
+    판단만 근거를 잃습니다 (2026-08-10에 실제로 그 상태였음).
+    """
+    issues = []
+    summary = _load_json(ANALYTICS_SUMMARY, None)
+    if not summary:
+        return issues   # 아직 분석 미실행 — 여기서 경보를 내면 소음이 됨
+
+    ds = summary.get("dataSource", {}) or {}
+    total_posts = summary.get("totalPosts", 0)
+
+    if not ds.get("bloggerApi") and not ds.get("gscPageData"):
+        issues.append({
+            "id": "measurement_dead",
+            "level": "critical",
+            "message": "성과 데이터 수집 전면 실패 — 등급·학습 판단의 근거가 없음",
+            "context": {"dataSource": ds},
+            "fix": None,
+        })
+        return issues
+
+    if ds.get("gscPageData") and ds.get("gscUrlsSeen", 0) > 0 and ds.get("gscMatchRate", 0) < 20:
+        issues.append({
+            "id": "gsc_url_mismatch",
+            "level": "high",
+            "message": (
+                f"GSC가 URL {ds.get('gscUrlsSeen')}개를 반환했지만 글 매칭률이 "
+                f"{ds.get('gscMatchRate')}% — 도메인 전환·URL 형식 불일치 의심"
+            ),
+            "context": {"dataSource": ds},
+            "fix": None,
+        })
+
+    if not ds.get("bloggerApi"):
+        issues.append({
+            "id": "blogger_pageviews_zero",
+            "level": "warning",
+            "message": "Blogger 조회수가 0 — API 권한 또는 통계 미집계 확인 필요",
+            "context": {"dataSource": ds},
+            "fix": None,
+        })
+
+    without_url = ds.get("postsWithoutUrl", 0)
+    if total_posts and without_url / total_posts > 0.2:
+        issues.append({
+            "id": "posts_missing_url",
+            "level": "warning",
+            "message": f"발행 URL 없는 글 {without_url}/{total_posts}개 — 성과 추적 불가",
+            "context": {"withoutUrl": without_url, "totalPosts": total_posts},
+            "fix": None,
+        })
+    return issues
+
+
 def _diagnose_history_bloat(runs: list[dict]) -> list[dict]:
     """실행 이력 200개 초과 시 정리."""
     issues = []
@@ -267,8 +328,14 @@ def _diagnose_from_logs() -> list[dict]:
     try:
         with open(LOG_FILE, encoding="utf-8", errors="replace") as f:
             lines = f.readlines()[-300:]
-        log_tail = "".join(lines)
-        tb_count = log_tail.count("Traceback (most recent call last):")
+        # 이미 분석·수리한 예외까지 세면 고친 오류가 며칠씩 "최근 오류"로
+        # 남습니다. code_repair의 판정을 그대로 씁니다 — 같은 규칙을 두 번
+        # 구현하면 한쪽만 고쳐질 때 어긋납니다.
+        try:
+            from code_repair import new_tracebacks
+            tb_count = len(new_tracebacks())
+        except Exception:
+            tb_count = "".join(lines).count("Traceback (most recent call last):")
         if tb_count > 0:
             issues.append({
                 "id": "python_exception_in_log",
@@ -608,6 +675,7 @@ def run_auto_repair(dry_run: bool = False) -> dict:
     issues += _diagnose_adsense_config()
     issues += _diagnose_json_corruption()
     issues += _diagnose_from_logs()
+    issues += _diagnose_measurement_health()
 
     lvl_order = {"critical": 0, "high": 1, "warning": 2, "low": 3}
     issues.sort(key=lambda x: lvl_order.get(x["level"], 9))

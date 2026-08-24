@@ -116,8 +116,13 @@ def run_once(
     dry_run: bool = False,
     review: bool = False,
     blog_config: dict | None = None,
-) -> None:
-    """키워드를 수집해 포스트를 생성하고 Blogger에 업로드합니다."""
+) -> dict:
+    """키워드를 수집해 포스트를 생성하고 Blogger에 업로드합니다.
+
+    Returns: {"blog", "attempted", "success", "failed", "errors"}
+    호출부가 성공 0건을 감지해 종료 코드로 올릴 수 있도록 집계를 돌려줍니다.
+    예전에는 None을 반환해 무엇이 실패해도 워크플로가 success로 끝났습니다.
+    """
     # 구버전 used_keywords.json 포맷 자동 마이그레이션
     _migrate_used_keywords()
 
@@ -421,7 +426,7 @@ def run_once(
         for upload_try in range(1, MAX_UPLOAD_RETRY + 1):
             result = upload_post(post_data, blog_config)
             if result:
-                break
+                break  # 성공 또는 "DUPLICATE" — 중복은 재시도해도 결과가 같으므로 즉시 중단
             if upload_try < MAX_UPLOAD_RETRY:
                 _wait = 5 * upload_try
                 logger.warning(
@@ -429,6 +434,15 @@ def run_once(
                     f"({upload_try}/{MAX_UPLOAD_RETRY})"
                 )
                 time.sleep(_wait)
+
+        if result == "DUPLICATE":
+            # 실패가 아니라 중복 가드의 정상 차단 — 실패 집계·재시도 큐에서 제외
+            msg = f"중복 주제 — 업로드 건너뜀: '{title}' (유사 제목 이미 발행됨)"
+            update_post_status(_post_id, PostStatus.SKIPPED, error=msg)
+            logger.warning(f"  ⏭ {msg}")
+            if i < len(keywords):
+                time.sleep(2)
+            continue
 
         if result:
             url = result.get("url", "")
@@ -438,8 +452,16 @@ def run_once(
 
             # ── ⑥ 소셜 미디어 콘텐츠 생성 (완전 non-blocking) ──────────────────────
             try:
+                from feature_flags import is_enabled as _flag
                 from social_publisher import publish_all, generate_social_content
-                if SOCIAL_AUTO_PUBLISH:
+                if not _flag("social_content"):
+                    # 스위치가 꺼져 있으면 생성 자체를 하지 않습니다. 지금까지는
+                    # SOCIAL_AUTO_PUBLISH=false여도 콘텐츠는 매번 만들어 두고
+                    # 게시만 건너뛰었습니다 — 한 번도 쓰이지 않는 것을 만드느라
+                    # Claude 호출과 356KB를 계속 썼습니다.
+                    logger.info("  📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀")
+                    social_result = None
+                elif SOCIAL_AUTO_PUBLISH:
                     _img_m = re.search(r'<img[^>]+src="([^"]+)"', post_data.get("content", ""))
                     social_result = publish_all(
                         post_data, blog_url=url,
@@ -453,10 +475,11 @@ def run_once(
                         "instagram": _skip, "threads": _skip, "tiktok": _skip,
                     }
                     logger.info(f"  📱 소셜 콘텐츠 생성 완료")
-                post_data["socialContent"]    = social_result.get("socialContent")
-                post_data["social_instagram"] = social_result.get("instagram")
-                post_data["social_threads"]   = social_result.get("threads")
-                post_data["social_tiktok"]    = social_result.get("tiktok")
+                if social_result:
+                    post_data["socialContent"]    = social_result.get("socialContent")
+                    post_data["social_instagram"] = social_result.get("instagram")
+                    post_data["social_threads"]   = social_result.get("threads")
+                    post_data["social_tiktok"]    = social_result.get("tiktok")
             except Exception as _se:
                 logger.warning(f"  ⚠️ 소셜 콘텐츠 생성 실패 (무시): {_se}")
 
@@ -504,6 +527,20 @@ def run_once(
         logger.info("대시보드 데이터 업데이트 완료")
     except Exception as e:
         logger.warning(f"대시보드 업데이트 실패 (무시): {e}")
+
+    return {
+        "blog": cfg.get("name") or "기본",
+        "attempted": success_count + fail_count,
+        # success_count는 pending 저장(품질 미달·글자 수 미달)까지 성공으로 셉니다.
+        # 블로그에 실제로 올라간 건수는 blogger_count뿐이라, 발행 여부를 판단할
+        # 때는 반드시 이 값을 봐야 합니다. 이걸 구분하지 않으면 "성공 1건"인데
+        # 블로그는 비어 있는 상태를 놓칩니다 (2026-08-22 확인).
+        "published": blogger_count,
+        "pending": max(0, success_count - blogger_count),
+        "success": success_count,
+        "failed": fail_count,
+        "errors": list(error_messages),
+    }
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -595,6 +632,9 @@ def run_series(
 
     generated_posts: list[dict] = []
     pending_list: list[dict] = []
+    # 회차 ↔ 방금 만든 글의 짝. 저장 후 배정된 id를 회차에 적기 위한 것으로,
+    # series.json에는 들어가지 않습니다 (회차 레코드를 오염시키면 안 됩니다).
+    pending_eps: list[tuple[dict, dict]] = []
     episodes = series_plan.get("episodes", [])
 
     from datetime import date as _date
@@ -668,6 +708,7 @@ def run_series(
             post_data["status"] = "pending"
             pending_list.append(post_data)
             ep["status"] = "pending_review"
+            pending_eps.append((ep, post_data))   # 저장 후 id를 받아 적을 짝
             generated_posts.append(post_data)
             save_series(series_plan)
             continue
@@ -681,6 +722,7 @@ def run_series(
             post_data["status"] = "pending"
             pending_list.append(post_data)
             ep["status"] = "pending_review"
+            pending_eps.append((ep, post_data))   # 저장 후 id를 받아 적을 짝
             generated_posts.append(post_data)
             save_series(series_plan)
             continue
@@ -706,6 +748,7 @@ def run_series(
                 post_data["status"] = "pending"
                 pending_list.append(post_data)
                 ep["status"] = "pending_review"
+                pending_eps.append((ep, post_data))   # 저장 후 id를 받아 적을 짝
                 generated_posts.append(post_data)
                 save_series(series_plan)
                 continue
@@ -718,7 +761,10 @@ def run_series(
             logger.debug(f"  최종 편집 건너뜀 (무시): {_fe}")
 
         result = upload_post(post_data, blog_config)
-        if result:
+        if result == "DUPLICATE":
+            ep["status"] = "skipped_duplicate"
+            logger.warning(f"  ⏭ 편 {ep_num} 중복 주제 — 업로드 건너뜀")
+        elif result:
             blogger_url = result.get("url", "")
             ep["status"] = "done"
             ep["blogger_url"] = blogger_url
@@ -736,7 +782,7 @@ def run_series(
             time.sleep(3)
 
     has_scheduled = any(ep.get("status") == "scheduled" for ep in episodes)
-    all_done = all(ep.get("status") in ("done", "pending_review") for ep in episodes)
+    all_done = all(ep.get("status") in ("done", "pending_review", "skipped_duplicate") for ep in episodes)
     if has_scheduled:
         series_plan["status"] = "scheduled_wait"  # 예약 편 대기 중 — 매일 예약 처리기가 이어감
     else:
@@ -755,7 +801,18 @@ def run_series(
 
     try:
         if pending_list:
-            save_pending_posts(pending_list, blog_config)
+            # 배정된 id를 회차에 적어 둡니다. 지금까지 회차와 글을 잇는 유일한
+            # 끈이 제목이었는데, final_editor가 생성 후 제목을 교정하므로
+            # (post_data["title"] = new_title) 그 순간 연결이 끊깁니다.
+            # 실제로 pending_review 41편 중 35편이 어느 목록에서도 제목으로
+            # 찾히지 않았습니다. id는 바뀌지 않으므로 끊길 일이 없습니다.
+            assigned_ids = save_pending_posts(pending_list, blog_config)
+            by_obj = {id(post): pid for post, pid in zip(pending_list, assigned_ids) if pid}
+            for ep, post in pending_eps:
+                pid = by_obj.get(id(post))
+                if pid:
+                    ep["post_id"] = pid
+            save_series(series_plan)
         if generated_posts:
             log_run(
                 keywords=[keyword],
@@ -861,6 +918,9 @@ def main() -> None:
     parser.add_argument("--test", action="store_true", help="글 생성만 (업로드 없음)")
     parser.add_argument("--review", action="store_true", help="검토 모드 — 글 생성 후 pending_posts.json에 저장 (업로드 없음)")
     parser.add_argument("--keyword", type=str, help="특정 키워드로 실행 (쉼표로 복수 지정)")
+    parser.add_argument("--article-type", default="auto",
+                        help="글 구조 템플릿 지정 (auto=키워드로 자동 판정). "
+                             "후보는 python template_advisor.py '<키워드>' 로 확인")
     parser.add_argument("--interactive", "-i", action="store_true", help="키워드 직접 입력 후 즉시 실행")
     parser.add_argument("--series", action="store_true", help="시리즈 모드 — 주제를 N편으로 분할 기획·생성·게시 (--keyword 필수)")
     parser.add_argument("--series-count", type=int, default=4, metavar="N", help="시리즈 편수 (2~5, 회차별 리뷰는 1~8, 기본값 4)")
@@ -1062,10 +1122,85 @@ def main() -> None:
         return
 
     if args.once or args.interactive or keywords:
-        for blog_cfg in target_blogs:
-            run_once(keywords=keywords, blog_config=blog_cfg)
+        # 사람이 고른 템플릿은 이 실행 동안만 유지됩니다 (수동 발행 전용)
+        from content_generator import article_type_override
+        with article_type_override(getattr(args, "article_type", "auto")):
+            summaries = [run_once(keywords=keywords, blog_config=blog_cfg)
+                         for blog_cfg in target_blogs]
+        _exit_on_publish_failure(summaries)
     else:
         run_scheduled()
+
+
+def _save_publish_summary(attempted: int, published: int, pending: int,
+                          failed: int, summaries: list[dict],
+                          path: str | None = None) -> None:
+    """이번 실행의 발행 결과를 워크플로가 읽을 수 있게 남깁니다.
+
+    후속 단계(사이트맵 제출 등)가 "발행이 있었는가"로 갈리는데, 지금까지는
+    종료 코드에만 의존해 암묵적으로 건너뛰어졌습니다. 부수효과에 기대면
+    단계 순서가 바뀔 때 조용히 어긋나므로 값을 명시적으로 남깁니다.
+    """
+    import json as _json
+    import sys as _sys
+    from datetime import datetime, timezone
+    if path is None:
+        # 테스트가 실제 logs/를 오염시키지 않도록 — 검증이 필요한 테스트는
+        # path를 직접 넘깁니다
+        if "pytest" in _sys.modules:
+            return
+        path = os.path.join(os.path.dirname(__file__), "logs",
+                            "last_publish_summary.json")
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            _json.dump({
+                "ranAt": datetime.now(timezone.utc).isoformat(),
+                "attempted": attempted, "published": published,
+                "pending": pending, "failed": failed,
+                "blogs": [{"blog": s.get("blog"), "published": s.get("published", 0),
+                           "pending": s.get("pending", 0), "failed": s.get("failed", 0)}
+                          for s in summaries],
+            }, f, ensure_ascii=False, indent=2)
+    except OSError as e:
+        logger.warning(f"발행 요약 저장 실패 (무시): {e}")
+
+
+def _exit_on_publish_failure(summaries: list[dict]) -> None:
+    """한 편도 못 올렸으면 0이 아닌 코드로 끝냅니다.
+
+    이게 없어서 2026-08-20~22 이틀 동안 콘텐츠 생성이 100% 실패하는데도
+    워크플로가 계속 success로 끝났습니다. 실패 알림도 뜨지 않았고 대시보드
+    어디에도 표시되지 않아, 발행이 멈춘 걸 아무도 몰랐습니다.
+
+    시도 자체가 0건인 경우(오늘 처리할 예약이 없음 등)는 실패가 아닙니다 —
+    할 일이 없던 것과 하려다 실패한 것은 구분해야 합니다.
+    """
+    attempted = sum(s.get("attempted", 0) for s in summaries)
+    published = sum(s.get("published", 0) for s in summaries)
+    pending = sum(s.get("pending", 0) for s in summaries)
+    failed = sum(s.get("failed", 0) for s in summaries)
+    _save_publish_summary(attempted, published, pending, failed, summaries)
+
+    if attempted == 0:
+        logger.info("발행 시도 없음 — 처리할 키워드가 없었습니다")
+        return
+    if published > 0:
+        logger.info(f"발행 요약: 게시 {published}건 / 검토 대기 {pending}건 / 실패 {failed}건")
+        return
+
+    # 여기부터는 블로그에 한 편도 올라가지 않은 경우입니다.
+    logger.error("=" * 60)
+    if failed:
+        logger.error(f"❌ 게시 0건 — {attempted}건 시도, 오류 {failed}건")
+    else:
+        logger.error(f"❌ 게시 0건 — 생성은 됐지만 {pending}건 모두 검토 대기로 빠졌습니다")
+        logger.error("   품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다")
+    for s in summaries:
+        for msg in (s.get("errors") or [])[:3]:
+            logger.error(f"   [{s.get('blog')}] {msg}")
+    logger.error("=" * 60)
+    sys.exit(1)
 
 
 if __name__ == "__main__":

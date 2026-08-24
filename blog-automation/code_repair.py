@@ -22,6 +22,8 @@ _DOCS = _BASE.parent / "docs" / "data"
 
 LOG_FILE       = _LOGS / "automation.log"
 CODE_REPAIR_LOG = _LOGS / "code_repair.json"
+#: 어디까지 분석했는지 기록 — 같은 예외를 반복 분석하지 않기 위해
+CODE_REPAIR_MARK = _LOGS / "code_repair_mark.json"
 CODE_REPAIR_BACKUP = _LOGS / "code_repair_backups"
 
 logger = logging.getLogger(__name__)
@@ -60,6 +62,15 @@ def _extract_tracebacks(log_path: Path, max_lines: int = 500) -> list[dict]:
     i = 0
     while i < len(tail):
         if "Traceback (most recent call last):" in tail[i]:
+            # 트레이스백 자체에는 시각이 없습니다. 바로 앞의 타임스탬프 로그
+            # 줄에서 가져옵니다 — 이 값이 없으면 "이미 분석한 오류"를 구분할
+            # 수 없어 같은 예외를 영원히 다시 분석하게 됩니다.
+            occurred_at = ""
+            for back in range(i - 1, max(-1, i - 6), -1):
+                m = re.match(r'^(\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2})', tail[back])
+                if m:
+                    occurred_at = m.group(1).replace("T", " ")
+                    break
             tb_lines = [tail[i]]
             j = i + 1
             while j < len(tail):
@@ -81,6 +92,7 @@ def _extract_tracebacks(log_path: Path, max_lines: int = 500) -> list[dict]:
                 "traceback": tb_text,
                 "files": file_matches,
                 "error": error_line,
+                "at": occurred_at,
             })
             i = j
         else:
@@ -207,6 +219,40 @@ def _apply_fix(source_code: str, original: str, fixed: str, path: Path) -> bool:
         return False
 
 
+def _load_mark() -> str:
+    """마지막으로 분석한 예외의 발생 시각."""
+    try:
+        return str(json.loads(CODE_REPAIR_MARK.read_text(encoding="utf-8")).get("lastAnalyzedAt", ""))
+    except (OSError, ValueError, AttributeError):
+        return ""
+
+
+def _save_mark(at: str) -> None:
+    try:
+        CODE_REPAIR_MARK.parent.mkdir(parents=True, exist_ok=True)
+        CODE_REPAIR_MARK.write_text(
+            json.dumps({"lastAnalyzedAt": at}, ensure_ascii=False), encoding="utf-8")
+    except OSError as e:
+        logger.warning(f"[CodeRepair] 분석 표식 저장 실패 (무시): {e}")
+
+
+def new_tracebacks(log_path: Path = LOG_FILE, mark: str | None = None) -> list[dict]:
+    """아직 분석하지 않은 트레이스백만 돌려줍니다.
+
+    automation.log는 저장소에 커밋돼 계속 누적됩니다. 마지막 300줄을 그냥
+    읽으면 이미 고친 예외가 며칠씩 "최근 오류"로 다시 잡히고, 그때마다
+    Claude 분석을 다시 부릅니다. 실제로 2026-08-22에 04:06에 고친
+    temperature 오류가 04:57·05:01·05:07·05:11·05:52 다섯 번 재분석됐고
+    대시보드는 계속 빨간 상태였습니다.
+
+    시각이 없는 트레이스백은 판단할 수 없으므로 새 것으로 봅니다 —
+    놓치는 쪽보다 한 번 더 보는 쪽이 안전합니다.
+    """
+    mark = _load_mark() if mark is None else mark
+    return [tb for tb in _extract_tracebacks(log_path)
+            if not tb.get("at") or not mark or tb["at"] > mark]
+
+
 # ── 메인 ──────────────────────────────────────────────────────────────────────
 
 def run_code_repair(dry_run: bool = False) -> dict:
@@ -214,15 +260,20 @@ def run_code_repair(dry_run: bool = False) -> dict:
     _LOGS.mkdir(parents=True, exist_ok=True)
 
     logger.info("[CodeRepair] 로그 분석 시작...")
-    tracebacks = _extract_tracebacks(LOG_FILE)
+    all_tracebacks = _extract_tracebacks(LOG_FILE)
+    tracebacks = new_tracebacks(LOG_FILE)
     critical_lines = _extract_critical_lines(LOG_FILE)
+    skipped = len(all_tracebacks) - len(tracebacks)
+    if skipped:
+        logger.info(f"[CodeRepair] 이미 분석한 예외 {skipped}건 건너뜀")
 
     if not tracebacks:
-        logger.info("[CodeRepair] 트레이스백 없음 — 코드 수리 건너뜀")
+        logger.info("[CodeRepair] 새 트레이스백 없음 — 코드 수리 건너뜀")
         result = {
             "timestamp": datetime.now().isoformat(),
             "tracebacks_found": 0,
             "critical_errors": len(critical_lines),
+            "skipped_already_analyzed": skipped,
             "repairs": [],
             "auto_fixed": 0,
             "manual_required": 0,
@@ -319,12 +370,19 @@ def run_code_repair(dry_run: bool = False) -> dict:
         "tracebacks_found": len(tracebacks),
         "critical_errors": len(critical_lines),
         "critical_samples": critical_lines[-3:],
+        "skipped_already_analyzed": skipped,
         "repairs": repairs,
         "auto_fixed": auto_fixed,
         "manual_required": manual_req,
         "dry_run": dry_run,
     }
     _save_result(result)
+
+    # 여기까지 본 예외는 다시 분석하지 않습니다. dry_run에서는 표식을 옮기지
+    # 않습니다 — 미리보기 때문에 실제 수리 기회를 잃으면 안 됩니다.
+    newest = max((tb.get("at", "") for tb in tracebacks), default="")
+    if newest and not dry_run:
+        _save_mark(newest)
 
     logger.info(
         f"[CodeRepair] 완료 | 트레이스백: {len(tracebacks)}개 | "

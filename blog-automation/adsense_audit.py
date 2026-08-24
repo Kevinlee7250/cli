@@ -46,8 +46,8 @@ _YMYL_KW = {"투자", "주식", "etf", "펀드", "재테크", "부동산", "금�
             "연금", "세금", "절세", "코인", "건강", "다이어트", "질병", "의료", "치료",
             "영양", "혈압", "당뇨", "법률", "계약", "소송", "상속"}
 
-_CLICKBAIT = ["충격", "경악", "미쳤다", "대박", "헐", "소름", "절대 하지 마",
-              "100% 보장", "무조건 벌", "확실한 수익"]
+# 낚시성 표현은 생성 단계 사전 차단(title_policy)과 동일 기준을 사용 — 단일 출처
+from title_policy import CLICKBAIT_TERMS as _CLICKBAIT
 
 _DISCLAIMER_MARKERS = ["전문가와 상담", "투자 판단", "의학적 조언", "법률 자문",
                        "개인의 상황", "참고용", "면책", "책임지지 않"]
@@ -95,7 +95,11 @@ def _fix_empty_alts(content: str, title: str) -> tuple[str, int]:
 
 
 def audit_post(post: dict) -> tuple[list[str], list[str], str]:
-    """단일 글 검사. Returns (자동보완 로그, 리포트 이슈, 수정된 content)."""
+    """단일 글 검사. Returns (자동보완 로그, 리포트 이슈, 수정된 content).
+
+    글자수 미달 이슈는 메시지 앞부분이 "글자수 부족"으로 시작하므로,
+    호출부(run_audit)가 이를 보고 draft 전환 대상을 판별한다.
+    """
     from fix_duplicate_toc import count_tocs, dedupe_toc
 
     title   = post.get("title", "")
@@ -159,7 +163,19 @@ def audit_post(post: dict) -> tuple[list[str], list[str], str]:
     return fixes, issues, content
 
 
-def run_audit(blog_cfg: dict, dry_run: bool) -> dict:
+def _revert_to_draft(blogger_blog_id: str, post_id: str, token: str) -> bool:
+    """게시글을 임시저장(draft)으로 내립니다. Blogger 관리자에서 언제든 복원 가능."""
+    r = requests.post(
+        f"{BLOGGER_API_BASE}/blogs/{blogger_blog_id}/posts/{post_id}/revert",
+        headers={"Authorization": f"Bearer {token}"}, timeout=20,
+    )
+    if r.status_code == 200:
+        return True
+    logger.error(f"     draft 전환 실패 [{r.status_code}]: {r.text[:150]}")
+    return False
+
+
+def run_audit(blog_cfg: dict, dry_run: bool, draft_short: bool = False) -> dict:
     from blogger_uploader import _get_access_token
 
     name = blog_cfg.get("name") or blog_cfg.get("id", "")
@@ -170,7 +186,7 @@ def run_audit(blog_cfg: dict, dry_run: bool) -> dict:
         return {"blog": name, "scanned": 0, "fixed": 0, "posts": []}
 
     logger.info(f"══ [{name}] AdSense 감사 시작 ══")
-    scanned = fixed_posts = 0
+    scanned = fixed_posts = drafted_posts = 0
     report_posts = []
     page_token = ""
     while True:
@@ -215,6 +231,20 @@ def run_audit(blog_cfg: dict, dry_run: bool) -> dict:
             elif fixes and dry_run:
                 fixed_posts += 1
 
+            # 글자수 미달 글은 AdSense "최소 콘텐츠 요건" 직접 위반 —
+            # 심사 대상에서 빼기 위해 draft로 내린다 (--draft-short 지정 시에만).
+            if draft_short and any(i.startswith("글자수 부족") for i in issues):
+                if dry_run:
+                    fixes.append("글자수 미달 → draft 전환 [dry-run]")
+                    drafted_posts += 1
+                elif _revert_to_draft(blogger_blog_id, post["id"], token):
+                    fixes.append("글자수 미달 → draft 전환")
+                    drafted_posts += 1
+                    logger.info("     📥 draft 전환 완료 (Blogger 관리자에서 복원 가능)")
+                    time.sleep(1)
+                else:
+                    issues.append("draft 전환 실패")
+
             report_posts.append({
                 "title": post.get("title", ""), "url": post.get("url", ""),
                 "fixes": fixes, "issues": issues,
@@ -225,14 +255,18 @@ def run_audit(blog_cfg: dict, dry_run: bool) -> dict:
             break
 
     logger.info(f"══ [{name}] 스캔 {scanned}건 / 자동보완 {fixed_posts}건 / "
+                f"draft 전환 {drafted_posts}건 / "
                 f"수동확인 필요 {sum(1 for p in report_posts if p['issues'])}건 ══")
-    return {"blog": name, "scanned": scanned, "fixed": fixed_posts, "posts": report_posts}
+    return {"blog": name, "scanned": scanned, "fixed": fixed_posts,
+            "drafted": drafted_posts, "posts": report_posts}
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="AdSense 승인 대비 감사·보완")
     parser.add_argument("--blog", default="blog1", help="블로그 ID (기본: blog1, 'all'=전체)")
     parser.add_argument("--dry-run", action="store_true", help="검사만 하고 수정하지 않음")
+    parser.add_argument("--draft-short", action="store_true",
+                        help=f"{MIN_CHARS}자 미만 글을 draft로 전환 (AdSense 최소 콘텐츠 요건 대응)")
     args = parser.parse_args()
 
     from config import get_blog_configs
@@ -243,7 +277,7 @@ def main() -> int:
             logger.error(f"블로그 '{args.blog}' 없음")
             return 1
 
-    results = [run_audit(cfg, args.dry_run) for cfg in blogs]
+    results = [run_audit(cfg, args.dry_run, draft_short=args.draft_short) for cfg in blogs]
 
     report = {
         "auditedAt": datetime.now().isoformat(),
@@ -262,6 +296,7 @@ def main() -> int:
     logger.info("=" * 55)
     logger.info(f"전체 완료 — 스캔 {sum(r['scanned'] for r in results)}건 / "
                 f"자동보완 {sum(r['fixed'] for r in results)}건 / "
+                f"draft 전환 {sum(r.get('drafted', 0) for r in results)}건 / "
                 f"수동확인 필요 {total_issues}건")
     return 0
 

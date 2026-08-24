@@ -74,12 +74,38 @@ def _domain_property_for(site_url: str) -> str:
     return f"sc-domain:{netloc}" if netloc else site_url
 
 
+def _is_scope_error(text: str) -> bool:
+    """403이 권한(스코프) 부족 때문인지 판별합니다.
+
+    같은 403이라도 원인이 둘입니다: (a) 토큰에 쓰기 권한이 없음,
+    (b) 속성 유형이 URL-프리픽스가 아니라 도메인 속성임.
+
+    두 응답 모두 "permission"이라는 단어를 담고 있어, 그 단어로 판별하면
+    (b)를 (a)로 오해합니다. 실제로 그랬습니다 — blog1은 sc-domain 속성인데
+    URL-프리픽스로 제출해 403을 받았고, 메시지의 "sufficient permission for
+    site"를 스코프 부족으로 읽어 도메인 속성 재시도를 건너뛰었습니다.
+    토큰에는 쓰기 권한(webmasters)이 멀쩡히 있었는데도요 (2026-08-22 확인).
+
+      (a) 스코프: "Request had insufficient authentication scopes."
+                  reason=ACCESS_TOKEN_SCOPE_INSUFFICIENT
+      (b) 속성:   "User does not have sufficient permission for site '...'"
+
+    그래서 스코프에만 나타나는 표현으로 좁힙니다. 애매하면 (b)로 봐서
+    재시도하는 편이 안전합니다 — 재시도는 멱등이고, 오진은 멀쩡한 권한을
+    "재발급하세요"로 몰아갑니다.
+    """
+    low = (text or "").lower()
+    return ("authentication scope" in low
+            or "access_token_scope_insufficient" in low
+            or "insufficientpermissions" in low)
+
+
 def submit_sitemaps(blogs: list[dict], token: str | None = None) -> dict:
     """각 블로그의 sitemap.xml을 GSC에 (재)제출합니다. 멱등 — 반복 호출 안전."""
     token = token or _access_token()
     if not token:
-        return {"submitted": 0, "failed": 0}
-    submitted = failed = 0
+        return {"submitted": 0, "failed": 0, "scopeDenied": 0}
+    submitted = failed = scope_denied = 0
     for cfg in blogs:
         site = _site_url_for(cfg)
         name = cfg.get("name") or cfg.get("id", "?")
@@ -96,20 +122,34 @@ def submit_sitemaps(blogs: list[dict], token: str | None = None) -> dict:
 
         try:
             r = _submit(site)
-            if r.status_code == 403:
+            if r.status_code == 403 and not _is_scope_error(r.text):
                 domain_property = _domain_property_for(site)
                 logger.info(f"[{name}] URL-프리픽스 속성 403 — 도메인 속성으로 재시도: {domain_property}")
                 r = _submit(domain_property)
             if r.status_code in (200, 204):
                 logger.info(f"✅ [{name}] 사이트맵 제출: {sitemap}")
                 submitted += 1
+            elif r.status_code == 403 and _is_scope_error(r.text):
+                # 속성 유형 문제로 오해하면 엉뚱한 곳을 고치게 됨 — 원인을 명시한다
+                logger.error(
+                    f"❌ [{name}] 사이트맵 제출 권한 없음 — refresh_token이 읽기 전용입니다. "
+                    "로컬에서 get_refresh_token.py를 다시 실행해 "
+                    "https://www.googleapis.com/auth/webmasters (읽기 전용 아님) 권한으로 재발급하세요."
+                )
+                scope_denied += 1
+                failed += 1
             else:
                 logger.warning(f"⚠️ [{name}] 사이트맵 제출 실패 [{r.status_code}]: {r.text[:150]}")
                 failed += 1
         except Exception as e:
             logger.warning(f"⚠️ [{name}] 사이트맵 제출 오류: {e}")
             failed += 1
-    return {"submitted": submitted, "failed": failed}
+    if scope_denied:
+        logger.error(
+            f"🚨 사이트맵 {scope_denied}건이 권한 부족으로 제출되지 않았습니다 — "
+            "구글이 새 글을 발견하지 못하는 직접 원인입니다"
+        )
+    return {"submitted": submitted, "failed": failed, "scopeDenied": scope_denied}
 
 
 def _recent_published(blogs: list[dict], limit: int) -> list[dict]:
@@ -139,7 +179,25 @@ def _recent_published(blogs: list[dict], limit: int) -> list[dict]:
             "published_at": p.get("publishedAt") or p.get("createdAt", ""),
         })
     items.sort(key=lambda x: x.get("published_at") or "", reverse=True)
-    return items[:limit]
+    return _sample_spread(items, limit)
+
+
+def _sample_spread(items: list[dict], limit: int) -> list[dict]:
+    """최신 절반 + 오래된 글에서 고르게 절반을 뽑습니다.
+
+    최신순으로만 자르면 검사 대상이 항상 1~2일 된 글뿐이라, 발행 직후에는
+    원래 색인이 안 되는 게 정상이므로 "미색인 20건"이 무엇을 뜻하는지 알 수
+    없습니다. 정작 궁금한 건 "몇 주 지난 글이 색인됐는가"인데 그 표본이
+    한 번도 포함되지 않았습니다 (2026-08-18 확인: 검사 20건 전부 1~2일 글).
+    """
+    if limit <= 0 or len(items) <= limit:
+        return items[:limit] if limit > 0 else []
+    recent_n = max(1, limit // 2)
+    recent = items[:recent_n]
+    older = items[recent_n:]
+    step = max(1, len(older) // (limit - recent_n))
+    spread = older[::step][:limit - recent_n]
+    return recent + spread
 
 
 def inspect_recent(blogs: list[dict], limit: int = 20, token: str | None = None) -> dict:
@@ -164,9 +222,15 @@ def inspect_recent(blogs: list[dict], limit: int = 20, token: str | None = None)
                     timeout=20,
                 )
 
-            r = _inspect(p["site"])
+            # 어느 속성 형식이 통했는지 기록해 둡니다. 대시보드가 GSC
+            # "URL 검사" 딥링크를 만들 때 resource_id로 그대로 써야 하는데,
+            # 속성 형식(URL-프리픽스 vs sc-domain)을 틀리면 링크가 열리지
+            # 않습니다. 여기서 실제로 200을 받은 값이 유일하게 확실한 정답입니다.
+            used_property = p["site"]
+            r = _inspect(used_property)
             if r.status_code == 403:
-                r = _inspect(_domain_property_for(p["site"]))
+                used_property = _domain_property_for(p["site"])
+                r = _inspect(used_property)
             if r.status_code != 200:
                 logger.debug(f"검사 실패 [{r.status_code}]: {p['url']} {r.text[:100]}")
                 results.append({**p, "verdict": "unknown", "coverage": f"API {r.status_code}"})
@@ -182,7 +246,8 @@ def inspect_recent(blogs: list[dict], limit: int = 20, token: str | None = None)
             mark = "🟢" if indexed else "🟡"
             logger.info(f"{mark} [{p['blog']}] {coverage or verdict}: {p['title'][:40]}")
             results.append({**p, "verdict": "indexed" if indexed else "not_indexed",
-                            "coverage": coverage, "last_crawl": last_crawl[:10]})
+                            "coverage": coverage, "last_crawl": last_crawl[:10],
+                            "gsc_property": used_property})
         except Exception as e:
             logger.debug(f"검사 오류: {p['url']} — {e}")
             results.append({**p, "verdict": "unknown", "coverage": str(e)[:60]})
@@ -208,6 +273,34 @@ def inspect_recent(blogs: list[dict], limit: int = 20, token: str | None = None)
     return report
 
 
+SITEMAP_STATUS_PATH = os.path.join(
+    os.path.dirname(__file__), "..", "docs", "data", "sitemap_status.json")
+
+
+def save_sitemap_status(result: dict, blogs: list[dict]) -> None:
+    """사이트맵 제출 결과를 산출물로 남깁니다.
+
+    워크플로가 `|| true`로 이 단계를 감싸고 있어, 403·404로 실패해도
+    실행은 성공으로 끝납니다. 발행을 막을 이유는 없지만 결과가 어딘가에는
+    남아야 합니다 — 지금은 로그에만 있어 대시보드에도 알림에도 안 나옵니다
+    (2026-08-22 확인. 같은 패턴으로 발행 중단·검증 실패를 며칠씩 놓쳤습니다).
+    """
+    from datetime import datetime, timezone
+    payload = {
+        "checkedAt": datetime.now(timezone.utc).isoformat(),
+        "blogs": [b.get("name") or b.get("id", "") for b in blogs],
+        **result,
+        "ok": result.get("failed", 0) == 0 and result.get("submitted", 0) > 0,
+    }
+    path = os.path.normpath(SITEMAP_STATUS_PATH)
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+    except OSError as e:
+        logger.warning(f"사이트맵 상태 저장 실패 (무시): {e}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="구글 색인 가속")
     parser.add_argument("--submit", action="store_true", help="사이트맵 제출만")
@@ -229,11 +322,23 @@ def main() -> int:
     do_submit = args.submit or args.inspect is None
     do_inspect = args.inspect is not None or not args.submit
 
+    exit_code = 0
     if do_submit:
-        submit_sitemaps(blogs, token)
+        result = submit_sitemaps(blogs, token)
+        save_sitemap_status(result, blogs)
+        if result.get("failed"):
+            # 워크플로가 || true로 감싸므로 발행을 막지는 않습니다.
+            # 다만 종료 코드는 사실대로 돌려줘야 나중에 판단할 수 있습니다.
+            logger.error(
+                f"사이트맵 제출 실패 {result['failed']}건 "
+                f"(성공 {result.get('submitted', 0)}건"
+                + (f", 권한 부족 {result['scopeDenied']}건" if result.get("scopeDenied") else "")
+                + ")"
+            )
+            exit_code = 1
     if do_inspect:
         inspect_recent(blogs, args.inspect or 20, token)
-    return 0
+    return exit_code
 
 
 if __name__ == "__main__":

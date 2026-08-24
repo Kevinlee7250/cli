@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import re
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -9,7 +10,11 @@ _cfg_log = logging.getLogger(__name__)
 
 # Claude API
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
-CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
+# 빈 문자열도 미설정으로 취급합니다. GitHub Actions가 `CLAUDE_MODEL="${{ secrets.CLAUDE_MODEL }}"`
+# 형태로 .env를 쓰는데, 시크릿이 없으면 빈 값이 들어가 getenv의 기본값이 무시됩니다.
+# 2026-08-22 댓글 자동화가 이 때문에 400 "model: String should have at least 1 character"로
+# 전부 실패했습니다.
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL") or "claude-sonnet-5"
 
 # OpenAI API
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
@@ -236,6 +241,42 @@ def _openai_fallback(system: str, messages: list, max_tokens: int, temperature: 
     )
 
 
+#: SDK가 받지 않는 인자를 알아낼 때 쓰는 패턴
+_BAD_KWARG_RE = re.compile(r"unexpected keyword argument '([^']+)'")
+
+
+def _stream_final_message(client, messages: list, kwargs: dict):
+    """messages.stream()을 호출하되, SDK가 모르는 인자는 떼어내고 다시 시도합니다.
+
+    requirements.txt가 anthropic을 >=0.40.0으로만 묶어 둬서 SDK가 조용히
+    올라갑니다. 2026-08-21에 새 SDK의 stream()이 temperature를 받지 않게
+    되면서 콘텐츠 생성이 전량 실패했고(TypeError), 블로그 발행이 이틀 동안
+    0건이었습니다. Claude 5 계열은 adaptive thinking이 기본이라 temperature를
+    쓸 수 없는데, 그 사실이 코드에 반영돼 있지 않았습니다.
+
+    버전을 고정하는 대신 인자를 스스로 떼어내게 했습니다. 다음에 어떤 인자가
+    빠지더라도 발행이 멈추지 않고, 무엇을 떼었는지는 경고로 남습니다.
+    """
+    import logging as _logging
+    _log = _logging.getLogger(__name__)
+
+    call_kwargs = dict(kwargs)
+    for _ in range(4):
+        try:
+            with client.messages.stream(messages=messages, **call_kwargs) as stream:
+                return stream.get_final_message()
+        except TypeError as e:
+            m = _BAD_KWARG_RE.search(str(e))
+            if not m or m.group(1) not in call_kwargs:
+                raise
+            dropped = m.group(1)
+            call_kwargs.pop(dropped)
+            _log.warning(f"anthropic SDK가 '{dropped}' 인자를 받지 않아 제외하고 재시도합니다")
+    # 4번 떼어내고도 안 되면 호출부가 폴백하도록 원래 예외를 냅니다
+    with client.messages.stream(messages=messages, **call_kwargs) as stream:
+        return stream.get_final_message()
+
+
 def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
     """max_tokens로 잘린 응답을 이어쓰기로 완성해 전체 텍스트를 반환합니다.
 
@@ -261,7 +302,8 @@ def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
     _log = _logging.getLogger(__name__)
 
     messages = list(kwargs.pop("messages"))
-    model = kwargs.get("model", CLAUDE_MODEL)
+    model = kwargs.get("model") or CLAUDE_MODEL
+    kwargs["model"] = model      # 호출부가 빈 모델을 넘겨도 400이 나지 않게 보정
     _fb_args = (
         kwargs.get("system", ""), messages,
         kwargs.get("max_tokens", 8000), kwargs.get("temperature", 1.0),
@@ -272,8 +314,7 @@ def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
         return _openai_fallback(*_fb_args)
 
     try:
-        with client.messages.stream(messages=messages, **kwargs) as stream:
-            message = stream.get_final_message()
+        message = _stream_final_message(client, messages, kwargs)
     except Exception as e:
         if _is_usage_limit_error(e):
             _claude_limit_hit = True
@@ -298,8 +339,7 @@ def claude_generate(client, *, max_continues: int = 2, **kwargs) -> str:
             )},
         ]
         try:
-            with client.messages.stream(messages=messages, **kwargs) as stream:
-                message = stream.get_final_message()
+            message = _stream_final_message(client, messages, kwargs)
         except Exception as e:
             if _is_usage_limit_error(e):
                 # 이어쓰기 도중 한도 도달 — 부분 결과를 버리고 OpenAI로 전체 재생성

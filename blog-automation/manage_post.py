@@ -105,18 +105,15 @@ def action_publish(post_id: str) -> int:
     # 초안 파일 로드 시도
     post_data = load_draft(post_id)
     if not post_data:
-        # pending_posts.json에서 검색
-        pending_path = os.path.join(DOCS_DATA, "pending_posts.json")
-        if os.path.exists(pending_path):
-            try:
-                with open(pending_path, encoding="utf-8") as f:
-                    pending = json.load(f)
-                for item in pending:
-                    if item.get("id") == post_id or item.get("post_id") == post_id:
-                        post_data = item
-                        break
-            except Exception:
-                pass
+        # 검토 대기 목록에서 검색 (저장소가 본문을 합쳐 돌려줍니다)
+        try:
+            import pending_store
+            for item in pending_store.load():
+                if item.get("id") == post_id or item.get("post_id") == post_id:
+                    post_data = item
+                    break
+        except Exception:
+            pass
 
     if not post_data:
         logger.error(f"포스트 콘텐츠를 찾을 수 없습니다 (초안/pending 없음): {post_id}")
@@ -141,6 +138,11 @@ def action_publish(post_id: str) -> int:
     update_post_status(post_id, Status.RETRY_QUEUED)
 
     result = upload_post(post_data, blog_config)
+    if result == "DUPLICATE":
+        update_post_status(post_id, Status.SKIPPED, error="중복 제목 — 업로드 건너뜀")
+        export_for_dashboard(os.path.abspath(DOCS_DATA))
+        logger.warning("⏭ 중복 주제 — 업로드 건너뜀 (유사 제목 이미 발행됨)")
+        return 0
     if result:
         url = result.get("url", "")
         update_post_status(post_id, Status.PUBLISHED, blog_url=url)
@@ -249,17 +251,15 @@ def action_insert_thumbnail(post_id: str, thumb_title: str = "", thumb_theme: st
     post_data = load_draft(post_id)
     source = "draft"
     if not post_data:
-        pending_path = os.path.join(DOCS_DATA, "pending_posts.json")
-        if os.path.exists(pending_path):
-            try:
-                with open(pending_path, encoding="utf-8") as f:
-                    pending = json.load(f)
-                for item in pending:
-                    if item.get("id") == post_id or item.get("post_id") == post_id:
-                        post_data, source = item, "pending"
-                        break
-            except Exception:
-                pass
+        try:
+            import pending_store
+            pending = pending_store.load()
+            for item in pending:
+                if item.get("id") == post_id or item.get("post_id") == post_id:
+                    post_data, source = item, "pending"
+                    break
+        except Exception:
+            pending = []
     if not post_data:
         logger.error(f"포스트 콘텐츠를 찾을 수 없습니다 (초안/pending 없음): {post_id}")
         return 1
@@ -274,8 +274,8 @@ def action_insert_thumbnail(post_id: str, thumb_title: str = "", thumb_theme: st
     if source == "draft":
         save_draft(post_id, post_data)
     else:
-        with open(pending_path, "w", encoding="utf-8") as f:
-            json.dump(pending, f, ensure_ascii=False, indent=2)
+        import pending_store
+        pending_store.save(pending)
     logger.info(f"✅ 초안({source})에 썸네일 삽입 완료 — 발행 시 반영됩니다: {post_id}")
     return 0
 

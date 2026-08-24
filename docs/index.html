@@ -1116,6 +1116,8 @@
     <div class="alert-box">
       💡 블로그 포스팅 시 자동 생성된 소셜 미디어 콘텐츠입니다. 각 플랫폼에 맞게 복사해서 사용하세요.
     </div>
+    <!-- 생성이 꺼져 있을 때만 뜹니다 — 아래 목록이 옛 기록임을 알려야 합니다 -->
+    <div id="social-off-notice" style="display:none;margin-bottom:16px;padding:12px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:13px;line-height:1.7"></div>
     <div class="social-tabs">
       <button class="social-tab-btn active" onclick="switchSocialTab('instagram')">📸 Instagram</button>
       <button class="social-tab-btn" onclick="switchSocialTab('threads')">🧵 Threads</button>
@@ -2440,8 +2442,13 @@ let postsFiltered = []
 
 const DATA_STAMPS = {}   // { 파일명: {at: Date|null, via: 'field'|'header'} }
 
-//: 파일별 라벨과 기대 갱신 주기(시간). 주기의 2배를 넘기면 '지연',
-//: 4배를 넘기면 '중단'으로 봅니다. 주기를 모르면 0 — 나이만 표시합니다.
+//: 파일별 [라벨, 기대 갱신 주기(시간), 이 파일을 만드는 기능 스위치(선택)].
+//: 주기의 2배를 넘기면 '지연', 4배를 넘기면 '중단'으로 봅니다. 주기를 모르면
+//: 0 — 나이만 표시합니다.
+//:
+//: 세 번째 값이 있으면 그 스위치가 꺼졌을 때 '중단'이 아니라 '기능 꺼짐'으로
+//: 봅니다. 일부러 끈 기능의 파일이 안 늙는 건 당연한데, 그걸 빨간 경고로
+//: 띄우면 진짜 고장과 구분이 안 됩니다.
 const SOURCE_META = {
   'posts.json':              ['발행 글', 24],
   'runs.json':               ['실행 이력', 24],
@@ -2466,7 +2473,7 @@ const SOURCE_META = {
   'internal_links.json':     ['내부 링크', 168],
   'lifecycle.json':          ['생애주기', 24],
   'series.json':             ['시리즈 예약', 168],
-  'social.json':             ['소셜 콘텐츠', 24],
+  'social.json':             ['소셜 콘텐츠', 24, 'social_content'],
   'learning.json':           ['주간 학습', 168],
   'weekly_brief.json':       ['주간 브리핑', 168],
   'title_changes.json':      ['제목 최적화', 168],
@@ -2574,7 +2581,13 @@ async function fetchStamped(base, name) {
 //: 나이(시간) → {cls, text}. cls는 ok | late | stale | unknown
 function freshness(name) {
   const st = DATA_STAMPS[name]
-  const expect = (SOURCE_META[name] || [null, 0])[1]
+  const meta = SOURCE_META[name] || [null, 0]
+  const expect = meta[1]
+  const flag = meta[2]
+  // 스위치가 꺼진 기능의 파일은 늙는 게 정상입니다
+  if (flag && DATA.featureFlags && DATA.featureFlags[flag] === false) {
+    return { cls: 'off', text: '기능 꺼짐', hours: null, expect }
+  }
   if (!st || !st.at) return { cls: 'unknown', text: '시각 없음', hours: null }
   const hours = (Date.now() - st.at.getTime()) / 36e5
   let text
@@ -2594,12 +2607,13 @@ const FRESH_STYLE = {
   late:    ['rgba(251,191,36,.13)', 'var(--yellow)', 'rgba(251,191,36,.35)'],
   stale:   ['rgba(248,113,113,.13)', 'var(--red)',   'rgba(248,113,113,.35)'],
   unknown: ['var(--bg3)',            'var(--muted)', 'var(--border)'],
+  off:     ['var(--bg3)',            'var(--muted)', 'var(--border)'],
 }
 
 function freshBadgeHtml(name) {
   const f = freshness(name)
   const [bg, color, border] = FRESH_STYLE[f.cls]
-  const mark = f.cls === 'stale' ? '⚠️ ' : ''
+  const mark = f.cls === 'stale' ? '⚠️ ' : (f.cls === 'off' ? '⏸ ' : '')
   const tip = f.expect ? `기대 주기 ${f.expect >= 24 ? (f.expect / 24) + '일' : f.expect + '시간'}` : '주기 미지정'
   return `<span class="fresh-badge" title="${name} · ${tip}" style="margin-left:8px;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;background:${bg};color:${color};border:1px solid ${border};vertical-align:middle">${mark}${f.text}</span>`
 }
@@ -2814,12 +2828,15 @@ function renderFreshnessPanel() {
     .filter(n => DATA_STAMPS[n])
     .map(n => ({ name: n, label: SOURCE_META[n][0], f: freshness(n) }))
     .sort((a, b) => (b.f.hours ?? 1e9) - (a.f.hours ?? 1e9))
+  // '기능 꺼짐'은 문제가 아니므로 지연 집계에서 뺍니다
   const bad = rows.filter(r => r.f.cls === 'stale' || r.f.cls === 'late')
+  const off = rows.filter(r => r.f.cls === 'off').length
   const sum = document.getElementById('freshness-summary')
   if (sum) {
-    sum.innerHTML = bad.length
+    const offNote = off ? ` · <span style="color:var(--muted)">기능 꺼짐 ${off}개</span>` : ''
+    sum.innerHTML = (bad.length
       ? `<span style="color:var(--yellow)">${bad.length}개 파일이 기대 주기를 넘겼습니다</span> · 전체 ${rows.length}개`
-      : `<span style="color:var(--green)">전체 ${rows.length}개 파일이 최신입니다</span>`
+      : `<span style="color:var(--green)">전체 ${rows.length}개 파일이 최신입니다</span>`) + offNote
   }
   wrap.innerHTML = rows.map(r => {
     const [bg, color, border] = FRESH_STYLE[r.f.cls]
@@ -2828,7 +2845,7 @@ function renderFreshnessPanel() {
         <div style="font-size:13px;font-weight:600;color:var(--text)">${r.label}</div>
         <div style="font-size:11px;color:var(--muted);font-family:ui-monospace,monospace">${r.name}</div>
       </div>
-      <span style="flex-shrink:0;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;background:${bg};color:${color};border:1px solid ${border}">${r.f.cls === 'stale' ? '⚠️ ' : ''}${r.f.text}</span>
+      <span style="flex-shrink:0;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;background:${bg};color:${color};border:1px solid ${border}">${r.f.cls === 'stale' ? '⚠️ ' : (r.f.cls === 'off' ? '⏸ ' : '')}${r.f.text}</span>
     </div>`
   }).join('')
 }
@@ -4519,12 +4536,33 @@ async function loadShortsScripts() {
   }).join('')
 }
 
+// 생성 스위치가 꺼져 있으면 아래 목록이 "지금 만들어지는 것"이 아니라
+// "예전에 만든 기록"임을 알립니다. 이 안내가 없으면 마지막 50건을 보고
+// 여전히 돌아가는 줄 압니다.
+function _renderSocialOffNotice() {
+  const el = document.getElementById('social-off-notice')
+  if (!el) return
+  const flags = DATA.featureFlags || {}
+  if (flags.social_content === false) {
+    const n = (DATA.social || []).length
+    const last = (DATA.social || []).map(x => x.date).filter(Boolean).sort().pop()
+    el.style.display = 'block'
+    el.innerHTML = `⏸ <strong style="color:var(--text)">소셜 콘텐츠 생성이 꺼져 있습니다.</strong> ` +
+      `아래는 예전에 만든 기록 ${n}건입니다${last ? ` (마지막 ${esc(last)})` : ''} — 새 글에는 더 이상 생성되지 않습니다.` +
+      `<br><span style="font-size:12px">다시 켜려면 시스템 관리 → 기능 스위치에서 <strong>소셜 콘텐츠 생성</strong>을 켜세요. ` +
+      `실제 게시까지 하려면 각 플랫폼 토큰과 <code>SOCIAL_AUTO_PUBLISH</code>도 필요합니다.</span>`
+  } else {
+    el.style.display = 'none'
+  }
+}
+
 async function renderSocial() {
   _shortsFillPostSelect()
   loadShortsScripts()
   // 소셜 콘텐츠는 이 탭에서만 씁니다 — 여기서 처음 받아 옵니다.
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   DATA.social = await ensureData(base, 'social.json', [])
+  _renderSocialOffNotice()
   const { social } = DATA
   if (!social.length) {
     ['instagram','threads','tiktok'].forEach(t => {

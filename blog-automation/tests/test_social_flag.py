@@ -65,3 +65,30 @@ def test_dashboard_labels_cover_shipped_flags():
     labelled = set(re.findall(r"^\s*([a-z_]+):", block, re.M))
     for name in feature_flags.load_flags():
         assert name in labelled, f"{name}에 화면 표시용 이름이 없습니다"
+
+
+def test_freshness_meta_flag_names_are_real():
+    """SOURCE_META가 가리키는 스위치가 실제로 존재해야 합니다.
+
+    이름이 틀리면 연결이 조용히 끊기고, 일부러 끈 기능의 파일이 다시
+    빨간 '중단' 경고로 뜹니다 — 진짜 고장과 구분이 안 되는 상태로 돌아갑니다.
+    """
+    import re
+    dash = os.path.join(os.path.dirname(__file__), "..", "..", "docs", "index.html")
+    with open(dash, encoding="utf-8") as f:
+        html = f.read()
+    block = html[html.index("const SOURCE_META = {"):]
+    block = block[:block.index("\n}")]
+    referenced = set(re.findall(r"\[\s*'[^']*',\s*\d+\s*,\s*'([a-z_]+)'\s*\]", block))
+    known = set(feature_flags.load_flags())
+    assert referenced, "스위치와 연결된 항목이 하나도 없습니다 — 연결이 사라졌는지 확인하세요"
+    unknown = referenced - known
+    assert not unknown, f"SOURCE_META가 없는 스위치를 가리킵니다: {unknown}"
+
+
+def test_social_json_is_linked_to_its_flag():
+    """소셜 파일이 스위치와 이어져 있어야 꺼졌을 때 오경보가 안 납니다."""
+    dash = os.path.join(os.path.dirname(__file__), "..", "..", "docs", "index.html")
+    with open(dash, encoding="utf-8") as f:
+        html = f.read()
+    assert "'social.json':             ['소셜 콘텐츠', 24, 'social_content']" in html

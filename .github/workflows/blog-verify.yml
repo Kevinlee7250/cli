@@ -149,9 +149,12 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add \
+          # docs/.gitignore(npm/cli 템플릿)가 /* 로 전부 무시하므로 -f가 없으면
+          # 조용히 아무것도 커밋되지 않습니다. 실제로 검증 리포트가 한 번도
+          # 저장소에 남지 않았습니다 — 워크플로는 성공으로 끝나고요 (2026-08-22).
+          git add -f \
             docs/data/verify_report.json \
-            docs/data/pending_posts.json \
+            docs/data/pending_posts.json docs/data/pending_bodies.json docs/data/pending_archive.json \
             2>/dev/null || true
 
           if git diff --staged --quiet; then

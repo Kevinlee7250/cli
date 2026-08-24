@@ -114,8 +114,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           for f in \
             docs/data/auth_health.json \
-            docs/data/repairs.json docs/data/pending_posts.json \
-            docs/data/posts.json docs/data/post_registry.json \
+            docs/data/repairs.json docs/data/pending_posts.json docs/data/pending_bodies.json docs/data/pending_archive.json \
+            docs/data/posts.json docs/data/post_details.json docs/data/feature_flags.json docs/data/post_registry.json \
             docs/data/code_repairs.json \
             blog-automation/logs/repair_history.json \
             blog-automation/logs/run_history.json \
@@ -123,6 +123,7 @@ jobs:
             blog-automation/logs/series.json \
             blog-automation/logs/post_registry.json \
             blog-automation/logs/code_repair.json \
+            blog-automation/logs/code_repair_mark.json \
             blog-automation/content_generator.py \
             blog-automation/blogger_uploader.py \
             blog-automation/keyword_collector.py \

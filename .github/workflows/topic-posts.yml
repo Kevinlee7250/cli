@@ -88,8 +88,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           for f in \
-            docs/data/posts.json docs/data/posts_archive.json docs/data/runs.json \
-            docs/data/analytics.json docs/data/meta.json docs/data/pending_posts.json \
+            docs/data/posts.json docs/data/post_details.json docs/data/feature_flags.json docs/data/posts_archive.json docs/data/runs.json \
+            docs/data/analytics.json docs/data/meta.json docs/data/pending_posts.json docs/data/pending_bodies.json docs/data/pending_archive.json \
             docs/data/series.json docs/data/blogs.json docs/data/post_registry.json \
             docs/data/ai_usage.json \
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \

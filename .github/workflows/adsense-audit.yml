@@ -87,12 +87,23 @@ jobs:
           echo "실행 인자: $ARGS"
           python adsense_audit.py $ARGS
 
+      # 심사 필수 페이지(개인정보처리방침·소개·문의)가 실제로 블로그에 있는지
+      # 확인만 합니다. page_creator가 만들 수는 있지만 그 진입점(main.py --setup)을
+      # 도는 워크플로가 없어, 있는지 없는지 시스템 어디에도 기록되지 않았습니다.
+      # 만들지는 않습니다 — 발행 중인 블로그에 페이지를 얹는 건 사람이 정할 일입니다.
+      - name: 필수 페이지 확인 (읽기 전용)
+        if: always()
+        working-directory: blog-automation
+        run: python required_pages_check.py || echo "⚠️ 필수 페이지 확인 실패 — docs/data/required_pages.json 확인"
+
       - name: 감사 리포트 커밋
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          [ -f docs/data/adsense_audit.json ] && git add -f docs/data/adsense_audit.json
+          for f in docs/data/adsense_audit.json docs/data/required_pages.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
           if git diff --staged --quiet; then
             echo "변경 없음"
           else

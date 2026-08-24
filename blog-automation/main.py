@@ -623,6 +623,9 @@ def run_series(
 
     generated_posts: list[dict] = []
     pending_list: list[dict] = []
+    # 회차 ↔ 방금 만든 글의 짝. 저장 후 배정된 id를 회차에 적기 위한 것으로,
+    # series.json에는 들어가지 않습니다 (회차 레코드를 오염시키면 안 됩니다).
+    pending_eps: list[tuple[dict, dict]] = []
     episodes = series_plan.get("episodes", [])
 
     from datetime import date as _date
@@ -696,6 +699,7 @@ def run_series(
             post_data["status"] = "pending"
             pending_list.append(post_data)
             ep["status"] = "pending_review"
+            pending_eps.append((ep, post_data))   # 저장 후 id를 받아 적을 짝
             generated_posts.append(post_data)
             save_series(series_plan)
             continue
@@ -709,6 +713,7 @@ def run_series(
             post_data["status"] = "pending"
             pending_list.append(post_data)
             ep["status"] = "pending_review"
+            pending_eps.append((ep, post_data))   # 저장 후 id를 받아 적을 짝
             generated_posts.append(post_data)
             save_series(series_plan)
             continue
@@ -734,6 +739,7 @@ def run_series(
                 post_data["status"] = "pending"
                 pending_list.append(post_data)
                 ep["status"] = "pending_review"
+                pending_eps.append((ep, post_data))   # 저장 후 id를 받아 적을 짝
                 generated_posts.append(post_data)
                 save_series(series_plan)
                 continue
@@ -786,7 +792,18 @@ def run_series(
 
     try:
         if pending_list:
-            save_pending_posts(pending_list, blog_config)
+            # 배정된 id를 회차에 적어 둡니다. 지금까지 회차와 글을 잇는 유일한
+            # 끈이 제목이었는데, final_editor가 생성 후 제목을 교정하므로
+            # (post_data["title"] = new_title) 그 순간 연결이 끊깁니다.
+            # 실제로 pending_review 41편 중 35편이 어느 목록에서도 제목으로
+            # 찾히지 않았습니다. id는 바뀌지 않으므로 끊길 일이 없습니다.
+            assigned_ids = save_pending_posts(pending_list, blog_config)
+            by_obj = {id(post): pid for post, pid in zip(pending_list, assigned_ids) if pid}
+            for ep, post in pending_eps:
+                pid = by_obj.get(id(post))
+                if pid:
+                    ep["post_id"] = pid
+            save_series(series_plan)
         if generated_posts:
             log_run(
                 keywords=[keyword],

@@ -693,19 +693,31 @@ def export_dashboard() -> None:
     logger.info(f"  포스트: {len(posts)}개 / 실행 이력: {len(runs_export)}개 / 블로그: {len(blogs_export)}개")
 
 
-def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> None:
-    """생성된 포스트를 검토 대기 목록으로 저장합니다 (Blogger 업로드 없이)."""
+def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> list[str]:
+    """생성된 포스트를 검토 대기 목록으로 저장하고, 배정한 id를 돌려줍니다.
+
+    id를 돌려주는 이유: 시리즈 회차가 "이 글이 내 회차다"를 기록할 방법이
+    제목밖에 없었습니다. 그런데 final_editor가 생성 후 제목을 교정하므로
+    (`post_data["title"] = new_title`) 링크가 그 순간 끊깁니다. 실제로
+    series.json의 pending_review 41편 중 35편이 어느 목록에서도 제목으로
+    찾히지 않았습니다. 호출부가 id를 받아 저장할 수 있어야 합니다.
+
+    반환 순서는 results 순서와 같습니다. 제목·본문이 비어 건너뛴 항목은
+    빈 문자열이 들어가 자리를 지킵니다 — 그래야 zip으로 짝지을 수 있습니다.
+    """
     import pending_store
     pending = pending_store.load()
 
     cfg = blog_config or {}
     initial_pending_len = len(pending)
     now = datetime.now()
+    assigned: list[str] = []
     for idx, r in enumerate(results):
         title = r.get("title", "")
         content = r.get("content", "")
         if not title or not content:
             logger.warning(f"포스트 #{idx+1} 제목 또는 본문 비어있음 — 건너뜀 (title={repr(title[:30])})")
+            assigned.append("")      # 자리를 지켜 호출부가 zip으로 짝지을 수 있게
             continue
         safe_kw = re.sub(r"[^\w가-힣]", "_", r.get("keyword", ""))[:20]
         uid = f"{now.strftime('%Y%m%d%H%M%S')}_{idx:02d}_{safe_kw}"
@@ -730,6 +742,7 @@ def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> 
             "blogId": cfg.get("id", r.get("blogId", "blog1")),
             "blogName": cfg.get("name", r.get("blogName", "")),
         })
+        assigned.append(uid)
         logger.info(f"  검토 대기 저장: {title[:60]} ({len(content)}자 HTML)")
 
     try:
@@ -737,3 +750,4 @@ def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> 
         logger.info(f"검토 대기 포스트 저장 완료: {len(pending) - initial_pending_len}개 추가 (총 {len(pending)}개)")
     except OSError as e:
         logger.error(f"검토 대기 파일 저장 실패: {e}")
+    return assigned

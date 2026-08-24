@@ -5683,7 +5683,11 @@ async function openSerEpModal(srIdx, epIdx) {
 
   // pending_posts.json에서 매칭 포스트 찾기 (제목 정확 일치 우선, 없으면 키워드 포함)
   const pending = DATA.pending || []
-  let matched = pending.find(p => p.title === ep.title)
+  // post_id로 먼저 찾습니다. 제목 매칭은 final_editor가 생성 후 제목을 교정하는
+  // 순간 끊기고, 실제로 pending_review 41편 중 35편이 그렇게 미아가 됐습니다.
+  // 제목·키워드 폴백은 id가 없는 옛 회차를 위해 남겨 둡니다.
+  let matched = ep.post_id ? pending.find(p => p.id === ep.post_id) : null
+  if (!matched) matched = pending.find(p => p.title === ep.title)
   if (!matched && ep.title) matched = pending.find(p => p.title && p.title.includes(ep.title.slice(0, 15)))
   if (!matched) matched = pending.find(p => p.keyword === sr.keyword || p.keyword === ep.search_keyword)
 
@@ -5702,7 +5706,12 @@ async function openSerEpModal(srIdx, epIdx) {
       `<span style="font-size:12px;color:var(--muted)">저장: <strong style="color:var(--text)">${matched.savedAt ? new Date(matched.savedAt).toLocaleDateString('ko-KR') : '-'}</strong></span>`,
     ].join('')
   } else {
-    metaEl.innerHTML = `<span style="font-size:12px;color:var(--yellow)">⚠️ pending_posts.json에서 매칭되는 포스트를 찾을 수 없습니다. 데이터를 새로고침하거나 검토 모드로 재실행하세요.</span>`
+    // 옛 회차는 post_id가 없어 제목으로만 찾을 수 있고, 제목이 교정됐다면
+    // 영영 못 찾습니다. 그 사실을 그대로 알립니다 — "새로고침하세요"는
+    // 해결되지 않을 안내였습니다.
+    metaEl.innerHTML = ep.post_id
+      ? `<span style="font-size:12px;color:var(--yellow)">⚠️ 이 회차의 글(id: ${esc(ep.post_id)})이 검토 대기 목록에 없습니다. 이미 발행됐거나 정리된 것일 수 있습니다.</span>`
+      : `<span style="font-size:12px;color:var(--yellow)">⚠️ 이 회차는 글 id 기록 이전에 만들어져 제목으로만 찾을 수 있는데, 제목이 교정돼 연결이 끊겼습니다. 본문은 남아 있지 않습니다.</span>`
   }
 
   // FAQ 카운트

@@ -125,28 +125,53 @@ def _iter_posts(blog_id: str, token: str):
 def _find_safe_replacement(title: str, keyword: str = "") -> dict | None:
     """제목 기반으로 저작권 안전한 대체 이미지를 확보합니다.
 
-    _fetch_best_image는 이미 화이트리스트가 적용된 소스만 검색하지만,
-    반환값을 한 번 더 검증합니다 — 여기서 안전하지 않은 것이 통과하면
-    무단 이미지를 다른 무단 이미지로 바꾸는 최악의 결과가 됩니다.
+    같은 사진이 여러 글에 반복되지 않도록, 후보를 관련성 순으로 훑으면서
+    "이미 많이 쓴 사진"은 건너뜁니다.
+
+    URL이나 제목으로는 이 판정을 할 수 없습니다 — Pixabay는 같은 사진에
+    매번 다른 서명 URL을 주고, 태그 문자열도 조금씩 달라집니다. 내려받아
+    내용 해시를 계산한 뒤에야 같은 사진인 줄 압니다. 그래서 복제기가
+    돌려주는 uses를 보고 판단합니다 (2026-08-25 실측: 사진 한 장이 61편).
+
+    후보가 전부 과다 사용이면 그중 가장 덜 쓴 것을 씁니다 — 이미지 없는
+    글보다는 반복이라도 낫고, 여기서 None을 돌려주면 교체 대상 이미지가
+    삭제됩니다.
     """
+    import image_mirror
     from image_fetcher import (
-        _fetch_best_image, _simplify_query, adopt_image, generate_fallback_image,
-        is_license_safe,
+        _score_title_relevance, _search_all_sources, _simplify_query, adopt_image,
+        filter_license_safe, generate_fallback_image, is_license_safe,
     )
 
     query = _simplify_query(title, 3) or title
-    img = _fetch_best_image(
-        query, n_candidates=6, pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
-    )
-    if img and is_license_safe(img.get("url", "")):
-        img["alt_text"] = query[:50]
-        return adopt_image(img)
+    candidates = filter_license_safe(_search_all_sources(
+        query, "", "", 8, pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
+    ))
+    candidates.sort(key=lambda c: -_score_title_relevance(c, query))
+
+    least_used = None
+    for cand in candidates[:5]:
+        if not is_license_safe(cand.get("url", "")):
+            continue
+        cand["alt_text"] = query[:50]
+        got = adopt_image(cand)
+        if not got:
+            continue
+        uses = image_mirror.times_used(got.get("url", ""))
+        if uses <= image_mirror.MAX_REUSE:
+            return got
+        logger.info(f"    이미 {uses}편에 쓴 사진 — 다른 후보 확인: {query[:20]}")
+        if least_used is None or uses < least_used[0]:
+            least_used = (uses, got)
 
     thumb = generate_fallback_image(title, keyword)
     if thumb and is_license_safe(thumb.get("url", "")):
         kind = "AI 생성 이미지" if thumb.get("source") == "ai_generated" else "생성 썸네일"
-        logger.info(f"    검색 결과 없음 → {kind} 사용")
+        logger.info(f"    쓸 만한 새 사진 없음 → {kind} 사용")
         return thumb
+    if least_used:
+        logger.warning(f"    후보가 전부 과다 사용 — {least_used[0]}편짜리 사진을 재사용")
+        return least_used[1]
     return None
 
 

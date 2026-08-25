@@ -233,8 +233,11 @@ def mirror_url(url: str) -> dict | None:
         rec = manifest["items"][known]
         path = os.path.join(MIRROR_DIR, rec["file"])
         if os.path.exists(path):
+            rec["uses"] = times_used_by_record(rec) + 1
+            save_manifest(manifest)
             return {"url": f"{public_base()}/{rec['file']}", "file": rec["file"],
-                    "sha": known, "bytes": rec.get("bytes", 0), "reused": True}
+                    "sha": known, "bytes": rec.get("bytes", 0), "reused": True,
+                    "uses": rec["uses"]}
         # 매니페스트에는 있는데 파일이 없으면 다시 내려받습니다
 
     got = _download(url)
@@ -258,12 +261,46 @@ def mirror_url(url: str) -> dict | None:
         digest, {"file": name, "bytes": len(raw), "mime": mime,
                  "firstSeen": datetime.now(timezone.utc).isoformat(), "origins": []})
     rec["file"] = name
+    # 같은 사진을 몇 편에 넣었는지 셉니다. Pixabay는 같은 사진에 매번 다른
+    # 서명 URL을 주므로 origins 개수로는 정확히 셀 수 없습니다 — 내려받아
+    # 해시를 계산한 지금이 유일하게 확실한 시점입니다.
+    #
+    # 이번 원본을 목록에 넣기 **전에** 세야 합니다. 넣고 나서 세면 방금 것을
+    # 이미 쓴 것으로 잘못 포함해 한 번씩 부풀려집니다.
+    prior = times_used_by_record(rec)
     if url not in rec["origins"]:
         rec["origins"].append(url)
+    rec["uses"] = prior + 1
     save_manifest(manifest)
 
     return {"url": f"{public_base()}/{name}", "file": name, "sha": digest,
-            "bytes": len(raw), "reused": False}
+            "bytes": len(raw), "reused": prior > 0, "uses": rec["uses"]}
+
+
+#: 한 사진을 이 편수까지만 씁니다. 넘으면 다른 후보를 찾습니다.
+#: 2026-08-25 실측에서 사진 한 장이 61편에 들어가 있었습니다.
+MAX_REUSE = 3
+
+
+def times_used_by_record(rec: dict) -> int:
+    """이 사진이 몇 편에 쓰였는지.
+
+    uses가 없는 옛 기록은 origins 개수로 셉니다 — 같은 사진에 서명 URL이
+    여러 개 붙은 만큼은 실제로 쓰인 것이므로 최소값으로는 맞습니다.
+    """
+    return int(rec.get("uses") or len(rec.get("origins", [])) or 0)
+
+
+def times_used(mirrored_url: str) -> int:
+    """복제본 URL이 몇 편에 쓰였는지 (모르면 0)."""
+    m = re.search(r"/([0-9a-f]{16})\.[a-z]+$", mirrored_url or "")
+    if not m:
+        return 0
+    return times_used_by_record(load_manifest().get("items", {}).get(m.group(1), {}))
+
+
+def is_overused(mirrored_url: str, limit: int = MAX_REUSE) -> bool:
+    return times_used(mirrored_url) > limit
 
 
 def mirror_images(images: list[dict]) -> int:

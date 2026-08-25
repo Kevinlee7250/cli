@@ -150,11 +150,11 @@ jobs:
           # 변경 가능한 파일 스테이징
           git add -f docs/data/post_registry.json 2>/dev/null || true
           git add -f blog-automation/logs/post_registry.json 2>/dev/null || true
-          git add -f blog-automation/logs/used_images.json docs/data/image_mirror.json 2>/dev/null || true
+          for f in blog-automation/logs/used_images.json docs/data/image_mirror.json; do [ -f "$f" ] && git add -f "$f"; done
           # 자체 호스팅 이미지 — 파일과 매니페스트가 함께 커밋돼야 본문 src가 살아 있습니다
           git add -f docs/images/ 2>/dev/null || true
           git add -f blog-automation/logs/post_drafts/ 2>/dev/null || true
-          git add -f docs/data/pending_posts.json docs/data/pending_bodies.json docs/data/pending_archive.json 2>/dev/null || true
+          for f in docs/data/pending_posts.json docs/data/pending_bodies.json docs/data/pending_archive.json; do [ -f "$f" ] && git add -f "$f"; done
 
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"

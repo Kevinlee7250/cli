@@ -78,12 +78,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f \
-            docs/data/learning.json \
-            blog-automation/logs/learning.json \
-            blog-automation/logs/learned_keywords.json \
-            blog-automation/logs/weekly_learning.log \
-            2>/dev/null || true
+          for f in docs/data/learning.json blog-automation/logs/learning.json blog-automation/logs/learned_keywords.json blog-automation/logs/weekly_learning.log; do [ -f "$f" ] && git add -f "$f"; done
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else

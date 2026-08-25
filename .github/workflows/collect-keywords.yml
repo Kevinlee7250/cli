@@ -65,11 +65,11 @@ jobs:
           NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
 
-      # Pages는 claude/blog-automation-system-KAbtE 브랜치의 docs/에서 배포되므로
+      # Pages는 latest(기본 브랜치)의 docs/에서 배포되므로
       # 수집 데이터도 해당 브랜치에 커밋해야 대시보드에 반영됨
       - name: 변경 커밋 & 푸시 (대시보드 브랜치)
         env:
-          DASH_BRANCH: claude/blog-automation-system-KAbtE
+          DASH_BRANCH: latest
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -101,6 +101,6 @@ jobs:
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/${{ github.repository }}/actions/workflows/deploy-dashboard.yml/dispatches" \
-            -d '{"ref": "claude/blog-automation-system-KAbtE"}' \
+            -d '{"ref": "latest"}' \
             && echo "배포 워크플로우 dispatch 완료" \
             || echo "배포 dispatch 실패 — 다음 push 트리거에서 반영됨"

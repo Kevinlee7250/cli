@@ -57,14 +57,14 @@ on:
     # 2026-08-25에 실제로 그랬습니다. 이미지 감사가 발행 글 25장을 자체 호스팅
     # 주소로 바꿔 놓고 커밋까지 했는데 배포가 안 걸려, 라이브 글들이 없는
     # 파일을 가리켰습니다. 워크플로는 초록이었습니다.
-    branches: [claude/blog-automation-system-KAbtE, latest]
+    branches: [latest]
 
   # 수동 배포
   workflow_dispatch:
 
   # 사람이 docs/를 직접 고쳤을 때 (자동화 커밋은 위 workflow_run이 담당)
   push:
-    branches: [claude/blog-automation-system-KAbtE, latest]
+    branches: [latest]
     paths:
       - 'docs/index.html'
       - 'docs/data/**'
@@ -94,7 +94,7 @@ jobs:
       - name: 코드 체크아웃
         uses: actions/checkout@v4
         with:
-          ref: claude/blog-automation-system-KAbtE
+          ref: latest
 
       - name: GitHub Pages 설정
         uses: actions/configure-pages@v5

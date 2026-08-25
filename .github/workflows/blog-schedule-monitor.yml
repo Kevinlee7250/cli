@@ -31,7 +31,7 @@ jobs:
       - name: 코드 체크아웃
         uses: actions/checkout@v4
         with:
-          ref: claude/blog-automation-system-KAbtE
+          ref: latest
 
       - name: Python 3.11 설정
         uses: actions/setup-python@v5
@@ -76,8 +76,8 @@ jobs:
             git commit -m "chore: 스케줄 실행 이력 업데이트 ($TIMESTAMP)"
             _push_ok=0
             for i in 1 2 3; do
-              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
-                && git push origin claude/blog-automation-system-KAbtE \
+              git pull --rebase --autostash origin latest \
+                && git push origin latest \
                 && { _push_ok=1; break; }
               echo "pull+push 재시도 $i/3..."
               sleep $((i * 3))

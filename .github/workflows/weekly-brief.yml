@@ -8,7 +8,7 @@ on:
   workflow_dispatch: {}
 
   push:
-    branches: [claude/blog-automation-system-KAbtE]
+    branches: [latest]
     paths: ['.github/weekly-brief-trigger']
 
 concurrency:
@@ -27,7 +27,7 @@ jobs:
       - name: 코드 체크아웃
         uses: actions/checkout@v4
         with:
-          ref: claude/blog-automation-system-KAbtE
+          ref: latest
 
       - name: Python 3.11 설정
         uses: actions/setup-python@v5
@@ -55,8 +55,8 @@ jobs:
           else
             git commit -m "📋 주간 운영 브리핑 (#${{ github.run_number }})"
             for i in 1 2 3; do
-              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
-                && git push origin claude/blog-automation-system-KAbtE && break
+              git pull --rebase --autostash origin latest \
+                && git push origin latest && break
               sleep $((i * 3))
             done
           fi

@@ -15,7 +15,7 @@ on:
       - '.github/workflows/*.yml'
       - 'docs/index.html'
   push:
-    branches: [claude/blog-automation-system-KAbtE, latest]
+    branches: [latest]
     paths:
       - 'blog-automation/**'
       - '.github/workflows/*.yml'

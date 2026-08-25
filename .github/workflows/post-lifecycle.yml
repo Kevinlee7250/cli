@@ -23,7 +23,7 @@ jobs:
       - name: 코드 체크아웃 (대시보드 브랜치)
         uses: actions/checkout@v4
         with:
-          ref: claude/blog-automation-system-KAbtE
+          ref: latest
           fetch-depth: 1
 
       - name: Python 3.11 설정
@@ -47,7 +47,7 @@ jobs:
 
       - name: 변경 커밋 & 푸시 (대시보드 브랜치)
         env:
-          DASH_BRANCH: claude/blog-automation-system-KAbtE
+          DASH_BRANCH: latest
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -75,5 +75,5 @@ jobs:
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/${{ github.repository }}/actions/workflows/deploy-dashboard.yml/dispatches" \
-            -d '{"ref": "claude/blog-automation-system-KAbtE"}' \
+            -d '{"ref": "latest"}' \
             && echo "배포 dispatch 완료" || echo "배포 dispatch 실패 — 다음 배포에서 반영"

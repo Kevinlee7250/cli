@@ -5,7 +5,7 @@ on:
   workflow_run:
     workflows: ["블로그 자동화 실행"]
     types: [completed]
-    branches: [claude/blog-automation-system-KAbtE]
+    branches: [latest]
 
   # 매일 오전 2시 KST (UTC 17:00) — 야간 정기 점검
   schedule:
@@ -37,7 +37,7 @@ jobs:
       - name: 코드 체크아웃
         uses: actions/checkout@v4
         with:
-          ref: claude/blog-automation-system-KAbtE
+          ref: latest
 
       - name: Python 3.11 설정
         uses: actions/setup-python@v5
@@ -145,8 +145,8 @@ jobs:
             _push_ok=0
             for i in 1 2 3; do
               git rebase --abort 2>/dev/null || true
-              if git pull --rebase --autostash origin claude/blog-automation-system-KAbtE; then
-                git push origin claude/blog-automation-system-KAbtE && { _push_ok=1; break; }
+              if git pull --rebase --autostash origin latest; then
+                git push origin latest && { _push_ok=1; break; }
               else
                 if git ls-files -u | grep -q .; then
                   for cf in docs/data/post_registry.json blog-automation/logs/post_registry.json; do
@@ -154,7 +154,7 @@ jobs:
                     git add -f "$cf" 2>/dev/null || true
                   done
                   git rebase --continue --no-edit \
-                    && git push origin claude/blog-automation-system-KAbtE \
+                    && git push origin latest \
                     && { _push_ok=1; break; }
                 fi
                 git rebase --abort 2>/dev/null || true

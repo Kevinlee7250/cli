@@ -1,185 +1,3 @@
-2026-08-21 22:33:23,701 [INFO] evidence_builder — 자료팩: 중요 사실 5개 제외 (A/B 등급 출처 없음)
-2026-08-21 22:33:23,701 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-21 22:33:23,702 [ERROR] content_generator — 포스트 생성 오류: Messages.stream() got an unexpected keyword argument 'temperature'
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 2766, in generate_post
-    raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 143, in _ai_generate
-    return claude_generate(
-           ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 275, in claude_generate
-    with client.messages.stream(messages=messages, **kwargs) as stream:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: Messages.stream() got an unexpected keyword argument 'temperature'
-2026-08-21 22:33:23,703 [WARNING] main —   콘텐츠 생성 실패 (시도 1/2)
-2026-08-21 22:33:26,704 [INFO] content_generator — 포스트 생성 중: '국내 증시 사이드카 발동 의미와 개인투자자 대응법'
-2026-08-21 22:33:37,313 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-21 22:33:37,314 [INFO] research_collector — 검색 의도: 사이드카 발동의 정확한 개념, 발동 조건, 최근 사례를 이해하고 개인투자자로서 어떻게 대응해야 하는지 알고 
-2026-08-21 22:33:49,451 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '국내 증시 사이드카 발동 의미와 개인투자자 대응법'
-2026-08-21 22:34:05,841 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-21 22:34:05,842 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '국내 증시 사이드카 발동 의미와 개인투자자 대응법'
-2026-08-21 22:34:28,157 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-21 22:34:28,158 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'A': 1, 'D': 2, 'X': 2}
-2026-08-21 22:34:28,159 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
-2026-08-21 22:34:28,159 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-21 22:34:28,159 [ERROR] content_generator — 포스트 생성 오류: Messages.stream() got an unexpected keyword argument 'temperature'
-Traceback (most recent call last):
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 2766, in generate_post
-    raw = _ai_generate(_sys, prompt + escalation, ai_provider).strip()
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/content_generator.py", line 143, in _ai_generate
-    return claude_generate(
-           ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cli/cli/blog-automation/config.py", line 275, in claude_generate
-    with client.messages.stream(messages=messages, **kwargs) as stream:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: Messages.stream() got an unexpected keyword argument 'temperature'
-2026-08-21 22:34:28,160 [WARNING] main —   콘텐츠 생성 실패 (시도 2/2)
-2026-08-21 22:34:28,160 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '국내 증시 사이드카 발동 의미와 개인투자자 대응법'
-2026-08-21 22:34:28,160 [INFO] main — 
-============================================================
-2026-08-21 22:34:28,160 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 1개
-2026-08-21 22:34:28,160 [INFO] main — ============================================================
-2026-08-21 22:34:28,201 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-21 22:34:28,231 [INFO] dashboard_exporter —   시리즈: 21개 내보내기 완료
-2026-08-21 22:34:28,251 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-21 22:34:28,401 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-08-21 22:34:28,598 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
-2026-08-21 22:34:28,820 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-21 22:34:28,822 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-21 22:34:28,824 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-21 22:34:28,841 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 257 / 실패 0 / 대기 27)
-2026-08-21 22:34:28,841 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-21 22:34:28,841 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-21 22:34:28,842 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-21 23:22:53,419 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-08-21 23:22:53,419 [INFO] main —   - [blog1] HOGU What?
-2026-08-21 23:22:53,419 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-08-21 23:22:53,419 [INFO] main —   - [blog3] 금융NEWS
-2026-08-21 23:22:53,424 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
-2026-08-22 05:01:08,095 [INFO] main — ============================================================
-2026-08-22 05:01:08,096 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-22 05:01:08
-2026-08-22 05:01:08,096 [INFO] main — ============================================================
-2026-08-22 05:01:08,115 [INFO] main — 수집된 키워드 1개: ['벌초 대행 서비스 비용 직접 비교 후기']
-2026-08-22 05:01:08,120 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
-2026-08-22 05:01:08,120 [INFO] main — 단독 포스트 대상 키워드 1개: ['벌초 대행 서비스 비용 직접 비교 후기']
-2026-08-22 05:01:08,140 [INFO] main — 
-[1/1] 키워드: '벌초 대행 서비스 비용 직접 비교 후기'
-2026-08-22 05:01:08,140 [INFO] content_generator — 포스트 생성 중: '벌초 대행 서비스 비용 직접 비교 후기'
-2026-08-22 05:01:16,603 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 05:01:16,626 [INFO] research_collector — 검색 의도: 벌초 대행 서비스의 실제 비용을 여러 업체 기준으로 비교하고 후기를 통해 선택에 도움받고자 함
-2026-08-22 05:01:39,842 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '벌초 대행 서비스 비용 직접 비교 후기'
-2026-08-22 05:02:00,505 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 05:02:00,507 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '벌초 대행 서비스 비용 직접 비교 후기'
-2026-08-22 05:02:10,837 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 05:02:10,838 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'X': 2, 'D': 4}
-2026-08-22 05:02:10,841 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-08-22 05:02:10,841 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-22 05:02:10,842 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-08-22 05:02:11,990 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 05:03:46,726 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-22 05:03:47,844 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 05:04:00,647 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 3건 자동 수정 적용
-2026-08-22 05:04:01,534 [INFO] image_fetcher — 이미지 수집 성공: '벌초 대행 서비스 비용, 산림조합으로 비교해보니' → 제목='planets / planet comparison / size compa' (관련성=0.12)
-2026-08-22 05:04:01,845 [WARNING] image_fetcher — 이미지 없음: '벌초 대행 서비스'
-2026-08-22 05:04:02,657 [INFO] image_fetcher — 이미지 수집 성공: '벌초 대행 추석 벌초는 보통' → 제목='field / harvest / harvest festival / nat' (관련성=0.29)
-2026-08-22 05:04:04,352 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 05:04:04,353 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
-2026-08-22 05:04:04,354 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-08-22 05:04:04,354 [INFO] image_fetcher — 제목 썸네일 생성: '벌초 대행 서비스 비용, 산림조합으로 비교해보니' (data URI, 993B)
-2026-08-22 05:04:04,541 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-08-22 05:04:04,546 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-08-22 05:04:04,548 [INFO] content_generator — 포스트 생성 완료: '벌초 대행 서비스 비용, 산림조합으로 비교해보니' (3259자, 이미지 1개)
-2026-08-22 05:04:05,498 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 05:04:18,037 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '벌초 대행 서비스 비용, 산림조합으로 비교해보니'
-2026-08-22 05:04:18,037 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 구체적 1인칭 경험·수치 없이 일반 정보 재구성에 가까움
-2026-08-22 05:04:18,038 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개 언급되나 구체적 인용 부족하고 1인칭 경험 서술이 약함
-2026-08-22 05:04:18,038 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개만 확인되며 alt텍스트·출처 명확성 부족
-2026-08-22 05:04:18,038 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심요약·체크리스트·표 등 정형화된 AI 템플릿 패턴이 반복됨
-2026-08-22 05:04:18,045 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-22 05:04:18,056 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-08-22 05:04:18,056 [INFO] main —   제목: 벌초 대행 서비스 비용, 산림조합으로 비교해보니
-2026-08-22 05:04:18,056 [INFO] main —   이미지: 1개 삽입
-2026-08-22 05:04:18,056 [INFO] main —   글자 수: 3259자
-2026-08-22 05:04:19,262 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 05:04:33,677 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '벌초 대행 서비스 비용, 산림조합으로 비교해보니'
-2026-08-22 05:04:33,677 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준을 충족하나 구체적 개인 경험·수치 없이 일반 정보 재정리에 가까움
-2026-08-22 05:04:33,677 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개는 있으나 1인칭 실제 경험 서술이 약함
-2026-08-22 05:04:33,677 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개(직접 제작)뿐이며 alt텍스트 명시 없음
-2026-08-22 05:04:33,677 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 요약박스·체크리스트형 구성 등 전형적 AI 템플릿 패턴이 보임
-2026-08-22 05:04:33,677 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-22 05:04:33,677 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 기준을 충족하나 구체적 개인 경험·수치 없이 일반 정보 재정리에 가까움
-2026-08-22 05:04:33,677 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3개는 있으나 1인칭 실제 경험 서술이 약함
-2026-08-22 05:04:33,678 [WARNING] main —      🟡 [이미지 정책] 이미지 1개(직접 제작)뿐이며 alt텍스트 명시 없음
-2026-08-22 05:04:33,678 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-22 05:04:34,611 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 05:06:03,427 [WARNING] adsense_validator — 자동 수정 결과가 너무 짧음 — 원본 유지
-2026-08-22 05:06:03,427 [WARNING] main —   ⚠️ 자동 수정 불가 — pending 저장
-2026-08-22 05:06:03,427 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '벌초 대행 서비스 비용, 산림조합으로 비교해보니' (점수: 79/100, 권장: review)
-2026-08-22 05:06:03,453 [INFO] dashboard_exporter —   검토 대기 저장: 벌초 대행 서비스 비용, 산림조합으로 비교해보니 (16228자 HTML)
-2026-08-22 05:06:03,468 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 161개)
-2026-08-22 05:06:03,468 [INFO] main — 
-============================================================
-2026-08-22 05:06:03,468 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-08-22 05:06:03,468 [INFO] main — ============================================================
-2026-08-22 05:06:03,508 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 100개)
-2026-08-22 05:06:03,538 [INFO] dashboard_exporter —   시리즈: 21개 내보내기 완료
-2026-08-22 05:06:03,558 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-22 05:06:03,854 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-08-22 05:06:04,006 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
-2026-08-22 05:06:04,284 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-22 05:06:04,787 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-22 05:06:04,788 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-22 05:06:04,791 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-22 05:06:04,807 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 257 / 실패 0 / 대기 27)
-2026-08-22 05:06:04,808 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-22 05:06:04,808 [INFO] dashboard_exporter —   포스트: 98개 / 실행 이력: 100개 / 블로그: 3개
-2026-08-22 05:06:04,809 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-22 05:06:04,810 [INFO] main — 발행 요약: 성공 1건 / 실패 0건
-2026-08-22 06:10:18,630 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 63
-2026-08-22 06:10:19,194 [INFO] main — ============================================================
-2026-08-22 06:10:19,195 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-22 06:10:19
-2026-08-22 06:10:19,195 [INFO] main — ============================================================
-2026-08-22 06:10:19,209 [INFO] keyword_collector — 포스팅 이력 코퍼스: 211개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-08-22 06:10:19,209 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
-2026-08-22 06:10:24,363 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-22 06:10:31,151 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 06:10:31,169 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-22 06:10:31,169 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-22 06:10:31,634 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-22 06:10:31,789 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-08-22 06:10:31,932 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
-2026-08-22 06:10:31,932 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-22 06:10:31,933 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
-2026-08-22 06:10:31,945 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-22 06:10:31,945 [INFO] keyword_collector — 유사 주제 제외 9개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-22 06:10:31,947 [INFO] keyword_collector —   [naver_realtime] 2개: ['경기도 여름 가볼만한 곳 해안 드라이브 노을 명소 추천', '카카오톡 챗GPT PC버전 사용법 후기 모바일과 비교']
-2026-08-22 06:10:31,947 [INFO] keyword_collector — 최종 선정 키워드 2개: ['경기도 여름 가볼만한 곳 해안 드라이브 노을 명소 추천', '카카오톡 챗GPT PC버전 사용법 후기 모바일과 비교']
-2026-08-22 06:10:31,947 [INFO] main — 수집된 키워드 2개: ['경기도 여름 가볼만한 곳 해안 드라이브 노을 명소 추천', '카카오톡 챗GPT PC버전 사용법 후기 모바일과 비교']
-2026-08-22 06:10:31,951 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
-2026-08-22 06:10:31,951 [INFO] main — 단독 포스트 대상 키워드 1개: ['경기도 여름 가볼만한 곳 해안 드라이브 노을 명소 추천']
-2026-08-22 06:10:31,966 [INFO] main — 
-[1/1] 키워드: '경기도 여름 가볼만한 곳 해안 드라이브 노을 명소 추천'
-2026-08-22 06:10:31,967 [INFO] content_generator — 포스트 생성 중: '경기도 여름 가볼만한 곳 해안 드라이브 노을 명소 추천'
-2026-08-22 06:10:39,693 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 06:10:39,694 [INFO] research_collector — 검색 의도: 경기도 지역에서 여름철 해안 드라이브와 노을 감상이 가능한 가볼만한 곳을 찾는 사용자를 위한 정보 제공
-2026-08-22 06:10:52,875 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '경기도 여름 가볼만한 곳 해안 드라이브 노을 명소 추천'
-2026-08-22 06:11:09,121 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 06:11:09,122 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '경기도 여름 가볼만한 곳 해안 드라이브 노을 명소 추천'
-2026-08-22 06:11:25,547 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 06:11:25,548 [INFO] source_validator — 출처 검증: 5/6개 통과, 등급 분포 {'A': 2, 'X': 1, 'D': 3}
-2026-08-22 06:11:25,550 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-08-22 06:11:25,550 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-22 06:11:25,551 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-08-22 06:11:26,789 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 06:12:47,614 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-22 06:12:48,920 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-22 06:12:57,813 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-08-22 06:12:57,963 [INFO] image_fetcher — 이미지 수집 성공: '경기도 여름 가볼만한 곳 해안 드라이브 노을 명소' → 제목='baseball field / landscape / lawn / gree' (관련성=0.30)
-2026-08-22 06:12:58,297 [INFO] image_fetcher — 대체 이미지 수집: '경기도 여름 가볼만한' → 제목='stadium / baseball / dodgers / field / a' (관련성=0.17)
-2026-08-22 06:12:58,297 [INFO] image_fetcher — 이미지 수집 성공: '경기도 여름 가볼만한' → 제목='stadium / baseball / dodgers / field / a' (관련성=0.17)
-2026-08-22 06:12:58,598 [INFO] image_fetcher — 대체 이미지 수집: '경기도 여름 드라이브 특별히 여름철 여행이' → 제목='baseball / summer / game / sport / baseb' (관련성=0.11)
 2026-08-22 06:12:58,598 [INFO] image_fetcher — 이미지 수집 성공: '경기도 여름 드라이브 특별히 여름철 여행이' → 제목='baseball / summer / game / sport / baseb' (관련성=0.11)
 2026-08-22 06:12:59,814 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-08-22 06:12:59,815 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
@@ -680,3 +498,190 @@ TypeError: Messages.stream() got an unexpected keyword argument 'temperature'
 2026-08-24 23:21:35,736 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-08-24 23:21:35,736 [INFO] main —   - [blog3] 금융NEWS
 2026-08-24 23:21:35,741 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-08-25 22:34:55,276 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 33
+2026-08-25 22:34:56,384 [INFO] main — ============================================================
+2026-08-25 22:34:56,384 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-25 22:34:56
+2026-08-25 22:34:56,384 [INFO] main — ============================================================
+2026-08-25 22:34:56,407 [INFO] keyword_collector — 포스팅 이력 코퍼스: 180개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-25 22:34:56,407 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
+2026-08-25 22:34:59,555 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-25 22:35:05,480 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:35:05,497 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-25 22:35:05,497 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-25 22:35:05,799 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-25 22:35:06,028 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-08-25 22:35:06,190 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
+2026-08-25 22:35:06,191 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-25 22:35:06,192 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-08-25 22:35:06,203 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-25 22:35:06,203 [INFO] keyword_collector — 유사 주제 제외 7개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-25 22:35:06,204 [INFO] keyword_collector —   [naver_realtime] 2개: ['추석 연휴 해외여행 몰디브 하와이 발리 항공권 숙소 비교', '카카오톡 PC 버전 챗GPT 사용법 총정리']
+2026-08-25 22:35:06,204 [INFO] keyword_collector — 최종 선정 키워드 2개: ['추석 연휴 해외여행 몰디브 하와이 발리 항공권 숙소 비교', '카카오톡 PC 버전 챗GPT 사용법 총정리']
+2026-08-25 22:35:06,204 [INFO] main — 수집된 키워드 2개: ['추석 연휴 해외여행 몰디브 하와이 발리 항공권 숙소 비교', '카카오톡 PC 버전 챗GPT 사용법 총정리']
+2026-08-25 22:35:06,209 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 8일 전)
+2026-08-25 22:35:08,774 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 40개
+2026-08-25 22:35:14,480 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:35:14,482 [INFO] keyword_collector — 화제 드라마 감지: ['김부장', '유부녀 킬러', '이상한 변호사 우영우']
+2026-08-25 22:35:14,482 [INFO] main — [자동 드라마 시리즈] '김부장' 감지 — 리뷰 시리즈 기획 시작
+2026-08-25 22:35:18,775 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:35:18,776 [INFO] series_planner — 드라마 시리즈 기획 완료: '김부장 드라마 리뷰 시리즈' 3편
+2026-08-25 22:35:18,776 [INFO] main — [자동 시리즈] '김부장' 3편 기획 시작 (이후 단독 포스트 0개)
+2026-08-25 22:35:18,776 [INFO] main — ============================================================
+2026-08-25 22:35:18,776 [INFO] main — [HOGU What?] 시리즈 모드 시작: '김부장' 3편
+2026-08-25 22:35:18,776 [INFO] main — ============================================================
+2026-08-25 22:35:18,777 [INFO] main — 시리즈 기획 완료: '김부장 드라마 리뷰 시리즈'
+2026-08-25 22:35:18,778 [INFO] main —   편 1: 김부장 첫인상 솔직 리뷰
+2026-08-25 22:35:18,778 [INFO] main —   편 2: 김부장 등장인물 분석과 연기력
+2026-08-25 22:35:18,778 [INFO] main —   편 3: 김부장 결말 총평 및 별점
+2026-08-25 22:35:18,778 [INFO] main — 
+--- [1/3편] '김부장 첫인상 리뷰' 생성 중 ---
+2026-08-25 22:35:18,778 [INFO] content_generator — 시리즈 포스트 생성: '김부장 첫인상 리뷰' (1/3편)
+2026-08-25 22:35:26,733 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:35:26,734 [INFO] research_collector — 검색 의도: '김부장'이라는 제품/브랜드/장소에 대한 실제 사용자의 첫인상과 초기 경험을 알고 싶어하는 검색 의도
+2026-08-25 22:35:34,303 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '김부장 첫인상 리뷰'
+2026-08-25 22:35:55,707 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:35:55,708 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '김부장 첫인상 리뷰'
+2026-08-25 22:36:21,350 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:36:21,351 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'D': 3, 'B': 1, 'X': 3}
+2026-08-25 22:36:21,352 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-08-25 22:36:21,353 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-25 22:36:21,354 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-08-25 22:36:22,720 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:37:43,484 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-25 22:37:43,486 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(카타르시스)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-08-25 22:37:45,486 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-08-25 22:37:45,486 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-08-25 22:37:46,877 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:39:03,526 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-25 22:39:05,320 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:39:16,412 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '한경 기사를 보면'
+2026-08-25 22:39:16,412 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: ''김부장리뷰, 처음 봤다면 놓치기 쉬운 포인트'라는 글이'
+2026-08-25 22:39:16,413 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 3건 자동 수정 적용
+2026-08-25 22:39:23,094 [INFO] image_fetcher — 이미지 수집 성공: '[1편] 김부장 첫인상, 장르부터 헷갈린 이유' → 제목='Environmental disaster in Levikha Villag' (관련성=0.00)
+2026-08-25 22:39:23,711 [INFO] image_fetcher — 이미지 수집 성공: '김부장 첫인상 리뷰' → 제목='office / desk / document review / editin' (관련성=0.20)
+2026-08-25 22:39:24,447 [INFO] image_fetcher — 이미지 수집 성공: '김부장 첫인상 화만 봐도 드라마를 저는' → 제목='actor / bangkok / asia / arts / ancient ' (관련성=0.14)
+2026-08-25 22:39:27,634 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:39:27,635 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-08-25 22:39:27,635 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-08-25 22:39:27,635 [INFO] image_fetcher — 제목 썸네일 생성: '[1편] 김부장 첫인상, 장르부터 헷갈린 이유' (data URI, 984B)
+2026-08-25 22:39:27,755 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-08-25 22:39:27,755 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-08-25 22:39:27,760 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] 김부장 첫인상, 장르부터 헷갈린 이유' (3064자, 이미지 1개)
+2026-08-25 22:39:29,061 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:39:48,454 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '[1편] 김부장 첫인상, 장르부터 헷갈린 이유'
+2026-08-25 22:39:48,454 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 우수하나 일부 단락(액션 장면, 첫인상 부분)이 500자 이상으로 길게 이어짐
+2026-08-25 22:39:48,454 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개만 존재하며 '직접 제작'으로 저작권 문제는 없으나 시각자료가 부족함
+2026-08-25 22:39:49,660 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:40:18,721 [INFO] final_editor —   ✏️ 제목 최종 교정: '[1편] 김부장 첫인상, 장르부터 헷갈린 이유' → '[1편] 김부장 첫인상 리뷰 - 장르부터 헷갈렸던 이유'
+2026-08-25 22:40:18,721 [INFO] final_editor —   ✏️ 메타 설명 교정 (86자)
+2026-08-25 22:40:18,721 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 재정리하고, 긴 문단을 2~4문장 단위로 분할했습니다. 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 추가하고 이미지 3곳의 위치와 구체적인 alt 텍스트를 제안했습니다.
+2026-08-25 22:40:18,850 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-25 22:40:18,851 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-25 22:40:19,886 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/1.html
+2026-08-25 22:40:19,887 [INFO] main —   ✅ 편 1 업로드 완료: https://www.hoguwhat.com/2026/08/1.html
+2026-08-25 22:40:22,889 [INFO] main — 
+--- [2/3편] '김부장 등장인물 분석' 생성 중 ---
+2026-08-25 22:40:22,889 [INFO] content_generator — 시리즈 포스트 생성: '김부장 등장인물 분석' (2/3편)
+2026-08-25 22:40:30,301 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:40:30,302 [INFO] research_collector — 검색 의도: 특정 작품(드라마/웹툰/영화 등)에 등장하는 '김부장' 캐릭터의 성격, 서사적 역할, 상징성을 분석한 정보를
+2026-08-25 22:40:38,775 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '김부장 등장인물 분석'
+2026-08-25 22:41:03,233 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:41:03,234 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '김부장 등장인물 분석'
+2026-08-25 22:41:33,818 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:41:33,819 [INFO] source_validator — 출처 검증: 8/8개 통과, 등급 분포 {'C': 3, 'B': 4, 'D': 1}
+2026-08-25 22:41:35,068 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '김부장 등장인물 분석'
+2026-08-25 22:41:35,069 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
+2026-08-25 22:41:35,069 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-25 22:41:35,069 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-08-25 22:41:36,827 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:43:13,767 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-25 22:43:15,762 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:43:24,722 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-08-25 22:43:25,677 [INFO] image_fetcher — 이미지 수집 성공: '[2편] 김부장 등장인물 분석 소지섭 윤경호 관계도 총정리' → 제목='digital marketing / technology / noteboo' (관련성=0.22)
+2026-08-25 22:43:26,858 [WARNING] image_fetcher — 중복 대체 이미지 없음: '김부장 등장인물 분석' — 건너뜀
+2026-08-25 22:43:28,052 [INFO] image_fetcher — 이미지 수집 성공: '김부장 등장인물 인물 관계 SBS 특수요원' → 제목='spongebob / sponge head / cap / sb / mir' (관련성=0.00)
+2026-08-25 22:43:30,414 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:43:30,415 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-08-25 22:43:30,415 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-08-25 22:43:30,415 [INFO] image_fetcher — 제목 썸네일 생성: '[2편] 김부장 등장인물 분석 소지섭 윤경호 관계도 총' (data URI, 1162B)
+2026-08-25 22:43:30,617 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-08-25 22:43:30,617 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-08-25 22:43:30,621 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 김부장 등장인물 분석 소지섭 윤경호 관계도 총정리' (3755자, 이미지 1개)
+2026-08-25 22:43:32,245 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:43:51,636 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '[2편] 김부장 등장인물 분석 소지섭 윤경호 관계도 총정리'
+2026-08-25 22:43:51,636 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 다수 단락이 500자 이상으로 길게 이어짐
+2026-08-25 22:43:51,636 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처가 '직접 제작'으로 표기되어 저작권 위반은 없으나 alt텍스트 등 세부 정책 확인 불가로 warn 처리
+2026-08-25 22:43:51,636 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~에 따르면에 따르면' 등 어색한 중복 표현과 보도 인용구 반복 패턴이 다소 기계적으로 느껴짐
+2026-08-25 22:43:53,095 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:44:42,327 [INFO] final_editor —   ✏️ 제목 최종 교정: '[2편] 김부장 등장인물 분석 소지섭 윤경호 관계도 총정리' → '[2편] 김부장 등장인물 분석 총정리|소지섭 윤경호 관계도'
+2026-08-25 22:44:42,327 [INFO] final_editor —   ✏️ 메타 설명 교정 (124자)
+2026-08-25 22:44:42,327 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 규격에 맞게 정리하고, 긴 문단을 모바일 친화적으로 분리했으며, 이미지·표 위치와 alt 텍스트를 구체화했습니다.
+2026-08-25 22:44:42,448 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-25 22:44:42,449 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-25 22:44:43,087 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/2_01243079270.html
+2026-08-25 22:44:43,089 [INFO] main —   ✅ 편 2 업로드 완료: https://www.hoguwhat.com/2026/08/2_01243079270.html
+2026-08-25 22:44:46,090 [INFO] main — 
+--- [3/3편] '김부장 결말 총평' 생성 중 ---
+2026-08-25 22:44:46,090 [INFO] content_generator — 시리즈 포스트 생성: '김부장 결말 총평' (3/3편)
+2026-08-25 22:44:51,290 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:44:51,291 [INFO] research_collector — 검색 의도: '김부장' 작품의 결말 내용과 전체적인 평가를 알고 싶어하는 검색 의도
+2026-08-25 22:44:59,669 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '김부장 결말 총평'
+2026-08-25 22:45:20,477 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:45:20,478 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '김부장 결말 총평'
+2026-08-25 22:45:37,107 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:45:37,108 [INFO] source_validator — 출처 검증: 4/8개 통과, 등급 분포 {'D': 2, 'X': 4, 'C': 2}
+2026-08-25 22:45:38,446 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '김부장 결말 총평'
+2026-08-25 22:45:38,446 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
+2026-08-25 22:45:38,447 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-25 22:45:38,447 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-08-25 22:45:39,782 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:46:52,719 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-25 22:46:54,426 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:47:08,783 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-08-25 22:47:10,077 [INFO] image_fetcher — 이미지 수집 성공: '[3편] 김부장 결말 총평·별점, OST와 유사작 정리' → 제목='lighthouse / sylt / elbow / red-and-whit' (관련성=0.14)
+2026-08-25 22:47:10,491 [WARNING] image_fetcher — 이미지 없음: '김부장 결말 총평'
+2026-08-25 22:47:12,120 [WARNING] image_fetcher — 이미지 없음: '김부장 결말 결국 결론부터 말씀드리'
+2026-08-25 22:47:12,515 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-08-25 22:47:12,515 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-08-25 22:47:12,519 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 김부장 결말 총평·별점, OST와 유사작 정리' (2870자, 이미지 1개)
+2026-08-25 22:47:13,965 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-25 22:47:28,790 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '[3편] 김부장 결말 총평·별점, OST와 유사작 정리'
+2026-08-25 22:47:28,790 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치·표·항목별 총평 등 조사 깊이는 있으나 '최고 시청률 23.1%'와 '최종화 23%대'가 문장상 모순되어 정보 신뢰도가 떨어짐
+2026-08-25 22:47:28,790 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개 보유하나 본문 내 기관명·시점 명시 부족하고 시청률 수치 서술에 오류·모순 존재
+2026-08-25 22:47:28,790 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개만 확인되며 alt 텍스트 여부 불명확
+2026-08-25 22:47:28,790 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '기록했고 기록했고' 등 반복 오타와 어색한 문장 연결이 AI 생성 흔적으로 의심됨
+2026-08-25 22:47:28,790 [WARNING] main —   ⚠️ [편 3] AdSense 검토 필요 — pending 저장 (점수: 79/100)
+2026-08-25 22:47:28,803 [INFO] dashboard_exporter —   검토 대기 저장: [3편] 김부장 결말 총평·별점, OST와 유사작 정리 (11999자 HTML)
+2026-08-25 22:47:28,825 [INFO] pending_store — 검토 대기 저장: 목록 45건 / 보관 118건 / 본문 60건
+2026-08-25 22:47:28,825 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 163개)
+2026-08-25 22:47:28,865 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 105개)
+2026-08-25 22:47:28,889 [INFO] dashboard_exporter —   시리즈: 23개 내보내기 완료
+2026-08-25 22:47:28,907 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-25 22:47:29,296 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-25 22:47:29,640 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-25 22:47:29,641 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-25 22:47:29,643 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-25 22:47:29,656 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 263 / 실패 0 / 대기 21)
+2026-08-25 22:47:29,656 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-25 22:47:29,656 [INFO] dashboard_exporter —   포스트: 105개 / 실행 이력: 105개 / 블로그: 3개
+2026-08-25 22:47:29,658 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-25 22:47:29,658 [INFO] main — 
+============================================================
+2026-08-25 22:47:29,658 [INFO] main — [HOGU What?] 시리즈 완료: 2/3편 성공
+2026-08-25 22:47:29,658 [INFO] main — ============================================================
+2026-08-25 22:47:29,658 [INFO] main — 단독 포스트 대상 키워드 0개: []
+2026-08-25 22:47:29,725 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
+2026-08-25 22:47:29,725 [INFO] main — 
+============================================================
+2026-08-25 22:47:29,725 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
+2026-08-25 22:47:29,725 [INFO] main — ============================================================
+2026-08-25 22:47:29,759 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 106개)
+2026-08-25 22:47:29,781 [INFO] dashboard_exporter —   시리즈: 23개 내보내기 완료
+2026-08-25 22:47:29,798 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-25 22:47:29,800 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-25 22:47:29,802 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-25 22:47:29,815 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 264 / 실패 1 / 대기 19)
+2026-08-25 22:47:29,815 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-25 22:47:29,816 [INFO] dashboard_exporter —   포스트: 105개 / 실행 이력: 106개 / 블로그: 3개
+2026-08-25 22:47:29,817 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-25 22:47:29,818 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다

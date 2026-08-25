@@ -1,5 +1,5 @@
 {
-  "auditedAt": "2026-08-25T13:27:33.325478+00:00",
+  "auditedAt": "2026-08-25T13:42:56.157091+00:00",
   "applied": true,
   "aiJudged": false,
   "blogFilter": "",
@@ -14,14 +14,14 @@
     "irrelevant",
     "weak_alt"
   ],
-  "scanned": 200,
-  "withIssues": 139,
-  "fixed": 52,
+  "scanned": 320,
+  "withIssues": 234,
+  "fixed": 53,
   "issueCounts": {
-    "insufficient": 118,
-    "broken": 102,
-    "weak_alt": 1,
-    "suspect": 1
+    "insufficient": 211,
+    "weak_alt": 2,
+    "suspect": 2,
+    "broken": 104
   },
   "posts": [
     {
@@ -753,16 +753,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g12a4db41f09b6c88c93ef632e3b35faf839997a91df3f95c49c5323c2cbc7fad8fbc2ffb9413d5c790cf025d7ee202ca45e72fe3e9f8269f5ca353f33858ab51_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "broken 교체 → pixabay"
+        "변경 없음"
       ]
     },
     {
@@ -934,22 +929,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g9ea2b2c73bc281db509cb9d689a4dc7a5015164317786f117446745e1a372bc689f6d4d72f4b32ab298ff7bbb729f0f92358c250c2e016d66617ff02657f07a2_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g4b2e1a6c1c9e2a5b8f7d3c6a9e0b1d4c5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay"
+        "변경 없음"
       ]
     },
     {
@@ -961,16 +945,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/gd331db4310a2b7c67d4a700ba17f6ed616d05221c1b604c6a80b2cccf76ad942f9705ad1b7850d5c8eee92d85739aaac8177ebd496726afa1deeaac5558b1c70_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "broken 교체 → pixabay"
+        "변경 없음"
       ]
     },
     {
@@ -982,22 +961,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/gc9671e3ee1a48e04f6ba39716564e1eb32d35eb14c1e0fc0aeed19700de5390b69e8b5ea16b452dfda8b803e562f95739c68c8745725cad624aeeefed95968d6_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g8a3f21e9d6c47b1a9e2f6d4c8b1e5a7f3c9d2b6e4a8f1c3d5e7b9a2c4d6e8f0a1b3c5d7e9f1a3b5c7d9e1f3a5b7c9d1e3f5a7b9c1d3e5f7a9b1c3d5e7_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay"
+        "변경 없음"
       ]
     },
     {
@@ -1030,40 +998,6 @@
       "blog": "HOGU What?",
       "actions": [
         "변경 없음"
-      ]
-    },
-    {
-      "title": "2026년 여름 여행 온열질환 예방법과 응급처치 총정리",
-      "url": "https://www.hoguwhat.com/2026/07/2026_01036540498.html",
-      "images": 3,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/gc727e06252002268b6f234564493c35201497e4c2cdfee59d4d525672e62f53f6443e4169409b330b86c972f6a43fa7781db9b22d1521de57603cf3ff590bee4_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "broken 교체 → pixabay"
-      ]
-    },
-    {
-      "title": "항공권 취소·지연 보상 직접 청구해보니 알게 된 체크리스트",
-      "url": "https://www.hoguwhat.com/2026/07/blog-post_619.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g801a508b101dde563ffe3c267425fdb0187ae025fcf57e6943b5c86079f99ede3a9e2789b4e79295b911a17649dc344f6969fc19bb33efea5c52f41a4c377840_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "broken 교체 → pixabay"
       ]
     },
     {
@@ -1291,75 +1225,6 @@
       ]
     },
     {
-      "title": "ETF 첫 매수 후 한 달 수익률 솔직 공개 — 2026년 직장인 실전 후기",
-      "url": "https://www.hoguwhat.com/2026/06/etf-2026.html",
-      "images": 3,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g89b044c15b6de82dd067e064b53cfaf6ad3dddc99e196de34d981b57f7b58439a3a1e8a650d6b80f8d8ce09eef1e69e8fce563bb0330334490cb88a25b849647_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g45a7d407e7aa579f2957b3a9333b8e798d56ccdafac3422c356e88430e362fb765d15cd1f4dacf33350861180573ef7b74b4024637b209a6a9d264903cf4859e_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g89b044c15b6de82dd067e064b53cfaf6ad3dddc99e196de34d981b57f7b58439a3a1e8a650d6b80f8d8ce09eef1e69e8fce563bb0330334490cb88a25b849647_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "broken 교체 → generated_thumbnail",
-        "broken 교체 → generated_thumbnail",
-        "broken 교체 → generated_thumbnail"
-      ]
-    },
-    {
-      "title": "직장인 투잡 세금 신고 방법 완벽 정리 2026년 5단계 가이드",
-      "url": "https://www.hoguwhat.com/2026/06/2026-5_01882421696.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/gb6b79089973f49c14b2e43c669c47a7897741ab559c7ec87b4317b8b4cd541af431c38e46e34a074293f8bd1ae970e753050b201dad77c4b5eea0ce5d4994895_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g532838947e68159a349ca982762b082975ce8f8c400fd9cf15344af47c7aac68ed6604a75e03faac2374bac9bf88a7491fdc7d6eb9c09efbb8c50473097153fb_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay"
-      ]
-    },
-    {
-      "title": "소액 투자 앱 수익 후기 TOP 5 완벽 정리 (2026년)",
-      "url": "https://www.hoguwhat.com/2026/06/top-5-2026_0124637232.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g60b674ce0cac53e36f70983949cf56e87ae7ac8730dbe1c057e32d5c0b9c86a179792b4063b5ade823a1e62de106433d6ae28e8de5fdd654bbc2fdf505e24b28_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "broken 교체 → pixabay"
-      ]
-    },
-    {
       "title": "국내 저비용 ETF 추천 순위 2026 — 수수료 아끼고 수익 높이는 5단계 투자법",
       "url": "https://www.hoguwhat.com/2026/06/etf-2026-5.html",
       "images": 1,
@@ -1376,58 +1241,6 @@
       ]
     },
     {
-      "title": "2026년 서울 아파트 청약 당첨 전략 5가지 완벽 정리",
-      "url": "https://www.hoguwhat.com/2026/06/2026-5_0866591759.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/ga54fa11de66099cafaaa02d8f2e222837ac5689bd75f0556519ba5c71680cb2e7e8ae9bddb6a0843ba9bfe6a871f81649bb9f304dc9bd34d42ae5000136d6b37_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/gdf5ed34a72446fbd3dc35fc8bc4fc572e187372b2a9cd409ce74b9747b07c878531b45bc9c075857713975c58b7cc8f41e4ea46b67f33532d44f98fd01780acc_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay"
-      ]
-    },
-    {
-      "title": "자동차보험 비교사이트 추천 순위 2024 – 진짜 아끼는 방법 총정리",
-      "url": "https://www.hoguwhat.com/2026/06/2024.html",
-      "images": 3,
-      "needed": 1,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g80e3f59a56b8bd61edb7d4c4e50b88e9b6c1f7fc62ad2f7ecfb0dd0a30844b771df96d64df071e9504a6b39495ec26d9f467a35b44e62e2c1d766d4c397e5e39_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/gde3b7050315d74892bec2a4c00c37594552741b5973d7297052aec9f7a4ba2687e53ab73c167c0a7aeccd06ef421505c3c735f487e077cead80fc2a1a5604e85_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/gaf025dc4ed00bfc5d72cc7144dd29a4d3fe1316e17d6981da81a7103a11d9af15d4f929f44d5e90b249e778c4b28b00665c40f065a7ca8b290fac87342ee9c27_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay"
-      ]
-    },
-    {
       "title": "2026 ISA계좌 세금혜택 총정리 5가지 핵심 전략",
       "url": "https://www.hoguwhat.com/2026/06/2026-isa-5.html",
       "images": 2,
@@ -1441,29 +1254,6 @@
       "blog": "HOGU What?",
       "actions": [
         "변경 없음"
-      ]
-    },
-    {
-      "title": "자동차보험 다이렉트 2026 최저가 비교 완벽 가이드",
-      "url": "https://www.hoguwhat.com/2026/06/2026_045233595.html",
-      "images": 3,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g5b5445fc96421591ec6d0960f9dcd8fde7e26bfa5695217f49ad0a0a415c0013f3b06601efd39d2ddc0c64012bdbf41a3a9ed4957363073fa76eb2c5ef6cb980_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g5b5445fc96421591ec6d0960f9dcd8fde7e26bfa5695217f49ad0a0a415c0013f3b06601efd39d2ddc0c64012bdbf41a3a9ed4957363073fa76eb2c5ef6cb980_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay"
       ]
     },
     {
@@ -1497,7 +1287,7 @@
       ],
       "blog": "HOGU What?",
       "actions": [
-        "수정 실패 HTTP 503"
+        "alt 재작성 → \"SK하이닉스 주가 전망 분석: 투자 판단을 위한 5단계 핵심 가이드 관련 이미지\" (캡션 포함)"
       ]
     },
     {
@@ -1509,80 +1299,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g146b688f9dd986801c19e8b28cc550b665882fd9fddc36d7a18d6ec27d453c607d900339d2b46af1c0ba2148d4084ce59931cd6259cd07174ef5fdc143ce136f_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/gc9b0bb8cc25a24b61bcdc1c506819c263806ae1662791df734e5c9d77847bc20eb24590286d0a15634d6d3b353296a67765bb2c47aeb9508ffde7a8079f4298e_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay"
-      ]
-    },
-    {
-      "title": "2026 주식 배당주 추천 종목 TOP 5 완벽 정리",
-      "url": "https://www.hoguwhat.com/2026/06/2026-top-5_02132301026.html",
-      "images": 3,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g2224bb83dd2de685e967fbaf700ab6e9c7fccc294a5aabbd73689bb048ca7673cc246dc668a90200e245fcdd04f453e9c5a395cbd70108a4373ae8d68fcbd044_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g2224bb83dd2de685e967fbaf700ab6e9c7fccc294a5aabbd73689bb048ca7673cc246dc668a90200e245fcdd04f453e9c5a395cbd70108a4373ae8d68fcbd044_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/gdcb47ce302d72d2d611e6dc44891852c7bf2f05a502b076cba39f088274d6f7fff38a627324a82dd1116d0638a6ec82ddb2f4edb5acadd18a45112fb20b6db66_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay"
-      ]
-    },
-    {
-      "title": "2026 주택청약 당첨 조건 총정리 — 핵심 5가지 전략",
-      "url": "https://www.hoguwhat.com/2026/06/2026-5_01039548558.html",
-      "images": 3,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g98d14b737d04ddfbe6f962b9ecde16f0196c4c6f07e03c0710cf3269adfb4bc545493efcf9242ac6a63d4a0bed45839f516c203a5528d468dc2749756f3d517b_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g98d14b737d04ddfbe6f962b9ecde16f0196c4c6f07e03c0710cf3269adfb4bc545493efcf9242ac6a63d4a0bed45839f516c203a5528d468dc2749756f3d517b_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g4fd0ac7ac0e61b63eaa10b7c5274bfc6b836b9402c363b2f27f847d7b10ef14b31264c71c6cd70b7a7b107dafde6ecd86ab533b243d78dd2fba918127fd9e528_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay"
+        "변경 없음"
       ]
     },
     {
@@ -1610,16 +1331,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/geb177a410113e61acd0b7d804b133cc349bdc75d031f4ed7515df75a1602c31936cb130e20c9773f0e10266ecb77491d2ea64872ac76ae384602041846cce37e_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "broken 교체 → pixabay"
+        "변경 없음"
       ]
     },
     {
@@ -1631,22 +1347,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g09ce1ffd088f5389c7a683f52f895044ef84f3f67accdcf93c045d2cc77d910d0b078818a3a5ef59749b0ad5826a0bfed3a0e9e6191048b5f230db6b7646c3ea_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/gf2e458cd3460138f40d30e1f037710b2cf2ac50589d96697042a2ba51b45d2e7ec8d7c2487f4fd6b9e310a2976adbcf74622200c6b139f054c825c389b21ad57_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay"
+        "변경 없음"
       ]
     },
     {
@@ -1658,22 +1363,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g3d1f0486dcc11e5eb6a123224b523b52cce4a57d0d08c4c24cafdcf8a89e26e70ae9880be993953d53327345a74454620323fab59056b96157d0738c9234dfe3_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/gb03262d2e34d237d9629c03df1d4c688f2686997017636c683bd253d7ace1b07fcc6d9e61ea361bacbedfb6324231c44fbdf7f158eee9b4191901a5ac7bbe30f_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay"
+        "변경 없음"
       ]
     },
     {
@@ -1685,22 +1379,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g725ffe80a7e387b8f74d64f7fee7a67b1d88b29513e67696c0517890ace86ffeafa68bcf1835446bae8749595e375e0a4d3254930ec3440fcf396e8f392b5e4c_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g023f2005cdfa6e33045d0f571830e4c42fab02de791eddc07610a28225f44956ee31aec430dea3e82fa871976b3ab28be3740644910fb41f5b1ad5ce871193ac_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay"
+        "변경 없음"
       ]
     },
     {
@@ -1728,17 +1411,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g5bf9c3a92c767774278fe79b7bcf29003b85b653c6755b90cd92b89715db0a4c77a953a93b8b37798491f27d08c1dd90458a7f91c580e01141cdd1f991de2104_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU 여행,스포츠,연예",
       "actions": [
-        "broken 교체 → generated_thumbnail",
-        "캡션 동기화 1건"
+        "변경 없음"
       ]
     },
     {
@@ -1750,17 +1427,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g361aa6400a52aec7c68b36cb1a896ae50e0e7c919a67e76d2488cffa358e82fc6fd6a4d72c4ca81c0d503dcfc96129a7cf73890eaa9fab1f3d2ad61c49e318fc_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU 여행,스포츠,연예",
       "actions": [
-        "broken 교체 → pixabay",
-        "캡션 동기화 1건"
+        "변경 없음"
       ]
     },
     {
@@ -1772,23 +1443,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/ga77d532ce249a3ed84669119c1e25440910f73e2b2a5bf14530be578000ed465cffc602fd343a3b3defe5f2498576fbaa83a9dc64e48e04ddf6f88a6caddaae5_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g22a492515db4f139e27f1bd65e91966530c7d3b13d8ef148614276347bec910664eda3aea39ce4fc76a357a4cd53c4a2d6028e12966f5ba0e67392ae75cb58d5_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU 여행,스포츠,연예",
       "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay",
-        "캡션 동기화 2건"
+        "변경 없음"
       ]
     },
     {
@@ -1800,23 +1459,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g64fab9a5b02a0206db37d94d20c7a4cbd1bf0cc8528dcfb45b23512904998b3c897407b84dd811594c286d6622b7f3c606f4e0539d909ff08a460cdd3c1fe8b0_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g833e37239b57aa1847398829092264ce73f126cbbd41e64741e51e9913df34d934444fffb10f8d3ba785234eb4a7d8e741fbfd84b5cd32a1bab0a0ee19f13497_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU 여행,스포츠,연예",
       "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay",
-        "캡션 동기화 2건"
+        "변경 없음"
       ]
     },
     {
@@ -1828,6 +1475,178 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "손흥민 토트넘 2026 최신 경기 분석과 전망, 부상병동 이슈",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/2026_02013513354.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "자전거 출퇴근 3개월 해본 솔직 장단점 정리 (따릉이 vs 개인 자전거)",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/3-vs.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "수영 1km 완주, 초보 훈련 계획 현실적으로",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/1km.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "수영 호흡법 초보 25m 완영 팁, 호흡 타이밍 교정하기",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/25m.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "등산 초보의 지리산 종주 도전기, 실제로 배운 것들 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/blog-post_946.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "마라톤 처음 완주한 사람이 알려주는 훈련법 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/blog-post_16.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        },
+        {
+          "type": "broken",
+          "url": "https://pixabay.com/get/gf57252f99d700b1b81f7177f475914f3a51972f6abd7e31e72271ace7b98acafb20d123de5729661a25e77d4b135d4e0f167d278fb99396c7a1fcd682cf8cdf2_1280.jpg",
+          "detail": "HTTP 400 (만료된 주소)"
+        },
+        {
+          "type": "broken",
+          "url": "https://pixabay.com/get/g689eb442481532224907854aa392fcb390153b650d5b33475950944a10ade0f65b647ec8c74fc1b9008c04f6b190e52758e0a9278479568746e23cde2590d4b0_1280.jpg",
+          "detail": "HTTP 400 (만료된 주소)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "broken 교체 → pixabay",
+        "broken 교체 → pixabay",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "국내 프로축구 K리그 직관 좌석 추천과 관람 팁 총정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/k.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "2026 추석 연휴 여행지 추천 후기, 강릉·해외 비교",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/2026_0137733991.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "AI 여행 큐레이션 서비스 비교 후기: 가족여행 일정, 이제 AI에 맡겨도 될까",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/ai-ai.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "강원도 캠핑 처음 해봤을 때 몰랐던 것들 실제 후기 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/blog-post_309.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
         }
       ],
       "blog": "HOGU 여행,스포츠,연예",

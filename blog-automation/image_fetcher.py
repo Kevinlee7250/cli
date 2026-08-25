@@ -1054,6 +1054,20 @@ def _self_host(images: list[dict]) -> None:
     _prefer_stable_urls(images)
 
 
+def adopt_image(img: dict | None) -> dict | None:
+    """글에 넣기로 확정한 이미지 한 장을 자체 호스팅 관문에 통과시킵니다.
+
+    검색 단계가 아니라 **채택 단계**에서 부릅니다. 후보를 고르는 동안 부르면
+    버려질 이미지까지 내려받아 저장소가 부풉니다.
+
+    이것을 빠뜨리면 만료되는 주소가 그대로 발행 글에 박힙니다 — 죽은 이미지를
+    또 죽을 이미지로 바꾸는 셈이 됩니다.
+    """
+    if img:
+        _self_host([img])
+    return img
+
+
 def _prefer_stable_urls(images: list[dict]) -> None:
     """복제되지 않은 채 남은 이미지를 영구 주소로 바꿉니다.
 

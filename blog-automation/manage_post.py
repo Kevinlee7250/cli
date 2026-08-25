@@ -335,14 +335,14 @@ def action_replace_image(
 
     # ── 새 이미지 결정 ──
     if image_query.strip():
-        from image_fetcher import _fetch_best_image
-        new_img = _fetch_best_image(
+        from image_fetcher import _fetch_best_image, adopt_image
+        new_img = adopt_image(_fetch_best_image(
             image_query.strip(),
             naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
             naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
             n_candidates=6,
             pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
-        )
+        ))
         if not new_img:
             logger.error(f"교체용 이미지 검색 실패: '{image_query}'")
             return 1
@@ -546,14 +546,14 @@ def action_add_image(post_id: str, image_query: str = "", image_index: int = 0,
         return 1
 
     if image_query.strip():
-        from image_fetcher import _fetch_best_image
-        new_img = _fetch_best_image(
+        from image_fetcher import _fetch_best_image, adopt_image
+        new_img = adopt_image(_fetch_best_image(
             image_query.strip(),
             naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
             naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
             n_candidates=6,
             pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
-        )
+        ))
         if not new_img:
             logger.error(f"이미지 검색 실패: '{image_query}'")
             return 1
@@ -679,7 +679,7 @@ def action_auto_images(post_id: str, max_images: int = 2) -> int:
     """
     import re as _re
     from image_fetcher import (
-        _fetch_best_image, _make_img_html, _safe_caption,
+        _fetch_best_image, _make_img_html, _safe_caption, adopt_image,
         _simplify_query, generate_fallback_image,
     )
 
@@ -747,13 +747,13 @@ def action_auto_images(post_id: str, max_images: int = 2) -> int:
         if h2_index < 0 or h2_index > len(h2_matches):
             h2_index = 0
 
-        img = _fetch_best_image(
+        img = adopt_image(_fetch_best_image(
             query,
             naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
             naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
             n_candidates=6,
             pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
-        )
+        ))
         if not img:
             img = generate_fallback_image(query if len(query) >= 6 else title,
                                           entry.get("keyword", ""))

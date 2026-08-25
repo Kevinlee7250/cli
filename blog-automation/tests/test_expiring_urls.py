@@ -121,3 +121,40 @@ def test_healthy_image_needs_no_retry(head, monkeypatch):
                         lambda *a, **k: calls.append(1) or _Head(200))
     assert image_audit.check_alive(LARGE)[0] is True
     assert not calls, "정상 이미지에 불필요한 재요청을 했습니다"
+
+
+# ── 채택 지점 ────────────────────────────────────────────────────────────────
+
+def test_adopt_image_puts_a_single_image_through_the_gate(monkeypatch):
+    seen = []
+    monkeypatch.setattr(image_fetcher, "_self_host", lambda imgs: seen.append(imgs))
+    img = {"url": LARGE, "stable_url": STABLE}
+    assert image_fetcher.adopt_image(img) is img
+    assert seen == [[img]]
+
+
+def test_adopt_image_tolerates_nothing_found(monkeypatch):
+    monkeypatch.setattr(image_fetcher, "_self_host",
+                        lambda imgs: (_ for _ in ()).throw(AssertionError("불려선 안 됩니다")))
+    assert image_fetcher.adopt_image(None) is None
+
+
+_REPAIR_MODULES = ["fix_unlicensed_images.py", "fix_duplicate_images.py", "manage_post.py"]
+
+
+@pytest.mark.parametrize("name", _REPAIR_MODULES)
+def test_repair_paths_adopt_what_they_insert(name):
+    """교체 이미지도 자체 호스팅 관문을 지나야 합니다.
+
+    이걸 빠뜨리면 만료된 이미지를 '또 만료될 이미지'로 바꾸게 됩니다.
+    _fetch_best_image를 쓰는 모듈은 adopt_image도 써야 합니다.
+    """
+    path = os.path.join(os.path.dirname(__file__), "..", name)
+    with open(path, encoding="utf-8") as f:
+        src = f.read()
+    if "_fetch_best_image(" not in src:
+        pytest.skip(f"{name}은 이미지를 직접 고르지 않습니다")
+    assert "adopt_image" in src, (
+        f"{name}이 이미지를 고르면서 adopt_image를 거치지 않습니다 — "
+        f"교체본이 만료되는 주소로 발행 글에 박힙니다"
+    )

@@ -9,7 +9,7 @@ on:
         default: ''
   push:
     branches:
-      - claude/blog-automation-system-KAbtE
+      - latest
     paths:
       - '.github/restyle-trigger.txt'
 
@@ -25,7 +25,7 @@ jobs:
       - name: 코드 체크아웃
         uses: actions/checkout@v4
         with:
-          ref: claude/blog-automation-system-KAbtE
+          ref: latest
 
       - name: Python 3.11 설정
         uses: actions/setup-python@v5
@@ -68,5 +68,5 @@ jobs:
           git rm -f .github/restyle-trigger.txt 2>/dev/null || true
           if ! git diff --staged --quiet; then
             git commit -m "🧹 restyle-trigger.txt 정리"
-            git push origin claude/blog-automation-system-KAbtE
+            git push origin latest
           fi

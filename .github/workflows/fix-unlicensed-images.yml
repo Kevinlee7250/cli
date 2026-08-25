@@ -39,7 +39,7 @@ jobs:
       - name: 코드 체크아웃
         uses: actions/checkout@v4
         with:
-          ref: claude/blog-automation-system-KAbtE
+          ref: latest
 
       - name: Python 3.11 설정
         uses: actions/setup-python@v5
@@ -102,8 +102,8 @@ jobs:
             echo "변경 없음"
           else
             git commit -m "🔒 무단 이미지 교체 리포트 (#${{ github.run_number }})"
-            git pull --rebase origin claude/blog-automation-system-KAbtE || true
-            git push origin HEAD:claude/blog-automation-system-KAbtE
+            git pull --rebase origin latest || true
+            git push origin HEAD:latest
           fi
 
       - name: 실행 로그 아티팩트

@@ -26,7 +26,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: claude/blog-automation-system-KAbtE
+          ref: latest
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python 3.11
@@ -69,8 +69,8 @@ jobs:
             git commit -m "🌿 시즌 트렌드 예약 키워드 큐 업데이트 ($(date -u +%Y-%m-%d))"
             _push_ok=0
             for i in 1 2 3; do
-              git pull --rebase --autostash origin claude/blog-automation-system-KAbtE \
-                && git push origin claude/blog-automation-system-KAbtE \
+              git pull --rebase --autostash origin latest \
+                && git push origin latest \
                 && { _push_ok=1; break; }
               echo "pull+push 재시도 $i/3..."
               sleep $((i * 3))

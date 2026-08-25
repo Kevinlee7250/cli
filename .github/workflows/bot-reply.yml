@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: claude/blog-automation-system-KAbtE
+          ref: latest
 
       - uses: actions/setup-python@v5
         with:
@@ -153,15 +153,15 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # bot_reply.json 내용 보존 후 최신 원격 상태로 리셋 (충돌 방지)
           cp docs/data/bot_reply.json /tmp/bot_reply.json
-          git fetch origin claude/blog-automation-system-KAbtE
-          git reset --hard origin/claude/blog-automation-system-KAbtE
+          git fetch origin latest
+          git reset --hard origin/latest
           cp /tmp/bot_reply.json docs/data/bot_reply.json
           git add -f docs/data/bot_reply.json
           git diff --staged --quiet && echo "변경없음" && exit 0
           git commit -m "🤖 봇 응답 (#${{ github.run_number }})"
           for i in 1 2 3; do
-            git push origin claude/blog-automation-system-KAbtE && break
+            git push origin latest && break
             echo "push 재시도 $i/3 — 원격 변경분 반영 후 재시도"
-            git pull --rebase --autostash origin claude/blog-automation-system-KAbtE || true
+            git pull --rebase --autostash origin latest || true
             sleep $((i * 2))
           done

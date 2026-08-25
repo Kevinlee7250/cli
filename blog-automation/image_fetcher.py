@@ -112,11 +112,22 @@ def _pixabay_images(keyword: str, count: int, api_key: str) -> list[dict]:
             return []
         images = []
         for item in r.json().get("hits", []):
+            # largeImageURL은 화질이 좋지만 서명·만료되는 주소입니다
+            # (pixabay.com/get/<해시>_1280.jpg). 발행 글에 그대로 박아 두면
+            # 얼마 뒤 400을 돌려주며 이미지가 깨집니다 — 2026-08-25 소급 작업에서
+            # 35장 중 34장이 이 형태로 이미 죽어 있었습니다.
+            # webformatURL(cdn.pixabay.com/photo/...)은 영구 주소입니다.
+            #
+            # 그래서 화질 좋은 쪽을 쓰되, 영구 주소를 stable_url로 함께 들고
+            # 갑니다. 복제에 성공하면 만료는 무의미해지고, 복제가 실패하거나
+            # 자체 호스팅이 꺼져 있으면 영구 주소로 갈아탑니다.
             img_url = item.get("largeImageURL") or item.get("webformatURL", "")
             if not img_url:
                 continue
+            stable = item.get("webformatURL", "")
             images.append({
                 "url": img_url,
+                "stable_url": stable if stable != img_url else "",
                 "title": item.get("tags", keyword).replace(",", " /"),
                 "width": item.get("imageWidth", item.get("webformatWidth", 800)),
                 "height": item.get("imageHeight", item.get("webformatHeight", 450)),
@@ -1030,16 +1041,34 @@ def _self_host(images: list[dict]) -> None:
     """이미지를 저장소로 복제해 원본이 사라져도 글이 깨지지 않게 합니다.
 
     복제가 실패하거나 스위치가 꺼져 있으면 조용히 원본(핫링크)을 유지합니다 —
-    이 단계 때문에 글 생성이 멈추면 안 됩니다.
+    이 단계 때문에 글 생성이 멈추면 안 됩니다. 다만 그 원본이 만료되는
+    주소라면 영구 주소(stable_url)로 갈아탑니다.
     """
     try:
         from feature_flags import is_enabled
-        if not is_enabled("image_self_host"):
-            return
-        from image_mirror import mirror_images
-        mirror_images(images)
+        if is_enabled("image_self_host"):
+            from image_mirror import mirror_images
+            mirror_images(images)
     except Exception as e:
         logger.warning(f"이미지 자체 호스팅 건너뜀: {e}")
+    _prefer_stable_urls(images)
+
+
+def _prefer_stable_urls(images: list[dict]) -> None:
+    """복제되지 않은 채 남은 이미지를 영구 주소로 바꿉니다.
+
+    복제에 성공했다면 우리 도메인을 가리키므로 손대지 않습니다. 실패했거나
+    스위치가 꺼져 있을 때만, 만료되는 주소 대신 영구 주소를 씁니다 —
+    화질을 조금 잃더라도 몇 주 뒤 깨지는 것보다 낫습니다.
+    """
+    for img in images or []:
+        stable = (img.get("stable_url") or "").strip()
+        if not stable or img.get("origin_url"):
+            continue
+        if img.get("url") == stable:
+            continue
+        logger.info(f"만료되는 주소 대신 영구 주소 사용: {stable[:70]}")
+        img["url"] = stable
 
 
 

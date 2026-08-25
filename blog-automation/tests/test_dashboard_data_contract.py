@@ -50,6 +50,7 @@ KNOWN_UNDISPLAYED = {
     "schedule_history.json": "스케줄 실행 이력 — 아직 패널 없음",
     "link_clusters.json": "related_posts가 관련 글 링크를 넣을 때 쓰는 파이프라인 파일",
     "adsense_policies.json": "adsense_policy_updater가 만드는 검증기·작성 프롬프트 입력",
+    "image_mirror.json": "자체 호스팅 이미지 대조표(해시 ↔ 원본) — 화면용이 아니라 복구용",
 }
 
 

@@ -572,8 +572,9 @@ def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
         use_ai: bool = False, attach_insufficient: bool = False) -> dict:
     from config import get_blog_configs
     from blogger_uploader import _get_access_token
-    from fix_unlicensed_images import _iter_posts
+    from fix_unlicensed_images import ListingTruncated, _iter_posts
 
+    incomplete: list[dict] = []
     fix_kinds = DEFAULT_FIX_KINDS + (("insufficient",) if attach_insufficient else ())
 
     blogs = get_blog_configs()
@@ -599,7 +600,16 @@ def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
             continue
 
         logger.info(f"══ [{name}] 이미지 검사 시작 (apply={apply_changes}, ai={use_ai}) ══")
-        for post in _iter_posts(blogger_id, token):
+        # 목록이 중간에 끊기면 그 블로그는 "덜 본 것"으로 기록합니다. 지금까지
+        # 한 수정은 유효하므로 버리지 않고, 대신 리포트에 남겨 "전부 확인했다"는
+        # 오해를 막습니다.
+        try:
+            posts = list(_iter_posts(blogger_id, token))
+        except ListingTruncated as e:
+            logger.error(f"[{name}] {e}")
+            incomplete.append({"blog": name, "reason": str(e)[:160]})
+            posts = []
+        for post in posts:
             if limit and totals["scanned"] >= limit:
                 break
             totals["scanned"] += 1
@@ -643,6 +653,8 @@ def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
         "blogFilter": blog_filter,
         "blogsAudited": [b.get("name") or b.get("id", "") for b in blogs],
         "fixKinds": list(fix_kinds),
+        # 비어 있어야 "전 범위를 확인했다"고 말할 수 있습니다
+        "incompleteBlogs": incomplete,
         **totals,
         "issueCounts": counts,
         "posts": results[:100],

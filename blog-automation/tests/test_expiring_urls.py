@@ -261,3 +261,48 @@ def test_report_carries_incomplete_blogs():
                encoding="utf-8").read()
     assert '"incompleteBlogs": incomplete' in src
     assert "except ListingTruncated" in src
+
+
+# ── 같은 사진이 여러 글에 반복되지 않게 ──────────────────────────────────────
+
+def test_adopted_image_is_recorded_as_used(monkeypatch, tmp_path):
+    """채택한 이미지를 기록해야 다음 글이 다른 사진을 고릅니다.
+
+    이 기록이 없으면 _fetch_best_image가 매번 같은 "아직 안 쓴 목록"을 보고
+    같은 사진을 고릅니다. 2026-08-25 소급 교체에서 원본 421건이 파일 115개로
+    수렴했는데, 절반은 압축 효과가 아니라 한 사진을 여러 글에 반복해서 넣은
+    결과였습니다.
+    """
+    used = tmp_path / "used_images.json"
+    monkeypatch.setattr(image_fetcher, "_USED_IMAGES_FILE", str(used))
+    monkeypatch.setattr(image_fetcher, "_self_host", lambda imgs: None)
+
+    image_fetcher.adopt_image({"url": STABLE, "title": "sea / sky"})
+
+    import json
+    saved = json.loads(used.read_text(encoding="utf-8"))
+    assert STABLE in saved["urls"]
+    assert saved["titles"], "제목 지문도 남겨야 같은 사진의 다른 URL을 막습니다"
+
+
+def test_recording_failure_does_not_break_adoption(monkeypatch):
+    """기록에 실패해도 이미지는 쓸 수 있어야 합니다."""
+    monkeypatch.setattr(image_fetcher, "_self_host", lambda imgs: None)
+
+    def _boom(*a, **k):
+        raise OSError("디스크 오류")
+    monkeypatch.setattr(image_fetcher, "mark_images_used", _boom)
+    img = {"url": STABLE}
+    assert image_fetcher.adopt_image(img) is img
+
+
+def test_attach_flag_is_manual_only():
+    """스케줄 실행이 전 게시글에 이미지를 밀어 넣지 않도록."""
+    path = os.path.join(os.path.dirname(__file__), "..", "..",
+                        ".github", "workflows", "image-audit.yml")
+    with open(path, encoding="utf-8") as f:
+        text = f.read()
+    assert "attach_insufficient" in text, "워크플로에서 켤 방법이 없습니다"
+    block = text[text.index("inputs.attach_insufficient"):]
+    block = block[:block.index("\n\n")] if "\n\n" in block else block
+    assert "schedule" not in block, "스케줄 실행에도 붙고 있습니다"

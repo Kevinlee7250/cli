@@ -17,6 +17,11 @@ on:
         type: boolean
         required: false
         default: false
+      attach_insufficient:
+        description: '권장 장수보다 적은 글에 이미지 1장씩 추가 (전체의 65% 해당 — 신중히)'
+        type: boolean
+        required: false
+        default: false
       limit:
         description: '검사할 최대 글 수 (0=전체)'
         required: false
@@ -90,6 +95,12 @@ jobs:
             ARGS="$ARGS --apply"
           else
             echo "=== 검사 전용 모드 (글을 수정하지 않음) ==="
+          fi
+          # 스케줄 실행에는 절대 붙이지 않습니다 — 수동으로만 켭니다.
+          # 대상이 전체 글의 65%라, 자동으로 돌면 사실상 전 게시글에 이미지를
+          # 밀어 넣게 됩니다.
+          if [ "${{ inputs.attach_insufficient }}" = "true" ]; then
+            ARGS="$ARGS --attach-insufficient"
           fi
           echo "실행 인자: $ARGS"
           python image_audit.py $ARGS

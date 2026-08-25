@@ -1063,8 +1063,21 @@ def adopt_image(img: dict | None) -> dict | None:
     이것을 빠뜨리면 만료되는 주소가 그대로 발행 글에 박힙니다 — 죽은 이미지를
     또 죽을 이미지로 바꾸는 셈이 됩니다.
     """
-    if img:
-        _self_host([img])
+    if not img:
+        return None
+    _self_host([img])
+    # 쓰기로 정한 순간 기록합니다. 이게 없으면 _fetch_best_image가 매번 같은
+    # "아직 안 쓴 목록"을 보고 같은 사진을 고릅니다 — 2026-08-25 소급 교체에서
+    # 원본 421건이 파일 115개로 수렴했는데, 절반은 압축 효과가 아니라 한 사진을
+    # 여러 글에 반복해서 넣은 결과였습니다.
+    #
+    # 기록은 복제 후에 합니다. mark_images_used가 복제본 URL을 원본으로
+    # 되돌려 적으므로 순서가 바뀌어도 값은 같지만, "채택 완료" 시점에 남기는
+    # 편이 실패한 복제를 사용 이력에 넣지 않아 정확합니다.
+    try:
+        mark_images_used([img.get("url", "")], [img.get("title", "")])
+    except Exception as e:
+        logger.debug(f"사용 이미지 기록 실패: {e}")
     return img
 
 

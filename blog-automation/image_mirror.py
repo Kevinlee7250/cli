@@ -171,12 +171,33 @@ def _decode_data_uri(url: str) -> tuple[bytes, str] | None:
     return raw, mime
 
 
+#: 발행 글의 Pixabay 이미지가 400을 돌려줍니다. 원인이 둘인데 대응이 정반대라
+#: 구분해야 합니다.
+#:   (가) 서명 URL 만료 → 그 이미지는 이미 죽었고, 복제가 아니라 교체 대상
+#:   (나) 핫링크 차단   → 브라우저에서는 멀쩡하고, 서버 요청만 막힌 것
+#: Referer를 붙여 한 번 더 요청해 보면 갈립니다. 성공하면 (나)이고, 그래도
+#: 400이면 (가)입니다. 어느 쪽인지 로그에 남깁니다 — 추측으로 500장을
+#: 처리하면 안 됩니다.
+def _fetch(url: str):
+    r = requests.get(url, headers=_HEADERS, timeout=TIMEOUT, stream=True)
+    if r.status_code < 400:
+        return r
+    m = re.match(r"(https?://[^/]+)", url)
+    retry = dict(_HEADERS, Referer=(m.group(1) + "/") if m else url, Accept="image/*,*/*")
+    r2 = requests.get(url, headers=retry, timeout=TIMEOUT, stream=True)
+    if r2.status_code < 400:
+        logger.info(f"Referer 재시도로 통과(핫링크 차단이었음): {url[:70]}")
+        return r2
+    logger.debug(f"재시도도 {r2.status_code}: {url[:70]}")
+    return r
+
+
 def _download(url: str) -> tuple[bytes, str] | None:
     """(바이트, MIME). 실패하거나 이미지가 아니면 None."""
     if url.startswith("data:"):
         return _decode_data_uri(url)
     try:
-        r = requests.get(url, headers=_HEADERS, timeout=TIMEOUT, stream=True)
+        r = _fetch(url)
         r.raise_for_status()
         mime = (r.headers.get("Content-Type") or "").split(";")[0].strip().lower()
         # 길이를 미리 알 수 있으면 내려받기 전에 포기합니다

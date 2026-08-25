@@ -34,8 +34,11 @@ def store(tmp_path, monkeypatch):
 
 
 class _Resp:
-    def __init__(self, body=PNG, mime="image/png", headers=None):
+    # status_code 필수 — _fetch가 400대일 때만 Referer로 재시도하므로,
+    # 이것이 없으면 정상 응답인지 판단할 수 없습니다.
+    def __init__(self, body=PNG, mime="image/png", headers=None, status_code=200):
         self.body, self.headers = body, {"Content-Type": mime, **(headers or {})}
+        self.status_code = status_code
 
     def raise_for_status(self):
         pass
@@ -227,3 +230,45 @@ def test_public_base_follows_the_repository(monkeypatch):
     monkeypatch.delenv("IMAGE_HOST_BASE", raising=False)
     monkeypatch.setenv("GITHUB_REPOSITORY", "Someone/myrepo")
     assert image_mirror.public_base() == "https://someone.github.io/myrepo/images"
+
+
+# ── 400 원인 구분 ────────────────────────────────────────────────────────────
+
+class _Coded:
+    def __init__(self, code, body=PNG):
+        self.status_code, self.body = code, body
+        self.headers = {"Content-Type": "image/png"}
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise image_mirror.requests.exceptions.HTTPError(f"{self.status_code}")
+
+    def iter_content(self, n):
+        yield self.body
+
+
+def test_hotlink_block_is_retried_with_a_referer(store, monkeypatch):
+    """400이 핫링크 차단이면 Referer를 붙여 통과합니다 — 이미지는 살아 있습니다."""
+    seen = []
+
+    def _get(url, headers=None, **kw):
+        seen.append(headers or {})
+        return _Coded(200) if "Referer" in (headers or {}) else _Coded(400)
+
+    monkeypatch.setattr(image_mirror.requests, "get", _get)
+    assert image_mirror.mirror_url("https://pixabay.com/get/a.jpg") is not None
+    assert len(seen) == 2 and seen[1]["Referer"] == "https://pixabay.com/"
+
+
+def test_dead_url_still_fails_after_retry(store, monkeypatch):
+    """재시도해도 400이면 원본이 죽은 것 — 복제할 수 없습니다."""
+    monkeypatch.setattr(image_mirror.requests, "get", lambda *a, **k: _Coded(400))
+    assert image_mirror.mirror_url("https://pixabay.com/get/a.jpg") is None
+
+
+def test_healthy_url_is_fetched_once(store, monkeypatch):
+    calls = []
+    monkeypatch.setattr(image_mirror.requests, "get",
+                        lambda *a, **k: calls.append(1) or _Coded(200))
+    image_mirror.mirror_url("https://pixabay.com/get/a.jpg")
+    assert len(calls) == 1, "정상 응답에 불필요한 재요청을 했습니다"

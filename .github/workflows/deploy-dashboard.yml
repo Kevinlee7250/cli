@@ -49,14 +49,22 @@ on:
       - "📋 주간 운영 브리핑"
       - "주간 학습 및 시스템 점검"
     types: [completed]
-    branches: [claude/blog-automation-system-KAbtE]
+    # 두 브랜치를 모두 적습니다. 이 필터가 보는 것은 "데이터를 만든 워크플로가
+    # 어느 브랜치에서 돌았는가"입니다. 워크플로 파일은 기본 브랜치(latest)에서
+    # 읽히므로 수동 실행은 ref가 latest가 되는데, 여기에 작업 브랜치만 적혀
+    # 있으면 그 실행은 배포를 못 부릅니다.
+    #
+    # 2026-08-25에 실제로 그랬습니다. 이미지 감사가 발행 글 25장을 자체 호스팅
+    # 주소로 바꿔 놓고 커밋까지 했는데 배포가 안 걸려, 라이브 글들이 없는
+    # 파일을 가리켰습니다. 워크플로는 초록이었습니다.
+    branches: [claude/blog-automation-system-KAbtE, latest]
 
   # 수동 배포
   workflow_dispatch:
 
   # 사람이 docs/를 직접 고쳤을 때 (자동화 커밋은 위 workflow_run이 담당)
   push:
-    branches: [claude/blog-automation-system-KAbtE]
+    branches: [claude/blog-automation-system-KAbtE, latest]
     paths:
       - 'docs/index.html'
       - 'docs/data/**'

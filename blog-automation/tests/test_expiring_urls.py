@@ -158,3 +158,54 @@ def test_repair_paths_adopt_what_they_insert(name):
         f"{name}이 이미지를 고르면서 adopt_image를 거치지 않습니다 — "
         f"교체본이 만료되는 주소로 발행 글에 박힙니다"
     )
+
+
+# ── 교체 직후의 공백 ─────────────────────────────────────────────────────────
+
+def test_replacement_keeps_the_origin_as_a_fallback():
+    """복제본은 배포돼야 열립니다 — 그 사이 발행 글이 깨지면 안 됩니다."""
+    import fix_unlicensed_images as fx
+    out = fx._replace_image(
+        '<figure><img src="https://old/x.jpg" alt="a" width="720"/></figure>',
+        "https://old/x.jpg",
+        {"url": "https://kevinlee7250.github.io/cli/images/ab.jpg",
+         "origin_url": STABLE, "alt_text": "설명"})
+    assert 'src="https://kevinlee7250.github.io/cli/images/ab.jpg"' in out
+    assert f"this.src='{STABLE}'" in out
+    assert out.count("<img") == 1
+
+
+def test_replacement_without_a_mirror_has_no_fallback():
+    """복제하지 않았다면 되돌아갈 곳이 없습니다 — 자기 자신을 예비로 두면 안 됩니다."""
+    import fix_unlicensed_images as fx
+    out = fx._replace_image('<img src="https://old/x.jpg" alt="a">',
+                            "https://old/x.jpg",
+                            {"url": STABLE, "alt_text": "설명"})
+    assert "onerror=" not in out
+
+
+def test_replacement_does_not_double_up_onerror():
+    import fix_unlicensed_images as fx
+    tag = '<img src="https://old/x.jpg" onerror="this.onerror=null;this.src=\'https://a/b.jpg\'">'
+    out = fx._replace_image(tag, "https://old/x.jpg",
+                            {"url": "https://kevinlee7250.github.io/cli/images/ab.jpg",
+                             "origin_url": STABLE, "alt_text": "설명"})
+    assert out.count(' onerror="') == 1
+
+
+# ── 배포 트리거 ──────────────────────────────────────────────────────────────
+
+def test_deploy_listens_to_both_branches():
+    """워크플로를 latest에서 수동 실행하면 배포가 안 걸리던 문제.
+
+    workflow_run의 branches 필터는 '데이터를 만든 워크플로가 어느 브랜치에서
+    돌았는가'를 봅니다. 워크플로 파일은 기본 브랜치에서 읽히므로 수동 실행은
+    ref가 latest가 되는데, 여기에 작업 브랜치만 적혀 있으면 그 실행은 배포를
+    부르지 못합니다. 발행 글이 아직 없는 파일을 가리킨 채 남습니다.
+    """
+    path = os.path.join(os.path.dirname(__file__), "..", "..",
+                        ".github", "workflows", "deploy-dashboard.yml")
+    with open(path, encoding="utf-8") as f:
+        text = f.read()
+    for line in [ln for ln in text.split("\n") if "branches:" in ln]:
+        assert "latest" in line, f"배포 트리거가 latest 실행을 놓칩니다: {line.strip()}"

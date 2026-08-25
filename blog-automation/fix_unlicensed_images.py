@@ -139,7 +139,30 @@ def _replace_image(content: str, old_url: str, new_img: dict) -> str:
         for attr in ("alt", "title"):
             if new_alt and re.search(rf'{attr}="[^"]*"', tag):
                 tag = re.sub(rf'{attr}="[^"]*"', f'{attr}="{new_alt}"', tag)
+        return _with_fallback(tag, new_img)
+
+    return _IMG_TAG_RE.sub(_sub, content)
+
+
+def _with_fallback(tag: str, img: dict) -> str:
+    """자체 호스팅 주소에 원본을 onerror 예비로 붙입니다.
+
+    복제본은 커밋된 뒤 GitHub Pages가 배포해야 열립니다. 교체 직후 배포
+    전까지는 없는 파일을 가리키는데, 이 예비가 없으면 그동안 발행 글이
+    그냥 깨져 보입니다 — 2026-08-25 교체에서 25장이 그 상태였습니다.
+    복제본이 나중에 사라졌을 때도 같은 예비가 받아 줍니다.
+
+    복제하지 않은 이미지(원본 그대로)는 되돌아갈 곳이 없으므로 붙이지
+    않습니다. 이미 onerror가 있으면 건드리지 않습니다.
+    """
+    import html as _h
+    origin = (img.get("origin_url") or "").strip()
+    if not origin.startswith("http") or "onerror=" in tag.lower():
         return tag
+    closer = "/>" if tag.rstrip().endswith("/>") else ">"
+    body = tag.rstrip()[:-len(closer)].rstrip()
+    esc = _h.escape(origin, quote=True)
+    return body + ' onerror="this.onerror=null;this.src=\'' + esc + '\'"' + closer
 
     return _IMG_TAG_RE.sub(_sub, content)
 

@@ -1,5 +1,5 @@
 {
-  "auditedAt": "2026-08-25T13:42:56.157091+00:00",
+  "auditedAt": "2026-08-25T14:07:19.215085+00:00",
   "applied": true,
   "aiJudged": false,
   "blogFilter": "",
@@ -14,14 +14,14 @@
     "irrelevant",
     "weak_alt"
   ],
-  "scanned": 320,
-  "withIssues": 234,
-  "fixed": 53,
+  "scanned": 437,
+  "withIssues": 295,
+  "fixed": 22,
   "issueCounts": {
-    "insufficient": 211,
-    "weak_alt": 2,
-    "suspect": 2,
-    "broken": 104
+    "insufficient": 285,
+    "weak_alt": 5,
+    "broken": 30,
+    "suspect": 4
   },
   "posts": [
     {
@@ -1257,40 +1257,6 @@
       ]
     },
     {
-      "title": "SK하이닉스 주가 전망 분석: 투자 판단을 위한 5단계 핵심 가이드",
-      "url": "https://www.hoguwhat.com/2026/06/sk-5.html",
-      "images": 3,
-      "needed": 1,
-      "issues": [
-        {
-          "type": "weak_alt",
-          "url": "https://source.unsplash.com/1200x675/?3&sig=0",
-          "detail": "본문과 겹치는 말이 없는 alt (\"3단계: 재무제표와 실적 데이터로 기 — 관련 이미지\")",
-          "alt": "3단계: 재무제표와 실적 데이터로 기 — 관련 이미지"
-        },
-        {
-          "type": "suspect",
-          "url": "https://source.unsplash.com/1200x675/?3&sig=0",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "3단계: 재무제표와 실적 데이터로 기 — 관련 이미지",
-          "imageTerms": "3단계: 재무제표와 실적 데이터로 기 — 관련 이미지",
-          "postTerms": [
-            "SK",
-            "하이닉스",
-            "주가",
-            "전망",
-            "분석",
-            "투자"
-          ]
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "alt 재작성 → \"SK하이닉스 주가 전망 분석: 투자 판단을 위한 5단계 핵심 가이드 관련 이미지\" (캡션 포함)"
-      ]
-    },
-    {
       "title": "2026 주식 투자 초보 시작 방법 5단계 완벽 정리",
       "url": "https://www.hoguwhat.com/2026/06/2026-5_0906654488.html",
       "images": 2,
@@ -1571,23 +1537,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/gf57252f99d700b1b81f7177f475914f3a51972f6abd7e31e72271ace7b98acafb20d123de5729661a25e77d4b135d4e0f167d278fb99396c7a1fcd682cf8cdf2_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g689eb442481532224907854aa392fcb390153b650d5b33475950944a10ade0f65b647ec8c74fc1b9008c04f6b190e52758e0a9278479568746e23cde2590d4b0_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU 여행,스포츠,연예",
       "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay",
-        "캡션 동기화 1건"
+        "변경 없음"
       ]
     },
     {
@@ -1647,6 +1601,22 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "2026 추석 선물 세트 직접 비교 후기: 롯데·현대·신세계 차이",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/2026_0727474562.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
         }
       ],
       "blog": "HOGU 여행,스포츠,연예",

@@ -150,6 +150,7 @@ def run(blogs: list[dict], mode: str, dry_run: bool, limit: int = 0) -> dict:
     live = Liveness()
     scanned = touched = failed = 0
     mirrored = rewritten = skipped_undeployed = unlicensed_total = 0
+    planned = 0
     items: list[dict] = []
 
     for cfg in blogs:
@@ -182,6 +183,7 @@ def run(blogs: list[dict], mode: str, dry_run: bool, limit: int = 0) -> dict:
             if mode == "mirror":
                 for url in targets:
                     if dry_run:
+                        planned += 1
                         actions.append({"url": url[:90], "action": "would_mirror"})
                         continue
                     got = mirror_url(url)
@@ -243,6 +245,7 @@ def run(blogs: list[dict], mode: str, dry_run: bool, limit: int = 0) -> dict:
         "scannedPosts": scanned,
         "touchedPosts": touched,
         "imagesMirrored": mirrored,
+        "imagesPlanned": planned,
         "imagesRewritten": rewritten,
         "skippedNotDeployed": skipped_undeployed,
         "unlicensedSeen": unlicensed_total,
@@ -287,6 +290,9 @@ def main() -> int:
     logger.info("─" * 60)
     logger.info(f"글 {report['scannedPosts']}편 확인 / 처리 {report['touchedPosts']}편")
     if mode == "mirror":
+        if report["dryRun"]:
+            logger.info(f"복제 예정 {report['imagesPlanned']}장 "
+                        f"(글 {report['touchedPosts']}편)")
         logger.info(f"복제 {report['imagesMirrored']}장 — 저장소 {report['store']['mirrored']}장 "
                     f"({report['store']['totalBytes'] / 1024 / 1024:.1f}MB)")
         logger.info("이제 docs/images/ 와 docs/data/image_mirror.json 을 커밋·배포한 뒤 "

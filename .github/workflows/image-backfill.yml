@@ -84,7 +84,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # docs/.gitignore(npm/cli 템플릿)가 docs/*를 무시하므로 -f 필수
-          git add -f docs/data/image_backfill.json docs/data/image_mirror.json 2>/dev/null || true
+          for f in docs/data/image_backfill.json docs/data/image_mirror.json; do [ -f "$f" ] && git add -f "$f"; done
           # 자체 호스팅 이미지 — 파일과 매니페스트가 함께 커밋돼야 본문 src가 살아 있습니다
           git add -f docs/images/ 2>/dev/null || true
           git add -f blog-automation/logs/used_images.json 2>/dev/null || true

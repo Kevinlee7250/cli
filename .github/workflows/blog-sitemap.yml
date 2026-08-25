@@ -129,7 +129,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add -f docs/sitemap.xml docs/robots.txt 2>/dev/null || true
+          for f in docs/sitemap.xml docs/robots.txt; do [ -f "$f" ] && git add -f "$f"; done
 
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"

@@ -20,6 +20,9 @@ COMPANIONS = {
     "docs/data/pending_posts.json": ("docs/data/pending_bodies.json",
                                      "docs/data/pending_archive.json"),
     "docs/data/posts.json": ("docs/data/post_details.json",),
+    # 매니페스트만 커밋하고 파일을 빠뜨리면, 본문 <img src>가 가리키는 복제본이
+    # 저장소에 없어 발행된 글이 404를 봅니다 (onerror 폴백이 없었다면 그대로 깨짐).
+    "docs/data/image_mirror.json": ("docs/images/",),
 }
 
 
@@ -35,7 +38,10 @@ def _commit_lines(text: str, primary: str) -> list[str]:
         stripped = line.strip()
         if stripped.startswith("#") or "description:" in stripped:
             continue
-        if "git add" in stripped or stripped.startswith("docs/data"):
+        # `for f in ... ; do` 목록은 여러 줄에 걸치고, 이어지는 줄은 아무
+        # 경로로나 시작합니다 — 줄 앞머리만 보면 그 줄들을 놓칩니다.
+        in_list = stripped.endswith("\\") or stripped.endswith("; do")
+        if "git add" in stripped or stripped.startswith("docs/data") or in_list:
             lines.append(line)
     return lines
 

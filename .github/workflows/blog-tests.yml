@@ -1,11 +1,25 @@
 name: 블로그 자동화 테스트
 
+# 트리거를 정할 때 주의할 점
+# ────────────────────────────
+# 테스트가 지키는 것은 파이썬 코드만이 아닙니다. 워크플로의 커밋 목록
+# (test_workflow_pending_files), 대시보드와 데이터 파일의 계약
+# (test_dashboard_data_contract), 스위치 이름과 화면 라벨(test_social_flag)까지
+# 검사합니다. 그래서 paths에 .py만 적어 두면 정작 그 검사들이 잡으라고 만든
+# 변경에는 한 번도 돌지 않습니다.
+
 on:
-  push:
-    branches: [claude/blog-automation-system-KAbtE]
+  pull_request:
     paths:
-      - 'blog-automation/**.py'
-      - 'blog-automation/blogs.json'
+      - 'blog-automation/**'
+      - '.github/workflows/*.yml'
+      - 'docs/index.html'
+  push:
+    branches: [claude/blog-automation-system-KAbtE, latest]
+    paths:
+      - 'blog-automation/**'
+      - '.github/workflows/*.yml'
+      - 'docs/index.html'
   workflow_dispatch:
 
 jobs:
@@ -14,9 +28,11 @@ jobs:
     timeout-minutes: 10
 
     steps:
+      # ref를 적지 않습니다. 적으면 PR에서도 그 브랜치를 받아 와, PR의 코드가
+      # 아니라 엉뚱한 코드를 검사한 초록불이 뜹니다 — 검사한 적 없는데 통과로
+      # 보이는 쪽이 검사가 없는 것보다 나쁩니다. 기본값이 push는 그 커밋을,
+      # pull_request는 병합 결과를 받아 옵니다.
       - uses: actions/checkout@v4
-        with:
-          ref: claude/blog-automation-system-KAbtE
 
       - uses: actions/setup-python@v5
         with:
@@ -28,8 +44,22 @@ jobs:
         working-directory: blog-automation
         run: |
           pip install -r requirements.txt
-          pip install pytest
+          # pyyaml은 워크플로 파일을 파싱하는 테스트에서만 씁니다 —
+          # 런타임 의존성이 아니므로 requirements.txt에는 넣지 않습니다.
+          pip install pytest pyyaml
 
       - name: 테스트 실행
         working-directory: blog-automation
         run: python -m pytest tests/ -v
+
+      # 테스트가 "0개 수집"으로 끝나도 pytest는 성공으로 보고할 수 있습니다.
+      # 수집 자체가 깨진 것을 초록불로 넘기지 않도록 개수를 확인합니다.
+      - name: 테스트가 실제로 수집됐는지 확인
+        working-directory: blog-automation
+        run: |
+          count=$(python -m pytest tests/ --collect-only -q 2>/dev/null | tail -1 | grep -oE '^[0-9]+' || echo 0)
+          echo "수집된 테스트: $count개"
+          if [ "$count" -lt 500 ]; then
+            echo "::error::테스트 수집이 $count개뿐입니다 (기대: 500개 이상). 수집이 깨졌을 수 있습니다."
+            exit 1
+          fi

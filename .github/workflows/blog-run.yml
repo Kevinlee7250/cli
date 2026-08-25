@@ -313,10 +313,12 @@ jobs:
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
             blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
-            blog-automation/logs/post_registry.json blog-automation/logs/ai_usage.json blog-automation/logs/used_images.json \
+            blog-automation/logs/post_registry.json blog-automation/logs/ai_usage.json blog-automation/logs/used_images.json docs/data/image_mirror.json \
             blog-automation/logs/scheduled_keywords.json; do
             [ -f "$f" ] && git add -f "$f"
           done
+          # 자체 호스팅 이미지 — 파일과 매니페스트가 함께 커밋돼야 본문 src가 살아 있습니다
+          git add -f docs/images/ 2>/dev/null || true
           # 초안 디렉토리: 업로드 실패 시 재시도용 파일 보존
           git add -f blog-automation/logs/post_drafts/ 2>/dev/null || true
           if git diff --staged --quiet; then
@@ -544,9 +546,11 @@ jobs:
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
             blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
-            blog-automation/logs/post_registry.json blog-automation/logs/ai_usage.json blog-automation/logs/used_images.json; do
+            blog-automation/logs/post_registry.json blog-automation/logs/ai_usage.json blog-automation/logs/used_images.json docs/data/image_mirror.json; do
             [ -f "$f" ] && git add -f "$f"
           done
+          # 자체 호스팅 이미지 — 파일과 매니페스트가 함께 커밋돼야 본문 src가 살아 있습니다
+          git add -f docs/images/ 2>/dev/null || true
           git add -f blog-automation/logs/post_drafts/ 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
@@ -773,9 +777,11 @@ jobs:
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
             blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
-            blog-automation/logs/post_registry.json blog-automation/logs/ai_usage.json blog-automation/logs/used_images.json; do
+            blog-automation/logs/post_registry.json blog-automation/logs/ai_usage.json blog-automation/logs/used_images.json docs/data/image_mirror.json; do
             [ -f "$f" ] && git add -f "$f"
           done
+          # 자체 호스팅 이미지 — 파일과 매니페스트가 함께 커밋돼야 본문 src가 살아 있습니다
+          git add -f docs/images/ 2>/dev/null || true
           git add -f blog-automation/logs/post_drafts/ 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"

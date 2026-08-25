@@ -137,6 +137,7 @@ def test_mirrored_url_for_requires_the_file_to_exist(store, monkeypatch):
     """매니페스트에만 남고 파일이 없으면 그쪽으로 돌리면 안 됩니다."""
     class _Resp:
         headers = {"Content-Type": "image/png"}
+        status_code = 200
 
         def raise_for_status(self): pass
 

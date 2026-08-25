@@ -71,9 +71,15 @@ def _extract_unsafe_urls(content: str) -> list[str]:
     return out
 
 
+class ListingTruncated(RuntimeError):
+    """글 목록을 끝까지 읽지 못했습니다 — 부분 결과를 전체로 보고하면 안 됩니다."""
+
+
 def _iter_posts(blog_id: str, token: str):
     """블로그의 발행(live) 글 전체를 최신순으로 순회합니다."""
     page_token = ""
+    fetched = 0
+    attempt = 0
     while True:
         params = {
             "maxResults": 100,
@@ -89,10 +95,28 @@ def _iter_posts(blog_id: str, token: str):
             params=params, timeout=30,
         )
         if r.status_code != 200:
-            logger.error(f"글 목록 조회 실패 [{r.status_code}]: {r.text[:200]}")
-            return
+            # 여기서 그냥 return하면 "그 블로그에는 글이 이만큼뿐"인 것처럼
+            # 보입니다. 검사·수정 도구가 절반만 훑고 성공으로 끝나므로,
+            # "다 처리했는가"를 아무도 알 수 없게 됩니다.
+            #
+            # 2026-08-25 소급 교체에서 실제로 그랬습니다. 같은 limit 0 실행이
+            # 437 → 382 → 291편으로 줄었는데, 글이 준 게 아니라 PATCH를
+            # 연달아 보내 API가 목록 요청을 거절한 것이었습니다.
+            if attempt < 2:
+                wait = 3 * (attempt + 1)
+                logger.warning(
+                    f"글 목록 조회 실패 [{r.status_code}] — {wait}초 후 재시도")
+                time.sleep(wait)
+                attempt += 1
+                continue
+            raise ListingTruncated(
+                f"글 목록을 끝까지 읽지 못했습니다 (HTTP {r.status_code}, "
+                f"{fetched}편까지 조회): {r.text[:120]}")
+        attempt = 0
         data = r.json()
-        yield from data.get("items", [])
+        items = data.get("items", [])
+        fetched += len(items)
+        yield from items
         page_token = data.get("nextPageToken", "")
         if not page_token:
             return

@@ -209,3 +209,55 @@ def test_deploy_listens_to_both_branches():
         text = f.read()
     for line in [ln for ln in text.split("\n") if "branches:" in ln]:
         assert "latest" in line, f"배포 트리거가 latest 실행을 놓칩니다: {line.strip()}"
+
+
+# ── 목록이 잘렸을 때 ─────────────────────────────────────────────────────────
+
+def test_listing_failure_is_retried_then_raised(monkeypatch):
+    """조용히 멈추면 '그 블로그에 글이 이만큼뿐'인 것처럼 보입니다.
+
+    같은 limit 0 실행이 437 → 382 → 291편으로 줄어든 원인이 이것이었습니다.
+    글이 준 게 아니라 API가 목록 요청을 거절했는데, 도구는 성공으로 끝났습니다.
+    """
+    import fix_unlicensed_images as fx
+
+    class _R:
+        status_code, text = 429, "rate limited"
+
+        @staticmethod
+        def json():
+            return {}
+
+    calls = []
+    monkeypatch.setattr(fx.requests, "get", lambda *a, **k: calls.append(1) or _R())
+    monkeypatch.setattr(fx.time, "sleep", lambda s: None)
+    with pytest.raises(fx.ListingTruncated):
+        list(fx._iter_posts("b1", "tok"))
+    assert len(calls) == 3, "재시도 없이 바로 포기했습니다"
+
+
+def test_listing_recovers_when_the_retry_succeeds(monkeypatch):
+    import fix_unlicensed_images as fx
+
+    class _Fail:
+        status_code, text = 503, "busy"
+
+    class _Ok:
+        status_code = 200
+
+        @staticmethod
+        def json():
+            return {"items": [{"id": "1", "title": "글"}]}
+
+    seq = [_Fail(), _Ok()]
+    monkeypatch.setattr(fx.requests, "get", lambda *a, **k: seq.pop(0))
+    monkeypatch.setattr(fx.time, "sleep", lambda s: None)
+    assert len(list(fx._iter_posts("b1", "tok"))) == 1
+
+
+def test_report_carries_incomplete_blogs():
+    """리포트가 '덜 봤다'를 말할 수 있어야 전 범위 확인을 주장할 수 있습니다."""
+    src = open(os.path.join(os.path.dirname(__file__), "..", "image_audit.py"),
+               encoding="utf-8").read()
+    assert '"incompleteBlogs": incomplete' in src
+    assert "except ListingTruncated" in src

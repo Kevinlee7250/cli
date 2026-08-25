@@ -102,6 +102,20 @@ def needed_image_count(content: str) -> int:
 # 2) 링크 생존 확인
 # ──────────────────────────────────────────────────────────────────────────────
 
+def _passes_with_referer(url: str, timeout: int) -> bool:
+    """Referer를 붙이면 통과하는지 — 통과하면 만료가 아니라 핫링크 차단입니다."""
+    m = re.match(r"(https?://[^/]+)", url)
+    if not m:
+        return False
+    try:
+        r = requests.get(url, timeout=timeout, stream=True,
+                         headers={"Referer": m.group(1) + "/", "Accept": "image/*,*/*"})
+        return r.status_code < 400
+    except requests.exceptions.RequestException:
+        # 확인하지 못한 것을 근거로 멀쩡한 이미지를 지우면 안 됩니다
+        return True
+
+
 def check_alive(url: str, timeout: int = 10) -> tuple[bool, str]:
     """(살아있음, 사유). 판단이 안 서면 살아있는 것으로 둡니다.
 
@@ -139,6 +153,15 @@ def check_alive(url: str, timeout: int = 10) -> tuple[bool, str]:
 
     if r.status_code in (404, 410):
         return False, f"HTTP {r.status_code}"
+    # 400도 죽은 것으로 봅니다. Pixabay의 largeImageURL(pixabay.com/get/<해시>)은
+    # 서명·만료되는 주소라 기한이 지나면 404가 아니라 400을 돌려줍니다. 이걸
+    # "일시적"으로 넘겨 온 탓에 2026-08-22 감사에서 broken 0건이 나왔는데,
+    # 실제로는 발행 글 수백 편의 이미지가 이미 깨져 있었습니다.
+    #
+    # 다만 핫링크 차단도 400을 줄 수 있으므로, Referer를 붙여 한 번 더
+    # 확인하고 그래도 안 되면 죽은 것으로 판정합니다.
+    if r.status_code == 400 and not _passes_with_referer(url, timeout):
+        return False, "HTTP 400 (만료된 주소)"
     if r.status_code >= 400:
         return True, f"HTTP {r.status_code} — 일시적일 수 있어 유지"
     ctype = (r.headers.get("Content-Type") or "").lower()

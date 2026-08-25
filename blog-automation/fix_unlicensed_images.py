@@ -106,7 +106,8 @@ def _find_safe_replacement(title: str, keyword: str = "") -> dict | None:
     무단 이미지를 다른 무단 이미지로 바꾸는 최악의 결과가 됩니다.
     """
     from image_fetcher import (
-        _fetch_best_image, _simplify_query, generate_fallback_image, is_license_safe,
+        _fetch_best_image, _simplify_query, adopt_image, generate_fallback_image,
+        is_license_safe,
     )
 
     query = _simplify_query(title, 3) or title
@@ -115,7 +116,7 @@ def _find_safe_replacement(title: str, keyword: str = "") -> dict | None:
     )
     if img and is_license_safe(img.get("url", "")):
         img["alt_text"] = query[:50]
-        return img
+        return adopt_image(img)
 
     thumb = generate_fallback_image(title, keyword)
     if thumb and is_license_safe(thumb.get("url", "")):

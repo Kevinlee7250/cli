@@ -1,5 +1,37 @@
 [
   {
+    "timestamp": "2026-08-25T22:48:13.807279",
+    "health_score": 93,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "stuck_series",
+        "level": "warning",
+        "message": "24시간 이상 멈춘 시리즈 1개",
+        "context": {
+          "series": [
+            "증시 조정기 채권으로 자산 방어하는 포트폴리오 직접 알"
+          ]
+        },
+        "fix": "reset_stuck_series"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "stuck_series",
+        "issue_level": "warning",
+        "issue_message": "24시간 이상 멈춘 시리즈 1개",
+        "fix_applied": "reset_stuck_series",
+        "timestamp": "2026-08-25T22:48:13.791425",
+        "success": true,
+        "detail": "멈춘 시리즈 1개 → completed 처리",
+        "fixed": 1
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-25T17:26:20.604002",
     "health_score": 100,
     "issues_found": 0,
@@ -1465,33 +1497,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-24T18:14:33.527390",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-23T18:08:57.971764",
-    "health_score": 93,
-    "issues_found": 1,
-    "issues": [
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 0,
-    "repairs": [
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-23T18:08:57.971717",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

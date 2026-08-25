@@ -124,6 +124,23 @@ def _origin_index(manifest: dict) -> dict[str, str]:
     return index
 
 
+def mirrored_url_for(origin: str) -> str:
+    """이미 복제해 둔 원본이면 그 공개 URL을, 아니면 빈 문자열.
+
+    파일이 실제로 있는지도 확인합니다 — 매니페스트에만 남고 파일이 사라진
+    경우에 발행 글을 그쪽으로 돌려놓으면 이미지가 죽습니다.
+    """
+    manifest = load_manifest()
+    digest = _origin_index(manifest).get((origin or "").strip())
+    if not digest:
+        return ""
+    rec = manifest["items"].get(digest, {})
+    name = rec.get("file", "")
+    if not name or not os.path.exists(os.path.join(MIRROR_DIR, name)):
+        return ""
+    return f"{public_base()}/{name}"
+
+
 def origin_of(url: str) -> str:
     """복제본 URL을 원본 URL로 되돌립니다 (모르면 빈 문자열).
 

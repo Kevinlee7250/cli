@@ -99,7 +99,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # docs/.gitignore(npm/cli 템플릿)가 docs/* 를 무시하므로 -f 필요
-          git add -f docs/data/inbound_links.json docs/data/internal_links.json 2>/dev/null || true
+          for f in docs/data/inbound_links.json docs/data/internal_links.json; do [ -f "$f" ] && git add -f "$f"; done
           if git diff --staged --quiet; then
             echo "변경 없음"
           else

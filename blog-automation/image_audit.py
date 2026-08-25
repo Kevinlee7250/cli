@@ -119,6 +119,17 @@ def check_alive(url: str, timeout: int = 10) -> tuple[bool, str]:
         return False, "이미지가 아닌 data URI"
     if not url.startswith("http"):
         return False, "URL 형식 아님"
+    # 자체 호스팅 복제본은 저장소에 파일이 있으면 살아있는 것으로 둡니다.
+    # 발행과 GitHub Pages 배포 사이 몇 분 동안은 아직 404가 나는데, 그때
+    # broken으로 잡으면 멀쩡한 글의 이미지를 도로 핫링크로 되돌립니다.
+    try:
+        import image_mirror
+        if image_mirror.is_mirrored_url(url):
+            name = url.rsplit("/", 1)[-1]
+            if os.path.exists(os.path.join(image_mirror.MIRROR_DIR, name)):
+                return True, ""
+    except Exception:
+        pass
     try:
         r = requests.head(url, timeout=timeout, allow_redirects=True)
         if r.status_code == 405:                 # HEAD 미지원 서버

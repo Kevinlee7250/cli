@@ -1,5 +1,73 @@
 [
   {
+    "timestamp": "2026-08-25T04:30:51.615051",
+    "health_score": 97,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 4개",
+        "context": {
+          "count": 4,
+          "titles": [
+            "[2편] SBS 김부장 8화 리뷰 — 컨테이너 은신처와",
+            "해외주식 양도세 고지서, 받고서야 알았다",
+            "해외주식 양도세 250만원 공제 계산법 2026"
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 4개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-08-25T04:30:51.602179",
+        "success": true,
+        "detail": "대기 포스트 4개 → expired 처리",
+        "expired": 4
+      }
+    ],
+    "dry_run": false
+  },
+  {
+    "timestamp": "2026-08-24T17:25:21.312826",
+    "health_score": 97,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 1개",
+        "context": {
+          "count": 1,
+          "titles": [
+            "서학개미 미국주식 투자, 계좌 개설부터 세금까지 시작 "
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 1개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-08-24T17:25:21.295598",
+        "success": true,
+        "detail": "대기 포스트 1개 → expired 처리",
+        "expired": 1
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-23T17:15:23.243172",
     "health_score": 97,
     "issues_found": 1,
@@ -1467,110 +1535,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-22T18:05:45.540177",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-22T15:41:02.634390",
-    "health_score": 86,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "consecutive_pending_review",
-        "level": "warning",
-        "message": "최근 5회 연속 검토 대기 전환 (분량/AdSense 점수 미달)",
-        "context": {
-          "pending_count": 5,
-          "recent_dates": [
-            "2026-07-22",
-            "2026-07-22",
-            "2026-07-22",
-            "2026-07-22",
-            "2026-07-22"
-          ]
-        },
-        "fix": null
-      },
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 0,
-    "repairs": [
-      {
-        "issue_id": "consecutive_pending_review",
-        "issue_level": "warning",
-        "issue_message": "최근 5회 연속 검토 대기 전환 (분량/AdSense 점수 미달)",
-        "fix_applied": null,
-        "timestamp": "2026-07-22T15:41:02.634216",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      },
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-22T15:41:02.634314",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-22T15:37:48.223041",
-    "health_score": 86,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "consecutive_pending_review",
-        "level": "warning",
-        "message": "최근 5회 연속 검토 대기 전환 (분량/AdSense 점수 미달)",
-        "context": {
-          "pending_count": 5,
-          "recent_dates": [
-            "2026-07-22",
-            "2026-07-22",
-            "2026-07-22",
-            "2026-07-22",
-            "2026-07-22"
-          ]
-        },
-        "fix": null
-      },
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 0,
-    "repairs": [
-      {
-        "issue_id": "consecutive_pending_review",
-        "issue_level": "warning",
-        "issue_message": "최근 5회 연속 검토 대기 전환 (분량/AdSense 점수 미달)",
-        "fix_applied": null,
-        "timestamp": "2026-07-22T15:37:48.222881",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      },
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-22T15:37:48.222945",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

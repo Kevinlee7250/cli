@@ -16,6 +16,7 @@ on:
     workflows:
       - "블로그 자동화 실행"
       - "🖼️ 게시글 이미지 검증"
+      - "🖼️ 발행 글 이미지 소급 자체 호스팅"
       - "🔍 구글 색인 점검 (사이트맵 제출 + 색인 상태)"
       - "🔗 역방향 내부 링크 (고아 페이지 해소)"
       - "🧹 검토 대기 글 정리·재검증"
@@ -59,6 +60,7 @@ on:
     paths:
       - 'docs/index.html'
       - 'docs/data/**'
+      - 'docs/images/**'
 
 permissions:
   contents: read

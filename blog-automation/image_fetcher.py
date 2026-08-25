@@ -320,6 +320,7 @@ _ALLOWED_IMAGE_HOSTS = (
     "source.unsplash.com",
     "i.ibb.co",               # ImgBB — 우리가 직접 업로드한 AI 이미지·썸네일
     "ibb.co",
+    "kevinlee7250.github.io", # 우리 GitHub Pages — image_mirror가 올린 복제본
 )
 
 # 화이트리스트를 끄는 스위치는 두지 않습니다. 저작권은 설정으로 켜고 끌
@@ -336,6 +337,14 @@ def is_license_safe(url: str) -> bool:
         return False
     if u.startswith("data:image/"):
         return True
+    # 우리가 직접 올린 복제본. 호스트 이름이 저장소 설정에 따라 달라지므로
+    # 고정 목록이 아니라 실제 공개 경로와 대조합니다 (포크·이름 변경 대응).
+    try:
+        from image_mirror import is_mirrored_url
+        if is_mirrored_url(u):
+            return True
+    except ImportError:
+        pass
     m = re.match(r'https?://([^/:]+)', u, re.I)
     if not m:
         return False
@@ -535,10 +544,22 @@ def _load_used_titles() -> set[str]:
         return set()
 
 
+def _origin_url(url: str) -> str:
+    """복제본 URL이면 원본으로, 아니면 그대로."""
+    try:
+        from image_mirror import origin_of
+        return origin_of(url) or url
+    except Exception:
+        return url
+
+
 def mark_images_used(urls: list[str], titles: list[str] | None = None) -> None:
     """삽입된 이미지 URL(+제목 지문)을 기록해 이후 글에서 같은 이미지를 피하게 합니다.
     제목 지문은 같은 사진이 다른 URL로 재등장하는 것까지 차단합니다.
     (data URI 생성 썸네일은 글마다 고유하므로 기록 제외)"""
+    # 복제본 URL은 원본으로 되돌려 기록합니다. 자체 호스팅 뒤에는 같은 사진이
+    # 매번 다른 복제 경로로 보이므로, 그대로 적으면 중복 방지가 무력해집니다.
+    urls = [_origin_url(u) for u in urls]
     real = [u for u in urls if u and not u.startswith("data:")]
     norm_titles = [t for t in (_norm_img_title(t) for t in (titles or [])) if t]
     if not real and not norm_titles:
@@ -997,7 +1018,28 @@ def fetch_images_for_queries(
         if thumb and is_license_safe(thumb.get("url", "")):
             images.append(thumb)
 
+    # 자체 호스팅 — 반드시 화이트리스트 관문 **뒤**에서만 복제합니다.
+    # 앞에서 하면 복제본 URL이 우리 도메인이라 무조건 통과해, 권리가 없는
+    # 이미지를 우리 저장소에 복사한 뒤 안전하다고 판정하게 됩니다.
+    _self_host(images)
+
     return images
+
+
+def _self_host(images: list[dict]) -> None:
+    """이미지를 저장소로 복제해 원본이 사라져도 글이 깨지지 않게 합니다.
+
+    복제가 실패하거나 스위치가 꺼져 있으면 조용히 원본(핫링크)을 유지합니다 —
+    이 단계 때문에 글 생성이 멈추면 안 됩니다.
+    """
+    try:
+        from feature_flags import is_enabled
+        if not is_enabled("image_self_host"):
+            return
+        from image_mirror import mirror_images
+        mirror_images(images)
+    except Exception as e:
+        logger.warning(f"이미지 자체 호스팅 건너뜀: {e}")
 
 
 
@@ -1099,10 +1141,18 @@ def _make_img_html(img: dict, alt: str, caption: str = "") -> str:
         f'margin-top:8px;line-height:1.6;">' + "<br>".join(cap_parts) + '</figcaption>'
         if cap_parts else ""
     )
+    # 복제본이 아직 배포되지 않았거나(발행 ~ Pages 배포 사이 몇 분) 나중에
+    # 지워졌을 때를 대비해 원본을 예비로 심어 둡니다. 자체 호스팅이 기존
+    # 핫링크보다 나쁠 수 있는 유일한 경우를 이 한 줄이 막습니다.
+    origin = (img.get("origin_url") or "").strip()
+    fallback = (
+        f' onerror="this.onerror=null;this.src=\'{html.escape(origin, quote=True)}\'"'
+        if origin.startswith("http") else ""
+    )
     return (
         f'\n<figure style="{fig_style}">'
         f'\n  <img src="{img["url"]}" alt="{alt_safe}" title="{alt_safe}" '
-        f'style="{img_style}" loading="lazy" decoding="async" width="720"/>'
+        f'style="{img_style}" loading="lazy" decoding="async" width="720"{fallback}/>'
         f'\n  {cap_html}'
         f'\n</figure>\n'
     )

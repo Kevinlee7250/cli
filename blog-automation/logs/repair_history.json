@@ -1,5 +1,80 @@
 [
   {
+    "timestamp": "2026-08-26T12:05:35.082484",
+    "health_score": 75,
+    "issues_found": 3,
+    "issues": [
+      {
+        "id": "schedule_stalled",
+        "level": "high",
+        "message": "마지막 실행이 37시간 전 — 스케줄 중단 의심",
+        "context": {
+          "last_run": "2026-08-24T22:49:06.637212",
+          "hours_ago": 37.3
+        },
+        "fix": null
+      },
+      {
+        "id": "stuck_series",
+        "level": "warning",
+        "message": "24시간 이상 멈춘 시리즈 1개",
+        "context": {
+          "series": [
+            "증시 조정기 채권으로 자산 방어하는 포트폴리오 직접 알"
+          ]
+        },
+        "fix": "reset_stuck_series"
+      },
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 7개",
+        "context": {
+          "count": 7,
+          "titles": [
+            "[4편] SBS 드라마 김부장 10화 리뷰, 27.1%",
+            "[1편] 항공권 취소당하고 깨달은 예약의 진실",
+            "[2편] 숙소 예약 플랫폼 비교, 가격 순위가 뒤집혔다"
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 2,
+    "repairs": [
+      {
+        "issue_id": "schedule_stalled",
+        "issue_level": "high",
+        "issue_message": "마지막 실행이 37시간 전 — 스케줄 중단 의심",
+        "fix_applied": null,
+        "timestamp": "2026-08-26T12:05:35.062822",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      },
+      {
+        "issue_id": "stuck_series",
+        "issue_level": "warning",
+        "issue_message": "24시간 이상 멈춘 시리즈 1개",
+        "fix_applied": "reset_stuck_series",
+        "timestamp": "2026-08-26T12:05:35.062908",
+        "success": true,
+        "detail": "멈춘 시리즈 1개 → completed 처리",
+        "fixed": 1
+      },
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 7개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-08-26T12:05:35.064503",
+        "success": true,
+        "detail": "대기 포스트 7개 → expired 처리",
+        "expired": 7
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-25T04:30:51.615051",
     "health_score": 97,
     "issues_found": 1,
@@ -1483,58 +1558,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-23T18:08:57.971717",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-22T18:05:45.540249",
-    "health_score": 86,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "consecutive_pending_review",
-        "level": "warning",
-        "message": "최근 5회 연속 검토 대기 전환 (분량/AdSense 점수 미달)",
-        "context": {
-          "pending_count": 5,
-          "recent_dates": [
-            "2026-07-22",
-            "2026-07-22",
-            "2026-07-22",
-            "2026-07-22",
-            "2026-07-22"
-          ]
-        },
-        "fix": null
-      },
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 0,
-    "repairs": [
-      {
-        "issue_id": "consecutive_pending_review",
-        "issue_level": "warning",
-        "issue_message": "최근 5회 연속 검토 대기 전환 (분량/AdSense 점수 미달)",
-        "fix_applied": null,
-        "timestamp": "2026-07-22T18:05:45.540093",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      },
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-22T18:05:45.540177",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

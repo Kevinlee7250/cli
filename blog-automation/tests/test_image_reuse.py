@@ -188,3 +188,27 @@ def test_rejected_candidates_are_not_counted(monkeypatch, tmp_path):
 
     assert fx._find_safe_replacement("제목")["url"] == "fresh"
     assert noted == ["fresh"], f"버린 후보까지 셌습니다: {noted}"
+
+
+# ── 두 기준이 어긋나지 않게 ──────────────────────────────────────────────────
+
+def test_duplicate_threshold_matches_the_chooser():
+    """중복 판정과 선택기 허용치가 다르면 영원히 수렴하지 않습니다.
+
+    선택기가 3편까지 허용하는데 정리 도구가 2편부터 중복으로 잡으면,
+    교체해 넣은 이미지가 다음 실행에서 다시 교체 대상이 됩니다. 실제로
+    2026-08-26 실행에서 중복 집계가 51 → 56으로 늘었습니다.
+    """
+    src = open(os.path.join(os.path.dirname(__file__), "..",
+                            "fix_duplicate_images.py"), encoding="utf-8").read()
+    assert "from image_mirror import MAX_REUSE" in src, "허용치를 따로 정하고 있습니다"
+    assert "> MAX_REUSE" in src, "고정된 숫자로 중복을 판정합니다"
+    assert ">= 2" not in src.split("dup_clusters = ")[1][:200]
+
+
+def test_allowed_copies_are_left_alone():
+    """허용 범위 안인 글까지 고치면 과잉 수정입니다."""
+    src = open(os.path.join(os.path.dirname(__file__), "..",
+                            "fix_duplicate_images.py"), encoding="utf-8").read()
+    assert "keep_n = max(1, MAX_REUSE)" in src
+    assert "entries[keep_n:]" in src, "여전히 1편만 남기고 전부 교체합니다"

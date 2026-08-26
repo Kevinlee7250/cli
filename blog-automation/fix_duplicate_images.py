@@ -5,9 +5,14 @@
 
 동작:
   1. BLOGS_CONFIG의 모든 블로그에서 발행 글 전체 조회 (Blogger API)
-  2. 두 글 이상에서 사용된 이미지 URL 감지 (data URI 생성 썸네일 제외)
-  3. 가장 오래된 글 1곳만 유지, 나머지 글의 해당 이미지를
+  2. image_mirror.MAX_REUSE 편을 넘겨 쓰인 이미지 감지 — URL이 같은 것과
+     내용(dHash)이 같은 것 모두 (data URI 생성 썸네일 제외)
+  3. 오래된 순으로 MAX_REUSE 편까지 유지, 나머지 글의 해당 이미지를
      글 제목 기반 새 이미지로 교체 (검색 실패 시 생성 SVG 썸네일)
+
+     허용 편수를 선택기와 같은 값으로 두는 것이 중요합니다. 2편부터
+     중복으로 잡으면 교체해 넣은 이미지가 다음 실행에서 다시 교체 대상이
+     되어 영원히 수렴하지 않습니다.
   4. 스캔된 전체 이미지 URL을 used_images.json에 시드
      → 이후 새 글이 기존 글 이미지를 재사용하지 않음
   5. 결과 리포트를 docs/data/duplicate_images.json에 저장
@@ -215,13 +220,17 @@ def scan_and_fix(blogs: list[dict], dry_run: bool, limit: int = 0) -> dict:
     logger.info(f"지문 계산 완료: {hashed_count}/{len(url_list)}개 성공")
 
     clusters = _cluster_urls(url_list, hashes)
-    dup_clusters = [
-        c for c in clusters
-        if sum(len(usage[u]) for u in c) >= 2 and (
-            len(c) >= 2 or any(len(usage[u]) >= 2 for u in c))
-    ]
+    # 몇 편에 쓰였으면 "너무 많이 쓴 것"인가 — 이미지 선택기와 같은 기준을
+    # 씁니다(image_mirror.MAX_REUSE). 두 기준이 어긋나면 이 도구가 영원히
+    # 수렴하지 않습니다: 선택기는 3편까지 허용하는데 여기서 2편부터 중복으로
+    # 잡으면, 교체해 넣은 이미지가 다음 실행에서 다시 교체 대상이 됩니다.
+    # 2026-08-26 실행에서 실제로 중복 집계가 51 → 56으로 늘었습니다.
+    from image_mirror import MAX_REUSE
+
+    dup_clusters = [c for c in clusters
+                    if sum(len(usage[u]) for u in c) > MAX_REUSE]
     logger.info(f"중복 이미지 클러스터: {len(dup_clusters)}종 "
-                f"(URL 동일 + 내용 동일 포함)")
+                f"({MAX_REUSE}편 초과 사용 · URL 동일 + 내용 동일 포함)")
 
     # ── 교체 계획: 클러스터마다 가장 오래된 글 1곳만 유지, 나머지 교체 ──
     # post_key → {"blog_id","token","post","dup_urls":[...]}
@@ -233,10 +242,13 @@ def scan_and_fix(blogs: list[dict], dry_run: bool, limit: int = 0) -> dict:
         keep_url, keep = entries[0]
         logger.info(
             f"🔁 중복 이미지 클러스터 (URL {len(cluster)}종 / 글 {len(entries)}곳): {keep_url[:70]}\n"
-            f"    유지: '{keep['post'].get('title','')[:40]}'"
+            f"    유지: '{keep['post'].get('title','')[:40]}' 외 {max(0, MAX_REUSE - 1)}편"
         )
-        seen_posts = {f"{keep['blog_id']}:{keep['post']['id']}"}
-        for url, e in entries[1:]:
+        # 오래된 순으로 MAX_REUSE 편까지는 그대로 둡니다. 허용 범위 안이라
+        # 굳이 발행 글을 건드릴 이유가 없습니다.
+        keep_n = max(1, MAX_REUSE)
+        seen_posts = {f"{e['blog_id']}:{e['post']['id']}" for _, e in entries[:keep_n]}
+        for url, e in entries[keep_n:]:
             key = f"{e['blog_id']}:{e['post']['id']}"
             if key in seen_posts:
                 continue  # 같은 글은 한 번만 (post 내 중복 url은 개별 처리)

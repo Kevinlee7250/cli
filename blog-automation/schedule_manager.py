@@ -167,6 +167,10 @@ def collect_all_runs(config: dict) -> dict:
             "schedule_id":  sched["id"],
             "category":     sched.get("category", "unknown"),
             "enabled":      sched.get("enabled", True),
+            # 침묵 감지에 필요합니다 — 얼마나 자주 돌아야 하는지 알아야
+            # "안 돈 지 오래됐다"를 판정할 수 있습니다
+            "cron_utc":     sched.get("cron_utc", ""),
+            "cron_count":   sched.get("cron_count", 1),
             "recent_runs":  runs,
             "fetched_at":   datetime.now(timezone.utc).isoformat(),
         }
@@ -203,6 +207,79 @@ def detect_consecutive_failures(workflow_runs: dict, threshold: int = 2) -> list
             })
 
     return failures
+
+
+def expected_interval_hours(cron: str, cron_count: int = 1) -> float:
+    """이 크론이 몇 시간마다 도는지. 판정할 수 없으면 0을 돌려줍니다."""
+    parts = cron.split()
+    if len(parts) != 5:
+        return 0.0
+    _, hour, _, _, dow = parts
+    if hour.startswith("*/"):
+        try:
+            return float(hour[2:])
+        except ValueError:
+            return 0.0
+    if hour == "*":
+        return 1.0
+    if dow != "*":              # 주 1회 (요일 지정)
+        return 24.0 * 7
+    # 매일 — 워크플로에 크론이 여러 개면 그만큼 자주 돕니다
+    return 24.0 / max(1, cron_count)
+
+
+def detect_silent_workflows(workflow_runs: dict, grace_hours: float = 1.0) -> list:
+    """예정된 시각이 한참 지났는데 아예 돌지 않은 워크플로우.
+
+    detect_consecutive_failures는 이걸 잡지 못합니다. 실행이 없으면
+    completed가 threshold보다 적어 그대로 continue로 넘어가기 때문입니다.
+    즉 "실패했다"는 잡지만 "아예 안 돈다"는 못 잡습니다.
+
+    실제로 그 사고가 있었습니다 — blog-verify가 38회 연속 실패한 뒤
+    아예 트리거되지 않았는데, 실패가 멈추자 조용해졌습니다. 12일 뒤에야
+    사람이 눈치챘습니다. 침묵은 정상보다 나쁜 신호인데 화면에서는
+    정상과 구분되지 않았습니다.
+
+    grace_hours는 배수가 아니라 절대 여유입니다. 처음에 배수(×2)로 썼다가
+    매일 도는 워크플로가 전부 판정에서 빠졌습니다 — 24h × 2 = 48h가 수집
+    창(25h)을 넘어서입니다. 정작 잡아야 할 대상이 빠지는 조건이었습니다.
+
+    지금 규칙은 "수집 창이 예상 주기 + 여유를 덮을 때만 판정한다"입니다.
+    매일(24h)은 창 25h 안에 한 번은 돌아야 하므로 판정 대상이고, 주간
+    작업은 창보다 드물어 판정하지 않습니다 — 실행이 없는 게 정상입니다.
+    """
+    silent = []
+    now = datetime.now(timezone.utc)
+
+    for wf_file, info in workflow_runs.items():
+        if not info.get("enabled", True):
+            continue
+
+        interval = expected_interval_hours(info.get("cron_utc", ""),
+                                           info.get("cron_count", 1))
+        if not interval:
+            continue                      # 주기를 모르면 판정하지 않습니다
+
+        # 수집 창보다 드물게 도는 워크플로는 "이 창에 실행이 없음"이
+        # 정상입니다. 그런 것까지 침묵으로 부르면 주간 작업이 매일
+        # 오탐으로 뜹니다.
+        if interval + grace_hours > LOOKBACK_HOURS:
+            continue
+
+        runs = info.get("recent_runs", [])
+        if runs:
+            continue                      # 창 안에 실행이 있으면 정상
+
+        silent.append({
+            "workflow":     wf_file,
+            "category":     info.get("category"),
+            "expected_every_hours": interval,
+            "window_hours": LOOKBACK_HOURS,
+            "detail": (f"{interval:.0f}시간마다 돌아야 하는데 최근 "
+                       f"{LOOKBACK_HOURS}시간 동안 실행이 없습니다"),
+        })
+
+    return silent
 
 
 def should_alert(failures: list, history: dict) -> list:
@@ -401,12 +478,26 @@ def main():
     else:
         logger.info("연속 실패 없음")
 
+    # 2-b. 침묵 감지 — "실패"가 아니라 "아예 안 돔"
+    #      연속 실패 감지는 실행이 없으면 그냥 넘어가므로, 트리거가 끊긴
+    #      워크플로는 조용해질수록 건강해 보입니다. 그 반대를 잡습니다.
+    silent = detect_silent_workflows(new_runs)
+    if silent:
+        logger.warning(f"침묵 감지: {len(silent)}개 — 예정대로 돌지 않았습니다")
+        for sw in silent:
+            logger.warning(f"  - {sw['workflow']}: {sw['detail']}")
+    else:
+        logger.info("침묵 워크플로 없음")
+
     # 3. 새 알림 이슈 생성
     for alert in new_alerts:
         create_failure_issue(alert)
 
-    # 4. 이력 저장
+    # 4. 이력 저장 — 침묵도 함께 남깁니다. 리포트만 보고 "이상 없음"으로
+    #    읽히지 않으려면 무엇을 보고 그렇게 판단했는지가 남아야 합니다.
     history = update_history(history, new_runs, new_alerts)
+    history["silent"] = silent
+    history["monitored_workflows"] = sorted(new_runs)
     save_history(history)
 
     # 5. 리포트

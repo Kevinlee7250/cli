@@ -3,7 +3,7 @@
     "version": "1.0",
     "description": "블로그 자동화 스케줄 중앙 설정 파일",
     "timezone": "Asia/Seoul (KST = UTC+9)",
-    "updated_at": "2026-07-04T00:00:00+09:00"
+    "updated_at": "2026-08-26T00:00:00+09:00"
   },
   "schedules": [
     {
@@ -22,43 +22,8 @@
       "depends_on": [],
       "triggers_after": [
         "blog-sitemap.yml"
-      ]
-    },
-    {
-      "id": "blog-run-noon",
-      "workflow": "blog-run.yml",
-      "slot": "noon",
-      "cron_utc": "0 3 * * *",
-      "cron_kst": "매일 12:00 KST",
-      "description": "블로그 포스트 자동 생성 (정오 슬롯)",
-      "category": "content",
-      "priority": 1,
-      "enabled": true,
-      "timeout_minutes": 30,
-      "retry_on_failure": true,
-      "max_retries": 2,
-      "depends_on": [],
-      "triggers_after": [
-        "blog-sitemap.yml"
-      ]
-    },
-    {
-      "id": "blog-run-evening",
-      "workflow": "blog-run.yml",
-      "slot": "evening",
-      "cron_utc": "0 10 * * *",
-      "cron_kst": "매일 19:00 KST",
-      "description": "블로그 포스트 자동 생성 (저녁 슬롯)",
-      "category": "content",
-      "priority": 1,
-      "enabled": true,
-      "timeout_minutes": 30,
-      "retry_on_failure": true,
-      "max_retries": 2,
-      "depends_on": [],
-      "triggers_after": [
-        "blog-sitemap.yml"
-      ]
+      ],
+      "cron_count": 1
     },
     {
       "id": "auto-repair-daily",
@@ -72,7 +37,8 @@
       "timeout_minutes": 20,
       "retry_on_failure": false,
       "max_retries": 0,
-      "depends_on": []
+      "depends_on": [],
+      "cron_count": 1
     },
     {
       "id": "blog-analytics-weekly",
@@ -86,7 +52,8 @@
       "timeout_minutes": 15,
       "retry_on_failure": true,
       "max_retries": 1,
-      "depends_on": []
+      "depends_on": [],
+      "cron_count": 1
     },
     {
       "id": "blog-optimize-weekly",
@@ -103,7 +70,8 @@
       "depends_on": [
         "blog-analytics-weekly"
       ],
-      "conflict_note": "기존 월요일 09:00 → 화요일 09:00으로 이동 (blog-analytics와 충돌 해결)"
+      "conflict_note": "기존 월요일 09:00 → 화요일 09:00으로 이동 (blog-analytics와 충돌 해결)",
+      "cron_count": 1
     },
     {
       "id": "blog-season-trend-weekly",
@@ -117,7 +85,8 @@
       "timeout_minutes": 20,
       "retry_on_failure": false,
       "max_retries": 0,
-      "depends_on": []
+      "depends_on": [],
+      "cron_count": 1
     },
     {
       "id": "blog-cluster-weekly",
@@ -132,7 +101,8 @@
       "retry_on_failure": false,
       "max_retries": 0,
       "depends_on": [],
-      "conflict_note": "blog-run 정오 슬롯(UTC 03:00)과 충돌 회피를 위해 04:00 UTC로 이동"
+      "conflict_note": "blog-run 정오 슬롯(UTC 03:00)과 충돌 회피를 위해 04:00 UTC로 이동",
+      "cron_count": 1
     },
     {
       "id": "weekly-learning",
@@ -146,7 +116,8 @@
       "timeout_minutes": 15,
       "retry_on_failure": false,
       "max_retries": 0,
-      "depends_on": []
+      "depends_on": [],
+      "cron_count": 1
     },
     {
       "id": "schedule-monitor-daily",
@@ -160,7 +131,232 @@
       "timeout_minutes": 10,
       "retry_on_failure": false,
       "max_retries": 0,
-      "depends_on": []
+      "depends_on": [],
+      "cron_count": 1
+    },
+    {
+      "id": "adsense-audit",
+      "workflow": "adsense-audit.yml",
+      "cron_utc": "0 23 * * 2",
+      "cron_kst": "매주 화 08:00 KST",
+      "cron_count": 1,
+      "description": "🔎 AdSense 승인 감사·보완",
+      "category": "seo",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "adsense-policy-update",
+      "workflow": "adsense-policy-update.yml",
+      "cron_utc": "0 22 * * 0",
+      "cron_kst": "매주 일 07:00 KST",
+      "cron_count": 1,
+      "description": "📋 AdSense 정책 자동 업데이트",
+      "category": "seo",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "alert-watchdog",
+      "workflow": "alert-watchdog.yml",
+      "cron_utc": "20 */6 * * *",
+      "cron_kst": "6시간마다",
+      "cron_count": 1,
+      "description": "🚨 운영 알림 워치독",
+      "category": "monitoring",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "backup",
+      "workflow": "backup.yml",
+      "cron_utc": "0 18 * * *",
+      "cron_kst": "매일 03:00 KST",
+      "cron_count": 1,
+      "description": "☁️ Google Drive 자동 백업",
+      "category": "maintenance",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "blog-comment-automation",
+      "workflow": "blog-comment-automation.yml",
+      "cron_utc": "0 */4 * * *",
+      "cron_kst": "4시간마다",
+      "cron_count": 1,
+      "description": "💬 블로그 댓글 자동화",
+      "category": "content",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "collect-keywords",
+      "workflow": "collect-keywords.yml",
+      "cron_utc": "0 17 * * *",
+      "cron_kst": "매일 02:00 KST (외 7회)",
+      "cron_count": 8,
+      "description": "키워드 트렌드 수집",
+      "category": "content",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "gsc-indexing",
+      "workflow": "gsc-indexing.yml",
+      "cron_utc": "0 0 * * *",
+      "cron_kst": "매일 09:00 KST",
+      "cron_count": 1,
+      "description": "🔍 구글 색인 점검 (사이트맵 제출 + 색인 상태)",
+      "category": "seo",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "image-audit",
+      "workflow": "image-audit.yml",
+      "cron_utc": "0 22 * * 6",
+      "cron_kst": "매주 토 07:00 KST",
+      "cron_count": 1,
+      "description": "🖼️ 게시글 이미지 검증",
+      "category": "maintenance",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "inbound-links",
+      "workflow": "inbound-links.yml",
+      "cron_utc": "0 23 * * *",
+      "cron_kst": "매일 08:00 KST",
+      "cron_count": 1,
+      "description": "🔗 역방향 내부 링크 (고아 페이지 해소)",
+      "category": "seo",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "pending-cleanup",
+      "workflow": "pending-cleanup.yml",
+      "cron_utc": "0 21 * * 3",
+      "cron_kst": "매주 수 06:00 KST",
+      "cron_count": 1,
+      "description": "🧹 검토 대기 글 정리·재검증",
+      "category": "maintenance",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "post-lifecycle",
+      "workflow": "post-lifecycle.yml",
+      "cron_utc": "0 23 * * *",
+      "cron_kst": "매일 08:00 KST",
+      "cron_count": 1,
+      "description": "게시 후 성과 추적",
+      "category": "analytics",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "series-schedule",
+      "workflow": "series-schedule.yml",
+      "cron_utc": "0 23 * * *",
+      "cron_kst": "매일 08:00 KST",
+      "cron_count": 1,
+      "description": "📅 시리즈 발행 예약 처리",
+      "category": "content",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "trend-preempt",
+      "workflow": "trend-preempt.yml",
+      "cron_utc": "30 */3 * * *",
+      "cron_kst": "3시간마다",
+      "cron_count": 1,
+      "description": "🔥 트렌드 선점 발행 감지",
+      "category": "content",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
+    },
+    {
+      "id": "weekly-brief",
+      "workflow": "weekly-brief.yml",
+      "cron_utc": "0 0 * * 1",
+      "cron_kst": "매주 월 09:00 KST",
+      "cron_count": 1,
+      "description": "📋 주간 운영 브리핑",
+      "category": "analytics",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 30,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": []
     }
   ],
   "categories": {

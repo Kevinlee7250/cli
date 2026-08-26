@@ -139,12 +139,12 @@ jobs:
 
     steps:
       - name: 코드 체크아웃
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: latest
 
       - name: Python 3.11 설정
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -338,7 +338,7 @@ jobs:
 
       - name: 로그 업로드 (blog1)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: automation-logs-blog1-${{ github.run_number }}
           path: blog-automation/logs/
@@ -377,12 +377,12 @@ jobs:
 
     steps:
       - name: 코드 체크아웃
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: latest
 
       - name: Python 3.11 설정
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -569,7 +569,7 @@ jobs:
 
       - name: 로그 업로드 (blog2)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: automation-logs-blog2-${{ github.run_number }}
           path: blog-automation/logs/
@@ -608,12 +608,12 @@ jobs:
 
     steps:
       - name: 코드 체크아웃
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: latest
 
       - name: Python 3.11 설정
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -800,7 +800,7 @@ jobs:
 
       - name: 로그 업로드 (blog3)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: automation-logs-blog3-${{ github.run_number }}
           path: blog-automation/logs/

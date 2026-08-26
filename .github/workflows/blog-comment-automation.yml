@@ -57,7 +57,7 @@ jobs:
     outputs:
       enabled: ${{ steps.flag.outputs.enabled }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: latest
       - id: flag
@@ -80,12 +80,12 @@ jobs:
 
     steps:
       - name: 코드 체크아웃
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: latest
 
       - name: Python 3.11 설정
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -164,7 +164,7 @@ jobs:
 
       - name: 댓글 이력 아티팩트
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: comment-history-${{ github.run_number }}
           path: blog-automation/logs/comment_history.json

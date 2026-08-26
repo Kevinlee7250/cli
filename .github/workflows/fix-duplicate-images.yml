@@ -12,6 +12,10 @@ on:
         description: '특정 블로그 ID (비워두면 전체 블로그)'
         required: false
         default: ''
+      limit:
+        description: '고칠 글 수 상한 (0=전체). 발행 글을 고치므로 나눠 도는 것을 권장'
+        required: false
+        default: '20'
 
 permissions:
   contents: write
@@ -72,6 +76,9 @@ jobs:
           if [ -n "${{ inputs.blog_id }}" ]; then
             ARGS="$ARGS --blog ${{ inputs.blog_id }}"
           fi
+          # 스케줄 실행에는 inputs가 없습니다 — 그때 실제로 쓰이는 값은 || 뒤쪽입니다
+          ARGS="$ARGS --limit ${{ inputs.limit || '20' }}"
+          echo "실행 인자: $ARGS"
           python fix_duplicate_images.py $ARGS
 
       - name: 결과 커밋 & 푸시

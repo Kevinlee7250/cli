@@ -352,6 +352,61 @@ def test_empty_filter_means_all_blogs():
     assert report["blogFilter"] == "" and report["blogsAudited"] == ["A", "B"]
 
 
+# ── limit = "손댈 글 수" (스캔 상한 아님) ────────────────────────────────────
+# 예전 limit은 스캔 상한이었습니다. 목록은 최신 글부터 오고 attach_insufficient는
+# 한 번에 한 장만 붙이므로, --limit 20을 반복하면 맨 앞 20편만 계속 채워지고
+# 뒤쪽 글에는 영원히 닿지 못했습니다. 그래서 "고칠 대상 글" 기준으로 셉니다.
+
+def _post(pid, content, title="제목"):
+    return {"id": str(pid), "title": title, "content": content, "url": ""}
+
+
+_NO_IMG = "<p>" + ("가" * 300) + "</p>"          # 이미지 0장 → missing
+_OK = ('<p>' + ('가' * 100) + '</p>'
+       '<img src="https://a/x.jpg" alt="제목 관련 사진 설명"/>')
+
+
+def _run(posts, **kw):
+    with patch("config.get_blog_configs", return_value=[_blog("blog1", "A")]), \
+         patch("blogger_uploader._get_access_token", return_value="t"), \
+         patch("fix_unlicensed_images._iter_posts", return_value=posts), \
+         patch("image_audit.check_alive", return_value=(True, "")), \
+         patch("image_audit._save"):
+        return image_audit.run(**kw)
+
+
+def test_limit_counts_targets_not_scanned_posts():
+    """앞쪽에 멀쩡한 글이 아무리 많아도 상한을 소모하지 않아야 합니다."""
+    posts = [_post(i, _OK) for i in range(30)] + [_post(90 + i, _NO_IMG) for i in range(5)]
+    report = _run(posts, limit=2)
+    assert report["targeted"] == 2
+    # 멀쩡한 글 30편을 지나쳐 대상 2편을 찾을 때까지 스캔했습니다
+    assert report["scanned"] > 2
+    assert report["stoppedAtLimit"] is True
+
+
+def test_limit_zero_processes_every_target():
+    posts = [_post(i, _NO_IMG) for i in range(5)]
+    report = _run(posts, limit=0)
+    assert report["targeted"] == 5 and report["stoppedAtLimit"] is False
+
+
+def test_scan_limit_still_caps_the_scan():
+    posts = [_post(i, _NO_IMG) for i in range(10)]
+    report = _run(posts, scan_limit=3)
+    assert report["scanned"] == 3
+
+
+def test_unfixable_issue_does_not_consume_the_limit():
+    """--ai 없이 suspect만 있는 글은 손댈 수 없으니 예산을 쓰면 안 됩니다."""
+    suspect = ('<p>' + ('가' * 100) + '</p>'
+               '<img src="https://a/x.jpg" alt="unrelated english words here"/>')
+    posts = [_post(1, suspect), _post(2, _NO_IMG)]
+    report = _run(posts, limit=1)
+    assert report["issueCounts"].get("suspect")      # 문제로는 잡혔고
+    assert report["targeted"] == 1                   # 대상은 missing 글 하나뿐
+
+
 # ── alt·캡션 설명 수정 ───────────────────────────────────────────────────────
 # 발행된 글에 alt 없는 <img>와 "사진" 한 단어짜리 캡션이 남아 있었습니다.
 # 화면 낭독기에도 검색엔진에도 쓸모가 없고, 이미지를 건드리지 않고 고칠 수

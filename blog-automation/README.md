@@ -28,7 +28,7 @@ blog-automation/
 ├── blogger_uploader.py    # Blogger API 업로드
 ├── requirements.txt       # Python 의존성
 ├── .env.example           # 환경 변수 예시
-└── test_image.py          # 이미지 기능 테스트
+└── manual_image_check.py  # 이미지 기능 수동 점검 (로컬 실행)
 ```
 
 ---
@@ -97,7 +97,7 @@ python main.py --once --keyword "재테크 방법"
 python main.py
 
 # 이미지 기능 테스트
-python test_image.py "오늘 핫이슈"
+python manual_image_check.py "오늘 핫이슈"
 ```
 
 ---

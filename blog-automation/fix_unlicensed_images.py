@@ -158,7 +158,8 @@ def _find_safe_replacement(title: str, keyword: str = "") -> dict | None:
         if not got:
             continue
         uses = image_mirror.times_used(got.get("url", ""))
-        if uses <= image_mirror.MAX_REUSE:
+        if uses < image_mirror.MAX_REUSE:
+            image_mirror.note_use(got.get("url", ""))
             return got
         logger.info(f"    이미 {uses}편에 쓴 사진 — 다른 후보 확인: {query[:20]}")
         if least_used is None or uses < least_used[0]:
@@ -171,6 +172,7 @@ def _find_safe_replacement(title: str, keyword: str = "") -> dict | None:
         return thumb
     if least_used:
         logger.warning(f"    후보가 전부 과다 사용 — {least_used[0]}편짜리 사진을 재사용")
+        image_mirror.note_use(least_used[1].get("url", ""))
         return least_used[1]
     return None
 
@@ -212,8 +214,6 @@ def _with_fallback(tag: str, img: dict) -> str:
     body = tag.rstrip()[:-len(closer)].rstrip()
     esc = _h.escape(origin, quote=True)
     return body + ' onerror="this.onerror=null;this.src=\'' + esc + '\'"' + closer
-
-    return _IMG_TAG_RE.sub(_sub, content)
 
 
 # 캡션 안의 출처 표기 — "이미지 출처: 네이버 블로그 nowand4eva" 같은 조각을 찾습니다.

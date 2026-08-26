@@ -43,31 +43,44 @@ class _Resp:
         yield self.body
 
 
-def test_same_photo_from_different_urls_counts_up(store, monkeypatch):
+def test_same_photo_from_different_urls_is_one_file(store, monkeypatch):
     """서명 URL이 달라도 내용이 같으면 같은 사진입니다."""
     monkeypatch.setattr(image_mirror.requests, "get", lambda *a, **k: _Resp())
     a = image_mirror.mirror_url("https://pixabay.com/get/sig1.jpg")
     b = image_mirror.mirror_url("https://pixabay.com/get/sig2.jpg")
     assert a["file"] == b["file"], "같은 내용인데 다른 파일로 저장됐습니다"
-    assert image_mirror.times_used(b["url"]) == 2
 
 
-def test_reusing_the_same_url_also_counts(store, monkeypatch):
+def test_mirroring_does_not_count_as_using(store, monkeypatch):
+    """후보로 훑어보다 버린 사진까지 세면 가드가 스스로 무너집니다.
+
+    2026-08-26 파일럿에서 실제로 그랬습니다 — 로그에는 "다른 후보 확인"이
+    찍히는데 최다 사용 사진은 61회에서 76회로 늘었습니다.
+    """
     monkeypatch.setattr(image_mirror.requests, "get", lambda *a, **k: _Resp())
-    url = "https://pixabay.com/get/sig1.jpg"
-    image_mirror.mirror_url(url)
-    again = image_mirror.mirror_url(url)
-    assert again["reused"] is True
-    assert image_mirror.times_used(again["url"]) == 2
+    got = image_mirror.mirror_url("https://pixabay.com/get/sig1.jpg")
+    assert image_mirror.times_used(got["url"]) == 0
+    image_mirror.mirror_url("https://pixabay.com/get/sig2.jpg")
+    assert image_mirror.times_used(got["url"]) == 0, "복제만 했는데 사용으로 셌습니다"
+
+    assert image_mirror.note_use(got["url"]) == 1
+    assert image_mirror.times_used(got["url"]) == 1
+
+
+def test_note_use_accumulates(store, monkeypatch):
+    monkeypatch.setattr(image_mirror.requests, "get", lambda *a, **k: _Resp())
+    got = image_mirror.mirror_url("https://pixabay.com/get/sig1.jpg")
+    for expected in (1, 2, 3):
+        assert image_mirror.note_use(got["url"]) == expected
 
 
 def test_overuse_threshold(store, monkeypatch):
     monkeypatch.setattr(image_mirror.requests, "get", lambda *a, **k: _Resp())
-    got = None
-    for i in range(image_mirror.MAX_REUSE):
-        got = image_mirror.mirror_url(f"https://pixabay.com/get/s{i}.jpg")
+    got = image_mirror.mirror_url("https://pixabay.com/get/s0.jpg")
+    for _ in range(image_mirror.MAX_REUSE):
+        image_mirror.note_use(got["url"])
     assert image_mirror.is_overused(got["url"]) is False
-    got = image_mirror.mirror_url("https://pixabay.com/get/extra.jpg")
+    image_mirror.note_use(got["url"])
     assert image_mirror.is_overused(got["url"]) is True
 
 
@@ -151,3 +164,27 @@ def test_duplicate_fixer_can_be_limited():
     assert "--limit ${{ inputs.limit || '20' }}" in wf, (
         "스케줄 실행이 쓰는 기본값이 없습니다 — inputs가 비면 전체가 돕니다"
     )
+
+
+def test_rejected_candidates_are_not_counted(monkeypatch, tmp_path):
+    """훑어보다 버린 후보는 사용 횟수에 들어가면 안 됩니다.
+
+    이것이 무너지면 가드가 스스로 임계값을 채워, 남은 후보가 없다며 가장
+    많이 쓴 사진으로 되돌아갑니다.
+    """
+    import fix_unlicensed_images as fx
+    noted = []
+    monkeypatch.setattr("image_fetcher._search_all_sources",
+                        lambda *a, **k: [{"url": "over", "score": 1.0},
+                                         {"url": "fresh", "score": 0.5}])
+    monkeypatch.setattr("image_fetcher.filter_license_safe", lambda imgs: imgs)
+    monkeypatch.setattr("image_fetcher.is_license_safe", lambda u: True)
+    monkeypatch.setattr("image_fetcher._score_title_relevance",
+                        lambda img, q: img.get("score", 0))
+    monkeypatch.setattr("image_fetcher.adopt_image", lambda img: img)
+    monkeypatch.setattr(image_mirror, "times_used",
+                        lambda url: 99 if url == "over" else 0)
+    monkeypatch.setattr(image_mirror, "note_use", lambda url: noted.append(url))
+
+    assert fx._find_safe_replacement("제목")["url"] == "fresh"
+    assert noted == ["fresh"], f"버린 후보까지 셌습니다: {noted}"

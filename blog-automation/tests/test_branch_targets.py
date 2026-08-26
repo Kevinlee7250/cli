@@ -47,6 +47,32 @@ def test_check_is_not_vacuous():
     assert len(_files()) >= 30
 
 
+# 워크플로만 보던 검사에는 구멍이 있었습니다. 파이썬 쪽에도 같은 브랜치가
+# 기본값으로 남아 있었는데(schedule_manager는 그 값으로 설정 파일을 읽고,
+# 실패하면 빈 스케줄을 돌려주고 경고만 남깁니다), Actions에서는
+# GITHUB_REF_NAME이 늘 채워져 드러나지 않았습니다.
+
+_SRC = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
+
+
+def _py_files():
+    return sorted(glob.glob(os.path.join(_SRC, "*.py")))
+
+
+@pytest.mark.parametrize("path", _py_files(), ids=os.path.basename)
+def test_no_module_defaults_to_the_old_branch(path):
+    with open(path, encoding="utf-8") as f:
+        hits = [ln.strip() for ln in f if _OLD in ln]
+    assert not hits, (
+        f"{os.path.basename(path)}에 휴면 브랜치가 남아 있습니다 — 환경변수가 "
+        f"빠진 경로에서 조용히 낡은 값을 읽습니다:\n  " + "\n  ".join(hits)
+    )
+
+
+def test_module_check_is_not_vacuous():
+    assert len(_py_files()) >= 20
+
+
 @pytest.mark.parametrize("path", _files(), ids=os.path.basename)
 def test_checkout_and_push_agree(path):
     """체크아웃한 브랜치와 푸시 대상이 어긋나면 결과가 엉뚱한 곳에 쌓입니다."""

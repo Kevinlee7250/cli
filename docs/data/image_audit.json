@@ -1,6 +1,6 @@
 {
-  "auditedAt": "2026-08-26T10:56:12.244929+00:00",
-  "applied": false,
+  "auditedAt": "2026-08-26T11:55:23.782423+00:00",
+  "applied": true,
   "aiJudged": false,
   "blogFilter": "",
   "blogsAudited": [
@@ -20,7 +20,7 @@
   "scanned": 440,
   "withIssues": 5,
   "targeted": 5,
-  "fixed": 0,
+  "fixed": 5,
   "issueCounts": {
     "insufficient": 4,
     "weak_alt": 1
@@ -37,7 +37,10 @@
           "detail": "이미지 3장 (권장 4장)"
         }
       ],
-      "blog": "HOGU What?"
+      "blog": "HOGU What?",
+      "actions": [
+        "첨부: generated_thumbnail 이미지 1장 첨부"
+      ]
     },
     {
       "title": "여름 직관·여행 온열질환 예방법과 응급처치 총정리",
@@ -50,7 +53,11 @@
           "detail": "이미지 3장 (권장 4장)"
         }
       ],
-      "blog": "HOGU 여행,스포츠,연예"
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "첨부: pixabay 이미지 1장 첨부",
+        "캡션 동기화 1건"
+      ]
     },
     {
       "title": "애드센스 승인 직접 해봤더니 걸린 시간 현실 (2026년 후기)",
@@ -63,7 +70,10 @@
           "detail": "이미지 2장 (권장 3장)"
         }
       ],
-      "blog": "HOGU 여행,스포츠,연예"
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "첨부: generated_thumbnail 이미지 1장 첨부"
+      ]
     },
     {
       "title": "국내 여행 혼자 처음 해봤더니 진짜 달랐던 것들 (2026년 솔직 후기)",
@@ -78,7 +88,10 @@
           "alt": "국내 여행"
         }
       ],
-      "blog": "HOGU 여행,스포츠,연예"
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "alt 재작성 → \"국내 여행 혼자 처음 해봤더니 진짜 달랐던 것들 (2026년 솔직 후기) 관련 이미지\" (캡션 포함)"
+      ]
     },
     {
       "title": "주택담보대출 금리 최저 은행 2026, 5곳 직접 발품 비교 후기",
@@ -91,7 +104,10 @@
           "detail": "이미지 3장 (권장 4장)"
         }
       ],
-      "blog": "금융NEWS"
+      "blog": "금융NEWS",
+      "actions": [
+        "첨부: generated_thumbnail 이미지 1장 첨부"
+      ]
     }
   ]
 }

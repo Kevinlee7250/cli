@@ -23,12 +23,11 @@ _MIN_MAJOR = {
     "actions/checkout": 5,
     "actions/setup-python": 6,
     "actions/upload-artifact": 7,
+    # Pages 3종은 서로 짝을 이뤄 돕니다. 한쪽만 올리면 배포가 깨질 수
+    # 있어 셋을 함께 올렸고, 그래서 함께 고정합니다.
+    "actions/configure-pages": 6,
+    "actions/deploy-pages": 5,
 }
-
-# Pages 배포용 아티팩트만 예외입니다. upload-artifact는 deploy-pages와
-# 짝을 이뤄 동작하는데, 한쪽만 올리면 배포가 깨질 수 있어 함께 검증하기
-# 전까지 v4에 둡니다. 대시보드가 안 뜨는 것은 즉시 눈에 보이는 사고입니다.
-_EXEMPT = {("deploy-dashboard.yml", "actions/upload-artifact")}
 
 
 def _ours():
@@ -51,8 +50,6 @@ def test_no_node20_actions(path):
         text = f.read()
     stale = []
     for action, minimum in _MIN_MAJOR.items():
-        if (name, action) in _EXEMPT:
-            continue
         for major in re.findall(rf"{re.escape(action)}@v(\d+)", text):
             if int(major) < minimum:
                 stale.append(f"{action}@v{major} (v{minimum} 이상 필요)")

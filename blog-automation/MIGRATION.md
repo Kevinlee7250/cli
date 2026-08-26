@@ -33,7 +33,7 @@ kevin-blog-os/
 # 1. 새 저장소를 GitHub에서 생성: kevinlee7250/kevin-blog-os (private 권장)
 
 # 2. 히스토리 없이 깔끔하게 시작 (권장 — 과거 커밋에 남은 실험 데이터 제외)
-git clone --branch claude/blog-automation-system-KAbtE \
+git clone --branch latest \
     https://github.com/kevinlee7250/cli.git blog-src
 mkdir kevin-blog-os && cd kevin-blog-os && git init -b main
 

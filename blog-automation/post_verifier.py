@@ -47,7 +47,6 @@ GITHUB_REPOSITORY = os.environ.get("GITHUB_REPOSITORY", "Kevinlee7250/cli")
 BLOGGER_BLOG_ID   = os.environ.get("BLOGGER_BLOG_ID", "")
 
 OWNER, REPO = GITHUB_REPOSITORY.split("/") if "/" in GITHUB_REPOSITORY else ("", GITHUB_REPOSITORY)
-BRANCH = os.environ.get("GITHUB_REF_NAME", "claude/blog-automation-system-KAbtE")
 
 BASE_DIR      = Path(__file__).parent
 DATA_DIR      = BASE_DIR.parent / "docs" / "data"

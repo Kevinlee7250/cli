@@ -28,7 +28,11 @@ import requests
 # ────────────────────────────────────────────
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 GITHUB_REPO  = os.environ.get("GITHUB_REPOSITORY", "Kevinlee7250/cli")
-BRANCH       = os.environ.get("GITHUB_REF_NAME", "claude/blog-automation-system-KAbtE")
+# 기본값은 반드시 기본 브랜치여야 합니다. 예전엔 작업 브랜치가 적혀 있었는데,
+# 이 값으로 GitHub에서 schedule_config.json을 읽고 실패해도 아래 except가 빈
+# 스케줄을 돌려주므로 — 경고 한 줄만 남기고 조용히 잘못된 설정으로 돕니다.
+# Actions 안에서는 GITHUB_REF_NAME이 항상 채워져 드러나지 않았습니다.
+BRANCH       = os.environ.get("GITHUB_REF_NAME", "latest")
 
 OWNER, REPO  = GITHUB_REPO.split("/") if "/" in GITHUB_REPO else ("", GITHUB_REPO)
 

@@ -1,6 +1,6 @@
 # 블로그 자동화 시스템 사용 설명서
 
-> **버전**: Python 3.11 | **저장소**: kevinlee7250/cli | **브랜치**: claude/blog-automation-system-KAbtE
+> **버전**: Python 3.11 | **저장소**: kevinlee7250/cli | **브랜치**: latest
 
 ---
 
@@ -365,7 +365,7 @@ JSON 파싱 실패 — 재시도 1/3
 **확인 사항**:
 1. GitHub Actions 로그의 "대시보드 데이터 커밋 & 푸시" 스텝 확인
 2. `docs/data/` 폴더가 브랜치에 존재하는지 확인
-3. GitHub Pages 설정: 브랜치 `claude/blog-automation-system-KAbtE` / 폴더 `/docs`
+3. GitHub Pages 설정: 브랜치 `latest` / 폴더 `/docs`
 
 ---
 

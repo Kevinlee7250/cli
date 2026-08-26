@@ -3,8 +3,8 @@
 새 세션이 이 문서만 읽고 이어갈 수 있도록 정리했습니다.
 
 - 저장소: `Kevinlee7250/cli` (npm/cli의 **공개 포크**)
-- 작업 브랜치: `claude/blog-automation-system-KAbtE`
-- 기본 브랜치: `latest`
+- 브랜치: `latest` 하나만 씁니다 (예전 작업 브랜치 `claude/blog-automation-system-KAbtE`는
+  2026-08-25에 정리했습니다 — 워크플로가 읽는 코드와 쓰는 대상이 어긋나던 원인이었습니다)
 - 테스트: `cd blog-automation && python -m pytest tests/ -q` → **434건 통과** (2026-08-21)
 
 ---
@@ -25,9 +25,9 @@
 
 3. **워크플로의 `schedule`·`workflow_dispatch`는 기본 브랜치(`latest`)의
    파일만 인식합니다.** 기능 브랜치에만 워크플로를 추가하면 Actions 목록에
-   "This workflow does not exist"가 뜹니다. 새 워크플로는 `latest`에도 올리세요
-   (내용은 그대로 — 잡 안에서 `ref: claude/blog-automation-system-KAbtE`로
-   체크아웃하므로 코드는 기능 브랜치 것이 돕니다).
+   "This workflow does not exist"가 뜹니다. 워크플로는 `latest`에 올리세요
+   (잡 안에서도 `ref: latest`로 체크아웃합니다 — 읽는 코드와 쓰는 대상이
+   같은 브랜치여야 합니다).
 
 4. **`docs/.gitignore`(npm/cli 템플릿)가 `docs/*`를 무시합니다.**
    워크플로에서 docs 파일을 커밋하려면 반드시 `git add -f`.

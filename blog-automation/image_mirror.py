@@ -233,11 +233,9 @@ def mirror_url(url: str) -> dict | None:
         rec = manifest["items"][known]
         path = os.path.join(MIRROR_DIR, rec["file"])
         if os.path.exists(path):
-            rec["uses"] = times_used_by_record(rec) + 1
-            save_manifest(manifest)
             return {"url": f"{public_base()}/{rec['file']}", "file": rec["file"],
                     "sha": known, "bytes": rec.get("bytes", 0), "reused": True,
-                    "uses": rec["uses"]}
+                    "uses": times_used_by_record(rec)}
         # 매니페스트에는 있는데 파일이 없으면 다시 내려받습니다
 
     got = _download(url)
@@ -259,22 +257,16 @@ def mirror_url(url: str) -> dict | None:
 
     rec = manifest["items"].setdefault(
         digest, {"file": name, "bytes": len(raw), "mime": mime,
-                 "firstSeen": datetime.now(timezone.utc).isoformat(), "origins": []})
+                 "firstSeen": datetime.now(timezone.utc).isoformat(),
+                 "origins": [], "uses": 0})
     rec["file"] = name
-    # 같은 사진을 몇 편에 넣었는지 셉니다. Pixabay는 같은 사진에 매번 다른
-    # 서명 URL을 주므로 origins 개수로는 정확히 셀 수 없습니다 — 내려받아
-    # 해시를 계산한 지금이 유일하게 확실한 시점입니다.
-    #
-    # 이번 원본을 목록에 넣기 **전에** 세야 합니다. 넣고 나서 세면 방금 것을
-    # 이미 쓴 것으로 잘못 포함해 한 번씩 부풀려집니다.
     prior = times_used_by_record(rec)
     if url not in rec["origins"]:
         rec["origins"].append(url)
-    rec["uses"] = prior + 1
     save_manifest(manifest)
 
     return {"url": f"{public_base()}/{name}", "file": name, "sha": digest,
-            "bytes": len(raw), "reused": prior > 0, "uses": rec["uses"]}
+            "bytes": len(raw), "reused": prior > 0, "uses": prior}
 
 
 #: 한 사진을 이 편수까지만 씁니다. 넘으면 다른 후보를 찾습니다.
@@ -282,13 +274,44 @@ def mirror_url(url: str) -> dict | None:
 MAX_REUSE = 3
 
 
+def note_use(mirrored_url: str) -> int:
+    """이 사진을 실제로 글에 넣었다고 기록합니다.
+
+    복제(내려받기)와 사용(글에 넣기)은 다른 일입니다. 복제할 때 세면,
+    후보로 훑어보다 **버린 사진까지** 사용 횟수가 올라갑니다. 그러면 임계값이
+    금세 차올라 가드가 무력해지고, 오히려 남은 후보가 없어져 가장 많이 쓴
+    사진으로 되돌아갑니다.
+
+    2026-08-26 파일럿에서 실제로 그랬습니다. 로그에는 "다른 후보 확인"이
+    찍히는데 결과는 반대로, 최다 사용 사진이 61회 → 76회로 늘었습니다.
+    그래서 채택이 확정된 순간에만 이 함수를 부릅니다.
+    """
+    m = re.search(r"/([0-9a-f]{16})\.[a-z]+$", mirrored_url or "")
+    if not m:
+        return 0
+    manifest = load_manifest()
+    rec = manifest.get("items", {}).get(m.group(1))
+    if rec is None:
+        return 0
+    rec["uses"] = times_used_by_record(rec) + 1
+    save_manifest(manifest)
+    return rec["uses"]
+
+
 def times_used_by_record(rec: dict) -> int:
     """이 사진이 몇 편에 쓰였는지.
 
     uses가 없는 옛 기록은 origins 개수로 셉니다 — 같은 사진에 서명 URL이
     여러 개 붙은 만큼은 실제로 쓰인 것이므로 최소값으로는 맞습니다.
+
+    `or`가 아니라 None 검사를 씁니다. uses가 0인 기록(복제만 하고 아직 쓰지
+    않은 사진)에 `or`를 쓰면 0을 "값 없음"으로 보고 origins 개수로 되돌아가,
+    쓰지도 않은 사진이 이미 쓴 것으로 잡힙니다.
     """
-    return int(rec.get("uses") or len(rec.get("origins", [])) or 0)
+    uses = rec.get("uses")
+    if uses is None:
+        return len(rec.get("origins", []))
+    return int(uses)
 
 
 def times_used(mirrored_url: str) -> int:

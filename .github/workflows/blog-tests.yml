@@ -32,9 +32,9 @@ jobs:
       # 아니라 엉뚱한 코드를 검사한 초록불이 뜹니다 — 검사한 적 없는데 통과로
       # 보이는 쪽이 검사가 없는 것보다 나쁩니다. 기본값이 push는 그 커밋을,
       # pull_request는 병합 결과를 받아 옵니다.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
           cache: 'pip'

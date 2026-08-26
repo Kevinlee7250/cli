@@ -55,12 +55,12 @@ jobs:
 
     steps:
       - name: 코드 체크아웃
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: latest
 
       - name: Python 3.11 설정
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -189,7 +189,7 @@ jobs:
       # ── Step 5: 리포트 아티팩트 ────────────────────────────
       - name: 검증 리포트 아티팩트 업로드
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: verify-report-${{ github.run_number }}
           path: docs/data/verify_report.json

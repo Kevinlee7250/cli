@@ -21,13 +21,13 @@ jobs:
 
     steps:
       - name: 코드 체크아웃 (대시보드 브랜치)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: latest
           fetch-depth: 1
 
       - name: Python 3.11 설정
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
           cache: 'pip'

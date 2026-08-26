@@ -121,8 +121,9 @@ class TestFindSafeReplacement:
         import fix_unlicensed_images as fx
         import image_fetcher
 
-        monkeypatch.setattr(image_fetcher, "_fetch_best_image",
-                            lambda *a, **k: {"url": NAVER, "title": "x"})
+        monkeypatch.setattr(image_fetcher, "_search_all_sources",
+                            lambda *a, **k: [{"url": NAVER, "title": "x"}])
+        monkeypatch.setattr(image_fetcher, "adopt_image", lambda img: img)
         monkeypatch.setattr(image_fetcher, "generate_fallback_image",
                             lambda *a, **k: {"url": PIXA, "source": "generated_thumbnail"})
         out = fx._find_safe_replacement("제목")
@@ -132,8 +133,9 @@ class TestFindSafeReplacement:
         import fix_unlicensed_images as fx
         import image_fetcher
 
-        monkeypatch.setattr(image_fetcher, "_fetch_best_image",
-                            lambda *a, **k: {"url": NAVER})
+        monkeypatch.setattr(image_fetcher, "_search_all_sources",
+                            lambda *a, **k: [{"url": NAVER}])
+        monkeypatch.setattr(image_fetcher, "adopt_image", lambda img: img)
         monkeypatch.setattr(image_fetcher, "generate_fallback_image",
                             lambda *a, **k: {"url": NAVER})
         assert fx._find_safe_replacement("제목") is None
@@ -142,8 +144,9 @@ class TestFindSafeReplacement:
         import fix_unlicensed_images as fx
         import image_fetcher
 
-        monkeypatch.setattr(image_fetcher, "_fetch_best_image",
-                            lambda *a, **k: {"url": WIKI, "title": "x"})
+        monkeypatch.setattr(image_fetcher, "_search_all_sources",
+                            lambda *a, **k: [{"url": WIKI, "title": "x"}])
+        monkeypatch.setattr(image_fetcher, "adopt_image", lambda img: img)
         monkeypatch.setattr(image_fetcher, "generate_fallback_image",
                             lambda *a, **k: {"url": PIXA})
         assert fx._find_safe_replacement("제목")["url"] == WIKI

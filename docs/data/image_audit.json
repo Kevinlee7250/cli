@@ -1,5 +1,5 @@
 {
-  "auditedAt": "2026-08-25T15:56:48.804024+00:00",
+  "auditedAt": "2026-08-26T02:30:35.105780+00:00",
   "applied": true,
   "aiJudged": false,
   "blogFilter": "",
@@ -17,122 +17,78 @@
   ],
   "incompleteBlogs": [],
   "scanned": 20,
-  "withIssues": 15,
-  "fixed": 15,
+  "withIssues": 7,
+  "fixed": 7,
   "issueCounts": {
-    "insufficient": 15
+    "insufficient": 7,
+    "broken": 1
   },
   "posts": [
     {
-      "title": "여수 밤바다 오션뷰 숙소 가성비 비교, 직접 예약해봤더니",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_23.html",
-      "images": 2,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 2장 (권장 3장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "첨부: pixabay 이미지 1장 첨부",
-        "캡션 동기화 1건"
-      ]
-    },
-    {
-      "title": "경기도 여름 가볼만한 곳, 해안 드라이브 노을 명소 추천",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_359.html",
-      "images": 2,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 2장 (권장 3장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "첨부: pixabay 이미지 1장 첨부",
-        "캡션 동기화 1건"
-      ]
-    },
-    {
-      "title": "벌초 대행 서비스 비용, 산림조합으로 비교해보니",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_22.html",
-      "images": 1,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 1장 (권장 2장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "첨부: generated_thumbnail 이미지 1장 첨부"
-      ]
-    },
-    {
-      "title": "가을 K-POP 컴백 일정 확인 방법 3가지 완벽 정리",
-      "url": "https://www.hoguwhat.com/2026/08/k-pop-3.html",
-      "images": 2,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 2장 (권장 3장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "첨부: pixabay 이미지 1장 첨부",
-        "캡션 동기화 1건"
-      ]
-    },
-    {
-      "title": "2026 K-POP 컴백 정보 직접 정리해본 후기와 확인법",
-      "url": "https://www.hoguwhat.com/2026/08/2026-k-pop.html",
-      "images": 2,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 2장 (권장 3장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "첨부: pixabay 이미지 1장 첨부",
-        "캡션 동기화 1건"
-      ]
-    },
-    {
-      "title": "가을컴백시즌 앨범 저렴하게 구매하는 법 총정리",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_19.html",
-      "images": 2,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 2장 (권장 3장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "첨부: pixabay 이미지 1장 첨부",
-        "캡션 동기화 1건"
-      ]
-    },
-    {
-      "title": "아파트404 등장인물 배우 연기력 솔직 리뷰",
-      "url": "https://www.hoguwhat.com/2026/08/404.html",
+      "title": "김부장 결말 총평, 시청자들 반응 정리해봤어요",
+      "url": "https://www.hoguwhat.com/2026/08/blog-post_26.html",
       "images": 1,
       "needed": 3,
       "issues": [
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
+        },
+        {
+          "type": "broken",
+          "url": "https://kevinlee7250.github.io/cli/images/a330f034fa588fb1.svg",
+          "detail": "HTTP 404"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "첨부: generated_thumbnail 이미지 1장 첨부",
+        "broken 교체 → generated_thumbnail"
+      ]
+    },
+    {
+      "title": "[2편] 김부장 등장인물 분석 총정리|소지섭 윤경호 관계도",
+      "url": "https://www.hoguwhat.com/2026/08/2_01243079270.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "첨부: pixabay 이미지 1장 첨부",
+        "캡션 동기화 2건"
+      ]
+    },
+    {
+      "title": "[1편] 김부장 첫인상 리뷰 - 장르부터 헷갈렸던 이유",
+      "url": "https://www.hoguwhat.com/2026/08/1.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "첨부: pixabay 이미지 1장 첨부",
+        "캡션 동기화 2건"
+      ]
+    },
+    {
+      "title": "아파트404 등장인물 배우 연기력 솔직 리뷰",
+      "url": "https://www.hoguwhat.com/2026/08/404.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
         }
       ],
       "blog": "HOGU What?",
@@ -144,29 +100,12 @@
     {
       "title": "9월 아이돌 신보 솔직 비교 분석, 컴백 시즌 총정리 가이드",
       "url": "https://www.hoguwhat.com/2026/08/9.html",
-      "images": 2,
+      "images": 3,
       "needed": 4,
       "issues": [
         {
           "type": "insufficient",
-          "detail": "이미지 2장 (권장 4장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "첨부: pixabay 이미지 1장 첨부",
-        "캡션 동기화 1건"
-      ]
-    },
-    {
-      "title": "해외 어학연수 비용 현실적으로 얼마나 드나 국가별 총정리",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_18.html",
-      "images": 2,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 2장 (권장 3장)"
+          "detail": "이미지 3장 (권장 4장)"
         }
       ],
       "blog": "HOGU What?",
@@ -178,40 +117,6 @@
     {
       "title": "아파트 드라마 결말 후기 별점 총정리, 시즌2 떡밥이었다",
       "url": "https://www.hoguwhat.com/2026/08/2_0920732281.html",
-      "images": 1,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 1장 (권장 3장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "첨부: pixabay 이미지 1장 첨부",
-        "캡션 동기화 1건"
-      ]
-    },
-    {
-      "title": "JTBC 아파트 드라마 1회 첫인상 후기, 볼만한지 솔직 정리",
-      "url": "https://www.hoguwhat.com/2026/08/jtbc-1.html",
-      "images": 1,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 1장 (권장 3장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "첨부: wikimedia 이미지 1장 첨부",
-        "캡션 동기화 1건"
-      ]
-    },
-    {
-      "title": "멜론 vs 지니 vs 유튜브뮤직 요금 비교, 3개월 직접 써본 후기",
-      "url": "https://www.hoguwhat.com/2026/08/vs-vs-3.html",
       "images": 2,
       "needed": 3,
       "issues": [
@@ -227,53 +132,19 @@
       ]
     },
     {
-      "title": "넷플릭스 가족 공유 정책 변경 후 가장 저렴한 요금 조합",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_673.html",
-      "images": 1,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 1장 (권장 2장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "첨부: pixabay 이미지 1장 첨부",
-        "캡션 동기화 1건"
-      ]
-    },
-    {
-      "title": "넷플릭스 티빙 웨이브 구독료 대비 콘텐츠 비교 총정리",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_165.html",
-      "images": 1,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 1장 (권장 2장)"
-        }
-      ],
-      "blog": "HOGU What?",
-      "actions": [
-        "첨부: generated_thumbnail 이미지 1장 첨부"
-      ]
-    },
-    {
-      "title": "여행 중 도난 경찰서 신고부터 보험 청구까지",
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_361.html",
-      "images": 1,
+      "title": "JTBC 아파트 드라마 1회 첫인상 후기, 볼만한지 솔직 정리",
+      "url": "https://www.hoguwhat.com/2026/08/jtbc-1.html",
+      "images": 2,
       "needed": 3,
       "issues": [
         {
           "type": "insufficient",
-          "detail": "이미지 1장 (권장 3장)"
+          "detail": "이미지 2장 (권장 3장)"
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "첨부: pixabay 이미지 1장 첨부",
-        "캡션 동기화 1건"
+        "첨부: wikimedia 이미지 1장 첨부"
       ]
     }
   ]

@@ -44,6 +44,15 @@ jobs:
         working-directory: blog-automation
         run: python weekly_brief.py
 
+      - name: 저자 경험 자료 점검
+        # author_profile.json은 조용히 실패합니다 — 비어 있어도 워크플로는
+        # 초록으로 끝나고 모든 글이 조사·분석형으로 나갑니다. 그걸 잡으려고
+        # 만든 점검기인데 정작 어느 워크플로도 부르지 않아, 점검기 자신이
+        # 같은 침묵에 빠져 있었습니다. 실패시키지는 않고 로그로 보여줍니다.
+        if: always()
+        working-directory: blog-automation
+        run: python author_profile_check.py
+
       - name: 결과 커밋 & 푸시
         if: always()
         run: |

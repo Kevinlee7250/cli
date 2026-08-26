@@ -569,7 +569,19 @@ def fix_post(post: dict, audit: dict, kinds: tuple[str, ...] = DEFAULT_FIX_KINDS
 # ──────────────────────────────────────────────────────────────────────────────
 
 def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
-        use_ai: bool = False, attach_insufficient: bool = False) -> dict:
+        use_ai: bool = False, attach_insufficient: bool = False,
+        scan_limit: int = 0) -> dict:
+    """limit은 '검사할 글 수'가 아니라 '손댈 글 수'입니다.
+
+    예전에는 limit이 스캔 상한이었습니다. 그런데 목록은 항상 최신 글부터 오고
+    attach_insufficient는 한 번에 한 장만 붙이므로, --limit 20을 반복 실행하면
+    맨 앞 20편만 계속 채워지고 뒤쪽 263편에는 영원히 닿지 못했습니다
+    (2026-08-26 확인: 같은 20편에서 7편 → 3편으로 줄어들 뿐).
+
+    그래서 상한을 "고칠 대상 글"로 셉니다. 이미 권장 장수를 채운 글은 애초에
+    issues가 없어 세지 않으므로, 나눠 돌리면 앞에서부터 차례로 소진됩니다.
+    스캔 자체를 자르고 싶으면 scan_limit을 쓰세요.
+    """
     from config import get_blog_configs
     from blogger_uploader import _get_access_token
     from fix_unlicensed_images import ListingTruncated, _iter_posts
@@ -588,10 +600,15 @@ def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
             raise ValueError(f"블로그 '{blog_filter}'를 찾을 수 없습니다 (등록된 ID: {known})")
         blogs = selected
 
-    results, totals = [], {"scanned": 0, "withIssues": 0, "fixed": 0}
+    results, totals = [], {"scanned": 0, "withIssues": 0, "targeted": 0, "fixed": 0}
     counts: dict[str, int] = {}
+    # limit에 걸려 멈췄는지 남깁니다. 이게 True면 "남은 게 없다"가 아니라
+    # "여기까지만 했다"는 뜻이라, 리포트만 보고 완료로 오해하지 않게 됩니다.
+    stopped_at_limit = False
 
     for cfg in blogs:
+        if stopped_at_limit:
+            break
         name = cfg.get("name") or cfg.get("id", "")
         blogger_id = cfg.get("blog_id", "")
         token = _get_access_token(cfg)
@@ -610,7 +627,10 @@ def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
             incomplete.append({"blog": name, "reason": str(e)[:160]})
             posts = []
         for post in posts:
-            if limit and totals["scanned"] >= limit:
+            if limit and totals["targeted"] >= limit:
+                stopped_at_limit = True
+                break
+            if scan_limit and totals["scanned"] >= scan_limit:
                 break
             totals["scanned"] += 1
             audit = audit_post(post, use_ai)
@@ -618,6 +638,10 @@ def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
                 continue
 
             totals["withIssues"] += 1
+            # 고칠 수 있는 유형이 하나도 없으면 (예: --ai 없이 suspect만) 손댈
+            # 글이 아니므로 상한을 소모시키지 않습니다.
+            if any(i["type"] in fix_kinds for i in audit["issues"]):
+                totals["targeted"] += 1
             for i in audit["issues"]:
                 counts[i["type"]] = counts.get(i["type"], 0) + 1
             audit["blog"] = name
@@ -655,13 +679,17 @@ def run(blog_filter: str = "", limit: int = 0, apply_changes: bool = False,
         "fixKinds": list(fix_kinds),
         # 비어 있어야 "전 범위를 확인했다"고 말할 수 있습니다
         "incompleteBlogs": incomplete,
+        # False인데 대상이 0이면 그 범위는 정말로 다 처리된 것입니다
+        "stoppedAtLimit": stopped_at_limit,
         **totals,
         "issueCounts": counts,
         "posts": results[:100],
     }
     logger.info("=" * 60)
     logger.info(f"검사 {totals['scanned']}건 / 문제 {totals['withIssues']}건 "
-                f"/ 수정 {totals['fixed']}건")
+                f"/ 대상 {totals['targeted']}건 / 수정 {totals['fixed']}건")
+    if stopped_at_limit:
+        logger.info(f"⏸️ 상한({limit}건)에 걸려 멈췄습니다 — 남은 글이 더 있습니다")
     if counts:
         logger.info(f"유형별: {counts}")
     if not apply_changes and totals["withIssues"]:
@@ -682,12 +710,16 @@ def main() -> int:
     parser.add_argument("--apply", action="store_true", help="실제로 글을 수정")
     parser.add_argument("--ai", action="store_true",
                         help="관련성이 애매한 이미지를 Claude로 확정 판정 (비용 발생)")
-    parser.add_argument("--limit", type=int, default=0, help="검사할 최대 글 수 (0=전체)")
+    parser.add_argument("--limit", type=int, default=0,
+                        help="손댈 최대 글 수 (0=무제한). 검사 상한이 아닙니다")
+    parser.add_argument("--scan-limit", type=int, default=0,
+                        help="검사할 최대 글 수 (0=전체)")
     parser.add_argument("--blog", default="", help="특정 블로그 ID만")
     parser.add_argument("--attach-insufficient", action="store_true",
                         help="권장 장수에 못 미치는 글에도 이미지를 추가 (기본은 건너뜀)")
     args = parser.parse_args()
-    run(args.blog, args.limit, args.apply, args.ai, args.attach_insufficient)
+    run(args.blog, args.limit, args.apply, args.ai, args.attach_insufficient,
+        args.scan_limit)
     return 0
 
 

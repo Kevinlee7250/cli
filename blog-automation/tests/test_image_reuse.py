@@ -121,3 +121,33 @@ def test_all_overused_reuses_the_least_used(monkeypatch):
 def test_fresh_candidate_wins_immediately(monkeypatch):
     fx = _wire(monkeypatch, [{"url": "a", "score": 1.0}], {"a": 0})
     assert fx._find_safe_replacement("어떤 글 제목")["url"] == "a"
+
+
+# ── 중복 정리가 새 중복을 만들지 않게 ────────────────────────────────────────
+
+def test_duplicate_fixer_uses_the_guarded_chooser():
+    """중복을 없애면서 새 중복을 만들면 작업이 헛돕니다.
+
+    fix_duplicate_images가 따로 이미지를 고르면 '이미 여러 글에 쓴 사진은
+    건너뛴다'는 판정을 지나치게 됩니다. 선택기는 한 곳이어야 합니다.
+    """
+    src = open(os.path.join(os.path.dirname(__file__), "..",
+                            "fix_duplicate_images.py"), encoding="utf-8").read()
+    assert "_find_safe_replacement" in src, "가드가 있는 선택기를 쓰지 않습니다"
+    body = src[src.index("def _find_replacement_image("):]
+    body = body[:body.index("\ndef ")]
+    assert "_fetch_best_image" not in body, "여전히 직접 고르고 있습니다"
+
+
+def test_duplicate_fixer_can_be_limited():
+    """발행 중인 글을 고치므로 나눠 돌 수 있어야 합니다."""
+    src = open(os.path.join(os.path.dirname(__file__), "..",
+                            "fix_duplicate_images.py"), encoding="utf-8").read()
+    assert "def scan_and_fix(blogs: list[dict], dry_run: bool, limit: int = 0)" in src
+    assert "if limit and fixed >= limit:" in src
+
+    wf = open(os.path.join(os.path.dirname(__file__), "..", "..", ".github",
+                           "workflows", "fix-duplicate-images.yml"), encoding="utf-8").read()
+    assert "--limit ${{ inputs.limit || '20' }}" in wf, (
+        "스케줄 실행이 쓰는 기본값이 없습니다 — inputs가 비면 전체가 돕니다"
+    )

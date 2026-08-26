@@ -142,26 +142,18 @@ def _iter_posts(blog_id: str, token: str):
 
 
 def _find_replacement_image(title: str, keyword: str = "") -> dict | None:
-    """글 제목 기반 새 이미지 확보 — 검색(기사용 회피) 실패 시 생성 썸네일."""
-    from image_fetcher import (_fetch_best_image, _simplify_query, adopt_image,
-                               generate_fallback_image)
+    """글 제목 기반 새 이미지 확보.
 
-    query = _simplify_query(title, 3) or title
-    img = _fetch_best_image(
-        query,
-        naver_client_id=os.getenv("NAVER_CLIENT_ID", ""),
-        naver_client_secret=os.getenv("NAVER_CLIENT_SECRET", ""),
-        n_candidates=6,
-        pixabay_api_key=os.getenv("PIXABAY_API_KEY", ""),
-    )
-    if img:
-        img["alt_text"] = query[:50]
-        return adopt_image(img)
-    thumb = generate_fallback_image(title, keyword)
-    if thumb:
-        kind = "AI 생성 이미지" if thumb.get("source") == "ai_generated" else "생성 썸네일"
-        logger.info(f"    검색 실패 → {kind} 사용: '{title[:40]}'")
-    return thumb
+    fix_unlicensed_images의 선택기를 그대로 씁니다. 그쪽에는 "이미 여러 글에
+    쓴 사진은 건너뛴다"는 판정이 들어 있는데, 여기서 따로 고르면 중복을
+    없애면서 **새 중복을 만들게** 됩니다.
+
+    네이버 자격증명을 넘기던 것도 함께 뺐습니다 — 네이버는 화이트리스트
+    밖이라 어차피 전부 걸러집니다.
+    """
+    from fix_unlicensed_images import _find_safe_replacement
+
+    return _find_safe_replacement(title, keyword)
 
 
 def _replace_image_in_content(content: str, old_url: str, new_img: dict) -> str:
@@ -182,7 +174,7 @@ def _replace_image_in_content(content: str, old_url: str, new_img: dict) -> str:
     return _IMG_TAG_RE.sub(_sub_tag, content)
 
 
-def scan_and_fix(blogs: list[dict], dry_run: bool) -> dict:
+def scan_and_fix(blogs: list[dict], dry_run: bool, limit: int = 0) -> dict:
     from blogger_uploader import _get_access_token
     from image_fetcher import mark_images_used
 
@@ -257,6 +249,12 @@ def scan_and_fix(blogs: list[dict], dry_run: bool) -> dict:
     fixed = failed = 0
 
     for key, plan in plans.items():
+        # 발행 중인 글을 고치는 작업이라 나눠 돌 수 있어야 합니다. 한 번에
+        # 수백 편을 PATCH하면 Blogger API 제한에 걸리고, 중간에 끊겼을 때
+        # 어디까지 됐는지 알기 어렵습니다.
+        if limit and fixed >= limit:
+            logger.info(f"--limit {limit} 도달 — 중단합니다 (남은 대상은 다음 실행에서)")
+            break
         post = plan["post"]
         title = post.get("title", "")
         content = post.get("content", "")
@@ -330,6 +328,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="발행 글 중복 이미지 자동 교체")
     parser.add_argument("--dry-run", action="store_true", help="감지만 하고 수정하지 않음")
     parser.add_argument("--blog", default="", help="특정 블로그 ID만 (기본: 전체)")
+    parser.add_argument("--limit", type=int, default=0,
+                        help="고칠 글 수 상한 (0=전체). 나눠 도는 것을 권장")
     args = parser.parse_args()
 
     from config import get_blog_configs
@@ -337,7 +337,7 @@ def main() -> int:
     if args.blog:
         blogs = [b for b in blogs if b.get("id") == args.blog] or blogs
 
-    report = scan_and_fix(blogs, args.dry_run)
+    report = scan_and_fix(blogs, args.dry_run, args.limit)
     mode = "(dry-run) " if report["dry_run"] else ""
     logger.info("=" * 55)
     logger.info(

@@ -500,6 +500,56 @@ _WRITING_TIPS_FILE = os.path.join(os.path.dirname(__file__), "logs", "learned_wr
 _WRITING_TIPS_MAX_AGE_DAYS = 35   # 이보다 오래된 지침은 무시 (낡은 판단이 계속 남는 것 방지)
 
 
+def _quality_standard_block(keyword: str = "") -> str:
+    """검색 종결성·출처 서열·독자적 가치를 요구하는 공통 품질 기준.
+
+    기존 프롬프트에도 "독자에게 도움이 되는 글"은 있었지만, 그 판정 기준이
+    글 안에 없었습니다. 여기서 세 가지를 명시합니다.
+
+      1. 검색 종결성 — 이 글로 검색이 끝나야 합니다. 도움이 되는 것과
+         "더 찾아볼 필요가 없는 것"은 다른 기준입니다.
+      2. 출처 서열 — 지금까지는 "정부·공식 기준"이라고만 해서, 자료가 서로
+         어긋날 때 무엇을 택할지가 정해져 있지 않았습니다.
+      3. 독자적 가치 레이어 — 어디서나 볼 수 있는 정보의 재배열이 아니라,
+         이 글에만 있는 것이 최소 하나는 있어야 합니다.
+
+    상위 노출 글을 실제로 조사하는 기능은 없습니다(검색 순위 조회 도구가
+    없음). 조사하라고 지시하면 조사 없이 지어내게 되므로, 그 결론에
+    해당하는 요구사항만 남깁니다.
+    """
+    return """
+
+━━━ 발행 전 자가 점검 (아래를 모두 만족해야 완성) ━━━
+글을 다 쓴 뒤 스스로 확인하세요. 하나라도 걸리면 그 부분을 고쳐서 내보내세요.
+
+□ 검색 종결성 — 독자가 이 글을 읽고 나서 같은 걸 알아보려고 다른 사이트를
+  다시 찾아야 한다면 실패입니다. 그 주제로 검색한 사람이 궁금해할 것을
+  이 글 안에서 끝내세요. 핵심 질문에 답을 안 하고 "자세한 건 공식 홈페이지
+  참고"로 넘기지 마세요 (수치가 확인 안 될 때만 예외).
+□ 독자적 가치 — 검색하면 어디서나 나오는 내용의 재배열이 아니어야 합니다.
+  아래 중 최소 하나는 이 글에만 있어야 합니다:
+  직접 계산해본 수치 / 조건별 비교표 / 구체적 사례 / 실행 체크리스트 /
+  선택 기준(이럴 땐 A, 저럴 땐 B) / 단계별 실행 순서 / 비용 분석 /
+  실패·시행착오 사례 / 리스크 분석 / 남들이 안 다루는 관점
+□ 분량을 위한 반복이 없는가 — 같은 내용을 표현만 바꿔 되풀이하지 않았는지.
+  글자 수를 채우려고 늘린 문단은 지우는 편이 낫습니다.
+□ 확인되지 않은 것을 단정하지 않았는가 — 모르는 수치는 지어내지 말고
+  "확인 필요", "기준 시점에 따라 다름"으로 쓰세요. 검색량·조회수·순위 같은
+  숫자는 실제 확인한 값이 아니면 아예 쓰지 마세요.
+
+━━━ 출처 신뢰 서열 (자료가 서로 어긋나면 위쪽을 따름) ━━━
+1 정부·공공기관  2 기업 공식 자료  3 공식 문서(제품·서비스)  4 학술자료
+5 업계 전문기관  6 신뢰도 높은 언론  7 전문 사이트  8 커뮤니티·이용자 후기
+※ 8번(커뮤니티·후기)은 "이런 반응이 있다"는 정황으로만 쓰고, 사실 근거로
+   쓰지 마세요.
+
+━━━ 반드시 최신 자료로 확인할 항목 ━━━
+가격 · 정책 · 법률 · 세금 · 투자 · 여행 정보 · 건강 · 기술 사양 ·
+소프트웨어 버전 · 제품 사양
+이 항목들은 자주 바뀝니다. 자료팩에 최신 값이 없으면 단정하지 말고
+기준 시점을 밝히거나 확인 방법을 안내하세요."""
+
+
 def _learned_guidelines_block() -> str:
     """지난 주 학습에서 도출된 글쓰기 지침을 프롬프트 블록으로 반환합니다.
 
@@ -743,7 +793,7 @@ H2: 마무리 (300자 이상)
 
 ━━━ Google AdSense 정책 준수 ━━━
 ① 원본성 — 독창적 경험·인사이트 필수. 인터넷에 흔한 정보 나열 금지
-② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치, 낚시성 제목 금지
+② SEO — 키워드 10~14회 자연 분산 — 숫자를 맞추려고 억지로 넣지 말 것. 어색하면 적게 쓰는 편이 낫습니다, 제목·내용 일치, 낚시성 제목 금지
 ③ E-E-A-T — 1인칭 경험, 구체적 수치·날짜 포함, 출처 최소 2개, 균형 잡힌 시각
 ④ 유해 금지 — 성인/폭력/혐오/불법 절대 금지. 투자·의료는 면책 표현 필수
 ⑤ 분량 2,500자 이상(공백 제외) 필수 — 미달 시 자동 거부
@@ -754,7 +804,7 @@ H2: 마무리 (300자 이상)
 • 실존 URL만 사용 (2~6개)
 
 ━━━ SEO ━━━
-키워드 10~14회 | LSI 키워드 | 라벨 10개 | meta_description 120~160자
+키워드 10~14회(억지 반복 금지) | LSI 키워드 | 라벨 10개 | meta_description 120~160자
 {drama_ref_section}
 JSON만 응답 (마크다운 없이):
 {{
@@ -890,7 +940,7 @@ H2 섹션 (5~7개, 각 500자 이상):
 
 ━━━ Google AdSense 정책 준수 ━━━
 ① 원본성 — 독창적 경험·인사이트 필수. 인터넷에 흔한 정보 나열 금지
-② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치, 낚시성 제목 금지
+② SEO — 키워드 10~14회 자연 분산 — 숫자를 맞추려고 억지로 넣지 말 것. 어색하면 적게 쓰는 편이 낫습니다, 제목·내용 일치, 낚시성 제목 금지
 ③ E-E-A-T — 구체적 수치·날짜 포함, 출처 최소 2개, 균형 잡힌 시각
 ④ 유해 금지 — 불법 도박·저작권 침해·확인되지 않은 루머 유포 금지
 ⑤ 분량 2,500자 이상(공백 제외) 필수
@@ -900,7 +950,7 @@ H2 섹션 (5~7개, 각 500자 이상):
 • 실존 URL만 사용 (2~5개)
 
 ━━━ SEO ━━━
-키워드 10~14회 | LSI 키워드 | 라벨 10개 | meta_description 120~160자
+키워드 10~14회(억지 반복 금지) | LSI 키워드 | 라벨 10개 | meta_description 120~160자
 {drama_ref_section}
 
 JSON만 응답 (마크다운 없이):
@@ -1024,7 +1074,7 @@ H2 섹션 (5~7개, 각 500자 이상):
 
 ━━━ Google AdSense 정책 준수 ━━━
 ① 원본성 — 뉴스 재가공이 아닌 독자 입장의 분석·해설 필수
-② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치
+② SEO — 키워드 10~14회 자연 분산 — 숫자를 맞추려고 억지로 넣지 말 것. 어색하면 적게 쓰는 편이 낫습니다, 제목·내용 일치
 ③ E-E-A-T — 공식 출처 최소 2개, 날짜 명기, 균형 잡힌 시각
 ④ 유해 금지 — 투자 사기·불법 금융상품 관련 내용 금지
 ⑤ 분량 2,500자 이상(공백 제외) 필수
@@ -1035,7 +1085,7 @@ H2 섹션 (5~7개, 각 500자 이상):
 • 실존 URL만 사용 (2~5개)
 
 ━━━ SEO ━━━
-키워드 10~14회 | 정책명·기관명 LSI 키워드 | 라벨 10개 | meta_description 120~160자
+키워드 10~14회(억지 반복 금지) | 정책명·기관명 LSI 키워드 | 라벨 10개 | meta_description 120~160자
 
 JSON만 응답 (마크다운 없이):
 {{
@@ -1058,7 +1108,8 @@ def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -
     blog_id = (blog_config or {}).get("id", "")
     # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (모든 블로그 공통)
     style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + (
-        _engagement_block(keyword, blog_id) + _learned_guidelines_block()
+        _engagement_block(keyword, blog_id) + _quality_standard_block(keyword)
+        + _learned_guidelines_block()
         + intent_prompt_block(keyword) + snippet_prompt_block()
     )
 
@@ -1169,7 +1220,7 @@ def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -
 
 ━━━ Google AdSense 정책 준수 (가치 없는 콘텐츠 위반 방지) ━━━
 ① 원본성 — 독창적 경험·인사이트 필수. 인터넷에 흔한 정보 나열 금지. 반드시 글쓴이만 아는 구체적 경험·수치·실수 포함
-② SEO — 키워드 10~14회 자연 분산, 제목·내용 일치, 낚시성 제목 금지
+② SEO — 키워드 10~14회 자연 분산 — 숫자를 맞추려고 억지로 넣지 말 것. 어색하면 적게 쓰는 편이 낫습니다, 제목·내용 일치, 낚시성 제목 금지
 ③ 구조 — H2 5개 이상, 각 섹션 300자 이상, 단락 적절한 길이
 ④ 유해 금지 — 성인/폭력/혐오/불법 절대 금지. 투자·의료는 면책 표현 필수
 ⑤ E-E-A-T — 구체적 수치·날짜·출처 포함 (최소 3개), 균형 잡힌 시각
@@ -1214,7 +1265,7 @@ def _build_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -
 (5쌍)
 
 ━━━ SEO ━━━
-키워드 10~14회 | LSI 키워드 | 라벨 10개 | meta_description 155자 이내
+키워드 10~14회(억지 반복 금지) | LSI 키워드 | 라벨 10개 | meta_description 155자 이내
 
 ━━━ 출처 ━━━
 실존 URL만 (정부·언론·공공기관). 확인 불가 수치는 "~로 알려져 있습니다" + URL 생략.
@@ -1322,7 +1373,7 @@ No Schema.org markup (itemscope/itemtype/itemprop) — use this format only:
 (repeat 5 times)
 
 ━━━ SEO ━━━
-Keyword 10-14 times naturally | LSI keywords | 10 labels | meta_description under 155 chars
+Keyword 10-14 times naturally (never force the count) | LSI keywords | 10 labels | meta_description under 155 chars
 
 ━━━ SOURCES ━━━
 Real URLs only from credible sources | Min 2, max 6
@@ -1929,7 +1980,8 @@ def _build_series_prompt(keyword: str, traffic: str, series_context: dict, blog_
     blog_id = (blog_config or {}).get("id", "")
     # 실제 경험 자료 유무에 따른 문체 규칙 + 구조 변주 + 체류시간 강화 지침 (가짜 체험담·목차 반복 방지)
     style_block = _experience_style_block(keyword, blog_id) + _structure_variation(keyword) + (
-        _engagement_block(keyword, blog_id) + _learned_guidelines_block()
+        _engagement_block(keyword, blog_id) + _quality_standard_block(keyword)
+        + _learned_guidelines_block()
         + intent_prompt_block(keyword) + snippet_prompt_block()
     )
     if blog_id == "blog3":
@@ -2090,7 +2142,7 @@ def _build_series_prompt_general(keyword: str, traffic: str, series_context: dic
 검색 의도상 독자가 실제로 궁금해할 때만 2~5개. 필요 없으면 FAQ 섹션과 faq 필드를 생략(빈 배열)하세요. 모든 글에 같은 개수 금지. 구체적이고 실질적인 질문·답변
 
 ━━━ SEO ━━━
-키워드 10~14회 | LSI 키워드 | 라벨 10개 (반드시 "{series_label}" 포함) | meta_description 155자 이내
+키워드 10~14회(억지 반복 금지) | LSI 키워드 | 라벨 10개 (반드시 "{series_label}" 포함) | meta_description 155자 이내
 • meta_description 155자 이내
 
 ━━━ 출처 링크 ━━━
@@ -2149,7 +2201,7 @@ Conclusion (200w): summary + encourage reading next part
 • <strong> key concepts | Bullet/numbered lists
 
 ━━━ SEO ━━━
-• Keyword 10-14 times | LSI keywords throughout
+• Keyword 10-14 times (never force the count) | LSI keywords throughout
 • 10 labels — must include "{series_label}"
 • meta_description under 155 chars
 

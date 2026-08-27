@@ -1,233 +1,141 @@
 #!/usr/bin/env python3
-"""
-sitemap_generator.py
-posts.json → sitemap.xml 생성 + Google Search Console 자동 제출
+"""posts.json → docs/sitemap.xml · docs/robots.txt
+
+왜 모듈인가
+──────────
+이 로직은 원래 blog-sitemap.yml 안에 heredoc 파이썬으로 인라인돼 있었습니다.
+같은 이름의 모듈이 따로 있었지만 아무도 부르지 않아, 사이트맵 구현이 두 벌
+존재하고 도는 쪽에는 테스트가 없었습니다. 그 상태에서 아래 버그가 오래
+살아남았습니다.
+
+고친 버그
+────────
+인라인 판은 `"blogspot.com" not in url: continue`로 걸렀습니다. 커스텀
+도메인을 쓰는 블로그(www.hoguwhat.com)가 통째로 사이트맵과 robots.txt에서
+빠져 있었습니다 — posts.json에 31편이 있는데 sitemap.xml에는 0편.
+색인에 직접 영향이 가는 문제인데, 워크플로는 계속 초록이었습니다.
+
+이제 호스트를 가정하지 않고 posts.json의 URL에서 그대로 읽습니다. 블로그를
+새로 붙이거나 도메인을 갈아도 코드를 고칠 필요가 없습니다.
+
+GSC 제출과 ping은 여기 없습니다. 제출은 gsc_indexing.submit_sitemaps가
+담당하고, 구글의 sitemap ping 엔드포인트는 폐기됐습니다.
 """
 
-import os
 import json
-import logging
-import urllib.request
-import urllib.parse
-import urllib.error
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
-# ─── 경로 설정 ────────────────────────────────────────────────
 _DIR = Path(__file__).parent
-_POSTS_JSON  = (_DIR / ".." / "docs" / "data" / "posts.json").resolve()
-_SITEMAP_OUT = (_DIR / ".." / "docs" / "sitemap.xml").resolve()
+POSTS_JSON = (_DIR / ".." / "docs" / "data" / "posts.json").resolve()
+SITEMAP_OUT = (_DIR / ".." / "docs" / "sitemap.xml").resolve()
+ROBOTS_OUT = (_DIR / ".." / "docs" / "robots.txt").resolve()
 
-# 사이트 / Sitemap 정보
-BLOG_URL    = "https://hoguwhat1.blogspot.com"
-SITEMAP_URL = os.getenv("SITEMAP_URL",
-              "https://kevinlee7250.github.io/cli/sitemap.xml")
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    datefmt="%H:%M:%S",
-)
-logger = logging.getLogger(__name__)
+# 등급이 좋을수록 크롤러에 먼저 권합니다
+PRIORITY_BY_GRADE = {"S": "1.0", "A": "0.8", "B": "0.6", "C": "0.5"}
+DEFAULT_PRIORITY = "0.5"
 
 
-# ─── OAuth ────────────────────────────────────────────────────
-def get_oauth_token(client_id: str, client_secret: str, refresh_token: str) -> str:
-    if not all([client_id, client_secret, refresh_token]):
-        return ""
-    data = urllib.parse.urlencode({
-        "client_id":     client_id,
-        "client_secret": client_secret,
-        "refresh_token": refresh_token,
-        "grant_type":    "refresh_token",
-    }).encode()
-    try:
-        req = urllib.request.Request(
-            "https://oauth2.googleapis.com/token", data=data, method="POST"
-        )
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            return json.load(resp).get("access_token", "")
-    except Exception as e:
-        logger.warning(f"OAuth 토큰 발급 실패: {e}")
-        return ""
+def post_url(post: dict) -> str:
+    """글의 공개 주소. 필드 이름이 시기마다 달라 셋 다 봅니다."""
+    url = (post.get("url") or post.get("blogUrl") or post.get("link") or "").strip()
+    return url if url.startswith(("http://", "https://")) else ""
 
 
-# ─── 포스트 로드 ──────────────────────────────────────────────
-def load_posts() -> list[dict]:
-    if not _POSTS_JSON.exists():
-        logger.error(f"posts.json 없음: {_POSTS_JSON}")
-        return []
-    posts = json.loads(_POSTS_JSON.read_text(encoding="utf-8"))
-    logger.info(f"포스트 로드: {len(posts)}개")
-    return posts
+def host_root(url: str) -> str:
+    m = re.match(r"(https?://[^/]+)", url)
+    return m.group(1) if m else ""
 
 
-# ─── Sitemap 생성 ─────────────────────────────────────────────
-def generate_sitemap(posts: list[dict]) -> str:
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    now_dt = datetime.now()
+def normalize_date(post: dict, today: str) -> str:
+    """publishedAt/savedAt/createdAt/date 중 먼저 있는 것을 YYYY-MM-DD로."""
+    raw = str(post.get("publishedAt") or post.get("savedAt")
+              or post.get("createdAt") or post.get("date") or "")
+    if len(raw) == 14 and raw.isdigit():       # 20260826123456
+        return f"{raw[:4]}-{raw[4:6]}-{raw[6:8]}"
+    if len(raw) > 10:
+        return raw[:10]
+    return raw or today
 
-    # 등급별 우선순위
-    grade_priority = {"S": "0.9", "A": "0.8", "B": "0.7", "C": "0.5"}
 
-    lines = [
-        '<?xml version="1.0" encoding="UTF-8"?>',
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-        '',
-        '  <!-- 홈페이지 -->',
-        '  <url>',
-        f'    <loc>{BLOG_URL}/</loc>',
-        f'    <lastmod>{today}</lastmod>',
-        '    <changefreq>daily</changefreq>',
-        '    <priority>1.0</priority>',
-        '  </url>',
-        '',
-    ]
+def build_entries(posts: list[dict], today: str = "") -> list[dict]:
+    today = today or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    roots, entries, seen = set(), [], set()
 
-    valid_count = 0
-    for post in posts:
-        url = post.get("blogUrl", "").strip()
-        if not url or not url.startswith("http"):
+    for p in posts:
+        url = post_url(p)
+        if not url or url in seen:
             continue
+        seen.add(url)
+        root = host_root(url)
+        if root:
+            roots.add(root)
+        entries.append({
+            "url": url,
+            "lastmod": normalize_date(p, today),
+            "priority": PRIORITY_BY_GRADE.get(p.get("grade", ""), DEFAULT_PRIORITY),
+            "changefreq": "monthly",
+        })
 
-        date     = post.get("date", today)
-        grade    = post.get("grade", "B")
-        priority = grade_priority.get(grade, "0.7")
+    # 블로그 루트는 맨 앞에, 매일 크롤링 권장
+    for root in sorted(roots, reverse=True):
+        entries.insert(0, {"url": root + "/", "lastmod": today,
+                           "priority": "1.0", "changefreq": "daily"})
+    return entries
 
-        # 경과일 → changefreq
-        try:
-            days_old = (now_dt - datetime.strptime(date, "%Y-%m-%d")).days
-            if days_old <= 7:
-                changefreq = "daily"
-            elif days_old <= 30:
-                changefreq = "weekly"
-            else:
-                changefreq = "monthly"
-        except Exception:
-            changefreq = "weekly"
 
-        lines += [
-            '  <url>',
-            f'    <loc>{url}</loc>',
-            f'    <lastmod>{date}</lastmod>',
-            f'    <changefreq>{changefreq}</changefreq>',
-            f'    <priority>{priority}</priority>',
-            '  </url>',
-        ]
-        valid_count += 1
-
-    lines.append('</urlset>')
-    logger.info(f"sitemap 생성: {valid_count}개 포스트 URL + 1개 홈")
+def render_sitemap(entries: list[dict]) -> str:
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for e in entries:
+        lines += ["  <url>",
+                  f"    <loc>{e['url']}</loc>",
+                  f"    <lastmod>{e['lastmod']}</lastmod>",
+                  f"    <changefreq>{e['changefreq']}</changefreq>",
+                  f"    <priority>{e['priority']}</priority>",
+                  "  </url>"]
+    lines.append("</urlset>")
     return "\n".join(lines)
 
 
-# ─── 저장 ─────────────────────────────────────────────────────
-def save_sitemap(xml_content: str) -> None:
-    _SITEMAP_OUT.parent.mkdir(parents=True, exist_ok=True)
-    _SITEMAP_OUT.write_text(xml_content, encoding="utf-8")
-    logger.info(f"✅ sitemap.xml 저장: {_SITEMAP_OUT} ({len(xml_content):,} bytes)")
+def render_robots(roots: list[str]) -> str:
+    lines = ["User-agent: *", "Allow: /", ""]
+    lines += [f"Sitemap: {r}/sitemap.xml" for r in sorted(roots)]
+    return "\n".join(lines) + "\n"
 
 
-# ─── GSC Sitemap 제출 ──────────────────────────────────────────
-def submit_to_gsc(token: str, site_url: str, sitemap_url: str) -> bool:
-    if not token:
-        logger.warning("OAuth 토큰 없음 — GSC 제출 건너뜀")
-        return False
-
-    encoded_site    = urllib.parse.quote(site_url,    safe="")
-    encoded_sitemap = urllib.parse.quote(sitemap_url, safe="")
-    api_url = (
-        f"https://www.googleapis.com/webmasters/v3/"
-        f"sites/{encoded_site}/sitemaps/{encoded_sitemap}"
-    )
-
-    req = urllib.request.Request(
-        api_url, data=b"", method="PUT",
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Content-Length": "0",
-        },
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=20) as resp:
-            logger.info(f"✅ GSC sitemap 제출 성공: HTTP {resp.status}")
-            return True
-    except urllib.error.HTTPError as e:
-        body = e.read().decode(errors="replace")[:400]
-        logger.warning(f"GSC 제출 실패: HTTP {e.code} — {body}")
-        return False
-    except Exception as e:
-        logger.warning(f"GSC 제출 오류: {e}")
-        return False
+def roots_of(entries: list[dict]) -> list[str]:
+    return sorted({host_root(e["url"]) for e in entries if host_root(e["url"])})
 
 
-# ─── Blogger 기본 sitemap도 제출 ───────────────────────────────
-def submit_blogger_atom_sitemap(token: str, site_url: str) -> None:
-    """Blogger atom 피드도 sitemap으로 GSC 제출 (전체 피드 — 26개 제한 없음)"""
-    atom_url = f"{BLOG_URL}/feeds/posts/default?alt=rss"
-    logger.info(f"Blogger RSS 피드 GSC 제출 시도: {atom_url}")
-    submit_to_gsc(token, site_url, atom_url)
+def main() -> int:
+    if not POSTS_JSON.exists():
+        print(f"❌ posts.json 없음: {POSTS_JSON}")
+        return 0
+    posts = json.loads(POSTS_JSON.read_text(encoding="utf-8"))
+    print(f"📄 포스트 수: {len(posts)}")
 
+    entries = build_entries(posts)
+    roots = roots_of(entries)
 
-# ─── Google Ping ───────────────────────────────────────────────
-def ping_google(sitemap_url: str) -> None:
-    ping_url = f"https://www.google.com/ping?sitemap={urllib.parse.quote(sitemap_url)}"
-    try:
-        with urllib.request.urlopen(ping_url, timeout=10) as resp:
-            logger.info(f"Google ping: HTTP {resp.status}")
-    except Exception as e:
-        logger.debug(f"Google ping (무시): {e}")
+    SITEMAP_OUT.parent.mkdir(parents=True, exist_ok=True)
+    SITEMAP_OUT.write_text(render_sitemap(entries), encoding="utf-8")
+    print(f"✅ sitemap.xml: URL {len(entries)}개 → {SITEMAP_OUT}")
 
+    if roots:
+        ROBOTS_OUT.write_text(render_robots(roots), encoding="utf-8")
+        print(f"✅ robots.txt: 사이트맵 {len(roots)}개")
 
-# ─── Main ─────────────────────────────────────────────────────
-def main() -> None:
-    client_id     = os.getenv("GOOGLE_CLIENT_ID", "")
-    client_secret = os.getenv("GOOGLE_CLIENT_SECRET", "")
-    refresh_token = os.getenv("GOOGLE_REFRESH_TOKEN", "")
-    gsc_site_url  = os.getenv("GSC_SITE_URL", f"{BLOG_URL}/")
-    sitemap_url   = SITEMAP_URL
-
-    logger.info("=" * 55)
-    logger.info("  🗺️  Sitemap Generator")
-    logger.info("=" * 55)
-    logger.info(f"  블로그  : {BLOG_URL}")
-    logger.info(f"  Sitemap : {sitemap_url}")
-    logger.info(f"  GSC URL : {gsc_site_url}")
-
-    # 1. 포스트 로드
-    posts = load_posts()
-    if not posts:
-        logger.error("포스트 없음 — 종료")
-        return
-
-    # 2. sitemap 생성 & 저장
-    xml_content = generate_sitemap(posts)
-    save_sitemap(xml_content)
-
-    # 3. OAuth 토큰
-    token = get_oauth_token(client_id, client_secret, refresh_token)
-    if token:
-        logger.info("OAuth 토큰 발급 성공")
-    else:
-        logger.warning("OAuth 없음 — sitemap 파일만 생성됨 (GSC 제출 건너뜀)")
-
-    # 4. GSC에 커스텀 sitemap 제출
-    gsc_ok = submit_to_gsc(token, gsc_site_url, sitemap_url)
-
-    # 5. Blogger RSS 피드도 추가 제출
-    submit_blogger_atom_sitemap(token, gsc_site_url)
-
-    # 6. Google ping
-    ping_google(sitemap_url)
-
-    # 결과 요약
-    url_count = xml_content.count("<loc>")
-    logger.info("=" * 55)
-    logger.info(f"  ✅ sitemap URL 수   : {url_count}개")
-    logger.info(f"  {'✅' if gsc_ok else '⚠️'} GSC 제출        : {'성공' if gsc_ok else '실패/건너뜀'}")
-    logger.info(f"  🌐 sitemap 접근 URL : {sitemap_url}")
-    logger.info("=" * 55)
+    # 블로그별 내역을 남깁니다. 한 블로그가 통째로 빠져도 숫자만 보면
+    # 알 수 없던 것이 이번 버그의 원인이었습니다.
+    per = {}
+    for e in entries:
+        per[host_root(e["url"])] = per.get(host_root(e["url"]), 0) + 1
+    for h, c in sorted(per.items()):
+        print(f"   {h}: {c}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

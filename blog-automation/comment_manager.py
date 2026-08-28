@@ -193,7 +193,19 @@ def _queue_comment(entry: dict) -> None:
     _PENDING_FILE.parent.mkdir(parents=True, exist_ok=True)
     try:
         pending = json.loads(_PENDING_FILE.read_text(encoding="utf-8")) if _PENDING_FILE.exists() else []
-    except Exception:
+    except Exception as e:
+        # 예전에는 여기서 조용히 pending = []로 두고 아래에서 파일을 그대로
+        # 덮어썼습니다. 파일이 한 번 깨지면 큐에 쌓인 댓글 최대 200개가
+        # 사라집니다 — 조용한 실패를 넘어 데이터 손실입니다.
+        #
+        # 깨진 파일을 옆에 남기고 새로 시작합니다. 사람이 복구할 수 있어야
+        # 하고, 무엇이 없어졌는지 알 수 있어야 합니다.
+        backup = _PENDING_FILE.with_suffix(".corrupt.json")
+        try:
+            backup.write_text(_PENDING_FILE.read_text(encoding="utf-8"), encoding="utf-8")
+            logger.error(f"대기 댓글 파일이 손상됐습니다 ({e}) — {backup.name}에 원본을 남기고 새로 시작합니다")
+        except Exception as be:
+            logger.error(f"대기 댓글 파일이 손상됐고 백업도 실패했습니다 ({e} / {be})")
         pending = []
     pending.insert(0, entry)
     pending = pending[:200]  # 최대 200개 유지
@@ -305,7 +317,10 @@ def _load_published_posts(hours: int = 25) -> list[dict]:
         return []
     try:
         registry = json.loads(_REGISTRY_FILE.read_text(encoding="utf-8"))
-    except Exception:
+    except Exception as e:
+        # 빈 목록은 "댓글 달 글이 없다"로 읽힙니다. 읽기에 실패한 것과
+        # 구분되지 않으면 댓글 자동화가 아무것도 안 하면서 성공으로 끝납니다.
+        logger.error(f"post_registry.json을 읽지 못했습니다 ({e}) — 대상 글 0건으로 진행합니다")
         return []
 
     cutoff = (datetime.now(timezone.utc) - timedelta(hours=hours)).isoformat()

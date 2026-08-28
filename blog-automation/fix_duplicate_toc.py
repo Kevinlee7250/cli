@@ -24,6 +24,7 @@ import time
 
 import requests
 from dotenv import load_dotenv
+from blogger_posts import ListingTruncated, iter_posts  # noqa: F401
 load_dotenv()
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -81,30 +82,8 @@ def dedupe_toc(content: str) -> str:
 
 
 def _iter_posts(api_base: str, blog_id: str, token: str):
-    """블로그의 발행(live) 글을 전부 순회합니다."""
-    page_token = ""
-    while True:
-        params = {
-            "maxResults": 100,
-            "status": "live",
-            "fetchBodies": "true",
-            "fields": "nextPageToken,items(id,title,url,content)",
-        }
-        if page_token:
-            params["pageToken"] = page_token
-        r = requests.get(
-            f"{api_base}/blogs/{blog_id}/posts",
-            headers={"Authorization": f"Bearer {token}"},
-            params=params, timeout=30,
-        )
-        if r.status_code != 200:
-            logger.error(f"글 목록 조회 실패 [{r.status_code}]: {r.text[:200]}")
-            return
-        data = r.json()
-        yield from data.get("items", [])
-        page_token = data.get("nextPageToken", "")
-        if not page_token:
-            return
+    """블로그의 발행(live) 글 전체를 순회합니다 (공용 구현 위임)."""
+    yield from iter_posts(blog_id, token, api_base=api_base)
 
 
 def fix_blog(blog_cfg: dict, dry_run: bool) -> dict:

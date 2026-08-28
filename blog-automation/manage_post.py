@@ -258,7 +258,8 @@ def action_insert_thumbnail(post_id: str, thumb_title: str = "", thumb_theme: st
                 if item.get("id") == post_id or item.get("post_id") == post_id:
                     post_data, source = item, "pending"
                     break
-        except Exception:
+        except Exception as e:
+            logger.warning(f"pending 저장소를 읽지 못했습니다 ({e}) — 초안 없음으로 처리")
             pending = []
     if not post_data:
         logger.error(f"포스트 콘텐츠를 찾을 수 없습니다 (초안/pending 없음): {post_id}")

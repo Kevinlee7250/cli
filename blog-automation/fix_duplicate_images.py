@@ -34,6 +34,7 @@ from datetime import datetime, timezone
 
 import requests
 from dotenv import load_dotenv
+from blogger_posts import ListingTruncated, iter_posts  # noqa: F401
 load_dotenv()
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -120,30 +121,13 @@ def _extract_image_urls(content: str) -> list[str]:
 
 
 def _iter_posts(blog_id: str, token: str):
-    """블로그의 발행(live) 글 전체 순회 (최신순)."""
-    page_token = ""
-    while True:
-        params = {
-            "maxResults": 100,
-            "status": "live",
-            "fetchBodies": "true",
-            "fields": "nextPageToken,items(id,title,url,content,published)",
-        }
-        if page_token:
-            params["pageToken"] = page_token
-        r = requests.get(
-            f"{BLOGGER_API_BASE}/blogs/{blog_id}/posts",
-            headers={"Authorization": f"Bearer {token}"},
-            params=params, timeout=30,
-        )
-        if r.status_code != 200:
-            logger.error(f"글 목록 조회 실패 [{r.status_code}]: {r.text[:200]}")
-            return
-        data = r.json()
-        yield from data.get("items", [])
-        page_token = data.get("nextPageToken", "")
-        if not page_token:
-            return
+    """블로그의 발행(live) 글 전체를 순회합니다 (공용 구현 위임).
+
+    예전에는 이 모듈이 자체 사본을 들고 있었고, 비200 응답에 로그만 남기고
+    return해 목록이 조용히 잘렸습니다. 사본이 넷이라 수정이 한 곳에만
+    반영돼 나머지는 버그를 그대로 안고 있었습니다.
+    """
+    yield from iter_posts(blog_id, token)
 
 
 def _find_replacement_image(title: str, keyword: str = "") -> dict | None:

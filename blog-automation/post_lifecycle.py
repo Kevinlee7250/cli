@@ -138,6 +138,10 @@ def fetch_top_queries_for_page(token: str, site_url: str, page_url: str, days: i
             timeout=20,
         )
         if r.status_code != 200:
+            # 빈 목록은 "노출이 없다"로 읽힙니다. 조회에 실패한 것과 구분되지
+            # 않으면 성과 0으로 보고되고, 그 숫자로 글을 지우거나 순위를
+            # 매기게 됩니다. 최소한 로그로는 남깁니다.
+            logger.warning(f"GSC 질의 조회 실패 [{r.status_code}] — {page_url[:60]} 성과 0으로 처리")
             return []
         return [
             {"query": row.get("keys", [""])[0],
@@ -145,7 +149,8 @@ def fetch_top_queries_for_page(token: str, site_url: str, page_url: str, days: i
              "clicks": row.get("clicks", 0)}
             for row in r.json().get("rows", [])
         ]
-    except Exception:
+    except Exception as e:
+        logger.warning(f"GSC 질의 조회 오류 ({e}) — {page_url[:60]} 성과 0으로 처리")
         return []
 
 

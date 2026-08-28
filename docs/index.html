@@ -3192,6 +3192,36 @@ function qualityGrade(p) {
   return { cls: 'grade-c', label: 'C급' }
 }
 
+// ── Fact check ────────────────────────────────────────────────────────────────
+// 팩트체크는 지금까지 결과를 기록만 하고 아무도 읽지 않았습니다. 최근 80편 중
+// 68편이 warn인데 발행에는 아무 영향이 없었고 화면에도 나오지 않았습니다.
+// "검사했다"는 사실만으로는 아무것도 달라지지 않으므로, 무엇을 보고 그렇게
+// 판단했는지가 화면에 닿아야 합니다.
+function factCheckBadge(p) {
+  const fc = p.factCheck
+  if (!fc) return ''
+  if (!fc.checked) return `<span class="badge muted" title="사유: ${fc.reason || '?'}">팩트체크 안 함</span>`
+  const found = fc.issues_found || 0
+  const fixed = fc.fixes_applied || 0
+  if (!found) return '<span class="badge green">팩트체크 통과</span>'
+  // 찾았는데 하나도 못 고친 글이 실제로 위험한 쪽입니다 — 검증 안 된 내용이
+  // 그대로 남아 있다는 뜻이라, 발행 경로에서도 pending으로 보냅니다.
+  if (!fixed) return `<span class="badge red" title="검증되지 않은 내용이 그대로 남아 있습니다">⚠️ 미수정 ${found}건</span>`
+  return `<span class="badge yellow" title="${found}건 중 ${fixed}건 자동 수정">팩트체크 ${fixed}/${found} 수정</span>`
+}
+
+function factCheckDetail(p) {
+  const fc = p.factCheck
+  if (!fc || !fc.checked || !(fc.issues || []).length) return ''
+  const rows = fc.issues.map(i =>
+    `<li style="margin:4px 0">${i.fixed ? '✅' : '⚠️'} ${esc(i.problem || '')}</li>`).join('')
+  const tone = fc.fixes_applied ? 'var(--bg3)' : 'rgba(239,68,68,.12)'
+  return `<div style="background:${tone};border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px">
+    <div style="font-weight:700;margin-bottom:6px">🔎 팩트체크 — ${fc.issues_found}건 발견 / ${fc.fixes_applied}건 수정</div>
+    <ul style="margin:0;padding-left:18px;color:var(--muted)">${rows}</ul>
+  </div>`
+}
+
 // ── Dashboard ─────────────────────────────────────────────────────────────────
 function renderDashboard() {
   const { meta, runs, posts } = DATA
@@ -3819,6 +3849,7 @@ function postCardHTML(p) {
     <div class="info">
       <div class="kw">${icon} ${esc(p.keyword)}</div>
       <div class="title">${esc(p.title)}</div>
+      <div style="margin:4px 0">${factCheckBadge(p)}</div>
       <div class="footer">
         <span class="badge muted">${p.date}</span>
         <span class="badge purple">${p.adsenseCategory || '일반'}</span>
@@ -3859,8 +3890,9 @@ async function openPost(id) {
      <span class="${g.cls}" style="margin-left:6px">${g.label}</span>
      ${p.wordCount ? `<span class="badge muted" style="margin-left:6px">${p.wordCount.toLocaleString()}자</span>` : ''}
      ${p.faqCount ? `<span class="badge green" style="margin-left:6px">FAQ ${p.faqCount}개</span>` : ''}
+     <span style="margin-left:6px">${factCheckBadge(p)}</span>
      ${p.blogUrl ? `<a href="${p.blogUrl}" target="_blank" style="margin-left:10px;color:var(--accent2);font-size:13px">🔗 블로그에서 보기</a>` : ''}`
-  let body = ''
+  let body = factCheckDetail(p)
   if (p.metaDescription) body += `<div style="background:var(--bg3);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--muted)">📌 ${esc(p.metaDescription)}</div>`
   if (p.contentPreview) body += `<div style="background:var(--bg3);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px;line-height:1.8;color:var(--text)">📄 ${esc(p.contentPreview)}</div>`
   if (p.tags?.length) {

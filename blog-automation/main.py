@@ -321,6 +321,33 @@ def run_once(
             success_count += 1
             continue
 
+        # 팩트체크가 문제를 찾았는데 한 건도 못 고친 경우 → pending 저장
+        #
+        # 팩트체크는 지금까지 결과를 기록만 하고 아무도 읽지 않았습니다.
+        # 최근 80편 중 68편이 warn인데 발행에는 아무 영향이 없었고,
+        # 대시보드에 표시되지도 않았습니다.
+        #
+        # 그렇다고 warn 전부를 막으면 85%가 걸려 파이프라인이 멈춥니다.
+        # 실제로 위험한 것은 "검증되지 않은 내용을 찾았는데 고치지 못한" 글
+        # 입니다 — 같은 80편에서 8편(10%)이고, 사람이 보면 되는 양입니다.
+        _fc = post_data.get("fact_check") or {}
+        _unfixed = _fc.get("issues_found", 0) and not _fc.get("fixes_applied", 0)
+        if not (dry_run or review) and _unfixed:
+            _probs = "; ".join(i.get("problem", "")[:60]
+                               for i in (_fc.get("issues") or [])[:3])
+            logger.warning(
+                f"  ⚠️ 팩트체크 이슈 {_fc['issues_found']}건을 고치지 못했습니다 "
+                f"— pending 저장: '{title}'")
+            logger.warning(f"     {_probs}")
+            post_data["status"] = "pending"
+            post_data["pending_reason"] = f"팩트체크 미수정 {_fc['issues_found']}건: {_probs}"[:200]
+            _pid = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
+            save_draft(_pid, post_data)
+            save_pending_posts([post_data], blog_config)
+            completed_posts.append(post_data)
+            success_count += 1
+            continue
+
         if dry_run or review:
             mode_label = "검토 모드" if review else "테스트 모드"
             logger.info(f"  [{mode_label}] 업로드 건너뜀")

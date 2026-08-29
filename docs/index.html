@@ -5376,6 +5376,8 @@ function renderPendingPosts() {
     const excerpt = (p.excerpt || stripHtml(p.content)).substring(0, 220)
     const excerptHtml = excerpt ? `<div style="font-size:12px;color:var(--muted);line-height:1.7;margin-top:10px;border-left:3px solid var(--border);padding-left:10px">${esc(excerpt)}…</div>` : ''
     const metaHtml = p.metaDescription ? `<div style="font-size:12px;color:var(--muted);line-height:1.6;margin-top:6px"><strong style="color:var(--accent2)">Meta:</strong> ${esc(p.metaDescription)}</div>` : ''
+    // 팩트체크 게이트가 세운 글 — 이유 없이 목록에 섞이면 그냥 검토 대기로 보입니다
+    const reasonHtml = p.pendingReason ? `<div style="font-size:12px;color:var(--red);line-height:1.6;margin-top:6px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:8px;padding:8px 10px"><strong>⚠️ 보류 사유:</strong> ${esc(p.pendingReason)}</div>` : ''
     const hasContent = !!(p.contentLength || (p.content && p.content.trim()))
     return `<div class="run-panel" id="rpost-${safeId}" style="margin-bottom:16px">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;flex-wrap:wrap">
@@ -5395,6 +5397,7 @@ function renderPendingPosts() {
         ${(p.faq || []).length > 0 ? `<span class="badge blue">FAQ ${p.faq.length}개</span>` : ''}
         ${(p.labels || []).slice(0,5).map(l => `<span class="badge purple">${esc(l)}</span>`).join('')}
       </div>
+      ${reasonHtml}
       ${metaHtml}
       ${excerptHtml}
       <div id="rstatus-${safeId}" class="status-panel" style="margin-top:10px;display:none"></div>

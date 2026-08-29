@@ -739,6 +739,10 @@ def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> 
             "contentCategory": r.get("content_category", ""),
             "searchIntent": r.get("search_intent", ""),
             "status": "pending",
+            # 왜 보류됐는지 — 팩트체크 게이트(main.py)가 잡아 세운 글은 이유
+            # 없이 검토 목록에 섞이면 일반 검토 대기와 구분되지 않습니다.
+            "pendingReason": r.get("pending_reason", ""),
+            "factCheck": r.get("fact_check"),
             "blogId": cfg.get("id", r.get("blogId", "blog1")),
             "blogName": cfg.get("name", r.get("blogName", "")),
         })

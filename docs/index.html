@@ -1462,7 +1462,12 @@
 
     <!-- ④ 데이터 현황 -->
     <!-- ④-a 데이터 신선도 — 어떤 파일이 언제 것인지 한 곳에서 -->
-    <div class="section-header" style="margin-bottom:6px"><h2>📅 데이터 신선도</h2></div>
+    <div class="section-header" style="margin-bottom:6px">
+      <h2>📅 데이터 신선도</h2>
+      <button id="freshness-refresh-btn" onclick="freshnessRefresh()"
+        title="공개된 데이터 파일을 다시 받아 시각을 다시 계산합니다"
+        style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔄 새로고침</button>
+    </div>
     <div id="freshness-summary" style="font-size:13px;color:var(--muted);margin-bottom:12px">확인 중...</div>
     <div id="freshness-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-bottom:28px">
       <!-- filled by renderFreshnessPanel() -->
@@ -2929,6 +2934,71 @@ function renderFeatureFlags() {
 }
 
 // 전체 목록 — 어떤 파일이 언제 것인지 한 화면에서 봅니다.
+
+//: 파일을 실제로 만드는 워크플로. 값은 [워크플로 파일, 입력값, 예상 소요(분)].
+//: 여기 없는 파일은 재수집 버튼을 달지 않습니다 — 여러 워크플로가 같은
+//: docs/data를 함께 커밋하는 경우가 있어, 확실한 생산자만 적었습니다.
+//:
+//: 글을 고치는 워크플로에는 미리보기 입력을 명시적으로 넘깁니다. 여기서
+//: 필요한 건 리포트 갱신이지 발행 글 수정이 아닙니다 — fix-duplicate-images는
+//: dry_run 기본값이 false라, 빼먹으면 버튼 하나로 발행 글을 고치게 됩니다.
+const FRESH_SOURCE_WF = {
+  'dead_links.json':        ['fix-dead-links.yml', { dry_run: 'true' }, 5],
+  'duplicate_images.json':  ['fix-duplicate-images.yml', { dry_run: 'true' }, 5],
+  'image_audit.json':       ['image-audit.yml', { apply: 'false' }, 10],
+  'pending_report.json':    ['pending-cleanup.yml', { apply: 'false' }, 3],
+  'adsense_audit.json':     ['adsense-audit.yml', {}, 5],
+  'required_pages.json':    ['adsense-audit.yml', {}, 5],
+  'index_status.json':      ['gsc-indexing.yml', {}, 5],
+  'gsc_diagnosis.json':     ['gsc-indexing.yml', {}, 5],
+  'index_priority.json':    ['gsc-indexing.yml', {}, 5],
+  'sitemap_status.json':    ['gsc-indexing.yml', {}, 5],
+  'alerts.json':            ['alert-watchdog.yml', {}, 2],
+  'auth_health.json':       ['auto-repair.yml', {}, 5],
+  'repairs.json':           ['auto-repair.yml', {}, 5],
+  'code_repairs.json':      ['auto-repair.yml', {}, 5],
+  'trend_preempt.json':     ['trend-preempt.yml', {}, 3],
+  'title_changes.json':     ['post-lifecycle.yml', {}, 5],
+  'lifecycle.json':         ['post-lifecycle.yml', {}, 5],
+  'learning.json':          ['weekly-learning.yml', {}, 5],
+  'weekly_brief.json':      ['weekly-brief.yml', {}, 3],
+  'trending_keywords.json': ['collect-keywords.yml', {}, 2],
+  'analytics.json':         ['blog-analytics.yml', {}, 3],
+  'internal_links.json':    ['inbound-links.yml', {}, 5],
+}
+
+// 화면의 파일을 다시 받아 시각을 다시 계산합니다.
+//
+// 이것만으로 낡은 파일이 젊어지지는 않습니다 — 파일 내용이 그대로면 나이도
+// 그대로입니다. 낡은 파일을 실제로 갱신하려면 그 파일을 만드는 워크플로를
+// 돌려야 하고, 그건 각 항목의 ↻ 버튼이 합니다.
+async function freshnessRefresh() {
+  const btn = document.getElementById('freshness-refresh-btn')
+  if (btn) { btn.disabled = true; btn.textContent = '받는 중...' }
+  try {
+    await loadAll(true)
+    const stale = Object.keys(SOURCE_META).filter(n => DATA_STAMPS[n])
+      .map(n => freshness(n)).filter(f => f.cls === 'stale' || f.cls === 'late').length
+    showToast(stale
+      ? `데이터를 다시 받았습니다 — 아직 ${stale}개가 기대 주기를 넘겼습니다 (↻로 다시 수집하세요)`
+      : '데이터를 다시 받았습니다 — 전체 최신입니다', stale ? 'info' : 'success')
+  } catch (e) {
+    showToast('새로고침 실패: ' + e.message, 'error')
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '🔄 새로고침' }
+  }
+}
+
+// 그 파일을 만드는 워크플로를 돌립니다.
+function freshnessRecollect(name) {
+  const wf = FRESH_SOURCE_WF[name]
+  if (!wf) { showToast(`${name}을 만드는 워크플로를 모릅니다`, 'error'); return }
+  const [file, inputs, minutes] = wf
+  const label = (SOURCE_META[name] || [name])[0]
+  if (!confirm(`"${label}"을 다시 수집합니다.\n\n워크플로: ${file}\n약 ${minutes}분 소요되며, 끝나면 이 화면의 새로고침으로 확인할 수 있습니다.\n\n진행할까요?`)) return
+  wfDispatchGeneric(file, inputs, label + ' 재수집', minutes)
+}
+
 function renderFreshnessPanel() {
   const wrap = document.getElementById('freshness-grid')
   if (!wrap) return
@@ -2953,7 +3023,12 @@ function renderFreshnessPanel() {
         <div style="font-size:13px;font-weight:600;color:var(--text)">${r.label}</div>
         <div style="font-size:11px;color:var(--muted);font-family:ui-monospace,monospace">${r.name}</div>
       </div>
-      <span style="flex-shrink:0;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;background:${bg};color:${color};border:1px solid ${border}">${r.f.cls === 'stale' ? '⚠️ ' : (r.f.cls === 'off' ? '⏸ ' : '')}${r.f.text}</span>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <span style="padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;background:${bg};color:${color};border:1px solid ${border}">${r.f.cls === 'stale' ? '⚠️ ' : (r.f.cls === 'off' ? '⏸ ' : '')}${r.f.text}</span>
+        ${FRESH_SOURCE_WF[r.name] ? `<button onclick="freshnessRecollect('${r.name}')"
+          title="${esc(FRESH_SOURCE_WF[r.name][0])}를 실행해 이 파일을 다시 만듭니다"
+          style="padding:3px 7px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;cursor:pointer">↻</button>` : ''}
+      </div>
     </div>`
   }).join('')
 }

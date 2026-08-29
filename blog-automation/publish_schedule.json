@@ -1,0 +1,8 @@
+{
+  "_note": "블로그별 자동 발행 계획. 대시보드(발행 스케줄)나 이 파일을 직접 고쳐 조정합니다. 수동 발행(workflow_dispatch·manual-publish)에는 적용되지 않습니다.",
+  "blogs": {
+    "blog1": { "enabled": true, "postsPerDay": 1, "days": "daily" },
+    "blog2": { "enabled": true, "postsPerDay": 1, "days": "daily" },
+    "blog3": { "enabled": true, "postsPerDay": 1, "days": "daily" }
+  }
+}

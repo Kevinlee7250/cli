@@ -1,15 +1,16 @@
 name: 블로그 자동화 실행
 
 on:
-  # 매일 오전 7시 (KST) 1회 — 그날 당번 블로그 1개만 발행합니다.
+  # 매일 오전 7시 (KST) 1회. 어느 블로그가 몇 편 올릴지는
+  # blog-automation/publish_schedule.json이 정합니다 (대시보드에서 조정).
   #
-  # ⚠️ 발행량을 줄인 이유 (2026-08-18, INDEXING_DIAGNOSIS.md 참고)
-  #   이전: 하루 3회 × 3개 블로그 = 9건/일 → 52일간 478건
-  #   결과: 30일 검색 노출 3회, 색인 완료 0건
-  #   구글 스팸 정책의 "대규모 콘텐츠 남용" 패턴에 해당해 크롤 예산이
-  #   깎인 것으로 진단됐습니다. 색인률이 회복되기 전까지 되돌리지 마세요.
-  #
-  # 되돌리려면: cron 3줄 복원 + 아래 rotation 잡의 gate를 제거
+  # ⚠️ 발행량을 올릴 때 참고 (2026-08-18, INDEXING_DIAGNOSIS.md)
+  #   과거: 하루 3회 × 3개 블로그 = 9건/일 → 52일간 478건
+  #   결과: 30일 검색 노출 3회, 색인 완료 0건. 구글 스팸 정책의
+  #   "대규모 콘텐츠 남용" 패턴으로 진단돼 크롤 예산이 깎였습니다.
+  #   2026-08-29 기준 색인 상태도 20편 중 1편만 색인됨입니다.
+  #   편수를 늘리면 색인률을 함께 지켜보고, 나빠지면 되돌리세요 —
+  #   이제 워크플로를 고칠 필요 없이 설정값만 낮추면 됩니다.
   schedule:
     - cron: '0 22 * * *'   # 오전 7시 KST (UTC 22:00 전날)
 
@@ -97,31 +98,36 @@ concurrency:
 jobs:
 
   # ────────────────────────────────────────────────────────────
-  # Job 0: 당번 블로그 결정 (스케줄 실행 전용)
+  # Job 0: 오늘의 블로그별 발행 계획 (스케줄 실행 전용)
   # ────────────────────────────────────────────────────────────
-  # 하루에 블로그 1개만 발행하도록 요일 기준으로 돌아가며 당번을 정합니다.
-  # 연중일(day-of-year)을 3으로 나눈 나머지로 배정하므로 3일에 한 번씩
-  # 각 블로그 차례가 옵니다 → 블로그당 주 2~3건, 전체 1건/일.
+  # 예전에는 연중일 % 3으로 당번 하나만 골랐습니다(블로그당 3일에 1편).
+  # 이제 blog-automation/publish_schedule.json이 원본이고, 블로그마다
+  # 켜짐 여부·하루 편수·요일을 따로 정합니다. 대시보드도 같은 파일을
+  # 고치므로 발행량을 바꾸려고 워크플로를 손댈 일이 없습니다.
   #
   # 수동 실행(workflow_dispatch)에는 적용되지 않습니다 —
   # 필요할 때 blog_id를 지정해 언제든 발행할 수 있습니다.
   rotation:
     runs-on: ubuntu-latest
     outputs:
-      today: ${{ steps.pick.outputs.blog }}
+      blog1: ${{ steps.pick.outputs.blog1 }}
+      blog2: ${{ steps.pick.outputs.blog2 }}
+      blog3: ${{ steps.pick.outputs.blog3 }}
     steps:
-      - name: 오늘 당번 블로그 결정
+      - name: 코드 체크아웃
+        uses: actions/checkout@v5
+        with:
+          ref: latest
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: 오늘의 발행 계획 산출
         id: pick
-        run: |
-          DOY=$(date -u +%j)
-          IDX=$(( 10#$DOY % 3 ))
-          case "$IDX" in
-            0) BLOG=blog1 ;;
-            1) BLOG=blog2 ;;
-            *) BLOG=blog3 ;;
-          esac
-          echo "blog=$BLOG" >> "$GITHUB_OUTPUT"
-          echo "📅 연중 $DOY 일차 → 오늘 당번: $BLOG"
+        working-directory: blog-automation
+        run: python publish_schedule.py --github-output
 
   # ────────────────────────────────────────────────────────────
   # Job 1: blog1 게시
@@ -133,7 +139,7 @@ jobs:
     # 스케줄이면 당번일 때만, 수동이면 blog_id 미지정(전체 순차) 또는 blog1 지정 시
     if: >
       always() &&
-      ((github.event_name == 'schedule' && needs.rotation.outputs.today == 'blog1') ||
+      ((github.event_name == 'schedule' && needs.rotation.outputs.blog1 != '0') ||
        (github.event_name != 'schedule' &&
         (inputs.blog_id == '' || inputs.blog_id == 'blog1')))
 
@@ -183,7 +189,8 @@ jobs:
           SOCIAL_AUTO_PUBLISH="${{ secrets.SOCIAL_AUTO_PUBLISH }}"
           BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
           BLOG_NAME="${{ secrets.BLOG_NAME }}"
-          POSTS_PER_RUN="${{ inputs.posts_per_run || '1' }}"
+          # 스케줄은 발행 계획의 편수를, 수동 실행은 입력값을 씁니다
+          POSTS_PER_RUN="${{ github.event_name == 'schedule' && needs.rotation.outputs.blog1 || (inputs.posts_per_run || '1') }}"
           # 사람이 고른 글 구조 (auto면 키워드로 자동 판정 — 인자 생략)
           TYPE_ARG=""
           if [ -n "${{ inputs.article_type }}" ] && [ "${{ inputs.article_type }}" != "auto" ]; then
@@ -371,7 +378,7 @@ jobs:
     if: >
       always() &&
       (needs.publish-blog1.result == 'success' || needs.publish-blog1.result == 'skipped') &&
-      ((github.event_name == 'schedule' && needs.rotation.outputs.today == 'blog2') ||
+      ((github.event_name == 'schedule' && needs.rotation.outputs.blog2 != '0') ||
        (github.event_name != 'schedule' &&
         (inputs.blog_id == '' || inputs.blog_id == 'blog2')))
 
@@ -421,7 +428,8 @@ jobs:
           SOCIAL_AUTO_PUBLISH="${{ secrets.SOCIAL_AUTO_PUBLISH }}"
           BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
           BLOG_NAME="${{ secrets.BLOG_NAME }}"
-          POSTS_PER_RUN="${{ inputs.posts_per_run || '1' }}"
+          # 스케줄은 발행 계획의 편수를, 수동 실행은 입력값을 씁니다
+          POSTS_PER_RUN="${{ github.event_name == 'schedule' && needs.rotation.outputs.blog2 || (inputs.posts_per_run || '1') }}"
           # 사람이 고른 글 구조 (auto면 키워드로 자동 판정 — 인자 생략)
           TYPE_ARG=""
           if [ -n "${{ inputs.article_type }}" ] && [ "${{ inputs.article_type }}" != "auto" ]; then
@@ -602,7 +610,7 @@ jobs:
     if: >
       always() &&
       (needs.publish-blog2.result == 'success' || needs.publish-blog2.result == 'skipped') &&
-      ((github.event_name == 'schedule' && needs.rotation.outputs.today == 'blog3') ||
+      ((github.event_name == 'schedule' && needs.rotation.outputs.blog3 != '0') ||
        (github.event_name != 'schedule' &&
         (inputs.blog_id == '' || inputs.blog_id == 'blog3')))
 
@@ -652,7 +660,8 @@ jobs:
           SOCIAL_AUTO_PUBLISH="${{ secrets.SOCIAL_AUTO_PUBLISH }}"
           BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
           BLOG_NAME="${{ secrets.BLOG_NAME }}"
-          POSTS_PER_RUN="${{ inputs.posts_per_run || '1' }}"
+          # 스케줄은 발행 계획의 편수를, 수동 실행은 입력값을 씁니다
+          POSTS_PER_RUN="${{ github.event_name == 'schedule' && needs.rotation.outputs.blog3 || (inputs.posts_per_run || '1') }}"
           # 사람이 고른 글 구조 (auto면 키워드로 자동 판정 — 인자 생략)
           TYPE_ARG=""
           if [ -n "${{ inputs.article_type }}" ] && [ "${{ inputs.article_type }}" != "auto" ]; then

@@ -417,6 +417,25 @@ def _export_feature_flags(docs_dir: str) -> None:
         logger.debug(f"기능 스위치 내보내기 생략: {exc}")
 
 
+def _export_publish_schedule(docs_dir: str) -> None:
+    """블로그별 발행 계획을 대시보드로 내보냅니다.
+
+    publish_schedule.json도 blog-automation 아래라 Pages가 서빙하지 않습니다.
+    화면에서 현재 설정을 못 보면 "오늘 왜 blog2가 안 올라왔지"를 워크플로
+    로그부터 뒤져야 합니다.
+    """
+    try:
+        import publish_schedule
+        sched = publish_schedule.load_schedule()
+        write_data(os.path.join(docs_dir, "publish_schedule.json"), {
+            "blogs": {b: publish_schedule.entry_for(b, sched)
+                      for b in publish_schedule.BLOG_IDS},
+            "today": publish_schedule.plan_for_today(sched),
+        })
+    except Exception as exc:
+        logger.debug(f"발행 계획 내보내기 생략: {exc}")
+
+
 def _export_series(docs_dir: str) -> None:
     """시리즈 기획 데이터를 docs/data/series.json으로 내보냅니다."""
     series_src = os.path.join(os.path.dirname(__file__), "logs", "series.json")
@@ -676,6 +695,7 @@ def export_dashboard() -> None:
         write_data(os.path.join(DOCS_DATA_DIR, name), data)
 
     _export_feature_flags(DOCS_DATA_DIR)
+    _export_publish_schedule(DOCS_DATA_DIR)
     _export_series(DOCS_DATA_DIR)
     _export_social(DOCS_DATA_DIR)
     _export_gsc(DOCS_DATA_DIR)
@@ -739,6 +759,10 @@ def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> 
             "contentCategory": r.get("content_category", ""),
             "searchIntent": r.get("search_intent", ""),
             "status": "pending",
+            # 왜 보류됐는지 — 팩트체크 게이트(main.py)가 잡아 세운 글은 이유
+            # 없이 검토 목록에 섞이면 일반 검토 대기와 구분되지 않습니다.
+            "pendingReason": r.get("pending_reason", ""),
+            "factCheck": r.get("fact_check"),
             "blogId": cfg.get("id", r.get("blogId", "blog1")),
             "blogName": cfg.get("name", r.get("blogName", "")),
         })

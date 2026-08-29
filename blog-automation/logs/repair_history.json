@@ -1,5 +1,14 @@
 [
   {
+    "timestamp": "2026-08-29T03:51:49.247038",
+    "health_score": 100,
+    "issues_found": 0,
+    "issues": [],
+    "repairs_applied": 0,
+    "repairs": [],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-08-29T00:49:54.865408",
     "health_score": 100,
     "issues_found": 0,
@@ -1406,33 +1415,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-07-30T18:12:10.546168",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-07-29T18:03:15.168191",
-    "health_score": 93,
-    "issues_found": 1,
-    "issues": [
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 0,
-    "repairs": [
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-07-29T18:03:15.168109",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

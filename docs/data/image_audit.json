@@ -1,6 +1,6 @@
 {
-  "auditedAt": "2026-08-26T11:57:12.315297+00:00",
-  "applied": false,
+  "auditedAt": "2026-08-29T23:55:59.624633+00:00",
+  "applied": true,
   "aiJudged": false,
   "blogFilter": "",
   "blogsAudited": [
@@ -12,15 +12,310 @@
     "missing",
     "broken",
     "irrelevant",
-    "weak_alt",
-    "insufficient"
+    "weak_alt"
   ],
   "incompleteBlogs": [],
   "stoppedAtLimit": false,
-  "scanned": 440,
-  "withIssues": 0,
-  "targeted": 0,
-  "fixed": 0,
-  "issueCounts": {},
-  "posts": []
+  "scanned": 448,
+  "withIssues": 16,
+  "targeted": 11,
+  "fixed": 11,
+  "issueCounts": {
+    "insufficient": 8,
+    "broken": 11,
+    "weak_alt": 1
+  },
+  "posts": [
+    {
+      "title": "발리 겨울방학 가족여행 패키지 비교 후기, 이렇게 골랐습니다",
+      "url": "https://www.hoguwhat.com/2026/08/blog-post_28.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "중증외상센터 결말 총평, 갈린 반응 정리",
+      "url": "https://www.hoguwhat.com/2026/08/blog-post_667.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        },
+        {
+          "type": "broken",
+          "url": "https://kevinlee7250.github.io/cli/images/b64a69cba5fd3dc9.svg",
+          "detail": "HTTP 404"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "broken 교체 → generated_thumbnail"
+      ]
+    },
+    {
+      "title": "중증외상센터 첫인상, 후기 모아보니 달랐다",
+      "url": "https://www.hoguwhat.com/2026/08/blog-post_71.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        },
+        {
+          "type": "broken",
+          "url": "https://kevinlee7250.github.io/cli/images/3e7b29868dedee27.jpg",
+          "detail": "HTTP 404"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "broken 교체 → generated_thumbnail",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "중증외상센터 등장인물 분석 2편, 백강혁이 문제작인 이유",
+      "url": "https://www.hoguwhat.com/2026/08/2_0666087572.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "야구 직관 준비물 체크리스트 2026 세 번 가보고 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/2026_01044259084.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/54bf535441d6d91c.jpg",
+          "detail": "alt가 너무 짧음 (5자: \"야구 직관\")",
+          "alt": "야구 직관"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "alt 재작성 → \"야구 직관 준비물 체크리스트 2026 세 번 가보고 정리 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 2건"
+      ]
+    },
+    {
+      "title": "[2편] 야구장 좌석별 준비물 외야 내야 응원석 차이",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/2.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "KBO 야구장 직관 처음 준비물, 몰랐다가 3시간 고생한 이유",
+      "url": "https://hogugolfntraval.blogspot.com/2026/08/kbo-3.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "중개형 ISA 계좌 개설 방법과 혜택 비교 (2026년 기준)",
+      "url": "https://hoguasset.blogspot.com/2026/08/isa-2026_02093266470.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "KB Pay 신용관리 서비스 활용법 총정리, 자산관리 메뉴 사용법",
+      "url": "https://hoguasset.blogspot.com/2026/08/kb-pay.html",
+      "images": 2,
+      "needed": 2,
+      "issues": [
+        {
+          "type": "broken",
+          "url": "https://pixabay.com/get/gf3f3919a27f1f488119784fe054598ba9557245926c3baed853fb64d8f51ef6462439104430b5fc20b57ec8cbcf30f88_640.jpg",
+          "detail": "HTTP 400 (만료된 주소)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "broken 교체 → pixabay",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "추석 선물세트 저렴하게 구매하는 방법, 한우 할인까지 총정리",
+      "url": "https://hoguasset.blogspot.com/2026/08/blog-post_11.html",
+      "images": 3,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "broken",
+          "url": "https://pixabay.com/get/gb6c3505b5a86cffbb77ba6cda325272cf6665d178b09700998fa1ce5efb684ce2a26472b0cce1c25d5e4f236d6e4e6183b3c59afa3f7e7d876338c2b8e729fff_640.jpg",
+          "detail": "HTTP 400 (만료된 주소)"
+        },
+        {
+          "type": "broken",
+          "url": "https://pixabay.com/get/g28b2177d8f933ae646abaf7ae5db93773d2ef5b8ec0282d75d65ebf2eea6a4671ea4f531839511d700df4d6d8a34430da165fd2ef95c40de6538a13cdf43d623_640.jpg",
+          "detail": "HTTP 400 (만료된 주소)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "broken 교체 → pixabay",
+        "broken 교체 → pixabay"
+      ]
+    },
+    {
+      "title": "미국 주식 투자 시작하는 방법 2026, 서학개미 되기 전 체크리스트",
+      "url": "https://hoguasset.blogspot.com/2026/08/2026_01325784700.html",
+      "images": 3,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "broken",
+          "url": "https://pixabay.com/get/g94f54a871be2253d03c353fda1a8dc910fd82a64823eb89ad9656f48c58076a33ca581e510eba1038e42cbc66ad427f92fb9698fc6fcb81ede7812144f25c643_640.jpg",
+          "detail": "HTTP 400 (만료된 주소)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "broken 교체 → pixabay",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "퇴직연금 로보어드바이저 수익률 비교, 가입 전 확인할 점",
+      "url": "https://hoguasset.blogspot.com/2026/08/blog-post_06.html",
+      "images": 3,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "broken",
+          "url": "https://pixabay.com/get/g3a56be2b6a9af0c4d582082aca46752f32a4b963091b4e94f30204779ff847fe861299cd835dc0746fa4674f9ac486b6abdb0a77052da20a0c8783548d105a8e_640.jpg",
+          "detail": "HTTP 400 (만료된 주소)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "broken 교체 → pixabay"
+      ]
+    },
+    {
+      "title": "2026년 다주택자 양도세 중과 유예 종료, 절세 전략 비교",
+      "url": "https://hoguasset.blogspot.com/2026/08/2026_02124758306.html",
+      "images": 3,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "broken",
+          "url": "https://pixabay.com/get/g925f7e73654ab66df4d7e7e897d9a7f77d510e47b605786f80052394828277a0b423707828fd3939a35c6abeb9917cd0_640.jpg",
+          "detail": "HTTP 400 (만료된 주소)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "broken 교체 → pixabay"
+      ]
+    },
+    {
+      "title": "삼성전자 배당금 지급일 2026 확인법",
+      "url": "https://hoguasset.blogspot.com/2026/08/2026.html",
+      "images": 3,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "broken",
+          "url": "https://pixabay.com/get/g812b9db9c8390e067c53a557246d3f628d0cd028861e86f57ce6f7af624fc9b5ac4723fba3303175046f06b47ad26cfb597f7b4df79fbf038a8fdd3c9db8ee7f_640.png",
+          "detail": "HTTP 400 (만료된 주소)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "broken 교체 → pixabay",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "1인가구 예적금 대신 주식·ETF 갈아타기 방법 총정리",
+      "url": "https://hoguasset.blogspot.com/2026/07/1-etf.html",
+      "images": 3,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "broken",
+          "url": "https://pixabay.com/get/g03a11d8cb12d306e1cab0de1414278bf6cc58f2d1e357d7f954d729aa86dd0b09b9394fcda15c7b7b6f188958f756ddc0de7c3e66be3309938a34c7b8cf686ae_640.jpg",
+          "detail": "HTTP 400 (만료된 주소)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "broken 교체 → pixabay"
+      ]
+    },
+    {
+      "title": "소액 재테크 펀드 시작하는 방법 2026, 월 10만원 후기",
+      "url": "https://hoguasset.blogspot.com/2026/07/2026-10.html",
+      "images": 3,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "broken",
+          "url": "https://pixabay.com/get/ge881406fa8b75f71bd1e1a0692d58510b167ca47fd7a91201cbdecb79945ea4b67e261e67d28422335f4bc3681cd78771656714ccc6d97f4e8cedb116ce8aeb1_640.jpg",
+          "detail": "HTTP 400 (만료된 주소)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "broken 교체 → pixabay"
+      ]
+    }
+  ]
 }

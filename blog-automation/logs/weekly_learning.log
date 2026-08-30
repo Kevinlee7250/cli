@@ -1,0 +1,13 @@
+2026-08-30 17:50:04,529 [INFO] weekly_learning — ============================================================
+2026-08-30 17:50:04,529 [INFO] weekly_learning — 주간 시스템 점검 시작
+2026-08-30 17:50:04,529 [INFO] weekly_learning — ============================================================
+2026-08-30 17:50:04,542 [INFO] weekly_learning — 분석 대상: 지난 7일 12회 실행
+2026-08-30 17:50:04,542 [INFO] weekly_learning — 집계: 포스트 14개 생성 / 12개 게시 / 오류율 7.1% / 검토대기율 14.3%
+2026-08-30 17:50:04,542 [INFO] weekly_learning — Claude AI 분석 중…
+2026-08-30 17:50:23,254 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 17:50:23,279 [ERROR] weekly_learning — AI 분석 실패: Unterminated string starting at: line 31 column 5 (char 2058)
+2026-08-30 17:50:23,280 [INFO] weekly_learning — 학습 이력 저장 완료 (총 1주)
+2026-08-30 17:50:23,280 [INFO] weekly_learning — 대시보드 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data/learning.json
+2026-08-30 17:50:23,280 [INFO] weekly_learning — ============================================================
+2026-08-30 17:50:23,281 [INFO] weekly_learning — 주간 점검 완료 | 건강점수: N/A | 이슈: 0건 | 자동적용: 0건
+2026-08-30 17:50:23,281 [INFO] weekly_learning — ============================================================

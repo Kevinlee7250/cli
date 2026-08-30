@@ -1227,10 +1227,45 @@ def inject_images_into_content(content: str, images: list[dict], keyword: str) -
     mark_images_used([img.get("url", "") for img in images],
                      [img.get("title", "") for img in images])
 
-    img_iter = iter(enumerate(images))
-
     def _alt(img: dict, fallback: str) -> str:
-        return img.get("alt_text") or img.get("search_query", fallback)
+        # 글이 정해 준 alt가 가장 정확합니다. 그 다음이 소스가 준 alt이고,
+        # 검색어는 마지막입니다 — 검색어는 3단어로 줄인 결과라 '발리 겨울방학'
+        # 처럼 잘린 문구가 그대로 alt로 나갔습니다.
+        return img.get("plan_alt") or img.get("alt_text") or img.get("search_query", fallback)
+
+    # ⓪ 글이 배치를 지정한 이미지는 그 H2 바로 앞에 넣습니다.
+    #
+    # 예전에는 위치가 순서로만 정해졌습니다(첫 <p> 뒤, 2·4번째 H2 앞). 그런데
+    # 이미지는 섹션별 검색어로 따로 찾았고, 관련성 필터·중복 제거로 목록이
+    # 줄면 순서가 밀려 엉뚱한 섹션에 붙었습니다.
+    planned, unplaced = [], []
+    for idx, img in enumerate(images):
+        (planned if (img.get("plan_heading") or "").strip() else unplaced).append((idx, img))
+
+    used_positions: list[int] = []
+    for idx, img in list(planned):
+        heading = img["plan_heading"].strip()
+        # 제목이 본문과 정확히 같지 않을 수 있어(모델이 살짝 다듬는 경우)
+        # 태그를 벗긴 텍스트로 비교합니다.
+        hit = None
+        for m in re.finditer(r'<h2[^>]*>(.*?)</h2>', content, re.IGNORECASE | re.DOTALL):
+            text = re.sub(r'<[^>]+>', '', m.group(1)).strip()
+            if text == heading or (len(heading) >= 6 and heading in text):
+                hit = m.start()
+                break
+        if hit is None:
+            logger.debug(f"이미지 배치 대상 H2를 찾지 못함 — 기본 위치로: {heading[:30]!r}")
+            planned.remove((idx, img))
+            unplaced.append((idx, img))
+            continue
+        used_positions.append(hit)
+
+    # 뒤에서부터 넣어야 앞 위치의 인덱스가 밀리지 않습니다
+    for (idx, img), pos in sorted(zip(planned, used_positions), key=lambda x: -x[1]):
+        alt = _alt(img, keyword)
+        content = content[:pos] + _make_img_html(img, alt, _safe_caption(img, alt)) + content[pos:]
+
+    img_iter = iter(unplaced)
 
     # ① 첫 번째 이미지: 첫 <p>...</p> 바로 다음
     first_p = re.search(r'(</p>)', content, re.IGNORECASE)
@@ -1243,7 +1278,7 @@ def inject_images_into_content(content: str, images: list[dict], keyword: str) -
         except StopIteration:
             return content
 
-    # ② 나머지 이미지: <h2> 태그 직전에 삽입 (섹션 사이 배치)
+    # ② 배치 지정이 없는 나머지: <h2> 태그 직전에 삽입 (섹션 사이 배치)
     h2_positions = [m.start() for m in re.finditer(r'<h2', content, re.IGNORECASE)]
     insert_positions = h2_positions[1::2]  # 2번째, 4번째, 6번째 H2 앞
 

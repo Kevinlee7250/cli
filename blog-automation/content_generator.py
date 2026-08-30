@@ -812,6 +812,13 @@ JSON만 응답 (마크다운 없이):
   "content": "<완전한 HTML>",
   "labels": ["태그1","태그2","태그3","태그4","태그5","태그6","태그7","태그8","태그9","태그10"],
   "meta_description": "...",
+  "image_plan": [
+    {{"heading": "이 이미지를 넣을 H2 제목 (본문에 쓴 것과 글자 그대로 같아야 함)",
+      "subject": "그 섹션에서 실제로 설명하는 장면·사물 (예: 공항 셀프체크인 기계 앞에 선 가족)",
+      "search_en": "english search phrase, 2-4 words",
+      "alt": "이미지 alt 텍스트 (한국어, 무엇이 보이는지 구체적으로)"}}
+    // 1~3개. 도입부용은 heading을 "" 로 둡니다
+  ],
   "faq": [
     {{"q": "질문1", "a": "답변1"}},
     {{"q": "질문2", "a": "답변2"}},
@@ -959,6 +966,13 @@ JSON만 응답 (마크다운 없이):
   "content": "<완전한 HTML>",
   "labels": ["태그1","태그2","태그3","태그4","태그5","태그6","태그7","태그8","태그9","태그10"],
   "meta_description": "...",
+  "image_plan": [
+    {{"heading": "이 이미지를 넣을 H2 제목 (본문에 쓴 것과 글자 그대로 같아야 함)",
+      "subject": "그 섹션에서 실제로 설명하는 장면·사물 (예: 공항 셀프체크인 기계 앞에 선 가족)",
+      "search_en": "english search phrase, 2-4 words",
+      "alt": "이미지 alt 텍스트 (한국어, 무엇이 보이는지 구체적으로)"}}
+    // 1~3개. 도입부용은 heading을 "" 로 둡니다
+  ],
   "faq": [
     {{"q": "질문1", "a": "답변1"}},
     {{"q": "질문2", "a": "답변2"}}
@@ -1093,6 +1107,13 @@ JSON만 응답 (마크다운 없이):
   "content": "<완전한 HTML>",
   "labels": ["태그1","태그2","태그3","태그4","태그5","태그6","태그7","태그8","태그9","태그10"],
   "meta_description": "...",
+  "image_plan": [
+    {{"heading": "이 이미지를 넣을 H2 제목 (본문에 쓴 것과 글자 그대로 같아야 함)",
+      "subject": "그 섹션에서 실제로 설명하는 장면·사물 (예: 공항 셀프체크인 기계 앞에 선 가족)",
+      "search_en": "english search phrase, 2-4 words",
+      "alt": "이미지 alt 텍스트 (한국어, 무엇이 보이는지 구체적으로)"}}
+    // 1~3개. 도입부용은 heading을 "" 로 둡니다
+  ],
   "faq": [
     {{"q": "질문1", "a": "답변1"}},
     {{"q": "질문2", "a": "답변2"}}
@@ -1277,6 +1298,13 @@ JSON만 응답 (마크다운 없이):
   "content": "<완전한 HTML>",
   "labels": ["태그1","태그2","태그3","태그4","태그5","태그6","태그7","태그8","태그9","태그10"],
   "meta_description": "...",
+  "image_plan": [
+    {{"heading": "이 이미지를 넣을 H2 제목 (본문에 쓴 것과 글자 그대로 같아야 함)",
+      "subject": "그 섹션에서 실제로 설명하는 장면·사물 (예: 공항 셀프체크인 기계 앞에 선 가족)",
+      "search_en": "english search phrase, 2-4 words",
+      "alt": "이미지 alt 텍스트 (한국어, 무엇이 보이는지 구체적으로)"}}
+    // 1~3개. 도입부용은 heading을 "" 로 둡니다
+  ],
   "faq": [
     {{"q": "질문1", "a": "답변1"}},
     {{"q": "질문2", "a": "답변2"}}
@@ -1385,6 +1413,13 @@ JSON only (no markdown):
   "content": "<complete HTML>",
   "labels": ["t1","t2","t3","t4","t5","t6","t7","t8","t9","t10"],
   "meta_description": "...",
+  "image_plan": [
+    {{"heading": "exact H2 heading this image belongs under (verbatim from your HTML)",
+      "subject": "the concrete scene or object that section actually describes",
+      "search_en": "english search phrase, 2-4 words",
+      "alt": "alt text describing what is visible"}}
+    // 1-3 items. Use "" as heading for the intro image
+  ],
   "faq": [
     {{"q": "Q1", "a": "A1"}},
     {{"q": "Q2", "a": "A2"}}
@@ -2156,6 +2191,13 @@ JSON만 응답 (마크다운 없이):
   "content": "<완전한 HTML>",
   "labels": ["{series_label}","태그2","태그3","태그4","태그5","태그6","태그7","태그8","태그9","태그10"],
   "meta_description": "...",
+  "image_plan": [
+    {{"heading": "이 이미지를 넣을 H2 제목 (본문에 쓴 것과 글자 그대로 같아야 함)",
+      "subject": "그 섹션에서 실제로 설명하는 장면·사물 (예: 공항 셀프체크인 기계 앞에 선 가족)",
+      "search_en": "english search phrase, 2-4 words",
+      "alt": "이미지 alt 텍스트 (한국어, 무엇이 보이는지 구체적으로)"}}
+    // 1~3개. 도입부용은 heading을 "" 로 둡니다
+  ],
   "faq": [{{"q":"...","a":"..."}},...],
   "sources": [{{"title":"...","url":"..."}}]
 }}"""
@@ -2214,6 +2256,13 @@ JSON only:
   "content": "<complete HTML>",
   "labels": ["{series_label}","tag2","tag3","tag4","tag5","tag6","tag7","tag8","tag9","tag10"],
   "meta_description": "...",
+  "image_plan": [
+    {{"heading": "exact H2 heading this image belongs under (verbatim from your HTML)",
+      "subject": "the concrete scene or object that section actually describes",
+      "search_en": "english search phrase, 2-4 words",
+      "alt": "alt text describing what is visible"}}
+    // 1-3 items. Use "" as heading for the intro image
+  ],
   "faq": [{{"q":"...","a":"..."}},...],
   "sources": [{{"title":"...","url":"..."}}]
 }}"""
@@ -2287,6 +2336,13 @@ def _build_series_prompt_finance(keyword: str, traffic: str, series_context: dic
   "content": "<완성된 HTML 본문 + 면책 문구 포함>",
   "labels": ["{series_label}","금융","경제","정부지원","세금","절세","재테크","복지","시책","정책"],
   "meta_description": "검색 결과 요약 (155자 이내, 실용 정보 강조, 투자 조언 아님 명시)",
+  "image_plan": [
+    {{"heading": "이 이미지를 넣을 H2 제목 (본문에 쓴 것과 글자 그대로 같아야 함)",
+      "subject": "그 섹션에서 실제로 설명하는 장면·사물 (예: 공항 셀프체크인 기계 앞에 선 가족)",
+      "search_en": "english search phrase, 2-4 words",
+      "alt": "이미지 alt 텍스트 (한국어, 무엇이 보이는지 구체적으로)"}}
+    // 1~3개. 도입부용은 heading을 "" 로 둡니다
+  ],
   "faq": [{{"q":"독자 금융 질문","a":"공신력 있는 정보 기반 답변"}}],
   "sources": [{{"title":"기획재정부·금융위 등 공식 출처명","url":"https://..."}}]
 }}"""
@@ -2295,6 +2351,40 @@ def _build_series_prompt_finance(keyword: str, traffic: str, series_context: dic
 # 글당 이미지 정책: 최소 1장 (폴백 SVG 썸네일로 보장) / 최대 3장
 _MIN_IMAGES_PER_POST = 1
 _MAX_IMAGES_PER_POST = 3
+
+
+#: 글이 스스로 밝힌 이미지 계획을 검색 쿼리로 바꿉니다.
+#:
+#: 왜: 지금까지 검색어는 H2 제목과 본문 명사를 기계적으로 조합해 만들었습니다
+#: (_extract_section_queries). 그래서 "겨울방학 발리 가족여행, 패키지 선택이
+#: 유독 어려운 이유" 같은 섹션에 붙는 검색어가 '발리 겨울방학'이 되고, 그
+#: 문자열이 그대로 alt로도 새어 나갔습니다. 글은 그 섹션에서 무엇을 보여
+#: 줘야 하는지 알고 있는데, 그 정보를 쓰지 않았습니다.
+def _plan_queries(post_data: dict) -> list[tuple[str, str, str]]:
+    """image_plan에서 (검색어, 배치할 H2 제목, alt)를 뽑습니다.
+
+    형식이 어긋난 항목은 조용히 건너뜁니다 — 계획이 없거나 깨졌다고 이미지가
+    아예 안 붙으면 안 되고, 그 경우 기존 섹션 쿼리 방식으로 돌아갑니다.
+    """
+    plan = post_data.get("image_plan")
+    if not isinstance(plan, list):
+        return []
+    out: list[tuple[str, str, str]] = []
+    for item in plan:
+        if not isinstance(item, dict):
+            continue
+        # 영어 검색어를 우선합니다 — 무료 이미지 소스(Pixabay·Wikimedia·
+        # Unsplash)의 제목이 대부분 영어라, 한국어로 찾으면 번역 추정을 거쳐
+        # 정확도가 떨어집니다.
+        query = (item.get("search_en") or item.get("subject") or "").strip()
+        if not query:
+            continue
+        out.append((query[:60],
+                    (item.get("heading") or "").strip(),
+                    (item.get("alt") or "").strip()))
+        if len(out) >= _MAX_IMAGES_PER_POST:
+            break
+    return out
 
 
 def _collect_post_images(post_data: dict, keyword: str) -> list[dict]:
@@ -2306,16 +2396,24 @@ def _collect_post_images(post_data: dict, keyword: str) -> list[dict]:
     """
     final_title = (post_data.get("title") or "").strip() or keyword
 
-    # 검색 쿼리 구성: 제목 1개 + 섹션 쿼리 최대 2개 (중복 각도 제거)
-    queries = [final_title]
-    try:
-        for q in _extract_section_queries(post_data.get("content", ""), keyword):
-            if len(queries) >= _MAX_IMAGES_PER_POST:
-                break
-            if q and q not in queries:
-                queries.append(q)
-    except Exception as e:
-        logger.debug(f"섹션 쿼리 추출 실패 (제목 쿼리만 사용): {e}")
+    # 검색 쿼리 구성 — 글이 밝힌 계획이 있으면 그것을 씁니다.
+    plan = _plan_queries(post_data)
+    placements: list[tuple[str, str]] = []   # (배치할 H2 제목, alt)
+    if plan:
+        queries = [q for q, _h, _a in plan]
+        placements = [(h, a) for _q, h, a in plan]
+        logger.info(f"이미지 계획 {len(plan)}건 사용: {queries}")
+    else:
+        # 계획이 없는 글(옛 글 재생성·모델이 필드를 뺀 경우)은 기존 방식
+        queries = [final_title]
+        try:
+            for q in _extract_section_queries(post_data.get("content", ""), keyword):
+                if len(queries) >= _MAX_IMAGES_PER_POST:
+                    break
+                if q and q not in queries:
+                    queries.append(q)
+        except Exception as e:
+            logger.debug(f"섹션 쿼리 추출 실패 (제목 쿼리만 사용): {e}")
 
     plain_text = _content_preview(post_data.get("content", ""), chars=600)
     images = fetch_images_for_queries(
@@ -2328,6 +2426,17 @@ def _collect_post_images(post_data: dict, keyword: str) -> list[dict]:
         title=post_data.get("title", ""),
     )
     images = images[:_MAX_IMAGES_PER_POST]
+
+    # 계획한 배치·alt를 이미지에 붙입니다. 검색·중복 제거를 거치며 목록이
+    # 줄어들 수 있으므로, 자리를 순서로 짐작하지 않고 검색어로 되짚습니다 —
+    # 예전에는 A섹션용으로 찾은 그림이 B섹션 앞에 놓이곤 했습니다.
+    if placements:
+        by_query = {q: (h, a) for (q, _h, _a), (h, a) in zip(plan, placements)}
+        for img in images:
+            hit = by_query.get(img.get("search_query", ""))
+            if hit:
+                img["plan_heading"], img["plan_alt"] = hit
+
     if len(images) < _MIN_IMAGES_PER_POST:
         logger.warning(f"이미지 최소 개수({_MIN_IMAGES_PER_POST}장) 미달: {len(images)}장 — 텍스트만으로 진행")
     else:

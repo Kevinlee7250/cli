@@ -1,192 +1,3 @@
-2026-08-24 22:43:02,739 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-08-24 22:43:02,739 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-24 22:43:02,739 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-08-24 22:43:03,800 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-24 22:44:03,964 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-24 22:44:03,964 [WARNING] content_generator — 컨텐츠 너무 짧음(2388자, 최소 2500자) — 재시도 1/3
-2026-08-24 22:44:06,965 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-08-24 22:44:06,965 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-08-24 22:44:07,664 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-24 22:45:09,596 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-24 22:45:09,597 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(스프레드)가 쉬운 설명 없이 사용됨']) — 재작성 요청 2/3
-2026-08-24 22:45:11,598 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-08-24 22:45:11,598 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-08-24 22:45:12,725 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-24 22:46:17,973 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-24 22:46:18,981 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-24 22:46:40,231 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-08-24 22:46:40,782 [INFO] image_fetcher — 이미지 수집 성공: '채권 포트폴리오 구성 후기와 주의사항 총정리' → 제목='mockup / the sheet bond / the model of t' (관련성=0.11)
-2026-08-24 22:46:41,301 [INFO] image_fetcher — 이미지 수집 성공: '채권 포트폴리오 구성' → 제목='couple / hands / wedding / ring / love /' (관련성=0.00)
-2026-08-24 22:46:41,925 [INFO] image_fetcher — 이미지 수집 성공: '채권 포트폴리오 편입 종합하면 금융 커뮤니티' → 제목='sky / building / stratocumulus / cloud /' (관련성=0.12)
-2026-08-24 22:46:43,503 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-24 22:46:43,504 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
-2026-08-24 22:46:43,504 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-08-24 22:46:43,508 [INFO] content_generator — 시리즈 포스트 생성 완료: '채권 포트폴리오 구성 후기와 주의사항 총정리' (2796자, 이미지 1개)
-2026-08-24 22:46:44,639 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-24 22:47:03,806 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '채권 포트폴리오 구성 후기와 주의사항 총정리'
-2026-08-24 22:47:03,806 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락(후기 종합, 세금 계산법 부분)이 500자 이상으로 길게 이어짐
-2026-08-24 22:47:03,806 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개 존재하나 alt 텍스트 명시 여부 불명, 이미지 수가 매우 적음
-2026-08-24 22:47:03,806 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~후기가 있었습니다', '쉽게 말하면' 등 유사 문장 패턴이 반복되어 다소 정형화된 문체가 나타남
-2026-08-24 22:47:04,815 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-24 22:48:19,384 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-08-24 22:48:20,553 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-24 22:49:04,228 [INFO] final_editor —   ✏️ 제목 최종 교정: '채권 포트폴리오 구성 후기와 주의사항 총정리' → '채권 포트폴리오 구성 후기와 주의사항 총정리 완벽 가이드'
-2026-08-24 22:49:04,228 [INFO] final_editor —   ✏️ 메타 설명 교정 (124자)
-2026-08-24 22:49:04,228 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 발행 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분리했으며 요약 박스·비중 비교표·개인 경험 메모·주의사항·FAQ 6개·작성자 메모·내부 링크 언급을 모두 추가해 발행 형태로 완성했습니다.
-2026-08-24 22:49:04,334 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-24 22:49:04,334 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '채권 포트폴리오 구성 후기 주의사항' — 면책·팩트체크 확인 권장
-2026-08-24 22:49:04,334 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-08-24 22:49:05,321 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/blog-post_25.html
-2026-08-24 22:49:05,322 [INFO] main —   ✅ 편 3 업로드 완료: https://hoguasset.blogspot.com/2026/08/blog-post_25.html
-2026-08-24 22:49:05,335 [INFO] dashboard_exporter —   검토 대기 저장: [1편] 증시 조정기 채권 자산배분, 계좌 손실 보고 알아본 이유 (8857자 HTML)
-2026-08-24 22:49:05,359 [INFO] pending_store — 검토 대기 저장: 목록 48건 / 보관 114건 / 본문 59건
-2026-08-24 22:49:05,359 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 162개)
-2026-08-24 22:49:05,401 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 103개)
-2026-08-24 22:49:05,427 [INFO] dashboard_exporter —   시리즈: 22개 내보내기 완료
-2026-08-24 22:49:05,446 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-24 22:49:05,739 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-08-24 22:49:06,148 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
-2026-08-24 22:49:06,561 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-24 22:49:06,563 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-24 22:49:06,565 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-24 22:49:06,580 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 261 / 실패 0 / 대기 23)
-2026-08-24 22:49:06,581 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-24 22:49:06,581 [INFO] dashboard_exporter —   포스트: 102개 / 실행 이력: 103개 / 블로그: 3개
-2026-08-24 22:49:06,582 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-24 22:49:06,582 [INFO] main — 
-============================================================
-2026-08-24 22:49:06,582 [INFO] main — [금융NEWS] 시리즈 완료: 1/3편 성공
-2026-08-24 22:49:06,582 [INFO] main — ============================================================
-2026-08-24 22:49:06,582 [INFO] main — 단독 포스트 대상 키워드 0개: []
-2026-08-24 22:49:06,626 [INFO] post_manager — run_history 마이그레이션: 2개 포스트 추가
-2026-08-24 22:49:06,626 [INFO] main — 
-============================================================
-2026-08-24 22:49:06,626 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 0개
-2026-08-24 22:49:06,627 [INFO] main — ============================================================
-2026-08-24 22:49:06,663 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 104개)
-2026-08-24 22:49:06,686 [INFO] dashboard_exporter —   시리즈: 22개 내보내기 완료
-2026-08-24 22:49:06,705 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-24 22:49:06,706 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-24 22:49:06,708 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-24 22:49:06,722 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 262 / 실패 1 / 대기 21)
-2026-08-24 22:49:06,723 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-24 22:49:06,723 [INFO] dashboard_exporter —   포스트: 102개 / 실행 이력: 104개 / 블로그: 3개
-2026-08-24 22:49:06,724 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-24 22:49:06,725 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다
-2026-08-24 23:21:35,736 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-08-24 23:21:35,736 [INFO] main —   - [blog1] HOGU What?
-2026-08-24 23:21:35,736 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-08-24 23:21:35,736 [INFO] main —   - [blog3] 금융NEWS
-2026-08-24 23:21:35,741 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
-2026-08-25 22:34:55,276 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 33
-2026-08-25 22:34:56,384 [INFO] main — ============================================================
-2026-08-25 22:34:56,384 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-25 22:34:56
-2026-08-25 22:34:56,384 [INFO] main — ============================================================
-2026-08-25 22:34:56,407 [INFO] keyword_collector — 포스팅 이력 코퍼스: 180개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-08-25 22:34:56,407 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
-2026-08-25 22:34:59,555 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-25 22:35:05,480 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:35:05,497 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-25 22:35:05,497 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-25 22:35:05,799 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-25 22:35:06,028 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-08-25 22:35:06,190 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
-2026-08-25 22:35:06,191 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-25 22:35:06,192 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-08-25 22:35:06,203 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-25 22:35:06,203 [INFO] keyword_collector — 유사 주제 제외 7개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-25 22:35:06,204 [INFO] keyword_collector —   [naver_realtime] 2개: ['추석 연휴 해외여행 몰디브 하와이 발리 항공권 숙소 비교', '카카오톡 PC 버전 챗GPT 사용법 총정리']
-2026-08-25 22:35:06,204 [INFO] keyword_collector — 최종 선정 키워드 2개: ['추석 연휴 해외여행 몰디브 하와이 발리 항공권 숙소 비교', '카카오톡 PC 버전 챗GPT 사용법 총정리']
-2026-08-25 22:35:06,204 [INFO] main — 수집된 키워드 2개: ['추석 연휴 해외여행 몰디브 하와이 발리 항공권 숙소 비교', '카카오톡 PC 버전 챗GPT 사용법 총정리']
-2026-08-25 22:35:06,209 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 8일 전)
-2026-08-25 22:35:08,774 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 40개
-2026-08-25 22:35:14,480 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:35:14,482 [INFO] keyword_collector — 화제 드라마 감지: ['김부장', '유부녀 킬러', '이상한 변호사 우영우']
-2026-08-25 22:35:14,482 [INFO] main — [자동 드라마 시리즈] '김부장' 감지 — 리뷰 시리즈 기획 시작
-2026-08-25 22:35:18,775 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:35:18,776 [INFO] series_planner — 드라마 시리즈 기획 완료: '김부장 드라마 리뷰 시리즈' 3편
-2026-08-25 22:35:18,776 [INFO] main — [자동 시리즈] '김부장' 3편 기획 시작 (이후 단독 포스트 0개)
-2026-08-25 22:35:18,776 [INFO] main — ============================================================
-2026-08-25 22:35:18,776 [INFO] main — [HOGU What?] 시리즈 모드 시작: '김부장' 3편
-2026-08-25 22:35:18,776 [INFO] main — ============================================================
-2026-08-25 22:35:18,777 [INFO] main — 시리즈 기획 완료: '김부장 드라마 리뷰 시리즈'
-2026-08-25 22:35:18,778 [INFO] main —   편 1: 김부장 첫인상 솔직 리뷰
-2026-08-25 22:35:18,778 [INFO] main —   편 2: 김부장 등장인물 분석과 연기력
-2026-08-25 22:35:18,778 [INFO] main —   편 3: 김부장 결말 총평 및 별점
-2026-08-25 22:35:18,778 [INFO] main — 
---- [1/3편] '김부장 첫인상 리뷰' 생성 중 ---
-2026-08-25 22:35:18,778 [INFO] content_generator — 시리즈 포스트 생성: '김부장 첫인상 리뷰' (1/3편)
-2026-08-25 22:35:26,733 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:35:26,734 [INFO] research_collector — 검색 의도: '김부장'이라는 제품/브랜드/장소에 대한 실제 사용자의 첫인상과 초기 경험을 알고 싶어하는 검색 의도
-2026-08-25 22:35:34,303 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '김부장 첫인상 리뷰'
-2026-08-25 22:35:55,707 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:35:55,708 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '김부장 첫인상 리뷰'
-2026-08-25 22:36:21,350 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:36:21,351 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'D': 3, 'B': 1, 'X': 3}
-2026-08-25 22:36:21,352 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
-2026-08-25 22:36:21,353 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-25 22:36:21,354 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-08-25 22:36:22,720 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:37:43,484 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-25 22:37:43,486 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(카타르시스)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
-2026-08-25 22:37:45,486 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-08-25 22:37:45,486 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-08-25 22:37:46,877 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:39:03,526 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-25 22:39:05,320 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:39:16,412 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '한경 기사를 보면'
-2026-08-25 22:39:16,412 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: ''김부장리뷰, 처음 봤다면 놓치기 쉬운 포인트'라는 글이'
-2026-08-25 22:39:16,413 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 3건 자동 수정 적용
-2026-08-25 22:39:23,094 [INFO] image_fetcher — 이미지 수집 성공: '[1편] 김부장 첫인상, 장르부터 헷갈린 이유' → 제목='Environmental disaster in Levikha Villag' (관련성=0.00)
-2026-08-25 22:39:23,711 [INFO] image_fetcher — 이미지 수집 성공: '김부장 첫인상 리뷰' → 제목='office / desk / document review / editin' (관련성=0.20)
-2026-08-25 22:39:24,447 [INFO] image_fetcher — 이미지 수집 성공: '김부장 첫인상 화만 봐도 드라마를 저는' → 제목='actor / bangkok / asia / arts / ancient ' (관련성=0.14)
-2026-08-25 22:39:27,634 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:39:27,635 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
-2026-08-25 22:39:27,635 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-08-25 22:39:27,635 [INFO] image_fetcher — 제목 썸네일 생성: '[1편] 김부장 첫인상, 장르부터 헷갈린 이유' (data URI, 984B)
-2026-08-25 22:39:27,755 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-08-25 22:39:27,755 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-08-25 22:39:27,760 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] 김부장 첫인상, 장르부터 헷갈린 이유' (3064자, 이미지 1개)
-2026-08-25 22:39:29,061 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:39:48,454 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '[1편] 김부장 첫인상, 장르부터 헷갈린 이유'
-2026-08-25 22:39:48,454 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 우수하나 일부 단락(액션 장면, 첫인상 부분)이 500자 이상으로 길게 이어짐
-2026-08-25 22:39:48,454 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개만 존재하며 '직접 제작'으로 저작권 문제는 없으나 시각자료가 부족함
-2026-08-25 22:39:49,660 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:40:18,721 [INFO] final_editor —   ✏️ 제목 최종 교정: '[1편] 김부장 첫인상, 장르부터 헷갈린 이유' → '[1편] 김부장 첫인상 리뷰 - 장르부터 헷갈렸던 이유'
-2026-08-25 22:40:18,721 [INFO] final_editor —   ✏️ 메타 설명 교정 (86자)
-2026-08-25 22:40:18,721 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 재정리하고, 긴 문단을 2~4문장 단위로 분할했습니다. 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 추가하고 이미지 3곳의 위치와 구체적인 alt 텍스트를 제안했습니다.
-2026-08-25 22:40:18,850 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-25 22:40:18,851 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-08-25 22:40:19,886 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/1.html
-2026-08-25 22:40:19,887 [INFO] main —   ✅ 편 1 업로드 완료: https://www.hoguwhat.com/2026/08/1.html
-2026-08-25 22:40:22,889 [INFO] main — 
---- [2/3편] '김부장 등장인물 분석' 생성 중 ---
-2026-08-25 22:40:22,889 [INFO] content_generator — 시리즈 포스트 생성: '김부장 등장인물 분석' (2/3편)
-2026-08-25 22:40:30,301 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:40:30,302 [INFO] research_collector — 검색 의도: 특정 작품(드라마/웹툰/영화 등)에 등장하는 '김부장' 캐릭터의 성격, 서사적 역할, 상징성을 분석한 정보를
-2026-08-25 22:40:38,775 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '김부장 등장인물 분석'
-2026-08-25 22:41:03,233 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:41:03,234 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '김부장 등장인물 분석'
-2026-08-25 22:41:33,818 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:41:33,819 [INFO] source_validator — 출처 검증: 8/8개 통과, 등급 분포 {'C': 3, 'B': 4, 'D': 1}
-2026-08-25 22:41:35,068 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '김부장 등장인물 분석'
-2026-08-25 22:41:35,069 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-08-25 22:41:35,069 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-25 22:41:35,069 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-08-25 22:41:36,827 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:43:13,767 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-25 22:43:15,762 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:43:24,722 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-08-25 22:43:25,677 [INFO] image_fetcher — 이미지 수집 성공: '[2편] 김부장 등장인물 분석 소지섭 윤경호 관계도 총정리' → 제목='digital marketing / technology / noteboo' (관련성=0.22)
-2026-08-25 22:43:26,858 [WARNING] image_fetcher — 중복 대체 이미지 없음: '김부장 등장인물 분석' — 건너뜀
-2026-08-25 22:43:28,052 [INFO] image_fetcher — 이미지 수집 성공: '김부장 등장인물 인물 관계 SBS 특수요원' → 제목='spongebob / sponge head / cap / sb / mir' (관련성=0.00)
-2026-08-25 22:43:30,414 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-25 22:43:30,415 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
-2026-08-25 22:43:30,415 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-08-25 22:43:30,415 [INFO] image_fetcher — 제목 썸네일 생성: '[2편] 김부장 등장인물 분석 소지섭 윤경호 관계도 총' (data URI, 1162B)
-2026-08-25 22:43:30,617 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-08-25 22:43:30,617 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-08-25 22:43:30,621 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 김부장 등장인물 분석 소지섭 윤경호 관계도 총정리' (3755자, 이미지 1개)
 2026-08-25 22:43:32,245 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-08-25 22:43:51,636 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '[2편] 김부장 등장인물 분석 소지섭 윤경호 관계도 총정리'
 2026-08-25 22:43:51,636 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 다수 단락이 500자 이상으로 길게 이어짐
@@ -687,3 +498,132 @@
 2026-08-29 04:01:53,965 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-08-29 04:01:53,965 [INFO] main —   - [blog3] 금융NEWS
 2026-08-29 04:01:53,971 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-08-30 00:04:01,713 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-08-30 00:04:02,549 [INFO] main — ============================================================
+2026-08-30 00:04:02,549 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-30 00:04:02
+2026-08-30 00:04:02,550 [INFO] main — ============================================================
+2026-08-30 00:04:02,569 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
+2026-08-30 00:04:02,569 [INFO] keyword_collector — 포스팅 이력 코퍼스: 170개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-08-30 00:04:02,569 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
+2026-08-30 00:04:05,532 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-08-30 00:04:07,677 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:04:07,705 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-08-30 00:04:07,705 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-08-30 00:04:08,051 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-30 00:04:08,350 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-08-30 00:04:08,583 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
+2026-08-30 00:04:08,584 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-08-30 00:04:08,585 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-08-30 00:04:08,598 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-08-30 00:04:08,598 [INFO] keyword_collector — 유사 주제 제외 7개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-08-30 00:04:08,600 [INFO] keyword_collector —   [naver_realtime] 2개: ['추석 연휴 해외여행 항공권 유류할증료 대처법', '9월 국내 가을 여행지 추천 강원도 코스']
+2026-08-30 00:04:08,600 [INFO] keyword_collector — 최종 선정 키워드 2개: ['추석 연휴 해외여행 항공권 유류할증료 대처법', '9월 국내 가을 여행지 추천 강원도 코스']
+2026-08-30 00:04:08,600 [INFO] main — 수집된 키워드 2개: ['추석 연휴 해외여행 항공권 유류할증료 대처법', '9월 국내 가을 여행지 추천 강원도 코스']
+2026-08-30 00:04:08,605 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-08-30 00:04:08,606 [INFO] main — 단독 포스트 대상 키워드 1개: ['추석 연휴 해외여행 항공권 유류할증료 대처법']
+2026-08-30 00:04:08,624 [INFO] main — 
+[1/1] 키워드: '추석 연휴 해외여행 항공권 유류할증료 대처법'
+2026-08-30 00:04:08,624 [INFO] content_generator — 포스트 생성 중: '추석 연휴 해외여행 항공권 유류할증료 대처법'
+2026-08-30 00:04:14,738 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:04:14,739 [INFO] research_collector — 검색 의도: 추석 연휴 기간 해외여행 항공권 유류할증료 인상에 대비해 비용을 절감하는 방법을 찾으려는 의도
+2026-08-30 00:04:23,257 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '추석 연휴 해외여행 항공권 유류할증료 대처법'
+2026-08-30 00:04:37,376 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:04:37,377 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '추석 연휴 해외여행 항공권 유류할증료 대처법'
+2026-08-30 00:04:53,952 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:04:53,953 [INFO] source_validator — 출처 검증: 6/7개 통과, 등급 분포 {'D': 4, 'C': 2, 'X': 1}
+2026-08-30 00:04:53,955 [INFO] evidence_builder — 자료팩: 중요 사실 5개 제외 (A/B 등급 출처 없음)
+2026-08-30 00:04:53,955 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-08-30 00:04:53,957 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-08-30 00:04:54,779 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:06:17,301 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-08-30 00:06:18,047 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:06:32,487 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-08-30 00:06:32,727 [INFO] image_fetcher — 이미지 수집 성공: '추석 연휴 해외 항공권 유류할증료 대처법' → 제목='ai generated / kwanzaa / child / season ' (관련성=0.33)
+2026-08-30 00:06:33,134 [INFO] image_fetcher — 대체 이미지 수집: '추석 연휴 해외여행' → 제목='dożynki / harvest festival / people / pa' (관련성=0.50)
+2026-08-30 00:06:33,134 [INFO] image_fetcher — 이미지 수집 성공: '추석 연휴 해외여행' → 제목='dożynki / harvest festival / people / pa' (관련성=0.50)
+2026-08-30 00:06:33,534 [INFO] image_fetcher — 대체 이미지 수집: '추석 연휴 나흘 유류할증료 일본 중국' → 제목='candy / apple / harvest / fall / festiva' (관련성=0.33)
+2026-08-30 00:06:33,534 [INFO] image_fetcher — 이미지 수집 성공: '추석 연휴 나흘 유류할증료 일본 중국' → 제목='candy / apple / harvest / fall / festiva' (관련성=0.33)
+2026-08-30 00:06:34,893 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:06:34,894 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-08-30 00:06:34,894 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-08-30 00:06:34,894 [INFO] image_fetcher — 제목 썸네일 생성: '추석 연휴 해외 항공권 유류할증료 대처법' (data URI, 985B)
+2026-08-30 00:06:35,087 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: 'ai generated / kwanzaa / child / season '
+2026-08-30 00:06:35,592 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-08-30 00:06:35,592 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-08-30 00:06:35,598 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-08-30 00:06:35,600 [INFO] content_generator — 포스트 생성 완료: '추석 연휴 해외 항공권 유류할증료 대처법' (2801자, 이미지 2개)
+2026-08-30 00:06:36,239 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:06:57,405 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '추석 연휴 해외 항공권 유류할증료 대처법'
+2026-08-30 00:06:57,405 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 표와 상황별 대처법 등 구조는 있으나 구체적 수치·날짜 없이 일반론 재구성 수준이며 문장 중복 오류 존재
+2026-08-30 00:06:57,405 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 5개 출처 있으나 본문 내 기관명·시점 명시 없이 '최근 보도', '이용자 후기'로만 모호하게 인용
+2026-08-30 00:06:57,405 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay·직접 제작 출처는 명시됐으나 alt 텍스트 언급 없음
+2026-08-30 00:06:57,405 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 동일 문장이 중복 삽입된 오류와 📌💡💬 템플릿형 아이콘 사용으로 AI 생성 흔적 감지
+2026-08-30 00:06:57,405 [WARNING] adsense_validator —   🔴 본문 중 '일본·중국·동남아 단거리 노선이 특수를 누린다는 내용이...' 문장이 중복 삽입되어 있어 즉시 수정 필요
+2026-08-30 00:06:57,410 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-08-30 00:06:57,412 [INFO] internal_linker —   [1/5] '여행지' -> https://hoguasset.blogspot.com/2026/08/2026_0702454989.html
+2026-08-30 00:06:57,417 [INFO] internal_linker —   [2/5] '해외여행' -> https://hogugolfntraval.blogspot.com/2026/08/blog-post_17.ht
+2026-08-30 00:06:57,419 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-08-30 00:06:57,419 [INFO] main —   제목: 추석 연휴 해외 항공권 유류할증료 대처법
+2026-08-30 00:06:57,419 [INFO] main —   이미지: 2개 삽입
+2026-08-30 00:06:57,419 [INFO] main —   글자 수: 2801자
+2026-08-30 00:06:58,156 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:07:19,221 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '추석 연휴 해외 항공권 유류할증료 대처법'
+2026-08-30 00:07:19,221 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 충분하나 도입부·본문 일부 단락이 500자 이상으로 길게 이어짐
+2026-08-30 00:07:19,221 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개 제공되나 '최근 보도', '실제 이용자 후기' 등 구체적 기관명·시점 명시 부족
+2026-08-30 00:07:19,221 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 및 직접 제작 표기로 저작권 문제는 없으나 alt 텍스트 명시 여부 불명확
+2026-08-30 00:07:19,221 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 문장 일부 중복(특수 누린다는 내용 반복), 이모지 요약박스·첫째둘째셋째식 나열 패턴이 다소 정형화됨
+2026-08-30 00:07:19,221 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-08-30 00:07:19,221 [WARNING] main —      🟡 [구조 및 가독성] H2 5개는 충분하나 도입부·본문 일부 단락이 500자 이상으로 길게 이어짐
+2026-08-30 00:07:19,221 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 5개 제공되나 '최근 보도', '실제 이용자 후기' 등 구체적 기관명·시점 명시 부족
+2026-08-30 00:07:19,221 [WARNING] main —      🟡 [이미지 정책] Pixabay 라이선스 및 직접 제작 표기로 저작권 문제는 없으나 alt 텍스트 명시 여부 불명확
+2026-08-30 00:07:19,221 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-08-30 00:07:19,231 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-08-30 00:07:19,238 [INFO] adsense_validator —   🖼️ alt 재작성 → "추석 연휴 해외 항공권 유류할증료 대처법 관련 이미지" (캡션 포함)
+2026-08-30 00:07:19,238 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 2건
+2026-08-30 00:07:19,924 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:08:57,249 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2801자 → 4107자 (+1306자)
+2026-08-30 00:08:57,249 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-08-30 00:08:57,963 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:09:06,177 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '추석 연휴 해외 항공권 유류할증료 대처법'
+2026-08-30 00:09:06,177 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 사용은 안전하나 alt 텍스트 명시 여부 불확실
+2026-08-30 00:09:06,177 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 정보 나열형 문단 구조와 일부 정형화된 전환 표현이 반복되어 AI 작성 패턴이 소폭 감지됨
+2026-08-30 00:09:06,177 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
+2026-08-30 00:09:06,177 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-08-30 00:09:07,165 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:09:51,174 [INFO] final_editor —   ✏️ 제목 최종 교정: '추석 연휴 해외 항공권 유류할증료 대처법' → '나흘 추석 연휴, 해외 항공권 유류할증료 대처법'
+2026-08-30 00:09:51,174 [INFO] final_editor —   ✏️ 메타 설명 교정 (129자)
+2026-08-30 00:09:51,174 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 규격에 맞게 정리하고, 이미지 3개와 alt 텍스트를 구체화했으며, 요약 박스·표·FAQ·주의사항·작성자 메모 등 발행 요소를 모두 확인해 긴 문단을 모바일 친화적으로 분할했습니다.
+2026-08-30 00:09:51,392 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-08-30 00:09:51,392 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-08-30 00:09:52,234 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_30.html
+2026-08-30 00:09:52,247 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_30.html
+2026-08-30 00:09:52,252 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-08-30 00:09:52,260 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-08-30 00:09:52,261 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '나흘 추석 연휴, 해외 항공권 유류할증료 대처법'
+2026-08-30 00:09:52,904 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-08-30 00:09:56,593 [INFO] comment_manager —   생성된 댓글: 덧붙이자면, 국토교통부 항공포털에서 유류할증료 고시표는 매달 1일 즈음 갱신되는데 갱신 직후보다 갱신 며칠 전에 발권하는 게 유리할 때가 많더라...
+2026-08-30 00:12:56,881 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-08-30 00:12:56,882 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-08-30 00:12:56,882 [INFO] main — 
+============================================================
+2026-08-30 00:12:56,882 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-08-30 00:12:56,882 [INFO] main — ============================================================
+2026-08-30 00:12:56,924 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 111개)
+2026-08-30 00:12:56,998 [INFO] dashboard_exporter —   시리즈: 24개 내보내기 완료
+2026-08-30 00:12:57,020 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-08-30 00:12:57,442 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-08-30 00:12:57,827 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-08-30 00:12:57,829 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-08-30 00:12:57,831 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-08-30 00:12:57,847 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 268 / 실패 0 / 대기 16)
+2026-08-30 00:12:57,848 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-08-30 00:12:57,848 [INFO] dashboard_exporter —   포스트: 111개 / 실행 이력: 111개 / 블로그: 3개
+2026-08-30 00:12:57,849 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-08-30 00:12:57,850 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

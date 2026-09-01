@@ -137,6 +137,12 @@ jobs:
             [ -f "$f" ] && git add -f "$f"
           done
           git add -f blog-automation/logs/post_drafts/ 2>/dev/null || true
+          # 자체 호스팅 이미지 — 파일과 매니페스트가 함께 커밋돼야 본문 src가
+          # 살아 있습니다. 이 워크플로는 글을 다시 생성해 발행하므로 이미지를
+          # docs/images에 쓰고 본문 주소를 우리 도메인으로 바꿉니다. 커밋하지
+          # 않으면 러너와 함께 파일이 사라져 발행된 글이 영구 404가 됩니다.
+          for f in blog-automation/logs/used_images.json docs/data/image_mirror.json; do [ -f "$f" ] && git add -f "$f"; done
+          git add -f docs/images/ 2>/dev/null || true
           true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"

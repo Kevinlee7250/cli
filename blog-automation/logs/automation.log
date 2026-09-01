@@ -1,116 +1,3 @@
-2026-08-30 00:06:57,405 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 표와 상황별 대처법 등 구조는 있으나 구체적 수치·날짜 없이 일반론 재구성 수준이며 문장 중복 오류 존재
-2026-08-30 00:06:57,405 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 5개 출처 있으나 본문 내 기관명·시점 명시 없이 '최근 보도', '이용자 후기'로만 모호하게 인용
-2026-08-30 00:06:57,405 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay·직접 제작 출처는 명시됐으나 alt 텍스트 언급 없음
-2026-08-30 00:06:57,405 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 동일 문장이 중복 삽입된 오류와 📌💡💬 템플릿형 아이콘 사용으로 AI 생성 흔적 감지
-2026-08-30 00:06:57,405 [WARNING] adsense_validator —   🔴 본문 중 '일본·중국·동남아 단거리 노선이 특수를 누린다는 내용이...' 문장이 중복 삽입되어 있어 즉시 수정 필요
-2026-08-30 00:06:57,410 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-30 00:06:57,412 [INFO] internal_linker —   [1/5] '여행지' -> https://hoguasset.blogspot.com/2026/08/2026_0702454989.html
-2026-08-30 00:06:57,417 [INFO] internal_linker —   [2/5] '해외여행' -> https://hogugolfntraval.blogspot.com/2026/08/blog-post_17.ht
-2026-08-30 00:06:57,419 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-08-30 00:06:57,419 [INFO] main —   제목: 추석 연휴 해외 항공권 유류할증료 대처법
-2026-08-30 00:06:57,419 [INFO] main —   이미지: 2개 삽입
-2026-08-30 00:06:57,419 [INFO] main —   글자 수: 2801자
-2026-08-30 00:06:58,156 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:07:19,221 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '추석 연휴 해외 항공권 유류할증료 대처법'
-2026-08-30 00:07:19,221 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 충분하나 도입부·본문 일부 단락이 500자 이상으로 길게 이어짐
-2026-08-30 00:07:19,221 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개 제공되나 '최근 보도', '실제 이용자 후기' 등 구체적 기관명·시점 명시 부족
-2026-08-30 00:07:19,221 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 및 직접 제작 표기로 저작권 문제는 없으나 alt 텍스트 명시 여부 불명확
-2026-08-30 00:07:19,221 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 문장 일부 중복(특수 누린다는 내용 반복), 이모지 요약박스·첫째둘째셋째식 나열 패턴이 다소 정형화됨
-2026-08-30 00:07:19,221 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-08-30 00:07:19,221 [WARNING] main —      🟡 [구조 및 가독성] H2 5개는 충분하나 도입부·본문 일부 단락이 500자 이상으로 길게 이어짐
-2026-08-30 00:07:19,221 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 5개 제공되나 '최근 보도', '실제 이용자 후기' 등 구체적 기관명·시점 명시 부족
-2026-08-30 00:07:19,221 [WARNING] main —      🟡 [이미지 정책] Pixabay 라이선스 및 직접 제작 표기로 저작권 문제는 없으나 alt 텍스트 명시 여부 불명확
-2026-08-30 00:07:19,221 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-08-30 00:07:19,231 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-08-30 00:07:19,238 [INFO] adsense_validator —   🖼️ alt 재작성 → "추석 연휴 해외 항공권 유류할증료 대처법 관련 이미지" (캡션 포함)
-2026-08-30 00:07:19,238 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 2건
-2026-08-30 00:07:19,924 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:08:57,249 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2801자 → 4107자 (+1306자)
-2026-08-30 00:08:57,249 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-08-30 00:08:57,963 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:09:06,177 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '추석 연휴 해외 항공권 유류할증료 대처법'
-2026-08-30 00:09:06,177 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 사용은 안전하나 alt 텍스트 명시 여부 불확실
-2026-08-30 00:09:06,177 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 정보 나열형 문단 구조와 일부 정형화된 전환 표현이 반복되어 AI 작성 패턴이 소폭 감지됨
-2026-08-30 00:09:06,177 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-08-30 00:09:06,177 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-08-30 00:09:07,165 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:09:51,174 [INFO] final_editor —   ✏️ 제목 최종 교정: '추석 연휴 해외 항공권 유류할증료 대처법' → '나흘 추석 연휴, 해외 항공권 유류할증료 대처법'
-2026-08-30 00:09:51,174 [INFO] final_editor —   ✏️ 메타 설명 교정 (129자)
-2026-08-30 00:09:51,174 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 규격에 맞게 정리하고, 이미지 3개와 alt 텍스트를 구체화했으며, 요약 박스·표·FAQ·주의사항·작성자 메모 등 발행 요소를 모두 확인해 긴 문단을 모바일 친화적으로 분할했습니다.
-2026-08-30 00:09:51,392 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-30 00:09:51,392 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-08-30 00:09:52,234 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_30.html
-2026-08-30 00:09:52,247 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/08/blog-post_30.html
-2026-08-30 00:09:52,252 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-08-30 00:09:52,260 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-08-30 00:09:52,261 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '나흘 추석 연휴, 해외 항공권 유류할증료 대처법'
-2026-08-30 00:09:52,904 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:09:56,593 [INFO] comment_manager —   생성된 댓글: 덧붙이자면, 국토교통부 항공포털에서 유류할증료 고시표는 매달 1일 즈음 갱신되는데 갱신 직후보다 갱신 며칠 전에 발권하는 게 유리할 때가 많더라...
-2026-08-30 00:12:56,881 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-08-30 00:12:56,882 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-30 00:12:56,882 [INFO] main — 
-============================================================
-2026-08-30 00:12:56,882 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-08-30 00:12:56,882 [INFO] main — ============================================================
-2026-08-30 00:12:56,924 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 111개)
-2026-08-30 00:12:56,998 [INFO] dashboard_exporter —   시리즈: 24개 내보내기 완료
-2026-08-30 00:12:57,020 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-30 00:12:57,442 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-30 00:12:57,827 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-08-30 00:12:57,829 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-30 00:12:57,831 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-30 00:12:57,847 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 268 / 실패 0 / 대기 16)
-2026-08-30 00:12:57,848 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-30 00:12:57,848 [INFO] dashboard_exporter —   포스트: 111개 / 실행 이력: 111개 / 블로그: 3개
-2026-08-30 00:12:57,849 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-30 00:12:57,850 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-08-30 00:13:56,926 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-08-30 00:13:57,799 [INFO] main — ============================================================
-2026-08-30 00:13:57,800 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-08-30 00:13:57
-2026-08-30 00:13:57,800 [INFO] main — ============================================================
-2026-08-30 00:13:57,820 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-08-30 00:13:57,820 [INFO] keyword_collector — 포스팅 이력 코퍼스: 162개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-08-30 00:13:57,820 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-30 00:14:02,589 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-08-30 00:14:07,835 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:14:07,863 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-30 00:14:07,864 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-30 00:14:08,697 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-30 00:14:08,698 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-30 00:14:08,699 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-08-30 00:14:08,745 [INFO] keyword_collector — 유사 주제 제외 34개: ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '가을 단풍 골프장 추천 라운딩 코스 비교', '호텔 AI 컨시어지 서비스 체험 후기 활용법', '가을 마트 할인 정보 활용한 장바구니 절약 팁']
-2026-08-30 00:14:08,745 [INFO] keyword_collector —   [naver_realtime] 1개: ['OTT 대신 본방사수 다시 뜨는 이유와 시청 방법 비교']
-2026-08-30 00:14:08,745 [INFO] keyword_collector —   [fallback] 1개: ['수영 초보가 1km 완주하기까지 걸린 시간과 방법']
-2026-08-30 00:14:08,745 [INFO] keyword_collector — 최종 선정 키워드 2개: ['OTT 대신 본방사수 다시 뜨는 이유와 시청 방법 비교', '수영 초보가 1km 완주하기까지 걸린 시간과 방법']
-2026-08-30 00:14:08,745 [INFO] main — 수집된 키워드 2개: ['OTT 대신 본방사수 다시 뜨는 이유와 시청 방법 비교', '수영 초보가 1km 완주하기까지 걸린 시간과 방법']
-2026-08-30 00:14:08,751 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
-2026-08-30 00:14:08,751 [INFO] main — 단독 포스트 대상 키워드 1개: ['OTT 대신 본방사수 다시 뜨는 이유와 시청 방법 비교']
-2026-08-30 00:14:08,769 [INFO] main — 
-[1/1] 키워드: 'OTT 대신 본방사수 다시 뜨는 이유와 시청 방법 비교'
-2026-08-30 00:14:08,769 [INFO] content_generator — 포스트 생성 중: 'OTT 대신 본방사수 다시 뜨는 이유와 시청 방법 비교'
-2026-08-30 00:14:16,461 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:14:16,462 [INFO] research_collector — 검색 의도: OTT 대신 실시간 본방송 시청이 다시 증가하는 이유와 배경, 그리고 본방사수와 OTT 시청 방법의 차이를 
-2026-08-30 00:14:31,076 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — 'OTT 대신 본방사수 다시 뜨는 이유와 시청 방법 비교'
-2026-08-30 00:14:40,236 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:14:40,237 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — 'OTT 대신 본방사수 다시 뜨는 이유와 시청 방법 비교'
-2026-08-30 00:14:59,673 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:14:59,675 [INFO] source_validator — 출처 검증: 2/5개 통과, 등급 분포 {'B': 2, 'X': 3}
-2026-08-30 00:15:01,113 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-30 00:15:01,115 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-08-30 00:15:01,768 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:16:10,804 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-08-30 00:16:11,467 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:16:14,552 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-08-30 00:16:15,584 [WARNING] image_fetcher — 이미지 없음: 'OTT 대신 본방사수 다시 뜨는 이유와 시청 방법 비교, 어떤 게 나에게 맞을까'
-2026-08-30 00:16:16,290 [WARNING] image_fetcher — 이미지 없음: 'OTT 대신 본방사수'
-2026-08-30 00:16:17,323 [INFO] image_fetcher — 이미지 수집 성공: 'OTT 대신 갑자기 얘기 KBS 뉴스가' → 제목='railway tunnel / brenzbahn / kbs 757 / r' (관련성=0.17)
 2026-08-30 00:16:18,178 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
 2026-08-30 00:16:18,179 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
 2026-08-30 00:16:18,183 [INFO] content_generator — 이미지 1개 본문 삽입 완료
@@ -611,3 +498,108 @@
 2026-08-31 01:06:43,067 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-08-31 01:06:43,067 [INFO] main —   - [blog3] 금융NEWS
 2026-08-31 01:06:43,072 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-09-01 01:11:10,065 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-01 01:11:11,030 [INFO] main — ============================================================
+2026-09-01 01:11:11,030 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-01 01:11:11
+2026-09-01 01:11:11,030 [INFO] main — ============================================================
+2026-09-01 01:11:11,052 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
+2026-09-01 01:11:11,052 [INFO] keyword_collector — 포스팅 이력 코퍼스: 164개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-09-01 01:11:11,053 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
+2026-09-01 01:11:15,830 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-09-01 01:11:21,534 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 01:11:21,556 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-01 01:11:21,557 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-01 01:11:21,945 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-09-01 01:11:22,262 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-01 01:11:22,416 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
+2026-09-01 01:11:22,417 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-01 01:11:22,418 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-01 01:11:22,434 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-09-01 01:11:22,434 [INFO] keyword_collector — 유사 주제 제외 10개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-01 01:11:22,436 [INFO] keyword_collector —   [fallback] 2개: ['통영 하루 코스 알짜 명소와 숙소 실제 후기', '남해 독일마을 방문 전 알았으면 좋을 것들']
+2026-09-01 01:11:22,436 [INFO] keyword_collector — 최종 선정 키워드 2개: ['통영 하루 코스 알짜 명소와 숙소 실제 후기', '남해 독일마을 방문 전 알았으면 좋을 것들']
+2026-09-01 01:11:22,436 [INFO] main — 수집된 키워드 2개: ['통영 하루 코스 알짜 명소와 숙소 실제 후기', '남해 독일마을 방문 전 알았으면 좋을 것들']
+2026-09-01 01:11:22,442 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
+2026-09-01 01:11:22,442 [INFO] main — 단독 포스트 대상 키워드 1개: ['통영 하루 코스 알짜 명소와 숙소 실제 후기']
+2026-09-01 01:11:22,462 [INFO] main — 
+[1/1] 키워드: '통영 하루 코스 알짜 명소와 숙소 실제 후기'
+2026-09-01 01:11:22,462 [INFO] content_generator — 포스트 생성 중: '통영 하루 코스 알짜 명소와 숙소 실제 후기'
+2026-09-01 01:11:30,099 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 01:11:30,100 [INFO] research_collector — 검색 의도: 통영을 하루 동안 효율적으로 둘러볼 수 있는 실제 검증된 명소 코스와 숙소 후기를 찾으려는 의도
+2026-09-01 01:12:10,956 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '통영 하루 코스 알짜 명소와 숙소 실제 후기'
+2026-09-01 01:12:30,957 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 01:12:30,958 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '통영 하루 코스 알짜 명소와 숙소 실제 후기'
+2026-09-01 01:13:16,739 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 01:13:16,740 [INFO] source_validator — 출처 검증: 0/5개 통과, 등급 분포 {'X': 5}
+2026-09-01 01:13:16,742 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
+2026-09-01 01:13:16,742 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-01 01:13:16,743 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-01 01:13:18,203 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 01:14:18,526 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-01 01:14:19,949 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 01:14:34,115 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-09-01 01:14:34,115 [INFO] content_generator — 이미지 계획 1건 사용: ['tongyeong dongpirang mural village']
+2026-09-01 01:14:34,409 [INFO] image_fetcher — 이미지 수집 성공: 'tongyeong dongpirang mural village' → 제목='tongyeong / nature / landscape / bench /' (관련성=0.25)
+2026-09-01 01:14:34,618 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-01 01:14:34,618 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-01 01:14:34,623 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-09-01 01:14:34,625 [INFO] content_generator — 포스트 생성 완료: '통영 하루 코스, 알짜 명소와 숙소 후기' (2577자, 이미지 1개)
+2026-09-01 01:14:35,206 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 01:14:57,839 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '통영 하루 코스, 알짜 명소와 숙소 후기'
+2026-09-01 01:14:57,839 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지가 1장뿐이고 출처는 Pixabay로 저작권 문제는 없으나 이미지 수가 적어 warn
+2026-09-01 01:14:57,840 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 후기가 많습니다' 류의 유사 문장 패턴과 요약 박스 구조가 반복돼 AI 생성 톤이 다소 감지됨
+2026-09-01 01:14:57,844 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-01 01:14:57,849 [INFO] internal_linker —   [1/5] '이렇게' -> https://www.hoguwhat.com/2026/08/blog-post_28.html
+2026-09-01 01:14:57,852 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-09-01 01:14:57,852 [INFO] main —   제목: 통영 하루 코스, 알짜 명소와 숙소 후기
+2026-09-01 01:14:57,852 [INFO] main —   이미지: 1개 삽입
+2026-09-01 01:14:57,852 [INFO] main —   글자 수: 2577자
+2026-09-01 01:14:58,442 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 01:15:17,895 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '통영 하루 코스, 알짜 명소와 숙소 후기'
+2026-09-01 01:15:17,895 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장(Pixabay 출처 명시)뿐이며 alt텍스트 명시 여부 불확실해 보강 필요
+2026-09-01 01:15:17,895 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음으로 ~짚어보겠습니다' 식 예고성 전환 문구와 첫째·둘째·셋째 나열 패턴이 반복되어 정형화된 흐름이 느껴짐
+2026-09-01 01:15:17,895 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-09-01 01:15:19,000 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 01:16:38,274 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-01 01:16:39,370 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 01:17:48,871 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-01 01:17:50,847 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 01:17:59,197 [INFO] final_editor —   ✏️ 제목 최종 교정: '통영 하루 코스, 알짜 명소와 숙소 후기' → '통영 하루 코스 알짜 명소와 숙소 실제 후기 총정리'
+2026-09-01 01:17:59,197 [INFO] final_editor —   ✏️ 메타 설명 교정 (132자)
+2026-09-01 01:17:59,197 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 쪼개고 H3 소제목을 추가해 가독성을 높였으며, 동선 비교표와 개인 경험 메모·주의사항 박스를 보강하고 FAQ를 5개로 확장했습니다. 중복된 질문 박스를 정리하고 제목·메타설명·슬러그를 SEO 기준에 맞게 재조정했습니다.
+2026-09-01 01:17:59,315 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-01 01:17:59,315 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-09-01 01:17:59,929 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/blog-post.html
+2026-09-01 01:17:59,943 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/09/blog-post.html
+2026-09-01 01:17:59,947 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-09-01 01:17:59,955 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-01 01:17:59,956 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '통영 하루 코스 알짜 명소와 숙소 실제 후기 총정리'
+2026-09-01 01:18:01,185 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 01:18:04,579 [INFO] comment_manager —   생성된 댓글: 통영 여행 팁 하나 더 보태자면, 강구안에서 동피랑 올라가기 전에 근처 공영주차장 위치를 미리 확인해두시는 걸 추천드려요. 성수기엔 골목 주변 ...
+2026-09-01 01:21:04,808 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-09-01 01:21:04,809 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-09-01 01:21:04,810 [INFO] main — 
+============================================================
+2026-09-01 01:21:04,810 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-09-01 01:21:04,810 [INFO] main — ============================================================
+2026-09-01 01:21:04,856 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 117개)
+2026-09-01 01:21:04,913 [INFO] dashboard_exporter — 분석 필드 유지: 116/117개 (등급·조회수·수익)
+2026-09-01 01:21:04,929 [INFO] dashboard_exporter —   시리즈: 24개 내보내기 완료
+2026-09-01 01:21:04,952 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-01 01:21:05,298 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-01 01:21:05,608 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-01 01:21:05,610 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-01 01:21:05,610 [INFO] dashboard_exporter —   학습 이력: 1주 내보내기 완료
+2026-09-01 01:21:05,612 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-01 01:21:05,629 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 269 / 실패 0 / 대기 16)
+2026-09-01 01:21:05,629 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-01 01:21:05,630 [INFO] dashboard_exporter —   포스트: 117개 / 실행 이력: 117개 / 블로그: 3개
+2026-09-01 01:21:05,631 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-01 01:21:05,632 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

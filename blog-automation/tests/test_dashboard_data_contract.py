@@ -34,7 +34,6 @@ _JSON_RE = re.compile(r"([a-z_]+\.json)")
 #: 방치되지 않습니다.
 NOT_YET_GENERATED = {
     "posts_archive.json": "글이 300편을 넘어야 넘침분이 생깁니다 (현재 정확히 300편)",
-    "adsense_revenue.json": "AdSense 미승인 — 승인 후 blog-analytics가 만듭니다",
     "shorts_scripts.json": "shorts-generate 워크플로를 아직 돌리지 않았습니다",
 }
 

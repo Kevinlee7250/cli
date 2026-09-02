@@ -1,5 +1,35 @@
 [
   {
+    "timestamp": "2026-09-02T08:44:34.036290",
+    "health_score": 85,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "schedule_stalled",
+        "level": "high",
+        "message": "마지막 실행이 163시간 전 — 스케줄 중단 의심",
+        "context": {
+          "last_run": "2026-08-26T14:14:34.000936",
+          "hours_ago": 162.5
+        },
+        "fix": null
+      }
+    ],
+    "repairs_applied": 0,
+    "repairs": [
+      {
+        "issue_id": "schedule_stalled",
+        "issue_level": "high",
+        "issue_message": "마지막 실행이 163시간 전 — 스케줄 중단 의심",
+        "fix_applied": null,
+        "timestamp": "2026-09-02T08:44:34.036246",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-09-02T08:41:22.072023",
     "health_score": 82,
     "issues_found": 2,
@@ -1521,33 +1551,6 @@
         "success": true,
         "detail": "대기 포스트 15개 → expired 처리",
         "expired": 15
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-05T18:16:32.658015",
-    "health_score": 93,
-    "issues_found": 1,
-    "issues": [
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 0,
-    "repairs": [
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-08-05T18:16:32.657922",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
       }
     ],
     "dry_run": false

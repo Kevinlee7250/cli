@@ -1,5 +1,59 @@
 [
   {
+    "timestamp": "2026-09-02T08:41:22.072023",
+    "health_score": 82,
+    "issues_found": 2,
+    "issues": [
+      {
+        "id": "schedule_stalled",
+        "level": "high",
+        "message": "마지막 실행이 162시간 전 — 스케줄 중단 의심",
+        "context": {
+          "last_run": "2026-08-26T14:14:34.000936",
+          "hours_ago": 162.4
+        },
+        "fix": null
+      },
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 4개",
+        "context": {
+          "count": 4,
+          "titles": [
+            "동남아 대신 뜨는 여름 휴가지, 진짜 나은 선택일까 비",
+            "[1편] 오사카 환전 실패 후기 2026, 공항서 뭘 ",
+            "[2편] 2026 오사카 IC카드·현금 결제 비교, 실"
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "schedule_stalled",
+        "issue_level": "high",
+        "issue_message": "마지막 실행이 162시간 전 — 스케줄 중단 의심",
+        "fix_applied": null,
+        "timestamp": "2026-09-02T08:41:22.058782",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      },
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 4개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-09-02T08:41:22.058845",
+        "success": true,
+        "detail": "대기 포스트 4개 → expired 처리",
+        "expired": 4
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-09-01T14:07:29.626579",
     "health_score": 82,
     "issues_found": 2,
@@ -1492,33 +1546,6 @@
         "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
         "fix_applied": null,
         "timestamp": "2026-08-05T18:16:32.657922",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-04T18:25:07.087310",
-    "health_score": 93,
-    "issues_found": 1,
-    "issues": [
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      }
-    ],
-    "repairs_applied": 0,
-    "repairs": [
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-08-04T18:25:07.087221",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
       }

@@ -1,111 +1,3 @@
-2026-08-30 00:26:18,090 [INFO] image_fetcher — 이미지 수집 성공: '주택담보대출 금리 최저' → 제목='savings / real estate / mortgage bond / ' (관련성=0.17)
-2026-08-30 00:26:18,372 [INFO] image_fetcher — 대체 이미지 수집: '주택담보대출 금리 매주 바뀌 기준금리 가산금리' → 제목='bridge / opera house / sydney / opera / ' (관련성=0.22)
-2026-08-30 00:26:18,373 [INFO] image_fetcher — 이미지 수집 성공: '주택담보대출 금리 매주 바뀌 기준금리 가산금리' → 제목='bridge / opera house / sydney / opera / ' (관련성=0.22)
-2026-08-30 00:26:19,610 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:26:19,611 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
-2026-08-30 00:26:19,702 [WARNING] image_mirror — 이미지 내려받기 실패: https://pixabay.com/get/ge2494a08c8b9d99f2713d6563f967b42af98c5155c819 — 429 Client Error: Too Many Requests for url: https://pixabay.com/get/ge2494a08c8b9d99f2713d6563f967b42af98c5155c81956e08d2564954e5ca8a1db3ae1d2d06f06fa414aff257eefc29e9fecf5433d0b2092708e1ae1b883498_1280.jpg
-2026-08-30 00:26:19,704 [INFO] image_fetcher — 만료되는 주소 대신 영구 주소 사용: https://pixabay.com/get/gd58ae4c57288d0bf2b016fff3be324c5efaacaff985ac
-2026-08-30 00:26:19,704 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-08-30 00:26:19,708 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-08-30 00:26:19,710 [INFO] content_generator — 포스트 생성 완료: '주택담보대출 금리 최저 은행 2026, 발품 팔아 직접 비교해보니' (3512자, 이미지 1개)
-2026-08-30 00:26:20,338 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:26:30,425 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '주택담보대출 금리 최저 은행 2026, 발품 팔아 직접 비교해보'
-2026-08-30 00:26:30,425 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 6개가 포함됐다고 하나 본문 발췌에는 기관명(금감원 등) 언급 외 구체적 인용 시점 표기가 부족함
-2026-08-30 00:26:30,425 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1건 확인되나 alt텍스트 명시 여부 불분명, 이미지 수 자체가 적음
-2026-08-30 00:26:30,425 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 표와 목록 위주 구성, '~할 차례입니다', '~ 짚어보겠습니다' 등 정형화된 전환 문구가 반복돼 다소 보고서체 인상
-2026-08-30 00:26:30,430 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-08-30 00:26:30,431 [INFO] internal_linker —   [1/5] '중도상환수수료' -> https://hoguasset.blogspot.com/2026/08/blog-post_316.html
-2026-08-30 00:26:30,440 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-08-30 00:26:30,440 [INFO] main —   제목: 주택담보대출 금리 최저 은행 2026, 발품 팔아 직접 비교해보니
-2026-08-30 00:26:30,440 [INFO] main —   이미지: 1개 삽입
-2026-08-30 00:26:30,440 [INFO] main —   글자 수: 3512자
-2026-08-30 00:26:31,037 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:26:49,822 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '주택담보대출 금리 최저 은행 2026, 발품 팔아 직접 비교해보'
-2026-08-30 00:26:49,822 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어짐
-2026-08-30 00:26:49,822 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 1개 사용되나 alt텍스트 여부 불명확 및 이미지 수 부족
-2026-08-30 00:26:49,823 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서는', '핵심 요약/포인트' 등 정형화된 전환 문구와 표 위주 구성이 AI 작성 패턴과 유사함
-2026-08-30 00:26:49,823 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-08-30 00:26:50,497 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:27:37,692 [INFO] final_editor —   ✏️ 제목 최종 교정: '주택담보대출 금리 최저 은행 2026, 발품 팔아 직접 비교해보니' → '주택담보대출 금리 최저 은행 2026, 발품 팔아 비교한 후기'
-2026-08-30 00:27:37,692 [INFO] final_editor —   ✏️ 메타 설명 교정 (123자)
-2026-08-30 00:27:37,692 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 규정 길이에 맞게 정리하고, 이미지 3종과 참고자료·내부링크 항목을 구체화했습니다.
-2026-08-30 00:27:37,819 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-08-30 00:27:37,819 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교' — 면책·팩트체크 확인 권장
-2026-08-30 00:27:37,820 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-08-30 00:27:38,840 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026_02023899290.html
-2026-08-30 00:27:38,853 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/08/2026_02023899290.html
-2026-08-30 00:27:38,857 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-08-30 00:27:38,865 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-08-30 00:27:38,866 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '주택담보대출 금리 최저 은행 2026, 발품 팔아 비교한 후기'
-2026-08-30 00:27:39,526 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-30 00:27:44,247 [INFO] comment_manager —   생성된 댓글: 상담받으실 때 팁 하나 더 드리면, 같은 은행이라도 지점마다 그리고 상담해주시는 분마다 우대금리 적용 재량이 조금씩 다르니 한 은행 내에서도 지...
-2026-08-30 00:30:44,484 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-08-30 00:30:44,485 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-08-30 00:30:44,486 [INFO] main — 
-============================================================
-2026-08-30 00:30:44,486 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-08-30 00:30:44,486 [INFO] main — ============================================================
-2026-08-30 00:30:44,528 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 113개)
-2026-08-30 00:30:44,587 [INFO] dashboard_exporter —   시리즈: 24개 내보내기 완료
-2026-08-30 00:30:44,608 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-08-30 00:30:44,886 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-08-30 00:30:45,163 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
-2026-08-30 00:30:45,523 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-08-30 00:30:45,525 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-08-30 00:30:45,527 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-08-30 00:30:45,544 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 269 / 실패 0 / 대기 16)
-2026-08-30 00:30:45,544 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-08-30 00:30:45,544 [INFO] dashboard_exporter —   포스트: 113개 / 실행 이력: 113개 / 블로그: 3개
-2026-08-30 00:30:45,545 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-08-30 00:30:45,546 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-08-30 01:05:12,658 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-08-30 01:05:12,658 [INFO] main —   - [blog1] HOGU What?
-2026-08-30 01:05:12,658 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-08-30 01:05:12,658 [INFO] main —   - [blog3] 금융NEWS
-2026-08-30 01:05:12,661 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
-2026-08-31 00:22:21,101 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-08-31 00:22:21,929 [INFO] main — ============================================================
-2026-08-31 00:22:21,929 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-08-31 00:22:21
-2026-08-31 00:22:21,929 [INFO] main — ============================================================
-2026-08-31 00:22:21,949 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
-2026-08-31 00:22:21,949 [INFO] keyword_collector — 포스팅 이력 코퍼스: 168개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-08-31 00:22:21,949 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
-2026-08-31 00:22:26,067 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-08-31 00:22:30,424 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-31 00:22:30,451 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-08-31 00:22:30,451 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-08-31 00:22:30,978 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-31 00:22:31,138 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-08-31 00:22:31,364 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
-2026-08-31 00:22:31,364 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-08-31 00:22:31,365 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-08-31 00:22:31,378 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-08-31 00:22:31,378 [INFO] keyword_collector — 유사 주제 제외 8개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-08-31 00:22:31,380 [INFO] keyword_collector —   [naver_realtime] 2개: ['가을 강원도 여행 가볼만한 곳 추천', '초보자를 위한 가을 등산 코스 추천']
-2026-08-31 00:22:31,380 [INFO] keyword_collector — 최종 선정 키워드 2개: ['가을 강원도 여행 가볼만한 곳 추천', '초보자를 위한 가을 등산 코스 추천']
-2026-08-31 00:22:31,380 [INFO] main — 수집된 키워드 2개: ['가을 강원도 여행 가볼만한 곳 추천', '초보자를 위한 가을 등산 코스 추천']
-2026-08-31 00:22:31,386 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-08-31 00:22:31,386 [INFO] main — 단독 포스트 대상 키워드 1개: ['가을 강원도 여행 가볼만한 곳 추천']
-2026-08-31 00:22:31,403 [INFO] main — 
-[1/1] 키워드: '가을 강원도 여행 가볼만한 곳 추천'
-2026-08-31 00:22:31,403 [INFO] content_generator — 포스트 생성 중: '가을 강원도 여행 가볼만한 곳 추천'
-2026-08-31 00:22:36,742 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-31 00:22:36,743 [INFO] research_collector — 검색 의도: 가을철 강원도 지역의 단풍 명소 및 여행지 정보를 찾아 여행 계획을 세우려는 의도
-2026-08-31 00:22:49,774 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '가을 강원도 여행 가볼만한 곳 추천'
-2026-08-31 00:23:07,427 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-31 00:23:07,428 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '가을 강원도 여행 가볼만한 곳 추천'
-2026-08-31 00:23:23,555 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-08-31 00:23:23,556 [INFO] source_validator — 출처 검증: 6/7개 통과, 등급 분포 {'D': 6, 'X': 1}
-2026-08-31 00:23:23,558 [INFO] evidence_builder — 자료팩: 중요 사실 6개 제외 (A/B 등급 출처 없음)
-2026-08-31 00:23:23,558 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-08-31 00:23:23,559 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
 2026-08-31 00:23:24,563 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-08-31 00:24:48,704 [INFO] content_generator —   📌 핵심 요약 박스 삽입
 2026-08-31 00:24:49,888 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
@@ -606,3 +498,186 @@
 2026-09-01 01:40:28,811 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-09-01 01:40:28,811 [INFO] main —   - [blog3] 금융NEWS
 2026-09-01 01:40:28,816 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-09-01 23:57:23,077 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-01 23:57:23,929 [INFO] main — ============================================================
+2026-09-01 23:57:23,929 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-01 23:57:23
+2026-09-01 23:57:23,929 [INFO] main — ============================================================
+2026-09-01 23:57:23,948 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-01 23:57:23,948 [INFO] keyword_collector — 포스팅 이력 코퍼스: 162개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-09-01 23:57:23,948 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
+2026-09-01 23:57:28,035 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-09-01 23:57:32,485 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 23:57:32,512 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-01 23:57:32,512 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-01 23:57:32,844 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-09-01 23:57:33,016 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-01 23:57:33,140 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 11개 쿼리 / 1개 카테고리
+2026-09-01 23:57:33,140 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-01 23:57:33,142 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-01 23:57:33,159 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-09-01 23:57:33,159 [INFO] keyword_collector — 유사 주제 제외 9개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-01 23:57:33,161 [INFO] keyword_collector —   [naver_realtime] 1개: ['가을 국내 여행지 추천 강원도 경기도 당일치기 코스']
+2026-09-01 23:57:33,161 [INFO] keyword_collector —   [fallback] 1개: ['인천 차이나타운 맛집과 볼거리 직접 다녀온 솔직 평가']
+2026-09-01 23:57:33,161 [INFO] keyword_collector — 최종 선정 키워드 2개: ['가을 국내 여행지 추천 강원도 경기도 당일치기 코스', '인천 차이나타운 맛집과 볼거리 직접 다녀온 솔직 평가']
+2026-09-01 23:57:33,161 [INFO] main — 수집된 키워드 2개: ['가을 국내 여행지 추천 강원도 경기도 당일치기 코스', '인천 차이나타운 맛집과 볼거리 직접 다녀온 솔직 평가']
+2026-09-01 23:57:33,166 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-09-01 23:57:37,102 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 40개
+2026-09-01 23:57:39,017 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 23:57:39,020 [INFO] keyword_collector — 화제 드라마 감지: ['재벌X형사2', '중증외상센터', '포핸즈']
+2026-09-01 23:57:39,020 [INFO] main — [자동 드라마 시리즈] '재벌X형사2' 감지 — 리뷰 시리즈 기획 시작
+2026-09-01 23:57:43,335 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 23:57:43,336 [INFO] series_planner — 드라마 시리즈 기획 완료: '재벌X형사2 드라마 리뷰 시리즈' 3편
+2026-09-01 23:57:43,336 [INFO] main — [자동 시리즈] '재벌X형사2' 3편 기획 시작 (이후 단독 포스트 0개)
+2026-09-01 23:57:43,336 [INFO] main — ============================================================
+2026-09-01 23:57:43,336 [INFO] main — [HOGU What?] 시리즈 모드 시작: '재벌X형사2' 3편
+2026-09-01 23:57:43,337 [INFO] main — ============================================================
+2026-09-01 23:57:43,338 [INFO] main — 시리즈 기획 완료: '재벌X형사2 드라마 리뷰 시리즈'
+2026-09-01 23:57:43,338 [INFO] main —   편 1: 재벌X형사2 첫인상 솔직 리뷰
+2026-09-01 23:57:43,338 [INFO] main —   편 2: 재벌X형사2 등장인물 완전 분석
+2026-09-01 23:57:43,339 [INFO] main —   편 3: 재벌X형사2 결말 총평 별점 공개
+2026-09-01 23:57:43,339 [INFO] main — 
+--- [1/3편] '재벌X형사2 첫인상 리뷰' 생성 중 ---
+2026-09-01 23:57:43,339 [INFO] content_generator — 시리즈 포스트 생성: '재벌X형사2 첫인상 리뷰' (1/3편)
+2026-09-01 23:57:48,282 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 23:57:48,283 [INFO] research_collector — 검색 의도: 재벌X형사2 작품의 초반 내용, 연출, 캐릭터 등에 대한 시청자의 첫인상 및 평가 정보를 얻고자 함
+2026-09-01 23:57:57,532 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '재벌X형사2 첫인상 리뷰'
+2026-09-01 23:58:24,847 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 23:58:24,848 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '재벌X형사2 첫인상 리뷰'
+2026-09-01 23:58:55,303 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-01 23:58:55,304 [INFO] source_validator — 출처 검증: 6/6개 통과, 등급 분포 {'B': 2, 'D': 2, 'C': 2}
+2026-09-01 23:58:55,306 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
+2026-09-01 23:58:55,306 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-01 23:58:55,308 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-01 23:58:56,007 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:00:31,725 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-02 00:00:33,154 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:00:56,245 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-09-02 00:00:56,246 [INFO] content_generator — 이미지 계획 3건 사용: ['watching tv drama living room', 'detective office scene drama set', 'luxury mansion exterior architecture']
+2026-09-02 00:00:56,432 [INFO] image_fetcher — 이미지 수집 성공: 'watching tv drama living room' → 제목='television / kids / cartoons / movie / t' (관련성=0.75)
+2026-09-02 00:00:56,615 [INFO] image_fetcher — 이미지 수집 성공: 'detective office scene drama set' → 제목='fbi / police force / surveillance / crim' (관련성=0.60)
+2026-09-02 00:00:56,803 [INFO] image_fetcher — 이미지 수집 성공: 'luxury mansion exterior architecture' → 제목='mansion / house / estate / residence / l' (관련성=0.75)
+2026-09-02 00:00:59,004 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:00:59,820 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 3장 (docs/images)
+2026-09-02 00:00:59,820 [INFO] content_generator — 이미지 3장 수집 완료 (최소 1 / 최대 3)
+2026-09-02 00:00:59,828 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] 재벌X형사2 첫인상, 시즌1과 뭐가 달라졌나' (3450자, 이미지 3개)
+2026-09-02 00:01:00,904 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:01:08,061 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '[1편] 재벌X형사2 첫인상, 시즌1과 뭐가 달라졌나'
+2026-09-02 00:01:08,061 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 광고 슬롯 0개로 수익화가 이루어지지 않아 광고 배치 자체가 부재
+2026-09-02 00:01:08,061 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처의 이미지 2장 사용되나 alt텍스트 명시 여부 불명확, 저작권 문제는 없음
+2026-09-02 00:01:09,177 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:02:12,134 [INFO] final_editor —   ✏️ 제목 최종 교정: '[1편] 재벌X형사2 첫인상, 시즌1과 뭐가 달라졌나' → '재벌X형사2 첫인상 리뷰: 시즌1과 뭐가 달라졌나 총정리'
+2026-09-02 00:02:12,134 [INFO] final_editor —   ✏️ 메타 설명 교정 (124자)
+2026-09-02 00:02:12,134 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 30~45자/120~160자 기준에 맞게 정리하고, 이미지 4곳의 위치와 구체적 alt를 지정했으며 관련 태그·내부링크·참고자료를 발행 형식에 맞춰 정돈했습니다.
+2026-09-02 00:02:12,320 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-02 00:02:12,321 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-09-02 00:02:12,934 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/x2-1.html
+2026-09-02 00:02:12,935 [INFO] main —   ✅ 편 1 업로드 완료: https://www.hoguwhat.com/2026/09/x2-1.html
+2026-09-02 00:02:15,937 [INFO] main — 
+--- [2/3편] '재벌X형사2 등장인물 분석' 생성 중 ---
+2026-09-02 00:02:15,938 [INFO] content_generator — 시리즈 포스트 생성: '재벌X형사2 등장인물 분석' (2/3편)
+2026-09-02 00:02:19,649 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:02:19,650 [INFO] research_collector — 검색 의도: 재벌X형사2 등장인물들의 프로필과 관계, 배우 정보를 알고 싶어함
+2026-09-02 00:02:30,514 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '재벌X형사2 등장인물 분석'
+2026-09-02 00:02:47,224 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:02:47,225 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '재벌X형사2 등장인물 분석'
+2026-09-02 00:03:13,570 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:03:13,571 [INFO] source_validator — 출처 검증: 1/5개 통과, 등급 분포 {'X': 4, 'B': 1}
+2026-09-02 00:03:15,050 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '재벌X형사2 등장인물 분석'
+2026-09-02 00:03:15,050 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-02 00:03:15,050 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-02 00:03:15,729 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:04:48,084 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-02 00:04:49,619 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:05:00,686 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '작품 점유율도 함께 낮아졌다는 보도가 있었습니다'
+2026-09-02 00:05:00,687 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-09-02 00:05:00,687 [INFO] content_generator — 이미지 계획 3건 사용: ['korean drama detective chaebol characters', 'female detective analyzing crime scene', 'actor filmography multiple roles']
+2026-09-02 00:05:00,809 [INFO] image_fetcher — 이미지 수집 성공: 'korean drama detective chaebol characters' → 제목='tofu / korean / korean food / korean tra' (관련성=0.20)
+2026-09-02 00:05:00,971 [INFO] image_fetcher — 이미지 수집 성공: 'female detective analyzing crime scene' → 제목='man / hat / glasses / gangster / tough /' (관련성=0.40)
+2026-09-02 00:05:01,133 [INFO] image_fetcher — 이미지 수집 성공: 'actor filmography multiple roles' → 제목='woman / actor / adult / costume / epoch ' (관련성=0.25)
+2026-09-02 00:05:06,621 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:05:06,623 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-09-02 00:05:07,035 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-09-02 00:05:07,035 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-09-02 00:05:07,041 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 재벌X형사2 인물관계도, 안보현·정은채 연기 평가' (3417자, 이미지 2개)
+2026-09-02 00:05:07,653 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:05:29,060 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '[2편] 재벌X형사2 인물관계도, 안보현·정은채 연기 평가'
+2026-09-02 00:05:29,061 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 본문 일부 구간이 단락 구분 없이 길게 이어짐
+2026-09-02 00:05:29,061 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처는 저작권상 안전하나 alt 텍스트 명시 여부 확인 불가
+2026-09-02 00:05:29,061 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 전반적으로 인간적 어투이나 '보도되었습니다한 것으로 나타났습니다' 등 문장 중복·어색한 자동생성 흔적 존재
+2026-09-02 00:05:30,257 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:06:14,089 [INFO] final_editor —   ✏️ 제목 최종 교정: '[2편] 재벌X형사2 인물관계도, 안보현·정은채 연기 평가' → '재벌X형사2 등장인물 분석 총정리, 안보현·정은채·이동욱 연기 평가'
+2026-09-02 00:06:14,089 [INFO] final_editor —   ✏️ 메타 설명 교정 (123자)
+2026-09-02 00:06:14,089 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 재정비하고, 긴 문단을 모바일 친화적으로 분리했으며, 요약 박스·표·개인 경험 메모·FAQ·주의사항·작성자 메모·내부 링크 언급을 추가해 발행 가능한 형태로 완성했습니다.
+2026-09-02 00:06:14,188 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-02 00:06:14,188 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-09-02 00:06:14,776 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/x2.html
+2026-09-02 00:06:14,777 [INFO] main —   ✅ 편 2 업로드 완료: https://www.hoguwhat.com/2026/09/x2.html
+2026-09-02 00:06:17,779 [INFO] main — 
+--- [3/3편] '재벌X형사2 결말 총평 별점' 생성 중 ---
+2026-09-02 00:06:17,779 [INFO] content_generator — 시리즈 포스트 생성: '재벌X형사2 결말 총평 별점' (3/3편)
+2026-09-02 00:06:23,689 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:06:23,690 [INFO] research_collector — 검색 의도: 재벌X형사2 드라마의 결말 내용과 전체적인 평가, 별점을 확인하고 싶은 검색 의도
+2026-09-02 00:06:33,096 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '재벌X형사2 결말 총평 별점'
+2026-09-02 00:06:39,688 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:06:39,689 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '재벌X형사2 결말 총평 별점'
+2026-09-02 00:06:47,644 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:06:47,645 [INFO] source_validator — 출처 검증: 1/4개 통과, 등급 분포 {'X': 3, 'B': 1}
+2026-09-02 00:06:49,281 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-02 00:06:49,281 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-02 00:06:50,775 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:08:16,571 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-02 00:08:20,050 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:08:30,369 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-09-02 00:08:30,369 [INFO] content_generator — 이미지 계획 2건 사용: ['TV drama ending credits screen', 'streaming service drama list screen']
+2026-09-02 00:08:31,252 [INFO] image_fetcher — 이미지 수집 성공: 'TV drama ending credits screen' → 제목='playstation / computer / console / contr' (관련성=0.00)
+2026-09-02 00:08:31,529 [INFO] image_fetcher — 이미지 수집 성공: 'streaming service drama list screen' → 제목='tablet / video streaming / movie / watch' (관련성=0.60)
+2026-09-02 00:08:34,061 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:08:34,062 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
+2026-09-02 00:08:34,284 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-02 00:08:34,284 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-02 00:08:34,290 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 재벌X형사2 결말 총평 별점, 스포 주의하고 읽으세요' (2963자, 이미지 1개)
+2026-09-02 00:08:35,415 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-02 00:08:53,883 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '[3편] 재벌X형사2 결말 총평 별점, 스포 주의하고 읽으세요'
+2026-09-02 00:08:53,884 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충족하나 실제 결말·OST 정보 없이 '확인 불가' 서술과 일반적 장르 패턴 분석에 그쳐 독창적 가치가 낮음
+2026-09-02 00:08:53,884 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 불확실성을 솔직히 밝힌 점은 긍정적이나 구체적 출처·수치 인용 없이 추측성 서술 위주
+2026-09-02 00:08:53,884 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개 포함되어 저작권 위반은 없으나 이미지 수가 적어 warn 처리
+2026-09-02 00:08:53,884 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 동일 내용을 어색하게 반복하는 문장(SNS 곡 정보 언급 중복)과 정형화된 전환 문구가 AI 생성 패턴을 시사함
+2026-09-02 00:08:53,884 [WARNING] main —   ⚠️ [편 3] AdSense 검토 필요 — pending 저장 (점수: 79/100)
+2026-09-02 00:08:53,899 [INFO] dashboard_exporter —   검토 대기 저장: [3편] 재벌X형사2 결말 총평 별점, 스포 주의하고 읽으세요 (12124자 HTML)
+2026-09-02 00:08:53,921 [INFO] pending_store — 검토 대기 저장: 목록 27건 / 보관 137건 / 본문 38건
+2026-09-02 00:08:53,921 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 164개)
+2026-09-02 00:08:53,965 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 119개)
+2026-09-02 00:08:54,021 [INFO] dashboard_exporter — 분석 필드 유지: 116/121개 (등급·조회수·수익)
+2026-09-02 00:08:54,037 [INFO] dashboard_exporter —   시리즈: 25개 내보내기 완료
+2026-09-02 00:08:54,058 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-02 00:08:54,523 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-02 00:08:54,851 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-02 00:08:54,853 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-02 00:08:54,854 [INFO] dashboard_exporter —   학습 이력: 1주 내보내기 완료
+2026-09-02 00:08:54,855 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-02 00:08:54,872 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 269 / 실패 0 / 대기 16)
+2026-09-02 00:08:54,873 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-02 00:08:54,873 [INFO] dashboard_exporter —   포스트: 121개 / 실행 이력: 119개 / 블로그: 3개
+2026-09-02 00:08:54,874 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-02 00:08:54,874 [INFO] main — 
+============================================================
+2026-09-02 00:08:54,874 [INFO] main — [HOGU What?] 시리즈 완료: 2/3편 성공
+2026-09-02 00:08:54,874 [INFO] main — ============================================================
+2026-09-02 00:08:54,874 [INFO] main — 단독 포스트 대상 키워드 0개: []
+2026-09-02 00:08:54,899 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
+2026-09-02 00:08:54,899 [INFO] main — 
+============================================================
+2026-09-02 00:08:54,899 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
+2026-09-02 00:08:54,899 [INFO] main — ============================================================
+2026-09-02 00:08:54,942 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 120개)
+2026-09-02 00:08:54,960 [INFO] dashboard_exporter — 분석 필드 유지: 116/121개 (등급·조회수·수익)
+2026-09-02 00:08:54,974 [INFO] dashboard_exporter —   시리즈: 25개 내보내기 완료
+2026-09-02 00:08:54,996 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-02 00:08:54,997 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-02 00:08:54,998 [INFO] dashboard_exporter —   학습 이력: 1주 내보내기 완료
+2026-09-02 00:08:55,000 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-02 00:08:55,016 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 268 / 실패 1 / 대기 16)
+2026-09-02 00:08:55,016 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-02 00:08:55,016 [INFO] dashboard_exporter —   포스트: 121개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-02 00:08:55,017 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-02 00:08:55,019 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다

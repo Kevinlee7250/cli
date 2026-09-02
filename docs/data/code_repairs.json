@@ -1,5 +1,15 @@
 [
   {
+    "timestamp": "2026-09-02T19:36:19.775174",
+    "tracebacks_found": 0,
+    "critical_errors": 0,
+    "skipped_already_analyzed": 0,
+    "repairs": [],
+    "auto_fixed": 0,
+    "manual_required": 0,
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-09-02T00:37:10.285432",
     "tracebacks_found": 0,
     "critical_errors": 0,
@@ -693,57 +703,6 @@
         "file": "content_generator.py",
         "line": "2766",
         "timestamp": "2026-08-22T03:57:26.533483",
-        "dry_run": false,
-        "result": "error",
-        "detail": "Claude API 오류"
-      }
-    ],
-    "auto_fixed": 0,
-    "manual_required": 0,
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-22T03:50:39.528534",
-    "tracebacks_found": 4,
-    "critical_errors": 8,
-    "critical_samples": [
-      "2026-08-21 22:33:23,702 [ERROR] content_generator — 포스트 생성 오류: Messages.stream() got an unexpected keyword argument 'temperature'",
-      "2026-08-21 22:34:28,159 [ERROR] content_generator — 포스트 생성 오류: Messages.stream() got an unexpected keyword argument 'temperature'",
-      "2026-08-21 22:34:28,160 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '국내 증시 사이드카 발동 의미와 개인투자자 대응법'"
-    ],
-    "repairs": [
-      {
-        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
-        "file": "content_generator.py",
-        "line": "2766",
-        "timestamp": "2026-08-22T03:50:39.010861",
-        "dry_run": false,
-        "result": "error",
-        "detail": "Claude API 오류"
-      },
-      {
-        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
-        "file": "content_generator.py",
-        "line": "2766",
-        "timestamp": "2026-08-22T03:50:39.522452",
-        "dry_run": false,
-        "result": "error",
-        "detail": "Claude API 오류"
-      },
-      {
-        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
-        "file": "content_generator.py",
-        "line": "2766",
-        "timestamp": "2026-08-22T03:50:39.524665",
-        "dry_run": false,
-        "result": "error",
-        "detail": "Claude API 오류"
-      },
-      {
-        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
-        "file": "content_generator.py",
-        "line": "2766",
-        "timestamp": "2026-08-22T03:50:39.526567",
         "dry_run": false,
         "result": "error",
         "detail": "Claude API 오류"

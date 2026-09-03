@@ -1,5 +1,59 @@
 [
   {
+    "timestamp": "2026-09-03T13:37:05.542047",
+    "health_score": 82,
+    "issues_found": 2,
+    "issues": [
+      {
+        "id": "schedule_stalled",
+        "level": "high",
+        "message": "마지막 실행이 191시간 전 — 스케줄 중단 의심",
+        "context": {
+          "last_run": "2026-08-26T14:14:34.000936",
+          "hours_ago": 191.4
+        },
+        "fix": null
+      },
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 5개",
+        "context": {
+          "count": 5,
+          "titles": [
+            "[1편] 유부녀 킬러 첫인상, 공효진 킹피셔 되다",
+            "[2편] 유부녀 킬러 등장인물 분석, 공효진·정준원 케",
+            "[3편] 유부녀 킬러 결말 총평 및 별점 완벽 정리"
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "schedule_stalled",
+        "issue_level": "high",
+        "issue_message": "마지막 실행이 191시간 전 — 스케줄 중단 의심",
+        "fix_applied": null,
+        "timestamp": "2026-09-03T13:37:05.522766",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      },
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 5개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-09-03T13:37:05.522846",
+        "success": true,
+        "detail": "대기 포스트 5개 → expired 처리",
+        "expired": 5
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-09-02T15:06:58.707434",
     "health_score": 85,
     "issues_found": 1,
@@ -1479,57 +1533,6 @@
         "timestamp": "2026-08-09T17:25:07.014154",
         "success": null,
         "detail": "수동 조치 필요 (자동 수리 불가)"
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-08T17:23:40.389485",
-    "health_score": 90,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      },
-      {
-        "id": "stale_pending_posts",
-        "level": "low",
-        "message": "30일 이상 대기 중인 포스트 6개",
-        "context": {
-          "count": 6,
-          "titles": [
-            "프리랜서 종합소득세 첫 신고, 저는 이렇게 실수했습니다",
-            "장마철 여행 다니다 컨디션 난리났던 제 얘기 (2026",
-            "직장인 월 30만원 ETF 투자, 1년 해보고 솔직 후"
-          ]
-        },
-        "fix": "expire_old_pending"
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-08-08T17:23:40.328271",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      },
-      {
-        "issue_id": "stale_pending_posts",
-        "issue_level": "low",
-        "issue_message": "30일 이상 대기 중인 포스트 6개",
-        "fix_applied": "expire_old_pending",
-        "timestamp": "2026-08-08T17:23:40.328373",
-        "success": true,
-        "detail": "대기 포스트 6개 → expired 처리",
-        "expired": 6
       }
     ],
     "dry_run": false

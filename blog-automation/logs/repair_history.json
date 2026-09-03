@@ -1,5 +1,48 @@
 [
   {
+    "timestamp": "2026-09-03T19:34:26.389964",
+    "health_score": 85,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "gsc_url_mismatch",
+        "level": "high",
+        "message": "GSC가 URL 30개를 반환했지만 글 매칭률이 0.9% — 도메인 전환·URL 형식 불일치 의심",
+        "context": {
+          "dataSource": {
+            "bloggerApi": true,
+            "gscPageData": true,
+            "gscUrlsMatched": 0,
+            "gscUrlsSeen": 30,
+            "gscMatchRate": 0.9,
+            "postsWithoutUrl": 12
+          }
+        },
+        "fix": null,
+        "known_incident": {
+          "incident_id": "20260722060825",
+          "title": "GSC 도메인 속성(sc-domain:) 403 — 사이트맵 제출·검사 실패",
+          "root_cause": "GSC에 도메인 속성(sc-domain:)으로 등록된 사이트를 URL-프리픽스 형식으로 조회하면 403 발생",
+          "fix": "_domain_property_for() 헬퍼로 403 시 sc-domain: 형식으로 자동 재시도 (blog_analytics.py, gsc_indexing.py 양쪽)",
+          "match_score": 2
+        }
+      }
+    ],
+    "repairs_applied": 0,
+    "repairs": [
+      {
+        "issue_id": "gsc_url_mismatch",
+        "issue_level": "high",
+        "issue_message": "GSC가 URL 30개를 반환했지만 글 매칭률이 0.9% — 도메인 전환·URL 형식 불일치 의심",
+        "fix_applied": null,
+        "timestamp": "2026-09-03T19:34:26.389838",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-09-03T00:17:52.222727",
     "health_score": 82,
     "issues_found": 2,
@@ -1418,57 +1461,6 @@
         "success": true,
         "detail": "대기 포스트 6개 → expired 처리",
         "expired": 6
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-07T17:43:25.729885",
-    "health_score": 90,
-    "issues_found": 2,
-    "issues": [
-      {
-        "id": "adsense_not_configured",
-        "level": "warning",
-        "message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "context": {},
-        "fix": null
-      },
-      {
-        "id": "stale_pending_posts",
-        "level": "low",
-        "message": "30일 이상 대기 중인 포스트 15개",
-        "context": {
-          "count": 15,
-          "titles": [
-            "SBS 드라마 김부장 정주행 후기, 회사원이라 더 아팠",
-            "SBS 김부장 정주행 후기, 솔직히 제 감상 남겨봅니다",
-            "SBS 드라마 김부장 보면서 든 직장인 재테크 생각 ("
-          ]
-        },
-        "fix": "expire_old_pending"
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "adsense_not_configured",
-        "issue_level": "warning",
-        "issue_message": "AdSense 미설정 — 광고 수익화 비활성화 상태",
-        "fix_applied": null,
-        "timestamp": "2026-08-07T17:43:25.667800",
-        "success": null,
-        "detail": "수동 조치 필요 (자동 수리 불가)"
-      },
-      {
-        "issue_id": "stale_pending_posts",
-        "issue_level": "low",
-        "issue_message": "30일 이상 대기 중인 포스트 15개",
-        "fix_applied": "expire_old_pending",
-        "timestamp": "2026-08-07T17:43:25.667918",
-        "success": true,
-        "detail": "대기 포스트 15개 → expired 처리",
-        "expired": 15
       }
     ],
     "dry_run": false

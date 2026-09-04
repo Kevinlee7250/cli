@@ -1,5 +1,48 @@
 [
   {
+    "timestamp": "2026-09-04T19:15:44.649158",
+    "health_score": 85,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "gsc_url_mismatch",
+        "level": "high",
+        "message": "GSC가 URL 30개를 반환했지만 글 매칭률이 0.9% — 도메인 전환·URL 형식 불일치 의심",
+        "context": {
+          "dataSource": {
+            "bloggerApi": true,
+            "gscPageData": true,
+            "gscUrlsMatched": 0,
+            "gscUrlsSeen": 30,
+            "gscMatchRate": 0.9,
+            "postsWithoutUrl": 12
+          }
+        },
+        "fix": null,
+        "known_incident": {
+          "incident_id": "20260722060825",
+          "title": "GSC 도메인 속성(sc-domain:) 403 — 사이트맵 제출·검사 실패",
+          "root_cause": "GSC에 도메인 속성(sc-domain:)으로 등록된 사이트를 URL-프리픽스 형식으로 조회하면 403 발생",
+          "fix": "_domain_property_for() 헬퍼로 403 시 sc-domain: 형식으로 자동 재시도 (blog_analytics.py, gsc_indexing.py 양쪽)",
+          "match_score": 2
+        }
+      }
+    ],
+    "repairs_applied": 0,
+    "repairs": [
+      {
+        "issue_id": "gsc_url_mismatch",
+        "issue_level": "high",
+        "issue_message": "GSC가 URL 30개를 반환했지만 글 매칭률이 0.9% — 도메인 전환·URL 형식 불일치 의심",
+        "fix_applied": null,
+        "timestamp": "2026-09-04T19:15:44.649059",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-09-04T05:57:26.216407",
     "health_score": 85,
     "issues_found": 1,
@@ -1434,41 +1477,6 @@
         "success": true,
         "detail": "대기 포스트 11개 → expired 처리",
         "expired": 11
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-10T17:46:12.699902",
-    "health_score": 97,
-    "issues_found": 1,
-    "issues": [
-      {
-        "id": "stale_pending_posts",
-        "level": "low",
-        "message": "30일 이상 대기 중인 포스트 9개",
-        "context": {
-          "count": 9,
-          "titles": [
-            "소지섭 주연 드라마 깁부장, 직장인이 본 솔직 리뷰 (",
-            "소지섭 주연 드라마 '깁부장' 정주행 후기 - 직접 본",
-            "소지섭 주연 드라마 '깁부장'으로 보는 직장인 부장 승"
-          ]
-        },
-        "fix": "expire_old_pending"
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "stale_pending_posts",
-        "issue_level": "low",
-        "issue_message": "30일 이상 대기 중인 포스트 9개",
-        "fix_applied": "expire_old_pending",
-        "timestamp": "2026-08-10T17:46:12.639760",
-        "success": true,
-        "detail": "대기 포스트 9개 → expired 처리",
-        "expired": 9
       }
     ],
     "dry_run": false

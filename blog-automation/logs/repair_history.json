@@ -1,5 +1,14 @@
 [
   {
+    "timestamp": "2026-09-04T04:48:59.883845",
+    "health_score": 100,
+    "issues_found": 0,
+    "issues": [],
+    "repairs_applied": 0,
+    "repairs": [],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-09-04T03:09:42.056895",
     "health_score": 85,
     "issues_found": 1,
@@ -1501,41 +1510,6 @@
         "success": true,
         "detail": "대기 포스트 11개 → expired 처리",
         "expired": 11
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-10T17:46:12.699902",
-    "health_score": 97,
-    "issues_found": 1,
-    "issues": [
-      {
-        "id": "stale_pending_posts",
-        "level": "low",
-        "message": "30일 이상 대기 중인 포스트 9개",
-        "context": {
-          "count": 9,
-          "titles": [
-            "소지섭 주연 드라마 깁부장, 직장인이 본 솔직 리뷰 (",
-            "소지섭 주연 드라마 '깁부장' 정주행 후기 - 직접 본",
-            "소지섭 주연 드라마 '깁부장'으로 보는 직장인 부장 승"
-          ]
-        },
-        "fix": "expire_old_pending"
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "stale_pending_posts",
-        "issue_level": "low",
-        "issue_message": "30일 이상 대기 중인 포스트 9개",
-        "fix_applied": "expire_old_pending",
-        "timestamp": "2026-08-10T17:46:12.639760",
-        "success": true,
-        "detail": "대기 포스트 9개 → expired 처리",
-        "expired": 9
       }
     ],
     "dry_run": false

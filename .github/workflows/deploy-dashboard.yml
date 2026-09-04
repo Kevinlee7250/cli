@@ -49,22 +49,19 @@ on:
       - "📋 주간 운영 브리핑"
       - "주간 학습 및 시스템 점검"
     types: [completed]
-    # 두 브랜치를 모두 적습니다. 이 필터가 보는 것은 "데이터를 만든 워크플로가
-    # 어느 브랜치에서 돌았는가"입니다. 워크플로 파일은 기본 브랜치(latest)에서
-    # 읽히므로 수동 실행은 ref가 latest가 되는데, 여기에 작업 브랜치만 적혀
-    # 있으면 그 실행은 배포를 못 부릅니다.
-    #
-    # 2026-08-25에 실제로 그랬습니다. 이미지 감사가 발행 글 25장을 자체 호스팅
-    # 주소로 바꿔 놓고 커밋까지 했는데 배포가 안 걸려, 라이브 글들이 없는
-    # 파일을 가리켰습니다. 워크플로는 초록이었습니다.
-    branches: [claude/blog-automation-system-KAbtE, latest]
+    # ⚠️ 이 브랜치는 더 이상 쓰지 않습니다 (2026-09-04).
+    # 여기에 이 브랜치가 남아 있으면 그 활동이 옛 docs/를 라이브 대시보드에
+    # 배포합니다 — 실제로 그렇게 배포됐습니다(run #965). 대시보드가 이
+    # 브랜치를 가리키던 원인은 latest에서 고쳤고(#63), 남은 배포 경로를
+    # 여기서 닫습니다.
+    branches: [latest]
 
   # 수동 배포
   workflow_dispatch:
 
   # 사람이 docs/를 직접 고쳤을 때 (자동화 커밋은 위 workflow_run이 담당)
   push:
-    branches: [claude/blog-automation-system-KAbtE, latest]
+    branches: [latest]   # 위 주석 참고
     paths:
       - 'docs/index.html'
       - 'docs/data/**'
@@ -94,7 +91,9 @@ jobs:
       - name: 코드 체크아웃
         uses: actions/checkout@v4
         with:
-          ref: claude/blog-automation-system-KAbtE
+          # 이 워크플로가 수동으로 실행되더라도 옛 docs가 라이브에 나가지
+          # 않도록 latest를 체크아웃합니다.
+          ref: latest
 
       - name: GitHub Pages 설정
         uses: actions/configure-pages@v5

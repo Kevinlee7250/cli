@@ -1,5 +1,14 @@
 [
   {
+    "timestamp": "2026-09-04T05:04:32.706746",
+    "health_score": 100,
+    "issues_found": 0,
+    "issues": [],
+    "repairs_applied": 0,
+    "repairs": [],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-09-04T04:48:59.883845",
     "health_score": 100,
     "issues_found": 0,
@@ -1475,41 +1484,6 @@
         "success": true,
         "detail": "대기 포스트 2개 → expired 처리",
         "expired": 2
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-11T17:53:51.390487",
-    "health_score": 97,
-    "issues_found": 1,
-    "issues": [
-      {
-        "id": "stale_pending_posts",
-        "level": "low",
-        "message": "30일 이상 대기 중인 포스트 11개",
-        "context": {
-          "count": 11,
-          "titles": [
-            "여름방학 자녀 교육비 지출, 저는 이렇게 관리했습니다 ",
-            "2026년 여름 캠프 추천, 직접 알아보고 조카 보내본",
-            "방학 동안 할 일, 이번엔 '돈 공부'로 채워보세요 -"
-          ]
-        },
-        "fix": "expire_old_pending"
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "stale_pending_posts",
-        "issue_level": "low",
-        "issue_message": "30일 이상 대기 중인 포스트 11개",
-        "fix_applied": "expire_old_pending",
-        "timestamp": "2026-08-11T17:53:51.339271",
-        "success": true,
-        "detail": "대기 포스트 11개 → expired 처리",
-        "expired": 11
       }
     ],
     "dry_run": false

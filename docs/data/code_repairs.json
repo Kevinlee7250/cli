@@ -1,5 +1,15 @@
 [
   {
+    "timestamp": "2026-09-04T05:57:29.243950",
+    "tracebacks_found": 0,
+    "critical_errors": 1,
+    "skipped_already_analyzed": 0,
+    "repairs": [],
+    "auto_fixed": 0,
+    "manual_required": 0,
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-09-04T00:28:33.585332",
     "tracebacks_found": 0,
     "critical_errors": 1,
@@ -496,69 +506,6 @@
         "confidence": 0.55,
         "result": "manual_required",
         "detail": "수동 수정 필요 (확신도 55%): config.py의 claude_generate가 kwargs를 그대로 client.messages.stream()에 전달하는데, anthropic SDK의 stream() 메서드는 temperature 키워드 인자를 직접 받지 않아 TypeError가 발생함"
-      }
-    ],
-    "auto_fixed": 0,
-    "manual_required": 4,
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-22T05:11:09.698497",
-    "tracebacks_found": 4,
-    "critical_errors": 7,
-    "critical_samples": [
-      "2026-08-21 22:33:23,702 [ERROR] content_generator — 포스트 생성 오류: Messages.stream() got an unexpected keyword argument 'temperature'",
-      "2026-08-21 22:34:28,159 [ERROR] content_generator — 포스트 생성 오류: Messages.stream() got an unexpected keyword argument 'temperature'",
-      "2026-08-21 22:34:28,160 [ERROR] main —   ❌ 콘텐츠 생성 최종 실패 (2회 시도): '국내 증시 사이드카 발동 의미와 개인투자자 대응법'"
-    ],
-    "repairs": [
-      {
-        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
-        "file": "content_generator.py",
-        "line": "2766",
-        "timestamp": "2026-08-22T05:10:39.739352",
-        "dry_run": false,
-        "root_cause": "config.py의 claude_generate가 temperature 등 kwargs를 client.messages.stream()에 그대로 전달하는데, 사용 중인 anthropic SDK 버전의 stream() 메서드가 temperature 인자를 지원하지 않아 TypeError가 발생함",
-        "fix_summary": "content_generator.py에서 claude_generate 호출 시 전달하는 temperature 인자를 제거하여 stream() 호출에서 지원하지 않는 키워드 인자가 전달되지 않도록 수정",
-        "confidence": 0.6,
-        "result": "manual_required",
-        "detail": "수동 수정 필요 (확신도 60%): config.py의 claude_generate가 temperature 등 kwargs를 client.messages.stream()에 그대로 전달하는데, 사용 중인 anthropic SDK 버전의 stream() 메서드가 temperature 인자를 지원하지 않아 TypeError가 발생함"
-      },
-      {
-        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
-        "file": "content_generator.py",
-        "line": "2766",
-        "timestamp": "2026-08-22T05:10:50.079077",
-        "dry_run": false,
-        "root_cause": "config.py의 claude_generate 함수에서 client.messages.stream() 호출 시 temperature 등의 kwargs를 stream() 메서드에 직접 전달하고 있어 anthropic 라이브러리의 stream() 메서드가 지원하지 않는 키워드 인자를 받게 됨",
-        "fix_summary": "config.py의 claude_generate 함수 내 client.messages.stream() 호출부를 수정하여 temperature 등 kwargs가 올바르게 처리되도록 해야 하나, 해당 파일 코드가 제공되지 않아 정확한 수정 위치를 특정할 수 없음",
-        "confidence": 0.3,
-        "result": "manual_required",
-        "detail": "수동 수정 필요 (확신도 30%): config.py의 claude_generate 함수에서 client.messages.stream() 호출 시 temperature 등의 kwargs를 stream() 메서드에 직접 전달하고 있어 anthropic 라이브러리의 stream() 메서드가 지원하지 않는 키워드 인자를 받게 됨"
-      },
-      {
-        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
-        "file": "content_generator.py",
-        "line": "2766",
-        "timestamp": "2026-08-22T05:10:55.019704",
-        "dry_run": false,
-        "root_cause": "config.py의 claude_generate 함수에서 client.messages.stream() 호출 시 temperature 인자를 kwargs로 그대로 전달하는데, anthropic SDK의 stream 메서드가 temperature 키워드 인자를 지원하지 않아 TypeError가 발생함",
-        "fix_summary": "content_generator.py의 _ai_generate에서 claude_generate 호출 시 temperature 인자를 제거하여 stream() 호출에 전달되지 않도록 수정",
-        "confidence": 0.6,
-        "result": "manual_required",
-        "detail": "수동 수정 필요 (확신도 60%): config.py의 claude_generate 함수에서 client.messages.stream() 호출 시 temperature 인자를 kwargs로 그대로 전달하는데, anthropic SDK의 stream 메서드가 temperature 키워드 인자를 지원하지 않아 TypeError가 발생함"
-      },
-      {
-        "error": "TypeError: Messages.stream() got an unexpected keyword argument 'temperature'",
-        "file": "content_generator.py",
-        "line": "2766",
-        "timestamp": "2026-08-22T05:10:59.367891",
-        "dry_run": false,
-        "root_cause": "config.py의 claude_generate가 kwargs로 받은 temperature를 client.messages.stream()에 그대로 전달하는데, 사용 중인 anthropic SDK 버전의 stream() 메서드가 temperature 키워드 인자를 지원하지 않아 TypeError가 발생함",
-        "fix_summary": "_ai_generate에서 claude_generate 호출 시 temperature 인자를 제거하여 stream()에 지원되지 않는 키워드가 전달되지 않도록 수정",
-        "confidence": 0.55,
-        "result": "manual_required",
-        "detail": "수동 수정 필요 (확신도 55%): config.py의 claude_generate가 kwargs로 받은 temperature를 client.messages.stream()에 그대로 전달하는데, 사용 중인 anthropic SDK 버전의 stream() 메서드가 temperature 키워드 인자를 지원하지 않아 TypeError가 발생함"
       }
     ],
     "auto_fixed": 0,

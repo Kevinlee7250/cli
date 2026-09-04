@@ -88,3 +88,32 @@ def test_checkout_and_push_agree(path):
     assert concrete <= {"latest"}, (
         f"{os.path.basename(path)}가 latest 외의 브랜치를 씁니다: {sorted(concrete)}"
     )
+
+# 워크플로와 파이썬을 막고도 대시보드가 남아 있었습니다. docs/index.html의
+# GH_BRANCH가 휴면 브랜치를 가리켜, "GitHub에 저장"이 성공하고도 아무도
+# 읽지 않는 곳에 파일이 쌓였습니다. 쿠팡 링크가 그렇게 두 달 넘게 묻혀
+# 있었고, 발행 글 472편 중 광고가 들어간 글이 0건이었습니다. 화면은 내내
+# "✅ 저장 완료"라고 말했습니다.
+
+_DASHBOARD = os.path.normpath(os.path.join(_WF, "..", "..", "docs", "index.html"))
+
+
+def test_dashboard_does_not_target_the_old_branch():
+    with open(_DASHBOARD, encoding="utf-8") as f:
+        hits = [ln.strip()[:110] for ln in f if _OLD in ln]
+    assert not hits, (
+        "대시보드가 휴면 브랜치를 가리킵니다 — 저장·실행이 아무도 읽지 않는 "
+        "곳으로 가는데 화면에는 성공으로 보입니다:\n  " + "\n  ".join(hits)
+    )
+
+
+def test_dashboard_branch_is_declared_once_and_is_latest():
+    """브랜치를 곳곳에 하드코딩하면 한 곳만 고치고 지나칩니다."""
+    with open(_DASHBOARD, encoding="utf-8") as f:
+        text = f.read()
+    decls = re.findall(r"const GH_BRANCH = '([^']+)'", text)
+    assert decls == ["latest"], f"GH_BRANCH 선언이 이상합니다: {decls}"
+    # dispatch·저장 호출이 상수를 쓰지 않고 문자열을 직접 박아 두면,
+    # 다음에 브랜치가 바뀔 때 또 갈라집니다.
+    inline = re.findall(r"ref: '(?!\$)([a-zA-Z0-9/_-]+)'", text)
+    assert set(inline) <= {"latest"}, f"브랜치를 직접 박은 곳이 있습니다: {sorted(set(inline))}"

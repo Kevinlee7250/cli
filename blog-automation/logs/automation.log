@@ -1,116 +1,3 @@
-2026-09-02 00:06:14,188 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-09-02 00:06:14,776 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/x2.html
-2026-09-02 00:06:14,777 [INFO] main —   ✅ 편 2 업로드 완료: https://www.hoguwhat.com/2026/09/x2.html
-2026-09-02 00:06:17,779 [INFO] main — 
---- [3/3편] '재벌X형사2 결말 총평 별점' 생성 중 ---
-2026-09-02 00:06:17,779 [INFO] content_generator — 시리즈 포스트 생성: '재벌X형사2 결말 총평 별점' (3/3편)
-2026-09-02 00:06:23,689 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:06:23,690 [INFO] research_collector — 검색 의도: 재벌X형사2 드라마의 결말 내용과 전체적인 평가, 별점을 확인하고 싶은 검색 의도
-2026-09-02 00:06:33,096 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '재벌X형사2 결말 총평 별점'
-2026-09-02 00:06:39,688 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:06:39,689 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '재벌X형사2 결말 총평 별점'
-2026-09-02 00:06:47,644 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:06:47,645 [INFO] source_validator — 출처 검증: 1/4개 통과, 등급 분포 {'X': 3, 'B': 1}
-2026-09-02 00:06:49,281 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-02 00:06:49,281 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-02 00:06:50,775 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:08:16,571 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-02 00:08:20,050 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:08:30,369 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-09-02 00:08:30,369 [INFO] content_generator — 이미지 계획 2건 사용: ['TV drama ending credits screen', 'streaming service drama list screen']
-2026-09-02 00:08:31,252 [INFO] image_fetcher — 이미지 수집 성공: 'TV drama ending credits screen' → 제목='playstation / computer / console / contr' (관련성=0.00)
-2026-09-02 00:08:31,529 [INFO] image_fetcher — 이미지 수집 성공: 'streaming service drama list screen' → 제목='tablet / video streaming / movie / watch' (관련성=0.60)
-2026-09-02 00:08:34,061 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:08:34,062 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
-2026-09-02 00:08:34,284 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-02 00:08:34,284 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-09-02 00:08:34,290 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 재벌X형사2 결말 총평 별점, 스포 주의하고 읽으세요' (2963자, 이미지 1개)
-2026-09-02 00:08:35,415 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:08:53,883 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '[3편] 재벌X형사2 결말 총평 별점, 스포 주의하고 읽으세요'
-2026-09-02 00:08:53,884 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충족하나 실제 결말·OST 정보 없이 '확인 불가' 서술과 일반적 장르 패턴 분석에 그쳐 독창적 가치가 낮음
-2026-09-02 00:08:53,884 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 불확실성을 솔직히 밝힌 점은 긍정적이나 구체적 출처·수치 인용 없이 추측성 서술 위주
-2026-09-02 00:08:53,884 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개 포함되어 저작권 위반은 없으나 이미지 수가 적어 warn 처리
-2026-09-02 00:08:53,884 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 동일 내용을 어색하게 반복하는 문장(SNS 곡 정보 언급 중복)과 정형화된 전환 문구가 AI 생성 패턴을 시사함
-2026-09-02 00:08:53,884 [WARNING] main —   ⚠️ [편 3] AdSense 검토 필요 — pending 저장 (점수: 79/100)
-2026-09-02 00:08:53,899 [INFO] dashboard_exporter —   검토 대기 저장: [3편] 재벌X형사2 결말 총평 별점, 스포 주의하고 읽으세요 (12124자 HTML)
-2026-09-02 00:08:53,921 [INFO] pending_store — 검토 대기 저장: 목록 27건 / 보관 137건 / 본문 38건
-2026-09-02 00:08:53,921 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 164개)
-2026-09-02 00:08:53,965 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 119개)
-2026-09-02 00:08:54,021 [INFO] dashboard_exporter — 분석 필드 유지: 116/121개 (등급·조회수·수익)
-2026-09-02 00:08:54,037 [INFO] dashboard_exporter —   시리즈: 25개 내보내기 완료
-2026-09-02 00:08:54,058 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-02 00:08:54,523 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-02 00:08:54,851 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-02 00:08:54,853 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-02 00:08:54,854 [INFO] dashboard_exporter —   학습 이력: 1주 내보내기 완료
-2026-09-02 00:08:54,855 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-02 00:08:54,872 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 269 / 실패 0 / 대기 16)
-2026-09-02 00:08:54,873 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-02 00:08:54,873 [INFO] dashboard_exporter —   포스트: 121개 / 실행 이력: 119개 / 블로그: 3개
-2026-09-02 00:08:54,874 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-02 00:08:54,874 [INFO] main — 
-============================================================
-2026-09-02 00:08:54,874 [INFO] main — [HOGU What?] 시리즈 완료: 2/3편 성공
-2026-09-02 00:08:54,874 [INFO] main — ============================================================
-2026-09-02 00:08:54,874 [INFO] main — 단독 포스트 대상 키워드 0개: []
-2026-09-02 00:08:54,899 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
-2026-09-02 00:08:54,899 [INFO] main — 
-============================================================
-2026-09-02 00:08:54,899 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
-2026-09-02 00:08:54,899 [INFO] main — ============================================================
-2026-09-02 00:08:54,942 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 120개)
-2026-09-02 00:08:54,960 [INFO] dashboard_exporter — 분석 필드 유지: 116/121개 (등급·조회수·수익)
-2026-09-02 00:08:54,974 [INFO] dashboard_exporter —   시리즈: 25개 내보내기 완료
-2026-09-02 00:08:54,996 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-02 00:08:54,997 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-02 00:08:54,998 [INFO] dashboard_exporter —   학습 이력: 1주 내보내기 완료
-2026-09-02 00:08:55,000 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-02 00:08:55,016 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 268 / 실패 1 / 대기 16)
-2026-09-02 00:08:55,016 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-02 00:08:55,016 [INFO] dashboard_exporter —   포스트: 121개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-02 00:08:55,017 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-02 00:08:55,019 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다
-2026-09-02 00:09:30,072 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-02 00:09:30,870 [INFO] main — ============================================================
-2026-09-02 00:09:30,870 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-09-02 00:09:30
-2026-09-02 00:09:30,870 [INFO] main — ============================================================
-2026-09-02 00:09:30,889 [INFO] keyword_collector — 타 블로그 최근 키워드 6개 중복 방지 코퍼스 합류
-2026-09-02 00:09:30,889 [INFO] keyword_collector — 포스팅 이력 코퍼스: 156개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-09-02 00:09:30,889 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-02 00:09:36,992 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-09-02 00:09:43,916 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:09:43,942 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-09-02 00:09:43,942 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-09-02 00:09:44,461 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-02 00:09:44,461 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-09-02 00:09:44,462 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-09-02 00:09:44,479 [INFO] keyword_collector — 유사 주제 제외 12개: ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '가을 단풍 골프장 추천 코스 베스트', '호텔 AI 컨시어지 서비스 체험 후기', 'OTT 대신 극장 다시 찾는 이유와 관람 팁']
-2026-09-02 00:09:44,479 [INFO] keyword_collector —   [naver_realtime] 1개: ['가을철 장바구니 물가 절약 쇼핑 노하우']
-2026-09-02 00:09:44,479 [INFO] keyword_collector —   [fallback] 1개: ['남해 여행 봄에 가면 좋은 이유와 준비물']
-2026-09-02 00:09:44,479 [INFO] keyword_collector — 최종 선정 키워드 2개: ['가을철 장바구니 물가 절약 쇼핑 노하우', '남해 여행 봄에 가면 좋은 이유와 준비물']
-2026-09-02 00:09:44,479 [INFO] main — 수집된 키워드 2개: ['가을철 장바구니 물가 절약 쇼핑 노하우', '남해 여행 봄에 가면 좋은 이유와 준비물']
-2026-09-02 00:09:44,485 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-09-02 00:09:44,485 [INFO] main — 단독 포스트 대상 키워드 1개: ['가을철 장바구니 물가 절약 쇼핑 노하우']
-2026-09-02 00:09:44,504 [INFO] main — 
-[1/1] 키워드: '가을철 장바구니 물가 절약 쇼핑 노하우'
-2026-09-02 00:09:44,504 [INFO] content_generator — 포스트 생성 중: '가을철 장바구니 물가 절약 쇼핑 노하우'
-2026-09-02 00:09:52,629 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:09:52,630 [INFO] research_collector — 검색 의도: 가을철 식재료 물가 상승에 대비해 장바구니 비용을 절약할 수 있는 실질적인 쇼핑 방법과 팁을 찾으려는 의도
-2026-09-02 00:10:18,189 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '가을철 장바구니 물가 절약 쇼핑 노하우'
-2026-09-02 00:10:32,786 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:10:32,787 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '가을철 장바구니 물가 절약 쇼핑 노하우'
-2026-09-02 00:10:49,699 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:10:49,700 [INFO] source_validator — 출처 검증: 6/7개 통과, 등급 분포 {'A': 4, 'B': 1, 'X': 1, 'D': 1}
-2026-09-02 00:10:49,702 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-09-02 00:10:49,702 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-02 00:10:49,704 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-02 00:10:50,843 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:12:23,645 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-02 00:12:24,595 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-02 00:12:36,252 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-09-02 00:12:36,253 [INFO] content_generator — 이미지 계획 2건 사용: ['autumn market vegetables shopping', 'grocery produce price tags']
-2026-09-02 00:12:36,487 [INFO] image_fetcher — 이미지 수집 성공: 'autumn market vegetables shopping' → 제목='stockholm / market trade / hötorget / ma' (관련성=1.00)
-2026-09-02 00:12:36,678 [INFO] image_fetcher — 이미지 수집 성공: 'grocery produce price tags' → 제목='bananas / fruits / food / grocery store ' (관련성=0.50)
 2026-09-02 00:12:39,421 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-09-02 00:12:39,423 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
 2026-09-02 00:12:39,698 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
@@ -611,3 +498,108 @@
 2026-09-03 00:58:02,886 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-09-03 00:58:02,886 [INFO] main —   - [blog3] 금융NEWS
 2026-09-03 00:58:02,891 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-09-03 23:55:30,183 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-03 23:55:30,855 [INFO] main — ============================================================
+2026-09-03 23:55:30,855 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-03 23:55:30
+2026-09-03 23:55:30,855 [INFO] main — ============================================================
+2026-09-03 23:55:30,874 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-03 23:55:30,874 [INFO] keyword_collector — 포스팅 이력 코퍼스: 156개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-09-03 23:55:30,875 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
+2026-09-03 23:55:34,415 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-09-03 23:55:39,752 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-03 23:55:39,775 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-03 23:55:39,775 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-03 23:55:40,325 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-09-03 23:55:40,648 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-03 23:55:40,862 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 9개 쿼리 / 1개 카테고리
+2026-09-03 23:55:40,863 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-03 23:55:40,864 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-03 23:55:40,882 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-09-03 23:55:40,882 [INFO] keyword_collector — 유사 주제 제외 10개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-03 23:55:40,884 [INFO] keyword_collector —   [fallback] 2개: ['안동 하회마을 혼자 여행하기 좋을까 솔직 후기', '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳']
+2026-09-03 23:55:40,884 [INFO] keyword_collector — 최종 선정 키워드 2개: ['안동 하회마을 혼자 여행하기 좋을까 솔직 후기', '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳']
+2026-09-03 23:55:40,884 [INFO] main — 수집된 키워드 2개: ['안동 하회마을 혼자 여행하기 좋을까 솔직 후기', '춘천 닭갈비 골목 진짜 맛집과 피해야 할 곳']
+2026-09-03 23:55:40,889 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
+2026-09-03 23:55:40,889 [INFO] main — 단독 포스트 대상 키워드 1개: ['안동 하회마을 혼자 여행하기 좋을까 솔직 후기']
+2026-09-03 23:55:40,907 [INFO] main — 
+[1/1] 키워드: '안동 하회마을 혼자 여행하기 좋을까 솔직 후기'
+2026-09-03 23:55:40,907 [INFO] content_generator — 포스트 생성 중: '안동 하회마을 혼자 여행하기 좋을까 솔직 후기'
+2026-09-03 23:55:46,244 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-03 23:55:46,245 [INFO] research_collector — 검색 의도: 안동 하회마을이 혼자 여행하기에 적합한지 실제 경험 기반 정보를 얻고자 함
+2026-09-03 23:56:04,995 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '안동 하회마을 혼자 여행하기 좋을까 솔직 후기'
+2026-09-03 23:56:18,715 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-03 23:56:18,716 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '안동 하회마을 혼자 여행하기 좋을까 솔직 후기'
+2026-09-03 23:56:31,424 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-03 23:56:31,425 [INFO] source_validator — 출처 검증: 2/4개 통과, 등급 분포 {'A': 1, 'X': 2, 'C': 1}
+2026-09-03 23:56:31,427 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-03 23:56:31,428 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-03 23:56:32,667 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-03 23:57:53,719 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-03 23:57:54,938 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-03 23:58:03,597 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-09-03 23:58:03,597 [INFO] content_generator — 이미지 계획 2건 사용: ['hahoe folk village korea', 'traditional korean village alley walk']
+2026-09-03 23:58:04,156 [INFO] image_fetcher — 이미지 수집 성공: 'hahoe folk village korea' → 제목='dried / persimmons / fruits / hahoe folk' (관련성=1.00)
+2026-09-03 23:58:04,489 [INFO] image_fetcher — 이미지 수집 성공: 'traditional korean village alley walk' → 제목='korean folk village / forest / trees / s' (관련성=0.60)
+2026-09-03 23:58:07,359 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-03 23:58:07,361 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
+2026-09-03 23:58:08,668 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-03 23:58:08,668 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-03 23:58:08,673 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-09-03 23:58:08,675 [INFO] content_generator — 포스트 생성 완료: '안동 하회마을 혼자 여행, 솔직 후기 총정리' (3248자, 이미지 1개)
+2026-09-03 23:58:09,402 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-03 23:58:30,931 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '안동 하회마을 혼자 여행, 솔직 후기 총정리'
+2026-09-03 23:58:30,931 [INFO] adsense_validator —   ⚠️ SEO 최적화: 핵심 키워드 문구가 여러 차례 반복되며 일부 문장은 부자연스럽게 삽입됨(오타 '결론부터 결론부터'도 확인)
+2026-09-03 23:58:30,931 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장뿐이며 alt 텍스트 명시 여부 불명확, 출처는 Pixabay로 저작권 문제는 없음
+2026-09-03 23:58:30,931 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트식 목록화와 반복적 전환 문구('~할 차례입니다' 등) 패턴이 다소 기계적으로 느껴짐
+2026-09-03 23:58:30,936 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-03 23:58:30,946 [INFO] internal_linker —   [1/5] '이렇게' -> https://www.hoguwhat.com/2026/08/blog-post_28.html
+2026-09-03 23:58:30,946 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-09-03 23:58:30,946 [INFO] main —   제목: 안동 하회마을 혼자 여행, 솔직 후기 총정리
+2026-09-03 23:58:30,946 [INFO] main —   이미지: 1개 삽입
+2026-09-03 23:58:30,946 [INFO] main —   글자 수: 3248자
+2026-09-03 23:58:31,648 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-03 23:58:55,661 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '안동 하회마을 혼자 여행, 솔직 후기 총정리'
+2026-09-03 23:58:55,661 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 구간에서 문단 구분 없이 텍스트가 길게 이어짐
+2026-09-03 23:58:55,661 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개만 사용되고 alt 텍스트 명시 여부 확인 불가하나 출처(Pixabay)는 명확함
+2026-09-03 23:58:55,661 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 섹션 구분·정형화된 전환 문구('다음으로 짚어야 할 건' 등) 반복으로 템플릿화된 패턴이 다소 보임
+2026-09-03 23:58:55,661 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-09-03 23:58:56,865 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-03 23:59:46,806 [INFO] final_editor —   ✏️ 제목 최종 교정: '안동 하회마을 혼자 여행, 솔직 후기 총정리' → '안동 하회마을 혼자 여행하기 좋을까, 솔직 후기 완전 정리'
+2026-09-03 23:59:46,806 [INFO] final_editor —   ✏️ 메타 설명 교정 (128자)
+2026-09-03 23:59:46,806 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 발행 규격에 맞게 재정비하고 긴 문단을 2~4문장 단위로 재구성했습니다. 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모·이미지 위치를 표준 형식에 맞춰 정리하고, 광고 유도 문구나 근거 없는 과장 표현이 없는지 확인했습니다.
+2026-09-03 23:59:46,997 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-03 23:59:46,997 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-09-03 23:59:47,915 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/blog-post_04.html
+2026-09-03 23:59:47,928 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/09/blog-post_04.html
+2026-09-03 23:59:47,931 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-09-03 23:59:47,938 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-03 23:59:47,939 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '안동 하회마을 혼자 여행하기 좋을까, 솔직 후기 완전 정리'
+2026-09-03 23:59:49,011 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-03 23:59:52,253 [INFO] comment_manager —   생성된 댓글: 하나 더 팁 드리자면, 하회마을 자체는 짧게 끝나도 바로 옆 부용대에 올라가서 마을 전체를 내려다보는 코스까지 묶으면 체감 만족도가 확 올라가더...
+2026-09-04 00:02:52,674 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-09-04 00:02:52,676 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-09-04 00:02:52,676 [INFO] main — 
+============================================================
+2026-09-04 00:02:52,676 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-09-04 00:02:52,676 [INFO] main — ============================================================
+2026-09-04 00:02:52,718 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 126개)
+2026-09-04 00:02:52,758 [INFO] dashboard_exporter — 분석 필드 유지: 116/128개 (등급·조회수·수익)
+2026-09-04 00:02:52,771 [INFO] dashboard_exporter —   시리즈: 26개 내보내기 완료
+2026-09-04 00:02:52,791 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-04 00:02:53,183 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-04 00:02:53,549 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-04 00:02:53,550 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-04 00:02:53,551 [INFO] dashboard_exporter —   학습 이력: 1주 내보내기 완료
+2026-09-04 00:02:53,553 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-04 00:02:53,568 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 269 / 실패 0 / 대기 16)
+2026-09-04 00:02:53,568 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-04 00:02:53,568 [INFO] dashboard_exporter —   포스트: 128개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-04 00:02:53,569 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-04 00:02:53,570 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

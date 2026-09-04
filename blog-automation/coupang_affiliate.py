@@ -60,6 +60,20 @@ def _match_links(links: list[dict], keyword: str, blog_id: str) -> list[dict]:
     return selected
 
 
+#: 쿠팡 파트너스 고지 문구.
+#:
+#: 표시광고법상 대가를 받은 추천은 소비자가 "쉽게 인식할 수 있는" 방법으로
+#: 알려야 합니다. 문구를 바꾸거나 빼면 법적 문제가 되므로 상수로 두고
+#: 테스트로 고정합니다.
+#:
+#: 이전에는 10px · #bbb 회색이었습니다. 흰 배경에 옅은 회색 10px는 있어도
+#: 읽히지 않아, 표시했다고 보기 어렵습니다. 본문과 같은 크기로 올렸습니다.
+DISCLOSURE = (
+    "이 포스팅은 쿠팡 파트너스 활동의 일환으로, "
+    "이에 따른 일정액의 수수료를 제공받습니다."
+)
+
+
 def inject_affiliate_section(
     content_html: str,
     keyword: str,
@@ -100,9 +114,8 @@ def inject_affiliate_section(
         '  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">\n'
         f'    {items_html}\n'
         '  </div>\n'
-        '  <p style="font-size:10px;color:#bbb;margin:14px 0 0;line-height:1.5">'
-        '이 포스트는 쿠팡 파트너스 활동의 일환으로, '
-        '이에 따른 일정액의 수수료를 제공받을 수 있습니다.</p>\n'
+        f'  <p style="font-size:13px;color:#6b4423;margin:16px 0 0;'
+        f'line-height:1.6;font-weight:600">{DISCLOSURE}</p>\n'
         '</div>'
     )
 

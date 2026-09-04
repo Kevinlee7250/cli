@@ -2313,7 +2313,11 @@
 const GH_OWNER = 'kevinlee7250'
 const GH_REPO = 'cli'
 const GH_WORKFLOW = 'blog-run.yml'
-const GH_BRANCH = 'claude/blog-automation-system-KAbtE'
+//: 워크플로도 스케줄도 latest에서 읽습니다. 여기가 다른 브랜치를 가리키면
+//: 대시보드의 저장·실행이 아무도 보지 않는 곳으로 갑니다 — 쿠팡 링크가
+//: 그렇게 두 달 넘게 휴면 브랜치에만 쌓여, 발행 글 472편 중 광고가 들어간
+//: 글이 0건이었습니다. 화면은 "저장 완료"라고 말했습니다.
+const GH_BRANCH = 'latest'
 
 const CPC_MAP = {법률:3.20,부동산:2.80,금융:2.50,건강:1.80,기술:1.50,교육:1.30,여행:1.20,쇼핑:0.90,일반:1.00}
 
@@ -8663,7 +8667,7 @@ function wfRunWeeklyCheck() {
   fetch(`https://api.github.com/repos/${owner}/${repo}/actions/workflows/weekly-learning.yml/dispatches`, {
     method: 'POST',
     headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ref: 'claude/blog-automation-system-KAbtE', inputs: { force_analyze: 'true' } }),
+    body: JSON.stringify({ ref: 'latest', inputs: { force_analyze: 'true' } }),
   }).then(r => {
     if (r.status === 204) showToast('주간 점검 워크플로우 실행 시작됨 (약 5분 소요)', 'success')
     else showToast(_wfErrMsg(r.status), 'error')
@@ -9347,7 +9351,7 @@ function wfRunAutoRepair(dryRun = false) {
   fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/auto-repair.yml/dispatches`, {
     method: 'POST',
     headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ref: 'claude/blog-automation-system-KAbtE', inputs: { dry_run: dryRun ? 'true' : 'false' } }),
+    body: JSON.stringify({ ref: 'latest', inputs: { dry_run: dryRun ? 'true' : 'false' } }),
   }).then(r => {
     if (r.status === 204) showToast(dryRun ? '진단 워크플로우 실행 시작됨 (약 2분 소요)' : '자동 수리 워크플로우 실행 시작됨 (약 3분 소요)', 'success')
     else showToast(_wfErrMsg(r.status), 'error')
@@ -9921,7 +9925,7 @@ async function _botAutoRepair(errorCount) {
     const r = await fetch(`https://api.github.com/repos/${owner}/${repo}/actions/workflows/auto-repair.yml/dispatches`, {
       method: 'POST',
       headers: { Authorization: `token ${pat}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ref: 'claude/blog-automation-system-KAbtE', inputs: { dry_run: 'false' } }),
+      body: JSON.stringify({ ref: 'latest', inputs: { dry_run: 'false' } }),
     })
     dispatchOk = (r.status === 204)
   } catch { dispatchOk = false }

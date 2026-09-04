@@ -1360,12 +1360,19 @@
             <option value="draft">📄 Draft 저장</option>
             <option value="review">✍️ Review 모드</option>
           </select>
-          <select id="wf-live-count" style="width:70px;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
+          <select id="wf-live-count" onchange="wfLiveBlogChanged()" style="width:70px;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
             <option value="1">1편</option>
             <option value="2">2편</option>
             <option value="3">3편</option>
           </select>
         </div>
+        <select id="wf-live-blog" onchange="wfLiveBlogChanged()" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:8px">
+          <option value="">🌐 전체 블로그 (3곳 모두 실행 — 주의)</option>
+          <option value="blog1">blog1 (HOGU What?)</option>
+          <option value="blog2">blog2 (HOGU 여행,스포츠,연예)</option>
+          <option value="blog3">blog3 (금융NEWS)</option>
+        </select>
+        <div id="wf-live-blog-hint" style="font-size:11px;color:var(--yellow);line-height:1.6;margin:-4px 0 8px"></div>
         <input id="wf-live-kw" placeholder="키워드 (빈칸=자동)" oninput="tplSuggest()" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:8px;box-sizing:border-box">
         <select id="wf-live-tpl" onchange="tplDescribe()" style="width:100%;padding:7px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;margin-bottom:6px">
           <option value="auto">📐 글 구조: 자동 판정</option>
@@ -3114,6 +3121,7 @@ async function loadAll(silent = false) {
     ['운영 알림', renderAlerts],
     ['기능 스위치', renderFeatureFlags],
     ['발행 스케줄', renderPublishSchedule],
+    ['포스트 생성 대상 안내', wfLiveBlogChanged],
     ['시스템 탭 정리', groupSystemPanels],
     ['차트 안내', renderChartLibNotice],
     ['데이터 신선도', renderFreshnessPanel],
@@ -7961,12 +7969,29 @@ async function _wfDispatch(mode, extraInputs, statusElId, dotElId) {
   }
 }
 
+// 대상이 "전체"면 몇 편이 나가는지 미리 보여 줍니다. 3편을 고르고 전체를
+// 두면 9편이 발행되는데, 버튼에는 "3편"만 보여 알아채기 어렵습니다.
+function wfLiveBlogChanged() {
+  const hint = document.getElementById('wf-live-blog-hint')
+  if (!hint) return
+  const blogId = document.getElementById('wf-live-blog')?.value || ''
+  const n = parseInt(document.getElementById('wf-live-count')?.value, 10) || 1
+  hint.textContent = blogId ? '' : `⚠️ 전체 선택 — 블로그 3곳에 각 ${n}편, 총 ${n * 3}편이 생성됩니다`
+}
+
 function wfRunLive() {
   const mode = document.getElementById('wf-live-mode')?.value || 'live'
   const count = document.getElementById('wf-live-count')?.value || '1'
   const kw = document.getElementById('wf-live-kw')?.value.trim() || ''
   const tpl = document.getElementById('wf-live-tpl')?.value || 'auto'
-  _wfDispatch(mode, { keyword: kw, posts_per_run: count, article_type: tpl },
+  const blogId = document.getElementById('wf-live-blog')?.value || ''
+  // 시리즈 기획과 같은 이유로 확인을 받습니다 — 빈 값은 blog-run.yml에서
+  // "세 블로그 순차 실행"이라, 무심코 누르면 고른 편수의 3배가 나갑니다.
+  if (!blogId) {
+    const n = parseInt(count, 10) || 1
+    if (!confirm(`대상 블로그가 "전체"입니다.\n블로그 3곳에 각 ${n}편, 총 ${n * 3}편이 생성됩니다.\n계속할까요?`)) return
+  }
+  _wfDispatch(mode, { keyword: kw, posts_per_run: count, article_type: tpl, blog_id: blogId },
               'wf-live-status', 'wf-live-dot')
 }
 

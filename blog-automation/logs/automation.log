@@ -1,121 +1,3 @@
-============================================================
-2026-09-02 00:32:30,777 [INFO] main — [금융NEWS] 시리즈 완료: 2/3편 성공
-2026-09-02 00:32:30,777 [INFO] main — ============================================================
-2026-09-02 00:32:30,777 [INFO] main — 단독 포스트 대상 키워드 0개: []
-2026-09-02 00:32:30,800 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
-2026-09-02 00:32:30,800 [INFO] main — 
-============================================================
-2026-09-02 00:32:30,800 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 0개
-2026-09-02 00:32:30,800 [INFO] main — ============================================================
-2026-09-02 00:32:30,843 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 123개)
-2026-09-02 00:32:30,858 [INFO] dashboard_exporter — 분석 필드 유지: 116/125개 (등급·조회수·수익)
-2026-09-02 00:32:30,873 [INFO] dashboard_exporter —   시리즈: 26개 내보내기 완료
-2026-09-02 00:32:30,892 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-02 00:32:30,894 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-02 00:32:30,894 [INFO] dashboard_exporter —   학습 이력: 1주 내보내기 완료
-2026-09-02 00:32:30,896 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-02 00:32:30,911 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 268 / 실패 2 / 대기 15)
-2026-09-02 00:32:30,912 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-02 00:32:30,912 [INFO] dashboard_exporter —   포스트: 125개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-02 00:32:30,913 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-02 00:32:30,915 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다
-2026-09-02 00:50:27,879 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-09-02 00:50:27,879 [INFO] main —   - [blog1] HOGU What?
-2026-09-02 00:50:27,879 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-09-02 00:50:27,879 [INFO] main —   - [blog3] 금융NEWS
-2026-09-02 00:50:27,885 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
-2026-09-03 00:00:06,429 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-03 00:00:07,228 [INFO] main — ============================================================
-2026-09-03 00:00:07,228 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-03 00:00:07
-2026-09-03 00:00:07,229 [INFO] main — ============================================================
-2026-09-03 00:00:07,247 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-09-03 00:00:07,247 [INFO] keyword_collector — 포스팅 이력 코퍼스: 162개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-09-03 00:00:07,248 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
-2026-09-03 00:00:11,194 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-09-03 00:00:15,531 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:00:15,558 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-09-03 00:00:15,558 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-09-03 00:00:16,088 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-09-03 00:00:16,310 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-09-03 00:00:16,742 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 9개 쿼리 / 1개 카테고리
-2026-09-03 00:00:16,743 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-09-03 00:00:16,744 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-09-03 00:00:16,760 [INFO] keyword_collector — 최근 사용 제외 2개: ['해외여행 실비보험 필요한지 직접 비교해봤더니', '가을 국내 여행지 추천 강원도 경기도 당일치기 코스']
-2026-09-03 00:00:16,760 [INFO] keyword_collector — 유사 주제 제외 7개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-03 00:00:16,762 [INFO] keyword_collector —   [naver_realtime] 2개: ['혼수 가전 예약 구매 비교 가이드 2026', '가을 등산 초보 코스 추천 트레킹 명소 총정리']
-2026-09-03 00:00:16,762 [INFO] keyword_collector — 최종 선정 키워드 2개: ['혼수 가전 예약 구매 비교 가이드 2026', '가을 등산 초보 코스 추천 트레킹 명소 총정리']
-2026-09-03 00:00:16,762 [INFO] main — 수집된 키워드 2개: ['혼수 가전 예약 구매 비교 가이드 2026', '가을 등산 초보 코스 추천 트레킹 명소 총정리']
-2026-09-03 00:00:16,768 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-09-03 00:00:16,768 [INFO] main — 단독 포스트 대상 키워드 1개: ['혼수 가전 예약 구매 비교 가이드 2026']
-2026-09-03 00:00:16,786 [INFO] main — 
-[1/1] 키워드: '혼수 가전 예약 구매 비교 가이드 2026'
-2026-09-03 00:00:16,786 [INFO] content_generator — 포스트 생성 중: '혼수 가전 예약 구매 비교 가이드 2026'
-2026-09-03 00:00:25,010 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:00:25,011 [INFO] research_collector — 검색 의도: 2026년 혼수 가전 예약 구매 시 브랜드별 혜택, 할인율, 구매 시기를 비교하여 최적의 구매 시점과 제품을
-2026-09-03 00:00:37,380 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '혼수 가전 예약 구매 비교 가이드 2026'
-2026-09-03 00:00:54,250 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:00:54,251 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '혼수 가전 예약 구매 비교 가이드 2026'
-2026-09-03 00:01:07,923 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:01:07,924 [INFO] source_validator — 출처 검증: 5/5개 통과, 등급 분포 {'D': 4, 'C': 1}
-2026-09-03 00:01:07,926 [INFO] evidence_builder — 자료팩: 중요 사실 5개 제외 (A/B 등급 출처 없음)
-2026-09-03 00:01:07,926 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-03 00:01:07,928 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-03 00:01:08,843 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:02:56,680 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-03 00:02:56,682 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(얼리버드)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
-2026-09-03 00:02:58,682 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-09-03 00:02:58,682 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-03 00:02:59,490 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:04:34,734 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-03 00:04:35,387 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:04:44,458 [INFO] content_generator — 팩트체크: 통과
-2026-09-03 00:04:44,458 [INFO] content_generator — 이미지 계획 2건 사용: ['couple planning honeymoon trip laptop', 'airport check-in counter travelers']
-2026-09-03 00:04:44,710 [INFO] image_fetcher — 이미지 수집 성공: 'couple planning honeymoon trip laptop' → 제목='happy valentines day / couple / lying / ' (관련성=0.40)
-2026-09-03 00:04:44,866 [INFO] image_fetcher — 이미지 수집 성공: 'airport check-in counter travelers' → 제목='airport / tex free / madrid / spain / ba' (관련성=0.75)
-2026-09-03 00:04:48,188 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:04:48,189 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
-2026-09-03 00:04:48,430 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-03 00:04:48,430 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-09-03 00:04:48,435 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-09-03 00:04:48,437 [INFO] content_generator — 포스트 생성 완료: '신혼여행 예약 비교, 패키지냐 자유여행이냐 2026' (3295자, 이미지 1개)
-2026-09-03 00:04:49,051 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:05:13,385 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-03 00:05:14,157 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:05:20,484 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 77/100 — '신혼여행 예약 비교, 패키지냐 자유여행이냐 2026'
-2026-09-03 00:05:20,484 [INFO] adsense_validator —   ❌ SEO 최적화: 키워드(혼수 가전 예약 구매 비교)가 실제 본문 주제(신혼여행 패키지/자유여행 비교)와 전혀 무관해 검색 의도 불일치
-2026-09-03 00:05:20,484 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장만 확인되며 Pixabay 라이선스와 alt 설명은 있으나 3295자 분량 대비 이미지 수가 적음
-2026-09-03 00:05:20,484 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심요약·핵심포인트·FAQ 박스와 첫번째~여섯번째 나열식 구조가 전형적인 AI 템플릿 패턴을 보임
-2026-09-03 00:05:20,484 [WARNING] adsense_validator —   🔴 [SEO 최적화] 키워드(혼수 가전 예약 구매 비교)가 실제 본문 주제(신혼여행 패키지/자유여행 비교)와 전혀 무관해 검색 의도 불일치
-2026-09-03 00:05:20,484 [WARNING] adsense_validator —   🔴 키워드(혼수 가전 예약 구매 비교)와 실제 본문 주제(신혼여행 패키지·자유여행 비교)가 완전히 불일치하여 SEO 및 검색 노출에 심각한 문제 발생
-2026-09-03 00:05:20,490 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-03 00:05:20,495 [INFO] internal_linker —   [1/5] '비교와' -> https://hoguasset.blogspot.com/2026/09/2026.html
-2026-09-03 00:05:20,497 [INFO] internal_linker —   [2/5] '비교한' -> https://hoguasset.blogspot.com/2026/08/2026_02023899290.html
-2026-09-03 00:05:20,501 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-09-03 00:05:20,501 [INFO] main —   제목: 신혼여행 예약 비교, 패키지냐 자유여행이냐 2026
-2026-09-03 00:05:20,502 [INFO] main —   이미지: 1개 삽입
-2026-09-03 00:05:20,502 [INFO] main —   글자 수: 3295자
-2026-09-03 00:05:21,236 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:05:43,959 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '신혼여행 예약 비교, 패키지냐 자유여행이냐 2026'
-2026-09-03 00:05:43,959 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 체크리스트·비교표 형식은 갖췄으나 구체적 수치(가격, 날짜)가 부족해 일반 정보 재조합에 가까움
-2026-09-03 00:05:43,959 [INFO] adsense_validator —   ❌ SEO 최적화: 키워드가 '혼수 가전 예약 구매 비교'인데 본문은 전적으로 '신혼여행 예약'을 다뤄 주제-키워드 불일치가 심각함
-2026-09-03 00:05:43,959 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 6개 출처와 공정위·관광청 언급은 있으나 본문 내 구체적 시점·수치 인용이 부족함
-2026-09-03 00:05:43,959 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개, Pixabay 출처 명시로 저작권 문제는 없으나 alt 텍스트 여부 불명확
-2026-09-03 00:05:43,959 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 첫째~여섯째 나열 패턴, 이모지 박스, 정형화된 요약 문체 등 전형적 AI 작성 흔적이 다수 보임
-2026-09-03 00:05:43,960 [WARNING] adsense_validator —   🔴 [SEO 최적화] 키워드가 '혼수 가전 예약 구매 비교'인데 본문은 전적으로 '신혼여행 예약'을 다뤄 주제-키워드 불일치가 심각함
-2026-09-03 00:05:43,960 [WARNING] adsense_validator —   🔴 포스트 키워드('혼수 가전 예약 구매 비교 가이드 2026')와 실제 본문 주제('신혼여행 예약 비교')가 전혀 일치하지 않음 — 메타데이터 오류 또는 잘못된 콘텐츠 매칭 가능성
-2026-09-03 00:05:43,960 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 67/100, 권장: review) — 자동 수정 시도
-2026-09-03 00:05:43,960 [WARNING] main —      🔴 [SEO 최적화] 키워드가 '혼수 가전 예약 구매 비교'인데 본문은 전적으로 '신혼여행 예약'을 다뤄 주제-키워드 불일치가 심각함
-2026-09-03 00:05:43,960 [WARNING] main —      🔴 포스트 키워드('혼수 가전 예약 구매 비교 가이드 2026')와 실제 본문 주제('신혼여행 예약 비교')가 전혀 일치하지 않음 — 메타데이터 오류 또는 잘못된 콘텐츠 매칭 가능성
-2026-09-03 00:05:43,960 [WARNING] main —      🟡 [원본성 및 품질] 체크리스트·비교표 형식은 갖췄으나 구체적 수치(가격, 날짜)가 부족해 일반 정보 재조합에 가까움
-2026-09-03 00:05:43,960 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 6개 출처와 공정위·관광청 언급은 있으나 본문 내 구체적 시점·수치 인용이 부족함
-2026-09-03 00:05:43,960 [WARNING] main —      🟡 [이미지 정책] 이미지 1개, Pixabay 출처 명시로 저작권 문제는 없으나 alt 텍스트 여부 불명확
-2026-09-03 00:05:43,960 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 67/100, fail: 1개, warn: 4개
-2026-09-03 00:05:43,970 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-03 00:05:43,976 [INFO] adsense_validator —   🖼️ alt 재작성 → "신혼여행 예약 비교, 패키지냐 자유여행이냐 2026 관련 이미지" (캡션 포함)
-2026-09-03 00:05:43,976 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 1건
-2026-09-03 00:05:45,159 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:07:53,205 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3295자 → 4671자 (+1376자)
-2026-09-03 00:07:53,205 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
 2026-09-03 00:07:54,307 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-09-03 00:08:17,584 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
 2026-09-03 00:08:18,495 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
@@ -616,3 +498,111 @@
 2026-09-04 00:48:17,296 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-09-04 00:48:17,296 [INFO] main —   - [blog3] 금융NEWS
 2026-09-04 00:48:17,301 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-09-04 23:54:24,133 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-04 23:54:24,796 [INFO] main — ============================================================
+2026-09-04 23:54:24,796 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-04 23:54:24
+2026-09-04 23:54:24,796 [INFO] main — ============================================================
+2026-09-04 23:54:24,811 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-04 23:54:24,811 [INFO] keyword_collector — 포스팅 이력 코퍼스: 157개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-09-04 23:54:24,812 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
+2026-09-04 23:54:28,677 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-09-04 23:54:35,645 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-04 23:54:35,664 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-04 23:54:35,664 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-04 23:54:36,189 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-09-04 23:54:36,497 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-04 23:54:36,853 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 8개 쿼리 / 1개 카테고리
+2026-09-04 23:54:36,853 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-04 23:54:36,854 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-04 23:54:36,865 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-09-04 23:54:36,865 [INFO] keyword_collector — 유사 주제 제외 9개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-04 23:54:36,907 [INFO] keyword_collector —   [naver_realtime] 1개: ['9월 가볼 만한 국내 가을 여행지 추천']
+2026-09-04 23:54:36,907 [INFO] keyword_collector —   [fallback] 1개: ['담양 메타세쿼이아길 계절별 다른 매력 직접 방문 후기']
+2026-09-04 23:54:36,907 [INFO] keyword_collector — 최종 선정 키워드 2개: ['9월 가볼 만한 국내 가을 여행지 추천', '담양 메타세쿼이아길 계절별 다른 매력 직접 방문 후기']
+2026-09-04 23:54:36,907 [INFO] main — 수집된 키워드 2개: ['9월 가볼 만한 국내 가을 여행지 추천', '담양 메타세쿼이아길 계절별 다른 매력 직접 방문 후기']
+2026-09-04 23:54:36,911 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
+2026-09-04 23:54:36,911 [INFO] main — 단독 포스트 대상 키워드 1개: ['9월 가볼 만한 국내 가을 여행지 추천']
+2026-09-04 23:54:36,926 [INFO] main — 
+[1/1] 키워드: '9월 가볼 만한 국내 가을 여행지 추천'
+2026-09-04 23:54:36,926 [INFO] content_generator — 포스트 생성 중: '9월 가볼 만한 국내 가을 여행지 추천'
+2026-09-04 23:54:41,863 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-04 23:54:41,864 [INFO] research_collector — 검색 의도: 9월에 방문하기 좋은 국내 가을 여행지와 관련 정보를 찾으려는 의도
+2026-09-04 23:55:07,059 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '9월 가볼 만한 국내 가을 여행지 추천'
+2026-09-04 23:55:19,273 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-04 23:55:19,275 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '9월 가볼 만한 국내 가을 여행지 추천'
+2026-09-04 23:55:41,785 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-04 23:55:41,786 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'X': 3, 'D': 2, 'A': 1}
+2026-09-04 23:55:41,787 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-09-04 23:55:41,787 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-04 23:55:41,788 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-04 23:55:42,589 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-04 23:57:14,350 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-04 23:57:15,114 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-04 23:57:19,466 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-09-04 23:57:19,467 [INFO] content_generator — 이미지 계획 1건 사용: ['Gyeongju autumn street']
+2026-09-04 23:57:19,811 [INFO] image_fetcher — 이미지 수집 성공: 'Gyeongju autumn street' → 제목='nature / park / trees / autumn / fall / ' (관련성=0.67)
+2026-09-04 23:57:20,313 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-04 23:57:20,313 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-04 23:57:20,317 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-09-04 23:57:20,319 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-04 23:57:20,319 [INFO] content_generator — 포스트 생성 완료: '9월 가볼 만한 국내 가을 여행지 5곳 비교' (3097자, 이미지 1개)
+2026-09-04 23:57:21,411 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-04 23:57:45,247 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-04 23:57:46,447 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-04 23:57:46,527 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '9월 가볼 만한 국내 가을 여행지 5곳 비교'
+2026-09-04 23:57:46,527 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충족하나 지역별 정보가 대체로 공지·후기 재조합 수준이라 독창적 해석은 제한적
+2026-09-04 23:57:46,527 [INFO] adsense_validator —   ⚠️ SEO 최적화: 제목은 '5곳'을 언급하나 본문은 경주·순천만·담양·정선 4곳만 다뤄 제목-내용 불일치
+2026-09-04 23:57:46,527 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개는 적절하나 일부 단락(경주·비교 섹션)이 500자를 넘는 긴 문단으로 구성
+2026-09-04 23:57:46,527 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장에 출처(Pixabay)는 명시됐으나 전체 저작권·alt 텍스트 충분성 확인 불가
+2026-09-04 23:57:46,527 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 요약박스·체크리스트·비슷한 후기 인용 패턴('~라는 후기가 많습니다')이 반복되어 AI 생성 특유의 정형화된 구조가 보임
+2026-09-04 23:57:46,531 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-04 23:57:46,533 [INFO] internal_linker —   [1/5] '성수기' -> https://hogugolfntraval.blogspot.com/2026/08/8.html
+2026-09-04 23:57:46,536 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-09-04 23:57:46,536 [INFO] main —   제목: 9월 가볼 만한 국내 가을 여행지 5곳 비교
+2026-09-04 23:57:46,536 [INFO] main —   이미지: 1개 삽입
+2026-09-04 23:57:46,536 [INFO] main —   글자 수: 3097자
+2026-09-04 23:57:47,341 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-04 23:58:07,069 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '9월 가볼 만한 국내 가을 여행지 5곳 비교'
+2026-09-04 23:58:07,069 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장만 사용되어 수량이 적으나 Pixabay 라이선스 출처 명시로 저작권 문제는 없음
+2026-09-04 23:58:07,069 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 요약박스·체크리스트 등 정형화된 AI 블로그 패턴이 다소 반복됨
+2026-09-04 23:58:07,069 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-09-04 23:58:08,322 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-04 23:59:09,853 [INFO] final_editor —   ✏️ 제목 최종 교정: '9월 가볼 만한 국내 가을 여행지 5곳 비교' → '9월 가볼 만한 국내 가을 여행지 추천 – 5곳 비교 정리'
+2026-09-04 23:59:09,853 [INFO] final_editor —   ✏️ 메타 설명 교정 (128자)
+2026-09-04 23:59:09,853 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목과 메타 설명을 글자 수 기준에 맞게 재정리하고, 긴 문단을 모바일 친화적으로 분할했으며, 이미지 alt와 내부 링크, 참고 자료 항목을 구체화해 발행 준비를 완료했습니다.
+2026-09-04 23:59:10,023 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-04 23:59:10,023 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-09-04 23:59:10,524 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/9-5.html
+2026-09-04 23:59:10,534 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/09/9-5.html
+2026-09-04 23:59:10,537 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-09-04 23:59:10,542 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-04 23:59:10,542 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '9월 가볼 만한 국내 가을 여행지 추천 – 5곳 비교 정리'
+2026-09-04 23:59:11,276 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-04 23:59:15,175 [INFO] comment_manager —   생성된 댓글: 경주 황리단길 걸으실 분들은 해 지기 1시간 전쯤 도착하시는 걸 추천드려요. 낮에는 그늘이 없어서 꽤 덥고, 노을 지면서 조명 켜지는 타이밍이 ...
+2026-09-05 00:02:15,462 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-09-05 00:02:15,463 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-09-05 00:02:15,463 [INFO] main — 
+============================================================
+2026-09-05 00:02:15,463 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-09-05 00:02:15,463 [INFO] main — ============================================================
+2026-09-05 00:02:15,494 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 129개)
+2026-09-05 00:02:15,536 [INFO] dashboard_exporter — 분석 필드 유지: 116/131개 (등급·조회수·수익)
+2026-09-05 00:02:15,546 [INFO] dashboard_exporter —   시리즈: 26개 내보내기 완료
+2026-09-05 00:02:15,561 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-05 00:02:15,940 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-05 00:02:16,303 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-05 00:02:16,304 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-05 00:02:16,305 [INFO] dashboard_exporter —   학습 이력: 1주 내보내기 완료
+2026-09-05 00:02:16,306 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-05 00:02:16,318 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 269 / 실패 0 / 대기 16)
+2026-09-05 00:02:16,318 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-05 00:02:16,318 [INFO] dashboard_exporter —   포스트: 131개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-05 00:02:16,320 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-05 00:02:16,321 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

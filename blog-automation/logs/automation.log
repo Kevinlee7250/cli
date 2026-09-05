@@ -1,125 +1,3 @@
-2026-09-03 23:59:47,928 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/09/blog-post_04.html
-2026-09-03 23:59:47,931 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-09-03 23:59:47,938 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-03 23:59:47,939 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '안동 하회마을 혼자 여행하기 좋을까, 솔직 후기 완전 정리'
-2026-09-03 23:59:49,011 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 23:59:52,253 [INFO] comment_manager —   생성된 댓글: 하나 더 팁 드리자면, 하회마을 자체는 짧게 끝나도 바로 옆 부용대에 올라가서 마을 전체를 내려다보는 코스까지 묶으면 체감 만족도가 확 올라가더...
-2026-09-04 00:02:52,674 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-09-04 00:02:52,676 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-09-04 00:02:52,676 [INFO] main — 
-============================================================
-2026-09-04 00:02:52,676 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-09-04 00:02:52,676 [INFO] main — ============================================================
-2026-09-04 00:02:52,718 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 126개)
-2026-09-04 00:02:52,758 [INFO] dashboard_exporter — 분석 필드 유지: 116/128개 (등급·조회수·수익)
-2026-09-04 00:02:52,771 [INFO] dashboard_exporter —   시리즈: 26개 내보내기 완료
-2026-09-04 00:02:52,791 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-04 00:02:53,183 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-04 00:02:53,549 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-04 00:02:53,550 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-04 00:02:53,551 [INFO] dashboard_exporter —   학습 이력: 1주 내보내기 완료
-2026-09-04 00:02:53,553 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-04 00:02:53,568 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 269 / 실패 0 / 대기 16)
-2026-09-04 00:02:53,568 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-04 00:02:53,568 [INFO] dashboard_exporter —   포스트: 128개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-04 00:02:53,569 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-04 00:02:53,570 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-09-04 00:03:44,411 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-04 00:03:45,427 [INFO] main — ============================================================
-2026-09-04 00:03:45,427 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-09-04 00:03:45
-2026-09-04 00:03:45,427 [INFO] main — ============================================================
-2026-09-04 00:03:45,446 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-09-04 00:03:45,446 [INFO] keyword_collector — 포스팅 이력 코퍼스: 141개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-09-04 00:03:45,446 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-04 00:03:50,387 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-09-04 00:03:58,584 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:03:58,612 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-09-04 00:03:58,612 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-09-04 00:03:59,389 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-04 00:03:59,390 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-09-04 00:03:59,391 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-09-04 00:03:59,401 [INFO] keyword_collector — 유사 주제 제외 8개: ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '호텔 AI 컨시어지 서비스 도입 현황과 이용 후기', '가을 단풍 골프장 추천 및 예약 꿀팁', '이마트 롯데아울렛 이케아 가을 세일 정보 총정리']
-2026-09-04 00:03:59,401 [INFO] keyword_collector —   [fallback] 2개: ['부산 1박2일 혼자 여행 현실 비용 공개', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
-2026-09-04 00:03:59,401 [INFO] keyword_collector — 최종 선정 키워드 2개: ['부산 1박2일 혼자 여행 현실 비용 공개', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
-2026-09-04 00:03:59,401 [INFO] main — 수집된 키워드 2개: ['부산 1박2일 혼자 여행 현실 비용 공개', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
-2026-09-04 00:03:59,407 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-09-04 00:03:59,407 [INFO] main — 단독 포스트 대상 키워드 1개: ['부산 1박2일 혼자 여행 현실 비용 공개']
-2026-09-04 00:03:59,433 [INFO] post_manager — run_history 마이그레이션: 1개 포스트 추가
-2026-09-04 00:03:59,433 [INFO] main — 
-[1/1] 키워드: '부산 1박2일 혼자 여행 현실 비용 공개'
-2026-09-04 00:03:59,433 [INFO] content_generator — 포스트 생성 중: '부산 1박2일 혼자 여행 현실 비용 공개'
-2026-09-04 00:04:06,635 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:04:06,636 [INFO] research_collector — 검색 의도: 부산 1박2일 혼자 여행 시 실제 소요되는 총 비용과 세부 항목별 지출 내역을 알고 싶어함
-2026-09-04 00:04:19,823 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '부산 1박2일 혼자 여행 현실 비용 공개'
-2026-09-04 00:04:43,090 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:04:43,092 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '부산 1박2일 혼자 여행 현실 비용 공개'
-2026-09-04 00:04:49,159 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:04:49,160 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'D': 3, 'X': 2}
-2026-09-04 00:04:49,162 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
-2026-09-04 00:04:49,162 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-04 00:04:49,164 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-04 00:04:50,465 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:06:34,107 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-04 00:06:35,214 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:06:47,247 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '부산 혼자 여행 관련 여러 후기나 안내글에서도'
-2026-09-04 00:06:47,248 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
-2026-09-04 00:06:47,248 [INFO] content_generator — 이미지 계획 2건 사용: ['solo traveler busan station', 'travel budget planning notebook']
-2026-09-04 00:06:47,523 [INFO] image_fetcher — 이미지 수집 성공: 'solo traveler busan station' → 제목='woman / platform / waiting / train / tra' (관련성=0.50)
-2026-09-04 00:06:47,846 [INFO] image_fetcher — 이미지 수집 성공: 'travel budget planning notebook' → 제목='notebook / camera / map / pencil / trave' (관련성=0.75)
-2026-09-04 00:06:48,822 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:06:49,469 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-09-04 00:06:49,469 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-09-04 00:06:49,475 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-09-04 00:06:49,477 [INFO] content_generator — 포스트 생성 완료: '부산 1박2일 혼자 여행 현실 비용, 항목별로 뜯어보니 이렇습니다' (2929자, 이미지 2개)
-2026-09-04 00:06:50,194 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:07:06,941 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '부산 1박2일 혼자 여행 현실 비용, 항목별로 뜯어보니 이렇습니'
-2026-09-04 00:07:06,941 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 표와 조건별 구분은 있으나 가격 정보 자체는 일반적 수준이라 독창적 깊이는 다소 부족함
-2026-09-04 00:07:06,941 [INFO] adsense_validator —   ⚠️ SEO 최적화: 제목-내용 일치는 좋으나 '부산 1박2일 혼자 여행 현실 비용' 문구가 문단마다 반복돼 다소 밀집된 편
-2026-09-04 00:07:06,941 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개와 날짜(2026-01-27) 언급은 있으나 기관명이 구체적이지 않고 '자료'로만 표현됨
-2026-09-04 00:07:06,941 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 사용은 적절하나 alt 텍스트 명시 여부 확인 불가
-2026-09-04 00:07:06,941 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '정리하면', '~것이 좋습니다' 등 정형화된 요약 문체가 반복되나 개인 추천 표현도 일부 존재
-2026-09-04 00:07:06,946 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-04 00:07:06,953 [INFO] internal_linker —   [1/5] '저렴한' -> https://hogugolfntraval.blogspot.com/2026/08/8.html
-2026-09-04 00:07:06,955 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-09-04 00:07:06,955 [INFO] main —   제목: 부산 1박2일 혼자 여행 현실 비용, 항목별로 뜯어보니 이렇습니다
-2026-09-04 00:07:06,956 [INFO] main —   이미지: 2개 삽입
-2026-09-04 00:07:06,956 [INFO] main —   글자 수: 2929자
-2026-09-04 00:07:07,735 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:07:26,818 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '부산 1박2일 혼자 여행 현실 비용, 항목별로 뜯어보니 이렇습니'
-2026-09-04 00:07:26,818 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 표와 조건별 분류는 있으나 일반적인 여행비용 정리 패턴의 재구성에 가까움
-2026-09-04 00:07:26,818 [INFO] adsense_validator —   ⚠️ SEO 최적화: 핵심 키워드 '부산 1박2일 혼자 여행 현실 비용'이 문단마다 반복돼 부자연스러움
-2026-09-04 00:07:26,818 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처로 저작권 문제는 없으나 alt 텍스트 명시 여부 불명확
-2026-09-04 00:07:26,819 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약 중복 및 동일 키워드 반복 패턴이 기계적 생성 흔적을 보임
-2026-09-04 00:07:26,819 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-09-04 00:07:26,819 [WARNING] main —      🟡 [원본성 및 품질] 표와 조건별 분류는 있으나 일반적인 여행비용 정리 패턴의 재구성에 가까움
-2026-09-04 00:07:26,819 [WARNING] main —      🟡 [SEO 최적화] 핵심 키워드 '부산 1박2일 혼자 여행 현실 비용'이 문단마다 반복돼 부자연스러움
-2026-09-04 00:07:26,819 [WARNING] main —      🟡 [이미지 정책] Pixabay 출처로 저작권 문제는 없으나 alt 텍스트 명시 여부 불명확
-2026-09-04 00:07:26,819 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-09-04 00:07:26,828 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-04 00:07:26,834 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 2건
-2026-09-04 00:07:27,637 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:09:16,052 [ERROR] adsense_validator — 텍스트 자동 수정 오류: peer closed connection without sending complete message body (incomplete chunked read)
-2026-09-04 00:09:16,052 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-09-04 00:09:16,755 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:09:32,701 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '부산 1박2일 혼자 여행 현실 비용, 항목별로 뜯어보니 이렇습니'
-2026-09-04 00:09:32,701 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 설명은 있으나 alt 텍스트나 출처 명시 여부 불명확
-2026-09-04 00:09:32,701 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그럼 ~로 넘어가겠습니다' 류 전환 문구와 소제목 패턴이 다소 정형화되어 반복됨
-2026-09-04 00:09:32,701 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-09-04 00:09:32,701 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-09-04 00:09:33,676 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:10:46,897 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-04 00:10:48,127 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:11:59,521 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-04 00:12:00,947 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-04 00:12:54,900 [INFO] final_editor —   ✏️ 제목 최종 교정: '부산 1박2일 혼자 여행 현실 비용, 항목별로 뜯어보니 이렇습니다' → '부산 1박2일 혼자 여행 현실 비용 공개, 항목별로 뜯어봤습니다'
-2026-09-04 00:12:54,900 [INFO] final_editor —   ✏️ 메타 설명 교정 (129자)
 2026-09-04 00:12:54,900 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 규격에 맞게 정리하고, 핵심 요약 박스·2개 표·개인 경험 메모·주의사항·FAQ 6개·작성자 메모·내부 링크 언급을 추가했으며, 모든 문단을 2~4문장 이내로 재구성해 모바일 가독성을 높였습니다.
 2026-09-04 00:12:55,014 [INFO] related_posts — 관련 포스트 3개 섹션 생성
 2026-09-04 00:12:55,014 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
@@ -620,3 +498,110 @@
 2026-09-05 00:37:53,522 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-09-05 00:37:53,522 [INFO] main —   - [blog3] 금융NEWS
 2026-09-05 00:37:53,528 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-09-05 23:44:42,651 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-05 23:44:43,194 [INFO] main — ============================================================
+2026-09-05 23:44:43,194 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-05 23:44:43
+2026-09-05 23:44:43,194 [INFO] main — ============================================================
+2026-09-05 23:44:43,210 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-05 23:44:43,210 [INFO] keyword_collector — 포스팅 이력 코퍼스: 151개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-09-05 23:44:43,211 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog1): ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']...
+2026-09-05 23:44:46,755 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-09-05 23:44:53,265 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 23:44:53,284 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-05 23:44:53,285 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-05 23:44:53,730 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-09-05 23:44:53,960 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-05 23:44:54,116 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 7개 쿼리 / 1개 카테고리
+2026-09-05 23:44:54,116 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-05 23:44:54,117 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-05 23:44:54,129 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-09-05 23:44:54,129 [INFO] keyword_collector — 유사 주제 제외 9개: ['2026 광복절 연휴 인파 없는 여행지 추천', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-05 23:44:54,131 [INFO] keyword_collector —   [naver_realtime] 1개: ['가을 등산 코스 추천 붐비지 않는 명산 대안']
+2026-09-05 23:44:54,131 [INFO] keyword_collector —   [fallback] 1개: ['포항 구룡포 과메기 거리와 숨은 맛집 솔직 추천']
+2026-09-05 23:44:54,131 [INFO] keyword_collector — 최종 선정 키워드 2개: ['가을 등산 코스 추천 붐비지 않는 명산 대안', '포항 구룡포 과메기 거리와 숨은 맛집 솔직 추천']
+2026-09-05 23:44:54,131 [INFO] main — 수집된 키워드 2개: ['가을 등산 코스 추천 붐비지 않는 명산 대안', '포항 구룡포 과메기 거리와 숨은 맛집 솔직 추천']
+2026-09-05 23:44:54,135 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-09-05 23:44:54,135 [INFO] main — 단독 포스트 대상 키워드 1개: ['가을 등산 코스 추천 붐비지 않는 명산 대안']
+2026-09-05 23:44:54,152 [INFO] main — 
+[1/1] 키워드: '가을 등산 코스 추천 붐비지 않는 명산 대안'
+2026-09-05 23:44:54,152 [INFO] content_generator — 포스트 생성 중: '가을 등산 코스 추천 붐비지 않는 명산 대안'
+2026-09-05 23:45:00,233 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 23:45:00,233 [INFO] research_collector — 검색 의도: 가을철 단풍 명산의 혼잡을 피하고 싶은 등산객에게 상대적으로 한적한 대안 등산 코스를 추천
+2026-09-05 23:45:24,694 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '가을 등산 코스 추천 붐비지 않는 명산 대안'
+2026-09-05 23:45:36,361 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 23:45:36,362 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '가을 등산 코스 추천 붐비지 않는 명산 대안'
+2026-09-05 23:45:46,368 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 23:45:46,369 [INFO] source_validator — 출처 검증: 6/6개 통과, 등급 분포 {'B': 5, 'D': 1}
+2026-09-05 23:45:46,370 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-09-05 23:45:46,370 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-05 23:45:46,372 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-05 23:45:47,167 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 23:47:03,981 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-05 23:47:04,770 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 23:47:15,466 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-09-05 23:47:15,466 [INFO] content_generator — 이미지 계획 1건 사용: ['autumn hiking trail mountain']
+2026-09-05 23:47:15,749 [INFO] image_fetcher — 이미지 수집 성공: 'autumn hiking trail mountain' → 제목='trees / trail / mountain / larch / fores' (관련성=1.00)
+2026-09-05 23:47:16,083 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-05 23:47:16,083 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-05 23:47:16,088 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-09-05 23:47:16,089 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-05 23:47:16,089 [INFO] content_generator — 포스트 생성 완료: '가을 등산 코스 추천, 붐비지 않는 명산 대안' (2971자, 이미지 1개)
+2026-09-05 23:47:16,754 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 23:47:36,384 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '가을 등산 코스 추천, 붐비지 않는 명산 대안'
+2026-09-05 23:47:36,384 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장뿐이고 Pixabay 출처는 명확하나 전체 분량 대비 이미지가 부족
+2026-09-05 23:47:36,384 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '관련 보도에 따르면', '정리하면 아래와 같습니다' 등 정형화된 보고체 표현이 반복되어 다소 기계적 톤
+2026-09-05 23:47:36,388 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-05 23:47:36,396 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-09-05 23:47:36,397 [INFO] main —   제목: 가을 등산 코스 추천, 붐비지 않는 명산 대안
+2026-09-05 23:47:36,397 [INFO] main —   이미지: 1개 삽입
+2026-09-05 23:47:36,397 [INFO] main —   글자 수: 2971자
+2026-09-05 23:47:37,049 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 23:47:55,859 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '가을 등산 코스 추천, 붐비지 않는 명산 대안'
+2026-09-05 23:47:55,859 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: '관련 보도에 따르면' 등 출처 표현이 반복되나 구체적 기관명·발행 시점이 명시되지 않아 신뢰도 신호 약함
+2026-09-05 23:47:55,859 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개로 Pixabay 라이선스는 명확하나 alt 텍스트 명시 여부 확인 불가, 장문 대비 이미지 수 부족
+2026-09-05 23:47:55,860 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '관련 보도에 따르면', '자료를 종합하면', '이 지점이 바로' 등 유사 전환 문구가 반복되어 정형화된 패턴이 다소 감지됨
+2026-09-05 23:47:55,860 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-09-05 23:47:56,516 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 23:49:19,310 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-05 23:49:20,212 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 23:50:33,094 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-05 23:50:33,843 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 23:50:39,446 [INFO] final_editor —   ✏️ 제목 최종 교정: '가을 등산 코스 추천, 붐비지 않는 명산 대안' → '가을 등산 코스 추천, 붐비지 않는 명산 대안 총정리'
+2026-09-05 23:50:39,446 [INFO] final_editor —   ✏️ 메타 설명 교정 (124자)
+2026-09-05 23:50:39,446 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 발행 기준에 맞게 정리하고, 미완성이던 마무리 문단을 완성했으며, 문단을 2~4문장 단위로 재구성하고 요약박스·표 2개·개인경험메모·주의사항·FAQ 6개·작성자메모·내부링크 언급을 발행 형식에 맞춰 추가했습니다.
+2026-09-05 23:50:39,591 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-05 23:50:39,591 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-09-05 23:50:40,631 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/blog-post_06.html
+2026-09-05 23:50:40,641 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/09/blog-post_06.html
+2026-09-05 23:50:40,644 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-09-05 23:50:40,650 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-05 23:50:40,651 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '가을 등산 코스 추천, 붐비지 않는 명산 대안 총정리'
+2026-09-05 23:50:41,314 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 23:50:44,196 [INFO] comment_manager —   생성된 댓글: 성판악·관음사 예약은 보통 산행일 기준 한 달 전에 열리는데, 단풍철엔 오픈 직후 몇 분 만에 마감되는 경우도 많더라고요. 알림 신청 기능 켜두...
+2026-09-05 23:53:44,536 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-09-05 23:53:44,537 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-09-05 23:53:44,537 [INFO] main — 
+============================================================
+2026-09-05 23:53:44,537 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-09-05 23:53:44,537 [INFO] main — ============================================================
+2026-09-05 23:53:44,598 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 132개)
+2026-09-05 23:53:44,609 [INFO] dashboard_exporter — 분석 필드 유지: 116/134개 (등급·조회수·수익)
+2026-09-05 23:53:44,621 [INFO] dashboard_exporter —   시리즈: 26개 내보내기 완료
+2026-09-05 23:53:44,635 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-05 23:53:44,943 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-05 23:53:45,193 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-05 23:53:45,194 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-05 23:53:45,194 [INFO] dashboard_exporter —   학습 이력: 1주 내보내기 완료
+2026-09-05 23:53:45,196 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-05 23:53:45,208 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 270 / 실패 0 / 대기 16)
+2026-09-05 23:53:45,208 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-05 23:53:45,208 [INFO] dashboard_exporter —   포스트: 134개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-05 23:53:45,209 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-05 23:53:45,210 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

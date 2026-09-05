@@ -1,111 +1,3 @@
-2026-09-03 00:07:54,307 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:08:17,584 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-03 00:08:18,495 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:08:20,980 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '신혼여행 예약 비교, 패키지냐 자유여행이냐 2026'
-2026-09-03 00:08:20,980 [INFO] adsense_validator —   ❌ SEO 최적화: 제목·레이블·FAQ는 '신혼여행'이나 본문·키워드는 '혼수 가전'으로 완전히 다른 주제라 심각한 낚시성/불일치
-2026-09-03 00:08:20,980 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 개수는 충분하나 도입부·비교 단락이 500자 이상으로 길게 이어져 가독성 저하
-2026-09-03 00:08:20,980 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개 존재(Pixabay 출처 명시)하나 alt 텍스트 여부 확인 불가
-2026-09-03 00:08:20,981 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~하는 경우가 많습니다', '핵심 요약/핵심 포인트' 등 정형화된 요약·나열 패턴 다수 반복
-2026-09-03 00:08:20,981 [WARNING] adsense_validator —   🔴 [SEO 최적화] 제목·레이블·FAQ는 '신혼여행'이나 본문·키워드는 '혼수 가전'으로 완전히 다른 주제라 심각한 낚시성/불일치
-2026-09-03 00:08:20,981 [WARNING] adsense_validator —   🔴 제목(신혼여행 예약 비교)과 실제 본문 주제(혼수 가전 예약 구매)가 완전히 불일치하여 사용자 기만 및 검색 의도 왜곡 위험이 있음
-2026-09-03 00:08:20,981 [WARNING] adsense_validator —   🔴 레이블(신혼여행, 패키지여행 등)과 FAQ 목록도 본문 주제와 무관해 콘텐츠 정합성 심각 훼손
-2026-09-03 00:08:20,981 [WARNING] main —   ⚠️ 자동 수정 후에도 기준 미달 (점수: 72/100) — pending 저장
-2026-09-03 00:08:20,981 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '신혼여행 예약 비교, 패키지냐 자유여행이냐 2026' (점수: 72/100, 권장: review)
-2026-09-03 00:08:21,000 [INFO] dashboard_exporter —   검토 대기 저장: 신혼여행 예약 비교, 패키지냐 자유여행이냐 2026 (13411자 HTML)
-2026-09-03 00:08:21,017 [INFO] pending_store — 검토 대기 저장: 목록 22건 / 보관 144건 / 본문 22건
-2026-09-03 00:08:21,017 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 166개)
-2026-09-03 00:08:21,017 [INFO] main — 
-============================================================
-2026-09-03 00:08:21,017 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-09-03 00:08:21,017 [INFO] main — ============================================================
-2026-09-03 00:08:21,061 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 124개)
-2026-09-03 00:08:21,105 [INFO] dashboard_exporter — 분석 필드 유지: 116/126개 (등급·조회수·수익)
-2026-09-03 00:08:21,120 [INFO] dashboard_exporter —   시리즈: 26개 내보내기 완료
-2026-09-03 00:08:21,141 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-03 00:08:21,733 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-03 00:08:22,249 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-03 00:08:22,250 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-03 00:08:22,250 [INFO] dashboard_exporter —   학습 이력: 1주 내보내기 완료
-2026-09-03 00:08:22,252 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-03 00:08:22,268 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 269 / 실패 0 / 대기 16)
-2026-09-03 00:08:22,268 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-03 00:08:22,268 [INFO] dashboard_exporter —   포스트: 126개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-03 00:08:22,269 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-03 00:08:22,270 [ERROR] main — ============================================================
-2026-09-03 00:08:22,271 [ERROR] main — ❌ 게시 0건 — 생성은 됐지만 1건 모두 검토 대기로 빠졌습니다
-2026-09-03 00:08:22,271 [ERROR] main —    품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다
-2026-09-03 00:08:22,271 [ERROR] main — ============================================================
-2026-09-03 00:09:00,427 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-03 00:09:01,194 [INFO] main — ============================================================
-2026-09-03 00:09:01,195 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-09-03 00:09:01
-2026-09-03 00:09:01,195 [INFO] main — ============================================================
-2026-09-03 00:09:01,215 [INFO] keyword_collector — 타 블로그 최근 키워드 6개 중복 방지 코퍼스 합류
-2026-09-03 00:09:01,215 [INFO] keyword_collector — 포스팅 이력 코퍼스: 151개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-09-03 00:09:01,215 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog3): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-03 00:09:05,815 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-09-03 00:09:10,755 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:09:10,778 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-09-03 00:09:10,778 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-09-03 00:09:11,280 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-09-03 00:09:11,983 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-03 00:09:11,984 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-09-03 00:09:12,006 [INFO] keyword_collector — 유사 주제 제외 16개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '코스피 급락장 대응법 개인투자자 전략', '비트코인 지금 사도 될까 2026 투자 판단 기준']
-2026-09-03 00:09:12,006 [INFO] keyword_collector —   [naver_realtime] 1개: ['반도체 분산투자 4분할 투자법 총정리']
-2026-09-03 00:09:12,006 [INFO] keyword_collector —   [fallback] 1개: ['청년 전세자금 대출 조건과 한도 2026 최신 정리']
-2026-09-03 00:09:12,006 [INFO] keyword_collector — 최종 선정 키워드 2개: ['반도체 분산투자 4분할 투자법 총정리', '청년 전세자금 대출 조건과 한도 2026 최신 정리']
-2026-09-03 00:09:12,006 [INFO] main — 수집된 키워드 2개: ['반도체 분산투자 4분할 투자법 총정리', '청년 전세자금 대출 조건과 한도 2026 최신 정리']
-2026-09-03 00:09:12,012 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
-2026-09-03 00:09:12,012 [INFO] main — 단독 포스트 대상 키워드 1개: ['반도체 분산투자 4분할 투자법 총정리']
-2026-09-03 00:09:12,031 [INFO] main — 
-[1/1] 키워드: '반도체 분산투자 4분할 투자법 총정리'
-2026-09-03 00:09:12,031 [INFO] content_generator — 포스트 생성 중: '반도체 분산투자 4분할 투자법 총정리'
-2026-09-03 00:09:20,401 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:09:20,402 [INFO] research_collector — 검색 의도: 반도체 섹터에 분산투자할 때 자금을 4등분하여 투자하는 구체적인 방법과 전략을 알고 싶어함
-2026-09-03 00:09:33,533 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '반도체 분산투자 4분할 투자법 총정리'
-2026-09-03 00:09:54,341 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:09:54,342 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '반도체 분산투자 4분할 투자법 총정리'
-2026-09-03 00:10:17,399 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:10:17,401 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'B': 4, 'X': 2}
-2026-09-03 00:10:17,404 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-03 00:10:17,406 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-03 00:10:18,572 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:11:41,837 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-03 00:11:42,814 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:11:59,329 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-09-03 00:11:59,329 [INFO] content_generator — 이미지 계획 2건 사용: ['semiconductor stock chart desk', 'ETF stock comparison chart']
-2026-09-03 00:11:59,739 [INFO] image_fetcher — 이미지 수집 성공: 'semiconductor stock chart desk' → 제목='brandenburger tor / dusk / dawn / twilig' (관련성=0.00)
-2026-09-03 00:11:59,912 [INFO] image_fetcher — 이미지 수집 성공: 'ETF stock comparison chart' → 제목='chart / trading / courses / forex / anal' (관련성=0.50)
-2026-09-03 00:12:06,281 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:12:06,283 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 0개 유지
-2026-09-03 00:12:06,384 [WARNING] image_mirror — 이미지 내려받기 실패: https://pixabay.com/get/g147e58decd8c7afa4c9c093c0403a12ab9bf259bf1d0c — 429 Client Error: Too Many Requests for url: https://pixabay.com/get/g147e58decd8c7afa4c9c093c0403a12ab9bf259bf1d0cb2bfa2132c8fc144d1b920a47a5a99900525caec859a80f173171c66483bda1eada4b35593cc3af7421_1280.jpg
-2026-09-03 00:12:06,477 [WARNING] image_mirror — 이미지 내려받기 실패: https://pixabay.com/get/g50e453daf7458b0f7dd4cd91141f6cae24a1ed3741436 — 429 Client Error: Too Many Requests for url: https://pixabay.com/get/g50e453daf7458b0f7dd4cd91141f6cae24a1ed37414360995555bc66d1619b693870115c7912edc0ddb9aa792227d3dbae1958cf5d4e6fcb76e106e9dabe0ca3_1280.jpg
-2026-09-03 00:12:06,478 [INFO] image_fetcher — 만료되는 주소 대신 영구 주소 사용: https://pixabay.com/get/g06377f5dc3d161a0afbaf8333fe73906548ebfe383a43
-2026-09-03 00:12:06,479 [INFO] image_fetcher — 만료되는 주소 대신 영구 주소 사용: https://pixabay.com/get/g4b349d494ccec9bbbea6e1a302e791f3ae90c13daef50
-2026-09-03 00:12:06,479 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-09-03 00:12:06,484 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-09-03 00:12:06,485 [INFO] content_generator — 포스트 생성 완료: '반도체 분산투자 4분할 투자법 총정리 — 변동장에서 자산가들이 택한 방식' (3294자, 이미지 2개)
-2026-09-03 00:12:07,132 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:12:27,523 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '반도체 분산투자 4분할 투자법 총정리 — 변동장에서 자산가들이 '
-2026-09-03 00:12:27,523 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 다소 떨어짐
-2026-09-03 00:12:27,523 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개에 Pixabay 라이선스 출처 명시로 저작권 문제는 없으나 이미지 수가 적어 warn 처리
-2026-09-03 00:12:27,523 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~코멘트로 알려짐/전해짐' 표현의 반복과 '그럼 ~살펴보겠습니다' 식 정형화된 전환구가 다소 기계적
-2026-09-03 00:12:27,527 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-03 00:12:27,531 [INFO] internal_linker —   [1/5] '포트폴리오' -> https://hoguasset.blogspot.com/2026/08/blog-post_25.html
-2026-09-03 00:12:27,536 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-09-03 00:12:27,536 [INFO] main —   제목: 반도체 분산투자 4분할 투자법 총정리 — 변동장에서 자산가들이 택한 방식
-2026-09-03 00:12:27,536 [INFO] main —   이미지: 2개 삽입
-2026-09-03 00:12:27,536 [INFO] main —   글자 수: 3294자
-2026-09-03 00:12:28,653 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:12:46,133 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '반도체 분산투자 4분할 투자법 총정리 — 변동장에서 자산가들이 '
-2026-09-03 00:12:46,133 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 충분하나 각 섹션 내 단락이 500자 이상으로 길게 이어져 가독성이 다소 떨어짐
-2026-09-03 00:12:46,133 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개(Pixabay 출처 명시)로 저작권 이슈는 없으나 alt 텍스트 여부가 본문에서 확인되지 않음
-2026-09-03 00:12:46,133 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서 살펴보겠습니다' 등 전환 문구가 정형화되어 있어 다소 기계적 구성 패턴이 보임
-2026-09-03 00:12:46,133 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-09-03 00:12:47,229 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-03 00:13:51,123 [INFO] final_editor —   ✏️ 제목 최종 교정: '반도체 분산투자 4분할 투자법 총정리 — 변동장에서 자산가들이 택한 방식' → '반도체 분산투자 4분할 투자법 총정리, 변동장 대응 전략'
-2026-09-03 00:13:51,123 [INFO] final_editor —   ✏️ 메타 설명 교정 (138자)
-2026-09-03 00:13:51,123 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·URL 슬러그를 SEO 기준(글자수·키워드 포함)에 맞게 재정리하고, 기존 이미지 설명을 구체적인 alt 텍스트로 보완했으며 요약 박스·표·주의사항·FAQ 구성이 모두 갖춰졌는지 확인해 Blogger 발행 준비를 완료했습니다.
-2026-09-03 00:13:51,264 [INFO] related_posts — 관련 포스트 3개 섹션 생성
 2026-09-03 00:13:51,265 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '반도체 분산투자 4분할 투자법 총정리' — 면책·팩트체크 확인 권장
 2026-09-03 00:13:51,265 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
 2026-09-03 00:13:52,524 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/09/4.html
@@ -606,3 +498,117 @@
 2026-09-05 00:02:16,318 [INFO] dashboard_exporter —   포스트: 131개 / 실행 이력: 120개 / 블로그: 3개
 2026-09-05 00:02:16,320 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-09-05 00:02:16,321 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-09-05 00:03:03,462 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-05 00:03:04,520 [INFO] main — ============================================================
+2026-09-05 00:03:04,520 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-09-05 00:03:04
+2026-09-05 00:03:04,520 [INFO] main — ============================================================
+2026-09-05 00:03:04,539 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-05 00:03:04,539 [INFO] keyword_collector — 포스팅 이력 코퍼스: 139개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-09-05 00:03:04,539 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-05 00:03:08,898 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-09-05 00:03:15,712 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:03:15,739 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-05 00:03:15,739 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-05 00:03:16,536 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-05 00:03:16,537 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-05 00:03:16,538 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-05 00:03:16,547 [INFO] keyword_collector — 유사 주제 제외 7개: ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '호텔 AI 컨시어지 서비스 이용 후기 2026', '가을 마트·아울렛 할인 정보 총정리', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
+2026-09-05 00:03:16,548 [INFO] keyword_collector —   [naver_realtime] 1개: ['OTT vs 극장 관람 트렌드 비교 분석']
+2026-09-05 00:03:16,548 [INFO] keyword_collector —   [fallback] 1개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-09-05 00:03:16,548 [INFO] keyword_collector — 최종 선정 키워드 2개: ['OTT vs 극장 관람 트렌드 비교 분석', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-09-05 00:03:16,548 [INFO] main — 수집된 키워드 2개: ['OTT vs 극장 관람 트렌드 비교 분석', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-09-05 00:03:16,553 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
+2026-09-05 00:03:16,553 [INFO] main — 단독 포스트 대상 키워드 1개: ['OTT vs 극장 관람 트렌드 비교 분석']
+2026-09-05 00:03:16,580 [INFO] post_manager — run_history 마이그레이션: 1개 포스트 추가
+2026-09-05 00:03:16,580 [INFO] main — 
+[1/1] 키워드: 'OTT vs 극장 관람 트렌드 비교 분석'
+2026-09-05 00:03:16,580 [INFO] content_generator — 포스트 생성 중: 'OTT vs 극장 관람 트렌드 비교 분석'
+2026-09-05 00:03:22,514 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:03:22,515 [INFO] research_collector — 검색 의도: OTT 이용률과 극장 관람 추이를 비교해 최신 트렌드와 원인을 파악하려는 의도
+2026-09-05 00:03:58,854 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — 'OTT vs 극장 관람 트렌드 비교 분석'
+2026-09-05 00:04:21,375 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:04:21,376 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — 'OTT vs 극장 관람 트렌드 비교 분석'
+2026-09-05 00:04:46,711 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:04:46,712 [INFO] source_validator — 출처 검증: 6/8개 통과, 등급 분포 {'D': 4, 'B': 2, 'X': 2}
+2026-09-05 00:04:48,264 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
+2026-09-05 00:04:48,264 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-05 00:04:48,266 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-05 00:04:49,016 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:06:15,768 [ERROR] content_generator — JSON 복구 후 dict가 아닌 타입 반환: <class 'list'>
+2026-09-05 00:06:15,768 [WARNING] content_generator — JSON 파싱 실패 — 재시도 1/3
+2026-09-05 00:06:17,768 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-09-05 00:06:17,768 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-05 00:06:18,609 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:07:34,767 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-05 00:07:36,275 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:07:48,916 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-09-05 00:07:48,916 [INFO] content_generator — 이미지 계획 2건 사용: ['cinema screen streaming phone', 'movie ticket subscription price']
+2026-09-05 00:07:49,213 [INFO] image_fetcher — 이미지 수집 성공: 'cinema screen streaming phone' → 제목='phone / mobile phone / app / vpn / virtu' (관련성=0.75)
+2026-09-05 00:07:49,477 [INFO] image_fetcher — 이미지 수집 성공: 'movie ticket subscription price' → 제목='ticket / coupon / admission / carnival /' (관련성=0.50)
+2026-09-05 00:07:50,786 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:07:51,397 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-09-05 00:07:51,397 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-09-05 00:07:51,403 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-09-05 00:07:51,405 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-05 00:07:51,405 [INFO] content_generator — 포스트 생성 완료: 'OTT vs 극장, 2026년 지금은 뭐가 더 나을까 (매출 데이터로 보는 트렌드)' (2677자, 이미지 2개)
+2026-09-05 00:07:52,151 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:08:13,853 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — 'OTT vs 극장, 2026년 지금은 뭐가 더 나을까 (매출 데'
+2026-09-05 00:08:13,853 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락이 500자 이상으로 길어 가독성 저하 우려
+2026-09-05 00:08:13,853 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 명시로 저작권 문제는 없으나 alt 텍스트 상세도 및 이미지 수 적어 기본 warn 처리
+2026-09-05 00:08:13,857 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-05 00:08:13,860 [INFO] internal_linker —   [1/5] '콘텐츠' -> https://www.hoguwhat.com/2026/08/blog-post_165.html
+2026-09-05 00:08:13,867 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-09-05 00:08:13,867 [INFO] main —   제목: OTT vs 극장, 2026년 지금은 뭐가 더 나을까 (매출 데이터로 보는 트렌드)
+2026-09-05 00:08:13,868 [INFO] main —   이미지: 2개 삽입
+2026-09-05 00:08:13,868 [INFO] main —   글자 수: 2677자
+2026-09-05 00:08:14,597 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:08:34,977 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — 'OTT vs 극장, 2026년 지금은 뭐가 더 나을까 (매출 데'
+2026-09-05 00:08:34,977 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 초반 요약부와 TOP4 섹션 등 500자 이상 이어지는 단락이 존재
+2026-09-05 00:08:34,977 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 사용은 안전하나 alt 텍스트 및 상세 캡션 처리가 불명확해 확인 필요
+2026-09-05 00:08:34,977 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 질문형·전환구 반복('~일까요', '~다는 뜻입니다') 등 다소 정형화된 보고서식 패턴이 일부 관찰됨
+2026-09-05 00:08:34,977 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-09-05 00:08:35,941 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:09:57,184 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-05 00:09:58,198 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:11:15,843 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-05 00:11:16,775 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:11:31,953 [INFO] final_editor —   ✏️ 제목 최종 교정: 'OTT vs 극장, 2026년 지금은 뭐가 더 나을까 (매출 데이터로 보는 트렌드)' → 'OTT vs 극장 관람 트렌드, 2026년 매출 데이터로 비교분석'
+2026-09-05 00:11:31,953 [INFO] final_editor —   ✏️ 메타 설명 교정 (130자)
+2026-09-05 00:11:31,954 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분리했습니다. 요약 박스·비교표·개인 경험 메모·주의사항·FAQ 5개·작성자 메모·내부 링크 언급을 추가하고 어색한 문장과 미완성 문장을 정리했습니다.
+2026-09-05 00:11:32,157 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-05 00:11:32,157 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-09-05 00:11:33,309 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/ott-vs-2026.html
+2026-09-05 00:11:33,321 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/ott-vs-2026.html
+2026-09-05 00:11:33,325 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-09-05 00:11:33,333 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-05 00:11:33,334 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: 'OTT vs 극장 관람 트렌드, 2026년 매출 데이터로 비교분석'
+2026-09-05 00:11:34,043 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-05 00:11:39,755 [INFO] comment_manager —   생성된 댓글: 글 잘 읽었습니다. 개인적으로는 '이 영화 극장 가야 하나 OTT 풀리면 볼까' 고민될 때, 상영 규모(스크린 수)랑 개봉 첫 주 예매율을 같이...
+2026-09-05 00:14:40,037 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-09-05 00:14:40,038 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-09-05 00:14:40,038 [INFO] main — 
+============================================================
+2026-09-05 00:14:40,038 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-09-05 00:14:40,038 [INFO] main — ============================================================
+2026-09-05 00:14:40,082 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 130개)
+2026-09-05 00:14:40,127 [INFO] dashboard_exporter — 분석 필드 유지: 116/132개 (등급·조회수·수익)
+2026-09-05 00:14:40,143 [INFO] dashboard_exporter —   시리즈: 26개 내보내기 완료
+2026-09-05 00:14:40,164 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-05 00:14:40,495 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-05 00:14:40,760 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 7개 쿼리 / 1개 카테고리
+2026-09-05 00:14:41,120 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-05 00:14:41,121 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-05 00:14:41,121 [INFO] dashboard_exporter —   학습 이력: 1주 내보내기 완료
+2026-09-05 00:14:41,123 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-05 00:14:41,139 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 269 / 실패 0 / 대기 16)
+2026-09-05 00:14:41,139 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-05 00:14:41,139 [INFO] dashboard_exporter —   포스트: 132개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-05 00:14:41,141 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-05 00:14:41,142 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

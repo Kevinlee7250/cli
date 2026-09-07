@@ -1,69 +1,75 @@
 {
-  "collectedAt": "2026-09-07T12:50:16.055158+00:00",
+  "collectedAt": "2026-09-07T13:50:56.524662+00:00",
   "sources": {
     "googleTrends": [
       {
-        "keyword": "이소나",
+        "keyword": "이동국",
         "rank": 1,
-        "traffic": "100+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "김지찬",
-        "rank": 2,
-        "traffic": "200+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "스토킹",
-        "rank": 3,
-        "traffic": "100+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "중수 청장",
-        "rank": 4,
         "traffic": "2000+",
         "source": "google_trends"
       },
       {
-        "keyword": "오스틴 딘",
+        "keyword": "fcl",
+        "rank": 2,
+        "traffic": "500+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "의료",
+        "rank": 3,
+        "traffic": "10000+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "종합격투기",
+        "rank": 4,
+        "traffic": "200+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "미군",
         "rank": 5,
         "traffic": "200+",
         "source": "google_trends"
       },
       {
-        "keyword": "동해",
+        "keyword": "이소나",
         "rank": 6,
-        "traffic": "2000+",
+        "traffic": "100+",
         "source": "google_trends"
       },
       {
-        "keyword": "김종국",
+        "keyword": "김지찬",
         "rank": 7,
         "traffic": "200+",
         "source": "google_trends"
       },
       {
-        "keyword": "빕스",
+        "keyword": "스토킹",
         "rank": 8,
         "traffic": "100+",
         "source": "google_trends"
       },
       {
-        "keyword": "카페",
+        "keyword": "오스틴 딘",
         "rank": 9,
-        "traffic": "500+",
+        "traffic": "200+",
         "source": "google_trends"
       },
       {
-        "keyword": "왕옌청",
+        "keyword": "동해",
         "rank": 10,
-        "traffic": "500+",
+        "traffic": "5000+",
         "source": "google_trends"
       }
     ],
     "naverNews": [
+      {
+        "headline": "우리금융 외국인 지분율, 사상 첫 50% 돌파…꾸준히 사들이는 이유는",
+        "category": "경제",
+        "source": "naver_rss",
+        "keyword": "우리금융 외국인 지분율 사상 돌파 꾸준히"
+      },
       {
         "headline": "한미 '원전동맹' 업그레이드 … 대미펀드 70% 발전사업 투자",
         "category": "경제",
@@ -93,12 +99,6 @@
         "category": "경제",
         "source": "naver_rss",
         "keyword": "포토 물가 점검하는 부총리 후보자"
-      },
-      {
-        "headline": "6.3GW 가스복합발전 건설… 생산 전력은 데이터센터로",
-        "category": "경제",
-        "source": "naver_rss",
-        "keyword": "GW 가스복합발전 건설 생산 전력은 데이터센터로"
       },
       {
         "headline": "카카오게임즈 ‘도깨비의세계’, 한국적 소재 부각한 게임 알리기 ‘눈길’",
@@ -171,6 +171,209 @@
         "category": "생활문화",
         "source": "naver_rss",
         "keyword": "반도체 다음은 AI 전력난 탈중국 훈풍에"
+      },
+      {
+        "headline": "&quot;적금 부으면 다람쥐가 쑥쑥…한 달 만에 30만 모은 비결이죠&quot;",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "quot 적금 부으면 다람쥐가 쑥쑥 만에"
+      },
+      {
+        "headline": "[집중취재] 2차 공공기관 이전…세종 부동산 시장 훈풍 부나?",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "집중취재 공공기관 세종 부동산 시장 훈풍"
+      },
+      {
+        "headline": "“비용이 새는 것 같은데”…숫자만 봐선 기업 모릅니다 [A&amp;M의 기업 살...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "비용이 새는 같은데 숫자만 봐선 기업"
+      },
+      {
+        "headline": "젠슨황도 극찬한 챗GPT ASTRA…반도체 급등랠리 다시 오나 [불앤베어 플...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "젠슨황도 극찬한 GPT ASTRA 반도체 급등랠리"
+      },
+      {
+        "headline": "서울 인구 줄어드는데 집값은 왜 오를까 [부동산 손자병법]",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "서울 인구 줄어드는데 집값은 오를까 부동산"
+      },
+      {
+        "headline": "예수병원, 보건복지부 '일차의료 혁신 시범사업' 거점지원기관 최종 선...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "예수병원 보건복지부 일차의료 혁신 시범사업 거점지원기관"
+      },
+      {
+        "headline": "'강남언니' 22만명 개인정보 유출…시술정보 포함",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "강남언니 만명 개인정보 유출 시술정보 포함"
+      },
+      {
+        "headline": "‘이상순 건강 빨간불’ 이효리, 15년 솔로 브라이언에 일침 “청소보단...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "이상순 건강 빨간불 이효리 솔로 브라이언에"
+      },
+      {
+        "headline": "수술 후 호흡재활부터 디지털 헬스까지…을지대서 물리치료 미래 논의",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "수술 호흡재활부터 디지털 헬스까지 을지대서 물리치료"
+      },
+      {
+        "headline": "경복대학교 작업치료학과, 남양주시농업기술센터 연계 '치유농업 프로그...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "경복대학교 작업치료학과 남양주시농업기술센터 연계 치유농업 프로그"
+      },
+      {
+        "headline": "광명시, 예비 간호사 48명 대상 지역사회 임상실습 운영",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "광명시 예비 간호사 대상 지역사회 임상실습"
+      },
+      {
+        "headline": "흩어진 제조 데이터를 AI 지식으로…스카이월드와이드, ‘온토비아’로...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "흩어진 제조 데이터를 AI 지식으로 스카이월드와이드"
+      },
+      {
+        "headline": "AI 코딩이 센서·모터로…‘토이톤’, 5시간 만에 실물 41개 구현",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "AI 코딩이 센서 모터로 토이톤 시간"
+      },
+      {
+        "headline": "IPARK현대산업개발, 114건 중 4개 기술 선정…스마트 주차 인프라 기술 ...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "IPARK 현대산업개발 기술 선정 스마트 주차"
+      },
+      {
+        "headline": "불꽃축제에 모인 100명의 파트너…티오더, ‘소상공인 AX’ 협력망 넓힌...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "불꽃축제에 모인 명의 파트너 티오더 소상공인"
+      },
+      {
+        "headline": "게임 넘어 AI·로보틱스까지…크래프톤, 모디 총리와 인도 투자 청사진...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "게임 넘어 AI 로보틱스까지 크래프톤 모디"
+      },
+      {
+        "headline": "CCTV부터 출입통제까지 한 화면에…버카다, 현대차 사옥서 AI 물리보안 ...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "CCTV 부터 출입통제까지 화면에 버카다 현대차"
+      },
+      {
+        "headline": "인천시, 미혼남녀 만남 참가자 300명 모집·생활개선회 한마음대회 성료",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "인천시 미혼남녀 만남 참가자 모집 생활개선회"
+      },
+      {
+        "headline": "[오늘의 별자리 운세] 9월8일 총운…감정은 크게, 약속·지출은 기준부...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "오늘의 별자리 운세 총운 감정은 크게"
+      },
+      {
+        "headline": "[오늘의 운세] 9월 8일 띠별 재물운…투자보다 자금선별",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "오늘의 운세 띠별 재물운 투자보다 자금선별"
+      },
+      {
+        "headline": "[오늘의 띠별 운세] 9월 8일 나이별 총운…움직임은 밖으로, 현실은 촘촘...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "오늘의 띠별 운세 나이별 총운 움직임은"
+      },
+      {
+        "headline": "[오늘의 사주 일진 운세] 9월 8일 을유일…기준은 세우고 성급한 결론은...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "오늘의 사주 일진 운세 을유일 기준은"
+      },
+      {
+        "headline": "코트라, 독일 K컬처 축제서 수출 지원·중국 내수 및 프랜차이즈 시장 ...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "코트라 독일 컬처 축제서 수출 지원"
+      },
+      {
+        "headline": "“5억 아파트가 22억 됐다”…강신철, 장남 7억 상가까지 논란",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "아파트가 됐다 강신철 장남 상가까지 논란"
+      },
+      {
+        "headline": "지지율 하락 부추기는 부실한 인사 검증",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "지지율 하락 부추기는 부실한 인사 검증"
+      },
+      {
+        "headline": "동문건설, 배우 최우식 브랜드 전속모델 발탁…'동문 디 이스트' 접점 확...",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "동문건설 배우 최우식 브랜드 전속모델 발탁"
+      },
+      {
+        "headline": "청약 땐 ‘서민’ 검증, 분양 땐 ‘부자’에게만 판다?…‘뉴홈 선택형...",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "청약 서민 검증 분양 부자 에게만"
+      },
+      {
+        "headline": "청약통장 외면에 주택도시기금도 줄어든다",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "청약통장 외면에 주택도시기금도 줄어든다"
+      },
+      {
+        "headline": "[서울고법 판결]부동산 분양계약에 관해 전화권유판매임을 이유로 방문...",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "서울고법 판결 부동산 분양계약에 관해 전화권유판매임을"
       }
     ],
     "highCPC": [
@@ -385,12 +588,53 @@
         "source": "high_cpc"
       }
     ],
-    "aiRecommended": []
+    "aiRecommended": [
+      {
+        "keyword": "아이폰17 사전예약 vs 정식출시 구매 타이밍 비교",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "추석 차례상 비용 직접 계산해본 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "환절기 비염 완화 방법 직접 써본 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "가을 이사철 체크리스트와 비용 아끼는 법",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "연말정산 미리 준비하는 방법 9월부터 시작하기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "추석 연휴 국내 여행지 혼잡 피하는 법",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "가을 캠핑 초보자 준비물 리스트 추천",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "청년도약계좌 만기 후기 직접 받은 금액 공개",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "가을철 다이어트 시작하기 좋은 이유와 방법",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "가을 환절기 피부 트러블 관리 방법 후기",
+        "source": "ai_generated"
+      }
+    ]
   },
   "stats": {
     "googleTrends": 10,
-    "naverNews": 18,
+    "naverNews": 47,
     "highCPC": 47,
-    "aiRecommended": 0
+    "aiRecommended": 10
   }
 }

@@ -1,5 +1,57 @@
 [
   {
+    "timestamp": "2026-09-07T00:16:12.211549",
+    "health_score": 82,
+    "issues_found": 2,
+    "issues": [
+      {
+        "id": "schedule_stalled",
+        "level": "high",
+        "message": "마지막 실행이 67시간 전 — 스케줄 중단 의심",
+        "context": {
+          "last_run": "2026-09-04T05:15:27.653620",
+          "hours_ago": 67.0
+        },
+        "fix": null
+      },
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 1개",
+        "context": {
+          "count": 1,
+          "titles": [
+            "다낭 4박5일 실제 비용, 후기 종합해보니 이 정도 나"
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "schedule_stalled",
+        "issue_level": "high",
+        "issue_message": "마지막 실행이 67시간 전 — 스케줄 중단 의심",
+        "fix_applied": null,
+        "timestamp": "2026-09-07T00:16:12.201537",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      },
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 1개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-09-07T00:16:12.201586",
+        "success": true,
+        "detail": "대기 포스트 1개 → expired 처리",
+        "expired": 1
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-09-04T05:04:32.706746",
     "health_score": 100,
     "issues_found": 0,
@@ -1452,40 +1504,6 @@
     "issues": [],
     "repairs_applied": 0,
     "repairs": [],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-12T15:16:33.034681",
-    "health_score": 97,
-    "issues_found": 1,
-    "issues": [
-      {
-        "id": "stale_pending_posts",
-        "level": "low",
-        "message": "30일 이상 대기 중인 포스트 2개",
-        "context": {
-          "count": 2,
-          "titles": [
-            "장마철 건강 관리, 2026년 직접 겪고 정리한 실전 ",
-            "여름휴가 펜션 에어컨 전기세, 직접 겪어보니 이렇게 절"
-          ]
-        },
-        "fix": "expire_old_pending"
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "stale_pending_posts",
-        "issue_level": "low",
-        "issue_message": "30일 이상 대기 중인 포스트 2개",
-        "fix_applied": "expire_old_pending",
-        "timestamp": "2026-08-12T15:16:32.970239",
-        "success": true,
-        "detail": "대기 포스트 2개 → expired 처리",
-        "expired": 2
-      }
-    ],
     "dry_run": false
   }
 ]

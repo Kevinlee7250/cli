@@ -1,5 +1,72 @@
 [
   {
+    "timestamp": "2026-09-08T00:34:45.589585",
+    "health_score": 82,
+    "issues_found": 2,
+    "issues": [
+      {
+        "id": "gsc_url_mismatch",
+        "level": "high",
+        "message": "GSC가 URL 25개를 반환했지만 글 매칭률이 0.7% — 도메인 전환·URL 형식 불일치 의심",
+        "context": {
+          "dataSource": {
+            "bloggerApi": true,
+            "gscPageData": true,
+            "gscUrlsMatched": 0,
+            "gscUrlsSeen": 25,
+            "gscMatchRate": 0.7,
+            "postsWithoutUrl": 16
+          }
+        },
+        "fix": null,
+        "known_incident": {
+          "incident_id": "20260722060825",
+          "title": "GSC 도메인 속성(sc-domain:) 403 — 사이트맵 제출·검사 실패",
+          "root_cause": "GSC에 도메인 속성(sc-domain:)으로 등록된 사이트를 URL-프리픽스 형식으로 조회하면 403 발생",
+          "fix": "_domain_property_for() 헬퍼로 403 시 sc-domain: 형식으로 자동 재시도 (blog_analytics.py, gsc_indexing.py 양쪽)",
+          "match_score": 2
+        }
+      },
+      {
+        "id": "stale_pending_posts",
+        "level": "low",
+        "message": "30일 이상 대기 중인 포스트 3개",
+        "context": {
+          "count": 3,
+          "titles": [
+            "[1편] 연준 금리 발표, 한국 증시 이렇게 흔들렸다",
+            "미국 기준금리·환율·코스피 상관관계 총정리",
+            "[3편] 연준 금리 발표 개인투자자 대응 전략 정리"
+          ]
+        },
+        "fix": "expire_old_pending"
+      }
+    ],
+    "repairs_applied": 1,
+    "repairs": [
+      {
+        "issue_id": "gsc_url_mismatch",
+        "issue_level": "high",
+        "issue_message": "GSC가 URL 25개를 반환했지만 글 매칭률이 0.7% — 도메인 전환·URL 형식 불일치 의심",
+        "fix_applied": null,
+        "timestamp": "2026-09-08T00:34:45.572623",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      },
+      {
+        "issue_id": "stale_pending_posts",
+        "issue_level": "low",
+        "issue_message": "30일 이상 대기 중인 포스트 3개",
+        "fix_applied": "expire_old_pending",
+        "timestamp": "2026-09-08T00:34:45.572697",
+        "success": true,
+        "detail": "대기 포스트 3개 → expired 처리",
+        "expired": 3
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-09-07T20:20:17.200677",
     "health_score": 85,
     "issues_found": 1,
@@ -1592,40 +1659,6 @@
         "success": true,
         "detail": "대기 포스트 1개 → expired 처리",
         "expired": 1
-      }
-    ],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-15T17:15:01.452033",
-    "health_score": 97,
-    "issues_found": 1,
-    "issues": [
-      {
-        "id": "stale_pending_posts",
-        "level": "low",
-        "message": "30일 이상 대기 중인 포스트 2개",
-        "context": {
-          "count": 2,
-          "titles": [
-            "해외 사고 시 대사관 신고 절차, 조사해보니 이렇습니다",
-            "여름 휴가철 해외여행 식중독 예방 체크리스트, 출국 전"
-          ]
-        },
-        "fix": "expire_old_pending"
-      }
-    ],
-    "repairs_applied": 1,
-    "repairs": [
-      {
-        "issue_id": "stale_pending_posts",
-        "issue_level": "low",
-        "issue_message": "30일 이상 대기 중인 포스트 2개",
-        "fix_applied": "expire_old_pending",
-        "timestamp": "2026-08-15T17:15:01.393031",
-        "success": true,
-        "detail": "대기 포스트 2개 → expired 처리",
-        "expired": 2
       }
     ],
     "dry_run": false

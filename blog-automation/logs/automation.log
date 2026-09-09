@@ -1,112 +1,3 @@
-2026-09-06 23:47:57,413 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 77/100, 권장: review) — 자동 수정 시도
-2026-09-06 23:47:57,413 [WARNING] main —      🔴 [AI 생성 의심도] '확인하는 것이 좋습니다 미리 확인이 필요합니다' 등 중복·어색한 문장과 이모지 소제목 패턴이 AI 생성 흔적을 강하게 시사
-2026-09-06 23:47:57,413 [WARNING] main —      🔴 법주사 관련 문장에 의미 중복 오류('확인하는 것이 좋습니다 미리 확인이 필요합니다')가 있어 교정 필요
-2026-09-06 23:47:57,413 [WARNING] main —      🟡 [원본성 및 품질] 글자수(3209자)는 충족하나 국립공원 무료화·단풍 시기 등 공개된 정보의 재구성이 많아 독창적 인사이트는 제한적
-2026-09-06 23:47:57,413 [WARNING] main —      🟡 [이미지 정책] 이미지 1장만 사용되고 라이선스는 명시되었으나 alt 텍스트 및 다수 이미지 부재
-2026-09-06 23:47:57,413 [WARNING] main —      🟡 지역별 코스에 이미지를 추가하고 alt 텍스트 명시
-2026-09-06 23:47:57,413 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 77/100, fail: 1개, warn: 2개
-2026-09-06 23:47:57,423 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-06 23:47:57,429 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 1건
-2026-09-06 23:47:58,178 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-06 23:50:22,223 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3209자 → 4909자 (+1700자)
-2026-09-06 23:50:22,223 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-09-06 23:50:23,034 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-06 23:50:32,682 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '가을 단풍 여행지 가성비 코스 추천 총정리'
-2026-09-06 23:50:32,683 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장 확인되며 Pixabay 무료 라이선스 출처는 명시했으나 alt 텍스트 여부 불명확
-2026-09-06 23:50:32,683 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 개인 경험 삽화가 있으나 '핵심 요약/핵심 포인트' 등 정형화된 요약 패턴과 목록화 구조가 다소 반복적
-2026-09-06 23:50:32,683 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 77 → 90/100)
-2026-09-06 23:50:32,683 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-09-06 23:50:33,444 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-06 23:50:58,421 [INFO] final_editor —   ✏️ 제목 최종 교정: '가을 단풍 여행지 가성비 코스 추천 총정리' → '2025 가을 단풍 여행지 가성비 코스 추천 총정리 가이드'
-2026-09-06 23:50:58,421 [INFO] final_editor —   ✏️ 메타 설명 교정 (84자)
-2026-09-06 23:50:58,421 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목을 30자 이상으로 확장하고 메타 설명을 120~160자로 재작성했으며, 이미지 3곳(도입부·지역비교·체크리스트)과 관련 내부 글 주제 3건을 추가로 제안했습니다.
-2026-09-06 23:50:58,634 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-09-06 23:50:58,635 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-09-06 23:50:59,670 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/2025.html
-2026-09-06 23:50:59,683 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/09/2025.html
-2026-09-06 23:50:59,687 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-09-06 23:50:59,695 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-06 23:50:59,696 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '2025 가을 단풍 여행지 가성비 코스 추천 총정리 가이드'
-2026-09-06 23:51:00,421 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-06 23:51:04,329 [INFO] comment_manager —   생성된 댓글: 덧붙이자면 단풍 사진 찍으실 때는 오전 9~10시나 오후 4시 이후처럼 해가 낮게 뜬 시간대가 역광 없이 색감이 훨씬 진하게 나오더라고요. 그리...
-2026-09-06 23:54:04,693 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-09-06 23:54:04,694 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-09-06 23:54:04,695 [INFO] main — 
-============================================================
-2026-09-06 23:54:04,695 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-09-06 23:54:04,695 [INFO] main — ============================================================
-2026-09-06 23:54:04,739 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 136개)
-2026-09-06 23:54:04,786 [INFO] dashboard_exporter — 분석 필드 유지: 116/139개 (등급·조회수·수익)
-2026-09-06 23:54:04,802 [INFO] dashboard_exporter —   시리즈: 27개 내보내기 완료
-2026-09-06 23:54:04,823 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-06 23:54:05,284 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-06 23:54:05,661 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-06 23:54:05,662 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-06 23:54:05,663 [INFO] dashboard_exporter —   학습 이력: 2주 내보내기 완료
-2026-09-06 23:54:05,665 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-06 23:54:05,681 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 269 / 실패 0 / 대기 17)
-2026-09-06 23:54:05,681 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-06 23:54:05,681 [INFO] dashboard_exporter —   포스트: 139개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-06 23:54:05,682 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-06 23:54:05,683 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-09-06 23:54:58,897 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-06 23:54:59,714 [INFO] main — ============================================================
-2026-09-06 23:54:59,714 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-09-06 23:54:59
-2026-09-06 23:54:59,714 [INFO] main — ============================================================
-2026-09-06 23:54:59,733 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-09-06 23:54:59,733 [INFO] keyword_collector — 포스팅 이력 코퍼스: 144개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-09-06 23:54:59,734 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-06 23:55:04,507 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-09-06 23:55:15,010 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-06 23:55:15,038 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-09-06 23:55:15,038 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-09-06 23:55:15,920 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-06 23:55:15,920 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-09-06 23:55:15,922 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-09-06 23:55:15,929 [INFO] keyword_collector — 유사 주제 제외 3개: ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '호텔 AI 컨시어지 서비스 이용 후기와 활용법']
-2026-09-06 23:55:15,929 [INFO] keyword_collector —   [naver_realtime] 2개: ['이마트 롯데아울렛 가을 할인 정보 및 알뜰 쇼핑 팁', '스파이더맨4 예매 꿀팁과 실관람 후기 비교']
-2026-09-06 23:55:15,929 [INFO] keyword_collector — 최종 선정 키워드 2개: ['이마트 롯데아울렛 가을 할인 정보 및 알뜰 쇼핑 팁', '스파이더맨4 예매 꿀팁과 실관람 후기 비교']
-2026-09-06 23:55:15,929 [INFO] main — 수집된 키워드 2개: ['이마트 롯데아울렛 가을 할인 정보 및 알뜰 쇼핑 팁', '스파이더맨4 예매 꿀팁과 실관람 후기 비교']
-2026-09-06 23:55:15,935 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-09-06 23:55:15,935 [INFO] main — 단독 포스트 대상 키워드 1개: ['이마트 롯데아울렛 가을 할인 정보 및 알뜰 쇼핑 팁']
-2026-09-06 23:55:15,955 [INFO] main — 
-[1/1] 키워드: '이마트 롯데아울렛 가을 할인 정보 및 알뜰 쇼핑 팁'
-2026-09-06 23:55:15,955 [INFO] content_generator — 포스트 생성 중: '이마트 롯데아울렛 가을 할인 정보 및 알뜰 쇼핑 팁'
-2026-09-06 23:55:21,690 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-06 23:55:21,691 [INFO] research_collector — 검색 의도: 이마트와 롯데아울렛의 가을 할인 행사 정보를 확인하고 알뜰하게 쇼핑하는 방법을 알고 싶음
-2026-09-06 23:55:29,565 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '이마트 롯데아울렛 가을 할인 정보 및 알뜰 쇼핑 팁'
-2026-09-06 23:55:50,042 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-06 23:55:50,043 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '이마트 롯데아울렛 가을 할인 정보 및 알뜰 쇼핑 팁'
-2026-09-06 23:55:58,809 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-06 23:55:58,811 [INFO] source_validator — 출처 검증: 4/4개 통과, 등급 분포 {'C': 4}
-2026-09-06 23:55:58,813 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-09-06 23:55:58,813 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-06 23:55:58,814 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-06 23:55:59,592 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-06 23:57:25,352 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-06 23:57:26,307 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-06 23:57:35,482 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
-2026-09-06 23:57:35,482 [INFO] content_generator — 이미지 계획 1건 사용: ['golf apparel outlet store rack']
-2026-09-06 23:57:35,773 [INFO] image_fetcher — 이미지 수집 성공: 'golf apparel outlet store rack' → 제목='apparel / boutique / bags / shoes / shop' (관련성=0.40)
-2026-09-06 23:57:36,199 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-06 23:57:36,199 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-09-06 23:57:36,204 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-09-06 23:57:36,206 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-06 23:57:36,206 [INFO] content_generator — 포스트 생성 완료: '이마트·롯데아울렛 가을 할인 시즌, 골프웨어·스포츠브랜드 알뜰하게 사는 법' (2963자, 이미지 1개)
-2026-09-06 23:57:36,928 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-06 23:57:45,210 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '이마트·롯데아울렛 가을 할인 시즌, 골프웨어·스포츠브랜드 알뜰하'
-2026-09-06 23:57:45,211 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개 언급되나 본문 내 구체적 기관명·시점 명시가 일부만 있고 수치 대부분이 '자료팩 미확인'으로 단정 유보됨
-2026-09-06 23:57:45,211 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개 존재하며 Pixabay 출처 명시로 저작권 문제 없으나 alt텍스트 여부 불명확
-2026-09-06 23:57:45,211 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다만', '~하는 게' 등 반복 패턴과 정리형 문장 구조가 다소 보임
-2026-09-06 23:57:45,215 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-06 23:57:45,217 [INFO] internal_linker —   [1/5] '대형마트' -> https://hogugolfntraval.blogspot.com/2026/08/9.html
 2026-09-06 23:57:45,223 [INFO] internal_linker — 내부 링크 1개 삽입 완료
 2026-09-06 23:57:45,223 [INFO] main —   제목: 이마트·롯데아울렛 가을 할인 시즌, 골프웨어·스포츠브랜드 알뜰하게 사는 법
 2026-09-06 23:57:45,223 [INFO] main —   이미지: 1개 삽입
@@ -607,3 +498,196 @@
 2026-09-08 00:55:25,041 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-09-08 00:55:25,041 [INFO] main —   - [blog3] 금융NEWS
 2026-09-08 00:55:25,044 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-09-09 00:00:46,878 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-09 00:00:47,470 [INFO] main — ============================================================
+2026-09-09 00:00:47,470 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-09 00:00:47
+2026-09-09 00:00:47,470 [INFO] main — ============================================================
+2026-09-09 00:00:47,489 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
+2026-09-09 00:00:47,489 [INFO] keyword_collector — 포스팅 이력 코퍼스: 127개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-09-09 00:00:47,489 [INFO] keyword_collector — 시즌 예약 키워드 21개 로드 (blog=blog1): ['2026 가을 등산 코스 초보자 추천 후기', '2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법']...
+2026-09-09 00:00:50,450 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-09-09 00:00:55,507 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:00:55,527 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-09 00:00:55,527 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-09 00:00:55,813 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-09-09 00:00:56,069 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-09 00:00:56,507 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-09-09 00:00:56,507 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-09 00:00:56,508 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-09 00:00:56,516 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
+2026-09-09 00:00:56,516 [INFO] keyword_collector — 유사 주제 제외 7개: ['2026 가을 등산 코스 초보자 추천 후기', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-09 00:00:56,518 [INFO] keyword_collector —   [season_scheduled] 2개: ['가을 드라이브 코스 솔직 비교 추천', '9월 국내여행지 가격 비교 후기 총정리']
+2026-09-09 00:00:56,518 [INFO] keyword_collector — 최종 선정 키워드 2개: ['가을 드라이브 코스 솔직 비교 추천', '9월 국내여행지 가격 비교 후기 총정리']
+2026-09-09 00:00:56,518 [INFO] main — 수집된 키워드 2개: ['가을 드라이브 코스 솔직 비교 추천', '9월 국내여행지 가격 비교 후기 총정리']
+2026-09-09 00:00:56,523 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-09-09 00:00:59,065 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 40개
+2026-09-09 00:01:00,421 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:01:00,422 [INFO] keyword_collector — 화제 드라마 감지: ['재벌X형사2', '포핸즈', '신병4 : 사보타주']
+2026-09-09 00:01:00,422 [INFO] main — [자동 드라마 시리즈] '재벌X형사2' 감지 — 리뷰 시리즈 기획 시작
+2026-09-09 00:01:04,799 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:01:04,800 [INFO] series_planner — 드라마 시리즈 기획 완료: '재벌X형사2 드라마 리뷰 시리즈' 3편
+2026-09-09 00:01:04,800 [INFO] main — [자동 시리즈] '재벌X형사2' 3편 기획 시작 (이후 단독 포스트 0개)
+2026-09-09 00:01:04,800 [INFO] main — ============================================================
+2026-09-09 00:01:04,800 [INFO] main — [HOGU What?] 시리즈 모드 시작: '재벌X형사2' 3편
+2026-09-09 00:01:04,800 [INFO] main — ============================================================
+2026-09-09 00:01:04,824 [INFO] main — 시리즈 기획 완료: '재벌X형사2 드라마 리뷰 시리즈'
+2026-09-09 00:01:04,824 [INFO] main —   편 1: 재벌X형사2 첫인상 솔직 리뷰
+2026-09-09 00:01:04,824 [INFO] main —   편 2: 재벌X형사2 등장인물 분석 총정리
+2026-09-09 00:01:04,824 [INFO] main —   편 3: 재벌X형사2 결말 총평 별점 리뷰
+2026-09-09 00:01:04,824 [INFO] main — 
+--- [1/3편] '재벌X형사2 첫인상 후기' 생성 중 ---
+2026-09-09 00:01:04,824 [INFO] content_generator — 시리즈 포스트 생성: '재벌X형사2 첫인상 후기' (1/3편)
+2026-09-09 00:01:09,957 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:01:09,958 [INFO] research_collector — 검색 의도: 재벌X형사2의 초반 내용, 캐스팅, 전작 대비 변화 등에 대한 시청자 반응과 감상을 확인하려는 의도
+2026-09-09 00:01:16,004 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '재벌X형사2 첫인상 후기'
+2026-09-09 00:01:26,509 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:01:26,510 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '재벌X형사2 첫인상 후기'
+2026-09-09 00:01:32,692 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:01:32,693 [INFO] source_validator — 출처 검증: 1/6개 통과, 등급 분포 {'X': 5, 'C': 1}
+2026-09-09 00:01:32,695 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-09-09 00:01:32,695 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-09 00:01:32,696 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-09 00:01:33,647 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:03:14,822 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-09 00:03:15,670 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:03:28,675 [INFO] content_generator — 팩트체크: 통과
+2026-09-09 00:03:28,675 [INFO] content_generator — 이미지 계획 3건 사용: ['person choosing tv show remote', 'business suit police badge contrast', 'smartphone streaming apps screen']
+2026-09-09 00:03:29,008 [INFO] image_fetcher — 이미지 수집 성공: 'person choosing tv show remote' → 제목='remote control / tv / watch tv / watch /' (관련성=0.50)
+2026-09-09 00:03:29,256 [INFO] image_fetcher — 이미지 수집 성공: 'business suit police badge contrast' → 제목='people / business / meeting / business m' (관련성=0.40)
+2026-09-09 00:03:29,545 [INFO] image_fetcher — 이미지 수집 성공: 'smartphone streaming apps screen' → 제목='netflix / app / entertainment / digital ' (관련성=0.25)
+2026-09-09 00:03:35,472 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:03:35,473 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-09-09 00:03:36,091 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-09-09 00:03:36,091 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-09-09 00:03:36,099 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-09 00:03:36,099 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] 재벌X형사2 첫인상 후기, 시청 전 체크포인트' (2820자, 이미지 2개)
+2026-09-09 00:03:39,828 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:04:00,498 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '[1편] 재벌X형사2 첫인상 후기, 시청 전 체크포인트'
+2026-09-09 00:04:00,498 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 후기 종합·해석은 있으나 구체적 수치·날짜·출처 인용이 본문에 명시적으로 드러나지 않아 일반적 조사글 수준에 머묾
+2026-09-09 00:04:00,498 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 좋으나 일부 단락이 500자 이상으로 길게 이어짐
+2026-09-09 00:04:00,498 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 불확실성 명시(방영 일정 등)는 있으나 4개 출처가 본문 내 기관명·시점과 함께 인용되지 않음
+2026-09-09 00:04:00,498 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개, Pixabay 라이선스 출처는 명시되었으나 이미지 수가 적고 alt 텍스트 명시 확인 불가
+2026-09-09 00:04:00,498 [WARNING] main —   ⚠️ [편 1] AdSense 검토 필요 — pending 저장 (점수: 79/100)
+2026-09-09 00:04:00,500 [INFO] main — 
+--- [2/3편] '재벌X형사2 등장인물 배우 연기력' 생성 중 ---
+2026-09-09 00:04:00,500 [INFO] content_generator — 시리즈 포스트 생성: '재벌X형사2 등장인물 배우 연기력' (2/3편)
+2026-09-09 00:04:06,321 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:04:06,322 [INFO] research_collector — 검색 의도: 재벌X형사2 드라마의 등장인물과 배우 캐스팅, 연기력 평가를 확인하려는 검색
+2026-09-09 00:04:16,060 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '재벌X형사2 등장인물 배우 연기력'
+2026-09-09 00:04:32,476 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:04:32,476 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '재벌X형사2 등장인물 배우 연기력'
+2026-09-09 00:04:55,027 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:04:55,028 [INFO] source_validator — 출처 검증: 6/8개 통과, 등급 분포 {'B': 5, 'X': 2, 'C': 1}
+2026-09-09 00:04:56,180 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '재벌X형사2 등장인물 배우 연기력'
+2026-09-09 00:04:56,180 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-09-09 00:04:56,180 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-09 00:04:56,180 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-09 00:04:56,948 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:06:30,429 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-09 00:06:31,672 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:06:48,922 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '유승호 등이 특별출연으로 합류해 회차마다 화제를 모으고 있어요'
+2026-09-09 00:06:48,923 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-09-09 00:06:48,923 [INFO] content_generator — 이미지 계획 3건 사용: ['korean drama sword prop set', 'sword dance silhouette drama', 'drama cast rehearsal set']
+2026-09-09 00:06:49,219 [INFO] image_fetcher — 이미지 수집 성공: 'korean drama sword prop set' → 제목='tofu / korean / korean food / korean tra' (관련성=0.20)
+2026-09-09 00:06:49,573 [INFO] image_fetcher — 이미지 수집 성공: 'sword dance silhouette drama' → 제목='torii / traditional japanese gate / sakh' (관련성=0.25)
+2026-09-09 00:06:49,837 [INFO] image_fetcher — 이미지 수집 성공: 'drama cast rehearsal set' → 제목='lead set / hand set / cliche / letters /' (관련성=0.50)
+2026-09-09 00:06:52,364 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:06:52,365 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-09-09 00:06:52,365 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-09-09 00:06:52,365 [INFO] image_fetcher — 제목 썸네일 생성: '[2편] 재벌X형사2 등장인물 분석 총정리, 배우 연기' (data URI, 1164B)
+2026-09-09 00:06:54,183 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: '20260804 재벌X형사 2 강상준Kang Sang-jun.png'
+2026-09-09 00:06:55,406 [INFO] image_mirror — Referer 재시도로 통과(핫링크 차단이었음): https://upload.wikimedia.org/wikipedia/commons/0/02/20260804_%EC%9E%AC
+2026-09-09 00:06:55,407 [INFO] image_mirror — 이미지 복제 건너뜀(용량 5807KB): https://upload.wikimedia.org/wikipedia/commons/0/02/20260804_%EC%9E%AC
+2026-09-09 00:06:55,413 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-09 00:06:55,413 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-09-09 00:06:55,419 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-09 00:06:55,419 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 재벌X형사2 등장인물 분석 총정리, 배우 연기력까지 파헤쳐봤다' (3425자, 이미지 2개)
+2026-09-09 00:06:56,527 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:07:15,226 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '[2편] 재벌X형사2 등장인물 분석 총정리, 배우 연기력까지 파'
+2026-09-09 00:07:15,226 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개는 우수하나 일부 단락(시즌1 설명 등)이 500자 이상으로 길게 이어짐
+2026-09-09 00:07:15,226 [INFO] adsense_validator —   ⚠️ 이미지 정책: Wikimedia·직접제작 출처는 적절하나 alt 텍스트 명시 여부가 본문에서 확인되지 않음
+2026-09-09 00:07:16,066 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:07:57,440 [INFO] final_editor —   ✏️ 제목 최종 교정: '[2편] 재벌X형사2 등장인물 분석 총정리, 배우 연기력까지 파헤쳐봤다' → '재벌X형사2 등장인물 배우 연기력 총정리, 특별출연진까지 완벽 분석'
+2026-09-09 00:07:57,440 [INFO] final_editor —   ✏️ 메타 설명 교정 (137자)
+2026-09-09 00:07:57,440 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타 설명·슬러그를 SEO 규격에 맞게 재정리하고, 긴 문단을 2~4문장 단위로 분할했으며, 이미지 4개 위치와 구체적 alt 텍스트, 표·FAQ·주의사항·작성자 메모 블록을 배치해 발행 가능한 형태로 정리했습니다.
+2026-09-09 00:07:57,588 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-09 00:07:57,588 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-09-09 00:07:58,591 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/x2_02093879317.html
+2026-09-09 00:07:58,592 [INFO] main —   ✅ 편 2 업로드 완료: https://www.hoguwhat.com/2026/09/x2_02093879317.html
+2026-09-09 00:08:01,594 [INFO] main — 
+--- [3/3편] '재벌X형사2 결말 총평 별점' 생성 중 ---
+2026-09-09 00:08:01,595 [INFO] content_generator — 시리즈 포스트 생성: '재벌X형사2 결말 총평 별점' (3/3편)
+2026-09-09 00:08:06,979 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:08:06,980 [INFO] research_collector — 검색 의도: 재벌X형사2 드라마의 결말 내용과 전체적인 평가, 평점을 확인하려는 검색 의도
+2026-09-09 00:08:15,232 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '재벌X형사2 결말 총평 별점'
+2026-09-09 00:08:30,781 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:08:30,782 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '재벌X형사2 결말 총평 별점'
+2026-09-09 00:08:45,298 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:08:45,299 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'C': 2, 'B': 1, 'X': 2}
+2026-09-09 00:08:46,443 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-09-09 00:08:46,443 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-09 00:08:46,443 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-09 00:08:47,677 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:10:45,055 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-09 00:10:45,913 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:11:11,206 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
+2026-09-09 00:11:11,206 [INFO] content_generator — 이미지 계획 3건 사용: ['drama review notes laptop', 'watching drama finale tv', 'streaming service drama list']
+2026-09-09 00:11:11,503 [INFO] image_fetcher — 이미지 수집 성공: 'drama review notes laptop' → 제목='finger / feedback / report back / write ' (관련성=0.25)
+2026-09-09 00:11:12,139 [INFO] image_fetcher — 이미지 수집 성공: 'watching drama finale tv' → 제목='daily / routine / tv / watching tv / tv ' (관련성=0.33)
+2026-09-09 00:11:12,366 [INFO] image_fetcher — 이미지 수집 성공: 'streaming service drama list' → 제목='video streaming / laptop / few / movie /' (관련성=0.50)
+2026-09-09 00:11:15,248 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:11:15,249 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-09-09 00:11:15,865 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-09-09 00:11:15,865 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-09-09 00:11:15,873 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-09 00:11:15,874 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 재벌X형사2 결말 총평, 별점과 OST까지 총정리' (2875자, 이미지 2개)
+2026-09-09 00:11:16,805 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:11:36,464 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '[3편] 재벌X형사2 결말 총평, 별점과 OST까지 총정리'
+2026-09-09 00:11:36,464 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 총평 섹션 등 일부 단락이 500자 이상으로 길게 이어짐
+2026-09-09 00:11:36,464 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 표기는 있으나 alt 텍스트 등 세부 정책 확인 불가로 기본 warn 처리
+2026-09-09 00:11:37,203 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-09 00:12:24,934 [INFO] final_editor —   ✏️ 제목 최종 교정: '[3편] 재벌X형사2 결말 총평, 별점과 OST까지 총정리' → '[완결] 재벌X형사2 결말 총평, 별점과 OST 총정리'
+2026-09-09 00:12:24,934 [INFO] final_editor —   ✏️ 메타 설명 교정 (101자)
+2026-09-09 00:12:24,934 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분할했습니다. FAQ·주의사항·작성자 메모·내부 링크 언급을 추가하고 이미지 alt 텍스트를 구체화했습니다.
+2026-09-09 00:12:25,089 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-09 00:12:25,090 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-09-09 00:12:26,252 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/x2-ost.html
+2026-09-09 00:12:26,253 [INFO] main —   ✅ 편 3 업로드 완료: https://www.hoguwhat.com/2026/09/x2-ost.html
+2026-09-09 00:12:26,264 [INFO] dashboard_exporter —   검토 대기 저장: [1편] 재벌X형사2 첫인상 후기, 시청 전 체크포인트 (12864자 HTML)
+2026-09-09 00:12:26,279 [INFO] pending_store — 검토 대기 저장: 목록 18건 / 보관 150건 / 본문 24건
+2026-09-09 00:12:26,279 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 168개)
+2026-09-09 00:12:26,321 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 142개)
+2026-09-09 00:12:26,362 [INFO] dashboard_exporter — 분석 필드 유지: 141/146개 (등급·조회수·수익)
+2026-09-09 00:12:26,375 [INFO] dashboard_exporter —   시리즈: 28개 내보내기 완료
+2026-09-09 00:12:26,394 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-09 00:12:26,765 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-09 00:12:27,097 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-09 00:12:27,098 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-09 00:12:27,099 [INFO] dashboard_exporter —   학습 이력: 2주 내보내기 완료
+2026-09-09 00:12:27,100 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-09 00:12:27,115 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 268 / 실패 0 / 대기 17)
+2026-09-09 00:12:27,115 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-09 00:12:27,116 [INFO] dashboard_exporter —   포스트: 146개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-09 00:12:27,117 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-09 00:12:27,117 [INFO] main — 
+============================================================
+2026-09-09 00:12:27,117 [INFO] main — [HOGU What?] 시리즈 완료: 2/3편 성공
+2026-09-09 00:12:27,117 [INFO] main — ============================================================
+2026-09-09 00:12:27,117 [INFO] main — 단독 포스트 대상 키워드 0개: []
+2026-09-09 00:12:27,140 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
+2026-09-09 00:12:27,140 [INFO] main — 
+============================================================
+2026-09-09 00:12:27,141 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
+2026-09-09 00:12:27,141 [INFO] main — ============================================================
+2026-09-09 00:12:27,180 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 143개)
+2026-09-09 00:12:27,198 [INFO] dashboard_exporter — 분석 필드 유지: 141/146개 (등급·조회수·수익)
+2026-09-09 00:12:27,210 [INFO] dashboard_exporter —   시리즈: 28개 내보내기 완료
+2026-09-09 00:12:27,229 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-09 00:12:27,230 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-09 00:12:27,231 [INFO] dashboard_exporter —   학습 이력: 2주 내보내기 완료
+2026-09-09 00:12:27,232 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-09 00:12:27,246 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 267 / 실패 1 / 대기 17)
+2026-09-09 00:12:27,246 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-09 00:12:27,246 [INFO] dashboard_exporter —   포스트: 146개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-09 00:12:27,247 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-09 00:12:27,248 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다

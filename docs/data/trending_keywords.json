@@ -1,69 +1,81 @@
 {
-  "collectedAt": "2026-09-10T12:33:50.020663+00:00",
+  "collectedAt": "2026-09-10T14:48:13.244031+00:00",
   "sources": {
     "googleTrends": [
       {
-        "keyword": "강선영",
+        "keyword": "변우석",
         "rank": 1,
-        "traffic": "200+",
+        "traffic": "1000+",
         "source": "google_trends"
       },
       {
-        "keyword": "방아쇠",
+        "keyword": "신애라",
         "rank": 2,
-        "traffic": "100+",
+        "traffic": "200+",
         "source": "google_trends"
       },
       {
-        "keyword": "승리",
+        "keyword": "wti",
         "rank": 3,
-        "traffic": "2000+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "김종규",
-        "rank": 4,
-        "traffic": "200+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "신진서",
-        "rank": 5,
-        "traffic": "200+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "pakistan vs england",
-        "rank": 6,
         "traffic": "100+",
         "source": "google_trends"
       },
       {
-        "keyword": "skc",
+        "keyword": "서울 지하철 2호선",
+        "rank": 4,
+        "traffic": "500+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "사랑 이 온다",
+        "rank": 5,
+        "traffic": "500+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "대우건설",
+        "rank": 6,
+        "traffic": "200+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "송미령",
         "rank": 7,
-        "traffic": "200+",
+        "traffic": "5000+",
         "source": "google_trends"
       },
       {
-        "keyword": "주성엔지니어링",
+        "keyword": "ppi",
         "rank": 8,
-        "traffic": "200+",
+        "traffic": "500+",
         "source": "google_trends"
       },
       {
-        "keyword": "안성훈",
+        "keyword": "미스 트롯 포유",
         "rank": 9,
-        "traffic": "2000+",
+        "traffic": "5000+",
         "source": "google_trends"
       },
       {
-        "keyword": "화산분화",
+        "keyword": "도둑",
         "rank": 10,
-        "traffic": "200+",
+        "traffic": "1000+",
         "source": "google_trends"
       }
     ],
     "naverNews": [
+      {
+        "headline": "[속보] 국제유가 고공행진…WTI도 배럴당 100달러 돌파",
+        "category": "경제",
+        "source": "naver_rss",
+        "keyword": "국제유가 고공행진 WTI 배럴당 달러 돌파"
+      },
+      {
+        "headline": "베선트 약발 안먹힌다…60억달러 바이백 언급에도 국채금리 상승",
+        "category": "경제",
+        "source": "naver_rss",
+        "keyword": "베선트 약발 안먹힌다 억달러 바이백 언급에도"
+      },
       {
         "headline": "“내 재산은 평균일까?”…한국인 48세에 ‘빚’·61세 ‘자산’ 정점 [데이터로 읽는 머니 무브]",
         "category": "경제",
@@ -87,18 +99,6 @@
         "category": "경제",
         "source": "naver_rss",
         "keyword": "정부 지역필수의료에 투입 지방대 투자도 늘린다"
-      },
-      {
-        "headline": "[표] 외국환율고시표",
-        "category": "경제",
-        "source": "naver_rss",
-        "keyword": "외국환율고시표"
-      },
-      {
-        "headline": "\"좌석 유지 의무 풀어달라\" 항공사 요청에…공정위 기각",
-        "category": "경제",
-        "source": "naver_rss",
-        "keyword": "좌석 유지 의무 풀어달라 항공사 요청에"
       },
       {
         "headline": "[콘텐츠 핫&뉴] 엔씨, ‘원스 휴먼’ PC방 서비스",
@@ -194,18 +194,18 @@
         "keyword": "재산은 평균일까 한국인 세에 자산 정점"
       },
       {
-        "headline": "“나도 10개 사면 7개는 손절”…40년간 살아남은 고수의 ‘투자 5계명’...",
-        "category": "뉴스",
-        "query": "경제 재테크",
-        "source": "naver_api",
-        "keyword": "나도 사면 개는 손절 년간 살아남은"
-      },
-      {
         "headline": "삼전닉스 있는데 한국이 불리?…2030년 반도체 멸망전 [반도체플러스]",
         "category": "뉴스",
         "query": "경제 재테크",
         "source": "naver_api",
         "keyword": "삼전닉스 있는데 한국이 불리 2030 반도체"
+      },
+      {
+        "headline": "“나도 10개 사면 7개는 손절”…40년간 살아남은 고수의 ‘투자 5계명’...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "나도 사면 개는 손절 년간 살아남은"
       },
       {
         "headline": "[AJU+MONEY] &quot;치매 걸리면 내 돈은 누가?&quot;…미리 준비하는 '치매머니' 재...",
@@ -215,39 +215,81 @@
         "keyword": "AJU MONEY quot 치매 걸리면 돈은"
       },
       {
-        "headline": "가을 환절기 독감‧코로나 동시 유행 '트윈데믹' 경고등",
+        "headline": "독감 코로나 동시 유행, 예방법은? /",
         "category": "뉴스",
         "query": "건강 의료",
         "source": "naver_api",
-        "keyword": "가을 환절기 독감 코로나 동시 유행"
+        "keyword": "독감 코로나 동시 유행 예방법은"
       },
       {
-        "headline": "&quot;학생 마음 돌봄, 학교가 먼저 살핀다&quot;",
+        "headline": "K폐암신약 '렉라자 신화'… 유한양행·오스코텍 베스트 제약상",
         "category": "뉴스",
         "query": "건강 의료",
         "source": "naver_api",
-        "keyword": "quot 학생 마음 돌봄 학교가 먼저"
+        "keyword": "폐암신약 렉라자 신화 유한양행 오스코텍 베스트"
       },
       {
-        "headline": "[9월10일 인사종합] 기후에너지환경부 외",
+        "headline": "영월읍 '생명존중 안심마을' 현판식…지역맞춤형 자살예방 강화",
         "category": "뉴스",
         "query": "건강 의료",
         "source": "naver_api",
-        "keyword": "인사종합 기후에너지환경부"
+        "keyword": "영월읍 생명존중 안심마을 현판식 지역맞춤형 자살예방"
       },
       {
-        "headline": "바디프랜드, 신세계 강남점서 헬스케어로봇 체험 행사 진행",
+        "headline": "이성경, 건강 메시지 담은 셀카…유산균 모델 활동 잇는다",
         "category": "뉴스",
         "query": "건강 의료",
         "source": "naver_api",
-        "keyword": "바디프랜드 신세계 강남점서 헬스케어로봇 체험 행사"
+        "keyword": "이성경 건강 메시지 담은 셀카 유산균"
       },
       {
-        "headline": "235개 단체, 이만희 신천지 총회장 병보석 촉구",
+        "headline": "[9월 10일 병원계 이모저모④]고려대구로, 서울대, 이대서울, 일산백병...",
         "category": "뉴스",
         "query": "건강 의료",
         "source": "naver_api",
-        "keyword": "단체 이만희 신천지 총회장 병보석 촉구"
+        "keyword": "병원계 이모저모 고려대구로 서울대 이대서울 일산백병"
+      },
+      {
+        "headline": "&quot;신종 감염병 틈새 차단&quot;…경북도, 니파바이러스 유입 대비 실전 훈련",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "quot 신종 감염병 틈새 차단 quot"
+      },
+      {
+        "headline": "스트래티지, 네이버클라우드와 업무협약 체결",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "스트래티지 네이버클라우드와 업무협약 체결"
+      },
+      {
+        "headline": "[가톨릭관동대학교 2026년 초기창업패키지 선정기업] 지능형 올인원(All...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "가톨릭관동대학교 2026 초기창업패키지 선정기업 지능형 올인원"
+      },
+      {
+        "headline": "&quot;첨단 바이오 미래를 여는 경북&quot;… '2026 경북 바이오산업 엑스포' 안동...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "quot 첨단 바이오 미래를 여는 경북"
+      },
+      {
+        "headline": "산업 AX, 전시장 넘어 중소기업 현장으로",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "산업 AX 전시장 넘어 중소기업 현장으로"
+      },
+      {
+        "headline": "안동서 '경북 바이오산업 엑스포'…새 성장엔진 다진다",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "안동서 경북 바이오산업 엑스포 성장엔진 다진다"
       },
       {
         "headline": "‘쇳물에 AI 붓는다’⋯ 포스코, ‘철강AI융합대학’ 새출발 체질 혁신",
@@ -257,67 +299,25 @@
         "keyword": "쇳물에 AI 붓는다 포스코 철강 AI"
       },
       {
-        "headline": "포스코기술대학, '포스코철강AI융합대학'으로 개편…AI 교육 45% 확대",
-        "category": "뉴스",
-        "query": "IT AI 기술",
-        "source": "naver_api",
-        "keyword": "포스코기술대학 포스코철강 AI 융합대학 으로 개편"
-      },
-      {
-        "headline": "오픈AI·앤트로픽의 'AI공포 마케팅'...&quot;여전히 SF, 통제벗어나는 건 현...",
-        "category": "뉴스",
-        "query": "IT AI 기술",
-        "source": "naver_api",
-        "keyword": "오픈 AI 앤트로픽의 AI 공포 마케팅"
-      },
-      {
-        "headline": "[클라우드 월드] 이노그리드 '공공 클라우드 전환 MOU'·에이아이웍스 ...",
-        "category": "뉴스",
-        "query": "IT AI 기술",
-        "source": "naver_api",
-        "keyword": "클라우드 월드 이노그리드 공공 클라우드 전환"
-      },
-      {
-        "headline": "HL클레무브, 중국 레노버와 자율주행용 고성능 컴퓨터 공동 개발 업무협...",
-        "category": "뉴스",
-        "query": "IT AI 기술",
-        "source": "naver_api",
-        "keyword": "HL 클레무브 중국 레노버와 자율주행용 고성능"
-      },
-      {
-        "headline": "포스코 사내 대학 'AX 인재 양성' 중심 새출발",
-        "category": "뉴스",
-        "query": "IT AI 기술",
-        "source": "naver_api",
-        "keyword": "포스코 사내 대학 AX 인재 양성"
-      },
-      {
-        "headline": "전주시, 인구 위기 극복 위해 시정 역량 총결집",
+        "headline": "[패트롤] 해남군-완도군-진도군",
         "category": "뉴스",
         "query": "생활 소비",
         "source": "naver_api",
-        "keyword": "전주시 인구 위기 극복 시정 역량"
+        "keyword": "패트롤 해남군 완도군 진도군"
       },
       {
-        "headline": "봉화군, 농어촌 기본소득 자체사업 추진 박차",
+        "headline": "[패트롤] 구리시-남양주시-양평군-의정부시-하남시",
         "category": "뉴스",
         "query": "생활 소비",
         "source": "naver_api",
-        "keyword": "봉화군 농어촌 기본소득 자체사업 추진 박차"
+        "keyword": "패트롤 구리시 남양주시 양평군 의정부시 하남시"
       },
       {
-        "headline": "[일상 속 디자인 기행] &lt;인구절벽 시대 브랜드 전략&gt; 대량생산의 종말…...",
+        "headline": "창원 누비전, 첫 주 93.9% 판매…취약계층·고령층 구매 늘어",
         "category": "뉴스",
         "query": "생활 소비",
         "source": "naver_api",
-        "keyword": "일상 디자인 기행 lt 인구절벽 시대"
-      },
-      {
-        "headline": "[단독] “디즈니라더니 기존 제품에 포장만 바꿨다”…다이소 협업 상품...",
-        "category": "뉴스",
-        "query": "생활 소비",
-        "source": "naver_api",
-        "keyword": "디즈니라더니 기존 제품에 포장만 바꿨다 다이소"
+        "keyword": "창원 누비전 판매 취약계층 고령층 구매"
       },
       {
         "headline": "아이들 몰리는 ‘뽑기 인형’서 유해물질…기준치 최대 347배",
@@ -327,11 +327,25 @@
         "keyword": "아이들 몰리는 뽑기 인형 유해물질 기준치"
       },
       {
-        "headline": "BofA CEO &quot;美 소비 이상 없다&quot;…8월 지출 4% 증가",
+        "headline": "[오늘의 운세] 9월 11일 띠별 재물운…지킬 돈과 움직일 돈 가를 띠",
         "category": "뉴스",
         "query": "생활 소비",
         "source": "naver_api",
-        "keyword": "BofA CEO quot 소비 이상 없다"
+        "keyword": "오늘의 운세 띠별 재물운 지킬 돈과"
+      },
+      {
+        "headline": "[오늘의 별자리 운세] 9월 11일 총운…정리 끝내고 실행 기준 세울 때",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "오늘의 별자리 운세 총운 끝내고 실행"
+      },
+      {
+        "headline": "[설왕설래] 철거민 딱지",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "설왕설래 철거민 딱지"
       },
       {
         "headline": "서울 59㎡ 아파트 ‘분양가 16억’ 육박",
@@ -367,13 +381,6 @@
         "query": "부동산 청약",
         "source": "naver_api",
         "keyword": "금주의 여의도유리창 개각 검증대 오른 국회"
-      },
-      {
-        "headline": "8월 수도권 분양가 ㎡당 1500만원 돌파",
-        "category": "뉴스",
-        "query": "부동산 청약",
-        "source": "naver_api",
-        "keyword": "수도권 분양가 1500 만원 돌파"
       }
     ],
     "highCPC": [
@@ -590,50 +597,50 @@
     ],
     "aiRecommended": [
       {
-        "keyword": "아이폰17 시리즈 사전예약 가격 혜택 비교 2026",
+        "keyword": "환절기 면역력 관리법 실제 효과 본 습관 정리",
         "source": "ai_generated"
       },
       {
-        "keyword": "환절기 감기 몸살 예방하는 방법 직접 해본 후기",
+        "keyword": "가을철 비염 초기 증상 완화하는 법 병원 안 가고 관리하기",
         "source": "ai_generated"
       },
       {
-        "keyword": "가을철 알레르기성 비염 원인과 관리법 총정리",
+        "keyword": "아이폰17 사전예약 혜택 통신사별 비교 후기",
         "source": "ai_generated"
       },
       {
-        "keyword": "독감 예방접종 시기와 병원별 가격 비교 2026",
+        "keyword": "ISA 계좌 만기 후 재투자 전략 2026 최신 정리",
         "source": "ai_generated"
       },
       {
-        "keyword": "연말정산 미리 준비하는 절세 금융상품 추천 2026",
+        "keyword": "청년도약계좌 갈아타기 조건과 혜택 총정리",
         "source": "ai_generated"
       },
       {
-        "keyword": "청년도약계좌 만기 후 재투자 전략 직접 해본 후기",
+        "keyword": "가을 이사철 비용 아끼는 체크리스트",
         "source": "ai_generated"
       },
       {
-        "keyword": "추석 연휴 KTX SRT 예매 꿀팁과 실패 경험담",
+        "keyword": "단풍 시즌 국내 여행지 예약 꿀팁 2026",
         "source": "ai_generated"
       },
       {
-        "keyword": "가을 이사 손없는날 2026 비용 절약 체크리스트",
+        "keyword": "가을 캠핑 준비물 리스트 초보자 가이드",
         "source": "ai_generated"
       },
       {
-        "keyword": "가을 캠핑 초보 준비물 리스트 직접 써본 후기",
+        "keyword": "종합소득세 신고 미리 준비하는 절세 팁",
         "source": "ai_generated"
       },
       {
-        "keyword": "난방비 절약 보일러 설정 방법 직접 비교해본 결과",
+        "keyword": "가을철 실내 공기질 관리 공기청정기 필터 교체 주기",
         "source": "ai_generated"
       }
     ]
   },
   "stats": {
     "googleTrends": 10,
-    "naverNews": 47,
+    "naverNews": 48,
     "highCPC": 47,
     "aiRecommended": 10
   }

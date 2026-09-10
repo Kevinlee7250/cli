@@ -1,107 +1,3 @@
-2026-09-09 00:00:46,878 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-09 00:00:47,470 [INFO] main — ============================================================
-2026-09-09 00:00:47,470 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-09 00:00:47
-2026-09-09 00:00:47,470 [INFO] main — ============================================================
-2026-09-09 00:00:47,489 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
-2026-09-09 00:00:47,489 [INFO] keyword_collector — 포스팅 이력 코퍼스: 127개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-09-09 00:00:47,489 [INFO] keyword_collector — 시즌 예약 키워드 21개 로드 (blog=blog1): ['2026 가을 등산 코스 초보자 추천 후기', '2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법']...
-2026-09-09 00:00:50,450 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-09-09 00:00:55,507 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:00:55,527 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-09-09 00:00:55,527 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-09-09 00:00:55,813 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-09-09 00:00:56,069 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-09-09 00:00:56,507 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
-2026-09-09 00:00:56,507 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-09-09 00:00:56,508 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-09-09 00:00:56,516 [INFO] keyword_collector — 최근 사용 제외 1개: ['해외여행 실비보험 필요한지 직접 비교해봤더니']
-2026-09-09 00:00:56,516 [INFO] keyword_collector — 유사 주제 제외 7개: ['2026 가을 등산 코스 초보자 추천 후기', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-09 00:00:56,518 [INFO] keyword_collector —   [season_scheduled] 2개: ['가을 드라이브 코스 솔직 비교 추천', '9월 국내여행지 가격 비교 후기 총정리']
-2026-09-09 00:00:56,518 [INFO] keyword_collector — 최종 선정 키워드 2개: ['가을 드라이브 코스 솔직 비교 추천', '9월 국내여행지 가격 비교 후기 총정리']
-2026-09-09 00:00:56,518 [INFO] main — 수집된 키워드 2개: ['가을 드라이브 코스 솔직 비교 추천', '9월 국내여행지 가격 비교 후기 총정리']
-2026-09-09 00:00:56,523 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
-2026-09-09 00:00:59,065 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 40개
-2026-09-09 00:01:00,421 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:01:00,422 [INFO] keyword_collector — 화제 드라마 감지: ['재벌X형사2', '포핸즈', '신병4 : 사보타주']
-2026-09-09 00:01:00,422 [INFO] main — [자동 드라마 시리즈] '재벌X형사2' 감지 — 리뷰 시리즈 기획 시작
-2026-09-09 00:01:04,799 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:01:04,800 [INFO] series_planner — 드라마 시리즈 기획 완료: '재벌X형사2 드라마 리뷰 시리즈' 3편
-2026-09-09 00:01:04,800 [INFO] main — [자동 시리즈] '재벌X형사2' 3편 기획 시작 (이후 단독 포스트 0개)
-2026-09-09 00:01:04,800 [INFO] main — ============================================================
-2026-09-09 00:01:04,800 [INFO] main — [HOGU What?] 시리즈 모드 시작: '재벌X형사2' 3편
-2026-09-09 00:01:04,800 [INFO] main — ============================================================
-2026-09-09 00:01:04,824 [INFO] main — 시리즈 기획 완료: '재벌X형사2 드라마 리뷰 시리즈'
-2026-09-09 00:01:04,824 [INFO] main —   편 1: 재벌X형사2 첫인상 솔직 리뷰
-2026-09-09 00:01:04,824 [INFO] main —   편 2: 재벌X형사2 등장인물 분석 총정리
-2026-09-09 00:01:04,824 [INFO] main —   편 3: 재벌X형사2 결말 총평 별점 리뷰
-2026-09-09 00:01:04,824 [INFO] main — 
---- [1/3편] '재벌X형사2 첫인상 후기' 생성 중 ---
-2026-09-09 00:01:04,824 [INFO] content_generator — 시리즈 포스트 생성: '재벌X형사2 첫인상 후기' (1/3편)
-2026-09-09 00:01:09,957 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:01:09,958 [INFO] research_collector — 검색 의도: 재벌X형사2의 초반 내용, 캐스팅, 전작 대비 변화 등에 대한 시청자 반응과 감상을 확인하려는 의도
-2026-09-09 00:01:16,004 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '재벌X형사2 첫인상 후기'
-2026-09-09 00:01:26,509 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:01:26,510 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '재벌X형사2 첫인상 후기'
-2026-09-09 00:01:32,692 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:01:32,693 [INFO] source_validator — 출처 검증: 1/6개 통과, 등급 분포 {'X': 5, 'C': 1}
-2026-09-09 00:01:32,695 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-09-09 00:01:32,695 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-09 00:01:32,696 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-09 00:01:33,647 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:03:14,822 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-09 00:03:15,670 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:03:28,675 [INFO] content_generator — 팩트체크: 통과
-2026-09-09 00:03:28,675 [INFO] content_generator — 이미지 계획 3건 사용: ['person choosing tv show remote', 'business suit police badge contrast', 'smartphone streaming apps screen']
-2026-09-09 00:03:29,008 [INFO] image_fetcher — 이미지 수집 성공: 'person choosing tv show remote' → 제목='remote control / tv / watch tv / watch /' (관련성=0.50)
-2026-09-09 00:03:29,256 [INFO] image_fetcher — 이미지 수집 성공: 'business suit police badge contrast' → 제목='people / business / meeting / business m' (관련성=0.40)
-2026-09-09 00:03:29,545 [INFO] image_fetcher — 이미지 수집 성공: 'smartphone streaming apps screen' → 제목='netflix / app / entertainment / digital ' (관련성=0.25)
-2026-09-09 00:03:35,472 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:03:35,473 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-09-09 00:03:36,091 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-09-09 00:03:36,091 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-09-09 00:03:36,099 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-09 00:03:36,099 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] 재벌X형사2 첫인상 후기, 시청 전 체크포인트' (2820자, 이미지 2개)
-2026-09-09 00:03:39,828 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:04:00,498 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '[1편] 재벌X형사2 첫인상 후기, 시청 전 체크포인트'
-2026-09-09 00:04:00,498 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 후기 종합·해석은 있으나 구체적 수치·날짜·출처 인용이 본문에 명시적으로 드러나지 않아 일반적 조사글 수준에 머묾
-2026-09-09 00:04:00,498 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 좋으나 일부 단락이 500자 이상으로 길게 이어짐
-2026-09-09 00:04:00,498 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 불확실성 명시(방영 일정 등)는 있으나 4개 출처가 본문 내 기관명·시점과 함께 인용되지 않음
-2026-09-09 00:04:00,498 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개, Pixabay 라이선스 출처는 명시되었으나 이미지 수가 적고 alt 텍스트 명시 확인 불가
-2026-09-09 00:04:00,498 [WARNING] main —   ⚠️ [편 1] AdSense 검토 필요 — pending 저장 (점수: 79/100)
-2026-09-09 00:04:00,500 [INFO] main — 
---- [2/3편] '재벌X형사2 등장인물 배우 연기력' 생성 중 ---
-2026-09-09 00:04:00,500 [INFO] content_generator — 시리즈 포스트 생성: '재벌X형사2 등장인물 배우 연기력' (2/3편)
-2026-09-09 00:04:06,321 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:04:06,322 [INFO] research_collector — 검색 의도: 재벌X형사2 드라마의 등장인물과 배우 캐스팅, 연기력 평가를 확인하려는 검색
-2026-09-09 00:04:16,060 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '재벌X형사2 등장인물 배우 연기력'
-2026-09-09 00:04:32,476 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:04:32,476 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '재벌X형사2 등장인물 배우 연기력'
-2026-09-09 00:04:55,027 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:04:55,028 [INFO] source_validator — 출처 검증: 6/8개 통과, 등급 분포 {'B': 5, 'X': 2, 'C': 1}
-2026-09-09 00:04:56,180 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '재벌X형사2 등장인물 배우 연기력'
-2026-09-09 00:04:56,180 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-09-09 00:04:56,180 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-09 00:04:56,180 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-09 00:04:56,948 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:06:30,429 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-09 00:06:31,672 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:06:48,922 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '유승호 등이 특별출연으로 합류해 회차마다 화제를 모으고 있어요'
-2026-09-09 00:06:48,923 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
-2026-09-09 00:06:48,923 [INFO] content_generator — 이미지 계획 3건 사용: ['korean drama sword prop set', 'sword dance silhouette drama', 'drama cast rehearsal set']
-2026-09-09 00:06:49,219 [INFO] image_fetcher — 이미지 수집 성공: 'korean drama sword prop set' → 제목='tofu / korean / korean food / korean tra' (관련성=0.20)
-2026-09-09 00:06:49,573 [INFO] image_fetcher — 이미지 수집 성공: 'sword dance silhouette drama' → 제목='torii / traditional japanese gate / sakh' (관련성=0.25)
-2026-09-09 00:06:49,837 [INFO] image_fetcher — 이미지 수집 성공: 'drama cast rehearsal set' → 제목='lead set / hand set / cliche / letters /' (관련성=0.50)
-2026-09-09 00:06:52,364 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:06:52,365 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
-2026-09-09 00:06:52,365 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-09-09 00:06:52,365 [INFO] image_fetcher — 제목 썸네일 생성: '[2편] 재벌X형사2 등장인물 분석 총정리, 배우 연기' (data URI, 1164B)
-2026-09-09 00:06:54,183 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: '20260804 재벌X형사 2 강상준Kang Sang-jun.png'
-2026-09-09 00:06:55,406 [INFO] image_mirror — Referer 재시도로 통과(핫링크 차단이었음): https://upload.wikimedia.org/wikipedia/commons/0/02/20260804_%EC%9E%AC
-2026-09-09 00:06:55,407 [INFO] image_mirror — 이미지 복제 건너뜀(용량 5807KB): https://upload.wikimedia.org/wikipedia/commons/0/02/20260804_%EC%9E%AC
-2026-09-09 00:06:55,413 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-09 00:06:55,413 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-09-09 00:06:55,419 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-09 00:06:55,419 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 재벌X형사2 등장인물 분석 총정리, 배우 연기력까지 파헤쳐봤다' (3425자, 이미지 2개)
 2026-09-09 00:06:56,527 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-09-09 00:07:15,226 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '[2편] 재벌X형사2 등장인물 분석 총정리, 배우 연기력까지 파'
 2026-09-09 00:07:15,226 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개는 우수하나 일부 단락(시즌1 설명 등)이 500자 이상으로 길게 이어짐
@@ -602,3 +498,126 @@
 2026-09-10 00:10:01,575 [INFO] dashboard_exporter —   포스트: 151개 / 실행 이력: 120개 / 블로그: 3개
 2026-09-10 00:10:01,577 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-09-10 00:10:01,578 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-09-10 00:10:46,343 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-10 00:10:47,410 [INFO] main — ============================================================
+2026-09-10 00:10:47,410 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-09-10 00:10:47
+2026-09-10 00:10:47,410 [INFO] main — ============================================================
+2026-09-10 00:10:47,432 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-10 00:10:47,432 [INFO] keyword_collector — 포스팅 이력 코퍼스: 122개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-09-10 00:10:47,432 [INFO] keyword_collector — 시즌 예약 키워드 2개 로드 (blog=blog2): ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-10 00:10:53,366 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-09-10 00:11:01,050 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:11:01,073 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-10 00:11:01,073 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-10 00:11:01,631 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-10 00:11:01,632 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-10 00:11:01,633 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-10 00:11:01,642 [INFO] keyword_collector — 유사 주제 제외 8개: ['2026 추석 선물 세트 직접 비교 후기', '추석 선물 저렴하게 사는 꿀팁 정리', '이마트 롯데 오늘의 장바구니 할인정보 총정리', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기', '부산 1박2일 혼자 여행 현실 비용 공개']
+2026-09-10 00:11:01,642 [INFO] keyword_collector —   [naver_realtime] 1개: ['호텔 AI 컨시어지 서비스란 활용법 정리']
+2026-09-10 00:11:01,642 [INFO] keyword_collector —   [fallback] 1개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가']
+2026-09-10 00:11:01,642 [INFO] keyword_collector — 최종 선정 키워드 2개: ['호텔 AI 컨시어지 서비스란 활용법 정리', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
+2026-09-10 00:11:01,642 [INFO] main — 수집된 키워드 2개: ['호텔 AI 컨시어지 서비스란 활용법 정리', '서울 근교 드라이브 코스 직접 가본 솔직 평가']
+2026-09-10 00:11:01,648 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-09-10 00:11:01,648 [INFO] main — 단독 포스트 대상 키워드 1개: ['호텔 AI 컨시어지 서비스란 활용법 정리']
+2026-09-10 00:11:01,670 [INFO] main — 
+[1/1] 키워드: '호텔 AI 컨시어지 서비스란 활용법 정리'
+2026-09-10 00:11:01,670 [INFO] content_generator — 포스트 생성 중: '호텔 AI 컨시어지 서비스란 활용법 정리'
+2026-09-10 00:11:06,904 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:11:06,905 [INFO] research_collector — 검색 의도: 호텔 AI 컨시어지 서비스의 개념과 실제 활용 방법을 알고 싶은 검색자의 의도
+2026-09-10 00:11:22,020 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '호텔 AI 컨시어지 서비스란 활용법 정리'
+2026-09-10 00:11:37,366 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:11:37,367 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '호텔 AI 컨시어지 서비스란 활용법 정리'
+2026-09-10 00:11:50,146 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:11:50,147 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'B': 4, 'X': 3}
+2026-09-10 00:11:50,149 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-10 00:11:50,151 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-10 00:11:51,224 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:13:08,770 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-10 00:13:09,599 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:13:24,388 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-09-10 00:13:24,388 [INFO] content_generator — 이미지 계획 1건 사용: ['hotel self check-in kiosk']
+2026-09-10 00:13:24,684 [INFO] image_fetcher — 이미지 수집 성공: 'hotel self check-in kiosk' → 제목='burj al arab / largest hotel in dubai / ' (관련성=0.25)
+2026-09-10 00:13:24,903 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-10 00:13:24,903 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-10 00:13:24,909 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-09-10 00:13:24,910 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-10 00:13:24,910 [INFO] content_generator — 포스트 생성 완료: '호텔 AI 컨시어지 서비스란? 실제 활용법과 후기 정리' (2996자, 이미지 1개)
+2026-09-10 00:13:25,587 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:13:45,165 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '호텔 AI 컨시어지 서비스란? 실제 활용법과 후기 정리'
+2026-09-10 00:13:45,165 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치(65% 인력부족, 20% 청소단축)와 표 비교는 좋으나 단일 출처(한국경제) 의존도가 높아 독자적 해석 폭이 제한적
+2026-09-10 00:13:45,165 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 좋으나 '왜 지금 호텔들이~', '국내 호텔은~' 등 500자 이상 단락이 다수 존재
+2026-09-10 00:13:45,165 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 한국경제 기사 인용은 명확하나 출처가 1개뿐이고 교차검증 자료 부족
+2026-09-10 00:13:45,165 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개(Pixabay, 출처 명시)뿐이며 alt 텍스트 명시 없음
+2026-09-10 00:13:45,165 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서는~짚어보겠습니다' 식 전환구 반복과 핵심요약 박스형 구조가 정형화된 AI 패턴과 유사
+2026-09-10 00:13:45,170 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-10 00:13:45,182 [INFO] internal_linker —   [1/5] 'AI에' -> https://hogugolfntraval.blogspot.com/2026/08/ai-ai.html
+2026-09-10 00:13:45,182 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-09-10 00:13:45,182 [INFO] main —   제목: 호텔 AI 컨시어지 서비스란? 실제 활용법과 후기 정리
+2026-09-10 00:13:45,182 [INFO] main —   이미지: 1개 삽입
+2026-09-10 00:13:45,182 [INFO] main —   글자 수: 2996자
+2026-09-10 00:13:45,941 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:14:11,451 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-10 00:14:12,163 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:14:14,958 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '호텔 AI 컨시어지 서비스란? 실제 활용법과 후기 정리'
+2026-09-10 00:14:14,958 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치(65%, 20%, 2.9%)와 표 비교는 있으나 단일 출처(한국경식 1건)에 의존해 조사 깊이가 제한적
+2026-09-10 00:14:14,958 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 양호하나 일부 섹션이 500자 이상 단일 문단으로 이어짐
+2026-09-10 00:14:14,958 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처(한국경제) 명시 및 균형 잡힌 비교표는 긍정적이나 단일 출처에 그쳐 교차검증 부족
+2026-09-10 00:14:14,958 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개에 Pixabay 라이선스 명시로 저작권 위반은없으나 이미지 수가 1개로 적어 보완 권장
+2026-09-10 00:14:14,958 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서는~짚어보겠습니다' 등 전환 문구와 요약 박스가 반복되어 정형화된 패턴이 다소 보임
+2026-09-10 00:14:14,958 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
+2026-09-10 00:14:14,958 [WARNING] main —      🟡 [원본성 및 품질] 구체적 수치(65%, 20%, 2.9%)와 표 비교는 있으나 단일 출처(한국경식 1건)에 의존해 조사 깊이가 제한적
+2026-09-10 00:14:14,959 [WARNING] main —      🟡 [구조 및 가독성] H2 8개로 구조는 양호하나 일부 섹션이 500자 이상 단일 문단으로 이어짐
+2026-09-10 00:14:14,959 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처(한국경제) 명시 및 균형 잡힌 비교표는 긍정적이나 단일 출처에 그쳐 교차검증 부족
+2026-09-10 00:14:14,959 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
+2026-09-10 00:14:14,970 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-10 00:14:14,976 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 1건
+2026-09-10 00:14:16,076 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:16:24,825 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2996자 → 4738자 (+1742자)
+2026-09-10 00:16:24,825 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-09-10 00:16:26,053 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:16:48,095 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '호텔 AI 컨시어지 서비스란? 실제 활용법과 후기 정리'
+2026-09-10 00:16:48,095 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 우수하나 초반 섹션 다수가 500자 이상 단락으로 이어져 가독성이 다소 떨어짐
+2026-09-10 00:16:48,095 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 일부 포함되나 이미지 수가 적고 전체적으로 텍스트 위주 구성
+2026-09-10 00:16:48,095 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 90/100)
+2026-09-10 00:16:48,095 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-09-10 00:16:48,841 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:17:37,889 [INFO] final_editor —   ✏️ 제목 최종 교정: '호텔 AI 컨시어지 서비스란? 실제 활용법과 후기 정리' → '호텔 AI 컨시어지 서비스란? 활용법과 실제 후기 정리'
+2026-09-10 00:17:37,889 [INFO] final_editor —   ✏️ 메타 설명 교정 (138자)
+2026-09-10 00:17:37,889 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분할하고 핵심요약·개인경험메모·비교표·FAQ·작성자메모를 규격에 맞춰 정리했으며, 메타설명·슬러그·이미지 alt를 발행 기준에 맞게 재구성했습니다.
+2026-09-10 00:17:38,006 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-10 00:17:38,006 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-09-10 00:17:39,343 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/ai.html
+2026-09-10 00:17:39,356 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/ai.html
+2026-09-10 00:17:39,361 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-09-10 00:17:39,369 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-10 00:17:39,370 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '호텔 AI 컨시어지 서비스란? 활용법과 실제 후기 정리'
+2026-09-10 00:17:40,159 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-10 00:17:44,841 [INFO] comment_manager —   생성된 댓글: 태블릿이나 키오스크 체크인 이용하실 때 팁 하나 드리자면, 여권 스캔이 잘 안 될 때를 대비해서 여권 사진면을 미리 앱에 등록해두거나 사본을 따...
+2026-09-10 00:20:44,991 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-09-10 00:20:44,992 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-09-10 00:20:44,993 [INFO] main — 
+============================================================
+2026-09-10 00:20:44,993 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-09-10 00:20:44,993 [INFO] main — ============================================================
+2026-09-10 00:20:45,043 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 148개)
+2026-09-10 00:20:45,099 [INFO] dashboard_exporter — 분석 필드 유지: 141/152개 (등급·조회수·수익)
+2026-09-10 00:20:45,117 [INFO] dashboard_exporter —   시리즈: 29개 내보내기 완료
+2026-09-10 00:20:45,141 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-10 00:20:45,398 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-10 00:20:45,605 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-09-10 00:20:45,970 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-10 00:20:45,971 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-10 00:20:45,972 [INFO] dashboard_exporter —   학습 이력: 2주 내보내기 완료
+2026-09-10 00:20:45,974 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-10 00:20:45,991 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 271 / 실패 0 / 대기 15)
+2026-09-10 00:20:45,991 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-10 00:20:45,991 [INFO] dashboard_exporter —   포스트: 152개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-10 00:20:45,993 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-10 00:20:45,994 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

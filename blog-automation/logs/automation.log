@@ -1,113 +1,3 @@
-2026-09-09 00:26:56,687 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:27:13,180 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '[1편] 퇴직연금 개인국채 투자 2026 계기'
-2026-09-09 00:27:13,180 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장뿐이며 Pixabay 출처는 밝혔으나 alt 텍스트 언급 없음
-2026-09-09 00:27:13,180 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '확인이 필요합니다', '짚어보겠습니다' 등 유사 문장 패턴이 반복되어 다소 정형화된 흐름
-2026-09-09 00:27:13,983 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:27:59,531 [INFO] final_editor —   ✏️ 제목 최종 교정: '[1편] 퇴직연금 개인국채 투자 2026 계기' → '퇴직연금 개인국채 투자 2026, 9월 도입 배경과 핵심 정리'
-2026-09-09 00:27:59,531 [INFO] final_editor —   ✏️ 메타 설명 교정 (121자)
-2026-09-09 00:27:59,531 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·URL 슬러그를 SEO 기준에 맞게 정리하고, 이미지 3종의 위치와 alt 텍스트를 구체화했습니다. 태그를 5개로 정돈하고 참고자료 4건과 내부링크 제안을 추가했습니다.
-2026-09-09 00:27:59,682 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-09-09 00:27:59,682 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '퇴직연금 개인국채 투자 2026' — 면책·팩트체크 확인 권장
-2026-09-09 00:27:59,682 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-09-09 00:28:00,426 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/09/2026-9.html
-2026-09-09 00:28:00,426 [INFO] main —   ✅ 편 1 업로드 완료: https://hoguasset.blogspot.com/2026/09/2026-9.html
-2026-09-09 00:28:03,429 [INFO] main — 
---- [2/3편] '개인국채 복리 환매조건 계산법' 생성 중 ---
-2026-09-09 00:28:03,429 [INFO] content_generator — 시리즈 포스트 생성: '개인국채 복리 환매조건 계산법' (2/3편)
-2026-09-09 00:28:12,149 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:28:12,150 [INFO] research_collector — 검색 의도: 개인투자용국채(개인국채)의 복리 이자 계산 방식과 중도 환매(환매조건) 규정을 정확히 이해하고 계산법을 알고
-2026-09-09 00:28:43,468 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '개인국채 복리 환매조건 계산법'
-2026-09-09 00:28:56,354 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:28:56,355 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '개인국채 복리 환매조건 계산법'
-2026-09-09 00:29:11,021 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:29:11,022 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'X': 3, 'B': 3}
-2026-09-09 00:29:11,023 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-09 00:29:11,023 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-09 00:29:11,821 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:30:21,123 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-09 00:30:21,124 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 2개(만기수익률, 표면금리)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
-2026-09-09 00:30:23,124 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-09-09 00:30:23,125 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-09 00:30:23,916 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:31:41,035 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-09 00:31:41,833 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:31:44,093 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-09-09 00:31:44,093 [INFO] content_generator — 이미지 계획 2건 사용: ['government bond compound interest chart', 'calculator bond interest calculation']
-2026-09-09 00:31:44,357 [INFO] image_fetcher — 이미지 수집 성공: 'government bond compound interest chart' → 제목='bundestag / german flag / parliament / f' (관련성=0.20)
-2026-09-09 00:31:44,626 [INFO] image_fetcher — 이미지 수집 성공: 'calculator bond interest calculation' → 제목='calculator / calculation / assurance / f' (관련성=0.50)
-2026-09-09 00:31:46,272 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:31:46,273 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
-2026-09-09 00:31:46,583 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-09 00:31:46,583 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-09-09 00:31:46,588 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-09 00:31:46,588 [INFO] content_generator — 시리즈 포스트 생성 완료: '개인국채 복리 계산법과 환매조건 총정리' (3459자, 이미지 1개)
-2026-09-09 00:31:47,291 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:32:10,020 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '개인국채 복리 계산법과 환매조건 총정리'
-2026-09-09 00:32:10,020 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 본문이 소제목 대비 매우 긴 단일 단락으로 이어져 가독성이 떨어짐
-2026-09-09 00:32:10,020 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개는 저작권 문제 없으나 alt 텍스트 명시 여부가 본문상 확인되지 않음
-2026-09-09 00:32:10,021 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '쉽게 말하면', '~라는 뜻입니다' 같은 설명 패턴이 반복되어 다소 정형화된 문체가 느껴짐
-2026-09-09 00:32:10,874 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:33:23,336 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-09 00:33:24,289 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:34:37,956 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-09 00:34:38,782 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:34:45,240 [INFO] final_editor —   ✏️ 제목 최종 교정: '개인국채 복리 계산법과 환매조건 총정리' → '개인국채 복리 계산법과 환매조건, 만기수익률까지 총정리'
-2026-09-09 00:34:45,240 [INFO] final_editor —   ✏️ 메타 설명 교정 (120자)
-2026-09-09 00:34:45,240 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 규격에 맞게 재구성하고, 중복 문구 및 어색한 표현을 정리했습니다. 요약 박스·표·FAQ·주의사항·개인 경험 메모·작성자 메모를 추가하고 문단을 모바일 친화적으로 분할했으며, 이미지 3곳과 내부 링크 후보를 텍스트로 제안했습니다.
-2026-09-09 00:34:45,381 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-09-09 00:34:45,382 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-09-09 00:34:46,382 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/09/blog-post_09.html
-2026-09-09 00:34:46,383 [INFO] main —   ✅ 편 2 업로드 완료: https://hoguasset.blogspot.com/2026/09/blog-post_09.html
-2026-09-09 00:34:49,384 [INFO] main — 
---- [3/3편] '개인국채 신청방법 후기 2026' 생성 중 ---
-2026-09-09 00:34:49,385 [INFO] content_generator — 시리즈 포스트 생성: '개인국채 신청방법 후기 2026' (3/3편)
-2026-09-09 00:34:56,803 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:34:56,810 [INFO] research_collector — 검색 의도: 2026년 개인투자용 국채 청약 신청 방법과 절차, 실제 후기를 알고 싶어하는 검색 의도
-2026-09-09 00:35:08,609 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '개인국채 신청방법 후기 2026'
-2026-09-09 00:35:28,024 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:35:28,025 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '개인국채 신청방법 후기 2026'
-2026-09-09 00:35:44,136 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:35:44,137 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'B': 1, 'X': 2, 'A': 1, 'D': 1}
-2026-09-09 00:35:44,137 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-09-09 00:35:44,137 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-09 00:35:44,137 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-09 00:35:45,314 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:36:54,746 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-09 00:36:54,747 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(표면금리)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
-2026-09-09 00:36:56,747 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-09-09 00:36:56,747 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-09 00:36:57,632 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:38:05,306 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-09 00:38:05,306 [WARNING] content_generator — 컨텐츠 너무 짧음(2490자, 최소 2500자) — 재시도 2/3
-2026-09-09 00:38:08,306 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-09-09 00:38:08,307 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-09 00:38:09,353 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:39:39,449 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-09 00:39:40,279 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:39:55,692 [WARNING] content_generator — 팩트체크 fix가 지시문 형태 — 적용 건너뜀: '중도환매 시 예상보다 적은 금액을 받을 수 있다는 점에 유의해야 합니다'
-2026-09-09 00:39:55,693 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
-2026-09-09 00:39:55,693 [INFO] content_generator — 이미지 계획 1건 사용: ['government bond application phone']
-2026-09-09 00:39:56,039 [INFO] image_fetcher — 이미지 수집 성공: 'government bond application phone' → 제목='bundestag / german flag / parliament / f' (관련성=0.25)
-2026-09-09 00:39:56,366 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-09 00:39:56,366 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-09-09 00:39:56,371 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-09 00:39:56,371 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 개인국채 신청방법 후기 2026 총정리' (3589자, 이미지 1개)
-2026-09-09 00:39:57,460 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-09 00:40:19,204 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '[3편] 개인국채 신청방법 후기 2026 총정리'
-2026-09-09 00:40:19,204 [INFO] adsense_validator —   ⚠️ SEO 최적화: 제목에 '후기'가 있으나 본문은 1인칭 경험담이 아닌 조사·분석형이라 제목-내용 간 미묘한 불일치
-2026-09-09 00:40:19,204 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 양호하나 '신청 전 준비물' 등 일부 단락이 500자를 크게 초과함
-2026-09-09 00:40:19,204 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 명시된 이미지 1개뿐이라 저작권 문제는 없으나 이미지 수량 부족
-2026-09-09 00:40:19,204 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '공개된 자료와 공개된 자료를 종합하면' 같은 반복 오류와 질문-리스트 패턴 반복이 AI 생성 흔적을 시사
-2026-09-09 00:40:19,204 [WARNING] main —   ⚠️ [편 3] AdSense 검토 필요 — pending 저장 (점수: 79/100)
-2026-09-09 00:40:19,214 [INFO] dashboard_exporter —   검토 대기 저장: [3편] 개인국채 신청방법 후기 2026 총정리 (11799자 HTML)
-2026-09-09 00:40:19,229 [INFO] pending_store — 검토 대기 저장: 목록 19건 / 보관 150건 / 본문 25건
-2026-09-09 00:40:19,229 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 169개)
-2026-09-09 00:40:19,270 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 145개)
-2026-09-09 00:40:19,312 [INFO] dashboard_exporter — 분석 필드 유지: 141/150개 (등급·조회수·수익)
-2026-09-09 00:40:19,326 [INFO] dashboard_exporter —   시리즈: 29개 내보내기 완료
-2026-09-09 00:40:19,346 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-09 00:40:19,636 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-09-09 00:40:19,801 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
 2026-09-09 00:40:20,123 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
 2026-09-09 00:40:20,124 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
 2026-09-09 00:40:20,125 [INFO] dashboard_exporter —   학습 이력: 2주 내보내기 완료
@@ -608,3 +498,108 @@
 2026-09-11 00:06:37,048 [INFO] dashboard_exporter —   포스트: 147개 / 실행 이력: 120개 / 블로그: 3개
 2026-09-11 00:06:37,049 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-09-11 00:06:37,050 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-09-11 00:07:24,931 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-11 00:07:26,290 [INFO] main — ============================================================
+2026-09-11 00:07:26,290 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-09-11 00:07:26
+2026-09-11 00:07:26,290 [INFO] main — ============================================================
+2026-09-11 00:07:26,311 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-11 00:07:26,311 [INFO] keyword_collector — 포스팅 이력 코퍼스: 118개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-09-11 00:07:26,311 [INFO] keyword_collector — 시즌 예약 키워드 1개 로드 (blog=blog2): ['추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-11 00:07:30,959 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-09-11 00:07:37,587 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-11 00:07:37,613 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-11 00:07:37,613 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-11 00:07:38,473 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-11 00:07:38,474 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-11 00:07:38,475 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-11 00:07:38,484 [INFO] keyword_collector — 유사 주제 제외 11개: ['추석 선물 저렴하게 사는 꿀팁 정리', '가을 단풍 골프장 추천 라운딩 코스 베스트', '호텔 AI 컨시어지 서비스 이용 후기 및 활용법', '가을 마트 세일 총정리 이마트 롯데아울렛 할인 정보', '생활체육 디비전리그 참가 방법 및 지원 혜택 안내']
+2026-09-11 00:07:38,484 [INFO] keyword_collector —   [fallback] 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '남해 여행 봄에 가면 좋은 이유와 준비물']
+2026-09-11 00:07:38,485 [INFO] keyword_collector — 최종 선정 키워드 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '남해 여행 봄에 가면 좋은 이유와 준비물']
+2026-09-11 00:07:38,485 [INFO] main — 수집된 키워드 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '남해 여행 봄에 가면 좋은 이유와 준비물']
+2026-09-11 00:07:38,490 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
+2026-09-11 00:07:38,490 [INFO] main — 단독 포스트 대상 키워드 1개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가']
+2026-09-11 00:07:38,511 [INFO] main — 
+[1/1] 키워드: '서울 근교 드라이브 코스 직접 가본 솔직 평가'
+2026-09-11 00:07:38,512 [INFO] content_generator — 포스트 생성 중: '서울 근교 드라이브 코스 직접 가본 솔직 평가'
+2026-09-11 00:07:44,373 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-11 00:07:44,374 [INFO] research_collector — 검색 의도: 서울 근교에서 실제로 다녀올 수 있는 드라이브 코스에 대한 솔직한 후기와 실용적인 정보를 얻고자 함
+2026-09-11 00:07:55,363 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '서울 근교 드라이브 코스 직접 가본 솔직 평가'
+2026-09-11 00:08:12,874 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-11 00:08:12,876 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '서울 근교 드라이브 코스 직접 가본 솔직 평가'
+2026-09-11 00:08:26,986 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-11 00:08:26,987 [INFO] source_validator — 출처 검증: 7/7개 통과, 등급 분포 {'D': 7}
+2026-09-11 00:08:26,989 [INFO] evidence_builder — 자료팩: 중요 사실 5개 제외 (A/B 등급 출처 없음)
+2026-09-11 00:08:26,990 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-11 00:08:26,991 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-11 00:08:27,643 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-11 00:09:46,180 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-11 00:09:46,786 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-11 00:10:02,082 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '대한민국 구석구석 자료에 따르면'
+2026-09-11 00:10:02,082 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 1건 자동 수정 적용
+2026-09-11 00:10:02,082 [INFO] content_generator — 이미지 계획 1건 사용: ['Korea coastal bridge island drive']
+2026-09-11 00:10:02,423 [INFO] image_fetcher — 이미지 수집 성공: 'Korea coastal bridge island drive' → 제목='night view / bridge / river / building /' (관련성=0.40)
+2026-09-11 00:10:02,754 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-11 00:10:02,754 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-11 00:10:02,759 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-09-11 00:10:02,761 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-11 00:10:02,761 [INFO] content_generator — 포스트 생성 완료: '서울 근교 드라이브 코스, 대부도~선재도~영흥도 직접 조사해보니' (3273자, 이미지 1개)
+2026-09-11 00:10:03,388 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-11 00:10:27,422 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '서울 근교 드라이브 코스, 대부도~선재도~영흥도 직접 조사해보니'
+2026-09-11 00:10:27,422 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 다소 떨어짐
+2026-09-11 00:10:27,422 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1장만 포함되어 저작권 문제는 없으나 이미지 수가 적어 시각적 보강이 부족함
+2026-09-11 00:10:27,422 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 후기가 많습니다/반복적으로 나옵니다' 식의 유사 문형이 반복되어 다소 정형화된 서술 패턴이 보임
+2026-09-11 00:10:27,427 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-11 00:10:27,435 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-09-11 00:10:27,435 [INFO] main —   제목: 서울 근교 드라이브 코스, 대부도~선재도~영흥도 직접 조사해보니
+2026-09-11 00:10:27,435 [INFO] main —   이미지: 1개 삽입
+2026-09-11 00:10:27,435 [INFO] main —   글자 수: 3273자
+2026-09-11 00:10:28,050 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-11 00:10:50,224 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-11 00:10:50,859 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-11 00:10:51,430 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '서울 근교 드라이브 코스, 대부도~선재도~영흥도 직접 조사해보니'
+2026-09-11 00:10:51,430 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장만 사용되었고 Pixabay 라이선스 출처는 명시되었으나 이미지 수가 적어 warn
+2026-09-11 00:10:51,430 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌/💡 두 개의 유사한 요약 박스 중복 및 '다음 항목에서 ~ 짚어보겠습니다' 식 전환 문구 반복 패턴이 다소 정형화됨
+2026-09-11 00:10:51,430 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-09-11 00:10:52,066 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-11 00:12:12,318 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-11 00:12:13,085 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-11 00:13:22,207 [INFO] final_editor —   ✏️ 제목 최종 교정: '서울 근교 드라이브 코스, 대부도~선재도~영흥도 직접 조사해보니' → '서울 근교 드라이브 코스, 대부도·선재도·영흥도 직접 가본 후기'
+2026-09-11 00:13:22,207 [INFO] final_editor —   ✏️ 메타 설명 교정 (124자)
+2026-09-11 00:13:22,207 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 규격에 맞게 정리하고 요약 박스·표·경험 메모·주의사항·FAQ·작성자 메모를 추가했습니다. 긴 문단을 2~4문장 단위로 나누고 잘린 결론부(코스 비교, 대상별 추천)를 완성해 발행 가능한 형태로 마무리했습니다.
+2026-09-11 00:13:22,438 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-11 00:13:22,439 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-09-11 00:13:23,244 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/blog-post_11.html
+2026-09-11 00:13:23,257 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/blog-post_11.html
+2026-09-11 00:13:23,261 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-09-11 00:13:23,269 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-11 00:13:23,271 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '서울 근교 드라이브 코스, 대부도·선재도·영흥도 직접 가본 후기'
+2026-09-11 00:13:23,978 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-11 00:13:27,629 [INFO] comment_manager —   생성된 댓글: 주차 관련해서 팁 하나 더 얹자면, 대부도 초입 식당가 쪽 무료 주차공간은 성수기엔 진짜 순식간에 차버려서 갓길에 대는 분들도 많더라고요. 차라...
+2026-09-11 00:16:28,043 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-09-11 00:16:28,045 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-09-11 00:16:28,045 [INFO] main — 
+============================================================
+2026-09-11 00:16:28,045 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-09-11 00:16:28,045 [INFO] main — ============================================================
+2026-09-11 00:16:28,091 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 151개)
+2026-09-11 00:16:28,141 [INFO] dashboard_exporter — 분석 필드 유지: 134/148개 (등급·조회수·수익)
+2026-09-11 00:16:28,158 [INFO] dashboard_exporter —   시리즈: 29개 내보내기 완료
+2026-09-11 00:16:28,179 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-11 00:16:28,502 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-11 00:16:28,769 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-09-11 00:16:29,203 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-11 00:16:29,204 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-11 00:16:29,205 [INFO] dashboard_exporter —   학습 이력: 2주 내보내기 완료
+2026-09-11 00:16:29,207 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-11 00:16:29,223 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 273 / 실패 0 / 대기 14)
+2026-09-11 00:16:29,223 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-11 00:16:29,223 [INFO] dashboard_exporter —   포스트: 148개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-11 00:16:29,225 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-11 00:16:29,226 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

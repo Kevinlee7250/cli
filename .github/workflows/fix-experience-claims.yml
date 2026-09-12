@@ -1,0 +1,135 @@
+name: ✍️ 조작 체험담 정정
+
+# 발행된 글에서 하지 않은 경험을 했다고 쓴 부분을 찾아 조사·분석형으로 고칩니다.
+# 2026-09-12 AdSense "가치가 별로 없는 콘텐츠" 거절의 실제 원인입니다.
+#
+# 스케줄은 두지 않습니다 — 라이브 글의 제목과 본문을 직접 바꾸는 작업이라
+# 반드시 dry_run으로 결과를 먼저 보고 사람이 판단해서 돌려야 합니다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      step:
+        description: '무엇을 할지'
+        required: true
+        default: 'audit'
+        type: choice
+        options:
+          - audit        # 감사만 — 아무것도 바꾸지 않음
+          - titles       # 제목 정정
+          - bodies       # 본문 리라이팅
+          - unpublish    # critical 글 비공개 전환
+      blog_id:
+        description: '블로그 ID (blog1 / blog2 / blog3, 비워두면 전체)'
+        required: false
+        default: ''
+      limit:
+        description: '이번 실행에서 고칠 최대 글 수 (0=제한 없음). 나눠 돌리는 것을 권장'
+        required: false
+        default: '10'
+      dry_run:
+        description: '계획만 확인 (실제 수정 없음) — 첫 실행은 반드시 체크'
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fix-experience-claims
+  cancel-in-progress: false
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: claude/blog-automation-system-KAbtE
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          LOG_LEVEL=info
+          LOG_FILE=./logs/automation.log
+          ENVEOF
+
+      - name: 로그 디렉토리 생성
+        working-directory: blog-automation
+        run: mkdir -p logs
+
+      - name: 실행
+        working-directory: blog-automation
+        run: |
+          COMMON=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then COMMON="$COMMON --dry-run"; fi
+          if [ -n "${{ inputs.blog_id }}" ]; then COMMON="$COMMON --blog ${{ inputs.blog_id }}"; fi
+          LIMIT="${{ inputs.limit || '10' }}"
+
+          case "${{ inputs.step }}" in
+            audit)
+              # 감사는 아무것도 바꾸지 않으므로 dry_run과 무관하게 전수로 돕니다.
+              BLOG_ARG=""
+              if [ -n "${{ inputs.blog_id }}" ]; then BLOG_ARG="--blog ${{ inputs.blog_id }}"; fi
+              python experience_audit.py $BLOG_ARG
+              ;;
+            titles)
+              python fix_experience_titles.py $COMMON --limit "$LIMIT"
+              ;;
+            bodies)
+              python fix_experience_claims.py $COMMON --limit "$LIMIT"
+              ;;
+            unpublish)
+              python fix_experience_claims.py $COMMON --limit "$LIMIT" \
+                --severity critical --unpublish-critical
+              ;;
+          esac
+
+      - name: 리포트 커밋 & 푸시
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # docs/.gitignore(npm/cli 템플릿)가 docs/*를 무시하므로 -f 필수.
+          for f in experience_audit experience_title_fixes experience_claim_fixes; do
+            [ -f "docs/data/$f.json" ] && git add -f "docs/data/$f.json"
+          done
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "✍️ 조작 체험담 정정 리포트 — ${{ inputs.step }} (#${{ github.run_number }})"
+            git pull --rebase origin claude/blog-automation-system-KAbtE || true
+            git push origin HEAD:claude/blog-automation-system-KAbtE
+          fi
+
+      - name: 실행 로그 아티팩트
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: experience-fix-${{ inputs.step }}-${{ github.run_number }}
+          path: |
+            blog-automation/logs/
+            docs/data/experience_*.json
+          retention-days: 14

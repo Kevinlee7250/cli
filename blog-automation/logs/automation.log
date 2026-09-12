@@ -1,117 +1,3 @@
-2026-09-10 23:57:46,728 [INFO] keyword_collector — 유사 주제 제외 6개: ['2026 가을 등산 코스 초보자 추천 후기', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '추석 선물 저렴하게 사는 꿀팁 정리', '연말 앨범 사전 예약 저렴하게 구매하는 법']
-2026-09-10 23:57:46,731 [INFO] keyword_collector —   [season_scheduled] 2개: ['2026 추석 선물 세트 직접 비교 후기', '명절 특선영화 채널별 편성표 저렴하게 보기']
-2026-09-10 23:57:46,731 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 추석 선물 세트 직접 비교 후기', '명절 특선영화 채널별 편성표 저렴하게 보기']
-2026-09-10 23:57:46,731 [INFO] main — 수집된 키워드 2개: ['2026 추석 선물 세트 직접 비교 후기', '명절 특선영화 채널별 편성표 저렴하게 보기']
-2026-09-10 23:57:46,736 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-09-10 23:57:46,736 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 추석 선물 세트 직접 비교 후기']
-2026-09-10 23:57:46,756 [INFO] main — 
-[1/1] 키워드: '2026 추석 선물 세트 직접 비교 후기'
-2026-09-10 23:57:46,756 [INFO] content_generator — 포스트 생성 중: '2026 추석 선물 세트 직접 비교 후기'
-2026-09-10 23:57:53,794 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-10 23:57:53,795 [INFO] research_collector — 검색 의도: 2026년 추석 선물 세트를 직접 구매하거나 체험해보고 가격, 구성, 품질을 비교한 후기를 찾으려는 의도
-2026-09-10 23:58:04,241 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '2026 추석 선물 세트 직접 비교 후기'
-2026-09-10 23:58:19,370 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-10 23:58:19,371 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '2026 추석 선물 세트 직접 비교 후기'
-2026-09-10 23:58:35,479 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-10 23:58:35,480 [INFO] source_validator — 출처 검증: 8/8개 통과, 등급 분포 {'B': 4, 'C': 4}
-2026-09-10 23:58:35,482 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-09-10 23:58:35,482 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-10 23:58:35,483 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-10 23:58:36,249 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-11 00:00:13,593 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-11 00:00:14,206 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-11 00:00:40,770 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-09-11 00:00:40,770 [INFO] content_generator — 이미지 계획 2건 사용: ['department store gift set display', 'korean traditional gift box beef']
-2026-09-11 00:00:40,991 [INFO] image_fetcher — 이미지 수집 성공: 'department store gift set display' → 제목='suit / menswear / store / clothing / jac' (관련성=0.40)
-2026-09-11 00:00:41,181 [INFO] image_fetcher — 이미지 수집 성공: 'korean traditional gift box beef' → 제목='tofu / korean / korean food / korean tra' (관련성=0.40)
-2026-09-11 00:00:42,685 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-11 00:00:42,687 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
-2026-09-11 00:00:42,687 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-09-11 00:00:42,687 [INFO] image_fetcher — 제목 썸네일 생성: '2026 추석 선물세트 백화점 3사 비교해보니' (data URI, 982B)
-2026-09-11 00:00:42,906 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: 'gifts / boxes / flat lay / gift boxes / '
-2026-09-11 00:00:43,221 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-09-11 00:00:43,221 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-09-11 00:00:43,226 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-09-11 00:00:43,229 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-11 00:00:43,229 [INFO] content_generator — 포스트 생성 완료: '2026 추석 선물세트 백화점 3사 비교해보니' (3328자, 이미지 2개)
-2026-09-11 00:00:43,936 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-11 00:00:54,007 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '2026 추석 선물세트 백화점 3사 비교해보니'
-2026-09-11 00:00:54,007 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개는 명시됐으나 직접 제작 이미지 출처 표기가 불명확하고 alt텍스트 여부 확인 불가
-2026-09-11 00:00:54,007 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·표 등 목록화 패턴이 다소 많고 '~한 편입니다' 같은 정형화된 어투가 반복됨
-2026-09-11 00:00:54,011 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-11 00:00:54,015 [INFO] internal_linker —   [1/5] '신세계' -> https://hogugolfntraval.blogspot.com/2026/08/2026_0727474562
-2026-09-11 00:00:54,022 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-09-11 00:00:54,022 [INFO] main —   제목: 2026 추석 선물세트 백화점 3사 비교해보니
-2026-09-11 00:00:54,022 [INFO] main —   이미지: 2개 삽입
-2026-09-11 00:00:54,022 [INFO] main —   글자 수: 3328자
-2026-09-11 00:00:54,564 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-11 00:01:12,988 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '2026 추석 선물세트 백화점 3사 비교해보니'
-2026-09-11 00:01:12,988 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처(Pixabay, 직접 제작)는 명시됐으나 alt 텍스트 여부 확인 불가
-2026-09-11 00:01:12,988 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 요약박스·체크리스트 등 정형화된 포맷 반복이 AI 생성 패턴과 유사
-2026-09-11 00:01:12,988 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-09-11 00:01:13,689 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-11 00:02:27,231 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-11 00:02:27,985 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-11 00:03:29,748 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026 추석 선물세트 백화점 3사 비교해보니' → '2026 추석 선물세트 백화점 3사 직접 비교 후기 총정리'
-2026-09-11 00:03:29,749 [INFO] final_editor —   ✏️ 메타 설명 교정 (126자)
-2026-09-11 00:03:29,749 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 문단을 2~4문장 단위로 재구성하고 요약박스·체크리스트·경험메모·주의사항·FAQ·작성자메모를 규격에 맞게 정리했으며, 오탈자와 비문을 수정하고 제목·메타설명·슬러그·이미지 alt를 발행 기준에 맞게 완성했습니다.
-2026-09-11 00:03:29,919 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-09-11 00:03:29,919 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-09-11 00:03:30,420 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/2026-3.html
-2026-09-11 00:03:30,433 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/09/2026-3.html
-2026-09-11 00:03:30,436 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-09-11 00:03:30,443 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-11 00:03:30,444 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '2026 추석 선물세트 백화점 3사 직접 비교 후기 총정리'
-2026-09-11 00:03:31,376 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-11 00:03:35,731 [INFO] comment_manager —   생성된 댓글: 카드사 제휴 할인이나 백화점 상품권 적립 이벤트를 같이 활용하면 표시된 할인율보다 실제 체감 할인폭이 더 커지는 경우가 많더라고요. 특히 예약 ...
-2026-09-11 00:06:35,958 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-09-11 00:06:35,960 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-09-11 00:06:35,960 [INFO] main — 
-============================================================
-2026-09-11 00:06:35,960 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-09-11 00:06:35,960 [INFO] main — ============================================================
-2026-09-11 00:06:36,032 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 150개)
-2026-09-11 00:06:36,051 [INFO] dashboard_exporter — 분석 필드 유지: 134/147개 (등급·조회수·수익)
-2026-09-11 00:06:36,065 [INFO] dashboard_exporter —   시리즈: 29개 내보내기 완료
-2026-09-11 00:06:36,085 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-11 00:06:36,528 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-11 00:06:37,028 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-11 00:06:37,030 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-11 00:06:37,030 [INFO] dashboard_exporter —   학습 이력: 2주 내보내기 완료
-2026-09-11 00:06:37,032 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-11 00:06:37,047 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 273 / 실패 0 / 대기 14)
-2026-09-11 00:06:37,047 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-11 00:06:37,048 [INFO] dashboard_exporter —   포스트: 147개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-11 00:06:37,049 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-11 00:06:37,050 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-09-11 00:07:24,931 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-11 00:07:26,290 [INFO] main — ============================================================
-2026-09-11 00:07:26,290 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-09-11 00:07:26
-2026-09-11 00:07:26,290 [INFO] main — ============================================================
-2026-09-11 00:07:26,311 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-09-11 00:07:26,311 [INFO] keyword_collector — 포스팅 이력 코퍼스: 118개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-09-11 00:07:26,311 [INFO] keyword_collector — 시즌 예약 키워드 1개 로드 (blog=blog2): ['추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-11 00:07:30,959 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-09-11 00:07:37,587 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-11 00:07:37,613 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-09-11 00:07:37,613 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-09-11 00:07:38,473 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-11 00:07:38,474 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-09-11 00:07:38,475 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-09-11 00:07:38,484 [INFO] keyword_collector — 유사 주제 제외 11개: ['추석 선물 저렴하게 사는 꿀팁 정리', '가을 단풍 골프장 추천 라운딩 코스 베스트', '호텔 AI 컨시어지 서비스 이용 후기 및 활용법', '가을 마트 세일 총정리 이마트 롯데아울렛 할인 정보', '생활체육 디비전리그 참가 방법 및 지원 혜택 안내']
-2026-09-11 00:07:38,484 [INFO] keyword_collector —   [fallback] 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '남해 여행 봄에 가면 좋은 이유와 준비물']
-2026-09-11 00:07:38,485 [INFO] keyword_collector — 최종 선정 키워드 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '남해 여행 봄에 가면 좋은 이유와 준비물']
-2026-09-11 00:07:38,485 [INFO] main — 수집된 키워드 2개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가', '남해 여행 봄에 가면 좋은 이유와 준비물']
-2026-09-11 00:07:38,490 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-09-11 00:07:38,490 [INFO] main — 단독 포스트 대상 키워드 1개: ['서울 근교 드라이브 코스 직접 가본 솔직 평가']
-2026-09-11 00:07:38,511 [INFO] main — 
 [1/1] 키워드: '서울 근교 드라이브 코스 직접 가본 솔직 평가'
 2026-09-11 00:07:38,512 [INFO] content_generator — 포스트 생성 중: '서울 근교 드라이브 코스 직접 가본 솔직 평가'
 2026-09-11 00:07:44,373 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
@@ -612,3 +498,89 @@
 2026-09-12 00:55:50,064 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-09-12 00:55:50,064 [INFO] main —   - [blog3] 금융NEWS
 2026-09-12 00:55:50,070 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-09-12 23:55:02,237 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-12 23:55:03,068 [INFO] main — ============================================================
+2026-09-12 23:55:03,068 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-12 23:55:03
+2026-09-12 23:55:03,068 [INFO] main — ============================================================
+2026-09-12 23:55:03,083 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-12 23:55:03,083 [INFO] keyword_collector — 포스팅 이력 코퍼스: 123개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-09-12 23:55:03,083 [INFO] keyword_collector — 시즌 예약 키워드 14개 로드 (blog=blog1): ['2026 가을 등산 코스 초보자 추천 후기', '2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법']...
+2026-09-12 23:55:07,201 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-09-12 23:55:12,005 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-12 23:55:12,021 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-12 23:55:12,021 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-12 23:55:12,401 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기']
+2026-09-12 23:55:12,750 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-12 23:55:12,965 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 2개 쿼리 / 1개 카테고리
+2026-09-12 23:55:12,965 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-12 23:55:12,966 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-12 23:55:12,970 [INFO] keyword_collector — 유사 주제 제외 7개: ['2026 가을 등산 코스 초보자 추천 후기', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '추석 선물 저렴하게 사는 꿀팁 정리', '연말 앨범 사전 예약 저렴하게 구매하는 법']
+2026-09-12 23:55:12,972 [INFO] keyword_collector —   [high_cpc] 1개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기']
+2026-09-12 23:55:12,972 [INFO] keyword_collector —   [naver_realtime] 1개: ['가을 트레킹 코스 추천 하이원 하늘숲길']
+2026-09-12 23:55:12,972 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기', '가을 트레킹 코스 추천 하이원 하늘숲길']
+2026-09-12 23:55:12,972 [INFO] main — 수집된 키워드 2개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기', '가을 트레킹 코스 추천 하이원 하늘숲길']
+2026-09-12 23:55:12,976 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-09-12 23:55:12,976 [INFO] main — 단독 포스트 대상 키워드 1개: ['여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기']
+2026-09-12 23:55:12,993 [INFO] main — 
+[1/1] 키워드: '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-09-12 23:55:12,993 [INFO] content_generator — 포스트 생성 중: '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-09-12 23:55:20,033 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-12 23:55:20,034 [INFO] research_collector — 검색 의도: 여행자보험 가입 필요성과 실제 보상(청구) 경험을 통해 가입 여부를 판단하려는 의도
+2026-09-12 23:55:37,736 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-09-12 23:55:57,712 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-12 23:55:57,713 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '여행자보험 가입 꼭 해야 할까 실제 보상 경험 후기'
+2026-09-12 23:56:18,966 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-12 23:56:18,967 [INFO] source_validator — 출처 검증: 8/8개 통과, 등급 분포 {'B': 8}
+2026-09-12 23:56:18,968 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-12 23:56:18,969 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-12 23:56:19,751 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-12 23:57:36,948 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-12 23:57:37,657 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-12 23:57:52,367 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '단기 국내 여행이라면 상대적으로 저렴한 보험료로 가입 가능한 상품도 있고'
+2026-09-12 23:57:52,367 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '결항 후 비교적 빠르게 대체 항공편을 이용했기 때문에'
+2026-09-12 23:57:52,367 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 0건 자동 수정 적용
+2026-09-12 23:57:52,367 [INFO] content_generator — 이미지 계획 2건 사용: ['airport departure board delay', 'travel insurance document airport']
+2026-09-12 23:57:52,712 [INFO] image_fetcher — 이미지 수집 성공: 'airport departure board delay' → 제목='travel / flight / schedule / ad / plan /' (관련성=0.50)
+2026-09-12 23:57:52,908 [INFO] image_fetcher — 이미지 수집 성공: 'travel insurance document airport' → 제목='airport / aircraft / departure / travel ' (관련성=0.50)
+2026-09-12 23:57:54,277 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-12 23:57:54,880 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-09-12 23:57:54,880 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-09-12 23:57:54,884 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-09-12 23:57:54,886 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-12 23:57:54,886 [INFO] content_generator — 포스트 생성 완료: '여행자보험 가입, 실제 보상 거절 사례로 본 진실' (3068자, 이미지 2개)
+2026-09-12 23:57:55,501 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-12 23:58:11,618 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '여행자보험 가입, 실제 보상 거절 사례로 본 진실'
+2026-09-12 23:58:11,618 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 사례 설명 단락 일부가 500자 이상으로 길게 이어짐
+2026-09-12 23:58:11,618 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처로 저작권 문제는 없으나 alt 텍스트 명시 여부 불확실
+2026-09-12 23:58:11,621 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-12 23:58:11,626 [INFO] internal_linker —   [1/5] '항공권' -> https://www.hoguwhat.com/2026/08/blog-post_490.html
+2026-09-12 23:58:11,629 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-09-12 23:58:11,629 [INFO] main —   제목: 여행자보험 가입, 실제 보상 거절 사례로 본 진실
+2026-09-12 23:58:11,629 [INFO] main —   이미지: 2개 삽입
+2026-09-12 23:58:11,629 [INFO] main —   글자 수: 3068자
+2026-09-12 23:58:11,629 [WARNING] main —   ⚠️ 팩트체크 이슈 2건을 고치지 못했습니다 — pending 저장: '여행자보험 가입, 실제 보상 거절 사례로 본 진실'
+2026-09-12 23:58:11,629 [WARNING] main —      자료팩에 없는 구체적 보험료 수치로 검증 불가능한 통계에 해당함; 자료팩에 없는 구체적 시간 수치로, 근거 없이 추가된 세부사항임
+2026-09-12 23:58:11,643 [INFO] dashboard_exporter —   검토 대기 저장: 여행자보험 가입, 실제 보상 거절 사례로 본 진실 (14474자 HTML)
+2026-09-12 23:58:11,654 [INFO] pending_store — 검토 대기 저장: 목록 16건 / 보관 154건 / 본문 19건
+2026-09-12 23:58:11,655 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 170개)
+2026-09-12 23:58:11,655 [INFO] main — 
+============================================================
+2026-09-12 23:58:11,655 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-09-12 23:58:11,655 [INFO] main — ============================================================
+2026-09-12 23:58:11,685 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 156개)
+2026-09-12 23:58:11,732 [INFO] dashboard_exporter — 분석 필드 유지: 118/135개 (등급·조회수·수익)
+2026-09-12 23:58:11,743 [INFO] dashboard_exporter —   시리즈: 29개 내보내기 완료
+2026-09-12 23:58:11,760 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-12 23:58:12,247 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-12 23:58:12,605 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-12 23:58:12,606 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-12 23:58:12,607 [INFO] dashboard_exporter —   학습 이력: 2주 내보내기 완료
+2026-09-12 23:58:12,609 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-12 23:58:12,621 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 270 / 실패 0 / 대기 15)
+2026-09-12 23:58:12,621 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-12 23:58:12,621 [INFO] dashboard_exporter —   포스트: 135개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-12 23:58:12,623 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-12 23:58:12,624 [ERROR] main — ============================================================
+2026-09-12 23:58:12,624 [ERROR] main — ❌ 게시 0건 — 생성은 됐지만 1건 모두 검토 대기로 빠졌습니다
+2026-09-12 23:58:12,624 [ERROR] main —    품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다
+2026-09-12 23:58:12,624 [ERROR] main — ============================================================

@@ -573,7 +573,22 @@ def _experience_style_block(keyword: str, blog_id: str = "") -> str:
 
 ✓ 의견·계획성 1인칭은 허용:
   "개인적으로는 ~가 나아 보입니다" / "저라면 ~부터 확인하겠습니다" / "제 생각에는"
-  (경험을 했다는 주장이 아닌 의견·판단임이 분명한 표현만)"""
+  (경험을 했다는 주장이 아닌 의견·판단임이 분명한 표현만)
+
+━━━ 제목에도 똑같이 적용 (매우 중요) ━━━
+본문을 조사형으로 써도 제목이 체험담이면 소용없습니다. 검색 결과와 SNS
+카드에는 제목이 먼저 노출되므로 독자는 제목을 보고 "이 사람이 해봤구나"
+하고 읽기 시작합니다. 2026-09-12 AdSense가 이 사이트를 "가치가 별로 없는
+콘텐츠"로 거절했을 때 심사관이 본 것도 이런 제목들이었습니다.
+
+✗ 제목 금지: "직접 써본 후기" / "제가 겪은 실제 절차" / "3개월 해본 솔직 장단점" /
+  "직접 다녀와서 정리" / "정산한 실제 생활비" / "직접 예약해봤더니"
+
+✓ 제목 권장: "3개월 사용 후기 종합" / "공식 안내 기준 절차 정리" /
+  "장단점 비교 정리" / "방문 후기 종합과 체크리스트" / "생활비 얼마나 드나, 사례 종합"
+
+조사형 제목도 충분히 구체적이고 클릭할 만합니다. 구체성은 "내가 해봤다"가
+아니라 숫자·비교·범위에서 나옵니다."""
 
 
 def _build_blog1_prompt(keyword: str, traffic: str, blog_config: dict | None = None) -> str:
@@ -2450,14 +2465,24 @@ def generate_series_post(keyword: str, traffic: str = "N/A", series_context: dic
 
             # 제목 정책 검사 — 클릭 유도·과장 표현은 AdSense "오해의 소지가 있는 콘텐츠" 위반 소지.
             # 발행 후 감사에서 발견하면 이미 노출된 뒤라, 생성 단계에서 재작성을 요청한다.
-            last_title_violations = check_title(post_data.get("title", ""))
+            # 제목에도 같은 경험 주장 기준을 적용합니다. 본문만 막고 제목을
+            # 열어두면 "직접 써본 후기" 같은 제목이 계속 나갑니다 — 검색 결과와
+            # SNS 카드에는 제목이 먼저 노출되므로 오히려 제목 쪽이 더 눈에 띕니다.
+            # experience_mode는 바로 위에서 계산됩니다.
+            last_title_violations = check_title(
+                post_data.get("title", ""),
+                allow_experience=(post_data.get("experience_mode") == "experience"),
+            )
             if last_title_violations:
                 if attempt < 2:
                     logger.warning(f"제목 정책 위반({last_title_violations}) — 재작성 요청 {attempt + 1}/3")
                     time.sleep(2)
                     continue
                 _orig_title = post_data.get("title", "")
-                post_data["title"] = sanitize_title(_orig_title)
+                post_data["title"] = sanitize_title(
+                    _orig_title,
+                    allow_experience=(post_data.get("experience_mode") == "experience"),
+                )
                 logger.warning(
                     f"제목 정책 위반 — 재시도 소진, 표현 제거 후 진행: "
                     f"'{_orig_title}' → '{post_data['title']}'"
@@ -2876,14 +2901,24 @@ def generate_post(keyword: str, traffic: str = "N/A", blog_config: dict | None =
 
             # 제목 정책 검사 — 클릭 유도·과장 표현은 AdSense "오해의 소지가 있는 콘텐츠" 위반 소지.
             # 발행 후 감사에서 발견하면 이미 노출된 뒤라, 생성 단계에서 재작성을 요청한다.
-            last_title_violations = check_title(post_data.get("title", ""))
+            # 제목에도 같은 경험 주장 기준을 적용합니다. 본문만 막고 제목을
+            # 열어두면 "직접 써본 후기" 같은 제목이 계속 나갑니다 — 검색 결과와
+            # SNS 카드에는 제목이 먼저 노출되므로 오히려 제목 쪽이 더 눈에 띕니다.
+            # experience_mode는 바로 위에서 계산됩니다.
+            last_title_violations = check_title(
+                post_data.get("title", ""),
+                allow_experience=(post_data.get("experience_mode") == "experience"),
+            )
             if last_title_violations:
                 if attempt < 2:
                     logger.warning(f"제목 정책 위반({last_title_violations}) — 재작성 요청 {attempt + 1}/3")
                     time.sleep(2)
                     continue
                 _orig_title = post_data.get("title", "")
-                post_data["title"] = sanitize_title(_orig_title)
+                post_data["title"] = sanitize_title(
+                    _orig_title,
+                    allow_experience=(post_data.get("experience_mode") == "experience"),
+                )
                 logger.warning(
                     f"제목 정책 위반 — 재시도 소진, 표현 제거 후 진행: "
                     f"'{_orig_title}' → '{post_data['title']}'"

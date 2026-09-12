@@ -52,6 +52,8 @@ KNOWN_UNDISPLAYED = {
     "image_mirror.json": "자체 호스팅 이미지 대조표(해시 ↔ 원본) — 화면용이 아니라 복구용",
     "image_backfill.json": "발행 글 소급 복제 결과 — 일회성 작업 로그",
     "affiliate_disclosure.json": "옛 쿠팡 고지 문구 교체 결과 — 일회성 작업 로그",
+    "experience_audit.json": "조작 체험담 감사 — 제목·본문 정정 도구의 입력 파일. "
+                             "사람이 보는 결과는 정정 도구 리포트로 나갑니다",
 }
 
 

@@ -1,5 +1,5 @@
 {
-  "auditedAt": "2026-09-05T23:35:59.864415+00:00",
+  "auditedAt": "2026-09-12T23:48:43.072378+00:00",
   "applied": true,
   "aiJudged": false,
   "blogFilter": "",
@@ -16,17 +16,177 @@
   ],
   "incompleteBlogs": [],
   "stoppedAtLimit": false,
-  "scanned": 475,
-  "withIssues": 14,
-  "targeted": 5,
-  "fixed": 5,
+  "scanned": 498,
+  "withIssues": 36,
+  "targeted": 6,
+  "fixed": 6,
   "issueCounts": {
-    "insufficient": 13,
-    "weak_alt": 4,
-    "suspect": 3,
-    "broken": 2
+    "weak_alt": 6,
+    "insufficient": 34,
+    "suspect": 4,
+    "broken": 1
   },
   "posts": [
+    {
+      "title": "2026 추석 선물세트 백화점 3사 직접 비교 후기 총정리",
+      "url": "https://www.hoguwhat.com/2026/09/2026-3.html",
+      "images": 2,
+      "needed": 2,
+      "issues": [
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/4514ec3ff237b0e5.jpg",
+          "detail": "alt가 너무 짧음 (5자: \"추석 선물\")",
+          "alt": "추석 선물"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "alt 재작성 → \"2026 추석 선물세트 백화점 3사 직접 비교 후기 총정리 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 2건"
+      ]
+    },
+    {
+      "title": "2026 추석특선영화 편성표 총정리 후기 및 확인법 가이드",
+      "url": "https://www.hoguwhat.com/2026/09/2026_089953038.html",
+      "images": 1,
+      "needed": 4,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 4장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "재벌X형사2 첫인상 후기, 반응 갈리는 이유",
+      "url": "https://www.hoguwhat.com/2026/09/x2_026739731.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/e50d10eacf7a8be5.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"스마트폰으로 웹툰을 읽고 있는 손 모습\")",
+          "alt": "스마트폰으로 웹툰을 읽고 있는 손 모습"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/e50d10eacf7a8be5.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "스마트폰으로 웹툰을 읽고 있는 손 모습",
+          "imageTerms": "스마트폰으로 웹툰을 읽고 있는 손 모습 e50d10eacf7a8be5",
+          "postTerms": [
+            "재벌",
+            "형사",
+            "첫인상",
+            "반응",
+            "갈리"
+          ]
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "alt 재작성 → \"재벌X형사2 첫인상 후기, 반응 갈리는 이유 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "[완결] 재벌X형사2 결말 총평, 별점과 OST 총정리",
+      "url": "https://www.hoguwhat.com/2026/09/x2-ost.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "재벌X형사2 등장인물 배우 연기력 총정리, 특별출연진까지 완벽 분석",
+      "url": "https://www.hoguwhat.com/2026/09/x2_02093879317.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/0/02/20260804_%EC%9E%AC%EB%B2%8CX%ED%98%95%EC%82%AC_2_%EA%B0%95%EC%83%81%EC%A4%80Kang_Sang-jun.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+          "detail": "alt가 너무 짧음 (5자: \"재벌 형사\")",
+          "alt": "재벌 형사"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "alt 재작성 → \"재벌X형사2 등장인물 배우 연기력 총정리, 특별출연진까지 완벽 분석 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "2026 광복절 연휴 인파 피하는 법, 충남 예산 여행지 추천",
+      "url": "https://www.hoguwhat.com/2026/09/2026.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "2025 가을 단풍 여행지 가성비 코스 추천 총정리 가이드",
+      "url": "https://www.hoguwhat.com/2026/09/2025.html",
+      "images": 1,
+      "needed": 4,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 4장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "가을 등산 코스 추천, 붐비지 않는 명산 대안 총정리",
+      "url": "https://www.hoguwhat.com/2026/09/blog-post_06.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
     {
       "title": "9월 가볼 만한 국내 가을 여행지 추천 – 5곳 비교 정리",
       "url": "https://www.hoguwhat.com/2026/09/9-5.html",
@@ -52,18 +212,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/c22122fa3e1fc236.jpg",
-          "detail": "alt가 너무 짧음 (5자: \"가을 국내\")",
-          "alt": "가을 국내"
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "alt 재작성 → \"가을 국내 여행지 추천 코스 총정리: 지역별 단풍 시기와 체크리스트 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 2건"
+        "변경 없음"
       ]
     },
     {
@@ -123,69 +276,128 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/db23f5b54d3b827b.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"한 배우가 여러 작품에서 다른 배역을 소화하는 모습을 \")",
-          "alt": "한 배우가 여러 작품에서 다른 배역을 소화하는 모습을 표현한 이미지"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/db23f5b54d3b827b.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "한 배우가 여러 작품에서 다른 배역을 소화하는 모습을 표현한 이미지",
-          "imageTerms": "한 배우가 여러 작품에서 다른 배역을 소화하는 모습을 표현한 이미지 db23f5b54d3b827b",
-          "postTerms": [
-            "재벌",
-            "형사",
-            "등장인물",
-            "분석",
-            "안보현",
-            "정은채"
-          ]
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "alt 재작성 → \"재벌X형사2 등장인물 분석 총정리, 안보현·정은채·이동욱 연기 평가 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 2건"
+        "변경 없음"
       ]
     },
     {
-      "title": "재벌X형사2 첫인상 리뷰: 시즌1과 뭐가 달라졌나 총정리",
-      "url": "https://www.hoguwhat.com/2026/09/x2-1.html",
-      "images": 3,
+      "title": "서울 근교 드라이브 코스, 대부도·선재도·영흥도 직접 가본 후기",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/blog-post_11.html",
+      "images": 1,
       "needed": 3,
       "issues": [
         {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/703eb1fa8a52dc37.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"거실에서 드라마를 시청하는 모습\")",
-          "alt": "거실에서 드라마를 시청하는 모습"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/703eb1fa8a52dc37.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "거실에서 드라마를 시청하는 모습",
-          "imageTerms": "거실에서 드라마를 시청하는 모습 703eb1fa8a52dc37",
-          "postTerms": [
-            "재벌",
-            "형사",
-            "첫인상",
-            "리뷰",
-            "시즌",
-            "뭐가"
-          ]
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
         }
       ],
-      "blog": "HOGU What?",
+      "blog": "HOGU 여행,스포츠,연예",
       "actions": [
-        "alt 재작성 → \"재벌X형사2 첫인상 리뷰: 시즌1과 뭐가 달라졌나 총정리 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 3건"
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "호텔 AI 컨시어지 서비스란? 활용법과 실제 후기 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/ai.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        },
+        {
+          "type": "broken",
+          "url": "https://pixabay.com/get/ge79a304ac3caef5329479f0cc0dae6ed952637b53d24005c46f9f2fdcdbc5b6bed49ae481b7e83c76520fe225eaa66d59c66365eb2ed3c87b486bd14faa26e69_1280.jpg",
+          "detail": "HTTP 400 (만료된 주소)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "broken 교체 → pixabay"
+      ]
+    },
+    {
+      "title": "전주 한옥마을 사람 적은 시간대와 숨은 맛집 후기 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/blog-post_09.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "이마트·롯데아울렛 가을 할인, 골프웨어 알뜰 쇼핑 노하우",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/blog-post_07.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "생활체육 디비전리그 참가 후기, 신청 전 체크리스트 총정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/blog-post_887.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "디비전리그 등급 배정 기준, 나이 아닌 실력이 좌우한다",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/blog-post_860.html",
+      "images": 1,
+      "needed": 2,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 2장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "생활체육 디비전리그 참가 신청 방법, 처음엔 이렇게 헤맸습니다",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/blog-post_06.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
       ]
     },
     {
@@ -197,34 +409,204 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/336b9240ed082f0d.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"마트 진열대에 놓인 채소와 과일 가격표\")",
-          "alt": "마트 진열대에 놓인 채소와 과일 가격표"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/336b9240ed082f0d.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "마트 진열대에 놓인 채소와 과일 가격표",
-          "imageTerms": "마트 진열대에 놓인 채소와 과일 가격표 336b9240ed082f0d",
-          "postTerms": [
-            "가을철",
-            "장바구니",
-            "물가",
-            "절약",
-            "쇼핑",
-            "노하우"
-          ]
         }
       ],
       "blog": "HOGU 여행,스포츠,연예",
       "actions": [
-        "alt 재작성 → \"가을철 장바구니 물가 절약 쇼핑 노하우, 이렇게 준비하세요 관련 이미지\" (캡션 포함)",
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "자녀 명의 계좌로 세금 없이 자산 늘리는 법, 증여세 면제 한도부터 신고까지",
+      "url": "https://hoguasset.blogspot.com/2026/09/blog-post_12.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/13beb401d3236a33.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"증여세 공제 한도를 계산하는 계산기와 서류 이미지\")",
+          "alt": "증여세 공제 한도를 계산하는 계산기와 서류 이미지"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/13beb401d3236a33.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "증여세 공제 한도를 계산하는 계산기와 서류 이미지",
+          "imageTerms": "증여세 공제 한도를 계산하는 계산기와 서류 이미지 13beb401d3236a33",
+          "postTerms": [
+            "자녀",
+            "명의",
+            "계좌로",
+            "세금",
+            "없이",
+            "자산"
+          ]
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "alt 재작성 → \"자녀 명의 계좌로 세금 없이 자산 늘리는 법, 증여세 면제 한도부터 신고까지 관련 이미지\" (캡션 포함)",
         "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "퇴근 후 주식거래, 9월 14일 KRX 애프터마켓 개장…이용법 총정리",
+      "url": "https://hoguasset.blogspot.com/2026/09/9-14-krx.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "증권사 AI 투자비서 MTS 비교 추천 2026 선택 기준",
+      "url": "https://hoguasset.blogspot.com/2026/09/ai-mts-2026.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "개인투자용국채 신청방법, 2026년 이렇게 달라졌어요",
+      "url": "https://hoguasset.blogspot.com/2026/09/2026_0267428070.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "개인국채 복리 계산법과 환매조건, 만기수익률까지 총정리",
+      "url": "https://hoguasset.blogspot.com/2026/09/blog-post_09.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "퇴직연금 개인국채 투자 2026, 9월 도입 배경과 핵심 정리",
+      "url": "https://hoguasset.blogspot.com/2026/09/2026-9.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "코스피 7000 시대 대비 투자 전략 세우는 법 (2026년 9월 기준)",
+      "url": "https://hoguasset.blogspot.com/2026/09/7000-2026-9.html",
+      "images": 3,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/3b1af59fe9c17b9e.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"증권사 리포트를 검토하며 목표치를 확인하는 모습\")",
+          "alt": "증권사 리포트를 검토하며 목표치를 확인하는 모습"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/3b1af59fe9c17b9e.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "증권사 리포트를 검토하며 목표치를 확인하는 모습",
+          "imageTerms": "증권사 리포트를 검토하며 목표치를 확인하는 모습 3b1af59fe9c17b9e",
+          "postTerms": [
+            "코스피",
+            "시대",
+            "대비",
+            "투자",
+            "전략",
+            "세우"
+          ]
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/df9e1cd8a1d55cdb.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"노트북 화면의 자산 배분 표를 확인하는 모습\")",
+          "alt": "노트북 화면의 자산 배분 표를 확인하는 모습"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/df9e1cd8a1d55cdb.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "노트북 화면의 자산 배분 표를 확인하는 모습",
+          "imageTerms": "노트북 화면의 자산 배분 표를 확인하는 모습 df9e1cd8a1d55cdb",
+          "postTerms": [
+            "코스피",
+            "시대",
+            "대비",
+            "투자",
+            "전략",
+            "세우"
+          ]
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "alt 재작성 → \"코스피 7000 시대 대비 투자 전략 세우는 법 (2026년 9월 기준) 관련 이미지\" (캡션 포함)",
+        "alt 재작성 → \"코스피 7000 시대 대비 투자 전략 세우는 법 (2026년 9월 기준) 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 3건"
+      ]
+    },
+    {
+      "title": "2026 종합부동산세 대상 서울 아파트 확인 방법 총정리",
+      "url": "https://hoguasset.blogspot.com/2026/09/2026_0823836910.html",
+      "images": 1,
+      "needed": 4,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 4장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
       ]
     },
     {
@@ -268,23 +650,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g06377f5dc3d161a0afbaf8333fe73906548ebfe383a435e56e227e45615e3202c90a3c7cbe27faa0fc98b1aa0ccbba1a_640.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g4b349d494ccec9bbbea6e1a302e791f3ae90c13daef50ca356b720660d3b71004d781548c1e0ebf17388debf85f443e9b716956936b5eeacd16ef3932cbf02b6_640.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "금융NEWS",
       "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay",
-        "캡션 동기화 2건"
+        "변경 없음"
       ]
     },
     {

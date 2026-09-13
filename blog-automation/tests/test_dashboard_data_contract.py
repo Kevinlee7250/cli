@@ -59,6 +59,8 @@ KNOWN_UNDISPLAYED = {
     "curation_plan.json": "사이트 재편 계획(살릴 글/내릴 글) — 사람이 검토하는 것은 "
                           "curate_site가 함께 내보내는 curation_plan.md 쪽입니다",
     "curation_result.json": "비공개 전환 실행 결과 — Actions 로그·아티팩트로 확인",
+    "live_posts.json": "지금 공개 상태인 글 주소 — related_posts가 내려간 글을 "
+                       "관련 포스트 후보에서 빼는 데 씁니다 (화면용 아님)",
 }
 
 

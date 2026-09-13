@@ -1,15 +1,15 @@
 # 사이트 재편 계획 (소규모 정예)
 
-- 감사 기준: `2026-09-12T16:07:27.900364+00:00`
-- 계획 생성: `2026-09-13T10:10:09.356872+00:00`
+- 감사 기준: `2026-09-13T10:14:09.900549+00:00`
+- 계획 생성: `2026-09-13T10:16:36.716534+00:00`
 - 블로그당 목표 25편 · 최소 점수 40점
 
 | 구분 | 편수 |
 |---|---:|
 | ✅ 그대로 유지 (감사 통과) | 45 |
-| ✏️ 리라이팅 후 유지 | 44 |
+| ✏️ 리라이팅 후 유지 | 45 |
 | ↓ 비공개 전환 | 409 |
-| **최종 공개** | **89** |
+| **최종 공개** | **90** |
 
 > 비공개는 **임시저장 전환**입니다. 삭제가 아니라 Blogger에서 언제든 다시 공개할 수 있습니다.
 
@@ -101,7 +101,7 @@
 | -20 | high | 8 | [해외여행 실비보험 필요한지 직접 비교해봤더니, 2026년 개선안까지](https://www.hoguwhat.com/2026/08/2026_02059100424.html) |
 | -20 | high | 7 | [5060 프리미엄 여행 상품 트렌드, 실적으로 확인해보니](https://www.hoguwhat.com/2026/08/5060.html) |
 | -20 | high | 4 | [방콕 호텔 가성비 비교 & 실망 후기](https://www.hoguwhat.com/2026/08/blog-post.html) |
-| -20 | medium | 5 | [2026 추석 선물세트 백화점 3사 직접 비교 후기 총정리](https://www.hoguwhat.com/2026/09/2026-3.html) |
+| -20 | medium | 6 | [2026 추석 선물세트 백화점 3사 직접 비교 후기 총정리](https://www.hoguwhat.com/2026/09/2026-3.html) |
 | -15 | critical | 11 | [광복절연휴 2026 국내여행지 추천 후기, 날짜부터 체크리스트까지](https://www.hoguwhat.com/2026/08/2026_01436273172.html) |
 | -15 | critical | 11 | [해외여행 실비보험 필요할까? 방콕 여행으로 직접 비교해봤더니](https://www.hoguwhat.com/2026/08/blog-post_77.html) |
 | -15 | critical | 10 | [해외여행 환전 수수료 0% 방법 직접 비교하고 정리해봤습니다](https://www.hoguwhat.com/2026/08/0.html) |
@@ -344,7 +344,7 @@
 
 ## 금융NEWS
 
-리라이팅 17편 · 비공개 139편
+리라이팅 18편 · 비공개 139편
 
 ### ✏️ 살릴 글
 
@@ -367,6 +367,7 @@
 | 60 | high | 3263 | [IRP 로보어드바이저 자동투자 후기와 활용법 정리](https://hoguasset.blogspot.com/2026/08/irp.html) | 3263자에 문제 문단 2개 · FAQ 보유 · 정보형(investment) |
 | 55 | critical | 5462 | [반도체 관련주 투자 방법 2026, 삼성전자·SK하이닉스 분석](https://hoguasset.blogspot.com/2026/07/2026-sk.html) | 5462자에 문제 문단 4개 · 지어낸 수치 포함 · 5462자 · FAQ 보유 · 정보형(investment) |
 | 55 | critical | 4922 | [채권 투자 5:4:1 포트폴리오 전략, 만기·종류 분산으로 안전하게](https://hoguasset.blogspot.com/2026/08/541.html) | 4922자에 문제 문단 2개 · 지어낸 수치 포함 · 4922자 · FAQ 보유 · 정보형(investment) |
+| 55 | high | 3589 | [개인투자용국채 신청방법, 2026년 이렇게 달라졌어요](https://hoguasset.blogspot.com/2026/09/2026_0267428070.html) | 3589자에 문제 문단 5개 — 넓게 퍼짐 · 3589자 · FAQ 보유 · 정보형(how_to) |
 
 <details><summary>↓ 내릴 글 139편 (펼치기)</summary>
 
@@ -493,6 +494,7 @@
 | 30 | medium | 1 | [그린벨트 해제 지역 부동산 공급대책 전망, 지금까지 정리](https://hoguasset.blogspot.com/2026/08/blog-post_712.html) |
 | 35 | critical | 7 | [퇴직연금 수익률 높이는 운용 방법 2026, 디폴트옵션 개편 총정리](https://hoguasset.blogspot.com/2026/07/2026_0831796232.html) |
 | 35 | critical | 5 | [미국 주식 투자 시작하는 방법 2026, 서학개미 되기 전 체크리스트](https://hoguasset.blogspot.com/2026/08/2026_01325784700.html) |
+| 35 | medium | 3 | [추석 선물 저렴하게 사는 꿀팁, 50만원 중 5만원 아끼기](https://hoguasset.blogspot.com/2026/09/50-5.html) |
 | 35 | medium | 3 | [퇴직연금 로보어드바이저 수익률 비교, 가입 전 확인할 점](https://hoguasset.blogspot.com/2026/08/blog-post_06.html) |
 | 35 | medium | 2 | [그린벨트 신규택지 청약자격, 이것부터 확인하세요](https://hoguasset.blogspot.com/2026/08/blog-post_17.html) |
 | 35 | medium | 2 | [서울 그린벨트 해제, 2026년 신규택지 이렇게 봐야](https://hoguasset.blogspot.com/2026/08/2026_01673352174.html) |
@@ -507,7 +509,6 @@
 | 45 | critical | 2 | [증시 폭락 이후 개인투자자 대응 전략 2026, 체크리스트 총정리](https://hoguasset.blogspot.com/2026/08/2026_044842036.html) |
 | 45 | high | 5 | [원달러 환율 1300원대 전망과 해외여행 환전 타이밍 총정리](https://hoguasset.blogspot.com/2026/08/1300.html) |
 | 45 | medium | 2 | [주택담보대출 금리 최저 은행 2026, 발품 팔기 전에 이것부터 확인하세요](https://hoguasset.blogspot.com/2026/07/2026_0408514287.html) |
-| 55 | high | 5 | [개인투자용국채 신청방법, 2026년 이렇게 달라졌어요](https://hoguasset.blogspot.com/2026/09/2026_0267428070.html) |
 | 55 | high | 5 | [AI 자산관리 서비스로 투자 포트폴리오 만드는 법, 신뢰 기준까지](https://hoguasset.blogspot.com/2026/08/ai.html) |
 | 55 | medium | 2 | [전세의 월세화 시대, 임차인이라면 지금 이 3가지부터 확인하세요](https://hoguasset.blogspot.com/2026/08/3.html) |
 | 55 | medium | 1 | [삼성전자 2026 실적발표, 자사주 매입 진짜 효과](https://hoguasset.blogspot.com/2026/08/2026_01092498038.html) |

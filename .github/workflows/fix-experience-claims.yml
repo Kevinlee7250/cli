@@ -25,6 +25,15 @@ on:
         description: 'curate 전용 — 블로그당 남길 글 수'
         required: false
         default: '25'
+      unpublish_severity:
+        description: 'unpublish 전용 — 이 등급 이상을 비공개로 (기본 critical)'
+        required: false
+        default: 'critical'
+        type: choice
+        options:
+          - critical
+          - high
+          - medium
       blog_id:
         description: '블로그 ID (blog1 / blog2 / blog3, 비워두면 전체)'
         required: false
@@ -122,8 +131,9 @@ jobs:
               python fix_experience_claims.py $COMMON --limit "$LIMIT"
               ;;
             unpublish)
+              SEV="${{ inputs.unpublish_severity || 'critical' }}"
               python fix_experience_claims.py $COMMON --limit "$LIMIT" \
-                --severity critical --unpublish-critical
+                --severity "$SEV" --unpublish-critical --unpublish-severity "$SEV"
               ;;
           esac
 

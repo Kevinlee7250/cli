@@ -1,0 +1,91 @@
+name: 📦 공개 글 원본 백업
+
+# 살아있는 글의 본문을 고치는 작업 전에 원본을 git에 넣어 둡니다.
+# Blogger에는 되돌릴 버전 기록이 없습니다 — 백업이 유일한 복구 수단입니다.
+#
+# 복원은 이 워크플로가 하지 않습니다. 사고가 났을 때 사람이 판단해서
+# 로컬에서 --restore로 돌리는 편이 안전합니다 (워크플로 버튼 하나로
+# 81편을 되돌릴 수 있게 두면, 눌러야 할 때가 아닌데 눌립니다).
+
+on:
+  workflow_dispatch:
+    inputs:
+      blog_id:
+        description: '블로그 ID (비워두면 전체)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: backup-live-posts
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v5
+        with:
+          ref: latest
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env <<'ENVEOF'
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: 백업 실행
+        working-directory: blog-automation
+        run: |
+          BLOG_ARG=""
+          if [ -n "${{ inputs.blog_id }}" ]; then BLOG_ARG="--blog ${{ inputs.blog_id }}"; fi
+          python backup_live_posts.py $BLOG_ARG
+
+      - name: 백업 커밋
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add blog-automation/backups/ 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "새 백업 없음 — 커밋 건너뜀"
+          else
+            git commit -m "📦 공개 글 원본 백업 (#${{ github.run_number }})"
+            _ok=0
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin latest \
+                && git push origin latest && { _ok=1; break; }
+              echo "pull+push 재시도 $i/3..."
+              sleep $((i * 3))
+            done
+            [ "$_ok" = "1" ] || { echo "push 3회 실패 — 종료"; exit 1; }
+          fi
+
+      - name: 백업 아티팩트
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: live-posts-backup-${{ github.run_number }}
+          path: blog-automation/backups/
+          retention-days: 90

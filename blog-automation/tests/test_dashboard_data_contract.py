@@ -56,6 +56,9 @@ KNOWN_UNDISPLAYED = {
                              "사람이 보는 결과는 정정 도구 리포트로 나갑니다",
     "experience_title_fixes.json": "제목 정정 결과 — Actions 로그·아티팩트로 확인",
     "experience_claim_fixes.json": "본문 리라이팅 결과 — Actions 로그·아티팩트로 확인",
+    "curation_plan.json": "사이트 재편 계획(살릴 글/내릴 글) — 사람이 검토하는 것은 "
+                          "curate_site가 함께 내보내는 curation_plan.md 쪽입니다",
+    "curation_result.json": "비공개 전환 실행 결과 — Actions 로그·아티팩트로 확인",
 }
 
 

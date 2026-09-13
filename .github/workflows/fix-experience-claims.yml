@@ -15,10 +15,16 @@ on:
         default: 'audit'
         type: choice
         options:
-          - audit        # 감사만 — 아무것도 바꾸지 않음
-          - titles       # 제목 정정
-          - bodies       # 본문 리라이팅
-          - unpublish    # critical 글 비공개 전환
+          - audit          # 감사만 — 아무것도 바꾸지 않음
+          - curate-plan    # 살릴 글/내릴 글 계획 세우기 (아무것도 바꾸지 않음)
+          - curate-apply   # 계획대로 비공개 전환 — 되돌릴 수 있음(임시저장)
+          - titles         # 제목 정정
+          - bodies         # 본문 리라이팅
+          - unpublish      # critical 글 비공개 전환 (curate-apply의 옛 방식)
+      keep_per_blog:
+        description: 'curate 전용 — 블로그당 남길 글 수'
+        required: false
+        default: '25'
       blog_id:
         description: '블로그 ID (blog1 / blog2 / blog3, 비워두면 전체)'
         required: false
@@ -95,6 +101,20 @@ jobs:
               if [ -n "${{ inputs.blog_id }}" ]; then BLOG_ARG="--blog ${{ inputs.blog_id }}"; fi
               python experience_audit.py $BLOG_ARG
               ;;
+            curate-plan)
+              # 계획만 세웁니다. 결과는 docs/data/curation_plan.md 로 커밋되니
+              # 승인 전에 그 파일을 읽어 보세요.
+              python curate_site.py --plan --keep-per-blog "${{ inputs.keep_per_blog || '25' }}"
+              ;;
+            curate-apply)
+              # dry_run이 켜져 있으면 계획만 다시 출력합니다.
+              if [ "${{ inputs.dry_run }}" = "true" ]; then
+                python curate_site.py --plan --keep-per-blog "${{ inputs.keep_per_blog || '25' }}"
+              else
+                python curate_site.py --apply \
+                  --keep-per-blog "${{ inputs.keep_per_blog || '25' }}" --limit "$LIMIT"
+              fi
+              ;;
             titles)
               python fix_experience_titles.py $COMMON --limit "$LIMIT"
               ;;
@@ -113,8 +133,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # docs/.gitignore(npm/cli 템플릿)가 docs/*를 무시하므로 -f 필수.
-          for f in experience_audit experience_title_fixes experience_claim_fixes; do
-            [ -f "docs/data/$f.json" ] && git add -f "docs/data/$f.json"
+          # if 문으로 씁니다 — `[ -f ... ] && git add`는 마지막 파일이 없을 때
+          # 0이 아닌 값을 반환해서, set -e인 Actions 셸에서 스텝이 통째로 실패합니다.
+          for f in experience_audit.json experience_title_fixes.json \
+                   experience_claim_fixes.json curation_plan.json \
+                   curation_plan.md curation_result.json; do
+            if [ -f "docs/data/$f" ]; then git add -f "docs/data/$f"; fi
           done
           if git diff --staged --quiet; then
             echo "변경 없음"
@@ -132,4 +156,5 @@ jobs:
           path: |
             blog-automation/logs/
             docs/data/experience_*.json
+            docs/data/curation_*
           retention-days: 14

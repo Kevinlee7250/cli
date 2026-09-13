@@ -37,6 +37,7 @@ logger = logging.getLogger(__name__)
 _ROOT         = Path(__file__).parent.parent
 POSTS_JSON    = _ROOT / "docs" / "data" / "posts.json"
 CLUSTERS_JSON = _ROOT / "docs" / "data" / "link_clusters.json"
+LIVE_POSTS_JSON = _ROOT / "docs" / "data" / "live_posts.json"
 
 # ── 파라미터 ──────────────────────────────────────────────────────────────────
 MAX_RELATED      = 3      # 포스트당 관련 포스트 최대 수
@@ -52,18 +53,54 @@ _DEFAULT_BLOG_URL  = "https://hoguwhat1.blogspot.com"
 
 # ── 포스트 인덱스 로드 ────────────────────────────────────────────────────────
 
+#: live_posts.json이 posts.json보다 이 비율 미만이면 필터를 적용하지 않습니다.
+#: 동기화가 반쪽만 된 파일로 멀쩡한 글을 링크에서 빼는 사고를 막습니다.
+MIN_LIVE_RATIO = 0.2
+
+
+def _live_urls() -> set[str]:
+    """공개 상태인 글 주소 집합. 파일이 없으면 빈 집합(=필터 안 함)."""
+    if not LIVE_POSTS_JSON.exists():
+        return set()
+    try:
+        with open(LIVE_POSTS_JSON, encoding="utf-8") as f:
+            return {u.rstrip("/") for u in (json.load(f).get("urls") or []) if u}
+    except Exception as e:
+        logger.warning(f"live_posts.json 로드 실패 — 필터 생략: {e}")
+        return set()
+
+
 def _load_posts() -> list[dict]:
-    """posts.json 로드 (blogUrl 없는 항목 제외)"""
+    """posts.json 로드 (blogUrl 없는 항목과 이미 내려간 글 제외).
+
+    posts.json은 자동화 '실행 이력'이라 글이 임시저장으로 내려간 것을
+    모릅니다. 2026-09-13 재편으로 409편이 내려갔고, 걸러내지 않으면
+    새 글이 내려간 글로 관련 포스트 링크를 걸게 됩니다.
+    """
     if not POSTS_JSON.exists():
         logger.warning(f"posts.json 없음: {POSTS_JSON}")
         return []
     try:
         with open(POSTS_JSON, encoding="utf-8") as f:
             posts = json.load(f)
-        return [p for p in posts if p.get("blogUrl") and p.get("title")]
+        posts = [p for p in posts if p.get("blogUrl") and p.get("title")]
     except Exception as e:
         logger.warning(f"posts.json 로드 실패: {e}")
         return []
+
+    live = _live_urls()
+    if not live:
+        return posts
+    if len(live) < len(posts) * MIN_LIVE_RATIO:
+        logger.warning(f"live_posts.json이 {len(live)}건뿐이라 동기화 실패로 보고 "
+                       f"필터를 생략합니다 (posts.json {len(posts)}건)")
+        return posts
+
+    kept = [p for p in posts if p["blogUrl"].rstrip("/") in live]
+    dropped = len(posts) - len(kept)
+    if dropped:
+        logger.info(f"내려간 글 {dropped}편을 관련 포스트 후보에서 제외")
+    return kept
 
 
 # ── 유사도 계산 ───────────────────────────────────────────────────────────────

@@ -34,6 +34,27 @@ jobs:
         working-directory: blog-automation
         run: pip install -r requirements.txt
 
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env <<'ENVEOF'
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          LOG_LEVEL=info
+          ENVEOF
+
+      # 공개 상태 동기화가 먼저입니다. posts.json은 실행 이력이라 글이
+      # 내려간 것을 모르고, 그대로 클러스터를 만들면 새 글이 내려간 글로
+      # 링크를 겁니다. 실패해도 클러스터 빌드는 계속합니다 — 그때는
+      # related_posts가 필터를 생략하고 예전처럼 동작합니다.
+      - name: 공개 글 목록 동기화
+        working-directory: blog-automation
+        continue-on-error: true
+        run: python sync_live_posts.py
+
       - name: 링크 클러스터 빌드
         working-directory: blog-automation
         run: |
@@ -45,6 +66,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f docs/data/link_clusters.json 2>/dev/null || true
+          git add -f docs/data/live_posts.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 건너뜀"
           else

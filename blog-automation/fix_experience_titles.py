@@ -14,6 +14,8 @@
   1. 발행 글을 순회하며 `title_policy.check_title`로 경험 주장을 찾음
   2. Claude로 조사형 제목을 다시 씀 (사실 관계·키워드는 유지)
   3. 다시 쓴 제목이 정책을 통과하는지 재검사 — 통과 못 하면 채택하지 않음
+     그리고 원제목의 첫 주제어·숫자·영문 키워드가 살아 있는지 재검사
+     ("안동 하회마을" → "동 하회마을" 같은 글자 유실을 막습니다)
   4. Claude가 실패하면 `sanitize_title`의 규칙 기반 치환으로 폴백
   5. 제목만 PATCH (본문은 건드리지 않음 — 그건 fix_experience_claims.py)
 
@@ -126,6 +128,47 @@ def _rewrite_with_claude(title: str, violations: list[str]) -> str:
     return line[:MAX_TITLE_LEN]
 
 
+#: 제목을 토큰으로 쪼갤 때 쓰는 패턴 — 한글·영문·숫자 덩어리만 봅니다.
+_TOKEN_RE = re.compile(r"[0-9A-Za-z가-힣]+")
+
+
+def _tokens(text: str) -> list[str]:
+    return _TOKEN_RE.findall(text or "")
+
+
+def _anchor_loss(old: str, new: str) -> str:
+    """정정안이 원제목의 핵심 토큰을 잃었으면 그 사유를, 아니면 빈 문자열.
+
+    정책 검사(check_title)만으로는 부족합니다. 2026-09-13 dry-run에서
+    "안동 하회마을 혼자 여행하기…" → "동 하회마을 혼자 여행…" 처럼
+    모델이 첫 글자를 흘린 사고가 있었습니다. "동 하회마을"도 경험 주장은
+    아니므로 정책 검사는 통과합니다 — 잡으려면 별도 검사가 필요합니다.
+
+    표현을 통째로 빼는 것(직접 써본 후기 → 삭제)은 이 도구가 하는 일이므로
+    '사라짐'은 문제 삼지 않습니다. 문제 삼는 것은 '잘림'입니다.
+    """
+    old_tokens, new_tokens = _tokens(old), _tokens(new)
+    if not old_tokens or not new_tokens:
+        return "토큰 없음"
+
+    # 1) 첫머리 주제어 훼손 — 원문 첫 토큰이 통째로는 없고 그 꼬리만 남은 경우.
+    #    앞글자가 깎이는 사고를 잡습니다. 뒤가 깎이는 것(여행하기 → 여행)은
+    #    한국어에서 자연스러운 축약이라 통과시킵니다.
+    head = old_tokens[0]
+    if len(head) >= 2 and head not in new:
+        for t in new_tokens:
+            if t != head and len(t) < len(head) and head.endswith(t):
+                return f"첫 주제어 훼손: {head} → {t}"
+
+    # 2) 숫자·영문 토큰 보존 — 연도, TOP 5, ETF, SK 같은 검색 키워드입니다.
+    #    프롬프트로 "고유명사·숫자는 유지"라고 부탁은 하지만, 부탁은 검사가
+    #    아닙니다. 여기서 빠지면 그 글로 들어오던 검색 유입이 끊깁니다.
+    for t in old_tokens:
+        if re.search(r"[0-9A-Za-z]", t) and t not in new:
+            return f"숫자·영문 키워드 누락: {t}"
+    return ""
+
+
 def propose_title(title: str, violations: list[str]) -> tuple[str, str]:
     """새 제목과 그 출처("claude" | "rule" | "")를 반환합니다.
 
@@ -135,10 +178,14 @@ def propose_title(title: str, violations: list[str]) -> tuple[str, str]:
     from title_policy import check_title, sanitize_title
 
     cand = _rewrite_with_claude(title, violations)
-    if cand and len(cand) >= 10 and not check_title(cand):
-        return cand, "claude"
     if cand:
-        logger.debug(f"Claude 제안 반려(정책 재위반 또는 너무 짧음): {cand!r}")
+        if len(cand) < 10 or check_title(cand):
+            logger.debug(f"Claude 제안 반려(정책 재위반 또는 너무 짧음): {cand!r}")
+        else:
+            loss = _anchor_loss(title, cand)
+            if not loss:
+                return cand, "claude"
+            logger.warning(f"  ⚠️  Claude 제안 반려({loss}): {cand!r}")
 
     fallback = sanitize_title(title)
     if fallback != title and not check_title(fallback):

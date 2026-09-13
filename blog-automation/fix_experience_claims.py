@@ -201,8 +201,18 @@ def _severity_of(content_html: str, title: str) -> str:
     return audit_post(title, content_html)["severity"]
 
 
+#: 심각도 순위 — 비공개 기준선을 "이 등급 이상"으로 비교하기 위한 값입니다.
+_SEVERITY_RANK = {"medium": 1, "high": 2, "critical": 3}
+
+
+def _at_least(sev: str, floor: str) -> bool:
+    """sev가 floor 이상으로 심각한가."""
+    return _SEVERITY_RANK.get(sev, 0) >= _SEVERITY_RANK.get(floor, 99)
+
+
 def run(blog_filter: str = "", dry_run: bool = True, limit: int = 0,
-        severity_filter: str = "", unpublish_critical: bool = False) -> dict:
+        severity_filter: str = "", unpublish_critical: bool = False,
+        unpublish_severity: str = "critical") -> dict:
     from blogger_uploader import _get_access_token
     from config import get_blog_configs
 
@@ -238,8 +248,11 @@ def run(blog_filter: str = "", dry_run: bool = True, limit: int = 0,
                 continue
             flagged += 1
 
-            # critical + 비공개 옵션 → 리라이팅 대신 내립니다.
-            if sev == "critical" and unpublish_critical:
+            # 기준선 이상 + 비공개 옵션 → 리라이팅 대신 내립니다.
+            # 기본 기준선은 critical이라 기존 동작은 그대로입니다. high까지
+            # 내리고 싶을 때가 있습니다 — 자동 재작성이 계속 반려되는 글은
+            # 고쳐지지 않은 채 공개로 남아 심사에서 같은 지적을 받습니다.
+            if unpublish_critical and _at_least(sev, unpublish_severity):
                 logger.info(f"  🔴 비공개 전환: {title[:50]}")
                 if not dry_run:
                     r = requests.post(
@@ -308,6 +321,7 @@ def run(blog_filter: str = "", dry_run: bool = True, limit: int = 0,
         "dryRun": dry_run,
         "severityFilter": severity_filter,
         "unpublishCritical": unpublish_critical,
+        "unpublishSeverity": unpublish_severity,
         "scanned": scanned, "flagged": flagged,
         "rewritten": fixed, "unpublished": unpublished, "failed": failed,
         "paragraphsReplaced": total_replaced, "paragraphsRejected": total_rejected,
@@ -331,10 +345,14 @@ def main() -> int:
     p.add_argument("--severity", default="", choices=["", "critical", "high", "medium"],
                    help="이 심각도만 처리")
     p.add_argument("--unpublish-critical", action="store_true",
-                   help="critical 글은 리라이팅 대신 비공개(draft) 전환")
+                   help="기준 심각도 이상은 리라이팅 대신 비공개(draft) 전환")
+    p.add_argument("--unpublish-severity", default="critical",
+                   choices=["critical", "high", "medium"],
+                   help="비공개 전환 기준선 (기본 critical). high로 두면 high·critical을 내립니다")
     args = p.parse_args()
 
-    rep = run(args.blog, args.dry_run, args.limit, args.severity, args.unpublish_critical)
+    rep = run(args.blog, args.dry_run, args.limit, args.severity,
+              args.unpublish_critical, args.unpublish_severity)
     mode = "(dry-run) " if rep["dryRun"] else ""
     logger.info("=" * 62)
     logger.info(

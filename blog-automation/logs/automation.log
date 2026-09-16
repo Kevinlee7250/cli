@@ -1,107 +1,3 @@
-2026-09-15 00:27:18,827 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-09-15 00:27:18,828 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-09-15 00:27:18,829 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-09-15 00:27:18,834 [INFO] keyword_collector — 유사 주제 제외 8개: ['2026 가을 등산 코스 초보자 추천 후기', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '추석 선물 저렴하게 사는 꿀팁 정리', '연말 앨범 사전 예약 저렴하게 구매하는 법']
-2026-09-15 00:27:18,836 [INFO] keyword_collector —   [high_cpc] 1개: ['해외여행 환전 수수료 0% 방법 직접 비교 정리']
-2026-09-15 00:27:18,836 [INFO] keyword_collector —   [naver_realtime] 1개: ['영등포 미식 여권 맛집 투어 코스']
-2026-09-15 00:27:18,836 [INFO] keyword_collector — 최종 선정 키워드 2개: ['해외여행 환전 수수료 0% 방법 직접 비교 정리', '영등포 미식 여권 맛집 투어 코스']
-2026-09-15 00:27:18,836 [INFO] main — 수집된 키워드 2개: ['해외여행 환전 수수료 0% 방법 직접 비교 정리', '영등포 미식 여권 맛집 투어 코스']
-2026-09-15 00:27:18,841 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
-2026-09-15 00:27:18,841 [INFO] main — 단독 포스트 대상 키워드 1개: ['해외여행 환전 수수료 0% 방법 직접 비교 정리']
-2026-09-15 00:27:18,855 [INFO] main — 
-[1/1] 키워드: '해외여행 환전 수수료 0% 방법 직접 비교 정리'
-2026-09-15 00:27:18,855 [INFO] content_generator — 포스트 생성 중: '해외여행 환전 수수료 0% 방법 직접 비교 정리'
-2026-09-15 00:27:27,052 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:27:27,053 [INFO] research_collector — 검색 의도: 해외여행 시 환전 수수료를 최소화(0%)할 수 있는 방법들을 실제로 비교해보고 가장 유리한 수단을 찾으려는 
-2026-09-15 00:27:36,698 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '해외여행 환전 수수료 0% 방법 직접 비교 정리'
-2026-09-15 00:27:48,124 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:27:48,124 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '해외여행 환전 수수료 0% 방법 직접 비교 정리'
-2026-09-15 00:28:07,482 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:28:07,483 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'C': 3, 'X': 3}
-2026-09-15 00:28:07,485 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-09-15 00:28:07,485 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-15 00:28:07,486 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-15 00:28:08,753 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:29:19,547 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-15 00:29:20,301 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:29:26,247 [INFO] content_generator — 팩트체크: 통과
-2026-09-15 00:29:26,247 [INFO] content_generator — 이미지 계획 1건 사용: ['travel money card airport currency exchange']
-2026-09-15 00:29:26,523 [INFO] image_fetcher — 이미지 수집 성공: 'travel money card airport currency exchange' → 제목='ryanair / boeing / boeing 737-800 / egg-' (관련성=0.33)
-2026-09-15 00:29:26,882 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-15 00:29:26,882 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-09-15 00:29:26,886 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-09-15 00:29:26,888 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-15 00:29:26,888 [INFO] content_generator — 포스트 생성 완료: '해외여행 환전 수수료 0% 방법 비교 정리' (2836자, 이미지 1개)
-2026-09-15 00:29:27,416 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:29:48,739 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '해외여행 환전 수수료 0% 방법 비교 정리'
-2026-09-15 00:29:48,739 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(2836자)는 충분하나 카드사 비교가 구체적 수치·날짜 없이 일반적 공지 재구성 수준에 머묾
-2026-09-15 00:29:48,739 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·비교표 등 목록화 패턴이 반복되고 '~습니다' 격식체가 다소 단조로움
-2026-09-15 00:29:48,742 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-15 00:29:48,748 [INFO] internal_linker —   [1/5] '트래블카드' -> https://www.hoguwhat.com/2026/08/2026_01224415002.html
-2026-09-15 00:29:48,750 [INFO] internal_linker —   [2/5] '트래블로그' -> https://www.hoguwhat.com/2026/08/blog-post_639.html
-2026-09-15 00:29:48,751 [INFO] internal_linker —   [3/5] '하나카드' -> https://hogugolfntraval.blogspot.com/2026/08/blog-post_17.ht
-2026-09-15 00:29:48,751 [INFO] internal_linker — 내부 링크 3개 삽입 완료
-2026-09-15 00:29:48,751 [INFO] main —   제목: 해외여행 환전 수수료 0% 방법 비교 정리
-2026-09-15 00:29:48,751 [INFO] main —   이미지: 1개 삽입
-2026-09-15 00:29:48,751 [INFO] main —   글자 수: 2836자
-2026-09-15 00:29:49,350 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:30:12,663 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '해외여행 환전 수수료 0% 방법 비교 정리'
-2026-09-15 00:30:12,663 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 1장만 사용되어 저작권 문제는 없으나 이미지 수가 적어 warn
-2026-09-15 00:30:12,663 [INFO] main —   ✅ AdSense 검증 통과 (점수: 95/100) — 업로드
-2026-09-15 00:30:13,356 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:30:56,420 [INFO] final_editor —   ✏️ 제목 최종 교정: '해외여행 환전 수수료 0% 방법 비교 정리' → '해외여행 환전 수수료 0% 만들기, 트래블카드 직접 비교 정리'
-2026-09-15 00:30:56,420 [INFO] final_editor —   ✏️ 메타 설명 교정 (137자)
-2026-09-15 00:30:56,420 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분할하고, 도입부 직후 요약 박스와 경험 메모·주의사항 박스를 추가했으며, FAQ를 5개로 확장하고 제목·메타 설명·슬러그·이미지 alt·내부 링크 문구를 발행 기준에 맞게 정리했습니다.
-2026-09-15 00:30:56,595 [INFO] related_posts — 내려간 글 92편을 관련 포스트 후보에서 제외
-2026-09-15 00:30:56,596 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-09-15 00:30:56,596 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-09-15 00:30:57,725 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/0.html
-2026-09-15 00:30:57,736 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/09/0.html
-2026-09-15 00:30:57,739 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-09-15 00:30:57,746 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-15 00:30:57,747 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '해외여행 환전 수수료 0% 만들기, 트래블카드 직접 비교 정리'
-2026-09-15 00:30:59,018 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:31:02,544 [INFO] comment_manager —   생성된 댓글: 트래블카드 하나 더 챙기시는 분들 많은데, 카드 자체를 두 개 이상 만들면 오히려 각각 최소 충전금이나 월 환전 한도 관리가 번거로워지더라고요....
-2026-09-15 00:34:02,933 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-09-15 00:34:02,935 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-09-15 00:34:02,935 [INFO] main — 
-============================================================
-2026-09-15 00:34:02,935 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-09-15 00:34:02,935 [INFO] main — ============================================================
-2026-09-15 00:34:02,964 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 161개)
-2026-09-15 00:34:02,978 [INFO] dashboard_exporter — 분석 필드 유지: 119/120개 (등급·조회수·수익)
-2026-09-15 00:34:02,990 [INFO] dashboard_exporter —   시리즈: 30개 내보내기 완료
-2026-09-15 00:34:03,041 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-15 00:34:03,401 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-15 00:34:03,733 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-15 00:34:03,735 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-15 00:34:03,735 [INFO] dashboard_exporter —   학습 이력: 3주 내보내기 완료
-2026-09-15 00:34:03,737 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-15 00:34:03,750 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 269 / 실패 0 / 대기 15)
-2026-09-15 00:34:03,751 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-15 00:34:03,751 [INFO] dashboard_exporter —   포스트: 120개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-15 00:34:03,752 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-15 00:34:03,753 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-09-15 00:34:49,843 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-15 00:34:50,378 [INFO] main — ============================================================
-2026-09-15 00:34:50,378 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-09-15 00:34:50
-2026-09-15 00:34:50,378 [INFO] main — ============================================================
-2026-09-15 00:34:50,393 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-09-15 00:34:50,393 [INFO] keyword_collector — 포스팅 이력 코퍼스: 100개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-09-15 00:34:50,393 [INFO] keyword_collector — 시즌 예약 키워드 1개 로드 (blog=blog2): ['추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-15 00:34:55,944 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-09-15 00:35:02,816 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:35:02,835 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-09-15 00:35:02,835 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-09-15 00:35:03,943 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-15 00:35:03,943 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
 2026-09-15 00:35:03,944 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
 2026-09-15 00:35:03,950 [INFO] keyword_collector — 유사 주제 제외 11개: ['추석 선물 저렴하게 사는 꿀팁 정리', '가을 단풍 골프장 추천 라운딩 코스 후기', '호텔 AI 컨시어지 서비스 이용법과 장점 2026', '가을 시즌 마트·아울렛 할인 정보 총정리', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
 2026-09-15 00:35:03,950 [INFO] keyword_collector —   [naver_realtime] 1개: ['스파이더맨4 실관람 후기와 가을 영화관 추천']
@@ -602,3 +498,208 @@
 2026-09-16 00:33:02,411 [INFO] dashboard_exporter —   포스트: 117개 / 실행 이력: 120개 / 블로그: 3개
 2026-09-16 00:33:02,412 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-09-16 00:33:02,413 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-09-16 00:33:47,807 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-16 00:33:48,582 [INFO] main — ============================================================
+2026-09-16 00:33:48,583 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-09-16 00:33:48
+2026-09-16 00:33:48,583 [INFO] main — ============================================================
+2026-09-16 00:33:48,596 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-16 00:33:48,596 [INFO] keyword_collector — 포스팅 이력 코퍼스: 94개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-09-16 00:33:48,596 [INFO] keyword_collector — 시즌 예약 키워드 1개 로드 (blog=blog3): ['추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-16 00:33:52,431 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-09-16 00:33:58,804 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:33:58,821 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-16 00:33:58,821 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-16 00:33:59,134 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-09-16 00:33:59,417 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-16 00:33:59,418 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-16 00:33:59,420 [INFO] keyword_collector — 유사 주제 제외 4개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '추석 선물 저렴하게 사는 꿀팁 정리', '미국 기준금리 인상 2026 코스피 영향 및 투자 전략', '퇴근 후 주식거래 방법 KRX 애프터마켓 활용 가이드']
+2026-09-16 00:33:59,421 [INFO] keyword_collector —   [naver_realtime] 2개: ['환헤지 ETF 손실 이유와 원화 강세 시대 투자법', '금 투자 방법 골드 특별자산 펀드 비교 분석']
+2026-09-16 00:33:59,421 [INFO] keyword_collector — 최종 선정 키워드 2개: ['환헤지 ETF 손실 이유와 원화 강세 시대 투자법', '금 투자 방법 골드 특별자산 펀드 비교 분석']
+2026-09-16 00:33:59,421 [INFO] main — 수집된 키워드 2개: ['환헤지 ETF 손실 이유와 원화 강세 시대 투자법', '금 투자 방법 골드 특별자산 펀드 비교 분석']
+2026-09-16 00:33:59,425 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-09-16 00:34:10,011 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:34:10,012 [INFO] series_planner — 자동 시리즈 키워드 선정: '환헤지 ETF 손실 이유와 원화 강세 시대 투자법'
+2026-09-16 00:34:10,012 [INFO] main — [자동 시리즈] '환헤지 ETF 손실 이유와 원화 강세 시대 투자법' 3편 기획 시작 (이후 단독 포스트 0개)
+2026-09-16 00:34:10,012 [INFO] main — ============================================================
+2026-09-16 00:34:10,012 [INFO] main — [금융NEWS] 시리즈 모드 시작: '환헤지 ETF 손실 이유와 원화 강세 시대 투자법' 3편
+2026-09-16 00:34:10,012 [INFO] main — ============================================================
+2026-09-16 00:34:15,404 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:34:15,405 [INFO] series_planner — [blog3 금융] 시리즈 기획 완료: '환헤지 ETF 손실 이유와 원화 강세 시대 투자법 직접 알아본 완전 정리 시리즈' 3편
+2026-09-16 00:34:15,406 [INFO] main — 시리즈 기획 완료: '환헤지 ETF 손실 이유와 원화 강세 시대 투자법 직접 알아본 완전 정리 시리즈'
+2026-09-16 00:34:15,406 [INFO] main —   편 1: [1편] 환헤지 ETF 손실, 왜 나만 이런가 싶었다
+2026-09-16 00:34:15,406 [INFO] main —   편 2: [2편] 환헤지 ETF 구조와 비용 총정리
+2026-09-16 00:34:15,406 [INFO] main —   편 3: [3편] 원화 강세 시대, 직접 정리한 투자 체크리스트
+2026-09-16 00:34:15,406 [INFO] main — 
+--- [1/3편] '환헤지 ETF 손실 원인' 생성 중 ---
+2026-09-16 00:34:15,406 [INFO] content_generator — 시리즈 포스트 생성: '환헤지 ETF 손실 원인' (1/3편)
+2026-09-16 00:34:20,560 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:34:20,561 [INFO] research_collector — 검색 의도: 환헤지 ETF에서 손실이 발생하는 원인과 구조를 이해하고 싶은 투자자의 검색
+2026-09-16 00:34:35,177 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '환헤지 ETF 손실 원인'
+2026-09-16 00:34:46,250 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:34:46,251 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '환헤지 ETF 손실 원인'
+2026-09-16 00:34:50,018 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:34:50,019 [INFO] source_validator — 출처 검증: 0/4개 통과, 등급 분포 {'X': 4}
+2026-09-16 00:34:50,021 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
+2026-09-16 00:34:50,021 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-16 00:34:50,022 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-16 00:34:51,222 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:35:57,611 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-16 00:35:57,612 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(환헤지)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-09-16 00:35:59,612 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-09-16 00:35:59,612 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-16 00:36:00,260 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:37:05,267 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-16 00:37:05,870 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:37:18,549 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '본 글은 공개된 정보를 바탕으로 작성된 것으로'
+2026-09-16 00:37:18,549 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 2건 자동 수정 적용
+2026-09-16 00:37:18,549 [INFO] content_generator — 이미지 계획 2건 사용: ['checking stock balance smartphone', 'exchange rate graph currency']
+2026-09-16 00:37:18,948 [INFO] image_fetcher — 이미지 수집 성공: 'checking stock balance smartphone' → 제목='woman / person / people / sitting / rest' (관련성=0.50)
+2026-09-16 00:37:19,159 [INFO] image_fetcher — 이미지 수집 성공: 'exchange rate graph currency' → 제목='stock / trading / monitor / business / f' (관련성=1.00)
+2026-09-16 00:37:20,313 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:37:20,314 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
+2026-09-16 00:37:20,733 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-16 00:37:20,734 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-16 00:37:20,738 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-16 00:37:20,738 [INFO] content_generator — 시리즈 포스트 생성 완료: '환헤지 ETF 손실 원인, 잔고 확인 후 남은 의문' (2607자, 이미지 1개)
+2026-09-16 00:37:21,382 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:37:42,232 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '환헤지 ETF 손실 원인, 잔고 확인 후 남은 의문'
+2026-09-16 00:37:42,232 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 섹션이 500자 이상의 긴 단락으로 이어져 가독성이 다소 떨어짐
+2026-09-16 00:37:42,232 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개(Pixabay 출처, 저작권 문제 없음)로 정책상 warn 처리, alt 설명은 존재
+2026-09-16 00:37:42,232 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 섹션에서 살펴보겠습니다' 류의 전환 문구가 반복돼 다소 정형화된 패턴이 보임
+2026-09-16 00:37:42,926 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:38:50,859 [INFO] final_editor —   ✏️ 제목 최종 교정: '환헤지 ETF 손실 원인, 잔고 확인 후 남은 의문' → '환헤지 ETF 손실 원인 총정리, 잔고 확인 후 남은 의문들'
+2026-09-16 00:38:50,860 [INFO] final_editor —   ✏️ 메타 설명 교정 (133자)
+2026-09-16 00:38:50,860 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 기준(30~45자/120~160자)에 맞게 재정리하고, 중복 문장(핵심 요약 반복 등)을 정리해 문단을 2~4문장 단위로 재구성했습니다. 이미지 alt 텍스트를 구체화하고 주의사항·FAQ·작성자 메모·참고자료를 최종 발행 형식에 맞춰 배치했습니다.
+2026-09-16 00:38:50,995 [INFO] related_posts — 내려간 글 80편을 관련 포스트 후보에서 제외
+2026-09-16 00:38:50,996 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-16 00:38:50,996 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '환헤지 ETF 손실 원인' — 면책·팩트체크 확인 권장
+2026-09-16 00:38:50,996 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-09-16 00:38:51,951 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/09/etf_0172065334.html
+2026-09-16 00:38:51,952 [INFO] main —   ✅ 편 1 업로드 완료: https://hoguasset.blogspot.com/2026/09/etf_0172065334.html
+2026-09-16 00:38:54,954 [INFO] main — 
+--- [2/3편] '환헤지 ETF 구조 수수료 계산' 생성 중 ---
+2026-09-16 00:38:54,954 [INFO] content_generator — 시리즈 포스트 생성: '환헤지 ETF 구조 수수료 계산' (2/3편)
+2026-09-16 00:39:01,065 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:39:01,065 [INFO] research_collector — 검색 의도: 환헤지 ETF의 구조와 헤지 비용(수수료)이 어떻게 계산되고 수익률에 영향을 미치는지 알고 싶음
+2026-09-16 00:39:14,300 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '환헤지 ETF 구조 수수료 계산'
+2026-09-16 00:39:32,335 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:39:32,336 [INFO] evidence_builder — 자료팩 생성: 사실 3개 — '환헤지 ETF 구조 수수료 계산'
+2026-09-16 00:39:45,387 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:39:45,387 [INFO] source_validator — 출처 검증: 2/3개 통과, 등급 분포 {'C': 1, 'X': 1, 'D': 1}
+2026-09-16 00:39:45,388 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-09-16 00:39:45,388 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-16 00:39:45,388 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-16 00:39:46,586 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:41:04,470 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-16 00:41:04,471 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 2개(스프레드, 환헤지)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-09-16 00:41:06,471 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-09-16 00:41:06,472 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-16 00:41:08,266 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:42:11,241 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-09-16 00:42:11,241 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-16 00:42:11,777 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:42:23,030 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '수익률 차이가 발생하는 경우가 있다는 분석이 있습니다'
+2026-09-16 00:42:23,031 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
+2026-09-16 00:42:23,031 [INFO] content_generator — 이미지 계획 1건 사용: ['currency exchange rate calculator finance']
+2026-09-16 00:42:23,382 [INFO] image_fetcher — 이미지 수집 성공: 'currency exchange rate calculator finance' → 제목='india / rupee / occupation / indian curr' (관련성=0.60)
+2026-09-16 00:42:23,994 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-16 00:42:23,995 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-16 00:42:23,998 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-16 00:42:23,999 [INFO] content_generator — 시리즈 포스트 생성 완료: '환헤지 ETF 수수료·구조 계산 정리' (2696자, 이미지 1개)
+2026-09-16 00:42:25,233 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:42:46,003 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '환헤지 ETF 수수료·구조 계산 정리'
+2026-09-16 00:42:46,003 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개에 Pixabay 출처는 명시됐으나 alt 텍스트 여부가 불명확하고 이미지 수가 적음
+2026-09-16 00:42:46,003 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '쉽게 말하면 ~라는 뜻입니다' 같은 설명 패턴이 반복되어 다소 정형화된 문체가 관찰됨
+2026-09-16 00:42:46,632 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:43:31,182 [INFO] final_editor —   ✏️ 제목 최종 교정: '환헤지 ETF 수수료·구조 계산 정리' → '환헤지 ETF 구조와 수수료 계산, 가정 수치로 정리'
+2026-09-16 00:43:31,182 [INFO] final_editor —   ✏️ 메타 설명 교정 (124자)
+2026-09-16 00:43:31,182 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 기준에 맞게 재정리하고, 이미지 3개의 위치와 구체적 alt 텍스트를 지정했으며, 주의사항·작성자메모·내부링크·참고자료를 발행 형식에 맞춰 정비했습니다.
+2026-09-16 00:43:31,299 [INFO] related_posts — 내려간 글 80편을 관련 포스트 후보에서 제외
+2026-09-16 00:43:31,300 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-16 00:43:31,300 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '환헤지 ETF 구조 수수료 계산' — 면책·팩트체크 확인 권장
+2026-09-16 00:43:31,300 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-09-16 00:43:32,412 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/09/etf_01737443020.html
+2026-09-16 00:43:32,413 [INFO] main —   ✅ 편 2 업로드 완료: https://hoguasset.blogspot.com/2026/09/etf_01737443020.html
+2026-09-16 00:43:35,415 [INFO] main — 
+--- [3/3편] '원화 강세 환노출 환헤지 비교' 생성 중 ---
+2026-09-16 00:43:35,415 [INFO] content_generator — 시리즈 포스트 생성: '원화 강세 환노출 환헤지 비교' (3/3편)
+2026-09-16 00:43:42,169 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:43:42,170 [INFO] research_collector — 검색 의도: 원화 강세 시기에 해외투자 시 환노출형과 환헤지형 상품 중 어느 것이 유리한지 비교 정보를 찾는 의도
+2026-09-16 00:43:52,089 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '원화 강세 환노출 환헤지 비교'
+2026-09-16 00:44:03,970 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:44:03,971 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '원화 강세 환노출 환헤지 비교'
+2026-09-16 00:44:24,149 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:44:24,150 [INFO] source_validator — 출처 검증: 5/8개 통과, 등급 분포 {'B': 2, 'X': 3, 'C': 3}
+2026-09-16 00:44:24,150 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
+2026-09-16 00:44:24,151 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-16 00:44:24,151 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-16 00:44:24,751 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:45:23,203 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-16 00:45:23,204 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 2개(스프레드, 환헤지)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-09-16 00:45:25,204 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-09-16 00:45:25,204 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-16 00:45:26,063 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:46:37,375 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-16 00:46:38,101 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:47:22,096 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-16 00:47:22,713 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:47:23,439 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '금융감독원 전자공시시스템(DART)이나 한국금융투자협회가 운영하는 펀드다'
+2026-09-16 00:47:23,440 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
+2026-09-16 00:47:23,440 [INFO] content_generator — 이미지 계획 2건 사용: ['currency exchange rate graph desk', 'compare two financial charts']
+2026-09-16 00:47:25,754 [INFO] image_fetcher — 이미지 수집 성공: 'currency exchange rate graph desk' → 제목='money / dollars / us / currency / busine' (관련성=0.20)
+2026-09-16 00:47:25,998 [INFO] image_fetcher — 이미지 수집 성공: 'compare two financial charts' → 제목='pros and cons / weigh up / to compare / ' (관련성=0.50)
+2026-09-16 00:47:27,284 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:47:28,091 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-09-16 00:47:28,092 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-09-16 00:47:28,096 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-16 00:47:28,096 [INFO] content_generator — 시리즈 포스트 생성 완료: '원화 강세, 환노출·환헤지 비교와 점검 체크리스트' (2803자, 이미지 2개)
+2026-09-16 00:47:28,630 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:47:44,721 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '원화 강세, 환노출·환헤지 비교와 점검 체크리스트'
+2026-09-16 00:47:44,721 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 pass 조건은 충족하나 본문이 단락 구분 없이 길게 이어져 가독성이 떨어짐
+2026-09-16 00:47:44,721 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처는 명확하나 alt 텍스트 명시 여부가 불분명하여 주의 필요
+2026-09-16 00:47:44,721 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: ‘정리해보겠습니다·짚어보겠습니다’ 등 정형화된 안내 문구 반복으로 다소 보고서체 느낌
+2026-09-16 00:47:45,782 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-16 00:48:25,654 [INFO] final_editor —   ✏️ 제목 최종 교정: '원화 강세, 환노출·환헤지 비교와 점검 체크리스트' → '원화 강세 시대, 환노출·환헤지 비교와 실전 점검 체크리스트'
+2026-09-16 00:48:25,654 [INFO] final_editor —   ✏️ 메타 설명 교정 (107자)
+2026-09-16 00:48:25,654 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 발행 규격에 맞게 정리하고, 긴 문단을 모바일 친화적으로 분리했으며 요약박스·비교표·개인경험메모·주의사항·FAQ·마무리·작성자메모·내부링크 제안을 추가해 발행 형식을 완성했습니다.
+2026-09-16 00:48:25,810 [INFO] related_posts — 내려간 글 80편을 관련 포스트 후보에서 제외
+2026-09-16 00:48:25,810 [INFO] related_posts — 관련 포스트 2개 섹션 생성
+2026-09-16 00:48:25,810 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-09-16 00:48:26,474 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/09/blog-post_16.html
+2026-09-16 00:48:26,474 [INFO] main —   ✅ 편 3 업로드 완료: https://hoguasset.blogspot.com/2026/09/blog-post_16.html
+2026-09-16 00:48:26,496 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 167개)
+2026-09-16 00:48:26,535 [INFO] dashboard_exporter — 분석 필드 유지: 110/120개 (등급·조회수·수익)
+2026-09-16 00:48:26,544 [INFO] dashboard_exporter —   시리즈: 32개 내보내기 완료
+2026-09-16 00:48:26,554 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-16 00:48:26,790 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-16 00:48:27,078 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
+2026-09-16 00:48:27,372 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-16 00:48:27,373 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-16 00:48:27,374 [INFO] dashboard_exporter —   학습 이력: 3주 내보내기 완료
+2026-09-16 00:48:27,375 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-16 00:48:27,384 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 270 / 실패 1 / 대기 15)
+2026-09-16 00:48:27,384 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-16 00:48:27,385 [INFO] dashboard_exporter —   포스트: 120개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-16 00:48:27,385 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-16 00:48:27,386 [INFO] main — 
+============================================================
+2026-09-16 00:48:27,386 [INFO] main — [금융NEWS] 시리즈 완료: 3/3편 성공
+2026-09-16 00:48:27,386 [INFO] main — ============================================================
+2026-09-16 00:48:27,386 [INFO] main — 단독 포스트 대상 키워드 0개: []
+2026-09-16 00:48:27,397 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
+2026-09-16 00:48:27,398 [INFO] main — 
+============================================================
+2026-09-16 00:48:27,398 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 0개
+2026-09-16 00:48:27,398 [INFO] main — ============================================================
+2026-09-16 00:48:27,416 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 168개)
+2026-09-16 00:48:27,423 [INFO] dashboard_exporter — 분석 필드 유지: 110/120개 (등급·조회수·수익)
+2026-09-16 00:48:27,431 [INFO] dashboard_exporter —   시리즈: 32개 내보내기 완료
+2026-09-16 00:48:27,440 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-16 00:48:27,441 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-16 00:48:27,441 [INFO] dashboard_exporter —   학습 이력: 3주 내보내기 완료
+2026-09-16 00:48:27,443 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-16 00:48:27,452 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 270 / 실패 1 / 대기 15)
+2026-09-16 00:48:27,452 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-16 00:48:27,452 [INFO] dashboard_exporter —   포스트: 120개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-16 00:48:27,452 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-16 00:48:27,453 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다

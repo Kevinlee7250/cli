@@ -1,213 +1,3 @@
-2026-09-15 00:35:03,944 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-09-15 00:35:03,950 [INFO] keyword_collector — 유사 주제 제외 11개: ['추석 선물 저렴하게 사는 꿀팁 정리', '가을 단풍 골프장 추천 라운딩 코스 후기', '호텔 AI 컨시어지 서비스 이용법과 장점 2026', '가을 시즌 마트·아울렛 할인 정보 총정리', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
-2026-09-15 00:35:03,950 [INFO] keyword_collector —   [naver_realtime] 1개: ['스파이더맨4 실관람 후기와 가을 영화관 추천']
-2026-09-15 00:35:03,950 [INFO] keyword_collector —   [fallback] 1개: ['남해 여행 봄에 가면 좋은 이유와 준비물']
-2026-09-15 00:35:03,950 [INFO] keyword_collector — 최종 선정 키워드 2개: ['스파이더맨4 실관람 후기와 가을 영화관 추천', '남해 여행 봄에 가면 좋은 이유와 준비물']
-2026-09-15 00:35:03,950 [INFO] main — 수집된 키워드 2개: ['스파이더맨4 실관람 후기와 가을 영화관 추천', '남해 여행 봄에 가면 좋은 이유와 준비물']
-2026-09-15 00:35:03,955 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-09-15 00:35:03,955 [INFO] main — 단독 포스트 대상 키워드 1개: ['스파이더맨4 실관람 후기와 가을 영화관 추천']
-2026-09-15 00:35:03,968 [INFO] main — 
-[1/1] 키워드: '스파이더맨4 실관람 후기와 가을 영화관 추천'
-2026-09-15 00:35:03,968 [INFO] content_generator — 포스트 생성 중: '스파이더맨4 실관람 후기와 가을 영화관 추천'
-2026-09-15 00:35:12,408 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:35:12,409 [INFO] research_collector — 검색 의도: 스파이더맨4의 실제 개봉 여부와 관람 후기, 가을 시즌 추천 영화 정보를 찾는 검색자의 의도
-2026-09-15 00:35:23,032 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '스파이더맨4 실관람 후기와 가을 영화관 추천'
-2026-09-15 00:35:42,050 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:35:42,051 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '스파이더맨4 실관람 후기와 가을 영화관 추천'
-2026-09-15 00:35:55,359 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:35:55,360 [INFO] source_validator — 출처 검증: 4/7개 통과, 등급 분포 {'B': 4, 'X': 3}
-2026-09-15 00:35:57,189 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-15 00:35:57,190 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-15 00:35:58,711 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:37:17,664 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-15 00:37:18,302 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:37:43,678 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 2건 자동 수정 적용
-2026-09-15 00:37:43,678 [INFO] content_generator — 이미지 계획 2건 사용: ['movie theater audience seats', 'cinema ticket booth screen']
-2026-09-15 00:37:43,976 [INFO] image_fetcher — 이미지 수집 성공: 'movie theater audience seats' → 제목='theatre / seats / old / theater / cinema' (관련성=1.00)
-2026-09-15 00:37:44,168 [INFO] image_fetcher — 이미지 수집 성공: 'cinema ticket booth screen' → 제목='ticket / entry / focus / coupon / movie ' (관련성=0.50)
-2026-09-15 00:37:47,146 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:37:47,824 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-09-15 00:37:47,824 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-09-15 00:37:47,830 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-09-15 00:37:47,831 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-15 00:37:47,831 [INFO] content_generator — 포스트 생성 완료: '스파이더맨4 관람 후기 종합, 800만 돌파 숫자와 가을 영화관 추천' (3076자, 이미지 2개)
-2026-09-15 00:37:48,496 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:38:05,197 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '스파이더맨4 관람 후기 종합, 800만 돌파 숫자와 가을 영화관'
-2026-09-15 00:38:05,198 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처로 저작권 문제는 없으나 alt 텍스트 명시 여부가 본문에서 확인되지 않음
-2026-09-15 00:38:05,198 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심요약 박스·표·전환 문구('다음으로는~보겠습니다') 등 정형화된 구조 패턴이 반복됨
-2026-09-15 00:38:05,201 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-15 00:38:05,205 [INFO] internal_linker —   [1/5] '2026년' -> https://hogugolfntraval.blogspot.com/2026/09/ott-vs-2026.htm
-2026-09-15 00:38:05,207 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-09-15 00:38:05,208 [INFO] main —   제목: 스파이더맨4 관람 후기 종합, 800만 돌파 숫자와 가을 영화관 추천
-2026-09-15 00:38:05,208 [INFO] main —   이미지: 2개 삽입
-2026-09-15 00:38:05,208 [INFO] main —   글자 수: 3076자
-2026-09-15 00:38:05,677 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:38:26,999 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '스파이더맨4 관람 후기 종합, 800만 돌파 숫자와 가을 영화관'
-2026-09-15 00:38:26,999 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 출처 표기는 있으나 정책상 저작권 위반 없는 경우도 기본적으로 warn 처리
-2026-09-15 00:38:26,999 [INFO] main —   ✅ AdSense 검증 통과 (점수: 95/100) — 업로드
-2026-09-15 00:38:27,642 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:39:45,458 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-15 00:39:46,171 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:40:32,461 [INFO] final_editor —   ✏️ 제목 최종 교정: '스파이더맨4 관람 후기 종합, 800만 돌파 숫자와 가을 영화관 추천' → '스파이더맨4 실관람 후기와 800만 흥행, 가을 영화관 추천'
-2026-09-15 00:40:32,461 [INFO] final_editor —   ✏️ 메타 설명 교정 (127자)
-2026-09-15 00:40:32,461 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 규격에 맞게 정리하고, 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 추가해 발행 형식을 완성했습니다. 긴 문단을 2~4문장 단위로 분리하고 이미지 alt를 구체화했습니다.
-2026-09-15 00:40:32,618 [INFO] related_posts — 내려간 글 84편을 관련 포스트 후보에서 제외
-2026-09-15 00:40:32,619 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-09-15 00:40:32,619 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-09-15 00:40:33,586 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/4-800.html
-2026-09-15 00:40:33,596 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/4-800.html
-2026-09-15 00:40:33,599 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-09-15 00:40:33,605 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-15 00:40:33,608 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '스파이더맨4 실관람 후기와 800만 흥행, 가을 영화관 추천'
-2026-09-15 00:40:34,396 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:40:38,147 [INFO] comment_manager —   생성된 댓글: 좋은 정보 감사합니다! 하나 덧붙이자면, '브랜드 뉴 데이'처럼 대작이 800만~900만 관객을 넘긴 작품은 개봉 초반 지났어도 아이맥스나 4D...
-2026-09-15 00:43:38,425 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-09-15 00:43:38,426 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-09-15 00:43:38,426 [INFO] main — 
-============================================================
-2026-09-15 00:43:38,426 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-09-15 00:43:38,426 [INFO] main — ============================================================
-2026-09-15 00:43:38,454 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 162개)
-2026-09-15 00:43:38,466 [INFO] dashboard_exporter — 분석 필드 유지: 119/121개 (등급·조회수·수익)
-2026-09-15 00:43:38,501 [INFO] dashboard_exporter —   시리즈: 30개 내보내기 완료
-2026-09-15 00:43:38,514 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-15 00:43:38,797 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-09-15 00:43:39,318 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-09-15 00:43:39,849 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-15 00:43:39,850 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-15 00:43:39,851 [INFO] dashboard_exporter —   학습 이력: 3주 내보내기 완료
-2026-09-15 00:43:39,853 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-15 00:43:39,866 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 269 / 실패 0 / 대기 15)
-2026-09-15 00:43:39,866 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-15 00:43:39,866 [INFO] dashboard_exporter —   포스트: 121개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-15 00:43:39,867 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-15 00:43:39,868 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-09-15 00:44:30,861 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-15 00:44:31,722 [INFO] main — ============================================================
-2026-09-15 00:44:31,723 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-09-15 00:44:31
-2026-09-15 00:44:31,723 [INFO] main — ============================================================
-2026-09-15 00:44:31,739 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-09-15 00:44:31,739 [INFO] keyword_collector — 포스팅 이력 코퍼스: 96개 항목 로드 (blog_id=blog3 중복 방지 기준)
-2026-09-15 00:44:31,740 [INFO] keyword_collector — 시즌 예약 키워드 1개 로드 (blog=blog3): ['추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-15 00:44:35,122 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-09-15 00:44:41,285 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:44:41,308 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-09-15 00:44:41,309 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-09-15 00:44:41,898 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
-2026-09-15 00:44:42,317 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-15 00:44:42,318 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-09-15 00:44:42,322 [INFO] keyword_collector — 유사 주제 제외 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-15 00:44:42,323 [INFO] keyword_collector —   [naver_realtime] 2개: ['미성년 자녀 주식계좌 개설 및 증여세 절세 방법', 'ISA 계좌 개편 이후 해지해야 할까 총정리']
-2026-09-15 00:44:42,323 [INFO] keyword_collector — 최종 선정 키워드 2개: ['미성년 자녀 주식계좌 개설 및 증여세 절세 방법', 'ISA 계좌 개편 이후 해지해야 할까 총정리']
-2026-09-15 00:44:42,323 [INFO] main — 수집된 키워드 2개: ['미성년 자녀 주식계좌 개설 및 증여세 절세 방법', 'ISA 계좌 개편 이후 해지해야 할까 총정리']
-2026-09-15 00:44:42,328 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
-2026-09-15 00:44:42,328 [INFO] main — 단독 포스트 대상 키워드 1개: ['미성년 자녀 주식계좌 개설 및 증여세 절세 방법']
-2026-09-15 00:44:42,345 [INFO] main — 
-[1/1] 키워드: '미성년 자녀 주식계좌 개설 및 증여세 절세 방법'
-2026-09-15 00:44:42,345 [INFO] content_generator — 포스트 생성 중: '미성년 자녀 주식계좌 개설 및 증여세 절세 방법'
-2026-09-15 00:44:50,209 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:44:50,210 [INFO] research_collector — 검색 의도: 미성년 자녀 명의로 주식계좌를 개설하는 절차와 증여세를 절세하며 투자할 수 있는 방법을 알고 싶음
-2026-09-15 00:45:02,173 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '미성년 자녀 주식계좌 개설 및 증여세 절세 방법'
-2026-09-15 00:45:15,540 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:45:15,542 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '미성년 자녀 주식계좌 개설 및 증여세 절세 방법'
-2026-09-15 00:45:23,796 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:45:23,797 [INFO] source_validator — 출처 검증: 2/4개 통과, 등급 분포 {'A': 1, 'B': 1, 'X': 2}
-2026-09-15 00:45:23,799 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-15 00:45:23,800 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-15 00:45:25,009 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:46:51,145 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-15 00:46:51,963 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:47:03,689 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-09-15 00:47:03,689 [INFO] content_generator — 이미지 계획 2건 사용: ['parent child investment account', 'bank document signing family']
-2026-09-15 00:47:04,009 [INFO] image_fetcher — 이미지 수집 성공: 'parent child investment account' → 제목='deer / parent child / morning / cute / k' (관련성=0.50)
-2026-09-15 00:47:04,327 [INFO] image_fetcher — 이미지 수집 성공: 'bank document signing family' → 제목='man / sign / paper / write / document / ' (관련성=0.50)
-2026-09-15 00:47:06,915 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:47:06,916 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
-2026-09-15 00:47:07,336 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-15 00:47:07,336 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-09-15 00:47:07,341 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-09-15 00:47:07,343 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-15 00:47:07,343 [INFO] content_generator — 포스트 생성 완료: '미성년 자녀 주식계좌 개설과 증여세 절세, 공식 기준으로 정리' (3279자, 이미지 1개)
-2026-09-15 00:47:07,968 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:47:27,575 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '미성년 자녀 주식계좌 개설과 증여세 절세, 공식 기준으로 정리'
-2026-09-15 00:47:27,575 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개만 존재하며 Pixabay 출처는 명시되었으나 alt 텍스트 여부 불명확, 이미지 수 부족
-2026-09-15 00:47:27,580 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-15 00:47:27,581 [INFO] internal_linker —   [1/5] '증여재산공제' -> https://hoguasset.blogspot.com/2026/09/blog-post_12.html
-2026-09-15 00:47:27,583 [INFO] internal_linker —   [2/5] '2026년' -> https://hoguasset.blogspot.com/2026/08/isa-2026_02093266470.
-2026-09-15 00:47:27,586 [INFO] internal_linker —   [3/5] '이렇게' -> https://hogugolfntraval.blogspot.com/2026/09/blog-post_06.ht
-2026-09-15 00:47:27,587 [INFO] internal_linker — 내부 링크 3개 삽입 완료
-2026-09-15 00:47:27,587 [INFO] main —   제목: 미성년 자녀 주식계좌 개설과 증여세 절세, 공식 기준으로 정리
-2026-09-15 00:47:27,588 [INFO] main —   이미지: 1개 삽입
-2026-09-15 00:47:27,588 [INFO] main —   글자 수: 3279자
-2026-09-15 00:47:28,293 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:47:46,259 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '미성년 자녀 주식계좌 개설과 증여세 절세, 공식 기준으로 정리'
-2026-09-15 00:47:46,259 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개 사용되었으나 alt 텍스트 명시 여부 불명확
-2026-09-15 00:47:46,259 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌 핵심 요약/💡 핵심 포인트 등 전형적 AI 요약 박스 패턴이 반복됨
-2026-09-15 00:47:46,259 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-09-15 00:47:47,344 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:49:01,594 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-15 00:49:02,817 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:50:13,055 [INFO] final_editor —   ✏️ 제목 최종 교정: '미성년 자녀 주식계좌 개설과 증여세 절세, 공식 기준으로 정리' → '미성년 자녀 주식계좌 개설과 증여세 절세, 공식 기준 총정리'
-2026-09-15 00:50:13,055 [INFO] final_editor —   ✏️ 메타 설명 교정 (121자)
-2026-09-15 00:50:13,055 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목 글자수 조정, 메타 설명 신규 작성, 미완성 본문 이어서 완성(신고 실수 3가지·체크리스트·FAQ·마무리 추가), 표 2개와 개인 경험 메모·주의사항·작성자 메모 배치, 이미지 3개 alt 구체화, 문단을 2~4문장 단위로 재정리.
-2026-09-15 00:50:13,251 [INFO] related_posts — 내려간 글 85편을 관련 포스트 후보에서 제외
-2026-09-15 00:50:13,252 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-09-15 00:50:13,253 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '미성년 자녀 주식계좌 개설 및 증여세 절세 방법' — 면책·팩트체크 확인 권장
-2026-09-15 00:50:13,253 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-09-15 00:50:14,179 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/09/blog-post_15.html
-2026-09-15 00:50:14,192 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/09/blog-post_15.html
-2026-09-15 00:50:14,196 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-09-15 00:50:14,203 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-15 00:50:14,204 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '미성년 자녀 주식계좌 개설과 증여세 절세, 공식 기준 총정리'
-2026-09-15 00:50:15,448 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-15 00:50:21,702 [INFO] comment_manager —   생성된 댓글: 한도 이내라서 세금이 안 나오더라도, 증여세 신고를 홈택스에서 미리 해두시는 걸 추천드려요. 나중에 그 자금으로 투자수익이 크게 나거나 부동산 ...
-2026-09-15 00:53:22,086 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-09-15 00:53:22,088 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-09-15 00:53:22,088 [INFO] main — 
-============================================================
-2026-09-15 00:53:22,088 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-09-15 00:53:22,088 [INFO] main — ============================================================
-2026-09-15 00:53:22,119 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 163개)
-2026-09-15 00:53:22,134 [INFO] dashboard_exporter — 분석 필드 유지: 119/122개 (등급·조회수·수익)
-2026-09-15 00:53:22,178 [INFO] dashboard_exporter —   시리즈: 30개 내보내기 완료
-2026-09-15 00:53:22,195 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-15 00:53:22,541 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-09-15 00:53:22,721 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 1개 쿼리 / 1개 카테고리
-2026-09-15 00:53:23,054 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-15 00:53:23,056 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-15 00:53:23,057 [INFO] dashboard_exporter —   학습 이력: 3주 내보내기 완료
-2026-09-15 00:53:23,059 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-15 00:53:23,075 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 270 / 실패 0 / 대기 15)
-2026-09-15 00:53:23,075 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-15 00:53:23,076 [INFO] dashboard_exporter —   포스트: 122개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-15 00:53:23,076 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-15 00:53:23,077 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-09-15 01:10:53,429 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-09-15 01:10:53,429 [INFO] main —   - [blog1] HOGU What?
-2026-09-15 01:10:53,429 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-09-15 01:10:53,429 [INFO] main —   - [blog3] 금융NEWS
-2026-09-15 01:10:53,434 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
-2026-09-16 00:06:46,359 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-16 00:06:47,460 [INFO] main — ============================================================
-2026-09-16 00:06:47,460 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-16 00:06:47
-2026-09-16 00:06:47,460 [INFO] main — ============================================================
-2026-09-16 00:06:47,476 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
-2026-09-16 00:06:47,476 [INFO] keyword_collector — 포스팅 이력 코퍼스: 97개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-09-16 00:06:47,477 [INFO] keyword_collector — 시즌 예약 키워드 14개 로드 (blog=blog1): ['2026 가을 등산 코스 초보자 추천 후기', '2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법']...
 2026-09-16 00:06:51,417 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
 2026-09-16 00:06:56,028 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-09-16 00:06:56,055 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
@@ -708,3 +498,113 @@
 2026-09-16 01:07:30,736 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-09-16 01:07:30,736 [INFO] main —   - [blog3] 금융NEWS
 2026-09-16 01:07:30,742 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-09-17 00:17:40,815 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-17 00:17:41,852 [INFO] main — ============================================================
+2026-09-17 00:17:41,852 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-17 00:17:41
+2026-09-17 00:17:41,853 [INFO] main — ============================================================
+2026-09-17 00:17:41,870 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-17 00:17:41,870 [INFO] keyword_collector — 포스팅 이력 코퍼스: 107개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-09-17 00:17:41,870 [INFO] keyword_collector — 시즌 예약 키워드 14개 로드 (blog=blog1): ['2026 가을 등산 코스 초보자 추천 후기', '2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법']...
+2026-09-17 00:17:46,032 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-09-17 00:17:50,409 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-17 00:17:50,436 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-17 00:17:50,436 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-17 00:17:50,863 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것']
+2026-09-17 00:17:51,070 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-17 00:17:51,394 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-17 00:17:51,395 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-17 00:17:51,396 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-17 00:17:51,403 [INFO] keyword_collector — 유사 주제 제외 6개: ['2026 가을 등산 코스 초보자 추천 후기', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '추석 선물 저렴하게 사는 꿀팁 정리', '연말 앨범 사전 예약 저렴하게 구매하는 법']
+2026-09-17 00:17:51,405 [INFO] keyword_collector —   [high_cpc] 1개: ['패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것']
+2026-09-17 00:17:51,405 [INFO] keyword_collector —   [naver_realtime] 1개: ['추석 황금연휴 국내 여행지 추천']
+2026-09-17 00:17:51,405 [INFO] keyword_collector — 최종 선정 키워드 2개: ['패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것', '추석 황금연휴 국내 여행지 추천']
+2026-09-17 00:17:51,405 [INFO] main — 수집된 키워드 2개: ['패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것', '추석 황금연휴 국내 여행지 추천']
+2026-09-17 00:17:51,411 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
+2026-09-17 00:17:51,411 [INFO] main — 단독 포스트 대상 키워드 1개: ['패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것']
+2026-09-17 00:17:51,426 [INFO] main — 
+[1/1] 키워드: '패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것'
+2026-09-17 00:17:51,426 [INFO] content_generator — 포스트 생성 중: '패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것'
+2026-09-17 00:17:57,486 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-17 00:17:57,487 [INFO] research_collector — 검색 의도: 패키지여행 계약서의 환불 조항을 직접 읽고 실제 내용과 주의점을 확인하려는 의도
+2026-09-17 00:18:22,469 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것'
+2026-09-17 00:18:40,840 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-17 00:18:40,842 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것'
+2026-09-17 00:19:05,650 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-17 00:19:05,651 [INFO] source_validator — 출처 검증: 1/5개 통과, 등급 분포 {'X': 4, 'B': 1}
+2026-09-17 00:19:05,653 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-17 00:19:05,654 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-17 00:19:06,264 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-17 00:20:38,272 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-17 00:20:38,915 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-17 00:20:44,689 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: 'YTN 라디오가 보도한 내용을 보면'
+2026-09-17 00:20:44,690 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
+2026-09-17 00:20:44,690 [INFO] content_generator — 이미지 계획 2건 사용: ['travel contract paper desk', 'highlighting contract clause']
+2026-09-17 00:20:44,932 [INFO] image_fetcher — 이미지 수집 성공: 'travel contract paper desk' → 제목='laptop / office / hand / writing / busin' (관련성=0.50)
+2026-09-17 00:20:45,479 [INFO] image_fetcher — 대체 이미지 수집: 'highlighting contract clause' → 제목='ng of the hill / olympic sculpture / tor' (관련성=0.00)
+2026-09-17 00:20:45,479 [INFO] image_fetcher — 이미지 수집 성공: 'highlighting contract clause' → 제목='ng of the hill / olympic sculpture / tor' (관련성=0.00)
+2026-09-17 00:20:46,845 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-17 00:20:46,846 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
+2026-09-17 00:20:47,069 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-17 00:20:47,069 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-17 00:20:47,075 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-09-17 00:20:47,077 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-17 00:20:47,077 [INFO] content_generator — 포스트 생성 완료: '패키지여행 계약서 환불 조항 체크리스트' (3326자, 이미지 1개)
+2026-09-17 00:20:47,555 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-17 00:21:05,022 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '패키지여행 계약서 환불 조항 체크리스트'
+2026-09-17 00:21:05,022 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어져 가독성 저하
+2026-09-17 00:21:05,022 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장(Pixabay 출처 명시)뿐이며 alt 텍스트 언급 없어 보강 필요
+2026-09-17 00:21:05,022 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 표 형식·단정적 종결어미('~습니다') 반복이 다소 많으나 '개인적으로는' 등 인간적 견해 일부 포함
+2026-09-17 00:21:05,026 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-17 00:21:05,029 [INFO] internal_linker —   [1/5] '수수료' -> https://www.hoguwhat.com/2026/09/0.html
+2026-09-17 00:21:05,037 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-09-17 00:21:05,037 [INFO] main —   제목: 패키지여행 계약서 환불 조항 체크리스트
+2026-09-17 00:21:05,037 [INFO] main —   이미지: 1개 삽입
+2026-09-17 00:21:05,037 [INFO] main —   글자 수: 3326자
+2026-09-17 00:21:05,647 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-17 00:21:28,049 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '패키지여행 계약서 환불 조항 체크리스트'
+2026-09-17 00:21:28,049 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 개수는 충분하나 일부 문단이 줄바꿈 없이 500자 이상 길게 이어짐
+2026-09-17 00:21:28,049 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장에 Pixabay 출처는 명시했으나 alt 텍스트 명확성 확인 어려움
+2026-09-17 00:21:28,049 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 개인적 어투는 있으나 📌💡⚠️ 이모지 박스와 표 형태 반복이 전형적 자동생성 포맷과 유사
+2026-09-17 00:21:28,049 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-09-17 00:21:28,666 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-17 00:21:53,903 [INFO] final_editor —   ✏️ 제목 최종 교정: '패키지여행 계약서 환불 조항 체크리스트' → '패키지여행 계약서 환불 조항, 직접 확인하고 정리한 체크리스트'
+2026-09-17 00:21:53,903 [INFO] final_editor —   ✏️ 메타 설명 교정 (98자)
+2026-09-17 00:21:53,904 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고 제목·메타 설명·슬러그를 SEO 기준에 맞게 재정리했으며, 이미지 3장의 위치와 구체적 alt 텍스트, 내부 링크 텍스트, 참고자료 출처를 명확히 정리함.
+2026-09-17 00:21:54,024 [INFO] related_posts — 내려간 글 83편을 관련 포스트 후보에서 제외
+2026-09-17 00:21:54,025 [INFO] related_posts — 관련 포스트 1개 섹션 생성
+2026-09-17 00:21:54,026 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것' — 면책·팩트체크 확인 권장
+2026-09-17 00:21:54,026 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-09-17 00:21:54,618 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/blog-post_17.html
+2026-09-17 00:21:54,631 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/09/blog-post_17.html
+2026-09-17 00:21:54,635 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-09-17 00:21:54,643 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-17 00:21:54,644 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '패키지여행 계약서 환불 조항, 직접 확인하고 정리한 체크리스트'
+2026-09-17 00:21:55,263 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-17 00:21:58,891 [INFO] comment_manager —   생성된 댓글: 한 가지 팁을 더 드리자면, 계약서에 "천재지변이나 여행사 사정으로 취소 시" 환불 규정도 꼭 확인해보세요. 이 부분은 소비자 귀책 취소와 위약...
+2026-09-17 00:24:59,041 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-09-17 00:24:59,042 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-09-17 00:24:59,042 [INFO] main — 
+============================================================
+2026-09-17 00:24:59,042 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-09-17 00:24:59,042 [INFO] main — ============================================================
+2026-09-17 00:24:59,072 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 169개)
+2026-09-17 00:24:59,085 [INFO] dashboard_exporter — 분석 필드 유지: 99/110개 (등급·조회수·수익)
+2026-09-17 00:24:59,099 [INFO] dashboard_exporter —   시리즈: 32개 내보내기 완료
+2026-09-17 00:24:59,141 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-17 00:24:59,705 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-17 00:24:59,984 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-17 00:24:59,985 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-17 00:24:59,986 [INFO] dashboard_exporter —   학습 이력: 3주 내보내기 완료
+2026-09-17 00:24:59,988 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-17 00:25:00,004 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 271 / 실패 0 / 대기 15)
+2026-09-17 00:25:00,005 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-17 00:25:00,005 [INFO] dashboard_exporter —   포스트: 110개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-17 00:25:00,006 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-17 00:25:00,006 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

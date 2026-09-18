@@ -1,9 +1,18 @@
 {
-  "checkedAt": "2026-09-18T11:19:59.058650+00:00",
+  "checkedAt": "2026-09-18T16:27:38.923273+00:00",
   "windowHours": 12,
   "failedRuns": [],
-  "systemAlerts": [],
+  "systemAlerts": [
+    {
+      "key": "health:55",
+      "text": "⚠️ 시스템 건강점수 55/100 (기준 70 미만)"
+    },
+    {
+      "key": "critical:consecutive_upload_failures",
+      "text": "🔴 최근 3회 연속 업로드 실패 (0건 업로드)"
+    }
+  ],
   "newFailedRuns": 0,
-  "newSystemAlerts": 0,
+  "newSystemAlerts": 2,
   "sent": false
 }

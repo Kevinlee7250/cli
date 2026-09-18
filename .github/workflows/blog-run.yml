@@ -303,6 +303,15 @@ jobs:
           python inbound_linker.py --blog blog1 --limit 5 --apply \
             || echo "⚠️ 역방향 링크 생성 실패 — docs/data/inbound_links.json 확인"
 
+      # 발행 직후 공개 글 목록을 갱신합니다. blog-cluster가 주 1회(일요일)만
+      # 돌아서, 그 사이 발행된 글은 live_posts.json에 없습니다. 관련 포스트
+      # 후보 필터가 '내려간 글'로 오해해 새 글을 링크에서 빼버립니다.
+      - name: 공개 글 목록 동기화
+        if: always()
+        working-directory: blog-automation
+        continue-on-error: true
+        run: python sync_live_posts.py
+
       - name: 대시보드 데이터 커밋 & 푸시 (blog1)
         if: always()
         run: |
@@ -316,7 +325,7 @@ jobs:
             docs/data/internal_links.json docs/data/inbound_links.json \
             docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
             docs/data/affiliate_links.json docs/data/ai_usage.json docs/ads.txt \
-            docs/data/templates.json docs/data/sitemap_status.json \
+            docs/data/templates.json docs/data/sitemap_status.json docs/data/live_posts.json \
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
             blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
@@ -537,6 +546,12 @@ jobs:
           python inbound_linker.py --blog blog2 --limit 5 --apply \
             || echo "⚠️ 역방향 링크 생성 실패 — docs/data/inbound_links.json 확인"
 
+      - name: 공개 글 목록 동기화 (blog2)
+        if: always()
+        working-directory: blog-automation
+        continue-on-error: true
+        run: python sync_live_posts.py
+
       - name: 대시보드 데이터 커밋 & 푸시 (blog2)
         if: always()
         run: |
@@ -550,7 +565,7 @@ jobs:
             docs/data/internal_links.json docs/data/inbound_links.json \
             docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
             docs/data/affiliate_links.json docs/data/ai_usage.json docs/ads.txt \
-            docs/data/templates.json docs/data/sitemap_status.json \
+            docs/data/templates.json docs/data/sitemap_status.json docs/data/live_posts.json \
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
             blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \
@@ -769,6 +784,12 @@ jobs:
           python inbound_linker.py --blog blog3 --limit 5 --apply \
             || echo "⚠️ 역방향 링크 생성 실패 — docs/data/inbound_links.json 확인"
 
+      - name: 공개 글 목록 동기화 (blog3)
+        if: always()
+        working-directory: blog-automation
+        continue-on-error: true
+        run: python sync_live_posts.py
+
       - name: 대시보드 데이터 커밋 & 푸시 (blog3)
         if: always()
         run: |
@@ -782,7 +803,7 @@ jobs:
             docs/data/internal_links.json docs/data/inbound_links.json \
             docs/data/repairs.json docs/data/social.json docs/data/post_registry.json \
             docs/data/affiliate_links.json docs/data/ai_usage.json docs/ads.txt \
-            docs/data/templates.json docs/data/sitemap_status.json \
+            docs/data/templates.json docs/data/sitemap_status.json docs/data/live_posts.json \
             blog-automation/logs/run_history.json blog-automation/logs/used_keywords.json \
             blog-automation/logs/series.json blog-automation/logs/learning.json \
             blog-automation/logs/learned_keywords.json blog-automation/logs/automation.log \

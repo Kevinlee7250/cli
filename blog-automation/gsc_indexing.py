@@ -245,9 +245,20 @@ def inspect_recent(blogs: list[dict], limit: int = 20, token: str | None = None)
             counts["indexed" if indexed else "not_indexed"] += 1
             mark = "🟢" if indexed else "🟡"
             logger.info(f"{mark} [{p['blog']}] {coverage or verdict}: {p['title'][:40]}")
+            # 왜 색인이 안 되는지는 coverageState만으로 알 수 없습니다.
+            # "Discovered - currently not indexed"는 robots 차단·페치 실패·
+            # 표준 URL 불일치 중 무엇 때문인지 말해주지 않습니다.
+            # 2026-09-18: 20편 전부 미색인인데 원인 판정이 불가능했습니다.
             results.append({**p, "verdict": "indexed" if indexed else "not_indexed",
                             "coverage": coverage, "last_crawl": last_crawl[:10],
-                            "gsc_property": used_property})
+                            "gsc_property": used_property,
+                            "robots": idx.get("robotsTxtState", ""),
+                            "fetch": idx.get("pageFetchState", ""),
+                            "crawled_as": idx.get("crawledAs", ""),
+                            "google_canonical": idx.get("googleCanonical", ""),
+                            "user_canonical": idx.get("userCanonical", ""),
+                            "sitemaps": idx.get("sitemap", []),
+                            "referring_urls": idx.get("referringUrls", [])[:3]})
         except Exception as e:
             logger.debug(f"검사 오류: {p['url']} — {e}")
             results.append({**p, "verdict": "unknown", "coverage": str(e)[:60]})

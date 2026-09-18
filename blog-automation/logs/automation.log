@@ -1,77 +1,3 @@
-2026-09-17 00:41:20,858 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:41:40,218 [WARNING] content_generator — 팩트체크 fix가 지시문 형태 — 적용 건너뜀: '이 시기 연준 의장 관련 인사 변동은 별도 확인이 필요합니다'
-2026-09-17 00:41:40,219 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 2건 자동 수정 적용
-2026-09-17 00:41:40,219 [INFO] content_generator — 이미지 계획 2건 사용: ['bank interest rate board customer', 'federal reserve interest rate chart']
-2026-09-17 00:41:40,850 [INFO] image_fetcher — 이미지 수집 성공: 'bank interest rate board customer' → 제목='castle / hanau / philippsruh / hesse / g' (관련성=0.20)
-2026-09-17 00:41:41,078 [INFO] image_fetcher — 이미지 수집 성공: 'federal reserve interest rate chart' → 제목='dollar / money / cash / business / curre' (관련성=0.40)
-2026-09-17 00:41:44,139 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:41:44,140 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
-2026-09-17 00:41:44,445 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-17 00:41:44,446 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-09-17 00:41:44,450 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-09-17 00:41:44,452 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-17 00:41:44,452 [INFO] content_generator — 포스트 생성 완료: '미국 기준금리 3.50~3.75% 동결, 2026년 예적금 금리는 어디로 가나' (3465자, 이미지 1개)
-2026-09-17 00:41:45,536 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:42:07,455 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-17 00:42:08,551 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:42:12,663 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '미국 기준금리 3.50~3.75% 동결, 2026년 예적금 금리'
-2026-09-17 00:42:12,663 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드 '기준금리 인상'과 실제 내용(인하 후 동결)이 반대라 검색 의도 불일치 우려가 있으나 본문에서 이를 투명하게 짚어 완화됨
-2026-09-17 00:42:12,663 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 개수는 충분하나 본문이 단락 구분 없이 장문으로 이어져 가독성 저하 우려
-2026-09-17 00:42:12,663 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개에 alt 텍스트와 라이선스 명시가 있으나 저작권 위반 여부와 무관하게 이미지 수량이 적어 보수적으로 warn
-2026-09-17 00:42:12,664 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '정리하면', '결국', '그렇다면 다음에서 살펴보겠습니다' 등 전형적 전환구와 요약 박스 반복 패턴, 문장 중복 오류가 AI 생성 흔적을 시사
-2026-09-17 00:42:12,667 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-17 00:42:12,673 [INFO] internal_linker —   [1/5] '체크리스트' -> https://www.hoguwhat.com/2026/09/blog-post_16.html
-2026-09-17 00:42:12,674 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-09-17 00:42:12,675 [INFO] main —   제목: 미국 기준금리 3.50~3.75% 동결, 2026년 예적금 금리는 어디로 가나
-2026-09-17 00:42:12,675 [INFO] main —   이미지: 1개 삽입
-2026-09-17 00:42:12,675 [INFO] main —   글자 수: 3465자
-2026-09-17 00:42:13,594 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:42:38,829 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-17 00:42:42,155 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:42:49,789 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '미국 기준금리 3.50~3.75% 동결, 2026년 예적금 금리'
-2026-09-17 00:42:49,789 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치·날짜·출처는 갖췄으나 '한미 금리차는 대략 한미 금리차는...' 등 문장 중복·파손이 품질을 저해함
-2026-09-17 00:42:49,789 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 미리보기 상 문단 구분 없이 텍스트가 밀집돼 가독성 저하 우려
-2026-09-17 00:42:49,789 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처의 범용 스톡 이미지 1장뿐으로 실제 데이터 그래프가 아님에도 '기준금리 추이 그래프'로 표현해 오인 소지 있음
-2026-09-17 00:42:49,789 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '정리하면', '다음 섹션에서 살펴보겠습니다' 등 정형화된 전환 문구와 문장 중복 오류가 AI 생성 흔적을 시사함
-2026-09-17 00:42:49,789 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-09-17 00:42:49,789 [WARNING] main —      🟡 [원본성 및 품질] 구체적 수치·날짜·출처는 갖췄으나 '한미 금리차는 대략 한미 금리차는...' 등 문장 중복·파손이 품질을 저해함
-2026-09-17 00:42:49,789 [WARNING] main —      🟡 [구조 및 가독성] H2 7개로 구조는 양호하나 미리보기 상 문단 구분 없이 텍스트가 밀집돼 가독성 저하 우려
-2026-09-17 00:42:49,789 [WARNING] main —      🟡 [이미지 정책] Pixabay 출처의 범용 스톡 이미지 1장뿐으로 실제 데이터 그래프가 아님에도 '기준금리 추이 그래프'로 표현해 오인 소지 있음
-2026-09-17 00:42:49,789 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-09-17 00:42:49,798 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-17 00:42:49,803 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 1건
-2026-09-17 00:42:51,345 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:44:45,417 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3465자 → 4912자 (+1447자)
-2026-09-17 00:44:45,417 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-09-17 00:44:46,136 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:45:05,230 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '미국 기준금리 3.50~3.75% 동결, 2026년 예적금 금리'
-2026-09-17 00:45:05,230 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드에 '기준금리 인상'이 포함되나 실제 내용은 '동결'이라 초반 혼동 소지가 있음(본문이 이를 명확히 해명하긴 함)
-2026-09-17 00:45:05,230 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 앞부분에 500자 이상 긴 단락이 여러 개 존재
-2026-09-17 00:45:05,230 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처의 참고용 이미지는 있으나 alt 텍스트 명시 여부 불명확
-2026-09-17 00:45:05,230 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 개인 경험 서술은 자연스러우나 이모지 요약 박스·정형화된 '핵심 요약' 패턴이 AI 템플릿 느낌을 줌
-2026-09-17 00:45:05,230 [WARNING] main —   ⚠️ 자동 수정 후에도 기준 미달 (점수: 79/100) — pending 저장
-2026-09-17 00:45:05,230 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '미국 기준금리 3.50~3.75% 동결, 2026년 예적금 금리는 어디로 가나' (점수: 79/100, 권장: review)
-2026-09-17 00:45:05,248 [INFO] dashboard_exporter —   검토 대기 저장: 미국 기준금리 3.50~3.75% 동결, 2026년 예적금 금리는 어디로 가나 (14642자 HTML)
-2026-09-17 00:45:05,260 [INFO] pending_store — 검토 대기 저장: 목록 14건 / 보관 158건 / 본문 14건
-2026-09-17 00:45:05,261 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 172개)
-2026-09-17 00:45:05,261 [INFO] main — 
-============================================================
-2026-09-17 00:45:05,261 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-09-17 00:45:05,261 [INFO] main — ============================================================
-2026-09-17 00:45:05,285 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 171개)
-2026-09-17 00:45:05,294 [INFO] dashboard_exporter — 분석 필드 유지: 99/112개 (등급·조회수·수익)
-2026-09-17 00:45:05,305 [INFO] dashboard_exporter —   시리즈: 32개 내보내기 완료
-2026-09-17 00:45:05,344 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-17 00:45:05,882 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-09-17 00:45:06,203 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-17 00:45:06,769 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-17 00:45:06,771 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-17 00:45:06,771 [INFO] dashboard_exporter —   학습 이력: 3주 내보내기 완료
-2026-09-17 00:45:06,773 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-17 00:45:06,786 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 270 / 실패 0 / 대기 16)
-2026-09-17 00:45:06,786 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-17 00:45:06,787 [INFO] dashboard_exporter —   포스트: 112개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-17 00:45:06,787 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-09-17 00:45:06,788 [ERROR] main — ============================================================
 2026-09-17 00:45:06,788 [ERROR] main — ❌ 게시 0건 — 생성은 됐지만 1건 모두 검토 대기로 빠졌습니다
 2026-09-17 00:45:06,788 [ERROR] main —    품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다
@@ -572,3 +498,67 @@
 2026-09-18 14:11:54,949 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
 2026-09-18 14:11:54,949 [INFO] dashboard_exporter —   포스트: 98개 / 실행 이력: 120개 / 블로그: 3개
 2026-09-18 14:11:54,950 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-18 14:12:37,355 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-18 14:12:38,249 [INFO] main — 테스트 모드 — 업로드 없이 글만 생성합니다
+2026-09-18 14:12:38,250 [INFO] main — ============================================================
+2026-09-18 14:12:38,250 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-09-18 14:12:38
+2026-09-18 14:12:38,250 [INFO] main — ============================================================
+2026-09-18 14:12:38,266 [INFO] main — 수집된 키워드 1개: ['포핸즈 7화 리뷰']
+2026-09-18 14:12:38,266 [INFO] main — 단독 포스트 대상 키워드 1개: ['포핸즈 7화 리뷰']
+2026-09-18 14:12:38,278 [INFO] main — 
+[1/1] 키워드: '포핸즈 7화 리뷰'
+2026-09-18 14:12:38,278 [INFO] content_generator — 포스트 생성 중: '포핸즈 7화 리뷰'
+2026-09-18 14:12:45,734 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:12:45,757 [INFO] research_collector — 검색 의도: 웹툰/드라마 '포핸즈' 7화의 줄거리, 주요 장면, 반응을 알고 싶어 검색
+2026-09-18 14:12:59,526 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '포핸즈 7화 리뷰'
+2026-09-18 14:13:19,612 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:13:19,613 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '포핸즈 7화 리뷰'
+2026-09-18 14:13:26,813 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:13:26,814 [INFO] source_validator — 출처 검증: 6/7개 통과, 등급 분포 {'D': 6, 'X': 1}
+2026-09-18 14:13:26,817 [INFO] evidence_builder — 자료팩: 중요 사실 6개 제외 (A/B 등급 출처 없음)
+2026-09-18 14:13:26,817 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-18 14:13:26,818 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-18 14:13:27,750 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:15:27,498 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-18 14:15:33,572 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:15:43,183 [INFO] content_generator — 팩트체크: 통과
+2026-09-18 14:15:43,183 [INFO] content_generator — 이미지 계획 2건 사용: ['laptop stock chart drama news', 'broadcasting company stock screen']
+2026-09-18 14:15:43,454 [INFO] image_fetcher — 이미지 수집 성공: 'laptop stock chart drama news' → 제목='laptop / work / coffee / chart / man / f' (관련성=0.40)
+2026-09-18 14:15:43,989 [INFO] image_fetcher — 이미지 수집 성공: 'broadcasting company stock screen' → 제목='tv / television / retro / classic / old ' (관련성=0.00)
+2026-09-18 14:15:49,346 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:15:49,854 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-09-18 14:15:49,854 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-09-18 14:15:49,860 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-09-18 14:15:49,862 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-18 14:15:49,862 [INFO] content_generator — 포스트 생성 완료: '포핸즈 7화 화제성과 콘텐츠 관련주, 투자 전에 확인할 것들' (2652자, 이미지 2개)
+2026-09-18 14:15:50,785 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:16:13,014 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '포핸즈 7화 화제성과 콘텐츠 관련주, 투자 전에 확인할 것들'
+2026-09-18 14:16:13,014 [INFO] adsense_validator —   ⚠️ SEO 최적화: 제목/본문은 '화제성·투자' 중심인데 키워드는 '리뷰'로 설정돼 검색의도와 다소 불일치
+2026-09-18 14:16:13,014 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 표기된 이미지 사용으로 저작권 문제는 없으나 기본 정책상 warn 처리
+2026-09-18 14:16:13,014 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심요약 박스, '결론부터 말하면', 단계별 나열 등 전형적인 AI 생성 패턴이 다수 관찰됨
+2026-09-18 14:16:13,018 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-18 14:16:13,020 [INFO] internal_linker —   [1/5] '체크리스트' -> https://www.hoguwhat.com/2026/09/blog-post_16.html
+2026-09-18 14:16:13,027 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-09-18 14:16:13,028 [INFO] main —   제목: 포핸즈 7화 화제성과 콘텐츠 관련주, 투자 전에 확인할 것들
+2026-09-18 14:16:13,028 [INFO] main —   이미지: 2개 삽입
+2026-09-18 14:16:13,028 [INFO] main —   글자 수: 2652자
+2026-09-18 14:16:13,028 [INFO] main —   [테스트 모드] 업로드 건너뜀
+2026-09-18 14:16:13,041 [INFO] main — 
+============================================================
+2026-09-18 14:16:13,041 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-09-18 14:16:13,041 [INFO] main — ============================================================
+2026-09-18 14:16:13,064 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 177개)
+2026-09-18 14:16:13,075 [INFO] dashboard_exporter — 분석 필드 유지: 80/99개 (등급·조회수·수익)
+2026-09-18 14:16:13,089 [INFO] dashboard_exporter —   시리즈: 32개 내보내기 완료
+2026-09-18 14:16:13,102 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-18 14:16:13,639 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-18 14:16:13,858 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-18 14:16:14,208 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-18 14:16:14,468 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-18 14:16:14,469 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-18 14:16:14,470 [INFO] dashboard_exporter —   학습 이력: 3주 내보내기 완료
+2026-09-18 14:16:14,473 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-18 14:16:14,488 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 270 / 실패 0 / 대기 19)
+2026-09-18 14:16:14,488 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-18 14:16:14,488 [INFO] dashboard_exporter —   포스트: 99개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-18 14:16:14,489 [INFO] main — 대시보드 데이터 업데이트 완료

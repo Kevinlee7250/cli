@@ -1,119 +1,3 @@
-2026-09-17 00:24:59,099 [INFO] dashboard_exporter —   시리즈: 32개 내보내기 완료
-2026-09-17 00:24:59,141 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-17 00:24:59,705 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-17 00:24:59,984 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-17 00:24:59,985 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-17 00:24:59,986 [INFO] dashboard_exporter —   학습 이력: 3주 내보내기 완료
-2026-09-17 00:24:59,988 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-17 00:25:00,004 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 271 / 실패 0 / 대기 15)
-2026-09-17 00:25:00,005 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-17 00:25:00,005 [INFO] dashboard_exporter —   포스트: 110개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-17 00:25:00,006 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-17 00:25:00,006 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-09-17 00:25:46,847 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-17 00:25:47,833 [INFO] main — ============================================================
-2026-09-17 00:25:47,833 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-09-17 00:25:47
-2026-09-17 00:25:47,833 [INFO] main — ============================================================
-2026-09-17 00:25:47,848 [INFO] keyword_collector — 타 블로그 최근 키워드 6개 중복 방지 코퍼스 합류
-2026-09-17 00:25:47,848 [INFO] keyword_collector — 포스팅 이력 코퍼스: 86개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-09-17 00:25:47,848 [INFO] keyword_collector — 시즌 예약 키워드 1개 로드 (blog=blog2): ['추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-17 00:25:52,167 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-09-17 00:25:59,286 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:25:59,313 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-09-17 00:25:59,313 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-09-17 00:26:00,118 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-17 00:26:00,119 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-09-17 00:26:00,120 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-09-17 00:26:00,130 [INFO] keyword_collector — 유사 주제 제외 13개: ['추석 선물 저렴하게 사는 꿀팁 정리', '가을 단풍 골프장 추천 및 예약 꿀팁', 'AI 컨시어지 호텔 서비스 이용 후기 및 장단점', '가을 세일 이마트 롯데아울렛 이케아 알뜰 쇼핑 정보', '생활체육 디비전리그 참가 방법과 지원 혜택 총정리']
-2026-09-17 00:26:00,130 [INFO] keyword_collector —   [fallback] 2개: ['통영 여행 2박3일 실제 여행 경비 공개', '설악산 단풍 트레킹 초보자가 가도 괜찮을까']
-2026-09-17 00:26:00,130 [INFO] keyword_collector — 최종 선정 키워드 2개: ['통영 여행 2박3일 실제 여행 경비 공개', '설악산 단풍 트레킹 초보자가 가도 괜찮을까']
-2026-09-17 00:26:00,130 [INFO] main — 수집된 키워드 2개: ['통영 여행 2박3일 실제 여행 경비 공개', '설악산 단풍 트레킹 초보자가 가도 괜찮을까']
-2026-09-17 00:26:00,136 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-09-17 00:26:00,136 [INFO] main — 단독 포스트 대상 키워드 1개: ['통영 여행 2박3일 실제 여행 경비 공개']
-2026-09-17 00:26:00,151 [INFO] main — 
-[1/1] 키워드: '통영 여행 2박3일 실제 여행 경비 공개'
-2026-09-17 00:26:00,151 [INFO] content_generator — 포스트 생성 중: '통영 여행 2박3일 실제 여행 경비 공개'
-2026-09-17 00:26:09,464 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:26:09,465 [INFO] research_collector — 검색 의도: 통영 2박3일 여행을 계획 중인 사람이 실제 경비(교통비, 숙박비, 식비, 입장료 등)를 항목별로 파악하고 
-2026-09-17 00:26:18,637 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '통영 여행 2박3일 실제 여행 경비 공개'
-2026-09-17 00:26:40,412 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:26:40,413 [INFO] evidence_builder — 자료팩 생성: 사실 2개 — '통영 여행 2박3일 실제 여행 경비 공개'
-2026-09-17 00:26:45,857 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:26:45,860 [INFO] source_validator — 출처 검증: 1/2개 통과, 등급 분포 {'D': 1, 'X': 1}
-2026-09-17 00:26:45,862 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-09-17 00:26:45,862 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-17 00:26:45,864 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-17 00:26:46,359 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:28:42,337 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-17 00:28:42,996 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:28:54,202 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
-2026-09-17 00:28:54,202 [INFO] content_generator — 이미지 계획 2건 사용: ['tongyeong harbor colorful village', 'hansando ferry sea korea']
-2026-09-17 00:28:54,463 [INFO] image_fetcher — 이미지 수집 성공: 'tongyeong harbor colorful village' → 제목='fireworks / harbour / night / celebratio' (관련성=0.25)
-2026-09-17 00:28:54,820 [INFO] image_fetcher — 이미지 수집 성공: 'hansando ferry sea korea' → 제목='ship / ferry / port / harbor / sea / oce' (관련성=0.50)
-2026-09-17 00:28:56,449 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:28:56,451 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
-2026-09-17 00:28:56,451 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-09-17 00:28:56,451 [INFO] image_fetcher — 제목 썸네일 생성: '통영 2박3일 여행경비 얼마나 드나, 후기 종합과 이순' (data URI, 1178B)
-2026-09-17 00:28:56,676 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: 'ship / curtain / strip / sea / waves / c'
-2026-09-17 00:28:56,943 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-09-17 00:28:56,943 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-09-17 00:28:56,950 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-09-17 00:28:56,951 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-17 00:28:56,952 [INFO] content_generator — 포스트 생성 완료: '통영 2박3일 여행경비 얼마나 드나, 후기 종합과 이순신 영화 촬영 배경지 코스' (3422자, 이미지 2개)
-2026-09-17 00:28:57,593 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:29:20,059 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-17 00:29:20,541 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:29:25,387 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '통영 2박3일 여행경비 얼마나 드나, 후기 종합과 이순신 영화 '
-2026-09-17 00:29:25,387 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 충분하나 구체적 수치가 부족하고 두 요약박스의 경비 수치가 서로 모순돼 신뢰도가 떨어짐
-2026-09-17 00:29:25,387 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 500자 이상의 긴 단락이 다수 존재
-2026-09-17 00:29:25,387 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개가 포함됐지만 경비 수치 모순으로 신뢰도 저하
-2026-09-17 00:29:25,388 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay·직접 제작 출처는 명시됐으나 alt 텍스트 여부 불명확
-2026-09-17 00:29:25,388 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약 박스 중복, '갈립니다 갈립니다' 등 미검수 흔적과 반복적 후기 인용 패턴이 AI 생성 의심 신호
-2026-09-17 00:29:25,388 [WARNING] adsense_validator —   🔴 두 핵심 요약 박스의 여행 경비 수치가 서로 모순됨(34~60만원 vs 20만원대 후반~40만원대 초반)
-2026-09-17 00:29:25,388 [WARNING] adsense_validator —   🔴 '갈립니다 갈립니다' 등 중복 오류 텍스트 존재
-2026-09-17 00:29:25,392 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-17 00:29:25,394 [INFO] internal_linker —   [1/5] '동피랑' -> https://www.hoguwhat.com/2026/09/blog-post.html
-2026-09-17 00:29:25,401 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-09-17 00:29:25,401 [INFO] main —   제목: 통영 2박3일 여행경비 얼마나 드나, 후기 종합과 이순신 영화 촬영 배경지 코스
-2026-09-17 00:29:25,401 [INFO] main —   이미지: 2개 삽입
-2026-09-17 00:29:25,401 [INFO] main —   글자 수: 3422자
-2026-09-17 00:29:25,998 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:29:48,349 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '통영 2박3일 여행경비 얼마나 드나, 후기 종합과 이순신 영화 '
-2026-09-17 00:29:48,349 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 충분하나 두 요약 박스의 경비 수치가 서로 달라(34~60만원 vs 20만대후반~40만대초반) 정보의 깊이보다 재조합 인상이 강함
-2026-09-17 00:29:48,349 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 5개 출처 인용은 긍정적이나 경비 수치 불일치로 신뢰도에 흠집이 있음
-2026-09-17 00:29:48,349 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 및 직접 제작 이미지 출처는 명시됐으나 alt텍스트 여부 불명확해 기본 warn 처리
-2026-09-17 00:29:48,349 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~다는 후기가 많습니다' 등 유사 문형 반복과 '갈립니다 갈립니다' 같은 중복 오류가 자동 생성 흔적을 시사함
-2026-09-17 00:29:48,349 [WARNING] adsense_validator —   🔴 핵심 요약 박스 두 곳의 1인 여행경비 수치가 서로 상충됨 (34~60만원 vs 20만대후반~40만대초반)
-2026-09-17 00:29:48,349 [WARNING] adsense_validator —   🔴 '갈립니다 갈립니다'와 같은 문장 중복 오류 존재
-2026-09-17 00:29:48,349 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
-2026-09-17 00:29:48,349 [WARNING] main —      🔴 핵심 요약 박스 두 곳의 1인 여행경비 수치가 서로 상충됨 (34~60만원 vs 20만대후반~40만대초반)
-2026-09-17 00:29:48,349 [WARNING] main —      🔴 '갈립니다 갈립니다'와 같은 문장 중복 오류 존재
-2026-09-17 00:29:48,349 [WARNING] main —      🟡 [원본성 및 품질] 글자 수는 충분하나 두 요약 박스의 경비 수치가 서로 달라(34~60만원 vs 20만대후반~40만대초반) 정보의 깊이보다 재조합 인상이 강함
-2026-09-17 00:29:48,349 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 5개 출처 인용은 긍정적이나 경비 수치 불일치로 신뢰도에 흠집이 있음
-2026-09-17 00:29:48,350 [WARNING] main —      🟡 [이미지 정책] Pixabay 및 직접 제작 이미지 출처는 명시됐으나 alt텍스트 여부 불명확해 기본 warn 처리
-2026-09-17 00:29:48,350 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
-2026-09-17 00:29:48,360 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-17 00:29:48,366 [INFO] adsense_validator —   🖼️ alt 재작성 → "통영 2박3일 여행경비 얼마나 드나, 후기 종합과 이순신 영화 촬영 배경지 코스 관련 이미지" (캡션 포함)
-2026-09-17 00:29:48,366 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 2건
-2026-09-17 00:29:48,993 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:31:42,189 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 3422자 → 5065자 (+1643자)
-2026-09-17 00:31:42,189 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-09-17 00:31:42,833 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:32:01,597 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '통영 2박3일 여행경비 얼마나 드나, 후기 종합과 이순신 영화 '
-2026-09-17 00:32:01,597 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 언급은 있으나 alt텍스트·출처 명시 여부가 본문상 불명확하여 저작권 확인 필요
-2026-09-17 00:32:01,597 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~차례입니다', '~살펴보겠습니다' 식의 정형화된 섹션 전환 문구가 반복되어 AI 패턴 의심 여지 있음
-2026-09-17 00:32:01,597 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
-2026-09-17 00:32:01,597 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-09-17 00:32:02,504 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:33:19,813 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-17 00:33:20,918 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-17 00:34:35,024 [INFO] final_editor —   ✏️ 제목 최종 교정: '통영 2박3일 여행경비 얼마나 드나, 후기 종합과 이순신 영화 촬영 배경지 코스' → '통영 여행 2박3일 실제 경비 공개와 이순신 촬영지 코스'
-2026-09-17 00:34:35,024 [INFO] final_editor —   ✏️ 메타 설명 교정 (123자)
-2026-09-17 00:34:35,025 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 정리하고 문단을 짧게 재구성했으며, 교통비/숙소/총경비 비교 표 3개와 FAQ 5개, 개인 경험 메모·주의사항 박스를 추가해 발행 가능한 완성 본문으로 마무리했습니다.
-2026-09-17 00:34:35,239 [INFO] related_posts — 내려간 글 77편을 관련 포스트 후보에서 제외
-2026-09-17 00:34:35,240 [INFO] related_posts — 관련 포스트 1개 섹션 생성
-2026-09-17 00:34:35,241 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-09-17 00:34:36,060 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/23.html
 2026-09-17 00:34:36,072 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/23.html
 2026-09-17 00:34:36,077 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
 2026-09-17 00:34:36,085 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
@@ -614,3 +498,72 @@
 2026-09-18 01:03:42,645 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-09-18 01:03:42,645 [INFO] main —   - [blog3] 금융NEWS
 2026-09-18 01:03:42,651 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-09-18 14:01:15,637 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-18 14:01:16,446 [INFO] main — 테스트 모드 — 업로드 없이 글만 생성합니다
+2026-09-18 14:01:16,446 [INFO] main — ============================================================
+2026-09-18 14:01:16,446 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-18 14:01:16
+2026-09-18 14:01:16,446 [INFO] main — ============================================================
+2026-09-18 14:01:16,457 [WARNING] main —   ⚠️ 수동 키워드 '포핸즈 7화 리뷰'는 최근 포스팅 이력과 유사합니다 — 제목이 중복되면 업로드 단계에서 차단됩니다.
+2026-09-18 14:01:16,458 [INFO] main — 수집된 키워드 1개: ['포핸즈 7화 리뷰']
+2026-09-18 14:01:16,458 [INFO] main — 단독 포스트 대상 키워드 1개: ['포핸즈 7화 리뷰']
+2026-09-18 14:01:16,468 [INFO] main — 
+[1/1] 키워드: '포핸즈 7화 리뷰'
+2026-09-18 14:01:16,468 [INFO] content_generator — 포스트 생성 중: '포핸즈 7화 리뷰'
+2026-09-18 14:01:21,729 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:01:21,746 [INFO] research_collector — 검색 의도: 웹툰/드라마 '포핸즈' 7화의 줄거리와 전개, 반응을 확인하려는 의도
+2026-09-18 14:01:43,392 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '포핸즈 7화 리뷰'
+2026-09-18 14:02:03,000 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:02:03,001 [INFO] evidence_builder — 자료팩 생성: 사실 3개 — '포핸즈 7화 리뷰'
+2026-09-18 14:02:13,559 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:02:13,560 [INFO] source_validator — 출처 검증: 3/3개 통과, 등급 분포 {'D': 3}
+2026-09-18 14:02:13,563 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-09-18 14:02:13,563 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-18 14:02:13,564 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-18 14:02:14,404 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:04:23,702 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-18 14:04:24,880 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:04:29,694 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-09-18 14:04:29,694 [INFO] content_generator — 이미지 계획 1건 사용: ['two actors intense conversation drama scene']
+2026-09-18 14:04:30,047 [INFO] image_fetcher — 이미지 수집 성공: 'two actors intense conversation drama scene' → 제목='bikini / two piece swimwear / women / tw' (관련성=0.17)
+2026-09-18 14:04:30,332 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-18 14:04:30,333 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-18 14:04:30,337 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-09-18 14:04:30,339 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-18 14:04:30,339 [INFO] content_generator — 포스트 생성 완료: '포핸즈 7화 리뷰와 BL설 논란 총정리' (2957자, 이미지 1개)
+2026-09-18 14:04:31,196 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:04:52,603 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-18 14:04:53,524 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-18 14:05:00,831 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '포핸즈 7화 리뷰와 BL설 논란 총정리'
+2026-09-18 14:05:00,831 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 2957자로 기준 충족하나, 문장 중복 오류('이라, 사실 확정이 아니라...' 반복)와 커뮤니티 반응 재구성 위주로 독창적 분석 깊이가 얕음
+2026-09-18 14:05:00,831 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 4개 출처 인용과 불확실성 명시는 긍정적이나 기관명·시점 등 구체적 근거 제시가 부족함
+2026-09-18 14:05:00,831 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개만 사용되어 시각 자료가 부족하며, alt 텍스트 명시도 불충분함
+2026-09-18 14:05:00,831 [INFO] adsense_validator —   ❌ AI 생성 의심도: 문장 중복 오류와 이모지 콜아웃(📌💡💬), 체크리스트형 구조 등 전형적 AI 생성 패턴이 뚜렷하게 나타남
+2026-09-18 14:05:00,831 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 문장 중복 오류와 이모지 콜아웃(📌💡💬), 체크리스트형 구조 등 전형적 AI 생성 패턴이 뚜렷하게 나타남
+2026-09-18 14:05:00,831 [WARNING] adsense_validator —   🔴 본문 중 '이라, 사실 확정이 아니라 정황으로만 참고하는 게 맞습니다'가 중복 삽입된 명백한 편집 오류 존재 (AI 생성 후 미검수 흔적)
+2026-09-18 14:05:00,835 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-18 14:05:00,836 [INFO] internal_linker —   [1/5] '등장인물' -> https://www.hoguwhat.com/2026/09/2.html
+2026-09-18 14:05:00,837 [INFO] internal_linker —   [2/5] '체크리스트' -> https://www.hoguwhat.com/2026/09/blog-post_16.html
+2026-09-18 14:05:00,841 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-09-18 14:05:00,841 [INFO] main —   제목: 포핸즈 7화 리뷰와 BL설 논란 총정리
+2026-09-18 14:05:00,842 [INFO] main —   이미지: 1개 삽입
+2026-09-18 14:05:00,842 [INFO] main —   글자 수: 2957자
+2026-09-18 14:05:00,842 [INFO] main —   [테스트 모드] 업로드 건너뜀
+2026-09-18 14:05:00,851 [INFO] main — 
+============================================================
+2026-09-18 14:05:00,851 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-09-18 14:05:00,851 [INFO] main — ============================================================
+2026-09-18 14:05:00,872 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 175개)
+2026-09-18 14:05:00,879 [INFO] dashboard_exporter — 분석 필드 유지: 80/97개 (등급·조회수·수익)
+2026-09-18 14:05:00,890 [INFO] dashboard_exporter —   시리즈: 32개 내보내기 완료
+2026-09-18 14:05:00,940 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-18 14:05:01,159 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-18 14:05:01,316 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-18 14:05:01,561 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-18 14:05:01,843 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-18 14:05:01,844 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-18 14:05:01,844 [INFO] dashboard_exporter —   학습 이력: 3주 내보내기 완료
+2026-09-18 14:05:01,847 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-18 14:05:01,859 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 271 / 실패 0 / 대기 17)
+2026-09-18 14:05:01,859 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-18 14:05:01,859 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-18 14:05:01,860 [INFO] main — 대시보드 데이터 업데이트 완료

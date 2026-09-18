@@ -244,8 +244,16 @@ def run(blog_filter: str = "", dry_run: bool = True, limit: int = 0,
             sev = _severity_of(content, title)
             if sev == "ok":
                 continue
-            if severity_filter and sev != severity_filter:
-                continue
+            # 비공개 모드에서는 severity_filter를 '이 등급 이상'으로 읽습니다.
+            # 2026-09-18: --severity high 로 돌렸더니 high 6편만 잡히고
+            # critical 1편이 빠졌습니다. "high 이상을 내린다"는 의도인데
+            # 정확히 high인 것만 남겨서, 가장 심각한 글이 그대로 공개됐습니다.
+            if severity_filter:
+                if unpublish_critical:
+                    if not _at_least(sev, severity_filter):
+                        continue
+                elif sev != severity_filter:
+                    continue
             flagged += 1
 
             # 기준선 이상 + 비공개 옵션 → 리라이팅 대신 내립니다.

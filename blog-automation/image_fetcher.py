@@ -406,6 +406,37 @@ def _search_all_sources(
 # 관련성 최소 임계값 — 이 미만이면 엉뚱한 이미지(Wikimedia 잡음 등)로 판단하고 버림
 _MIN_RELEVANCE = 0.15
 
+# 관련성 미달 폴백의 하한. 이 값 이하(사실상 무관)면 이미지를 붙이지 않고
+# 제목 썸네일로 넘깁니다 — 아무 사진이나 붙이는 것보다 낫습니다.
+_MIN_FALLBACK_RELEVANCE = 0.0
+
+#: 어떤 글에도 붙으면 안 되는 이미지. 관련성 점수와 무관하게 거부합니다.
+#
+# 2026-09-18: 드라마 회차 글 테스트에서 'two actors intense conversation drama
+# scene'을 검색했는데 'bikini / two piece swimwear / women' 사진이 붙었습니다.
+# 관련성 미달이어도 후보가 있으면 최상위를 반환하는 폴백을 그대로 통과했고,
+# Claude 관련성 검증은 파싱이 비면 원본을 되돌려 줍니다 — 두 겹이 모두
+# '실패 시 통과'라 막을 것이 없었습니다.
+#
+# 관련성 문제가 아니라 안전 문제입니다. AdSense 성인 인접 콘텐츠 판정은
+# 글 한 편이 아니라 사이트 전체에 영향을 줍니다.
+_UNSAFE_IMAGE_TERMS = (
+    "bikini", "swimwear", "swimsuit", "lingerie", "underwear", "nude", "naked",
+    "sexy", "erotic", "boudoir", "cleavage", "topless", "bra ", "panties",
+    "비키니", "수영복", "속옷", "란제리", "노출", "섹시", "글래머",
+)
+
+
+def _is_unsafe_image(img: dict) -> bool:
+    """제목·검색어·URL 어디든 차단어가 있으면 거부합니다."""
+    blob = " ".join([
+        str(img.get("title", "")),
+        str(img.get("search_query", "")),
+        str(img.get("url", "")),
+        " ".join(str(t) for t in (img.get("tags") or [])),
+    ]).lower()
+    return any(term in blob for term in _UNSAFE_IMAGE_TERMS)
+
 
 def _is_korean_query(text: str) -> bool:
     """쿼리 단어 중 한글 비율이 50% 이상이면 한국어 쿼리로 판정합니다."""
@@ -634,6 +665,16 @@ def _fetch_best_image(
             attempt_q, naver_client_id, naver_client_secret, n_candidates,
             pixabay_api_key=pixabay_api_key,
         )
+        # 안전 차단이 먼저입니다 — 관련성이 아무리 높아도 붙이면 안 되는 사진이 있습니다
+        blocked = [c for c in candidates if _is_unsafe_image(c)]
+        if blocked:
+            for c in blocked:
+                logger.warning(
+                    f"🚫 부적합 이미지 차단: '{str(c.get('title',''))[:50]}' "
+                    f"(검색어 '{attempt_q}')"
+                )
+            candidates = [c for c in candidates if not _is_unsafe_image(c)]
+
         fresh = [c for c in candidates
                  if c.get("url", "") not in used_urls
                  and _norm_img_title(c.get("title", "")) not in used_titles]
@@ -648,7 +689,9 @@ def _fetch_best_image(
         if score >= _MIN_RELEVANCE:
             return best
         logger.debug(f"관련성 미달 후보 보관: '{attempt_q}' → '{best.get('title','')[:30]}' (score={score:.2f})")
-        if best_fallback is None:
+        # 점수가 사실상 0이면 보관하지 않습니다. 무관한 사진을 붙이느니
+        # 제목 썸네일로 가는 편이 낫습니다 — 2026-09-18 수영복 사진 사고.
+        if best_fallback is None and score > _MIN_FALLBACK_RELEVANCE:
             best_fallback = best
 
     # 임계값을 넘는 이미지가 없어도 후보가 있으면 최상위 반환
@@ -670,6 +713,17 @@ def _filter_relevant_images(
     """
     if not images:
         return images
+
+    # 차단어 이미지는 Claude에게 묻지도 않고 먼저 뺍니다. 아래 경로는 오류·파싱
+    # 실패 시 '원본 그대로 통과'라서, 여기서 빼두지 않으면 되돌아옵니다.
+    unsafe = [img for img in images if _is_unsafe_image(img)]
+    if unsafe:
+        for img in unsafe:
+            logger.warning(f"🚫 부적합 이미지 제거: '{str(img.get('title',''))[:50]}'")
+        images = [img for img in images if not _is_unsafe_image(img)]
+        if not images:
+            return []
+
     try:
         import anthropic
         from config import claude_text, ANTHROPIC_API_KEY, CLAUDE_MODEL

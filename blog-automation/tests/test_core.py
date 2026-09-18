@@ -341,9 +341,14 @@ def test_safe_caption_rejects_filenames():
     assert _safe_caption({"title": "heat wave / flower wallpaper / beautiful"}, "대체텍스트") == "대체텍스트"
 
 
-def test_min_relevance_returns_fallback():
-    """관련성 0 후보만 있어도 _fetch_best_image는 최상위 후보를 폴백으로 반환한다.
-    최종 품질 게이트는 _filter_relevant_images(Claude)가 담당한다."""
+def test_zero_relevance_returns_no_image():
+    """관련성이 사실상 0이면 이미지를 붙이지 않는다 — 제목 썸네일로 넘어간다.
+
+    2026-09-18 정책 변경. 예전에는 관련성 0이어도 최상위 후보를 폴백으로
+    반환하고 최종 판정을 Claude(_filter_relevant_images)에 맡겼는데, 그
+    경로가 오류·파싱 실패 시 '원본 통과'라 드라마 글에 수영복 사진이
+    붙었습니다. 무관한 사진을 붙이느니 안 붙이는 편이 낫습니다.
+    """
     import image_fetcher as imf
 
     junk = {"url": "http://x/ChateauValere.jpg", "title": "Château de Valère", "width": 800, "height": 600}
@@ -354,10 +359,7 @@ def test_min_relevance_returns_fallback():
     orig = imf._search_all_sources
     imf._search_all_sources = fake_search
     try:
-        result = imf._fetch_best_image("프리랜서 종합소득세 신고")
-        # 폴백 반환: 관련성 미달이라도 후보가 있으면 반환 (Claude가 최종 필터링)
-        assert result is not None
-        assert result["url"] == junk["url"]
+        assert imf._fetch_best_image("프리랜서 종합소득세 신고") is None
     finally:
         imf._search_all_sources = orig
 

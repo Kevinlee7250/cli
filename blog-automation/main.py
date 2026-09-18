@@ -667,9 +667,26 @@ def run_series(
     from datetime import date as _date
     today_str = _date.today().isoformat()
 
+    # 드라마 회차 글은 하루 한 편까지. 기획 단계에서 날짜를 하루씩 나눠
+    # 배정하지만, 하루에 실행이 두 번 돌면 그것만으로는 막히지 않습니다.
+    # 2026-09-16에 같은 드라마 글 3편이 하루에 올라간 뒤 넣은 안전장치입니다.
+    is_drama_series = series_plan.get("type") == "drama_episode_review"
+    published_today = sum(
+        1 for e in episodes if e.get("published_date") == today_str
+    ) if is_drama_series else 0
+    if is_drama_series and published_today:
+        logger.info(
+            f"📺 오늘 이미 {published_today}편 발행됨 — 드라마 회차 글은 하루 한 편까지입니다"
+        )
+
     for ep_idx, ep in enumerate(episodes):
         ep_num = ep["episode"]
         ep_keyword = ep.get("search_keyword", keyword)
+
+        # 하루 한 편 상한 — 방영 스케줄에 맞춰 한 회차씩 따라갑니다
+        if is_drama_series and published_today >= 1:
+            logger.info(f"--- [{ep_num}/{len(episodes)}편] 📺 하루 1편 상한 도달 — 내일 이어감 ---")
+            continue
 
         # 이미 처리된 편은 건너뜀 (재실행·예약 처리 시 중복 방지)
         if ep.get("status") in ("done", "pending_review"):
@@ -796,6 +813,8 @@ def run_series(
             ep["status"] = "done"
             ep["blogger_url"] = blogger_url
             ep["post_id"] = result.get("id", "")
+            ep["published_date"] = today_str   # 하루 1편 상한 판정 기준
+            published_today += 1
             post_data["blogUrl"] = blogger_url
             logger.info(f"  ✅ 편 {ep_num} 업로드 완료: {blogger_url}")
         else:

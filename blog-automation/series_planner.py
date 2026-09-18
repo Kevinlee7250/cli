@@ -563,6 +563,13 @@ def plan_drama_episode_series(drama_name: str, count: int = 4, start_episode: in
     # 미방영 회차의 방영일 추정 → 예약일(방영 익일) 계산
     air_dates = _estimate_air_dates(broadcast_info, start_episode, start_episode + count - 1)
 
+    # 이미 방영된 회차(밀린 분량)도 하루 한 편씩 나눠 예약합니다.
+    # 예전에는 전부 status="pending"이라 한 번의 실행에서 통째로 발행됐고,
+    # 2026-09-16에 같은 드라마 글 3편이 하루에 올라갔습니다. 하루치 분량으로는
+    # 양산형으로 읽히고, 재편 때 대량으로 내린 유형이 그대로 다시 쌓입니다.
+    from datetime import date as _date2
+    _backlog_day = 0
+
     episodes = []
     scheduled_cnt = 0
     for i in range(count):
@@ -570,10 +577,11 @@ def plan_drama_episode_series(drama_name: str, count: int = 4, start_episode: in
         ep = {
             "episode": i + 1,             # 시리즈 내 순번
             "drama_episode": n,           # 실제 드라마 회차
-            "title": f"[{n}화] {drama_name} {n}화 리뷰 — 줄거리·명장면 정리",
+            "title": f"[{n}화] {drama_name} {n}화 정리 — 시청률·줄거리·반응",
             "focus": (
-                f"{drama_name} {n}화 리뷰: 줄거리 핵심 요약(스포 주의 안내 포함), "
-                f"명장면·명대사, 배우 연기 평가, 다음 화 예상 포인트"
+                f"{drama_name} {n}화 정리: 편성·시청률 추이(조사기관 명시), "
+                f"줄거리 핵심 요약(스포 주의 안내 포함), 화제 장면, "
+                f"매체·시청자 평가, 다음 화 관전 포인트"
             ),
             "search_keyword": f"{drama_name} {n}화 리뷰",
             "status": "pending",
@@ -591,6 +599,15 @@ def plan_drama_episode_series(drama_name: str, count: int = 4, start_episode: in
                 f"  📅 {n}화: 미방영 — 발행 예약 "
                 f"(방영 예정 {ep['air_date'] or '미정'} → 작성 {ep['scheduled_date'] or '방영 확인 시'})"
             )
+        else:
+            # 이미 방영된 회차 — 하루 한 편씩 나눠 예약합니다.
+            # 첫 편만 오늘 발행되고 나머지는 하루씩 뒤로 밀립니다.
+            ep["status"] = "scheduled"
+            ep["scheduled_date"] = (_date2.today() + timedelta(days=_backlog_day)).isoformat()
+            if _backlog_day:
+                scheduled_cnt += 1
+                logger.info(f"  📅 {n}화: 방영분 — {ep['scheduled_date']} 작성 예정 (하루 1편)")
+            _backlog_day += 1
         episodes.append(ep)
 
     end_ep = start_episode + count - 1
@@ -600,7 +617,9 @@ def plan_drama_episode_series(drama_name: str, count: int = 4, start_episode: in
         "series_title": f"{drama_name} 회차별 리뷰 ({ep_range})",
         "series_label": "드라마리뷰",
         "drama_label": re.sub(r"[^가-힣a-zA-Z0-9]", "-", drama_name),
-        "series_description": f"직접 시청한 {drama_name} {ep_range} 회차별 솔직 리뷰",
+        "series_description": (
+            f"{drama_name} {ep_range} 회차별 정리 — 편성·시청률·시청자 반응 중심"
+        ),
         "drama_name": drama_name,
         "keyword": drama_name,
         "episodes": episodes,

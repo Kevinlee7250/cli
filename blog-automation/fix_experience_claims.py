@@ -98,11 +98,23 @@ def _iter_posts(blog_id: str, token: str):
 
 
 def find_bad_paragraphs(content_html: str) -> list[tuple[str, str, list[dict]]]:
-    """(문단 전체 HTML, 내부 HTML, 감사 히트) 목록을 반환합니다."""
-    from experience_audit import analyze_text
+    """(문단 전체 HTML, 내부 HTML, 감사 히트) 목록을 반환합니다.
+
+    관련 포스트 카드·시리즈 내비게이션·역방향 링크 줄은 글쓴이가 쓴 문장이
+    아니라 자동 생성된 블록입니다. 거기 박힌 '다른 글 제목' 때문에 리라이팅을
+    돌리면, 내비게이션 문구를 고쳐 놓고 본문을 정정했다고 기록하게 됩니다
+    (2026-09-19 감사: 히트 68개 중 31개가 그런 경우였습니다).
+    """
+    from experience_audit import analyze_text, strip_chrome
+
+    # 부속 블록을 걷어낸 뒤 남는 문단만 대상으로 봅니다. 치환은 원본 HTML에
+    # 그대로 하므로, 여기서는 '어느 문단이 본문인지'만 가립니다.
+    body_only = {m.group(0) for m in _P_BLOCK.finditer(strip_chrome(content_html or ""))}
 
     out = []
     for m in _P_BLOCK.finditer(content_html or ""):
+        if m.group(0) not in body_only:
+            continue
         inner = m.group(1)
         hits = analyze_text(_text_of(inner))
         if hits:

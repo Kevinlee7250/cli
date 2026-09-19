@@ -203,6 +203,104 @@ Google은 이 블로그 방문자에게 관심사 기반 광고를 표시하기 
 # About 페이지 — 테마별 맞춤 콘텐츠
 # ──────────────────────────────────────────────────────────────────────────────
 
+def build_disclaimer_html(blog_url: str = "", blog_name: str = "이 블로그",
+                          theme: str = "general") -> str:
+    """면책 조항 페이지.
+
+    왜 필요한가
+    ──────────
+    2026-09-19 점검에서 blog1에만 있고 blog2·blog3에는 없었습니다.
+    금융 블로그(blog3)는 투자·세금·대출을 다루므로 특히 중요합니다 —
+    AdSense는 YMYL(돈·건강·법률) 주제에서 "누가 썼고 어디까지
+    책임지는가"를 봅니다. 본문 하단 주의 박스(adsense_audit ⑤)는 글마다
+    붙지만, 사이트 전체를 대표하는 페이지는 따로 있어야 합니다.
+
+    내용은 지키지 못할 약속을 하지 않습니다. 이 블로그는 자료를 정리해
+    싣는 곳이고, 개별 상담을 하지 않는다는 사실을 그대로 적습니다.
+    """
+    today = datetime.now().strftime("%Y년 %m월 %d일")
+    style = _make_page_style()
+    blog_link = f'<a href="{blog_url}" target="_blank">{blog_url}</a>' if blog_url else blog_name
+
+    if theme == "finance":
+        domain_block = """
+<h2>투자·세무 정보에 대하여</h2>
+<p>이 블로그의 금융·투자·세금 관련 글은 <strong>정보 제공이 목적이며 투자 권유나
+세무 자문이 아닙니다.</strong> 특정 종목·상품·계좌를 추천하거나 매수·매도 시점을
+제시하지 않습니다.</p>
+<ul>
+  <li>모든 투자에는 원금 손실 위험이 있으며, 과거 수익률이 미래 수익률을 보장하지 않습니다.</li>
+  <li>세금·절세 내용은 개인의 소득·자산·가족 관계에 따라 달라집니다.</li>
+  <li>실제 판단 전에는 금융회사·세무사 등 자격을 갖춘 전문가와 상담하시기 바랍니다.</li>
+</ul>
+<p>글에 인용된 수치·제도·요건은 작성 시점 기준이며, 이후 변경될 수 있습니다.
+투자나 신고 전에는 반드시 공식 출처에서 최신 내용을 확인해 주세요.</p>
+"""
+    elif theme == "lifestyle":
+        domain_block = """
+<h2>여행·생활 정보에 대하여</h2>
+<p>요금·운영시간·예약 조건·항공권 규정 등은 수시로 바뀝니다. 이 블로그의 내용은
+작성 시점에 확인한 자료를 정리한 것이며, 방문이나 예약 전에는 해당 업체·기관의
+공식 안내를 다시 확인해 주세요.</p>
+<ul>
+  <li>건강·안전과 관련된 내용은 일반적인 참고 정보이며 의학적 조언이 아닙니다.</li>
+  <li>해외여행 관련 규정(비자·보험·입국 요건)은 국가별로 다르고 자주 바뀝니다.</li>
+  <li>스포츠·운동 관련 내용은 개인의 신체 조건에 따라 적용이 달라질 수 있습니다.</li>
+</ul>
+"""
+    else:
+        domain_block = """
+<h2>정보의 성격</h2>
+<p>이 블로그의 글은 일반적인 참고 정보이며, 개별 상황에 대한 전문적 조언을
+대신하지 않습니다. 중요한 결정 전에는 해당 분야의 전문가와 상담하시기 바랍니다.</p>
+"""
+
+    return f"""{style}
+<h1>면책 조항</h1>
+
+<div class="notice-box">
+  <strong>{blog_name}</strong>은(는) 공개된 자료와 공식 발표를 바탕으로 정보를
+  정리해 싣는 블로그입니다. 아래 내용을 확인하신 뒤 이용해 주세요.
+</div>
+
+<h2>정보의 정확성</h2>
+<p>모든 글은 작성 시점에 확인 가능한 자료를 기준으로 작성합니다. 다만 제도·요금·
+일정·시세는 수시로 바뀌므로, 글의 내용이 현재와 다를 수 있습니다.
+내용의 완전성이나 최신성을 보증하지 않으며, 이를 근거로 한 판단의 결과에
+대해서는 책임지지 않습니다.</p>
+<p>잘못된 내용을 발견하시면 문의 페이지로 알려 주세요. 확인 후 수정하겠습니다.</p>
+{domain_block}
+<h2>글의 작성 방식</h2>
+<p>이 블로그의 글은 공개 자료·공식 발표·언론 보도를 조사해 정리하는 방식으로
+작성합니다. 글쓴이가 직접 경험하지 않은 일을 경험한 것처럼 쓰지 않으며,
+수치를 인용할 때는 가능한 한 출처와 기준 시점을 함께 밝힙니다.</p>
+
+<h2>외부 링크</h2>
+<p>이 블로그는 이해를 돕기 위해 외부 사이트로 연결되는 링크를 포함할 수 있습니다.
+링크된 사이트의 내용과 운영에 대해서는 책임지지 않습니다.</p>
+
+<h2>광고 및 제휴</h2>
+<p>이 블로그는 Google AdSense를 통해 광고를 게재합니다. 광고는 자동으로 표시되며,
+광고주의 상품이나 서비스를 이 블로그가 검증하거나 보증하지 않습니다.
+광고 수익은 블로그 운영에 사용됩니다.</p>
+<p>제휴 링크가 포함된 글에는 해당 사실을 글 안에 표시합니다.</p>
+
+<h2>저작권</h2>
+<p>이 블로그에 게시된 글의 저작권은 {blog_name}에 있습니다. 인용 시 출처와 함께
+원문 링크를 남겨 주세요. 본문 전체를 무단으로 복제·배포하는 것은 삼가 주시기 바랍니다.</p>
+<p>본문에 사용한 이미지는 저작권이 자유로운 자료(Pixabay 등)를 이용하며,
+출처가 필요한 경우 이미지 아래에 표기합니다.</p>
+
+<div class="contact-box">
+  <strong>문의</strong><br>
+  내용 정정 요청, 저작권 관련 문의는 블로그 상단의 <strong>문의하기</strong> 페이지를
+  이용해 주세요. 블로그 주소: {blog_link}
+</div>
+
+<p class="last-updated">최종 수정일: {today}</p>
+"""
+
+
 def build_about_html(blog_url: str = "", blog_name: str = "이 블로그", theme: str = "general") -> str:
     today = datetime.now().strftime("%Y년 %m월 %d일")
     style = _make_page_style()
@@ -361,16 +459,46 @@ def build_about_html(blog_url: str = "", blog_name: str = "이 블로그", theme
 # 메인 함수
 # ──────────────────────────────────────────────────────────────────────────────
 
-def create_required_pages(blog_cfg: dict | None = None) -> dict:
+#: 이미 있는 페이지를 알아보기 위한 제목 별칭. 사람이 손으로 만들었다면
+#: "개인정보 처리방침"처럼 띄어쓰기가 다를 수 있어 정확히 비교하면 놓칩니다.
+#: required_pages_check.REQUIRED와 같은 기준을 씁니다.
+_PAGE_ALIASES = {
+    "privacy_policy": ["개인정보", "privacy"],
+    "about": ["소개", "about"],
+    "disclaimer": ["면책", "disclaimer"],
+}
+
+
+def _page_exists(existing_pages: list[dict], aliases: list[str]) -> dict | None:
+    def norm(t):
+        return "".join((t or "").lower().split())
+    for page in existing_pages:
+        title = norm(page.get("title"))
+        if any(norm(a) in title for a in aliases):
+            return page
+    return None
+
+
+def create_required_pages(blog_cfg: dict | None = None, *,
+                          only_missing: bool = True,
+                          dry_run: bool = False) -> dict:
     """
-    AdSense 심사 필수 페이지(개인정보처리방침·소개)를 Blogger에 생성/업데이트합니다.
+    AdSense 심사 필수 페이지(개인정보처리방침·소개·면책 조항)를 만듭니다.
+
+    기본값은 **없는 것만 만들기**입니다. 사람이 손으로 고쳐 둔 페이지를
+    자동 생성본으로 덮어쓰는 것은 되돌리기 어렵습니다 — 2026-09-19 기준
+    blog1에는 이미 면책 조항이 있었고, 그 내용을 이쪽이 알 방법이 없습니다.
+    일부러 새로 쓰고 싶을 때만 only_missing=False로 부르세요.
 
     Args:
         blog_cfg: BLOGS_CONFIG 항목 dict. None이면 .env 기본값 사용.
+        only_missing: True면 이미 있는 페이지는 건드리지 않습니다.
+        dry_run: True면 무엇을 만들지만 알리고 아무것도 바꾸지 않습니다.
     Returns:
-        {"privacy_policy": url|None, "about": url|None}
+        {"privacy_policy": url|None, "about": url|None, "disclaimer": url|None}
+        이미 있어서 건너뛴 항목은 기존 URL이 들어갑니다.
     """
-    results = {"privacy_policy": None, "about": None}
+    results = {"privacy_policy": None, "about": None, "disclaimer": None}
 
     blog_id   = _get_blog_id(blog_cfg)
     blog_name = (blog_cfg or {}).get("name") or "이 블로그"
@@ -390,9 +518,18 @@ def create_required_pages(blog_cfg: dict | None = None) -> dict:
     pages = [
         ("개인정보처리방침", build_privacy_policy_html(blog_url, blog_name), "privacy_policy"),
         ("블로그 소개",     build_about_html(blog_url, blog_name, theme),   "about"),
+        ("면책 조항",       build_disclaimer_html(blog_url, blog_name, theme), "disclaimer"),
     ]
 
     for title, html, key in pages:
+        found = _page_exists(existing_pages, _PAGE_ALIASES.get(key, [title]))
+        if found and only_missing:
+            results[key] = found.get("url")
+            logger.info(f"  건너뜀 — 이미 있음: {found.get('title')} → {found.get('url', '')}")
+            continue
+        if dry_run:
+            logger.info(f"  (dry-run) {'덮어쓰기' if found else '새로 만들기'}: {title}")
+            continue
         result = _create_or_update_page(token, blog_id, title, html, existing_pages)
         if result:
             results[key] = result.get("url")
@@ -451,12 +588,51 @@ def setup_ads_txt(blog_cfg: dict | None = None) -> None:
         logger.warning(f"docs/ads.txt 업데이트 실패: {e}")
 
 
-if __name__ == "__main__":
+def main() -> int:
+    """여러 블로그를 한 번에 처리하는 진입점.
+
+    지금까지 이 모듈을 부르는 길은 `main.py --setup` 하나뿐이었고 어떤
+    워크플로도 그 경로를 타지 않았습니다(required_pages_check 주석 참고).
+    그래서 페이지가 있는지는 누군가 로컬에서 돌렸는지에 달려 있었습니다.
+    """
+    import argparse
     import logging as _logging
+
+    parser = argparse.ArgumentParser(description="AdSense 심사 필수 페이지 생성")
+    parser.add_argument("--blog", default="", help="블로그 ID (비우면 전체)")
+    parser.add_argument("--overwrite", action="store_true",
+                        help="이미 있는 페이지도 자동 생성본으로 덮어씁니다 "
+                             "(기본은 없는 것만 만듦)")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="무엇을 만들지만 알리고 아무것도 바꾸지 않습니다")
+    parser.add_argument("--ads-txt", action="store_true", help="ads.txt 안내도 출력")
+    args = parser.parse_args()
+
     _logging.basicConfig(level=_logging.INFO, format="%(levelname)s %(message)s")
-    urls = create_required_pages()
-    print("\n=== 생성된 페이지 ===")
-    for k, v in urls.items():
-        print(f"  {k}: {v or '실패'}")
-    print()
-    setup_ads_txt()
+
+    try:
+        from config import get_blog_configs
+        blogs = get_blog_configs()
+    except Exception as e:                      # 설정을 못 읽으면 단일 블로그로
+        logger.warning(f"블로그 설정을 읽지 못했습니다 ({e}) — 기본값으로 진행")
+        blogs = [None]
+    if args.blog and blogs and blogs[0] is not None:
+        blogs = [b for b in blogs if b.get("id") == args.blog] or blogs
+
+    for cfg in blogs:
+        urls = create_required_pages(cfg, only_missing=not args.overwrite,
+                                     dry_run=args.dry_run)
+        name = (cfg or {}).get("name", "기본 블로그")
+        print(f"\n=== {name} ===")
+        for k, v in urls.items():
+            print(f"  {k}: {v or ('(dry-run)' if args.dry_run else '실패')}")
+
+    if args.ads_txt:
+        print()
+        setup_ads_txt()
+    return 0
+
+
+if __name__ == "__main__":
+    import sys as _sys
+    _sys.exit(main())

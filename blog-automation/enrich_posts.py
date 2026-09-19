@@ -50,10 +50,76 @@ _TAIL_MARKERS = ['<div style="margin-top:2.5em;padding:16px 20px;background:#fff
 
 
 def _plain_text(html: str, limit: int = 5000) -> str:
-    text = re.sub(r"<script[^>]*>.*?</script>", "", html, flags=re.DOTALL | re.I)
-    text = re.sub(r"<[^>]+>", " ", text)
-    text = re.sub(r"\s+", " ", text).strip()
-    return text[:limit]
+    """FAQ 생성에 넣을 본문 텍스트.
+
+    2026-09-19 — 관련 포스트 카드·시리즈 내비게이션을 걷어내고 넘깁니다.
+    그 블록에는 **다른 글의 제목과 요약**이 박혀 있어서, 그대로 넣으면
+    이 글에 없는 내용을 근거로 FAQ가 만들어집니다.
+    experience_audit와 같은 기준을 써서 판정이 어긋나지 않게 합니다.
+    """
+    try:
+        from experience_audit import _strip_html
+        return _strip_html(html or "")[:limit]
+    except Exception:                       # 감사 모듈을 못 불러도 멈추지 않음
+        text = re.sub(r"<script[^>]*>.*?</script>", "", html, flags=re.DOTALL | re.I)
+        text = re.sub(r"<[^>]+>", " ", text)
+        text = re.sub(r"\s+", " ", text).strip()
+        return text[:limit]
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# FAQ 검증 — 프롬프트로 부탁하는 것과 실제로 지켜졌는지 확인하는 것은 다릅니다
+# ──────────────────────────────────────────────────────────────────────────────
+#
+# generate_faq_items의 프롬프트는 "본문에 없는 수치·사실 생성 금지"라고
+# 적고 있었지만, 지켜졌는지 확인하는 코드는 없었습니다. AdSense 거절의
+# 원인이 정확히 "지어낸 내용"이었으므로, 부탁만 하고 넘어갈 수 없습니다.
+#
+# 단위가 붙은 숫자만 사실 주장으로 봅니다 — "2단계"는 글의 구성이지만
+# "9억원"·"12월"·"3%"는 틀리면 독자가 손해를 봅니다. 단위가 없어도 세 자리
+# 이상이면 연도·금액인 경우가 많아 함께 봅니다.
+_CLAIM_NUM_RE = re.compile(
+    r"\d[\d,.]*\s*(?:억|만|천|원|%|％|퍼센트|포인트|년|월|일|주|개월|배|건|명|㎡|평)"
+    r"|\d{3,}")
+
+
+def _norm_num(token: str) -> str:
+    return re.sub(r"[\s,]", "", token)
+
+
+def unsupported_numbers(answer: str, body_text: str) -> list[str]:
+    """답변에 있는데 본문에는 없는 수치 목록.
+
+    본문이 "12억원"이라고 쓴 글의 FAQ가 "9억원"이라고 답하면, 글 하나가
+    스스로 모순되고 독자는 어느 쪽도 믿을 수 없게 됩니다.
+    """
+    body_nums = {_norm_num(t) for t in _CLAIM_NUM_RE.findall(body_text or "")}
+    return [t.strip() for t in _CLAIM_NUM_RE.findall(answer or "")
+            if _norm_num(t) not in body_nums]
+
+
+def validate_faq_items(items, body_text: str) -> list[dict]:
+    """본문 근거가 없거나 경험을 주장하는 항목을 걸러냅니다."""
+    out = []
+    for it in items if isinstance(items, list) else []:
+        if not isinstance(it, dict):
+            continue
+        q, a = str(it.get("q", "")).strip(), str(it.get("a", "")).strip()
+        if len(q) < 5 or len(a) < 20:
+            continue
+        bad = unsupported_numbers(a, body_text)
+        if bad:
+            logger.info(f"  ↩︎ FAQ 반려 — 본문에 없는 수치 {bad}: {q[:30]}")
+            continue
+        try:
+            from experience_audit import analyze_text
+            if analyze_text(a):
+                logger.info(f"  ↩︎ FAQ 반려 — 경험 주장 표현: {q[:30]}")
+                continue
+        except Exception:
+            pass                            # 감사 모듈이 없어도 수치 검증은 유지
+        out.append({"q": q, "a": a})
+    return out
 
 
 def needs_faq(content: str) -> bool:
@@ -103,11 +169,9 @@ JSON 배열만 응답: [{{"q": "질문", "a": "답변"}}, ...]"""
         if not m:
             return []
         items = json.loads(m.group(0))
-        return [
-            {"q": str(it["q"]).strip(), "a": str(it["a"]).strip()}
-            for it in items
-            if isinstance(it, dict) and it.get("q") and it.get("a")
-        ][:4]
+        # 프롬프트에 "본문에 없는 수치·사실 생성 금지"라고 적는 것과, 지켜졌는지
+        # 확인하는 것은 다릅니다. 확인까지 한 뒤 넘깁니다.
+        return validate_faq_items(items, body_text)[:4]
     except Exception as e:
         logger.warning(f"FAQ 생성 실패: {e}")
         return []

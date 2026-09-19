@@ -14,7 +14,8 @@ page_creator.py가 개인정보처리방침·소개 페이지를 만들 수 있�
   python required_pages_check.py              # 확인 + docs/data/required_pages.json 기록
   python required_pages_check.py --blog blog1
 
-없을 때 만드는 법:  python main.py --setup --blog blog1
+없을 때 만드는 법:  python page_creator.py --blog blog1
+  (기본은 '없는 것만 만들기' — 손으로 고쳐 둔 페이지를 덮어쓰지 않습니다)
 """
 
 import argparse
@@ -36,6 +37,9 @@ REQUIRED = {
     "privacy_policy": ("개인정보처리방침", ["개인정보", "privacy"]),
     "about": ("블로그 소개", ["소개", "about", "about us"]),
     "contact": ("문의", ["문의", "연락", "contact"]),
+    # 2026-09-19 추가 — blog1에만 있고 blog2·blog3에는 없었습니다.
+    # 금융 블로그는 투자·세금을 다루므로 특히 필요합니다(YMYL).
+    "disclaimer": ("면책 조항", ["면책", "disclaimer"]),
 }
 
 

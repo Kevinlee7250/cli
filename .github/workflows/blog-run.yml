@@ -300,7 +300,7 @@ jobs:
           # 고아 목록을 다시 만든 뒤(방금 올린 글이 여기 들어옵니다) 링크를 겁니다.
           # 발행을 막을 이유는 없으므로 실패해도 경고만 남깁니다.
           python internal_link_audit.py --blog blog1 || echo "⚠️ 내부 링크 진단 실패"
-          python inbound_linker.py --blog blog1 --limit 5 --apply \
+          python inbound_linker.py --blog blog1 --limit 10 --apply \
             || echo "⚠️ 역방향 링크 생성 실패 — docs/data/inbound_links.json 확인"
 
       # 발행 직후 공개 글 목록을 갱신합니다. blog-cluster가 주 1회(일요일)만
@@ -543,7 +543,7 @@ jobs:
           # 고아 목록을 다시 만든 뒤(방금 올린 글이 여기 들어옵니다) 링크를 겁니다.
           # 발행을 막을 이유는 없으므로 실패해도 경고만 남깁니다.
           python internal_link_audit.py --blog blog2 || echo "⚠️ 내부 링크 진단 실패"
-          python inbound_linker.py --blog blog2 --limit 5 --apply \
+          python inbound_linker.py --blog blog2 --limit 10 --apply \
             || echo "⚠️ 역방향 링크 생성 실패 — docs/data/inbound_links.json 확인"
 
       - name: 공개 글 목록 동기화 (blog2)
@@ -781,7 +781,7 @@ jobs:
           # 고아 목록을 다시 만든 뒤(방금 올린 글이 여기 들어옵니다) 링크를 겁니다.
           # 발행을 막을 이유는 없으므로 실패해도 경고만 남깁니다.
           python internal_link_audit.py --blog blog3 || echo "⚠️ 내부 링크 진단 실패"
-          python inbound_linker.py --blog blog3 --limit 5 --apply \
+          python inbound_linker.py --blog blog3 --limit 10 --apply \
             || echo "⚠️ 역방향 링크 생성 실패 — docs/data/inbound_links.json 확인"
 
       - name: 공개 글 목록 동기화 (blog3)

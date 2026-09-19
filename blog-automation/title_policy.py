@@ -52,6 +52,10 @@ EXPERIENCE_PATTERNS = [
     # "트래블카드 직접 비교 정리" 같은 제목이 생성 단계를 그냥 통과했습니다.
     # experience_audit.MEDIUM_PATTERNS와 짝을 맞춥니다.
     (re.compile(r"직접\s*(비교|정리|확인|점검|계산)"), "직접 비교·정리"),
+    # 2026-09-19 추가 — 9/18 발행된 "직접 경험한 절차"가 그대로 통과했습니다.
+    # experience_audit.MEDIUM_PATTERNS와 정규식 문자열까지 동일해야 합니다
+    # (tests/test_prompt_experience_guard.py가 pattern 문자열로 대조합니다).
+    (re.compile(r"직접\s*(경험|체험)(한|했|해\s*본)?"), "직접 경험 주장"),
 ]
 
 # 재시도가 소진됐을 때 제목을 버리지 않고 조사형으로 바꾸는 치환표.
@@ -73,6 +77,8 @@ _EXPERIENCE_REWRITES = [
     (re.compile(r"겪은\s*"), ""),
     (re.compile(r"정산한\s*(실제|직접)?\s*"), ""),
     (re.compile(r"직접\s*(비교|정리|확인|점검|계산)"), r"\1"),
+    # "직접 경험한 절차" → "절차". 어미가 긴 것부터 지워야 조각이 남지 않습니다.
+    (re.compile(r"직접\s*(?:경험|체험)(?:해\s*본|했던|했|한)?\s*"), ""),
 ]
 
 # 표현을 제거한 뒤 남는 군더더기 기호·접속어 정리용

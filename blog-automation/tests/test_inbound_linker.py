@@ -83,34 +83,56 @@ def test_link_inserted_into_body_text():
     assert ok and '<a href="https://a.com/new"' in updated and anchor
 
 
+# 2026-09-19 — 아래 네 건은 원래 "삽입 실패(ok=False)"를 기대했습니다.
+# 그때는 그게 안전의 증거였지만, 실측해 보니 그 상태로 고아가 그대로
+# 남았습니다(후보를 찾은 5건 중 3건이 앵커를 못 찾아 실패). 이제는
+# 글 끝에 관련 글 한 줄을 붙이므로, 지켜야 할 것은 "삽입하지 않는다"가
+# 아니라 "기존 본문을 한 글자도 건드리지 않는다"입니다.
+
 def test_link_not_inserted_into_heading():
-    """제목에 링크를 넣으면 문서 구조가 망가집니다."""
+    """제목 안에 링크를 넣으면 문서 구조가 망가집니다."""
     from inbound_linker import build_anchor_html
     html = "<h2>가을 단풍 골프장 추천</h2><p>본문에는 다른 내용.</p>"
-    _, ok, _ = build_anchor_html(_orphan(), html)
-    assert ok is False
+    updated, ok, _ = build_anchor_html(_orphan(), html)
+    assert ok, "이제는 마지막 수단으로 관련 글 줄을 붙입니다"
+    assert updated.startswith(html), "기존 본문이 변형됐습니다"
+    assert "https://a.com/new" not in updated.split("</h2>")[0]
 
 
 def test_link_not_nested_inside_existing_anchor():
     from inbound_linker import build_anchor_html
     html = '<p><a href="https://other.com">가을 단풍 골프장 추천</a></p>'
-    _, ok, _ = build_anchor_html(_orphan(), html)
-    assert ok is False
-
-
-def test_no_insertion_when_no_matching_phrase():
-    """본문에 자연스럽게 쓸 표현이 없으면 문장을 지어내지 않습니다."""
-    from inbound_linker import build_anchor_html
-    html = "<p>전혀 관계없는 내용입니다.</p>"
     updated, ok, _ = build_anchor_html(_orphan(), html)
-    assert ok is False and updated == html
+    assert ok
+    assert updated.startswith(html), "기존 앵커 안에 링크가 들어갔습니다"
 
 
-def test_original_html_unchanged_when_insertion_fails():
+def test_orphan_gets_a_link_even_without_a_matching_phrase():
+    """본문에 쓸 표현이 없어도 고아를 그대로 두지는 않습니다.
+
+    문장을 지어내는 게 아니라, 글 끝에 관련 글 한 줄을 붙입니다.
+    """
+    from inbound_linker import build_anchor_html, FALLBACK_ANCHOR_LABEL
+    html = "<p>전혀 관계없는 내용입니다.</p>"
+    updated, ok, anchor = build_anchor_html(_orphan(), html)
+    assert ok and anchor == FALLBACK_ANCHOR_LABEL
+    assert updated.startswith(html)
+    assert "https://a.com/new" in updated
+
+
+def test_original_html_is_never_rewritten():
     from inbound_linker import build_anchor_html
     html = "<h1>가을 단풍 골프장 추천</h1>"
     updated, ok, _ = build_anchor_html(_orphan(), html)
-    assert updated == html and not ok
+    assert ok and updated.startswith(html)
+
+
+def test_nothing_is_added_when_the_link_already_exists():
+    """이미 그 글을 가리키고 있으면 아무것도 하지 않습니다 (멱등)."""
+    from inbound_linker import build_anchor_html
+    html = '<p>자세한 내용은 <a href="https://a.com/new">여기</a>를 보세요.</p>'
+    updated, ok, _ = build_anchor_html(_orphan(), html)
+    assert ok is False and updated == html
 
 
 # ──────────────────────────────────────────────────────────────────────────────

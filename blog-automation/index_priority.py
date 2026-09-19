@@ -39,6 +39,28 @@ DAILY_QUOTA = 10
 # 발행 직후에는 원래 시간이 걸리므로, 이 기간이 지나야 요청 대상으로 봅니다
 MIN_AGE_DAYS = 3
 
+# 사이트 재편(2026-09-13)으로 409편을 비공개 전환했습니다. index_status.json에는
+# 그때 이전에 검사한 URL이 그대로 남아 있어, 2026-09-18 점검에서 20건 중 7건이
+# 이미 비공개된 글이었습니다. 하루 10건뿐인 색인 요청 할당량을 죽은 URL에
+# 쓰는 것이라, 공개 글 목록으로 걸러냅니다.
+LIVE_POSTS_PATH = os.path.join(_DOCS_DATA, "live_posts.json")
+# 공개 글 목록이 망가졌을 때 큐를 통째로 비우지 않기 위한 하한선.
+# related_posts.MIN_LIVE_RATIO와 같은 사고방식입니다 — 의심스러우면 통과시킵니다.
+MIN_LIVE_RATIO = 0.2
+
+
+def _live_urls() -> set[str]:
+    """docs/data/live_posts.json의 공개 URL 집합. 없거나 깨졌으면 빈 집합.
+
+    빈 집합은 "공개 글이 없다"가 아니라 "판정할 수 없다"는 뜻이고,
+    호출부는 그 경우 필터를 걸지 않습니다(fail-open).
+    """
+    data = _load(LIVE_POSTS_PATH, {})
+    urls = data.get("urls") if isinstance(data, dict) else None
+    if not isinstance(urls, list):
+        return set()
+    return {u for u in urls if isinstance(u, str) and u}
+
 
 def _load(path, default):
     if not os.path.exists(path):
@@ -118,11 +140,25 @@ def build_queue(limit: int = DAILY_QUOTA) -> dict:
         return {"generatedAt": datetime.now(timezone.utc).isoformat(),
                 "queue": [], "skipped": 0, "note": "색인 리포트 없음"}
 
+    live = _live_urls()
+    # 공개 목록이 검사 대상의 극히 일부만 덮으면(동기화 실패·구버전 파일)
+    # 필터를 걸지 않습니다 — 잘못된 목록으로 큐를 비우는 것이 더 나쁩니다.
+    matched = sum(1 for it in items if it.get("url", "") in live)
+    use_live_filter = bool(live) and matched >= len(items) * MIN_LIVE_RATIO
+    if live and not use_live_filter:
+        logger.warning(
+            f"live_posts.json이 검사 대상 {len(items)}건 중 {matched}건만 덮습니다 "
+            f"— 공개 여부 필터를 건너뜁니다(동기화 상태를 확인하세요)")
+
     candidates = []
-    skipped_indexed = skipped_fresh = 0
+    skipped_indexed = skipped_fresh = skipped_unpublished = 0
     for it in items:
         if it.get("verdict") == "indexed":
             skipped_indexed += 1
+            continue
+        if use_live_filter and it.get("url", "") not in live:
+            # 이미 비공개로 돌린 글 — 색인 요청해 봐야 404입니다
+            skipped_unpublished += 1
             continue
         post = by_url.get(it.get("url", ""), {})
         age = _age_days(post.get("date") or it.get("published_at"))
@@ -154,12 +190,15 @@ def build_queue(limit: int = DAILY_QUOTA) -> dict:
         "totalNotIndexed": len(candidates) + skipped_fresh,
         "skippedIndexed": skipped_indexed,
         "skippedTooFresh": skipped_fresh,
+        "skippedUnpublished": skipped_unpublished,
+        "liveFilterApplied": use_live_filter,
         "queue": candidates[:limit],
         "backlog": max(0, len(candidates) - limit),
     }
 
     logger.info(f"미색인 {len(candidates)}건 중 상위 {len(report['queue'])}건 선정 "
-                f"(이미 색인 {skipped_indexed} / 발행 직후 제외 {skipped_fresh})")
+                f"(이미 색인 {skipped_indexed} / 발행 직후 제외 {skipped_fresh}"
+                f" / 비공개 제외 {skipped_unpublished})")
     for i, c in enumerate(report["queue"], 1):
         logger.info(f"  {i:2}. [{c['score']:3}점] {c['title'][:44]}")
         logger.info(f"      {c['url']}")

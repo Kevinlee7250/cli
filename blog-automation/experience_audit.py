@@ -75,8 +75,23 @@ RESEARCH_FRAMING = re.compile(
     # 2026-09-19 추가 — "실제 여행자들이 어디서 시행착오를 겪었는지를
     # 자료 기준으로 정리했습니다"가 high로 잡혔습니다. 3인칭 서술을
     # 조사형으로 감싼 전형적인 문장인데 '겪었'만 보고 판정한 탓입니다.
-    r"자료(를)?\s*기준으로|기사(를)?\s*종합|보도(를)?\s*종합|공식\s*문서)"
+    r"자료(를)?\s*기준으로|기사(를)?\s*종합|보도(를)?\s*종합|공식\s*문서|"
+    # "신청자들이 자주 겪는 배정 착오, 실제 사례로 보면 커뮤니티 후기들을
+    # 살펴보면…" — 남의 후기를 모아 본 문장입니다.
+    r"커뮤니티\s*(후기|반응|글)|사례로\s*보면|후기(들)?을\s*살펴)"
 )
+
+# 본문에서만 적용하는 예외 — "직접 ~하고/하는/하세요"는 독자에게 권하거나
+# 다음 동작으로 이어지는 연결형이지, 글쓴이가 했다는 주장이 아닙니다.
+# 제목은 명사구라 같은 꼬리도 뜻이 다릅니다("직접 확인하고 정리한 체크리스트"는
+# 글쓴이가 했다는 말이므로 제목에서는 그대로 잡아야 합니다).
+BODY_ADVICE_FORM = re.compile(
+    r"직접\s*(?:비교|정리|확인|점검|계산|경험|체험)\s*"
+    r"(?:하고|하긴|하는|하면|하며|하려|해야|하세요|하시|한\s*뒤|한\s*후|"
+    r"할\s|하기|해\s*보)"
+)
+# 이 예외가 적용되는 라벨 — 1인칭 경험(critical/high)에는 쓰지 않습니다.
+_ADVICE_EXEMPT_LABELS = {"직접 비교·정리", "직접 경험 주장"}
 
 # critical — 1인칭 주어 + 지어낸 구체 사실이 같은 문장 안에 있는 경우.
 # 금액·날짜·기간·주소가 붙으면 독자가 사실로 받아들이므로 가장 위험합니다.
@@ -138,7 +153,9 @@ HIGH_PATTERNS = [
 MEDIUM_PATTERNS = [
     (re.compile(r"솔직(한)?\s*(후기|리뷰|비교|정리|평가|장단점)"), "솔직 후기·리뷰"),
     # "실제 대환대출 후기"처럼 사이에 단어가 끼는 형태까지 잡습니다.
-    (re.compile(r"(실제|실사용)\s*[가-힣A-Za-z0-9·\s]{0,12}?(후기|경험|사용기)"),
+    # "기대와 실제 경험 사이의 간극"처럼 일반 명사구로 쓰인 경우는 뺍니다.
+    (re.compile(r"(실제|실사용)\s*[가-힣A-Za-z0-9·\s]{0,12}?(후기|경험|사용기)"
+                r"(?!\s*(?:사이|차이))"),
      "실제 후기 표방"),
     (re.compile(r"(해\s*본|써\s*본|다녀온|가\s*본)\s*(후기|리뷰|경험)"), "~해본 후기"),
     # 2026-09-19 좁힘 — "상품설명서를 직접 확인하는 게 안전합니다"처럼 독자에게
@@ -263,10 +280,16 @@ def analyze_text(text: str, *, title_mode: bool = False) -> list[dict]:
                     break
             else:
                 for pat, label in MEDIUM_PATTERNS:
-                    if pat.search(unit):
-                        hits.append({"severity": "medium", "label": label,
-                                     "excerpt": unit[:160]})
+                    if not pat.search(unit):
+                        continue
+                    if (not title_mode and label in _ADVICE_EXEMPT_LABELS
+                            and BODY_ADVICE_FORM.search(unit)):
+                        # "데이터를 직접 확인하고 본인 상황을 점검하세요" 같은
+                        # 권유·연결형 — 글쓴이가 했다는 주장이 아닙니다.
                         break
+                    hits.append({"severity": "medium", "label": label,
+                                 "excerpt": unit[:160]})
+                    break
     return hits
 
 

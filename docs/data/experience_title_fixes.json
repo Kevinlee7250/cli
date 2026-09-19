@@ -1,69 +1,33 @@
 {
-  "ranAt": "2026-09-13T13:25:22.941784+00:00",
-  "dryRun": false,
-  "scanned": 90,
-  "flagged": 5,
-  "changed": 5,
+  "ranAt": "2026-09-19T07:23:32.070633+00:00",
+  "dryRun": true,
+  "scanned": 96,
+  "flagged": 2,
+  "changed": 2,
   "skipped": 0,
   "failed": 0,
   "items": [
     {
-      "url": "https://www.hoguwhat.com/2026/09/blog-post_04.html",
+      "url": "https://www.hoguwhat.com/2026/09/blog-post_18.html",
       "blog": "HOGU What?",
-      "old": "안동 하회마을 혼자 여행하기 좋을까, 솔직 후기 완전 정리",
-      "new": "안동 하회마을 혼자 여행 가이드, 준비물부터 코스까지 정보 총정리",
+      "old": "해외에서 사고 났을 때 대사관 신고 직접 경험한 절차",
+      "new": "해외 사고 시 대사관 신고 절차, 공식 안내 기준 총정리",
       "source": "claude",
       "violations": [
-        "경험 주장: 솔직 후기"
+        "경험 주장: 직접 경험 주장"
       ],
-      "action": "updated"
+      "action": "dry-run"
     },
     {
-      "url": "https://www.hoguwhat.com/2026/08/blog-post_01.html",
+      "url": "https://www.hoguwhat.com/2026/09/blog-post_17.html",
       "blog": "HOGU What?",
-      "old": "홍콩 싱가포르 항공권 시기별 가격 차이 직접 추적해봤더니",
-      "new": "홍콩 싱가포르 항공권 시기별 가격 차이 정리",
+      "old": "패키지여행 계약서 환불 조항, 직접 확인하고 정리한 체크리스트",
+      "new": "패키지여행 계약서 환불 조항 정리, 체크리스트로 한눈에 보기",
       "source": "claude",
       "violations": [
-        "경험 주장: 직접 ~해봤",
-        "경험 주장: 경험 완료형"
+        "경험 주장: 직접 비교·정리"
       ],
-      "action": "updated"
-    },
-    {
-      "url": "https://www.hoguwhat.com/2026/06/2026-top-5_0477851388.html",
-      "blog": "HOGU What?",
-      "old": "2026년 부동산 투자 전략 TOP 5 완벽 정리 (충격 수익률)",
-      "new": "2026년 부동산 투자 전략 TOP 5 정리 (수익률 비교)",
-      "source": "claude",
-      "violations": [
-        "충격"
-      ],
-      "action": "updated"
-    },
-    {
-      "url": "https://hogugolfntraval.blogspot.com/2026/09/blog-post_11.html",
-      "blog": "HOGU 여행,스포츠,연예",
-      "old": "서울 근교 드라이브 코스, 대부도·선재도·영흥도 직접 가본 후기",
-      "new": "서울 근교 드라이브 코스 정리, 대부도·선재도·영흥도 총정리",
-      "source": "claude",
-      "violations": [
-        "경험 주장: 직접 ~해봤",
-        "경험 주장: ~해본 후기"
-      ],
-      "action": "updated"
-    },
-    {
-      "url": "https://hogugolfntraval.blogspot.com/2026/08/blog-post_309.html",
-      "blog": "HOGU 여행,스포츠,연예",
-      "old": "강원도 캠핑 처음 해봤을 때 몰랐던 것들 실제 후기 정리",
-      "new": "강원도 캠핑 처음일 때 알아두면 좋은 것들 정리",
-      "source": "claude",
-      "violations": [
-        "경험 주장: 경험 완료형",
-        "경험 주장: 실제 후기 표방"
-      ],
-      "action": "updated"
+      "action": "dry-run"
     }
   ]
 }

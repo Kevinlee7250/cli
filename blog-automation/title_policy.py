@@ -51,7 +51,12 @@ EXPERIENCE_PATTERNS = [
     # 2026-09-18 추가 — 치환표(_EXPERIENCE_REWRITES)에는 있는데 탐지 규칙이 없어
     # "트래블카드 직접 비교 정리" 같은 제목이 생성 단계를 그냥 통과했습니다.
     # experience_audit.MEDIUM_PATTERNS와 짝을 맞춥니다.
-    (re.compile(r"직접\s*(비교|정리|확인|점검|계산)"), "직접 비교·정리"),
+    # 2026-09-19 좁힘 — 독자에게 권하는 "직접 확인하세요"까지 잡고 있었습니다.
+    # experience_audit.MEDIUM_PATTERNS와 정규식 문자열이 같아야 합니다.
+    (re.compile(r"직접\s*(?:비교|정리|확인|점검|계산)"
+                r"(?!\s*(?:하는|하시|하세요|해야|하면|하기|할\s|해\s*보면|"
+                r"해\s*보세요|해\s*보시|이\s*필요|가\s*필요|이\s*중요|이\s*안전))"),
+     "직접 비교·정리"),
     # 2026-09-19 추가 — 9/18 발행된 "직접 경험한 절차"가 그대로 통과했습니다.
     # experience_audit.MEDIUM_PATTERNS와 정규식 문자열까지 동일해야 합니다
     # (tests/test_prompt_experience_guard.py가 pattern 문자열로 대조합니다).

@@ -71,7 +71,11 @@ REPORT_PATH = os.path.join(_DOCS_DATA, "experience_audit.json")
 RESEARCH_FRAMING = re.compile(
     r"(후기(를|들을)?\s*종합|후기\s*기반|리뷰(를)?\s*종합|자료(를)?\s*조사|"
     r"공식\s*(발표|안내|자료|홈페이지)|이용자\s*(후기|반응|평)|"
-    r"조사해\s*보니|자료에\s*따르면|기준으로는|알려져\s*있습니다)"
+    r"조사해\s*보니|자료에\s*따르면|기준으로는|알려져\s*있습니다|"
+    # 2026-09-19 추가 — "실제 여행자들이 어디서 시행착오를 겪었는지를
+    # 자료 기준으로 정리했습니다"가 high로 잡혔습니다. 3인칭 서술을
+    # 조사형으로 감싼 전형적인 문장인데 '겪었'만 보고 판정한 탓입니다.
+    r"자료(를)?\s*기준으로|기사(를)?\s*종합|보도(를)?\s*종합|공식\s*문서)"
 )
 
 # critical — 1인칭 주어 + 지어낸 구체 사실이 같은 문장 안에 있는 경우.
@@ -137,7 +141,14 @@ MEDIUM_PATTERNS = [
     (re.compile(r"(실제|실사용)\s*[가-힣A-Za-z0-9·\s]{0,12}?(후기|경험|사용기)"),
      "실제 후기 표방"),
     (re.compile(r"(해\s*본|써\s*본|다녀온|가\s*본)\s*(후기|리뷰|경험)"), "~해본 후기"),
-    (re.compile(r"직접\s*(비교|정리|확인|점검|계산)"), "직접 비교·정리"),
+    # 2026-09-19 좁힘 — "상품설명서를 직접 확인하는 게 안전합니다"처럼 독자에게
+    # 권하는 문장까지 잡고 있었습니다. 9/19 감사의 본문 히트 37개 중 26개가
+    # 이 규칙이었고, 그대로 본문 리라이팅을 돌리면 멀쩡한 안내 문장이
+    # 망가집니다. 글쓴이가 '했다'는 쪽만 남깁니다.
+    (re.compile(r"직접\s*(?:비교|정리|확인|점검|계산)"
+                r"(?!\s*(?:하는|하시|하세요|해야|하면|하기|할\s|해\s*보면|"
+                r"해\s*보세요|해\s*보시|이\s*필요|가\s*필요|이\s*중요|이\s*안전))"),
+     "직접 비교·정리"),
     # 2026-09-19 추가 — 9/18 발행된 "직접 경험한 절차"가 어느 규칙에도 걸리지
     # 않았습니다. "직접 ~해봤"은 봤/본/보니 어미를, "1인칭 경험 수식"은
     # 제가/저는을 요구해서 '직접 + 경험' 조합만 빠져 있었습니다.
@@ -147,11 +158,72 @@ MEDIUM_PATTERNS = [
 SEVERITY_ORDER = {"critical": 0, "high": 1, "medium": 2, "ok": 3}
 
 
+# ──────────────────────────────────────────────────────────────────────────────
+# 본문이 아닌 부속 블록
+# ──────────────────────────────────────────────────────────────────────────────
+#
+# 2026-09-19 감사에서 지적 42건 중 14건이 "본문에는 아무 문제가 없는데
+# 관련 포스트 카드에 박힌 다른 글 제목 때문에" 걸렸습니다. 히트 68개 중
+# 31개가 그런 경우였습니다. 이걸 그대로 두면 제목이 나쁜 글 하나가 그 글을
+# 링크한 모든 글을 오염시키고, 본문 리라이팅이 엉뚱한 곳을 고칩니다.
+#
+# 아래 블록은 글쓴이가 쓴 문장이 아니라 자동 생성된 내비게이션입니다.
+#   · 관련 포스트 카드       related_posts.build_related_section → div.rp-wrap
+#   · 역방향 링크 한 줄       inbound_linker → p.hogu-inbound-related
+#   · 시리즈 내비게이션       series_planner → background:#f0f4ff 인라인 스타일
+_CHROME_DIV_MARKERS = ('class="rp-wrap"', "background:#f0f4ff")
+_CHROME_P_RE = re.compile(
+    r'<p[^>]*class="[^"]*hogu-inbound-related[^"]*"[^>]*>.*?</p>', re.I | re.S)
+_HASHTAG_RUN_RE = re.compile(r"(?:(?:^|\s)#[^\s#]{1,30}){2,}")
+
+
+def _drop_div_block(html: str, marker: str) -> str:
+    """marker를 가진 <div>를 여는 태그부터 짝이 맞는 </div>까지 통째로 지웁니다.
+
+    정규식 하나로 하면 중첩된 div에서 잘못된 지점을 닫습니다 —
+    관련 포스트 카드는 3단 중첩이라 실제로 그렇게 깨졌습니다.
+    """
+    out = html or ""
+    tag_re = re.compile(r"<(/?)div\b[^>]*>", re.I)
+    while True:
+        pos = out.find(marker)
+        if pos < 0:
+            return out
+        start = out.rfind("<div", 0, pos + len(marker))
+        if start < 0:
+            return out
+        depth, cursor = 0, start
+        end = -1
+        for m in tag_re.finditer(out, start):
+            depth += -1 if m.group(1) else 1
+            cursor = m.end()
+            if depth == 0:
+                end = cursor
+                break
+        if end < 0:
+            end = len(out)          # 닫는 태그가 없으면 그 뒤는 전부 부속물
+        out = out[:start] + " " + out[end:]
+
+
+def strip_chrome(html: str) -> str:
+    """관련 포스트·시리즈 내비·역방향 링크 줄을 걷어냅니다 (감사 전용)."""
+    s = _CHROME_P_RE.sub(" ", html or "")
+    for marker in _CHROME_DIV_MARKERS:
+        s = _drop_div_block(s, marker)
+    return s
+
+
 def _strip_html(html: str) -> str:
-    """태그·스크립트를 걷어내고 본문 텍스트만 남깁니다."""
+    """태그·스크립트를 걷어내고 본문 텍스트만 남깁니다.
+
+    감사 대상은 글쓴이가 쓴 문장입니다 — 자동 생성된 내비게이션 블록과
+    글 끝 해시태그 줄은 먼저 걷어냅니다.
+    """
     s = re.sub(r"<(script|style)\b[^>]*>.*?</\1>", " ", html or "", flags=re.I | re.S)
+    s = strip_chrome(s)
     s = re.sub(r"<[^>]+>", " ", s)
     s = re.sub(r"&nbsp;?", " ", s)
+    s = _HASHTAG_RUN_RE.sub(" ", s)
     return re.sub(r"\s+", " ", s).strip()
 
 

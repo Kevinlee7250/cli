@@ -22,6 +22,24 @@ on:
         type: boolean
         required: false
         default: false
+      create_pages:
+        description: '없는 필수 페이지(개인정보·소개·면책 조항) 생성 — 있는 페이지는 건드리지 않음'
+        type: boolean
+        required: false
+        default: false
+      enrich:
+        description: 'FAQ·참고자료 보강 (off/both/faq) — 출처는 research_collector가 찾은 실존 URL만'
+        required: false
+        default: 'off'
+        type: choice
+        options:
+          - 'off'
+          - both
+          - faq
+      enrich_limit:
+        description: '보강할 최대 편수 (0=전체). 나눠 돌리는 것을 권장'
+        required: false
+        default: '10'
 
 permissions:
   contents: write
@@ -87,10 +105,36 @@ jobs:
           echo "실행 인자: $ARGS"
           python adsense_audit.py $ARGS
 
-      # 심사 필수 페이지(개인정보처리방침·소개·문의)가 실제로 블로그에 있는지
-      # 확인만 합니다. page_creator가 만들 수는 있지만 그 진입점(main.py --setup)을
-      # 도는 워크플로가 없어, 있는지 없는지 시스템 어디에도 기록되지 않았습니다.
-      # 만들지는 않습니다 — 발행 중인 블로그에 페이지를 얹는 건 사람이 정할 일입니다.
+      # 없는 페이지만 만듭니다. 이미 있는 페이지는 손대지 않습니다 — 사람이
+      # 고쳐 둔 내용을 자동 생성본으로 덮어쓰는 것은 되돌리기 어렵습니다.
+      # 기본값은 꺼져 있고, 사람이 켤 때만 돕니다.
+      - name: 필수 페이지 생성 (없는 것만)
+        if: inputs.create_pages == true
+        working-directory: blog-automation
+        run: |
+          ARGS=""
+          [ "${{ inputs.blog_id }}" != "all" ] && ARGS="--blog ${{ inputs.blog_id }}"
+          [ "${{ inputs.dry_run }}" = "true" ] && ARGS="$ARGS --dry-run"
+          python page_creator.py $ARGS || echo "⚠️ 페이지 생성 실패"
+
+      # FAQ·참고자료 보강. 출처는 research_collector가 찾은 실존 URL만 쓰고,
+      # 자료를 못 찾으면 그 글은 건너뜁니다 — 가짜 URL은 클릭하면 바로
+      # 들통나므로 안 넣느니만 못합니다. FAQ 답변은 본문에 없는 수치가
+      # 들어가면 그 항목을 버립니다(2026-09-19 추가한 검증).
+      - name: FAQ·참고자료 보강
+        if: inputs.enrich != 'off' && inputs.enrich != ''
+        working-directory: blog-automation
+        run: |
+          ARGS="--blog ${{ inputs.blog_id || 'blog1' }} --limit ${{ inputs.enrich_limit || '10' }}"
+          [ "${{ inputs.enrich }}" = "faq" ] && ARGS="$ARGS --faq-only"
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+            echo "=== 보강 계획만 확인 (수정 없음) ==="
+          fi
+          echo "실행 인자: $ARGS"
+          python enrich_posts.py $ARGS || echo "⚠️ 보강 실패 — docs/data/enrich_report.json 확인"
+
+      # 심사 필수 페이지가 실제로 블로그에 있는지 확인합니다 (읽기 전용).
       - name: 필수 페이지 확인 (읽기 전용)
         if: always()
         working-directory: blog-automation
@@ -101,7 +145,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          for f in docs/data/adsense_audit.json docs/data/required_pages.json; do
+          for f in docs/data/adsense_audit.json docs/data/required_pages.json \
+                   docs/data/enrich_report.json; do
             [ -f "$f" ] && git add -f "$f"
           done
           if git diff --staged --quiet; then

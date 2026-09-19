@@ -41,7 +41,9 @@ def wired(tmp_path, monkeypatch):
 _BLOG = [{"id": "blog1", "name": "테스트 블로그"}]
 _ALL_PAGES = [{"title": "개인정보처리방침", "url": "u1"},
               {"title": "블로그 소개", "url": "u2"},
-              {"title": "문의하기", "url": "u3"}]
+              {"title": "문의하기", "url": "u3"},
+              # 2026-09-19 추가 — blog1에만 있고 blog2·blog3에는 없었습니다.
+              {"title": "면책 조항", "url": "u4"}]
 
 
 def test_all_pages_present(wired):
@@ -56,7 +58,7 @@ def test_missing_pages_are_listed(wired):
     r = rpc.check()
     assert r["ok"] is False
     assert r["blogsWithMissing"] == 1
-    assert set(r["blogs"][0]["missing"]) == {"블로그 소개", "문의"}
+    assert set(r["blogs"][0]["missing"]) == {"블로그 소개", "문의", "면책 조항"}
 
 
 def test_token_failure_is_unknown_not_missing(wired):
@@ -79,7 +81,8 @@ def test_title_variants_are_accepted(wired):
     """사람이 손으로 만들었다면 제목이 조금 다를 수 있습니다."""
     wired(_BLOG, pages=[{"title": "개인정보 처리방침", "url": "u1"},
                         {"title": "About", "url": "u2"},
-                        {"title": "연락처", "url": "u3"}])
+                        {"title": "연락처", "url": "u3"},
+                        {"title": "Disclaimer", "url": "u4"}])
     r = rpc.check()
     assert r["ok"] is True, f"별칭 매칭 실패: {r['blogs'][0]['missing']}"
 

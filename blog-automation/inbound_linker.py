@@ -30,9 +30,11 @@ Usage:
 """
 
 import argparse
+import html as _html
 import json
 import logging
 import os
+import re
 import sys
 import time
 from datetime import datetime, timezone
@@ -56,6 +58,38 @@ MAX_ADDED_PER_SOURCE = 3
 # 관련성 점수가 이 값 미만이면 링크하지 않음 — 억지 링크는 안 하느니만 못합니다
 MIN_RELEVANCE = 2
 
+# 2026-09-19 측정: 고아 21건을 처리했는데 링크는 2건만 생겼습니다.
+# 21건 중 16건은 후보가 아예 0건이었습니다. 재편으로 공개 글이 96편까지
+# 줄면서 "태그가 2개 이상 겹치고 + 더 먼저 발행된 글"이 거의 남지 않은 탓입니다.
+# 그래서 후보를 못 찾으면 기준을 단계적으로 낮춥니다. 단계는 리포트에 남겨
+# 어떤 링크가 어느 기준으로 만들어졌는지 나중에 판단할 수 있게 합니다.
+
+# 본문에 쓸 앵커가 없을 때 글 끝에 붙이는 관련 글 줄
+FALLBACK_ANCHOR_LABEL = "함께 읽으면 좋은 글"
+FALLBACK_MARKER = "hogu-inbound-related"
+MAX_FALLBACK_PER_SOURCE = 3
+
+_TOKEN_RE = re.compile(r"[0-9A-Za-z가-힣]+")
+# 어느 글에나 나오는 말이라 겹쳐도 관련성의 증거가 아닙니다
+_COMMON_TOKENS = {
+    "정리", "방법", "총정리", "비교", "가이드", "추천", "후기", "정보", "확인",
+    "기준", "차이", "완벽", "핵심", "최신", "국내", "해외", "그리고", "하는",
+    "2024", "2025", "2026",
+}
+
+
+def _title_overlap(a: str, b: str) -> int:
+    """제목끼리 겹치는 의미 있는 낱말 수.
+
+    `_score_relevance`는 공백 단위로만 비교해서 "일본 기준금리 인상"과
+    "한국은행 기준금리 동결"의 '기준금리'를 놓칩니다. 두 글자 이상
+    낱말만, 흔한 말은 빼고 셉니다.
+    """
+    def toks(s: str) -> set[str]:
+        return {t for t in _TOKEN_RE.findall(s or "")
+                if len(t) >= 2 and t not in _COMMON_TOKENS}
+    return len(toks(a) & toks(b))
+
 
 def _save(path, data):
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -65,7 +99,8 @@ def _save(path, data):
 
 def find_link_targets(orphan: dict, candidates: list[dict],
                       already_linked: set[str], per_orphan: int = LINKS_PER_ORPHAN,
-                      min_relevance: int = MIN_RELEVANCE) -> list[dict]:
+                      min_relevance: int = MIN_RELEVANCE,
+                      relax: bool = True) -> list[dict]:
     """고아 글에 링크를 걸어 줄 '출처 글'을 고릅니다.
 
     조건:
@@ -74,37 +109,82 @@ def find_link_targets(orphan: dict, candidates: list[dict],
       · 이미 그 대상을 링크하고 있지 않음
       · 인바운드가 많은(=구글이 이미 아는) 글을 우선 — 크롤 경로가 이어짐
     """
-    from internal_linker import _score_relevance
-
     orphan_tags = set(orphan.get("tags") or [])
     orphan_kw = (orphan.get("keyword") or "")
     orphan_pub = orphan.get("published") or ""
 
-    scored = []
-    for c in candidates:
-        if c.get("url") == orphan.get("url"):
-            continue
-        if c.get("url") in already_linked:
-            continue
-        if orphan_pub and (c.get("published") or "") >= orphan_pub:
-            continue
-        score = _score_relevance(c, orphan_tags, orphan_kw,
-                                 orphan.get("articleType", ""))
-        if score < min_relevance:
-            continue
-        # 관련성 우선, 같으면 이미 링크를 많이 받은 글 우선
-        scored.append((score, c.get("inbound", 0), c))
+    orphan_title = orphan.get("title") or ""
 
-    scored.sort(key=lambda x: (-x[0], -x[1]))
-    return [c for _, _, c in scored[:per_orphan]]
+    def collect(floor: int, require_older: bool) -> list[dict]:
+        scored = []
+        for c in candidates:
+            if c.get("url") == orphan.get("url"):
+                continue
+            if c.get("url") in already_linked:
+                continue
+            if require_older and orphan_pub and (c.get("published") or "") >= orphan_pub:
+                continue
+            # _score_relevance의 공백 단위 비교는 "2026", "정리"처럼
+            # 어느 글에나 있는 말에도 점수를 줍니다. 그 부분만 빼고,
+            # 낱말 단위 겹침으로 대신합니다.
+            score = len(orphan_tags & set(c.get("tags") or []))
+            score += _title_overlap(orphan_title or orphan_kw,
+                                    c.get("title") or c.get("keyword") or "")
+            if score < floor:
+                continue
+            # 관련성 우선, 같으면 이미 링크를 많이 받은 글 우선
+            scored.append((score, c.get("inbound", 0), c))
+        scored.sort(key=lambda x: (-x[0], -x[1]))
+        return [c for _, _, c in scored[:per_orphan]]
+
+    # 1단계: 원래 기준. 2단계: 관련성 1점까지 허용(태그 하나 또는 낱말 하나).
+    # 3단계: 발행 순서 제약만 풉니다 — 오래된 고아일수록 더 먼저 나온 글이
+    # 거의 없어서, 이 제약이 남으면 후보가 영원히 0건입니다.
+    # 관련성 1점 미만은 어느 단계에서도 링크하지 않습니다 — 무관한 링크는
+    # 고아를 해소하는 게 아니라 스팸 신호를 만듭니다.
+    if not relax:
+        return collect(min_relevance, True)
+    for floor, older in ((min_relevance, True), (1, True), (1, False)):
+        found = collect(floor, older)
+        if found:
+            return found
+    return []
+
+
+def append_related_link(orphan: dict, source_html: str) -> tuple[str, bool]:
+    """글 끝에 "함께 읽으면 좋은 글" 한 줄을 붙입니다.
+
+    안전장치:
+      · 이미 그 URL이 본문에 있으면 아무것도 하지 않습니다 (몇 번 돌려도 같음)
+      · 한 글에 이 방식으로 붙는 줄은 MAX_FALLBACK_PER_SOURCE개까지 —
+        본문 끝이 링크 목록이 되면 그게 더 나쁜 신호입니다
+    """
+    url = (orphan.get("url") or "").strip()
+    title = (orphan.get("title") or "").strip()
+    if not url or not title:
+        return source_html, False
+
+    existing = source_html or ""
+    if url in existing:
+        return source_html, False
+    if existing.count(FALLBACK_MARKER) >= MAX_FALLBACK_PER_SOURCE:
+        return source_html, False
+
+    block = (f'<p class="{FALLBACK_MARKER}">{FALLBACK_ANCHOR_LABEL}: '
+             f'<a href="{_html.escape(url, quote=True)}">'
+             f'{_html.escape(title[:70])}</a></p>')
+    return existing + "\n" + block, True
 
 
 def build_anchor_html(orphan: dict, source_html: str) -> tuple[str, bool, str]:
     """출처 글 본문에 고아 글로 가는 링크를 삽입합니다.
 
     반환: (수정된 html, 삽입 여부, 사용한 앵커 텍스트)
-    본문에 자연스럽게 쓸 수 있는 표현이 없으면 삽입하지 않습니다 —
-    억지로 문장을 만들어 붙이지 않습니다.
+
+    1순위는 본문 문장 속 자연스러운 앵커입니다. 그게 안 되면 글 끝에
+    "함께 읽으면 좋은 글" 한 줄을 붙입니다 — 문장을 지어내는 게 아니라
+    블로그에서 흔히 쓰는 관련 글 표기이고, 이걸 안 하면 고아가 그대로
+    남습니다(2026-09-19 측정: 후보를 찾은 5건 중 3건이 앵커를 못 찾아 실패).
     """
     from internal_linker import _extract_keywords, _insert_link_in_text
 
@@ -115,6 +195,10 @@ def build_anchor_html(orphan: dict, source_html: str) -> tuple[str, bool, str]:
             source_html, kw, orphan.get("url", ""), orphan.get("title", "")[:60])
         if ok:
             return updated, True, kw
+
+    updated, ok = append_related_link(orphan, source_html)
+    if ok:
+        return updated, True, FALLBACK_ANCHOR_LABEL
     return source_html, False, ""
 
 

@@ -85,3 +85,30 @@ def test_the_title_that_slipped_through_is_now_caught():
     """2026-09-15 발행된 실제 제목 — 이제는 걸려야 합니다."""
     from title_policy import check_title
     assert check_title("해외여행 환전 수수료 0% 만들기, 트래블카드 직접 비교 정리")
+
+
+def test_direct_experience_phrase_is_caught():
+    """2026-09-18 발행된 '직접 경험한 절차' — 어느 규칙에도 안 걸렸습니다.
+
+    '직접 ~해봤'은 봤/본/보니 어미를, '1인칭 경험 수식'은 제가/저는을
+    요구해서 '직접 + 경험' 조합만 통째로 빠져 있었습니다.
+    """
+    from title_policy import check_title
+    assert check_title("실업급여 신청, 직접 경험한 절차 안내")
+    assert check_title("해외 배송 대행 직접 체험한 과정")
+
+
+def test_direct_experience_phrase_is_rewritten_cleanly():
+    """재시도가 소진돼도 제목을 버리지 않고 조사형으로 바꿉니다."""
+    from title_policy import sanitize_title, check_title
+    out = sanitize_title("실업급여 신청, 직접 경험한 절차 안내")
+    assert not check_title(out), f"치환 후에도 걸립니다: {out}"
+    assert "경험" not in out and "직접" not in out
+    assert "절차" in out, f"주제어가 사라졌습니다: {out}"
+
+
+def test_audit_flags_the_same_phrase_in_body():
+    """감사도 같은 표현을 medium으로 잡는지 — 두 곳이 어긋나면 안 됩니다."""
+    from experience_audit import analyze_text
+    hits = analyze_text("신청은 어렵지 않았습니다. 직접 경험한 절차를 정리했습니다.")
+    assert any(h["label"] == "직접 경험 주장" for h in hits), hits

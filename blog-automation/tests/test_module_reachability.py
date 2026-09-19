@@ -34,6 +34,9 @@ _EXPECTED_LOCAL = {
     "recover_post_details": "수동 복구 도구",
     "series_relink": "수동 복구 도구",
     "manual_image_check": "로컬 수동 점검",
+    # 백업 파일로 감사를 돌려 봅니다. Blogger API를 쓰지 않아 규칙을 고칠 때
+    # 워크플로를 기다리지 않고 바로 결과를 볼 수 있습니다.
+    "audit_from_backup": "로컬 수동 점검 (백업 기반 감사)",
     "dashboard": "대시보드가 읽는 데이터 모듈",
     "trend_fetcher": "미사용 — 정리 대상",
 }

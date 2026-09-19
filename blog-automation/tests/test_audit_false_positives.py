@@ -119,6 +119,49 @@ def test_third_person_research_framing_is_not_high():
     assert analyze_text(s) == [], analyze_text(s)
 
 
+CONNECTIVE_ADVICE = [
+    "실제 투자 전 최신 재무제표와 배당 이력을 반드시 직접 확인하고 결정하시기 바랍니다.",
+    "'복리의 마법'을 직접 체험하세요.",
+    "이 자료는 최근 강수 패턴과 직접 비교하긴 어렵지만 참고할 만합니다.",
+    "보험료를 직접 비교하고 불필요한 중간 수수료를 줄이는 방식입니다.",
+    "자금 흐름 데이터를 직접 확인하고 본인의 투자 기간을 먼저 점검하는 것이 낫습니다.",
+]
+
+
+def test_connective_and_imperative_forms_are_not_claims_in_body():
+    """'직접 ~하고/하긴/하세요'는 다음 동작으로 이어지는 연결형입니다."""
+    for s in CONNECTIVE_ADVICE:
+        assert analyze_text(s) == [], f"연결·권유형을 지적했습니다: {s}"
+
+
+def test_the_same_tail_is_still_caught_in_a_title():
+    """제목은 명사구라 같은 꼬리도 뜻이 다릅니다.
+
+    "직접 확인하고 정리한 체크리스트"는 글쓴이가 했다는 말입니다 —
+    본문 예외를 제목까지 적용하면 9/17 발행 제목을 놓칩니다.
+    """
+    assert check_title("패키지여행 계약서 환불 조항, 직접 확인하고 정리한 체크리스트")
+    assert analyze_text("패키지여행 계약서 환불 조항, 직접 확인하고 정리한 체크리스트",
+                        title_mode=True)
+
+
+def test_generic_noun_phrase_is_not_a_review_claim():
+    """'기대와 실제 경험 사이의 간극' — 후기 표방이 아닙니다."""
+    assert analyze_text("예약 전에 확인해두면 기대와 실제 경험 사이의 간극을 줄일 수 있습니다.") == []
+
+
+def test_community_reviews_are_research_framing():
+    s = ("신청자들이 자주 겪는 배정 착오, 실제 사례로 보면 "
+         "커뮤니티 후기들을 살펴보면 불만이 자주 올라옵니다.")
+    assert analyze_text(s) == [], analyze_text(s)
+
+
+def test_writer_completed_claim_in_body_still_caught():
+    """본문 예외를 넓히다 진짜 주장을 놓치면 안 됩니다."""
+    assert analyze_text("카드 세 종류를 직접 비교 정리했습니다.")
+    assert analyze_text("다음 편에서는 세 번 다녀온 경험을 종합해 총평을 다룹니다.")
+
+
 def test_first_person_experience_is_still_high():
     """조사형 표현을 추가했다고 1인칭 경험까지 통과시키면 안 됩니다."""
     hits = analyze_text("제가 직접 겪은 일을 그대로 적었습니다.")

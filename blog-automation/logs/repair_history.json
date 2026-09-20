@@ -1,5 +1,48 @@
 [
   {
+    "timestamp": "2026-09-20T00:31:55.456720",
+    "health_score": 85,
+    "issues_found": 1,
+    "issues": [
+      {
+        "id": "gsc_url_mismatch",
+        "level": "high",
+        "message": "GSC가 URL 19개를 반환했지만 글 매칭률이 0.0% — 도메인 전환·URL 형식 불일치 의심",
+        "context": {
+          "dataSource": {
+            "bloggerApi": true,
+            "gscPageData": true,
+            "gscUrlsMatched": 0,
+            "gscUrlsSeen": 19,
+            "gscMatchRate": 0.0,
+            "postsWithoutUrl": 16
+          }
+        },
+        "fix": null,
+        "known_incident": {
+          "incident_id": "20260722060825",
+          "title": "GSC 도메인 속성(sc-domain:) 403 — 사이트맵 제출·검사 실패",
+          "root_cause": "GSC에 도메인 속성(sc-domain:)으로 등록된 사이트를 URL-프리픽스 형식으로 조회하면 403 발생",
+          "fix": "_domain_property_for() 헬퍼로 403 시 sc-domain: 형식으로 자동 재시도 (blog_analytics.py, gsc_indexing.py 양쪽)",
+          "match_score": 2
+        }
+      }
+    ],
+    "repairs_applied": 0,
+    "repairs": [
+      {
+        "issue_id": "gsc_url_mismatch",
+        "issue_level": "high",
+        "issue_message": "GSC가 URL 19개를 반환했지만 글 매칭률이 0.0% — 도메인 전환·URL 형식 불일치 의심",
+        "fix_applied": null,
+        "timestamp": "2026-09-20T00:31:55.456674",
+        "success": null,
+        "detail": "수동 조치 필요 (자동 수리 불가)"
+      }
+    ],
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-09-19T19:07:12.988291",
     "health_score": 85,
     "issues_found": 1,
@@ -2210,15 +2253,6 @@
   },
   {
     "timestamp": "2026-08-29T03:51:49.247038",
-    "health_score": 100,
-    "issues_found": 0,
-    "issues": [],
-    "repairs_applied": 0,
-    "repairs": [],
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-08-29T00:49:54.865408",
     "health_score": 100,
     "issues_found": 0,
     "issues": [],

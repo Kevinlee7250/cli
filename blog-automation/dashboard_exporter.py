@@ -63,6 +63,12 @@ def _measured_impressions() -> int | None:
     rows = (data or {}).get("rows") if isinstance(data, dict) else None
     if isinstance(rows, list):
         return int(sum(r.get("impressions", 0) for r in rows if isinstance(r, dict)))
+    # gsc_fetcher가 쓰는 형태 — 검색 실적이 한 줄도 없으면 total_rows가 0입니다.
+    # "자료를 못 읽었다"(None)와 "읽었는데 0이다"(0)는 다릅니다.
+    if isinstance(data, dict) and isinstance(data.get("total_rows"), int):
+        queries = data.get("top_queries") or []
+        return int(sum(q.get("impressions", 0) for q in queries
+                       if isinstance(q, dict)))
     return None
 
 
@@ -648,8 +654,17 @@ def export_dashboard() -> None:
         for run in history[:RUNS_EXPORT_LIMIT]
     ]
 
-    # analytics.json — 최신 실행의 누적 수익 추정치 사용 (모든 포스트 기반)
-    last_earnings = history[0].get("earnings", {}) if history else {}
+    # analytics.json — 수익 추정은 **지금 다시 계산**합니다.
+    #
+    # 예전에는 history[0]["earnings"]를 그대로 읽었습니다. 그러면 추정
+    # 방식을 고쳐도 새 실행이 한 번 돌기 전까지 예전 숫자가 계속 떠 있습니다.
+    # 2026-09-20에 '노출 0이면 수익도 0'으로 고쳤는데도 대시보드에는
+    # 연 33만원이 그대로 남아 있었던 이유가 이것입니다.
+    _last = history[0].get("earnings", {}) if history else {}
+    last_earnings = _estimate_earnings(
+        _last.get("totalPosts") or len(posts),
+        _last.get("avgCPC", 0.9),
+    )
     analytics = {
         "estimatedDailyRevenue": last_earnings.get("estimatedDailyRevenue", 0),
         "estimatedMonthlyRevenue": last_earnings.get("estimatedMonthlyRevenue", 0),

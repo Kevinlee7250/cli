@@ -40,6 +40,11 @@ on:
         description: '보강할 최대 편수 (0=전체). 나눠 돌리는 것을 권장'
         required: false
         default: '10'
+      apply_expansion:
+        description: '사람이 쓴 보강 원고(expansions/*.json)를 발행 글에 반영'
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -133,6 +138,18 @@ jobs:
           fi
           echo "실행 인자: $ARGS"
           python enrich_posts.py $ARGS || echo "⚠️ 보강 실패 — docs/data/enrich_report.json 확인"
+
+      # 분량이 모자란 글을 AI로 자동 증량하는 기능은 일부러 없습니다.
+      # "글자수를 채워라"만큼 지어내기를 부르는 지시도 없고, 그게 거절
+      # 사유였습니다. 이 단계는 사람이 검증해 git에 올린 원고를 옮겨
+      # 붙이기만 합니다.
+      - name: 보강 원고 반영
+        if: inputs.apply_expansion == true
+        working-directory: blog-automation
+        run: |
+          ARGS=""
+          [ "${{ inputs.dry_run }}" = "true" ] || ARGS="--apply"
+          python apply_expansion.py $ARGS || echo "⚠️ 보강 원고 반영 실패"
 
       # 심사 필수 페이지가 실제로 블로그에 있는지 확인합니다 (읽기 전용).
       - name: 필수 페이지 확인 (읽기 전용)

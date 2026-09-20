@@ -203,8 +203,50 @@ def build_faq_html(items: list[dict]) -> str:
 # 출처 수집 (research_collector — 실존 URL만)
 # ──────────────────────────────────────────────────────────────────────────────
 
-def collect_source_links(keyword: str, max_sources: int = 3) -> list[dict]:
-    """키워드로 실제 뉴스·신뢰 도메인 자료를 수집합니다. 실패 시 빈 목록."""
+_TOPIC_SOURCES_PATH = os.path.join(_BASE_DIR, "topic_sources.json")
+
+
+def _load_topic_sources() -> list[dict]:
+    try:
+        with open(_TOPIC_SOURCES_PATH, encoding="utf-8") as f:
+            return json.load(f).get("topics") or []
+    except (OSError, json.JSONDecodeError) as e:
+        logger.debug(f"topic_sources.json 없음/손상 ({e})")
+        return []
+
+
+def curated_sources_for(title: str, max_sources: int = 3) -> list[dict]:
+    """제목이 가리키는 주제의 '공식 기관' 자료를 돌려줍니다.
+
+    2026-09-20 실측: 오래된 글 11편은 research_collector가 뉴스 자료를
+    하나도 못 찾았습니다. 키워드가 시의성 없는 안내형이라 최근 기사가
+    없는 탓입니다. 그 글들을 영영 출처 없이 두느니, 그 주제의 **공식
+    기관 대표 페이지**를 참고자료로 답니다.
+
+    지어내는 것과 다릅니다 — topic_sources.json의 URL은 전부 접속해
+    200을 확인한 실제 기관 주소이고, 개별 게시물이 아니라 대표 페이지만
+    담아 시간이 지나도 죽지 않습니다. 다만 "본문에서 인용한 자료"는
+    아니므로, 표기도 그렇게 하지 않습니다(build_sources_html 참고).
+    """
+    t = (title or "").lower()
+    for topic in _load_topic_sources():
+        if any(m.lower() in t for m in (topic.get("match") or [])):
+            picked = [s for s in (topic.get("sources") or [])
+                      if s.get("title") and s.get("url")][:max_sources]
+            if picked:
+                logger.info(f"     주제 '{topic.get('name')}' 공식 자료 {len(picked)}건 사용")
+                return picked
+    return []
+
+
+def collect_source_links(keyword: str, max_sources: int = 3,
+                         title: str = "") -> list[dict]:
+    """키워드로 실제 뉴스·신뢰 도메인 자료를 수집합니다.
+
+    못 찾으면 주제별 공식 기관 자료로 대체합니다. 둘 다 없으면 빈 목록 —
+    그 경우 호출부가 글을 건너뜁니다. 가짜 URL은 어느 단계에서도 만들지
+    않습니다.
+    """
     try:
         from research_collector import collect_research
         research = collect_research(keyword, max_materials=6)
@@ -215,10 +257,13 @@ def collect_source_links(keyword: str, max_sources: int = 3) -> list[dict]:
             for m in materials
             if m.get("title") and m.get("url")
         ][:max_sources]
-        return picked
+        if picked:
+            return picked
     except Exception as e:
         logger.warning(f"출처 수집 실패 ({keyword}): {e}")
-        return []
+
+    return [dict(s, curated=True) for s in curated_sources_for(title or keyword,
+                                                               max_sources)]
 
 
 def build_sources_html(sources: list[dict]) -> str:
@@ -229,9 +274,16 @@ def build_sources_html(sources: list[dict]) -> str:
         f'target="_blank" rel="noopener nofollow">{_html_esc.escape(s["title"])}</a></li>'
         for s in sources
     )
+    # 뉴스 자료와 '주제 공식 자료'는 성격이 다르므로 표기도 다릅니다.
+    # 공식 기관 대표 페이지를 "본문에서 인용한 자료"라고 적으면 거짓말입니다.
+    note = ""
+    if all(s.get("curated") for s in sources):
+        note = ('\n<p style="font-size:0.85em;color:#888;margin:6px 0 0;">'
+                '이 주제를 직접 확인할 수 있는 공식 기관 자료입니다. '
+                '제도·요금·시세는 바뀔 수 있으니 최신 내용은 각 기관에서 확인하세요.</p>')
     return (
         '\n<h2 style="font-size:1.42em;font-weight:800;margin:2.8em 0 1.1em;">'
-        f"참고자료</h2>\n<ul>{items}</ul>"
+        f"참고자료</h2>\n<ul>{items}</ul>{note}"
     )
 
 
@@ -313,12 +365,14 @@ def enrich_blog(blog_cfg: dict, dry_run: bool, limit: int, faq_only: bool = Fals
                     entry["detail"].append("FAQ 생성 실패 — 건너뜀")
 
             if add_sources:
-                sources = collect_source_links(title)
+                sources = collect_source_links(title, title=title)
                 src_html = build_sources_html(sources)
                 if src_html:
                     new_content = insert_before_tail(new_content, src_html)
                     entry["sources_added"] = True
-                    entry["detail"].append(f"출처 {len(sources)}건 삽입 (실존 URL 검증됨)")
+                    kind = ("주제 공식 자료" if all(s.get("curated") for s in sources)
+                            else "실존 URL 검증됨")
+                    entry["detail"].append(f"출처 {len(sources)}건 삽입 ({kind})")
                 else:
                     entry["detail"].append("실존 출처 못 찾음 — 가짜 URL 방지 위해 생략")
 

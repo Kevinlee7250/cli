@@ -1,0 +1,78 @@
+{
+  "_설명": [
+    "주제별 공식 출처 목록. research_collector가 뉴스 자료를 못 찾을 때 씁니다.",
+    "여기 있는 URL은 전부 2026-09-20에 접속해 200 응답을 확인했습니다.",
+    "새로 추가할 때도 반드시 접속해 확인하고 넣으세요 — 죽은 링크는",
+    "가짜 출처와 같은 문제를 만듭니다. 기관 대표 페이지만 넣습니다.",
+    "개별 게시물 URL은 금방 사라지기 때문입니다.",
+    "match는 제목에서 찾을 낱말이고, 하나라도 걸리면 그 주제로 봅니다."
+  ],
+  "verifiedAt": "2026-09-20",
+  "topics": [
+    {
+      "name": "자동차보험",
+      "match": ["자동차보험", "자동차 보험", "다이렉트 보험", "보험료 비교"],
+      "sources": [
+        {"title": "손해보험협회 자동차보험 비교공시", "url": "https://kpub.knia.or.kr/"},
+        {"title": "자동차보험 할인·할증 요인 조회 (손해보험협회)", "url": "https://carinfo.knia.or.kr/"},
+        {"title": "금융소비자 정보포털 파인 (금융감독원)", "url": "https://fine.fss.or.kr/"}
+      ]
+    },
+    {
+      "name": "주식·기업분석",
+      "match": ["주가", "삼성전자", "SK하이닉스", "반도체주", "종목", "상장사"],
+      "sources": [
+        {"title": "DART 전자공시시스템 (금융감독원)", "url": "https://dart.fss.or.kr/"},
+        {"title": "KRX 정보데이터시스템 (한국거래소)", "url": "https://data.krx.co.kr/"},
+        {"title": "KIND 기업공시채널 (한국거래소)", "url": "https://kind.krx.co.kr/"}
+      ]
+    },
+    {
+      "name": "재테크·금융일반",
+      "match": ["재테크", "적금", "예금", "대출", "금리", "자산", "투자 방법", "트렌드 코리아"],
+      "sources": [
+        {"title": "금융소비자 정보포털 파인 (금융감독원)", "url": "https://fine.fss.or.kr/"},
+        {"title": "한국은행 경제통계시스템 ECOS", "url": "https://ecos.bok.or.kr/"},
+        {"title": "금융감독원", "url": "https://www.fss.or.kr/"}
+      ]
+    },
+    {
+      "name": "세금",
+      "match": ["세금", "절세", "증여세", "종합소득세", "종부세", "종합부동산세", "연말정산"],
+      "sources": [
+        {"title": "국세청 홈택스", "url": "https://www.nts.go.kr/"},
+        {"title": "금융소비자 정보포털 파인 (금융감독원)", "url": "https://fine.fss.or.kr/"}
+      ]
+    },
+    {
+      "name": "골프",
+      "match": ["골프", "골프장", "그린피", "골프 여행"],
+      "sources": [
+        {"title": "대한골프협회", "url": "https://www.kgagolf.or.kr/"},
+        {"title": "한국골프장경영협회", "url": "https://kgba.or.kr/"}
+      ]
+    },
+    {
+      "name": "해외여행",
+      "match": ["해외여행", "해외 여행", "항공권", "비자", "환전", "여행자보험"],
+      "sources": [
+        {"title": "외교부 해외안전여행", "url": "https://www.0404.go.kr/"},
+        {"title": "한국관광공사 대한민국 구석구석", "url": "https://korean.visitkorea.or.kr/"}
+      ]
+    },
+    {
+      "name": "국내여행",
+      "match": ["국내여행", "국내 여행", "캠핑", "여행지 추천", "드라이브 코스", "한옥마을"],
+      "sources": [
+        {"title": "한국관광공사 대한민국 구석구석", "url": "https://korean.visitkorea.or.kr/"}
+      ]
+    },
+    {
+      "name": "소비자·쇼핑",
+      "match": ["할인", "쇼핑", "물가", "장바구니", "아울렛", "대형마트"],
+      "sources": [
+        {"title": "한국소비자원", "url": "https://www.kca.go.kr/"}
+      ]
+    }
+  ]
+}

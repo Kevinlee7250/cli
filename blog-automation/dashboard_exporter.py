@@ -47,9 +47,50 @@ def _save_history(history: list[dict]) -> None:
         logger.error(f"히스토리 저장 실패: {e}")
 
 
+def _measured_impressions() -> int | None:
+    """GSC에서 실제로 잡힌 30일 노출 수. 자료가 없으면 None."""
+    path = os.path.join(_DOCS_DATA, "gsc.json") if "_DOCS_DATA" in globals() \
+        else os.path.join(os.path.dirname(__file__), "..", "docs", "data", "gsc.json")
+    try:
+        with open(os.path.normpath(path), encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return None
+    for key in ("totalImpressions", "impressions", "impressions30d"):
+        v = (data or {}).get(key) if isinstance(data, dict) else None
+        if isinstance(v, (int, float)):
+            return int(v)
+    rows = (data or {}).get("rows") if isinstance(data, dict) else None
+    if isinstance(rows, list):
+        return int(sum(r.get("impressions", 0) for r in rows if isinstance(r, dict)))
+    return None
+
+
 def _estimate_earnings(post_count: int, avg_cpc: float = 0.9) -> dict:
-    """AdSense 수익 추정 (CTR 2.5%, 포스트당 80 페이지뷰/일 기준)."""
-    daily_views = post_count * 80
+    """AdSense 수익 추정.
+
+    2026-09-19까지는 '글 1편당 하루 80 페이지뷰'를 가정해 곱했습니다.
+    그 결과 Search Console 노출이 **0인데도 연 33만원**이 대시보드에
+    떠 있었습니다. 근거 없는 숫자는 판단을 흐립니다 — 특히 AdSense
+    재심사를 앞두고 "이 정도면 되겠지"라는 착각을 만듭니다.
+
+    이제는 실제로 측정된 노출이 있을 때만 추정합니다. 없으면 0을 주고
+    `measured: False`로 이유를 함께 남깁니다.
+    """
+    impressions = _measured_impressions()
+    if not impressions:
+        return {
+            "totalPosts": post_count,
+            "estimatedDailyRevenue": 0,
+            "estimatedMonthlyRevenue": 0,
+            "estimatedYearlyRevenue": 0,
+            "avgCPC": avg_cpc,
+            "currency": "USD",
+            "measured": False,
+            "note": "Search Console 노출이 0이라 수익을 추정할 근거가 없습니다",
+        }
+
+    daily_views = impressions / 30
     daily_clicks = daily_views * 0.025
     daily_rev = daily_clicks * avg_cpc
     return {
@@ -59,6 +100,8 @@ def _estimate_earnings(post_count: int, avg_cpc: float = 0.9) -> dict:
         "estimatedYearlyRevenue": round(daily_rev * 365, 2),
         "avgCPC": avg_cpc,
         "currency": "USD",
+        "measured": True,
+        "note": f"최근 30일 노출 {impressions:,}회 기준 (CTR 2.5% 가정)",
     }
 
 
@@ -614,6 +657,10 @@ def export_dashboard() -> None:
         "avgCPC": last_earnings.get("avgCPC", 0.9),
         "runCount": len(history),
         "totalWords": sum(r.get("totalWords", 0) for r in history),
+        # 대시보드가 "추정치인지 실측 기반인지"를 구분해 보여줄 수 있게 넘깁니다.
+        # 숫자만 주면 0원이 '아직 안 벌었다'인지 '알 수 없다'인지 구분이 안 됩니다.
+        "revenueMeasured": last_earnings.get("measured", False),
+        "revenueNote": last_earnings.get("note", ""),
     }
 
     # meta.json — totalRevenue는 현재 누적 포스트 기준 연 예상 수익

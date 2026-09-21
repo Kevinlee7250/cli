@@ -1,41 +1,44 @@
 {
-  "generated_at": "2026-09-14T04:36:58.788621+00:00",
+  "generated_at": "2026-09-21T04:37:11.594194+00:00",
   "period_days": 7,
-  "period_start": "2026-09-07T04:36:58.788621+00:00",
-  "period_end": "2026-09-14T04:36:58.788621+00:00",
-  "summary_text": "지난 7일간 총 21건 생성, 18건 발행(HOGU 여행,스포츠,연예 6건, HOGU What? 5건, 금융NEWS 7건). 평균 건강점수 84.4/100. 특이 위험 신호 없음.",
+  "period_start": "2026-09-14T04:37:11.594194+00:00",
+  "period_end": "2026-09-21T04:37:11.594194+00:00",
+  "summary_text": "지난 7일간 총 29건 생성, 23건 발행(금융NEWS 8건, HOGU 여행,스포츠,연예 8건, HOGU What? 7건). 평균 건강점수 81.1/100. 위험 신호 2건 확인됨.",
   "metrics": {
-    "posts_generated": 21,
-    "posts_uploaded": 18,
+    "posts_generated": 29,
+    "posts_uploaded": 23,
     "errors": 0,
-    "avg_health_score": 84.4,
-    "min_health_score": 82,
+    "avg_health_score": 81.1,
+    "min_health_score": 55,
     "by_blog": {
+      "blog3": {
+        "blogName": "금융NEWS",
+        "generated": 10,
+        "uploaded": 8
+      },
       "blog2": {
         "blogName": "HOGU 여행,스포츠,연예",
-        "generated": 6,
-        "uploaded": 6
+        "generated": 10,
+        "uploaded": 8
       },
       "blog1": {
         "blogName": "HOGU What?",
-        "generated": 7,
-        "uploaded": 5
-      },
-      "blog3": {
-        "blogName": "금융NEWS",
-        "generated": 8,
+        "generated": 9,
         "uploaded": 7
       }
     },
     "new_incidents": 0,
-    "recurring_issues_auto_matched": 15,
+    "recurring_issues_auto_matched": 17,
     "deleted_low_grade_posts": 0,
-    "total_published_posts": 128
+    "total_published_posts": 95
   },
   "highlights": [
-    "이번 주 18건 발행 완료 (3개 블로그)",
-    "자가진단 봇이 과거 인시던트와 일치하는 이슈 15건 자동 식별"
+    "이번 주 23건 발행 완료 (3개 블로그)",
+    "자가진단 봇이 과거 인시던트와 일치하는 이슈 17건 자동 식별"
   ],
-  "risks": [],
+  "risks": [
+    "critical 등급 이슈 2건 발생",
+    "건강점수 최저 55/100까지 하락"
+  ],
   "new_incidents": []
 }

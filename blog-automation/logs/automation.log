@@ -1,115 +1,3 @@
-  <style>
-    *{ma — 큐잉
-2026-09-19 00:16:08,456 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-09-19 00:16:08,457 [INFO] main — 
-============================================================
-2026-09-19 00:16:08,457 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-09-19 00:16:08,457 [INFO] main — ============================================================
-2026-09-19 00:16:08,475 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 178개)
-2026-09-19 00:16:08,483 [INFO] dashboard_exporter — 분석 필드 유지: 77/97개 (등급·조회수·수익)
-2026-09-19 00:16:08,493 [INFO] dashboard_exporter —   시리즈: 32개 내보내기 완료
-2026-09-19 00:16:08,530 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-19 00:16:09,861 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-19 00:16:10,419 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-19 00:16:10,420 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-19 00:16:10,421 [INFO] dashboard_exporter —   학습 이력: 3주 내보내기 완료
-2026-09-19 00:16:10,423 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-19 00:16:10,437 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 270 / 실패 0 / 대기 19)
-2026-09-19 00:16:10,437 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-19 00:16:10,437 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-19 00:16:10,438 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-19 00:16:10,439 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-09-19 00:16:56,222 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-19 00:16:57,054 [INFO] main — ============================================================
-2026-09-19 00:16:57,054 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-09-19 00:16:57
-2026-09-19 00:16:57,054 [INFO] main — ============================================================
-2026-09-19 00:16:57,065 [INFO] keyword_collector — 타 블로그 최근 키워드 6개 중복 방지 코퍼스 합류
-2026-09-19 00:16:57,066 [INFO] keyword_collector — 포스팅 이력 코퍼스: 82개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-09-19 00:16:57,066 [INFO] keyword_collector — 시즌 예약 키워드 1개 로드 (blog=blog2): ['추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-19 00:17:03,599 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-09-19 00:17:12,948 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:17:12,965 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-09-19 00:17:12,966 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-09-19 00:17:13,707 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-19 00:17:13,708 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-09-19 00:17:13,709 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-09-19 00:17:13,711 [INFO] keyword_collector — 유사 주제 제외 1개: ['추석 선물 저렴하게 사는 꿀팁 정리']
-2026-09-19 00:17:13,711 [INFO] keyword_collector —   [naver_realtime] 2개: ['AI 컨시어지 호텔 서비스 후기와 장단점 2026', '가을 단풍 골프장 추천 코스 BEST 5']
-2026-09-19 00:17:13,711 [INFO] keyword_collector — 최종 선정 키워드 2개: ['AI 컨시어지 호텔 서비스 후기와 장단점 2026', '가을 단풍 골프장 추천 코스 BEST 5']
-2026-09-19 00:17:13,711 [INFO] main — 수집된 키워드 2개: ['AI 컨시어지 호텔 서비스 후기와 장단점 2026', '가을 단풍 골프장 추천 코스 BEST 5']
-2026-09-19 00:17:13,716 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-09-19 00:17:13,716 [INFO] main — 단독 포스트 대상 키워드 1개: ['AI 컨시어지 호텔 서비스 후기와 장단점 2026']
-2026-09-19 00:17:13,727 [INFO] main — 
-[1/1] 키워드: 'AI 컨시어지 호텔 서비스 후기와 장단점 2026'
-2026-09-19 00:17:13,727 [INFO] content_generator — 포스트 생성 중: 'AI 컨시어지 호텔 서비스 후기와 장단점 2026'
-2026-09-19 00:17:27,105 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:17:27,107 [INFO] research_collector — 검색 의도: 2026년 기준 실제 호텔 AI 컨시어지 서비스를 도입한 사례와 이용자들의 실제 후기, 장단점을 파악하고 싶
-2026-09-19 00:17:33,828 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — 'AI 컨시어지 호텔 서비스 후기와 장단점 2026'
-2026-09-19 00:17:48,283 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:17:48,284 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — 'AI 컨시어지 호텔 서비스 후기와 장단점 2026'
-2026-09-19 00:17:53,950 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:17:53,951 [INFO] source_validator — 출처 검증: 0/5개 통과, 등급 분포 {'X': 5}
-2026-09-19 00:17:53,953 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-09-19 00:17:53,953 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-19 00:17:53,954 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-19 00:17:54,761 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:19:36,760 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-09-19 00:19:36,760 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-19 00:19:37,816 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:20:02,483 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-09-19 00:20:02,483 [INFO] content_generator — 이미지 계획 2건 사용: ['hotel self check-in kiosk lobby', 'traveler luggage hotel lobby']
-2026-09-19 00:20:02,649 [WARNING] image_fetcher — 🚫 부적합 이미지 차단: 'hotel / hotel rooms / home / decoration / relax / ' (검색어 'hotel self check-in kiosk lobby')
-2026-09-19 00:20:02,650 [INFO] image_fetcher — 이미지 수집 성공: 'hotel self check-in kiosk lobby' → 제목='reception / hotel / desk / interior desi' (관련성=0.60)
-2026-09-19 00:20:02,820 [INFO] image_fetcher — 이미지 수집 성공: 'traveler luggage hotel lobby' → 제목='suitcase / packaging / to travel / vacat' (관련성=0.25)
-2026-09-19 00:20:05,405 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:20:05,406 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
-2026-09-19 00:20:05,588 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-19 00:20:05,588 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-09-19 00:20:05,593 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-09-19 00:20:05,594 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-19 00:20:05,594 [INFO] content_generator — 포스트 생성 완료: 'AI 컨시어지 호텔 서비스 후기 종합과 장단점 비교 2026' (3111자, 이미지 1개)
-2026-09-19 00:20:06,719 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:20:31,251 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-19 00:20:32,264 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:20:34,279 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — 'AI 컨시어지 호텔 서비스 후기 종합과 장단점 비교 2026'
-2026-09-19 00:20:34,279 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 개수는 충족하나 일부 단락이 500자 이상으로 길게 이어져 가독성 저하
-2026-09-19 00:20:34,280 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장(Pixabay 라이선스 명시)만 포함되어 저작권 문제는 없으나 이미지 수가 적어 warn
-2026-09-19 00:20:34,280 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약 박스가 두 번 중복 제시되고 '결국 ~공통된 결론입니다' 식 자동 요약형 마무리 패턴이 다소 기계적임
-2026-09-19 00:20:34,284 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-19 00:20:34,291 [INFO] internal_linker —   [1/5] '고르는' -> https://hogugolfntraval.blogspot.com/2026/09/blog-post.html
-2026-09-19 00:20:34,291 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-09-19 00:20:34,291 [INFO] main —   제목: AI 컨시어지 호텔 서비스 후기 종합과 장단점 비교 2026
-2026-09-19 00:20:34,291 [INFO] main —   이미지: 1개 삽입
-2026-09-19 00:20:34,291 [INFO] main —   글자 수: 3111자
-2026-09-19 00:20:35,334 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:20:57,869 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — 'AI 컨시어지 호텔 서비스 후기 종합과 장단점 비교 2026'
-2026-09-19 00:20:57,869 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 섹션별 단락이 500자 이상으로 길게 이어지는 부분이 다수 존재
-2026-09-19 00:20:57,869 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개만 언급되고 Pixabay 라이선스 출처는 명시됐으나 alt 텍스트 여부 불확실하고 이미지 수가 적음
-2026-09-19 00:20:57,870 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌💡 핵심요약 불릿과 '결국 ~라는 게 공통된 결론' 식의 자동요약형 정리 문구가 반복돼 AI 패턴 느낌이 있음
-2026-09-19 00:20:57,870 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-09-19 00:20:58,558 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:22:15,073 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-19 00:22:16,202 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:23:28,814 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-19 00:23:29,645 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:24:12,621 [INFO] final_editor —   ✏️ 제목 최종 교정: 'AI 컨시어지 호텔 서비스 후기 종합과 장단점 비교 2026' → 'AI 컨시어지 호텔 서비스 후기와 장단점 총정리 2026'
-2026-09-19 00:24:12,621 [INFO] final_editor —   ✏️ 메타 설명 교정 (123자)
-2026-09-19 00:24:12,621 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고 H3 소제목을 추가해 흐름을 명확히 했으며, 표·요약박스·개인경험메모·주의사항·FAQ·작성자메모·참고자료를 모두 갖춘 발행용 구조로 정리했습니다. 이미지 alt 텍스트를 구체화하고 본문 내 이미지 설명 문구는 별도 목록으로 분리했습니다.
-2026-09-19 00:24:12,729 [INFO] related_posts — 내려간 글 52편을 관련 포스트 후보에서 제외
-2026-09-19 00:24:12,730 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-09-19 00:24:12,730 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-09-19 00:24:13,967 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/ai-2026.html
-2026-09-19 00:24:13,978 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/ai-2026.html
-2026-09-19 00:24:13,981 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-09-19 00:24:13,988 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-19 00:24:13,988 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: 'AI 컨시어지 호텔 서비스 후기와 장단점 총정리 2026'
-2026-09-19 00:24:14,970 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-19 00:24:19,889 [INFO] comment_manager —   생성된 댓글: 골프백이나 캐리어처럼 짐이 많은 경우엔 체크인 전에 미리 호텔 앱이나 챗봇으로 "짐 보관 가능 시간"을 확인해두면 로비에서 우왕좌왕하는 시간을 ...
-2026-09-19 00:27:20,009 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
   <title>Error 404 (Not Found)!!1</title>
   <style>
     *{ma — 큐잉
@@ -610,3 +498,109 @@
 2026-09-20 00:41:34,289 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-09-20 00:41:34,289 [INFO] main —   - [blog3] 금융NEWS
 2026-09-20 00:41:34,295 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-09-21 00:05:14,985 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-21 00:05:15,764 [INFO] main — ============================================================
+2026-09-21 00:05:15,764 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-21 00:05:15
+2026-09-21 00:05:15,764 [INFO] main — ============================================================
+2026-09-21 00:05:15,777 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-21 00:05:15,777 [INFO] keyword_collector — 포스팅 이력 코퍼스: 95개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-09-21 00:05:15,777 [INFO] keyword_collector — 시즌 예약 키워드 13개 로드 (blog=blog1): ['2026 가을 등산 코스 초보자 추천 후기', '2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법']...
+2026-09-21 00:05:19,025 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-09-21 00:05:23,373 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-21 00:05:23,397 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-21 00:05:23,397 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-21 00:05:23,666 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
+2026-09-21 00:05:23,896 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-21 00:05:24,189 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-21 00:05:24,190 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-21 00:05:24,191 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-21 00:05:24,201 [INFO] keyword_collector — 유사 주제 제외 9개: ['2026 가을 등산 코스 초보자 추천 후기', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '추석 선물 저렴하게 사는 꿀팁 정리', '2026 가을 등산 코스 초보자 추천 방법']
+2026-09-21 00:05:24,203 [INFO] keyword_collector —   [fallback] 2개: ['제주도 숨겨진 명소 현지인만 아는 곳 솔직 후기', '부산 골목 맛집 관광객 없는 진짜 맛집 직접 가봤더니']
+2026-09-21 00:05:24,203 [INFO] keyword_collector — 최종 선정 키워드 2개: ['제주도 숨겨진 명소 현지인만 아는 곳 솔직 후기', '부산 골목 맛집 관광객 없는 진짜 맛집 직접 가봤더니']
+2026-09-21 00:05:24,203 [INFO] main — 수집된 키워드 2개: ['제주도 숨겨진 명소 현지인만 아는 곳 솔직 후기', '부산 골목 맛집 관광객 없는 진짜 맛집 직접 가봤더니']
+2026-09-21 00:05:24,208 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-09-21 00:05:24,208 [INFO] main — 단독 포스트 대상 키워드 1개: ['제주도 숨겨진 명소 현지인만 아는 곳 솔직 후기']
+2026-09-21 00:05:24,220 [INFO] main — 
+[1/1] 키워드: '제주도 숨겨진 명소 현지인만 아는 곳 솔직 후기'
+2026-09-21 00:05:24,220 [INFO] content_generator — 포스트 생성 중: '제주도 숨겨진 명소 현지인만 아는 곳 솔직 후기'
+2026-09-21 00:05:31,678 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-21 00:05:31,679 [INFO] research_collector — 검색 의도: 제주도 여행 시 관광객이 잘 모르는 현지인 애용 장소를 실제 경험 기반으로 찾고자 함
+2026-09-21 00:05:57,816 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '제주도 숨겨진 명소 현지인만 아는 곳 솔직 후기'
+2026-09-21 00:06:39,295 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-21 00:06:39,296 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '제주도 숨겨진 명소 현지인만 아는 곳 솔직 후기'
+2026-09-21 00:07:00,842 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-21 00:07:00,843 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'D': 2, 'C': 1, 'X': 2}
+2026-09-21 00:07:00,845 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-09-21 00:07:00,845 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-21 00:07:00,846 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-21 00:07:01,801 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-21 00:08:26,870 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-21 00:08:28,016 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-21 00:08:33,556 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-09-21 00:08:33,556 [INFO] content_generator — 이미지 계획 1건 사용: ['jeju village stone wall alley']
+2026-09-21 00:08:33,872 [INFO] image_fetcher — 이미지 수집 성공: 'jeju village stone wall alley' → 제목='stone day bag / jeju / jeju island / the' (관련성=0.40)
+2026-09-21 00:08:34,728 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-21 00:08:34,728 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-21 00:08:34,733 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-09-21 00:08:34,735 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-21 00:08:34,735 [INFO] content_generator — 포스트 생성 완료: '제주도 숨겨진 명소 현지인만 아는 곳 후기 종합' (2854자, 이미지 1개)
+2026-09-21 00:08:35,963 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-21 00:08:53,335 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '제주도 숨겨진 명소 현지인만 아는 곳 후기 종합'
+2026-09-21 00:08:53,336 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 4개 마을 비교표와 후기 교차분석은 있으나 로코노미 자료 등 외부 정보 재조합 비중이 높아 완전한 독창성은 약함
+2026-09-21 00:08:53,336 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개 인용되나 구체적 날짜·통계 수치가 부족하고 일부 자료는 '오래된 자료'로 불확실성만 언급됨
+2026-09-21 00:08:53,336 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 명시된 이미지 1개뿐이며 alt 텍스트 여부 불명확, 전반적으로 이미지 부족
+2026-09-21 00:08:53,336 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다음 항목에서 짚어보겠습니다', '정리하면 이렇습니다' 등 전형적 전환·요약 문구와 체크리스트식 패턴이 반복됨
+2026-09-21 00:08:53,340 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-21 00:08:53,346 [INFO] internal_linker —   [1/5] '후기와' -> https://hogugolfntraval.blogspot.com/2026/09/ai-2026.html
+2026-09-21 00:08:53,349 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-09-21 00:08:53,349 [INFO] main —   제목: 제주도 숨겨진 명소 현지인만 아는 곳 후기 종합
+2026-09-21 00:08:53,349 [INFO] main —   이미지: 1개 삽입
+2026-09-21 00:08:53,349 [INFO] main —   글자 수: 2854자
+2026-09-21 00:08:54,442 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-21 00:09:13,739 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '제주도 숨겨진 명소 현지인만 아는 곳 후기 종합'
+2026-09-21 00:09:13,739 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 4개라 명시했으나 본문에는 비짓코리아 1곳만 명시적으로 언급되어 나머지 출처 투명성이 부족함
+2026-09-21 00:09:13,739 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '짚어보겠습니다', '넘어가 보겠습니다' 등 정형화된 전환 문구와 체크리스트식 구성이 반복되어 AI 특유의 패턴이 일부 감지됨
+2026-09-21 00:09:13,739 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-09-21 00:09:14,664 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-21 00:10:33,438 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-21 00:10:34,415 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-21 00:11:46,917 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-21 00:11:47,879 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-21 00:12:04,713 [WARNING] final_editor —   ⚠️ 3차 최종 편집 건너뜀 (무시): 'list' object has no attribute 'get'
+2026-09-21 00:12:04,863 [INFO] related_posts — 내려간 글 44편을 관련 포스트 후보에서 제외
+2026-09-21 00:12:04,864 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-21 00:12:04,865 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-09-21 00:12:06,023 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/09/blog-post_21.html
+2026-09-21 00:12:06,035 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/09/blog-post_21.html
+2026-09-21 00:12:06,039 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-09-21 00:12:06,047 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-21 00:12:06,048 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '제주도 숨겨진 명소 현지인만 아는 곳 후기 종합'
+2026-09-21 00:12:07,171 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-21 00:12:10,900 [INFO] comment_manager —   생성된 댓글: 덧붙이자면, 종달리나 저지문화예술인마을은 대중교통으로 접근하기가 은근 애매해서 렌트카 없이 가시면 동선 짜기가 꽤 피곤하더라고요. 그리고 위미리...
+2026-09-21 00:15:11,106 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-09-21 00:15:11,108 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-09-21 00:15:11,108 [INFO] main — 
+============================================================
+2026-09-21 00:15:11,108 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-09-21 00:15:11,108 [INFO] main — ============================================================
+2026-09-21 00:15:11,130 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 184개)
+2026-09-21 00:15:11,137 [INFO] dashboard_exporter — 분석 필드 유지: 66/91개 (등급·조회수·수익)
+2026-09-21 00:15:11,148 [INFO] dashboard_exporter —   시리즈: 32개 내보내기 완료
+2026-09-21 00:15:11,191 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-21 00:15:11,504 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-21 00:15:11,854 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-21 00:15:11,855 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-21 00:15:11,856 [INFO] dashboard_exporter —   학습 이력: 4주 내보내기 완료
+2026-09-21 00:15:11,859 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-21 00:15:11,874 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 271 / 실패 0 / 대기 18)
+2026-09-21 00:15:11,874 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-21 00:15:11,874 [INFO] dashboard_exporter —   포스트: 91개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-21 00:15:11,875 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-21 00:15:11,876 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

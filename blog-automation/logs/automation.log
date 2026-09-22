@@ -1,107 +1,3 @@
-2026-09-20 00:23:15,603 [INFO] main — 수집된 키워드 2개: ['한은 기준금리 추가 인상 전망, 대출 이자 미리 대비하는 방법', '서학개미 미국주식 투자 늘어나는 이유와 해외주식 세금 정리']
-2026-09-20 00:23:15,609 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-09-20 00:23:15,609 [INFO] main — 단독 포스트 대상 키워드 1개: ['한은 기준금리 추가 인상 전망, 대출 이자 미리 대비하는 방법']
-2026-09-20 00:23:15,622 [INFO] main — 
-[1/1] 키워드: '한은 기준금리 추가 인상 전망, 대출 이자 미리 대비하는 방법'
-2026-09-20 00:23:15,622 [INFO] content_generator — 포스트 생성 중: '한은 기준금리 추가 인상 전망, 대출 이자 미리 대비하는 방법'
-2026-09-20 00:23:23,512 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-20 00:23:23,513 [INFO] research_collector — 검색 의도: 한국은행 기준금리 추가 인상 가능성을 파악하고, 대출 이자 부담 증가에 미리 대비하는 방법을 찾으려는 의도
-2026-09-20 00:23:37,830 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '한은 기준금리 추가 인상 전망, 대출 이자 미리 대비하는 방법'
-2026-09-20 00:23:47,833 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-20 00:23:47,838 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '한은 기준금리 추가 인상 전망, 대출 이자 미리 대비하는 방법'
-2026-09-20 00:24:04,855 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-20 00:24:04,856 [INFO] source_validator — 출처 검증: 2/6개 통과, 등급 분포 {'X': 4, 'B': 2}
-2026-09-20 00:24:04,859 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-20 00:24:04,861 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-20 00:24:05,816 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-20 00:25:13,202 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-20 00:25:14,542 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-20 00:25:41,284 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-09-20 00:25:41,284 [INFO] content_generator — 이미지 계획 2건 사용: ['bank loan interest rate consultation', 'mobile banking loan rate check']
-2026-09-20 00:25:41,557 [INFO] image_fetcher — 이미지 수집 성공: 'bank loan interest rate consultation' → 제목='money / finance / mortgage / loan / real' (관련성=0.40)
-2026-09-20 00:25:41,716 [WARNING] image_fetcher — 🚫 부적합 이미지 차단: 'online banking / banking operations / bitcoin / li' (검색어 'mobile banking loan rate check')
-2026-09-20 00:25:41,861 [INFO] image_fetcher — 대체 이미지 수집: 'mobile banking loan rate check' → 제목='online banking / banking operations / bi' (관련성=0.40)
-2026-09-20 00:25:41,861 [INFO] image_fetcher — 이미지 수집 성공: 'mobile banking loan rate check' → 제목='online banking / banking operations / bi' (관련성=0.40)
-2026-09-20 00:25:41,861 [WARNING] image_fetcher — 🚫 부적합 이미지 제거: 'online banking / banking operations / bitcoin / li'
-2026-09-20 00:25:42,848 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-20 00:25:43,073 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-20 00:25:43,073 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-09-20 00:25:43,078 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-09-20 00:25:43,080 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-20 00:25:43,080 [INFO] content_generator — 포스트 생성 완료: '한은 기준금리 추가 인상설, 대출 이자 대비 방법 정리 (2026년 9월 기준)' (2629자, 이미지 1개)
-2026-09-20 00:25:43,983 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-20 00:26:03,210 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '한은 기준금리 추가 인상설, 대출 이자 대비 방법 정리 (202'
-2026-09-20 00:26:03,210 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개로 기준 충족하나 '대출금리, 왜 이렇게 갑자기 올랐나' 등 일부 단락이 500자 이상으로 길게 이어짐
-2026-09-20 00:26:03,210 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 1장만 포함되어 있어 저작권 위반은 없으나 이미지 수가 적음
-2026-09-20 00:26:03,210 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면 ~ 짚어보겠습니다', '흔한 실수' 등 형식적 전환구가 반복되어 다소 정형화된 패턴 존재
-2026-09-20 00:26:03,214 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-20 00:26:03,215 [INFO] internal_linker —   [1/5] '주택담보대출' -> https://hoguasset.blogspot.com/2026/08/2026_02023899290.html
-2026-09-20 00:26:03,225 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-09-20 00:26:03,225 [INFO] main —   제목: 한은 기준금리 추가 인상설, 대출 이자 대비 방법 정리 (2026년 9월 기준)
-2026-09-20 00:26:03,225 [INFO] main —   이미지: 1개 삽입
-2026-09-20 00:26:03,225 [INFO] main —   글자 수: 2629자
-2026-09-20 00:26:04,188 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-20 00:26:26,000 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '한은 기준금리 추가 인상설, 대출 이자 대비 방법 정리 (202'
-2026-09-20 00:26:26,000 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 1장 사용되었으나 저작권 위반 없어도 기본적으로 warn 처리
-2026-09-20 00:26:26,000 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약·핵심 포인트 박스와 '그렇다면 ~ 짚어보겠습니다' 식 전환 문구, 단계별 딱딱한 보고서 문체가 반복되어 AI 생성 패턴 의심
-2026-09-20 00:26:26,000 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-09-20 00:26:27,247 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-20 00:27:24,625 [INFO] final_editor —   ✏️ 제목 최종 교정: '한은 기준금리 추가 인상설, 대출 이자 대비 방법 정리 (2026년 9월 기준)' → '한은 기준금리 추가 인상 전망과 대출 이자 미리 대비하는 방법'
-2026-09-20 00:27:24,625 [INFO] final_editor —   ✏️ 메타 설명 교정 (125자)
-2026-09-20 00:27:24,625 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분할하고 요약 박스·표·개인 경험 메모·주의사항·FAQ(5개)·마무리·작성자 메모를 규격에 맞게 재구성했으며, 이미지 3곳의 위치와 구체적 alt 텍스트를 추가하고 제목·메타 설명·URL 슬러그를 발행 기준에 맞게 정리했습니다.
-2026-09-20 00:27:24,773 [INFO] related_posts — 내려간 글 44편을 관련 포스트 후보에서 제외
-2026-09-20 00:27:24,775 [INFO] related_posts — 관련 포스트 1개 섹션 생성
-2026-09-20 00:27:24,775 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '한은 기준금리 추가 인상 전망, 대출 이자 미리 대비하는 방법' — 면책·팩트체크 확인 권장
-2026-09-20 00:27:24,775 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-09-20 00:27:25,636 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/09/blog-post_20.html
-2026-09-20 00:27:25,649 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/09/blog-post_20.html
-2026-09-20 00:27:25,653 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-09-20 00:27:25,661 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-20 00:27:25,662 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '한은 기준금리 추가 인상 전망과 대출 이자 미리 대비하는 방법'
-2026-09-20 00:27:26,584 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-20 00:27:30,243 [INFO] comment_manager —   생성된 댓글: 덧붙이자면, 대출 재산정일이 언제인지는 은행 앱 '대출 상세정보'나 대출 계약서상 '금리변동주기' 항목에서 바로 확인 가능하니 미리 캘린더에 표...
-2026-09-20 00:30:30,485 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-09-20 00:30:30,487 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-09-20 00:30:30,487 [INFO] main — 
-============================================================
-2026-09-20 00:30:30,487 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-09-20 00:30:30,487 [INFO] main — ============================================================
-2026-09-20 00:30:30,507 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 183개)
-2026-09-20 00:30:30,515 [INFO] dashboard_exporter — 분석 필드 유지: 69/93개 (등급·조회수·수익)
-2026-09-20 00:30:30,528 [INFO] dashboard_exporter —   시리즈: 32개 내보내기 완료
-2026-09-20 00:30:30,587 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-20 00:30:30,872 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-09-20 00:30:31,096 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-20 00:30:31,593 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-20 00:30:31,594 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-20 00:30:31,595 [INFO] dashboard_exporter —   학습 이력: 3주 내보내기 완료
-2026-09-20 00:30:31,598 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-20 00:30:31,613 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 271 / 실패 0 / 대기 18)
-2026-09-20 00:30:31,614 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-20 00:30:31,614 [INFO] dashboard_exporter —   포스트: 93개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-20 00:30:31,614 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-20 00:30:31,615 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-09-20 00:41:34,289 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-09-20 00:41:34,289 [INFO] main —   - [blog1] HOGU What?
-2026-09-20 00:41:34,289 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-09-20 00:41:34,289 [INFO] main —   - [blog3] 금융NEWS
-2026-09-20 00:41:34,295 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
-2026-09-21 00:05:14,985 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-21 00:05:15,764 [INFO] main — ============================================================
-2026-09-21 00:05:15,764 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-21 00:05:15
-2026-09-21 00:05:15,764 [INFO] main — ============================================================
-2026-09-21 00:05:15,777 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-09-21 00:05:15,777 [INFO] keyword_collector — 포스팅 이력 코퍼스: 95개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-09-21 00:05:15,777 [INFO] keyword_collector — 시즌 예약 키워드 13개 로드 (blog=blog1): ['2026 가을 등산 코스 초보자 추천 후기', '2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법']...
-2026-09-21 00:05:19,025 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-09-21 00:05:23,373 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-09-21 00:05:23,397 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
 2026-09-21 00:05:23,397 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
 2026-09-21 00:05:23,666 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
@@ -602,3 +498,129 @@
 2026-09-22 00:49:29,838 [INFO] dashboard_exporter —   포스트: 96개 / 실행 이력: 120개 / 블로그: 3개
 2026-09-22 00:49:29,839 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-09-22 00:49:29,839 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-09-22 00:50:22,913 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-22 00:50:23,796 [INFO] main — ============================================================
+2026-09-22 00:50:23,796 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-09-22 00:50:23
+2026-09-22 00:50:23,796 [INFO] main — ============================================================
+2026-09-22 00:50:23,809 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-22 00:50:23,809 [INFO] keyword_collector — 포스팅 이력 코퍼스: 97개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-09-22 00:50:23,810 [INFO] keyword_collector — 시즌 예약 키워드 1개 로드 (blog=blog2): ['추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-22 00:50:30,065 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-09-22 00:50:35,544 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:50:35,571 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-22 00:50:35,571 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-22 00:50:36,253 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-22 00:50:36,254 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-22 00:50:36,255 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-22 00:50:36,259 [INFO] keyword_collector — 유사 주제 제외 3개: ['추석 선물 저렴하게 사는 꿀팁 정리', '가을 단풍 골프장 추천 베스트 코스', '이마트 롯데아울렛 가을 할인 알뜰 쇼핑 팁']
+2026-09-22 00:50:36,259 [INFO] keyword_collector —   [naver_realtime] 1개: ['OTT 요금제 비교 SKB B tv+ max 넷플릭스 디즈니플러스']
+2026-09-22 00:50:36,259 [INFO] keyword_collector —   [fallback] 1개: ['제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
+2026-09-22 00:50:36,259 [INFO] keyword_collector — 최종 선정 키워드 2개: ['OTT 요금제 비교 SKB B tv+ max 넷플릭스 디즈니플러스', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
+2026-09-22 00:50:36,260 [INFO] main — 수집된 키워드 2개: ['OTT 요금제 비교 SKB B tv+ max 넷플릭스 디즈니플러스', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
+2026-09-22 00:50:36,265 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
+2026-09-22 00:50:36,265 [INFO] main — 단독 포스트 대상 키워드 1개: ['OTT 요금제 비교 SKB B tv+ max 넷플릭스 디즈니플러스']
+2026-09-22 00:50:36,278 [INFO] main — 
+[1/1] 키워드: 'OTT 요금제 비교 SKB B tv+ max 넷플릭스 디즈니플러스'
+2026-09-22 00:50:36,279 [INFO] content_generator — 포스트 생성 중: 'OTT 요금제 비교 SKB B tv+ max 넷플릭스 디즈니플러스'
+2026-09-22 00:50:43,473 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:50:43,474 [INFO] research_collector — 검색 의도: SKB(SK브로드밴드) B tv+ max 결합상품과 넷플릭스, 디즈니플러스 등 OTT 요금제를 비교하여 최적
+2026-09-22 00:50:53,741 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — 'OTT 요금제 비교 SKB B tv+ max 넷플릭스 디즈니플러스'
+2026-09-22 00:51:15,269 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:51:15,270 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — 'OTT 요금제 비교 SKB B tv+ max 넷플릭스 디즈니플러스'
+2026-09-22 00:51:21,282 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:51:21,283 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'D': 5, 'X': 2}
+2026-09-22 00:51:22,715 [INFO] evidence_builder — 자료팩: 중요 사실 5개 제외 (A/B 등급 출처 없음)
+2026-09-22 00:51:22,715 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-22 00:51:22,716 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-22 00:51:23,560 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:52:45,307 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-22 00:52:46,382 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:52:55,524 [INFO] content_generator — 팩트체크: 통과
+2026-09-22 00:52:55,524 [INFO] content_generator — 이미지 계획 1건 사용: ['streaming apps smart tv remote']
+2026-09-22 00:52:55,693 [INFO] image_fetcher — 이미지 수집 성공: 'streaming apps smart tv remote' → 제목='app / vpn / virtual private network / st' (관련성=0.25)
+2026-09-22 00:52:55,892 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-22 00:52:55,892 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-22 00:52:55,897 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-09-22 00:52:55,899 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-22 00:52:55,899 [INFO] content_generator — 포스트 생성 완료: 'SKB B tv+ max로 넷플릭스·디즈니플러스 묶어보기, 요금제 비교 정리' (2844자, 이미지 1개)
+2026-09-22 00:52:57,656 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:53:16,174 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — 'SKB B tv+ max로 넷플릭스·디즈니플러스 묶어보기, 요금'
+2026-09-22 00:53:16,174 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어짐
+2026-09-22 00:53:16,174 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 구체적 작품명·불확실성 명시는 있으나 5개 출처가 본문 내 명확히 인용되지 않음
+2026-09-22 00:53:16,174 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 1개 사용되었으나 저작권 확인 불가로 기본 warn 처리
+2026-09-22 00:53:16,174 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '그렇다면', '~살펴보겠습니다' 등 정형화된 전환 문구 반복으로 다소 기계적 패턴 존재
+2026-09-22 00:53:16,179 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-22 00:53:16,179 [INFO] internal_linker —   [1/5] '2026년' -> https://hogugolfntraval.blogspot.com/2026/09/ott-vs-2026.htm
+2026-09-22 00:53:16,181 [INFO] internal_linker —   [2/5] 'IPTV' -> https://hogugolfntraval.blogspot.com/2026/08/ott.html
+2026-09-22 00:53:16,186 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-09-22 00:53:16,186 [INFO] main —   제목: SKB B tv+ max로 넷플릭스·디즈니플러스 묶어보기, 요금제 비교 정리
+2026-09-22 00:53:16,186 [INFO] main —   이미지: 1개 삽입
+2026-09-22 00:53:16,186 [INFO] main —   글자 수: 2844자
+2026-09-22 00:53:16,727 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:53:35,396 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — 'SKB B tv+ max로 넷플릭스·디즈니플러스 묶어보기, 요금'
+2026-09-22 00:53:35,396 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 비교표·사례는 있으나 구체적 가격 수치 없이 '공식 홈페이지 확인' 안내로 대체되어 독창적 데이터 깊이가 부족함
+2026-09-22 00:53:35,396 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 5개 출처가 있다고 명시되나 본문 내 기관명·시점 인용이 이미지 출처 외에는 드러나지 않음
+2026-09-22 00:53:35,396 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개만 사용되었고 라이선스는 명시되었으나 전반적으로 이미지가 적어 warn 처리
+2026-09-22 00:53:35,396 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약 박스 중복 및 '다음 섹션에서는~살펴보겠습니다' 식 전형적 전환 문구 반복이 눈에 띔
+2026-09-22 00:53:35,396 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-09-22 00:53:35,396 [WARNING] main —      🟡 [원본성 및 품질] 비교표·사례는 있으나 구체적 가격 수치 없이 '공식 홈페이지 확인' 안내로 대체되어 독창적 데이터 깊이가 부족함
+2026-09-22 00:53:35,396 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 5개 출처가 있다고 명시되나 본문 내 기관명·시점 인용이 이미지 출처 외에는 드러나지 않음
+2026-09-22 00:53:35,396 [WARNING] main —      🟡 [이미지 정책] 이미지 1개만 사용되었고 라이선스는 명시되었으나 전반적으로 이미지가 적어 warn 처리
+2026-09-22 00:53:35,396 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-09-22 00:53:35,406 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-22 00:53:35,412 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 1건
+2026-09-22 00:53:36,262 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:55:22,085 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2844자 → 4403자 (+1559자)
+2026-09-22 00:55:22,085 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-09-22 00:55:22,759 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:55:41,044 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — 'SKB B tv+ max로 넷플릭스·디즈니플러스 묶어보기, 요금'
+2026-09-22 00:55:41,044 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 넷플릭스·디즈니플러스 소개 단락 등 500자 이상 장문 단락이 다수 존재
+2026-09-22 00:55:41,044 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pexels 라이선스 이미지 언급되나 alt텍스트 명시 부족 및 이미지 수 적음
+2026-09-22 00:55:41,044 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
+2026-09-22 00:55:41,044 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-09-22 00:55:41,949 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:56:55,830 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-22 00:56:56,835 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:58:06,819 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-22 00:58:07,852 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:58:18,602 [INFO] final_editor —   ✏️ 제목 최종 교정: 'SKB B tv+ max로 넷플릭스·디즈니플러스 묶어보기, 요금제 비교 정리' → 'SKB B tv+ max 요금제 비교, 넷플릭스·디즈니플러스 결합 총정리'
+2026-09-22 00:58:18,602 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
+2026-09-22 00:58:18,602 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 규격에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분할했습니다. 요약 박스·개인 경험 메모·주의사항·FAQ·작성자 메모·내부 링크 언급을 추가하고 표를 지정 스타일로 재구성했으며, 미완성이던 마지막 H2 섹션(상황별 결합/개별 구독 추천)을 새로 작성해 결론을 완성했습니다.
+2026-09-22 00:58:18,734 [INFO] related_posts — 내려간 글 41편을 관련 포스트 후보에서 제외
+2026-09-22 00:58:18,736 [INFO] related_posts — 관련 포스트 2개 섹션 생성
+2026-09-22 00:58:18,736 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-09-22 00:58:19,881 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/skb-b-tv-max.html
+2026-09-22 00:58:19,895 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/09/skb-b-tv-max.html
+2026-09-22 00:58:19,900 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-09-22 00:58:19,908 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-22 00:58:19,909 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: 'SKB B tv+ max 요금제 비교, 넷플릭스·디즈니플러스 결합 총정리'
+2026-09-22 00:58:20,419 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-22 00:58:23,195 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리면, 결합 해지하실 때는 위약금이나 할인 반환금 조건도 꼭 확인해보시는 게 좋아요. 저도 처음엔 요금만 비교하고 넘어갔다가 ...
+2026-09-22 01:01:23,420 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-09-22 01:01:23,421 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-09-22 01:01:23,422 [INFO] main — 
+============================================================
+2026-09-22 01:01:23,422 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-09-22 01:01:23,422 [INFO] main — ============================================================
+2026-09-22 01:01:23,446 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 189개)
+2026-09-22 01:01:23,455 [INFO] dashboard_exporter — 분석 필드 유지: 95/97개 (등급·조회수·수익)
+2026-09-22 01:01:23,468 [INFO] dashboard_exporter —   시리즈: 33개 내보내기 완료
+2026-09-22 01:01:23,482 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-22 01:01:23,676 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-22 01:01:24,051 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-22 01:01:24,378 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-22 01:01:24,379 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-22 01:01:24,380 [INFO] dashboard_exporter —   학습 이력: 4주 내보내기 완료
+2026-09-22 01:01:24,383 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-22 01:01:24,430 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 275 / 실패 0 / 대기 14)
+2026-09-22 01:01:24,430 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-22 01:01:24,431 [INFO] dashboard_exporter —   포스트: 97개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-22 01:01:24,431 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-22 01:01:24,432 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

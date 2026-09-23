@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg  width="1200" height="675" xmlns="http://www.w3.org/2000/svg" font-family="Liberation Sans,sans-serif" font-size="40" text-anchor="middle" fill="black">
+
+<defs>
+<marker id="node" markerWidth="8" markerHeight="8" refX="4" refY="4">
+ <circle cx="4" cy="4" r="1.5" fill="#d02" />
+</marker>
+</defs>
+
+<rect width="1200" height="675" x="0" y="0" fill="#f8f8f8"/>
+<rect width="1008" height="516" x="142" y="80" stroke="#888888" stroke-width="1" fill="white"/>
+
+<path stroke="none" fill="#fafffa" d="
+M142,80 
+h1008 v73.714 h-1008 v73.714
+h1008 v73.714 h-1008 v73.714
+h1008 v73.714 h-1008 v73.714
+h1008 v73.714 h-1008
+"/>
+
+<path stroke="none" fill="#fff0f0" stroke-linecap="round" stroke-linejoin="round" d="
+M142,301 L184,331 226,390 268,404 310,390 352,345 394,345 436,316 478,301 
+562,345 604,345 646,390 688,390 730,257 772,183 814,124 856,227 898,242 940,242
+V596 H142
+"/>
+
+<path stroke="#ddd" stroke-width="1018" stroke-dasharray="3,70.7142857142857" d="M641,78.5 v518"/>
+
+<g font-size="35" transform="translate(71,0)" fill="#d02">
+<text y="165.96">4%</text>
+<text y="313.39">3%</text>
+<text y="460.82">2%</text>
+<text y="608.25">1%</text>
+</g>
+
+<path stroke="black" stroke-width="526" stroke-dasharray="0.25,41.75" d="M142,343 h1010"/>
+
+<g font-size="35" transform="translate(0,650)">
+<text x="142">Jan</text>
+<text x="268">Apr</text>
+<text x="394">Jul</text>
+<text x="520">Oct</text>
+<text x="646">Jan</text>
+<text x="772">Apr</text>
+<text x="898">Jul</text>
+<text x="1024">Oct</text>
+</g>
+
+<path stroke="#d02" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" marker-start="url(#node)" marker-mid="url(#node)" marker-end="url(#node)" d="
+M142,301 L184,331 226,390 268,404 310,390 352,345 394,345 436,316 478,301 
+562,345 604,345 646,390 688,390 730,257 772,183 814,124 856,227 898,242 940,242
+"/>
+
+<g transform="translate(0,572)" text-anchor="start">
+<text x="134">► 2025</text>
+<text x="638">► 2026</text>
+</g>
+
+<text x="646" y="52" font-size="50">Consumer price index – US</text>
+<text x="175" y="128" text-anchor="start" font-size="35">Year-over-year inflation rate</text>
+
+<rect width="1008" height="516" x="142" y="80" stroke="#888" stroke-width="0.5" fill="none"/>
+
+</svg>

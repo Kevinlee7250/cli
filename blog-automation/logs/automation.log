@@ -1,106 +1,3 @@
-2026-09-23 00:42:33,321 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '국제유가 하락해도 물가 안 내린 이유 2026'
-2026-09-23 00:42:33,322 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지에 alt 설명 있으나 정책상 이미지 관련 항목은 기본 warn 처```
-리
-2026-09-23 00:42:33,322 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '다룰 예정입니다 을 다룰 예정입니다', '발표에 따르면에 따르면' 등 문장 중복 및 반복적 전환구('다음 섹션에서는~')가 AI 생성 편집 미흡 흔적으로 보임
-2026-09-23 00:42:34,007 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:43:51,155 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-23 00:43:52,046 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:44:05,771 [INFO] final_editor —   ✏️ 제목 최종 교정: '국제유가 하락해도 물가 안 내린 이유 2026' → '국제유가 하락해도 생활물가 안 내린 이유, 2026년 분석'
-2026-09-23 00:44:05,771 [INFO] final_editor —   ✏️ 메타 설명 교정 (123자)
-2026-09-23 00:44:05,771 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 중복·비문 표현을 정리하고 문단을 2~4문장으로 분리했으며, 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 규칙에 맞게 추가해 발행 가능한 형태로 완성했습니다.
-2026-09-23 00:44:05,924 [INFO] related_posts — 내려간 글 39편을 관련 포스트 후보에서 제외
-2026-09-23 00:44:05,925 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-09-23 00:44:05,925 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-09-23 00:44:06,807 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/09/2026_01009204778.html
-2026-09-23 00:44:06,808 [INFO] main —   ✅ 편 1 업로드 완료: https://hoguasset.blogspot.com/2026/09/2026_01009204778.html
-2026-09-23 00:44:09,810 [INFO] main — 
---- [2/3편] '국제유가 소비자물가 반영 시차 통계청' 생성 중 ---
-2026-09-23 00:44:09,810 [INFO] content_generator — 시리즈 포스트 생성: '국제유가 소비자물가 반영 시차 통계청' (2/3편)
-2026-09-23 00:44:22,443 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:44:22,444 [INFO] research_collector — 검색 의도: 국제유가 변동이 국내 소비자물가지수(CPI)에 반영되기까지 걸리는 시차와 그 메커니즘을 통계청 공식 데이터로
-2026-09-23 00:44:34,011 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '국제유가 소비자물가 반영 시차 통계청'
-2026-09-23 00:44:50,791 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:44:50,796 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '국제유가 소비자물가 반영 시차 통계청'
-2026-09-23 00:45:01,277 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:45:01,278 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'B': 4, 'X': 1}
-2026-09-23 00:45:01,279 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-23 00:45:01,279 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-23 00:45:01,976 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:45:28,646 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-23 00:45:28,646 [WARNING] content_generator — 컨텐츠 너무 짧음(322자, 최소 2500자) — 재시도 1/3
-2026-09-23 00:45:31,646 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-09-23 00:45:31,646 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-23 00:45:32,930 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:46:46,858 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-23 00:46:47,602 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:47:00,802 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '계약 단가 재협상 시점까지 변동 없음'
-2026-09-23 00:47:00,802 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '국제유가 변동 후 비교적 빠르게 반영 (정유사 재고 소진 주기에 좌우)'
-2026-09-23 00:47:00,802 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 3건 자동 수정 적용
-2026-09-23 00:47:00,803 [INFO] content_generator — 이미지 계획 2건 사용: ['gas station price sign supermarket', 'consumer price index chart graph']
-2026-09-23 00:47:01,061 [INFO] image_fetcher — 이미지 수집 성공: 'gas station price sign supermarket' → 제목='gas price / sign / fuel / car wallpapers' (관련성=0.80)
-2026-09-23 00:47:01,362 [INFO] image_fetcher — 이미지 수집 성공: 'consumer price index chart graph' → 제목='supermarket / shopping / sales / store /' (관련성=0.20)
-2026-09-23 00:47:03,251 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:47:03,897 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-09-23 00:47:03,897 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-09-23 00:47:03,901 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-23 00:47:03,902 [INFO] content_generator — 시리즈 포스트 생성 완료: '국제유가 소비자물가 반영 시차, 통계로 뜯어보기' (3147자, 이미지 2개)
-2026-09-23 00:47:04,502 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:47:27,515 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-23 00:47:28,149 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:47:32,598 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 77/100 — '국제유가 소비자물가 반영 시차, 통계로 뜯어보기'
-2026-09-23 00:47:32,598 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 날짜·기관명(통계청 2023-12-19, KBS 보도) 인용은 있으나 본문 중 문장이 그대로 중복 출력된 부분이 있어 편집 품질이 떨어짐
-2026-09-23 00:47:32,598 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 출처는 명시했으나 alt 텍스트 여부 확인 불가
-2026-09-23 00:47:32,598 [INFO] adsense_validator —   ❌ AI 생성 의심도: '경우도 있는 것으로 보입니다 경우도 있다고 합니다', '부분입니다 부분입니다' 등 문장 중복 오류가 AI 생성 편집 누락으로 의심됨
-2026-09-23 00:47:32,598 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '경우도 있는 것으로 보입니다 경우도 있다고 합니다', '부분입니다 부분입니다' 등 문장 중복 오류가 AI 생성 편집 누락으로 의심됨
-2026-09-23 00:47:32,598 [WARNING] adsense_validator —   🔴 본문 내 문장 중복/오류('...경우도 있다고 합니다', '부분입니다 부분입니다')는 AI 생성 편집 누락으로 보이며 즉시 수정 필요
-2026-09-23 00:47:32,598 [WARNING] main —   ⚠️ [편 2] AdSense 검토 필요 — pending 저장 (점수: 77/100)
-2026-09-23 00:47:32,600 [INFO] main — 
---- [3/3편] '국제유가 하락 물가 체감 후기 2026' 생성 중 ---
-2026-09-23 00:47:32,600 [INFO] content_generator — 시리즈 포스트 생성: '국제유가 하락 물가 체감 후기 2026' (3/3편)
-2026-09-23 00:47:42,354 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:47:42,361 [INFO] research_collector — 검색 의도: 2026년 국제유가 하락이 실제 체감 물가(기름값, 생활물가)에 얼마나 반영됐는지 확인하고 싶은 검색
-2026-09-23 00:47:55,495 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '국제유가 하락 물가 체감 후기 2026'
-2026-09-23 00:48:11,804 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:48:11,805 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '국제유가 하락 물가 체감 후기 2026'
-2026-09-23 00:48:32,352 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:48:32,353 [INFO] source_validator — 출처 검증: 2/5개 통과, 등급 분포 {'X': 3, 'A': 1, 'B': 1}
-2026-09-23 00:48:32,353 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-23 00:48:32,353 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-23 00:48:32,938 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:49:43,630 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-23 00:49:44,720 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:49:54,600 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-09-23 00:49:54,600 [INFO] content_generator — 이미지 계획 1건 사용: ['oil price chart calculator desk']
-2026-09-23 00:49:54,858 [INFO] image_fetcher — 이미지 수집 성공: 'oil price chart calculator desk' → 제목='money / money calculator / calculator / ' (관련성=0.40)
-2026-09-23 00:49:55,267 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-23 00:49:55,267 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-09-23 00:49:55,271 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-23 00:49:55,271 [INFO] content_generator — 시리즈 포스트 생성 완료: '유가·물가 3개월 비교 기록, 체감 안 된 이유' (2803자, 이미지 1개)
-2026-09-23 00:49:56,138 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:50:17,650 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '유가·물가 3개월 비교 기록, 체감 안 된 이유'
-2026-09-23 00:50:17,650 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 다소 떨어짐
-2026-09-23 00:50:17,650 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 1건 존재하나 정책상 이미지 관련 항목은 기본적으로 warn 처리
-2026-09-23 00:50:17,650 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약 3줄·이모지 구획 등 템플릿화된 요약 패턴과 '다음 섹션에서 풀어보겠습니다' 반복 어구가 다소 정형적임
-2026-09-23 00:50:18,833 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-23 00:51:00,171 [INFO] final_editor —   ✏️ 제목 최종 교정: '유가·물가 3개월 비교 기록, 체감 안 된 이유' → '국제유가 하락 물가 체감 후기, 3개월 비교로 본 이유(2026)'
-2026-09-23 00:51:00,171 [INFO] final_editor —   ✏️ 메타 설명 교정 (127자)
-2026-09-23 00:51:00,172 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 정리하고, 긴 문단을 모바일 친화적으로 분리했으며, 요약 박스·표·FAQ·주의사항·작성자 메모 등 발행 필수 요소를 보강했습니다.
-2026-09-23 00:51:00,298 [INFO] related_posts — 내려간 글 39편을 관련 포스트 후보에서 제외
-2026-09-23 00:51:00,299 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-09-23 00:51:00,300 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-09-23 00:51:01,216 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/09/3-2026.html
-2026-09-23 00:51:01,217 [INFO] main —   ✅ 편 3 업로드 완료: https://hoguasset.blogspot.com/2026/09/3-2026.html
-2026-09-23 00:51:01,227 [INFO] dashboard_exporter —   검토 대기 저장: 국제유가 소비자물가 반영 시차, 통계로 뜯어보기 (11420자 HTML)
-2026-09-23 00:51:01,237 [INFO] pending_store — 검토 대기 저장: 목록 14건 / 보관 161건 / 본문 17건
-2026-09-23 00:51:01,237 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 175개)
-2026-09-23 00:51:01,251 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 194개)
-2026-09-23 00:51:01,256 [INFO] dashboard_exporter — 분석 필드 유지: 92/102개 (등급·조회수·수익)
-2026-09-23 00:51:01,265 [INFO] dashboard_exporter —   시리즈: 35개 내보내기 완료
-2026-09-23 00:51:01,274 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-23 00:51:01,511 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-09-23 00:51:01,684 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-23 00:51:02,051 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-23 00:51:02,052 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
 2026-09-23 00:51:02,053 [INFO] dashboard_exporter —   학습 이력: 4주 내보내기 완료
 2026-09-23 00:51:02,054 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
 2026-09-23 00:51:02,064 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 276 / 실패 1 / 대기 12)
@@ -601,3 +498,114 @@
 2026-09-25 00:41:40,855 [INFO] dashboard_exporter —   포스트: 103개 / 실행 이력: 120개 / 블로그: 3개
 2026-09-25 00:41:40,856 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-09-25 00:41:40,857 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-09-25 00:42:32,054 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-25 00:42:32,985 [INFO] main — ============================================================
+2026-09-25 00:42:32,985 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-09-25 00:42:32
+2026-09-25 00:42:32,985 [INFO] main — ============================================================
+2026-09-25 00:42:32,998 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-25 00:42:32,998 [INFO] keyword_collector — 포스팅 이력 코퍼스: 92개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-09-25 00:42:32,998 [INFO] keyword_collector — 시즌 예약 키워드 1개 로드 (blog=blog3): ['추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-25 00:42:37,619 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-09-25 00:42:44,122 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-25 00:42:44,150 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-25 00:42:44,150 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-25 00:42:44,703 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-09-25 00:42:45,223 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-25 00:42:45,224 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-25 00:42:45,229 [INFO] keyword_collector — 유사 주제 제외 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '추석 선물 저렴하게 사는 꿀팁 정리']
+2026-09-25 00:42:45,230 [INFO] keyword_collector —   [naver_realtime] 2개: ['추석 연휴 미국 ETF 투자 방법 총정리', '퇴직연금 수익률 높이는 방법 2026']
+2026-09-25 00:42:45,230 [INFO] keyword_collector — 최종 선정 키워드 2개: ['추석 연휴 미국 ETF 투자 방법 총정리', '퇴직연금 수익률 높이는 방법 2026']
+2026-09-25 00:42:45,230 [INFO] main — 수집된 키워드 2개: ['추석 연휴 미국 ETF 투자 방법 총정리', '퇴직연금 수익률 높이는 방법 2026']
+2026-09-25 00:42:45,235 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
+2026-09-25 00:42:45,236 [INFO] main — 단독 포스트 대상 키워드 1개: ['추석 연휴 미국 ETF 투자 방법 총정리']
+2026-09-25 00:42:45,250 [INFO] main — 
+[1/1] 키워드: '추석 연휴 미국 ETF 투자 방법 총정리'
+2026-09-25 00:42:45,250 [INFO] content_generator — 포스트 생성 중: '추석 연휴 미국 ETF 투자 방법 총정리'
+2026-09-25 00:42:52,450 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-25 00:42:52,451 [INFO] research_collector — 검색 의도: 추석 연휴 기간 동안 미국 증시 휴장 여부와 국내에서 미국 ETF에 투자하는 구체적인 방법(계좌 개설, 거래
+2026-09-25 00:43:04,311 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '추석 연휴 미국 ETF 투자 방법 총정리'
+2026-09-25 00:43:14,896 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-25 00:43:14,897 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '추석 연휴 미국 ETF 투자 방법 총정리'
+2026-09-25 00:43:30,379 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-25 00:43:30,380 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'B': 3, 'X': 2}
+2026-09-25 00:43:30,382 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-25 00:43:30,383 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-25 00:43:31,204 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-25 00:44:47,642 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-25 00:44:48,890 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-25 00:45:00,223 [WARNING] content_generator — 팩트체크 fix가 지시문 형태 — 적용 건너뜀: '홍콩 증시 개장 여부는 별도 확인이 필요합니다'
+2026-09-25 00:45:00,224 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 1건 자동 수정 적용
+2026-09-25 00:45:00,224 [INFO] content_generator — 이미지 계획 2건 사용: ['smartphone stock trading app night', 'stock trading app buy order screen']
+2026-09-25 00:45:00,746 [INFO] image_fetcher — 이미지 수집 성공: 'smartphone stock trading app night' → 제목='finance / stock trading / day trading / ' (관련성=0.60)
+2026-09-25 00:45:01,186 [INFO] image_fetcher — 대체 이미지 수집: 'stock trading app buy order screen' → 제목='blur / chart / computer / data / finance' (관련성=0.33)
+2026-09-25 00:45:01,187 [INFO] image_fetcher — 이미지 수집 성공: 'stock trading app buy order screen' → 제목='blur / chart / computer / data / finance' (관련성=0.33)
+2026-09-25 00:45:02,492 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-25 00:45:03,007 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-09-25 00:45:03,007 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-09-25 00:45:03,043 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-09-25 00:45:03,045 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-25 00:45:03,045 [INFO] content_generator — 포스트 생성 완료: '추석 연휴 미국 ETF 투자 방법 총정리 - 단계별 절차와 주의사항' (3054자, 이미지 2개)
+2026-09-25 00:45:04,890 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-25 00:45:27,071 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-09-25 00:45:27,873 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-25 00:45:30,077 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '추석 연휴 미국 ETF 투자 방법 총정리 - 단계별 절차와 주의'
+2026-09-25 00:45:30,077 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락(도입부, 매매절차 설명)이 500자 이상으로 길게 이어짐
+2026-09-25 00:45:30,077 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 사용은 적절하나 alt 텍스트 명시 여부 확인 불가로 주의 필요
+2026-09-25 00:45:30,077 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심요약·이모지 박스, 단계별 나열 등 템플릿화된 AI 생성 특유의 구조적 패턴이 다수 관찰됨
+2026-09-25 00:45:30,081 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-25 00:45:30,083 [INFO] internal_linker —   [1/5] '체크리스트' -> https://hoguasset.blogspot.com/2026/09/etf-2026_0981672431.h
+2026-09-25 00:45:30,086 [INFO] internal_linker —   [2/5] '그대로' -> https://hoguasset.blogspot.com/2026/09/etf-2026.html
+2026-09-25 00:45:30,093 [INFO] internal_linker —   [3/5] '2026년' -> https://hoguasset.blogspot.com/2026/09/ai-2026.html
+2026-09-25 00:45:30,093 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-09-25 00:45:30,093 [INFO] main —   제목: 추석 연휴 미국 ETF 투자 방법 총정리 - 단계별 절차와 주의사항
+2026-09-25 00:45:30,093 [INFO] main —   이미지: 2개 삽입
+2026-09-25 00:45:30,093 [INFO] main —   글자 수: 3054자
+2026-09-25 00:45:30,883 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-25 00:45:50,726 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '추석 연휴 미국 ETF 투자 방법 총정리 - 단계별 절차와 주의'
+2026-09-25 00:45:50,726 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 '5단계 절차' 등 일부 단락이 500자 이상으로 길게 뭉쳐있음
+2026-09-25 00:45:50,726 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처는 안전하나 alt 텍스트 명시 여부가 본문에서 확인되지 않음
+2026-09-25 00:45:50,727 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약/핵심 포인트 박스 및 정형화된 전환 문구 패턴이 다소 AI 템플릿 느낌을 줌
+2026-09-25 00:45:50,727 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-09-25 00:45:51,536 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-25 00:46:34,838 [INFO] final_editor —   ✏️ 제목 최종 교정: '추석 연휴 미국 ETF 투자 방법 총정리 - 단계별 절차와 주의사항' → '추석 연휴 미국 ETF 투자 방법 총정리 5단계 가이드'
+2026-09-25 00:46:34,838 [INFO] final_editor —   ✏️ 메타 설명 교정 (126자)
+2026-09-25 00:46:34,838 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 기준에 맞춰 재정리하고, 이미지 3종의 위치와 구체적 alt text를 지정했으며, 참고자료와 내부링크 후보를 명시해 발행 직전 상태로 정리했습니다.
+2026-09-25 00:46:34,947 [INFO] related_posts — 내려간 글 38편을 관련 포스트 후보에서 제외
+2026-09-25 00:46:34,949 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-09-25 00:46:34,950 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '추석 연휴 미국 ETF 투자 방법 총정리' — 면책·팩트체크 확인 권장
+2026-09-25 00:46:34,950 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-09-25 00:46:35,940 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/09/etf-5.html
+2026-09-25 00:46:35,953 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/09/etf-5.html
+2026-09-25 00:46:35,957 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-09-25 00:46:35,965 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-25 00:46:35,967 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '추석 연휴 미국 ETF 투자 방법 총정리 5단계 가이드'
+2026-09-25 00:46:36,706 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-25 00:46:40,608 [INFO] comment_manager —   생성된 댓글: 추석 연휴에 미국 ETF 거래하실 때 한 가지 팁 드리면, 서머타임 해제 시점이 11월이라 아직은 한국 시간 기준 밤 10시 30분~새벽 5시가...
+2026-09-25 00:49:40,783 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-09-25 00:49:40,784 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-09-25 00:49:40,784 [INFO] main — 
+============================================================
+2026-09-25 00:49:40,784 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-09-25 00:49:40,784 [INFO] main — ============================================================
+2026-09-25 00:49:40,806 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 200개)
+2026-09-25 00:49:40,818 [INFO] dashboard_exporter — 분석 필드 유지: 89/104개 (등급·조회수·수익)
+2026-09-25 00:49:40,833 [INFO] dashboard_exporter —   시리즈: 35개 내보내기 완료
+2026-09-25 00:49:40,847 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-25 00:49:41,152 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-25 00:49:41,550 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-25 00:49:41,960 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-25 00:49:41,961 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-25 00:49:41,963 [INFO] dashboard_exporter —   학습 이력: 4주 내보내기 완료
+2026-09-25 00:49:41,966 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-25 00:49:41,983 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 276 / 실패 0 / 대기 13)
+2026-09-25 00:49:41,983 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-25 00:49:41,983 [INFO] dashboard_exporter —   포스트: 104개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-25 00:49:41,984 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-25 00:49:41,985 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

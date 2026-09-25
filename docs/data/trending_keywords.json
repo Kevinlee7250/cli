@@ -1,69 +1,75 @@
 {
-  "collectedAt": "2026-09-24T23:07:16.413378+00:00",
+  "collectedAt": "2026-09-25T01:18:46.735388+00:00",
   "sources": {
     "googleTrends": [
       {
-        "keyword": "서울지하철",
+        "keyword": "추석 인사",
         "rank": 1,
+        "traffic": "2000+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "최화정",
+        "rank": 2,
         "traffic": "200+",
         "source": "google_trends"
       },
       {
-        "keyword": "ionq",
-        "rank": 2,
-        "traffic": "100+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "weather",
+        "keyword": "죽음",
         "rank": 3,
         "traffic": "1000+",
         "source": "google_trends"
       },
       {
-        "keyword": "차례상",
+        "keyword": "룰라",
         "rank": 4,
+        "traffic": "1000+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "배두나",
+        "rank": 5,
+        "traffic": "200+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "열차",
+        "rank": 6,
         "traffic": "500+",
         "source": "google_trends"
       },
       {
-        "keyword": "thời tiết",
-        "rank": 5,
-        "traffic": "2000+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "skhy",
-        "rank": 6,
-        "traffic": "200+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "ai 데이터 센터",
+        "keyword": "vix",
         "rank": 7,
-        "traffic": "200+",
+        "traffic": "100+",
         "source": "google_trends"
       },
       {
-        "keyword": "필라델피아 반도체 지수",
+        "keyword": "추석 차례상",
         "rank": 8,
         "traffic": "200+",
         "source": "google_trends"
       },
       {
-        "keyword": "날씨",
+        "keyword": "모유",
         "rank": 9,
-        "traffic": "200000+",
+        "traffic": "10000+",
         "source": "google_trends"
       },
       {
-        "keyword": "погода",
+        "keyword": "天气",
         "rank": 10,
-        "traffic": "500+",
+        "traffic": "1000+",
         "source": "google_trends"
       }
     ],
     "naverNews": [
+      {
+        "headline": "“아빠랑 할머니가 각각 줬는데요?”…추석 용돈 ‘2000만원 공제’의 오해",
+        "category": "경제",
+        "source": "naver_rss",
+        "keyword": "아빠랑 할머니가 각각 줬는데요 추석 용돈"
+      },
       {
         "headline": "“시장 익숙하지 않은 영역 진입”…美 30년물 금리 2004년 이래 최고치",
         "category": "경제",
@@ -93,12 +99,6 @@
         "category": "경제",
         "source": "naver_rss",
         "keyword": "주가상승 배당 파이어족 갈아타는 혜자 GPIQ"
-      },
-      {
-        "headline": "도수치료 막히니 ‘이 치료’에 환자 북적…실손보험 적자 줄인다더니, 효과는",
-        "category": "경제",
-        "source": "naver_rss",
-        "keyword": "도수치료 막히니 치료 환자 북적 실손보험"
       },
       {
         "headline": "[더도 덜도 말고 한가위만 같아라④] 게임계 풍성한 추석 이벤트 ‘눈길’",
@@ -137,6 +137,12 @@
         "keyword": "컴투스 SWC2026 유럽컵 독일 함부르크서 개최"
       },
       {
+        "headline": "[속보] 李대통령 “2030년 6월2일 넘기는일 절대없어”…임기 다시 언급",
+        "category": "생활문화",
+        "source": "naver_rss",
+        "keyword": "대통령 2030 넘기는일 절대없어 임기 다시"
+      },
+      {
         "headline": "6억 성과급에 200만원 의자까지…삼전 ‘파격 보상’ 베일 벗는다",
         "category": "생활문화",
         "source": "naver_rss",
@@ -167,10 +173,11 @@
         "keyword": "년만에 세계 성장률 넘어서나 성장 전망"
       },
       {
-        "headline": "북한군 포로 2명 한국행…젤렌스키 공개, 정부도 사실상 확인",
-        "category": "생활문화",
-        "source": "naver_rss",
-        "keyword": "북한군 포로 한국행 젤렌스키 공개 정부도"
+        "headline": "주식투자·부동산·세금 상담에에 상생금융마켓까지…머니페스타 ‘재...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "주식투자 부동산 세금 상담에에 상생금융마켓까지 머니페스타"
       },
       {
         "headline": "삼성전자우, 본주 두 배 속도로 뛴다…배당·소각 기대",
@@ -208,172 +215,165 @@
         "keyword": "돈보다 지금의 행복도 중요 재테크 속도"
       },
       {
-        "headline": "5만원에 산 구호가 강남 빌딩으로…숭구리당당 김정렬의 반전 재테크",
-        "category": "뉴스",
-        "query": "경제 재테크",
-        "source": "naver_api",
-        "keyword": "만원에 구호가 강남 빌딩으로 숭구리당당 김정렬의"
-      },
-      {
-        "headline": "“추석에 늘어난 체중 모두 ‘살’일까”⋯명절 맞춤 체중 관리법",
+        "headline": "전남광주시, 정신건강 등 복합위기 지원 안내서 1만부 배포",
         "category": "뉴스",
         "query": "건강 의료",
         "source": "naver_api",
-        "keyword": "추석에 늘어난 체중 모두 일까 명절"
+        "keyword": "전남광주시 정신건강 복합위기 지원 안내서 만부"
       },
       {
-        "headline": "추석엔 부모님께 ‘건강’을 선물하세요…안마의자 6選",
+        "headline": "걷는 모습 달라진 부모님…&quot;무릎·허리 점검하세요&quot;",
         "category": "뉴스",
         "query": "건강 의료",
         "source": "naver_api",
-        "keyword": "추석엔 부모님께 건강 선물하세요 안마의자"
+        "keyword": "걷는 모습 달라진 부모님 quot 무릎"
       },
       {
-        "headline": "&quot;명절 연휴 폭음했다면 가슴 두근거림 가볍게 생각 말아야&quot;",
+        "headline": "전남광주특별시, 정신건강·고용·금융 지원 안내서 1만 부 배포",
         "category": "뉴스",
         "query": "건강 의료",
         "source": "naver_api",
-        "keyword": "quot 명절 연휴 폭음했다면 가슴 두근거림"
+        "keyword": "전남광주특별시 정신건강 고용 금융 지원 안내서"
       },
       {
-        "headline": "남은 생 두 달, 아들은 말 못했지만…아버지는 이미 알았던 '마지막 병...",
+        "headline": "독감 유행에 식중독·화상까지…건강한 추석 보내려면?",
         "category": "뉴스",
         "query": "건강 의료",
         "source": "naver_api",
-        "keyword": "남은 아들은 못했지만 아버지는 이미 알았던"
+        "keyword": "독감 유행에 식중독 화상까지 건강한 추석"
       },
       {
-        "headline": "[관절염 명의의 진료실]심한 목 디스크가 6개월 만에 완치된 비결",
+        "headline": "&quot;목 혈관 좁아져도 모를 수 있다&quot;…뇌경색 부르는 '경동맥 협착'",
         "category": "뉴스",
         "query": "건강 의료",
         "source": "naver_api",
-        "keyword": "관절염 명의의 진료실 심한 디스크가 개월"
+        "keyword": "quot 혈관 좁아져도 모를 있다 quot"
       },
       {
-        "headline": "&quot;날씬하니 괜찮다&quot;고?…나 챙길 시간 없던 X세대의 착각",
-        "category": "뉴스",
-        "query": "건강 의료",
-        "source": "naver_api",
-        "keyword": "quot 날씬하니 괜찮다 quot 챙길 시간"
-      },
-      {
-        "headline": "넷플 시청 기록으로 10년 뒤 미래도 점친다…MBTI 다음은 'AI 사주'",
+        "headline": "‘AI 붐’ 타고 커지는 데이터센터 시장…건설사들 새 격전지로",
         "category": "뉴스",
         "query": "IT AI 기술",
         "source": "naver_api",
-        "keyword": "넷플 시청 기록으로 미래도 점친다 MBTI"
+        "keyword": "AI 타고 커지는 데이터센터 시장 건설사들"
       },
       {
-        "headline": "[주간 기업동향] 정용진 신세계그룹 회장, 보육원 아동 위해 사재 1억원...",
+        "headline": "中 CXMT 단기간 추격 어려워…삼성·SK 기술력 '2~3세대' 우위",
         "category": "뉴스",
         "query": "IT AI 기술",
         "source": "naver_api",
-        "keyword": "주간 기업동향 정용진 신세계그룹 회장 보육원"
+        "keyword": "CXMT 단기간 추격 어려워 삼성 SK"
       },
       {
-        "headline": "국산 NPU, 실증 넘어 상용화로…SI·IT 기업 활용 확대",
+        "headline": "LG디스플레이, 新 성장전략은 ‘기술중심회사’⋯“OLED 기술로 흑자 이...",
         "category": "뉴스",
         "query": "IT AI 기술",
         "source": "naver_api",
-        "keyword": "국산 NPU 실증 넘어 상용화로 SI"
+        "keyword": "LG 디스플레이 성장전략은 기술중심회사 OLED 기술로"
       },
       {
-        "headline": "글로벌 완성차 '휴머노이드 대전' 참전 러시…'피지컬 AI' 시장 정조준",
+        "headline": "'산업혁명 뛰어넘는 AI혁명 시대' 국회에 맡겨진 숙제[AI룰메이커]",
         "category": "뉴스",
         "query": "IT AI 기술",
         "source": "naver_api",
-        "keyword": "글로벌 완성차 휴머노이드 대전 참전 러시"
+        "keyword": "산업혁명 뛰어넘는 AI 혁명 시대 국회에"
       },
       {
-        "headline": "AI 보폭 넓히는 구광모…LG그룹, 엔비디아·MS와 전방위 협력",
+        "headline": "오라클, AI 데이터센터 불가항력 통보…관련 주가 일제히 하락",
         "category": "뉴스",
         "query": "IT AI 기술",
         "source": "naver_api",
-        "keyword": "AI 보폭 넓히는 구광모 LG 그룹"
+        "keyword": "오라클 AI 데이터센터 불가항력 통보 주가"
       },
       {
-        "headline": "[로보택시 공습, 흔들리는 안방] 韓 로보택시 19대 뿐…해외기술 종속 ...",
+        "headline": "재계 총수 올해 명절 연휴엔 어디로…‘글로벌 경영’ 나선다",
         "category": "뉴스",
         "query": "IT AI 기술",
         "source": "naver_api",
-        "keyword": "로보택시 공습 흔들리는 안방 로보택시 해외기술"
+        "keyword": "재계 총수 명절 연휴엔 어디로 글로벌"
       },
       {
-        "headline": "밀키트에 혼행까지…1027만 '혼추족' 품은 추석 경제학",
+        "headline": "최대 산유국이라는 미국, 에너지 가격은 왜 못잡을까[박신영의 월가 아...",
         "category": "뉴스",
         "query": "생활 소비",
         "source": "naver_api",
-        "keyword": "밀키트에 혼행까지 1027 혼추족 품은 추석"
+        "keyword": "최대 산유국이라는 미국 에너지 가격은 못잡을까"
       },
       {
-        "headline": "100년 시장에 스며든 청년…디화제 ‘세대 잇기’ [셔터 거리의 경고, 무...",
+        "headline": "[인터뷰] 손훈모 순천시장 &quot;취임 3개월…더 큰 순천 열겠다&quot;",
         "category": "뉴스",
         "query": "생활 소비",
         "source": "naver_api",
-        "keyword": "시장에 스며든 청년 디화제 세대 잇기"
+        "keyword": "인터뷰 손훈모 순천시장 quot 취임 개월"
       },
       {
-        "headline": "“명절인데 꼭 술 마셔야 하나”…추석 술자리도 ‘제로’ 바람",
+        "headline": "[오늘 일본은] 엔화 다시 159엔대…美 30년물 국채금리 22년 만에 최고",
         "category": "뉴스",
         "query": "생활 소비",
         "source": "naver_api",
-        "keyword": "명절인데 마셔야 하나 추석 술자리도 제로"
+        "keyword": "일본은 엔화 다시 엔대 년물 국채금리"
       },
       {
-        "headline": "추석 용돈, 통장으로 만드는 좋은 습관",
+        "headline": "한복 사고 선물세트 팔고…추석 준비도 ‘중고 거래’로 아낀다",
         "category": "뉴스",
         "query": "생활 소비",
         "source": "naver_api",
-        "keyword": "추석 용돈 통장으로 만드는 좋은 습관"
+        "keyword": "한복 사고 선물세트 팔고 추석 준비도"
       },
       {
-        "headline": "추석 성묫길 모기·진드기 주의…&quot;기피제, 연령 확인하고 사용해야&quot;",
+        "headline": "&quot;외국어 앱 지원부터 전용 적금까지&quot;…300만 외국인 마음 잡는 K-금융",
         "category": "뉴스",
         "query": "생활 소비",
         "source": "naver_api",
-        "keyword": "추석 성묫길 모기 진드기 주의 quot"
+        "keyword": "quot 외국어 지원부터 전용 적금까지 quot"
       },
       {
-        "headline": "가을 분양 ‘브랜드 대전’…10월 전국서 대형 건설사 공급 잇따라",
+        "headline": "경북도 &quot;수도권에 대응할 성장동력 마련이 TK통합 목적&quot;",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "경북도 quot 수도권에 대응할 성장동력 마련이"
+      },
+      {
+        "headline": "힘들게 청약 당첨됐는데…부적격 취소, 6년간 5만명 넘어",
         "category": "뉴스",
         "query": "부동산 청약",
         "source": "naver_api",
-        "keyword": "가을 분양 브랜드 대전 전국서 대형"
+        "keyword": "힘들게 청약 당첨됐는데 부적격 취소 년간"
       },
       {
-        "headline": "[서울 청년 민심은 下] 멀어진 내 집 마련, 불안한 주식 투자…2030이 본...",
+        "headline": "빚 없이 1.4억 모았는데… 다둥이 엄마가 꿈인 소연씨의 고민",
         "category": "뉴스",
         "query": "부동산 청약",
         "source": "naver_api",
-        "keyword": "서울 청년 민심은 멀어진 마련 불안한"
+        "keyword": "없이 모았는데 다둥이 엄마가 꿈인 소연씨의"
       },
       {
-        "headline": "주택청약 당첨되고도 부적격…최근 3년간 1만3000명",
+        "headline": "아파트 청약 당첨됐다가 취소…6년간 5만4000명",
         "category": "뉴스",
         "query": "부동산 청약",
         "source": "naver_api",
-        "keyword": "주택청약 당첨되고도 부적격 년간 3000"
+        "keyword": "아파트 청약 당첨됐다가 취소 년간 4000"
       },
       {
-        "headline": "“청약 큰 장 열린다는데 서울은 딴 세상”…2398가구뿐, 현금 30억 필요...",
+        "headline": "청약돼 좋아했는데…당첨후 취소 6년간 5만4000명",
         "category": "뉴스",
         "query": "부동산 청약",
         "source": "naver_api",
-        "keyword": "청약 열린다는데 서울은 세상 2398 가구뿐"
+        "keyword": "청약돼 좋아했는데 당첨후 취소 년간 4000"
       },
       {
-        "headline": "전세 씨 마르자 '로또' 된 공공임대 … 1가구에 2088명 '우르르'",
+        "headline": "추석 끝나자 4만9000가구 쏟아진다 … 10월 ‘분양 대목’",
         "category": "뉴스",
         "query": "부동산 청약",
         "source": "naver_api",
-        "keyword": "전세 마르자 로또 공공임대 가구에 2088"
+        "keyword": "추석 끝나자 9000 가구 쏟아진다 분양"
       },
       {
-        "headline": "[추석 부동산②] 집값 오를수록 멀어지는 내 집 마련, 무주택자의 한숨",
+        "headline": "&quot;아파트 청약 후 당첨 취소된 사람 6년 간 5만4000명&quot;",
         "category": "뉴스",
         "query": "부동산 청약",
         "source": "naver_api",
-        "keyword": "추석 부동산 집값 오를수록 멀어지는 마련"
+        "keyword": "quot 아파트 청약 당첨 취소된 사람"
       }
     ],
     "highCPC": [
@@ -590,43 +590,43 @@
     ],
     "aiRecommended": [
       {
-        "keyword": "아이폰17 프로 실사용 후기 국내 출시가 총정리 및 비교",
+        "keyword": "환절기 감기 예방 면역력 관리법 실제 후기",
         "source": "ai_generated"
       },
       {
-        "keyword": "연말정산 미리보기 활용법 환급액 늘리는 절세 꿀팁 2026",
+        "keyword": "2026 연말정산 미리 준비하는 절세 팁 총정리",
         "source": "ai_generated"
       },
       {
-        "keyword": "독감 예방접종 시기와 병원별 가격 비교 직접 후기",
+        "keyword": "아이폰17 프로 갤럭시 신제품 비교 후기",
         "source": "ai_generated"
       },
       {
-        "keyword": "환절기 비염 증상 완화 방법 직접 관리해본 후기",
+        "keyword": "가을 이사철 전세 계약 체크리스트 후기",
         "source": "ai_generated"
       },
       {
-        "keyword": "가을 단풍 명소 국내 여행지 추천 2026 방문 후기",
+        "keyword": "전국 단풍 명소 추천 순위 2026",
         "source": "ai_generated"
       },
       {
-        "keyword": "ISA 계좌 만기 갈아타기 절세 효과 직접 비교",
+        "keyword": "가을철 알레르기 비염 관리 방법과 실제 후기",
         "source": "ai_generated"
       },
       {
-        "keyword": "가을 이사철 이사비용 아끼는 방법과 견적 비교 후기",
+        "keyword": "ISA 계좌 만기 후 갈아타기 실제 후기",
         "source": "ai_generated"
       },
       {
-        "keyword": "갤럭시Z폴드7 실사용 후기 아이폰17과 카메라 비교",
+        "keyword": "갤럭시 언팩 2026 신제품 사전예약 혜택 비교",
         "source": "ai_generated"
       },
       {
-        "keyword": "3분기 어닝시즌 실적 발표 종목 투자 전략 2026",
+        "keyword": "가을 제철 음식 맛집 추천 총정리",
         "source": "ai_generated"
       },
       {
-        "keyword": "환절기 피부 트러블 관리 스킨케어 루틴 직접 써본 후기",
+        "keyword": "10월 단풍 여행지 숙소 예약 가격 비교 후기",
         "source": "ai_generated"
       }
     ]

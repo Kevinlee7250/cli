@@ -1,69 +1,75 @@
 {
-  "collectedAt": "2026-09-25T12:01:39.618506+00:00",
+  "collectedAt": "2026-09-25T13:08:32.072447+00:00",
   "sources": {
     "googleTrends": [
       {
-        "keyword": "스타벅스",
+        "keyword": "내일 날씨",
         "rank": 1,
+        "traffic": "200000+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "금",
+        "rank": 2,
         "traffic": "2000+",
         "source": "google_trends"
       },
       {
-        "keyword": "이재성",
-        "rank": 2,
-        "traffic": "50000+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "방사포",
+        "keyword": "thời tiết ngày mai",
         "rank": 3,
-        "traffic": "500+",
+        "traffic": "2000+",
         "source": "google_trends"
       },
       {
-        "keyword": "자영업",
+        "keyword": "weather tomorrow",
         "rank": 4,
+        "traffic": "2000+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "기사",
+        "rank": 5,
         "traffic": "200+",
         "source": "google_trends"
       },
       {
-        "keyword": "u-23 hàn quốc đấu với u-23 việt nam",
-        "rank": 5,
-        "traffic": "500+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "치지직",
+        "keyword": "중산층",
         "rank": 6,
         "traffic": "2000+",
         "source": "google_trends"
       },
       {
-        "keyword": "문보경",
+        "keyword": "박현호",
         "rank": 7,
-        "traffic": "200+",
+        "traffic": "2000+",
         "source": "google_trends"
       },
       {
-        "keyword": "중국",
+        "keyword": "스타벅스",
         "rank": 8,
         "traffic": "2000+",
         "source": "google_trends"
       },
       {
-        "keyword": "유튜버",
+        "keyword": "이재성",
         "rank": 9,
-        "traffic": "500+",
+        "traffic": "2000+",
         "source": "google_trends"
       },
       {
-        "keyword": "한국 u-23 대 베트남 u-23",
+        "keyword": "자영업",
         "rank": 10,
-        "traffic": "10000+",
+        "traffic": "500+",
         "source": "google_trends"
       }
     ],
     "naverNews": [
+      {
+        "headline": "“산재보험 1억6천만원 받았는데 또?”…추락한 철근공 회사에 소송 낸 까닭 [어쩌다 세상이]",
+        "category": "경제",
+        "source": "naver_rss",
+        "keyword": "산재보험 천만원 받았는데 추락한 철근공 회사에"
+      },
       {
         "headline": "“은행 간 어머니가 돌아오질 않아요”...평균거리 18km, 국토 절반이 ‘은행사막’",
         "category": "경제",
@@ -93,12 +99,6 @@
         "category": "경제",
         "source": "naver_rss",
         "keyword": "년에 1200 만원 이하 버는 사업장"
-      },
-      {
-        "headline": "“아빠랑 할머니가 각각 줬는데요?”…추석 용돈 ‘2000만원 공제’의 오해",
-        "category": "경제",
-        "source": "naver_rss",
-        "keyword": "아빠랑 할머니가 각각 줬는데요 추석 용돈"
       },
       {
         "headline": "[더도 덜도 말고 한가위만 같아라④] 게임계 풍성한 추석 이벤트 ‘눈길’",
@@ -137,6 +137,12 @@
         "keyword": "컴투스 SWC2026 유럽컵 독일 함부르크서 개최"
       },
       {
+        "headline": "[속보] 한국 야구, 일본 실업팀 선수들에 0대 5 대패",
+        "category": "생활문화",
+        "source": "naver_rss",
+        "keyword": "한국 야구 일본 실업팀 선수들에 대패"
+      },
+      {
         "headline": "[속보] 靑, 지뢰 폭발 ‘늑장 조사’ 의혹 일축…“철저·신속 규명”",
         "category": "생활문화",
         "source": "naver_rss",
@@ -167,10 +173,214 @@
         "keyword": "연휴 노린 올빼미 공시 공개매수 무산"
       },
       {
-        "headline": "北외무상 “핵보유 의지는 백년·천년이 지나도 절대불변”",
-        "category": "생활문화",
-        "source": "naver_rss",
-        "keyword": "외무상 핵보유 의지는 백년 천년이 지나도"
+        "headline": "&quot;간식비·게임비 따로따로&quot;… 추석 용돈으로 시작하는 첫 재테크",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "quot 간식비 게임비 따로따로 quot 추석"
+      },
+      {
+        "headline": "[차호중의 재테크 칼럼] 통화량과 물가",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "차호중의 재테크 칼럼 통화량과 물가"
+      },
+      {
+        "headline": "&quot;지금 행복도 중요&quot;…72% 재테크 미뤄",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "quot 행복도 중요 quot 재테크 미뤄"
+      },
+      {
+        "headline": "믿지윤tv 박지윤 앵커, '한부모가정 &amp; 자녀들' 위한 재테크 강연 진행",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "믿지윤 tv 박지윤 앵커 한부모가정 amp"
+      },
+      {
+        "headline": "&quot;돈은 벌고 싶고&quot; 탈세 유튜버, 작년만 17명…239억원 부과",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "quot 돈은 벌고 싶고 quot 탈세"
+      },
+      {
+        "headline": "&quot;추석 떡값 100만원 생겼다면…&quot; 운용사들은 '반도체·월배당·반반' 찍...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "quot 추석 떡값 만원 생겼다면 quot"
+      },
+      {
+        "headline": "지난해 강원도민 타 지역 원정 진료비 8천여억 원",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "지난해 강원도민 지역 원정 진료비 천여억"
+      },
+      {
+        "headline": "채널A 프라임 다큐 '금쪽같은 오둥이 5+5' 인천·동두천 오둥이",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "채널 프라임 다큐 금쪽같은 오둥이 인천"
+      },
+      {
+        "headline": "대체 왜 가려울까…난치성 가려움증 (EBS 명의)",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "대체 가려울까 난치성 가려움증 EBS 명의"
+      },
+      {
+        "headline": "이현재 하남시장 &quot;연휴 마지막까지 빈틈없이&quot;…하남 안전현장 이틀간 살...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "이현재 하남시장 quot 연휴 마지막까지 빈틈없이"
+      },
+      {
+        "headline": "'비대면진료' 시행령 입법예고…비상상황·집단 휴폐업 때 기준 완화",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "비대면진료 시행령 입법예고 비상상황 집단 휴폐업"
+      },
+      {
+        "headline": "[의료영상 AI 국가 인프라 ④] 유방암 AI, 간격암 감소와 진단시간 단축...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "의료영상 AI 국가 인프라 유방암 AI"
+      },
+      {
+        "headline": "FDE 도입 1년, 교육 수요도 급증…데이원컴퍼니, 현장 경험 제공 나서",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "FDE 도입 교육 수요도 급증 데이원컴퍼니"
+      },
+      {
+        "headline": "[인도증시] 저가 매수세 유입에 소폭 상승...주간으로는 6년래 최장인 7...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "인도증시 저가 매수세 유입에 소폭 상승"
+      },
+      {
+        "headline": "“3만명 자르더니 이젠 다시 돌아와?”…아마존, 해고 대상자까지 끌어...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "만명 자르더니 이젠 다시 돌아와 아마존"
+      },
+      {
+        "headline": "[기획] 무형 콘텐츠 넘어 오프라인 공간으로… 국내 IP 비즈니스 영역 ...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "기획 무형 콘텐츠 넘어 오프라인 공간으로"
+      },
+      {
+        "headline": "AI 붐 탄 1b DRAM 면적당 가치 0.654달러…TSMC 2나노 웨이퍼 단가 웃돌아",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "AI DRAM 면적당 가치 달러 TSMC"
+      },
+      {
+        "headline": "28만원대 오른 삼성전자…증권가 목표주가는 '63만원 vs 27만원'",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "만원대 오른 삼성전자 증권가 목표주가는 만원"
+      },
+      {
+        "headline": "[분석] 홈플 익스프레스, NS 인수 후에도 '심플러스' 나오는 까닭은",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "분석 홈플 익스프레스 NS 인수 후에도"
+      },
+      {
+        "headline": "[오늘의 운세] 9월 26일 띠별 재물운…돈 움직이기 전 가릴 것은",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "오늘의 운세 띠별 재물운 움직이기 가릴"
+      },
+      {
+        "headline": "[오늘의 띠별 운세] 9월 26일 나이별 총운…받는 힘보다 쓰는 방향이 중...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "오늘의 띠별 운세 나이별 총운 받는"
+      },
+      {
+        "headline": "[오늘의 별자리 운세] 9월26일 총운…흐릿한 판단은 걷어내고 필요한 일...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "오늘의 별자리 운세 총운 흐릿한 판단은"
+      },
+      {
+        "headline": "[오늘의 사주 일진 운세] 9월 26일 계묘일…아이디어는 살리고 일은 벌...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "오늘의 사주 일진 운세 계묘일 아이디어는"
+      },
+      {
+        "headline": "대구경북, 인구감소 대응 행정통합 속도",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "대구경북 인구감소 대응 행정통합 속도"
+      },
+      {
+        "headline": "“청약 당첨 좋아했는데”…단순 실수로 5만명 넘게 ‘취소’",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "청약 당첨 좋아했는데 단순 실수로 만명"
+      },
+      {
+        "headline": "&quot;아파트 당첨됐다고 좋아했는데&quot;…계산 실수 한 번에 '날벼락'",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "quot 아파트 당첨됐다고 좋아했는데 quot 계산"
+      },
+      {
+        "headline": "&quot;아파트 청약 힘들게 당첨됐는데&quot;⋯6년간 취소 5만4천명",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "quot 아파트 청약 힘들게 당첨됐는데 quot"
+      },
+      {
+        "headline": "집값 치솟자 떠오르는 '아파텔'… 추석 지나고 5600실 분양 러시",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "집값 치솟자 떠오르는 아파텔 추석 지나고"
+      },
+      {
+        "headline": "&quot;아싸 당첨이다!&quot;…청약 당첨되고도 웃지 못한 5천여 명 '왜?'",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "quot 아싸 당첨이다 quot 청약 당첨되고도"
+      },
+      {
+        "headline": "청약 당첨자 5만4000명 부적격 취소…&quot;무주택 기간 착오 가장 많아&quot;",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "청약 당첨자 4000 부적격 취소 quot"
       }
     ],
     "highCPC": [
@@ -385,12 +595,53 @@
         "source": "high_cpc"
       }
     ],
-    "aiRecommended": []
+    "aiRecommended": [
+      {
+        "keyword": "환절기 면역력 관리법 직접 해보고 효과 본 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "가을 단풍 여행지 추천 2026 혼잡 피하는 법",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "연말정산 미리 준비하는 절세 전략 2026",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "아이폰17 갤럭시S25 가을 신제품 비교 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "환절기 감기 예방 영양제 추천 실제 복용 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "가을 캠핑 준비물 체크리스트 초보자 실수담",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "난방비 절약 보일러 설정 꿀팁 겨울 대비",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "ISA 계좌 만기 후 재투자 전략 2026",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "국내 단풍 명산 등산 코스 추천 시기별 정리",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "겨울 이불 세탁 관리법 알레르기 예방 후기",
+        "source": "ai_generated"
+      }
+    ]
   },
   "stats": {
     "googleTrends": 10,
-    "naverNews": 18,
+    "naverNews": 48,
     "highCPC": 47,
-    "aiRecommended": 0
+    "aiRecommended": 10
   }
 }

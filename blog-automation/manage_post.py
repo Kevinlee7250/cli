@@ -649,8 +649,24 @@ def _plan_images_with_ai(title: str, plain_text: str, h2_titles: list[str],
             client, model=CLAUDE_MODEL, max_tokens=2000,
             system=(
                 "당신은 블로그 이미지 편집자입니다. 글을 읽고 시각 자료가 가장 도움이 될 "
-                "섹션을 고르고, 이미지 검색에 적합한 짧은 검색어(핵심 명사 2~3개)를 제안하세요. "
-                "'이미 이미지 있음' 섹션은 제외하세요. JSON만 응답하세요."
+                "섹션을 고르고, 이미지 검색에 적합한 짧은 검색어를 제안하세요. "
+                "'이미 이미지 있음' 섹션은 제외하세요. JSON만 응답하세요.\n"
+                "\n"
+                "검색어 규칙 — 무료 이미지 소스(Pixabay·Wikimedia)는 영어로 색인돼 "
+                "있습니다. 그래서 검색어는 반드시 영어로, 눈에 보이는 사물 2~3개만 "
+                "적으세요.\n"
+                "  · 약어를 쓰지 마세요. LTV, DSR, ETF, GDP 같은 약어는 다른 분야에서 "
+                "전혀 다른 뜻으로 쓰여서 엉뚱한 사진이 걸립니다. 실제로 'LTV 주택담보대출 "
+                "비율'로 검색했다가 LTV사(항공기 제조사)의 전투기 사진이 붙은 적이 "
+                "있습니다.\n"
+                "  · 추상 개념(비율, 한도, 규제, 정책, 전략)은 사진으로 찍을 수 없습니다. "
+                "찍을 수 있는 사물로 바꾸세요.\n"
+                "  · 좋은 예: 'apartment building seoul', 'bank counter customer', "
+                "'house key contract document', 'city skyline aerial'\n"
+                "  · 나쁜 예: 'LTV ratio', '주택담보대출 한도', 'DSR 규제', "
+                "'financial policy'\n"
+                "적당한 사물이 떠오르지 않는 섹션은 계획에서 빼세요. 관련 없는 사진을 "
+                "넣는 것보다 이미지가 없는 편이 낫습니다."
             ),
             messages=[{"role": "user", "content": (
                 f"제목: {title}\n\nH2 섹션 목록:\n{h2_list}\n\n"

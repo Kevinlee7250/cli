@@ -198,6 +198,48 @@ def _wikimedia_search_titles(keyword: str, count: int) -> list[str]:
         return []
 
 
+#: 검색어와 결과 제목이 이 길이 이하의 토큰만 공유하면 근거로 인정하지 않습니다.
+#: 짧은 약어가 다른 뜻으로 걸리는 것을 막습니다.
+_MIN_EVIDENCE_LEN = 4
+
+_TOKEN_SPLIT_RE = re.compile(r"[0-9A-Za-z가-힣]+")
+
+
+def _meaningful_tokens(text: str) -> set[str]:
+    """의미를 판정할 근거가 되는 토큰만 남깁니다.
+
+    한글은 2자 이상, 영문·숫자는 4자 이상만 셉니다. 'LTV', 'DSR', 'ETF'처럼
+    짧은 약어는 뜻이 여러 개라 근거가 되지 못합니다.
+    """
+    out = set()
+    for t in _TOKEN_SPLIT_RE.findall(text or ""):
+        low = t.lower()
+        if re.search(r"[가-힣]", t):
+            if len(t) >= 2:
+                out.add(low)
+        elif len(t) >= _MIN_EVIDENCE_LEN:
+            out.add(low)
+    return out
+
+
+def _title_matches_query(title: str, keyword: str) -> bool:
+    """결과 제목이 검색어와 실제로 관련 있는지 봅니다.
+
+    2026-09-27: 주택담보대출 글에 'LTV 주택담보대출 비율'로 검색했더니
+    Commons가 LTV를 항공기 제조사(Ling-Temco-Vought)로 잡아 미 해군
+    A-7E Corsair II 전투기 사진을 돌려줬고, 그대로 발행됐습니다.
+    Commons 전문 검색은 짧은 약어 하나만 겹쳐도 결과를 냅니다.
+
+    그래서 근거가 될 만한 토큰이 하나라도 겹쳐야 통과시킵니다. 검색어에
+    근거 토큰이 아예 없으면(약어뿐이면) 통과시키지 않습니다 — 관련 없는
+    사진을 붙이는 것보다 이미지를 안 넣고 AI 생성·SVG로 넘기는 편이 낫습니다.
+    """
+    want = _meaningful_tokens(keyword)
+    if not want:
+        return False
+    return bool(want & _meaningful_tokens(title))
+
+
 def _wikimedia_images(keyword: str, count: int) -> list[dict]:
     """Wikimedia Commons 이미지 (저작권 없는 공개 이미지). 한국어 키워드 실패 시 영어 단어로 재시도."""
     try:
@@ -210,6 +252,15 @@ def _wikimedia_images(keyword: str, count: int) -> list[dict]:
             en_keyword = " ".join(re.findall(r'[A-Za-z0-9]+', keyword))
             if en_keyword and en_keyword != keyword:
                 titles = _wikimedia_search_titles(en_keyword, count)
+
+        # 제목이 검색어와 관련 없는 결과는 버립니다 (짧은 약어 오매칭 차단).
+        kept = [t for t in titles if _title_matches_query(t, keyword)]
+        if titles and not kept:
+            logger.info(
+                f"Wikimedia 결과 {len(titles)}건 모두 '{keyword}'와 무관한 제목 — "
+                "이미지를 쓰지 않고 다음 소스로 넘깁니다"
+            )
+        titles = kept
 
         images = []
         for title in titles:

@@ -69,6 +69,45 @@ def blog_config_for(blog_id: str) -> dict | None:
     return None
 
 
+def register_in_registry(post: dict, blog_cfg: dict | None) -> bool:
+    """발행한 글을 post_registry에 등록합니다.
+
+    이걸 하지 않으면 글은 블로그에 멀쩡히 올라가 있는데 시스템에는 없는
+    글이 됩니다. 대시보드 집계, 내부링크 연결, 색인 요청 큐, 이미지 관리
+    (manage_post) 모두 레지스트리를 기준으로 글을 찾기 때문입니다.
+    2026-09-27까지 수동 게시 글은 전부 이 상태였습니다.
+
+    실패해도 발행 자체는 유효하므로 예외를 올리지 않습니다 — 경고만 남깁니다.
+    """
+    try:
+        from post_manager import register_post, mirror_registry_to_docs, Status
+
+        register_post(
+            {
+                "keyword": post.get("keyword", ""),
+                "title": post.get("title", ""),
+                "blogUrl": post.get("blogUrl", ""),
+                "word_count": post.get("wordCount") or post.get("contentLength") or 0,
+                "faq": post.get("faq", []),
+                "labels": post.get("labels", []),
+                "meta_description": post.get("metaDescription", ""),
+                "content_preview": post.get("excerpt", ""),
+                "article_type": post.get("articleType", ""),
+                "content_category": post.get("contentCategory", ""),
+                "search_intent": post.get("searchIntent", ""),
+                "adsense_category": post.get("contentCategory") or "일반",
+            },
+            Status.PUBLISHED,
+            blog_config=blog_cfg,
+            source="manual",
+        )
+        mirror_registry_to_docs()
+        return True
+    except Exception as exc:
+        logger.warning(f"  ⚠ 레지스트리 등록 실패 (발행은 성공): {exc}")
+        return False
+
+
 def upload_with_log_capture(post_data: dict,
                             blog_config: dict | None = None) -> tuple[dict | None, str]:
     """upload_post 호출 + 에러 로그 캡처."""
@@ -180,6 +219,7 @@ def main() -> None:
             post["publishedTo"] = where
             post.pop("failReason", None)
             logger.info(f"  ✅ 성공: {post['blogUrl']}")
+            register_in_registry(post, blog_cfg)
             success += 1
         else:
             post["status"] = "failed"

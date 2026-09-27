@@ -75,6 +75,33 @@ def save_registry(registry: list[dict]) -> None:
                 pass
 
 
+#: 대시보드와 감사 도구들은 docs/data/post_registry.json을 읽습니다.
+#: 레지스트리를 고쳤으면 그쪽도 같이 맞춰 줘야 합니다 — 안 맞으면 방금 올린
+#: 글이 대시보드·내부링크·색인 큐에서 통째로 안 보입니다.
+DOCS_REGISTRY_FILE = os.path.join(_BASE_DIR, "..", "docs", "data", "post_registry.json")
+
+
+def mirror_registry_to_docs() -> bool:
+    """logs/post_registry.json을 docs/data 쪽에 그대로 복사합니다.
+
+    들여쓰기는 넣지 않습니다 — 대시보드가 받아 가는 파일이고, 300건이
+    통째로 바뀌어 git diff로 읽을 수 없기는 마찬가지입니다
+    (dashboard_exporter가 같은 이유로 같은 판단을 합니다).
+    """
+    try:
+        registry = load_registry()
+        path = os.path.abspath(DOCS_REGISTRY_FILE)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        tmp = path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(registry, f, ensure_ascii=False, separators=(",", ":"))
+        os.replace(tmp, path)
+        return True
+    except OSError as e:
+        logger.error(f"docs/data 레지스트리 동기화 실패: {e}")
+        return False
+
+
 # ─── 포스트 ID 생성 ──────────────────────────────────────────────────────────
 
 def generate_post_id(keyword: str, title: str = "", created_at: str = "") -> str:

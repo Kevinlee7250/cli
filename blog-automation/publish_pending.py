@@ -47,7 +47,30 @@ def save_pending(pending: list[dict]) -> None:
         logger.error(f"검토 대기 저장 실패: {e}")
 
 
-def upload_with_log_capture(post_data: dict) -> tuple[dict | None, str]:
+def blog_config_for(blog_id: str) -> dict | None:
+    """레코드의 blogId에 해당하는 블로그 설정을 찾습니다.
+
+    없으면 None을 반환합니다 — 기본 블로그로 떨어뜨리지 않습니다.
+
+    2026-09-27: 이 함수가 없던 동안 upload_post가 blog_config 없이 호출돼,
+    blogId가 blog3인 글이 기본값(BLOGGER_BLOG_ID=blog1)으로 올라갔습니다.
+    대기 글이 거의 다 blog1이라 오래 드러나지 않았습니다. 잘못된 블로그에
+    올리는 것보다 안 올리고 실패로 남기는 편이 낫습니다.
+    """
+    if not blog_id:
+        return None
+    try:
+        from config import get_blog_configs
+        for cfg in get_blog_configs():
+            if cfg.get("id") == blog_id:
+                return cfg
+    except Exception as exc:
+        logger.error(f"블로그 설정 조회 실패: {exc}")
+    return None
+
+
+def upload_with_log_capture(post_data: dict,
+                            blog_config: dict | None = None) -> tuple[dict | None, str]:
     """upload_post 호출 + 에러 로그 캡처."""
     from blogger_uploader import upload_post
 
@@ -58,7 +81,7 @@ def upload_with_log_capture(post_data: dict) -> tuple[dict | None, str]:
     root.addHandler(capture)
     result = None
     try:
-        result = upload_post(post_data)
+        result = upload_post(post_data, blog_config)
     except Exception as exc:
         logger.error(f"upload_post 예외: {exc}")
         log_stream.write(f"EXCEPTION: {exc}")
@@ -113,7 +136,25 @@ def main() -> None:
             continue
 
         title = post.get("title", "")
-        logger.info(f"게시 중: {title[:60]}")
+        target = post.get("blogId", "")
+        blog_cfg = blog_config_for(target)
+
+        # 목적지를 모르면 올리지 않습니다. 기본 블로그로 올리면 되돌리는 데
+        # 사람 손이 들고, 글이 엉뚱한 주제의 블로그에 남습니다.
+        if target and not blog_cfg:
+            post["status"] = "failed"
+            post["failedAt"] = datetime.now().isoformat()
+            post["failReason"] = (
+                f"blogId '{target}' 설정을 찾지 못했습니다 — "
+                "BLOGS_CONFIG/blogs.json에 해당 id가 있는지 확인하세요."
+            )
+            logger.error(f"  ❌ 목적지 불명 — 게시하지 않음: {title[:50]}")
+            logger.error(f"     → {post['failReason']}")
+            fail += 1
+            continue
+
+        where = (blog_cfg or {}).get("name") or target or "기본 블로그"
+        logger.info(f"게시 중: {title[:60]}  →  {where}")
 
         result, err_log = upload_with_log_capture({
             "title": post["title"],
@@ -123,7 +164,7 @@ def main() -> None:
             "faq": post.get("faq", []),
             "meta_description": post.get("metaDescription", ""),
             "sources": post.get("sources", []),
-        })
+        }, blog_cfg)
 
         if result == "DUPLICATE":
             post["status"] = "skipped"
@@ -135,6 +176,8 @@ def main() -> None:
             post["status"] = "published"
             post["publishedAt"] = datetime.now().isoformat()
             post["blogUrl"] = result.get("url", "")
+            # 어디로 올라갔는지 남깁니다 — blogId와 어긋나면 리포트에서 바로 보입니다.
+            post["publishedTo"] = where
             post.pop("failReason", None)
             logger.info(f"  ✅ 성공: {post['blogUrl']}")
             success += 1

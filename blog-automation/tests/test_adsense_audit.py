@@ -41,22 +41,29 @@ def test_is_ymyl_false_for_unrelated_topic():
 def test_audit_post_flags_short_content():
     from adsense_audit import audit_post
     post = {"title": "짧은 글", "content": "<p>내용</p>", "labels": []}
-    fixes, issues, _ = audit_post(post)
+    fixes, issues, _, _ = audit_post(post)
     assert any("글자수 부족" in i for i in issues)
 
 
-def test_audit_post_flags_missing_faq_and_sources():
+def test_audit_post_flags_missing_sources_and_suggests_faq():
+    """2026-09-27 — FAQ 없음은 '지적'에서 '제안'으로 옮겼습니다.
+
+    생성 프롬프트가 "필요 없으면 FAQ를 생략하라"고 지시하는데 감사가
+    "없으면 지적"하면 서로 어긋납니다. FAQ는 AdSense 요건도 아닙니다.
+    출처 없음은 그대로 지적입니다 — 조사해 쓴 글인지와 직결됩니다.
+    """
     from adsense_audit import audit_post
     post = {"title": "일반 글", "content": _long_content() + '<img src="a.jpg" alt="x">', "labels": []}
-    fixes, issues, _ = audit_post(post)
-    assert any("FAQ" in i for i in issues)
+    fixes, issues, _, suggestions = audit_post(post)
     assert any("출처" in i for i in issues)
+    assert not any("FAQ" in i for i in issues)
+    assert any("FAQ" in s for s in suggestions)
 
 
 def test_audit_post_flags_clickbait_title():
     from adsense_audit import audit_post
     post = {"title": "충격 대박 소식", "content": _long_content() + '<img src="a.jpg" alt="x">', "labels": []}
-    _, issues, _ = audit_post(post)
+    _, issues, _, _ = audit_post(post)
     assert any("과장 표현" in i for i in issues)
 
 
@@ -66,7 +73,7 @@ def test_audit_post_inserts_thumbnail_when_no_image():
     with patch("image_fetcher.generate_title_thumbnail", return_value=fake_thumb), \
          patch("image_fetcher._make_img_html", return_value='<img src="thumb.jpg" alt="테스트">'):
         post = {"title": "테스트", "content": _long_content(), "labels": []}
-        fixes, issues, new_content = audit_post(post)
+        fixes, issues, new_content, _ = audit_post(post)
     assert any("썸네일" in f for f in fixes)
     assert "<img" in new_content
 
@@ -74,7 +81,7 @@ def test_audit_post_inserts_thumbnail_when_no_image():
 def test_audit_post_fills_empty_alt_when_image_exists():
     from adsense_audit import audit_post
     post = {"title": "테스트", "content": _long_content() + '<img src="a.jpg">', "labels": []}
-    fixes, issues, new_content = audit_post(post)
+    fixes, issues, new_content, _ = audit_post(post)
     assert any("alt 텍스트" in f for f in fixes)
     assert 'alt="' in new_content
 
@@ -83,7 +90,7 @@ def test_audit_post_dedupes_duplicate_toc():
     from adsense_audit import audit_post
     toc = '<p>목차</p><ul><li>섹션1</li></ul>'
     post = {"title": "가이드", "content": toc + toc + _long_content() + '<img src="a.jpg" alt="x">', "labels": []}
-    fixes, issues, new_content = audit_post(post)
+    fixes, issues, new_content, _ = audit_post(post)
     assert any("중복 목차 제거" in f for f in fixes)
     from fix_duplicate_toc import count_tocs
     assert count_tocs(new_content) == 1
@@ -96,7 +103,7 @@ def test_audit_post_adds_disclaimer_for_ymyl_without_one():
         "content": _long_content() + '<img src="a.jpg" alt="x">',
         "labels": ["투자", "ETF"],
     }
-    fixes, issues, new_content = audit_post(post)
+    fixes, issues, new_content, _ = audit_post(post)
     assert any("면책 문구" in f for f in fixes)
     assert "면책" in new_content or "전문가와 상담" in new_content
 
@@ -105,7 +112,7 @@ def test_audit_post_skips_disclaimer_when_already_present():
     from adsense_audit import audit_post
     content = _long_content() + '<img src="a.jpg" alt="x"><p>이 글은 참고용이며 투자 판단은 본인 책임입니다.</p>'
     post = {"title": "ETF 투자 전략", "content": content, "labels": ["투자"]}
-    fixes, _, _ = audit_post(post)
+    fixes, _, _, _ = audit_post(post)
     assert not any("면책 문구" in f for f in fixes)
 
 
@@ -118,7 +125,7 @@ def test_audit_post_clean_content_has_no_fixes_or_issues():
         '<h2>참고자료</h2><p>출처: 예시</p>'
     )
     post = {"title": "일반 정보 글", "content": content, "labels": []}
-    fixes, issues, _ = audit_post(post)
+    fixes, issues, _, _ = audit_post(post)
     assert issues == []
 
 

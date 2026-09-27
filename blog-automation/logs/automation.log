@@ -1,121 +1,3 @@
-2026-09-24 00:38:35,713 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-24 00:38:59,070 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-09-24 00:38:59,918 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-24 00:39:12,602 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '제주도 여행 현지인처럼 즐기는 방법, 로컬 맛집 후기와 데이터로'
-2026-09-24 00:39:12,603 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2622자로 분량 기준은 충족하나 대부분 2차 자료(데이터랩·핫식신 기사) 재정리에 그쳐 독창적 해석 깊이가 얕음
-2026-09-24 00:39:12,603 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 성산 흑돼지 섹션 등 일부 단락이 500자 이상으로 과도하게 김
-2026-09-24 00:39:12,603 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay·직접제작 이미지로 저작권 위반은 없으나 alt 텍스트 여부 불명확하여 warn 처리
-2026-09-24 00:39:12,603 [INFO] adsense_validator —   ❌ AI 생성 의심도: "핫식신(핫식신이 소개한 바 있다고", "보이는데이라 다소 오래되었는데" 등 문장 중복·꼬임 오류가 다수 발견되어 미검수 AI 생성 흔적이 뚜렷함
-2026-09-24 00:39:12,603 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] "핫식신(핫식신이 소개한 바 있다고", "보이는데이라 다소 오래되었는데" 등 문장 중복·꼬임 오류가 다수 발견되어 미검수 AI 생성 흔적이 뚜렷함
-2026-09-24 00:39:12,603 [WARNING] adsense_validator —   🔴 본문 내 "핫식신(핫식신이 소개한 바 있다고 알려져 있습니다", "이 자료는 다소 오래전에 등록된 정보로 보이는데이라 다소 오래되었는데" 등 문장이 중복·오류 상태로 출력되어 있어 반드시 교정 필요
-2026-09-24 00:39:12,603 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 72/100, 권장: review) — 자동 수정 시도
-2026-09-24 00:39:12,603 [WARNING] main —      🔴 [AI 생성 의심도] "핫식신(핫식신이 소개한 바 있다고", "보이는데이라 다소 오래되었는데" 등 문장 중복·꼬임 오류가 다수 발견되어 미검수 AI 생성 흔적이 뚜렷함
-2026-09-24 00:39:12,603 [WARNING] main —      🔴 본문 내 "핫식신(핫식신이 소개한 바 있다고 알려져 있습니다", "이 자료는 다소 오래전에 등록된 정보로 보이는데이라 다소 오래되었는데" 등 문장이 중복·오류 상태로 출력되어 있어 반드시 교정 필요
-2026-09-24 00:39:12,603 [WARNING] main —      🟡 [원본성 및 품질] 2622자로 분량 기준은 충족하나 대부분 2차 자료(데이터랩·핫식신 기사) 재정리에 그쳐 독창적 해석 깊이가 얕음
-2026-09-24 00:39:12,603 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 구조는 양호하나 성산 흑돼지 섹션 등 일부 단락이 500자 이상으로 과도하게 김
-2026-09-24 00:39:12,603 [WARNING] main —      🟡 [이미지 정책] Pixabay·직접제작 이미지로 저작권 위반은 없으나 alt 텍스트 여부 불명확하여 warn 처리
-2026-09-24 00:39:12,603 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 72/100, fail: 1개, warn: 3개
-2026-09-24 00:39:12,614 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-24 00:39:12,620 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 2건
-2026-09-24 00:39:14,111 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-24 00:40:37,309 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2622자 → 4141자 (+1519자)
-2026-09-24 00:40:37,309 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-09-24 00:40:38,528 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-24 00:40:59,527 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '제주도 여행 현지인처럼 즐기는 방법, 로컬 맛집 후기와 데이터로'
-2026-09-24 00:40:59,527 [INFO] adsense_validator —   ⚠️ SEO 최적화: 핵심 키워드 '제주도 여행 현지인처럼 즐기는 방법'이 짧은 구간에도 반복 다수 사용되어 다소 부자연스러움
-2026-09-24 00:40:59,527 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락(핫식신 기사 소개, 성산흑돼지 설명 등)이 500자 이상으로 김
-2026-09-24 00:40:59,527 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음(부재 자체는 fail 아니며 텍스트만으로도 정책 통과 가능)
-2026-09-24 00:40:59,527 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌💡 요약 박스와 동일 키워드 문구의 반복적 재사용 패턴이 다소 기계적으로 보임
-2026-09-24 00:40:59,527 [WARNING] main —   ⚠️ 자동 수정 후에도 기준 미달 (점수: 79/100) — pending 저장
-2026-09-24 00:40:59,527 [WARNING] main —   ⚠️ AdSense 기준 미달 — pending 저장: '제주도 여행 현지인처럼 즐기는 방법, 로컬 맛집 후기와 데이터로 정리' (점수: 79/100, 권장: review)
-2026-09-24 00:40:59,549 [INFO] dashboard_exporter —   검토 대기 저장: 제주도 여행 현지인처럼 즐기는 방법, 로컬 맛집 후기와 데이터로 정리 (12994자 HTML)
-2026-09-24 00:40:59,565 [INFO] pending_store — 검토 대기 저장: 목록 14건 / 보관 162건 / 본문 14건
-2026-09-24 00:40:59,565 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 176개)
-2026-09-24 00:40:59,565 [INFO] main — 
-============================================================
-2026-09-24 00:40:59,565 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-09-24 00:40:59,565 [INFO] main — ============================================================
-2026-09-24 00:40:59,586 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 197개)
-2026-09-24 00:40:59,598 [INFO] dashboard_exporter — 분석 필드 유지: 91/103개 (등급·조회수·수익)
-2026-09-24 00:40:59,612 [INFO] dashboard_exporter —   시리즈: 35개 내보내기 완료
-2026-09-24 00:40:59,626 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-09-24 00:40:59,789 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-09-24 00:41:00,054 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-24 00:41:00,393 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-24 00:41:00,395 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-09-24 00:41:00,396 [INFO] dashboard_exporter —   학습 이력: 4주 내보내기 완료
-2026-09-24 00:41:00,399 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-09-24 00:41:00,416 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 276 / 실패 0 / 대기 13)
-2026-09-24 00:41:00,417 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-09-24 00:41:00,417 [INFO] dashboard_exporter —   포스트: 103개 / 실행 이력: 120개 / 블로그: 3개
-2026-09-24 00:41:00,417 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-09-24 00:41:00,418 [ERROR] main — ============================================================
-2026-09-24 00:41:00,418 [ERROR] main — ❌ 게시 0건 — 생성은 됐지만 1건 모두 검토 대기로 빠졌습니다
-2026-09-24 00:41:00,418 [ERROR] main —    품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다
-2026-09-24 00:41:00,419 [ERROR] main — ============================================================
-2026-09-24 01:07:28,623 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-09-24 01:07:28,623 [INFO] main —   - [blog1] HOGU What?
-2026-09-24 01:07:28,624 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-09-24 01:07:28,624 [INFO] main —   - [blog3] 금융NEWS
-2026-09-24 01:07:28,629 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
-2026-09-25 00:25:24,655 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-09-25 00:25:25,512 [INFO] main — ============================================================
-2026-09-25 00:25:25,512 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-25 00:25:25
-2026-09-25 00:25:25,512 [INFO] main — ============================================================
-2026-09-25 00:25:25,525 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
-2026-09-25 00:25:25,525 [INFO] keyword_collector — 포스팅 이력 코퍼스: 95개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-09-25 00:25:25,525 [INFO] keyword_collector — 시즌 예약 키워드 21개 로드 (blog=blog1): ['2026 가을 등산 코스 초보자 추천 후기', '2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법']...
-2026-09-25 00:25:29,859 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-09-25 00:25:36,596 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-25 00:25:36,618 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-09-25 00:25:36,618 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-09-25 00:25:37,199 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
-2026-09-25 00:25:37,446 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-09-25 00:25:37,723 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-09-25 00:25:37,724 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-09-25 00:25:37,726 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-09-25 00:25:37,733 [INFO] keyword_collector — 유사 주제 제외 6개: ['2026 가을 등산 코스 초보자 추천 후기', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '추석 선물 저렴하게 사는 꿀팁 정리', '2026 가을 등산 코스 초보자 추천 방법']
-2026-09-25 00:25:37,735 [INFO] keyword_collector —   [season_scheduled] 1개: ['OTT 10월 신작 저렴하게 보는 방법']
-2026-09-25 00:25:37,735 [INFO] keyword_collector —   [naver_realtime] 1개: ['짧은 연휴 일본 중국 단거리 여행 경비 절약 방법']
-2026-09-25 00:25:37,735 [INFO] keyword_collector — 최종 선정 키워드 2개: ['OTT 10월 신작 저렴하게 보는 방법', '짧은 연휴 일본 중국 단거리 여행 경비 절약 방법']
-2026-09-25 00:25:37,735 [INFO] main — 수집된 키워드 2개: ['OTT 10월 신작 저렴하게 보는 방법', '짧은 연휴 일본 중국 단거리 여행 경비 절약 방법']
-2026-09-25 00:25:37,741 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-09-25 00:25:37,741 [INFO] main — 단독 포스트 대상 키워드 1개: ['OTT 10월 신작 저렴하게 보는 방법']
-2026-09-25 00:25:37,756 [INFO] main — 
-[1/1] 키워드: 'OTT 10월 신작 저렴하게 보는 방법'
-2026-09-25 00:25:37,756 [INFO] content_generator — 포스트 생성 중: 'OTT 10월 신작 저렴하게 보는 방법'
-2026-09-25 00:25:45,119 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-25 00:25:45,120 [INFO] research_collector — 검색 의도: 10월에 새로 공개되는 OTT 신작 콘텐츠를 저렴한 비용으로 시청할 수 있는 방법을 찾으려는 의도
-2026-09-25 00:26:00,006 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — 'OTT 10월 신작 저렴하게 보는 방법'
-2026-09-25 00:26:13,054 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-25 00:26:13,055 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — 'OTT 10월 신작 저렴하게 보는 방법'
-2026-09-25 00:26:16,735 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-25 00:26:16,736 [INFO] source_validator — 출처 검증: 1/5개 통과, 등급 분포 {'X': 4, 'D': 1}
-2026-09-25 00:26:18,278 [INFO] content_generator — 드라마/영화 참고 데이터 수집 완료: 'OTT 10월 신작 저렴하게 보는 방법'
-2026-09-25 00:26:18,279 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-09-25 00:26:18,279 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-09-25 00:26:18,280 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-09-25 00:26:19,284 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-25 00:28:05,891 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-09-25 00:28:07,062 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-25 00:28:22,734 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '10월 개봉을 앞두고 스페셜 상영이 진행되는 신작 '동그라미'처럼'
-2026-09-25 00:28:22,735 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
-2026-09-25 00:28:22,735 [INFO] content_generator — 이미지 계획 1건 사용: ['streaming service selection TV remote']
-2026-09-25 00:28:22,939 [INFO] image_fetcher — 이미지 수집 성공: 'streaming service selection TV remote' → 제목='video streaming / laptop / few / movie /' (관련성=0.50)
-2026-09-25 00:28:23,157 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-09-25 00:28:23,157 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-09-25 00:28:23,165 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-09-25 00:28:23,168 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
-2026-09-25 00:28:23,168 [INFO] content_generator — 포스트 생성 완료: 'OTT 10월 신작 저렴하게 보는 법, 요금제 비교' (3208자, 이미지 1개)
-2026-09-25 00:28:23,930 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-09-25 00:28:40,858 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — 'OTT 10월 신작 저렴하게 보는 법, 요금제 비교'
-2026-09-25 00:28:40,858 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 '절차' 섹션 등 일부 단락이 500자를 넘어 다소 김
-2026-09-25 00:28:40,858 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 5개 출처는 있으나 본문 내 '일부 보도', '관련 보도' 등 출처 표기가 모호해 구체성이 부족
-2026-09-25 00:28:40,858 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~습니다' 반복 및 단계별 정형화된 격식체 패턴이 다소 기계적으로 느껴짐
-2026-09-25 00:28:40,862 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-09-25 00:28:40,867 [INFO] internal_linker —   [1/5] '디즈니플러스' -> https://hogugolfntraval.blogspot.com/2026/09/skb-b-tv-max.ht
-2026-09-25 00:28:40,872 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-09-25 00:28:40,872 [INFO] main —   제목: OTT 10월 신작 저렴하게 보는 법, 요금제 비교
 2026-09-25 00:28:40,872 [INFO] main —   이미지: 1개 삽입
 2026-09-25 00:28:40,872 [INFO] main —   글자 수: 3208자
 2026-09-25 00:28:41,638 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
@@ -616,3 +498,88 @@
 2026-09-26 01:12:57,460 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-09-26 01:12:57,460 [INFO] main —   - [blog3] 금융NEWS
 2026-09-26 01:12:57,465 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-09-27 00:24:57,867 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-09-27 00:24:58,816 [INFO] main — ============================================================
+2026-09-27 00:24:58,816 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-09-27 00:24:58
+2026-09-27 00:24:58,816 [INFO] main — ============================================================
+2026-09-27 00:24:58,829 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-09-27 00:24:58,829 [INFO] keyword_collector — 포스팅 이력 코퍼스: 99개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-09-27 00:24:58,830 [INFO] keyword_collector — 시즌 예약 키워드 28개 로드 (blog=blog1): ['2026 가을 등산 코스 초보자 추천 후기', '2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법']...
+2026-09-27 00:25:03,929 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-09-27 00:25:09,975 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-27 00:25:10,001 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-09-27 00:25:10,001 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-09-27 00:25:10,498 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
+2026-09-27 00:25:10,674 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-09-27 00:25:11,176 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-27 00:25:11,177 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-09-27 00:25:11,178 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-09-27 00:25:11,186 [INFO] keyword_collector — 유사 주제 제외 6개: ['2026 가을 등산 코스 초보자 추천 후기', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법', '추석 선물 저렴하게 사는 꿀팁 정리', '2026 가을 등산 코스 초보자 추천 방법']
+2026-09-27 00:25:11,189 [INFO] keyword_collector —   [season_scheduled] 2개: ['2026 단풍 트레킹 코스 추천 후기', '단풍시즌 여행 저렴한 숙소 추천 방법']
+2026-09-27 00:25:11,189 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 단풍 트레킹 코스 추천 후기', '단풍시즌 여행 저렴한 숙소 추천 방법']
+2026-09-27 00:25:11,189 [INFO] main — 수집된 키워드 2개: ['2026 단풍 트레킹 코스 추천 후기', '단풍시즌 여행 저렴한 숙소 추천 방법']
+2026-09-27 00:25:11,195 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 4일 전, 3일 후 활성화)
+2026-09-27 00:25:11,195 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 단풍 트레킹 코스 추천 후기']
+2026-09-27 00:25:11,209 [INFO] main — 
+[1/1] 키워드: '2026 단풍 트레킹 코스 추천 후기'
+2026-09-27 00:25:11,209 [INFO] content_generator — 포스트 생성 중: '2026 단풍 트레킹 코스 추천 후기'
+2026-09-27 00:25:23,951 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-27 00:25:23,952 [INFO] research_collector — 검색 의도: 2026년 가을 단풍 시즌에 갈 만한 트레킹 코스를 추천받고, 실제 방문 후기를 통해 코스 선택에 참고하려는
+2026-09-27 00:25:36,751 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '2026 단풍 트레킹 코스 추천 후기'
+2026-09-27 00:26:00,854 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-27 00:26:00,855 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '2026 단풍 트레킹 코스 추천 후기'
+2026-09-27 00:26:17,882 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-27 00:26:17,883 [INFO] source_validator — 출처 검증: 6/7개 통과, 등급 분포 {'A': 5, 'X': 1, 'B': 1}
+2026-09-27 00:26:17,885 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-09-27 00:26:17,887 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-09-27 00:26:18,439 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-27 00:28:14,298 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-09-27 00:28:15,114 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-27 00:28:27,230 [INFO] content_generator — 팩트체크: 통과
+2026-09-27 00:28:27,230 [INFO] content_generator — 이미지 계획 1건 사용: ['autumn foliage forest trail hiking']
+2026-09-27 00:28:27,444 [INFO] image_fetcher — 이미지 수집 성공: 'autumn foliage forest trail hiking' → 제목='autumn / forest / path / nature / sunlig' (관련성=0.80)
+2026-09-27 00:28:27,636 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-09-27 00:28:27,637 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-09-27 00:28:27,642 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-09-27 00:28:27,645 [INFO] coupang_affiliate — 쿠팡파트너스 링크 1개 삽입: ['쿠팡']
+2026-09-27 00:28:27,645 [INFO] content_generator — 포스트 생성 완료: '2026 가을 단풍 트레킹 코스 후기 총정리' (3533자, 이미지 1개)
+2026-09-27 00:28:28,204 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-27 00:28:45,416 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '2026 가을 단풍 트레킹 코스 후기 총정리'
+2026-09-27 00:28:45,416 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처는 명시했으나 alt 텍스트 여부 확인 불가하고 이미지 1장뿐
+2026-09-27 00:28:45,416 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·표 등 목록화 패턴이 다소 많아 기계적 구성 느낌이 일부 있음
+2026-09-27 00:28:45,420 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-09-27 00:28:45,428 [INFO] internal_linker —   [1/5] '난이도' -> https://hogugolfntraval.blogspot.com/2026/09/2.html
+2026-09-27 00:28:45,431 [INFO] internal_linker — 내부 링크 1개 삽입 완료
+2026-09-27 00:28:45,431 [INFO] main —   제목: 2026 가을 단풍 트레킹 코스 후기 총정리
+2026-09-27 00:28:45,432 [INFO] main —   이미지: 1개 삽입
+2026-09-27 00:28:45,432 [INFO] main —   글자 수: 3533자
+2026-09-27 00:28:46,054 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-27 00:29:08,216 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '2026 가을 단풍 트레킹 코스 후기 총정리'
+2026-09-27 00:29:08,216 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개만 있고 alt 텍스트 표기가 캡션 형태로 다소 불명확함
+2026-09-27 00:29:08,216 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌💡💬 이모지 요약박스와 정형화된 템플릿 구조가 반복되어 AI 생성 패턴 의심 소지 있음
+2026-09-27 00:29:08,216 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-09-27 00:29:08,984 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-09-27 00:29:38,701 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026 가을 단풍 트레킹 코스 후기 총정리' → '2026 가을 단풍 트레킹 코스 추천 후기 총정리 가이드'
+2026-09-27 00:29:38,701 [INFO] final_editor —   ✏️ 메타 설명 교정 (121자)
+2026-09-27 00:29:38,701 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고, 요약 박스·표·FAQ·주의사항·작성자 메모를 발행 규격에 맞춰 정리했으며 이미지 3장의 위치와 구체적 alt 텍스트를 추가했습니다.
+2026-09-27 00:29:38,802 [WARNING] blogger_uploader — ⏭ 중복 포스트 감지 — 업로드 건너뜀: '2026 가을 단풍 트레킹 코스 추천 후기 총정리 가이드'
+   기존 포스트: '2025 가을 단풍 여행지 가성비 코스 추천 총정리 가이드' (https://www.hoguwhat.com/2026/09/2025.html)
+2026-09-27 00:29:38,816 [WARNING] main —   ⏭ 중복 주제 — 업로드 건너뜀: '2026 가을 단풍 트레킹 코스 후기 총정리' (유사 제목 이미 발행됨)
+2026-09-27 00:29:38,816 [INFO] main — 
+============================================================
+2026-09-27 00:29:38,816 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
+2026-09-27 00:29:38,817 [INFO] main — ============================================================
+2026-09-27 00:29:38,866 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 151개)
+2026-09-27 00:29:38,875 [INFO] dashboard_exporter — 분석 필드 유지: 86/103개 (등급·조회수·수익)
+2026-09-27 00:29:38,890 [INFO] dashboard_exporter —   시리즈: 35개 내보내기 완료
+2026-09-27 00:29:38,904 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-09-27 00:29:39,304 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-27 00:29:39,536 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-09-27 00:29:39,538 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-09-27 00:29:39,539 [INFO] dashboard_exporter —   학습 이력: 4주 내보내기 완료
+2026-09-27 00:29:39,542 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-09-27 00:29:39,561 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 274 / 실패 0 / 대기 14)
+2026-09-27 00:29:39,561 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-09-27 00:29:39,561 [INFO] dashboard_exporter —   포스트: 103개 / 실행 이력: 120개 / 블로그: 3개
+2026-09-27 00:29:39,562 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-09-27 00:29:39,563 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다

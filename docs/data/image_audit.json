@@ -1,5 +1,5 @@
 {
-  "auditedAt": "2026-09-19T23:56:11.134356+00:00",
+  "auditedAt": "2026-09-27T00:19:17.030290+00:00",
   "applied": true,
   "aiJudged": false,
   "blogFilter": "",
@@ -16,17 +16,203 @@
   ],
   "incompleteBlogs": [],
   "stoppedAtLimit": false,
-  "scanned": 96,
-  "withIssues": 29,
-  "targeted": 4,
-  "fixed": 4,
+  "scanned": 118,
+  "withIssues": 50,
+  "targeted": 7,
+  "fixed": 7,
   "issueCounts": {
-    "insufficient": 29,
-    "weak_alt": 3,
-    "suspect": 3,
+    "insufficient": 49,
+    "weak_alt": 8,
+    "suspect": 8,
     "broken": 2
   },
   "posts": [
+    {
+      "title": "OTT 10월 신작 저렴하게 보는 방법과 요금제 비교 정리",
+      "url": "https://www.hoguwhat.com/2026/09/ott-10.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "2026 가을드라마 신작 추천, 편성 확인법과 솔직 후기",
+      "url": "https://www.hoguwhat.com/2026/09/2026_02128141105.html",
+      "images": 3,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/19fecfdef69af259.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"거실 소파에서 리모컨을 들고 드라마를 고르는 모습\")",
+          "alt": "거실 소파에서 리모컨을 들고 드라마를 고르는 모습"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/19fecfdef69af259.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "거실 소파에서 리모컨을 들고 드라마를 고르는 모습",
+          "imageTerms": "거실 소파에서 리모컨을 들고 드라마를 고르는 모습 19fecfdef69af259",
+          "postTerms": [
+            "가을드라마",
+            "신작",
+            "편성",
+            "확인법과"
+          ]
+        },
+        {
+          "type": "broken",
+          "url": "https://kevinlee7250.github.io/cli/images/2b7a3f91cd8e4560.jpg",
+          "detail": "HTTP 404"
+        },
+        {
+          "type": "broken",
+          "url": "https://kevinlee7250.github.io/cli/images/6f3e08b7a1c92d47.jpg",
+          "detail": "HTTP 404"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "alt 재작성 → \"2026 가을드라마 신작 추천, 편성 확인법과 솔직 후기 관련 이미지\" (캡션 포함)",
+        "broken 교체 → pixabay",
+        "broken 교체 → pixabay"
+      ]
+    },
+    {
+      "title": "신병4 사보타주, 배우 아니라 실제 훈련병입니다",
+      "url": "https://www.hoguwhat.com/2026/09/4_01603375175.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "[3편] 신병4 사보타주 결말 총평·별점·OST 총정리",
+      "url": "https://www.hoguwhat.com/2026/09/3-4-ost.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/0a38f2e684fad2d6.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"군대 드라마 속 긴장감 있는 대치 장면 이미지\")",
+          "alt": "군대 드라마 속 긴장감 있는 대치 장면 이미지"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/0a38f2e684fad2d6.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "군대 드라마 속 긴장감 있는 대치 장면 이미지",
+          "imageTerms": "군대 드라마 속 긴장감 있는 대치 장면 이미지 0a38f2e684fad2d6",
+          "postTerms": [
+            "신병",
+            "사보타주",
+            "결말",
+            "총평",
+            "별점",
+            "OST"
+          ]
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "alt 재작성 → \"[3편] 신병4 사보타주 결말 총평·별점·OST 총정리 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 2건"
+      ]
+    },
+    {
+      "title": "신병4 사보타주 첫인상 후기, 화제성 이유와 시청 포인트",
+      "url": "https://www.hoguwhat.com/2026/09/4.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/df84f2847fbc3b94.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"군부대 연병장을 배경으로 한 드라마 장면 이미지\")",
+          "alt": "군부대 연병장을 배경으로 한 드라마 장면 이미지"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/df84f2847fbc3b94.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "군부대 연병장을 배경으로 한 드라마 장면 이미지",
+          "imageTerms": "군부대 연병장을 배경으로 한 드라마 장면 이미지 df84f2847fbc3b94",
+          "postTerms": [
+            "신병",
+            "사보타주",
+            "첫인상",
+            "화제성",
+            "이유와",
+            "시청"
+          ]
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "alt 재작성 → \"신병4 사보타주 첫인상 후기, 화제성 이유와 시청 포인트 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "황금연휴 면세점 쇼핑 꿀팁 2026, 800달러 한도 총정리",
+      "url": "https://www.hoguwhat.com/2026/09/2026-800.html",
+      "images": 1,
+      "needed": 2,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 2장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "제주도 숨겨진 명소 현지인만 아는 곳 후기 종합",
+      "url": "https://www.hoguwhat.com/2026/09/blog-post_21.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
     {
       "title": "여행 중 물건 도난 경찰서 신고 후 보험 청구 방법 총정리",
       "url": "https://www.hoguwhat.com/2026/09/blog-post_19.html",
@@ -100,33 +286,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/5dccce9da196230e.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"피아노 두 대와 악보가 놓인 연습실 풍경\")",
-          "alt": "피아노 두 대와 악보가 놓인 연습실 풍경"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/5dccce9da196230e.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "피아노 두 대와 악보가 놓인 연습실 풍경",
-          "imageTerms": "피아노 두 대와 악보가 놓인 연습실 풍경 5dccce9da196230e",
-          "postTerms": [
-            "포핸즈",
-            "등장인물",
-            "분석",
-            "배우",
-            "케미까지"
-          ]
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "alt 재작성 → \"[2편] 포핸즈 등장인물 분석, 배우 케미까지 총정리 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 2건"
+        "변경 없음"
       ]
     },
     {
@@ -157,6 +321,102 @@
         }
       ],
       "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "삼성 AI TV 추석 활용법 및 기능 후기, 라인업별 비교 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/ai-tv.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "가을 시즌 마트 할인정보, 창원 지역화폐 알뜰 장보기 팁",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/blog-post_23.html",
+      "images": 1,
+      "needed": 2,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 2장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "SKB B tv+ max 요금제 비교, 넷플릭스·디즈니플러스 결합 총정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/skb-b-tv-max.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "가을 단풍 골프장 예약, 부킹 오픈 타이밍 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/blog-post_21.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "[2편] 단풍 골프장 코스 난이도 비교와 실력별 선택법",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/2.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "2026년 가을 골프장 예약 꿀팁과 라운딩 비용 시기별 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/09/2026_02024516348.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
       "actions": [
         "변경 없음"
       ]
@@ -258,6 +518,246 @@
       ]
     },
     {
+      "title": "서학개미 다시 미국 주식, 2026년 지금 사도 될까",
+      "url": "https://hoguasset.blogspot.com/2026/09/2026_0774373565.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/553f0d687b6bf747.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"증권 앱에 여러 지수 ETF 종목이 표시된 화면\")",
+          "alt": "증권 앱에 여러 지수 ETF 종목이 표시된 화면"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/553f0d687b6bf747.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "증권 앱에 여러 지수 ETF 종목이 표시된 화면",
+          "imageTerms": "증권 앱에 여러 지수 ETF 종목이 표시된 화면 553f0d687b6bf747",
+          "postTerms": [
+            "서학개미",
+            "다시",
+            "미국",
+            "주식",
+            "사도",
+            "될까"
+          ]
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "alt 재작성 → \"서학개미 다시 미국 주식, 2026년 지금 사도 될까 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 2건"
+      ]
+    },
+    {
+      "title": "추석 연휴 미국 ETF 투자 방법 총정리 5단계 가이드",
+      "url": "https://hoguasset.blogspot.com/2026/09/etf-5.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "국제유가와 물가, 왜 몇 달씩 시차가 날까",
+      "url": "https://hoguasset.blogspot.com/2026/09/blog-post_23.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/56e6f7a7023c8677.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"주유소 유가 표지판을 클로즈업한 사진\")",
+          "alt": "주유소 유가 표지판을 클로즈업한 사진"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/56e6f7a7023c8677.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "주유소 유가 표지판을 클로즈업한 사진",
+          "imageTerms": "주유소 유가 표지판을 클로즈업한 사진 56e6f7a7023c8677",
+          "postTerms": [
+            "국제유가와",
+            "물가",
+            "달씩",
+            "시차",
+            "날까"
+          ]
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "alt 재작성 → \"국제유가와 물가, 왜 몇 달씩 시차가 날까 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 2건"
+      ]
+    },
+    {
+      "title": "국제유가 하락 물가 체감 후기, 3개월 비교로 본 이유(2026)",
+      "url": "https://hoguasset.blogspot.com/2026/09/3-2026.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "국제유가 하락해도 생활물가 안 내린 이유, 2026년 분석",
+      "url": "https://hoguasset.blogspot.com/2026/09/2026_01009204778.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/b01c7e3affcb0ab6.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"소비자물가지수 상승 추이를 보여주는 그래프 이미지\")",
+          "alt": "소비자물가지수 상승 추이를 보여주는 그래프 이미지"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/b01c7e3affcb0ab6.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "소비자물가지수 상승 추이를 보여주는 그래프 이미지",
+          "imageTerms": "소비자물가지수 상승 추이를 보여주는 그래프 이미지 b01c7e3affcb0ab6",
+          "postTerms": [
+            "국제유",
+            "하락해도",
+            "생활물",
+            "내린",
+            "분석"
+          ]
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/80a7b21b97b22aa9.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"주유소 유가 게시판과 마트 진열대를 비교한 이미지\")",
+          "alt": "주유소 유가 게시판과 마트 진열대를 비교한 이미지"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/80a7b21b97b22aa9.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "주유소 유가 게시판과 마트 진열대를 비교한 이미지",
+          "imageTerms": "주유소 유가 게시판과 마트 진열대를 비교한 이미지 80a7b21b97b22aa9",
+          "postTerms": [
+            "국제유",
+            "하락해도",
+            "생활물",
+            "내린",
+            "분석"
+          ]
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "alt 재작성 → \"국제유가 하락해도 생활물가 안 내린 이유, 2026년 분석 관련 이미지\" (캡션 포함)",
+        "alt 재작성 → \"국제유가 하락해도 생활물가 안 내린 이유, 2026년 분석 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 2건"
+      ]
+    },
+    {
+      "title": "AI·사이버보안 관련주, 2026년 투자 유망주 분석 포인트",
+      "url": "https://hoguasset.blogspot.com/2026/09/ai-2026.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "토지거래허가제 실거주 유예 지역 확인하고 내집마련 전략 세우기",
+      "url": "https://hoguasset.blogspot.com/2026/09/blog-post_21.html",
+      "images": 1,
+      "needed": 2,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 2장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/ef4f60f291f5b32f.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"서울 아파트 단지와 부동산 중개업소가 보이는 거리 풍경\")",
+          "alt": "서울 아파트 단지와 부동산 중개업소가 보이는 거리 풍경"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/ef4f60f291f5b32f.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "서울 아파트 단지와 부동산 중개업소가 보이는 거리 풍경",
+          "imageTerms": "서울 아파트 단지와 부동산 중개업소가 보이는 거리 풍경 ef4f60f291f5b32f",
+          "postTerms": [
+            "토지거래허가제",
+            "실거주",
+            "유예",
+            "지역",
+            "확인하고",
+            "내집마련"
+          ]
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "alt 재작성 → \"토지거래허가제 실거주 유예 지역 확인하고 내집마련 전략 세우기 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "한은 기준금리 추가 인상 전망과 대출 이자 미리 대비하는 방법",
+      "url": "https://hoguasset.blogspot.com/2026/09/blog-post_20.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
       "title": "일본 기준금리 1.25% 인상, 31년 만의 최고치와 엔화 투자 대응법",
       "url": "https://hoguasset.blogspot.com/2026/09/125-31.html",
       "images": 1,
@@ -282,34 +782,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/6ce23a29dbbe88a4.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"환율 변동 그래프와 계산기가 놓인 책상 이미지\")",
-          "alt": "환율 변동 그래프와 계산기가 놓인 책상 이미지"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/6ce23a29dbbe88a4.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "환율 변동 그래프와 계산기가 놓인 책상 이미지",
-          "imageTerms": "환율 변동 그래프와 계산기가 놓인 책상 이미지 6ce23a29dbbe88a4",
-          "postTerms": [
-            "원화",
-            "강세",
-            "시대",
-            "환노출",
-            "환헤지",
-            "비교와"
-          ]
         }
       ],
       "blog": "금융NEWS",
       "actions": [
-        "alt 재작성 → \"원화 강세 시대, 환노출·환헤지 비교와 실전 점검 체크리스트 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 2건"
+        "변경 없음"
       ]
     },
     {
@@ -337,34 +814,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/b64daf2c151ad856.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"원달러 환율 그래프와 지폐가 놓인 이미지\")",
-          "alt": "원달러 환율 그래프와 지폐가 놓인 이미지"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/b64daf2c151ad856.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "원달러 환율 그래프와 지폐가 놓인 이미지",
-          "imageTerms": "원달러 환율 그래프와 지폐가 놓인 이미지 b64daf2c151ad856",
-          "postTerms": [
-            "환헤지",
-            "ETF",
-            "손실",
-            "원인",
-            "잔고",
-            "확인"
-          ]
         }
       ],
       "blog": "금융NEWS",
       "actions": [
-        "alt 재작성 → \"환헤지 ETF 손실 원인 총정리, 잔고 확인 후 남은 의문들 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 1건"
+        "변경 없음"
       ]
     },
     {
@@ -392,23 +846,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 4장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://kevinlee7250.github.io/cli/images/19a0ed4a90608ed6.jpg",
-          "detail": "HTTP 404"
-        },
-        {
-          "type": "broken",
-          "url": "https://kevinlee7250.github.io/cli/images/2f01fdb0a201da37.jpg",
-          "detail": "HTTP 404"
         }
       ],
       "blog": "금융NEWS",
       "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay",
-        "캡션 동기화 2건"
+        "변경 없음"
       ]
     },
     {

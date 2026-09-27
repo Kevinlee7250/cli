@@ -94,8 +94,14 @@ def _fix_empty_alts(content: str, title: str) -> tuple[str, int]:
     return new, fixed
 
 
-def audit_post(post: dict) -> tuple[list[str], list[str], str]:
-    """단일 글 검사. Returns (자동보완 로그, 리포트 이슈, 수정된 content).
+def audit_post(post: dict) -> tuple[list[str], list[str], str, list[str]]:
+    """단일 글 검사.
+
+    Returns (자동보완 로그, 리포트 이슈, 수정된 content, 제안).
+
+    이슈와 제안을 나눈 이유: 지적이 9건이라고 하면 9개를 고쳐야 하는 것처럼
+    읽히지만, 그중 8건이 "FAQ 없으면 좋겠다"였습니다(2026-09-27). 정책 위반과
+    있으면 좋은 것을 같은 숫자에 넣으면 진짜 문제가 묻힙니다.
 
     글자수 미달 이슈는 메시지 앞부분이 "글자수 부족"으로 시작하므로,
     호출부(run_audit)가 이를 보고 draft 전환 대상을 판별한다.
@@ -107,6 +113,7 @@ def audit_post(post: dict) -> tuple[list[str], list[str], str]:
     labels  = post.get("labels", []) or []
     fixes: list[str] = []
     issues: list[str] = []
+    suggestions: list[str] = []
 
     # ① 글자 수
     n_chars = _plain_len(content)
@@ -147,9 +154,22 @@ def audit_post(post: dict) -> tuple[list[str], list[str], str]:
             content += _DISCLAIMER_HTML
             fixes.append("YMYL 글 면책 문구 추가")
 
-    # ⑥ FAQ
+    # ⑥ FAQ — '지적'이 아니라 '제안'입니다.
+    #
+    # 2026-09-27: 1주간 새 글 22편이 올라온 뒤 지적이 1건에서 9건으로 늘었고,
+    # 8건이 전부 이 항목이었습니다. 그런데 생성 프롬프트는 일부러 이렇게
+    # 적고 있습니다 — "검색 의도상 독자가 실제로 궁금해할 때만 2~5개.
+    # 필요 없으면 FAQ 섹션을 생략하세요."
+    #
+    # 즉 생성은 "생략해도 된다", 감사는 "없으면 지적"이라 서로 어긋났습니다.
+    # 어느 쪽을 고칠지는 분명합니다: FAQ는 AdSense 요건이 아니고, 모든 글에
+    # 억지로 붙이면 오히려 심사가 싫어하는 형식적 채우기가 됩니다.
+    # 그래서 감사 쪽을 고칩니다 — 없으면 알려는 주되, 지적으로 세지 않습니다.
+    #
+    # 이걸 지적으로 두면 진짜 문제(글자수·출처)가 숫자에 묻힙니다. 이 프로젝트가
+    # 이미 한 번 겪은 실수입니다(2026-09-19 과탐지 42건 중 진짜 3건).
     if not re.search(r'자주\s*묻는\s*질문|FAQ', content, re.I):
-        issues.append("FAQ 섹션 없음 — 재작성 필요 시 검토")
+        suggestions.append("FAQ 섹션 없음 — 검색 의도상 필요하면 추가 검토")
 
     # ⑦ 출처
     if not re.search(r'참고\s*자료|출처|références|reference', content, re.I):
@@ -160,7 +180,7 @@ def audit_post(post: dict) -> tuple[list[str], list[str], str]:
     if hits:
         issues.append(f"제목 과장 표현 감지: {hits}")
 
-    return fixes, issues, content
+    return fixes, issues, content, suggestions
 
 
 def _revert_to_draft(blogger_blog_id: str, post_id: str, token: str) -> bool:
@@ -203,10 +223,10 @@ def run_audit(blog_cfg: dict, dry_run: bool, draft_short: bool = False) -> dict:
 
         for post in data.get("items", []):
             scanned += 1
-            fixes, issues, new_content = audit_post(post)
+            fixes, issues, new_content, suggestions = audit_post(post)
             title_s = post.get("title", "")[:45]
 
-            if not fixes and not issues:
+            if not fixes and not issues and not suggestions:
                 continue
 
             logger.info(f"  📄 '{title_s}'")
@@ -214,6 +234,8 @@ def run_audit(blog_cfg: dict, dry_run: bool, draft_short: bool = False) -> dict:
                 logger.info(f"     🔧 {f}" + (" [dry-run]" if dry_run else ""))
             for i in issues:
                 logger.warning(f"     ⚠️ {i}")
+            for s in suggestions:
+                logger.info(f"     💡 {s}")
 
             if fixes and not dry_run and new_content != post.get("content", ""):
                 pr = requests.patch(
@@ -247,18 +269,21 @@ def run_audit(blog_cfg: dict, dry_run: bool, draft_short: bool = False) -> dict:
 
             report_posts.append({
                 "title": post.get("title", ""), "url": post.get("url", ""),
-                "fixes": fixes, "issues": issues,
+                "fixes": fixes, "issues": issues, "suggestions": suggestions,
             })
 
         page_token = data.get("nextPageToken", "")
         if not page_token:
             break
 
+    n_issue = sum(1 for p in report_posts if p["issues"])
+    n_sugg = sum(1 for p in report_posts if p.get("suggestions"))
     logger.info(f"══ [{name}] 스캔 {scanned}건 / 자동보완 {fixed_posts}건 / "
                 f"draft 전환 {drafted_posts}건 / "
-                f"수동확인 필요 {sum(1 for p in report_posts if p['issues'])}건 ══")
+                f"수동확인 필요 {n_issue}건 / 제안 {n_sugg}건 ══")
     return {"blog": name, "scanned": scanned, "fixed": fixed_posts,
-            "drafted": drafted_posts, "posts": report_posts}
+            "drafted": drafted_posts, "issueCount": n_issue,
+            "suggestionCount": n_sugg, "posts": report_posts}
 
 
 def main() -> int:

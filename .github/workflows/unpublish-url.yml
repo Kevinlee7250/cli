@@ -1,0 +1,75 @@
+name: 🔒 글 하나 비공개로 내리기
+
+# URL로 지목한 글 한 편만 비공개(draft)로 내립니다.
+#
+# 기존 경로는 조건으로 고릅니다 — adsense-audit는 글자수 미달을, curate-site는
+# 품질 점수를 봅니다. 그런데 "이 글 하나만"이 필요할 때가 있습니다. 잘못된
+# 블로그에 올라간 글, 사실관계가 틀린 글처럼 조건으로 잡히지 않는 경우입니다.
+# 그때 기준을 임시로 낮춰 돌리면 의도하지 않은 글까지 같이 내려갑니다.
+#
+# 삭제가 아닙니다. Blogger 관리자에서 언제든 다시 공개할 수 있습니다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: '내릴 글의 전체 URL (예: https://hoguasset.blogspot.com/2026/07/x.html)'
+        required: true
+      apply:
+        description: '실제로 내립니다 (false면 확인만)'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: unpublish-url
+
+jobs:
+  unpublish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v5
+        with:
+          ref: latest
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env <<ENVEOF
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          ENVEOF
+
+      - name: 비공개 전환
+        working-directory: blog-automation
+        env:
+          PYTHONIOENCODING: utf-8
+        run: |
+          ARGS=""
+          if [ "${{ inputs.apply }}" = "true" ]; then
+            ARGS="--apply"
+            echo "=== 실제 전환 모드 ==="
+          else
+            echo "=== 확인 전용 모드 (변경 없음) ==="
+          fi
+          python unpublish_url.py --url "${{ inputs.url }}" $ARGS

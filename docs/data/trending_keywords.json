@@ -1,69 +1,75 @@
 {
-  "collectedAt": "2026-09-28T16:18:54.713424+00:00",
+  "collectedAt": "2026-09-28T18:25:43.090362+00:00",
   "sources": {
     "googleTrends": [
       {
-        "keyword": "전지현",
+        "keyword": "박지선",
         "rank": 1,
-        "traffic": "500+",
+        "traffic": "200+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "전지현",
+        "rank": 2,
+        "traffic": "1000+",
         "source": "google_trends"
       },
       {
         "keyword": "선거",
-        "rank": 2,
-        "traffic": "5000+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "파운드리",
         "rank": 3,
         "traffic": "2000+",
         "source": "google_trends"
       },
       {
-        "keyword": "채무",
+        "keyword": "파운드리",
         "rank": 4,
+        "traffic": "2000+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "채무",
+        "rank": 5,
         "traffic": "1000+",
         "source": "google_trends"
       },
       {
         "keyword": "김민수",
-        "rank": 5,
+        "rank": 6,
         "traffic": "2000+",
         "source": "google_trends"
       },
       {
         "keyword": "김연자",
-        "rank": 6,
+        "rank": 7,
         "traffic": "5000+",
         "source": "google_trends"
       },
       {
         "keyword": "일본 우루과이",
-        "rank": 7,
-        "traffic": "1000+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "포를란",
         "rank": 8,
         "traffic": "1000+",
         "source": "google_trends"
       },
       {
-        "keyword": "설영우",
+        "keyword": "포를란",
         "rank": 9,
         "traffic": "1000+",
         "source": "google_trends"
       },
       {
-        "keyword": "국가수사본부",
+        "keyword": "설영우",
         "rank": 10,
-        "traffic": "500+",
+        "traffic": "1000+",
         "source": "google_trends"
       }
     ],
     "naverNews": [
+      {
+        "headline": "北 김선경 “핵보유국 되돌릴 수없어”...비핵화 협상 일축",
+        "category": "경제",
+        "source": "naver_rss",
+        "keyword": "김선경 핵보유국 되돌릴 수없어 비핵화 협상"
+      },
       {
         "headline": "대통령 호언장담한 이 무역협정…가입만 하면 8조원 경제효과라는데",
         "category": "경제",
@@ -93,12 +99,6 @@
         "category": "경제",
         "source": "naver_rss",
         "keyword": "만명은 갚았는데 코로나 채무조정 나선 정부"
-      },
-      {
-        "headline": "\"선배 사업가 노하우 배우자\"…젊은 한상 100여명 뭉쳤다",
-        "category": "경제",
-        "source": "naver_rss",
-        "keyword": "선배 사업가 노하우 배우자 젊은 한상"
       },
       {
         "headline": "‘2026 대한민국 게임대상’, 11월 18일 개최…신청 접수 돌입",
@@ -173,18 +173,18 @@
         "keyword": "주식 어쩌나 삼전닉스 급락에 7000 붕괴"
       },
       {
-        "headline": "[오늘의 운세] 별자리별 운세-9월 29일",
-        "category": "뉴스",
-        "query": "경제 재테크",
-        "source": "naver_api",
-        "keyword": "오늘의 운세 별자리별 운세"
-      },
-      {
         "headline": "오늘의 운세-띠별(9월29일)",
         "category": "뉴스",
         "query": "경제 재테크",
         "source": "naver_api",
         "keyword": "오늘의 운세 띠별"
+      },
+      {
+        "headline": "[오늘의 운세] 별자리별 운세-9월 29일",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "오늘의 운세 별자리별 운세"
       },
       {
         "headline": "&quot;2030 내 집 마련 최선책은 청약통장과 추첨제 공략&quot;…전문가가 전한 현...",
@@ -208,11 +208,39 @@
         "keyword": "기대 못미친 미중 회담 이번주 주목할"
       },
       {
-        "headline": "K증시에 지친 투자자들…대피처로 꼽히는 이곳은? [주린이 ABC]",
+        "headline": "경기도 경기기후플랫폼, 태양광·재활용 정보 한눈에… 이용 기능 확대",
         "category": "뉴스",
         "query": "경제 재테크",
         "source": "naver_api",
-        "keyword": "증시에 지친 투자자들 대피처로 꼽히는 이곳은"
+        "keyword": "경기도 경기기후플랫폼 태양광 재활용 정보 한눈에"
+      },
+      {
+        "headline": "부여군, &quot;4년 복지 대전환 청사진&quot; 나왔다",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "부여군 quot 복지 대전환 청사진 quot"
+      },
+      {
+        "headline": "슈퍼 박테리아 17개 우선 대응 순위, 국내 최초로 나왔다",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "슈퍼 박테리아 우선 대응 순위 국내"
+      },
+      {
+        "headline": "[특별기고] 혁신적인 암 치료제 국내 생산 시동… 급여·치료 인프라도...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "특별기고 혁신적인 치료제 국내 생산 시동"
+      },
+      {
+        "headline": "6대 암 중 폐암 국가검진만 종합병원븞… 병·의원 확대 목소리",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "폐암 국가검진만 종합병원븞 의원 확대 목소리"
       },
       {
         "headline": "&quot;입 돌아가고 눈이 안감겨요&quot;…말초성 안면마비?",
@@ -227,34 +255,6 @@
         "query": "건강 의료",
         "source": "naver_api",
         "keyword": "quot 응급실도 갔다 quot 말자쇼 슬리피"
-      },
-      {
-        "headline": "교통·문화·복지 혜택을 카드 한 장에… 경남, 도민 일상 바꾼다",
-        "category": "뉴스",
-        "query": "건강 의료",
-        "source": "naver_api",
-        "keyword": "교통 문화 복지 혜택을 카드 장에"
-      },
-      {
-        "headline": "‘치매머니’ 172조 시대… 금융권은 관리, 정부는 감독 강화해야",
-        "category": "뉴스",
-        "query": "건강 의료",
-        "source": "naver_api",
-        "keyword": "치매머니 시대 금융권은 관리 정부는 감독"
-      },
-      {
-        "headline": "북한군 포로, 한국 넘어왔는데…조용한 김정은",
-        "category": "뉴스",
-        "query": "건강 의료",
-        "source": "naver_api",
-        "keyword": "북한군 포로 한국 넘어왔는데 조용한 김정은"
-      },
-      {
-        "headline": "강원 암환자 절반 가까이 다른 지역에서 수술⋯도내 10대 암 수술 자체...",
-        "category": "뉴스",
-        "query": "건강 의료",
-        "source": "naver_api",
-        "keyword": "강원 암환자 절반 가까이 다른 지역에서"
       },
       {
         "headline": "“미국 AI 넘으려면 미국 칩 필요”… 중국 ‘AI 도광양회’ 꺼냈다",
@@ -292,11 +292,46 @@
         "keyword": "정보통신 미래모임 아닌 우리 던져온 질문"
       },
       {
-        "headline": "[정보통신 미래모임 30년] 초대 회장 최두환 대표, “앞으로도 미래 관...",
+        "headline": "[정보통신 미래모임 30년] “글로벌 넘버원 향해 오늘도 달린다”… ICT...",
         "category": "뉴스",
         "query": "IT AI 기술",
         "source": "naver_api",
-        "keyword": "정보통신 미래모임 초대 회장 최두환 대표"
+        "keyword": "정보통신 미래모임 글로벌 넘버원 향해 오늘도"
+      },
+      {
+        "headline": "&quot;BRT 개통, 공주에 기회인가 위기인가&quot;…김명환 공주시의원, 주차대란·...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "quot BRT 개통 공주에 기회인가 위기인가"
+      },
+      {
+        "headline": "* 9월 29일 오늘의 운세 *",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "오늘의 운세"
+      },
+      {
+        "headline": "K-뷰티, 세계서 통했다…70억불 수출 이어 '블프' 기대감↑",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "뷰티 세계서 통했다 억불 수출 이어"
+      },
+      {
+        "headline": "9월 소비심리 다시 반등… 집값 상승 기대 영향",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "소비심리 다시 반등 집값 상승 기대"
+      },
+      {
+        "headline": "패트롤] 고양시-동두천시-양주시-의정부시-포천시",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "패트롤 고양시 동두천시 양주시 의정부시 포천시"
       },
       {
         "headline": "[기고] 철도 통합의 효과는 지역에서 나타난다",
@@ -304,27 +339,6 @@
         "query": "생활 소비",
         "source": "naver_api",
         "keyword": "기고 철도 통합의 효과는 지역에서 나타난다"
-      },
-      {
-        "headline": "“카드 7장으로 돌려막아”… 카드론 대환대출 8개월새 23% ‘쑥’",
-        "category": "뉴스",
-        "query": "생활 소비",
-        "source": "naver_api",
-        "keyword": "카드 장으로 돌려막아 카드론 대환대출 개월새"
-      },
-      {
-        "headline": "제주 AI 대전환, 관광·에너지·우주산업 경쟁력 높인다",
-        "category": "뉴스",
-        "query": "생활 소비",
-        "source": "naver_api",
-        "keyword": "제주 AI 대전환 관광 에너지 우주산업"
-      },
-      {
-        "headline": "은행 9시30분에 문 연다…내년 4월부터 30분 늦춰",
-        "category": "뉴스",
-        "query": "생활 소비",
-        "source": "naver_api",
-        "keyword": "은행 분에 연다 내년 월부터 늦춰"
       },
       {
         "headline": "강원 옛 청약통장 8113구좌 전환기한 1년 연장",
@@ -576,50 +590,50 @@
     ],
     "aiRecommended": [
       {
-        "keyword": "환절기 감기 몸살 예방 면역력 관리법 총정리",
+        "keyword": "환절기 감기 vs 독감 구별법과 예방접종 시기 총정리",
         "source": "ai_generated"
       },
       {
-        "keyword": "연말정산 미리 준비하는 절세 항목 체크리스트 2026",
+        "keyword": "가을 이사철 체크리스트와 포장이사 견적 비교 후기",
         "source": "ai_generated"
       },
       {
-        "keyword": "김장철 배추김치 재료비 아끼는 절약 꿀팁",
+        "keyword": "전어 제철 맛집 다녀온 솔직 후기",
         "source": "ai_generated"
       },
       {
-        "keyword": "가을철 실내 건조 습도 관리 가습기 추천 비교",
+        "keyword": "김장 재료 미리 사두는 법 배추값 비교",
         "source": "ai_generated"
       },
       {
-        "keyword": "아이폰17 갤럭시S26 가을 신제품 스펙 비교 후기",
+        "keyword": "실비보험 갱신 전 꼭 확인해야 할 사항",
         "source": "ai_generated"
       },
       {
-        "keyword": "국내 온천 여행지 가을 추천 직접 다녀온 후기",
+        "keyword": "국내 온천 여행지 가성비 비교 후기",
         "source": "ai_generated"
       },
       {
-        "keyword": "ISA 계좌 만기 갈아타기 절세 재테크 방법 2026",
+        "keyword": "가을철 알레르기성 비염 관리법과 병원 후기",
         "source": "ai_generated"
       },
       {
-        "keyword": "가을철 알레르기 비염 원인과 관리법 경험담",
+        "keyword": "전기차 보조금 신청 방법과 지역별 혜택 비교 2026",
         "source": "ai_generated"
       },
       {
-        "keyword": "가을 이사철 견적 비교 및 비용 절약 체크리스트",
+        "keyword": "퇴직연금 디폴트옵션 수익률 비교하는 법",
         "source": "ai_generated"
       },
       {
-        "keyword": "스마트워치 건강관리 기능 비교 2026 최신 모델",
+        "keyword": "가을 캠핑 초보 장비 리스트 가성비 비교",
         "source": "ai_generated"
       }
     ]
   },
   "stats": {
     "googleTrends": 10,
-    "naverNews": 45,
+    "naverNews": 47,
     "highCPC": 47,
     "aiRecommended": 10
   }

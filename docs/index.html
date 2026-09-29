@@ -1792,16 +1792,21 @@
       </div>
     </div>
     <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">
-      등록된 링크는 글 생성 시 키워드와 매칭되어 <strong>글 하단 고정 위치</strong>에 자동 삽입됩니다. AdSense 자동 광고 영역과 겹치지 않습니다.<br>
+      등록된 항목은 글 생성 시 키워드와 매칭되어 <strong>글 하단 고정 위치</strong>에 자동 삽입됩니다. AdSense 자동 광고 영역과 겹치지 않습니다.<br>
+      <strong>🔗 링크</strong>는 오렌지 버튼으로, <strong>🖼 HTML 배너</strong>는 쿠팡이 준 코드 그대로 들어갑니다. 대가성 고지 문구는 자동으로 붙습니다.<br>
       변경 후 <strong>GitHub에 저장</strong>을 눌러야 다음 글 생성에 반영됩니다.
+    </div>
+    <div style="font-size:12px;margin-bottom:12px;padding:10px 14px;border-radius:8px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25);color:#fbbf24;line-height:1.7">
+      ⚠ <strong>HTML 배너는 현재 꺼져 있습니다.</strong> 애드센스 심사 중 제휴 배너가 늘어나는 것은 위험해서, 기능만 만들어 두고 비활성 상태입니다.<br>
+      켜는 법 — <strong>시스템 관리 → 기능 스위치</strong>에서 <strong>쿠팡 HTML 배너</strong>를 켜세요. 링크(버튼)는 이 스위치와 무관하게 지금도 동작합니다.
     </div>
     <div class="table-wrap" style="margin-bottom:12px">
       <table>
         <thead><tr>
-          <th>상품명</th><th>URL</th><th>키워드 태그</th><th>블로그</th><th>상태</th><th>액션</th>
+          <th>상품명</th><th>방식</th><th>URL / 코드</th><th>키워드 태그</th><th>블로그</th><th>상태</th><th>액션</th>
         </tr></thead>
         <tbody id="affiliate-table-body">
-          <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px;font-size:13px">등록된 링크가 없습니다. + 링크 추가를 눌러 첫 번째 상품을 등록하세요.</td></tr>
+          <tr><td colspan="7" style="text-align:center;color:var(--muted);padding:24px;font-size:13px">등록된 링크가 없습니다. + 링크 추가를 눌러 첫 번째 상품을 등록하세요.</td></tr>
         </tbody>
       </table>
     </div>
@@ -1936,9 +1941,26 @@
           <input id="am-name" placeholder="예: ETF 투자 입문서" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box">
         </div>
         <div style="margin-bottom:14px">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">삽입 방식 <span style="color:var(--red)">*</span></label>
+          <select id="am-type" onchange="onAffiliateTypeChange()" style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px">
+            <option value="link">🔗 링크 — 오렌지 버튼으로 표시</option>
+            <option value="html">🖼 HTML 배너 — 쿠팡이 준 코드 그대로</option>
+          </select>
+        </div>
+        <div style="margin-bottom:14px" id="am-url-row">
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">쿠팡파트너스 URL <span style="color:var(--red)">*</span></label>
           <input id="am-url" placeholder="https://link.coupang.com/a/..." style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box;font-family:monospace">
           <div style="font-size:11px;color:var(--muted);margin-top:4px">쿠팡파트너스에서 발급한 트래킹 링크를 입력하세요</div>
+        </div>
+        <div style="margin-bottom:14px;display:none" id="am-html-row">
+          <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">배너 HTML <span style="color:var(--red)">*</span></label>
+          <textarea id="am-html" rows="6" placeholder='&lt;iframe src="https://ads-partners.coupang.com/widgets.html?id=..." width="680" height="140" frameborder="0"&gt;&lt;/iframe&gt;' style="width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;box-sizing:border-box;font-family:monospace;line-height:1.5;resize:vertical"></textarea>
+          <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.7">
+            쿠팡파트너스 → 배너 만들기에서 받은 코드를 그대로 붙여넣으세요.<br>
+            <strong style="color:var(--text)">iframe 방식을 권장합니다</strong> — script 방식은 블로그 스킨과 충돌할 수 있습니다.<br>
+            쿠팡 도메인이 아닌 주소, onclick 같은 이벤트 속성은 저장되지 않습니다.
+          </div>
+          <div id="am-html-check" style="display:none;font-size:12px;margin-top:8px;padding:8px 12px;border-radius:6px"></div>
         </div>
         <div style="margin-bottom:14px">
           <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px">키워드 태그 <span style="font-size:11px;color:var(--muted)">(쉼표로 구분, 비워두면 모든 글에 표시)</span></label>
@@ -2758,6 +2780,8 @@ const FEATURE_LABELS = {
                    '글마다 Claude 호출 1회'],
   image_self_host: ['이미지 자체 호스팅', '본문 이미지를 docs/images에 복제해 우리 도메인에서 서빙',
                     '저장소 용량 (끄면 원본 핫링크로 되돌아감)'],
+  coupang_banner: ['쿠팡 HTML 배너', '쿠팡파트너스 배너 코드를 글 하단에 삽입 (링크 버튼은 이 스위치와 무관)',
+                   '애드센스 심사 중에는 꺼 두는 것을 권장'],
 }
 
 // 스위치를 저장소에 씁니다. 대시보드는 정적 페이지라 파일을 직접 못 고치므로
@@ -7314,19 +7338,76 @@ function saveAffiliateLinks(arr) {
   localStorage.setItem(AFFILIATE_LS_KEY, JSON.stringify(arr))
 }
 
+// 쿠팡 배너 HTML 검사 — coupang_affiliate.validate_banner_html과 같은 규칙입니다.
+// 저장 전에 여기서 걸러 주면, 잘못된 코드가 글에 들어갔다가 발행 후에야
+// 발견되는 일을 막습니다. 최종 판정은 발행 시 파이썬 쪽이 다시 합니다.
+const AFF_ALLOWED_HOSTS = ['coupang.com', 'coupangcdn.com']
+const AFF_ALLOWED_TAGS = ['iframe','a','img','div','span','p','script','ins','br']
+const AFF_SCRIPT_DENY = ['document.write','eval(','xmlhttprequest','fetch(',
+                         'localstorage','document.cookie','innerhtml']
+
+function affHostAllowed(url) {
+  let u = (url || '').trim()
+  if (u.startsWith('//')) u = 'https:' + u
+  if (!/^https?:\/\//i.test(u)) return false
+  let host
+  try { host = new URL(u).hostname.toLowerCase() } catch { return false }
+  return AFF_ALLOWED_HOSTS.some(s => host === s || host.endsWith('.' + s))
+}
+
+function validateBannerHtml(html) {
+  if (!html || !html.trim()) return [false, '배너 HTML이 비어 있습니다']
+  if (/\son[a-z]+\s*=/i.test(html)) return [false, 'onclick 같은 이벤트 속성은 사용할 수 없습니다']
+
+  const tags = [...html.matchAll(/<\s*\/?\s*([a-zA-Z][a-zA-Z0-9]*)/g)].map(m => m[1].toLowerCase())
+  const bad = [...new Set(tags)].filter(t => !AFF_ALLOWED_TAGS.includes(t))
+  if (bad.length) return [false, `허용하지 않는 태그입니다: ${bad.join(', ')}`]
+
+  const urls = [...html.matchAll(/\b(?:src|href|data-src)\s*=\s*["']([^"']+)["']/gi)].map(m => m[1])
+  for (const u of urls) {
+    if (!affHostAllowed(u)) return [false, `쿠팡 도메인이 아닌 주소가 있습니다: ${u.slice(0, 60)}`]
+  }
+
+  for (const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)) {
+    if (/src/i.test(m[1])) continue
+    const inner = (m[2] || '').toLowerCase()
+    if (!inner.includes('partnerscoupang')) return [false, '쿠팡 위젯 초기화가 아닌 스크립트는 넣을 수 없습니다']
+    const hit = AFF_SCRIPT_DENY.find(d => inner.includes(d))
+    if (hit) return [false, `스크립트에 허용되지 않는 코드가 있습니다: ${hit}`]
+  }
+
+  if (!urls.length && !tags.includes('script')) {
+    return [false, '쿠팡 주소가 하나도 없습니다 — 배너 코드가 맞는지 확인하세요']
+  }
+  return [true, '']
+}
+
+function onAffiliateTypeChange() {
+  const isHtml = document.getElementById('am-type').value === 'html'
+  document.getElementById('am-url-row').style.display = isHtml ? 'none' : 'block'
+  document.getElementById('am-html-row').style.display = isHtml ? 'block' : 'none'
+  const box = document.getElementById('am-html-check')
+  if (box) box.style.display = 'none'
+}
+
 function renderAffiliateTable() {
   const tbody = document.getElementById('affiliate-table-body')
   if (!tbody) return
   const links = getAffiliateLinks()
   if (!links.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px;font-size:13px">등록된 링크가 없습니다. + 링크 추가를 눌러 첫 번째 상품을 등록하세요.</td></tr>'
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:24px;font-size:13px">등록된 링크가 없습니다. + 링크 추가를 눌러 첫 번째 상품을 등록하세요.</td></tr>'
     return
   }
   tbody.innerHTML = links.map((ln, i) => `
     <tr>
       <td style="font-weight:600">${_esc(ln.name)}</td>
+      <td>${(ln.type === 'html')
+            ? '<span class="badge orange">🖼 배너</span>'
+            : '<span class="badge blue">🔗 링크</span>'}</td>
       <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
-        <a href="${_esc(ln.url)}" target="_blank" rel="noopener" style="color:var(--accent2);font-size:12px">${_esc(ln.url)}</a>
+        ${(ln.type === 'html')
+          ? `<code style="font-size:11px;color:var(--muted)">${_esc((ln.html || '').slice(0, 60))}…</code>`
+          : `<a href="${_esc(ln.url)}" target="_blank" rel="noopener" style="color:var(--accent2);font-size:12px">${_esc(ln.url)}</a>`}
       </td>
       <td>${(ln.keywords||[]).map(k=>`<span class="badge blue">${_esc(k)}</span>`).join(' ') || '<span style="color:var(--muted);font-size:11px">전체</span>'}</td>
       <td>${(ln.blogs||[]).map(b=>`<span class="badge purple">${_esc(b)}</span>`).join(' ') || '<span style="color:var(--muted);font-size:11px">전체</span>'}</td>
@@ -7341,7 +7422,10 @@ function openAffiliateModal(idx) {
   const ln = idx >= 0 ? links[idx] : null
   document.getElementById('affiliate-modal-title').textContent = idx < 0 ? '링크 추가' : '링크 편집'
   document.getElementById('am-name').value = ln?.name || ''
+  document.getElementById('am-type').value = (ln?.type === 'html') ? 'html' : 'link'
   document.getElementById('am-url').value = ln?.url || ''
+  document.getElementById('am-html').value = ln?.html || ''
+  onAffiliateTypeChange()
   document.getElementById('am-keywords').value = (ln?.keywords || []).join(', ')
   document.getElementById('am-blogs').value = (ln?.blogs || []).join(', ')
   document.getElementById('am-enabled').value = (ln?.enabled !== false) ? 'true' : 'false'
@@ -7357,16 +7441,42 @@ function closeAffiliateModal() {
 
 function saveAffiliateModal() {
   const name = document.getElementById('am-name').value.trim()
+  const type = document.getElementById('am-type').value === 'html' ? 'html' : 'link'
   const url  = document.getElementById('am-url').value.trim()
+  const html = document.getElementById('am-html').value.trim()
   if (!name) { showToast('상품명을 입력하세요', 'error'); return }
-  if (!url || !url.startsWith('http')) { showToast('올바른 URL을 입력하세요', 'error'); return }
+
+  if (type === 'link') {
+    if (!url || !url.startsWith('http')) { showToast('올바른 URL을 입력하세요', 'error'); return }
+  } else {
+    const [ok, why] = validateBannerHtml(html)
+    const box = document.getElementById('am-html-check')
+    if (!ok) {
+      if (box) {
+        box.style.display = 'block'
+        box.style.background = 'rgba(248,113,113,.1)'
+        box.style.color = 'var(--red)'
+        box.textContent = '⚠ ' + why
+      }
+      showToast(why, 'error')
+      return
+    }
+    if (box) {
+      box.style.display = 'block'
+      box.style.background = 'rgba(52,211,153,.1)'
+      box.style.color = 'var(--green)'
+      box.textContent = '✓ 쿠팡 배너 코드로 확인되었습니다'
+    }
+  }
 
   const kwRaw = document.getElementById('am-keywords').value.trim()
   const bRaw  = document.getElementById('am-blogs').value.trim()
   const entry = {
     id: _amEditIdx >= 0 ? (getAffiliateLinks()[_amEditIdx]?.id || `link-${Date.now()}`) : `link-${Date.now()}`,
     name,
-    url,
+    type,
+    url:  type === 'link' ? url : '',
+    html: type === 'html' ? html : '',
     keywords: kwRaw ? kwRaw.split(',').map(s=>s.trim()).filter(Boolean) : [],
     blogs:    bRaw  ? bRaw.split(',').map(s=>s.trim()).filter(Boolean) : [],
     enabled:  document.getElementById('am-enabled').value !== 'false',

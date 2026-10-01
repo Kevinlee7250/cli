@@ -345,19 +345,72 @@ def _simplify_query(query: str, max_terms: int = 3) -> str:
 # 통합 검색 & HTML 삽입
 # ──────────────────────────────────────────────────────────────────────────────
 
-def _score_title_relevance(img: dict, query: str) -> float:
-    """이미지 제목·URL과 쿼리 단어의 겹침 비율 (0~1). 관련성 순위 정렬에 사용.
-    한국어 쿼리는 영어 번역 단어도 포함해 영어 이미지 제목과 매칭합니다."""
+def alt_text_for(img: dict, query: str, limit: int = 50) -> str:
+    """이미지에 쓸 alt 텍스트.
+
+    검색어를 그대로 alt로 쓰면 "무엇을 찾았는지"가 적힙니다. alt는 "무엇이
+    찍혀 있는지"를 적는 자리입니다 — 화면을 못 보는 독자가 읽는 문장이고,
+    사실과 다르면 없느니만 못합니다.
+
+    2026-09-27: 'seoul apartment complex skyline'이 alt로 박혔지만 서울인지
+    확인된 바 없는 사진이었습니다.
+
+    그래서 이미지가 자기 설명(Pixabay 태그 등)을 갖고 있으면 그것을 쓰고,
+    없을 때만 검색어로 돌아갑니다.
+    """
+    own = (img.get("alt_text") or img.get("title") or "").strip()
+    if own:
+        # Pixabay 태그는 'a / b / c' 또는 'a, b, c' 형태입니다. 앞 3개만 씁니다.
+        parts = [p.strip() for p in re.split(r"[/,]", own) if p.strip()]
+        if parts:
+            return ", ".join(parts[:3])[:limit]
+        return own[:limit]
+    return (query or "").strip()[:limit]
+
+
+def _relevance_counts(img: dict, query: str) -> tuple[int, int]:
+    """(겹친 단어 수, 쿼리 단어 수). 비율과 절대 개수를 함께 쓰기 위한 것입니다."""
     query_words = set(re.findall(r'[가-힣]{2,}|[A-Za-z]{3,}', query.lower()))
     # 한국어 쿼리인 경우 Pixabay/DDG 영어 이미지와의 관련성 채점을 위해 번역 단어 추가
     if _is_korean_query(query):
         en_q = _ko_to_en_query(query)
         query_words |= set(re.findall(r'[A-Za-z]{3,}', en_q.lower()))
     if not query_words:
-        return 0.0
+        return 0, 0
     haystack = (img.get("title", "") + " " + img.get("url", "")).lower()
     title_words = set(re.findall(r'[가-힣]{2,}|[A-Za-z]{3,}', haystack))
-    return len(query_words & title_words) / len(query_words)
+    return len(query_words & title_words), len(query_words)
+
+
+def _score_title_relevance(img: dict, query: str) -> float:
+    """이미지 제목·URL과 쿼리 단어의 겹침 비율 (0~1). 관련성 순위 정렬에 사용.
+    한국어 쿼리는 영어 번역 단어도 포함해 영어 이미지 제목과 매칭합니다."""
+    matched, total = _relevance_counts(img, query)
+    return (matched / total) if total else 0.0
+
+
+#: 쿼리 단어가 이 수 이상이면 겹친 단어도 2개 이상이어야 합니다.
+#:
+#: 2026-09-27: 'bank consultation desk documents'로 찾은 사진이 본문에
+#: 붙었는데, 실제로는 벤치에 혼자 앉아 휴대폰 보는 여성 사진이었습니다.
+#: 태그에 'bank'가 하나 있어서 1/4 = 0.25로 임계값(0.15)을 넘었습니다.
+#:
+#: 비율만 보면 일반적인 단어 하나가 구체적인 긴 쿼리를 통째로 통과시킵니다.
+#: 그래서 절대 개수 하한을 같이 둡니다 — 구체적으로 물었으면 구체적으로
+#: 맞아야 합니다. 못 맞추면 사진을 안 붙이고 제목 썸네일로 갑니다.
+_SPECIFIC_QUERY_WORDS = 3
+_MIN_MATCHED_WORDS = 2
+
+
+def _passes_relevance(img: dict, query: str, min_ratio: float) -> bool:
+    """비율과 절대 개수를 모두 만족해야 통과입니다."""
+    matched, total = _relevance_counts(img, query)
+    if total == 0 or matched == 0:
+        return False
+    need = _MIN_MATCHED_WORDS if total >= _SPECIFIC_QUERY_WORDS else 1
+    if matched < need:
+        return False
+    return (matched / total) >= min_ratio
 
 
 # ──────────────────────────────────────────────────────────────
@@ -737,12 +790,21 @@ def _fetch_best_image(
             continue
         best = max(candidates, key=lambda img: _score_title_relevance(img, score_query))
         score = _score_title_relevance(best, score_query)
-        if score >= _MIN_RELEVANCE:
+        matched, total = _relevance_counts(best, score_query)
+        if _passes_relevance(best, score_query, _MIN_RELEVANCE):
             return best
-        logger.debug(f"관련성 미달 후보 보관: '{attempt_q}' → '{best.get('title','')[:30]}' (score={score:.2f})")
+        logger.debug(
+            f"관련성 미달 후보 보관: '{attempt_q}' → '{best.get('title','')[:30]}' "
+            f"(score={score:.2f}, 겹친 단어 {matched}/{total})"
+        )
         # 점수가 사실상 0이면 보관하지 않습니다. 무관한 사진을 붙이느니
         # 제목 썸네일로 가는 편이 낫습니다 — 2026-09-18 수영복 사진 사고.
-        if best_fallback is None and score > _MIN_FALLBACK_RELEVANCE:
+        #
+        # 폴백에도 같은 개수 하한을 겁니다. 하한을 임계값에만 걸면 여기로
+        # 그대로 새어 나갑니다 — 2026-09-27 벤치 사진이 그 경로였습니다.
+        if (best_fallback is None
+                and score > _MIN_FALLBACK_RELEVANCE
+                and _passes_relevance(best, score_query, 0.0)):
             best_fallback = best
 
     # 임계값을 넘는 이미지가 없어도 후보가 있으면 최상위 반환

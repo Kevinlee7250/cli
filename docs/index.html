@@ -66,6 +66,24 @@
   .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
   .section-header h2{font-size:16px;font-weight:600;}
 
+  /* 토글 스위치 — 기능 스위치(feature flags)에 씁니다.
+     버튼 대신 스위치를 쓰는 이유: '켜기'라고 적힌 버튼은 지금 상태가
+     켜짐인지 끄려는 동작인지 한눈에 안 읽힙니다. 스위치는 위치 자체가
+     현재 상태입니다. */
+  .sw{position:relative;flex-shrink:0;width:46px;height:26px;border-radius:999px;
+      border:1px solid var(--border);background:rgba(136,146,176,.22);
+      cursor:pointer;padding:0;transition:background .18s ease,border-color .18s ease;}
+  .sw::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;
+      border-radius:50%;background:#e8ecf7;box-shadow:0 1px 3px rgba(0,0,0,.35);
+      transition:transform .18s ease,background .18s ease;}
+  .sw[aria-checked="true"]{background:rgba(52,211,153,.55);border-color:rgba(52,211,153,.6);}
+  .sw[aria-checked="true"]::after{transform:translateX(20px);background:#fff;}
+  .sw:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .sw:disabled{cursor:not-allowed;opacity:.45;}
+  .sw[data-busy="1"]{cursor:progress;}
+  .sw[data-busy="1"]::after{animation:sw-pulse .7s ease-in-out infinite;}
+  @keyframes sw-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+
   .img-pill{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(6,182,212,.12);color:var(--accent2);}
   .toc-pill{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(52,211,153,.12);color:var(--green);}
   .ad-pill{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(251,146,60,.12);color:var(--orange);}
@@ -1796,10 +1814,10 @@
       <strong>🔗 링크</strong>는 오렌지 버튼으로, <strong>🖼 HTML 배너</strong>는 쿠팡이 준 코드 그대로 들어갑니다. 대가성 고지 문구는 자동으로 붙습니다.<br>
       변경 후 <strong>GitHub에 저장</strong>을 눌러야 다음 글 생성에 반영됩니다.
     </div>
-    <div style="font-size:12px;margin-bottom:12px;padding:10px 14px;border-radius:8px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25);color:#fbbf24;line-height:1.7">
-      ⚠ <strong>HTML 배너는 현재 꺼져 있습니다.</strong> 애드센스 심사 중 제휴 배너가 늘어나는 것은 위험해서, 기능만 만들어 두고 비활성 상태입니다.<br>
-      켜는 법 — <strong>시스템 관리 → 기능 스위치</strong>에서 <strong>쿠팡 HTML 배너</strong>를 켜세요. 링크(버튼)는 이 스위치와 무관하게 지금도 동작합니다.
-    </div>
+    <!-- 쿠팡 HTML 배너 스위치 — 기능 스위치 섹션의 coupang_banner와 같은 값입니다.
+         여기에도 둔 이유: 배너를 등록하는 자리에서 바로 켜고 끌 수 있어야 합니다.
+         다른 화면으로 가서 찾아야 하면, 등록해 놓고 안 켠 채 잊어버립니다. -->
+    <div id="coupang-banner-switch" style="margin-bottom:14px"></div>
     <div class="table-wrap" style="margin-bottom:12px">
       <table>
         <thead><tr>
@@ -2889,8 +2907,18 @@ async function toggleFeature(name, turnOn) {
     return
   }
   const label = (FEATURE_LABELS[name] || [name])[0]
-  const btn = document.getElementById('flag-btn-' + name)
-  if (btn) { btn.disabled = true; btn.textContent = '저장 중...' }
+  // 스위치는 누르는 즉시 움직입니다. 저장은 네트워크를 타므로, 결과가
+  // 올 때까지 가만히 있으면 "안 눌렸나" 싶어 두 번 누르게 됩니다.
+  // 실패하면 아래 renderFlagSwitches()가 실제 값으로 되돌립니다.
+  //
+  // 같은 스위치가 화면에 둘 이상 있을 수 있습니다 (기능 스위치 섹션과
+  // 쿠팡 섹션). id로 하나만 집으면 나머지가 어긋난 채 남습니다.
+  const switches = document.querySelectorAll(`[data-flag="${CSS.escape(name)}"]`)
+  switches.forEach(btn => {
+    btn.disabled = true
+    btn.dataset.busy = '1'
+    btn.setAttribute('aria-checked', turnOn ? 'true' : 'false')
+  })
   const url = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${FEATURE_FLAGS_PATH}`
   try {
     // 최신 내용을 받아 그 위에 바꿉니다. 화면의 사본으로 덮어쓰면 그 사이
@@ -2920,12 +2948,19 @@ async function toggleFeature(name, turnOn) {
       throw new Error(`저장 실패 (HTTP ${putRes.status}) ${t.slice(0, 120)}`)
     }
     DATA.featureFlags = current
-    renderFeatureFlags()
+    renderFlagSwitches()
     showToast(`${label}을(를) ${turnOn ? '켰습니다' : '껐습니다'} — 다음 실행부터 적용됩니다`, 'success')
   } catch (e) {
     showToast('스위치 저장 실패: ' + e.message, 'error')
-    renderFeatureFlags()
+    renderFlagSwitches()
   }
+}
+
+//: 스위치가 그려지는 곳이 두 군데입니다. 한쪽만 다시 그리면 나머지가
+//: 옛 상태로 남아, 꺼 놓고 켜진 줄 아는 일이 생깁니다.
+function renderFlagSwitches() {
+  renderFeatureFlags()
+  if (typeof renderCoupangBannerSwitch === 'function') renderCoupangBannerSwitch()
 }
 
 function renderFeatureFlags() {
@@ -2942,9 +2977,6 @@ function renderFeatureFlags() {
     const [bg, color, border] = on
       ? ['rgba(52,211,153,.13)', 'var(--green)', 'rgba(52,211,153,.3)']
       : ['rgba(248,113,113,.13)', 'var(--red)', 'rgba(248,113,113,.35)']
-    const btnStyle = on
-      ? 'background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35);color:var(--red)'
-      : 'background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);color:var(--green)'
     return `<div style="padding:12px 14px;background:var(--bg2);border:1px solid ${on ? 'var(--border)' : border};border-radius:8px">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
         <span style="font-size:13px;font-weight:700;color:var(--text)">${esc(label)}</span>
@@ -2954,10 +2986,12 @@ function renderFeatureFlags() {
       ${!on && saves ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">아끼는 중: ${esc(saves)}</div>` : ''}
       <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:9px">
         <span style="font-size:11px;color:var(--muted);font-family:ui-monospace,monospace">${esc(name)}</span>
-        <button id="flag-btn-${esc(name)}" ${hasPat ? '' : 'disabled'}
+        <button data-flag="${esc(name)}" class="sw" role="switch"
+          aria-checked="${on ? 'true' : 'false'}"
+          aria-label="${esc(label)} ${on ? '켜짐' : '꺼짐'}"
+          ${hasPat ? '' : 'disabled'}
           title="${hasPat ? '저장소의 feature_flags.json을 고칩니다 — 다음 실행부터 적용' : 'GitHub PAT가 필요합니다 (API 키 관리)'}"
-          onclick="toggleFeature(${jsonq(name)}, ${on ? 'false' : 'true'})"
-          style="flex-shrink:0;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:${hasPat ? 'pointer' : 'not-allowed'};opacity:${hasPat ? 1 : .45};${btnStyle}">${on ? '끄기' : '켜기'}</button>
+          onclick="toggleFeature(${jsonq(name)}, ${on ? 'false' : 'true'})"></button>
       </div>
     </div>`
   }).join('')
@@ -3147,7 +3181,7 @@ async function loadAll(silent = false) {
     ['AdSense 감사', renderAdsenseAudit],
     ['검토 대기 리포트', renderPendingReport],
     ['운영 알림', renderAlerts],
-    ['기능 스위치', renderFeatureFlags],
+    ['기능 스위치', renderFlagSwitches],
     ['발행 스케줄', renderPublishSchedule],
     ['포스트 생성 대상 안내', wfLiveBlogChanged],
     ['시스템 탭 정리', groupSystemPanels],
@@ -7390,7 +7424,53 @@ function onAffiliateTypeChange() {
   if (box) box.style.display = 'none'
 }
 
+//: 쿠팡 HTML 배너 스위치. 기능 스위치 섹션의 coupang_banner와 같은 값을
+//: 읽고 같은 함수로 씁니다 — 두 군데서 따로 관리하면 반드시 어긋납니다.
+const COUPANG_BANNER_FLAG = 'coupang_banner'
+
+function renderCoupangBannerSwitch() {
+  const box = document.getElementById('coupang-banner-switch')
+  if (!box) return
+
+  const flags = DATA.featureFlags || {}
+  // 플래그 파일에 이름이 아직 없으면(배포 전) 꺼진 것으로 봅니다 —
+  // 런타임은 '정의 안 됨 = 켜짐'이지만, 화면에서 켜졌다고 말했다가
+  // 실제로는 안 붙는 것보다 보수적으로 보이는 편이 낫습니다.
+  const on = flags[COUPANG_BANNER_FLAG] === true
+  const hasPat = !!getPAT()
+  const banners = getAffiliateLinks().filter(l => l.type === 'html' && l.enabled !== false).length
+
+  const [bg, bd, fg] = on
+    ? ['rgba(52,211,153,.08)', 'rgba(52,211,153,.28)', 'var(--green)']
+    : ['rgba(251,191,36,.08)', 'rgba(251,191,36,.25)', '#fbbf24']
+
+  const body = on
+    ? `등록된 HTML 배너가 글 하단에 삽입됩니다.${banners ? ` 현재 활성 배너 <strong>${banners}개</strong>.` : ' 아직 등록된 배너가 없습니다.'}`
+    : '애드센스 심사 중 제휴 배너가 늘어나는 것은 위험합니다. 승인된 뒤에 켜세요.'
+
+  box.innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:10px;
+                background:${bg};border:1px solid ${bd}">
+      <button data-flag="${COUPANG_BANNER_FLAG}" class="sw" role="switch"
+        aria-checked="${on ? 'true' : 'false'}"
+        aria-label="쿠팡 HTML 배너 ${on ? '켜짐' : '꺼짐'}"
+        ${hasPat ? '' : 'disabled'}
+        title="${hasPat ? '저장소의 feature_flags.json을 고칩니다 — 다음 글 생성부터 적용'
+                        : 'GitHub PAT가 필요합니다 (시스템 관리 → API 키 관리)'}"
+        onclick="toggleFeature('${COUPANG_BANNER_FLAG}', ${on ? 'false' : 'true'})"></button>
+      <div style="line-height:1.7;font-size:12px;color:var(--muted)">
+        <div style="font-size:13px;font-weight:700;color:${fg}">
+          🖼 HTML 배너 ${on ? '켜짐' : '꺼짐'}
+        </div>
+        <div>${body}</div>
+        <div>🔗 링크(오렌지 버튼)는 이 스위치와 무관하게 항상 동작합니다.</div>
+        ${hasPat ? '' : '<div style="color:var(--yellow)">바꾸려면 GitHub PAT가 필요합니다 — 시스템 관리 → API 키 관리</div>'}
+      </div>
+    </div>`
+}
+
 function renderAffiliateTable() {
+  renderCoupangBannerSwitch()
   const tbody = document.getElementById('affiliate-table-body')
   if (!tbody) return
   const links = getAffiliateLinks()

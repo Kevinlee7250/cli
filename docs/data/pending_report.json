@@ -1,32 +1,32 @@
 {
-  "ranAt": "2026-09-23T23:35:37.534055",
+  "ranAt": "2026-10-01T00:32:00.719248",
   "applied": true,
   "before": {
-    "total": 175,
+    "total": 181,
     "byStatus": {
-      "pending": 14,
-      "expired": 142,
-      "published": 19
+      "pending": 17,
+      "published": 20,
+      "expired": 144
+    },
+    "withContent": 19
+  },
+  "after": {
+    "total": 181,
+    "byStatus": {
+      "pending": 17,
+      "published": 20,
+      "expired": 144
     },
     "withContent": 17
   },
-  "after": {
-    "total": 175,
-    "byStatus": {
-      "expired": 143,
-      "pending": 13,
-      "published": 19
-    },
-    "withContent": 13
-  },
   "revalidate": {
-    "checked": 14,
-    "passed": 5,
-    "failed": 9,
+    "checked": 17,
+    "passed": 7,
+    "failed": 10,
     "unvalidated": 0
   },
-  "expired": 1,
-  "pruned": 4,
+  "expired": 0,
+  "pruned": 2,
   "readyToPublish": [
     {
       "id": "20260906001149_00_금리_3_5__시대_자산배분_6대_4",
@@ -37,26 +37,38 @@
     {
       "id": "20260912235811_00_여행자보험_가입_꼭_해야_할까_실제_",
       "title": "여행자보험 가입, 실제 보상 거절 사례로 본 진실",
-      "score": 84,
-      "blogId": "blog1"
-    },
-    {
-      "id": "20260917004505_00_미국_기준금리_인상_예금_적금_금리_",
-      "title": "미국 기준금리 3.50~3.75% 동결, 2026년 예적금 금리는 어디로 가나",
       "score": 90,
-      "blogId": "blog3"
+      "blogId": "blog1"
     },
     {
       "id": "20260921002912_00_가을_단풍_골프장_예약_시기",
       "title": "[1편] 가을 단풍 골프장 예약, 실패 사례로 본 최적 타이밍",
-      "score": 95,
+      "score": 90,
       "blogId": "blog2"
     },
     {
-      "id": "20260923005101_00_국제유가_소비자물가_반영_시차_통계청",
-      "title": "국제유가 소비자물가 반영 시차, 통계로 뜯어보기",
-      "score": 84,
-      "blogId": "blog3"
+      "id": "20260924004059_00_제주도_여행_현지인처럼_즐기는_방법_",
+      "title": "제주도 여행 현지인처럼 즐기는 방법, 로컬 맛집 후기와 데이터로 정리",
+      "score": 90,
+      "blogId": "blog2"
+    },
+    {
+      "id": "20260926003541_00_2026_단풍_명소_추천_직접_다녀온",
+      "title": "2026 단풍 명소 추천, 방문 후기 종합 정리",
+      "score": 95,
+      "blogId": "blog1"
+    },
+    {
+      "id": "20260930012706_00_신병4_첫인상_리뷰",
+      "title": "[1편] 신병4 첫인상 리뷰: 장르와 분위기 체크포인트",
+      "score": 90,
+      "blogId": "blog1"
+    },
+    {
+      "id": "20260930012706_01_신병4_결말_총평",
+      "title": "[3편] 신병4 결말 해석과 별점 총평, OST까지 정리",
+      "score": 90,
+      "blogId": "blog1"
     },
     {
       "id": "20260817035502_00_드라마_OST_저작권_유튜브_사용_가",

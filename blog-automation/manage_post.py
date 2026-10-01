@@ -347,7 +347,8 @@ def action_replace_image(
         if not new_img:
             logger.error(f"교체용 이미지 검색 실패: '{image_query}'")
             return 1
-        new_alt = image_query.strip()[:50]
+        from image_fetcher import alt_text_for
+        new_alt = alt_text_for(new_img, image_query)
         logger.info(f"교체 이미지 검색 성공: '{new_img.get('title','')[:40]}'")
     else:
         from image_fetcher import generate_title_thumbnail
@@ -558,7 +559,8 @@ def action_add_image(post_id: str, image_query: str = "", image_index: int = 0,
         if not new_img:
             logger.error(f"이미지 검색 실패: '{image_query}'")
             return 1
-        alt = image_query.strip()[:50]
+        from image_fetcher import alt_text_for
+        alt = alt_text_for(new_img, image_query)
     else:
         from image_fetcher import generate_title_thumbnail
         title = thumb_title or entry.get("title") or entry.get("keyword", "")

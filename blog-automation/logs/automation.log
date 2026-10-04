@@ -1,114 +1,3 @@
-2026-10-01 01:42:08,869 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-01 01:42:08,869 [INFO] dashboard_exporter —   포스트: 110개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-01 01:42:08,870 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-10-01 01:42:08,870 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다
-2026-10-01 01:49:15,859 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-10-01 01:49:15,859 [INFO] main —   - [blog1] HOGU What?
-2026-10-01 01:49:15,859 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-10-01 01:49:15,859 [INFO] main —   - [blog3] 금융NEWS
-2026-10-01 01:49:15,864 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
-2026-10-02 01:31:09,293 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-02 01:31:10,376 [INFO] main — ============================================================
-2026-10-02 01:31:10,376 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-10-02 01:31:10
-2026-10-02 01:31:10,376 [INFO] main — ============================================================
-2026-10-02 01:31:10,418 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
-2026-10-02 01:31:10,418 [INFO] keyword_collector — 포스팅 이력 코퍼스: 97개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-10-02 01:31:10,418 [INFO] keyword_collector — 시즌 예약 키워드 26개 로드 (blog=blog1): ['2026 가을 등산 코스 초보자 추천 후기', '2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법']...
-2026-10-02 01:31:15,369 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-10-02 01:31:19,963 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-02 01:31:19,983 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-10-02 01:31:19,983 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-10-02 01:31:20,223 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
-2026-10-02 01:31:20,461 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-10-02 01:31:20,792 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-02 01:31:20,793 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-10-02 01:31:20,794 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-10-02 01:31:20,803 [INFO] keyword_collector — 유사 주제 제외 12개: ['2026 가을 등산 코스 초보자 추천 후기', '가을 단풍 드라이브 코스 추천 방법', '단풍 트레킹 코스 저렴하게 즐기기', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']
-2026-10-02 01:31:20,836 [INFO] keyword_collector —   [naver_realtime] 2개: ['10월 황금연휴 단거리 해외여행 추천, 일본·중국·동남아 저렴하게 다녀오는 법', "에어비앤비 '여행지도' 신규 기능 활용법과 친구 여행지 공유 후기"]
-2026-10-02 01:31:20,836 [INFO] keyword_collector — 최종 선정 키워드 2개: ['10월 황금연휴 단거리 해외여행 추천, 일본·중국·동남아 저렴하게 다녀오는 법', "에어비앤비 '여행지도' 신규 기능 활용법과 친구 여행지 공유 후기"]
-2026-10-02 01:31:20,836 [INFO] main — 수집된 키워드 2개: ['10월 황금연휴 단거리 해외여행 추천, 일본·중국·동남아 저렴하게 다녀오는 법', "에어비앤비 '여행지도' 신규 기능 활용법과 친구 여행지 공유 후기"]
-2026-10-02 01:31:20,841 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-10-02 01:31:20,841 [INFO] main — 단독 포스트 대상 키워드 1개: ['10월 황금연휴 단거리 해외여행 추천, 일본·중국·동남아 저렴하게 다녀오는 법']
-2026-10-02 01:31:20,852 [INFO] main — 
-[1/1] 키워드: '10월 황금연휴 단거리 해외여행 추천, 일본·중국·동남아 저렴하게 다녀오는 법'
-2026-10-02 01:31:20,852 [INFO] content_generator — 포스트 생성 중: '10월 황금연휴 단거리 해외여행 추천, 일본·중국·동남아 저렴하게 다녀오는 법'
-2026-10-02 01:31:29,601 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-02 01:31:29,602 [INFO] research_collector — 검색 의도: 10월 황금연휴 기간과 일정을 활용해 일본·중국·동남아로 저렴하게 다녀올 수 있는 단거리 해외여행지, 항공권
-2026-10-02 01:31:46,917 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '10월 황금연휴 단거리 해외여행 추천, 일본·중국·동남아 저렴하게 다녀오는 법'
-2026-10-02 01:31:59,691 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-02 01:31:59,692 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '10월 황금연휴 단거리 해외여행 추천, 일본·중국·동남아 저렴하게 다녀오는 법'
-2026-10-02 01:32:37,709 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-02 01:32:37,710 [WARNING] source_validator — 주장-출처 대조 실패: Expecting ',' delimiter: line 3 column 58 (char 128)
-2026-10-02 01:32:37,710 [INFO] source_validator — 출처 검증: 5/6개 통과, 등급 분포 {'X': 1, 'A': 2, 'C': 3}
-2026-10-02 01:32:37,712 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-10-02 01:32:37,712 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-02 01:32:37,713 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-02 01:32:38,326 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-02 01:33:47,407 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-02 01:33:48,089 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-02 01:33:57,561 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '성수기 항공권은 평시 대비 상당히 오르는 경우가 흔하다는 게 여행업계 종'
-2026-10-02 01:33:57,561 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '일본 왕복 항공권은 평시보다 연휴엔 가격이 크게 오르는 구간이 많다는 게'
-2026-10-02 01:33:57,562 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '여행 플랫폼과 항공권 가격 비교 사이트를 살펴보면'
-2026-10-02 01:33:57,562 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 1건 자동 수정 적용
-2026-10-02 01:33:57,562 [INFO] content_generator — 이미지 계획 1건 사용: ['airport departure board travelers']
-2026-10-02 01:33:57,741 [INFO] image_fetcher — 이미지 수집 성공: 'airport departure board travelers' → 제목='merry christmas / boarding pass / travel' (관련성=0.50)
-2026-10-02 01:33:57,990 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-10-02 01:33:57,990 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-10-02 01:33:57,995 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-10-02 01:33:57,996 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-02 01:33:57,996 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-02 01:33:57,996 [INFO] content_generator — 포스트 생성 완료: '10월 황금연휴 단거리 해외여행 비용 비교 정리' (3302자, 이미지 1개)
-2026-10-02 01:33:58,637 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-02 01:34:09,060 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '10월 황금연휴 단거리 해외여행 비용 비교 정리'
-2026-10-02 01:34:09,060 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 '항공권·숙소 가격' 단락 등 500자 이상 블록이 다수 존재
-2026-10-02 01:34:09,060 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개 포함되나 alt 텍스트 명시 여부 불확실
-2026-10-02 01:34:09,060 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '핵심 요약/핵심 포인트' 박스와 '그렇다면 ~까요' 식 전환 문구가 반복돼 정형화된 패턴이 다소 보임
-2026-10-02 01:34:09,063 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-10-02 01:34:09,066 [INFO] internal_linker —   [1/5] '저렴하게' -> https://www.hoguwhat.com/2026/09/10.html
-2026-10-02 01:34:09,067 [INFO] internal_linker —   [2/5] '저렴하게' -> https://www.hoguwhat.com/2026/09/ott-10.html
-2026-10-02 01:34:09,069 [INFO] internal_linker —   [3/5] '수수료' -> https://www.hoguwhat.com/2026/09/0.html
-2026-10-02 01:34:09,071 [INFO] internal_linker —   [4/5] '오사카' -> https://hogugolfntraval.blogspot.com/2026/10/2026.html
-2026-10-02 01:34:09,073 [INFO] internal_linker —   [5/5] '가이드' -> https://www.hoguwhat.com/2026/10/blog-post.html
-2026-10-02 01:34:09,073 [INFO] internal_linker — 내부 링크 5개 삽입 완료
-2026-10-02 01:34:09,073 [INFO] main —   제목: 10월 황금연휴 단거리 해외여행 비용 비교 정리
-2026-10-02 01:34:09,073 [INFO] main —   이미지: 1개 삽입
-2026-10-02 01:34:09,073 [INFO] main —   글자 수: 3302자
-2026-10-02 01:34:09,648 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-02 01:34:24,745 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '10월 황금연휴 단거리 해외여행 비용 비교 정리'
-2026-10-02 01:34:24,746 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어져 가독성 저하 우려
-2026-10-02 01:34:24,746 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개에 Pixabay 출처는 명시됐으나 alt 텍스트 여부 불명확
-2026-10-02 01:34:24,746 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 섹션(📌💡💬)과 '그렇다면 ~할까요' 식 전환 문구가 반복돼 전형적인 AI 작성 패턴이 감지됨
-2026-10-02 01:34:24,746 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-10-02 01:34:25,286 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-02 01:35:37,233 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-02 01:35:37,852 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-02 01:36:36,868 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-02 01:36:40,911 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-02 01:36:54,845 [INFO] final_editor —   ✏️ 제목 최종 교정: '10월 황금연휴 단거리 해외여행 비용 비교 정리' → '10월 황금연휴 단거리 해외여행 추천, 일본·중국·동남아 비용 비교'
-2026-10-02 01:36:54,845 [INFO] final_editor —   ✏️ 메타 설명 교정 (123자)
-2026-10-02 01:36:54,846 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 미완성 결론부(상황별 추천, FAQ, 마무리)를 완성하고 문단을 2~4문장 단위로 분할했으며, 요약 박스·표·개인 경험 메모·주의사항·작성자 메모·내부 링크 언급을 모두 추가해 발행 가능한 형태로 정리했습니다.
-2026-10-02 01:36:54,952 [INFO] related_posts — 내려간 글 29편을 관련 포스트 후보에서 제외
-2026-10-02 01:36:54,954 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-10-02 01:36:54,954 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-10-02 01:36:55,597 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/10/10.html
-2026-10-02 01:36:55,608 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/10/10.html
-2026-10-02 01:36:55,611 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-10-02 01:36:55,618 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-02 01:36:55,618 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '10월 황금연휴 단거리 해외여행 추천, 일본·중국·동남아 비용 비교'
-2026-10-02 01:36:56,206 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-02 01:36:59,654 [INFO] comment_manager —   생성된 댓글: 항공권만 보지 마시고 '왕복 스케줄'도 꼭 체크하세요 — 황금연휴엔 저가항공 특가가 가는 날은 저렴한데 오는 날 심야 도착편만 남아있는 경우가 ...
-2026-10-02 01:39:59,795 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-10-02 01:39:59,796 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-10-02 01:39:59,796 [INFO] main — 
-============================================================
-2026-10-02 01:39:59,796 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
 2026-10-02 01:39:59,797 [INFO] main — ============================================================
 2026-10-02 01:39:59,814 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 167개)
 2026-10-02 01:39:59,825 [INFO] dashboard_exporter — 분석 필드 유지: 94/109개 (등급·조회수·수익)
@@ -609,3 +498,106 @@
 2026-10-03 01:44:59,414 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
 2026-10-03 01:44:59,414 [INFO] main —   - [blog3] 금융NEWS
 2026-10-03 01:44:59,419 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
+2026-10-04 00:27:50,765 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-04 00:27:51,687 [INFO] main — ============================================================
+2026-10-04 00:27:51,687 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-10-04 00:27:51
+2026-10-04 00:27:51,687 [INFO] main — ============================================================
+2026-10-04 00:27:51,737 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-10-04 00:27:51,737 [INFO] keyword_collector — 포스팅 이력 코퍼스: 98개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-10-04 00:27:51,738 [INFO] keyword_collector — 시즌 예약 키워드 26개 로드 (blog=blog1): ['2026 가을 등산 코스 초보자 추천 후기', '2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법']...
+2026-10-04 00:27:56,439 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-10-04 00:28:00,071 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-04 00:28:00,091 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-10-04 00:28:00,091 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-10-04 00:28:00,360 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['아이돌 콘서트 티케팅 앱별 수수료 비교와 꿀팁']
+2026-10-04 00:28:00,518 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
+2026-10-04 00:28:00,896 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-04 00:28:00,897 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-10-04 00:28:00,898 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-10-04 00:28:00,907 [INFO] keyword_collector — 유사 주제 제외 13개: ['2026 가을 등산 코스 초보자 추천 후기', '가을 단풍 드라이브 코스 추천 방법', '단풍 트레킹 코스 저렴하게 즐기기', '2026 광복절 연휴 국내여행 추천 후기', '2026 광복절 연휴 숙소 저렴하게 예약법']
+2026-10-04 00:28:00,909 [INFO] keyword_collector —   [naver_realtime] 2개: ['면세점 할인 알뜰하게 이용하는 방법', '에어비앤비 새 기능으로 여행 계획 세우는 법']
+2026-10-04 00:28:00,909 [INFO] keyword_collector — 최종 선정 키워드 2개: ['면세점 할인 알뜰하게 이용하는 방법', '에어비앤비 새 기능으로 여행 계획 세우는 법']
+2026-10-04 00:28:00,909 [INFO] main — 수집된 키워드 2개: ['면세점 할인 알뜰하게 이용하는 방법', '에어비앤비 새 기능으로 여행 계획 세우는 법']
+2026-10-04 00:28:00,914 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-10-04 00:28:00,914 [INFO] main — 단독 포스트 대상 키워드 1개: ['면세점 할인 알뜰하게 이용하는 방법']
+2026-10-04 00:28:00,925 [INFO] main — 
+[1/1] 키워드: '면세점 할인 알뜰하게 이용하는 방법'
+2026-10-04 00:28:00,925 [INFO] content_generator — 포스트 생성 중: '면세점 할인 알뜰하게 이용하는 방법'
+2026-10-04 00:28:06,612 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-04 00:28:06,613 [INFO] research_collector — 검색 의도: 면세점에서 할인, 적립, 쿠폰 등을 활용해 최대한 저렴하게 쇼핑하는 구체적인 방법을 알고 싶어함
+2026-10-04 00:28:23,079 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '면세점 할인 알뜰하게 이용하는 방법'
+2026-10-04 00:28:38,003 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-04 00:28:38,004 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '면세점 할인 알뜰하게 이용하는 방법'
+2026-10-04 00:28:42,533 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-04 00:28:42,534 [INFO] source_validator — 출처 검증: 3/4개 통과, 등급 분포 {'A': 3, 'X': 1}
+2026-10-04 00:28:42,536 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-04 00:28:42,537 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-04 00:28:43,064 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-04 00:29:55,409 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-04 00:29:56,126 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-04 00:30:12,274 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-10-04 00:30:12,275 [INFO] content_generator — 이미지 계획 1건 사용: ['airport duty free shopping']
+2026-10-04 00:30:12,452 [INFO] image_fetcher — 이미지 수집 성공: 'airport duty free shopping' → 제목='shopping market / coronavirus / protecti' (관련성=0.50)
+2026-10-04 00:30:12,661 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-10-04 00:30:12,662 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-10-04 00:30:12,667 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-10-04 00:30:12,668 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-04 00:30:12,668 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-04 00:30:12,668 [INFO] content_generator — 포스트 생성 완료: '면세점 할인 알뜰하게 쓰는 법, 한도까지 정리' (2913자, 이미지 1개)
+2026-10-04 00:30:13,468 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-04 00:30:31,400 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '면세점 할인 알뜰하게 쓰는 법, 한도까지 정리'
+2026-10-04 00:30:31,400 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 1개로 저작권 문제는 없으나 이미지 수가 적어 warn 처리
+2026-10-04 00:30:31,400 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~습니다' 종결과 '그런데' 전환구의 반복, 체크리스트 나열 패턴이 다소 정형화된 AI 작성 느낌을 줌
+2026-10-04 00:30:31,403 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-10-04 00:30:31,404 [INFO] internal_linker —   [1/5] '800달러' -> https://www.hoguwhat.com/2026/09/2026-800.html
+2026-10-04 00:30:31,412 [INFO] internal_linker —   [2/5] '이렇게' -> https://hogugolfntraval.blogspot.com/2026/09/blog-post_06.ht
+2026-10-04 00:30:31,412 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-10-04 00:30:31,412 [INFO] main —   제목: 면세점 할인 알뜰하게 쓰는 법, 한도까지 정리
+2026-10-04 00:30:31,412 [INFO] main —   이미지: 1개 삽입
+2026-10-04 00:30:31,412 [INFO] main —   글자 수: 2913자
+2026-10-04 00:30:32,111 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-04 00:30:48,749 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '면세점 할인 알뜰하게 쓰는 법, 한도까지 정리'
+2026-10-04 00:30:48,749 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락(면세 한도 설명 등)이 500자 이상으로 다소 길게 이어짐
+2026-10-04 00:30:48,749 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장(Pixabay, 라이선스 명시)만 포함되어 있어 기본적으로 warn 처리
+2026-10-04 00:30:48,749 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-10-04 00:30:49,953 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-04 00:31:21,231 [INFO] final_editor —   ✏️ 제목 최종 교정: '면세점 할인 알뜰하게 쓰는 법, 한도까지 정리' → '면세점 할인 알뜰하게 이용하는 방법, 한도까지 완벽 정리'
+2026-10-04 00:31:21,231 [INFO] final_editor —   ✏️ 메타 설명 교정 (131자)
+2026-10-04 00:31:21,231 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞춰 재정리하고, 긴 문단을 2~4문장 단위로 분리했습니다. 표·요약 박스·FAQ·개인 경험 메모·주의사항·작성자 메모 구조를 완성하고 이미지 4곳의 구체적인 alt 텍스트와 내부 링크 주제를 추가했습니다.
+2026-10-04 00:31:21,336 [INFO] related_posts — 내려간 글 23편을 관련 포스트 후보에서 제외
+2026-10-04 00:31:21,338 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-04 00:31:21,338 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-10-04 00:31:21,919 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/10/blog-post_04.html
+2026-10-04 00:31:21,931 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/10/blog-post_04.html
+2026-10-04 00:31:21,934 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-10-04 00:31:21,940 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-04 00:31:21,941 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '면세점 할인 알뜰하게 이용하는 방법, 한도까지 완벽 정리'
+2026-10-04 00:31:22,519 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-04 00:31:25,390 [INFO] comment_manager —   생성된 댓글: 하나 더 팁 드리자면, 가족 여행일 경우 1인당 800달러씩 한도가 각각 적용되니까 구매자를 분산해서 결제하면 초과분 걱정을 덜 수 있어요. 또...
+2026-10-04 00:34:25,566 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-10-04 00:34:25,567 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-10-04 00:34:25,567 [INFO] main — 
+============================================================
+2026-10-04 00:34:25,567 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-10-04 00:34:25,567 [INFO] main — ============================================================
+2026-10-04 00:34:25,585 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 172개)
+2026-10-04 00:34:25,596 [INFO] dashboard_exporter — 분석 필드 유지: 85/105개 (등급·조회수·수익)
+2026-10-04 00:34:25,609 [INFO] dashboard_exporter —   시리즈: 38개 내보내기 완료
+2026-10-04 00:34:25,621 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-04 00:34:26,051 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-04 00:34:26,312 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-04 00:34:26,313 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-04 00:34:26,314 [INFO] dashboard_exporter —   학습 이력: 5주 내보내기 완료
+2026-10-04 00:34:26,317 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-04 00:34:26,333 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 275 / 실패 0 / 대기 13)
+2026-10-04 00:34:26,333 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-04 00:34:26,333 [INFO] dashboard_exporter —   포스트: 105개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-04 00:34:26,334 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-04 00:34:26,335 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

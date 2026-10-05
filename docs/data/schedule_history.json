@@ -3,16 +3,6 @@
     "blog-run.yml": {
       "all_runs": [
         {
-          "run_id": 33931144113,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-04T23:53:37Z",
-          "completed_at": "2026-09-05T00:25:50Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33931144113",
-          "event": "schedule",
-          "run_number": 326
-        },
-        {
           "run_id": 33999439140,
           "status": "completed",
           "conclusion": "failure",
@@ -311,6 +301,16 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37164977958",
           "event": "schedule",
           "run_number": 356
+        },
+        {
+          "run_id": 37248404245,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T00:40:09Z",
+          "completed_at": "2026-10-05T01:07:35Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37248404245",
+          "event": "schedule",
+          "run_number": 357
         }
       ],
       "category": "content",
@@ -320,38 +320,18 @@
       "failure_count": 9,
       "success_rate": 71.0,
       "last_run": {
-        "run_id": 33931144113,
+        "run_id": 33999439140,
         "status": "completed",
-        "conclusion": "success",
-        "started_at": "2026-09-04T23:53:37Z",
-        "completed_at": "2026-09-05T00:25:50Z",
-        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33931144113",
+        "conclusion": "failure",
+        "started_at": "2026-09-05T23:43:55Z",
+        "completed_at": "2026-09-06T00:11:57Z",
+        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33999439140",
         "event": "schedule",
-        "run_number": 326
+        "run_number": 327
       }
     },
     "auto-repair.yml": {
       "all_runs": [
-        {
-          "run_id": 33984980671,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T18:44:07Z",
-          "completed_at": "2026-09-05T18:44:58Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33984980671",
-          "event": "schedule",
-          "run_number": 272
-        },
-        {
-          "run_id": 33932949717,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T00:25:52Z",
-          "completed_at": "2026-09-05T00:26:44Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33932949717",
-          "event": "workflow_run",
-          "run_number": 271
-        },
         {
           "run_id": 34052842473,
           "status": "completed",
@@ -1021,6 +1001,26 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37166227075",
           "event": "workflow_run",
           "run_number": 338
+        },
+        {
+          "run_id": 37386082244,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T23:01:38Z",
+          "completed_at": "2026-10-05T23:02:44Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37386082244",
+          "event": "schedule",
+          "run_number": 341
+        },
+        {
+          "run_id": 37250174258,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T01:07:37Z",
+          "completed_at": "2026-10-05T01:08:39Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37250174258",
+          "event": "workflow_run",
+          "run_number": 340
         }
       ],
       "category": "maintenance",
@@ -1030,14 +1030,14 @@
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
-        "run_id": 33984980671,
+        "run_id": 34052842473,
         "status": "completed",
         "conclusion": "success",
-        "started_at": "2026-09-05T18:44:07Z",
-        "completed_at": "2026-09-05T18:44:58Z",
-        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33984980671",
+        "started_at": "2026-09-06T18:47:40Z",
+        "completed_at": "2026-09-06T18:48:22Z",
+        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34052842473",
         "event": "schedule",
-        "run_number": 272
+        "run_number": 274
       }
     },
     "blog-analytics.yml": {
@@ -1081,12 +1081,22 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/36373253631",
           "event": "schedule",
           "run_number": 25
+        },
+        {
+          "run_id": 37260785737,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T03:46:44Z",
+          "completed_at": "2026-10-05T03:47:21Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37260785737",
+          "event": "schedule",
+          "run_number": 26
         }
       ],
       "category": "analytics",
       "enabled": true,
-      "total_runs": 4,
-      "success_count": 4,
+      "total_runs": 5,
+      "success_count": 5,
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
@@ -1383,16 +1393,6 @@
     "blog-schedule-monitor.yml": {
       "all_runs": [
         {
-          "run_id": 33988036739,
-          "status": "in_progress",
-          "conclusion": null,
-          "started_at": "2026-09-05T19:44:54Z",
-          "completed_at": "2026-09-05T19:44:56Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33988036739",
-          "event": "schedule",
-          "run_number": 64
-        },
-        {
           "run_id": 34056056032,
           "status": "in_progress",
           "conclusion": null,
@@ -1681,6 +1681,16 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37233151468",
           "event": "schedule",
           "run_number": 93
+        },
+        {
+          "run_id": 37388917026,
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-10-05T23:30:54Z",
+          "completed_at": "2026-10-05T23:30:57Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37388917026",
+          "event": "schedule",
+          "run_number": 94
         }
       ],
       "category": "monitoring",
@@ -1992,12 +2002,22 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/36361494818",
           "event": "schedule",
           "run_number": 11
+        },
+        {
+          "run_id": 37247298124,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T00:22:51Z",
+          "completed_at": "2026-10-05T00:24:30Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37247298124",
+          "event": "schedule",
+          "run_number": 12
         }
       ],
       "category": "seo",
       "enabled": true,
-      "total_runs": 4,
-      "success_count": 4,
+      "total_runs": 5,
+      "success_count": 5,
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
@@ -2013,46 +2033,6 @@
     },
     "alert-watchdog.yml": {
       "all_runs": [
-        {
-          "run_id": 33974305511,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T15:16:41Z",
-          "completed_at": "2026-09-05T15:17:19Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33974305511",
-          "event": "schedule",
-          "run_number": 61
-        },
-        {
-          "run_id": 33961200433,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T10:38:20Z",
-          "completed_at": "2026-09-05T10:39:00Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33961200433",
-          "event": "schedule",
-          "run_number": 60
-        },
-        {
-          "run_id": 33944876139,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T04:33:26Z",
-          "completed_at": "2026-09-05T04:34:06Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33944876139",
-          "event": "schedule",
-          "run_number": 59
-        },
-        {
-          "run_id": 33917957194,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-04T20:47:16Z",
-          "completed_at": "2026-09-04T20:48:31Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33917957194",
-          "event": "schedule",
-          "run_number": 58
-        },
         {
           "run_id": 34042470775,
           "status": "completed",
@@ -2082,16 +2062,6 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34012187590",
           "event": "schedule",
           "run_number": 63
-        },
-        {
-          "run_id": 33989987986,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T20:24:03Z",
-          "completed_at": "2026-09-05T20:24:35Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33989987986",
-          "event": "schedule",
-          "run_number": 62
         },
         {
           "run_id": 34122945238,
@@ -3112,37 +3082,47 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37154709407",
           "event": "schedule",
           "run_number": 166
+        },
+        {
+          "run_id": 37327272864,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T14:45:22Z",
+          "completed_at": "2026-10-05T14:46:04Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37327272864",
+          "event": "schedule",
+          "run_number": 171
+        },
+        {
+          "run_id": 37269187924,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T05:45:22Z",
+          "completed_at": "2026-10-05T05:46:03Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37269187924",
+          "event": "schedule",
+          "run_number": 170
         }
       ],
       "category": "monitoring",
       "enabled": true,
-      "total_runs": 110,
-      "success_count": 110,
+      "total_runs": 107,
+      "success_count": 107,
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
-        "run_id": 33974305511,
+        "run_id": 34042470775,
         "status": "completed",
         "conclusion": "success",
-        "started_at": "2026-09-05T15:16:41Z",
-        "completed_at": "2026-09-05T15:17:19Z",
-        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33974305511",
+        "started_at": "2026-09-06T15:29:35Z",
+        "completed_at": "2026-09-06T15:30:19Z",
+        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34042470775",
         "event": "schedule",
-        "run_number": 61
+        "run_number": 65
       }
     },
     "backup.yml": {
       "all_runs": [
-        {
-          "run_id": 33988822210,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T20:00:55Z",
-          "completed_at": "2026-09-05T20:01:28Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33988822210",
-          "event": "schedule",
-          "run_number": 57
-        },
         {
           "run_id": 34056867750,
           "status": "completed",
@@ -3406,83 +3386,23 @@
       ],
       "category": "maintenance",
       "enabled": true,
-      "total_runs": 27,
-      "success_count": 27,
+      "total_runs": 26,
+      "success_count": 26,
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
-        "run_id": 33988822210,
+        "run_id": 34056867750,
         "status": "completed",
         "conclusion": "success",
-        "started_at": "2026-09-05T20:00:55Z",
-        "completed_at": "2026-09-05T20:01:28Z",
-        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33988822210",
+        "started_at": "2026-09-06T20:04:53Z",
+        "completed_at": "2026-09-06T20:05:27Z",
+        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34056867750",
         "event": "schedule",
-        "run_number": 57
+        "run_number": 58
       }
     },
     "blog-comment-automation.yml": {
       "all_runs": [
-        {
-          "run_id": 33982560506,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T17:57:42Z",
-          "completed_at": "2026-09-05T17:57:58Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33982560506",
-          "event": "schedule",
-          "run_number": 293
-        },
-        {
-          "run_id": 33972642031,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T14:43:12Z",
-          "completed_at": "2026-09-05T14:43:30Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33972642031",
-          "event": "schedule",
-          "run_number": 292
-        },
-        {
-          "run_id": 33954417644,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T08:07:46Z",
-          "completed_at": "2026-09-05T08:08:03Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33954417644",
-          "event": "schedule",
-          "run_number": 291
-        },
-        {
-          "run_id": 33941545444,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T03:19:47Z",
-          "completed_at": "2026-09-05T03:20:04Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33941545444",
-          "event": "schedule",
-          "run_number": 290
-        },
-        {
-          "run_id": 33932949790,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T00:25:52Z",
-          "completed_at": "2026-09-05T00:26:09Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33932949790",
-          "event": "workflow_run",
-          "run_number": 289
-        },
-        {
-          "run_id": 33924349332,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-04T22:10:15Z",
-          "completed_at": "2026-09-04T22:10:29Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33924349332",
-          "event": "schedule",
-          "run_number": 288
-        },
         {
           "run_id": 34050544831,
           "status": "completed",
@@ -3532,16 +3452,6 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34000659273",
           "event": "workflow_run",
           "run_number": 295
-        },
-        {
-          "run_id": 33994475721,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T21:56:31Z",
-          "completed_at": "2026-09-05T21:56:51Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33994475721",
-          "event": "schedule",
-          "run_number": 294
         },
         {
           "run_id": 34147400185,
@@ -4982,107 +4892,67 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37159374356",
           "event": "schedule",
           "run_number": 439
+        },
+        {
+          "run_id": 37344041647,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T16:51:37Z",
+          "completed_at": "2026-10-05T16:51:55Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37344041647",
+          "event": "schedule",
+          "run_number": 447
+        },
+        {
+          "run_id": 37263697805,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T04:28:53Z",
+          "completed_at": "2026-10-05T04:29:07Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37263697805",
+          "event": "schedule",
+          "run_number": 446
+        },
+        {
+          "run_id": 37250174329,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T01:07:37Z",
+          "completed_at": "2026-10-05T01:07:52Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37250174329",
+          "event": "workflow_run",
+          "run_number": 445
+        },
+        {
+          "run_id": 37241432198,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-04T22:48:47Z",
+          "completed_at": "2026-10-04T22:49:03Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37241432198",
+          "event": "schedule",
+          "run_number": 444
         }
       ],
       "category": "content",
       "enabled": true,
-      "total_runs": 155,
-      "success_count": 155,
+      "total_runs": 152,
+      "success_count": 152,
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
-        "run_id": 33982560506,
+        "run_id": 34050544831,
         "status": "completed",
         "conclusion": "success",
-        "started_at": "2026-09-05T17:57:42Z",
-        "completed_at": "2026-09-05T17:57:58Z",
-        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33982560506",
+        "started_at": "2026-09-06T18:04:14Z",
+        "completed_at": "2026-09-06T18:04:33Z",
+        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34050544831",
         "event": "schedule",
-        "run_number": 293
+        "run_number": 299
       }
     },
     "collect-keywords.yml": {
       "all_runs": [
-        {
-          "run_id": 33985451457,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T18:53:34Z",
-          "completed_at": "2026-09-05T18:54:30Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33985451457",
-          "event": "schedule",
-          "run_number": 455
-        },
-        {
-          "run_id": 33978363277,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T16:35:52Z",
-          "completed_at": "2026-09-05T16:36:39Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33978363277",
-          "event": "schedule",
-          "run_number": 454
-        },
-        {
-          "run_id": 33969536385,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T13:39:30Z",
-          "completed_at": "2026-09-05T13:40:38Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33969536385",
-          "event": "schedule",
-          "run_number": 453
-        },
-        {
-          "run_id": 33963515069,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T11:30:35Z",
-          "completed_at": "2026-09-05T11:31:29Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33963515069",
-          "event": "schedule",
-          "run_number": 452
-        },
-        {
-          "run_id": 33955946504,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T08:41:19Z",
-          "completed_at": "2026-09-05T08:42:18Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33955946504",
-          "event": "schedule",
-          "run_number": 451
-        },
-        {
-          "run_id": 33950830945,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T06:48:37Z",
-          "completed_at": "2026-09-05T06:49:30Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33950830945",
-          "event": "schedule",
-          "run_number": 450
-        },
-        {
-          "run_id": 33934066111,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T00:46:23Z",
-          "completed_at": "2026-09-05T00:47:12Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33934066111",
-          "event": "schedule",
-          "run_number": 449
-        },
-        {
-          "run_id": 33924706622,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-04T22:15:08Z",
-          "completed_at": "2026-09-04T22:16:06Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33924706622",
-          "event": "schedule",
-          "run_number": 448
-        },
         {
           "run_id": 34053322648,
           "status": "completed",
@@ -5152,16 +5022,6 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34002102492",
           "event": "schedule",
           "run_number": 457
-        },
-        {
-          "run_id": 33994586544,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T21:59:03Z",
-          "completed_at": "2026-09-05T21:59:58Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33994586544",
-          "event": "schedule",
-          "run_number": 456
         },
         {
           "run_id": 34159230451,
@@ -7402,37 +7262,107 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37159564367",
           "event": "schedule",
           "run_number": 680
+        },
+        {
+          "run_id": 37386403288,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T23:04:55Z",
+          "completed_at": "2026-10-05T23:05:57Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37386403288",
+          "event": "schedule",
+          "run_number": 695
+        },
+        {
+          "run_id": 37375524984,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T21:23:12Z",
+          "completed_at": "2026-10-05T21:24:11Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37375524984",
+          "event": "schedule",
+          "run_number": 694
+        },
+        {
+          "run_id": 37363733659,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T19:29:34Z",
+          "completed_at": "2026-10-05T19:35:58Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37363733659",
+          "event": "schedule",
+          "run_number": 693
+        },
+        {
+          "run_id": 37342507701,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T16:39:28Z",
+          "completed_at": "2026-10-05T16:40:23Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37342507701",
+          "event": "schedule",
+          "run_number": 692
+        },
+        {
+          "run_id": 37305897582,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T11:53:57Z",
+          "completed_at": "2026-10-05T11:54:58Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37305897582",
+          "event": "schedule",
+          "run_number": 691
+        },
+        {
+          "run_id": 37285168525,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T08:41:11Z",
+          "completed_at": "2026-10-05T08:42:05Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37285168525",
+          "event": "schedule",
+          "run_number": 690
+        },
+        {
+          "run_id": 37252704457,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T01:45:51Z",
+          "completed_at": "2026-10-05T01:46:50Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37252704457",
+          "event": "schedule",
+          "run_number": 689
+        },
+        {
+          "run_id": 37241802589,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-04T22:54:45Z",
+          "completed_at": "2026-10-04T22:55:37Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37241802589",
+          "event": "schedule",
+          "run_number": 688
         }
       ],
       "category": "content",
       "enabled": true,
-      "total_runs": 240,
-      "success_count": 240,
+      "total_runs": 239,
+      "success_count": 239,
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
-        "run_id": 33985451457,
+        "run_id": 34053322648,
         "status": "completed",
         "conclusion": "success",
-        "started_at": "2026-09-05T18:53:34Z",
-        "completed_at": "2026-09-05T18:54:30Z",
-        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33985451457",
+        "started_at": "2026-09-06T18:57:03Z",
+        "completed_at": "2026-09-06T18:58:01Z",
+        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34053322648",
         "event": "schedule",
-        "run_number": 455
+        "run_number": 463
       }
     },
     "gsc-indexing.yml": {
       "all_runs": [
-        {
-          "run_id": 33936690574,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T01:36:50Z",
-          "completed_at": "2026-09-05T01:39:59Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33936690574",
-          "event": "schedule",
-          "run_number": 58
-        },
         {
           "run_id": 34004108923,
           "status": "completed",
@@ -7732,6 +7662,16 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37172937903",
           "event": "schedule",
           "run_number": 88
+        },
+        {
+          "run_id": 37256070352,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T02:36:29Z",
+          "completed_at": "2026-10-05T02:40:43Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37256070352",
+          "event": "schedule",
+          "run_number": 89
         }
       ],
       "category": "seo",
@@ -7741,14 +7681,14 @@
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
-        "run_id": 33936690574,
+        "run_id": 34004108923,
         "status": "completed",
         "conclusion": "success",
-        "started_at": "2026-09-05T01:36:50Z",
-        "completed_at": "2026-09-05T01:39:59Z",
-        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33936690574",
+        "started_at": "2026-09-06T01:31:16Z",
+        "completed_at": "2026-09-06T01:34:19Z",
+        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34004108923",
         "event": "schedule",
-        "run_number": 58
+        "run_number": 59
       }
     },
     "image-audit.yml": {
@@ -7823,16 +7763,6 @@
     },
     "inbound-links.yml": {
       "all_runs": [
-        {
-          "run_id": 33933205786,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T00:30:27Z",
-          "completed_at": "2026-09-05T00:31:09Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33933205786",
-          "event": "schedule",
-          "run_number": 14
-        },
         {
           "run_id": 34001252906,
           "status": "completed",
@@ -8122,6 +8052,16 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37170547357",
           "event": "schedule",
           "run_number": 43
+        },
+        {
+          "run_id": 37251392112,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T01:25:47Z",
+          "completed_at": "2026-10-05T01:26:29Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37251392112",
+          "event": "schedule",
+          "run_number": 44
         }
       ],
       "category": "seo",
@@ -8131,14 +8071,14 @@
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
-        "run_id": 33933205786,
+        "run_id": 34001252906,
         "status": "completed",
         "conclusion": "success",
-        "started_at": "2026-09-05T00:30:27Z",
-        "completed_at": "2026-09-05T00:31:09Z",
-        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33933205786",
+        "started_at": "2026-09-06T00:25:42Z",
+        "completed_at": "2026-09-06T00:26:35Z",
+        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34001252906",
         "event": "schedule",
-        "run_number": 14
+        "run_number": 15
       }
     },
     "pending-cleanup.yml": {
@@ -8203,16 +8143,6 @@
     },
     "post-lifecycle.yml": {
       "all_runs": [
-        {
-          "run_id": 33933148669,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T00:29:30Z",
-          "completed_at": "2026-09-05T00:30:00Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33933148669",
-          "event": "schedule",
-          "run_number": 54
-        },
         {
           "run_id": 34001209150,
           "status": "completed",
@@ -8502,6 +8432,16 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37170529496",
           "event": "schedule",
           "run_number": 83
+        },
+        {
+          "run_id": 37251378339,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T01:25:35Z",
+          "completed_at": "2026-10-05T01:25:58Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37251378339",
+          "event": "schedule",
+          "run_number": 84
         }
       ],
       "category": "analytics",
@@ -8511,28 +8451,18 @@
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
-        "run_id": 33933148669,
+        "run_id": 34001209150,
         "status": "completed",
         "conclusion": "success",
-        "started_at": "2026-09-05T00:29:30Z",
-        "completed_at": "2026-09-05T00:30:00Z",
-        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33933148669",
+        "started_at": "2026-09-06T00:24:43Z",
+        "completed_at": "2026-09-06T00:25:04Z",
+        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34001209150",
         "event": "schedule",
-        "run_number": 54
+        "run_number": 55
       }
     },
     "series-schedule.yml": {
       "all_runs": [
-        {
-          "run_id": 33933579785,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T00:37:20Z",
-          "completed_at": "2026-09-05T00:38:00Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33933579785",
-          "event": "schedule",
-          "run_number": 48
-        },
         {
           "run_id": 34001689097,
           "status": "completed",
@@ -8822,6 +8752,16 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37170961868",
           "event": "schedule",
           "run_number": 77
+        },
+        {
+          "run_id": 37252178943,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T01:37:56Z",
+          "completed_at": "2026-10-05T01:39:10Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37252178943",
+          "event": "schedule",
+          "run_number": 78
         }
       ],
       "category": "content",
@@ -8831,78 +8771,18 @@
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
-        "run_id": 33933579785,
+        "run_id": 34001689097,
         "status": "completed",
         "conclusion": "success",
-        "started_at": "2026-09-05T00:37:20Z",
-        "completed_at": "2026-09-05T00:38:00Z",
-        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33933579785",
+        "started_at": "2026-09-06T00:35:29Z",
+        "completed_at": "2026-09-06T00:36:04Z",
+        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34001689097",
         "event": "schedule",
-        "run_number": 48
+        "run_number": 49
       }
     },
     "trend-preempt.yml": {
       "all_runs": [
-        {
-          "run_id": 33980904748,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T17:25:14Z",
-          "completed_at": "2026-09-05T17:25:57Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33980904748",
-          "event": "schedule",
-          "run_number": 310
-        },
-        {
-          "run_id": 33974613678,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T15:22:43Z",
-          "completed_at": "2026-09-05T15:23:23Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33974613678",
-          "event": "schedule",
-          "run_number": 309
-        },
-        {
-          "run_id": 33961562280,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T10:46:45Z",
-          "completed_at": "2026-09-05T10:47:23Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33961562280",
-          "event": "schedule",
-          "run_number": 308
-        },
-        {
-          "run_id": 33945306579,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T04:42:57Z",
-          "completed_at": "2026-09-05T04:43:39Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33945306579",
-          "event": "schedule",
-          "run_number": 307
-        },
-        {
-          "run_id": 33928240332,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-04T23:06:49Z",
-          "completed_at": "2026-09-04T23:07:27Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33928240332",
-          "event": "schedule",
-          "run_number": 306
-        },
-        {
-          "run_id": 33918432720,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-04T20:53:04Z",
-          "completed_at": "2026-09-04T20:53:47Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33918432720",
-          "event": "schedule",
-          "run_number": 305
-        },
         {
           "run_id": 34042801825,
           "status": "completed",
@@ -8932,26 +8812,6 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34012621552",
           "event": "schedule",
           "run_number": 313
-        },
-        {
-          "run_id": 33997592942,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T23:02:51Z",
-          "completed_at": "2026-09-05T23:03:32Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33997592942",
-          "event": "schedule",
-          "run_number": 312
-        },
-        {
-          "run_id": 33990332273,
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-09-05T20:30:49Z",
-          "completed_at": "2026-09-05T20:31:27Z",
-          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33990332273",
-          "event": "schedule",
-          "run_number": 311
         },
         {
           "run_id": 34155002436,
@@ -10172,23 +10032,63 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37163343168",
           "event": "schedule",
           "run_number": 435
+        },
+        {
+          "run_id": 37380174416,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T22:05:17Z",
+          "completed_at": "2026-10-05T22:05:59Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37380174416",
+          "event": "schedule",
+          "run_number": 442
+        },
+        {
+          "run_id": 37329658145,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T15:03:10Z",
+          "completed_at": "2026-10-05T15:03:50Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37329658145",
+          "event": "schedule",
+          "run_number": 441
+        },
+        {
+          "run_id": 37270149408,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T05:58:29Z",
+          "completed_at": "2026-10-05T05:59:17Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37270149408",
+          "event": "schedule",
+          "run_number": 440
+        },
+        {
+          "run_id": 37245860714,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T00:01:42Z",
+          "completed_at": "2026-10-05T00:02:23Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37245860714",
+          "event": "schedule",
+          "run_number": 439
         }
       ],
       "category": "content",
       "enabled": true,
-      "total_runs": 133,
-      "success_count": 133,
+      "total_runs": 129,
+      "success_count": 129,
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
-        "run_id": 33980904748,
+        "run_id": 34042801825,
         "status": "completed",
         "conclusion": "success",
-        "started_at": "2026-09-05T17:25:14Z",
-        "completed_at": "2026-09-05T17:25:57Z",
-        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/33980904748",
+        "started_at": "2026-09-06T15:35:42Z",
+        "completed_at": "2026-09-06T15:36:26Z",
+        "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/34042801825",
         "event": "schedule",
-        "run_number": 310
+        "run_number": 315
       }
     },
     "weekly-brief.yml": {
@@ -10232,12 +10132,22 @@
           "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/36380258600",
           "event": "schedule",
           "run_number": 13
+        },
+        {
+          "run_id": 37267100525,
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-05T05:17:15Z",
+          "completed_at": "2026-10-05T05:18:00Z",
+          "html_url": "https://github.com/Kevinlee7250/cli/actions/runs/37267100525",
+          "event": "schedule",
+          "run_number": 14
         }
       ],
       "category": "analytics",
       "enabled": true,
-      "total_runs": 4,
-      "success_count": 4,
+      "total_runs": 5,
+      "success_count": 5,
       "failure_count": 0,
       "success_rate": 100.0,
       "last_run": {
@@ -10253,8 +10163,16 @@
     }
   },
   "alerts": [],
-  "last_updated": "2026-10-04T20:43:17.522955+00:00",
-  "silent": [],
+  "last_updated": "2026-10-05T23:31:17.805937+00:00",
+  "silent": [
+    {
+      "workflow": "backup.yml",
+      "category": "maintenance",
+      "expected_every_hours": 24.0,
+      "window_hours": 25,
+      "detail": "24시간마다 돌아야 하는데 최근 25시간 동안 실행이 없습니다"
+    }
+  ],
   "monitored_workflows": [
     "adsense-audit.yml",
     "adsense-policy-update.yml",

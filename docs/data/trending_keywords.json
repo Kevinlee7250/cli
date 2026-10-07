@@ -1,69 +1,75 @@
 {
-  "collectedAt": "2026-10-07T20:41:50.986175+00:00",
+  "collectedAt": "2026-10-07T21:49:51.981146+00:00",
   "sources": {
     "googleTrends": [
       {
-        "keyword": "역주행",
+        "keyword": "한화 이글스",
         "rank": 1,
+        "traffic": "5000+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "신지",
+        "rank": 2,
         "traffic": "100+",
         "source": "google_trends"
       },
       {
-        "keyword": "숙행",
-        "rank": 2,
-        "traffic": "200+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "박지원",
+        "keyword": "홍명보",
         "rank": 3,
-        "traffic": "200+",
+        "traffic": "500+",
         "source": "google_trends"
       },
       {
-        "keyword": "백령도",
+        "keyword": "엔비디아",
         "rank": 4,
         "traffic": "200+",
         "source": "google_trends"
       },
       {
-        "keyword": "world space week 2026",
+        "keyword": "포스코",
         "rank": 5,
-        "traffic": "1000+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "로또 1등도 출근합니다",
-        "rank": 6,
         "traffic": "500+",
         "source": "google_trends"
       },
       {
-        "keyword": "67",
-        "rank": 7,
-        "traffic": "1000+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "대학",
-        "rank": 8,
-        "traffic": "2000+",
-        "source": "google_trends"
-      },
-      {
-        "keyword": "지현 원규",
-        "rank": 9,
+        "keyword": "정은경",
+        "rank": 6,
         "traffic": "100+",
         "source": "google_trends"
       },
       {
-        "keyword": "주차공간",
+        "keyword": "비트코인",
+        "rank": 7,
+        "traffic": "500+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "lg에너지솔루션",
+        "rank": 8,
+        "traffic": "200+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "압수수색",
+        "rank": 9,
+        "traffic": "200+",
+        "source": "google_trends"
+      },
+      {
+        "keyword": "프로야구 순위",
         "rank": 10,
-        "traffic": "2000+",
+        "traffic": "100+",
         "source": "google_trends"
       }
     ],
     "naverNews": [
+      {
+        "headline": "서민금융, 돈이 됩니까…은행 점포 줄이더니 PB센터는 50% 늘렸다",
+        "category": "경제",
+        "source": "naver_rss",
+        "keyword": "서민금융 돈이 됩니까 은행 점포 줄이더니"
+      },
       {
         "headline": "소득 비슷한 중산층인데 순자산은 4배 차이 … 격차 큰 까닭은",
         "category": "경제",
@@ -93,12 +99,6 @@
         "category": "경제",
         "source": "naver_rss",
         "keyword": "명불허전 허진호의 연출력은 암살자 에서 아쉬운"
-      },
-      {
-        "headline": "나주에 에너지도시 … 제주는 전기차 메카로",
-        "category": "경제",
-        "source": "naver_rss",
-        "keyword": "나주에 에너지도시 제주는 전기차 메카로"
       },
       {
         "headline": "넥슨 ‘마비노기 모바일’, 일본 애플 앱스토어 인기 1위",
@@ -171,6 +171,216 @@
         "category": "생활문화",
         "source": "naver_rss",
         "keyword": "KT 인도네시아 신공장 가동 해외 최대"
+      },
+      {
+        "headline": "‘빚’ 자랑해서 돈 버는 시대…美 틱톡 휩쓴 ‘뎃톡’ 정체는",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "자랑해서 버는 시대 틱톡 휩쓴 뎃톡"
+      },
+      {
+        "headline": "“아무리 확신 있어도 몰빵은 금물”…IMF 때도 웃은 최권욱의 투자법 ...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "아무리 확신 있어도 몰빵은 금물 IMF"
+      },
+      {
+        "headline": "트럼프가 망가뜨리는 AI 관련株, 중간선거 이후엔 회복될까? [미래를 바...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "트럼프가 망가뜨리는 AI 중간선거 이후엔 회복될까"
+      },
+      {
+        "headline": "오세훈 “전북과 올림픽 공동 개최?…어떤 제안도 받아들일 것” [종합...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "오세훈 전북과 올림픽 공동 개최 어떤"
+      },
+      {
+        "headline": "성동 못잖은 직주근접 입지에 6만가구…영등포에 주목할 이유 [박합수의...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "성동 못잖은 직주근접 입지에 만가구 영등포에"
+      },
+      {
+        "headline": "동작구, '2026 동작구민 맞춤형 세무설명회' 개최... tvN '어쩌다 어른...",
+        "category": "뉴스",
+        "query": "경제 재테크",
+        "source": "naver_api",
+        "keyword": "동작구 2026 동작구민 맞춤형 세무설명회 개최"
+      },
+      {
+        "headline": "[국감] 결핵환자 줄었다는데 집단시설선 14% 급증…의무점검은 10곳 중 ...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "국감 결핵환자 줄었다는데 집단시설선 급증 의무점검은"
+      },
+      {
+        "headline": "주치의 예단이 산재 신청 문턱 돼서는 안 된다",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "주치의 예단이 산재 신청 문턱 돼서는"
+      },
+      {
+        "headline": "“약으로 없앨 수 있는 유일한 발암물질” 건강 검진할 때 ‘위내시경’...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "약으로 없앨 있는 유일한 발암물질 건강"
+      },
+      {
+        "headline": "실손보험-건보 데이터 연계…중복보상 차단 나선다",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "실손보험 건보 데이터 연계 중복보상 차단"
+      },
+      {
+        "headline": "[특별기고] 안전상비의약품은 정말 안전한가",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "특별기고 안전상비의약품은 정말 안전한가"
+      },
+      {
+        "headline": "엄승용 보령시장 &quot;인구감소 악순환 끊겠다&quot;…취임 100일, '보령 대전환'...",
+        "category": "뉴스",
+        "query": "건강 의료",
+        "source": "naver_api",
+        "keyword": "엄승용 보령시장 quot 인구감소 악순환 끊겠다"
+      },
+      {
+        "headline": "[OT보안②] 전 산업 AX 가속…OT 보안 투자는?",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "OT 보안 산업 AX 가속 OT"
+      },
+      {
+        "headline": "스페이스X, 엔비디아 AI 칩 구매에 400억달러 조달 추진",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "스페이스 엔비디아 AI 구매에 억달러 조달"
+      },
+      {
+        "headline": "2분30초→10초 '마법'…올해가 HUG의 'AX원년'인 이유",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "마법 올해가 HUG AX 원년 이유"
+      },
+      {
+        "headline": "AI는 기업의 철학을 향으로 만들 수 있을까 [이선미의 퍼퓸테크]",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "AI 기업의 철학을 향으로 만들 있을까"
+      },
+      {
+        "headline": "뉴엔AI, AI 기술 선도 기업 사업화 플랫폼 코오롱베니트 AI 얼라이언스 ...",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "뉴엔 AI AI 기술 선도 기업"
+      },
+      {
+        "headline": "&lt;메트로경제 10월 8일자 한줄뉴스&gt;",
+        "category": "뉴스",
+        "query": "IT AI 기술",
+        "source": "naver_api",
+        "keyword": "lt 메트로경제 일자 한줄뉴스 gt"
+      },
+      {
+        "headline": "美 모기지 금리 7.49%…3년 만에 최고, 주택시장 얼어붙나",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "모기지 금리 만에 최고 주택시장 얼어붙나"
+      },
+      {
+        "headline": "쇼핑하면 주식 살 돈 준다…'거래 앱' 벗어나는 증권사 MTS",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "쇼핑하면 주식 준다 거래 벗어나는 증권사"
+      },
+      {
+        "headline": "[릴레이 인터뷰] &quot;스스로 사랑할 수 있도록&quot;…포항서 여드름 구원 '11년...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "릴레이 인터뷰 quot 스스로 사랑할 있도록"
+      },
+      {
+        "headline": "[정옥재의 스마트 라이프] ‘심장관리 함 해보까’...갤럭시워치 9 리뷰",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "정옥재의 스마트 라이프 심장관리 해보까 갤럭시워치"
+      },
+      {
+        "headline": "[기고]국가를 위한 40년, 경마공원의 새 터를 양평으로…",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "기고 국가를 경마공원의 터를 양평으로"
+      },
+      {
+        "headline": "조상호 세종시장 &quot;행정수도 완성, 더 이상 미룰 수 없다&quot;…시정 5기 대전...",
+        "category": "뉴스",
+        "query": "생활 소비",
+        "source": "naver_api",
+        "keyword": "조상호 세종시장 quot 행정수도 완성 이상"
+      },
+      {
+        "headline": "토지거래허가구역 지정 연장 시사…서울 집값 연말부터 안정화 될 것",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "토지거래허가구역 지정 연장 시사 서울 집값"
+      },
+      {
+        "headline": "[오늘 부동산] 홍지선 장관 &quot;연말엔 서울 집값 안정…토허제 확대 검토...",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "부동산 홍지선 장관 quot 연말엔 서울"
+      },
+      {
+        "headline": "[오늘의 청약 일정] '쌍용 더 플래티넘 한강' 견본주택 개관 등",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "오늘의 청약 일정 쌍용 플래티넘 한강"
+      },
+      {
+        "headline": "공공임대 '익산 부송에코르' 300세대 입주자 모집…22일부터 청약",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "공공임대 익산 부송에코르 세대 입주자 모집"
+      },
+      {
+        "headline": "홍지선 장관 &quot;토허제 연장 검토&quot;…공급은 목표의 80~88%",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "홍지선 장관 quot 토허제 연장 검토"
+      },
+      {
+        "headline": "홍지선 &quot;연말엔 서울 집값 안정…토허제, 상황 보면 연장 검토&quot;",
+        "category": "뉴스",
+        "query": "부동산 청약",
+        "source": "naver_api",
+        "keyword": "홍지선 quot 연말엔 서울 집값 안정"
       }
     ],
     "highCPC": [
@@ -385,12 +595,53 @@
         "source": "high_cpc"
       }
     ],
-    "aiRecommended": []
+    "aiRecommended": [
+      {
+        "keyword": "가을 환절기 감기몸살 증상과 예방법 직접 비교",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "할로윈 파티 준비물 알뜰하게 구매하는 방법",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "2026년 연말정산 미리 준비하는 체크리스트",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "아이폰17 vs 갤럭시S26 실구매 가격 비교 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "전국 가을 단풍 명소 베스트 코스 추천",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "가을철 보일러 난방비 절약하는 방법 직접 비교",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "환절기 비염 증상 완화 생활 습관 후기",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "ISA 계좌 vs 연금저축 세액공제 비교 분석",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "가을 캠핑 준비물 체크리스트 초보자 가이드",
+        "source": "ai_generated"
+      },
+      {
+        "keyword": "김장철 재료 가격 비교와 알뜰하게 장보는 법",
+        "source": "ai_generated"
+      }
+    ]
   },
   "stats": {
     "googleTrends": 10,
-    "naverNews": 18,
+    "naverNews": 48,
     "highCPC": 47,
-    "aiRecommended": 0
+    "aiRecommended": 10
   }
 }

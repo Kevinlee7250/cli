@@ -51,6 +51,62 @@ def _request_token(client_id: str, client_secret: str, refresh_token: str):
     return None, f"{resp.status_code} {resp.text[:200]}"
 
 
+#: 라벨 하나의 길이·단어 수 상한. 넘으면 분류가 아니라 검색어입니다.
+MAX_LABEL_CHARS = 20
+MAX_LABEL_WORDS = 2
+#: 글 하나에 붙일 라벨 수. Blogger API는 5개를 넘기면 400을 돌려줍니다.
+MAX_LABELS = 5
+
+
+def _label_like(text: str) -> bool:
+    """이게 '분류'인가 '검색어'인가.
+
+    '국내여행'은 분류입니다. '삼양해수욕장 검은모래해변 일몰 맨발걷기'는
+    검색어입니다. 후자를 라벨로 달면 그 글에만 붙는 라벨이 하나 생길 뿐,
+    묶이는 글이 없습니다.
+    """
+    t = (text or "").strip()
+    if not t or len(t) > MAX_LABEL_CHARS:
+        return False
+    return len(t.split()) <= MAX_LABEL_WORDS
+
+
+def build_labels(keyword: str, labels: list | None) -> list[str]:
+    """업로드에 쓸 라벨 목록.
+
+    2026-10-08: 여기가 라벨이 불어난 자리였습니다. 예전에는 무조건
+    `[keyword] + labels` 로 만들어서, 글마다 키워드 문장이 통째로 라벨이
+    됐습니다. blog1 글 107편에 서로 다른 라벨이 402개 쌓였고 그 대부분이
+    한 번만 쓰인 것이었습니다 — 카테고리가 아니라 키워드 나열이 된 이유가
+    이것입니다.
+
+    이제 키워드는 **라벨이 하나도 없을 때만**, 그리고 **분류처럼 생겼을
+    때만** 씁니다. 라벨을 제대로 넘겨준 호출자의 분류를 키워드가
+    밀어내지 않습니다.
+    """
+    cleaned = []
+    for lb in (labels or []):
+        # 문자열만 받습니다. str(None)은 "None"이라, 걸러내지 않으면
+        # 'None'이라는 라벨이 실제로 블로그에 붙습니다.
+        if not isinstance(lb, str):
+            continue
+        s = lb.strip()[:200]
+        if s:
+            cleaned.append(s)
+    cleaned = list(dict.fromkeys(cleaned))
+
+    if not cleaned:
+        kw = str(keyword or "").strip()
+        if _label_like(kw):
+            cleaned = [kw]
+        elif kw:
+            logger.info(
+                f"키워드 '{kw[:40]}'는 라벨로 쓰기에 길어 라벨 없이 올립니다 — "
+                "분류가 필요하면 labels를 넘겨주세요"
+            )
+    return cleaned[:MAX_LABELS]
+
+
 def _get_access_token(blog_config: dict | None = None) -> str | None:
     cfg = blog_config or {}
     client_id = cfg.get("client_id") or BLOGGER_CLIENT_ID
@@ -586,12 +642,7 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
     if not isinstance(raw_labels, list):
         raw_labels = []
 
-    # 레이블 정제: 빈 문자열·공백만인 항목 제거, 200자 초과 자르기
-    def _clean_label(lb: str) -> str:
-        return str(lb).strip()[:200]
-
-    all_labels = [_clean_label(kw)] + [_clean_label(lb) for lb in raw_labels]
-    labels = [lb for lb in dict.fromkeys(all_labels) if lb][:5]  # Blogger API: 5개 초과 시 400
+    labels = build_labels(kw, raw_labels)  # Blogger API: 5개 초과 시 400
 
     blog_name = cfg.get("name", "")
     logger.debug(f"업로드 레이블 ({len(labels)}개): {labels[:5]}{'…' if len(labels)>5 else ''}")
@@ -752,13 +803,7 @@ def update_post(blogger_post_id: str, post_data: dict, blog_config: dict | None 
     if not isinstance(raw_labels, list):
         raw_labels = []
 
-    def _clean_label(lb: str) -> str:
-        return str(lb).strip()[:200]
-
-    all_labels = list(dict.fromkeys(
-        [_clean_label(kw)] + [_clean_label(lb) for lb in raw_labels]
-    ))
-    all_labels = [lb for lb in all_labels if lb][:5]
+    all_labels = build_labels(kw, raw_labels)
 
     payload = {
         "title": post_data.get("title", ""),

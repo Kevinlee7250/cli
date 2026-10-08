@@ -1,0 +1,100 @@
+name: 🗂 사이트 구조 정리 (라벨·목차)
+
+# 라벨을 카테고리로 줄이고, 카테고리별 글 목차 페이지를 만듭니다.
+#
+# 왜 목차가 '페이지'인가 (2026-10-08)
+#   blog1의 robots.txt 는 Disallow: /search 입니다. Blogger 라벨 목록은
+#   /search/label/... 주소라서 구글이 아예 가져가지 않습니다. 사이드바에
+#   라벨을 붙여도 검색 쪽에는 변화가 없습니다. 반면 Blogger 페이지는
+#   /p/....html 이라 크롤됩니다 — 그래서 구조는 페이지로 보여줍니다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      blog_id:
+        description: '대상 블로그'
+        type: choice
+        required: false
+        default: 'blog1'
+        options:
+          - 'blog1'
+      steps:
+        description: '무엇을 할지'
+        type: choice
+        required: false
+        default: 'both'
+        options:
+          - 'both'    # 라벨 정리 + 목차
+          - 'labels'  # 라벨만
+          - 'toc'     # 목차만
+      dry_run:
+        description: '확인만 (실제 변경 없음)'
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-structure
+  cancel-in-progress: false
+
+jobs:
+  structure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v5
+        with:
+          ref: latest
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: 라벨 정리
+        if: inputs.steps != 'toc'
+        working-directory: blog-automation
+        run: |
+          ARGS="--blog ${{ inputs.blog_id || 'blog1' }}"
+          if [ "${{ inputs.dry_run }}" = "false" ]; then
+            ARGS="$ARGS --apply"
+          else
+            echo "=== 확인 모드 (변경 없음) ==="
+          fi
+          python normalize_labels.py $ARGS
+
+      - name: 글 목차 페이지
+        if: inputs.steps != 'labels'
+        working-directory: blog-automation
+        run: |
+          ARGS="--blog ${{ inputs.blog_id || 'blog1' }}"
+          if [ "${{ inputs.dry_run }}" = "false" ]; then
+            ARGS="$ARGS --apply"
+          else
+            echo "=== 확인 모드 (변경 없음) ==="
+          fi
+          python build_toc_page.py $ARGS

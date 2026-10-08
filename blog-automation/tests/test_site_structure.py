@@ -184,3 +184,84 @@ def test_toc_page_is_not_confused_with_other_pages():
 def test_both_scripts_agree_on_the_categories():
     """라벨 정리와 목차가 다른 이름을 쓰면 전부 '그 외'로 떨어집니다."""
     assert set(toc.CATEGORY_ORDER_BY_BLOG["blog1"]) == nl._CATEGORY_NAMES
+
+
+# ── 목차로 가는 링크 ────────────────────────────────────────────────────────
+# 2026-10-08: 목차 페이지를 만들었는데 어디에서도 링크되지 않았습니다.
+# 홈페이지 메뉴는 손으로 고른 4개 페이지만 걸려 있고(홈·소개·개인정보처리방침·
+# 면책 조항·문의), API로는 메뉴를 건드릴 수 없습니다. 링크가 없으면 구글이
+# 찾아올 길이 없으므로, 메뉴에 있는 '블로그 소개' 하단에 링크를 답니다.
+
+ABOUT_PAGE = {"id": "P1", "title": "블로그 소개",
+              "content": "<p>여행과 드라마 이야기를 씁니다.</p>",
+              "url": "https://example.test/p/about.html"}
+
+
+def test_finds_the_about_page_as_link_host():
+    pages = [{"title": "개인정보처리방침", "content": ""}, ABOUT_PAGE]
+    assert toc.find_link_host(pages) is ABOUT_PAGE
+
+
+def test_link_host_matches_english_title():
+    page = {"title": "About this blog", "content": ""}
+    assert toc.find_link_host([page]) is page
+
+
+def test_no_about_page_is_reported_not_crashed():
+    msg = toc.link_toc_from_host_page(
+        "B1", [{"title": "문의하기", "content": ""}],
+        "https://example.test/p/toc.html", "tok", apply_changes=False)
+    assert "소개 페이지가 없" in msg
+
+
+def test_link_block_points_at_the_toc():
+    block = toc.toc_link_block("https://example.test/p/toc.html")
+    assert "https://example.test/p/toc.html" in block
+    assert toc.LINK_MARKER in block
+
+
+def test_existing_link_is_not_added_twice():
+    page = dict(ABOUT_PAGE)
+    page["content"] += toc.toc_link_block("https://example.test/p/toc.html")
+    msg = toc.link_toc_from_host_page(
+        "B1", [page], "https://example.test/p/toc.html", "tok", apply_changes=False)
+    assert "이미 있음" in msg
+
+
+def test_the_about_pages_own_text_is_kept(monkeypatch):
+    """덧붙이기만 합니다 — 사람이 쓴 소개 글이 사라지면 안 됩니다."""
+    sent = {}
+
+    class _R:
+        status_code = 200
+
+        @staticmethod
+        def json():
+            return {"url": ABOUT_PAGE["url"]}
+
+    def _request(method, url, **kw):
+        sent["method"] = method
+        sent["json"] = kw.get("json")
+        return _R()
+
+    monkeypatch.setattr(toc.requests, "request", _request)
+    msg = toc.link_toc_from_host_page(
+        "B1", [dict(ABOUT_PAGE)], "https://example.test/p/toc.html",
+        "tok", apply_changes=True)
+    assert msg.startswith("✅")
+    assert sent["method"] == "PUT"
+    body = sent["json"]["content"]
+    assert body.startswith(ABOUT_PAGE["content"]), "기존 본문이 앞에 그대로 있어야 합니다"
+    assert "https://example.test/p/toc.html" in body
+    assert sent["json"]["title"] == "블로그 소개", "제목이 바뀌면 메뉴 항목이 달라집니다"
+
+
+def test_dry_run_sends_no_request(monkeypatch):
+    def _boom(*a, **kw):
+        raise AssertionError("확인 모드에서 요청을 보냈습니다")
+
+    monkeypatch.setattr(toc.requests, "request", _boom)
+    msg = toc.link_toc_from_host_page(
+        "B1", [dict(ABOUT_PAGE)], "https://example.test/p/toc.html",
+        "tok", apply_changes=False)
+    assert "넣을 예정" in msg

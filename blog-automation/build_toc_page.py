@@ -38,6 +38,16 @@ PAGE_TITLE = "글 목차"
 #: 이 문자열이 있으면 이 스크립트가 만든 목차로 봅니다.
 MARKER = "hogu-toc-page"
 
+#: 목차로 가는 링크를 넣었다는 표시 (소개 페이지 쪽).
+LINK_MARKER = "hogu-toc-link"
+#: 목차 링크를 넣을 페이지. 상단 메뉴에 걸려 있어 크롤되는 페이지여야 합니다.
+LINK_HOST_ALIASES = ["소개", "about"]
+
+# 2026-10-08: 목차 페이지를 만들었지만 어디에서도 링크되지 않아 구글이
+# 찾아올 길이 없었습니다(홈페이지 메뉴는 손으로 고른 4개 페이지만 걸려
+# 있고, API로는 메뉴를 건드릴 수 없습니다). 메뉴에 있는 '블로그 소개'
+# 하단에 링크를 넣어, 홈 → 소개 → 목차 → 모든 글 로 이어지게 합니다.
+
 #: 카테고리를 보여줄 순서. 여기 없는 라벨은 '그 외'로 묶습니다.
 CATEGORY_ORDER_BY_BLOG = {
     "blog1": ["국내여행", "해외여행", "드라마리뷰", "영화리뷰", "연예소식"],
@@ -138,6 +148,60 @@ def find_toc_page(pages: list[dict]) -> dict | None:
     return None
 
 
+def _norm(t: str) -> str:
+    return "".join((t or "").lower().split())
+
+
+def find_link_host(pages: list[dict]) -> dict | None:
+    """목차 링크를 넣을 페이지 ('블로그 소개')."""
+    for p in pages:
+        title = _norm(p.get("title"))
+        if any(_norm(a) in title for a in LINK_HOST_ALIASES):
+            return p
+    return None
+
+
+def toc_link_block(url: str) -> str:
+    """소개 페이지 하단에 붙일 목차 링크."""
+    return (
+        f'\n<p class="{LINK_MARKER}" style="margin-top:32px;padding-top:16px;'
+        'border-top:1px solid #e5e7eb;font-size:14px;color:#4b5563;'
+        'line-height:1.7;">'
+        '이 블로그의 모든 글은 '
+        f'<a href="{url}" style="color:#1d4ed8;font-weight:600;">글 목차</a>'
+        '에서 주제별로 보실 수 있습니다.'
+        '</p>'
+    )
+
+
+def link_toc_from_host_page(blog_id: str, pages: list[dict], toc_url: str,
+                            token: str, apply_changes: bool) -> str:
+    """소개 페이지 하단에 목차 링크를 답니다. 기존 본문은 그대로 둡니다.
+
+    안전: 기존 content 뒤에 덧붙이기만 합니다 (replace 아님). marker 가
+    이미 있으면 건너뜁니다 — 몇 번 돌려도 같습니다.
+    """
+    host = find_link_host(pages)
+    if not host:
+        return "소개 페이지가 없어 목차 링크를 넣지 못했습니다"
+    content = host.get("content") or ""
+    if LINK_MARKER in content:
+        return f"목차 링크 이미 있음 ({host.get('url', '')})"
+    if not apply_changes:
+        return f"목차 링크 넣을 예정 → {host.get('title')} ({host.get('url', '')})"
+
+    r = _request_with_retry(
+        "PUT", f"{BLOGGER_API_BASE}/blogs/{blog_id}/pages/{host['id']}",
+        headers={"Authorization": f"Bearer {token}",
+                 "Content-Type": "application/json"},
+        json={"title": host.get("title", ""), "content": content + toc_link_block(toc_url)},
+        timeout=30)
+    if r is None or r.status_code != 200:
+        detail = f"[{r.status_code}] {r.text[:150]}" if r is not None else "응답 없음"
+        return f"목차 링크 넣기 실패 {detail}"
+    return f"✅ 목차 링크 추가: {host.get('title')} ({host.get('url', '')})"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="카테고리별 글 목차 페이지")
     parser.add_argument("--blog", default="blog1")
@@ -193,11 +257,15 @@ def main() -> int:
         detail = f"[{r.status_code}] {r.text[:200]}" if r is not None else "응답 없음"
         logger.error(f"페이지 목록 조회 실패 {detail}")
         return 1
-    existing = find_toc_page(r.json().get("items", []))
+    pages = r.json().get("items", [])
+    existing = find_toc_page(pages)
 
     if not args.apply:
         where = f"갱신 예정: {existing.get('url')}" if existing else "새로 만들 예정"
         logger.info(f"(확인만) {where} · 본문 {len(content):,}자")
+        logger.info(link_toc_from_host_page(
+            blog_id, pages, existing.get("url", "") if existing else "(아직 없음)",
+            token, apply_changes=False))
         logger.info("─── 미리보기 (앞 600자) ───")
         logger.info(content[:600])
         return 0
@@ -224,9 +292,12 @@ def main() -> int:
 
     url = pr.json().get("url", "")
     logger.info(f"✅ 목차 페이지 {action} 완료: {url}")
+
+    # 링크가 없으면 구글이 찾아올 길이 없습니다.
+    logger.info(link_toc_from_host_page(blog_id, pages, url, token, apply_changes=True))
     logger.info(
-        "상단 메뉴에 자동으로 뜨지 않으면 Blogger 레이아웃에서 '페이지' 가젯에 "
-        "추가해야 합니다 — API로는 메뉴를 건드릴 수 없습니다."
+        "상단 메뉴에 넣으면 더 좋습니다 — Blogger 레이아웃의 '페이지' 가젯에서 "
+        "사람이 해야 합니다. API로는 메뉴를 건드릴 수 없습니다."
     )
     return 0
 

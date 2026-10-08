@@ -31,6 +31,8 @@ import normalize_labels as nl  # noqa: E402
     ("해외에서 사고 났을 때 대사관 신고 절차", ["영사콜센터"], "해외여행"),
     ("가을 강원도 여행 가볼만한 곳 추천 7선, 단풍 명소", ["가을여행", "단풍명소"], "국내여행"),
     ("가을 등산 코스 추천, 붐비지 않는 명산", ["등산코스"], "국내여행"),
+    # 2026-10-08 미리보기에서 어느 쪽에도 안 걸린 글.
+    ("패키지여행 계약서 환불 조항 총정리: 확인해야 할 체크리스트", [], "해외여행"),
 ])
 def test_category_for_real_titles(title, labels, expected):
     assert nl.category_for(title, labels, "blog1") == expected
@@ -39,6 +41,12 @@ def test_category_for_real_titles(title, labels, expected):
 def test_unclassifiable_post_is_left_alone():
     """분류 신호가 없으면 None — 아무 카테고리에 억지로 넣지 않습니다."""
     assert nl.category_for("멜론 vs 지니 요금 비교", ["멜론"], "blog1") is None
+
+
+def test_domestic_wins_ties_against_overseas():
+    """'패키지여행'을 해외 쪽에 넣었습니다. 제주 패키지가 해외로 가면 안 됩니다."""
+    assert nl.category_for("제주 패키지여행 후기", [], "blog1") == "국내여행"
+    assert nl.category_for("도쿄 패키지여행 후기", [], "blog1") == "해외여행"
 
 
 def test_unknown_blog_returns_none():

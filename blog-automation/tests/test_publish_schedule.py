@@ -90,11 +90,19 @@ def test_weekday_is_judged_in_kst():
 
 # ── 실제 설정값 ──────────────────────────────────────────────────────────────
 
-def test_shipped_config_gives_every_blog_at_least_one_a_day():
+def test_shipped_config_is_valid_for_every_blog():
+    """실제 설정이 세 블로그 모두에 대해 해석 가능한지.
+
+    2026-10-08 이전에는 '모든 블로그가 하루 1편 이상'을 확인했습니다.
+    애드센스 2차 거절(색인 0건·노출 0회) 이후 발행을 일부러 멈췄으므로,
+    편수가 1 이상인지가 아니라 설정이 온전한지만 봅니다.
+    멈춘 상태 자체는 test_publish_pause.py 가 확인합니다.
+    """
     with open(_CFG, encoding="utf-8") as f:
         sched = json.load(f)
     plan = ps.plan_for_today(sched, datetime(2026, 8, 31, 7, 0, tzinfo=ps.KST))
-    assert all(n >= 1 for n in plan.values()), plan
+    assert set(plan) == set(ps.BLOG_IDS), plan
+    assert all(0 <= n <= ps.MAX_POSTS_PER_DAY for n in plan.values()), plan
 
 
 # ── 워크플로 연결 ────────────────────────────────────────────────────────────

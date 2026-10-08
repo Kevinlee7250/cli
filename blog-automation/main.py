@@ -574,6 +574,24 @@ def run_once(
 # 시리즈 모드
 # ──────────────────────────────────────────────────────────────────────────────
 
+def _series_publishing_paused(blog_id: str) -> bool:
+    """이 블로그의 자동 발행이 멈춰 있는지. 모르겠으면 '멈춤'으로 봅니다.
+
+    발행 스케줄을 읽을 수 없거나 blog_id 가 비어 있으면 올리지 않습니다 —
+    잘못된 블로그에 올리거나 멈춰야 할 때 올리는 쪽이 안 올리는 쪽보다
+    되돌리기 어렵습니다.
+    """
+    if not blog_id:
+        logger.warning("시리즈 계획에 blog_id 가 없습니다 — 발행하지 않습니다")
+        return True
+    try:
+        from publish_schedule import posts_for_today
+        return posts_for_today(blog_id) <= 0
+    except Exception as exc:
+        logger.error(f"발행 스케줄을 읽지 못했습니다 ({exc}) — 발행하지 않습니다")
+        return True
+
+
 def process_scheduled_series() -> None:
     """발행 예약된 시리즈 편을 처리합니다 (매일 스케줄 실행용).
 
@@ -611,7 +629,19 @@ def process_scheduled_series() -> None:
         return
 
     for plan, due in due_plans:
-        cfg = blogs.get(plan.get("blog_id"))
+        blog_id = plan.get("blog_id") or ""
+        # 발행 스케줄이 내려가 있으면 예약 시리즈도 올리지 않습니다.
+        # 2026-10-08: publish_schedule.json 으로 세 블로그를 모두 멈췄는데도
+        # 이 함수는 그 파일을 보지 않아서 series-schedule.yml 이 매일 계속
+        # 발행하고 있었습니다. blog-run.yml 만 막고 옆문을 열어둔 셈이었습니다.
+        if _series_publishing_paused(blog_id):
+            logger.info(
+                f"⏸ '{plan.get('series_title','?')}' 예약 {len(due)}편 보류 — "
+                f"{blog_id or '블로그 미지정'}의 발행 스케줄이 꺼져 있습니다 "
+                f"(publish_schedule.json 에서 enabled 를 true 로 바꾸면 재개)"
+            )
+            continue
+        cfg = blogs.get(blog_id)
         logger.info("=" * 60)
         logger.info(
             f"📅 예약 처리: '{plan.get('series_title','?')}' — "

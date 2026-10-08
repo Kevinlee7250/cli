@@ -56,8 +56,17 @@ def load_schedule(path: str = SCHEDULE_PATH) -> dict:
 
 
 def entry_for(blog_id: str, schedule: dict | None = None) -> dict:
-    """블로그 하나의 설정을 정규화해 돌려줍니다."""
-    blogs = (schedule or {}).get("blogs")
+    """블로그 하나의 설정을 정규화해 돌려줍니다.
+
+    schedule 을 넘기지 않으면 파일에서 읽습니다.
+    2026-10-08: 이 함수가 schedule=None 일 때 파일을 읽지 않고 곧장
+    DEFAULT_ENTRY(켜짐·1편/일)로 떨어져서, publish_schedule.json 에
+    enabled=false 를 적어도 posts_for_today('blog1') 이 1을 돌려줬습니다.
+    즉 '스위치를 내렸는데 안 내려간' 상태였습니다. 읽을 수 없을 때만
+    기본값으로 갑니다.
+    """
+    sched = load_schedule() if schedule is None else schedule
+    blogs = (sched or {}).get("blogs")
     raw = blogs.get(blog_id) if isinstance(blogs, dict) else None
     if not isinstance(raw, dict):
         return dict(DEFAULT_ENTRY)

@@ -1,16 +1,8 @@
 {
-  "checkedAt": "2026-10-07T02:55:16.398175+00:00",
+  "checkedAt": "2026-10-08T03:12:38.492918+00:00",
   "canWrite": true,
-  "grantedScope": "https://www.googleapis.com/auth/blogger https://www.googleapis.com/auth/webmasters",
+  "grantedScope": "https://www.googleapis.com/auth/webmasters https://www.googleapis.com/auth/blogger",
   "properties": [
-    {
-      "property": "https://hogugolfntraval.blogspot.com/",
-      "permission": "siteOwner"
-    },
-    {
-      "property": "https://hoguasset.blogspot.com/",
-      "permission": "siteOwner"
-    },
     {
       "property": "https://thisnthat-1.tistory.com/",
       "permission": "siteOwner"
@@ -20,7 +12,19 @@
       "permission": "siteOwner"
     },
     {
+      "property": "https://hogugolfntraval.blogspot.com/",
+      "permission": "siteOwner"
+    },
+    {
+      "property": "https://hoguasset.blogspot.com/",
+      "permission": "siteOwner"
+    },
+    {
       "property": "sc-domain:hoguwhat.com",
+      "permission": "siteOwner"
+    },
+    {
+      "property": "https://www.hoguwhat.com/",
       "permission": "siteOwner"
     }
   ],
@@ -28,11 +32,20 @@
     {
       "blog": "HOGU What?",
       "siteUrl": "https://www.hoguwhat.com/",
-      "property": "sc-domain:hoguwhat.com",
+      "property": "https://www.hoguwhat.com/",
       "sitemap": {
         "ok": true,
-        "registered": 1,
+        "registered": 2,
         "sitemaps": [
+          {
+            "path": "https://www.hoguwhat.com/sitemap-pages.xml",
+            "lastDownloaded": "2026-10-07",
+            "errors": 0,
+            "warnings": 0,
+            "submittedUrls": 4,
+            "indexedUrlsDeprecated": 0,
+            "isPending": false
+          },
           {
             "path": "https://www.hoguwhat.com/sitemap.xml",
             "lastDownloaded": "2026-10-06",
@@ -40,7 +53,7 @@
             "warnings": 0,
             "submittedUrls": 47,
             "indexedUrlsDeprecated": 0,
-            "isPending": false
+            "isPending": true
           }
         ],
         "note": "indexedUrlsDeprecated는 구글이 지원 중단한 필드로 항상 0입니다 — 색인 여부는 index_status.json(URL 검사)으로 판단하세요",
@@ -57,7 +70,7 @@
         "sitemaps": [
           {
             "path": "https://hogugolfntraval.blogspot.com/sitemap.xml",
-            "lastDownloaded": "2026-10-06",
+            "lastDownloaded": "2026-10-07",
             "errors": 0,
             "warnings": 0,
             "submittedUrls": 44,
@@ -79,7 +92,7 @@
         "sitemaps": [
           {
             "path": "https://hoguasset.blogspot.com/sitemap.xml",
-            "lastDownloaded": "2026-10-06",
+            "lastDownloaded": "2026-10-07",
             "errors": 0,
             "warnings": 0,
             "submittedUrls": 63,

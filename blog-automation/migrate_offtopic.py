@@ -145,33 +145,74 @@ def classify(title: str, labels: list[str], blog_id: str = "blog1") -> str:
     return "review"  # 신호 없음 — 수동 판단
 
 
+_RETRY_STATUS = {429, 500, 502, 503, 504}
+_RETRY_WAITS = (5, 15, 45)
+_PACE_SECONDS = 4  # 글 사이 간격. 1.5초로는 429를 맞았습니다.
+
+
+def _request_with_retry(method: str, url: str, **kw):
+    """429·5xx면 기다렸다 다시 보냅니다. 마지막 응답(또는 None)을 돌려줍니다.
+
+    2026-10-08: 구주제 글 17편을 옮기는데 6편 성공 후 11편이 전부
+    429 'Resource has been exhausted'로 실패했습니다. 재시도가 없어서
+    한 번 막히면 남은 글을 그대로 포기했습니다.
+    """
+    last = None
+    for attempt, wait in enumerate((0,) + _RETRY_WAITS):
+        if wait:
+            code = last.status_code if last is not None else "연결 실패"
+            logger.warning(
+                f"    [{code}] {wait}초 뒤 재시도 ({attempt}/{len(_RETRY_WAITS)})"
+            )
+            time.sleep(wait)
+        try:
+            r = requests.request(method, url, **kw)
+        except requests.RequestException as exc:
+            logger.error(f"    요청 실패: {exc}")
+            last = None
+            continue
+        if r.status_code not in _RETRY_STATUS:
+            return r
+        last = r
+    return last
+
+
 def _revert_to_draft(api: str, blog_id: str, post_id: str, token: str) -> bool:
-    r = requests.post(
-        f"{api}/blogs/{blog_id}/posts/{post_id}/revert",
+    r = _request_with_retry(
+        "POST", f"{api}/blogs/{blog_id}/posts/{post_id}/revert",
         headers={"Authorization": f"Bearer {token}"}, timeout=20,
     )
-    if r.status_code == 200:
+    if r is not None and r.status_code == 200:
         return True
-    logger.error(f"    draft 전환 실패 [{r.status_code}]: {r.text[:150]}")
+    detail = f"[{r.status_code}] {r.text[:150]}" if r is not None else "응답 없음"
+    logger.error(f"    draft 전환 실패 {detail}")
     return False
 
 
-def _create_on_blog3(api: str, blog3_id: str, post: dict, token: str) -> str:
+def _create_on_blog3(api: str, blog3_id: str, post: dict, token: str) -> tuple[str, int]:
+    """blog3에 발행하고 (새 URL, 마지막 상태코드)를 돌려줍니다.
+
+    상태코드를 함께 주는 이유: 429가 재시도 후에도 남으면 할당량이 바닥난
+    것이므로, 남은 글을 계속 두드리지 말고 그 자리에서 멈춰야 합니다.
+    """
     payload = {
         "title": post.get("title", ""),
         "content": post.get("content", ""),
         "labels": (post.get("labels") or [])[:5],
     }
-    r = requests.post(
-        f"{api}/blogs/{blog3_id}/posts/",
+    r = _request_with_retry(
+        "POST", f"{api}/blogs/{blog3_id}/posts/",
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
         params={"isDraft": "false"},
         json=payload, timeout=30,
     )
+    if r is None:
+        logger.error("    blog3 발행 실패: 응답 없음")
+        return "", 0
     if r.status_code == 200:
-        return r.json().get("url", "")
+        return r.json().get("url", ""), 200
     logger.error(f"    blog3 발행 실패 [{r.status_code}]: {r.text[:200]}")
-    return ""
+    return "", r.status_code
 
 
 def _sync_registry(title: str, action: str, new_url: str = "", src_blog_id: str = "blog1") -> None:
@@ -226,6 +267,7 @@ def main() -> int:
 
     counts = {"keep": 0, "migrate_blog3": 0, "archive": 0, "review": 0, "failed": 0}
     actions = []
+    quota_exhausted = False
 
     page_token = ""
     while True:
@@ -256,8 +298,18 @@ def main() -> int:
                 actions.append(entry)
                 continue
 
+            if cat == "migrate_blog3" and quota_exhausted:
+                # 이미 할당량이 바닥났습니다. 더 두드리지 않고 넘깁니다 —
+                # 글은 공개 상태로 그대로 남으니 다음 실행이 이어서 합니다.
+                logger.info("    ⏭ 할당량 소진 — 이번 실행에서는 건너뜁니다")
+                counts["failed"] += 1
+                entry["action"] = "failed"
+                entry["status"] = 429
+                actions.append(entry)
+                continue
+
             if cat == "migrate_blog3":
-                new_url = _create_on_blog3(BLOGGER_API_BASE, b3_id, post, token3)
+                new_url, status = _create_on_blog3(BLOGGER_API_BASE, b3_id, post, token3)
                 if new_url and _revert_to_draft(BLOGGER_API_BASE, b1_id, post["id"], token1):
                     logger.info(f"    ✅ 이전 완료: {new_url}")
                     entry["newUrl"] = new_url
@@ -265,7 +317,18 @@ def main() -> int:
                 else:
                     counts["failed"] += 1
                     entry["action"] = "failed"
-                time.sleep(1.5)
+                    entry["status"] = status
+                    if status == 429:
+                        # 재시도까지 다 쓰고도 429면 할당량이 바닥난 것입니다.
+                        # 남은 글을 계속 두드려도 전부 실패하므로 여기서 멈춥니다.
+                        # 아직 공개 상태인 글은 그대로 남으니 다음에 이어서
+                        # 돌리면 됩니다 (status=live만 훑으므로 이미 옮긴 글은
+                        # 다시 처리되지 않습니다). 보관(draft 전환)은 다른
+                        # 엔드포인트라 할당량과 무관하므로 계속 진행합니다.
+                        quota_exhausted = True
+                        actions.append(entry)
+                        continue
+                time.sleep(_PACE_SECONDS)
 
             elif cat == "archive":
                 if _revert_to_draft(BLOGGER_API_BASE, b1_id, post["id"], token1):
@@ -287,6 +350,7 @@ def main() -> int:
         "blogId": src_id,
         "blogName": b1.get("name", src_id),
         "dryRun": args.dry_run,
+        "quotaExhausted": quota_exhausted,
         "counts": counts,
         "actions": actions,
     }
@@ -304,6 +368,16 @@ def main() -> int:
         f"{mode}완료 — 유지 {counts['keep']} / blog3 이전 {counts['migrate_blog3']} / "
         f"보관 {counts['archive']} / 수동판단 {counts['review']} / 실패 {counts['failed']}"
     )
+    if quota_exhausted:
+        logger.warning(
+            f"⏸ Blogger 할당량이 바닥나 {counts['failed']}편을 남겼습니다. "
+            "남은 글은 blog1에 그대로 공개 상태이므로 잠시 뒤(보통 하루) "
+            "같은 워크플로를 다시 돌리면 이어서 처리됩니다 — "
+            "이미 옮긴 글은 공개 목록에 없어 중복되지 않습니다."
+        )
+        # 할당량은 고장이 아니라 '나중에 이어서'입니다 — 워크플로를 빨간색으로
+        # 만들면 진짜 실패와 구별되지 않습니다.
+        return 0
     return 0 if counts["failed"] == 0 else 1
 
 

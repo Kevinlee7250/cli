@@ -3,7 +3,7 @@ name: 게시 후 성과 추적
 on:
   # 매일 오전 8시 KST (23:00 UTC)
   schedule:
-    - cron: '0 23 * * *'
+    - cron: '0 23 * * 0'
   workflow_dispatch:
 
 permissions:

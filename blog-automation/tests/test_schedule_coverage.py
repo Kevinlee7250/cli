@@ -29,9 +29,27 @@ def _scheduled_workflows():
         if not (re.search(r"^name:.*[가-힣]", text, re.M)
                 or "blog-automation" in text):
             continue
-        crons = re.findall(r"cron:\s*['\"]([^'\"]+)['\"]", text)
+        crons = _live_crons(text)
         if crons:
             out[os.path.basename(path)] = crons
+    return out
+
+
+def _live_crons(text: str) -> list[str]:
+    """주석 처리된 cron 은 빼고 셉니다.
+
+    2026-10-11: 실행 횟수를 줄이려고 schedule 블록을 주석으로 내렸는데,
+    이 함수가 `# - cron: '...'` 까지 세고 있어서 감시 설정은 여전히 그
+    스케줄을 기다리고 있었습니다. 돌 리 없는 실행을 기다리면 침묵 판정이
+    계속 울립니다 — 주석은 스케줄이 아닙니다.
+    """
+    out = []
+    for line in text.splitlines():
+        if line.lstrip().startswith("#"):
+            continue
+        m = re.search(r"cron:\s*['\"]([^'\"]+)['\"]", line)
+        if m:
+            out.append(m.group(1))
     return out
 
 
@@ -53,6 +71,8 @@ def test_no_phantom_schedule_is_monitored():
     actual = _scheduled_workflows()
     phantom = []
     for s in _config()["schedules"]:
+        if not s.get("enabled", True):
+            continue  # 일부러 내려둔 것 — 기다리지 않습니다
         wf, cron = s["workflow"], s.get("cron_utc", "")
         if cron not in actual.get(wf, []):
             phantom.append(f"{s['id']} → {wf} {cron!r}")
@@ -73,6 +93,8 @@ def test_cron_count_matches_the_workflow():
     actual = _scheduled_workflows()
     wrong = []
     for s in _config()["schedules"]:
+        if not s.get("enabled", True):
+            continue
         want = len(actual.get(s["workflow"], []))
         if want and s.get("cron_count", 1) != want:
             wrong.append(f"{s['workflow']}: 설정 {s.get('cron_count')} ≠ 실제 {want}")
@@ -80,5 +102,11 @@ def test_cron_count_matches_the_workflow():
 
 
 def test_check_is_not_vacuous():
-    assert len(_scheduled_workflows()) >= 20
+    """헬퍼가 조용히 빈 값을 돌려주면 위 검사들이 전부 통과해 버립니다.
+
+    2026-10-11: 실행 중인 스케줄이 22개에서 14개로 줄었습니다(GitHub이 실행
+    규모를 이유로 이 포크의 Actions를 꺼서 예약을 내렸습니다). 그래서 기준을
+    20에서 10으로 낮춥니다 — 0이나 1이면 여전히 걸립니다.
+    """
+    assert len(_scheduled_workflows()) >= 10
     assert len(_config()["schedules"]) >= 20

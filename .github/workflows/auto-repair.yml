@@ -9,7 +9,7 @@ on:
 
   # 매일 오전 2시 KST (UTC 17:00) — 야간 정기 점검
   schedule:
-    - cron: '0 17 * * *'
+    - cron: '0 17 * * 0'
 
   # 대시보드 봇에서 수동 실행
   workflow_dispatch:

@@ -3,7 +3,8 @@
     "version": "1.0",
     "description": "블로그 자동화 스케줄 중앙 설정 파일",
     "timezone": "Asia/Seoul (KST = UTC+9)",
-    "updated_at": "2026-08-26T00:00:00+09:00"
+    "updated_at": "2026-08-26T00:00:00+09:00",
+    "scheduleTrim_2026_10_11": "2026-10-11: GitHub이 실행 규모를 이유로 이 포크의 Actions를 껐습니다. 발행을 멈춘 동안 예약을 하루 35회에서 4.6회로 줄였습니다. paused=true 는 워크플로의 schedule 블록이 주석 처리된 것입니다 — 수동 실행은 그대로 되고, 주석만 지우면 돌아옵니다."
   },
   "schedules": [
     {
@@ -15,7 +16,7 @@
       "description": "블로그 포스트 자동 생성 (오전 슬롯)",
       "category": "content",
       "priority": 1,
-      "enabled": true,
+      "enabled": false,
       "timeout_minutes": 30,
       "retry_on_failure": true,
       "max_retries": 2,
@@ -23,13 +24,16 @@
       "triggers_after": [
         "blog-sitemap.yml"
       ],
-      "cron_count": 1
+      "cron_count": 1,
+      "paused": true,
+      "pausedAt": "2026-10-11",
+      "pausedReason": "발행 정지 + GitHub Actions 실행 규모 제한"
     },
     {
       "id": "auto-repair-daily",
       "workflow": "auto-repair.yml",
-      "cron_utc": "0 17 * * *",
-      "cron_kst": "매일 02:00 KST",
+      "cron_utc": "0 17 * * 0",
+      "cron_kst": "일요일 02:00 KST",
       "description": "시스템 자동 수리 - 오류 감지 및 자동 복구",
       "category": "maintenance",
       "priority": 2,
@@ -127,12 +131,15 @@
       "description": "스케줄 실행 이력 수집 + 연속 실패 감지 + GitHub Issue 알림",
       "category": "monitoring",
       "priority": 2,
-      "enabled": true,
+      "enabled": false,
       "timeout_minutes": 10,
       "retry_on_failure": false,
       "max_retries": 0,
       "depends_on": [],
-      "cron_count": 1
+      "cron_count": 1,
+      "paused": true,
+      "pausedAt": "2026-10-11",
+      "pausedReason": "발행 정지 + GitHub Actions 실행 규모 제한"
     },
     {
       "id": "adsense-audit",
@@ -169,8 +176,8 @@
     {
       "id": "alert-watchdog",
       "workflow": "alert-watchdog.yml",
-      "cron_utc": "20 */6 * * *",
-      "cron_kst": "6시간마다",
+      "cron_utc": "20 20 * * *",
+      "cron_kst": "매일 05:20 KST",
       "cron_count": 1,
       "description": "🚨 운영 알림 워치독",
       "category": "monitoring",
@@ -207,12 +214,15 @@
       "description": "💬 블로그 댓글 자동화",
       "category": "content",
       "priority": 2,
-      "enabled": true,
+      "enabled": false,
       "timeout_minutes": 30,
       "retry_on_failure": false,
       "max_retries": 0,
       "depends_on": [],
-      "triggers_after": []
+      "triggers_after": [],
+      "paused": true,
+      "pausedAt": "2026-10-11",
+      "pausedReason": "발행 정지 + GitHub Actions 실행 규모 제한"
     },
     {
       "id": "collect-keywords",
@@ -223,12 +233,15 @@
       "description": "키워드 트렌드 수집",
       "category": "content",
       "priority": 2,
-      "enabled": true,
+      "enabled": false,
       "timeout_minutes": 30,
       "retry_on_failure": false,
       "max_retries": 0,
       "depends_on": [],
-      "triggers_after": []
+      "triggers_after": [],
+      "paused": true,
+      "pausedAt": "2026-10-11",
+      "pausedReason": "발행 정지 + GitHub Actions 실행 규모 제한"
     },
     {
       "id": "gsc-indexing",
@@ -265,8 +278,8 @@
     {
       "id": "inbound-links",
       "workflow": "inbound-links.yml",
-      "cron_utc": "0 23 * * *",
-      "cron_kst": "매일 08:00 KST",
+      "cron_utc": "0 23 * * 0",
+      "cron_kst": "일요일 08:00 KST",
       "cron_count": 1,
       "description": "🔗 역방향 내부 링크 (고아 페이지 해소)",
       "category": "seo",
@@ -297,8 +310,8 @@
     {
       "id": "post-lifecycle",
       "workflow": "post-lifecycle.yml",
-      "cron_utc": "0 23 * * *",
-      "cron_kst": "매일 08:00 KST",
+      "cron_utc": "0 23 * * 0",
+      "cron_kst": "일요일 08:00 KST",
       "cron_count": 1,
       "description": "게시 후 성과 추적",
       "category": "analytics",
@@ -319,12 +332,15 @@
       "description": "📅 시리즈 발행 예약 처리",
       "category": "content",
       "priority": 2,
-      "enabled": true,
+      "enabled": false,
       "timeout_minutes": 30,
       "retry_on_failure": false,
       "max_retries": 0,
       "depends_on": [],
-      "triggers_after": []
+      "triggers_after": [],
+      "paused": true,
+      "pausedAt": "2026-10-11",
+      "pausedReason": "발행 정지 + GitHub Actions 실행 규모 제한"
     },
     {
       "id": "trend-preempt",
@@ -335,12 +351,15 @@
       "description": "🔥 트렌드 선점 발행 감지",
       "category": "content",
       "priority": 2,
-      "enabled": true,
+      "enabled": false,
       "timeout_minutes": 30,
       "retry_on_failure": false,
       "max_retries": 0,
       "depends_on": [],
-      "triggers_after": []
+      "triggers_after": [],
+      "paused": true,
+      "pausedAt": "2026-10-11",
+      "pausedReason": "발행 정지 + GitHub Actions 실행 규모 제한"
     },
     {
       "id": "weekly-brief",

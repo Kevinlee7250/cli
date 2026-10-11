@@ -32,11 +32,34 @@ def _read(name):
         return f.read()
 
 
+def _publishing_is_on() -> bool:
+    """세 블로그 중 하나라도 자동 발행이 켜져 있는지."""
+    import json
+    path = os.path.normpath(os.path.join(os.path.dirname(__file__), "..",
+                                         "publish_schedule.json"))
+    try:
+        with open(path, encoding="utf-8") as f:
+            blogs = (json.load(f).get("blogs") or {})
+    except (FileNotFoundError, json.JSONDecodeError, OSError):
+        return True  # 모르면 켜진 것으로 보고 빡빡하게 검사합니다
+    return any(b.get("enabled", True) for b in blogs.values()
+               if isinstance(b, dict))
+
+
 def test_backlog_job_runs_daily():
-    """주간이면 밀린 물량을 따라잡지 못합니다."""
+    """발행 중이면 매일 돌아야 합니다 — 주간으로는 따라잡지 못합니다.
+
+    2026-10-11: 발행을 멈춘 뒤 이 작업을 주 1회로 내렸습니다. GitHub이
+    실행 규모를 이유로 이 포크의 Actions를 꺼버려서 예약을 줄여야 했는데,
+    새 글이 없으면 새 고아도 생기지 않고 그 시점 orphansRemaining 은 0
+    이었습니다. 발행을 다시 켜면 이 테스트가 다시 매일을 요구합니다 —
+    조용히 옛 처리량으로 돌아가는 것을 막으려는 것입니다.
+    """
     text = _read("inbound-links.yml")
     crons = re.findall(r"cron:\s*'([^']+)'", text)
     assert crons, "스케줄이 없습니다"
+    if not _publishing_is_on():
+        pytest.skip("자동 발행이 멈춰 있어 새 고아가 생기지 않습니다")
     for cron in crons:
         dom, dow = cron.split()[2], cron.split()[4]
         assert dom == "*" and dow == "*", (

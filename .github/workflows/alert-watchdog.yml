@@ -3,7 +3,7 @@ name: 🚨 운영 알림 워치독
 on:
   # 6시간마다 — 실패를 하루 안에는 반드시 알아채는 간격
   schedule:
-    - cron: '20 */6 * * *'
+    - cron: '20 20 * * *'
 
   workflow_dispatch:
     inputs:

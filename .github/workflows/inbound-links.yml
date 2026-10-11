@@ -9,7 +9,7 @@ on:
   # 오히려 늘었습니다). 밀린 것을 다 걷어내면 발행 직후 단계(blog-run)가
   # 새 고아를 그때그때 처리하므로 이 배치는 보조로 남습니다.
   schedule:
-    - cron: '0 23 * * *'
+    - cron: '0 23 * * 0'
 
   workflow_dispatch:
     inputs:

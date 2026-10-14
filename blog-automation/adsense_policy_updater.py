@@ -320,6 +320,24 @@ def run_policy_update(dry_run: bool = False, force: bool = False) -> dict:
         logger.error("모든 정책 페이지 크롤링 실패 — 업데이트 중단")
         return current
 
+    # 일부만 성공한 경우도 알립니다.
+    #
+    # 2026-10-14: 4개 중 1개(프로그램 정책)만 성공한 상태로 리포트가
+    # 나가고 있었습니다. 성공한 그 한 페이지는 무효 클릭·광고 라벨·트래픽
+    # 소스를 다루고, 실패한 세 개가 '가치 있는 인벤토리'·'광고 게재'·'제한
+    # 콘텐츠'입니다. 애드센스는 '가치가 별로 없는 콘텐츠' 사유로 두 번
+    # 거절했는데, 정작 그 규정은 수집되지 않은 채 writer_checklist 10개가
+    # 전부 클릭 조작 항목이었습니다. 반쪽 규정집으로 점검하면서 통과한
+    # 것처럼 보이던 것이라, 빠진 페이지를 이름으로 남깁니다.
+    missing = [p["label"] for p in pages if not p.get("text")]
+    if missing:
+        logger.warning(
+            f"⚠️ 정책 페이지 {len(missing)}개를 수집하지 못했습니다: {', '.join(missing)}"
+        )
+        logger.warning(
+            "   이 리포트는 수집된 페이지만 반영합니다 — 빠진 규정은 점검되지 않습니다"
+        )
+
     if dry_run:
         logger.info("[DRY RUN] 저장 건너뜀")
         for p in pages:
@@ -342,6 +360,18 @@ def run_policy_update(dry_run: bool = False, force: bool = False) -> dict:
          "char_count": p.get("char_count", 0), "error": p.get("error")}
         for p in pages
     ]
+    # 리포트를 읽는 쪽이 "이 점검이 무엇을 못 봤는지" 알 수 있게 남깁니다.
+    # 로그 경고만으로는 아무도 보지 않습니다.
+    analysis["coverage"] = {
+        "fetched": success_count,
+        "total": len(pages),
+        "complete": not missing,
+        "missing": [p["id"] for p in pages if not p.get("text")],
+        "missingLabels": missing,
+        "note": ("" if not missing else
+                 "수집하지 못한 정책은 이 리포트에 반영되지 않았습니다 — "
+                 "해당 규정은 점검되지 않은 상태입니다"),
+    }
     analysis["updated_at"] = datetime.now(timezone.utc).isoformat()
     analysis["prev_version"] = current.get("version", "")
 

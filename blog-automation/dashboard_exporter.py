@@ -491,6 +491,56 @@ def _export_publish_schedule(docs_dir: str) -> None:
         logger.debug(f"발행 계획 내보내기 생략: {exc}")
 
 
+def _export_workflow_catalog(docs_dir: str) -> None:
+    """실행할 수 있는 워크플로 목록을 내보냅니다.
+
+    대시보드의 실행 버튼을 화면에 손으로 박아 두면 새 워크플로가 생길 때마다
+    빠집니다 — 실제로 dispatch 가능한 70개 중 30개만 올라와 있었습니다.
+    워크플로 파일에서 직접 읽어 목록을 만듭니다.
+    """
+    try:
+        import workflow_catalog
+        workflow_catalog.export(os.path.join(docs_dir, "workflow_catalog.json"))
+    except Exception as exc:
+        logger.warning(f"워크플로 목록 내보내기 실패: {exc}")
+
+
+def _export_author_profile(docs_dir: str) -> None:
+    """저자 경험 자료를 대시보드로 내보냅니다.
+
+    author_profile.json은 blog-automation 아래라 Pages가 서빙하지 않아,
+    화면에서 "어느 주제에 경험 자료가 있는지"를 볼 방법이 없었습니다.
+    경험이 비면 모든 글이 조사·분석형으로 나가므로 운영상 중요한 값입니다.
+    """
+    try:
+        from config import get_author_profile
+        profile = get_author_profile() or {}
+        experiences = []
+        for exp in profile.get("experiences", []) or []:
+            if not isinstance(exp, dict):
+                continue
+            experiences.append({
+                "topics": [str(t) for t in (exp.get("topics") or [])],
+                "blogs": [str(b) for b in (exp.get("blogs") or [])],
+                "summary": str(exp.get("summary", "")),
+                "detail": str(exp.get("detail", "")),
+                # summary가 비면 매칭되지 않습니다 — 화면이 그걸 보여줘야
+                # "등록했는데 왜 경험형이 아닌지"를 묻지 않게 됩니다
+                "active": bool(str(exp.get("summary", "")).strip()),
+            })
+        write_data(os.path.join(docs_dir, "author_profile.json"), {
+            "name": str(profile.get("name", "")),
+            "bio": str(profile.get("bio", "")),
+            "howToFill": str(profile.get("howToFill", "")),
+            "experiences": experiences,
+            "activeCount": sum(1 for e in experiences if e["active"]),
+            "totalCount": len(experiences),
+            "exportedAt": datetime.now(timezone.utc).isoformat(),
+        })
+    except Exception as exc:
+        logger.warning(f"저자 프로필 내보내기 실패: {exc}")
+
+
 def export_settings() -> None:
     """설정 파일만 대시보드로 내보냅니다 — 발행과 무관하게 돌 수 있습니다.
 
@@ -502,6 +552,8 @@ def export_settings() -> None:
     os.makedirs(DOCS_DATA_DIR, exist_ok=True)
     _export_publish_schedule(DOCS_DATA_DIR)
     _export_feature_flags(DOCS_DATA_DIR)
+    _export_workflow_catalog(DOCS_DATA_DIR)
+    _export_author_profile(DOCS_DATA_DIR)
     logger.info(f"설정 내보내기 완료: {DOCS_DATA_DIR}")
 
 

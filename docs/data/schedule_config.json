@@ -3,7 +3,7 @@
     "version": "1.0",
     "description": "블로그 자동화 스케줄 중앙 설정 파일",
     "timezone": "Asia/Seoul (KST = UTC+9)",
-    "updated_at": "2026-10-14T21:40:00+09:00",
+    "updated_at": "2026-10-14T21:45:00+09:00",
     "scheduleTrim_2026_10_11": "2026-10-11: GitHub이 실행 규모를 이유로 이 포크의 Actions를 껐습니다. 발행을 멈춘 동안 예약을 하루 35회에서 4.6회로 줄였습니다. paused=true 는 워크플로의 schedule 블록이 주석 처리된 것입니다 — 수동 실행은 그대로 되고, 주석만 지우면 돌아옵니다."
   },
   "schedules": [
@@ -16,7 +16,7 @@
       "description": "블로그 포스트 자동 생성 (오전 슬롯)",
       "category": "content",
       "priority": 1,
-      "enabled": false,
+      "enabled": true,
       "timeout_minutes": 30,
       "retry_on_failure": true,
       "max_retries": 2,
@@ -25,9 +25,8 @@
         "blog-sitemap.yml"
       ],
       "cron_count": 1,
-      "paused": true,
-      "pausedAt": "2026-10-11",
-      "pausedReason": "발행 정지 + GitHub Actions 실행 규모 제한"
+      "resumedAt": "2026-10-14",
+      "resumedReason": "블로그당 하루 1편으로 발행 재개 (사용자 지시)"
     },
     {
       "id": "auto-repair-daily",
@@ -278,8 +277,8 @@
     {
       "id": "inbound-links",
       "workflow": "inbound-links.yml",
-      "cron_utc": "0 23 * * 0",
-      "cron_kst": "일요일 08:00 KST",
+      "cron_utc": "0 23 * * *",
+      "cron_kst": "매일 08:00 KST",
       "cron_count": 1,
       "description": "🔗 역방향 내부 링크 (고아 페이지 해소)",
       "category": "seo",

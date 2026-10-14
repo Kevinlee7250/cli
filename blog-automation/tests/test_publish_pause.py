@@ -1,10 +1,19 @@
-"""발행 정지 스위치가 '모든' 발행 경로를 막는지 확인합니다.
+"""발행 스위치가 '모든' 발행 경로를 실제로 지배하는지 확인합니다.
 
 2026-10-08: 애드센스가 같은 사유로 두 번째 거절했고(색인 0건·노출 0회),
 발행을 멈추기로 했습니다. 그런데 publish_schedule.json 은 blog-run.yml 만
 막고 있었고, series-schedule.yml 이 쓰는 process_scheduled_series() 는
 그 파일을 아예 보지 않아서 매일 계속 발행하는 상태였습니다.
 '정면만 잠그고 옆문은 열어둔' 경우라 여기에 고정해 둡니다.
+
+2026-10-14: 블로그당 하루 1편으로 재개했습니다(사용자 지시). 정지 상태를
+고정한 테스트는 재개 상태를 고정하도록 바꿨습니다 — 끄고 켤 때마다 여기를
+함께 고치게 되므로, 설정이 조용히 뒤집히는 일은 여전히 없습니다.
+
+끄든 켜든 변하지 않아야 하는 것은 아래가 전부 지키고 있습니다.
+  · 발행하는 워크플로는 모두 스위치를 거친다 (옆문 없음)
+  · 스케줄을 못 읽으면 발행하지 않는다 (fail-closed)
+  · entry_for 는 인자를 생략해도 파일을 읽는다
 """
 
 import json
@@ -28,36 +37,48 @@ def _schedule() -> dict:
 
 # ── 현재 저장소 상태 ─────────────────────────────────────────────────────────
 
-def test_all_blogs_are_currently_paused():
-    """지금은 세 블로그 모두 멈춰 있어야 합니다.
+def test_every_blog_publishes_one_post_a_day():
+    """지금은 세 블로그 모두 하루 1편입니다 (2026-10-14 재개).
 
-    다시 켤 때는 이 테스트를 함께 고치게 되므로, 실수로 켜지는 일이 없습니다.
+    편수를 바꿀 때는 이 테스트를 함께 고치게 되므로, 설정이 조용히
+    뒤집히는 일이 없습니다.
     """
     blogs = _schedule()["blogs"]
     for blog_id in BLOG_IDS:
-        assert blogs[blog_id]["enabled"] is False, (
-            f"{blog_id} 가 켜져 있습니다 — 2026-10-08 이후 발행은 멈춘 상태입니다"
+        assert blogs[blog_id]["enabled"] is True, (
+            f"{blog_id} 가 꺼져 있습니다 — 지금은 하루 1편 발행 상태입니다"
+        )
+        assert blogs[blog_id]["postsPerDay"] == 1, (
+            f"{blog_id} 가 하루 {blogs[blog_id]['postsPerDay']}편입니다 — "
+            f"색인 0/20 상태에서 편수를 늘리면 과거(하루 9편·52일 478건·색인 0건)가 "
+            f"반복됩니다"
         )
 
 
-def test_pause_reason_is_recorded():
-    """왜 멈췄는지가 파일에 남아 있어야 합니다."""
-    assert _schedule().get("_stopped"), "멈춘 이유가 적혀 있지 않습니다"
+def test_the_current_setting_says_why():
+    """켜든 끄든 이유가 파일에 남아 있어야 합니다.
+
+    숫자만 바뀌어 있으면 몇 달 뒤에 "왜 이렇게 됐지"를 다시 팝니다.
+    """
+    sched = _schedule()
+    assert sched.get("_resumed") or sched.get("_stopped"), (
+        "현재 설정의 이유(_resumed 또는 _stopped)가 적혀 있지 않습니다"
+    )
 
 
-def test_posts_for_today_is_zero_while_paused():
+def test_posts_for_today_matches_the_setting():
     from publish_schedule import posts_for_today
     for blog_id in BLOG_IDS:
-        assert posts_for_today(blog_id) == 0
+        assert posts_for_today(blog_id) == 1
 
 
 # ── 옆문: 예약 시리즈 ────────────────────────────────────────────────────────
 
-def test_scheduled_series_is_paused_too():
-    """예약 시리즈도 같은 스위치를 봐야 합니다."""
+def test_scheduled_series_follows_the_same_switch():
+    """예약 시리즈도 같은 스위치를 봐야 합니다 — 지금은 켜져 있습니다."""
     from main import _series_publishing_paused
     for blog_id in BLOG_IDS:
-        assert _series_publishing_paused(blog_id) is True
+        assert _series_publishing_paused(blog_id) is False
 
 
 def test_series_without_blog_id_never_publishes():

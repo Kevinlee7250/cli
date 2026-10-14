@@ -698,17 +698,31 @@ def export_dashboard() -> None:
     blogs_export = sorted(blog_stats.values(), key=lambda b: b.get("lastRunAt", ""), reverse=True)
 
     # Blogger 실제 조회수 데이터를 blogs_export에 병합
+    #
+    # 전에는 사이트 전체 합계(bloggerPageviews30d)를 세 블로그에 똑같이
+    # 복사했습니다. 그러면 블로그 카드마다 같은 숫자가 뜨고(2,821회 ×3),
+    # 대시보드는 블로그별 값을 다시 더해 전체를 내므로 전체 조회수가
+    # 세 배로 부풀었습니다(실제 4,160 → 표시 8,463).
+    #
+    # blogBreakdown에 블로그별 실측이 있으므로 그것을 씁니다. 7일·어제
+    # 조회수는 블로그별 출처가 없어, 지어내지 않고 블로그에는 넣지
+    # 않습니다. 사이트 전체 값은 analytics.json으로 따로 넘깁니다.
     analytics_summary = _load_analytics_summary()
     if analytics_summary and blogs_export:
-        pv30 = analytics_summary.get("bloggerPageviews30d", 0)
-        pv7 = analytics_summary.get("bloggerPageviews7d", 0)
-        pv1 = analytics_summary.get("bloggerPageviews1d", 0)
+        breakdown = analytics_summary.get("blogBreakdown") or {}
         updated_at = analytics_summary.get("generatedAt", "")
         for blog in blogs_export:
-            blog["pageviews30d"] = pv30
-            blog["pageviews7d"] = pv7
-            blog["pageviews1d"] = pv1
-            blog["analyticsUpdatedAt"] = updated_at
+            per_blog = breakdown.get(blog.get("id")) or {}
+            if "pageviews30d" in per_blog:
+                blog["pageviews30d"] = per_blog["pageviews30d"]
+                blog["analyticsUpdatedAt"] = updated_at
+
+    if analytics_summary:
+        # 사이트 전체 조회수 — 블로그별 값을 더해 만들면 안 됩니다
+        analytics["bloggerPageviews30d"] = analytics_summary.get("bloggerPageviews30d", 0)
+        analytics["bloggerPageviews7d"] = analytics_summary.get("bloggerPageviews7d", 0)
+        analytics["bloggerPageviews1d"] = analytics_summary.get("bloggerPageviews1d", 0)
+        analytics["pageviewsUpdatedAt"] = analytics_summary.get("generatedAt", "")
 
     # posts.json 비대화 방지 — 최근 POSTS_EXPORT_LIMIT개만 유지하고
     # 나머지는 posts_archive.json에 누적 (대시보드가 백그라운드에서 병합 로드)

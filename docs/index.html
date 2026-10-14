@@ -3489,10 +3489,15 @@ function renderDashboard() {
   if (imgEl) imgEl.textContent = totalImages + '개'
 
   // Blogger pageviews from blogs.json
+  // 7일·어제 조회수는 블로그별 출처가 없어 analytics.json의 사이트 전체
+  // 값을 그대로 씁니다. 블로그별 값을 더해 만들면 같은 합계를 세 번
+  // 더하게 됩니다 — 전체 조회수가 세 배로 부풀던 원인입니다.
   const blogsData = DATA.blogs || []
-  const pv30Total = blogsData.reduce((s, b) => s + (b.pageviews30d || 0), 0)
-  const pv7Total = blogsData.reduce((s, b) => s + (b.pageviews7d || 0), 0)
-  const pv1Total = blogsData.reduce((s, b) => s + (b.pageviews1d || 0), 0)
+  const an = DATA.analytics || {}
+  const pv30Total = an.bloggerPageviews30d
+    || blogsData.reduce((s, b) => s + (b.pageviews30d || 0), 0)
+  const pv7Total = an.bloggerPageviews7d || 0
+  const pv1Total = an.bloggerPageviews1d || 0
   const pv30El = document.getElementById('s-pv30')
   const pv7El = document.getElementById('s-pv7')
   const pv1El = document.getElementById('s-pv1')
@@ -7163,10 +7168,13 @@ function loadBlogList() {
     const statusColor = enabled ? (hasOAuth ? 'var(--green)' : 'var(--yellow)') : 'var(--muted)'
     const statusText = !enabled ? '비활성' : (hasOAuth ? '설정 완료' : 'OAuth 미설정')
     const blogUrl = b.url || ''
+    // 지표별로 따로 봅니다 — 7일·어제는 블로그별 출처가 없어 값이
+    // 없습니다. 없는 것을 0으로 보여주면 "조회수 0"으로 읽힙니다.
     const hasPageviews = stats.pageviews30d !== undefined
-    const pv30 = hasPageviews ? (stats.pageviews30d || 0).toLocaleString() : '-'
-    const pv7 = hasPageviews ? (stats.pageviews7d || 0).toLocaleString() : '-'
-    const pv1 = hasPageviews ? (stats.pageviews1d || 0).toLocaleString() : '-'
+    const pvCell = v => (v !== undefined ? v.toLocaleString() : '-')
+    const pv30 = pvCell(stats.pageviews30d)
+    const pv7 = pvCell(stats.pageviews7d)
+    const pv1 = pvCell(stats.pageviews1d)
     const pvColor = hasPageviews ? 'var(--green)' : 'var(--muted)'
     return `<div class="run-panel" style="padding:18px;border-left:3px solid ${statusColor}">
       <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px">

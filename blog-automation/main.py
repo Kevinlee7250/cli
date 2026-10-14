@@ -1266,16 +1266,34 @@ def _exit_on_publish_failure(summaries: list[dict]) -> None:
         return
 
     # 여기부터는 블로그에 한 편도 올라가지 않은 경우입니다.
-    logger.error("=" * 60)
+    #
+    # 심각도를 나눕니다. 업로드가 실패한 것과, 품질 게이트가 글을 붙잡은
+    # 것은 다릅니다. 후자는 설계된 동작입니다 — 기준 미달 글을 내보내지
+    # 않고 검토 대기로 돌린 것이므로 고장이 아닙니다.
+    #
+    # 2026-10-14: 둘 다 logger.error 로 기록하고 있었고, 구분선("=" * 60)
+    # 까지 error 로 남겼습니다. code_repair 가 ERROR 줄을 세므로
+    # "CRITICAL 7건"으로 집계됐는데, 열어 보니 10-07·10-08 두 번의 같은
+    # 상황에서 나온 7줄이고 그중 2줄이 구분선이었습니다. 고칠 코드가 없는
+    # 것을 고장으로 세는 쪽이, 정작 진짜 고장을 묻히게 합니다.
+    bar = "=" * 60
     if failed:
+        logger.error(bar)
         logger.error(f"❌ 게시 0건 — {attempted}건 시도, 오류 {failed}건")
+        for s in summaries:
+            for msg in (s.get("errors") or [])[:3]:
+                logger.error(f"   [{s.get('blog')}] {msg}")
+        logger.error(bar)
     else:
-        logger.error(f"❌ 게시 0건 — 생성은 됐지만 {pending}건 모두 검토 대기로 빠졌습니다")
-        logger.error("   품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다")
-    for s in summaries:
-        for msg in (s.get("errors") or [])[:3]:
-            logger.error(f"   [{s.get('blog')}] {msg}")
-    logger.error("=" * 60)
+        logger.warning(bar)
+        logger.warning(f"⚠️ 게시 0건 — 생성은 됐지만 {pending}건 모두 검토 대기로 빠졌습니다")
+        logger.warning("   품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다")
+        logger.warning("   품질 게이트가 의도대로 막은 것입니다 — 대시보드 검토 대기에서 확인하세요")
+        for s in summaries:
+            for msg in (s.get("errors") or [])[:3]:
+                logger.warning(f"   [{s.get('blog')}] {msg}")
+        logger.warning(bar)
+    # 어느 쪽이든 한 편도 올라가지 않았으므로 실행은 성공으로 두지 않습니다.
     sys.exit(1)
 
 

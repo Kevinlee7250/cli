@@ -929,14 +929,39 @@ def test_everything_diverted_to_pending_is_a_failure(caplog):
 
     success_count는 pending 저장까지 성공으로 세기 때문에, 이 구분이 없으면
     "성공 1건"인데 블로그는 비어 있는 상태를 영영 놓칩니다.
+
+    2026-10-14: 심각도를 error → warning 으로 낮췄습니다. 품질 게이트가
+    기준 미달 글을 붙잡은 것은 설계된 동작인데, error 로 남기면 code_repair
+    가 그 줄을 세어 "CRITICAL n건"으로 보고합니다 (실제로 구분선까지
+    포함해 7건으로 집계됐습니다). 다만 이 테스트가 지키는 것 — "성공으로
+    끝내지 않는다"(SystemExit) — 는 그대로입니다. 레벨만 WARNING 으로
+    맞췄습니다.
     """
     import pytest
     import main
-    with caplog.at_level("ERROR"), pytest.raises(SystemExit):
+    with caplog.at_level("WARNING"), pytest.raises(SystemExit):
         main._exit_on_publish_failure(
             [{"blog": "A", "attempted": 1, "published": 0, "pending": 1,
               "success": 1, "failed": 0, "errors": []}])
     assert "검토 대기" in caplog.text
+    # 게이트가 막은 것은 고장이 아니므로 error 로 남지 않아야 합니다
+    assert not [r for r in caplog.records if r.levelname == "ERROR"], (
+        "품질 게이트가 막은 경우가 error 로 기록됩니다"
+    )
+
+
+def test_real_upload_failure_still_logs_an_error(caplog):
+    """게이트와 달리 업로드 실패는 진짜 고장입니다 — error 로 남아야 합니다."""
+    import pytest
+    import main
+    with caplog.at_level("ERROR"), pytest.raises(SystemExit):
+        main._exit_on_publish_failure(
+            [{"blog": "A", "attempted": 2, "published": 0, "pending": 0,
+              "success": 0, "failed": 2, "errors": ["업로드 실패: 토큰 만료"]}])
+    assert [r for r in caplog.records if r.levelname == "ERROR"], (
+        "업로드 실패가 error 로 기록되지 않습니다"
+    )
+    assert "오류" in caplog.text
 
 
 def test_published_post_passes_even_with_pending_siblings():

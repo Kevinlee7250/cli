@@ -1,0 +1,71 @@
+name: ⚙️ 대시보드 설정 내보내기
+
+# 대시보드의 발행 스케줄·기능 스위치를 저장소의 실제 설정과 맞춥니다.
+#
+# 왜 따로 있나
+# ────────────
+# export_dashboard()는 발행 이력·수익·조회수까지 모아 쓰므로 main.py의
+# 발행 파이프라인 안에서만 돕니다. 그래서 2026-10-08에 발행을 멈춘 뒤
+# 내보내기도 같이 멈췄고, 대시보드는 엿새 동안 세 블로그 모두 "매일 1편
+# 발행 중"으로 표시했습니다 — 실제로는 전부 꺼져 있었습니다.
+#
+# 설정 내보내기는 비밀값도 발행 이력도 필요 없습니다. 발행이 멈춰 있어도
+# 화면이 진실을 보여주도록 자체 스케줄로 돌립니다.
+
+on:
+  schedule:
+    # 06:40 KST — 자동 발행(07:00 KST) 직전에 그날 계획을 반영합니다
+    - cron: '40 21 * * *'
+  push:
+    branches: [latest]
+    paths:
+      - 'blog-automation/publish_schedule.json'
+      - 'blog-automation/feature_flags.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: export-settings
+  cancel-in-progress: false
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v5
+        with:
+          ref: latest
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: 설정 내보내기
+        working-directory: blog-automation
+        run: python dashboard_exporter.py --settings-only
+
+      - name: 커밋 & 푸시
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # docs/.gitignore(npm/cli 템플릿)가 docs/* 를 무시하므로 -f 필요.
+          # 한 줄에 몰면 한 파일만 없어도 전부 무산되므로 하나씩 add합니다.
+          for f in docs/data/publish_schedule.json docs/data/feature_flags.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
+          if git diff --staged --quiet; then
+            echo "변경 없음 — 대시보드가 이미 실제 설정과 같습니다"
+          else
+            git commit -m "⚙️ 대시보드 설정 동기화 (#${{ github.run_number }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin latest \
+                && git push origin latest && break
+              sleep $((i * 3))
+            done
+          fi

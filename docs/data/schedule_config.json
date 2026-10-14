@@ -3,7 +3,7 @@
     "version": "1.0",
     "description": "블로그 자동화 스케줄 중앙 설정 파일",
     "timezone": "Asia/Seoul (KST = UTC+9)",
-    "updated_at": "2026-08-26T00:00:00+09:00",
+    "updated_at": "2026-10-14T21:40:00+09:00",
     "scheduleTrim_2026_10_11": "2026-10-11: GitHub이 실행 규모를 이유로 이 포크의 Actions를 껐습니다. 발행을 멈춘 동안 예약을 하루 35회에서 4.6회로 줄였습니다. paused=true 는 워크플로의 schedule 블록이 주석 처리된 것입니다 — 수동 실행은 그대로 되고, 주석만 지우면 돌아옵니다."
   },
   "schedules": [
@@ -376,6 +376,25 @@
       "max_retries": 0,
       "depends_on": [],
       "triggers_after": []
+    },
+    {
+      "id": "export-settings",
+      "workflow": "export-settings.yml",
+      "slot": "pre-morning",
+      "cron_utc": "40 21 * * *",
+      "cron_kst": "매일 06:40 KST",
+      "description": "대시보드 설정 동기화 (발행 스케줄·기능 스위치) — 발행과 독립",
+      "category": "monitoring",
+      "priority": 2,
+      "enabled": true,
+      "timeout_minutes": 10,
+      "retry_on_failure": false,
+      "max_retries": 0,
+      "depends_on": [],
+      "triggers_after": [
+        "deploy-dashboard.yml"
+      ],
+      "cron_count": 1
     }
   ],
   "categories": {

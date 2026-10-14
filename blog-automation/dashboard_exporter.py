@@ -8,7 +8,7 @@ import json
 import logging
 import os
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 
 logger = logging.getLogger(__name__)
 
@@ -472,6 +472,11 @@ def _export_publish_schedule(docs_dir: str) -> None:
     publish_schedule.json도 blog-automation 아래라 Pages가 서빙하지 않습니다.
     화면에서 현재 설정을 못 보면 "오늘 왜 blog2가 안 올라왔지"를 워크플로
     로그부터 뒤져야 합니다.
+
+    exportedAt을 함께 넣습니다. 이 파일은 내보내기가 돌아야 갱신되므로,
+    언제 기준인지 없으면 화면이 몇 달 전 설정을 현재처럼 보여줍니다.
+    2026-10-08에 발행을 전부 멈춘 뒤 내보내기가 돌지 않아, 대시보드는
+    엿새 동안 세 블로그 모두 "매일 1편 발행 중"으로 표시했습니다.
     """
     try:
         import publish_schedule
@@ -480,9 +485,24 @@ def _export_publish_schedule(docs_dir: str) -> None:
             "blogs": {b: publish_schedule.entry_for(b, sched)
                       for b in publish_schedule.BLOG_IDS},
             "today": publish_schedule.plan_for_today(sched),
+            "exportedAt": datetime.now(timezone.utc).isoformat(),
         })
     except Exception as exc:
         logger.debug(f"발행 계획 내보내기 생략: {exc}")
+
+
+def export_settings() -> None:
+    """설정 파일만 대시보드로 내보냅니다 — 발행과 무관하게 돌 수 있습니다.
+
+    export_dashboard()는 발행 이력·수익·조회수까지 모아 쓰므로 main.py의
+    발행 파이프라인 안에서만 돕니다. 그래서 발행을 멈추면 대시보드 갱신도
+    같이 멈췄습니다. 설정(발행 계획·기능 스위치)은 비밀값도 발행 이력도
+    필요 없으니, 따로 떼어 자체 스케줄로 돌립니다.
+    """
+    os.makedirs(DOCS_DATA_DIR, exist_ok=True)
+    _export_publish_schedule(DOCS_DATA_DIR)
+    _export_feature_flags(DOCS_DATA_DIR)
+    logger.info(f"설정 내보내기 완료: {DOCS_DATA_DIR}")
 
 
 def _export_series(docs_dir: str) -> None:
@@ -851,3 +871,16 @@ def save_pending_posts(results: list[dict], blog_config: dict | None = None) -> 
     except OSError as e:
         logger.error(f"검토 대기 파일 저장 실패: {e}")
     return assigned
+
+
+if __name__ == "__main__":
+    import sys
+
+    # 설정만 내보내는 경로 — 발행 워크플로와 독립적으로 돕니다.
+    if "--settings-only" in sys.argv:
+        logging.basicConfig(level=logging.INFO,
+                            format="%(asctime)s %(levelname)s %(message)s")
+        export_settings()
+    else:
+        print("사용법: python dashboard_exporter.py --settings-only")
+        sys.exit(2)

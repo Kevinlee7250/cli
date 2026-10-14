@@ -27,11 +27,17 @@ def _posts(n, start=0):
 
 @pytest.fixture
 def data(tmp_path, monkeypatch):
-    """posts.json / live_posts.json 을 임시 경로로 돌립니다."""
+    """posts.json / live_posts.json / link_clusters.json 을 임시 경로로 돌립니다.
+
+    출력 경로(CLUSTERS_JSON)까지 돌려야 합니다 — build_clusters()는 save=True가
+    기본이라, 입력만 바꿔두면 테스트가 fixture로 만든 클러스터를 실제
+    docs/data/link_clusters.json 에 덮어씁니다.
+    """
     posts_p = tmp_path / "posts.json"
     live_p = tmp_path / "live_posts.json"
     monkeypatch.setattr(related_posts, "POSTS_JSON", posts_p)
     monkeypatch.setattr(related_posts, "LIVE_POSTS_JSON", live_p)
+    monkeypatch.setattr(related_posts, "CLUSTERS_JSON", tmp_path / "link_clusters.json")
 
     def write(posts=None, live=None):
         if posts is not None:

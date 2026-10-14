@@ -269,10 +269,21 @@ def run_code_repair(dry_run: bool = False) -> dict:
 
     if not tracebacks:
         logger.info("[CodeRepair] 새 트레이스백 없음 — 코드 수리 건너뜀")
+        if critical_lines:
+            # 숫자만 남기면 아무도 조치할 수 없습니다. 2026-10-14 점검에서
+            # 이 경로가 "critical_errors: 7"만 기록하고 그 7건이 무엇인지는
+            # 어디에도 없었습니다 — 트레이스백이 없는 평상시가 바로 이
+            # 경로이므로, 정작 대부분의 리포트에 근거가 빠져 있었습니다.
+            logger.warning(
+                f"[CodeRepair] CRITICAL {len(critical_lines)}건 — 최근 샘플:"
+            )
+            for line in critical_lines[-3:]:
+                logger.warning(f"    {line[:200]}")
         result = {
             "timestamp": datetime.now().isoformat(),
             "tracebacks_found": 0,
             "critical_errors": len(critical_lines),
+            "critical_samples": critical_lines[-3:],
             "skipped_already_analyzed": skipped,
             "repairs": [],
             "auto_fixed": 0,

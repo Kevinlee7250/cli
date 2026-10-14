@@ -1350,9 +1350,10 @@
       이 설정과 무관하게 언제든 됩니다.
       <span style="color:var(--yellow)">※ 편수를 늘리면 색인 상태를 함께 지켜보세요 — 과거 하루 9건 발행 때 색인률이 0이었습니다.</span>
     </div>
-    <div id="publish-schedule-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-bottom:28px">
+    <div id="publish-schedule-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-bottom:6px">
       <!-- filled by renderPublishSchedule() -->
     </div>
+    <div id="publish-schedule-asof" style="font-size:11px;color:var(--muted);margin-bottom:28px"></div>
 
     <!-- ① -B API 키 관리 -->
     <div class="section-header" style="margin-bottom:12px">
@@ -2822,17 +2823,25 @@ function renderPublishSchedule() {
   const today = (DATA.publishSchedule && DATA.publishSchedule.today) || {}
   const hasPat = !!getPAT()
   grid.innerHTML = PS_BLOGS.map(id => {
-    const e = cfg[id] || { enabled: true, postsPerDay: 1 }
-    const n = e.enabled ? (e.postsPerDay || 0) : 0
-    const on = n > 0
-    const [bg, color, border] = on
-      ? ['rgba(52,211,153,.13)', 'var(--green)', 'rgba(52,211,153,.3)']
-      : ['rgba(248,113,113,.13)', 'var(--red)', 'rgba(248,113,113,.35)']
+    // 데이터가 없으면 "발행 중"으로 꾸미지 않습니다. 전에는 기본값을
+    // { enabled: true, postsPerDay: 1 } 로 줘서, 내보내기가 안 돌았을 때
+    // 실제로 멈춘 블로그가 화면에서는 매일 1편 발행 중으로 보였습니다.
+    const e = cfg[id]
+    const unknown = !e
+    const n = unknown ? 0 : (e.enabled ? (e.postsPerDay || 0) : 0)
+    const on = !unknown && n > 0
+    const [bg, color, border] = unknown
+      ? ['rgba(148,163,184,.13)', 'var(--muted)', 'rgba(148,163,184,.3)']
+      : on
+        ? ['rgba(52,211,153,.13)', 'var(--green)', 'rgba(52,211,153,.3)']
+        : ['rgba(248,113,113,.13)', 'var(--red)', 'rgba(248,113,113,.35)']
     const plannedToday = today[id]
-    const todayNote = (plannedToday === undefined) ? ''
-      : `<div style="font-size:11px;color:var(--muted);margin-top:4px">오늘 예정: ${plannedToday}편</div>`
+    const todayNote = unknown
+      ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">설정을 읽지 못했습니다</div>`
+      : (plannedToday === undefined) ? ''
+        : `<div style="font-size:11px;color:var(--muted);margin-top:4px">오늘 예정: ${plannedToday}편</div>`
     const opts = [0, 1, 2, 3, 4, 5].map(v =>
-      `<option value="${v}"${v === n ? ' selected' : ''}>${v === 0 ? '발행 안 함' : v + '편/일'}</option>`).join('')
+      `<option value="${v}"${(!unknown && v === n) ? ' selected' : ''}>${v === 0 ? '발행 안 함' : v + '편/일'}</option>`).join('')
     return `<div style="background:${bg};border:1px solid ${border};border-radius:var(--radius);padding:12px">
       <div style="font-size:13px;font-weight:700;color:${color}">${esc(psBlogName(id))}</div>
       <div style="font-size:11px;color:var(--muted);font-family:ui-monospace,monospace;margin-bottom:8px">${id}</div>
@@ -2843,6 +2852,22 @@ function renderPublishSchedule() {
       ${todayNote}
     </div>`
   }).join('')
+
+  // 이 패널은 내보내기가 돌아야 갱신됩니다. 언제 기준인지 안 보이면
+  // 몇 달 전 설정이 현재처럼 읽힙니다 — 실제로 그렇게 엿새를 보냈습니다.
+  const stamp = document.getElementById('publish-schedule-asof')
+  if (stamp) {
+    const at = DATA.publishSchedule && DATA.publishSchedule.exportedAt
+    if (!at) {
+      stamp.innerHTML = '<span style="color:var(--yellow)">⚠️ 기준 시각 없음 — 현재 설정과 다를 수 있습니다</span>'
+    } else {
+      const ageH = (Date.now() - new Date(at).getTime()) / 3600000
+      const when = new Date(at).toLocaleString('ko-KR')
+      stamp.innerHTML = ageH > 48
+        ? `<span style="color:var(--yellow)">⚠️ ${when} 기준 (${Math.floor(ageH / 24)}일 전) — 그 뒤 바뀐 설정은 반영되지 않았습니다</span>`
+        : `${when} 기준`
+    }
+  }
 }
 
 async function savePublishSchedule(blogId, value) {

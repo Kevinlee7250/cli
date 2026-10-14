@@ -111,9 +111,23 @@ def _extract_critical_lines(log_path: Path, max_lines: int = 300) -> list[str]:
     tail = lines[-max_lines:]
     result = []
     for line in tail:
-        if any(kw in line for kw in ["[CRITICAL]", "CRITICAL —", " ERROR ", "[ERROR]"]):
-            result.append(line.strip())
+        if not any(kw in line for kw in ["[CRITICAL]", "CRITICAL —", " ERROR ", "[ERROR]"]):
+            continue
+        if _is_noise(line):
+            continue
+        result.append(line.strip())
     return result[-10:]
+
+
+#: 로그 가독성을 위한 구분선 — 내용이 없으므로 오류로 세지 않습니다.
+#:
+#: 2026-10-14: "CRITICAL 7건"을 열어 보니 7줄 중 2줄이 `=` 60개였습니다.
+#: 구분선을 오류로 세면 건수가 부풀고, 진짜 오류가 그 숫자에 묻힙니다.
+def _is_noise(line: str) -> bool:
+    # 로그 접두사(날짜 [LEVEL] 모듈 —) 뒤의 본문만 봅니다
+    body = line.split("—", 1)[-1] if "—" in line else line
+    body = body.strip().strip("·-=_*# ")
+    return not body
 
 
 # ── 소스 파일 처리 ────────────────────────────────────────────────────────────

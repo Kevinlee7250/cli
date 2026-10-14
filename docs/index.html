@@ -1467,6 +1467,33 @@
 
     </div>
 
+    <!-- ②-B 전체 기능 실행 (워크플로 목록 자동 생성) -->
+    <div class="section-header" style="margin-bottom:6px">
+      <h2 data-fresh="workflow_catalog.json">🧰 전체 기능 실행</h2>
+      <input id="wfc-search" oninput="renderWorkflowCatalog()" placeholder="기능 검색 (예: 사이트맵, 백업, 이미지)"
+        style="padding:7px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;min-width:220px">
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.7">
+      저장소의 워크플로 파일에서 자동으로 만든 목록입니다 — 위쪽 패널에 없는 기능도 전부 여기서 실행됩니다.
+      입력값이 있는 기능은 칸이 함께 나옵니다.
+      <span style="color:var(--red)">발행된 글을 바꾸거나 지우는 기능은 ⚠️로 표시되고, 실행 전 확인을 받습니다.</span>
+      <span id="wfc-counts"></span>
+    </div>
+    <div id="wfc-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;margin-bottom:10px"></div>
+    <div id="wfc-asof" style="font-size:11px;color:var(--muted);margin-bottom:28px"></div>
+
+    <!-- ②-C 저자 경험 자료 -->
+    <div class="section-header" style="margin-bottom:6px">
+      <h2 data-fresh="author_profile.json">🧑‍💻 저자 경험 자료</h2>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.7">
+      등록된 주제에서만 글에 1인칭 경험 표현이 허용됩니다. <strong>요약이 비어 있으면 매칭되지 않습니다</strong> —
+      그 주제 글은 조사·분석형으로만 나갑니다.
+      <span style="color:var(--yellow)">공개 저장소이므로 실명·연락처·정확한 금액은 넣지 마세요 (기간·결과 수준까지만).</span>
+    </div>
+    <div id="author-profile-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px;margin-bottom:10px"></div>
+    <div id="author-profile-asof" style="font-size:11px;color:var(--muted);margin-bottom:28px"></div>
+
     <!-- ③ 최근 실행 이력 (GitHub Actions API) -->
     <div class="section-header" style="margin-bottom:12px">
       <h2>📋 최근 실행 이력</h2>
@@ -2552,6 +2579,8 @@ const SOURCE_META = {
   'templates.json':          ['글 템플릿', 168],
   'feature_flags.json':      ['기능 스위치', 168],
   'publish_schedule.json':   ['발행 스케줄', 168],
+  'workflow_catalog.json':   ['실행 가능 기능 목록', 168],
+  'author_profile.json':     ['저자 경험 자료', 720],
   'post_registry.json':      ['포스트 레지스트리', 24],
   'pending_report.json':     ['검토 대기 리포트', 168],
   'index_priority.json':     ['색인 우선순위', 168],
@@ -2814,6 +2843,293 @@ const PS_BLOGS = ['blog1', 'blog2', 'blog3']
 function psBlogName(id) {
   const b = (DATA.blogs || []).find(x => x.id === id)
   return b && b.name ? b.name : id
+}
+
+// ════════ 전체 기능 실행 (워크플로 목록 자동 생성) ════════
+//
+// 실행 버튼을 화면에 손으로 박아 두면 새 워크플로가 생길 때마다 빠집니다 —
+// 실제로 dispatch 가능한 70개 중 30개만 올라와 있었습니다. 목록은
+// workflow_catalog.json(워크플로 파일에서 생성)에서 읽습니다.
+
+function wfcInputId(file, name) {
+  return 'wfc-in-' + file.replace(/[^a-z0-9]/gi, '_') + '-' + name.replace(/[^a-z0-9]/gi, '_')
+}
+
+function renderWorkflowCatalog() {
+  const grid = document.getElementById('wfc-grid')
+  if (!grid) return
+  const cat = DATA.workflowCatalog || {}
+  const all = cat.workflows || []
+  const countsEl = document.getElementById('wfc-counts')
+  const asofEl = document.getElementById('wfc-asof')
+
+  if (!all.length) {
+    grid.innerHTML = `<div class="run-panel" style="padding:18px;color:var(--muted);font-size:12px">
+      목록을 아직 만들지 못했습니다. <strong>⚙️ 대시보드 설정 내보내기</strong>를 실행하면 생성됩니다
+      (06:40 KST에 자동으로도 돕니다).</div>`
+    if (countsEl) countsEl.textContent = ''
+    if (asofEl) asofEl.innerHTML = '<span style="color:var(--yellow)">⚠️ workflow_catalog.json 없음</span>'
+    return
+  }
+
+  const q = (document.getElementById('wfc-search')?.value || '').trim().toLowerCase()
+  const hit = w => !q || (w.name + ' ' + w.file + ' ' + w.category).toLowerCase().includes(q)
+  const shown = all.filter(hit)
+
+  const c = cat.counts || {}
+  if (countsEl) {
+    countsEl.innerHTML = `<br>총 ${all.length}개` +
+      (q ? ` 중 ${shown.length}개 표시` : '') +
+      (c.upstreamSkipped ? ` · npm/cli 상속 CI ${c.upstreamSkipped}개는 블로그와 무관해 제외` : '') +
+      (c.noDispatch ? ` · 수동 실행이 없는 ${c.noDispatch}개 제외` : '')
+  }
+
+  if (!shown.length) {
+    grid.innerHTML = `<div class="run-panel" style="padding:18px;color:var(--muted);font-size:12px">
+      "${esc(q)}"에 해당하는 기능이 없습니다.</div>`
+  } else {
+    // 분류별로 묶어 그립니다 — 48개를 한 줄로 늘어놓으면 찾을 수 없습니다
+    const byCat = {}
+    shown.forEach(w => { (byCat[w.category] = byCat[w.category] || []).push(w) })
+    const order = (cat.categories || Object.keys(byCat)).filter(k => byCat[k])
+    grid.innerHTML = order.map(label => {
+      const items = byCat[label].map(w => {
+        const border = w.danger ? 'var(--red)' : 'var(--border)'
+        const fields = (w.inputs || []).map(inp => {
+          const id = wfcInputId(w.file, inp.name)
+          const title = esc(inp.description || inp.name)
+          if (inp.options && inp.options.length) {
+            const opts = inp.options.map(o =>
+              `<option value="${esc(o)}"${o === inp.default ? ' selected' : ''}>${esc(o)}</option>`).join('')
+            return `<label style="display:block;font-size:10px;color:var(--muted);margin-top:6px">${esc(inp.name)}
+              <select id="${id}" title="${title}" style="width:100%;padding:5px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:11px">${opts}</select></label>`
+          }
+          if (inp.type === 'boolean') {
+            // dry-run 류는 기본값을 워크플로가 정한 그대로 둡니다 (보통 안전한 쪽)
+            const on = inp.default === 'true'
+            return `<label style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);margin-top:6px" title="${title}">
+              <input type="checkbox" id="${id}"${on ? ' checked' : ''}> ${esc(inp.name)}
+              <span style="opacity:.7">${esc((inp.description || '').slice(0, 42))}</span></label>`
+          }
+          return `<label style="display:block;font-size:10px;color:var(--muted);margin-top:6px">${esc(inp.name)}${inp.required ? ' *' : ''}
+            <input id="${id}" value="${esc(inp.default || '')}" title="${title}"
+              placeholder="${esc((inp.description || '').slice(0, 50))}"
+              style="width:100%;padding:5px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:11px;box-sizing:border-box"></label>`
+        }).join('')
+        const sched = (w.schedules || []).length
+          ? `<div style="font-size:10px;color:var(--muted);margin-top:6px">⏰ 예약 ${w.schedules.length}건</div>` : ''
+        return `<div class="run-panel" style="padding:14px;border-left:3px solid ${border}">
+          <div style="font-weight:700;font-size:13px;line-height:1.4">${w.danger ? '⚠️ ' : ''}${esc(w.name)}</div>
+          <div style="font-size:10px;color:var(--muted);font-family:ui-monospace,monospace;margin-top:2px">${esc(w.file)}</div>
+          ${fields}${sched}
+          <button class="run-btn" style="width:100%;padding:7px;margin-top:10px;font-size:12px${w.danger ? ';background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.35);color:var(--red)' : ''}"
+            onclick="wfcRun('${esc(w.file)}')">▶ 실행</button>
+          <div id="wfc-st-${esc(w.file).replace(/[^a-z0-9]/gi, '_')}" class="status-panel" style="display:none;margin-top:6px;font-size:11px"></div>
+        </div>`
+      }).join('')
+      return `<div style="grid-column:1/-1;margin:6px 0 0">
+          <div style="font-size:12px;font-weight:700;color:var(--accent2);margin-bottom:6px">${esc(label)} (${byCat[label].length})</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px">${items}</div>
+        </div>`
+    }).join('')
+  }
+
+  if (asofEl) {
+    const at = cat.generatedAt
+    if (!at) asofEl.innerHTML = '<span style="color:var(--yellow)">⚠️ 기준 시각 없음</span>'
+    else {
+      const ageH = (Date.now() - new Date(at).getTime()) / 3600000
+      const when = new Date(at).toLocaleString('ko-KR')
+      asofEl.innerHTML = ageH > 48
+        ? `<span style="color:var(--yellow)">⚠️ ${when} 기준 (${Math.floor(ageH / 24)}일 전) — 그 뒤 추가된 기능은 목록에 없습니다</span>`
+        : `${when} 기준 · 워크플로 파일에서 자동 생성`
+    }
+  }
+}
+
+async function wfcRun(file) {
+  const cat = DATA.workflowCatalog || {}
+  const w = (cat.workflows || []).find(x => x.file === file)
+  if (!w) { showToast('목록에서 찾지 못했습니다: ' + file, 'error'); return }
+  const statusEl = document.getElementById('wfc-st-' + file.replace(/[^a-z0-9]/gi, '_'))
+  const fail = msg => {
+    if (statusEl) { statusEl.style.display = 'block'; statusEl.className = 'status-panel error'; statusEl.textContent = '❌ ' + msg }
+    showToast(msg, 'error')
+  }
+
+  const pat = getPAT()
+  if (!pat) { fail('PAT가 없습니다 — 아래 API 키 관리에서 설정하세요'); return }
+
+  // 입력 모으기
+  const inputs = {}
+  for (const inp of w.inputs || []) {
+    const el = document.getElementById(wfcInputId(file, inp.name))
+    if (!el) continue
+    const v = inp.type === 'boolean' ? (el.checked ? 'true' : 'false') : el.value.trim()
+    if (inp.required && !v) { fail(`'${inp.name}' 은(는) 필수입니다`); return }
+    if (v !== '') inputs[inp.name] = v
+  }
+
+  // 발행 글을 바꾸거나 지우는 기능은 확인을 받습니다. 버튼 하나로 글이
+  // 사라지는 일을 막으려는 것입니다.
+  if (w.danger) {
+    const dry = w.dryRunInput
+    const dryVal = dry ? inputs[dry] : undefined
+    // apply=true 또는 dry_run=false 면 실제로 바꿉니다
+    const willApply = !dry
+      || (dry === 'apply' ? dryVal === 'true' : dryVal === 'false')
+    const lines = [
+      `"${w.name}" 을(를) 실행합니다.`,
+      willApply
+        ? '⚠️ 발행된 글을 실제로 바꾸거나 내립니다. 되돌리기 어렵습니다.'
+        : `미리보기 모드입니다 (${dry}). 실제 변경은 없습니다.`,
+      '계속할까요?',
+    ]
+    if (!confirm(lines.join('\n\n'))) return
+  }
+
+  if (statusEl) { statusEl.style.display = 'block'; statusEl.className = 'status-panel running'; statusEl.innerHTML = '<span class="pulse">⏳</span> 요청 중...' }
+  try {
+    const resp = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${encodeURIComponent(file)}/dispatches`,
+      { method: 'POST',
+        headers: { Authorization: `Bearer ${pat}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ref: GH_BRANCH, inputs }) })
+    if (resp.status !== 204) {
+      const err = await resp.json().catch(() => ({}))
+      throw new Error(`HTTP ${resp.status}: ${err.message || ''}`)
+    }
+    if (statusEl) { statusEl.className = 'status-panel success'; statusEl.textContent = '✅ 시작됨 — 아래 실행 이력에서 진행 상황을 확인하세요' }
+    showToast(w.name + ' 시작', 'success')
+    setTimeout(() => loadSystemRuns(), 5000)
+  } catch (e) {
+    fail(e.message)
+  }
+}
+
+// ════════ 저자 경험 자료 ════════
+//
+// 경험이 비면 모든 글이 조사·분석형으로 나갑니다 — 운영상 중요한데
+// author_profile.json은 blog-automation 아래라 화면에서 볼 수 없었습니다.
+
+function renderAuthorProfile() {
+  const grid = document.getElementById('author-profile-grid')
+  if (!grid) return
+  const prof = DATA.authorProfile || {}
+  const exps = prof.experiences || []
+  const asofEl = document.getElementById('author-profile-asof')
+  const hasPat = !!getPAT()
+
+  if (!exps.length) {
+    grid.innerHTML = `<div class="run-panel" style="padding:18px;color:var(--muted);font-size:12px">
+      경험 자료를 읽지 못했습니다. <strong>⚙️ 대시보드 설정 내보내기</strong>를 실행하면 생성됩니다.</div>`
+    if (asofEl) asofEl.innerHTML = '<span style="color:var(--yellow)">⚠️ author_profile.json 없음</span>'
+    return
+  }
+
+  grid.innerHTML = exps.map((e, i) => {
+    const on = e.active
+    const [bg, color, border] = on
+      ? ['rgba(52,211,153,.10)', 'var(--green)', 'rgba(52,211,153,.3)']
+      : ['rgba(148,163,184,.10)', 'var(--muted)', 'rgba(148,163,184,.3)']
+    const topics = (e.topics || []).slice(0, 6).join(', ')
+    return `<div style="background:${bg};border:1px solid ${border};border-radius:var(--radius);padding:14px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:13px;font-weight:700;color:${color}">${on ? '✅ 경험형 허용' : '⬜ 조사형만'}</span>
+        <span style="margin-left:auto;font-size:10px;color:var(--muted)">${esc((e.blogs || []).join(', ') || '전체')}</span>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin:6px 0 8px;line-height:1.5">${esc(topics)}${(e.topics || []).length > 6 ? ' …' : ''}</div>
+      <label style="display:block;font-size:10px;color:var(--muted)">요약 — 언제부터 무엇을 했는지 한 줄
+        <input id="ap-sum-${i}" value="${esc(e.summary || '')}" ${hasPat ? '' : 'disabled'}
+          placeholder="예: 2024년부터 연금저축·ISA로 ETF를 적립식 매수"
+          style="width:100%;padding:6px 8px;margin-top:3px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:11px;box-sizing:border-box"></label>
+      <label style="display:block;font-size:10px;color:var(--muted);margin-top:6px">상세 — 글에 인용해도 되는 구체적 사실
+        <textarea id="ap-det-${i}" rows="4" ${hasPat ? '' : 'disabled'}
+          placeholder="구체적 사실 위주로. 해보지 않은 부분은 '확인하지 못했습니다'라고 적어두면 AI가 지어내지 않습니다."
+          style="width:100%;padding:6px 8px;margin-top:3px;background:var(--bg3);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:11px;box-sizing:border-box;resize:vertical">${esc(e.detail || '')}</textarea></label>
+      <button class="run-btn" style="width:100%;padding:7px;margin-top:8px;font-size:12px" ${hasPat ? '' : 'disabled'}
+        onclick="saveAuthorExperience(${i})">💾 저장</button>
+      <div id="ap-st-${i}" class="status-panel" style="display:none;margin-top:6px;font-size:11px"></div>
+    </div>`
+  }).join('')
+
+  if (asofEl) {
+    const n = prof.activeCount || 0, t = prof.totalCount || exps.length
+    const warn = n === 0
+      ? ' <span style="color:var(--yellow)">— 경험 자료가 하나도 없어 모든 글이 조사·분석형으로 나갑니다</span>' : ''
+    const at = prof.exportedAt ? new Date(prof.exportedAt).toLocaleString('ko-KR') + ' 기준' : '기준 시각 없음'
+    asofEl.innerHTML = `경험형이 열린 항목 ${n} / ${t}${warn} · ${at}`
+      + (hasPat ? '' : ' · <span style="color:var(--yellow)">수정에는 PAT가 필요합니다</span>')
+  }
+}
+
+async function saveAuthorExperience(idx) {
+  const pat = getPAT()
+  const statusEl = document.getElementById('ap-st-' + idx)
+  const show = (cls, msg) => {
+    if (statusEl) { statusEl.style.display = 'block'; statusEl.className = 'status-panel ' + cls; statusEl.textContent = msg }
+  }
+  if (!pat) { show('error', '❌ PAT가 필요합니다'); return }
+  const summary = (document.getElementById('ap-sum-' + idx)?.value || '').trim()
+  const detail = (document.getElementById('ap-det-' + idx)?.value || '').trim()
+
+  // 공개 저장소입니다 — 올리기 전에 눈에 띄는 개인정보를 잡아둡니다.
+  const risky = [
+    [/\b01[016-9]-?\d{3,4}-?\d{4}\b/, '전화번호로 보이는 값'],
+    [/[\w.+-]+@[\w-]+\.[\w.]+/, '이메일 주소'],
+    [/\b\d{6}-?[1-4]\d{6}\b/, '주민번호 형태의 값'],
+    [/\b\d{2,3}-\d{2,6}-\d{2,6}\b/, '계좌번호로 보이는 값'],
+  ]
+  for (const [re, label] of risky) {
+    if (re.test(summary + ' ' + detail)) {
+      show('error', `❌ ${label}이 들어 있습니다 — 공개 저장소에는 올릴 수 없습니다`)
+      return
+    }
+  }
+  if (!summary && detail) {
+    show('error', '❌ 요약이 비면 이 항목은 매칭되지 않습니다 — 상세만 적으면 글에 쓰이지 않습니다')
+    return
+  }
+
+  show('running', '⏳ 저장 중...')
+  const url = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/blog-automation/author_profile.json`
+  try {
+    // 기능 스위치·발행 스케줄과 같은 이유로 최신 내용 위에 얹습니다 —
+    // 화면의 사본으로 덮어쓰면 그 사이 다른 항목에 준 변경을 되돌립니다.
+    const getRes = await fetch(url + `?ref=${GH_BRANCH}&t=${Date.now()}`,
+      { headers: { Authorization: `token ${pat}`, Accept: 'application/vnd.github.v3+json' } })
+    if (!getRes.ok) throw new Error(`현재 파일을 읽지 못했습니다 (HTTP ${getRes.status})`)
+    const meta = await getRes.json()
+    const current = JSON.parse(decodeURIComponent(escape(atob((meta.content || '').replace(/\n/g, '')))))
+    const list = current.experiences
+    if (!Array.isArray(list) || !list[idx]) throw new Error('항목을 찾지 못했습니다 — 새로고침 후 다시 시도하세요')
+    list[idx].summary = summary
+    list[idx].detail = detail
+
+    const putRes = await fetch(url, {
+      method: 'PUT',
+      headers: { Authorization: `token ${pat}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: `🧑‍💻 저자 경험 자료 ${summary ? '등록' : '비움'} (대시보드)`,
+        content: btoa(unescape(encodeURIComponent(JSON.stringify(current, null, 2) + '\n'))),
+        branch: GH_BRANCH,
+        sha: meta.sha,
+      }),
+    })
+    if (!putRes.ok) {
+      const t = await putRes.text()
+      throw new Error(`저장 실패 (HTTP ${putRes.status}) ${t.slice(0, 120)}`)
+    }
+    DATA.authorProfile.experiences[idx].summary = summary
+    DATA.authorProfile.experiences[idx].detail = detail
+    DATA.authorProfile.experiences[idx].active = !!summary
+    DATA.authorProfile.activeCount = DATA.authorProfile.experiences.filter(e => e.active).length
+    renderAuthorProfile()
+    showToast(summary ? '경험 자료 저장 — 다음 발행분부터 경험형으로 나갑니다' : '경험 자료를 비웠습니다', 'success')
+  } catch (e) {
+    show('error', '❌ ' + e.message)
+    showToast('실패: ' + e.message, 'error')
+  }
 }
 
 function renderPublishSchedule() {
@@ -3137,7 +3453,7 @@ async function loadAll(silent = false) {
   purgeLegacyOAuthStorage()  // 보안: 과거 저장된 장기 토큰 제거
   const base = location.pathname.replace(/\/[^/]*$/, '') + '/data'
   const ts = '?t=' + Date.now()
-  const [posts, runs, analytics, meta, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, requiredPages, pendingReport, alerts, featureFlags, publishSchedule, adsenseRevenue] = await Promise.all([
+  const [posts, runs, analytics, meta, pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, requiredPages, pendingReport, alerts, featureFlags, publishSchedule, adsenseRevenue, workflowCatalog, authorProfile] = await Promise.all([
     fetchData(base, 'posts.json', []),
     fetchData(base, 'runs.json', []),
     fetchData(base, 'analytics.json', ({})),
@@ -3165,8 +3481,10 @@ async function loadAll(silent = false) {
     fetchData(base, 'feature_flags.json', null),
     fetchData(base, 'publish_schedule.json', null),
     fetchData(base, 'adsense_revenue.json', null),
+    fetchData(base, 'workflow_catalog.json', null),
+    fetchData(base, 'author_profile.json', null),
   ])
-  DATA = { posts, runs, analytics, meta, social: DATA.social || [], pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, requiredPages, pendingReport, alerts, featureFlags, adsenseRevenue, publishSchedule }
+  DATA = { posts, runs, analytics, meta, social: DATA.social || [], pending, series, gsc, blogs, learning, repairs, registry, codeRepairs, trending, lifecycle, titleChanges, aiUsage, deadLinks, authHealth, weeklyBrief, trendPreempt, adsenseAudit, requiredPages, pendingReport, alerts, featureFlags, adsenseRevenue, publishSchedule, workflowCatalog, authorProfile }
 
   // 아카이브 포스트 백그라운드 병합 (posts.json은 최근 300개만 유지 — 초기 로딩 속도 확보)
   fetch(base + '/posts_archive.json' + ts).then(r => r.ok ? r.json() : []).then(archive => {
@@ -3208,6 +3526,8 @@ async function loadAll(silent = false) {
     ['운영 알림', renderAlerts],
     ['기능 스위치', renderFlagSwitches],
     ['발행 스케줄', renderPublishSchedule],
+    ['전체 기능 실행', renderWorkflowCatalog],
+    ['저자 경험 자료', renderAuthorProfile],
     ['포스트 생성 대상 안내', wfLiveBlogChanged],
     ['시스템 탭 정리', groupSystemPanels],
     ['차트 안내', renderChartLibNotice],

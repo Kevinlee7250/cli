@@ -14,3 +14,8 @@ google-auth-httplib2>=0.2.0
 # 패키지가 Pillow를 떼면 `except ImportError: return None`으로 빠져
 # URL 비교만 남고, 워크플로는 그대로 성공으로 끝납니다.
 Pillow>=10.0.0
+
+# 워크플로 YAML 파싱 — workflow_catalog가 씁니다 (대시보드 실행 목록 생성).
+# Pillow와 같은 사례입니다: 지금까지 다른 패키지에 딸려 설치돼 동작했지만
+# 선언이 없었습니다. 상위 패키지가 떼면 목록 생성이 조용히 멈춥니다.
+PyYAML>=6.0

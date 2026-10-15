@@ -1,210 +1,3 @@
-2026-10-07 01:30:50,407 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:30:50,409 [INFO] source_validator — 출처 검증: 7/8개 통과, 등급 분포 {'C': 7, 'X': 1}
-2026-10-07 01:30:51,924 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '포핸즈 등장인물 분석'
-2026-10-07 01:30:51,924 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-10-07 01:30:51,924 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-07 01:30:51,925 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-07 01:30:52,585 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:32:06,768 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-07 01:32:07,737 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:32:19,408 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-10-07 01:32:19,408 [INFO] content_generator — 이미지 계획 3건 사용: ['two pianists playing one piano together', 'piano viola classical music trio', 'woman playing viola close up']
-2026-10-07 01:32:19,747 [INFO] image_fetcher — 이미지 수집 성공: 'two pianists playing one piano together' → 제목='piano / synthesizer / pianist / ebony / ' (관련성=0.33)
-2026-10-07 01:32:19,916 [INFO] image_fetcher — 이미지 수집 성공: 'piano viola classical music trio' → 제목='bowed instrument / violin / classical mu' (관련성=0.60)
-2026-10-07 01:32:20,096 [INFO] image_fetcher — 이미지 수집 성공: 'woman playing viola close up' → 제목='hands / guitar / instrument / music / pl' (관련성=0.25)
-2026-10-07 01:32:21,510 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:32:21,511 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
-2026-10-07 01:32:21,511 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-10-07 01:32:21,512 [INFO] image_fetcher — 제목 썸네일 생성: '[2편] 포핸즈 등장인물 분석과 배우 케미 총정리' (data URI, 990B)
-2026-10-07 01:32:21,714 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-10-07 01:32:21,714 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-10-07 01:32:21,720 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-07 01:32:21,720 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-07 01:32:21,720 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 포핸즈 등장인물 분석과 배우 케미 총정리' (3336자, 이미지 1개)
-2026-10-07 01:32:22,368 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:32:44,099 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-07 01:32:44,666 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:32:45,029 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '[2편] 포핸즈 등장인물 분석과 배우 케미 총정리'
-2026-10-07 01:32:45,029 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 양호하나 일부 단락이 500자 이상으로 길어 가독성이 다소 떨어짐
-2026-10-07 01:32:45,029 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처·날짜·수치는 명시되었으나 일부 문장에서 중복·비문('집계가 있었다는 집계도 있었는데' 등)이 신뢰도를 저해
-2026-10-07 01:32:45,029 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 출처를 '직접 제작'으로 표기했으나 alt 텍스트 언급이 없어 확인 불가
-2026-10-07 01:32:45,029 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 개인적 의견 서술은 자연스러우나 '보도가 있었다를 기록', '분석이 있었다이 있었는데' 등 템플릿 치환성 비문이 AI 생성 흔적으로 의심됨
-2026-10-07 01:32:45,029 [WARNING] main —   ⚠️ [편 2] AdSense 검토 필요 — pending 저장 (점수: 79/100)
-2026-10-07 01:32:45,032 [INFO] main — 
---- [3/3편] '포핸즈 결말 총평' 생성 중 ---
-2026-10-07 01:32:45,032 [INFO] content_generator — 시리즈 포스트 생성: '포핸즈 결말 총평' (3/3편)
-2026-10-07 01:32:50,155 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:32:50,156 [INFO] research_collector — 검색 의도: 웹툰/드라마 '포핸즈'의 결말 내용과 작품에 대한 전반적인 평가를 알고 싶어하는 검색 의도
-2026-10-07 01:33:01,280 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '포핸즈 결말 총평'
-2026-10-07 01:33:06,926 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:33:06,927 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '포핸즈 결말 총평'
-2026-10-07 01:33:35,153 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:33:35,154 [INFO] source_validator — 출처 검증: 4/4개 통과, 등급 분포 {'D': 3, 'C': 1}
-2026-10-07 01:33:36,821 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '포핸즈 결말 총평'
-2026-10-07 01:33:36,821 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-10-07 01:33:36,821 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-07 01:33:36,822 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-07 01:33:37,534 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:34:47,144 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-07 01:34:47,145 [WARNING] content_generator — 컨텐츠 너무 짧음(2498자, 최소 2500자) — 재시도 1/3
-2026-10-07 01:34:50,146 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-10-07 01:34:50,146 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-07 01:34:50,881 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:35:55,260 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-07 01:35:55,878 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:36:07,160 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
-2026-10-07 01:36:07,160 [INFO] content_generator — 이미지 계획 3건 사용: ['piano hands classical drama', 'prague cathedral interior', 'star rating review drama']
-2026-10-07 01:36:07,369 [INFO] image_fetcher — 이미지 수집 성공: 'piano hands classical drama' → 제목='piano / hands / music / musician / keybo' (관련성=0.50)
-2026-10-07 01:36:07,531 [INFO] image_fetcher — 이미지 수집 성공: 'prague cathedral interior' → 제목='prague / czech / vitus / cathedral / chu' (관련성=1.00)
-2026-10-07 01:36:07,685 [INFO] image_fetcher — 이미지 수집 성공: 'star rating review drama' → 제목='review / opinion / feedback / stars / ev' (관련성=0.50)
-2026-10-07 01:36:09,412 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:36:09,413 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-10-07 01:36:09,797 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-10-07 01:36:09,797 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-10-07 01:36:09,804 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-07 01:36:09,804 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-07 01:36:09,804 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 포핸즈 결말 해석, OST와 비슷한 드라마 추천' (2513자, 이미지 2개)
-2026-10-07 01:36:10,348 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:36:32,201 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-07 01:36:32,762 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:36:40,941 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '[3편] 포핸즈 결말 해석, OST와 비슷한 드라마 추천'
-2026-10-07 01:36:40,941 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 대부분 '블로그 리뷰들'·'언급'이 있다는' 식 2차 요약 위주이며 독자적 분석·경험은 제한적
-2026-10-07 01:36:40,941 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락이 500자 이상으로 길어 가독성 저하
-2026-10-07 01:36:40,941 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 명시는 양호하나 alt 텍스트 적용 여부 본문상 확인 불가
-2026-10-07 01:36:40,941 [INFO] adsense_validator —   ❌ AI 생성 의심도: '~라는 평가가 있습니다를 기록했습니다' 등 비문·중복 서술이 남아있어 AI 생성 후 미검수 흔적 뚜렷함
-2026-10-07 01:36:40,941 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '~라는 평가가 있습니다를 기록했습니다' 등 비문·중복 서술이 남아있어 AI 생성 후 미검수 흔적 뚜렷함
-2026-10-07 01:36:40,941 [WARNING] adsense_validator —   🔴 본문 중 '시청률 면에서도 준수한 성적을 기록했다는 평가가 있습니다를 기록했습니다', '상위권에 올랐다는 언급이 있습니다를 차지했다는 언급이 있을 정도로' 등 비문·중복 문장이 존재 — 발행 전 반드시 교정 필요
-2026-10-07 01:36:40,941 [WARNING] main —   ⚠️ [편 3] AdSense 검토 필요 — pending 저장 (점수: 72/100)
-2026-10-07 01:36:40,954 [INFO] dashboard_exporter —   검토 대기 저장: [2편] 포핸즈 등장인물 분석과 배우 케미 총정리 (10467자 HTML)
-2026-10-07 01:36:40,954 [INFO] dashboard_exporter —   검토 대기 저장: [3편] 포핸즈 결말 해석, OST와 비슷한 드라마 추천 (10075자 HTML)
-2026-10-07 01:36:40,973 [INFO] pending_store — 검토 대기 저장: 목록 17건 / 보관 167건 / 본문 20건
-2026-10-07 01:36:40,973 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 2개 추가 (총 184개)
-2026-10-07 01:36:40,996 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 181개)
-2026-10-07 01:36:41,006 [INFO] dashboard_exporter — 분석 필드 유지: 99/105개 (등급·조회수·수익)
-2026-10-07 01:36:41,021 [INFO] dashboard_exporter —   시리즈: 40개 내보내기 완료
-2026-10-07 01:36:41,035 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-10-07 01:36:41,388 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-07 01:36:41,656 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-07 01:36:41,658 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-10-07 01:36:41,659 [INFO] dashboard_exporter —   학습 이력: 6주 내보내기 완료
-2026-10-07 01:36:41,662 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-10-07 01:36:41,680 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 274 / 실패 0 / 대기 13)
-2026-10-07 01:36:41,680 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-07 01:36:41,680 [INFO] dashboard_exporter —   포스트: 105개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-07 01:36:41,681 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-10-07 01:36:41,681 [INFO] main — 
-============================================================
-2026-10-07 01:36:41,681 [INFO] main — [HOGU What?] 시리즈 완료: 1/3편 성공
-2026-10-07 01:36:41,681 [INFO] main — ============================================================
-2026-10-07 01:36:41,681 [INFO] main — 단독 포스트 대상 키워드 0개: []
-2026-10-07 01:36:41,700 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
-2026-10-07 01:36:41,700 [INFO] main — 
-============================================================
-2026-10-07 01:36:41,700 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
-2026-10-07 01:36:41,701 [INFO] main — ============================================================
-2026-10-07 01:36:41,720 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 182개)
-2026-10-07 01:36:41,730 [INFO] dashboard_exporter — 분석 필드 유지: 99/105개 (등급·조회수·수익)
-2026-10-07 01:36:41,743 [INFO] dashboard_exporter —   시리즈: 40개 내보내기 완료
-2026-10-07 01:36:41,757 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-10-07 01:36:41,758 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-10-07 01:36:41,759 [INFO] dashboard_exporter —   학습 이력: 6주 내보내기 완료
-2026-10-07 01:36:41,762 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-10-07 01:36:41,779 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 272 / 실패 2 / 대기 13)
-2026-10-07 01:36:41,779 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-07 01:36:41,780 [INFO] dashboard_exporter —   포스트: 105개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-07 01:36:41,780 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-10-07 01:36:41,781 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다
-2026-10-07 01:37:27,059 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-07 01:37:28,119 [INFO] main — ============================================================
-2026-10-07 01:37:28,119 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-10-07 01:37:28
-2026-10-07 01:37:28,119 [INFO] main — ============================================================
-2026-10-07 01:37:28,131 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-10-07 01:37:28,131 [INFO] keyword_collector — 포스팅 이력 코퍼스: 98개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-10-07 01:37:28,131 [INFO] keyword_collector — 시즌 예약 키워드 1개 로드 (blog=blog2): ['추석 선물 저렴하게 사는 꿀팁 정리']
-2026-10-07 01:37:34,620 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-10-07 01:37:42,953 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:37:42,980 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-10-07 01:37:42,980 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-10-07 01:37:43,683 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-07 01:37:43,684 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-10-07 01:37:43,685 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-10-07 01:37:43,691 [INFO] keyword_collector — 유사 주제 제외 5개: ['추석 선물 저렴하게 사는 꿀팁 정리', '호텔 AI 컨시어지 서비스 추천 2026 스마트 여행 트렌드', '가을 단풍 골프장 베스트 코스 추천 2026', 'OTT 구독료 비교 2026 넷플릭스 티빙 디즈니플러스 통합요금제 추천', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
-2026-10-07 01:37:43,691 [INFO] keyword_collector —   [naver_realtime] 1개: ['10월 대형마트 할인정보 총정리 이마트 롯데아울렛 특가 비교']
-2026-10-07 01:37:43,692 [INFO] keyword_collector —   [fallback] 1개: ['부산 1박2일 혼자 여행 현실 비용 공개']
-2026-10-07 01:37:43,692 [INFO] keyword_collector — 최종 선정 키워드 2개: ['10월 대형마트 할인정보 총정리 이마트 롯데아울렛 특가 비교', '부산 1박2일 혼자 여행 현실 비용 공개']
-2026-10-07 01:37:43,692 [INFO] main — 수집된 키워드 2개: ['10월 대형마트 할인정보 총정리 이마트 롯데아울렛 특가 비교', '부산 1박2일 혼자 여행 현실 비용 공개']
-2026-10-07 01:37:43,697 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
-2026-10-07 01:37:43,697 [INFO] main — 단독 포스트 대상 키워드 1개: ['10월 대형마트 할인정보 총정리 이마트 롯데아울렛 특가 비교']
-2026-10-07 01:37:43,712 [INFO] main — 
-[1/1] 키워드: '10월 대형마트 할인정보 총정리 이마트 롯데아울렛 특가 비교'
-2026-10-07 01:37:43,712 [INFO] content_generator — 포스트 생성 중: '10월 대형마트 할인정보 총정리 이마트 롯데아울렛 특가 비교'
-2026-10-07 01:37:50,084 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:37:50,085 [INFO] research_collector — 검색 의도: 10월에 진행되는 이마트, 롯데아울렛 등 대형마트 할인 행사 정보를 비교하여 알고 싶은 소비자의 검색 의도
-2026-10-07 01:38:02,648 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '10월 대형마트 할인정보 총정리 이마트 롯데아울렛 특가 비교'
-2026-10-07 01:38:17,635 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:38:17,636 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '10월 대형마트 할인정보 총정리 이마트 롯데아울렛 특가 비교'
-2026-10-07 01:38:26,718 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:38:26,720 [INFO] source_validator — 출처 검증: 6/6개 통과, 등급 분포 {'D': 1, 'C': 5}
-2026-10-07 01:38:26,723 [INFO] evidence_builder — 자료팩: 중요 사실 5개 제외 (A/B 등급 출처 없음)
-2026-10-07 01:38:26,723 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-07 01:38:26,724 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-07 01:38:27,540 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:39:58,941 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-07 01:39:59,754 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:40:31,177 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 0건 자동 수정 적용
-2026-10-07 01:40:31,177 [INFO] content_generator — 이미지 계획 2건 사용: ['grocery store discount aisle', 'price comparison flyer shopping']
-2026-10-07 01:40:31,395 [INFO] image_fetcher — 이미지 수집 성공: 'grocery store discount aisle' → 제목='supermarket / stalls / coolers / market ' (관련성=0.50)
-2026-10-07 01:40:31,563 [INFO] image_fetcher — 이미지 수집 성공: 'price comparison flyer shopping' → 제목='market / vegetables / eggplant / service' (관련성=0.25)
-2026-10-07 01:40:35,245 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:40:35,246 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
-2026-10-07 01:40:35,507 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-10-07 01:40:35,507 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-10-07 01:40:35,512 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-10-07 01:40:35,514 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-07 01:40:35,514 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-07 01:40:35,515 [INFO] content_generator — 포스트 생성 완료: '10월 대형마트 할인정보 비교: 이마트·롯데아울렛 특가 확인하는 법' (3153자, 이미지 1개)
-2026-10-07 01:40:36,225 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-07 01:40:52,981 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '10월 대형마트 할인정보 비교: 이마트·롯데아울렛 특가 확인하는'
-2026-10-07 01:40:52,981 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어짐
-2026-10-07 01:40:52,982 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장(Pixabay 라이선스 명시)만 포함되어 저작권 위반은 없으나 이미지 수가 적어 warn
-2026-10-07 01:40:52,982 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~정리해보겠습니다' 식 전환 문구가 섹션마다 반복되어 템플릿화된 패턴이 감지됨
-2026-10-07 01:40:52,985 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-10-07 01:40:52,988 [INFO] internal_linker —   [1/5] '체크리스트' -> https://hoguasset.blogspot.com/2026/10/isa-2026.html
-2026-10-07 01:40:52,994 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-10-07 01:40:52,994 [INFO] main —   제목: 10월 대형마트 할인정보 비교: 이마트·롯데아울렛 특가 확인하는 법
-2026-10-07 01:40:52,994 [INFO] main —   이미지: 1개 삽입
-2026-10-07 01:40:52,994 [INFO] main —   글자 수: 3153자
-2026-10-07 01:40:52,994 [WARNING] main —   ⚠️ 팩트체크 이슈 1건을 고치지 못했습니다 — pending 저장: '10월 대형마트 할인정보 비교: 이마트·롯데아울렛 특가 확인하는 법'
-2026-10-07 01:40:52,994 [WARNING] main —      검증되지 않은 이용자 반응을 '100%'라는 과장된 단정적 표현으로 서술함
-2026-10-07 01:40:53,014 [INFO] dashboard_exporter —   검토 대기 저장: 10월 대형마트 할인정보 비교: 이마트·롯데아울렛 특가 확인하는 법 (11942자 HTML)
-2026-10-07 01:40:53,032 [INFO] pending_store — 검토 대기 저장: 목록 18건 / 보관 167건 / 본문 21건
-2026-10-07 01:40:53,032 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 185개)
-2026-10-07 01:40:53,032 [INFO] main — 
-============================================================
-2026-10-07 01:40:53,032 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-10-07 01:40:53,032 [INFO] main — ============================================================
-2026-10-07 01:40:53,051 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 183개)
-2026-10-07 01:40:53,061 [INFO] dashboard_exporter — 분석 필드 유지: 99/106개 (등급·조회수·수익)
-2026-10-07 01:40:53,075 [INFO] dashboard_exporter —   시리즈: 40개 내보내기 완료
-2026-10-07 01:40:53,088 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-10-07 01:40:53,328 [INFO] gsc_fetcher — GSC URL-프리픽스 403 — 도메인 속성으로 재시도: sc-domain:hoguwhat.com
-2026-10-07 01:40:53,517 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-07 01:40:53,786 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-07 01:40:53,787 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-10-07 01:40:53,788 [INFO] dashboard_exporter —   학습 이력: 6주 내보내기 완료
-2026-10-07 01:40:53,791 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-10-07 01:40:53,807 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 271 / 실패 2 / 대기 14)
-2026-10-07 01:40:53,807 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-07 01:40:53,807 [INFO] dashboard_exporter —   포스트: 106개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-07 01:40:53,807 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-10-07 01:40:53,808 [ERROR] main — ============================================================
-2026-10-07 01:40:53,808 [ERROR] main — ❌ 게시 0건 — 생성은 됐지만 1건 모두 검토 대기로 빠졌습니다
-2026-10-07 01:40:53,808 [ERROR] main —    품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다
-2026-10-07 01:40:53,808 [ERROR] main — ============================================================
-2026-10-07 02:07:36,670 [INFO] main — 다중 블로그 모드: 3개 블로그 순차 실행
-2026-10-07 02:07:36,670 [INFO] main —   - [blog1] HOGU What?
-2026-10-07 02:07:36,670 [INFO] main —   - [blog2] HOGU 여행,스포츠,연예
-2026-10-07 02:07:36,670 [INFO] main —   - [blog3] 금융NEWS
 2026-10-07 02:07:36,676 [INFO] main — 오늘 처리할 발행 예약 편이 없습니다
 2026-10-08 01:45:50,582 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
 2026-10-08 01:45:51,800 [INFO] main — ============================================================
@@ -705,3 +498,188 @@
 2026-10-15 00:24:23,121 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 120개 / 블로그: 3개
 2026-10-15 00:24:23,122 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-10-15 00:24:23,122 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다
+2026-10-15 00:25:08,980 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-15 00:25:10,315 [INFO] main — ============================================================
+2026-10-15 00:25:10,315 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-10-15 00:25:10
+2026-10-15 00:25:10,315 [INFO] main — ============================================================
+2026-10-15 00:25:10,329 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
+2026-10-15 00:25:10,329 [INFO] keyword_collector — 포스팅 이력 코퍼스: 80개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-10-15 00:25:10,329 [INFO] keyword_collector — 시즌 예약 키워드 1개 로드 (blog=blog2): ['추석 선물 저렴하게 사는 꿀팁 정리']
+2026-10-15 00:25:14,533 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-10-15 00:25:19,817 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:25:19,833 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-10-15 00:25:19,833 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-10-15 00:25:20,860 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-15 00:25:20,861 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-10-15 00:25:20,863 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-10-15 00:25:20,868 [INFO] keyword_collector — 유사 주제 제외 4개: ['추석 선물 저렴하게 사는 꿀팁 정리', '호텔 AI 컨시어지 서비스 이용 후기와 활용법', '가을 시즌 아울렛 할인 쇼핑 정보 총정리', '제주도 여행 현지인처럼 즐기는 방법 솔직 후기']
+2026-10-15 00:25:20,868 [INFO] keyword_collector —   [naver_realtime] 1개: ['OTT 구독 서비스 비교 2026 나에게 맞는 선택법']
+2026-10-15 00:25:20,868 [INFO] keyword_collector —   [fallback] 1개: ['부산 1박2일 혼자 여행 현실 비용 공개']
+2026-10-15 00:25:20,868 [INFO] keyword_collector — 최종 선정 키워드 2개: ['OTT 구독 서비스 비교 2026 나에게 맞는 선택법', '부산 1박2일 혼자 여행 현실 비용 공개']
+2026-10-15 00:25:20,868 [INFO] main — 수집된 키워드 2개: ['OTT 구독 서비스 비교 2026 나에게 맞는 선택법', '부산 1박2일 혼자 여행 현실 비용 공개']
+2026-10-15 00:25:20,877 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 8일 전)
+2026-10-15 00:25:25,449 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:25:25,450 [INFO] series_planner — 자동 시리즈 키워드 선정: '부산 1박2일 혼자 여행 현실 비용 공개'
+2026-10-15 00:25:25,451 [INFO] main — [자동 시리즈] '부산 1박2일 혼자 여행 현실 비용 공개' 3편 기획 시작 (이후 단독 포스트 0개)
+2026-10-15 00:25:25,451 [INFO] main — ============================================================
+2026-10-15 00:25:25,451 [INFO] main — [HOGU 여행,스포츠,연예] 시리즈 모드 시작: '부산 1박2일 혼자 여행 현실 비용 공개' 3편
+2026-10-15 00:25:25,451 [INFO] main — ============================================================
+2026-10-15 00:25:30,587 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:25:30,588 [INFO] series_planner — [blog1] 시리즈 기획 완료: '부산 1박2일 혼자 여행 현실 비용 공개 직접 해보고 정리한 시리즈' 3편
+2026-10-15 00:25:30,591 [INFO] main — 시리즈 기획 완료: '부산 1박2일 혼자 여행 현실 비용 공개 직접 해보고 정리한 시리즈'
+2026-10-15 00:25:30,591 [INFO] main —   편 1: [1편] 부산 혼행 전날 밤 지른 실수들
+2026-10-15 00:25:30,591 [INFO] main —   편 2: [2편] 부산 1박2일 실제 영수증 전부 공개
+2026-10-15 00:25:30,591 [INFO] main —   편 3: [3편] 부산 혼행 다시 간다면 이렇게 쓴다
+2026-10-15 00:25:30,591 [INFO] main — 
+--- [1/3편] '부산 혼자 여행 준비 실수' 생성 중 ---
+2026-10-15 00:25:30,591 [INFO] content_generator — 시리즈 포스트 생성: '부산 혼자 여행 준비 실수' (1/3편)
+2026-10-15 00:25:38,873 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:25:38,874 [INFO] research_collector — 검색 의도: 부산 혼자 여행을 준비하면서 흔히 하는 실수를 미리 파악하여 시행착오를 줄이고 싶은 의도
+2026-10-15 00:25:50,640 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 6개) — '부산 혼자 여행 준비 실수'
+2026-10-15 00:26:02,755 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:26:02,756 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '부산 혼자 여행 준비 실수'
+2026-10-15 00:26:12,702 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:26:12,703 [INFO] source_validator — 출처 검증: 2/4개 통과, 등급 분포 {'X': 2, 'D': 2}
+2026-10-15 00:26:12,705 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-10-15 00:26:12,705 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-15 00:26:12,707 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-15 00:26:13,208 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:27:23,134 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-15 00:27:23,670 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:27:48,118 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-10-15 00:27:48,118 [INFO] content_generator — 이미지 계획 3건 사용: ['late night train ticket booking phone', 'KTX platform traveler waiting', 'travel checklist notebook planning']
+2026-10-15 00:27:48,445 [INFO] image_fetcher — 이미지 수집 성공: 'late night train ticket booking phone' → 제목='street / kiosk / store / woman / adult /' (관련성=0.17)
+2026-10-15 00:27:48,967 [INFO] image_fetcher — 이미지 수집 성공: 'KTX platform traveler waiting' → 제목='ktx / train travel / travel / ktx / ktx ' (관련성=0.25)
+2026-10-15 00:27:49,309 [INFO] image_fetcher — 이미지 수집 성공: 'travel checklist notebook planning' → 제목='journey / adventure / photo / map / old ' (관련성=0.50)
+2026-10-15 00:27:50,806 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:27:50,808 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-10-15 00:27:51,556 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-15 00:27:51,556 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-15 00:27:51,565 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-15 00:27:51,565 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-15 00:27:51,565 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] 부산 혼자 여행 전날 숙소·기차 예약 실수 종합' (2841자, 이미지 2개)
+2026-10-15 00:27:52,470 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:28:09,209 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '[1편] 부산 혼자 여행 전날 숙소·기차 예약 실수 종합'
+2026-10-15 00:28:09,209 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(2841자)는 기준 충족하나 구체적 가격·날짜 수치 없이 후기 종합 수준의 일반화된 서술이 많음
+2026-10-15 00:28:09,209 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개는 양호하나 일부 단락이 500자 이상으로 길어 가독성 저하 우려
+2026-10-15 00:28:09,209 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 코레일·SRT·플랫폼 언급 및 불확실성 명시는 긍정적이나 구체적 수치·시점 데이터 부족
+2026-10-15 00:28:09,209 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장만 존재하며 출처는 명시(Pixabay)됐으나 alt 텍스트 여부 불명확
+2026-10-15 00:28:09,209 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라고 합니다', '~라는 점' 등 유사 헤징 표현이 반복되어 다소 정형화된 패턴 보임
+2026-10-15 00:28:09,209 [WARNING] main —   ⚠️ [편 1] AdSense 검토 필요 — pending 저장 (점수: 74/100)
+2026-10-15 00:28:09,212 [INFO] main — 
+--- [2/3편] '부산 1박2일 혼자 여행 비용' 생성 중 ---
+2026-10-15 00:28:09,212 [INFO] content_generator — 시리즈 포스트 생성: '부산 1박2일 혼자 여행 비용' (2/3편)
+2026-10-15 00:28:14,879 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:28:14,879 [INFO] research_collector — 검색 의도: 부산으로 1박 2일 혼자 여행할 때 드는 총 예산과 세부 비용 항목을 알고 싶음
+2026-10-15 00:28:32,858 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '부산 1박2일 혼자 여행 비용'
+2026-10-15 00:28:36,480 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:28:36,481 [INFO] evidence_builder — 자료팩 생성: 사실 0개 — '부산 1박2일 혼자 여행 비용'
+2026-10-15 00:28:36,481 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-15 00:28:36,482 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-15 00:28:37,184 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:29:36,156 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-15 00:29:36,157 [WARNING] content_generator — 컨텐츠 너무 짧음(2175자, 최소 2500자) — 재시도 1/3
+2026-10-15 00:29:39,157 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-10-15 00:29:39,158 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-15 00:29:39,635 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:30:54,331 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-15 00:30:54,332 [WARNING] content_generator — 컨텐츠 너무 짧음(2342자, 최소 2500자) — 재시도 2/3
+2026-10-15 00:30:57,332 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-10-15 00:30:57,332 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-15 00:30:57,937 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:32:04,721 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-15 00:32:04,721 [WARNING] content_generator — 최소 분량 미달(2396자) — 재시도 소진, 해당 분량으로 진행
+2026-10-15 00:32:05,375 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:32:21,410 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
+2026-10-15 00:32:21,410 [INFO] content_generator — 이미지 계획 3건 사용: ['busan station platform solo traveler', 'ktx train ticket bus ticket comparison', 'busan guesthouse dormitory room']
+2026-10-15 00:32:21,589 [INFO] image_fetcher — 이미지 수집 성공: 'busan station platform solo traveler' → 제목='train / windows / platform / speed / cir' (관련성=0.40)
+2026-10-15 00:32:21,860 [INFO] image_fetcher — 이미지 수집 성공: 'ktx train ticket bus ticket comparison' → 제목='korea / railroad / traffic / train / veh' (관련성=0.40)
+2026-10-15 00:32:22,316 [INFO] image_fetcher — 이미지 수집 성공: 'busan guesthouse dormitory room' → 제목='night view / night / bridge / busan / bu' (관련성=0.25)
+2026-10-15 00:32:25,319 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:32:25,320 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-10-15 00:32:26,205 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-15 00:32:26,205 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-15 00:32:26,213 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-15 00:32:26,213 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-15 00:32:26,213 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 부산 1박2일 실제 영수증 공개, 교통·숙소·식비 얼마 나왔나' (2396자, 이미지 2개)
+2026-10-15 00:32:26,213 [WARNING] main —   ⚠️ [편 2] 글자 수 미달 (2396자 < 2500자) — pending 저장
+2026-10-15 00:32:26,216 [INFO] main — 
+--- [3/3편] '부산 혼자 여행 예산 짜기' 생성 중 ---
+2026-10-15 00:32:26,216 [INFO] content_generator — 시리즈 포스트 생성: '부산 혼자 여행 예산 짜기' (3/3편)
+2026-10-15 00:32:32,761 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:32:32,762 [INFO] research_collector — 검색 의도: 부산 혼자 여행 시 필요한 예산 규모와 항목별 비용을 알고 싶어함
+2026-10-15 00:32:44,556 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '부산 혼자 여행 예산 짜기'
+2026-10-15 00:32:53,974 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:32:53,975 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '부산 혼자 여행 예산 짜기'
+2026-10-15 00:33:05,485 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:33:05,486 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'D': 1, 'X': 2, 'B': 2}
+2026-10-15 00:33:05,486 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-10-15 00:33:05,486 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-15 00:33:05,486 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-15 00:33:05,995 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:34:10,333 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-15 00:34:11,030 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:34:37,763 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
+2026-10-15 00:34:37,763 [INFO] content_generator — 이미지 계획 3건 사용: ['solo traveler busan beach', 'KTX train seat travel bag', 'busan market street food']
+2026-10-15 00:34:38,780 [WARNING] image_fetcher — 이미지 없음: 'solo traveler busan beach'
+2026-10-15 00:34:39,087 [INFO] image_fetcher — 이미지 수집 성공: 'KTX train seat travel bag' → 제목='train / korea / ktx / travel / railroad ' (관련성=0.60)
+2026-10-15 00:34:39,296 [INFO] image_fetcher — 이미지 수집 성공: 'busan market street food' → 제목='seed hotteok / republic of korea / busan' (관련성=0.25)
+2026-10-15 00:34:40,157 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:34:41,904 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-15 00:34:41,905 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-15 00:34:41,913 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-15 00:34:41,913 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-15 00:34:41,913 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 부산 혼자 여행 예산 짜기, 다시 간다면 이렇게' (2573자, 이미지 2개)
+2026-10-15 00:34:42,572 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:35:02,724 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-10-15 00:35:03,585 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:35:05,333 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '[3편] 부산 혼자 여행 예산 짜기, 다시 간다면 이렇게'
+2026-10-15 00:35:05,334 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 2개 포함되어 저작권 문제는 없으나 alt 텍스트 명시 여부 불확실하여 warn 처리
+2026-10-15 00:35:06,614 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-15 00:35:49,205 [INFO] final_editor —   ✏️ 제목 최종 교정: '[3편] 부산 혼자 여행 예산 짜기, 다시 간다면 이렇게' → '부산 혼자 여행 예산 짜기 3편, 1박2일 적정 비용 총정리'
+2026-10-15 00:35:49,205 [INFO] final_editor —   ✏️ 메타 설명 교정 (130자)
+2026-10-15 00:35:49,205 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 길이 기준에 맞게 재정비하고, 긴 문단을 2~4문장 단위로 쪼개 모바일 가독성을 높였습니다. 이미지 alt 텍스트를 구체화하고 주의사항·작성자 메모·내부 링크 언급을 추가해 발행 완성도를 맞췄습니다.
+2026-10-15 00:35:49,323 [INFO] related_posts — 내려간 글 9편을 관련 포스트 후보에서 제외
+2026-10-15 00:35:49,325 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-15 00:35:49,326 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-10-15 00:35:50,259 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/10/3-12.html
+2026-10-15 00:35:50,260 [INFO] main —   ✅ 편 3 업로드 완료: https://hogugolfntraval.blogspot.com/2026/10/3-12.html
+2026-10-15 00:35:50,274 [INFO] dashboard_exporter —   검토 대기 저장: [1편] 부산 혼자 여행 전날 숙소·기차 예약 실수 종합 (12563자 HTML)
+2026-10-15 00:35:50,274 [INFO] dashboard_exporter —   검토 대기 저장: [2편] 부산 1박2일 실제 영수증 공개, 교통·숙소·식비 얼마 나왔나 (11953자 HTML)
+2026-10-15 00:35:50,293 [INFO] pending_store — 검토 대기 저장: 목록 19건 / 보관 171건 / 본문 19건
+2026-10-15 00:35:50,293 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 2개 추가 (총 190개)
+2026-10-15 00:35:50,316 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 189개)
+2026-10-15 00:35:50,325 [INFO] dashboard_exporter — 분석 필드 유지: 86/92개 (등급·조회수·수익)
+2026-10-15 00:35:50,341 [INFO] dashboard_exporter —   시리즈: 43개 내보내기 완료
+2026-10-15 00:35:50,355 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-15 00:35:50,891 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-15 00:35:51,288 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-15 00:35:51,290 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-15 00:35:51,291 [INFO] dashboard_exporter —   학습 이력: 7주 내보내기 완료
+2026-10-15 00:35:51,294 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-15 00:35:51,313 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 272 / 실패 1 / 대기 15)
+2026-10-15 00:35:51,313 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-15 00:35:51,314 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-15 00:35:51,314 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-15 00:35:51,314 [INFO] main — 
+============================================================
+2026-10-15 00:35:51,314 [INFO] main — [HOGU 여행,스포츠,연예] 시리즈 완료: 1/3편 성공
+2026-10-15 00:35:51,314 [INFO] main — ============================================================
+2026-10-15 00:35:51,314 [INFO] main — 단독 포스트 대상 키워드 0개: []
+2026-10-15 00:35:51,335 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
+2026-10-15 00:35:51,335 [INFO] main — 
+============================================================
+2026-10-15 00:35:51,335 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 0개
+2026-10-15 00:35:51,336 [INFO] main — ============================================================
+2026-10-15 00:35:51,356 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 190개)
+2026-10-15 00:35:51,366 [INFO] dashboard_exporter — 분석 필드 유지: 86/92개 (등급·조회수·수익)
+2026-10-15 00:35:51,378 [INFO] dashboard_exporter —   시리즈: 43개 내보내기 완료
+2026-10-15 00:35:51,392 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-15 00:35:51,393 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-15 00:35:51,394 [INFO] dashboard_exporter —   학습 이력: 7주 내보내기 완료
+2026-10-15 00:35:51,397 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-15 00:35:51,416 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 270 / 실패 3 / 대기 15)
+2026-10-15 00:35:51,416 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-15 00:35:51,416 [INFO] dashboard_exporter —   포스트: 92개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-15 00:35:51,417 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-15 00:35:51,417 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다

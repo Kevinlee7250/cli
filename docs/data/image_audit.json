@@ -1,5 +1,5 @@
 {
-  "auditedAt": "2026-10-04T00:23:31.811908+00:00",
+  "auditedAt": "2026-10-17T23:54:12.886934+00:00",
   "applied": true,
   "aiJudged": false,
   "blogFilter": "",
@@ -16,59 +16,216 @@
   ],
   "incompleteBlogs": [],
   "stoppedAtLimit": false,
-  "scanned": 144,
-  "withIssues": 74,
-  "targeted": 13,
-  "fixed": 13,
+  "scanned": 170,
+  "withIssues": 100,
+  "targeted": 10,
+  "fixed": 10,
   "issueCounts": {
-    "insufficient": 72,
-    "weak_alt": 8,
-    "suspect": 8,
-    "broken": 6
+    "insufficient": 99,
+    "weak_alt": 10,
+    "suspect": 9,
+    "broken": 5
   },
   "posts": [
     {
-      "title": "짧은 연휴 해외여행 떠날 때 유류할증료 절약하는 방법 총정리",
-      "url": "https://www.hoguwhat.com/2026/10/blog-post_03.html",
+      "title": "닥터X 등장인물 분석 2편, 김지원과 조연 연기력 비교",
+      "url": "https://www.hoguwhat.com/2026/10/x-2.html",
       "images": 1,
       "needed": 3,
       "issues": [
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "닥터X 첫인상 리뷰 1편, 1화만 봐도 보이는 포인트들",
+      "url": "https://www.hoguwhat.com/2026/10/x-1-1.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
         },
         {
           "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/0f116dce15fd7f7d.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"공항 출국장 전광판 앞에서 항공편 정보를 확인하는 여행\")",
-          "alt": "공항 출국장 전광판 앞에서 항공편 정보를 확인하는 여행객의 모습"
+          "url": "https://kevinlee7250.github.io/cli/images/f4a2e2153b923d54.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"병원 복도를 배경으로 한 의학 드라마 느낌의 이미지\")",
+          "alt": "병원 복도를 배경으로 한 의학 드라마 느낌의 이미지"
         },
         {
           "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/0f116dce15fd7f7d.jpg",
+          "url": "https://kevinlee7250.github.io/cli/images/f4a2e2153b923d54.jpg",
           "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
           "score": 0.0,
-          "alt": "공항 출국장 전광판 앞에서 항공편 정보를 확인하는 여행객의 모습",
-          "imageTerms": "공항 출국장 전광판 앞에서 항공편 정보를 확인하는 여행객의 모습 0f116dce15fd7f7d",
+          "alt": "병원 복도를 배경으로 한 의학 드라마 느낌의 이미지",
+          "imageTerms": "병원 복도를 배경으로 한 의학 드라마 느낌의 이미지 f4a2e2153b923d54",
           "postTerms": [
-            "짧은",
-            "연휴",
-            "해외여행",
-            "떠날",
-            "유류할증료",
-            "절약하"
+            "닥터",
+            "첫인상",
+            "리뷰",
+            "화만",
+            "봐도",
+            "보이"
+          ]
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/b6e5941d3dac3ad5.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"수술복을 입은 의료진이 병원 복도를 걸어가는 모습\")",
+          "alt": "수술복을 입은 의료진이 병원 복도를 걸어가는 모습"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/b6e5941d3dac3ad5.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "수술복을 입은 의료진이 병원 복도를 걸어가는 모습",
+          "imageTerms": "수술복을 입은 의료진이 병원 복도를 걸어가는 모습 b6e5941d3dac3ad5",
+          "postTerms": [
+            "닥터",
+            "첫인상",
+            "리뷰",
+            "화만",
+            "봐도",
+            "보이"
           ]
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "alt 재작성 → \"짧은 연휴 해외여행 떠날 때 유류할증료 절약하는 방법 총정리 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 1건"
+        "alt 재작성 → \"닥터X 첫인상 리뷰 1편, 1화만 봐도 보이는 포인트들 관련 이미지\" (캡션 포함)",
+        "alt 재작성 → \"닥터X 첫인상 리뷰 1편, 1화만 봐도 보이는 포인트들 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 2건"
       ]
     },
     {
       "title": "10월 황금연휴 단거리 해외여행 추천, 일본·중국·동남아 비용 비교",
       "url": "https://www.hoguwhat.com/2026/10/10.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "삼양 검은모래해변 일몰과 맨발걷기 — 제주공항에서 20분",
+      "url": "https://www.hoguwhat.com/2026/10/20.html",
+      "images": 1,
+      "needed": 2,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 2장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "포핸즈 결말 총평, 호불호 갈린 이유",
+      "url": "https://www.hoguwhat.com/2026/10/blog-post_54.html",
+      "images": 1,
+      "needed": 2,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 2장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/970fc8fa73fa9e38.png",
+          "detail": "본문과 겹치는 말이 없는 alt (\"피아노 건반 위에서 네 손이 함께 연주하는 모습\")",
+          "alt": "피아노 건반 위에서 네 손이 함께 연주하는 모습"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/970fc8fa73fa9e38.png",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "피아노 건반 위에서 네 손이 함께 연주하는 모습",
+          "imageTerms": "피아노 건반 위에서 네 손이 함께 연주하는 모습 970fc8fa73fa9e38",
+          "postTerms": [
+            "포핸즈",
+            "결말",
+            "총평",
+            "호불호",
+            "갈린"
+          ]
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "alt 재작성 → \"포핸즈 결말 총평, 호불호 갈린 이유 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "포핸즈 등장인물 분석, 자매·스승 관계 총정리",
+      "url": "https://www.hoguwhat.com/2026/10/blog-post_07.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "유류할증료 아끼는 항공권 저렴하게 구매하는 방법 총정리",
+      "url": "https://www.hoguwhat.com/2026/10/blog-post_05.html",
+      "images": 1,
+      "needed": 4,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 4장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "면세점 할인 알뜰하게 이용하는 방법, 한도까지 완벽 정리",
+      "url": "https://www.hoguwhat.com/2026/10/blog-post_04.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU What?",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "짧은 연휴 해외여행 떠날 때 유류할증료 절약하는 방법 총정리",
+      "url": "https://www.hoguwhat.com/2026/10/blog-post_03.html",
       "images": 1,
       "needed": 3,
       "issues": [
@@ -107,34 +264,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/943d61e26894d8b6.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"훈련소 수료식에서 가족과 재회하는 훈련병들\")",
-          "alt": "훈련소 수료식에서 가족과 재회하는 훈련병들"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/943d61e26894d8b6.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "훈련소 수료식에서 가족과 재회하는 훈련병들",
-          "imageTerms": "훈련소 수료식에서 가족과 재회하는 훈련병들 943d61e26894d8b6",
-          "postTerms": [
-            "신병",
-            "결말",
-            "총평",
-            "역대",
-            "시즌과",
-            "비교"
-          ]
         }
       ],
       "blog": "HOGU What?",
       "actions": [
-        "alt 재작성 → \"신병4 결말 총평, 역대 시즌과 비교 정리 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 1건"
+        "변경 없음"
       ]
     },
     {
@@ -394,8 +528,8 @@
       ]
     },
     {
-      "title": "베트남 다낭 4박5일 실제 비용 솔직 후기, 조건별로 다르다",
-      "url": "https://hogugolfntraval.blogspot.com/2026/10/45.html",
+      "title": "할로윈 코스튬 저렴하게 구매하는 방법과 아이돌 콘셉트 참고 팁",
+      "url": "https://hogugolfntraval.blogspot.com/2026/10/blog-post_18.html",
       "images": 2,
       "needed": 3,
       "issues": [
@@ -405,13 +539,226 @@
         },
         {
           "type": "broken",
-          "url": "https://pixabay.com/get/g1a9e7b3c6d8f2e4a0b5c7d9e1f3a5b7_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
+          "url": "https://kevinlee7250.github.io/cli/images/8a2f91cd0e3b57a1.png",
+          "detail": "HTTP 404"
         }
       ],
       "blog": "HOGU 여행,스포츠,연예",
       "actions": [
         "broken 교체 → generated_thumbnail"
+      ]
+    },
+    {
+      "title": "2026 할로윈 파티 준비물 체크리스트, 직접 해본 후기 총정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/10/2026_0642945554.html",
+      "images": 3,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "broken",
+          "url": "https://kevinlee7250.github.io/cli/images/7a1c3f90d8e42b61.jpg",
+          "detail": "HTTP 404"
+        },
+        {
+          "type": "broken",
+          "url": "https://kevinlee7250.github.io/cli/images/9d4e21b7f3a85c60.jpg",
+          "detail": "HTTP 404"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "broken 교체 → generated_thumbnail",
+        "broken 교체 → generated_thumbnail"
+      ]
+    },
+    {
+      "title": "부산 1박2일 혼자 여행 비용, 범위별 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/10/12.html",
+      "images": 1,
+      "needed": 2,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 2장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "부산 혼자 여행 준비, 흔한 실수 모음",
+      "url": "https://hogugolfntraval.blogspot.com/2026/10/blog-post_15.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "부산 혼자 여행 예산 짜기 3편, 1박2일 적정 비용 총정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/10/3-12.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "2026 KBO 직관 준비물 체크리스트 총정리: 날씨부터 대기시간까지",
+      "url": "https://hogugolfntraval.blogspot.com/2026/10/2026-kbo.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/c3d0506ee46d0505.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"야구장 입구에서 입장을 기다리는 관중들 모습\")",
+          "alt": "야구장 입구에서 입장을 기다리는 관중들 모습"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/c3d0506ee46d0505.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "야구장 입구에서 입장을 기다리는 관중들 모습",
+          "imageTerms": "야구장 입구에서 입장을 기다리는 관중들 모습 c3d0506ee46d0505",
+          "postTerms": [
+            "KBO",
+            "직관",
+            "준비물",
+            "체크리스트",
+            "날씨부터",
+            "대기시간까지"
+          ]
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/e75a702e8bf81c3e.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"야구장 내야석과 외야 응원석 풍경 비교\")",
+          "alt": "야구장 내야석과 외야 응원석 풍경 비교"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/e75a702e8bf81c3e.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "야구장 내야석과 외야 응원석 풍경 비교",
+          "imageTerms": "야구장 내야석과 외야 응원석 풍경 비교 e75a702e8bf81c3e",
+          "postTerms": [
+            "KBO",
+            "직관",
+            "준비물",
+            "체크리스트",
+            "날씨부터",
+            "대기시간까지"
+          ]
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "alt 재작성 → \"2026 KBO 직관 준비물 체크리스트 총정리: 날씨부터 대기시간까지 관련 이미지\" (캡션 포함)",
+        "alt 재작성 → \"2026 KBO 직관 준비물 체크리스트 총정리: 날씨부터 대기시간까지 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 2건"
+      ]
+    },
+    {
+      "title": "[2편] KBO 야구장 좌석별 준비물, 외야 내야 테이블석 비교",
+      "url": "https://hogugolfntraval.blogspot.com/2026/10/2-kbo.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "야구장 직관 처음 준비물 실패 사례 총정리와 체크포인트",
+      "url": "https://hogugolfntraval.blogspot.com/2026/10/blog-post_06.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "제주도 여행 현지인처럼 즐기는 법, 솔직 맛집 후기와 동선 정리",
+      "url": "https://hogugolfntraval.blogspot.com/2026/10/blog-post_05.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "2026 넷플릭스·티빙 구독료 비교와 결합 요금제 절약법",
+      "url": "https://hogugolfntraval.blogspot.com/2026/10/2026_01671582330.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "베트남 다낭 4박5일 실제 비용 솔직 후기, 조건별로 다르다",
+      "url": "https://hogugolfntraval.blogspot.com/2026/10/45.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "HOGU 여행,스포츠,연예",
+      "actions": [
+        "변경 없음"
       ]
     },
     {
@@ -439,16 +786,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://pixabay.com/get/g3f8e2b1c4a95d6e7f0123456789abcde_1280.jpg",
-          "detail": "HTTP 400 (만료된 주소)"
         }
       ],
       "blog": "HOGU 여행,스포츠,연예",
       "actions": [
-        "broken 교체 → pixabay"
+        "변경 없음"
       ]
     },
     {
@@ -476,69 +818,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/62397d9d10f77a3a.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"불국사 경내 계단과 관람객들이 걷는 모습\")",
-          "alt": "불국사 경내 계단과 관람객들이 걷는 모습"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/62397d9d10f77a3a.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "불국사 경내 계단과 관람객들이 걷는 모습",
-          "imageTerms": "불국사 경내 계단과 관람객들이 걷는 모습 62397d9d10f77a3a",
-          "postTerms": [
-            "경주",
-            "당일치기",
-            "동선",
-            "실전",
-            "시간표",
-            "비교"
-          ]
         }
       ],
       "blog": "HOGU 여행,스포츠,연예",
       "actions": [
-        "alt 재작성 → \"경주 당일치기 동선 추천, 실전 시간표 3안 비교 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 1건"
-      ]
-    },
-    {
-      "title": "[2편] 황리단길 대신 경주 숨은 명소 골목 감포 해국길",
-      "url": "https://hogugolfntraval.blogspot.com/2026/09/2_01773074426.html",
-      "images": 3,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/d45510e4cabf1190.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"감포 바다를 따라 걷는 느리게 걷기 코스 해안 산책로\")",
-          "alt": "감포 바다를 따라 걷는 느리게 걷기 코스 해안 산책로"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/d45510e4cabf1190.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "감포 바다를 따라 걷는 느리게 걷기 코스 해안 산책로",
-          "imageTerms": "감포 바다를 따라 걷는 느리게 걷기 코스 해안 산책로 d45510e4cabf1190",
-          "postTerms": [
-            "황리단길",
-            "대신",
-            "경주",
-            "숨은",
-            "명소",
-            "골목"
-          ]
-        }
-      ],
-      "blog": "HOGU 여행,스포츠,연예",
-      "actions": [
-        "alt 재작성 → \"[2편] 황리단길 대신 경주 숨은 명소 골목 감포 해국길 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 3건"
+        "변경 없음"
       ]
     },
     {
@@ -750,6 +1034,308 @@
       ]
     },
     {
+      "title": "2026 할로윈 파티 준비물 직접 해본 후기와 비용 정리",
+      "url": "https://hoguasset.blogspot.com/2026/10/2026_0791983741.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "2026 금융지원 신청 방법과 후기로 보는 금감원 제도 총정리",
+      "url": "https://hoguasset.blogspot.com/2026/10/2026_01305836492.html",
+      "images": 2,
+      "needed": 4,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 4장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "[2편] 주식 손실 세액공제·대출상환 조건 정리",
+      "url": "https://hoguasset.blogspot.com/2026/10/2.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/8b810126df31132c.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"은행 창구에서 투자상품 안내 자료를 살펴보는 모습\")",
+          "alt": "은행 창구에서 투자상품 안내 자료를 살펴보는 모습"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/8b810126df31132c.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "은행 창구에서 투자상품 안내 자료를 살펴보는 모습",
+          "imageTerms": "은행 창구에서 투자상품 안내 자료를 살펴보는 모습 8b810126df31132c",
+          "postTerms": [
+            "주식",
+            "손실",
+            "세액공제",
+            "대출상환",
+            "조건"
+          ]
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "alt 재작성 → \"[2편] 주식 손실 세액공제·대출상환 조건 정리 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "코스피 폭락 2026 원인과 개인투자자 대응 체크리스트",
+      "url": "https://hoguasset.blogspot.com/2026/10/2026_0793642237.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/840da0e6fc77feee.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"급락한 주가 그래프를 스마트폰으로 확인하는 모습\")",
+          "alt": "급락한 주가 그래프를 스마트폰으로 확인하는 모습"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/840da0e6fc77feee.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "급락한 주가 그래프를 스마트폰으로 확인하는 모습",
+          "imageTerms": "급락한 주가 그래프를 스마트폰으로 확인하는 모습 840da0e6fc77feee",
+          "postTerms": [
+            "코스피",
+            "폭락",
+            "원인과",
+            "개인투자자",
+            "대응",
+            "체크리스트"
+          ]
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/d5eabd3921459a88.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"은행 앱에서 대출 현황과 금리를 조회하는 화면\")",
+          "alt": "은행 앱에서 대출 현황과 금리를 조회하는 화면"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/d5eabd3921459a88.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "은행 앱에서 대출 현황과 금리를 조회하는 화면",
+          "imageTerms": "은행 앱에서 대출 현황과 금리를 조회하는 화면 d5eabd3921459a88",
+          "postTerms": [
+            "코스피",
+            "폭락",
+            "원인과",
+            "개인투자자",
+            "대응",
+            "체크리스트"
+          ]
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "alt 재작성 → \"코스피 폭락 2026 원인과 개인투자자 대응 체크리스트 관련 이미지\" (캡션 포함)",
+        "alt 재작성 → \"코스피 폭락 2026 원인과 개인투자자 대응 체크리스트 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 2건"
+      ]
+    },
+    {
+      "title": "추석 선물 저렴하게 사는 꿀팁과 할인 타이밍 완벽 정리",
+      "url": "https://hoguasset.blogspot.com/2026/10/blog-post_15.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/9d22ed29f36e29b6.jpg",
+          "detail": "alt가 너무 짧음 (5자: \"추석 선물\")",
+          "alt": "추석 선물"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "alt 재작성 → \"추석 선물 저렴하게 사는 꿀팁과 할인 타이밍 완벽 정리 관련 이미지\" (캡션 포함)",
+        "캡션 동기화 2건"
+      ]
+    },
+    {
+      "title": "서학개미 다시 미국 주식, 2026년 지금 사도 될까",
+      "url": "https://hoguasset.blogspot.com/2026/09/2026_0774373565.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "해외주식 환헤지 선택 기준, 헤지형·언헤지형 차이와 체크리스트",
+      "url": "https://hoguasset.blogspot.com/2026/10/blog-post_08.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        },
+        {
+          "type": "weak_alt",
+          "url": "https://kevinlee7250.github.io/cli/images/0abd7b80f81e5375.jpg",
+          "detail": "본문과 겹치는 말이 없는 alt (\"환율 그래프와 금융 차트가 표시된 모니터\")",
+          "alt": "환율 그래프와 금융 차트가 표시된 모니터"
+        },
+        {
+          "type": "suspect",
+          "url": "https://kevinlee7250.github.io/cli/images/0abd7b80f81e5375.jpg",
+          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
+          "score": 0.0,
+          "alt": "환율 그래프와 금융 차트가 표시된 모니터",
+          "imageTerms": "환율 그래프와 금융 차트가 표시된 모니터 0abd7b80f81e5375",
+          "postTerms": [
+            "해외주식",
+            "환헤지",
+            "선택",
+            "헤지형",
+            "언헤지형",
+            "차이와"
+          ]
+        },
+        {
+          "type": "broken",
+          "url": "PLACEHOLDER_IMAGE",
+          "detail": "URL 형식 아님"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "alt 재작성 → \"해외주식 환헤지 선택 기준, 헤지형·언헤지형 차이와 체크리스트 관련 이미지\" (캡션 포함)",
+        "broken 교체 → pixabay",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "환헤지 ETF 보수·과세 완전 비교, 언헤지형 선택 가이드",
+      "url": "https://hoguasset.blogspot.com/2026/10/etf.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "해외주식 환노출 vs 환헤지 ETF, 수익률 차이 정리",
+      "url": "https://hoguasset.blogspot.com/2026/10/vs-etf.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "주식 소수점 거래 방법과 장단점 2026년 총정리 가이드",
+      "url": "https://hoguasset.blogspot.com/2026/10/2026_01799479320.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        },
+        {
+          "type": "broken",
+          "url": "https://kevinlee7250.github.io/cli/images/19a0ed4a90608ed6.jpg",
+          "detail": "HTTP 404"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "broken 교체 → pixabay",
+        "캡션 동기화 1건"
+      ]
+    },
+    {
+      "title": "AI 반도체 ETF 투자 전략 2026, 체크포인트 총정리",
+      "url": "https://hoguasset.blogspot.com/2026/10/ai-etf-2026.html",
+      "images": 2,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 2장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
+      "title": "중개형ISA 가입 혜택과 증권사 이벤트 비교 2026 체크리스트",
+      "url": "https://hoguasset.blogspot.com/2026/10/isa-2026.html",
+      "images": 1,
+      "needed": 3,
+      "issues": [
+        {
+          "type": "insufficient",
+          "detail": "이미지 1장 (권장 3장)"
+        }
+      ],
+      "blog": "금융NEWS",
+      "actions": [
+        "변경 없음"
+      ]
+    },
+    {
       "title": "스테이블코인이란 뜻과 활용법, 2026년 전망 정리",
       "url": "https://hoguasset.blogspot.com/2026/10/2026_01477541992.html",
       "images": 1,
@@ -774,17 +1360,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 2장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://kevinlee7250.github.io/cli/images/29f16c04d347fa2f.jpg",
-          "detail": "HTTP 404"
         }
       ],
       "blog": "금융NEWS",
       "actions": [
-        "broken 교체 → generated_thumbnail",
-        "캡션 동기화 1건"
+        "변경 없음"
       ]
     },
     {
@@ -812,32 +1392,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/5a7b1c1bf69f8eee.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"고금리 특판예금\")",
-          "alt": "고금리 특판예금"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/5a7b1c1bf69f8eee.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "고금리 특판예금",
-          "imageTerms": "고금리 특판예금 5a7b1c1bf69f8eee",
-          "postTerms": [
-            "청년미래적금",
-            "자격조건부터",
-            "절세",
-            "계산법까지"
-          ]
         }
       ],
       "blog": "금융NEWS",
       "actions": [
-        "alt 재작성 → \"2026 청년미래적금 자격조건부터 절세 계산법까지 총정리 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 2건"
+        "변경 없음"
       ]
     },
     {
@@ -865,17 +1424,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://kevinlee7250.github.io/cli/images/51e56a0158657718.jpg",
-          "detail": "HTTP 404"
         }
       ],
       "blog": "금융NEWS",
       "actions": [
-        "broken 교체 → pixabay",
-        "캡션 동기화 1건"
+        "변경 없음"
       ]
     },
     {
@@ -887,23 +1440,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "broken",
-          "url": "https://kevinlee7250.github.io/cli/images/0a8d2a4d880efa54.jpg",
-          "detail": "HTTP 404"
-        },
-        {
-          "type": "broken",
-          "url": "https://kevinlee7250.github.io/cli/images/ee0fc73da528b924.jpg",
-          "detail": "HTTP 404"
         }
       ],
       "blog": "금융NEWS",
       "actions": [
-        "broken 교체 → pixabay",
-        "broken 교체 → pixabay",
-        "캡션 동기화 2건"
+        "변경 없음"
       ]
     },
     {
@@ -915,34 +1456,11 @@
         {
           "type": "insufficient",
           "detail": "이미지 2장 (권장 3장)"
-        },
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/95bf32dafa7887f6.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"비과세 한도와 세율을 표현한 동전과 그래프 이미지\")",
-          "alt": "비과세 한도와 세율을 표현한 동전과 그래프 이미지"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/95bf32dafa7887f6.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "비과세 한도와 세율을 표현한 동전과 그래프 이미지",
-          "imageTerms": "비과세 한도와 세율을 표현한 동전과 그래프 이미지 95bf32dafa7887f6",
-          "postTerms": [
-            "ISA",
-            "계좌",
-            "절세",
-            "세금",
-            "고지서로",
-            "알아보기"
-          ]
         }
       ],
       "blog": "금융NEWS",
       "actions": [
-        "alt 재작성 → \"ISA 계좌 절세 2026, 세금 고지서로 알아보기 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 2건"
+        "변경 없음"
       ]
     },
     {
@@ -970,80 +1488,6 @@
         {
           "type": "insufficient",
           "detail": "이미지 1장 (권장 3장)"
-        },
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/3cfd8051338be0c4.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"20대 청년이 스마트폰으로 주식 앱과 재테크 영상을 확\")",
-          "alt": "20대 청년이 스마트폰으로 주식 앱과 재테크 영상을 확인하는 모습"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/3cfd8051338be0c4.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "20대 청년이 스마트폰으로 주식 앱과 재테크 영상을 확인하는 모습",
-          "imageTerms": "20대 청년이 스마트폰으로 주식 앱과 재테크 영상을 확인하는 모습 3cfd8051338be0c4",
-          "postTerms": [
-            "세대",
-            "투자",
-            "종목",
-            "추천보다",
-            "선택",
-            "기준이"
-          ]
-        }
-      ],
-      "blog": "금융NEWS",
-      "actions": [
-        "alt 재작성 → \"2030세대 첫 투자 종목 추천보다 선택 기준이 중요한 이유 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 1건"
-      ]
-    },
-    {
-      "title": "강남 아파트 주택담보대출, 2026년엔 얼마까지 나오나 (6억·4억·2억)",
-      "url": "https://hoguasset.blogspot.com/2026/09/2026-642.html",
-      "images": 2,
-      "needed": 2,
-      "issues": [
-        {
-          "type": "weak_alt",
-          "url": "https://kevinlee7250.github.io/cli/images/aeda82c5a56098b8.jpg",
-          "detail": "본문과 겹치는 말이 없는 alt (\"seoul apartment complex skylin\")",
-          "alt": "seoul apartment complex skyline"
-        },
-        {
-          "type": "suspect",
-          "url": "https://kevinlee7250.github.io/cli/images/aeda82c5a56098b8.jpg",
-          "detail": "관련성 낮음 (점수 0.0) — --ai로 확정 판정",
-          "score": 0.0,
-          "alt": "seoul apartment complex skyline",
-          "imageTerms": "seoul apartment complex skyline aeda82c5a56098b8",
-          "postTerms": [
-            "강남",
-            "아파트",
-            "주택담보대출",
-            "년엔",
-            "얼마까지",
-            "나오나"
-          ]
-        }
-      ],
-      "blog": "금융NEWS",
-      "actions": [
-        "alt 재작성 → \"강남 아파트 주택담보대출, 2026년엔 얼마까지 나오나 (6억·4억·2억) 관련 이미지\" (캡션 포함)",
-        "캡션 동기화 1건"
-      ]
-    },
-    {
-      "title": "서학개미 다시 미국 주식, 2026년 지금 사도 될까",
-      "url": "https://hoguasset.blogspot.com/2026/09/2026_0774373565.html",
-      "images": 2,
-      "needed": 3,
-      "issues": [
-        {
-          "type": "insufficient",
-          "detail": "이미지 2장 (권장 3장)"
         }
       ],
       "blog": "금융NEWS",

@@ -179,7 +179,8 @@ def _recent_published(blogs: list[dict], limit: int) -> list[dict]:
             "published_at": p.get("publishedAt") or p.get("createdAt", ""),
         })
     items.sort(key=lambda x: x.get("published_at") or "", reverse=True)
-    return _sample_spread(items, limit)
+    pinned, rest = _split_watchlist(items)
+    return pinned + _allocate_by_blog(rest, limit - len(pinned))
 
 
 def _sample_spread(items: list[dict], limit: int) -> list[dict]:
@@ -193,11 +194,91 @@ def _sample_spread(items: list[dict], limit: int) -> list[dict]:
     if limit <= 0 or len(items) <= limit:
         return items[:limit] if limit > 0 else []
     recent_n = max(1, limit // 2)
+    if limit - recent_n <= 0:
+        # 몫이 1건이면 나눠 뽑을 자리가 없습니다. 최신 글 하나로 갑니다.
+        # 2026-10-19: 여기서 0으로 나누고 있었습니다. 지금까지는 항상
+        # 20건으로만 불러서 드러나지 않았는데, 블로그별로 몫을 나누기
+        # 시작하면서 몫이 1이 되는 경우가 생겼습니다.
+        return items[:limit]
     recent = items[:recent_n]
     older = items[recent_n:]
     step = max(1, len(older) // (limit - recent_n))
     spread = older[::step][:limit - recent_n]
     return recent + spread
+
+
+def _allocate_by_blog(items: list[dict], limit: int) -> list[dict]:
+    """블로그마다 검사 몫을 나눠서 뽑습니다.
+
+    2026-10-19: 지금까지는 세 블로그를 한 묶음에 넣고 최근순으로 잘랐습니다.
+    그러면 가장 많이 발행하는 블로그가 검사 창을 거의 다 차지하고, 발행이
+    적은 블로그는 표본에서 통째로 빠집니다. 애드센스 심사를 받는 blog1 이
+    바로 그 경우였습니다 (10/14 발행 재개 뒤 고정 20건 창에서 직접 쓴
+    삼양 글이 밀려나, 정작 보려던 색인 상태를 못 봤습니다).
+
+    한 건씩 돌아가며 나눠 담아 몫이 자연히 고르게 떨어지게 하고, 글 수가
+    몫보다 적은 블로그가 남긴 자리는 다음 바퀴에서 다른 블로그가 씁니다.
+    """
+    if limit <= 0 or not items:
+        return []
+    groups: dict[str, list[dict]] = {}
+    for it in items:
+        groups.setdefault(it.get("blog") or "?", []).append(it)
+    names = sorted(groups)
+    counts = {n: 0 for n in names}
+    remaining = limit
+    while remaining > 0:
+        grew = False
+        for name in names:
+            if remaining <= 0:
+                break
+            if counts[name] < len(groups[name]):
+                counts[name] += 1
+                remaining -= 1
+                grew = True
+        if not grew:
+            break  # 모든 블로그의 글을 다 담았습니다
+    out: list[dict] = []
+    for name in names:
+        if counts[name]:
+            out.extend(_sample_spread(groups[name], counts[name]))
+    return out
+
+
+WATCHLIST_PATH = os.path.join(os.path.dirname(__file__), "index_watchlist.json")
+
+
+def load_watchlist() -> list[str]:
+    """색인 검사에서 '항상' 확인할 글 주소 목록. 없으면 빈 목록입니다."""
+    try:
+        with open(WATCHLIST_PATH, encoding="utf-8") as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        return []
+    except (OSError, ValueError) as exc:
+        logger.warning(f"관찰 목록을 읽지 못했습니다 ({exc}) — 목록 없이 진행합니다")
+        return []
+    urls = (data or {}).get("urls")
+    if not isinstance(urls, list):
+        return []
+    return [u.strip() for u in urls if isinstance(u, str) and u.strip()]
+
+
+def _split_watchlist(items: list[dict]) -> tuple[list[dict], list[dict]]:
+    """관찰 목록에 있는 글을 앞으로 빼냅니다.
+
+    2026-10-19: 검사 창이 고정 20건이라, 특정 글의 색인 상태를 며칠 이어서
+    보려 해도 새 글이 쌓이면 밀려나 사라졌습니다. 어떤 글이 색인되는지
+    알아보려고 직접 쓴 글이 이렇게 묻혔습니다. 목록에 적은 주소는 몫과
+    무관하게 항상 검사합니다.
+    """
+    watch = {u.rstrip("/") for u in load_watchlist()}
+    if not watch:
+        return [], items
+    pinned = [it for it in items if (it.get("url") or "").rstrip("/") in watch]
+    pinned_ids = {id(it) for it in pinned}
+    rest = [it for it in items if id(it) not in pinned_ids]
+    return pinned, rest
 
 
 def inspect_recent(blogs: list[dict], limit: int = 20, token: str | None = None) -> dict:

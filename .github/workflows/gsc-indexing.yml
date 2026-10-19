@@ -10,9 +10,9 @@ on:
   workflow_dispatch:
     inputs:
       inspect_count:
-        description: '색인 검사할 최근 글 수 (기본 20)'
+        description: '색인 검사할 글 수 (기본 45 = 블로그당 약 15건)'
         required: false
-        default: '20'
+        default: '45'
 
 permissions:
   contents: write
@@ -63,7 +63,10 @@ jobs:
           # 사이트맵이 왜 전달되지 않는지부터 확인 (읽기 전용이라 안전)
           python gsc_diagnose.py
           python gsc_indexing.py --submit
-          python gsc_indexing.py --inspect "${{ inputs.inspect_count || '20' }}"
+          # 45건 = 블로그 3개 × 약 15건. 블로그별로 몫을 나눠 뽑기 때문에
+          # 발행이 적은 블로그(blog1)도 반드시 표본에 남습니다. 2026-10-19:
+          # 20건이던 때는 발행량 많은 블로그가 창을 다 차지했습니다.
+          python gsc_indexing.py --inspect "${{ inputs.inspect_count || '45' }}"
           # 색인 요청은 자동화할 수 없으므로(웹 UI 전용·하루 10건),
           # 무엇을 먼저 넣을지 우선순위만 뽑아 둡니다
           python index_priority.py

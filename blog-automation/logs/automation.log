@@ -1,111 +1,3 @@
-2026-10-18 23:49:39,492 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '📌 핵심 요약','💬 잠깐' 등 템플릿형 구성과 체크리스트 패턴이 반복돼 AI 보조 의심 신호 존재
-2026-10-18 23:49:39,492 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-10-18 23:49:39,901 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:50:32,368 [INFO] final_editor —   ✏️ 제목 최종 교정: '제주 렌터카 보험 필요한 옵션만 고르는 법' → '제주도 렌터카 보험 옵션, 실제로 필요한 것만 고르는 법'
-2026-10-18 23:50:32,368 [INFO] final_editor —   ✏️ 메타 설명 교정 (112자)
-2026-10-18 23:50:32,368 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 키워드 중심으로 정리하고, 이미지 3개의 위치와 구체적 alt 텍스트를 추가했으며, 공식 기관 참고자료와 내부 링크 주제를 명시해 발행 준비를 완료했습니다.
-2026-10-18 23:50:32,473 [WARNING] blogger_uploader — ⏭ 중복 포스트 감지 — 업로드 건너뜀: '제주도 렌터카 보험 옵션, 실제로 필요한 것만 고르는 법'
-   기존 포스트: '제주도 렌터카 보험 옵션, 실제로 필요한 것만 고르는 법' (https://www.hoguwhat.com/2026/08/blog-post_14.html)
-2026-10-18 23:50:32,487 [WARNING] main —   ⏭ 중복 주제 — 업로드 건너뜀: '제주 렌터카 보험 필요한 옵션만 고르는 법' (유사 제목 이미 발행됨)
-2026-10-18 23:50:32,487 [INFO] main — 
-============================================================
-2026-10-18 23:50:32,487 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
-2026-10-18 23:50:32,487 [INFO] main — ============================================================
-2026-10-18 23:50:32,506 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 200개)
-2026-10-18 23:50:32,516 [INFO] dashboard_exporter — 분석 필드 유지: 73/87개 (등급·조회수·수익)
-2026-10-18 23:50:32,530 [INFO] dashboard_exporter —   시리즈: 44개 내보내기 완료
-2026-10-18 23:50:32,543 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-10-18 23:50:32,764 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-18 23:50:33,011 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-18 23:50:33,012 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-10-18 23:50:33,014 [INFO] dashboard_exporter —   학습 이력: 8주 내보내기 완료
-2026-10-18 23:50:33,017 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-10-18 23:50:33,035 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 268 / 실패 0 / 대기 16)
-2026-10-18 23:50:33,035 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-18 23:50:33,035 [INFO] dashboard_exporter —   포스트: 87개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-18 23:50:33,036 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-10-18 23:50:33,037 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다
-2026-10-18 23:51:13,786 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-18 23:51:14,980 [INFO] main — ============================================================
-2026-10-18 23:51:14,980 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-10-18 23:51:14
-2026-10-18 23:51:14,981 [INFO] main — ============================================================
-2026-10-18 23:51:14,994 [INFO] keyword_collector — 타 블로그 최근 키워드 6개 중복 방지 코퍼스 합류
-2026-10-18 23:51:14,994 [INFO] keyword_collector — 포스팅 이력 코퍼스: 87개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-10-18 23:51:14,994 [INFO] keyword_collector — 시즌 예약 키워드 9개 로드 (blog=blog2): ['할로윈 코스튬 추천 직접 해본 후기', '할로윈 소품 다이소 솔직 비교 후기', '2026 할로윈 파티 집에서 준비하는 방법']...
-2026-10-18 23:51:21,400 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-10-18 23:51:30,069 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:51:30,088 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-10-18 23:51:30,088 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-10-18 23:51:30,695 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-18 23:51:30,696 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-10-18 23:51:30,697 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-10-18 23:51:30,704 [INFO] keyword_collector — 유사 주제 제외 10개: ['할로윈 코스튬 추천 직접 해본 후기', '2026 할로윈 파티 집에서 준비하는 방법', '할로윈 코스튬 커플룩 저렴하게 완성하기', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법']
-2026-10-18 23:51:30,705 [INFO] keyword_collector —   [season_scheduled] 1개: ['할로윈 소품 다이소 솔직 비교 후기']
-2026-10-18 23:51:30,705 [INFO] keyword_collector —   [naver_realtime] 1개: ['2026 가을 세일 이마트 아울렛 쇼핑 꿀팁']
-2026-10-18 23:51:30,705 [INFO] keyword_collector — 최종 선정 키워드 2개: ['할로윈 소품 다이소 솔직 비교 후기', '2026 가을 세일 이마트 아울렛 쇼핑 꿀팁']
-2026-10-18 23:51:30,705 [INFO] main — 수집된 키워드 2개: ['할로윈 소품 다이소 솔직 비교 후기', '2026 가을 세일 이마트 아울렛 쇼핑 꿀팁']
-2026-10-18 23:51:30,714 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-10-18 23:51:30,714 [INFO] main — 단독 포스트 대상 키워드 1개: ['할로윈 소품 다이소 솔직 비교 후기']
-2026-10-18 23:51:30,727 [INFO] main — 
-[1/1] 키워드: '할로윈 소품 다이소 솔직 비교 후기'
-2026-10-18 23:51:30,727 [INFO] content_generator — 포스트 생성 중: '할로윈 소품 다이소 솔직 비교 후기'
-2026-10-18 23:51:36,743 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:51:36,744 [INFO] research_collector — 검색 의도: 다이소 할로윈 소품을 실제로 구매해본 사람의 솔직한 품질, 가격, 구성 비교 정보를 얻고자 함
-2026-10-18 23:51:44,433 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '할로윈 소품 다이소 솔직 비교 후기'
-2026-10-18 23:51:55,024 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:51:55,025 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '할로윈 소품 다이소 솔직 비교 후기'
-2026-10-18 23:52:09,911 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:52:09,912 [INFO] source_validator — 출처 검증: 0/5개 통과, 등급 분포 {'X': 5}
-2026-10-18 23:52:09,914 [INFO] evidence_builder — 자료팩: 중요 사실 5개 제외 (A/B 등급 출처 없음)
-2026-10-18 23:52:09,914 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-18 23:52:09,915 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-18 23:52:10,332 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:53:21,774 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-18 23:53:21,775 [WARNING] content_generator — 컨텐츠 너무 짧음(2243자, 최소 2500자) — 재시도 1/3
-2026-10-18 23:53:24,775 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-10-18 23:53:24,775 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-18 23:53:25,535 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:54:40,396 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-18 23:54:41,184 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:54:53,325 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '거미줄 장식, 가랜드류, 풍선 세트 등 대부분의 품목이 5천원 이하로 형'
-2026-10-18 23:54:53,326 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 3건 자동 수정 적용
-2026-10-18 23:54:53,326 [INFO] content_generator — 이미지 계획 2건 사용: ['halloween photo booth decoration', 'halloween party supplies store']
-2026-10-18 23:54:53,524 [INFO] image_fetcher — 이미지 수집 성공: 'halloween photo booth decoration' → 제목='halloween / ghosts / happy halloween / g' (관련성=0.50)
-2026-10-18 23:54:53,649 [INFO] image_fetcher — 이미지 수집 성공: 'halloween party supplies store' → 제목='skulls / skull allover / halloween / hal' (관련성=0.50)
-2026-10-18 23:54:54,821 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:54:55,267 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-10-18 23:54:55,267 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-10-18 23:54:55,274 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-10-18 23:54:55,276 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-18 23:54:55,276 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-18 23:54:55,276 [INFO] content_generator — 포스트 생성 완료: '할로윈 아이돌 생일카페 꾸미기, 다이소 소품 비교 후기 총정리' (2589자, 이미지 2개)
-2026-10-18 23:54:56,010 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:55:17,488 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-18 23:55:18,207 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:55:19,419 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '할로윈 아이돌 생일카페 꾸미기, 다이소 소품 비교 후기 총정리'
-2026-10-18 23:55:19,419 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 가격대·소품 종류 등 구체적 정보는 있으나 '후기를 종합하면'식 서술이 반복되어 1차 자료 인용이 약함
-2026-10-18 23:55:19,419 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 단락 구분 없이 긴 텍스트 블록이 다수 존재
-2026-10-18 23:55:19,419 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 6개 보유 및 균형잡힌 장단점 서술은 긍정적이나 본문 내 구체적 출처명·시점 인용이 부족
-2026-10-18 23:55:19,419 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 표기로 저작권 문제는 없으나 이미지 수가 적어 기본 warn 적용
-2026-10-18 23:55:19,419 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~것으로 보인다', '종합해보면' 등 반복 표현과 중복된 핵심요약 박스가 AI 패턴 의심 요소
-2026-10-18 23:55:19,423 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-10-18 23:55:19,425 [INFO] internal_linker —   [1/5] '후기와' -> https://hoguasset.blogspot.com/2026/10/2026_0791983741.html
-2026-10-18 23:55:19,428 [INFO] internal_linker —   [2/5] '다르다' -> https://hogugolfntraval.blogspot.com/2026/10/45.html
-2026-10-18 23:55:19,432 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-10-18 23:55:19,432 [INFO] main —   제목: 할로윈 아이돌 생일카페 꾸미기, 다이소 소품 비교 후기 총정리
-2026-10-18 23:55:19,432 [INFO] main —   이미지: 2개 삽입
-2026-10-18 23:55:19,432 [INFO] main —   글자 수: 2589자
-2026-10-18 23:55:20,148 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:55:41,251 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '할로윈 아이돌 생일카페 꾸미기, 다이소 소품 비교 후기 총정리'
-2026-10-18 23:55:41,251 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 양호하나 일부 단락이 500자 이상으로 길어 가독성이 다소 떨어짐
-2026-10-18 23:55:41,251 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 6개 출처를 언급하나 본문 내 구체적 출처명·시점 표기가 부족하고 '~로 보인다' 식 모호한 표현이 반복됨
-2026-10-18 23:55:41,251 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '후기를 종합하면', '~로 전해진다' 등 유사 패턴 문구가 반복되어 기계적 생성 느낌이 일부 있음
-2026-10-18 23:55:41,252 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-10-18 23:55:42,058 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:57:00,287 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-18 23:57:01,059 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-18 23:58:02,326 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-18 23:58:03,186 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-10-18 23:58:04,370 [INFO] final_editor —   ✏️ 제목 최종 교정: '할로윈 아이돌 생일카페 꾸미기, 다이소 소품 비교 후기 총정리' → '할로윈 소품 다이소 솔직 비교 후기, 생일카페 꾸미기 총정리'
 2026-10-18 23:58:04,370 [INFO] final_editor —   ✏️ 메타 설명 교정 (148자)
 2026-10-18 23:58:04,370 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 중복된 요약 박스를 템플릿 형식 하나로 통일하고 긴 문단을 2~4문장 단위로 분할했으며, 비교표·FAQ·주의사항·개인 경험 메모·작성자 메모·내부 링크 언급을 추가해 발행 가능한 형태로 정리했습니다.
@@ -606,3 +498,109 @@
 2026-10-20 01:12:30,626 [INFO] dashboard_exporter —   포스트: 83개 / 실행 이력: 120개 / 블로그: 3개
 2026-10-20 01:12:30,627 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-10-20 01:12:30,628 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-10-21 00:14:05,609 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-21 00:14:06,871 [INFO] main — ============================================================
+2026-10-21 00:14:06,871 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-10-21 00:14:06
+2026-10-21 00:14:06,871 [INFO] main — ============================================================
+2026-10-21 00:14:06,886 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
+2026-10-21 00:14:06,886 [INFO] keyword_collector — 포스팅 이력 코퍼스: 73개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-10-21 00:14:06,886 [INFO] keyword_collector — 시즌 예약 키워드 37개 로드 (blog=blog1): ['2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법', '명절 TV 영화 편성표 솔직 비교']...
+2026-10-21 00:14:10,196 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-10-21 00:14:15,782 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-21 00:14:15,802 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-10-21 00:14:15,802 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-10-21 00:14:16,248 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['해외에서 사고 났을 때 대사관 신고 직접 경험한 과정']
+2026-10-21 00:14:16,492 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-21 00:14:16,493 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-10-21 00:14:16,494 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-10-21 00:14:16,499 [INFO] keyword_collector —   [high_cpc] 1개: ['해외에서 사고 났을 때 대사관 신고 직접 경험한 과정']
+2026-10-21 00:14:16,499 [INFO] keyword_collector —   [season_scheduled] 1개: ['할로윈 소품 다이소 솔직 비교 후기']
+2026-10-21 00:14:16,499 [INFO] keyword_collector — 최종 선정 키워드 2개: ['해외에서 사고 났을 때 대사관 신고 직접 경험한 과정', '할로윈 소품 다이소 솔직 비교 후기']
+2026-10-21 00:14:16,500 [INFO] main — 수집된 키워드 2개: ['해외에서 사고 났을 때 대사관 신고 직접 경험한 과정', '할로윈 소품 다이소 솔직 비교 후기']
+2026-10-21 00:14:16,506 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
+2026-10-21 00:14:16,506 [INFO] main — 단독 포스트 대상 키워드 1개: ['해외에서 사고 났을 때 대사관 신고 직접 경험한 과정']
+2026-10-21 00:14:16,518 [INFO] main — 
+[1/1] 키워드: '해외에서 사고 났을 때 대사관 신고 직접 경험한 과정'
+2026-10-21 00:14:16,518 [INFO] content_generator — 포스트 생성 중: '해외에서 사고 났을 때 대사관 신고 직접 경험한 과정'
+2026-10-21 00:14:23,515 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-21 00:14:23,516 [INFO] research_collector — 검색 의도: 해외 사고 발생 시 대사관에 신고하는 실제 절차와 경험담을 알고 싶어하는 검색 의도
+2026-10-21 00:14:32,124 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '해외에서 사고 났을 때 대사관 신고 직접 경험한 과정'
+2026-10-21 00:14:42,207 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-21 00:14:42,208 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '해외에서 사고 났을 때 대사관 신고 직접 경험한 과정'
+2026-10-21 00:14:52,120 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-21 00:14:52,122 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'A': 3, 'X': 2}
+2026-10-21 00:14:52,124 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-21 00:14:52,130 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-21 00:14:52,803 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-21 00:15:58,832 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-21 00:15:59,541 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-21 00:16:09,069 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '국가별 접속번호로 걸면 무료로'
+2026-10-21 00:16:09,069 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '이 글은 공식 자료 조사와 정보 정리를 바탕으로 작성되었습니다'
+2026-10-21 00:16:09,069 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 1건 자동 수정 적용
+2026-10-21 00:16:09,069 [INFO] content_generator — 이미지 계획 2건 사용: ['traveler emergency phone call airport', 'dialing international phone number']
+2026-10-21 00:16:09,304 [INFO] image_fetcher — 이미지 수집 성공: 'traveler emergency phone call airport' → 제목='phone booth / make a phone call / emerge' (관련성=0.60)
+2026-10-21 00:16:10,026 [INFO] image_fetcher — 이미지 수집 성공: 'dialing international phone number' → 제목='mobile / phone / technology / internet /' (관련성=0.50)
+2026-10-21 00:16:10,845 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-21 00:16:11,930 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-21 00:16:11,930 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-21 00:16:11,938 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-10-21 00:16:11,940 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-21 00:16:11,940 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-21 00:16:11,940 [INFO] content_generator — 포스트 생성 완료: '해외 사고 발생 시 영사콜센터 신고 절차 정리' (2609자, 이미지 2개)
+2026-10-21 00:16:13,831 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-21 00:16:31,630 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '해외 사고 발생 시 영사콜센터 신고 절차 정리'
+2026-10-21 00:16:31,630 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 수는 충분하나 일부 섹션 단락이 500자 이상으로 길게 이어짐
+2026-10-21 00:16:31,630 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처는 명시됐으나 alt 텍스트 기재 여부 확인 불가
+2026-10-21 00:16:31,630 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 요약박스·표·체크리스트가 반복되는 전형적 AI 블로그 포맷 패턴이 다수 관찰됨
+2026-10-21 00:16:31,634 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-10-21 00:16:31,636 [INFO] internal_linker —   [1/5] '준비물' -> https://hoguasset.blogspot.com/2026/10/2026_0791983741.html
+2026-10-21 00:16:31,638 [INFO] internal_linker —   [2/5] '체크리스트' -> https://hogugolfntraval.blogspot.com/2026/10/2026_0642945554
+2026-10-21 00:16:31,645 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-10-21 00:16:31,645 [INFO] main —   제목: 해외 사고 발생 시 영사콜센터 신고 절차 정리
+2026-10-21 00:16:31,645 [INFO] main —   이미지: 2개 삽입
+2026-10-21 00:16:31,645 [INFO] main —   글자 수: 2609자
+2026-10-21 00:16:32,384 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-21 00:16:48,618 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '해외 사고 발생 시 영사콜센터 신고 절차 정리'
+2026-10-21 00:16:48,618 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지는 Pixabay 합법 출처이나 alt 텍스트 명시 여부 확인 불가
+2026-10-21 00:16:48,618 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 요약박스·체크리스트 등 전형적인 AI 블로그 템플릿 패턴이 반복적으로 나타남
+2026-10-21 00:16:48,618 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-10-21 00:16:49,448 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-21 00:17:43,853 [INFO] final_editor —   ✏️ 제목 최종 교정: '해외 사고 발생 시 영사콜센터 신고 절차 정리' → '해외에서 사고 났을 때 대사관 신고하는 법, 직접 경험 정리'
+2026-10-21 00:17:43,853 [INFO] final_editor —   ✏️ 메타 설명 교정 (142자)
+2026-10-21 00:17:43,854 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목과 메타 설명을 글자 수 기준에 맞춰 재작성하고, 긴 문단을 2~4문장 단위로 분리했습니다. 이미지 3개의 위치와 구체적 alt 텍스트를 지정하고, 중복된 FAQ 문항을 정리해 가독성을 높였습니다.
+2026-10-21 00:17:43,970 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-21 00:17:43,971 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-10-21 00:17:44,951 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/10/blog-post_21.html
+2026-10-21 00:17:44,965 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/10/blog-post_21.html
+2026-10-21 00:17:44,970 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-10-21 00:17:44,978 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-21 00:17:44,979 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '해외에서 사고 났을 때 대사관 신고하는 법, 직접 경험 정리'
+2026-10-21 00:17:45,551 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-21 00:17:48,738 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리면, 여권을 분실하거나 도난당했을 때는 영사콜센터뿐 아니라 '영사민원24' 홈페이지에서 여행증명서 신청도 미리 알아두시면 좋...
+2026-10-21 00:20:48,899 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-10-21 00:20:48,901 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-10-21 00:20:48,901 [INFO] main — 
+============================================================
+2026-10-21 00:20:48,901 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-10-21 00:20:48,901 [INFO] main — ============================================================
+2026-10-21 00:20:48,920 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 154개)
+2026-10-21 00:20:48,929 [INFO] dashboard_exporter — 분석 필드 유지: 80/84개 (등급·조회수·수익)
+2026-10-21 00:20:48,942 [INFO] dashboard_exporter —   시리즈: 44개 내보내기 완료
+2026-10-21 00:20:48,954 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-21 00:20:49,332 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-21 00:20:49,593 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-21 00:20:49,595 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-21 00:20:49,596 [INFO] dashboard_exporter —   학습 이력: 8주 내보내기 완료
+2026-10-21 00:20:49,599 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-21 00:20:49,618 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 268 / 실패 0 / 대기 16)
+2026-10-21 00:20:49,618 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-21 00:20:49,618 [INFO] dashboard_exporter —   포스트: 84개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-21 00:20:49,619 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-21 00:20:49,619 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

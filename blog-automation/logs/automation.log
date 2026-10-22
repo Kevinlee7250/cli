@@ -1,100 +1,3 @@
-2026-10-19 00:04:59,658 [INFO] adsense_validator —   ❌ AI 생성 의심도: 같은 문장이 그대로 반복 삽입된 구간(예: '하나만 사러 갔다가...', '한겨레의 한겨레의...')이 있어 미편집 AI 생성 흔적이 뚜렷함
-2026-10-19 00:04:59,658 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 같은 문장이 그대로 반복 삽입된 구간(예: '하나만 사러 갔다가...', '한겨레의 한겨레의...')이 있어 미편집 AI 생성 흔적이 뚜렷함
-2026-10-19 00:04:59,658 [WARNING] adsense_validator —   🔴 본문 내 문장 중복/오류(예: '한겨레의 "한겨레의 할로윈 관련 보도를 보면를 보면' 및 '하나만 사러 갔다가' 반복)는 미편집 AI 생성 흔적으로 즉시 수정 필요
-2026-10-19 00:04:59,658 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 72/100, 권장: review) — 자동 수정 시도
-2026-10-19 00:04:59,658 [WARNING] main —      🔴 [AI 생성 의심도] 같은 문장이 그대로 반복 삽입된 구간(예: '하나만 사러 갔다가...', '한겨레의 한겨레의...')이 있어 미편집 AI 생성 흔적이 뚜렷함
-2026-10-19 00:04:59,658 [WARNING] main —      🔴 본문 내 문장 중복/오류(예: '한겨레의 "한겨레의 할로윈 관련 보도를 보면를 보면' 및 '하나만 사러 갔다가' 반복)는 미편집 AI 생성 흔적으로 즉시 수정 필요
-2026-10-19 00:04:59,658 [WARNING] main —      🟡 [원본성 및 품질] 구체적 수치(2019 지마켓 77%, 2배)와 자료 해석은 있으나 동일 문장이 반복·중복 삽입되어 편집 품질이 떨어짐
-2026-10-19 00:04:59,658 [WARNING] main —      🟡 [구조 및 가독성] H2는 6개로 충분하나 일부 단락이 500자 이상으로 과도하게 길어 가독성 저하
-2026-10-19 00:04:59,658 [WARNING] main —      🟡 [이미지 정책] 이미지 1개만 존재하며 출처는 '직접 제작'이나 alt 텍스트 정보 확인 불가
-2026-10-19 00:04:59,658 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 72/100, fail: 1개, warn: 3개
-2026-10-19 00:04:59,667 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-19 00:04:59,674 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 1건
-2026-10-19 00:05:00,371 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-19 00:06:31,544 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2855자 → 3985자 (+1130자)
-2026-10-19 00:06:31,544 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-10-19 00:06:32,382 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-19 00:06:48,336 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '다이소 할로윈 소품, 대형마트·온라인과 비교해보니 (채널별 체크'
-2026-10-19 00:06:48,337 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락(채널비교, 수요분석 섹션)이 500자 이상으로 길게 이어짐
-2026-10-19 00:06:48,337 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 삽입 여부 확인 불가하며 명시적 이미지 설명 없어 가독성 측면 보완 필요
-2026-10-19 00:06:48,337 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌·💡 이모지 요약박스와 정형화된 '~습니다' 보고서체 반복이 AI 템플릿 느낌을 줌
-2026-10-19 00:06:48,337 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 72 → 84/100)
-2026-10-19 00:06:48,337 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-10-19 00:06:49,022 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-19 00:08:00,238 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-19 00:08:00,996 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-19 00:08:52,069 [INFO] final_editor —   ✏️ 제목 최종 교정: '다이소 할로윈 소품, 대형마트·온라인과 비교해보니 (채널별 체크리스트)' → '다이소 할로윈 소품 솔직 비교 후기 (대형마트·온라인)'
-2026-10-19 00:08:52,069 [INFO] final_editor —   ✏️ 메타 설명 교정 (112자)
-2026-10-19 00:08:52,069 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고, 요약 박스·표·개인 경험 메모·주의사항·FAQ(5개)·작성자 메모를 모두 규칙에 맞춰 추가했습니다. 제목·메타설명·슬러그를 글자 수 기준에 맞게 재작성하고, 연도 표기 오류(2026년)를 '지금 시점'으로 수정했습니다.
-2026-10-19 00:08:52,173 [INFO] related_posts — 내려간 글 1편을 관련 포스트 후보에서 제외
-2026-10-19 00:08:52,175 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-10-19 00:08:52,175 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
-2026-10-19 00:08:53,167 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/10/blog-post_19.html
-2026-10-19 00:08:53,181 [INFO] main —   ✅ 업로드 성공: https://hoguasset.blogspot.com/2026/10/blog-post_19.html
-2026-10-19 00:08:53,186 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-10-19 00:08:53,194 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-19 00:08:53,195 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '다이소 할로윈 소품 솔직 비교 후기 (대형마트·온라인)'
-2026-10-19 00:08:53,990 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-19 00:08:56,467 [INFO] comment_manager —   생성된 댓글: 하나 더 팁 드리자면, 다이소는 오전 오픈 직후에 가시면 재입고 물량을 확인하기 좋더라고요. 특히 인기 많은 눈화장 키트나 가발류는 오후엔 품절...
-2026-10-19 00:11:56,665 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-10-19 00:11:56,667 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-10-19 00:11:56,667 [INFO] main — 
-============================================================
-2026-10-19 00:11:56,667 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
-2026-10-19 00:11:56,667 [INFO] main — ============================================================
-2026-10-19 00:11:56,687 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 202개)
-2026-10-19 00:11:56,700 [INFO] dashboard_exporter — 분석 필드 유지: 73/89개 (등급·조회수·수익)
-2026-10-19 00:11:56,715 [INFO] dashboard_exporter —   시리즈: 44개 내보내기 완료
-2026-10-19 00:11:56,729 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-10-19 00:11:56,941 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-19 00:11:57,168 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-19 00:11:57,170 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-10-19 00:11:57,172 [INFO] dashboard_exporter —   학습 이력: 8주 내보내기 완료
-2026-10-19 00:11:57,175 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-10-19 00:11:57,195 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 268 / 실패 0 / 대기 16)
-2026-10-19 00:11:57,195 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-19 00:11:57,195 [INFO] dashboard_exporter —   포스트: 89개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-19 00:11:57,196 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-10-19 00:11:57,197 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-10-20 00:47:25,048 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-20 00:47:26,252 [INFO] main — ============================================================
-2026-10-20 00:47:26,252 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-10-20 00:47:26
-2026-10-20 00:47:26,252 [INFO] main — ============================================================
-2026-10-20 00:47:26,265 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
-2026-10-20 00:47:26,265 [INFO] keyword_collector — 포스팅 이력 코퍼스: 73개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-10-20 00:47:26,266 [INFO] keyword_collector — 시즌 예약 키워드 38개 로드 (blog=blog1): ['2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법', '명절 TV 영화 편성표 솔직 비교']...
-2026-10-20 00:47:29,476 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-10-20 00:47:35,175 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-20 00:47:35,194 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-10-20 00:47:35,194 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-10-20 00:47:35,536 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것']
-2026-10-20 00:47:36,079 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-20 00:47:36,080 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-10-20 00:47:36,081 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-10-20 00:47:36,087 [INFO] keyword_collector —   [high_cpc] 1개: ['패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것']
-2026-10-20 00:47:36,087 [INFO] keyword_collector —   [season_scheduled] 1개: ['할로윈 코스튬 추천 직접 해본 후기']
-2026-10-20 00:47:36,087 [INFO] keyword_collector — 최종 선정 키워드 2개: ['패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것', '할로윈 코스튬 추천 직접 해본 후기']
-2026-10-20 00:47:36,087 [INFO] main — 수집된 키워드 2개: ['패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것', '할로윈 코스튬 추천 직접 해본 후기']
-2026-10-20 00:47:36,093 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-10-20 00:47:36,093 [INFO] main — 단독 포스트 대상 키워드 1개: ['패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것']
-2026-10-20 00:47:36,107 [INFO] main — 
-[1/1] 키워드: '패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것'
-2026-10-20 00:47:36,107 [INFO] content_generator — 포스트 생성 중: '패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것'
-2026-10-20 00:47:44,391 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-20 00:47:44,392 [INFO] research_collector — 검색 의도: 패키지여행 계약 시 환불 조항을 실제로 확인하고 싶은 소비자가 계약서 내용과 법적 기준을 정확히 이해하려는 
-2026-10-20 00:47:55,816 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것'
-2026-10-20 00:48:08,540 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-20 00:48:08,541 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '패키지여행 계약서 환불 조항 직접 읽어보고 알게 된 것'
-2026-10-20 00:48:30,705 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-20 00:48:30,707 [INFO] source_validator — 출처 검증: 0/4개 통과, 등급 분포 {'X': 4}
-2026-10-20 00:48:30,709 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
 2026-10-20 00:48:30,709 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
 2026-10-20 00:48:30,727 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
 2026-10-20 00:48:31,266 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
@@ -595,3 +498,186 @@
 2026-10-21 00:26:15,768 [WARNING] main —    품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다
 2026-10-21 00:26:15,768 [WARNING] main —    품질 게이트가 의도대로 막은 것입니다 — 대시보드 검토 대기에서 확인하세요
 2026-10-21 00:26:15,768 [WARNING] main — ============================================================
+2026-10-22 00:18:23,892 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-22 00:18:25,342 [INFO] main — ============================================================
+2026-10-22 00:18:25,342 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-10-22 00:18:25
+2026-10-22 00:18:25,342 [INFO] main — ============================================================
+2026-10-22 00:18:25,355 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-10-22 00:18:25,355 [INFO] keyword_collector — 포스팅 이력 코퍼스: 80개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-10-22 00:18:25,355 [INFO] keyword_collector — 시즌 예약 키워드 36개 로드 (blog=blog1): ['2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법', '명절 TV 영화 편성표 솔직 비교']...
+2026-10-22 00:18:30,010 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-10-22 00:18:36,612 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:18:36,631 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-10-22 00:18:36,631 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-10-22 00:18:36,942 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법']
+2026-10-22 00:18:37,236 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-22 00:18:37,237 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-10-22 00:18:37,238 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-10-22 00:18:37,244 [INFO] keyword_collector —   [high_cpc] 1개: ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법']
+2026-10-22 00:18:37,244 [INFO] keyword_collector —   [season_scheduled] 1개: ['2026 할로윈 파티 집에서 준비하는 방법']
+2026-10-22 00:18:37,244 [INFO] keyword_collector — 최종 선정 키워드 2개: ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법', '2026 할로윈 파티 집에서 준비하는 방법']
+2026-10-22 00:18:37,244 [INFO] main — 수집된 키워드 2개: ['여행 중 물건 도난 경찰서 신고 후 보험 청구 방법', '2026 할로윈 파티 집에서 준비하는 방법']
+2026-10-22 00:18:37,250 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-10-22 00:18:40,965 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 40개
+2026-10-22 00:18:41,754 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:18:41,755 [INFO] keyword_collector — 화제 드라마 감지: ['닥터X', '개인적인 택시']
+2026-10-22 00:18:41,755 [INFO] main — [자동 드라마 시리즈] '닥터X' 감지 — 리뷰 시리즈 기획 시작
+2026-10-22 00:18:46,216 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:18:46,217 [INFO] series_planner — 드라마 시리즈 기획 완료: '닥터X 드라마 리뷰 시리즈' 3편
+2026-10-22 00:18:46,217 [INFO] main — [자동 시리즈] '닥터X' 3편 기획 시작 (이후 단독 포스트 0개)
+2026-10-22 00:18:46,217 [INFO] main — ============================================================
+2026-10-22 00:18:46,217 [INFO] main — [HOGU What?] 시리즈 모드 시작: '닥터X' 3편
+2026-10-22 00:18:46,217 [INFO] main — ============================================================
+2026-10-22 00:18:46,220 [INFO] main — 시리즈 기획 완료: '닥터X 드라마 리뷰 시리즈'
+2026-10-22 00:18:46,220 [INFO] main —   편 1: 닥터X 첫인상 솔직 리뷰, 입문 전 체크
+2026-10-22 00:18:46,221 [INFO] main —   편 2: 닥터X 등장인물 분석과 연기력 평가
+2026-10-22 00:18:46,221 [INFO] main —   편 3: 닥터X 결말 총평, OST·추천작·별점
+2026-10-22 00:18:46,221 [INFO] main — 
+--- [1/3편] '닥터X 첫인상 리뷰' 생성 중 ---
+2026-10-22 00:18:46,221 [INFO] content_generator — 시리즈 포스트 생성: '닥터X 첫인상 리뷰' (1/3편)
+2026-10-22 00:18:50,326 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:18:50,327 [INFO] research_collector — 검색 의도: '닥터X'라는 제품(또는 콘텐츠)에 대한 첫인상과 초기 사용 후기를 알고 싶어하는 검색 의도
+2026-10-22 00:19:02,056 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '닥터X 첫인상 리뷰'
+2026-10-22 00:19:05,568 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:19:05,569 [INFO] evidence_builder — 자료팩 생성: 사실 0개 — '닥터X 첫인상 리뷰'
+2026-10-22 00:19:05,570 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-22 00:19:05,576 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-22 00:19:06,220 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:20:37,942 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-22 00:20:38,760 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:20:50,623 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-10-22 00:20:50,623 [INFO] content_generator — 이미지 계획 2건 사용: ['surgeon operating room silhouette', 'hospital corridor medical staff walking']
+2026-10-22 00:20:50,780 [INFO] image_fetcher — 이미지 수집 성공: 'surgeon operating room silhouette' → 제목='operation / operating room / surgery / o' (관련성=0.75)
+2026-10-22 00:20:50,931 [INFO] image_fetcher — 이미지 수집 성공: 'hospital corridor medical staff walking' → 제목='doctor / tablet / stethoscope / hospital' (관련성=0.20)
+2026-10-22 00:20:51,955 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:20:52,318 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-22 00:20:52,318 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-22 00:20:52,327 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-22 00:20:52,327 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-22 00:20:52,327 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] 닥터X 첫인상 리뷰, 입문 전 체크포인트' (2802자, 이미지 2개)
+2026-10-22 00:20:53,154 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:21:11,298 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '[1편] 닥터X 첫인상 리뷰, 입문 전 체크포인트'
+2026-10-22 00:21:11,298 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처와 설명이 명시되어 저작권 문제는 없으나 이미지 정책상 기본 warn 처리
+2026-10-22 00:21:12,101 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:22:21,743 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-10-22 00:22:22,574 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:23:19,846 [INFO] final_editor —   ✏️ 제목 최종 교정: '[1편] 닥터X 첫인상 리뷰, 입문 전 체크포인트' → '[1편] 닥터X 첫인상 리뷰와 입문 전 체크포인트 총정리'
+2026-10-22 00:23:19,846 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
+2026-10-22 00:23:19,846 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 재정비하고 본문 내 수동 목차를 제거했으며, 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 추가해 발행 가능한 형태로 구조화했습니다.
+2026-10-22 00:23:19,941 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-22 00:23:19,942 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-10-22 00:23:20,504 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/10/1-x.html
+2026-10-22 00:23:20,505 [INFO] main —   ✅ 편 1 업로드 완료: https://www.hoguwhat.com/2026/10/1-x.html
+2026-10-22 00:23:23,508 [INFO] main — 
+--- [2/3편] '닥터X 등장인물 분석' 생성 중 ---
+2026-10-22 00:23:23,509 [INFO] content_generator — 시리즈 포스트 생성: '닥터X 등장인물 분석' (2/3편)
+2026-10-22 00:23:28,517 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:23:28,518 [INFO] research_collector — 검색 의도: 일본 드라마 '닥터X' 시리즈의 주요 등장인물 정보와 설정을 파악하고 싶은 검색 의도
+2026-10-22 00:23:39,293 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '닥터X 등장인물 분석'
+2026-10-22 00:23:57,565 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:23:57,566 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '닥터X 등장인물 분석'
+2026-10-22 00:24:07,638 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:24:07,639 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'X': 2, 'D': 2, 'C': 3}
+2026-10-22 00:24:09,188 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '닥터X 등장인물 분석'
+2026-10-22 00:24:09,188 [INFO] evidence_builder — 자료팩: 중요 사실 5개 제외 (A/B 등급 출처 없음)
+2026-10-22 00:24:09,188 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-22 00:24:09,188 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-22 00:24:10,112 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:25:26,038 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-22 00:25:26,038 [WARNING] content_generator — 컨텐츠 너무 짧음(305자, 최소 2500자) — 재시도 1/3
+2026-10-22 00:25:29,039 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-10-22 00:25:29,039 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-22 00:25:29,679 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:26:13,002 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-22 00:26:13,002 [WARNING] content_generator — 컨텐츠 너무 짧음(391자, 최소 2500자) — 재시도 2/3
+2026-10-22 00:26:16,002 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-10-22 00:26:16,002 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-22 00:26:16,457 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:26:47,038 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-22 00:26:47,038 [ERROR] content_generator — 컨텐츠 생성 실패: 434자 — thin content 방지를 위해 게시 거부
+2026-10-22 00:26:47,039 [ERROR] main — 편 2 생성 실패 — 건너뜀
+2026-10-22 00:26:47,041 [INFO] main — 
+--- [3/3편] '닥터X 결말 총평' 생성 중 ---
+2026-10-22 00:26:47,041 [INFO] content_generator — 시리즈 포스트 생성: '닥터X 결말 총평' (3/3편)
+2026-10-22 00:26:53,358 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:26:53,359 [INFO] research_collector — 검색 의도: 드라마 '닥터X'의 최종회 결말 내용과 전체 시리즈에 대한 총평을 찾아보려는 의도
+2026-10-22 00:27:04,371 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '닥터X 결말 총평'
+2026-10-22 00:27:24,172 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:27:24,173 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '닥터X 결말 총평'
+2026-10-22 00:27:34,898 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:27:34,899 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'C': 2, 'B': 1, 'X': 2}
+2026-10-22 00:27:36,382 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '닥터X 결말 총평'
+2026-10-22 00:27:36,382 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-10-22 00:27:36,382 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-22 00:27:36,382 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-22 00:27:37,371 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:29:33,613 [ERROR] content_generator — JSON 복구 후 dict가 아닌 타입 반환: <class 'list'>
+2026-10-22 00:29:33,613 [WARNING] content_generator — JSON 파싱 실패 — 재시도 1/3
+2026-10-22 00:29:35,613 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-10-22 00:29:35,613 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-22 00:29:36,338 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:31:14,499 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-10-22 00:31:14,499 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-22 00:31:15,375 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:31:41,214 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
+2026-10-22 00:31:41,214 [INFO] content_generator — 이미지 계획 3건 사용: ['hospital operating room drama scene', 'spoiler warning drama review notes', 'music streaming app headphones ost']
+2026-10-22 00:31:41,373 [INFO] image_fetcher — 이미지 수집 성공: 'hospital operating room drama scene' → 제목='surgery / hospital / medical professiona' (관련성=0.60)
+2026-10-22 00:31:41,493 [INFO] image_fetcher — 이미지 수집 성공: 'spoiler warning drama review notes' → 제목='drift / car wallpapers / speed / transpo' (관련성=0.20)
+2026-10-22 00:31:41,616 [INFO] image_fetcher — 이미지 수집 성공: 'music streaming app headphones ost' → 제목='man / music / phone / headphones / smart' (관련성=0.80)
+2026-10-22 00:31:43,252 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:31:43,253 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-10-22 00:31:43,597 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-22 00:31:43,597 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-22 00:31:43,605 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-22 00:31:43,605 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-22 00:31:43,605 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 닥터X 결말 총평, OST 추천작·별점 총정리' (3046자, 이미지 2개)
+2026-10-22 00:31:44,439 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:32:06,972 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-10-22 00:32:08,694 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:32:15,246 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '[3편] 닥터X 결말 총평, OST 추천작·별점 총정리'
+2026-10-22 00:32:15,246 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 다소 떨어짐
+2026-10-22 00:32:15,246 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지에 Pixabay 라이선스 출처가 명시되어 저작권 문제는 없으나 정책상 기본적으로 warn 처리
+2026-10-22 00:32:15,246 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌 핵심 요약, 💡 팁 박스 등 정형화된 포맷과 요약형 구조가 AI 생성 콘텐츠에 흔한 패턴과 유사함
+2026-10-22 00:32:16,058 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-22 00:33:18,339 [INFO] final_editor —   ✏️ 제목 최종 교정: '[3편] 닥터X 결말 총평, OST 추천작·별점 총정리' → '닥터X 결말 총평 정리 - OST 추천작과 최종 별점까지'
+2026-10-22 00:33:18,339 [INFO] final_editor —   ✏️ 메타 설명 교정 (128자)
+2026-10-22 00:33:18,340 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 기준에 맞게 재정리하고, 긴 문단을 2~4문장 단위로 분할했으며 중복·오타 문장(예: '원작 원작', '있었는데이 있었는데')을 정리할 지점을 표시했습니다. 이미지 alt 텍스트를 구체화하고 내부링크·참고자료·체크리스트를 보강했습니다.
+2026-10-22 00:33:18,426 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-22 00:33:18,426 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-10-22 00:33:18,927 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/10/x-ost.html
+2026-10-22 00:33:18,928 [INFO] main —   ✅ 편 3 업로드 완료: https://www.hoguwhat.com/2026/10/x-ost.html
+2026-10-22 00:33:18,952 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 156개)
+2026-10-22 00:33:18,962 [INFO] dashboard_exporter — 분석 필드 유지: 74/81개 (등급·조회수·수익)
+2026-10-22 00:33:18,976 [INFO] dashboard_exporter —   시리즈: 45개 내보내기 완료
+2026-10-22 00:33:18,988 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-22 00:33:19,451 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-22 00:33:19,663 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-22 00:33:19,664 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-22 00:33:19,666 [INFO] dashboard_exporter —   학습 이력: 8주 내보내기 완료
+2026-10-22 00:33:19,670 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-22 00:33:19,689 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 267 / 실패 0 / 대기 17)
+2026-10-22 00:33:19,690 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-22 00:33:19,690 [INFO] dashboard_exporter —   포스트: 81개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-22 00:33:19,691 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-22 00:33:19,691 [INFO] main — 
+============================================================
+2026-10-22 00:33:19,691 [INFO] main — [HOGU What?] 시리즈 완료: 2/3편 성공
+2026-10-22 00:33:19,691 [INFO] main — ============================================================
+2026-10-22 00:33:19,691 [INFO] main — 단독 포스트 대상 키워드 0개: []
+2026-10-22 00:33:19,711 [INFO] post_manager — run_history 마이그레이션: 2개 포스트 추가
+2026-10-22 00:33:19,711 [INFO] main — 
+============================================================
+2026-10-22 00:33:19,711 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
+2026-10-22 00:33:19,711 [INFO] main — ============================================================
+2026-10-22 00:33:19,729 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 157개)
+2026-10-22 00:33:19,738 [INFO] dashboard_exporter — 분석 필드 유지: 74/81개 (등급·조회수·수익)
+2026-10-22 00:33:19,751 [INFO] dashboard_exporter —   시리즈: 45개 내보내기 완료
+2026-10-22 00:33:19,763 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-22 00:33:19,765 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-22 00:33:19,766 [INFO] dashboard_exporter —   학습 이력: 8주 내보내기 완료
+2026-10-22 00:33:19,769 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-22 00:33:19,789 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 267 / 실패 0 / 대기 17)
+2026-10-22 00:33:19,789 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-22 00:33:19,789 [INFO] dashboard_exporter —   포스트: 81개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-22 00:33:19,790 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-22 00:33:19,791 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다

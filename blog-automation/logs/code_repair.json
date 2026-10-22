@@ -1,5 +1,19 @@
 [
   {
+    "timestamp": "2026-10-22T00:54:20.652604",
+    "tracebacks_found": 0,
+    "critical_errors": 2,
+    "critical_samples": [
+      "2026-10-22 00:45:55,824 [ERROR] content_generator — 컨텐츠 생성 실패: 340자 — thin content 방지를 위해 게시 거부",
+      "2026-10-22 00:45:55,825 [ERROR] main — 편 3 생성 실패 — 건너뜀"
+    ],
+    "skipped_already_analyzed": 0,
+    "repairs": [],
+    "auto_fixed": 0,
+    "manual_required": 0,
+    "dry_run": false
+  },
+  {
     "timestamp": "2026-10-22T00:11:29.864892",
     "tracebacks_found": 0,
     "critical_errors": 0,
@@ -293,16 +307,6 @@
   },
   {
     "timestamp": "2026-10-02T21:07:53.910437",
-    "tracebacks_found": 0,
-    "critical_errors": 0,
-    "skipped_already_analyzed": 0,
-    "repairs": [],
-    "auto_fixed": 0,
-    "manual_required": 0,
-    "dry_run": false
-  },
-  {
-    "timestamp": "2026-10-02T02:01:13.704528",
     "tracebacks_found": 0,
     "critical_errors": 0,
     "skipped_already_analyzed": 0,

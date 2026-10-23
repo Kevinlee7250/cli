@@ -1,96 +1,3 @@
-2026-10-22 00:20:52,318 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-10-22 00:20:52,318 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-10-22 00:20:52,327 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-22 00:20:52,327 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-22 00:20:52,327 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] 닥터X 첫인상 리뷰, 입문 전 체크포인트' (2802자, 이미지 2개)
-2026-10-22 00:20:53,154 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:21:11,298 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '[1편] 닥터X 첫인상 리뷰, 입문 전 체크포인트'
-2026-10-22 00:21:11,298 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처와 설명이 명시되어 저작권 문제는 없으나 이미지 정책상 기본 warn 처리
-2026-10-22 00:21:12,101 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:22:21,743 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-22 00:22:22,574 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:23:19,846 [INFO] final_editor —   ✏️ 제목 최종 교정: '[1편] 닥터X 첫인상 리뷰, 입문 전 체크포인트' → '[1편] 닥터X 첫인상 리뷰와 입문 전 체크포인트 총정리'
-2026-10-22 00:23:19,846 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
-2026-10-22 00:23:19,846 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 재정비하고 본문 내 수동 목차를 제거했으며, 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 추가해 발행 가능한 형태로 구조화했습니다.
-2026-10-22 00:23:19,941 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-10-22 00:23:19,942 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-10-22 00:23:20,504 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/10/1-x.html
-2026-10-22 00:23:20,505 [INFO] main —   ✅ 편 1 업로드 완료: https://www.hoguwhat.com/2026/10/1-x.html
-2026-10-22 00:23:23,508 [INFO] main — 
---- [2/3편] '닥터X 등장인물 분석' 생성 중 ---
-2026-10-22 00:23:23,509 [INFO] content_generator — 시리즈 포스트 생성: '닥터X 등장인물 분석' (2/3편)
-2026-10-22 00:23:28,517 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:23:28,518 [INFO] research_collector — 검색 의도: 일본 드라마 '닥터X' 시리즈의 주요 등장인물 정보와 설정을 파악하고 싶은 검색 의도
-2026-10-22 00:23:39,293 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '닥터X 등장인물 분석'
-2026-10-22 00:23:57,565 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:23:57,566 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '닥터X 등장인물 분석'
-2026-10-22 00:24:07,638 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:24:07,639 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'X': 2, 'D': 2, 'C': 3}
-2026-10-22 00:24:09,188 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '닥터X 등장인물 분석'
-2026-10-22 00:24:09,188 [INFO] evidence_builder — 자료팩: 중요 사실 5개 제외 (A/B 등급 출처 없음)
-2026-10-22 00:24:09,188 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-22 00:24:09,188 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-22 00:24:10,112 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:25:26,038 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-22 00:25:26,038 [WARNING] content_generator — 컨텐츠 너무 짧음(305자, 최소 2500자) — 재시도 1/3
-2026-10-22 00:25:29,039 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-10-22 00:25:29,039 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-22 00:25:29,679 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:26:13,002 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-22 00:26:13,002 [WARNING] content_generator — 컨텐츠 너무 짧음(391자, 최소 2500자) — 재시도 2/3
-2026-10-22 00:26:16,002 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-10-22 00:26:16,002 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-22 00:26:16,457 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:26:47,038 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-22 00:26:47,038 [ERROR] content_generator — 컨텐츠 생성 실패: 434자 — thin content 방지를 위해 게시 거부
-2026-10-22 00:26:47,039 [ERROR] main — 편 2 생성 실패 — 건너뜀
-2026-10-22 00:26:47,041 [INFO] main — 
---- [3/3편] '닥터X 결말 총평' 생성 중 ---
-2026-10-22 00:26:47,041 [INFO] content_generator — 시리즈 포스트 생성: '닥터X 결말 총평' (3/3편)
-2026-10-22 00:26:53,358 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:26:53,359 [INFO] research_collector — 검색 의도: 드라마 '닥터X'의 최종회 결말 내용과 전체 시리즈에 대한 총평을 찾아보려는 의도
-2026-10-22 00:27:04,371 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '닥터X 결말 총평'
-2026-10-22 00:27:24,172 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:27:24,173 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '닥터X 결말 총평'
-2026-10-22 00:27:34,898 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:27:34,899 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'C': 2, 'B': 1, 'X': 2}
-2026-10-22 00:27:36,382 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '닥터X 결말 총평'
-2026-10-22 00:27:36,382 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
-2026-10-22 00:27:36,382 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-22 00:27:36,382 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-22 00:27:37,371 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:29:33,613 [ERROR] content_generator — JSON 복구 후 dict가 아닌 타입 반환: <class 'list'>
-2026-10-22 00:29:33,613 [WARNING] content_generator — JSON 파싱 실패 — 재시도 1/3
-2026-10-22 00:29:35,613 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-10-22 00:29:35,613 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-22 00:29:36,338 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:31:14,499 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-10-22 00:31:14,499 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-22 00:31:15,375 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:31:41,214 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-10-22 00:31:41,214 [INFO] content_generator — 이미지 계획 3건 사용: ['hospital operating room drama scene', 'spoiler warning drama review notes', 'music streaming app headphones ost']
-2026-10-22 00:31:41,373 [INFO] image_fetcher — 이미지 수집 성공: 'hospital operating room drama scene' → 제목='surgery / hospital / medical professiona' (관련성=0.60)
-2026-10-22 00:31:41,493 [INFO] image_fetcher — 이미지 수집 성공: 'spoiler warning drama review notes' → 제목='drift / car wallpapers / speed / transpo' (관련성=0.20)
-2026-10-22 00:31:41,616 [INFO] image_fetcher — 이미지 수집 성공: 'music streaming app headphones ost' → 제목='man / music / phone / headphones / smart' (관련성=0.80)
-2026-10-22 00:31:43,252 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:31:43,253 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-10-22 00:31:43,597 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-10-22 00:31:43,597 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-10-22 00:31:43,605 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-22 00:31:43,605 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-22 00:31:43,605 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 닥터X 결말 총평, OST 추천작·별점 총정리' (3046자, 이미지 2개)
-2026-10-22 00:31:44,439 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:32:06,972 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-22 00:32:08,694 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:32:15,246 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '[3편] 닥터X 결말 총평, OST 추천작·별점 총정리'
-2026-10-22 00:32:15,246 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 8개로 구조는 양호하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 다소 떨어짐
-2026-10-22 00:32:15,246 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지에 Pixabay 라이선스 출처가 명시되어 저작권 문제는 없으나 정책상 기본적으로 warn 처리
-2026-10-22 00:32:15,246 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌 핵심 요약, 💡 팁 박스 등 정형화된 포맷과 요약형 구조가 AI 생성 콘텐츠에 흔한 패턴과 유사함
-2026-10-22 00:32:16,058 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-22 00:33:18,339 [INFO] final_editor —   ✏️ 제목 최종 교정: '[3편] 닥터X 결말 총평, OST 추천작·별점 총정리' → '닥터X 결말 총평 정리 - OST 추천작과 최종 별점까지'
-2026-10-22 00:33:18,339 [INFO] final_editor —   ✏️ 메타 설명 교정 (128자)
-2026-10-22 00:33:18,340 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 기준에 맞게 재정리하고, 긴 문단을 2~4문장 단위로 분할했으며 중복·오타 문장(예: '원작 원작', '있었는데이 있었는데')을 정리할 지점을 표시했습니다. 이미지 alt 텍스트를 구체화하고 내부링크·참고자료·체크리스트를 보강했습니다.
-2026-10-22 00:33:18,426 [INFO] related_posts — 관련 포스트 3개 섹션 생성
 2026-10-22 00:33:18,426 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
 2026-10-22 00:33:18,927 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/10/x-ost.html
 2026-10-22 00:33:18,928 [INFO] main —   ✅ 편 3 업로드 완료: https://www.hoguwhat.com/2026/10/x-ost.html
@@ -591,3 +498,206 @@
 2026-10-23 00:24:49,145 [INFO] dashboard_exporter —   포스트: 83개 / 실행 이력: 120개 / 블로그: 3개
 2026-10-23 00:24:49,146 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-10-23 00:24:49,147 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다
+2026-10-23 00:25:32,447 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-23 00:25:33,661 [INFO] main — ============================================================
+2026-10-23 00:25:33,661 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-10-23 00:25:33
+2026-10-23 00:25:33,661 [INFO] main — ============================================================
+2026-10-23 00:25:33,674 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-10-23 00:25:33,674 [INFO] keyword_collector — 포스팅 이력 코퍼스: 79개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-10-23 00:25:33,675 [INFO] keyword_collector — 시즌 예약 키워드 5개 로드 (blog=blog3): ['2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법', '2026 할로윈 소품 솔직 비교 후기']...
+2026-10-23 00:25:36,660 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-10-23 00:25:41,831 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:25:41,850 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-10-23 00:25:41,850 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-10-23 00:25:42,297 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-10-23 00:25:42,624 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-23 00:25:42,626 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-10-23 00:25:42,633 [INFO] keyword_collector — 유사 주제 제외 8개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법', '2026 할로윈 소품 솔직 비교 후기', '할로윈 파티 집에서 준비하는 방법 꿀팁']
+2026-10-23 00:25:42,633 [INFO] keyword_collector —   [naver_realtime] 2개: ['레버리지 인버스 ETF 손실 위험 초보자 투자 주의사항', '전기차 세액공제 혜택 변경 2026 구매 전 체크리스트']
+2026-10-23 00:25:42,633 [INFO] keyword_collector — 최종 선정 키워드 2개: ['레버리지 인버스 ETF 손실 위험 초보자 투자 주의사항', '전기차 세액공제 혜택 변경 2026 구매 전 체크리스트']
+2026-10-23 00:25:42,634 [INFO] main — 수집된 키워드 2개: ['레버리지 인버스 ETF 손실 위험 초보자 투자 주의사항', '전기차 세액공제 혜택 변경 2026 구매 전 체크리스트']
+2026-10-23 00:25:42,640 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-10-23 00:25:44,507 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:25:44,508 [INFO] series_planner — 자동 시리즈 키워드 선정: '레버리지 인버스 ETF 손실 위험 초보자 투자 주의사항'
+2026-10-23 00:25:44,509 [INFO] main — [자동 시리즈] '레버리지 인버스 ETF 손실 위험 초보자 투자 주의사항' 3편 기획 시작 (이후 단독 포스트 0개)
+2026-10-23 00:25:44,509 [INFO] main — ============================================================
+2026-10-23 00:25:44,509 [INFO] main — [금융NEWS] 시리즈 모드 시작: '레버리지 인버스 ETF 손실 위험 초보자 투자 주의사항' 3편
+2026-10-23 00:25:44,509 [INFO] main — ============================================================
+2026-10-23 00:25:49,954 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:25:49,955 [INFO] series_planner — [blog3 금융] 시리즈 기획 완료: '레버리지 인버스 ETF 손실 위험, 초보 투자자가 직접 파헤친 3편 완전정리' 3편
+2026-10-23 00:25:49,958 [INFO] main — 시리즈 기획 완료: '레버리지 인버스 ETF 손실 위험, 초보 투자자가 직접 파헤친 3편 완전정리'
+2026-10-23 00:25:49,958 [INFO] main —   편 1: [1편] 레버리지 ETF 반토막, 왜 몰랐을까
+2026-10-23 00:25:49,958 [INFO] main —   편 2: [2편] 레버리지 인버스 ETF 구조 완전분석
+2026-10-23 00:25:49,958 [INFO] main —   편 3: [3편] 금감원 경고 뒤 내가 내린 결론
+2026-10-23 00:25:49,958 [INFO] main — 
+--- [1/3편] '레버리지 ETF 손실 사례 초보자' 생성 중 ---
+2026-10-23 00:25:49,958 [INFO] content_generator — 시리즈 포스트 생성: '레버리지 ETF 손실 사례 초보자' (1/3편)
+2026-10-23 00:25:55,163 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:25:55,164 [INFO] research_collector — 검색 의도: 레버리지 ETF에 투자했다가 손실을 본 초보자 사례를 통해 위험성과 주의점을 이해하고자 함
+2026-10-23 00:26:12,995 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '레버리지 ETF 손실 사례 초보자'
+2026-10-23 00:26:34,348 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:26:34,349 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '레버리지 ETF 손실 사례 초보자'
+2026-10-23 00:26:51,479 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:26:51,481 [INFO] source_validator — 출처 검증: 7/8개 통과, 등급 분포 {'A': 5, 'B': 2, 'X': 1}
+2026-10-23 00:26:51,484 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-23 00:26:51,490 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-23 00:26:52,194 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:27:59,464 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-23 00:27:59,971 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:28:28,325 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '금융위원회가 안내한 자료에 따르면'
+2026-10-23 00:28:28,325 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-10-23 00:28:28,325 [INFO] content_generator — 이미지 계획 2건 사용: ['stock market volatility chart screen', 'calculator financial chart desk']
+2026-10-23 00:28:28,623 [INFO] image_fetcher — 이미지 수집 성공: 'stock market volatility chart screen' → 제목='business / chart / graph / graphic / dia' (관련성=0.60)
+2026-10-23 00:28:28,842 [INFO] image_fetcher — 이미지 수집 성공: 'calculator financial chart desk' → 제목='office / pen / calculator / calculation ' (관련성=0.75)
+2026-10-23 00:28:29,639 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:28:30,246 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-23 00:28:30,246 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-23 00:28:30,256 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-23 00:28:30,256 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-23 00:28:30,256 [INFO] content_generator — 시리즈 포스트 생성 완료: '레버리지 ETF 손실 사례, 초보자가 몰랐던 이유' (2921자, 이미지 2개)
+2026-10-23 00:28:30,928 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:28:47,678 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '레버리지 ETF 손실 사례, 초보자가 몰랐던 이유'
+2026-10-23 00:28:47,678 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락(음의 복리효과, 급등락 설명 부분)이 500자 이상으로 다소 김
+2026-10-23 00:28:47,678 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 명시로 저작권 문제는 없으나 이미지 수가 적어 warn 처리
+2026-10-23 00:28:47,679 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심요약·번호 목록화 등 정형화된 패턴이 있으나 '마린파파' 등 개인적 구어체도 섞여 있음
+2026-10-23 00:28:48,483 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:29:25,740 [INFO] final_editor —   ✏️ 제목 최종 교정: '레버리지 ETF 손실 사례, 초보자가 몰랐던 이유' → '레버리지 ETF 손실 사례, 초보자가 몰랐던 진짜 이유 정리'
+2026-10-23 00:29:25,740 [INFO] final_editor —   ✏️ 메타 설명 교정 (130자)
+2026-10-23 00:29:25,740 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 SEO 기준에 맞게 정리하고, 기존 이미지 2곳에 구체적 alt text를 부여했으며, 투자 주의사항·FAQ·작성자 메모·관련 글 언급을 보강해 발행 가능한 형태로 완성했습니다.
+2026-10-23 00:29:25,947 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-23 00:29:25,947 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '레버리지 ETF 손실 사례 초보자' — 면책·팩트체크 확인 권장
+2026-10-23 00:29:25,947 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-10-23 00:29:26,733 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/10/etf_01075448540.html
+2026-10-23 00:29:26,734 [INFO] main —   ✅ 편 1 업로드 완료: https://hoguasset.blogspot.com/2026/10/etf_01075448540.html
+2026-10-23 00:29:29,737 [INFO] main — 
+--- [2/3편] '레버리지 인버스 ETF 복리효과 변동성 손실' 생성 중 ---
+2026-10-23 00:29:29,737 [INFO] content_generator — 시리즈 포스트 생성: '레버리지 인버스 ETF 복리효과 변동성 손실' (2/3편)
+2026-10-23 00:29:37,165 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:29:37,166 [INFO] research_collector — 검색 의도: 레버리지·인버스 ETF의 복리효과(변동성 손실)로 인해 장기 보유 시 수익률이 기초지수와 괴리되는 원리와 실
+2026-10-23 00:29:51,119 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 6개) — '레버리지 인버스 ETF 복리효과 변동성 손실'
+2026-10-23 00:30:06,240 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:30:06,241 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '레버리지 인버스 ETF 복리효과 변동성 손실'
+2026-10-23 00:30:25,395 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:30:25,396 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'A': 4, 'X': 2, 'D': 1}
+2026-10-23 00:30:25,397 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-10-23 00:30:25,397 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-23 00:30:25,397 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-23 00:30:26,177 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:31:31,084 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-10-23 00:31:31,084 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-23 00:31:31,086 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 2개(괴리율, 레버리지)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-10-23 00:31:33,086 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-10-23 00:31:33,086 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-23 00:31:33,952 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:32:37,729 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-23 00:32:38,413 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:32:57,585 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '금융위원회가 안내한 단일종목 레버리지 상품 투자유의사항을 보면'
+2026-10-23 00:32:57,585 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 1건 자동 수정 적용
+2026-10-23 00:32:57,585 [INFO] content_generator — 이미지 계획 2건 사용: ['stock chart calculator desk', 'volatility chart comparison finance']
+2026-10-23 00:32:57,798 [INFO] image_fetcher — 이미지 수집 성공: 'stock chart calculator desk' → 제목='entrepreneur / idea / competence / visio' (관련성=0.25)
+2026-10-23 00:32:58,173 [WARNING] image_fetcher — 🚫 부적합 이미지 차단: 'astrology / divination / chart / horoscope / zodia' (검색어 'volatility chart comparison')
+2026-10-23 00:32:58,397 [INFO] image_fetcher — 이미지 수집 성공: 'volatility chart comparison finance' → 제목='stock market / chart / phone / stocks / ' (관련성=0.25)
+2026-10-23 00:32:59,089 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:32:59,090 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-10-23 00:32:59,090 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-10-23 00:32:59,090 [INFO] image_fetcher — 제목 썸네일 생성: '레버리지 인버스 ETF 복리효과, 손실 계산 예시 정리' (data URI, 1154B)
+2026-10-23 00:32:59,459 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-10-23 00:32:59,459 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-10-23 00:32:59,465 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-23 00:32:59,465 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-23 00:32:59,465 [INFO] content_generator — 시리즈 포스트 생성 완료: '레버리지 인버스 ETF 복리효과, 손실 계산 예시 정리' (3348자, 이미지 1개)
+2026-10-23 00:33:00,093 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:33:16,772 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '레버리지 인버스 ETF 복리효과, 손실 계산 예시 정리'
+2026-10-23 00:33:16,772 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개가 '직접 제작'으로 저작권 문제는 없으나 alt 텍스트 등 세부 정보 확인 불가로 warn
+2026-10-23 00:33:16,772 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~짚어보겠습니다/알아보겠습니다' 식의 섹션 전환 문구가 반복되어 전형적 AI 생성 패턴이 일부 감지됨
+2026-10-23 00:33:17,584 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:34:03,118 [INFO] final_editor —   ✏️ 제목 최종 교정: '레버리지 인버스 ETF 복리효과, 손실 계산 예시 정리' → '레버리지 인버스 ETF 복리효과, 손실 계산 예시로 알아보기'
+2026-10-23 00:34:03,118 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
+2026-10-23 00:34:03,118 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 길이 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분할했습니다. 요약 박스·계산 비교 표·FAQ·주의사항·작성자 메모를 구조화하고 이미지 3개의 삽입 위치와 구체적 alt 텍스트를 추가했습니다.
+2026-10-23 00:34:03,308 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-23 00:34:03,308 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '레버리지 인버스 ETF 복리효과 변동성 손실' — 면책·팩트체크 확인 권장
+2026-10-23 00:34:03,308 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-10-23 00:34:04,056 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/10/etf_01753009893.html
+2026-10-23 00:34:04,057 [INFO] main —   ✅ 편 2 업로드 완료: https://hoguasset.blogspot.com/2026/10/etf_01753009893.html
+2026-10-23 00:34:07,060 [INFO] main — 
+--- [3/3편] '금융감독원 레버리지 ETF 소비자경보' 생성 중 ---
+2026-10-23 00:34:07,061 [INFO] content_generator — 시리즈 포스트 생성: '금융감독원 레버리지 ETF 소비자경보' (3/3편)
+2026-10-23 00:34:13,293 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:34:13,293 [INFO] research_collector — 검색 의도: 금융감독원이 발표한 레버리지 ETF 관련 소비자경보의 구체적 내용과 투자 유의사항을 확인하려는 의도
+2026-10-23 00:34:30,386 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '금융감독원 레버리지 ETF 소비자경보'
+2026-10-23 00:34:48,294 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:34:48,295 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '금융감독원 레버리지 ETF 소비자경보'
+2026-10-23 00:35:06,998 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:35:06,999 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'B': 5, 'X': 2}
+2026-10-23 00:35:07,000 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-23 00:35:07,000 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-23 00:35:07,459 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:36:03,094 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-23 00:36:03,095 [WARNING] content_generator — 읽기 난이도 기준 미달(['전문용어 1개(레버리지)가 쉬운 설명 없이 사용됨']) — 재작성 요청 1/3
+2026-10-23 00:36:05,096 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-10-23 00:36:05,096 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-23 00:36:05,804 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:37:19,461 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-23 00:37:20,013 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:37:23,828 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-10-23 00:37:23,828 [INFO] content_generator — 이미지 계획 3건 사용: ['stock chart volatility phone', 'financial supervisory service building', 'checklist investment review desk']
+2026-10-23 00:37:24,069 [WARNING] image_fetcher — 🚫 부적합 이미지 차단: 'stock market / chart / smartphone / finance / inve' (검색어 'stock chart volatility phone')
+2026-10-23 00:37:24,070 [INFO] image_fetcher — 이미지 수집 성공: 'stock chart volatility phone' → 제목='stock market / chart / phone / stocks / ' (관련성=0.75)
+2026-10-23 00:37:24,259 [INFO] image_fetcher — 이미지 수집 성공: 'financial supervisory service building' → 제목='skyscrapers / nature / singapore / city ' (관련성=0.25)
+2026-10-23 00:37:24,450 [INFO] image_fetcher — 이미지 수집 성공: 'checklist investment review desk' → 제목='feedback / checklist / job / good / sati' (관련성=0.50)
+2026-10-23 00:37:27,552 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:37:27,553 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-10-23 00:37:28,315 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-23 00:37:28,315 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-23 00:37:28,324 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-23 00:37:28,324 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-23 00:37:28,324 [INFO] content_generator — 시리즈 포스트 생성 완료: '금감원 소비자경보 23건, ETF 투자 체크리스트' (3212자, 이미지 2개)
+2026-10-23 00:37:29,189 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:37:46,745 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '금감원 소비자경보 23건, ETF 투자 체크리스트'
+2026-10-23 00:37:46,745 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 뜻입니다', '~로 볼 수 있습니다' 식 설명 패턴이 반복되어 다소 정형화된 문체
+2026-10-23 00:37:47,556 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:38:59,408 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-10-23 00:39:00,255 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-23 00:39:40,862 [INFO] final_editor —   ✏️ 제목 최종 교정: '금감원 소비자경보 23건, ETF 투자 체크리스트' → '금감원 레버리지 ETF 소비자경보, 투자 전 체크리스트 5가지'
+2026-10-23 00:39:40,862 [INFO] final_editor —   ✏️ 메타 설명 교정 (82자)
+2026-10-23 00:39:40,862 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고, 요약 박스·단계별 표·개인 경험 메모·주의사항·FAQ·작성자 메모를 추가해 발행 형식을 완성했습니다. 제목과 메타 설명을 글자 수 기준에 맞게 다듬고, 본문 내 이미지 캡션은 별도 이미지 제안 항목으로 분리했습니다.
+2026-10-23 00:39:41,035 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-23 00:39:41,035 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '금융감독원 레버리지 ETF 소비자경보' — 면책·팩트체크 확인 권장
+2026-10-23 00:39:41,035 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-10-23 00:39:41,767 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/10/etf-5.html
+2026-10-23 00:39:41,768 [INFO] main —   ✅ 편 3 업로드 완료: https://hoguasset.blogspot.com/2026/10/etf-5.html
+2026-10-23 00:39:41,790 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 163개)
+2026-10-23 00:39:41,796 [INFO] dashboard_exporter — 분석 필드 유지: 73/86개 (등급·조회수·수익)
+2026-10-23 00:39:41,810 [INFO] dashboard_exporter —   시리즈: 47개 내보내기 완료
+2026-10-23 00:39:41,822 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-23 00:39:42,158 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-23 00:39:42,450 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-23 00:39:42,451 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-23 00:39:42,453 [INFO] dashboard_exporter —   학습 이력: 8주 내보내기 완료
+2026-10-23 00:39:42,456 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-23 00:39:42,471 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 265 / 실패 0 / 대기 17)
+2026-10-23 00:39:42,471 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-23 00:39:42,471 [INFO] dashboard_exporter —   포스트: 86개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-23 00:39:42,472 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-23 00:39:42,472 [INFO] main — 
+============================================================
+2026-10-23 00:39:42,472 [INFO] main — [금융NEWS] 시리즈 완료: 3/3편 성공
+2026-10-23 00:39:42,472 [INFO] main — ============================================================
+2026-10-23 00:39:42,472 [INFO] main — 단독 포스트 대상 키워드 0개: []
+2026-10-23 00:39:42,487 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
+2026-10-23 00:39:42,488 [INFO] main — 
+============================================================
+2026-10-23 00:39:42,488 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 0개
+2026-10-23 00:39:42,488 [INFO] main — ============================================================
+2026-10-23 00:39:42,504 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 164개)
+2026-10-23 00:39:42,511 [INFO] dashboard_exporter — 분석 필드 유지: 73/86개 (등급·조회수·수익)
+2026-10-23 00:39:42,523 [INFO] dashboard_exporter —   시리즈: 47개 내보내기 완료
+2026-10-23 00:39:42,533 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-23 00:39:42,534 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-23 00:39:42,536 [INFO] dashboard_exporter —   학습 이력: 8주 내보내기 완료
+2026-10-23 00:39:42,539 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-23 00:39:42,554 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 265 / 실패 0 / 대기 17)
+2026-10-23 00:39:42,554 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-23 00:39:42,554 [INFO] dashboard_exporter —   포스트: 86개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-23 00:39:42,555 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-23 00:39:42,556 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다

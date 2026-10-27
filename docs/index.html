@@ -556,6 +556,7 @@
     <a data-page="keywords"><span class="nav-icon">🔑</span> 키워드 분석</a>
     <a data-page="analytics"><span class="nav-icon">💰</span> 수익 분석</a>
     <a data-page="social"><span class="nav-icon">📱</span> 소셜 미디어</a>
+    <a data-page="shortform"><span class="nav-icon">📸</span> 제품 숏폼 <span id="shortform-nav-badge" style="display:none;background:var(--red);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
     <a data-page="review"><span class="nav-icon">✍️</span> 수동 검토 <span id="review-nav-badge" style="display:none;background:var(--yellow);color:#1a1d27;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
     <a data-page="series"><span class="nav-icon">📚</span> 시리즈 기획 <span id="series-nav-badge" style="display:none;background:var(--accent);color:#fff;border-radius:10px;font-size:10px;font-weight:700;padding:1px 7px;margin-left:4px;vertical-align:middle">0</span></a>
     <a data-page="thumbnail"><span class="nav-icon">🖼️</span> 썸네일 생성</a>
@@ -1166,6 +1167,29 @@
   </div>
 
   <!-- ═══ 수동 검토 ═══ -->
+  <!-- 제품 숏폼 자동화 모듈(Cloud Run 운영센터) — 연결 토큰으로 상태 조회·일시정지 -->
+  <div class="page" id="page-shortform">
+    <div class="page-title">📸 제품 숏폼 자동화</div>
+    <div class="alert-box">
+      💡 제품 사진 → AI 숏폼 → YouTube·Instagram·Threads 예약 발행 → 댓글 DM·링크허브 → 쿠팡 성과 학습 모듈입니다.
+      제작·검수는 운영센터에서, 상태 확인과 자동 발행 일시정지는 여기서 할 수 있습니다.
+    </div>
+    <div class="card" style="margin-bottom:20px">
+      <div class="section-header" style="margin-bottom:10px"><h2 style="font-size:15px">🔗 연결 설정</h2><span id="sf-conn-badge" class="badge muted">미연결</span></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-bottom:10px">
+        <input id="sf-url" placeholder="서비스 주소 (https://…run.app)" style="padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
+        <input id="sf-token" type="password" placeholder="연결 토큰 (sfx_…)" autocomplete="off" style="padding:8px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px">
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <button onclick="sfSaveSettings()" style="padding:6px 14px;background:var(--accent);border:0;border-radius:8px;color:#fff;font-size:12px;cursor:pointer;font-weight:600">저장 후 연결</button>
+        <button onclick="sfClearToken()" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">토큰 지우기</button>
+        <button onclick="sfLoad()" style="padding:6px 14px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:12px;cursor:pointer">🔄 새로고침</button>
+        <span style="font-size:12px;color:var(--muted)">토큰은 운영센터 → 📸 제품 숏폼 자동화 → 🔗 블로그 자동화 대시보드 연결에서 발급합니다. 이 브라우저에만 저장됩니다.</span>
+      </div>
+    </div>
+    <div id="sf-body"><div style="color:var(--muted);font-size:13px">연결 설정을 저장하면 숏폼 모듈 상태가 표시됩니다.</div></div>
+  </div>
+
   <div class="page" id="page-review">
     <div class="page-title">✍️ 수동 검토</div>
     <div class="alert-box">
@@ -3578,6 +3602,107 @@ function navTo(page) {
   if (page === 'system') renderSystemPage()
   if (page === 'postmgr') renderPostMgr()
   if (page === 'thumbnail') { thumbPopulatePosts(); thumbRender() }
+  if (page === 'shortform') sfLoad()
+}
+
+// ── 제품 숏폼 자동화 모듈 (kevin-blog-commerce-pwa /api/external/shortform) ──
+const SF_DEFAULT_URL = 'https://kevin-blog-commerce-pwa-783867642400.asia-northeast3.run.app'
+function sfStore(key, value) { try { if (value === undefined) return localStorage.getItem(key) || ''; if (value) localStorage.setItem(key, value); else localStorage.removeItem(key) } catch (e) { return '' } }
+function sfBaseUrl() { return (sfStore('sf_service_url') || SF_DEFAULT_URL).replace(/\/+$/, '') }
+function sfToken() { return sfStore('sf_token') }
+// 서버가 준 경로는 같은 서비스의 상대 경로('/…')일 때만 링크로 만듭니다.
+function sfLink(base, path) { return (typeof path === 'string' && path.startsWith('/') && !path.startsWith('//')) ? base + path : '' }
+
+function sfSaveSettings() {
+  const url = document.getElementById('sf-url').value.trim()
+  const token = document.getElementById('sf-token').value.trim()
+  if (url && !/^https:\/\//.test(url)) { showToast('서비스 주소는 https:// 로 시작해야 합니다', 'error'); return }
+  sfStore('sf_service_url', url.replace(/\/+$/, ''))
+  if (token) sfStore('sf_token', token)
+  document.getElementById('sf-token').value = ''
+  sfLoad()
+}
+
+function sfClearToken() {
+  sfStore('sf_token', '')
+  sfSetBadge(0)
+  sfRender(null, '토큰을 지웠습니다. 새 토큰을 넣으면 다시 연결됩니다.')
+}
+
+function sfSetBadge(n) {
+  const b = document.getElementById('shortform-nav-badge')
+  if (!b) return
+  b.textContent = String(n)
+  b.style.display = n > 0 ? 'inline' : 'none'
+}
+
+async function sfRequest(path, options) {
+  const res = await fetch(sfBaseUrl() + path, Object.assign({ headers: { 'Authorization': 'Bearer ' + sfToken(), 'Content-Type': 'application/json' } }, options || {}))
+  let body = {}
+  try { body = await res.json() } catch (e) {}
+  if (!res.ok) throw new Error(body.error || ('HTTP ' + res.status))
+  return body
+}
+
+async function sfLoad(silent) {
+  const urlEl = document.getElementById('sf-url')
+  if (urlEl && !urlEl.value) urlEl.value = sfStore('sf_service_url') || SF_DEFAULT_URL
+  if (!sfToken()) { if (!silent) sfRender(null, '연결 토큰이 없습니다. 운영센터에서 발급한 토큰을 넣어 주세요.'); return }
+  if (!silent) document.getElementById('sf-body').innerHTML = '<div style="color:var(--muted);font-size:13px">불러오는 중…</div>'
+  try {
+    const data = await sfRequest('/api/external/shortform')
+    sfSetBadge((data.alerts || []).filter(a => a.level === 'critical').length)
+    if (!silent || document.getElementById('page-shortform').classList.contains('active')) sfRender(data)
+  } catch (e) {
+    if (!silent) sfRender(null, '연결 실패: ' + e.message + ' (서비스 주소·토큰·허용 출처를 확인하세요)')
+  }
+}
+
+async function sfTogglePause(paused) {
+  if (paused && !confirm('제품 숏폼 자동 발행을 일시정지할까요? 예약은 그대로 유지됩니다.')) return
+  try {
+    await sfRequest('/api/external/shortform/pause', { method: 'POST', body: JSON.stringify({ paused: paused }) })
+    showToast(paused ? '⏸ 자동 발행을 일시정지했습니다' : '▶ 자동 발행을 재개했습니다', 'success')
+    sfLoad()
+  } catch (e) { showToast('변경 실패: ' + e.message, 'error') }
+}
+
+function sfRender(data, message) {
+  const body = document.getElementById('sf-body')
+  const badge = document.getElementById('sf-conn-badge')
+  if (!data) {
+    badge.className = 'badge muted'; badge.textContent = '미연결'
+    body.innerHTML = '<div style="color:var(--muted);font-size:13px">' + esc(message || '') + '</div>'
+    return
+  }
+  badge.className = 'badge green'; badge.textContent = '연결됨'
+  const base = (data.base_url || sfBaseUrl()).replace(/\/+$/, '')
+  const k = data.kpi || {}, pipe = data.pipeline || {}, pub = data.publisher || {}
+  const num = n => Number(n || 0).toLocaleString('ko-KR')
+  const status = data.paused ? '⏸ 일시정지' : (pub.ok ? '✅ 정상' : (pub.ok === null || pub.ok === undefined ? '⏳ 대기' : '⚠️ 점검'))
+  const link = (path, label) => { const href = sfLink(base, path); return href ? '<a href="' + esc(href) + '" target="_blank" rel="noopener" style="color:var(--accent2);font-size:12px">' + esc(label) + '</a>' : '' }
+  let h = '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">'
+  h += '<button onclick="sfTogglePause(' + (data.paused ? 'false' : 'true') + ')" style="padding:8px 16px;background:' + (data.paused ? 'var(--green)' : 'rgba(248,113,113,.15)') + ';border:1px solid ' + (data.paused ? 'var(--green)' : 'rgba(248,113,113,.35)') + ';border-radius:8px;color:' + (data.paused ? '#1a1d27' : 'var(--red)') + ';font-size:12px;cursor:pointer;font-weight:600">' + (data.paused ? '▶ 자동 발행 재개' : '⏸ 자동 발행 일시정지') + '</button>'
+  h += '<a href="' + esc(base + '/shortform') + '" target="_blank" rel="noopener" style="padding:8px 16px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;text-decoration:none">운영센터에서 관리 ↗</a>'
+  h += '<a href="' + esc(base + '/shorts/photo') + '" target="_blank" rel="noopener" style="padding:8px 16px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:12px;text-decoration:none">＋ 새 제품 숏폼 ↗</a></div>'
+  h += '<div class="cards">'
+  h += '<div class="card"><div class="label">자동 발행</div><div class="value" style="font-size:20px">' + status + '</div><div class="sub">' + esc(pub.detail) + '</div></div>'
+  h += '<div class="card"><div class="label">예약 대기</div><div class="value">' + num(pipe.queued) + '</div><div class="sub">초안 ' + num(pipe.drafts) + ' · 전체 ' + num(pipe.projects) + '</div></div>'
+  h += '<div class="card"><div class="label">최근 7일 게시</div><div class="value">' + num(pipe.posted_7d) + '</div><div class="sub">3개 채널 합계</div></div>'
+  h += '<div class="card"><div class="label">30일 쿠팡 수수료</div><div class="value">₩' + num(k.commission) + '</div><div class="sub">주문 ' + num(k.orders) + (data.top_channel ? ' · 1위 ' + esc(data.top_channel) : '') + '</div></div>'
+  h += '<div class="card"><div class="label">설정 완료</div><div class="value">' + num(data.ready_count) + '/' + num(data.ready_total) + '</div><div class="sub">필수 연결 항목</div></div></div>'
+  const alerts = data.alerts || []
+  h += '<div class="section-header"><h2>🚨 확인이 필요한 일 (' + alerts.length + ')</h2></div><div class="table-wrap" style="padding:8px 16px">'
+  h += alerts.length ? alerts.map(a => '<div style="display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span>' + (a.level === 'critical' ? '⛔ ' : '⚠️ ') + esc(a.text) + '</span>' + link(a.link, '열기 ↗') + '</div>').join('') : '<div style="padding:8px 0;color:var(--muted);font-size:13px">처리할 일이 없습니다.</div>'
+  h += '</div><div class="section-header"><h2>✅ 설정 체크리스트</h2></div><div class="table-wrap" style="padding:8px 16px">'
+  h += (data.readiness || []).map(c => '<div style="display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><span>' + (c.ok ? '✅ ' : (c.optional ? '➖ ' : '⬜ ')) + esc(c.label) + (c.optional ? ' <span style="color:var(--muted)">(선택)</span>' : '') + '<br><span style="color:var(--muted);font-size:12px">' + esc(c.hint) + '</span></span>' + (c.ok ? '' : link(c.fix, '설정 ↗')) + '</div>').join('')
+  const upcoming = pipe.upcoming || []
+  h += '</div><div class="section-header"><h2>📅 다가오는 발행</h2></div><div class="table-wrap"><table><thead><tr><th>공개 예정(KST)</th><th>채널</th><th>제품</th><th>상태</th></tr></thead><tbody>'
+  h += upcoming.length ? upcoming.map(u => '<tr><td>' + esc(u.publish_at_kst) + '</td><td>' + esc(u.channel_label) + '</td><td>' + link('/shorts/photo/' + Number(u.shorts_project_id), '#' + Number(u.shorts_project_id)) + '</td><td><span class="badge yellow">' + esc(u.status) + '</span></td></tr>').join('') : '<tr><td colspan="4" style="color:var(--muted)">예약된 발행이 없습니다.</td></tr>'
+  h += '</tbody></table></div><div class="section-header"><h2>채널별 현황</h2></div><div class="table-wrap"><table><thead><tr><th>채널</th><th>예약 대기</th><th>7일 게시</th></tr></thead><tbody>'
+  h += (pipe.channels || []).map(c => '<tr><td>' + esc(c.label) + '</td><td>' + num(c.queued) + '</td><td>' + num(c.posted_7d) + '</td></tr>').join('')
+  h += '</tbody></table></div>'
+  body.innerHTML = h
 }
 
 // ── 썸네일 생성 (blog-automation/image_fetcher.py generate_title_thumbnail과 동일 디자인) ──
@@ -11448,6 +11573,8 @@ function botQuick(cmd) {
 
 // Enter to send (Shift+Enter for newline)
 document.addEventListener('DOMContentLoaded', () => {
+  // 토큰이 저장돼 있으면 숏폼 모듈의 긴급 알림 수를 사이드바 배지에 표시합니다.
+  if (sfToken()) sfLoad(true)
   const inp = document.getElementById('bot-input')
   if (inp) {
     inp.addEventListener('keydown', e => {

@@ -1,127 +1,3 @@
-2026-10-25 00:06:50,836 [WARNING] main — ============================================================
-2026-10-25 00:06:50,836 [WARNING] main — ⚠️ 게시 0건 — 생성은 됐지만 1건 모두 검토 대기로 빠졌습니다
-2026-10-25 00:06:50,836 [WARNING] main —    품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다
-2026-10-25 00:06:50,836 [WARNING] main —    품질 게이트가 의도대로 막은 것입니다 — 대시보드 검토 대기에서 확인하세요
-2026-10-25 00:06:50,836 [WARNING] main — ============================================================
-2026-10-25 23:40:22,460 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-25 23:40:23,772 [INFO] main — ============================================================
-2026-10-25 23:40:23,773 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-10-25 23:40:23
-2026-10-25 23:40:23,773 [INFO] main — ============================================================
-2026-10-25 23:40:23,787 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-10-25 23:40:23,787 [INFO] keyword_collector — 포스팅 이력 코퍼스: 70개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-10-25 23:40:23,787 [INFO] keyword_collector — 시즌 예약 키워드 40개 로드 (blog=blog1): ['2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법', '명절 TV 영화 편성표 솔직 비교']...
-2026-10-25 23:40:26,956 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-10-25 23:40:33,252 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:40:33,272 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-10-25 23:40:33,272 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-10-25 23:40:33,797 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인']
-2026-10-25 23:40:34,258 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-25 23:40:34,259 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-10-25 23:40:34,260 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-10-25 23:40:34,266 [INFO] keyword_collector —   [season_scheduled] 2개: ['2026 수능 끝나고 여행지 추천 후기', '수능 이후 할 일 리스트 솔직 비교']
-2026-10-25 23:40:34,266 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 수능 끝나고 여행지 추천 후기', '수능 이후 할 일 리스트 솔직 비교']
-2026-10-25 23:40:34,266 [INFO] main — 수집된 키워드 2개: ['2026 수능 끝나고 여행지 추천 후기', '수능 이후 할 일 리스트 솔직 비교']
-2026-10-25 23:40:34,272 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
-2026-10-25 23:40:34,272 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 수능 끝나고 여행지 추천 후기']
-2026-10-25 23:40:34,286 [INFO] main — 
-[1/1] 키워드: '2026 수능 끝나고 여행지 추천 후기'
-2026-10-25 23:40:34,286 [INFO] content_generator — 포스트 생성 중: '2026 수능 끝나고 여행지 추천 후기'
-2026-10-25 23:40:41,653 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:40:41,654 [INFO] research_collector — 검색 의도: 2026학년도 수능이 끝난 직후 수험생들이 떠나기 좋은 국내외 여행지와 실제 후기를 찾으려는 의도
-2026-10-25 23:40:52,208 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '2026 수능 끝나고 여행지 추천 후기'
-2026-10-25 23:41:04,112 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:41:04,113 [INFO] evidence_builder — 자료팩 생성: 사실 3개 — '2026 수능 끝나고 여행지 추천 후기'
-2026-10-25 23:41:12,878 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:41:12,879 [INFO] source_validator — 출처 검증: 2/3개 통과, 등급 분포 {'A': 1, 'X': 1, 'D': 1}
-2026-10-25 23:41:12,881 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-10-25 23:41:12,881 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-25 23:41:12,887 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-25 23:41:13,552 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:43:18,629 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-25 23:43:18,630 [WARNING] content_generator — 컨텐츠 너무 짧음(2499자, 최소 2500자) — 재시도 1/3
-2026-10-25 23:43:21,630 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-10-25 23:43:21,630 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-25 23:43:22,455 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:44:48,027 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-25 23:44:48,662 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:44:59,457 [INFO] content_generator — 팩트체크: 통과
-2026-10-25 23:44:59,457 [INFO] content_generator — 이미지 계획 2건 사용: ['students travel airport suitcase', 'airport departure board check flight']
-2026-10-25 23:44:59,689 [INFO] image_fetcher — 이미지 수집 성공: 'students travel airport suitcase' → 제목='airport / walking / waiting / gate / wal' (관련성=0.50)
-2026-10-25 23:44:59,894 [INFO] image_fetcher — 이미지 수집 성공: 'airport departure board check flight' → 제목='airport / arrow / board / depart / depar' (관련성=0.60)
-2026-10-25 23:45:00,892 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:45:01,394 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-10-25 23:45:01,394 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-10-25 23:45:01,402 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-10-25 23:45:01,404 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-25 23:45:01,404 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-25 23:45:01,405 [INFO] content_generator — 포스트 생성 완료: '수능 끝난 후 여행지 추천, 국내외 비용 비교 정리' (2740자, 이미지 2개)
-2026-10-25 23:45:02,173 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:45:17,996 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '수능 끝난 후 여행지 추천, 국내외 비용 비교 정리'
-2026-10-25 23:45:17,996 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 500자 이상의 긴 단락이 다수 존재
-2026-10-25 23:45:17,996 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처는 명시했으나 alt 텍스트 적용 여부 확인 불가
-2026-10-25 23:45:17,997 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 박스·표·FAQ 등 정형화된 템플릿 패턴과 요약형 문체가 다수 반복됨
-2026-10-25 23:45:18,002 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-10-25 23:45:18,007 [INFO] internal_linker —   [1/5] '동남아' -> https://www.hoguwhat.com/2026/10/10.html
-2026-10-25 23:45:18,011 [INFO] internal_linker —   [2/5] '제주도' -> https://hogugolfntraval.blogspot.com/2026/10/blog-post_05.ht
-2026-10-25 23:45:18,021 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-10-25 23:45:18,021 [INFO] main —   제목: 수능 끝난 후 여행지 추천, 국내외 비용 비교 정리
-2026-10-25 23:45:18,021 [INFO] main —   이미지: 2개 삽입
-2026-10-25 23:45:18,022 [INFO] main —   글자 수: 2740자
-2026-10-25 23:45:18,711 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:45:37,720 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '수능 끝난 후 여행지 추천, 국내외 비용 비교 정리'
-2026-10-25 23:45:37,720 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 2개 사용은 적절하나 alt 텍스트 명시 여부 불명확
-2026-10-25 23:45:37,720 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약·💡·💬 박스 등 정형화된 AI 블로그 템플릿 패턴과 반복적 전환구가 다수 관찰됨
-2026-10-25 23:45:37,720 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-10-25 23:45:38,502 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:46:43,548 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-25 23:46:44,308 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:47:26,182 [INFO] final_editor —   ✏️ 제목 최종 교정: '수능 끝난 후 여행지 추천, 국내외 비용 비교 정리' → '2026 수능 끝나고 여행지 추천 후기, 국내외 비용 비교'
-2026-10-25 23:47:26,182 [INFO] final_editor —   ✏️ 메타 설명 교정 (128자)
-2026-10-25 23:47:26,182 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 키워드 중심으로 재정리하고, 긴 문단을 2~4문장 단위로 분리했으며 href='#' 미연결 링크를 제거하고 텍스트형 내부 링크 언급으로 대체했습니다. 이미지 위치와 구체적 alt text, 참고자료, 경고 문구를 추가해 발행 품질을 완성했습니다.
-2026-10-25 23:47:26,384 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-10-25 23:47:26,384 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-10-25 23:47:27,383 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/10/2026.html
-2026-10-25 23:47:27,398 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/10/2026.html
-2026-10-25 23:47:27,403 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-10-25 23:47:27,411 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-25 23:47:27,412 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '2026 수능 끝나고 여행지 추천 후기, 국내외 비용 비교'
-2026-10-25 23:47:27,756 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 23:47:30,758 [INFO] comment_manager —   생성된 댓글: 덧붙이자면, 항공권이나 숙소는 수능 날짜가 확정되기 전이라도 '가격 알림' 기능을 미리 설정해두면 폭등 전 타이밍을 잡기 훨씬 수월해요. 그리고...
-2026-10-25 23:50:30,988 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-10-25 23:50:30,989 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-10-25 23:50:30,990 [INFO] main — 
-============================================================
-2026-10-25 23:50:30,990 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-10-25 23:50:30,990 [INFO] main — ============================================================
-2026-10-25 23:50:31,011 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 169개)
-2026-10-25 23:50:31,020 [INFO] dashboard_exporter — 분석 필드 유지: 61/79개 (등급·조회수·수익)
-2026-10-25 23:50:31,034 [INFO] dashboard_exporter —   시리즈: 47개 내보내기 완료
-2026-10-25 23:50:31,046 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-10-25 23:50:31,414 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-25 23:50:31,802 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-25 23:50:31,803 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-10-25 23:50:31,805 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
-2026-10-25 23:50:31,809 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-10-25 23:50:31,829 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 263 / 실패 0 / 대기 19)
-2026-10-25 23:50:31,829 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-25 23:50:31,829 [INFO] dashboard_exporter —   포스트: 79개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-25 23:50:31,830 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-10-25 23:50:31,831 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-10-25 23:51:25,898 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-25 23:51:27,345 [INFO] main — ============================================================
-2026-10-25 23:51:27,345 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-10-25 23:51:27
-2026-10-25 23:51:27,345 [INFO] main — ============================================================
-2026-10-25 23:51:27,358 [INFO] keyword_collector — 타 블로그 최근 키워드 6개 중복 방지 코퍼스 합류
-2026-10-25 23:51:27,358 [INFO] keyword_collector — 포스팅 이력 코퍼스: 79개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-10-25 23:51:27,359 [INFO] keyword_collector — 시즌 예약 키워드 13개 로드 (blog=blog2): ['2026 재수 결정하는 방법 체크리스트', '수능 끝나고 저렴하게 준비하는 법', '수능 후 자격증 준비 추천 코스']...
-2026-10-25 23:51:33,352 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
 2026-10-25 23:51:42,528 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-10-25 23:51:42,546 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
 2026-10-25 23:51:42,546 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
@@ -622,3 +498,110 @@
 2026-10-28 00:57:58,663 [INFO] dashboard_exporter —   포스트: 77개 / 실행 이력: 120개 / 블로그: 3개
 2026-10-28 00:57:58,664 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-10-28 00:57:58,665 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-10-28 00:58:55,776 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-28 00:58:57,501 [INFO] main — ============================================================
+2026-10-28 00:58:57,502 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-10-28 00:58:57
+2026-10-28 00:58:57,502 [INFO] main — ============================================================
+2026-10-28 00:58:57,515 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-10-28 00:58:57,515 [INFO] keyword_collector — 포스팅 이력 코퍼스: 80개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-10-28 00:58:57,516 [INFO] keyword_collector — 시즌 예약 키워드 11개 로드 (blog=blog2): ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법']...
+2026-10-28 00:59:03,660 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-10-28 00:59:09,838 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:59:09,857 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-10-28 00:59:09,857 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-10-28 00:59:10,586 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-28 00:59:10,587 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-10-28 00:59:10,589 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-10-28 00:59:10,594 [INFO] keyword_collector — 유사 주제 제외 12개: ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법', '2026 할로윈 소품 솔직 비교 후기', '할로윈 파티 집에서 준비하는 방법 꿀팁']
+2026-10-28 00:59:10,596 [INFO] keyword_collector —   [season_scheduled] 1개: ['2026 수능 이후 할 일 리스트 추천']
+2026-10-28 00:59:10,596 [INFO] keyword_collector —   [naver_realtime] 1개: ['OTT 요금제 비교 2026 넷플릭스 디즈니플러스 SKB']
+2026-10-28 00:59:10,596 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 수능 이후 할 일 리스트 추천', 'OTT 요금제 비교 2026 넷플릭스 디즈니플러스 SKB']
+2026-10-28 00:59:10,596 [INFO] main — 수집된 키워드 2개: ['2026 수능 이후 할 일 리스트 추천', 'OTT 요금제 비교 2026 넷플릭스 디즈니플러스 SKB']
+2026-10-28 00:59:10,602 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
+2026-10-28 00:59:10,603 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 수능 이후 할 일 리스트 추천']
+2026-10-28 00:59:10,617 [INFO] main — 
+[1/1] 키워드: '2026 수능 이후 할 일 리스트 추천'
+2026-10-28 00:59:10,617 [INFO] content_generator — 포스트 생성 중: '2026 수능 이후 할 일 리스트 추천'
+2026-10-28 00:59:16,365 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:59:16,366 [INFO] research_collector — 검색 의도: 2026학년도 수능을 마친 수험생이 시험 후 해야 할 일(일정, 활동, 준비사항)을 추천받고자 하는 의도
+2026-10-28 00:59:31,217 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '2026 수능 이후 할 일 리스트 추천'
+2026-10-28 00:59:48,680 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:59:48,682 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '2026 수능 이후 할 일 리스트 추천'
+2026-10-28 00:59:59,177 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:59:59,179 [INFO] source_validator — 출처 검증: 2/5개 통과, 등급 분포 {'A': 2, 'X': 3}
+2026-10-28 00:59:59,183 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-28 00:59:59,189 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-28 00:59:59,867 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 01:01:15,549 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-28 01:01:16,296 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 01:01:24,018 [INFO] content_generator — 팩트체크: 통과
+2026-10-28 01:01:24,018 [INFO] content_generator — 이미지 계획 2건 사용: ['students leaving exam hall relieved', 'basketball arena crowd cheering']
+2026-10-28 01:01:24,221 [INFO] image_fetcher — 이미지 수집 성공: 'students leaving exam hall relieved' → 제목='woman / books / teen / to study / to lea' (관련성=0.20)
+2026-10-28 01:01:24,367 [INFO] image_fetcher — 이미지 수집 성공: 'basketball arena crowd cheering' → 제목='basketball / sports / athlete / player /' (관련성=0.25)
+2026-10-28 01:01:26,945 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 01:01:26,946 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
+2026-10-28 01:01:27,159 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-10-28 01:01:27,160 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-10-28 01:01:27,166 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-10-28 01:01:27,168 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-28 01:01:27,168 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-28 01:01:27,168 [INFO] content_generator — 포스트 생성 완료: '수능 이후 할 일 리스트, 스포츠 직관부터 드라마 정주행까지 조사 정리' (2593자, 이미지 1개)
+2026-10-28 01:01:27,888 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 01:01:41,409 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '수능 이후 할 일 리스트, 스포츠 직관부터 드라마 정주행까지 조'
+2026-10-28 01:01:41,410 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 날짜·출처 등 구체적 정보는 있으나 전반적으로 일반적인 팁 나열 수준으로 독창적 해석이 부족함
+2026-10-28 01:01:41,410 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 도입부 등 일부 단락이 500자 이상으로 길게 이어짐
+2026-10-28 01:01:41,410 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개가 Pixabay 라이선스로 적법하나 alt 텍스트 명시 여부 불명확하고 이미지 수가 적음
+2026-10-28 01:01:41,410 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '핵심 요약' 반복 제시와 체크리스트식 목록화 패턴이 다소 기계적인 느낌을 줌
+2026-10-28 01:01:41,414 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-10-28 01:01:41,417 [INFO] internal_linker —   [1/5] '체크리스트' -> https://www.hoguwhat.com/2026/10/2026-7.html
+2026-10-28 01:01:41,419 [INFO] internal_linker —   [2/5] '10월' -> https://www.hoguwhat.com/2026/10/2026-10-x.html
+2026-10-28 01:01:41,421 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-10-28 01:01:41,421 [INFO] main —   제목: 수능 이후 할 일 리스트, 스포츠 직관부터 드라마 정주행까지 조사 정리
+2026-10-28 01:01:41,421 [INFO] main —   이미지: 1개 삽입
+2026-10-28 01:01:41,421 [INFO] main —   글자 수: 2593자
+2026-10-28 01:01:42,059 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 01:02:03,431 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '수능 이후 할 일 리스트, 스포츠 직관부터 드라마 정주행까지 조'
+2026-10-28 01:02:03,431 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 문단 구분 없이 긴 텍스트 블록이 이어져 가독성 저하
+2026-10-28 01:02:03,431 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장만 사용되었고 Pixabay 출처는 명시되었으나 alt 텍스트 여부 불분명, 이미지 수 자체가 적음
+2026-10-28 01:02:03,431 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~살펴보겠습니다', '~확인하는 게 정확합니다' 등 전형적 전환 문구와 체크리스트 나열 패턴이 다수 반복됨
+2026-10-28 01:02:03,431 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-10-28 01:02:04,111 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 01:03:04,330 [INFO] final_editor —   ✏️ 제목 최종 교정: '수능 이후 할 일 리스트, 스포츠 직관부터 드라마 정주행까지 조사 정리' → '2026 수능 이후 할 일 리스트 추천, 스포츠·드라마 총정리'
+2026-10-28 01:03:04,330 [INFO] final_editor —   ✏️ 메타 설명 교정 (124자)
+2026-10-28 01:03:04,330 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타 설명·URL 슬러그를 규정 길이에 맞게 정리하고, 요약 박스·표·개인 경험 메모·FAQ·주의사항·작성자 메모·내부 링크 제안·구체적 이미지 alt를 추가해 Blogger 발행 가능한 형태로 편집했습니다.
+2026-10-28 01:03:04,444 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-28 01:03:04,445 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-10-28 01:03:05,485 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/10/2026_01958576024.html
+2026-10-28 01:03:05,503 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/10/2026_01958576024.html
+2026-10-28 01:03:05,508 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-10-28 01:03:05,517 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-28 01:03:05,519 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '2026 수능 이후 할 일 리스트 추천, 스포츠·드라마 총정리'
+2026-10-28 01:03:06,154 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 01:03:08,968 [INFO] comment_manager —   생성된 댓글: 덧붙이자면 KBL·V리그 직관 생각하시는 분들은 각 구단 공식 SNS나 멤버십 가입해두시는 걸 추천드려요. 일반 예매처보다 먼저 얼리버드 할인이...
+2026-10-28 01:06:09,094 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-10-28 01:06:09,096 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-10-28 01:06:09,096 [INFO] main — 
+============================================================
+2026-10-28 01:06:09,096 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-10-28 01:06:09,097 [INFO] main — ============================================================
+2026-10-28 01:06:09,116 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 175개)
+2026-10-28 01:06:09,128 [INFO] dashboard_exporter — 분석 필드 유지: 74/78개 (등급·조회수·수익)
+2026-10-28 01:06:09,142 [INFO] dashboard_exporter —   시리즈: 47개 내보내기 완료
+2026-10-28 01:06:09,155 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-28 01:06:10,367 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-28 01:06:10,914 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-28 01:06:10,916 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-28 01:06:10,919 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
+2026-10-28 01:06:10,922 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-28 01:06:10,942 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 263 / 실패 0 / 대기 20)
+2026-10-28 01:06:10,943 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-28 01:06:10,943 [INFO] dashboard_exporter —   포스트: 78개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-28 01:06:10,943 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-28 01:06:10,944 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

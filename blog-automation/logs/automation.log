@@ -1,92 +1,3 @@
-2026-10-25 00:00:41,414 [INFO] main — ============================================================
-2026-10-25 00:00:41,427 [INFO] keyword_collector — 타 블로그 최근 키워드 6개 중복 방지 코퍼스 합류
-2026-10-25 00:00:41,427 [INFO] keyword_collector — 포스팅 이력 코퍼스: 78개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-10-25 00:00:41,428 [INFO] keyword_collector — 시즌 예약 키워드 10개 로드 (blog=blog2): ['2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법', '2026 할로윈 소품 솔직 비교 후기']...
-2026-10-25 00:00:47,157 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-10-25 00:00:53,796 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 00:00:53,814 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-10-25 00:00:53,815 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-10-25 00:00:54,577 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-25 00:00:54,578 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-10-25 00:00:54,579 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-10-25 00:00:54,583 [INFO] keyword_collector — 유사 주제 제외 6개: ['2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법', '2026 할로윈 소품 솔직 비교 후기', '할로윈 파티 집에서 준비하는 방법 꿀팁', '할로윈 코스튬 직접 만들어본 후기 공유']
-2026-10-25 00:00:54,584 [INFO] keyword_collector —   [season_scheduled] 2개: ['수능 후 재수 결정 솔직 비교 방법', '2026 수능 이후 할 일 리스트 추천']
-2026-10-25 00:00:54,584 [INFO] keyword_collector — 최종 선정 키워드 2개: ['수능 후 재수 결정 솔직 비교 방법', '2026 수능 이후 할 일 리스트 추천']
-2026-10-25 00:00:54,584 [INFO] main — 수집된 키워드 2개: ['수능 후 재수 결정 솔직 비교 방법', '2026 수능 이후 할 일 리스트 추천']
-2026-10-25 00:00:54,590 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 2일 전, 5일 후 활성화)
-2026-10-25 00:00:54,590 [INFO] main — 단독 포스트 대상 키워드 1개: ['수능 후 재수 결정 솔직 비교 방법']
-2026-10-25 00:00:54,603 [INFO] main — 
-[1/1] 키워드: '수능 후 재수 결정 솔직 비교 방법'
-2026-10-25 00:00:54,603 [INFO] content_generator — 포스트 생성 중: '수능 후 재수 결정 솔직 비교 방법'
-2026-10-25 00:01:01,863 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 00:01:01,865 [INFO] research_collector — 검색 의도: 수능 성적 발표 후 재수와 정시 지원 중 어떤 선택이 나은지 판단 기준과 비교 방법을 알고 싶은 수험생/학부
-2026-10-25 00:01:16,350 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 5개) — '수능 후 재수 결정 솔직 비교 방법'
-2026-10-25 00:01:34,689 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 00:01:34,691 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '수능 후 재수 결정 솔직 비교 방법'
-2026-10-25 00:01:41,004 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 00:01:41,005 [INFO] source_validator — 출처 검증: 1/4개 통과, 등급 분포 {'X': 3, 'B': 1}
-2026-10-25 00:01:41,008 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-25 00:01:41,013 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-25 00:01:41,749 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 00:03:01,273 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-25 00:03:01,273 [WARNING] content_generator — 컨텐츠 너무 짧음(2050자, 최소 2500자) — 재시도 1/3
-2026-10-25 00:03:04,273 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-10-25 00:03:04,274 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-25 00:03:05,150 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 00:04:47,923 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-25 00:04:47,924 [WARNING] content_generator — 컨텐츠 너무 짧음(2424자, 최소 2500자) — 재시도 2/3
-2026-10-25 00:04:50,924 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-10-25 00:04:50,924 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-25 00:04:51,685 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 00:06:04,257 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-25 00:06:04,258 [WARNING] content_generator — 최소 분량 미달(2386자) — 재시도 소진, 해당 분량으로 진행
-2026-10-25 00:06:05,031 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 00:06:21,660 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
-2026-10-25 00:06:21,660 [INFO] content_generator — 이미지 계획 2건 사용: ['student studying desk exam results', 'study academy classroom students']
-2026-10-25 00:06:21,877 [INFO] image_fetcher — 이미지 수집 성공: 'student studying desk exam results' → 제목='studying / exams / preparation / knowled' (관련성=0.60)
-2026-10-25 00:06:22,027 [INFO] image_fetcher — 이미지 수집 성공: 'study academy classroom students' → 제목='living room / classroom / teacher / scho' (관련성=0.50)
-2026-10-25 00:06:24,155 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 00:06:24,733 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-10-25 00:06:24,733 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-10-25 00:06:24,739 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-10-25 00:06:24,741 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-25 00:06:24,741 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-25 00:06:24,741 [INFO] content_generator — 포스트 생성 완료: '수능 후 재수 결정, 체대·예체능 지망생이라면 이렇게 비교해보세요' (2386자, 이미지 2개)
-2026-10-25 00:06:25,317 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 00:06:46,037 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-25 00:06:46,695 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-25 00:06:50,136 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '수능 후 재수 결정, 체대·예체능 지망생이라면 이렇게 비교해보세'
-2026-10-25 00:06:50,136 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수 2386자로 2000~2499 구간(warn)이며, 2023년 수치·표 등 구체성은 있으나 일부 구간은 일반론 나열에 가까움
-2026-10-25 00:06:50,136 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개로 기준 충족하나 표 내용이 텍스트로 뭉개져 가독성이 떨어지는 구간 존재
-2026-10-25 00:06:50,136 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스로 저작권 위반은 없으나 alt 텍스트 명시 여부 불확실
-2026-10-25 00:06:50,136 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 중복된 핵심 요약 박스와 '~로 알려져 있습니다' 등 유사 문형 반복, 문장 중간 끊김 등 편집 흔적 발견
-2026-10-25 00:06:50,136 [WARNING] adsense_validator —   🔴 중복된 핵심 요약 박스 및 '차이가 큰 편입니다., 기숙학원은' 같은 문장 끊김 오류로 품질 검수 필요
-2026-10-25 00:06:50,139 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-10-25 00:06:50,151 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-10-25 00:06:50,151 [INFO] main —   제목: 수능 후 재수 결정, 체대·예체능 지망생이라면 이렇게 비교해보세요
-2026-10-25 00:06:50,151 [INFO] main —   이미지: 2개 삽입
-2026-10-25 00:06:50,151 [INFO] main —   글자 수: 2386자
-2026-10-25 00:06:50,151 [WARNING] main —   ⚠️ 글자 수 미달 — pending 저장: '수능 후 재수 결정, 체대·예체능 지망생이라면 이렇게 비교해보세요' (2386자 < 2500자)
-2026-10-25 00:06:50,171 [INFO] dashboard_exporter —   검토 대기 저장: 수능 후 재수 결정, 체대·예체능 지망생이라면 이렇게 비교해보세요 (13079자 HTML)
-2026-10-25 00:06:50,191 [INFO] pending_store — 검토 대기 저장: 목록 17건 / 보관 177건 / 본문 20건
-2026-10-25 00:06:50,191 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 194개)
-2026-10-25 00:06:50,191 [INFO] main — 
-============================================================
-2026-10-25 00:06:50,191 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-10-25 00:06:50,191 [INFO] main — ============================================================
-2026-10-25 00:06:50,208 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 168개)
-2026-10-25 00:06:50,214 [INFO] dashboard_exporter — 분석 필드 유지: 63/80개 (등급·조회수·수익)
-2026-10-25 00:06:50,228 [INFO] dashboard_exporter —   시리즈: 47개 내보내기 완료
-2026-10-25 00:06:50,239 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-10-25 00:06:50,500 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-25 00:06:50,812 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-25 00:06:50,813 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-10-25 00:06:50,814 [INFO] dashboard_exporter —   학습 이력: 8주 내보내기 완료
-2026-10-25 00:06:50,818 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-10-25 00:06:50,834 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 263 / 실패 0 / 대기 19)
-2026-10-25 00:06:50,834 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-25 00:06:50,834 [INFO] dashboard_exporter —   포스트: 80개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-25 00:06:50,835 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-10-25 00:06:50,836 [WARNING] main — ============================================================
 2026-10-25 00:06:50,836 [WARNING] main — ⚠️ 게시 0건 — 생성은 됐지만 1건 모두 검토 대기로 빠졌습니다
 2026-10-25 00:06:50,836 [WARNING] main —    품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다
@@ -587,3 +498,127 @@
 2026-10-27 01:13:16,868 [WARNING] main —    품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다
 2026-10-27 01:13:16,868 [WARNING] main —    품질 게이트가 의도대로 막은 것입니다 — 대시보드 검토 대기에서 확인하세요
 2026-10-27 01:13:16,868 [WARNING] main — ============================================================
+2026-10-28 00:48:58,051 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-28 00:48:59,478 [INFO] main — ============================================================
+2026-10-28 00:48:59,478 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-10-28 00:48:59
+2026-10-28 00:48:59,478 [INFO] main — ============================================================
+2026-10-28 00:48:59,493 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
+2026-10-28 00:48:59,493 [INFO] keyword_collector — 포스팅 이력 코퍼스: 74개 항목 로드 (blog_id=blog1 중복 방지 기준)
+2026-10-28 00:48:59,493 [INFO] keyword_collector — 시즌 예약 키워드 36개 로드 (blog=blog1): ['2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법', '명절 TV 영화 편성표 솔직 비교']...
+2026-10-28 00:49:02,561 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-10-28 00:49:05,961 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:49:05,980 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-10-28 00:49:05,980 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-10-28 00:49:06,523 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인']
+2026-10-28 00:49:06,785 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-28 00:49:06,786 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-10-28 00:49:06,787 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-10-28 00:49:06,789 [INFO] keyword_collector — 유사 주제 제외 2개: ['수능 끝나고 저렴하게 준비하는 법', '가을 단풍 드라이브 코스 솔직 비교']
+2026-10-28 00:49:06,792 [INFO] keyword_collector —   [season_scheduled] 2개: ['2026 MAMA 예상 수상자 직접 분석 후기', '멜론뮤직어워드 2026 티켓 예매 방법 추천']
+2026-10-28 00:49:06,792 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 MAMA 예상 수상자 직접 분석 후기', '멜론뮤직어워드 2026 티켓 예매 방법 추천']
+2026-10-28 00:49:06,792 [INFO] main — 수집된 키워드 2개: ['2026 MAMA 예상 수상자 직접 분석 후기', '멜론뮤직어워드 2026 티켓 예매 방법 추천']
+2026-10-28 00:49:06,798 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 6일 전, 1일 후 활성화)
+2026-10-28 00:49:06,798 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 MAMA 예상 수상자 직접 분석 후기']
+2026-10-28 00:49:06,811 [INFO] main — 
+[1/1] 키워드: '2026 MAMA 예상 수상자 직접 분석 후기'
+2026-10-28 00:49:06,811 [INFO] content_generator — 포스트 생성 중: '2026 MAMA 예상 수상자 직접 분석 후기'
+2026-10-28 00:49:14,591 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:49:14,592 [INFO] research_collector — 검색 의도: 2026 MAMA 시상식의 예상 수상자와 후보를 미리 분석하여 궁금증을 해소하려는 검색 의도
+2026-10-28 00:49:22,679 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — '2026 MAMA 예상 수상자 직접 분석 후기'
+2026-10-28 00:49:40,890 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:49:40,891 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '2026 MAMA 예상 수상자 직접 분석 후기'
+2026-10-28 00:49:43,210 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:49:43,211 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'B': 3, 'X': 3}
+2026-10-28 00:49:44,441 [INFO] content_generator — K-POP 참고 데이터 수집 완료: '2026 MAMA 예상 수상자 직접 분석 후기'
+2026-10-28 00:49:44,441 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-28 00:49:44,447 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-28 00:49:45,120 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:51:24,417 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-10-28 00:51:24,417 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-28 00:51:24,874 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:51:35,216 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-10-28 00:51:35,217 [INFO] content_generator — 이미지 계획 1건 사용: ['music awards trophy stage lights']
+2026-10-28 00:51:35,438 [INFO] image_fetcher — 이미지 수집 성공: 'music awards trophy stage lights' → 제목='concert / crowd / silhouette / music fes' (관련성=0.40)
+2026-10-28 00:51:35,721 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-10-28 00:51:35,721 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-10-28 00:51:35,727 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-10-28 00:51:35,729 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-28 00:51:35,729 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-28 00:51:35,729 [INFO] content_generator — 포스트 생성 완료: '2026 MAMA 신인상 예상, 하츠투하츠 분석 정리' (2798자, 이미지 1개)
+2026-10-28 00:51:36,403 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:51:56,464 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '2026 MAMA 신인상 예상, 하츠투하츠 분석 정리'
+2026-10-28 00:51:56,465 [INFO] adsense_validator —   ⚠️ SEO 최적화: 제목·본문은 일치하나 키워드 '직접 분석 후기'와 달리 본문에서 체험담이 아님을 명시해 키워드-콘텐츠 간 미세한 괴리 존재
+2026-10-28 00:51:56,465 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 체크리스트·표 형태의 과도한 구조화와 '정리하면' 등 자동요약성 문구가 다소 기계적인 인상을 줌
+2026-10-28 00:51:56,468 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-10-28 00:51:56,473 [INFO] internal_linker —   [1/5] '체크리스트' -> https://hogugolfntraval.blogspot.com/2026/10/2026_0642945554
+2026-10-28 00:51:56,475 [INFO] internal_linker —   [2/5] '국내외' -> https://www.hoguwhat.com/2026/10/2026.html
+2026-10-28 00:51:56,478 [INFO] internal_linker —   [3/5] '2026년' -> https://hoguasset.blogspot.com/2026/09/2026_0483980665.html
+2026-10-28 00:51:56,478 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-10-28 00:51:56,478 [INFO] main —   제목: 2026 MAMA 신인상 예상, 하츠투하츠 분석 정리
+2026-10-28 00:51:56,478 [INFO] main —   이미지: 1개 삽입
+2026-10-28 00:51:56,478 [INFO] main —   글자 수: 2798자
+2026-10-28 00:51:57,454 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:52:19,444 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-10-28 00:52:20,260 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:52:23,347 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '2026 MAMA 신인상 예상, 하츠투하츠 분석 정리'
+2026-10-28 00:52:23,347 [INFO] adsense_validator —   ⚠️ SEO 최적화: 키워드에 '후기'가 포함되나 본문은 명시적으로 체험 후기가 아닌 분석 글임을 밝혀 키워드-내용 미세 불일치
+2026-10-28 00:52:23,347 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개로 구조는 양호하나 일부 단락(해외 노미네이트 설명 등)이 500자 이상으로 길게 이어짐
+2026-10-28 00:52:23,347 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 1개 포함되어 있으나 정책상 이미지 관련 항목은 기본적으로 warn 처리
+2026-10-28 00:52:23,347 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 콜아웃 박스, 체크리스트, '정리하면' 등 전형적인 AI 생성 포맷 패턴이 반복적으로 나타남
+2026-10-28 00:52:23,347 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-10-28 00:52:23,347 [WARNING] main —      🟡 [SEO 최적화] 키워드에 '후기'가 포함되나 본문은 명시적으로 체험 후기가 아닌 분석 글임을 밝혀 키워드-내용 미세 불일치
+2026-10-28 00:52:23,347 [WARNING] main —      🟡 [구조 및 가독성] H2 5개로 구조는 양호하나 일부 단락(해외 노미네이트 설명 등)이 500자 이상으로 길게 이어짐
+2026-10-28 00:52:23,347 [WARNING] main —      🟡 [이미지 정책] Pixabay 라이선스 이미지 1개 포함되어 있으나 정책상 이미지 관련 항목은 기본적으로 warn 처리
+2026-10-28 00:52:23,347 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-10-28 00:52:23,357 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-28 00:52:23,363 [INFO] adsense_validator —   🖼️ alt 재작성 → "2026 MAMA 신인상 예상, 하츠투하츠 분석 정리 관련 이미지" (캡션 포함)
+2026-10-28 00:52:23,363 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 1건
+2026-10-28 00:52:24,116 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:54:07,073 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2798자 → 3887자 (+1089자)
+2026-10-28 00:54:07,074 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-10-28 00:54:07,843 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:54:27,604 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '2026 MAMA 신인상 예상, 하츠투하츠 분석 정리'
+2026-10-28 00:54:27,604 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1장에 alt텍스트 포함되어 명백한 위반은 없으나 이미지 수가 적어 기본 warn 처리
+2026-10-28 00:54:27,605 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심요약 박스·표·결론 정리 등 전형적 AI 블로그 템플릿 패턴이 반복됨
+2026-10-28 00:54:27,605 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
+2026-10-28 00:54:27,605 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-10-28 00:54:28,400 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:54:52,180 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026 MAMA 신인상 예상, 하츠투하츠 분석 정리' → '2026 MAMA 신인상 예상 수상자, 하츠투하츠 분석 후기'
+2026-10-28 00:54:52,180 [INFO] final_editor —   ✏️ 메타 설명 교정 (87자)
+2026-10-28 00:54:52,180 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 SEO 기준에 맞게 정리하고, 잘려 있던 FAQ 섹션을 4개 이상으로 보완했으며, 긴 문단을 2~4문장 단위로 재분할하고 이미지 3곳을 구체적 alt와 함께 제안했습니다.
+2026-10-28 00:54:52,295 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-28 00:54:52,295 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
+2026-10-28 00:54:53,200 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/10/2026-mama.html
+2026-10-28 00:54:53,214 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/10/2026-mama.html
+2026-10-28 00:54:53,218 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-10-28 00:54:53,226 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-28 00:54:53,228 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '2026 MAMA 신인상 예상 수상자, 하츠투하츠 분석 후기'
+2026-10-28 00:54:53,897 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-28 00:54:57,999 [INFO] comment_manager —   생성된 댓글: 글 보시는 분들을 위해 팁 하나 드리면, MAMA는 보통 공식 유튜브랑 홈페이지를 통해 11월 초중순쯤 1차 후보 발표를 하는 경우가 많으니 그...
+2026-10-28 00:57:58,144 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-10-28 00:57:58,146 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-10-28 00:57:58,146 [INFO] main — 
+============================================================
+2026-10-28 00:57:58,146 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
+2026-10-28 00:57:58,146 [INFO] main — ============================================================
+2026-10-28 00:57:58,165 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 174개)
+2026-10-28 00:57:58,174 [INFO] dashboard_exporter — 분석 필드 유지: 74/77개 (등급·조회수·수익)
+2026-10-28 00:57:58,188 [INFO] dashboard_exporter —   시리즈: 47개 내보내기 완료
+2026-10-28 00:57:58,200 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-28 00:57:58,452 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-28 00:57:58,638 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-28 00:57:58,640 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-28 00:57:58,642 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
+2026-10-28 00:57:58,645 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-28 00:57:58,663 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 263 / 실패 0 / 대기 20)
+2026-10-28 00:57:58,663 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-28 00:57:58,663 [INFO] dashboard_exporter —   포스트: 77개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-28 00:57:58,664 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-28 00:57:58,665 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

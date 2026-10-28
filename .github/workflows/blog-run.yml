@@ -197,11 +197,6 @@ jobs:
           BLOG_NAME="${{ secrets.BLOG_NAME }}"
           # 스케줄은 발행 계획의 편수를, 수동 실행은 입력값을 씁니다
           POSTS_PER_RUN="${{ github.event_name == 'schedule' && needs.rotation.outputs.blog1 || (inputs.posts_per_run || '1') }}"
-          # 사람이 고른 글 구조 (auto면 키워드로 자동 판정 — 인자 생략)
-          TYPE_ARG=""
-          if [ -n "${{ inputs.article_type }}" ] && [ "${{ inputs.article_type }}" != "auto" ]; then
-            TYPE_ARG="--article-type ${{ inputs.article_type }}"
-          fi
           POST_STATUS="${{ (inputs.mode == 'draft') && 'draft' || 'live' }}"
           BLOG_LANGUAGE=ko
           TREND_COUNTRY=KR
@@ -220,6 +215,11 @@ jobs:
       - name: blog1 게시
         working-directory: blog-automation
         run: |
+          # article_type 은 쉘 인자이므로 .env 파일이 아닌 실행 셸에서 구성합니다.
+          TYPE_ARG=""
+          if [ -n "${{ inputs.article_type }}" ] && [ "${{ inputs.article_type }}" != "auto" ]; then
+            TYPE_ARG="--article-type ${{ inputs.article_type }}"
+          fi
           MODE="${{ inputs.mode || 'live' }}"
           KEYWORD="${{ inputs.keyword }}"
           SERIES_COUNT="${{ inputs.series_count || '4' }}"
@@ -445,11 +445,6 @@ jobs:
           BLOG_NAME="${{ secrets.BLOG_NAME }}"
           # 스케줄은 발행 계획의 편수를, 수동 실행은 입력값을 씁니다
           POSTS_PER_RUN="${{ github.event_name == 'schedule' && needs.rotation.outputs.blog2 || (inputs.posts_per_run || '1') }}"
-          # 사람이 고른 글 구조 (auto면 키워드로 자동 판정 — 인자 생략)
-          TYPE_ARG=""
-          if [ -n "${{ inputs.article_type }}" ] && [ "${{ inputs.article_type }}" != "auto" ]; then
-            TYPE_ARG="--article-type ${{ inputs.article_type }}"
-          fi
           POST_STATUS="${{ (inputs.mode == 'draft') && 'draft' || 'live' }}"
           BLOG_LANGUAGE=ko
           TREND_COUNTRY=KR
@@ -468,6 +463,11 @@ jobs:
       - name: blog2 게시
         working-directory: blog-automation
         run: |
+          # article_type 은 쉘 인자이므로 .env 파일이 아닌 실행 셸에서 구성합니다.
+          TYPE_ARG=""
+          if [ -n "${{ inputs.article_type }}" ] && [ "${{ inputs.article_type }}" != "auto" ]; then
+            TYPE_ARG="--article-type ${{ inputs.article_type }}"
+          fi
           MODE="${{ inputs.mode || 'live' }}"
           KEYWORD="${{ inputs.keyword }}"
           SERIES_COUNT="${{ inputs.series_count || '4' }}"
@@ -683,11 +683,6 @@ jobs:
           BLOG_NAME="${{ secrets.BLOG_NAME }}"
           # 스케줄은 발행 계획의 편수를, 수동 실행은 입력값을 씁니다
           POSTS_PER_RUN="${{ github.event_name == 'schedule' && needs.rotation.outputs.blog3 || (inputs.posts_per_run || '1') }}"
-          # 사람이 고른 글 구조 (auto면 키워드로 자동 판정 — 인자 생략)
-          TYPE_ARG=""
-          if [ -n "${{ inputs.article_type }}" ] && [ "${{ inputs.article_type }}" != "auto" ]; then
-            TYPE_ARG="--article-type ${{ inputs.article_type }}"
-          fi
           POST_STATUS="${{ (inputs.mode == 'draft') && 'draft' || 'live' }}"
           BLOG_LANGUAGE=ko
           TREND_COUNTRY=KR
@@ -706,6 +701,11 @@ jobs:
       - name: blog3 게시
         working-directory: blog-automation
         run: |
+          # article_type 은 쉘 인자이므로 .env 파일이 아닌 실행 셸에서 구성합니다.
+          TYPE_ARG=""
+          if [ -n "${{ inputs.article_type }}" ] && [ "${{ inputs.article_type }}" != "auto" ]; then
+            TYPE_ARG="--article-type ${{ inputs.article_type }}"
+          fi
           MODE="${{ inputs.mode || 'live' }}"
           KEYWORD="${{ inputs.keyword }}"
           SERIES_COUNT="${{ inputs.series_count || '4' }}"

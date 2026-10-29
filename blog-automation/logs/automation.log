@@ -1,182 +1,3 @@
-2026-10-27 01:00:18,914 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'A': 2, 'X': 3, 'B': 1}
-2026-10-27 01:00:18,916 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-27 01:00:18,919 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-27 01:00:19,601 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:02:44,702 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-27 01:02:45,247 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:02:51,613 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-10-27 01:02:51,613 [INFO] content_generator — 이미지 계획 2건 사용: ['study desk checklist notebook', 'library desk books study']
-2026-10-27 01:02:51,887 [INFO] image_fetcher — 이미지 수집 성공: 'study desk checklist notebook' → 제목='laptop / workstaion / office / work / bu' (관련성=0.75)
-2026-10-27 01:02:52,067 [INFO] image_fetcher — 이미지 수집 성공: 'library desk books study' → 제목='books / read / to learn / literature / o' (관련성=1.00)
-2026-10-27 01:02:53,639 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:02:54,113 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-10-27 01:02:54,113 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-10-27 01:02:54,118 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-10-27 01:02:54,120 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-27 01:02:54,120 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-27 01:02:54,120 [INFO] content_generator — 포스트 생성 완료: '2026 재수 결정 체크리스트, 7단계로 점검하기' (3118자, 이미지 2개)
-2026-10-27 01:02:54,748 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:03:14,559 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '2026 재수 결정 체크리스트, 7단계로 점검하기'
-2026-10-27 01:03:14,559 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 표기 및 설명문 있으나 이미지 수가 적어 주의 차원의 warn 처리
-2026-10-27 01:03:14,559 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '흔한 실수는 ~ 경우입니다' 패턴이 5회 반복되고 이모지 요약박스가 정형화되어 AI 생성 패턴 의심
-2026-10-27 01:03:14,562 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-10-27 01:03:14,570 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
-2026-10-27 01:03:14,570 [INFO] main —   제목: 2026 재수 결정 체크리스트, 7단계로 점검하기
-2026-10-27 01:03:14,571 [INFO] main —   이미지: 2개 삽입
-2026-10-27 01:03:14,571 [INFO] main —   글자 수: 3118자
-2026-10-27 01:03:15,274 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:03:32,226 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '2026 재수 결정 체크리스트, 7단계로 점검하기'
-2026-10-27 01:03:32,226 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '흔한 실수는 ~ 경우입니다' 문형이 5회 이상 반복되고 체크리스트식 단조로운 패턴이 다수 나타남
-2026-10-27 01:03:32,226 [INFO] main —   ✅ AdSense 검증 통과 (점수: 95/100) — 업로드
-2026-10-27 01:03:33,041 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:04:46,967 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-27 01:04:47,796 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:05:49,475 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-10-27 01:05:50,221 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:05:57,328 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026 재수 결정 체크리스트, 7단계로 점검하기' → '2026 재수 결정하는 방법, 체크리스트 7가지로 점검'
-2026-10-27 01:05:57,328 [INFO] final_editor —   ✏️ 메타 설명 교정 (129자)
-2026-10-27 01:05:57,328 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 발행 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 분리했으며, 요약박스·개인경험메모·주의사항·FAQ 6개·작성자메모·내부링크 텍스트를 추가해 Blogger 발행본 형태로 완성했습니다. 이미지 3개의 위치와 구체적 alt 텍스트를 제안하고 표 2개를 유지해 가독성을 높였습니다.
-2026-10-27 01:05:57,465 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-10-27 01:05:57,465 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-10-27 01:05:57,858 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/10/2026-7.html
-2026-10-27 01:05:57,868 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/10/2026-7.html
-2026-10-27 01:05:57,871 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-10-27 01:05:57,876 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-27 01:05:57,877 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '2026 재수 결정하는 방법, 체크리스트 7가지로 점검'
-2026-10-27 01:05:58,586 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:06:01,847 [INFO] comment_manager —   생성된 댓글: 재수 학원 다닐지 독학할지도 고민되실 텐데, 이건 성적보다 '혼자 있을 때 계획대로 움직이는 사람인지'로 판단하는 게 더 정확하더라고요. 그리고...
-2026-10-27 01:09:02,047 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-10-27 01:09:02,048 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-10-27 01:09:02,048 [INFO] main — 
-============================================================
-2026-10-27 01:09:02,048 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-10-27 01:09:02,048 [INFO] main — ============================================================
-2026-10-27 01:09:02,062 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 172개)
-2026-10-27 01:09:02,068 [INFO] dashboard_exporter — 분석 필드 유지: 76/77개 (등급·조회수·수익)
-2026-10-27 01:09:02,077 [INFO] dashboard_exporter —   시리즈: 47개 내보내기 완료
-2026-10-27 01:09:02,086 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-10-27 01:09:02,615 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-27 01:09:03,104 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-27 01:09:03,105 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-10-27 01:09:03,107 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
-2026-10-27 01:09:03,109 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-10-27 01:09:03,122 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 264 / 실패 0 / 대기 19)
-2026-10-27 01:09:03,122 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-27 01:09:03,122 [INFO] dashboard_exporter —   포스트: 77개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-27 01:09:03,123 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-10-27 01:09:03,123 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-10-27 01:09:50,922 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-27 01:09:52,105 [INFO] main — ============================================================
-2026-10-27 01:09:52,105 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-10-27 01:09:52
-2026-10-27 01:09:52,105 [INFO] main — ============================================================
-2026-10-27 01:09:52,117 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-10-27 01:09:52,117 [INFO] keyword_collector — 포스팅 이력 코퍼스: 80개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-10-27 01:09:52,118 [INFO] keyword_collector — 시즌 예약 키워드 11개 로드 (blog=blog2): ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법']...
-2026-10-27 01:09:56,540 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-10-27 01:10:02,755 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:10:02,774 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-10-27 01:10:02,774 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-10-27 01:10:03,404 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-27 01:10:03,405 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-10-27 01:10:03,406 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-10-27 01:10:03,411 [INFO] keyword_collector — 유사 주제 제외 11개: ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법', '2026 할로윈 소품 솔직 비교 후기', '할로윈 파티 집에서 준비하는 방법 꿀팁']
-2026-10-27 01:10:03,412 [INFO] keyword_collector —   [season_scheduled] 1개: ['2026 수능 끝난 후 알바 추천 후기']
-2026-10-27 01:10:03,413 [INFO] keyword_collector —   [naver_realtime] 1개: ['OTT 요금 절약하는 통합 구독 서비스 비교']
-2026-10-27 01:10:03,413 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 수능 끝난 후 알바 추천 후기', 'OTT 요금 절약하는 통합 구독 서비스 비교']
-2026-10-27 01:10:03,413 [INFO] main — 수집된 키워드 2개: ['2026 수능 끝난 후 알바 추천 후기', 'OTT 요금 절약하는 통합 구독 서비스 비교']
-2026-10-27 01:10:03,418 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 5일 전, 2일 후 활성화)
-2026-10-27 01:10:03,419 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 수능 끝난 후 알바 추천 후기']
-2026-10-27 01:10:03,431 [INFO] main — 
-[1/1] 키워드: '2026 수능 끝난 후 알바 추천 후기'
-2026-10-27 01:10:03,431 [INFO] content_generator — 포스트 생성 중: '2026 수능 끝난 후 알바 추천 후기'
-2026-10-27 01:10:10,487 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:10:10,488 [INFO] research_collector — 검색 의도: 2026학년도 수능 종료 후 수험생이 할 수 있는 알바를 추천받고 실제 후기를 참고하려는 의도
-2026-10-27 01:10:30,080 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '2026 수능 끝난 후 알바 추천 후기'
-2026-10-27 01:10:44,101 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:10:44,102 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '2026 수능 끝난 후 알바 추천 후기'
-2026-10-27 01:11:03,941 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:11:03,942 [INFO] source_validator — 출처 검증: 3/5개 통과, 등급 분포 {'A': 2, 'X': 2, 'B': 1}
-2026-10-27 01:11:03,944 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-27 01:11:03,950 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-27 01:11:04,411 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:12:39,435 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-27 01:12:39,999 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:12:52,219 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '한 커뮤니티 경험담(동아일보 엠엘비파크로 알려진 커뮤니티)에 따르면'
-2026-10-27 01:12:52,219 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 0건 자동 수정 적용
-2026-10-27 01:12:52,219 [INFO] content_generator — 이미지 계획 2건 사용: ['stadium part time staff', 'concert merchandise booth staff']
-2026-10-27 01:12:52,520 [INFO] image_fetcher — 이미지 수집 성공: 'stadium part time staff' → 제목='stadium / olympic stadium / structure / ' (관련성=0.25)
-2026-10-27 01:12:53,176 [INFO] image_fetcher — 이미지 수집 성공: 'concert merchandise booth staff' → 제목='walt disney center / concert hall / arch' (관련성=0.25)
-2026-10-27 01:12:54,957 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:12:54,958 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
-2026-10-27 01:12:55,214 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-10-27 01:12:55,214 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-10-27 01:12:55,220 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-10-27 01:12:55,222 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-27 01:12:55,222 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-27 01:12:55,222 [INFO] content_generator — 포스트 생성 완료: '2026 수능 끝난 후 알바 추천, 스포츠·공연 현장 알바 후기 종합' (3220자, 이미지 1개)
-2026-10-27 01:12:55,901 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-27 01:13:16,163 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '2026 수능 끝난 후 알바 추천, 스포츠·공연 현장 알바 후기'
-2026-10-27 01:13:16,163 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(3220자)는 충족하나 출처 1건(커뮤니티 경험담)만 구체적으로 인용되고 나머지는 일반적 재구성에 가까움
-2026-10-27 01:13:16,164 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 핵심 요약 섹션 중복 및 일부 단락이 과도하게 길게 이어짐
-2026-10-27 01:13:16,164 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 사용으로 저작권 문제는 없으나 이미지 1개뿐이고 alt텍스트 명시 불확실
-2026-10-27 01:13:16,164 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '핵심 요약' 섹션 중복 및 정형화된 리스트 구조가 반복되어 템플릿형 AI 패턴이 다소 보임
-2026-10-27 01:13:16,167 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-10-27 01:13:16,173 [INFO] internal_linker —   [1/5] '체크리스트' -> https://hogugolfntraval.blogspot.com/2026/10/2026_0642945554
-2026-10-27 01:13:16,175 [INFO] internal_linker —   [2/5] '콘서트' -> https://hogugolfntraval.blogspot.com/2026/09/ai-tv-2026.html
-2026-10-27 01:13:16,176 [INFO] internal_linker — 내부 링크 2개 삽입 완료
-2026-10-27 01:13:16,176 [INFO] main —   제목: 2026 수능 끝난 후 알바 추천, 스포츠·공연 현장 알바 후기 종합
-2026-10-27 01:13:16,176 [INFO] main —   이미지: 1개 삽입
-2026-10-27 01:13:16,176 [INFO] main —   글자 수: 3220자
-2026-10-27 01:13:16,176 [WARNING] main —   ⚠️ 팩트체크 이슈 1건을 고치지 못했습니다 — pending 저장: '2026 수능 끝난 후 알바 추천, 스포츠·공연 현장 알바 후기 종합'
-2026-10-27 01:13:16,176 [WARNING] main —      커뮤니티 게시글의 구체적 작성 날짜와 출처를 명시했으나 검증 불가능한 정보임
-2026-10-27 01:13:16,200 [INFO] dashboard_exporter —   검토 대기 저장: 2026 수능 끝난 후 알바 추천, 스포츠·공연 현장 알바 후기 종합 (13344자 HTML)
-2026-10-27 01:13:16,220 [INFO] pending_store — 검토 대기 저장: 목록 18건 / 보관 178건 / 본문 22건
-2026-10-27 01:13:16,220 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 196개)
-2026-10-27 01:13:16,220 [INFO] main — 
-============================================================
-2026-10-27 01:13:16,220 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
-2026-10-27 01:13:16,220 [INFO] main — ============================================================
-2026-10-27 01:13:16,236 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 173개)
-2026-10-27 01:13:16,246 [INFO] dashboard_exporter — 분석 필드 유지: 76/78개 (등급·조회수·수익)
-2026-10-27 01:13:16,259 [INFO] dashboard_exporter —   시리즈: 47개 내보내기 완료
-2026-10-27 01:13:16,271 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-10-27 01:13:16,583 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-27 01:13:16,841 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-27 01:13:16,843 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-10-27 01:13:16,845 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
-2026-10-27 01:13:16,848 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-10-27 01:13:16,866 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 263 / 실패 0 / 대기 20)
-2026-10-27 01:13:16,866 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-27 01:13:16,866 [INFO] dashboard_exporter —   포스트: 78개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-27 01:13:16,867 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-10-27 01:13:16,868 [WARNING] main — ============================================================
-2026-10-27 01:13:16,868 [WARNING] main — ⚠️ 게시 0건 — 생성은 됐지만 1건 모두 검토 대기로 빠졌습니다
-2026-10-27 01:13:16,868 [WARNING] main —    품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다
-2026-10-27 01:13:16,868 [WARNING] main —    품질 게이트가 의도대로 막은 것입니다 — 대시보드 검토 대기에서 확인하세요
-2026-10-27 01:13:16,868 [WARNING] main — ============================================================
-2026-10-28 00:48:58,051 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-28 00:48:59,478 [INFO] main — ============================================================
-2026-10-28 00:48:59,478 [INFO] main — [HOGU What?] 블로그 자동화 시작: 2026-10-28 00:48:59
-2026-10-28 00:48:59,478 [INFO] main — ============================================================
-2026-10-28 00:48:59,493 [INFO] keyword_collector — 타 블로그 최근 키워드 2개 중복 방지 코퍼스 합류
-2026-10-28 00:48:59,493 [INFO] keyword_collector — 포스팅 이력 코퍼스: 74개 항목 로드 (blog_id=blog1 중복 방지 기준)
-2026-10-28 00:48:59,493 [INFO] keyword_collector — 시즌 예약 키워드 36개 로드 (blog=blog1): ['2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법', '명절 TV 영화 편성표 솔직 비교']...
-2026-10-28 00:49:02,561 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-10-28 00:49:05,961 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-28 00:49:05,980 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-10-28 00:49:05,980 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-10-28 00:49:06,523 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인']
-2026-10-28 00:49:06,785 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-28 00:49:06,786 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-10-28 00:49:06,787 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-10-28 00:49:06,789 [INFO] keyword_collector — 유사 주제 제외 2개: ['수능 끝나고 저렴하게 준비하는 법', '가을 단풍 드라이브 코스 솔직 비교']
 2026-10-28 00:49:06,792 [INFO] keyword_collector —   [season_scheduled] 2개: ['2026 MAMA 예상 수상자 직접 분석 후기', '멜론뮤직어워드 2026 티켓 예매 방법 추천']
 2026-10-28 00:49:06,792 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 MAMA 예상 수상자 직접 분석 후기', '멜론뮤직어워드 2026 티켓 예매 방법 추천']
 2026-10-28 00:49:06,792 [INFO] main — 수집된 키워드 2개: ['2026 MAMA 예상 수상자 직접 분석 후기', '멜론뮤직어워드 2026 티켓 예매 방법 추천']
@@ -677,3 +498,216 @@
 2026-10-29 01:31:50,016 [INFO] dashboard_exporter —   포스트: 79개 / 실행 이력: 120개 / 블로그: 3개
 2026-10-29 01:31:50,016 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-10-29 01:31:50,016 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다
+2026-10-29 01:32:36,524 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-29 01:32:37,987 [INFO] main — ============================================================
+2026-10-29 01:32:37,988 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-10-29 01:32:37
+2026-10-29 01:32:37,988 [INFO] main — ============================================================
+2026-10-29 01:32:38,000 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-10-29 01:32:38,000 [INFO] keyword_collector — 포스팅 이력 코퍼스: 76개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-10-29 01:32:38,001 [INFO] keyword_collector — 시즌 예약 키워드 11개 로드 (blog=blog2): ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법']...
+2026-10-29 01:32:42,154 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-10-29 01:32:47,204 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:32:47,223 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-10-29 01:32:47,223 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-10-29 01:32:47,800 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-29 01:32:47,800 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-10-29 01:32:47,801 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-10-29 01:32:47,808 [INFO] keyword_collector — 유사 주제 제외 13개: ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법', '2026 할로윈 소품 솔직 비교 후기', '할로윈 파티 집에서 준비하는 방법 꿀팁']
+2026-10-29 01:32:47,808 [INFO] keyword_collector —   [naver_realtime] 2개: ['OTT 구독 서비스 요금제 비교 2026', '가을 마트 할인 정보 알뜰 장보기 꿀팁']
+2026-10-29 01:32:47,808 [INFO] keyword_collector — 최종 선정 키워드 2개: ['OTT 구독 서비스 요금제 비교 2026', '가을 마트 할인 정보 알뜰 장보기 꿀팁']
+2026-10-29 01:32:47,808 [INFO] main — 수집된 키워드 2개: ['OTT 구독 서비스 요금제 비교 2026', '가을 마트 할인 정보 알뜰 장보기 꿀팁']
+2026-10-29 01:32:47,814 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-10-29 01:32:49,929 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:32:49,930 [INFO] series_planner — 자동 시리즈 키워드 선정: 'OTT 구독 서비스 요금제 비교 2026'
+2026-10-29 01:32:49,930 [INFO] main — [자동 시리즈] 'OTT 구독 서비스 요금제 비교 2026' 3편 기획 시작 (이후 단독 포스트 0개)
+2026-10-29 01:32:49,930 [INFO] main — ============================================================
+2026-10-29 01:32:49,930 [INFO] main — [HOGU 여행,스포츠,연예] 시리즈 모드 시작: 'OTT 구독 서비스 요금제 비교 2026' 3편
+2026-10-29 01:32:49,930 [INFO] main — ============================================================
+2026-10-29 01:32:59,657 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:32:59,658 [INFO] series_planner — [blog1] 시리즈 기획 완료: 'OTT 구독료로 매달 8만원 날리다 직접 정리한 2026년 요금제 비교기' 3편
+2026-10-29 01:32:59,661 [INFO] main — 시리즈 기획 완료: 'OTT 구독료로 매달 8만원 날리다 직접 정리한 2026년 요금제 비교기'
+2026-10-29 01:32:59,661 [INFO] main —   편 1: [1편] OTT 5개 구독하다 통장 텅장 된 썰
+2026-10-29 01:32:59,661 [INFO] main —   편 2: [2편] 티빙 vs 웨이브 직접 써보니 승자는
+2026-10-29 01:32:59,661 [INFO] main —   편 3: [3편] 2026년 내가 최종 고른 OTT 조합 공개
+2026-10-29 01:32:59,662 [INFO] main — 
+--- [1/3편] 'OTT 구독료 아끼는 법 2026' 생성 중 ---
+2026-10-29 01:32:59,662 [INFO] content_generator — 시리즈 포스트 생성: 'OTT 구독료 아끼는 법 2026' (1/3편)
+2026-10-29 01:33:05,543 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:33:05,544 [INFO] research_collector — 검색 의도: 2026년 기준 OTT 구독료를 절약할 수 있는 최신 방법과 요금제 정보를 찾는 의도
+2026-10-29 01:33:14,717 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — 'OTT 구독료 아끼는 법 2026'
+2026-10-29 01:33:30,161 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:33:30,162 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — 'OTT 구독료 아끼는 법 2026'
+2026-10-29 01:33:32,724 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:33:32,725 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'C': 4, 'X': 1}
+2026-10-29 01:33:33,656 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: 'OTT 구독료 아끼는 법 2026'
+2026-10-29 01:33:33,656 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
+2026-10-29 01:33:33,657 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-29 01:33:33,662 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-29 01:33:34,345 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:34:58,916 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-29 01:34:59,684 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:35:18,318 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: 'OTT 4~5개를 동시에 유지하면 월 합계가 적지 않은 금액에 이를 수 '
+2026-10-29 01:35:18,319 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: 'LG U+ '유독' 같은 서비스처럼 통신사가 자사 요금제에 OTT 이용권'
+2026-10-29 01:35:18,319 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 2건 자동 수정 적용
+2026-10-29 01:35:18,319 [INFO] content_generator — 이미지 계획 3건 사용: ['multiple streaming app icons phone', 'credit card statement subscriptions', 'checking streaming watch history laptop']
+2026-10-29 01:35:19,042 [INFO] image_fetcher — 이미지 수집 성공: 'multiple streaming app icons phone' → 제목='dbag / deutsche bahn / br628 / saarbrück' (관련성=0.20)
+2026-10-29 01:35:19,279 [INFO] image_fetcher — 이미지 수집 성공: 'credit card statement subscriptions' → 제목='wallet / cash / pocket / credit card / m' (관련성=0.50)
+2026-10-29 01:35:19,908 [WARNING] image_fetcher — 이미지 없음: 'checking streaming watch history laptop'
+2026-10-29 01:35:22,918 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:35:22,919 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-10-29 01:35:22,919 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-10-29 01:35:22,919 [INFO] image_fetcher — 제목 썸네일 생성: '[1편] OTT 중복구독, 월 8만원 새는 이유 정리' (data URI, 1143B)
+2026-10-29 01:35:23,369 [INFO] image_fetcher — 썸네일 폴백 + 관련 이미지 추가: 'warbird / yes 11 / yak 11 / hunter / fig'
+2026-10-29 01:35:23,758 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-29 01:35:23,758 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-29 01:35:23,767 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-29 01:35:23,767 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-29 01:35:23,767 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] OTT 중복구독, 월 8만원 새는 이유 정리' (2916자, 이미지 2개)
+2026-10-29 01:35:24,416 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:35:41,866 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '[1편] OTT 중복구독, 월 8만원 새는 이유 정리'
+2026-10-29 01:35:41,866 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구조적 해석은 있으나 구체적 수치·날짜 없이 '~라고 알려져 있다' 식 표현이 많아 독창적 깊이가 얕음
+2026-10-29 01:35:41,866 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 5개 보유를 명시하나 본문 내 인용이 '커뮤니티 후기', '소비자 행동 자료' 등 모호해 기관명·시점 명시 부족
+2026-10-29 01:35:41,866 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌⚠️💡 구획화와 '그런데/그렇다면' 식 반복적 전환 패턴이 전형적 AI 글쓰기 톤과 유사함
+2026-10-29 01:35:42,582 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:36:59,648 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-10-29 01:37:00,549 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:37:54,174 [INFO] final_editor —   ✏️ 제목 최종 교정: '[1편] OTT 중복구독, 월 8만원 새는 이유 정리' → 'OTT 구독료 아끼는 법 2026, 중복구독 월 8만원 이유'
+2026-10-29 01:37:54,174 [INFO] final_editor —   ✏️ 메타 설명 교정 (120자)
+2026-10-29 01:37:54,174 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 글자 수 기준에 맞춰 정리하고, 긴 문단을 2~4문장 단위로 쪼갰으며, 요금제 비교 표와 체크리스트 박스, FAQ 5개, 주의사항·작성자 메모를 추가해 발행 가능한 형태로 완성했습니다.
+2026-10-29 01:37:54,282 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-29 01:37:54,282 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-10-29 01:37:54,776 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/10/ott-2026-8.html
+2026-10-29 01:37:54,777 [INFO] main —   ✅ 편 1 업로드 완료: https://hogugolfntraval.blogspot.com/2026/10/ott-2026-8.html
+2026-10-29 01:37:57,780 [INFO] main — 
+--- [2/3편] '티빙 웨이브 요금제 비교 2026' 생성 중 ---
+2026-10-29 01:37:57,780 [INFO] content_generator — 시리즈 포스트 생성: '티빙 웨이브 요금제 비교 2026' (2/3편)
+2026-10-29 01:38:04,606 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:38:04,607 [INFO] research_collector — 검색 의도: 2026년 기준 티빙과 웨이브의 요금제 종류, 가격, 혜택을 비교해 자신에게 맞는 서비스를 선택하려는 의도
+2026-10-29 01:38:15,915 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '티빙 웨이브 요금제 비교 2026'
+2026-10-29 01:38:32,737 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:38:32,738 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '티빙 웨이브 요금제 비교 2026'
+2026-10-29 01:38:43,942 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:38:43,943 [INFO] source_validator — 출처 검증: 5/7개 통과, 등급 분포 {'B': 1, 'C': 4, 'X': 2}
+2026-10-29 01:38:45,135 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '티빙 웨이브 요금제 비교 2026'
+2026-10-29 01:38:45,135 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
+2026-10-29 01:38:45,135 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-29 01:38:45,135 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-29 01:38:45,858 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:39:22,642 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-29 01:39:22,642 [WARNING] content_generator — 컨텐츠 너무 짧음(312자, 최소 2500자) — 재시도 1/3
+2026-10-29 01:39:25,642 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-10-29 01:39:25,643 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-29 01:39:27,244 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:40:51,978 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-29 01:40:52,679 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:41:18,917 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-10-29 01:41:18,917 [INFO] content_generator — 이미지 계획 3건 사용: ['streaming app icons phone screen', 'watching korean drama living room tv', 'data breach warning laptop screen']
+2026-10-29 01:41:19,160 [INFO] image_fetcher — 이미지 수집 성공: 'streaming app icons phone screen' → 제목='youtube / technology / icon / app / mobi' (관련성=0.20)
+2026-10-29 01:41:19,379 [INFO] image_fetcher — 이미지 수집 성공: 'watching korean drama living room tv' → 제목='korean living style / young man / man / ' (관련성=0.40)
+2026-10-29 01:41:19,588 [INFO] image_fetcher — 이미지 수집 성공: 'data breach warning laptop screen' → 제목='laptop / keyboard / cyber / attack / wan' (관련성=0.40)
+2026-10-29 01:41:23,098 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:41:23,099 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-10-29 01:41:23,765 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-29 01:41:23,765 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-29 01:41:23,773 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-29 01:41:23,773 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-29 01:41:23,773 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 티빙 웨이브 요금제 비교 2026, K드라마는 어디가' (2740자, 이미지 2개)
+2026-10-29 01:41:24,732 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:41:46,855 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-10-29 01:41:47,510 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:41:54,584 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 69/100 — '[2편] 티빙 웨이브 요금제 비교 2026, K드라마는 어디가'
+2026-10-29 01:41:54,584 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수는 기준 충족하나 가격 등 핵심 수치를 의도적으로 생략하고 기존 보도 재구성 수준에 머묾
+2026-10-29 01:41:54,584 [INFO] adsense_validator —   ⚠️ 광고 배치 적합성: 
+2026-10-29 01:41:54,584 [INFO] adsense_validator —   ⚠️ 유해/금지 콘텐츠: 
+2026-10-29 01:41:54,584 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-10-29 01:41:54,584 [INFO] adsense_validator —   ⚠️ 이미지 정책: 
+2026-10-29 01:41:54,584 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 
+2026-10-29 01:41:54,584 [WARNING] main —   ⚠️ [편 2] AdSense 검토 필요 — pending 저장 (점수: 69/100)
+2026-10-29 01:41:54,587 [INFO] main — 
+--- [3/3편] 'OTT 요금제 추천 조합 2026' 생성 중 ---
+2026-10-29 01:41:54,587 [INFO] content_generator — 시리즈 포스트 생성: 'OTT 요금제 추천 조합 2026' (3/3편)
+2026-10-29 01:41:59,672 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:41:59,673 [INFO] research_collector — 검색 의도: 2026년 기준 OTT 서비스별 요금제 가격과 혜택을 비교하여 최적의 조합을 추천받고 싶은 의도
+2026-10-29 01:42:07,474 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — 'OTT 요금제 추천 조합 2026'
+2026-10-29 01:42:18,365 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:42:18,366 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — 'OTT 요금제 추천 조합 2026'
+2026-10-29 01:42:40,813 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:42:40,814 [INFO] source_validator — 출처 검증: 5/6개 통과, 등급 분포 {'B': 3, 'C': 2, 'X': 1}
+2026-10-29 01:42:42,042 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: 'OTT 요금제 추천 조합 2026'
+2026-10-29 01:42:42,042 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-10-29 01:42:42,042 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-29 01:42:42,042 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-29 01:42:42,858 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:43:44,438 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-29 01:43:44,438 [WARNING] content_generator — 컨텐츠 너무 짧음(2488자, 최소 2500자) — 재시도 1/3
+2026-10-29 01:43:47,439 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-10-29 01:43:47,439 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-29 01:43:48,452 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:44:45,983 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-29 01:44:46,718 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:45:02,338 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '다섯 개를 따로 결제했을 때의 비용보다 상당히 줄어드는 수준'
+2026-10-29 01:45:02,339 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 4건 자동 수정 적용
+2026-10-29 01:45:02,339 [INFO] content_generator — 이미지 계획 3건 사용: ['streaming apps phone subscription', 'ott subscription price comparison', 'family watching tv together']
+2026-10-29 01:45:02,586 [INFO] image_fetcher — 이미지 수집 성공: 'streaming apps phone subscription' → 제목='iphone / hand / screen / smartphone / ap' (관련성=0.50)
+2026-10-29 01:45:03,267 [WARNING] image_fetcher — 이미지 없음: 'ott subscription price comparison'
+2026-10-29 01:45:03,514 [INFO] image_fetcher — 이미지 수집 성공: 'family watching tv together' → 제목='father and son / walking / railway / rai' (관련성=0.67)
+2026-10-29 01:45:04,635 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:45:04,636 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
+2026-10-29 01:45:04,636 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-10-29 01:45:04,636 [INFO] image_fetcher — 제목 썸네일 생성: '[3편] 2026년 OTT 요금제 추천 조합, 내가 최' (data URI, 1156B)
+2026-10-29 01:45:05,126 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-10-29 01:45:05,126 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-10-29 01:45:05,133 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-29 01:45:05,133 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-29 01:45:05,133 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 2026년 OTT 요금제 추천 조합, 내가 최종 정리한 결론' (2694자, 이미지 1개)
+2026-10-29 01:45:05,820 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:45:23,453 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '[3편] 2026년 OTT 요금제 추천 조합, 내가 최종 정리한'
+2026-10-29 01:45:23,454 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락이 500자를 넘는 긴 서술형으로 이어짐
+2026-10-29 01:45:23,454 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개 포함(직접 제작 명시)되나 alt 텍스트 여부 불명확, 이미지 수 부족
+2026-10-29 01:45:23,454 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~로 알려져 있는 것으로 보입니다' 류의 모호한 표현이 반복돼 AI 특유의 완곡어법이 다소 드러남
+2026-10-29 01:45:27,006 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-29 01:46:16,926 [INFO] final_editor —   ✏️ 제목 최종 교정: '[3편] 2026년 OTT 요금제 추천 조합, 내가 최종 정리한 결론' → '2026년 OTT 요금제 추천 조합, 숫자로 정리한 결론'
+2026-10-29 01:46:16,926 [INFO] final_editor —   ✏️ 메타 설명 교정 (126자)
+2026-10-29 01:46:16,926 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·URL 슬러그를 발행 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 쪼갰습니다. 요약박스·가격 비교표·FAQ·주의사항·작성자 메모 구조를 점검하고 이미지 위치와 구체적 alt 텍스트, 내부 링크 주제를 제안했습니다.
+2026-10-29 01:46:17,032 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-29 01:46:17,033 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-10-29 01:46:17,637 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/10/2026-ott.html
+2026-10-29 01:46:17,638 [INFO] main —   ✅ 편 3 업로드 완료: https://hogugolfntraval.blogspot.com/2026/10/2026-ott.html
+2026-10-29 01:46:17,652 [INFO] dashboard_exporter —   검토 대기 저장: [2편] 티빙 웨이브 요금제 비교 2026, K드라마는 어디가 (12417자 HTML)
+2026-10-29 01:46:17,671 [INFO] pending_store — 검토 대기 저장: 목록 18건 / 보관 180건 / 본문 18건
+2026-10-29 01:46:17,671 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 198개)
+2026-10-29 01:46:17,692 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 179개)
+2026-10-29 01:46:17,701 [INFO] dashboard_exporter — 분석 필드 유지: 72/82개 (등급·조회수·수익)
+2026-10-29 01:46:17,715 [INFO] dashboard_exporter —   시리즈: 49개 내보내기 완료
+2026-10-29 01:46:17,729 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-29 01:46:18,057 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-29 01:46:18,280 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-29 01:46:18,281 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-29 01:46:18,283 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
+2026-10-29 01:46:18,287 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-29 01:46:18,306 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 262 / 실패 1 / 대기 20)
+2026-10-29 01:46:18,306 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-29 01:46:18,306 [INFO] dashboard_exporter —   포스트: 82개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-29 01:46:18,307 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-29 01:46:18,307 [INFO] main — 
+============================================================
+2026-10-29 01:46:18,307 [INFO] main — [HOGU 여행,스포츠,연예] 시리즈 완료: 2/3편 성공
+2026-10-29 01:46:18,307 [INFO] main — ============================================================
+2026-10-29 01:46:18,307 [INFO] main — 단독 포스트 대상 키워드 0개: []
+2026-10-29 01:46:18,326 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
+2026-10-29 01:46:18,326 [INFO] main — 
+============================================================
+2026-10-29 01:46:18,327 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 0개 / 실패 0개
+2026-10-29 01:46:18,327 [INFO] main — ============================================================
+2026-10-29 01:46:18,345 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 180개)
+2026-10-29 01:46:18,354 [INFO] dashboard_exporter — 분석 필드 유지: 72/82개 (등급·조회수·수익)
+2026-10-29 01:46:18,368 [INFO] dashboard_exporter —   시리즈: 49개 내보내기 완료
+2026-10-29 01:46:18,380 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-29 01:46:18,381 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-29 01:46:18,383 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
+2026-10-29 01:46:18,387 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-29 01:46:18,405 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 261 / 실패 2 / 대기 20)
+2026-10-29 01:46:18,406 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-29 01:46:18,406 [INFO] dashboard_exporter —   포스트: 82개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-29 01:46:18,406 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-29 01:46:18,407 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다

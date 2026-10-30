@@ -1,127 +1,3 @@
-2026-10-29 01:29:06,267 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '닥터X 결말 총평'
-2026-10-29 01:29:06,267 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-10-29 01:29:06,267 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-29 01:29:06,267 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-29 01:29:06,987 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:30:28,122 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-10-29 01:30:28,122 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-29 01:30:28,756 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:30:39,423 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 4건 자동 수정 적용
-2026-10-29 01:30:39,423 [INFO] content_generator — 이미지 계획 2건 사용: ['medical drama hospital scene', 'hospital emergency room tension']
-2026-10-29 01:30:39,589 [INFO] image_fetcher — 이미지 수집 성공: 'medical drama hospital scene' → 제목='laboratory / test tubes / healthcare wor' (관련성=0.50)
-2026-10-29 01:30:39,733 [INFO] image_fetcher — 이미지 수집 성공: 'hospital emergency room tension' → 제목='hospital / bed / doctor / surgery / hosp' (관련성=0.25)
-2026-10-29 01:30:40,439 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:30:40,440 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
-2026-10-29 01:30:40,440 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
-2026-10-29 01:30:40,440 [INFO] image_fetcher — 제목 썸네일 생성: '[3편] 닥터X 결말 총평, OST·유사작 총정리' (data URI, 1140B)
-2026-10-29 01:30:40,820 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-10-29 01:30:40,820 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-10-29 01:30:40,826 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-29 01:30:40,826 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-29 01:30:40,826 [INFO] content_generator — 시리즈 포스트 생성 완료: '[3편] 닥터X 결말 총평, OST·유사작 총정리' (2796자, 이미지 1개)
-2026-10-29 01:30:41,652 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:31:00,949 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '[3편] 닥터X 결말 총평, OST·유사작 총정리'
-2026-10-29 01:31:00,949 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 불확실성을 솔직히 밝히는 점은 좋으나 '블로그 후기들'처럼 출처가 구체적 매체명·날짜 없이 뭉뚱그려 인용됨
-2026-10-29 01:31:00,949 [INFO] adsense_validator —   ⚠️ 이미지 정책: 직접 제작 이미지 1개 언급되나 alt 텍스트 확인 불가 및 이미지 수 부족으로 기본 warn 처리
-2026-10-29 01:31:01,976 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:31:48,603 [INFO] final_editor —   ✏️ 제목 최종 교정: '[3편] 닥터X 결말 총평, OST·유사작 총정리' → '닥터X 결말 총평 정리｜OST 추천곡과 유사 드라마 총정리'
-2026-10-29 01:31:48,604 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
-2026-10-29 01:31:48,604 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목과 메타 설명 길이를 SEO 기준에 맞게 조정하고, 긴 문단을 모바일 친화적으로 분리했으며 표·FAQ·이미지 alt 텍스트를 구체화해 발행 완성도를 높였습니다.
-2026-10-29 01:31:48,719 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-10-29 01:31:48,720 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-10-29 01:31:49,341 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/10/x-ost_01663376646.html
-2026-10-29 01:31:49,342 [INFO] main —   ✅ 편 3 업로드 완료: https://www.hoguwhat.com/2026/10/x-ost_01663376646.html
-2026-10-29 01:31:49,357 [INFO] dashboard_exporter —   검토 대기 저장: [2편] 닥터X 계수정과 조연들, 연기 평가 총정리 (10836자 HTML)
-2026-10-29 01:31:49,376 [INFO] pending_store — 검토 대기 저장: 목록 17건 / 보관 180건 / 본문 17건
-2026-10-29 01:31:49,376 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 197개)
-2026-10-29 01:31:49,397 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 177개)
-2026-10-29 01:31:49,405 [INFO] dashboard_exporter — 분석 필드 유지: 72/79개 (등급·조회수·수익)
-2026-10-29 01:31:49,419 [INFO] dashboard_exporter —   시리즈: 48개 내보내기 완료
-2026-10-29 01:31:49,431 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-10-29 01:31:49,647 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-29 01:31:49,893 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-29 01:31:49,894 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-10-29 01:31:49,896 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
-2026-10-29 01:31:49,900 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-10-29 01:31:49,919 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 263 / 실패 0 / 대기 20)
-2026-10-29 01:31:49,919 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-29 01:31:49,919 [INFO] dashboard_exporter —   포스트: 79개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-29 01:31:49,920 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-10-29 01:31:49,920 [INFO] main — 
-============================================================
-2026-10-29 01:31:49,920 [INFO] main — [HOGU What?] 시리즈 완료: 1/3편 성공
-2026-10-29 01:31:49,920 [INFO] main — ============================================================
-2026-10-29 01:31:49,920 [INFO] main — 단독 포스트 대상 키워드 0개: []
-2026-10-29 01:31:49,940 [INFO] post_manager — run_history 마이그레이션: 2개 포스트 추가
-2026-10-29 01:31:49,940 [INFO] main — 
-============================================================
-2026-10-29 01:31:49,940 [INFO] main — [HOGU What?] 완료: 성공 0개 / 실패 0개
-2026-10-29 01:31:49,940 [INFO] main — ============================================================
-2026-10-29 01:31:49,958 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 178개)
-2026-10-29 01:31:49,966 [INFO] dashboard_exporter — 분석 필드 유지: 72/79개 (등급·조회수·수익)
-2026-10-29 01:31:49,979 [INFO] dashboard_exporter —   시리즈: 48개 내보내기 완료
-2026-10-29 01:31:49,990 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-10-29 01:31:49,991 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-10-29 01:31:49,993 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
-2026-10-29 01:31:49,997 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-10-29 01:31:50,015 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 262 / 실패 1 / 대기 20)
-2026-10-29 01:31:50,016 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-29 01:31:50,016 [INFO] dashboard_exporter —   포스트: 79개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-29 01:31:50,016 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-10-29 01:31:50,016 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다
-2026-10-29 01:32:36,524 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-29 01:32:37,987 [INFO] main — ============================================================
-2026-10-29 01:32:37,988 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-10-29 01:32:37
-2026-10-29 01:32:37,988 [INFO] main — ============================================================
-2026-10-29 01:32:38,000 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-10-29 01:32:38,000 [INFO] keyword_collector — 포스팅 이력 코퍼스: 76개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-10-29 01:32:38,001 [INFO] keyword_collector — 시즌 예약 키워드 11개 로드 (blog=blog2): ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법']...
-2026-10-29 01:32:42,154 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-10-29 01:32:47,204 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:32:47,223 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-10-29 01:32:47,223 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-10-29 01:32:47,800 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-29 01:32:47,800 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-10-29 01:32:47,801 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-10-29 01:32:47,808 [INFO] keyword_collector — 유사 주제 제외 13개: ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법', '2026 할로윈 소품 솔직 비교 후기', '할로윈 파티 집에서 준비하는 방법 꿀팁']
-2026-10-29 01:32:47,808 [INFO] keyword_collector —   [naver_realtime] 2개: ['OTT 구독 서비스 요금제 비교 2026', '가을 마트 할인 정보 알뜰 장보기 꿀팁']
-2026-10-29 01:32:47,808 [INFO] keyword_collector — 최종 선정 키워드 2개: ['OTT 구독 서비스 요금제 비교 2026', '가을 마트 할인 정보 알뜰 장보기 꿀팁']
-2026-10-29 01:32:47,808 [INFO] main — 수집된 키워드 2개: ['OTT 구독 서비스 요금제 비교 2026', '가을 마트 할인 정보 알뜰 장보기 꿀팁']
-2026-10-29 01:32:47,814 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
-2026-10-29 01:32:49,929 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:32:49,930 [INFO] series_planner — 자동 시리즈 키워드 선정: 'OTT 구독 서비스 요금제 비교 2026'
-2026-10-29 01:32:49,930 [INFO] main — [자동 시리즈] 'OTT 구독 서비스 요금제 비교 2026' 3편 기획 시작 (이후 단독 포스트 0개)
-2026-10-29 01:32:49,930 [INFO] main — ============================================================
-2026-10-29 01:32:49,930 [INFO] main — [HOGU 여행,스포츠,연예] 시리즈 모드 시작: 'OTT 구독 서비스 요금제 비교 2026' 3편
-2026-10-29 01:32:49,930 [INFO] main — ============================================================
-2026-10-29 01:32:59,657 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:32:59,658 [INFO] series_planner — [blog1] 시리즈 기획 완료: 'OTT 구독료로 매달 8만원 날리다 직접 정리한 2026년 요금제 비교기' 3편
-2026-10-29 01:32:59,661 [INFO] main — 시리즈 기획 완료: 'OTT 구독료로 매달 8만원 날리다 직접 정리한 2026년 요금제 비교기'
-2026-10-29 01:32:59,661 [INFO] main —   편 1: [1편] OTT 5개 구독하다 통장 텅장 된 썰
-2026-10-29 01:32:59,661 [INFO] main —   편 2: [2편] 티빙 vs 웨이브 직접 써보니 승자는
-2026-10-29 01:32:59,661 [INFO] main —   편 3: [3편] 2026년 내가 최종 고른 OTT 조합 공개
-2026-10-29 01:32:59,662 [INFO] main — 
---- [1/3편] 'OTT 구독료 아끼는 법 2026' 생성 중 ---
-2026-10-29 01:32:59,662 [INFO] content_generator — 시리즈 포스트 생성: 'OTT 구독료 아끼는 법 2026' (1/3편)
-2026-10-29 01:33:05,543 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:33:05,544 [INFO] research_collector — 검색 의도: 2026년 기준 OTT 구독료를 절약할 수 있는 최신 방법과 요금제 정보를 찾는 의도
-2026-10-29 01:33:14,717 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — 'OTT 구독료 아끼는 법 2026'
-2026-10-29 01:33:30,161 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:33:30,162 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — 'OTT 구독료 아끼는 법 2026'
-2026-10-29 01:33:32,724 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:33:32,725 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'C': 4, 'X': 1}
-2026-10-29 01:33:33,656 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: 'OTT 구독료 아끼는 법 2026'
-2026-10-29 01:33:33,656 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-10-29 01:33:33,657 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-29 01:33:33,662 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-29 01:33:34,345 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:34:58,916 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-29 01:34:59,684 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:35:18,318 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: 'OTT 4~5개를 동시에 유지하면 월 합계가 적지 않은 금액에 이를 수 '
-2026-10-29 01:35:18,319 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: 'LG U+ '유독' 같은 서비스처럼 통신사가 자사 요금제에 OTT 이용권'
-2026-10-29 01:35:18,319 [INFO] content_generator — 팩트체크: 이슈 4건 발견, 2건 자동 수정 적용
-2026-10-29 01:35:18,319 [INFO] content_generator — 이미지 계획 3건 사용: ['multiple streaming app icons phone', 'credit card statement subscriptions', 'checking streaming watch history laptop']
-2026-10-29 01:35:19,042 [INFO] image_fetcher — 이미지 수집 성공: 'multiple streaming app icons phone' → 제목='dbag / deutsche bahn / br628 / saarbrück' (관련성=0.20)
 2026-10-29 01:35:19,279 [INFO] image_fetcher — 이미지 수집 성공: 'credit card statement subscriptions' → 제목='wallet / cash / pocket / credit card / m' (관련성=0.50)
 2026-10-29 01:35:19,908 [WARNING] image_fetcher — 이미지 없음: 'checking streaming watch history laptop'
 2026-10-29 01:35:22,918 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
@@ -622,3 +498,195 @@
 2026-10-30 01:41:40,640 [INFO] dashboard_exporter —   포스트: 85개 / 실행 이력: 120개 / 블로그: 3개
 2026-10-30 01:41:40,641 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-10-30 01:41:40,642 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-10-30 01:42:22,764 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-30 01:42:23,475 [INFO] main — ============================================================
+2026-10-30 01:42:23,475 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-10-30 01:42:23
+2026-10-30 01:42:23,475 [INFO] main — ============================================================
+2026-10-30 01:42:23,483 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-10-30 01:42:23,483 [INFO] keyword_collector — 포스팅 이력 코퍼스: 67개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-10-30 01:42:23,483 [INFO] keyword_collector — 시즌 예약 키워드 11개 로드 (blog=blog3): ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법']...
+2026-10-30 01:42:27,169 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-10-30 01:42:31,149 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:42:31,159 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-10-30 01:42:31,159 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-10-30 01:42:31,631 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-10-30 01:42:31,969 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-30 01:42:31,970 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-10-30 01:42:31,972 [INFO] keyword_collector — 유사 주제 제외 7개: ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법', '2026 할로윈 소품 솔직 비교 후기', '할로윈 파티 집에서 준비하는 방법 꿀팁']
+2026-10-30 01:42:31,973 [INFO] keyword_collector —   [high_cpc] 1개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-10-30 01:42:31,973 [INFO] keyword_collector —   [season_scheduled] 1개: ['수능 후 재수 결정 솔직 비교 방법']
+2026-10-30 01:42:31,973 [INFO] keyword_collector — 최종 선정 키워드 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '수능 후 재수 결정 솔직 비교 방법']
+2026-10-30 01:42:31,973 [INFO] main — 수집된 키워드 2개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '수능 후 재수 결정 솔직 비교 방법']
+2026-10-30 01:42:31,977 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
+2026-10-30 01:42:34,573 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:42:34,574 [INFO] series_planner — 자동 시리즈 키워드 선정: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교'
+2026-10-30 01:42:34,574 [INFO] main — [자동 시리즈] '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교' 3편 기획 시작 (이후 단독 포스트 0개)
+2026-10-30 01:42:34,574 [INFO] main — ============================================================
+2026-10-30 01:42:34,574 [INFO] main — [금융NEWS] 시리즈 모드 시작: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교' 3편
+2026-10-30 01:42:34,574 [INFO] main — ============================================================
+2026-10-30 01:42:40,485 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:42:40,486 [INFO] series_planner — [blog3 금융] 시리즈 기획 완료: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교 완전 정리 시리즈' 3편
+2026-10-30 01:42:40,488 [INFO] main — 시리즈 기획 완료: '주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교 완전 정리 시리즈'
+2026-10-30 01:42:40,488 [INFO] main —   편 1: [1편] 대출 갱신일, 금리에 뒤통수 맞은 이유
+2026-10-30 01:42:40,488 [INFO] main —   편 2: [2편] 은행 10곳 직접 비교한 금리 자격조건
+2026-10-30 01:42:40,488 [INFO] main —   편 3: [3편] 직접 갈아탄 후기와 추천 대상 총정리
+2026-10-30 01:42:40,488 [INFO] main — 
+--- [1/3편] '주택담보대출 금리 갱신 2026' 생성 중 ---
+2026-10-30 01:42:40,488 [INFO] content_generator — 시리즈 포스트 생성: '주택담보대출 금리 갱신 2026' (1/3편)
+2026-10-30 01:42:46,419 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:42:46,421 [INFO] research_collector — 검색 의도: 2026년 주택담보대출 금리 갱신 시점과 예상 금리 변동을 파악하여 대응 전략을 세우려는 의도
+2026-10-30 01:42:57,016 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '주택담보대출 금리 갱신 2026'
+2026-10-30 01:43:08,147 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:43:08,148 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '주택담보대출 금리 갱신 2026'
+2026-10-30 01:43:21,030 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:43:21,030 [INFO] source_validator — 출처 검증: 3/8개 통과, 등급 분포 {'X': 5, 'D': 2, 'B': 1}
+2026-10-30 01:43:21,032 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-10-30 01:43:21,032 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-30 01:43:21,035 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-30 01:43:21,942 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:44:23,574 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-30 01:44:23,575 [WARNING] content_generator — 컨텐츠 너무 짧음(2400자, 최소 2500자) — 재시도 1/3
+2026-10-30 01:44:26,575 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-10-30 01:44:26,575 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-30 01:44:27,302 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:45:32,035 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-30 01:45:32,822 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:45:46,881 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-10-30 01:45:46,881 [INFO] content_generator — 이미지 계획 2건 사용: ['mortgage renewal notice document', 'calculator mortgage interest rate']
+2026-10-30 01:45:47,201 [INFO] image_fetcher — 이미지 수집 성공: 'mortgage renewal notice document' → 제목='real estate / homeownership / homebuying' (관련성=0.25)
+2026-10-30 01:45:47,411 [INFO] image_fetcher — 이미지 수집 성공: 'calculator mortgage interest rate' → 제목='calculator / agreement / energy certific' (관련성=0.25)
+2026-10-30 01:45:48,736 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:45:49,533 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-30 01:45:49,533 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-30 01:45:49,538 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-30 01:45:49,538 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-30 01:45:49,538 [INFO] content_generator — 시리즈 포스트 생성 완료: '주택담보대출 금리 갱신 2026, 오른 이유 분석' (2724자, 이미지 2개)
+2026-10-30 01:45:50,128 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:46:08,125 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 95/100 — '주택담보대출 금리 갱신 2026, 오른 이유 분석'
+2026-10-30 01:46:08,125 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌 핵심 요약과 번호 목록이 본문 서두에 중복 배치되는 전형적 AI 요약 패턴이 보임
+2026-10-30 01:46:08,840 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:47:12,246 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-10-30 01:47:12,970 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:47:50,988 [INFO] final_editor —   ✏️ 제목 최종 교정: '주택담보대출 금리 갱신 2026, 오른 이유 분석' → '주택담보대출 금리 갱신 2026, 오른 이유와 대응 방법 정리'
+2026-10-30 01:47:50,988 [INFO] final_editor —   ✏️ 메타 설명 교정 (126자)
+2026-10-30 01:47:50,988 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분리하고, 대출 잔액별 이자 증가 표와 FAQ 5개, 주의사항·개인 경험 메모·작성자 메모를 추가해 발행 형식에 맞게 정리했습니다. 이미지는 실제 삽입 없이 위치와 alt만 별도로 명시했습니다.
+2026-10-30 01:47:51,114 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-30 01:47:51,114 [INFO] blogger_uploader — ⚠️ 고위험(YMYL) 주제 업로드: '주택담보대출 금리 갱신 2026' — 면책·팩트체크 확인 권장
+2026-10-30 01:47:51,114 [INFO] blogger_uploader — 업로드 대상 블로그: 금융NEWS (blog_id=3612975334194190709)
+2026-10-30 01:47:51,798 [INFO] blogger_uploader — 업로드 성공: https://hoguasset.blogspot.com/2026/10/2026_01610759925.html
+2026-10-30 01:47:51,798 [INFO] main —   ✅ 편 1 업로드 완료: https://hoguasset.blogspot.com/2026/10/2026_01610759925.html
+2026-10-30 01:47:54,800 [INFO] main — 
+--- [2/3편] '2026 주택담보대출 은행별 금리비교' 생성 중 ---
+2026-10-30 01:47:54,800 [INFO] content_generator — 시리즈 포스트 생성: '2026 주택담보대출 은행별 금리비교' (2/3편)
+2026-10-30 01:48:02,041 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:48:02,042 [INFO] research_collector — 검색 의도: 2026년 기준 주요 은행별 주택담보대출 금리를 비교하여 유리한 대출 상품을 찾으려는 의도
+2026-10-30 01:48:15,262 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '2026 주택담보대출 은행별 금리비교'
+2026-10-30 01:48:29,299 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:48:29,300 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '2026 주택담보대출 은행별 금리비교'
+2026-10-30 01:48:42,516 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:48:42,517 [INFO] source_validator — 출처 검증: 7/7개 통과, 등급 분포 {'D': 4, 'B': 1, 'A': 2}
+2026-10-30 01:48:42,517 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
+2026-10-30 01:48:42,517 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-30 01:48:42,517 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-30 01:48:43,145 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:49:48,730 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-30 01:49:49,355 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:50:01,833 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
+2026-10-30 01:50:01,833 [INFO] content_generator — 이미지 계획 3건 사용: ['mortgage comparison bank document', 'fixed variable rate comparison chart', 'calculator mortgage interest calculation']
+2026-10-30 01:50:02,031 [INFO] image_fetcher — 이미지 수집 성공: 'mortgage comparison bank document' → 제목='house / structure / real estate / concep' (관련성=0.25)
+2026-10-30 01:50:02,689 [INFO] image_fetcher — 이미지 수집 성공: 'fixed variable rate comparison chart' → 제목='cake / celebration / candle / gifts / fi' (관련성=0.20)
+2026-10-30 01:50:02,934 [INFO] image_fetcher — 이미지 수집 성공: 'calculator mortgage interest calculation' → 제목='new year / calculator / calculation / in' (관련성=0.50)
+2026-10-30 01:50:04,574 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:50:04,575 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
+2026-10-30 01:50:05,259 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-30 01:50:05,259 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-30 01:50:05,263 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-30 01:50:05,263 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-30 01:50:05,263 [INFO] content_generator — 시리즈 포스트 생성 완료: '2026 주담대 은행별 금리비교, 우대조건 정리' (2554자, 이미지 2개)
+2026-10-30 01:50:05,855 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:50:26,279 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-10-30 01:50:26,900 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:50:32,665 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '2026 주담대 은행별 금리비교, 우대조건 정리'
+2026-10-30 01:50:32,665 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치·표·사례는 있으나 본문 곳곳에 문장이 그대로 중복 삽입되어 있어 완성도가 떨어짐
+2026-10-30 01:50:32,665 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 문장 중복/깨짐으로 가독성이 저해되는 구간이 있음
+2026-10-30 01:50:32,665 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처는 명시했으나 alt 텍스트 적용 여부가 본문에서 확인되지 않음
+2026-10-30 01:50:32,665 [INFO] adsense_validator —   ❌ AI 생성 의심도: 동일 문장이 그대로 반복·중첩 삽입된 깨진 텍스트가 다수 발견되어 AI 생성 오류 흔적이 뚜렷함
+2026-10-30 01:50:32,665 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 동일 문장이 그대로 반복·중첩 삽입된 깨진 텍스트가 다수 발견되어 AI 생성 오류 흔적이 뚜렷함
+2026-10-30 01:50:32,665 [WARNING] adsense_validator —   🔴 '코픽스가 두 달 새 0.28%P 뛰면서...' 문장이 괄호 안에서 그대로 중복 삽입됨
+2026-10-30 01:50:32,665 [WARNING] adsense_validator —   🔴 '은행 창구마다 우리 은행이 더 싸다는 말을 들어...' 문장이 중복되어 의미가 겹침
+2026-10-30 01:50:32,665 [WARNING] adsense_validator —   🔴 '다만 확인한 HF 안내 자료 중 일부는 다만 확인한 HF 안내 자료 중 일부는...' 구문이 깨진 상태로 삽입됨 — 즉시 수정 필요
+2026-10-30 01:50:32,665 [WARNING] main —   ⚠️ [편 2] AdSense 검토 필요 — pending 저장 (점수: 72/100)
+2026-10-30 01:50:32,667 [INFO] main — 
+--- [3/3편] '주택담보대출 대환대출 후기 2026' 생성 중 ---
+2026-10-30 01:50:32,667 [INFO] content_generator — 시리즈 포스트 생성: '주택담보대출 대환대출 후기 2026' (3/3편)
+2026-10-30 01:50:38,806 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:50:38,807 [INFO] research_collector — 검색 의도: 2026년 기준 주택담보대출 대환대출 실제 경험담과 절차, 조건을 확인하여 본인의 대환대출 여부를 결정하려는
+2026-10-30 01:50:50,415 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 6개) — '주택담보대출 대환대출 후기 2026'
+2026-10-30 01:51:11,292 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:51:11,293 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '주택담보대출 대환대출 후기 2026'
+2026-10-30 01:51:24,480 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:51:24,481 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'C': 1, 'X': 2, 'B': 2, 'A': 1}
+2026-10-30 01:51:24,481 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-10-30 01:51:24,482 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-30 01:51:24,482 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-30 01:51:25,121 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:52:29,718 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-10-30 01:52:29,718 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-30 01:52:30,539 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:52:50,117 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-10-30 01:52:50,117 [INFO] content_generator — 이미지 계획 1건 사용: ['bank loan consultation desk']
+2026-10-30 01:52:50,376 [INFO] image_fetcher — 이미지 수집 성공: 'bank loan consultation desk' → 제목='piggy / bank / money / finance / busines' (관련성=0.50)
+2026-10-30 01:52:50,639 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-10-30 01:52:50,639 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-10-30 01:52:50,643 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-30 01:52:50,643 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-30 01:52:50,643 [INFO] content_generator — 시리즈 포스트 생성 완료: '주택담보대출 대환대출 후기 2026 종합 정리' (2796자, 이미지 1개)
+2026-10-30 01:52:51,338 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:53:11,421 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-10-30 01:53:12,021 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:53:16,702 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 77/100 — '주택담보대출 대환대출 후기 2026 종합 정리'
+2026-10-30 01:53:16,702 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 적절하나 '대환대출 후기를 종합하면...' 등 500자 이상 단락이 다수 존재해 가독성이 다소 떨어짐
+2026-10-30 01:53:16,702 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장만 포함되어 있고 Pixabay 라이선스 출처는 명시됐으나 전체 분량 대비 이미지 수가 적어 보완 필요
+2026-10-30 01:53:16,702 [INFO] adsense_validator —   ❌ AI 생성 의심도: '인베스트조선이 인베스트조선 보도에 따르면 내용에 따르면', '한국주택금융공사가 안내하는 자료(한국주택금융공사가 안내하는 자료에는)' 등 템플릿 치환 오류로 보이는 중복·어색한 문구가 반복돼 자동 생성 흔적이 뚜렷함
+2026-10-30 01:53:16,702 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '인베스트조선이 인베스트조선 보도에 따르면 내용에 따르면', '한국주택금융공사가 안내하는 자료(한국주택금융공사가 안내하는 자료에는)' 등 템플릿 치환 오류로 보이는 중복·어색한 문구가 반복돼 자동 생성 흔적이 뚜렷함
+2026-10-30 01:53:16,702 [WARNING] adsense_validator —   🔴 '인베스트조선이 인베스트조선 보도에 따르면 내용에 따르면', '조선비즈가 조선비즈 보도(2024년 1월)에 따르면 내용을 보면', '한국주택금융공사가 안내하는 자료(한국주택금융공사가 안내하는 자료에는)' 등 출처 인용 문구가 중복·어색하게 삽입되어 있어 자동 생성 오류로 의심되며 가독성과 신뢰도를 해침 — 반드시 수정 필요
+2026-10-30 01:53:16,703 [WARNING] main —   ⚠️ [편 3] AdSense 검토 필요 — pending 저장 (점수: 77/100)
+2026-10-30 01:53:16,711 [INFO] dashboard_exporter —   검토 대기 저장: 2026 주담대 은행별 금리비교, 우대조건 정리 (13072자 HTML)
+2026-10-30 01:53:16,711 [INFO] dashboard_exporter —   검토 대기 저장: 주택담보대출 대환대출 후기 2026 종합 정리 (10074자 HTML)
+2026-10-30 01:53:16,723 [INFO] pending_store — 검토 대기 저장: 목록 20건 / 보관 180건 / 본문 20건
+2026-10-30 01:53:16,723 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 2개 추가 (총 200개)
+2026-10-30 01:53:16,739 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 184개)
+2026-10-30 01:53:16,744 [INFO] dashboard_exporter — 분석 필드 유지: 72/88개 (등급·조회수·수익)
+2026-10-30 01:53:16,753 [INFO] dashboard_exporter —   시리즈: 50개 내보내기 완료
+2026-10-30 01:53:16,762 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-30 01:53:17,080 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-30 01:53:17,401 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-30 01:53:17,401 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-30 01:53:17,402 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
+2026-10-30 01:53:17,404 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-30 01:53:17,416 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 264 / 실패 0 / 대기 20)
+2026-10-30 01:53:17,416 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-30 01:53:17,416 [INFO] dashboard_exporter —   포스트: 88개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-30 01:53:17,416 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-30 01:53:17,417 [INFO] main — 
+============================================================
+2026-10-30 01:53:17,417 [INFO] main — [금융NEWS] 시리즈 완료: 1/3편 성공
+2026-10-30 01:53:17,417 [INFO] main — ============================================================
+2026-10-30 01:53:17,417 [INFO] main — 단독 포스트 대상 키워드 0개: []
+2026-10-30 01:53:17,429 [INFO] post_manager — run_history 마이그레이션: 3개 포스트 추가
+2026-10-30 01:53:17,429 [INFO] main — 
+============================================================
+2026-10-30 01:53:17,429 [INFO] main — [금융NEWS] 완료: 성공 0개 / 실패 0개
+2026-10-30 01:53:17,429 [INFO] main — ============================================================
+2026-10-30 01:53:17,440 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 185개)
+2026-10-30 01:53:17,446 [INFO] dashboard_exporter — 분석 필드 유지: 72/88개 (등급·조회수·수익)
+2026-10-30 01:53:17,453 [INFO] dashboard_exporter —   시리즈: 50개 내보내기 완료
+2026-10-30 01:53:17,461 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-30 01:53:17,462 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-30 01:53:17,463 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
+2026-10-30 01:53:17,465 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-30 01:53:17,477 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 263 / 실패 2 / 대기 19)
+2026-10-30 01:53:17,477 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-30 01:53:17,477 [INFO] dashboard_exporter —   포스트: 88개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-30 01:53:17,477 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-30 01:53:17,478 [INFO] main — 발행 시도 없음 — 처리할 키워드가 없었습니다

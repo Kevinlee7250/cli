@@ -1,105 +1,3 @@
-2026-10-29 01:21:52,693 [INFO] keyword_collector — 시즌 예약 키워드 34개 로드 (blog=blog1): ['2026 추석 특선 영화 편성표 정리 후기', '추석 연휴 드라마 영화 추천 방법', '명절 TV 영화 편성표 솔직 비교']...
-2026-10-29 01:21:57,033 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-10-29 01:22:03,402 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:22:03,422 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-10-29 01:22:03,422 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-10-29 01:22:03,833 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['드라마 OST 저작권 유튜브 사용 가능 여부 직접 확인']
-2026-10-29 01:22:04,172 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-29 01:22:04,173 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-10-29 01:22:04,174 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-10-29 01:22:04,177 [INFO] keyword_collector — 유사 주제 제외 2개: ['수능 끝나고 저렴하게 준비하는 법', '가을 단풍 드라이브 코스 솔직 비교']
-2026-10-29 01:22:04,180 [INFO] keyword_collector —   [season_scheduled] 2개: ['연말 가요 시상식 일정 총정리 2026', 'MAMA 멜론뮤직어워드 시상식 솔직 비교']
-2026-10-29 01:22:04,180 [INFO] keyword_collector — 최종 선정 키워드 2개: ['연말 가요 시상식 일정 총정리 2026', 'MAMA 멜론뮤직어워드 시상식 솔직 비교']
-2026-10-29 01:22:04,180 [INFO] main — 수집된 키워드 2개: ['연말 가요 시상식 일정 총정리 2026', 'MAMA 멜론뮤직어워드 시상식 솔직 비교']
-2026-10-29 01:22:04,187 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
-2026-10-29 01:22:07,601 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 40개
-2026-10-29 01:22:08,237 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:22:08,238 [INFO] keyword_collector — 화제 드라마 감지: ['닥터X', '꿀알바']
-2026-10-29 01:22:08,238 [INFO] main — [자동 드라마 시리즈] '닥터X' 감지 — 리뷰 시리즈 기획 시작
-2026-10-29 01:22:13,367 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:22:13,368 [INFO] series_planner — 드라마 시리즈 기획 완료: '닥터X 드라마 리뷰 시리즈' 3편
-2026-10-29 01:22:13,368 [INFO] main — [자동 시리즈] '닥터X' 3편 기획 시작 (이후 단독 포스트 0개)
-2026-10-29 01:22:13,368 [INFO] main — ============================================================
-2026-10-29 01:22:13,368 [INFO] main — [HOGU What?] 시리즈 모드 시작: '닥터X' 3편
-2026-10-29 01:22:13,368 [INFO] main — ============================================================
-2026-10-29 01:22:13,372 [INFO] main — 시리즈 기획 완료: '닥터X 드라마 리뷰 시리즈'
-2026-10-29 01:22:13,372 [INFO] main —   편 1: 닥터X 첫인상 솔직 리뷰, 볼만할까
-2026-10-29 01:22:13,372 [INFO] main —   편 2: 닥터X 등장인물 분석과 연기력 평가
-2026-10-29 01:22:13,372 [INFO] main —   편 3: 닥터X 결말 총평, OST·추천작 총정리
-2026-10-29 01:22:13,372 [INFO] main — 
---- [1/3편] '닥터X 첫인상 리뷰' 생성 중 ---
-2026-10-29 01:22:13,372 [INFO] content_generator — 시리즈 포스트 생성: '닥터X 첫인상 리뷰' (1/3편)
-2026-10-29 01:22:17,024 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:22:17,025 [INFO] research_collector — 검색 의도: '닥터X'라는 제품/서비스/콘텐츠를 처음 사용하거나 접한 후의 솔직한 첫인상 후기를 찾는 의도
-2026-10-29 01:22:29,953 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '닥터X 첫인상 리뷰'
-2026-10-29 01:22:36,375 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:22:36,376 [INFO] evidence_builder — 자료팩 생성: 사실 2개 — '닥터X 첫인상 리뷰'
-2026-10-29 01:22:47,670 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:22:47,671 [INFO] source_validator — 출처 검증: 1/2개 통과, 등급 분포 {'C': 1, 'X': 1}
-2026-10-29 01:22:47,673 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-10-29 01:22:47,673 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-29 01:22:47,678 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-29 01:22:48,359 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:24:06,360 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-10-29 01:24:06,361 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-29 01:24:06,361 [WARNING] content_generator — 컨텐츠 너무 짧음(2401자, 최소 2500자) — 재시도 1/3
-2026-10-29 01:24:09,362 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-10-29 01:24:09,362 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-29 01:24:10,113 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:24:59,236 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-29 01:24:59,237 [WARNING] content_generator — 컨텐츠 너무 짧음(414자, 최소 2500자) — 재시도 2/3
-2026-10-29 01:25:02,237 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-10-29 01:25:02,237 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-29 01:25:02,939 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:25:50,059 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-29 01:25:50,060 [ERROR] content_generator — 컨텐츠 생성 실패: 435자 — thin content 방지를 위해 게시 거부
-2026-10-29 01:25:50,060 [ERROR] main — 편 1 생성 실패 — 건너뜀
-2026-10-29 01:25:50,063 [INFO] main — 
---- [2/3편] '닥터X 등장인물 분석' 생성 중 ---
-2026-10-29 01:25:50,063 [INFO] content_generator — 시리즈 포스트 생성: '닥터X 등장인물 분석' (2/3편)
-2026-10-29 01:25:57,270 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:25:57,271 [INFO] research_collector — 검색 의도: 일본 드라마 '닥터X(ドクターX)' 등장인물들의 이름, 배우, 역할, 특징 등을 정확히 알고 싶어하는 검색 
-2026-10-29 01:26:03,181 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '닥터X 등장인물 분석'
-2026-10-29 01:26:21,386 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:26:21,387 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '닥터X 등장인물 분석'
-2026-10-29 01:26:30,104 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:26:30,105 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'D': 4, 'X': 2}
-2026-10-29 01:26:31,926 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '닥터X 등장인물 분석'
-2026-10-29 01:26:31,926 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-10-29 01:26:31,926 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-29 01:26:31,926 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-29 01:26:32,511 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:27:51,773 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-29 01:27:52,407 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:27:58,220 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-10-29 01:27:58,220 [INFO] content_generator — 이미지 계획 3건 사용: ['hospital drama surgery scene', 'TV rating graph remote living room', 'watching drama review website laptop']
-2026-10-29 01:27:58,461 [INFO] image_fetcher — 이미지 수집 성공: 'hospital drama surgery scene' → 제목='nurse / medicine / doctor / hospital / m' (관련성=0.50)
-2026-10-29 01:27:58,988 [INFO] image_fetcher — 이미지 수집 성공: 'TV rating graph remote living room' → 제목='feedback / survey / rating / evaluation ' (관련성=0.20)
-2026-10-29 01:27:59,409 [INFO] image_fetcher — 이미지 수집 성공: 'watching drama review website laptop' → 제목='bee-eaters / birds / perched / animals /' (관련성=0.20)
-2026-10-29 01:28:02,745 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:28:02,746 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 2개 유지
-2026-10-29 01:28:03,310 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-10-29 01:28:03,310 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-10-29 01:28:03,319 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-29 01:28:03,320 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-29 01:28:03,320 [INFO] content_generator — 시리즈 포스트 생성 완료: '[2편] 닥터X 계수정과 조연들, 연기 평가 총정리' (2687자, 이미지 2개)
-2026-10-29 01:28:03,989 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:28:23,857 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '[2편] 닥터X 계수정과 조연들, 연기 평가 총정리'
-2026-10-29 01:28:23,857 [INFO] adsense_validator —   ⚠️ SEO 최적화: 핵심 키워드 '닥터X 등장인물 분석'이 제목에 직접 반영되지 않아 검색 의도 매칭이 다소 약함
-2026-10-29 01:28:23,857 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 일부 섹션이 500자 이상 단락으로 뭉쳐 있어 가독성 저하
-2026-10-29 01:28:23,857 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지로 저작권 위반은 없으나 정책상 이미지 관련 항목은 기본 warn 처리
-2026-10-29 01:28:23,857 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 보도가 있습니다/~라고 해요' 식 보고형 표현이 반복돼 다소 기계적인 톤이 섞여 있음
-2026-10-29 01:28:23,857 [WARNING] main —   ⚠️ [편 2] AdSense 검토 필요 — pending 저장 (점수: 79/100)
-2026-10-29 01:28:23,860 [INFO] main — 
---- [3/3편] '닥터X 결말 총평' 생성 중 ---
-2026-10-29 01:28:23,860 [INFO] content_generator — 시리즈 포스트 생성: '닥터X 결말 총평' (3/3편)
-2026-10-29 01:28:33,591 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:28:33,593 [INFO] research_collector — 검색 의도: 일본 드라마 '닥터X'의 완결(최종 시즌/스페셜) 결말 내용과 전체 평가를 알고 싶은 검색
-2026-10-29 01:28:49,141 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '닥터X 결말 총평'
-2026-10-29 01:28:57,715 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:28:57,716 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — '닥터X 결말 총평'
-2026-10-29 01:29:04,797 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-29 01:29:04,798 [INFO] source_validator — 출처 검증: 4/5개 통과, 등급 분포 {'C': 3, 'X': 1, 'D': 1}
 2026-10-29 01:29:06,267 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '닥터X 결말 총평'
 2026-10-29 01:29:06,267 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
 2026-10-29 01:29:06,267 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
@@ -600,3 +498,127 @@
 2026-10-30 01:32:20,356 [INFO] dashboard_exporter —   포스트: 84개 / 실행 이력: 120개 / 블로그: 3개
 2026-10-30 01:32:20,357 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-10-30 01:32:20,358 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-10-30 01:33:23,902 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-30 01:33:24,890 [INFO] main — ============================================================
+2026-10-30 01:33:24,891 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-10-30 01:33:24
+2026-10-30 01:33:24,891 [INFO] main — ============================================================
+2026-10-30 01:33:24,901 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-10-30 01:33:24,901 [INFO] keyword_collector — 포스팅 이력 코퍼스: 83개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-10-30 01:33:24,902 [INFO] keyword_collector — 시즌 예약 키워드 11개 로드 (blog=blog2): ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법']...
+2026-10-30 01:33:29,061 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-10-30 01:33:37,066 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:33:37,078 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-10-30 01:33:37,079 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-10-30 01:33:37,744 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-30 01:33:37,745 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-10-30 01:33:37,746 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-10-30 01:33:37,753 [INFO] keyword_collector — 유사 주제 제외 17개: ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법', '2026 할로윈 소품 솔직 비교 후기', '할로윈 파티 집에서 준비하는 방법 꿀팁']
+2026-10-30 01:33:37,753 [INFO] keyword_collector —   [naver_realtime] 1개: ['이케아 가을 인테리어 가구 쇼핑 할인 정보']
+2026-10-30 01:33:37,753 [INFO] keyword_collector —   [fallback] 1개: ['경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-10-30 01:33:37,753 [INFO] keyword_collector — 최종 선정 키워드 2개: ['이케아 가을 인테리어 가구 쇼핑 할인 정보', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-10-30 01:33:37,753 [INFO] main — 수집된 키워드 2개: ['이케아 가을 인테리어 가구 쇼핑 할인 정보', '경주 당일치기 놓치면 후회하는 코스 직접 다녀와서']
+2026-10-30 01:33:37,758 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
+2026-10-30 01:33:37,758 [INFO] main — 단독 포스트 대상 키워드 1개: ['이케아 가을 인테리어 가구 쇼핑 할인 정보']
+2026-10-30 01:33:37,769 [INFO] main — 
+[1/1] 키워드: '이케아 가을 인테리어 가구 쇼핑 할인 정보'
+2026-10-30 01:33:37,769 [INFO] content_generator — 포스트 생성 중: '이케아 가을 인테리어 가구 쇼핑 할인 정보'
+2026-10-30 01:33:41,831 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:33:41,832 [INFO] research_collector — 검색 의도: 이케아의 가을 시즌 인테리어 가구 할인 정보 및 쇼핑 팁을 찾는 의도
+2026-10-30 01:33:56,291 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '이케아 가을 인테리어 가구 쇼핑 할인 정보'
+2026-10-30 01:34:01,870 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:34:01,871 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '이케아 가을 인테리어 가구 쇼핑 할인 정보'
+2026-10-30 01:34:09,220 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:34:09,221 [INFO] source_validator — 출처 검증: 1/4개 통과, 등급 분포 {'X': 3, 'B': 1}
+2026-10-30 01:34:09,223 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-10-30 01:34:09,227 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-10-30 01:34:09,927 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:35:20,380 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-10-30 01:35:20,381 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-10-30 01:35:21,880 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:35:33,056 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
+2026-10-30 01:35:33,056 [INFO] content_generator — 이미지 계획 2건 사용: ['autumn living room wooden furniture', 'wooden desk shelf mood lamp']
+2026-10-30 01:35:33,367 [INFO] image_fetcher — 이미지 수집 성공: 'autumn living room wooden furniture' → 제목='living room / fireplace / sofa / autumn ' (관련성=0.80)
+2026-10-30 01:35:33,592 [INFO] image_fetcher — 이미지 수집 성공: 'wooden desk shelf mood lamp' → 제목='study / workroom / office / glimpse / th' (관련성=0.20)
+2026-10-30 01:35:34,721 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:35:35,401 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-10-30 01:35:35,401 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-10-30 01:35:35,407 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-10-30 01:35:35,409 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-10-30 01:35:35,409 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-10-30 01:35:35,409 [INFO] content_generator — 포스트 생성 완료: '이케아 가을 인테리어 가구, 연예인 집 공개 콘텐츠로 본 쇼핑·할인 정보 정리' (2802자, 이미지 2개)
+2026-10-30 01:35:36,130 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:35:52,591 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '이케아 가을 인테리어 가구, 연예인 집 공개 콘텐츠로 본 쇼핑·'
+2026-10-30 01:35:52,591 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 기준 충족하나 2016년 단일 구식 자료와 일반적 쇼핑 팁 재구성에 그쳐 독창적 분석 깊이는 다소 부족함
+2026-10-30 01:35:52,591 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처는 명시했으나 alt 텍스트 기재 여부가 불명확함
+2026-10-30 01:35:52,591 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 📌/💡 핵심 요약 박스가 중복 반복되는 등 정형화된 AI 요약 패턴이 보임
+2026-10-30 01:35:52,594 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-10-30 01:35:52,596 [INFO] internal_linker —   [1/5] '체크리스트' -> https://hoguasset.blogspot.com/2026/10/blog-post_28.html
+2026-10-30 01:35:52,598 [INFO] internal_linker —   [2/5] '라인업' -> https://www.hoguwhat.com/2026/10/2026-10-x.html
+2026-10-30 01:35:52,600 [INFO] internal_linker —   [3/5] '체크리스트' -> https://hogugolfntraval.blogspot.com/2026/10/1.html
+2026-10-30 01:35:52,602 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-10-30 01:35:52,602 [INFO] main —   제목: 이케아 가을 인테리어 가구, 연예인 집 공개 콘텐츠로 본 쇼핑·할인 정보 정리
+2026-10-30 01:35:52,602 [INFO] main —   이미지: 2개 삽입
+2026-10-30 01:35:52,602 [INFO] main —   글자 수: 2802자
+2026-10-30 01:35:53,257 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:36:09,265 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '이케아 가을 인테리어 가구, 연예인 집 공개 콘텐츠로 본 쇼핑·'
+2026-10-30 01:36:09,265 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2802자로 분량 기준은 충족하나 단일 10년 전 출처에 의존해 조사 깊이가 얕고 일반론적 나열이 많음
+2026-10-30 01:36:09,265 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 1개(2016년 기사)만 교차 없이 사용했고 불확실성은 명시했으나 자료 다양성이 부족함
+2026-10-30 01:36:09,265 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 출처는 명시됐으나 alt 텍스트 기재 여부 확인 불가
+2026-10-30 01:36:09,265 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 요약 박스 중복(📌/💡), 리스트 나열 패턴, '결론부터 말하면' 류의 정형화된 전개가 반복됨
+2026-10-30 01:36:09,265 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-10-30 01:36:09,265 [WARNING] main —      🟡 [원본성 및 품질] 2802자로 분량 기준은 충족하나 단일 10년 전 출처에 의존해 조사 깊이가 얕고 일반론적 나열이 많음
+2026-10-30 01:36:09,265 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 1개(2016년 기사)만 교차 없이 사용했고 불확실성은 명시했으나 자료 다양성이 부족함
+2026-10-30 01:36:09,265 [WARNING] main —      🟡 [이미지 정책] Pixabay 라이선스 출처는 명시됐으나 alt 텍스트 기재 여부 확인 불가
+2026-10-30 01:36:09,265 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-10-30 01:36:09,272 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-30 01:36:09,278 [INFO] adsense_validator —   🖼️ alt 재작성 → "이케아 가을 인테리어 가구, 연예인 집 공개 콘텐츠로 본 쇼핑·할인 정보 정리 관련 이미지" (캡션 포함)
+2026-10-30 01:36:09,278 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 2건
+2026-10-30 01:36:10,237 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:37:33,805 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2802자 → 4315자 (+1513자)
+2026-10-30 01:37:33,805 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-10-30 01:37:34,592 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:37:51,092 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — '이케아 가을 인테리어 가구, 연예인 집 공개 콘텐츠로 본 쇼핑·'
+2026-10-30 01:37:51,092 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 명시로 저작권 위반은 없으나 alt 텍스트 확인 불가해 기본 warn 처리
+2026-10-30 01:37:51,092 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '이 글에서 확인할 수 있는 것' 식 도입 요약과 목록화 패턴이 다소 보이나 개인 경험 서술이 혼재해 완전 AI 의심은 아님
+2026-10-30 01:37:51,092 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 90/100)
+2026-10-30 01:37:51,092 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
+2026-10-30 01:37:51,702 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:38:35,131 [INFO] final_editor —   ✏️ 제목 최종 교정: '이케아 가을 인테리어 가구, 연예인 집 공개 콘텐츠로 본 쇼핑·할인 정보 정리' → '이케아 가을 인테리어 가구 쇼핑·할인 정보 총정리 가이드'
+2026-10-30 01:38:35,131 [INFO] final_editor —   ✏️ 메타 설명 교정 (150자)
+2026-10-30 01:38:35,131 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 글자수 기준에 맞게 정리하고, 긴 문단을 2~4문장 단위로 쪼개 모바일 가독성을 높였습니다. 핵심 요약 박스, 비교 표, 개인 경험 메모, 주의사항, FAQ(5개), 작성자 메모를 추가하고 이미지 alt 텍스트를 구체적으로 보완했으며, 텍스트 형태의 내부 링크 언급을 글 하단에 자연스럽게 배치했습니다.
+2026-10-30 01:38:35,246 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-10-30 01:38:35,247 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-10-30 01:38:35,860 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/10/blog-post_30.html
+2026-10-30 01:38:35,871 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/10/blog-post_30.html
+2026-10-30 01:38:35,874 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-10-30 01:38:35,880 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-10-30 01:38:35,881 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '이케아 가을 인테리어 가구 쇼핑·할인 정보 총정리 가이드'
+2026-10-30 01:38:36,543 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-10-30 01:38:39,963 [INFO] comment_manager —   생성된 댓글: 하나 팁 드리자면, 이케아는 매장 방문 전에 앱으로 재고 확인하고 가는 게 진짜 중요해요. 인기 품목은 가을 시즌에 특히 광명점·고양점 간에도 ...
+2026-10-30 01:41:40,106 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-10-30 01:41:40,107 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-10-30 01:41:40,108 [INFO] main — 
+============================================================
+2026-10-30 01:41:40,108 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-10-30 01:41:40,108 [INFO] main — ============================================================
+2026-10-30 01:41:40,121 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 183개)
+2026-10-30 01:41:40,126 [INFO] dashboard_exporter — 분석 필드 유지: 72/85개 (등급·조회수·수익)
+2026-10-30 01:41:40,138 [INFO] dashboard_exporter —   시리즈: 49개 내보내기 완료
+2026-10-30 01:41:40,147 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-10-30 01:41:40,368 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-30 01:41:40,623 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-10-30 01:41:40,624 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-10-30 01:41:40,625 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
+2026-10-30 01:41:40,628 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-10-30 01:41:40,640 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 264 / 실패 0 / 대기 20)
+2026-10-30 01:41:40,640 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-10-30 01:41:40,640 [INFO] dashboard_exporter —   포스트: 85개 / 실행 이력: 120개 / 블로그: 3개
+2026-10-30 01:41:40,641 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-10-30 01:41:40,642 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

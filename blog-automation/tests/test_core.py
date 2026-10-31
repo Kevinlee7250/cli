@@ -924,30 +924,33 @@ def test_all_publishes_failed_exits_nonzero():
     assert e.value.code == 1
 
 
-def test_everything_diverted_to_pending_is_a_failure(caplog):
-    """블로그에 한 편도 안 올라갔으면 pending 저장은 성공이 아닙니다.
+def test_everything_diverted_to_pending_is_a_hold_not_a_failure(caplog, capsys):
+    """품질 게이트가 검토 대기로 돌린 것은 종료 코드 0, 상태 held 입니다.
 
-    success_count는 pending 저장까지 성공으로 세기 때문에, 이 구분이 없으면
-    "성공 1건"인데 블로그는 비어 있는 상태를 영영 놓칩니다.
+    success_count는 pending 저장까지 성공으로 세기 때문에, 발행 여부는
+    published 로 봐야 합니다. 한 편도 안 올라간 것은 맞지만, 그건 고장이
+    아닙니다.
 
-    2026-10-14: 심각도를 error → warning 으로 낮췄습니다. 품질 게이트가
-    기준 미달 글을 붙잡은 것은 설계된 동작인데, error 로 남기면 code_repair
-    가 그 줄을 세어 "CRITICAL n건"으로 보고합니다 (실제로 구분선까지
-    포함해 7건으로 집계됐습니다). 다만 이 테스트가 지키는 것 — "성공으로
-    끝내지 않는다"(SystemExit) — 는 그대로입니다. 레벨만 WARNING 으로
-    맞췄습니다.
+    2026-10-14: 로그 심각도를 error → warning 으로 낮췄습니다. error 로
+    남기면 code_repair 가 "CRITICAL n건"으로 셉니다.
+
+    2026-10-31: 그래도 sys.exit(1) 이라 워크플로는 failure 였습니다.
+    blog3 가 blog2 성공일 때만 돌아 금융NEWS 가 스킵됐고, 실행 결론을
+    세는 보고가 보류를 실패 일수에 넣었습니다. 이제 0으로 끝나고
+    warning 주석과 status=held 로만 드러냅니다.
     """
-    import pytest
     import main
-    with caplog.at_level("WARNING"), pytest.raises(SystemExit):
+    with caplog.at_level("WARNING"):
         main._exit_on_publish_failure(
             [{"blog": "A", "attempted": 1, "published": 0, "pending": 1,
               "success": 1, "failed": 0, "errors": []}])
     assert "검토 대기" in caplog.text
-    # 게이트가 막은 것은 고장이 아니므로 error 로 남지 않아야 합니다
     assert not [r for r in caplog.records if r.levelname == "ERROR"], (
         "품질 게이트가 막은 경우가 error 로 기록됩니다"
     )
+    text = capsys.readouterr().out
+    assert "::warning title=품질 보류::" in text
+    assert "(held)" in text
 
 
 def test_real_upload_failure_still_logs_an_error(caplog):
@@ -962,6 +965,47 @@ def test_real_upload_failure_still_logs_an_error(caplog):
         "업로드 실패가 error 로 기록되지 않습니다"
     )
     assert "오류" in caplog.text
+
+
+def test_unexplained_zero_publish_still_exits(caplog):
+    """시도했는데 게시·보류·오류가 전부 0이면 집계가 깨진 것입니다."""
+    import pytest
+    import main
+    with caplog.at_level("ERROR"), pytest.raises(SystemExit) as e:
+        main._exit_on_publish_failure(
+            [{"blog": "A", "attempted": 1, "published": 0, "pending": 0,
+              "success": 0, "failed": 0, "errors": []}])
+    assert e.value.code == 1
+    assert any(r.levelname == "ERROR" for r in caplog.records)
+
+
+def test_hold_writes_job_output_and_step_summary(tmp_path, monkeypatch, capsys):
+    import main
+    out = tmp_path / "github_output.txt"
+    summary = tmp_path / "summary.md"
+    monkeypatch.setenv("GITHUB_OUTPUT", str(out))
+    monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(summary))
+    main._exit_on_publish_failure(
+        [{"blog": "금융NEWS", "attempted": 1, "published": 0, "pending": 1,
+          "success": 1, "failed": 0, "errors": ["점수 72 < 80"]}])
+    assert "status=held" in out.read_text(encoding="utf-8")
+    body = summary.read_text(encoding="utf-8")
+    assert "품질 보류" in body and "(held)" in body
+    assert "::warning title=품질 보류::" in capsys.readouterr().out
+
+
+def test_real_failure_annotation_is_an_error(tmp_path, monkeypatch, capsys):
+    import pytest
+    import main
+    monkeypatch.setenv("GITHUB_OUTPUT", str(tmp_path / "out.txt"))
+    monkeypatch.setenv("GITHUB_STEP_SUMMARY", str(tmp_path / "sum.md"))
+    with pytest.raises(SystemExit) as e:
+        main._exit_on_publish_failure(
+            [{"blog": "A", "attempted": 1, "published": 0, "pending": 0,
+              "success": 0, "failed": 1, "errors": ["업로드 실패"]}])
+    assert e.value.code == 1
+    assert "status=failed" in (tmp_path / "out.txt").read_text(encoding="utf-8")
+    assert "::error title=게시 실패::" in capsys.readouterr().out
 
 
 def test_published_post_passes_even_with_pending_siblings():
@@ -1247,8 +1291,20 @@ def test_publish_summary_is_written(tmp_path):
         [{"blog": "A", "published": 1, "pending": 1, "failed": 0}],
         path=str(out))
     d = json.loads(out.read_text(encoding="utf-8"))
-    assert d["published"] == 1 and d["pending"] == 1
+    assert d["published"] == 1 and d["pending"] == 1 and d["status"] == "published"
     assert d["blogs"][0]["blog"] == "A"
+
+
+def test_publish_summary_marks_a_quality_hold(tmp_path):
+    import main
+    out = tmp_path / "last_publish_summary.json"
+    main._save_publish_summary(
+        1, 0, 1, 0,
+        [{"blog": "금융NEWS", "published": 0, "pending": 1, "failed": 0}],
+        path=str(out))
+    d = json.loads(out.read_text(encoding="utf-8"))
+    assert d["status"] == "held"
+    assert d["failed"] == 0 and d["pending"] == 1
 
 
 def test_publish_summary_does_not_pollute_real_logs():

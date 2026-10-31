@@ -66,7 +66,9 @@ from content_generator import generate_post, generate_series_post
 from adsense_validator import validate_adsense
 from blogger_uploader import upload_post
 from keyword_collector import get_trending_keywords, _migrate_used_keywords
-from dashboard_exporter import log_run, export_dashboard, save_pending_posts
+from dashboard_exporter import (
+    log_run, export_dashboard, save_pending_posts, classify_run_outcome,
+)
 from post_manager import (
     register_post, update_post_status, save_draft, get_failed_posts,
     retry_failed_posts,
@@ -1210,16 +1212,22 @@ def main() -> None:
 
 def _save_publish_summary(attempted: int, published: int, pending: int,
                           failed: int, summaries: list[dict],
-                          path: str | None = None) -> None:
+                          path: str | None = None,
+                          status: str | None = None) -> None:
     """이번 실행의 발행 결과를 워크플로가 읽을 수 있게 남깁니다.
 
     후속 단계(사이트맵 제출 등)가 "발행이 있었는가"로 갈리는데, 지금까지는
     종료 코드에만 의존해 암묵적으로 건너뛰어졌습니다. 부수효과에 기대면
     단계 순서가 바뀔 때 조용히 어긋나므로 값을 명시적으로 남깁니다.
+
+    status 는 published / partial / held / failed / idle 입니다.
+    품질 보류(held)는 종료 코드 0이라, 이 필드가 없으면 성공과 구분이 안 됩니다.
     """
     import json as _json
     import sys as _sys
     from datetime import datetime, timezone
+    if status is None:
+        status = classify_run_outcome(attempted, published, pending, failed)
     if path is None:
         # 테스트가 실제 logs/를 오염시키지 않도록 — 검증이 필요한 테스트는
         # path를 직접 넘깁니다
@@ -1232,6 +1240,7 @@ def _save_publish_summary(attempted: int, published: int, pending: int,
         with open(path, "w", encoding="utf-8") as f:
             _json.dump({
                 "ranAt": datetime.now(timezone.utc).isoformat(),
+                "status": status,
                 "attempted": attempted, "published": published,
                 "pending": pending, "failed": failed,
                 "blogs": [{"blog": s.get("blog"), "published": s.get("published", 0),
@@ -1242,8 +1251,81 @@ def _save_publish_summary(attempted: int, published: int, pending: int,
         logger.warning(f"발행 요약 저장 실패 (무시): {e}")
 
 
+def _github_escape(text: str) -> str:
+    """Actions 워크플로 명령어에서 줄바꿈·% 가 깨지지 않게 바꿉니다."""
+    return text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+
+
+def _surface_publish_status(status: str, attempted: int, published: int,
+                            pending: int, failed: int) -> None:
+    """잡 출력·스텝 요약·어노테이션으로 결과를 드러냅니다.
+
+    품질 보류는 종료 코드 0입니다. 로그만 보면 게시 성공과 같아서,
+    Actions 화면의 warning 과 잡 요약, GITHUB_OUTPUT(status)으로 구분합니다.
+    """
+    out = os.getenv("GITHUB_OUTPUT")
+    if out:
+        try:
+            with open(out, "a", encoding="utf-8") as f:
+                f.write(
+                    f"status={status}\n"
+                    f"published={published}\n"
+                    f"pending={pending}\n"
+                    f"failed={failed}\n"
+                )
+        except OSError as e:
+            logger.warning(f"GITHUB_OUTPUT 기록 실패 (무시): {e}")
+
+    titles = {
+        "held": "품질 보류",
+        "failed": "게시 실패",
+        "partial": "일부 게시",
+        "published": "게시 완료",
+        "idle": "발행 시도 없음",
+    }
+    lines = {
+        "held": (
+            f"품질 보류 (held): 게시 0건, 검토 대기 {pending}건. "
+            "품질 게이트가 의도대로 막았고 실행 실패가 아닙니다."
+        ),
+        "failed": (
+            f"게시 실패: 시도 {attempted}건, 오류 {failed}건, 검토 대기 {pending}건"
+        ),
+        "partial": (
+            f"일부 게시: 게시 {published}건, 오류 {failed}건, 검토 대기 {pending}건"
+        ),
+        "published": f"게시 {published}건 / 검토 대기 {pending}건 / 오류 {failed}건",
+        "idle": "발행 시도 없음 — 처리할 키워드가 없었습니다",
+    }
+    message = lines.get(status, status)
+    if status == "held":
+        print(f"::warning title={titles[status]}::{_github_escape(message)}", flush=True)
+    elif status == "failed":
+        print(f"::error title={titles[status]}::{_github_escape(message)}", flush=True)
+    elif status == "partial":
+        print(f"::warning title={titles[status]}::{_github_escape(message)}", flush=True)
+
+    summary = os.getenv("GITHUB_STEP_SUMMARY")
+    if not summary:
+        return
+    heading = titles.get(status, status)
+    body = (
+        f"### {heading} ({status})\n\n"
+        f"{message}\n\n"
+        f"- 시도: {attempted}\n"
+        f"- 게시: {published}\n"
+        f"- 검토 대기: {pending}\n"
+        f"- 오류: {failed}\n"
+    )
+    try:
+        with open(summary, "a", encoding="utf-8") as f:
+            f.write(body)
+    except OSError as e:
+        logger.warning(f"스텝 요약 기록 실패 (무시): {e}")
+
+
 def _exit_on_publish_failure(summaries: list[dict]) -> None:
-    """한 편도 못 올렸으면 0이 아닌 코드로 끝냅니다.
+    """진짜로 한 편도 못 올린 오류만 0이 아닌 코드로 끝냅니다.
 
     이게 없어서 2026-08-20~22 이틀 동안 콘텐츠 생성이 100% 실패하는데도
     워크플로가 계속 success로 끝났습니다. 실패 알림도 뜨지 않았고 대시보드
@@ -1251,12 +1333,18 @@ def _exit_on_publish_failure(summaries: list[dict]) -> None:
 
     시도 자체가 0건인 경우(오늘 처리할 예약이 없음 등)는 실패가 아닙니다 —
     할 일이 없던 것과 하려다 실패한 것은 구분해야 합니다.
+
+    품질 게이트가 검토 대기로 돌린 경우(held)도 실패가 아닙니다. 종료 코드 1로
+    두면 워크플로 실패로 집계되고, 뒤 블로그 잡이 스킵됩니다. 상태만 held 로
+    남기고 0으로 끝냅니다. 생성 실패·업로드 오류는 그대로 1입니다.
     """
     attempted = sum(s.get("attempted", 0) for s in summaries)
     published = sum(s.get("published", 0) for s in summaries)
     pending = sum(s.get("pending", 0) for s in summaries)
     failed = sum(s.get("failed", 0) for s in summaries)
-    _save_publish_summary(attempted, published, pending, failed, summaries)
+    status = classify_run_outcome(attempted, published, pending, failed)
+    _save_publish_summary(attempted, published, pending, failed, summaries, status=status)
+    _surface_publish_status(status, attempted, published, pending, failed)
 
     if attempted == 0:
         logger.info("발행 시도 없음 — 처리할 키워드가 없었습니다")
@@ -1276,10 +1364,21 @@ def _exit_on_publish_failure(summaries: list[dict]) -> None:
     # "CRITICAL 7건"으로 집계됐는데, 열어 보니 10-07·10-08 두 번의 같은
     # 상황에서 나온 7줄이고 그중 2줄이 구분선이었습니다. 고칠 코드가 없는
     # 것을 고장으로 세는 쪽이, 정작 진짜 고장을 묻히게 합니다.
+    #
+    # 2026-10-31: 보류도 실패로 끝내고 있어 워크플로가 failure 로 끝났습니다.
+    # blog3 는 blog2 가 성공일 때만 돌아서 금융NEWS 가 통째로 스킵됐고,
+    # 색인 점검처럼 실행 결론을 세는 보고가 보류를 실패 일수에 넣었습니다.
+    # 보류는 종료 코드 0, 상태 held 입니다. 진짜 오류만 0이 아닌 코드입니다.
     bar = "=" * 60
-    if failed:
+    if failed or pending <= 0:
         logger.error(bar)
-        logger.error(f"❌ 게시 0건 — {attempted}건 시도, 오류 {failed}건")
+        if failed:
+            logger.error(f"❌ 게시 0건 — {attempted}건 시도, 오류 {failed}건")
+        if not failed:
+            logger.error(
+                f"❌ 게시 0건 — {attempted}건을 시도했지만 "
+                f"게시·검토 대기·오류가 모두 0입니다"
+            )
         for s in summaries:
             for msg in (s.get("errors") or [])[:3]:
                 logger.error(f"   [{s.get('blog')}] {msg}")
@@ -1293,7 +1392,7 @@ def _exit_on_publish_failure(summaries: list[dict]) -> None:
             for msg in (s.get("errors") or [])[:3]:
                 logger.warning(f"   [{s.get('blog')}] {msg}")
         logger.warning(bar)
-    # 어느 쪽이든 한 편도 올라가지 않았으므로 실행은 성공으로 두지 않습니다.
+        return
     sys.exit(1)
 
 

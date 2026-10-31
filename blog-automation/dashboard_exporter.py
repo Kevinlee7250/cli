@@ -28,6 +28,58 @@ def write_data(path: str, data) -> None:
         json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
 
 
+_OUTCOMES = ("idle", "published", "partial", "held", "failed")
+
+
+def classify_run_outcome(generated: int, uploaded: int, pending: int, errors: int) -> str:
+    """이번 실행의 결과 구분. held(품질 보류)는 실패가 아닙니다.
+
+    published  게시가 있고 오류가 없음
+    partial    일부는 게시되고 일부는 오류
+    held       생성은 됐지만 품질 게이트가 검토 대기로 돌림 (오류 0)
+    failed     생성·업로드가 실제로 실패했거나, 시도했는데 결과가 비어 있음
+    idle       시도 자체가 없음
+    """
+    generated = int(generated or 0)
+    uploaded = int(uploaded or 0)
+    pending = int(pending or 0)
+    errors = int(errors or 0)
+    if generated <= 0 and errors <= 0:
+        return "idle"
+    if uploaded > 0 and errors > 0:
+        return "partial"
+    if uploaded > 0:
+        return "published"
+    if errors > 0:
+        return "failed"
+    if pending > 0:
+        return "held"
+    return "failed"
+
+
+def outcome_of_run(run: dict) -> str:
+    """이력 한 줄의 결과. 기록된 outcome 이 없으면 건수로 되돌립니다.
+
+    예전 이력에는 outcome 필드가 없습니다. 업로드 0·오류 0·검토 대기 있음은
+    품질 보류였는데, 종료 코드만 보고 실패로 세던 기간의 기록입니다.
+    """
+    recorded = run.get("outcome")
+    if recorded in _OUTCOMES:
+        return recorded
+    errors = run.get("errors") or 0
+    if isinstance(errors, list):
+        errors = len(errors)
+    uploaded = run.get("bloggerUploaded")
+    if uploaded is None:
+        uploaded = (run.get("platforms") or {}).get("blogger") or 0
+    return classify_run_outcome(
+        run.get("postsGenerated") or 0,
+        uploaded,
+        run.get("pendingReview") or 0,
+        errors,
+    )
+
+
 def _load_history() -> list[dict]:
     if os.path.exists(HISTORY_FILE):
         try:
@@ -170,6 +222,8 @@ def log_run(
         "postsGenerated": total_posts,
         "bloggerUploaded": blogger_uploaded,
         "pendingReview": pending_review,
+        # held = 품질 보류. 오류 건수(errors)와 따로 둬서 집계가 실패로 세지 않게 합니다.
+        "outcome": classify_run_outcome(total_posts, blogger_uploaded, pending_review, errors),
         "errors": errors,
         "errorMessages": (error_messages or [])[:20],
         "imagesInserted": total_images,
@@ -715,6 +769,8 @@ def export_dashboard() -> None:
             # 생성됐지만 품질 게이트로 검토 대기에 들어간 수 — 이 필드가 빠지면
             # 대시보드에서 "생성 1 / 업로드 0"이 실패처럼 보이는 착시 발생
             "pendingReview": run.get("pendingReview", 0),
+            # published / partial / held / failed / idle. 예전 이력은 건수로 되돌립니다.
+            "outcome": outcome_of_run(run),
             "imagesInserted": run.get("imagesInserted", 0),
             "totalWords": run.get("totalWords", 0),
             "errors": run["errors"],

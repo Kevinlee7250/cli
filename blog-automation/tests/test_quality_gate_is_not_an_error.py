@@ -42,9 +42,10 @@ with open(_MAIN, encoding="utf-8") as _f:
 
 
 def _zero_published_block() -> str:
-    """'한 편도 올라가지 않은 경우' 블록의 소스."""
+    """'한 편도 올라가지 않은 경우' 블록의 소스. sys.exit(1) 직전까지."""
     start = MAIN_SRC.index("여기부터는 블로그에 한 편도 올라가지 않은 경우")
-    return MAIN_SRC[start:start + 2000].split("sys.exit(1)")[0]
+    end = MAIN_SRC.index("sys.exit(1)", start)
+    return MAIN_SRC[start:end]
 
 
 # ── 1·2. 심각도가 상황에 맞는가 ─────────────────────────────────────────────
@@ -78,6 +79,8 @@ def test_separator_is_not_logged_as_error_in_the_gate_path():
     assert "logger.error" not in gate, (
         "게이트 경로에 error 로그가 남아 있습니다 — 구분선 포함"
     )
+    assert "sys.exit" not in gate, "품질 보류 경로가 0이 아닌 코드로 끝나면 안 됩니다"
+    assert "return" in gate, "품질 보류는 종료 코드 0으로 끝나야 합니다"
 
 
 # ── 3. 구분선을 세지 않는가 ─────────────────────────────────────────────────
@@ -119,6 +122,25 @@ def test_noise_check_does_not_eat_short_real_messages(tmp_path):
 
 
 # ── 실제 로그로 확인 ────────────────────────────────────────────────────────
+
+def test_blog3_runs_after_blog2_even_when_blog2_fails():
+    """blog2 성공/스킵일 때만 blog3 를 돌리던 조건이 금융NEWS 를 건너뛰게 했습니다.
+
+    순서를 위한 needs 는 남깁니다. 세 잡이 같은 파일을 푸시하기 때문입니다.
+    취소가 아닌 한(실패·보류·스킵 포함) blog3 는 돕니다.
+    """
+    root = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    path = os.path.join(root, ".github", "workflows", "blog-run.yml")
+    text = open(path, encoding="utf-8").read()
+    start = text.index("  publish-blog3:")
+    chunk = text[start:text.index("\n    steps:", start)]
+    assert "needs: [rotation, publish-blog2]" in chunk
+    assert "!cancelled()" in chunk
+    assert "needs.publish-blog2.result" not in chunk, (
+        "blog2 가 실패하거나 품질 보류면 blog3 가 다시 스킵됩니다"
+    )
+    assert "steps.publish.outputs.status" in chunk
+
 
 def test_the_live_log_no_longer_counts_separators():
     """저장소에 있는 실제 로그 — 구분선이 섞여 있던 그 로그입니다."""

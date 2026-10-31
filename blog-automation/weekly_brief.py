@@ -53,6 +53,12 @@ def _within_period(value: str, cutoff: datetime) -> bool:
     return dt is not None and dt >= cutoff
 
 
+def _outcome(run: dict) -> str:
+    """runs.json 한 줄의 결과. outcome 이 없는 예전 기록은 건수로 되돌립니다."""
+    from dashboard_exporter import outcome_of_run
+    return outcome_of_run(run)
+
+
 def generate_brief() -> dict:
     now = datetime.now(timezone.utc)
     cutoff = now - timedelta(days=_PERIOD_DAYS)
@@ -70,14 +76,25 @@ def generate_brief() -> dict:
 
     posts_generated = sum(r.get("postsGenerated", 0) for r in week_runs)
     posts_uploaded = sum(r.get("bloggerUploaded", 0) for r in week_runs)
-    total_errors = sum(r.get("errors", 0) for r in week_runs)
+    total_errors = sum(r.get("errors", 0) or 0 for r in week_runs)
+    # 품질 보류는 errors 에 들어 있지 않습니다. 실패 일수와 따로 셉니다.
+    held_runs = sum(1 for r in week_runs if _outcome(r) == "held")
+    failed_runs = sum(1 for r in week_runs if _outcome(r) == "failed")
+    pending_review = sum(int(r.get("pendingReview") or 0) for r in week_runs)
 
     by_blog: dict[str, dict] = {}
     for r in week_runs:
         bid = r.get("blogId", "unknown")
-        b = by_blog.setdefault(bid, {"blogName": r.get("blogName", bid), "generated": 0, "uploaded": 0})
+        b = by_blog.setdefault(bid, {
+            "blogName": r.get("blogName", bid),
+            "generated": 0, "uploaded": 0, "held": 0, "failed": 0,
+        })
         b["generated"] += r.get("postsGenerated", 0)
         b["uploaded"] += r.get("bloggerUploaded", 0)
+        if _outcome(r) == "held":
+            b["held"] += 1
+        elif _outcome(r) == "failed":
+            b["failed"] += 1
 
     scores = [r.get("health_score") for r in week_repairs if r.get("health_score") is not None]
     avg_health = round(sum(scores) / len(scores), 1) if scores else None
@@ -102,6 +119,10 @@ def generate_brief() -> dict:
     highlights = []
     if posts_uploaded > 0:
         highlights.append(f"이번 주 {posts_uploaded}건 발행 완료 ({len(by_blog)}개 블로그)")
+    if held_runs:
+        highlights.append(
+            f"품질 보류 {held_runs}회 — 검토 대기 {pending_review}건 (실패로 세지 않음)"
+        )
     if week_incidents:
         highlights.append(f"새 인시던트 {len(week_incidents)}건 기록 (재발 방지 조치 포함)")
     if recurring:
@@ -115,6 +136,7 @@ def generate_brief() -> dict:
 
     summary_text = (
         f"지난 {_PERIOD_DAYS}일간 총 {posts_generated}건 생성, {posts_uploaded}건 발행({blog_lines}). "
+        f"품질 보류 {held_runs}회(검토 대기 {pending_review}건), 발행 실패 {failed_runs}회(오류 {total_errors}건). "
         f"평균 건강점수 {avg_health if avg_health is not None else '측정 안 됨'}/100. "
         + (f"위험 신호 {len(risks)}건 확인됨." if risks else "특이 위험 신호 없음.")
     )
@@ -128,6 +150,9 @@ def generate_brief() -> dict:
         "metrics": {
             "posts_generated": posts_generated,
             "posts_uploaded": posts_uploaded,
+            "held_runs": held_runs,
+            "failed_runs": failed_runs,
+            "pending_review": pending_review,
             "errors": total_errors,
             "avg_health_score": avg_health,
             "min_health_score": min_health,

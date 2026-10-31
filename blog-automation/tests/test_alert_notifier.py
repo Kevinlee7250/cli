@@ -156,6 +156,28 @@ def test_dry_run_does_not_record_state(tmp_path, monkeypatch):
     assert again["newFailedRuns"] == 1   # 기록하지 않았으므로 계속 새 건
 
 
+def test_holds_are_counted_apart_from_failed_runs(tmp_path, monkeypatch):
+    """품질 보류는 실패 목록에도, 텔레그램을 울리는 이상에도 넣지 않습니다."""
+    from datetime import datetime, timezone
+    an = _isolate(tmp_path, monkeypatch)
+    data = tmp_path / "data"
+    data.mkdir()
+    now = datetime.now(timezone.utc).isoformat()
+    (data / "runs.json").write_text(json.dumps([
+        {"runAt": now, "outcome": "held", "postsGenerated": 1,
+         "bloggerUploaded": 0, "pendingReview": 1, "errors": 0},
+        {"runAt": now, "outcome": "failed", "postsGenerated": 1,
+         "bloggerUploaded": 0, "pendingReview": 0, "errors": 1},
+    ], ensure_ascii=False), encoding="utf-8")
+    with patch("requests.get", return_value=_runs_response([])):
+        report = an.run()
+    assert report["publishOutcomes"]["held"] == 1
+    assert report["publishOutcomes"]["failed"] == 1
+    assert report["failedRuns"] == []
+    assert report["newFailedRuns"] == 0
+    assert report["sent"] is False
+
+
 def test_report_is_written_even_when_nothing_wrong(tmp_path, monkeypatch):
     an = _isolate(tmp_path, monkeypatch)
     with patch("requests.get", return_value=_runs_response([])):

@@ -142,6 +142,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [rotation]
+    outputs:
+      # main.py가 품질 보류면 held, 진짜 오류면 failed 를 남깁니다.
+      status: ${{ steps.publish.outputs.status }}
     # 스케줄이면 당번일 때만, 수동이면 blog_id 미지정(전체 순차) 또는 blog1 지정 시
     if: >
       always() &&
@@ -218,6 +221,7 @@ jobs:
           fi
 
       - name: blog1 게시
+        id: publish
         working-directory: blog-automation
         run: |
           MODE="${{ inputs.mode || 'live' }}"
@@ -389,6 +393,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [rotation, publish-blog1]
+    outputs:
+      status: ${{ steps.publish.outputs.status }}
     # blog1이 성공했거나 스킵된 뒤, 스케줄이면 당번일 때만 / 수동이면 기존 규칙대로
     if: >
       always() &&
@@ -466,6 +472,7 @@ jobs:
           fi
 
       - name: blog2 게시
+        id: publish
         working-directory: blog-automation
         run: |
           MODE="${{ inputs.mode || 'live' }}"
@@ -621,16 +628,22 @@ jobs:
             -d chat_id="$TG_CHAT" -d text="$MSG" > /dev/null && echo "알림 발송" || echo "알림 실패(무시)"
 
   # ────────────────────────────────────────────────────────────
-  # Job 3: blog3 게시 — blog2 완료 후 실행
+  # Job 3: blog3 게시 — blog2가 끝난 뒤에 실행
   # ────────────────────────────────────────────────────────────
+  # needs 는 순서를 지키기 위한 것입니다. 세 잡이 같은 대시보드 파일을
+  # latest 에 푸시하므로 동시에 돌면 커밋이 서로 덮어씁니다.
+  # 예전 if 는 blog2 가 success/skipped 일 때만 blog3 를 돌렸습니다.
+  # 품질 게이트 보류가 exit 1 이라 blog2 가 failure 로 끝나면 blog3 가
+  # 통째로 스킵됐습니다 (2026-10-21·24·25·27, 금융NEWS 무발행).
+  # 보류든 진짜 실패든 blog3 는 돌고, 워크플로가 취소된 경우만 건너뜁니다.
   publish-blog3:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     needs: [rotation, publish-blog2]
-    # blog2가 성공했거나 스킵된 뒤, 스케줄이면 당번일 때만 / 수동이면 기존 규칙대로
+    outputs:
+      status: ${{ steps.publish.outputs.status }}
     if: >
-      always() &&
-      (needs.publish-blog2.result == 'success' || needs.publish-blog2.result == 'skipped') &&
+      !cancelled() &&
       ((github.event_name == 'schedule' && needs.rotation.outputs.blog3 != '0') ||
        (github.event_name != 'schedule' &&
         (inputs.blog_id == '' || inputs.blog_id == 'blog3')))
@@ -704,6 +717,7 @@ jobs:
           fi
 
       - name: blog3 게시
+        id: publish
         working-directory: blog-automation
         run: |
           MODE="${{ inputs.mode || 'live' }}"

@@ -1,112 +1,3 @@
-2026-10-31 01:11:17,207 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-31 01:11:17,208 [INFO] source_validator — 출처 검증: 6/6개 통과, 등급 분포 {'B': 5, 'C': 1}
-2026-10-31 01:11:18,476 [INFO] content_generator — K-POP 참고 데이터 수집 완료: 'MAMA 2026 생중계 저렴하게 보는 방법'
-2026-10-31 01:11:18,477 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
-2026-10-31 01:11:18,477 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-31 01:11:18,482 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-31 01:11:19,042 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-31 01:12:37,230 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-31 01:12:37,768 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-31 01:12:49,719 [INFO] content_generator — 팩트체크: 이슈 3건 발견, 3건 자동 수정 적용
-2026-10-31 01:12:49,719 [INFO] content_generator — 이미지 계획 1건 사용: ['music awards stage livestream']
-2026-10-31 01:12:49,894 [INFO] image_fetcher — 이미지 수집 성공: 'music awards stage livestream' → 제목='audience / band / club / concert / crowd' (관련성=0.50)
-2026-10-31 01:12:50,088 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-10-31 01:12:50,088 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-10-31 01:12:50,093 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-10-31 01:12:50,096 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-10-31 01:12:50,096 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-10-31 01:12:50,096 [INFO] content_generator — 포스트 생성 완료: 'MAMA 2026 생중계 저렴하게 보는 법 총정리' (2941자, 이미지 1개)
-2026-10-31 01:12:50,740 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-31 01:13:09,310 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — 'MAMA 2026 생중계 저렴하게 보는 법 총정리'
-2026-10-31 01:13:09,310 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 날짜·기관명을 명시하고 불확실성을 반복 언급하나 본문 인용 출처가 it.donga.com 한 곳에 치우침
-2026-10-31 01:13:09,310 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 1장 존재하나 전체 분량 대비 이미지 수가 적고 alt 텍스트 명시 여부 불명확
-2026-10-31 01:13:09,310 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 핵심 요약·핵심 포인트·FAQ 박스 등 템플릿화된 구조와 표 형식이 반복되어 AI 생성 패턴 의심
-2026-10-31 01:13:09,314 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-10-31 01:13:09,316 [INFO] internal_linker —   [1/5] '시청하는' -> https://www.hoguwhat.com/2026/10/2026_0927064496.html
-2026-10-31 01:13:09,324 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-10-31 01:13:09,324 [INFO] main —   제목: MAMA 2026 생중계 저렴하게 보는 법 총정리
-2026-10-31 01:13:09,324 [INFO] main —   이미지: 1개 삽입
-2026-10-31 01:13:09,324 [INFO] main —   글자 수: 2941자
-2026-10-31 01:13:09,876 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-31 01:13:24,613 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 90/100 — 'MAMA 2026 생중계 저렴하게 보는 법 총정리'
-2026-10-31 01:13:24,613 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개 있으나 출처(Pixabay)만 명시, alt 텍스트 여부 불명확
-2026-10-31 01:13:24,613 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 박스형 요약·표 반복 구조와 '~입니다' 단조로운 문체가 AI 생성 패턴과 유사
-2026-10-31 01:13:24,613 [INFO] main —   ✅ AdSense 검증 통과 (점수: 90/100) — 업로드
-2026-10-31 01:13:25,147 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-31 01:14:08,277 [INFO] final_editor —   ✏️ 제목 최종 교정: 'MAMA 2026 생중계 저렴하게 보는 법 총정리' → 'MAMA 2026 생중계 저렴하게 보는 방법, 유튜브 시청 총정리'
-2026-10-31 01:14:08,277 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
-2026-10-31 01:14:08,277 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 발행 기준에 맞게 정리하고, 문단을 짧게 재배치했으며 이미지 3곳과 alt 텍스트, 주의사항·작성자 메모·내부 링크 제안을 보강했습니다.
-2026-10-31 01:14:08,414 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-10-31 01:14:08,415 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-10-31 01:14:08,768 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/10/mama-2026.html
-2026-10-31 01:14:08,782 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/10/mama-2026.html
-2026-10-31 01:14:08,786 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-10-31 01:14:08,794 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-31 01:14:08,795 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: 'MAMA 2026 생중계 저렴하게 보는 방법, 유튜브 시청 총정리'
-2026-10-31 01:14:09,335 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-31 01:14:11,771 [INFO] comment_manager —   생성된 댓글: 유튜브 생중계가 확정되더라도 채널 알림 설정을 미리 해두시는 걸 추천드려요. 라이브는 시작 직후 접속자가 몰리면서 화질 저하나 버퍼링이 생기는 ...
-2026-10-31 01:17:11,907 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-10-31 01:17:11,908 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-10-31 01:17:11,908 [INFO] main — 
-============================================================
-2026-10-31 01:17:11,908 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-10-31 01:17:11,908 [INFO] main — ============================================================
-2026-10-31 01:17:11,926 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 186개)
-2026-10-31 01:17:11,935 [INFO] dashboard_exporter — 분석 필드 유지: 67/84개 (등급·조회수·수익)
-2026-10-31 01:17:11,949 [INFO] dashboard_exporter —   시리즈: 50개 내보내기 완료
-2026-10-31 01:17:11,961 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-10-31 01:17:12,394 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-31 01:17:12,974 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-31 01:17:12,975 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-10-31 01:17:12,978 [INFO] dashboard_exporter —   학습 이력: 9주 내보내기 완료
-2026-10-31 01:17:12,981 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-10-31 01:17:12,999 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 266 / 실패 0 / 대기 19)
-2026-10-31 01:17:12,999 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-10-31 01:17:12,999 [INFO] dashboard_exporter —   포스트: 84개 / 실행 이력: 120개 / 블로그: 3개
-2026-10-31 01:17:13,000 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-10-31 01:17:13,000 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-10-31 01:18:00,566 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-10-31 01:18:01,695 [INFO] main — ============================================================
-2026-10-31 01:18:01,695 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-10-31 01:18:01
-2026-10-31 01:18:01,695 [INFO] main — ============================================================
-2026-10-31 01:18:01,708 [INFO] keyword_collector — 타 블로그 최근 키워드 6개 중복 방지 코퍼스 합류
-2026-10-31 01:18:01,708 [INFO] keyword_collector — 포스팅 이력 코퍼스: 85개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-10-31 01:18:01,709 [INFO] keyword_collector — 시즌 예약 키워드 11개 로드 (blog=blog2): ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법']...
-2026-10-31 01:18:06,304 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-10-31 01:18:10,655 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-31 01:18:10,670 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-10-31 01:18:10,670 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-10-31 01:18:11,522 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-10-31 01:18:11,523 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-10-31 01:18:11,524 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-10-31 01:18:11,536 [INFO] keyword_collector — 유사 주제 제외 12개: ['수능 끝나고 저렴하게 준비하는 법', '2026 할로윈 파티 준비물 직접 해본 후기', '할로윈 코스튬 추천 저렴하게 구매하는 방법', '2026 할로윈 소품 솔직 비교 후기', '할로윈 파티 집에서 준비하는 방법 꿀팁']
-2026-10-31 01:18:11,536 [INFO] keyword_collector —   [naver_realtime] 2개: ['가을 단풍 골프장 추천 베스트 코스', '2026 OTT 통합 요금제 비교 B tv 넷플릭스 웨이브']
-2026-10-31 01:18:11,536 [INFO] keyword_collector — 최종 선정 키워드 2개: ['가을 단풍 골프장 추천 베스트 코스', '2026 OTT 통합 요금제 비교 B tv 넷플릭스 웨이브']
-2026-10-31 01:18:11,536 [INFO] main — 수집된 키워드 2개: ['가을 단풍 골프장 추천 베스트 코스', '2026 OTT 통합 요금제 비교 B tv 넷플릭스 웨이브']
-2026-10-31 01:18:11,543 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-10-31 01:18:11,543 [INFO] main — 단독 포스트 대상 키워드 1개: ['가을 단풍 골프장 추천 베스트 코스']
-2026-10-31 01:18:11,556 [INFO] main — 
-[1/1] 키워드: '가을 단풍 골프장 추천 베스트 코스'
-2026-10-31 01:18:11,556 [INFO] content_generator — 포스트 생성 중: '가을 단풍 골프장 추천 베스트 코스'
-2026-10-31 01:18:17,473 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-31 01:18:17,474 [INFO] research_collector — 검색 의도: 가을철 단풍이 아름다운 골프장을 찾아 라운딩 계획을 세우려는 사용자의 추천 정보 탐색
-2026-10-31 01:18:27,740 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 3개) — '가을 단풍 골프장 추천 베스트 코스'
-2026-10-31 01:18:39,441 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-31 01:18:39,442 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '가을 단풍 골프장 추천 베스트 코스'
-2026-10-31 01:18:43,613 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-31 01:18:43,614 [INFO] source_validator — 출처 검증: 6/6개 통과, 등급 분포 {'B': 6}
-2026-10-31 01:18:43,616 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-10-31 01:18:43,622 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-10-31 01:18:44,326 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-10-31 01:19:41,959 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-10-31 01:19:41,960 [WARNING] content_generator — 컨텐츠 너무 짧음(2412자, 최소 2500자) — 재시도 1/3
 2026-10-31 01:19:44,960 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
 2026-10-31 01:19:44,960 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
 2026-10-31 01:19:45,475 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
@@ -607,3 +498,123 @@
 2026-11-02 01:14:13,149 [INFO] dashboard_exporter —   포스트: 80개 / 실행 이력: 120개 / 블로그: 3개
 2026-11-02 01:14:13,150 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-11-02 01:14:13,150 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-11-02 01:15:06,277 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-11-02 01:15:07,494 [INFO] main — ============================================================
+2026-11-02 01:15:07,494 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-11-02 01:15:07
+2026-11-02 01:15:07,494 [INFO] main — ============================================================
+2026-11-02 01:15:07,507 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-11-02 01:15:07,507 [INFO] keyword_collector — 포스팅 이력 코퍼스: 82개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-11-02 01:15:07,507 [INFO] keyword_collector — 시즌 예약 키워드 8개 로드 (blog=blog2): ['수능 끝나고 저렴하게 준비하는 법', '할로윈 파티 집에서 준비하는 방법 꿀팁', '할로윈 코스튬 직접 만들어본 후기 공유']...
+2026-11-02 01:15:12,125 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-11-02 01:15:19,843 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-02 01:15:19,861 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-11-02 01:15:19,861 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-11-02 01:15:20,539 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-11-02 01:15:20,540 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-11-02 01:15:20,541 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
+2026-11-02 01:15:20,548 [INFO] keyword_collector — 유사 주제 제외 10개: ['수능 끝나고 저렴하게 준비하는 법', '할로윈 파티 집에서 준비하는 방법 꿀팁', '할로윈 코스튬 직접 만들어본 후기 공유', '2026 수능 끝나고 국내 여행지 추천 후기', '수능 후 재수 결정 솔직 비교 방법']
+2026-11-02 01:15:20,548 [INFO] keyword_collector —   [naver_realtime] 2개: ['OTT 요금 비교: 통신사 결합상품 vs 개별 구독 뭐가 유리할까', '가을 세일 시즌 알뜰 쇼핑 꿀팁 (이마트·이케아·아울렛)']
+2026-11-02 01:15:20,548 [INFO] keyword_collector — 최종 선정 키워드 2개: ['OTT 요금 비교: 통신사 결합상품 vs 개별 구독 뭐가 유리할까', '가을 세일 시즌 알뜰 쇼핑 꿀팁 (이마트·이케아·아울렛)']
+2026-11-02 01:15:20,548 [INFO] main — 수집된 키워드 2개: ['OTT 요금 비교: 통신사 결합상품 vs 개별 구독 뭐가 유리할까', '가을 세일 시즌 알뜰 쇼핑 꿀팁 (이마트·이케아·아울렛)']
+2026-11-02 01:15:20,554 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-11-02 01:15:20,554 [INFO] main — 단독 포스트 대상 키워드 1개: ['OTT 요금 비교: 통신사 결합상품 vs 개별 구독 뭐가 유리할까']
+2026-11-02 01:15:20,567 [INFO] main — 
+[1/1] 키워드: 'OTT 요금 비교: 통신사 결합상품 vs 개별 구독 뭐가 유리할까'
+2026-11-02 01:15:20,567 [INFO] content_generator — 포스트 생성 중: 'OTT 요금 비교: 통신사 결합상품 vs 개별 구독 뭐가 유리할까'
+2026-11-02 01:15:29,905 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-02 01:15:29,906 [INFO] research_collector — 검색 의도: 통신사 결합상품으로 OTT를 이용하는 것과 개별로 OTT를 구독하는 것 중 비용/혜택 측면에서 무엇이 더 유
+2026-11-02 01:15:42,620 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 2개) — 'OTT 요금 비교: 통신사 결합상품 vs 개별 구독 뭐가 유리할까'
+2026-11-02 01:15:57,319 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-02 01:15:57,320 [INFO] evidence_builder — 자료팩 생성: 사실 5개 — 'OTT 요금 비교: 통신사 결합상품 vs 개별 구독 뭐가 유리할까'
+2026-11-02 01:16:00,643 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-02 01:16:00,644 [INFO] source_validator — 출처 검증: 1/5개 통과, 등급 분포 {'X': 4, 'C': 1}
+2026-11-02 01:16:02,057 [INFO] content_generator — 드라마/영화 참고 데이터 수집 완료: 'OTT 요금 비교: 통신사 결합상품 vs 개별 구독 뭐가 유리할까'
+2026-11-02 01:16:02,057 [INFO] evidence_builder — 자료팩: 중요 사실 1개 제외 (A/B 등급 출처 없음)
+2026-11-02 01:16:02,057 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-11-02 01:16:02,062 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-11-02 01:16:02,755 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-02 01:17:06,197 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-11-02 01:17:06,198 [WARNING] content_generator — 컨텐츠 너무 짧음(2346자, 최소 2500자) — 재시도 1/3
+2026-11-02 01:17:09,198 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-11-02 01:17:09,198 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-11-02 01:17:09,872 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-02 01:18:07,806 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-11-02 01:18:07,807 [WARNING] content_generator — 컨텐츠 너무 짧음(2234자, 최소 2500자) — 재시도 2/3
+2026-11-02 01:18:10,807 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
+2026-11-02 01:18:10,807 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-11-02 01:18:11,576 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-02 01:19:15,379 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
+2026-11-02 01:19:15,380 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-11-02 01:19:16,328 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-02 01:19:25,500 [INFO] content_generator — 팩트체크: 통과
+2026-11-02 01:19:25,500 [INFO] content_generator — 이미지 계획 1건 사용: ['streaming apps TV screen']
+2026-11-02 01:19:26,392 [WARNING] image_fetcher — 이미지 없음: 'streaming apps TV screen'
+2026-11-02 01:19:26,392 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
+2026-11-02 01:19:26,392 [INFO] image_fetcher — 제목 썸네일 생성: '넷플릭스·티빙 결합상품 vs 개별 구독, 드라마 많이 ' (data URI, 1181B)
+2026-11-02 01:19:26,932 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-11-02 01:19:26,932 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-11-02 01:19:26,937 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-11-02 01:19:26,939 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-11-02 01:19:26,939 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-11-02 01:19:26,939 [INFO] content_generator — 포스트 생성 완료: '넷플릭스·티빙 결합상품 vs 개별 구독, 드라마 많이 보는 사람은 뭐가 유리할까' (2573자, 이미지 1개)
+2026-11-02 01:19:27,390 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-02 01:19:44,127 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '넷플릭스·티빙 결합상품 vs 개별 구독, 드라마 많이 보는 사람'
+2026-11-02 01:19:44,127 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 비교표와 후기 인용 등 구조화는 되어 있으나 실제 요금 숫자나 구체적 날짜 데이터 없이 '시점마다 다르다'로 넘어가 독창적 깊이가 다소 부족함
+2026-11-02 01:19:44,127 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개로 구조는 충족하나 '항목별로 나눠보면' 등 일부 단락이 500자 이상으로 길게 이어짐
+2026-11-02 01:19:44,127 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 통신사·OTT 명 구체적 언급과 출처 5개 포함은 긍정적이나 수치·날짜가 출처와 함께 명시되지 않아 신뢰 신호가 약함
+2026-11-02 01:19:44,127 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장(직접 제작 표기)만 있고 alt 텍스트 여부 불명확하여 보수적으로 warn 처리
+2026-11-02 01:19:44,127 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '핵심 요약', '정리해보면' 등 자동 요약형 문구와 과도한 목록/표 구조화 패턴이 반복돼 AI 생성 느낌이 다소 있음
+2026-11-02 01:19:44,131 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-11-02 01:19:44,133 [INFO] internal_linker —   [1/5] 'OTT' -> https://hogugolfntraval.blogspot.com/2026/10/ott-2026-8.html
+2026-11-02 01:19:44,135 [INFO] internal_linker —   [2/5] 'OTT' -> https://hogugolfntraval.blogspot.com/2026/10/2026-ott.html
+2026-11-02 01:19:44,137 [INFO] internal_linker —   [3/5] '요금제' -> https://hogugolfntraval.blogspot.com/2026/10/2026_0167158233
+2026-11-02 01:19:44,141 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-11-02 01:19:44,141 [INFO] main —   제목: 넷플릭스·티빙 결합상품 vs 개별 구독, 드라마 많이 보는 사람은 뭐가 유리할까
+2026-11-02 01:19:44,142 [INFO] main —   이미지: 1개 삽입
+2026-11-02 01:19:44,142 [INFO] main —   글자 수: 2573자
+2026-11-02 01:19:44,962 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-02 01:20:01,339 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '넷플릭스·티빙 결합상품 vs 개별 구독, 드라마 많이 보는 사람'
+2026-11-02 01:20:01,339 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 적절하나 500자 이상 길게 이어지는 단락이 다수 존재
+2026-11-02 01:20:01,339 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개뿐이며 '직접 제작' 표기는 긍정적이나 alt텍스트 명시 여부 불확실
+2026-11-02 01:20:01,339 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~인 경우가 많습니다', '그럼 ~해보겠습니다' 등 정형화된 전환 문구 반복 패턴 존재
+2026-11-02 01:20:01,339 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-11-02 01:20:02,022 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-02 01:20:29,429 [INFO] final_editor —   ✏️ 제목 최종 교정: '넷플릭스·티빙 결합상품 vs 개별 구독, 드라마 많이 보는 사람은 뭐가 유리할까' → 'OTT 요금 비교: 통신사 결합상품 vs 개별 구독 뭐가 유리할까'
+2026-11-02 01:20:29,429 [INFO] final_editor —   ✏️ 메타 설명 교정 (97자)
+2026-11-02 01:20:29,429 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타설명·슬러그를 키워드 중심으로 정리하고 긴 문단을 2~4문장 단위로 쪼갰으며, 광고 유도 문구(쿠팡 파트너스 섹션)를 제거하고 FAQ·주의사항·작성자 메모·참고자료를 표준 형식에 맞게 보강했습니다.
+2026-11-02 01:20:29,621 [INFO] related_posts — 관련 포스트 1개 섹션 생성
+2026-11-02 01:20:29,621 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-11-02 01:20:30,300 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/11/ott-vs.html
+2026-11-02 01:20:30,315 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/11/ott-vs.html
+2026-11-02 01:20:30,319 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-11-02 01:20:30,327 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-11-02 01:20:30,328 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: 'OTT 요금 비교: 통신사 결합상품 vs 개별 구독 뭐가 유리할까'
+2026-11-02 01:20:31,063 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-02 01:20:33,956 [INFO] comment_manager —   생성된 댓글: 하나 팁 드리면, 결합상품 가입 전에 '해지 시 할인반환금 계산기'를 통신사 앱에서 미리 돌려보시는 걸 추천드려요. 약정 중간에 이사나 통신사 ...
+2026-11-02 01:23:34,356 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-11-02 01:23:34,358 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-11-02 01:23:34,358 [INFO] main — 
+============================================================
+2026-11-02 01:23:34,358 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-11-02 01:23:34,358 [INFO] main — ============================================================
+2026-11-02 01:23:34,377 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 192개)
+2026-11-02 01:23:34,387 [INFO] dashboard_exporter — 분석 필드 유지: 58/81개 (등급·조회수·수익)
+2026-11-02 01:23:34,400 [INFO] dashboard_exporter —   시리즈: 50개 내보내기 완료
+2026-11-02 01:23:34,413 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-11-02 01:23:34,753 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-11-02 01:23:35,110 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-11-02 01:23:35,112 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-11-02 01:23:35,114 [INFO] dashboard_exporter —   학습 이력: 10주 내보내기 완료
+2026-11-02 01:23:35,117 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-11-02 01:23:35,136 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 266 / 실패 0 / 대기 20)
+2026-11-02 01:23:35,136 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-11-02 01:23:35,136 [INFO] dashboard_exporter —   포스트: 81개 / 실행 이력: 120개 / 블로그: 3개
+2026-11-02 01:23:35,137 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-11-02 01:23:35,137 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

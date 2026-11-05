@@ -88,6 +88,41 @@ def test_weekly_brief_aggregates_recent_runs_only(monkeypatch, tmp_path):
     brief = wb.generate_brief()
     assert brief["metrics"]["posts_uploaded"] == 2
     assert brief["metrics"]["posts_generated"] == 2
+    assert brief["metrics"]["held_runs"] == 0
+    assert brief["metrics"]["failed_runs"] == 0
+
+
+def test_weekly_brief_counts_holds_apart_from_failures(monkeypatch, tmp_path):
+    """품질 보류를 발행 오류에 더하면 '실패 N일'로 읽힙니다."""
+    import weekly_brief as wb
+
+    monkeypatch.setattr(wb, "_DOCS_DATA", str(tmp_path))
+    monkeypatch.setattr(wb, "_OUT_FILE", str(tmp_path / "weekly_brief.json"))
+
+    now = datetime.now(timezone.utc)
+    runs = [
+        {"runAt": _iso(now - timedelta(days=1)), "postsGenerated": 1,
+         "bloggerUploaded": 0, "pendingReview": 1, "errors": 0,
+         "outcome": "held", "blogId": "blog3", "blogName": "금융NEWS"},
+        {"runAt": _iso(now - timedelta(days=2)), "postsGenerated": 1,
+         "bloggerUploaded": 0, "pendingReview": 0, "errors": 1,
+         "outcome": "failed", "blogId": "blog2", "blogName": "여행"},
+        {"runAt": _iso(now - timedelta(days=3)), "postsGenerated": 1,
+         "bloggerUploaded": 0, "pendingReview": 1, "errors": 0,
+         "blogId": "blog3", "blogName": "금융NEWS"},
+    ]
+    for name in ("runs.json", "repairs.json", "posts.json"):
+        with open(tmp_path / name, "w", encoding="utf-8") as f:
+            json.dump(runs if name == "runs.json" else [], f)
+
+    brief = wb.generate_brief()
+    assert brief["metrics"]["held_runs"] == 2
+    assert brief["metrics"]["failed_runs"] == 1
+    assert brief["metrics"]["errors"] == 1
+    assert brief["metrics"]["pending_review"] == 2
+    assert "품질 보류 2회" in brief["summary_text"]
+    assert "발행 실패 1회" in brief["summary_text"]
+    assert not any("보류" in r for r in brief["risks"])
 
 
 def test_weekly_brief_flags_risk_when_auth_broken(monkeypatch, tmp_path):

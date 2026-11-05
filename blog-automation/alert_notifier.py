@@ -122,6 +122,39 @@ def _is_transient_error(error) -> bool:
     return any(m in text for m in _TRANSIENT_MARKERS)
 
 
+def collect_publish_outcomes(days: int = 7) -> dict:
+    """최근 실행을 게시·품질 보류·실패로 나눠 셉니다.
+
+    GitHub Actions 결론은 success/failure 뿐입니다. 품질 보류를 종료 코드 1로
+    두면 이 함수의 입력인 실패 목록(fetch_failed_runs)에 섞입니다. 보류는
+    runs.json 의 outcome=held 로만 세고, 실패 알림 문구에는 넣지 않습니다.
+    """
+    from dashboard_exporter import outcome_of_run
+
+    runs = _load(os.path.join(_DOCS_DATA, "runs.json"), [])
+    if not isinstance(runs, list):
+        runs = []
+    cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+    counts = {"windowDays": days, "held": 0, "failed": 0,
+              "published": 0, "partial": 0, "idle": 0}
+    for run in runs:
+        if not isinstance(run, dict):
+            continue
+        raw = str(run.get("runAt") or "")
+        try:
+            dt = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        if dt < cutoff:
+            continue
+        outcome = outcome_of_run(run)
+        if outcome in counts:
+            counts[outcome] += 1
+    return counts
+
+
 def collect_system_alerts() -> list[dict]:
     """자동수리·인증·측정 리포트에서 알릴 만한 상태를 뽑습니다."""
     alerts: list[dict] = []
@@ -201,6 +234,8 @@ def run(hours: int = DEFAULT_HOURS, dry_run: bool = False) -> dict:
 
     failed_runs = fetch_failed_runs(repo, token, hours)
     system_alerts = collect_system_alerts()
+    # 품질 보류는 실패 알림과 별도 칸입니다. 텔레그램을 울리지 않습니다.
+    publish_outcomes = collect_publish_outcomes()
 
     # 같은 문제로 매번 알리지 않도록 직전 발송분과 비교
     state = _load(STATE_FILE, {})
@@ -214,6 +249,7 @@ def run(hours: int = DEFAULT_HOURS, dry_run: bool = False) -> dict:
         "checkedAt": datetime.now(timezone.utc).isoformat(),
         "windowHours": hours,
         "failedRuns": failed_runs,
+        "publishOutcomes": publish_outcomes,
         "systemAlerts": system_alerts,
         "newFailedRuns": len(new_runs),
         "newSystemAlerts": len(new_alerts),
@@ -221,7 +257,11 @@ def run(hours: int = DEFAULT_HOURS, dry_run: bool = False) -> dict:
     }
 
     if not (new_runs or new_alerts):
-        logger.info(f"새 이상 없음 (실패 {len(failed_runs)}건·상태 {len(system_alerts)}건은 이미 알림)")
+        logger.info(
+            f"새 이상 없음 (실패 {len(failed_runs)}건·상태 {len(system_alerts)}건은 이미 알림, "
+            f"품질 보류 {publish_outcomes.get('held', 0)}회 / "
+            f"발행 실패 {publish_outcomes.get('failed', 0)}회)"
+        )
         _save(REPORT_PATH, report)
         return report
 

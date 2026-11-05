@@ -42,3 +42,30 @@ def test_log_run_carries_content_category(monkeypatch, tmp_path):
 
     history = de._load_history()
     assert history[0]["posts"][0]["contentCategory"] == "sports"
+    assert history[0]["outcome"] == "published"
+
+
+def test_log_run_marks_quality_hold_separately_from_failure(monkeypatch, tmp_path):
+    import dashboard_exporter as de
+
+    monkeypatch.setattr(de, "HISTORY_FILE", str(tmp_path / "run_history.json"))
+    de.log_run(
+        keywords=["금리"],
+        results=[{"title": "보류된 글", "keyword": "금리", "status": "pending",
+                  "word_count": 1200}],
+        blogger_uploaded=0,
+        errors=0,
+        blog_config={"id": "blog3", "name": "금융NEWS"},
+    )
+    de.log_run(
+        keywords=["금리"],
+        results=[],
+        blogger_uploaded=0,
+        errors=1,
+        blog_config={"id": "blog3", "name": "금융NEWS"},
+    )
+    history = de._load_history()
+    by_outcome = {h["outcome"] for h in history}
+    assert by_outcome == {"held", "failed"}
+    held = next(h for h in history if h["outcome"] == "held")
+    assert held["pendingReview"] == 1 and held["errors"] == 0

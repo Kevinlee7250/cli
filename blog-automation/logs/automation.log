@@ -1,122 +1,3 @@
-2026-11-05 01:53:32,898 [INFO] keyword_collector — 시즌 예약 키워드 32개 로드 (blog=blog1): ['추석 연휴 드라마 영화 추천 방법', '명절 TV 영화 편성표 솔직 비교', '2026 추석 볼만한 영화 저렴하게 보는 법']...
-2026-11-05 01:53:36,062 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
-2026-11-05 01:53:43,166 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:53:43,181 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-11-05 01:53:43,181 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-11-05 01:53:43,730 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog1): ['동남아 한 달 살기 집 구하는 방법과 계약 주의사항']
-2026-11-05 01:53:44,142 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-11-05 01:53:44,143 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-11-05 01:53:44,144 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: morning → travel
-2026-11-05 01:53:44,147 [INFO] keyword_collector — 유사 주제 제외 1개: ['수능 끝나고 저렴하게 준비하는 법']
-2026-11-05 01:53:44,150 [INFO] keyword_collector —   [high_cpc] 1개: ['동남아 한 달 살기 집 구하는 방법과 계약 주의사항']
-2026-11-05 01:53:44,150 [INFO] keyword_collector —   [season_scheduled] 1개: ['빼빼로 과자 세트 저렴하게 사는 법']
-2026-11-05 01:53:44,150 [INFO] keyword_collector — 최종 선정 키워드 2개: ['동남아 한 달 살기 집 구하는 방법과 계약 주의사항', '빼빼로 과자 세트 저렴하게 사는 법']
-2026-11-05 01:53:44,150 [INFO] main — 수집된 키워드 2개: ['동남아 한 달 살기 집 구하는 방법과 계약 주의사항', '빼빼로 과자 세트 저렴하게 사는 법']
-2026-11-05 01:53:44,157 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 7일 전)
-2026-11-05 01:53:46,710 [INFO] keyword_collector — 드라마 뉴스 헤드라인 수집: 40개
-2026-11-05 01:53:47,700 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:53:47,701 [INFO] keyword_collector — 화제 드라마 감지: ['연애박사', '김부장', '재혼 황후']
-2026-11-05 01:53:47,701 [INFO] main — [자동 드라마 시리즈] '연애박사' 감지 — 리뷰 시리즈 기획 시작
-2026-11-05 01:53:51,911 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:53:51,912 [INFO] series_planner — 드라마 시리즈 기획 완료: '연애박사 드라마 리뷰 시리즈' 3편
-2026-11-05 01:53:51,912 [INFO] main — [자동 시리즈] '연애박사' 3편 기획 시작 (이후 단독 포스트 0개)
-2026-11-05 01:53:51,912 [INFO] main — ============================================================
-2026-11-05 01:53:51,912 [INFO] main — [HOGU What?] 시리즈 모드 시작: '연애박사' 3편
-2026-11-05 01:53:51,912 [INFO] main — ============================================================
-2026-11-05 01:53:51,916 [INFO] main — 시리즈 기획 완료: '연애박사 드라마 리뷰 시리즈'
-2026-11-05 01:53:51,916 [INFO] main —   편 1: 연애박사 1화 첫인상 솔직 리뷰
-2026-11-05 01:53:51,916 [INFO] main —   편 2: 연애박사 등장인물 분석 및 연기력 평가
-2026-11-05 01:53:51,916 [INFO] main —   편 3: 연애박사 결말 총평 및 별점 (스포주의)
-2026-11-05 01:53:51,916 [INFO] main — 
---- [1/3편] '연애박사 첫인상 후기' 생성 중 ---
-2026-11-05 01:53:51,916 [INFO] content_generator — 시리즈 포스트 생성: '연애박사 첫인상 후기' (1/3편)
-2026-11-05 01:53:55,987 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:53:55,988 [INFO] research_collector — 검색 의도: 연애박사 서비스의 첫인상 분석 결과에 대한 실제 사용자 후기 및 신뢰도 확인
-2026-11-05 01:54:42,680 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '연애박사 첫인상 후기'
-2026-11-05 01:54:45,617 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:54:45,618 [INFO] evidence_builder — 자료팩 생성: 사실 0개 — '연애박사 첫인상 후기'
-2026-11-05 01:54:45,619 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-11-05 01:54:45,624 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-11-05 01:54:46,234 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:56:22,406 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-11-05 01:56:22,406 [WARNING] content_generator — 컨텐츠 너무 짧음(2403자, 최소 2500자) — 재시도 1/3
-2026-11-05 01:56:25,406 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-11-05 01:56:25,407 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-11-05 01:56:26,267 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:57:53,651 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-11-05 01:57:54,271 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:58:27,483 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 1건 자동 수정 적용
-2026-11-05 01:58:27,483 [INFO] content_generator — 이미지 계획 3건 사용: ['romance drama watching laptop', 'pastel soft lighting drama scene', 'watching checklist notebook pen']
-2026-11-05 01:58:27,871 [INFO] image_fetcher — 이미지 수집 성공: 'romance drama watching laptop' → 제목='girl / boy / dating / cafe / couple / cu' (관련성=0.50)
-2026-11-05 01:58:28,142 [INFO] image_fetcher — 이미지 수집 성공: 'pastel soft lighting drama scene' → 제목='flowers / tulips / cultivated tulips / s' (관련성=0.20)
-2026-11-05 01:58:28,554 [INFO] image_fetcher — 이미지 수집 성공: 'watching checklist notebook pen' → 제목='checklist / goals / box / notebook / pen' (관련성=0.75)
-2026-11-05 01:58:33,012 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:58:33,014 [INFO] image_fetcher — 이미지 관련성 검증: 2개 제거, 1개 유지
-2026-11-05 01:58:33,423 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-11-05 01:58:33,424 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-11-05 01:58:33,431 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-11-05 01:58:33,432 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-11-05 01:58:33,432 [INFO] content_generator — 시리즈 포스트 생성 완료: '[1편] 연애박사 첫인상 후기, 1화로 본 장르와 분위기' (3063자, 이미지 1개)
-2026-11-05 01:58:34,019 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:58:52,729 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '[1편] 연애박사 첫인상 후기, 1화로 본 장르와 분위기'
-2026-11-05 01:58:52,729 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 3063자로 기준 충족하나 '후기가 많았다/평가가 많다' 식 뭉뚱그린 서술이 반복되고 구체적 수치·날짜·출처 인용이 부족해 조사 깊이가 얕음
-2026-11-05 01:58:52,729 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 7개로 구조는 양호하나 단락 구분 없이 긴 문장이 이어지는 구간이 많아 가독성 저하
-2026-11-05 01:58:52,729 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 2개 포함되어 있으나 본문에 기관명·시점 등 구체적 인용 표시 없이 '조사해보니', '후기 종합' 등 모호한 표현에 의존
-2026-11-05 01:58:52,729 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개로 저작권 위반은 없으나 alt 텍스트 명시 여부 불분명하고 전체 글 대비 이미지 수가 적음
-2026-11-05 01:58:52,729 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~라는 평가가 많았습니다', '다음 섹션에서 짚어볼게요' 같은 정형화된 전환 문구가 반복되어 템플릿성 AI 패턴이 다소 드러남
-2026-11-05 01:58:52,729 [WARNING] main —   ⚠️ [편 1] AdSense 검토 필요 — pending 저장 (점수: 74/100)
-2026-11-05 01:58:52,733 [INFO] main — 
---- [2/3편] '연애박사 등장인물 분석' 생성 중 ---
-2026-11-05 01:58:52,733 [INFO] content_generator — 시리즈 포스트 생성: '연애박사 등장인물 분석' (2/3편)
-2026-11-05 01:58:57,289 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:58:57,290 [INFO] research_collector — 검색 의도: 연애박사(드라마/웹툰/프로그램)의 등장인물 정보와 특징을 알고자 하는 검색 의도
-2026-11-05 01:59:07,624 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '연애박사 등장인물 분석'
-2026-11-05 01:59:20,646 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:59:20,649 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '연애박사 등장인물 분석'
-2026-11-05 01:59:34,273 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 01:59:34,274 [INFO] source_validator — 출처 검증: 3/7개 통과, 등급 분포 {'X': 4, 'D': 1, 'C': 2}
-2026-11-05 01:59:35,526 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '연애박사 등장인물 분석'
-2026-11-05 01:59:35,526 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
-2026-11-05 01:59:35,526 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-11-05 01:59:35,526 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-11-05 01:59:36,127 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 02:00:43,272 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
-2026-11-05 02:00:43,273 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-11-05 02:00:43,273 [WARNING] content_generator — 컨텐츠 너무 짧음(2307자, 최소 2500자) — 재시도 1/3
-2026-11-05 02:00:46,274 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-11-05 02:00:46,274 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-11-05 02:00:47,035 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 02:01:24,918 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-11-05 02:01:24,918 [WARNING] content_generator — 컨텐츠 너무 짧음(408자, 최소 2500자) — 재시도 2/3
-2026-11-05 02:01:27,919 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-11-05 02:01:27,919 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-11-05 02:01:28,563 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 02:02:08,897 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-11-05 02:02:08,897 [ERROR] content_generator — 컨텐츠 생성 실패: 367자 — thin content 방지를 위해 게시 거부
-2026-11-05 02:02:08,897 [ERROR] main — 편 2 생성 실패 — 건너뜀
-2026-11-05 02:02:08,900 [INFO] main — 
---- [3/3편] '연애박사 결말 후기' 생성 중 ---
-2026-11-05 02:02:08,900 [INFO] content_generator — 시리즈 포스트 생성: '연애박사 결말 후기' (3/3편)
-2026-11-05 02:02:12,104 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 02:02:12,105 [INFO] research_collector — 검색 의도: 연애박사(드라마/영화/예능 등)의 결말 내용과 평가가 궁금해서 검색
-2026-11-05 02:02:24,131 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '연애박사 결말 후기'
-2026-11-05 02:02:37,915 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 02:02:37,916 [INFO] evidence_builder — 자료팩 생성: 사실 7개 — '연애박사 결말 후기'
-2026-11-05 02:02:49,891 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 02:02:49,895 [INFO] source_validator — 출처 검증: 6/7개 통과, 등급 분포 {'X': 1, 'C': 6}
-2026-11-05 02:02:51,138 [INFO] content_generator — [시리즈] 드라마/영화 참고 리뷰 데이터 수집 완료: '연애박사 결말 후기'
-2026-11-05 02:02:51,139 [INFO] evidence_builder — 자료팩: 중요 사실 3개 제외 (A/B 등급 출처 없음)
-2026-11-05 02:02:51,139 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-11-05 02:02:51,139 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-11-05 02:02:51,820 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 02:04:23,508 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-11-05 02:04:24,274 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-05 02:04:36,183 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-11-05 02:04:36,184 [INFO] content_generator — 이미지 계획 3건 사용: ['research lab romance drama scene', 'couple talking rainy street silhouette', 'person listening music headphones night']
-2026-11-05 02:04:36,468 [INFO] image_fetcher — 이미지 수집 성공: 'research lab romance drama scene' → 제목='laboratory / analysis / chemistry / rese' (관련성=0.40)
-2026-11-05 02:04:37,161 [INFO] image_fetcher — 이미지 수집 성공: 'couple talking rainy street silhouette' → 제목='people / couple / conversation / talking' (관련성=0.40)
-2026-11-05 02:04:37,617 [INFO] image_fetcher — 이미지 수집 성공: 'person listening music headphones night' → 제목='person / people / woman / nature / head ' (관련성=0.60)
-2026-11-05 02:04:40,669 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-11-05 02:04:40,670 [INFO] image_fetcher — 이미지 관련성 검증: 관련 이미지 없음 — 전체 제거
 2026-11-05 02:04:40,670 [INFO] image_fetcher — IMGBB_API_KEY 없음 — AI 생성 이미지 호스팅 불가, SVG 썸네일로 폴백
 2026-11-05 02:04:40,670 [INFO] image_fetcher — 제목 썸네일 생성: '[3편] 연애박사 결말 후기, 총평과 별점 정리 (스포' (data URI, 1159B)
@@ -617,3 +498,120 @@
 2026-11-06 02:01:50,319 [INFO] dashboard_exporter —   포스트: 83개 / 실행 이력: 120개 / 블로그: 3개
 2026-11-06 02:01:50,319 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-11-06 02:01:50,320 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-11-06 02:02:48,789 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-11-06 02:02:50,284 [INFO] main — ============================================================
+2026-11-06 02:02:50,284 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-11-06 02:02:50
+2026-11-06 02:02:50,284 [INFO] main — ============================================================
+2026-11-06 02:02:50,296 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
+2026-11-06 02:02:50,296 [INFO] keyword_collector — 포스팅 이력 코퍼스: 80개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-11-06 02:02:50,296 [INFO] keyword_collector — 시즌 예약 키워드 14개 로드 (blog=blog2): ['수능 끝나고 저렴하게 준비하는 법', '빼빼로데이 2026 커플 선물 추천 방법', '할로윈 파티 집에서 준비하는 방법 꿀팁']...
+2026-11-06 02:02:54,298 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-11-06 02:03:01,391 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:03:01,406 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-11-06 02:03:01,406 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-11-06 02:03:02,336 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-11-06 02:03:02,337 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-11-06 02:03:02,338 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
+2026-11-06 02:03:02,341 [INFO] keyword_collector — 유사 주제 제외 4개: ['가을 단풍 골프 여행지 추천 코스', '손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '수능 끝나고 저렴하게 준비하는 법']
+2026-11-06 02:03:02,342 [INFO] keyword_collector —   [fallback] 1개: ['골프 비기너 첫 필드 나가기 전 준비 체크리스트']
+2026-11-06 02:03:02,342 [INFO] keyword_collector —   [season_scheduled] 1개: ['빼빼로데이 2026 커플 선물 추천 방법']
+2026-11-06 02:03:02,343 [INFO] keyword_collector — 최종 선정 키워드 2개: ['골프 비기너 첫 필드 나가기 전 준비 체크리스트', '빼빼로데이 2026 커플 선물 추천 방법']
+2026-11-06 02:03:02,343 [INFO] main — 수집된 키워드 2개: ['골프 비기너 첫 필드 나가기 전 준비 체크리스트', '빼빼로데이 2026 커플 선물 추천 방법']
+2026-11-06 02:03:02,349 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 0일 전, 7일 후 활성화)
+2026-11-06 02:03:02,349 [INFO] main — 단독 포스트 대상 키워드 1개: ['골프 비기너 첫 필드 나가기 전 준비 체크리스트']
+2026-11-06 02:03:02,362 [INFO] main — 
+[1/1] 키워드: '골프 비기너 첫 필드 나가기 전 준비 체크리스트'
+2026-11-06 02:03:02,362 [INFO] content_generator — 포스트 생성 중: '골프 비기너 첫 필드 나가기 전 준비 체크리스트'
+2026-11-06 02:03:10,545 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:03:10,546 [INFO] research_collector — 검색 의도: 골프 입문자가 첫 필드(라운딩) 나가기 전 꼭 준비해야 할 것들을 체크리스트 형태로 확인하려는 의도
+2026-11-06 02:03:25,978 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 7개) — '골프 비기너 첫 필드 나가기 전 준비 체크리스트'
+2026-11-06 02:03:42,429 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:03:42,430 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '골프 비기너 첫 필드 나가기 전 준비 체크리스트'
+2026-11-06 02:03:58,646 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:03:58,647 [INFO] source_validator — 출처 검증: 2/4개 통과, 등급 분포 {'B': 1, 'X': 2, 'C': 1}
+2026-11-06 02:03:58,649 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-11-06 02:03:58,654 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-11-06 02:03:59,309 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:04:57,490 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-11-06 02:04:57,490 [WARNING] content_generator — 컨텐츠 너무 짧음(2449자, 최소 2500자) — 재시도 1/3
+2026-11-06 02:05:00,491 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
+2026-11-06 02:05:00,491 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-11-06 02:05:01,260 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:06:05,896 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-11-06 02:06:06,495 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:06:20,518 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-11-06 02:06:20,519 [INFO] content_generator — 이미지 계획 2건 사용: ['golf beginner equipment checklist', 'golf course dress code attire']
+2026-11-06 02:06:20,772 [INFO] image_fetcher — 이미지 수집 성공: 'golf beginner equipment checklist' → 제목='golf / sport / nature / green / grass / ' (관련성=0.25)
+2026-11-06 02:06:21,005 [INFO] image_fetcher — 이미지 수집 성공: 'golf course dress code attire' → 제목='golf / golf ball / golfing / hole / golf' (관련성=0.40)
+2026-11-06 02:06:21,942 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:06:22,534 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
+2026-11-06 02:06:22,534 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
+2026-11-06 02:06:22,542 [INFO] content_generator — 이미지 2개 본문 삽입 완료
+2026-11-06 02:06:22,544 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-11-06 02:06:22,544 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-11-06 02:06:22,544 [INFO] content_generator — 포스트 생성 완료: '골프 첫 라운딩 준비물 체크리스트, 복장부터 매너까지 정리' (2635자, 이미지 2개)
+2026-11-06 02:06:23,176 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:06:45,328 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-11-06 02:06:45,892 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:06:51,183 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '골프 첫 라운딩 준비물 체크리스트, 복장부터 매너까지 정리'
+2026-11-06 02:06:51,183 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개는 충족하나 도입부와 단계별 설명 단락이 지나치게 길고 줄바꿈 없이 이어짐
+2026-11-06 02:06:51,183 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 
+2026-11-06 02:06:51,183 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지가 있으나 alt 텍스트 적합성 확인이 어려워 warn으로 처리
+2026-11-06 02:06:51,183 [INFO] adsense_validator —   ❌ AI 생성 의심도: '일부 매체 보도에 따르면에 따르면', '소요된다고 알려져 있고으로 보면 되고' 등 중복·비문 형태의 AI 생성 흔적이 다수 발견됨
+2026-11-06 02:06:51,183 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '일부 매체 보도에 따르면에 따르면', '소요된다고 알려져 있고으로 보면 되고' 등 중복·비문 형태의 AI 생성 흔적이 다수 발견됨
+2026-11-06 02:06:51,183 [WARNING] adsense_validator —   🔴 본문 내 '에 따르면에 따르면', '~있고으로 보면 되고' 등 중복·비문 표현이 존재하여 AI 생성 글 의심 신호가 뚜렷함 - 교정 필요
+2026-11-06 02:06:51,187 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-11-06 02:06:51,194 [INFO] internal_linker — 내부 링크 삽입 대상 텍스트 없음 (키워드 미등장)
+2026-11-06 02:06:51,195 [INFO] main —   제목: 골프 첫 라운딩 준비물 체크리스트, 복장부터 매너까지 정리
+2026-11-06 02:06:51,195 [INFO] main —   이미지: 2개 삽입
+2026-11-06 02:06:51,195 [INFO] main —   글자 수: 2635자
+2026-11-06 02:06:51,783 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:07:12,694 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-11-06 02:07:13,388 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:07:15,231 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '골프 첫 라운딩 준비물 체크리스트, 복장부터 매너까지 정리'
+2026-11-06 02:07:15,231 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 4개로 기준 충족하나 일부 단락(특히 도입부·복장 규정 설명)이 500자 이상으로 길게 뭉쳐 있음
+2026-11-06 02:07:15,231 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 라이선스 이미지 사용은 적절하나 alt 텍스트 명시 여부 불분명하여 기본값 warn 적용
+2026-11-06 02:07:15,231 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '핵심 요약', '단계별 절차', '전제조건' 등 템플릿화된 구조와 일부 문법적으로 어색한 문장('소요된다고 알려져 있고으로 보면 되고')이 AI 생성 패턴을 시사
+2026-11-06 02:07:15,231 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-11-06 02:07:15,961 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:08:36,799 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-11-06 02:08:37,551 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:09:40,720 [INFO] final_editor —   ✏️ 제목 최종 교정: '골프 첫 라운딩 준비물 체크리스트, 복장부터 매너까지 정리' → '골프 비기너 첫 필드 나가기 전 준비 체크리스트 총정리'
+2026-11-06 02:09:40,721 [INFO] final_editor —   ✏️ 메타 설명 교정 (122자)
+2026-11-06 02:09:40,721 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 키워드 중심으로 재구성하고, 긴 문단을 2~4문장 단위로 분리했으며, 요약 박스·표·개인 경험 메모·주의사항·FAQ·작성자 메모를 표준 템플릿에 맞춰 추가했습니다. 어색한 문장(중복 어미, 비문)을 정리하고 이미지 3곳에 구체적인 alt 텍스트를 지정했습니다.
+2026-11-06 02:09:40,919 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-11-06 02:09:40,919 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-11-06 02:09:41,570 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/11/blog-post_06.html
+2026-11-06 02:09:41,583 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/11/blog-post_06.html
+2026-11-06 02:09:41,588 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-11-06 02:09:41,596 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-11-06 02:09:41,597 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '골프 비기너 첫 필드 나가기 전 준비 체크리스트 총정리'
+2026-11-06 02:09:42,272 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-06 02:09:45,163 [INFO] comment_manager —   생성된 댓글: 글에서 복장이랑 준비물은 꼼꼼히 짚어주셨는데, 캐디피와 별개로 '그늘집' 비용도 미리 생각해두시면 좋을 것 같아요. 중간중간 음료나 간식 사 먹...
+2026-11-06 02:12:45,424 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-11-06 02:12:45,425 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-11-06 02:12:45,425 [INFO] main — 
+============================================================
+2026-11-06 02:12:45,425 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-11-06 02:12:45,425 [INFO] main — ============================================================
+2026-11-06 02:12:45,442 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 152개)
+2026-11-06 02:12:45,452 [INFO] dashboard_exporter — 분석 필드 유지: 71/84개 (등급·조회수·수익)
+2026-11-06 02:12:45,466 [INFO] dashboard_exporter —   시리즈: 50개 내보내기 완료
+2026-11-06 02:12:45,477 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-11-06 02:12:45,937 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-11-06 02:12:46,313 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-11-06 02:12:46,317 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-11-06 02:12:46,320 [INFO] dashboard_exporter —   학습 이력: 10주 내보내기 완료
+2026-11-06 02:12:46,323 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-11-06 02:12:46,339 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 264 / 실패 0 / 대기 20)
+2026-11-06 02:12:46,339 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-11-06 02:12:46,340 [INFO] dashboard_exporter —   포스트: 84개 / 실행 이력: 120개 / 블로그: 3개
+2026-11-06 02:12:46,340 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-11-06 02:12:46,341 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

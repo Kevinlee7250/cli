@@ -74,6 +74,28 @@ jobs:
           # "Discovered - currently not indexed"의 대표적 원인입니다
           python internal_link_audit.py
 
+      # 목차 페이지는 blog1 에서 '모든 글로 가는 유일한 길'입니다.
+      # blog1 의 robots.txt 가 Disallow: /search 라, 홈의 "이전 글"
+      # (= /search?updated-max=...) 을 구글이 따라가지 못합니다. 홈에서
+      # 바로 닿는 건 최신 8편뿐이고 나머지는 목차를 거쳐야 합니다.
+      #
+      # 2026-11-19 확인: 목차가 10/08 이후 갱신되지 않아, 사이트맵 52편
+      # 가운데 16편이 어디서도 링크되지 않는 고아였습니다. 구글이 와도
+      # 보이지 않는 글입니다. 그래서 매일 다시 만듭니다.
+      #
+      # 왜 여기인가: 발행(blog-run)이 07:00 KST, 이 워크플로가 09:00 KST
+      # 라서 그날 새 글이 두 시간 뒤 목차에 들어갑니다. 워크플로를 새로
+      # 만들지 않은 이유는 실행 횟수 때문입니다 — 이 저장소는 포크라
+      # 누적 실행이 많아지면 GitHub 가 Actions 를 꺼버립니다(2026-10월,
+      # 11월에 각각 한 번씩 실제로 꺼졌습니다).
+      #
+      # continue-on-error: 목차 갱신이 실패해도 색인 리포트는 남아야
+      # 합니다. 둘은 서로 독립입니다.
+      - name: 글 목차 페이지 갱신 (blog1)
+        working-directory: blog-automation
+        continue-on-error: true
+        run: python build_toc_page.py --blog blog1 --apply
+
       - name: 리포트 커밋 & 푸시
         if: always()
         run: |

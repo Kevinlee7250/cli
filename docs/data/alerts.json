@@ -1,17 +1,25 @@
 {
-  "checkedAt": "2026-11-20T01:48:24.376057+00:00",
+  "checkedAt": "2026-11-21T01:36:31.424737+00:00",
   "windowHours": 12,
-  "failedRuns": [],
+  "failedRuns": [
+    {
+      "id": 44839291963,
+      "name": "대시보드 GitHub Pages 배포",
+      "path": ".github/workflows/deploy-dashboard.yml",
+      "created_at": "2026-11-20T23:47:04Z",
+      "url": "https://github.com/Kevinlee7250/cli/actions/runs/44839291963"
+    }
+  ],
   "publishOutcomes": {
     "windowDays": 7,
     "held": 0,
     "failed": 0,
-    "published": 0,
+    "published": 1,
     "partial": 0,
     "idle": 0
   },
   "systemAlerts": [],
-  "newFailedRuns": 0,
+  "newFailedRuns": 1,
   "newSystemAlerts": 0,
   "sent": false
 }

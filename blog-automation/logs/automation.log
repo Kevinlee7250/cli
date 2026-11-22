@@ -1,143 +1,3 @@
-2026-11-21 03:00:02,447 [WARNING] content_generator — 컨텐츠 너무 짧음(2285자, 최소 2500자) — 재시도 1/3
-2026-11-21 03:00:05,447 [INFO] content_generator —   AI 제공자: CLAUDE (시도 2/3)
-2026-11-21 03:00:05,447 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-11-21 03:00:05,916 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:01:36,648 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-11-21 03:01:36,649 [WARNING] content_generator — 제목 정책 위반(['경험 주장: 실제 후기 표방']) — 재작성 요청 2/3
-2026-11-21 03:01:38,650 [INFO] content_generator —   AI 제공자: CLAUDE (시도 3/3)
-2026-11-21 03:01:38,650 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-11-21 03:01:39,144 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:03:00,429 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-11-21 03:03:01,006 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:03:11,159 [INFO] content_generator — 팩트체크: 이슈 2건 발견, 2건 자동 수정 적용
-2026-11-21 03:03:11,159 [INFO] content_generator — 이미지 계획 2건 사용: ['traveler checking documents airport', 'medical receipt insurance claim documents']
-2026-11-21 03:03:11,338 [INFO] image_fetcher — 이미지 수집 성공: 'traveler checking documents airport' → 제목='passport / departure / suitcase / luggag' (관련성=0.50)
-2026-11-21 03:03:11,465 [INFO] image_fetcher — 이미지 수집 성공: 'medical receipt insurance claim documents' → 제목='medical / record / health / patient / fo' (관련성=0.20)
-2026-11-21 03:03:12,746 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:03:13,179 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 2장 (docs/images)
-2026-11-21 03:03:13,179 [INFO] content_generator — 이미지 2장 수집 완료 (최소 1 / 최대 3)
-2026-11-21 03:03:13,186 [INFO] content_generator — 이미지 2개 본문 삽입 완료
-2026-11-21 03:03:13,188 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-11-21 03:03:13,188 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-11-21 03:03:13,188 [INFO] content_generator — 포스트 생성 완료: '여행자보험 가입 꼭 해야 할까, 보상 사례 종합' (2932자, 이미지 2개)
-2026-11-21 03:03:13,594 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:03:35,741 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-11-21 03:03:36,111 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:03:40,793 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 67/100 — '여행자보험 가입 꼭 해야 할까, 보상 사례 종합'
-2026-11-21 03:03:40,793 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(2932자)는 충분하나 보험료 범위·체크리스트가 기존 보험 비교 콘텐츠의 재조합 수준에 머물러 독창적 해석이 부족함
-2026-11-21 03:03:40,793 [INFO] adsense_validator —   ⚠️ SEO 최적화: '여행자보험 가입 꼭 해야 할까' 문구가 부자연스럽게 반복 삽입되어 키워드 스터핑 느낌을 줌
-2026-11-21 03:03:40,793 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 3개 출처 언급되나 본문 내 기관명·시점 명시가 모호해('일부 보험 청구 안내 자료') 교차검증 신호 약함
-2026-11-21 03:03:40,793 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 사용은 적절하나 alt텍스트 명시 여부 확인 불가로 보수적평가
-2026-11-21 03:03:40,793 [INFO] adsense_validator —   ❌ AI 생성 의심도: 이모지 콜아웃(💡⚠️💬) 남용, 목록화 과다, 동일 질문구 반복 패턴이 전형적 AI 생성 블로그 스타일과 일치
-2026-11-21 03:03:40,793 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 이모지 콜아웃(💡⚠️💬) 남용, 목록화 과다, 동일 질문구 반복 패턴이 전형적 AI 생성 블로그 스타일과 일치
-2026-11-21 03:03:40,793 [WARNING] adsense_validator —   🔴 AI 생성 의심 패턴(이모지 콜아웃·반복 문구·과도한 목록화)이 뚜렷해 Valuable Inventory 정책상 스팸성 콘텐츠로 판단될 위험 있음
-2026-11-21 03:03:40,796 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-11-21 03:03:40,801 [INFO] internal_linker —   [1/5] '저렴하게' -> https://hoguasset.blogspot.com/2026/11/irp.html
-2026-11-21 03:03:40,804 [INFO] internal_linker — 내부 링크 1개 삽입 완료
-2026-11-21 03:03:40,804 [INFO] main —   제목: 여행자보험 가입 꼭 해야 할까, 보상 사례 종합
-2026-11-21 03:03:40,804 [INFO] main —   이미지: 2개 삽입
-2026-11-21 03:03:40,804 [INFO] main —   글자 수: 2932자
-2026-11-21 03:03:41,243 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:04:00,654 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '여행자보험 가입 꼭 해야 할까, 보상 사례 종합'
-2026-11-21 03:04:00,654 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 2932자로 길이는 충족하나 커뮤니티 후기·공개자료 재구성 수준으로 깊이있는 독자적 분석은 부족함
-2026-11-21 03:04:00,654 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 출처 3개와 수치는 제시되나 기관명·시점 등 구체적 근거 명시가 부족하고 '의견이 많다'는 식의 모호한 표현 반복
-2026-11-21 03:04:00,654 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지로 저작권 문제는 없으나 정책상 기본값은 warn 처리
-2026-11-21 03:04:00,654 [INFO] adsense_validator —   ❌ AI 생성 의심도: 📌💡⚠️💬 등 정형화된 아이콘 구조와 '~라는 의견이 많습니다' 문구 반복 등 전형적 AI 생성 패턴이 두드러짐
-2026-11-21 03:04:00,654 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 📌💡⚠️💬 등 정형화된 아이콘 구조와 '~라는 의견이 많습니다' 문구 반복 등 전형적 AI 생성 패턴이 두드러짐
-2026-11-21 03:04:00,654 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 72/100, 권장: review) — 자동 수정 시도
-2026-11-21 03:04:00,654 [WARNING] main —      🔴 [AI 생성 의심도] 📌💡⚠️💬 등 정형화된 아이콘 구조와 '~라는 의견이 많습니다' 문구 반복 등 전형적 AI 생성 패턴이 두드러짐
-2026-11-21 03:04:00,654 [WARNING] main —      🟡 [원본성 및 품질] 2932자로 길이는 충족하나 커뮤니티 후기·공개자료 재구성 수준으로 깊이있는 독자적 분석은 부족함
-2026-11-21 03:04:00,654 [WARNING] main —      🟡 [E-E-A-T 신뢰도] 출처 3개와 수치는 제시되나 기관명·시점 등 구체적 근거 명시가 부족하고 '의견이 많다'는 식의 모호한 표현 반복
-2026-11-21 03:04:00,654 [WARNING] main —      🟡 [이미지 정책] Pixabay 라이선스 이미지로 저작권 문제는 없으나 정책상 기본값은 warn 처리
-2026-11-21 03:04:00,654 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 72/100, fail: 1개, warn: 3개
-2026-11-21 03:04:00,663 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-11-21 03:04:00,668 [INFO] adsense_validator —   🖼️ alt 재작성 → "여행자보험 가입 꼭 해야 할까, 보상 사례 종합 관련 이미지" (캡션 포함)
-2026-11-21 03:04:00,668 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 2건
-2026-11-21 03:04:01,791 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:05:32,627 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2932자 → 4489자 (+1557자)
-2026-11-21 03:05:32,628 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-11-21 03:05:33,050 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:05:50,311 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '여행자보험 가입 꼭 해야 할까, 보상 사례 종합'
-2026-11-21 03:05:50,311 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 '안 들고 갔다가', '청구 절차' 단락이 500자 이상으로 길어 가독성 저하
-2026-11-21 03:05:50,311 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 언급은 있으나 alt 텍스트·출처 정보 불명확하여 저작권/접근성 확인 필요
-2026-11-21 03:05:50,311 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 개인 경험이 자연스럽게 녹아있으나 '핵심 요약'·'핵심 포인트' 같은 템플릿형 요약 문구가 반복되어 기계적 패턴이 일부 감지됨
-2026-11-21 03:05:50,311 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 72 → 84/100)
-2026-11-21 03:05:50,311 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-11-21 03:05:50,718 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:06:28,480 [INFO] final_editor —   ✏️ 제목 최종 교정: '여행자보험 가입 꼭 해야 할까, 보상 사례 종합' → '여행자보험 가입 꼭 해야 할까? 실제 보상 경험 후기 정리'
-2026-11-21 03:06:28,480 [INFO] final_editor —   ✏️ 메타 설명 교정 (126자)
-2026-11-21 03:06:28,480 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 30~45자/120~160자 기준에 맞춰 재정리하고, 긴 문단을 2~4문장 단위로 분할했으며 주의사항·작성자 메모·구체적 이미지 alt를 보강했습니다.
-2026-11-21 03:06:28,608 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-11-21 03:06:28,609 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU What? (blog_id=4782599180249292575)
-2026-11-21 03:06:29,262 [INFO] blogger_uploader — 업로드 성공: https://www.hoguwhat.com/2026/11/blog-post_21.html
-2026-11-21 03:06:29,274 [INFO] main —   ✅ 업로드 성공: https://www.hoguwhat.com/2026/11/blog-post_21.html
-2026-11-21 03:06:29,278 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-11-21 03:06:29,284 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-11-21 03:06:29,285 [INFO] comment_manager — 
-🌱 씨앗 댓글 작성: '여행자보험 가입 꼭 해야 할까? 실제 보상 경험 후기 정리'
-2026-11-21 03:06:30,331 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:06:33,808 [INFO] comment_manager —   생성된 댓글: 글 쓰면서 빼먹었는데, 카드사 부가서비스로 해외여행자보험이 자동 가입되는 경우가 있어서 중복 가입하기 전에 본인 신용카드 혜택부터 확인해보시는 ...
-2026-11-21 03:09:33,963 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
-<html lang=en>
-  <meta charset=utf-8>
-  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
-  <title>Error 404 (Not Found)!!1</title>
-  <style>
-    *{ma — 큐잉
-2026-11-21 03:09:33,965 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-11-21 03:09:33,965 [INFO] main — 
-============================================================
-2026-11-21 03:09:33,965 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-11-21 03:09:33,965 [INFO] main — ============================================================
-2026-11-21 03:09:33,979 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 156개)
-2026-11-21 03:09:33,983 [INFO] dashboard_exporter — 분석 필드 유지: 39/57개 (등급·조회수·수익)
-2026-11-21 03:09:33,994 [INFO] dashboard_exporter —   시리즈: 50개 내보내기 완료
-2026-11-21 03:09:34,003 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-11-21 03:09:34,779 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-11-21 03:09:35,258 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-11-21 03:09:35,259 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-11-21 03:09:35,261 [INFO] dashboard_exporter —   학습 이력: 10주 내보내기 완료
-2026-11-21 03:09:35,264 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-11-21 03:09:35,280 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 264 / 실패 0 / 대기 20)
-2026-11-21 03:09:35,280 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-11-21 03:09:35,280 [INFO] dashboard_exporter —   포스트: 57개 / 실행 이력: 120개 / 블로그: 3개
-2026-11-21 03:09:35,281 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-11-21 03:09:35,282 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-11-21 03:10:21,504 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-11-21 03:10:22,767 [INFO] main — ============================================================
-2026-11-21 03:10:22,767 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-11-21 03:10:22
-2026-11-21 03:10:22,767 [INFO] main — ============================================================
-2026-11-21 03:10:22,776 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-11-21 03:10:22,776 [INFO] keyword_collector — 포스팅 이력 코퍼스: 58개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-11-21 03:10:22,777 [INFO] keyword_collector — 시즌 예약 키워드 14개 로드 (blog=blog2): ['수능 끝나고 저렴하게 준비하는 법', '빼빼로데이 2026 커플 선물 추천 방법', '할로윈 파티 집에서 준비하는 방법 꿀팁']...
-2026-11-21 03:10:28,315 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-11-21 03:10:33,216 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:10:33,226 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-11-21 03:10:33,226 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-11-21 03:10:34,219 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-11-21 03:10:34,220 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-11-21 03:10:34,221 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
-2026-11-21 03:10:34,222 [INFO] keyword_collector — 유사 주제 제외 4개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '골프 비기너 첫 필드 나가기 전 준비 체크리스트', '수능 끝나고 저렴하게 준비하는 법']
-2026-11-21 03:10:34,227 [INFO] keyword_collector —   [season_scheduled] 2개: ['빼빼로데이 2026 커플 선물 추천 방법', '할로윈 파티 집에서 준비하는 방법 꿀팁']
-2026-11-21 03:10:34,227 [INFO] keyword_collector — 최종 선정 키워드 2개: ['빼빼로데이 2026 커플 선물 추천 방법', '할로윈 파티 집에서 준비하는 방법 꿀팁']
-2026-11-21 03:10:34,227 [INFO] main — 수집된 키워드 2개: ['빼빼로데이 2026 커플 선물 추천 방법', '할로윈 파티 집에서 준비하는 방법 꿀팁']
-2026-11-21 03:10:34,232 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 16일 전)
-2026-11-21 03:10:36,717 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:10:36,718 [INFO] series_planner — 시리즈 적합 키워드 없음 — 단독 포스트로 진행
-2026-11-21 03:10:36,718 [INFO] main — 단독 포스트 대상 키워드 1개: ['빼빼로데이 2026 커플 선물 추천 방법']
-2026-11-21 03:10:36,726 [INFO] main — 
-[1/1] 키워드: '빼빼로데이 2026 커플 선물 추천 방법'
-2026-11-21 03:10:36,726 [INFO] content_generator — 포스트 생성 중: '빼빼로데이 2026 커플 선물 추천 방법'
-2026-11-21 03:10:40,633 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:10:40,634 [INFO] research_collector — 검색 의도: 2026년 빼빼로데이를 맞아 커플이 주고받기 좋은 선물 아이디어와 추천 제품을 찾으려는 의도
-2026-11-21 03:10:53,339 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 0개) — '빼빼로데이 2026 커플 선물 추천 방법'
-2026-11-21 03:11:12,509 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:11:12,510 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '빼빼로데이 2026 커플 선물 추천 방법'
-2026-11-21 03:11:14,784 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-21 03:11:14,785 [INFO] source_validator — 출처 검증: 4/6개 통과, 등급 분포 {'X': 2, 'D': 4}
-2026-11-21 03:11:14,786 [INFO] evidence_builder — 자료팩: 중요 사실 4개 제외 (A/B 등급 출처 없음)
-2026-11-21 03:11:14,786 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-11-21 03:11:14,790 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
 2026-11-21 03:11:15,179 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 2026-11-21 03:12:34,069 [WARNING] content_generator — JSON 자동 복구 후 파싱 성공
 2026-11-21 03:12:34,069 [INFO] content_generator —   📌 핵심 요약 박스 삽입
@@ -638,3 +498,93 @@
 2026-11-22 02:11:31,101 [INFO] dashboard_exporter —   포스트: 56개 / 실행 이력: 120개 / 블로그: 3개
 2026-11-22 02:11:31,101 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-11-22 02:11:31,101 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-11-22 02:12:18,598 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-11-22 02:12:19,523 [INFO] main — ============================================================
+2026-11-22 02:12:19,523 [INFO] main — [금융NEWS] 블로그 자동화 시작: 2026-11-22 02:12:19
+2026-11-22 02:12:19,523 [INFO] main — ============================================================
+2026-11-22 02:12:19,533 [INFO] keyword_collector — 타 블로그 최근 키워드 6개 중복 방지 코퍼스 합류
+2026-11-22 02:12:19,533 [INFO] keyword_collector — 포스팅 이력 코퍼스: 64개 항목 로드 (blog_id=blog3 중복 방지 기준)
+2026-11-22 02:12:19,533 [INFO] keyword_collector — 시즌 예약 키워드 28개 로드 (blog=blog3): ['수능 끝나고 저렴하게 준비하는 법', '2026 연말정산 소득공제 준비 서류 후기', '연금저축 세액공제 직접 해본 솔직 비교']...
+2026-11-22 02:12:23,378 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 40개
+2026-11-22 02:12:28,847 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-22 02:12:28,858 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-11-22 02:12:28,858 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-11-22 02:12:29,248 [INFO] keyword_collector — 고CPC 키워드 1개 주입 (blog_id=blog3): ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교']
+2026-11-22 02:12:29,640 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-11-22 02:12:29,641 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-11-22 02:12:29,647 [INFO] keyword_collector — 유사 주제 제외 12개: ['주택담보대출 금리 최저 은행 2026 직접 발품 팔아 비교', '수능 끝나고 저렴하게 준비하는 법', '2026 연말정산 소득공제 준비 서류 후기', '연금저축 세액공제 직접 해본 솔직 비교', '2026 연말정산 환급 늘리는 법 추천']
+2026-11-22 02:12:29,716 [INFO] keyword_collector —   [season_scheduled] 2개: ['2026 수능 이후 할 일 리스트 추천', '2026 수능 끝난 후 알바 추천 후기']
+2026-11-22 02:12:29,716 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 수능 이후 할 일 리스트 추천', '2026 수능 끝난 후 알바 추천 후기']
+2026-11-22 02:12:29,717 [INFO] main — 수집된 키워드 2개: ['2026 수능 이후 할 일 리스트 추천', '2026 수능 끝난 후 알바 추천 후기']
+2026-11-22 02:12:29,723 [INFO] main — 자동 시리즈 조건 충족 (마지막 시리즈: 15일 전)
+2026-11-22 02:12:31,262 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-22 02:12:31,262 [INFO] series_planner — 시리즈 적합 키워드 없음 — 단독 포스트로 진행
+2026-11-22 02:12:31,263 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 수능 이후 할 일 리스트 추천']
+2026-11-22 02:12:31,272 [INFO] main — 
+[1/1] 키워드: '2026 수능 이후 할 일 리스트 추천'
+2026-11-22 02:12:31,272 [INFO] content_generator — 포스트 생성 중: '2026 수능 이후 할 일 리스트 추천'
+2026-11-22 02:12:36,759 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-22 02:12:36,760 [INFO] research_collector — 검색 의도: 2026학년도 수능 종료 후 수험생이 해야 할 일정 및 활동을 알고 싶어하는 의도
+2026-11-22 02:12:48,243 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 4개) — '2026 수능 이후 할 일 리스트 추천'
+2026-11-22 02:13:04,844 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-22 02:13:04,845 [INFO] evidence_builder — 자료팩 생성: 사실 6개 — '2026 수능 이후 할 일 리스트 추천'
+2026-11-22 02:13:13,422 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-22 02:13:13,423 [INFO] source_validator — 출처 검증: 3/6개 통과, 등급 분포 {'D': 1, 'X': 3, 'A': 1, 'C': 1}
+2026-11-22 02:13:13,426 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
+2026-11-22 02:13:13,426 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-11-22 02:13:13,430 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-11-22 02:13:14,070 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-22 02:14:23,758 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-11-22 02:14:24,362 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-22 02:14:34,680 [WARNING] content_generator — 팩트체크 치환이 중복 문구 생성 — 건너뜀: '성적 발표 예정일까지 공백이 생기는데'
+2026-11-22 02:14:34,680 [INFO] content_generator — 팩트체크: 이슈 1건 발견, 0건 자동 수정 적용
+2026-11-22 02:14:34,680 [INFO] content_generator — 이미지 계획 2건 사용: ['student checking bank app', 'financial checklist desk']
+2026-11-22 02:14:35,414 [WARNING] image_fetcher — 이미지 없음: 'student checking bank app'
+2026-11-22 02:14:35,846 [INFO] image_fetcher — 이미지 수집 성공: 'financial checklist desk' → 제목='skyscrapers / nature / singapore / city ' (관련성=0.33)
+2026-11-22 02:14:36,166 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-11-22 02:14:36,166 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-11-22 02:14:36,171 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-11-22 02:14:36,173 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-11-22 02:14:36,173 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-11-22 02:14:36,173 [INFO] content_generator — 포스트 생성 완료: '2026 수능 이후 할 일 리스트, 금융·돈 관리 관점에서 상황별 정리' (2575자, 이미지 1개)
+2026-11-22 02:14:36,614 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-22 02:14:53,733 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '2026 수능 이후 할 일 리스트, 금융·돈 관리 관점에서 상황'
+2026-11-22 02:14:53,733 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(2575자)는 기준 충족하나 구체 수치는 회피하고 '공식 공지 확인' 안내로 대체되어 조사 깊이가 얕음
+2026-11-22 02:14:53,733 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 5개는 적절하나 본문이 줄바꿈 없이 긴 단락으로 이어져 가독성 저하
+2026-11-22 02:14:53,733 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 관련 정보 없음(부재 자체는 fail 아님)
+2026-11-22 02:14:53,733 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 이모지 소제목(📌💡), '~하는 편이 안전합니다' 류 반복 전환구 등 전형적 AI 작성 패턴 다수
+2026-11-22 02:14:53,736 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-11-22 02:14:53,738 [INFO] internal_linker —   [1/5] '체크리스트' -> https://hoguasset.blogspot.com/2026/11/2026-11.html
+2026-11-22 02:14:53,739 [INFO] internal_linker —   [2/5] '한국장학재단' -> https://hoguasset.blogspot.com/2026/10/blog-post_28.html
+2026-11-22 02:14:53,740 [INFO] internal_linker —   [3/5] '체크리스트' -> https://hogugolfntraval.blogspot.com/2026/10/2026_0121960428
+2026-11-22 02:14:53,741 [INFO] internal_linker — 내부 링크 3개 삽입 완료
+2026-11-22 02:14:53,741 [INFO] main —   제목: 2026 수능 이후 할 일 리스트, 금융·돈 관리 관점에서 상황별 정리
+2026-11-22 02:14:53,741 [INFO] main —   이미지: 1개 삽입
+2026-11-22 02:14:53,741 [INFO] main —   글자 수: 2575자
+2026-11-22 02:14:53,741 [WARNING] main —   ⚠️ 팩트체크 이슈 1건을 고치지 못했습니다 — pending 저장: '2026 수능 이후 할 일 리스트, 금융·돈 관리 관점에서 상황별 정리'
+2026-11-22 02:14:53,741 [WARNING] main —      2027학년도 수능 성적 발표일은 자료팩에 명시되어 있지 않은데 '12월 초 예정'이라는 구체적 시기를 단정
+2026-11-22 02:14:53,761 [INFO] dashboard_exporter —   검토 대기 저장: 2026 수능 이후 할 일 리스트, 금융·돈 관리 관점에서 상황별 정리 (13102자 HTML)
+2026-11-22 02:14:53,778 [INFO] pending_store — 검토 대기 저장: 목록 12건 / 보관 192건 / 본문 21건
+2026-11-22 02:14:53,778 [INFO] dashboard_exporter — 검토 대기 포스트 저장 완료: 1개 추가 (총 204개)
+2026-11-22 02:14:53,778 [INFO] main — 
+============================================================
+2026-11-22 02:14:53,778 [INFO] main — [금융NEWS] 완료: 성공 1개 / 실패 0개
+2026-11-22 02:14:53,778 [INFO] main — ============================================================
+2026-11-22 02:14:53,789 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 161개)
+2026-11-22 02:14:53,793 [INFO] dashboard_exporter — 분석 필드 유지: 34/57개 (등급·조회수·수익)
+2026-11-22 02:14:53,804 [INFO] dashboard_exporter —   시리즈: 50개 내보내기 완료
+2026-11-22 02:14:53,812 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-11-22 02:14:54,171 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-11-22 02:14:54,489 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-11-22 02:14:54,490 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-11-22 02:14:54,492 [INFO] dashboard_exporter —   학습 이력: 10주 내보내기 완료
+2026-11-22 02:14:54,495 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-11-22 02:14:54,509 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 263 / 실패 0 / 대기 21)
+2026-11-22 02:14:54,510 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-11-22 02:14:54,510 [INFO] dashboard_exporter —   포스트: 57개 / 실행 이력: 120개 / 블로그: 3개
+2026-11-22 02:14:54,510 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-11-22 02:14:54,511 [WARNING] main — ============================================================
+2026-11-22 02:14:54,511 [WARNING] main — ⚠️ 게시 0건 — 생성은 됐지만 1건 모두 검토 대기로 빠졌습니다
+2026-11-22 02:14:54,511 [WARNING] main —    품질 기준(ADSENSE_MIN_SCORE) 미달이거나 글자 수 미달입니다
+2026-11-22 02:14:54,511 [WARNING] main —    품질 게이트가 의도대로 막은 것입니다 — 대시보드 검토 대기에서 확인하세요
+2026-11-22 02:14:54,511 [WARNING] main — ============================================================

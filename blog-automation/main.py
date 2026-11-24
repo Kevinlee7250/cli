@@ -446,6 +446,38 @@ def run_once(
             logger.debug(f"  최종 편집 건너뜀 (무시): {_fe}")
         # ─────────────────────────────────────────────────────────────────────────────
 
+        # ── ③.6 한국어 SEO 프리플라이트 (명시적 옵트인, 기존 기본 동작 유지) ────────
+        if os.getenv("SEO_KR_PREFLIGHT", "").strip().lower() in {"1", "true", "yes", "on"}:
+            try:
+                from seo_kr_preflight import inspect_post
+                _seo_kr = inspect_post(post_data)
+                post_data["seo_kr_preflight"] = _seo_kr
+                for _warning in _seo_kr["warnings"]:
+                    logger.warning(f"  SEO KR 참고: {_warning}")
+                if _seo_kr["blockers"]:
+                    post_data["status"] = "pending"
+                    post_data["pending_reason"] = "SEO KR 검수 보류: " + "; ".join(_seo_kr["blockers"])[:200]
+                    logger.warning(f"  SEO KR 구조 검수 보류: {post_data['pending_reason']}")
+                    _pid = register_post(post_data, PostStatus.PENDING, blog_config,
+                                         source=_source, run_number=_run_number)
+                    save_draft(_pid, post_data)
+                    save_pending_posts([post_data], blog_config)
+                    completed_posts.append(post_data)
+                    success_count += 1
+                    continue
+            except Exception:
+                # 명시적 활성화 시 검사 실패를 조용히 통과시키지 않는다.
+                logger.exception("SEO KR 활성화 상태에서 검수기를 실행하지 못함")
+                post_data["status"] = "pending"
+                post_data["pending_reason"] = "SEO KR 검수 실행 오류 — 사람이 확인해야 함"
+                _pid = register_post(post_data, PostStatus.PENDING, blog_config,
+                                     source=_source, run_number=_run_number)
+                save_draft(_pid, post_data)
+                save_pending_posts([post_data], blog_config)
+                completed_posts.append(post_data)
+                success_count += 1
+                continue
+
         # ── ④ 레지스트리 등록 (pending) + 초안 저장 ─────────────────────────────────
         _post_id = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
         save_draft(_post_id, post_data)

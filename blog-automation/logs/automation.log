@@ -1,129 +1,3 @@
-  <style>
-    *{ma — 큐잉
-2026-11-24 05:52:05,747 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
-2026-11-24 05:52:05,747 [INFO] main — 
-============================================================
-2026-11-24 05:52:05,747 [INFO] main — [HOGU What?] 완료: 성공 1개 / 실패 0개
-2026-11-24 05:52:05,748 [INFO] main — ============================================================
-2026-11-24 05:52:05,762 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 167개)
-2026-11-24 05:52:05,768 [INFO] dashboard_exporter — 분석 필드 유지: 59/60개 (등급·조회수·수익)
-2026-11-24 05:52:05,782 [INFO] dashboard_exporter —   시리즈: 50개 내보내기 완료
-2026-11-24 05:52:05,793 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
-2026-11-24 05:52:06,269 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-11-24 05:52:06,890 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-11-24 05:52:06,891 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
-2026-11-24 05:52:06,894 [INFO] dashboard_exporter —   학습 이력: 11주 내보내기 완료
-2026-11-24 05:52:06,897 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
-2026-11-24 05:52:06,917 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 263 / 실패 0 / 대기 21)
-2026-11-24 05:52:06,917 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
-2026-11-24 05:52:06,917 [INFO] dashboard_exporter —   포스트: 60개 / 실행 이력: 120개 / 블로그: 3개
-2026-11-24 05:52:06,917 [INFO] main — 대시보드 데이터 업데이트 완료
-2026-11-24 05:52:06,918 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
-2026-11-24 05:52:58,777 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-11-24 05:53:00,163 [INFO] main — ============================================================
-2026-11-24 05:53:00,163 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-11-24 05:53:00
-2026-11-24 05:53:00,163 [INFO] main — ============================================================
-2026-11-24 05:53:00,175 [INFO] keyword_collector — 타 블로그 최근 키워드 4개 중복 방지 코퍼스 합류
-2026-11-24 05:53:00,175 [INFO] keyword_collector — 포스팅 이력 코퍼스: 72개 항목 로드 (blog_id=blog2 중복 방지 기준)
-2026-11-24 05:53:00,175 [INFO] keyword_collector — 시즌 예약 키워드 13개 로드 (blog=blog2): ['수능 끝나고 저렴하게 준비하는 법', '할로윈 파티 집에서 준비하는 방법 꿀팁', '할로윈 코스튬 직접 만들어본 후기 공유']...
-2026-11-24 05:53:06,352 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
-2026-11-24 05:53:14,574 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:53:14,590 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
-2026-11-24 05:53:14,590 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
-2026-11-24 05:53:15,535 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
-2026-11-24 05:53:15,536 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
-2026-11-24 05:53:15,537 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
-2026-11-24 05:53:15,543 [INFO] keyword_collector — 유사 주제 제외 9개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '골프 비기너 첫 필드 나가기 전 준비 체크리스트', '수능 끝나고 저렴하게 준비하는 법', '할로윈 파티 집에서 준비하는 방법 꿀팁']
-2026-11-24 05:53:15,544 [INFO] keyword_collector —   [season_scheduled] 2개: ['할로윈 코스튬 직접 만들어본 후기 공유', '2026 수능 끝난 후 알바 추천 후기']
-2026-11-24 05:53:15,544 [INFO] keyword_collector — 최종 선정 키워드 2개: ['할로윈 코스튬 직접 만들어본 후기 공유', '2026 수능 끝난 후 알바 추천 후기']
-2026-11-24 05:53:15,545 [INFO] main — 수집된 키워드 2개: ['할로윈 코스튬 직접 만들어본 후기 공유', '2026 수능 끝난 후 알바 추천 후기']
-2026-11-24 05:53:15,551 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 1일 전, 6일 후 활성화)
-2026-11-24 05:53:15,551 [INFO] main — 단독 포스트 대상 키워드 1개: ['할로윈 코스튬 직접 만들어본 후기 공유']
-2026-11-24 05:53:15,564 [INFO] main — 
-[1/1] 키워드: '할로윈 코스튬 직접 만들어본 후기 공유'
-2026-11-24 05:53:15,564 [INFO] content_generator — 포스트 생성 중: '할로윈 코스튬 직접 만들어본 후기 공유'
-2026-11-24 05:53:18,646 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:53:18,647 [INFO] research_collector — 검색 의도: 할로윈 코스튬을 직접 제작한 경험과 노하우를 알아보고 싶음
-2026-11-24 05:53:40,077 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 1개) — '할로윈 코스튬 직접 만들어본 후기 공유'
-2026-11-24 05:54:01,831 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:54:01,832 [INFO] evidence_builder — 자료팩 생성: 사실 4개 — '할로윈 코스튬 직접 만들어본 후기 공유'
-2026-11-24 05:54:23,618 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:54:23,619 [INFO] source_validator — 출처 검증: 2/4개 통과, 등급 분포 {'X': 2, 'D': 1, 'C': 1}
-2026-11-24 05:54:23,622 [INFO] evidence_builder — 자료팩: 중요 사실 2개 제외 (A/B 등급 출처 없음)
-2026-11-24 05:54:23,622 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
-2026-11-24 05:54:23,628 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
-2026-11-24 05:54:24,345 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:55:48,432 [INFO] content_generator —   📌 핵심 요약 박스 삽입
-2026-11-24 05:55:49,129 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:56:05,543 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
-2026-11-24 05:56:05,543 [INFO] content_generator — 이미지 계획 2건 사용: ['halloween costume diy craft table', 'handmade halloween costume sewing']
-2026-11-24 05:56:05,696 [INFO] image_fetcher — 이미지 수집 성공: 'halloween costume diy craft table' → 제목='witch / gothic / forest / horror / goth ' (관련성=0.20)
-2026-11-24 05:56:05,829 [INFO] image_fetcher — 이미지 수집 성공: 'handmade halloween costume sewing' → 제목='embroidery thread / colorful yarn / croc' (관련성=0.50)
-2026-11-24 05:56:10,390 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:56:10,392 [INFO] image_fetcher — 이미지 관련성 검증: 1개 제거, 1개 유지
-2026-11-24 05:56:10,559 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
-2026-11-24 05:56:10,559 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
-2026-11-24 05:56:10,566 [INFO] content_generator — 이미지 1개 본문 삽입 완료
-2026-11-24 05:56:10,568 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
-2026-11-24 05:56:10,568 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
-2026-11-24 05:56:10,568 [INFO] content_generator — 포스트 생성 완료: '할로윈 코스튬 직접 만들기, 인기 드라마·영화 캐릭터 후기 종합과 비용 비교' (2890자, 이미지 1개)
-2026-11-24 05:56:11,564 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:56:34,034 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-11-24 05:56:35,067 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:56:35,338 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '할로윈 코스튬 직접 만들기, 인기 드라마·영화 캐릭터 후기 종합'
-2026-11-24 05:56:35,338 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자 수는 충족하나 캐릭터별 일반론 재조합 성격이 강하고 중복·깨진 문장('의상값 의상값과...')이 발견됨
-2026-11-24 05:56:35,338 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: 넷플릭스·NRF 등 기관 출처는 명시했으나 구체적 수치(금액·비율)가 부족하고 모호한 후기 인용이 많음
-2026-11-24 05:56:35,338 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1개만 포함되고 Pixabay 출처는 명시했으나 alt텍스트 명확성 부족
-2026-11-24 05:56:35,338 [INFO] adsense_validator —   ❌ AI 생성 의심도: '~후기가 많았습니다' 등 동일 패턴 문장 과다 반복과 중복/깨진 문장이 다수 발견되어 AI 생성 흔적이 뚜렷함
-2026-11-24 05:56:35,338 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] '~후기가 많았습니다' 등 동일 패턴 문장 과다 반복과 중복/깨진 문장이 다수 발견되어 AI 생성 흔적이 뚜렷함
-2026-11-24 05:56:35,338 [WARNING] adsense_validator —   🔴 본문 중 '의상값 의상값과 소품 재료비 모두 비교적 저렴하게 완성했다는 사례가 많습니다로 완성했다는 사례가 많습니다' 등 중복·문법 오류 문장 수정 필요
-2026-11-24 05:56:35,342 [INFO] internal_linker — 내부 링크 후보 5개 발견
-2026-11-24 05:56:35,345 [INFO] internal_linker —   [1/5] '저렴하게' -> https://www.hoguwhat.com/2026/11/blog-post.html
-2026-11-24 05:56:35,350 [INFO] internal_linker —   [2/5] '준비하는' -> https://hogugolfntraval.blogspot.com/2026/11/blog-post_22.ht
-2026-11-24 05:56:35,351 [INFO] internal_linker —   [3/5] '3가지' -> https://www.hoguwhat.com/2026/11/3.html
-2026-11-24 05:56:35,352 [INFO] internal_linker — 내부 링크 3개 삽입 완료
-2026-11-24 05:56:35,352 [INFO] main —   제목: 할로윈 코스튬 직접 만들기, 인기 드라마·영화 캐릭터 후기 종합과 비용 비교
-2026-11-24 05:56:35,352 [INFO] main —   이미지: 1개 삽입
-2026-11-24 05:56:35,352 [INFO] main —   글자 수: 2890자
-2026-11-24 05:56:36,070 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:56:57,488 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-11-24 05:56:58,440 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:57:03,325 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 74/100 — '할로윈 코스튬 직접 만들기, 인기 드라마·영화 캐릭터 후기 종합'
-2026-11-24 05:57:03,325 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 글자수(2890자)는 충족하나 '의상값 의상값과', '온라인몰에서 온라인몰마다' 등 중복 문구가 반복돼 조사 내용의 재가공 완성도가 떨어짐
-2026-11-24 05:57:03,325 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 캐릭터별 제작법·장단점 섹션 단락이 500자 이상으로 길어 가독성 저하
-2026-11-24 05:57:03,325 [INFO] adsense_validator —   ⚠️ E-E-A-T 신뢰도: NRF·넷플릭스 자료 등 출처 인용은 있으나 일부 문장 중복·모호한 표현으로 인해 해석의 정밀도가 다소 떨어짐
-2026-11-24 05:57:03,325 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 1개에 alt 텍스트는 있으나 저작권 검증 불가로 기본 warn 적용
-2026-11-24 05:57:03,325 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '의상값 의상값과', '공개 직후 몇 주간 공개 직후' 등 중복 생성 흔적과 '이처럼' 같은 정형화된 전환어가 발견됨
-2026-11-24 05:57:03,325 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 74/100, 권장: review) — 자동 수정 시도
-2026-11-24 05:57:03,325 [WARNING] main —      🟡 [원본성 및 품질] 글자수(2890자)는 충족하나 '의상값 의상값과', '온라인몰에서 온라인몰마다' 등 중복 문구가 반복돼 조사 내용의 재가공 완성도가 떨어짐
-2026-11-24 05:57:03,325 [WARNING] main —      🟡 [구조 및 가독성] H2 6개로 구조는 양호하나 캐릭터별 제작법·장단점 섹션 단락이 500자 이상으로 길어 가독성 저하
-2026-11-24 05:57:03,325 [WARNING] main —      🟡 [E-E-A-T 신뢰도] NRF·넷플릭스 자료 등 출처 인용은 있으나 일부 문장 중복·모호한 표현으로 인해 해석의 정밀도가 다소 떨어짐
-2026-11-24 05:57:03,325 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 74/100, fail: 0개, warn: 5개
-2026-11-24 05:57:03,338 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
-2026-11-24 05:57:03,344 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 1건
-2026-11-24 05:57:04,039 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:58:46,083 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2890자 → 4142자 (+1252자)
-2026-11-24 05:58:46,083 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
-2026-11-24 05:58:46,780 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 05:59:02,852 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '할로윈 코스튬 직접 만들기, 인기 드라마·영화 캐릭터 후기 종합'
-2026-11-24 05:59:02,852 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개는 양호하나 일부 단락이 500자 이상으로 길게 이어져 가독성이 떨어짐
-2026-11-24 05:59:02,852 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 무료 이미지 1개만 사용되어 저작권 문제는 없으나 이미지 수가 적음
-2026-11-24 05:59:02,852 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: '~다는 후기가 많았습니다' 류의 동일 패턴 문장과 요약 박스 반복이 다소 기계적임
-2026-11-24 05:59:02,853 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 74 → 84/100)
-2026-11-24 05:59:02,853 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
-2026-11-24 05:59:03,540 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 06:00:14,375 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
-2026-11-24 06:00:16,355 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
-2026-11-24 06:00:35,589 [INFO] final_editor —   ✏️ 제목 최종 교정: '할로윈 코스튬 직접 만들기, 인기 드라마·영화 캐릭터 후기 종합과 비용 비교' → '할로윈 코스튬 직접 만들어본 후기와 캐릭터별 비용 비교'
-2026-11-24 06:00:35,589 [INFO] final_editor —   ✏️ 메타 설명 교정 (121자)
-2026-11-24 06:00:35,589 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 긴 문단을 2~4문장 단위로 분할하고, 캐릭터별 비용 비교 표와 개인 경험 메모, 주의사항, FAQ 5개, 작성자 메모를 추가해 발행 가능한 형태로 정리했습니다. 제목·메타설명·슬러그를 SEO 기준에 맞게 재구성했습니다.
-2026-11-24 06:00:35,730 [INFO] related_posts — 내려간 글 4편을 관련 포스트 후보에서 제외
-2026-11-24 06:00:35,732 [INFO] related_posts — 관련 포스트 3개 섹션 생성
-2026-11-24 06:00:35,732 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
-2026-11-24 06:00:36,698 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/11/blog-post_24.html
-2026-11-24 06:00:36,714 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/11/blog-post_24.html
-2026-11-24 06:00:36,719 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
-2026-11-24 06:00:36,727 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
 2026-11-24 06:00:36,728 [INFO] comment_manager — 
 🌱 씨앗 댓글 작성: '할로윈 코스튬 직접 만들어본 후기와 캐릭터별 비용 비교'
 2026-11-24 06:00:37,105 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
@@ -624,3 +498,135 @@
 2026-11-26 04:04:14,404 [INFO] dashboard_exporter —   포스트: 60개 / 실행 이력: 120개 / 블로그: 3개
 2026-11-26 04:04:14,405 [INFO] main — 대시보드 데이터 업데이트 완료
 2026-11-26 04:04:14,406 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건
+2026-11-26 04:04:55,267 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-11-26 04:04:55,983 [INFO] main — ============================================================
+2026-11-26 04:04:55,983 [INFO] main — [HOGU 여행,스포츠,연예] 블로그 자동화 시작: 2026-11-26 04:04:55
+2026-11-26 04:04:55,983 [INFO] main — ============================================================
+2026-11-26 04:04:55,990 [INFO] keyword_collector — 타 블로그 최근 키워드 6개 중복 방지 코퍼스 합류
+2026-11-26 04:04:55,990 [INFO] keyword_collector — 포스팅 이력 코퍼스: 76개 항목 로드 (blog_id=blog2 중복 방지 기준)
+2026-11-26 04:04:55,990 [INFO] keyword_collector — 시즌 예약 키워드 12개 로드 (blog=blog2): ['할로윈 파티 집에서 준비하는 방법 꿀팁', '할로윈 코스튬 직접 만들어본 후기 공유', '2026 수능 끝나고 국내 여행지 추천 후기']...
+2026-11-26 04:05:01,566 [INFO] keyword_collector — Naver 실시간 뉴스 헤드라인 수집: 60개
+2026-11-26 04:05:08,411 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:05:08,421 [INFO] keyword_collector — Naver 뉴스 → 블로그 키워드 변환: 4개
+2026-11-26 04:05:08,421 [INFO] keyword_collector — 네이버 실시간 뉴스 키워드: 4개
+2026-11-26 04:05:09,404 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-11-26 04:05:09,405 [INFO] gsc_fetcher — GSC 고성과 카테고리 순위: []
+2026-11-26 04:05:09,406 [INFO] keyword_collector — 시간대 기반 주제 우선순위 적용: noon → sports
+2026-11-26 04:05:09,409 [INFO] keyword_collector — 유사 주제 제외 9개: ['손흥민 토트넘 2026 최신 경기 분석과 전망', 'KBO 야구 직관 처음 가는 사람을 위한 준비물', '골프 비기너 첫 필드 나가기 전 준비 체크리스트', '할로윈 파티 집에서 준비하는 방법 꿀팁', '할로윈 코스튬 직접 만들어본 후기 공유']
+2026-11-26 04:05:09,409 [INFO] keyword_collector —   [season_scheduled] 2개: ['2026 수능 끝난 후 알바 추천 후기', '빼빼로데이 2026 선물 추천 직접 해본 후기']
+2026-11-26 04:05:09,410 [INFO] keyword_collector — 최종 선정 키워드 2개: ['2026 수능 끝난 후 알바 추천 후기', '빼빼로데이 2026 선물 추천 직접 해본 후기']
+2026-11-26 04:05:09,410 [INFO] main — 수집된 키워드 2개: ['2026 수능 끝난 후 알바 추천 후기', '빼빼로데이 2026 선물 추천 직접 해본 후기']
+2026-11-26 04:05:09,414 [INFO] main — 자동 시리즈 대기 중 (마지막 시리즈 3일 전, 4일 후 활성화)
+2026-11-26 04:05:09,414 [INFO] main — 단독 포스트 대상 키워드 1개: ['2026 수능 끝난 후 알바 추천 후기']
+2026-11-26 04:05:09,421 [INFO] main — 
+[1/1] 키워드: '2026 수능 끝난 후 알바 추천 후기'
+2026-11-26 04:05:09,421 [INFO] content_generator — 포스트 생성 중: '2026 수능 끝난 후 알바 추천 후기'
+2026-11-26 04:05:17,976 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:05:17,977 [INFO] research_collector — 검색 의도: 2026학년도 수능이 끝난 후 할 수 있는 단기/장기 아르바이트를 추천받고 실제 후기를 참고하려는 수험생 및
+2026-11-26 04:05:31,968 [INFO] research_collector — 자료 조사: 8개 수집 (신뢰 도메인 8개) — '2026 수능 끝난 후 알바 추천 후기'
+2026-11-26 04:05:46,358 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:05:46,359 [INFO] evidence_builder — 자료팩 생성: 사실 8개 — '2026 수능 끝난 후 알바 추천 후기'
+2026-11-26 04:06:07,360 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:06:07,361 [INFO] source_validator — 출처 검증: 5/8개 통과, 등급 분포 {'A': 1, 'X': 3, 'B': 4}
+2026-11-26 04:06:07,362 [INFO] content_generator —   AI 제공자: CLAUDE (시도 1/3)
+2026-11-26 04:06:07,366 [WARNING] config — anthropic SDK가 'temperature' 인자를 받지 않아 제외하고 재시도합니다
+2026-11-26 04:06:07,818 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:07:22,052 [INFO] content_generator —   📌 핵심 요약 박스 삽입
+2026-11-26 04:07:22,559 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:07:30,684 [INFO] content_generator — 팩트체크: 이슈 5건 발견, 5건 자동 수정 적용
+2026-11-26 04:07:30,684 [INFO] content_generator — 이미지 계획 1건 사용: ['concert staff event volunteer']
+2026-11-26 04:07:30,907 [INFO] image_fetcher — 이미지 수집 성공: 'concert staff event volunteer' → 제목='concert / confetti / party / event / clu' (관련성=0.50)
+2026-11-26 04:07:31,264 [INFO] image_mirror — 🖼️ 이미지 자체 호스팅 1장 (docs/images)
+2026-11-26 04:07:31,264 [INFO] content_generator — 이미지 1장 수집 완료 (최소 1 / 최대 3)
+2026-11-26 04:07:31,269 [INFO] content_generator — 이미지 1개 본문 삽입 완료
+2026-11-26 04:07:31,270 [INFO] coupang_affiliate — HTML 배너 '쿠팡' 건너뜀 — 'coupang_banner' 기능이 꺼져 있습니다
+2026-11-26 04:07:31,270 [INFO] coupang_affiliate — 쿠팡파트너스 삽입 — 링크 1개, 배너 0개: ['쿠팡']
+2026-11-26 04:07:31,270 [INFO] content_generator — 포스트 생성 완료: '2026 수능 끝난 후 알바 추천, 콘서트·경기장 현장직까지 찾는 법 정리' (2853자, 이미지 1개)
+2026-11-26 04:07:31,640 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:07:53,757 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-11-26 04:07:54,131 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:07:58,993 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 72/100 — '2026 수능 끝난 후 알바 추천, 콘서트·경기장 현장직까지 찾'
+2026-11-26 04:07:58,993 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 수치·날짜는 구체적이나 문장 곳곳에 '~라고 답했습니다라고 답했습니다' 등 깨진 표현과 중복 요약 박스가 있어 가공 흔적이 드러남
+2026-11-26 04:07:58,993 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락이 끊김 없이 500자 이상 이어져 가독성 저하 우려
+2026-11-26 04:07:58,993 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 라이선스 이미지 1건으로 저작권 위반은 없으나 alt텍스트 확인 불가 및 이미지 수 적어 보강 권장
+2026-11-26 04:07:58,993 [INFO] adsense_validator —   ❌ AI 생성 의심도: 핵심 요약 박스가 거의 동일하게 두 번 반복되고 '구직자의 구직자' 같은 중복 오류 문장이 반복돼 자동생성 패턴 의심
+2026-11-26 04:07:58,993 [WARNING] adsense_validator —   🔴 [AI 생성 의심도] 핵심 요약 박스가 거의 동일하게 두 번 반복되고 '구직자의 구직자' 같은 중복 오류 문장이 반복돼 자동생성 패턴 의심
+2026-11-26 04:07:58,993 [WARNING] adsense_validator —   🔴 요약 박스(📌 핵심 요약, 💡 핵심 요약)가 중복·유사하게 반복되어 AI 생성/자동요약 흔적이 뚜렷함
+2026-11-26 04:07:58,993 [WARNING] adsense_validator —   🔴 '구직자의 구직자 지원 건수도', '~라고 답했습니다라고 답했습니다' 등 문장이 깨져 있어 교정 필요
+2026-11-26 04:07:58,996 [INFO] internal_linker — 내부 링크 후보 5개 발견
+2026-11-26 04:07:58,999 [INFO] internal_linker —   [1/5] '스포츠' -> https://hogugolfntraval.blogspot.com/2026/10/2026_0195857602
+2026-11-26 04:07:59,000 [INFO] internal_linker —   [2/5] '11월' -> https://hoguasset.blogspot.com/2026/11/2026-11.html
+2026-11-26 04:07:59,001 [INFO] internal_linker — 내부 링크 2개 삽입 완료
+2026-11-26 04:07:59,001 [INFO] main —   제목: 2026 수능 끝난 후 알바 추천, 콘서트·경기장 현장직까지 찾는 법 정리
+2026-11-26 04:07:59,001 [INFO] main —   이미지: 1개 삽입
+2026-11-26 04:07:59,001 [INFO] main —   글자 수: 2853자
+2026-11-26 04:07:59,480 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:08:21,749 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-11-26 04:08:22,102 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:08:29,580 [INFO] adsense_validator — AdSense 검증 ⚠️ [REVIEW] 점수: 79/100 — '2026 수능 끝난 후 알바 추천, 콘서트·경기장 현장직까지 찾'
+2026-11-26 04:08:29,580 [INFO] adsense_validator —   ⚠️ 원본성 및 품질: 구체적 수치·날짜·4개 출처 교차 인용이 있으나 문장 중복 흔적 존재
+2026-11-26 04:08:29,580 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락이 지나치게 길어 가독성 저하
+2026-11-26 04:08:29,580 [INFO] adsense_validator —   ⚠️ 이미지 정책: 이미지 1장(Pixabay 라이선스)만 포함되어 전반적으로 이미지 부족, alt텍스트 명시 불명확
+2026-11-26 04:08:29,580 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 일부 문장에서 어미 중복·문맥 끊김 등 미편집 AI 생성 흔적 발견
+2026-11-26 04:08:29,580 [WARNING] adsense_validator —   🔴 본문 중 '나타났습니다 수치입니다', '전해집니다했다고 합니다' 등 문장이 어색하게 중복·단절되어 있어 교정 필요
+2026-11-26 04:08:29,580 [WARNING] main —   ⚠️ AdSense 기준 미달 (점수: 79/100, 권장: review) — 자동 수정 시도
+2026-11-26 04:08:29,580 [WARNING] main —      🔴 본문 중 '나타났습니다 수치입니다', '전해집니다했다고 합니다' 등 문장이 어색하게 중복·단절되어 있어 교정 필요
+2026-11-26 04:08:29,580 [WARNING] main —      🟡 [원본성 및 품질] 구체적 수치·날짜·4개 출처 교차 인용이 있으나 문장 중복 흔적 존재
+2026-11-26 04:08:29,580 [WARNING] main —      🟡 [구조 및 가독성] H2 6개로 구조는 양호하나 일부 단락이 지나치게 길어 가독성 저하
+2026-11-26 04:08:29,580 [WARNING] main —      🟡 [이미지 정책] 이미지 1장(Pixabay 라이선스)만 포함되어 전반적으로 이미지 부족, alt텍스트 명시 불명확
+2026-11-26 04:08:29,580 [INFO] adsense_validator — AdSense 자동 수정 시작 — 점수: 79/100, fail: 0개, warn: 4개
+2026-11-26 04:08:29,586 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-11-26 04:08:29,589 [INFO] adsense_validator —   🖼️ 출처 표기 동기화 1건
+2026-11-26 04:08:30,018 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:10:11,254 [INFO] adsense_validator — 자동 수정 완료 — 글자 수: 2853자 → 4049자 (+1196자)
+2026-11-26 04:10:11,254 [INFO] main —   🔧 자동 수정 완료 — 재검증 시작
+2026-11-26 04:10:11,674 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:10:19,064 [INFO] adsense_validator — AdSense 검증 ✅ [UPLOAD] 점수: 84/100 — '2026 수능 끝난 후 알바 추천, 콘서트·경기장 현장직까지 찾'
+2026-11-26 04:10:19,064 [INFO] adsense_validator —   ⚠️ 구조 및 가독성: H2 6개로 구조는 양호하나 일부 단락(설문 결과·구인동향 설명)이 500자 이상으로 다소 길게 이어짐
+2026-11-26 04:10:19,064 [INFO] adsense_validator —   ⚠️ 이미지 정책: Pixabay 출처 이미지 2개 포함되어 저작권 위반은 없으나 alt텍스트 명시 여부 불명확
+2026-11-26 04:10:19,064 [INFO] adsense_validator —   ⚠️ AI 생성 의심도: 표·핵심요약 박스 등 목록화 패턴과 '~것으로 전해집니다' 식 보고체 표현이 반복됨
+2026-11-26 04:10:19,064 [INFO] main —   ✅ 자동 수정 후 AdSense 통과 (점수: 79 → 84/100)
+2026-11-26 04:10:19,064 [INFO] main —   ✅ AdSense 검증 통과 (점수: 84/100) — 업로드
+2026-11-26 04:10:19,500 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:11:35,228 [WARNING] config — 응답이 max_tokens로 잘림 — 이어쓰기 요청
+2026-11-26 04:11:35,781 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:12:36,123 [INFO] final_editor —   ✏️ 제목 최종 교정: '2026 수능 끝난 후 알바 추천, 콘서트·경기장 현장직까지 찾는 법 정리' → '2026 수능 끝난 후 알바 추천, 콘서트·경기장 현장직 구하는 법'
+2026-11-26 04:12:36,124 [INFO] final_editor —   ✏️ 메타 설명 교정 (133자)
+2026-11-26 04:12:36,124 [INFO] final_editor —   ✅ 3차 최종 편집 완료 — 제목·메타·슬러그를 발행 기준에 맞게 정리하고, 본문 문단을 모바일 기준 2~4문장으로 분할했습니다. 이미지 제안 3건, 개인 경험 메모, 주의사항, FAQ 5개, 마무리, 작성자 메모, 내부 링크 텍스트를 추가해 발행 완성도를 높였습니다.
+2026-11-26 04:12:36,288 [INFO] related_posts — 내려간 글 4편을 관련 포스트 후보에서 제외
+2026-11-26 04:12:36,289 [INFO] related_posts — 관련 포스트 3개 섹션 생성
+2026-11-26 04:12:36,289 [INFO] blogger_uploader — 업로드 대상 블로그: HOGU 여행,스포츠,연예 (blog_id=8903166932049624994)
+2026-11-26 04:12:37,020 [INFO] blogger_uploader — 업로드 성공: https://hogugolfntraval.blogspot.com/2026/11/2026_0151880073.html
+2026-11-26 04:12:37,030 [INFO] main —   ✅ 업로드 성공: https://hogugolfntraval.blogspot.com/2026/11/2026_0151880073.html
+2026-11-26 04:12:37,033 [INFO] main —   📱 소셜 콘텐츠 스위치 꺼짐 — 생성 건너뜀
+2026-11-26 04:12:37,037 [WARNING] dotenv.main — python-dotenv could not parse statement starting at line 34
+2026-11-26 04:12:37,038 [INFO] comment_manager — 
+🌱 씨앗 댓글 작성: '2026 수능 끝난 후 알바 추천, 콘서트·경기장 현장직 구하는 법'
+2026-11-26 04:12:37,461 [INFO] httpx2 — HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+2026-11-26 04:12:41,433 [INFO] comment_manager —   생성된 댓글: 추가로 팁 하나 드리자면, 콘서트·경기장 현장직은 공식 공고 뜨기 전에 기획사나 대행 업체 SNS 계정(인스타그램, 블로그 등)에서 먼저 모집 ...
+2026-11-26 04:15:41,618 [WARNING] comment_manager —   ⚠️ 댓글 게시 실패 [404]: <!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 404 (Not Found)!!1</title>
+  <style>
+    *{ma — 큐잉
+2026-11-26 04:15:41,619 [INFO] comment_manager —   📥 댓글 큐잉: pending_comments.json (1개)
+2026-11-26 04:15:41,619 [INFO] main — 
+============================================================
+2026-11-26 04:15:41,619 [INFO] main — [HOGU 여행,스포츠,연예] 완료: 성공 1개 / 실패 0개
+2026-11-26 04:15:41,619 [INFO] main — ============================================================
+2026-11-26 04:15:41,629 [INFO] dashboard_exporter — 실행 이력 저장 완료 (총 173개)
+2026-11-26 04:15:41,634 [INFO] dashboard_exporter — 분석 필드 유지: 54/61개 (등급·조회수·수익)
+2026-11-26 04:15:41,643 [INFO] dashboard_exporter —   시리즈: 50개 내보내기 완료
+2026-11-26 04:15:41,651 [INFO] dashboard_exporter —   SNS 데이터: 50개 내보내기 완료
+2026-11-26 04:15:42,144 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-11-26 04:15:42,582 [INFO] gsc_fetcher — GSC 데이터 수집 완료: 0개 쿼리 / 0개 카테고리
+2026-11-26 04:15:42,583 [INFO] gsc_fetcher — GSC 대시보드 데이터 저장: /home/runner/work/cli/cli/blog-automation/../docs/data/gsc.json
+2026-11-26 04:15:42,585 [INFO] dashboard_exporter —   학습 이력: 11주 내보내기 완료
+2026-11-26 04:15:42,587 [INFO] dashboard_exporter —   수리 이력: 50건 내보내기 완료
+2026-11-26 04:15:42,664 [INFO] post_manager —   포스트 레지스트리: 전체 300개 (게시 263 / 실패 0 / 대기 21)
+2026-11-26 04:15:42,665 [INFO] dashboard_exporter — 대시보드 데이터 내보내기 완료 → /home/runner/work/cli/cli/blog-automation/../docs/data
+2026-11-26 04:15:42,665 [INFO] dashboard_exporter —   포스트: 61개 / 실행 이력: 120개 / 블로그: 3개
+2026-11-26 04:15:42,665 [INFO] main — 대시보드 데이터 업데이트 완료
+2026-11-26 04:15:42,666 [INFO] main — 발행 요약: 게시 1건 / 검토 대기 0건 / 실패 0건

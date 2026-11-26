@@ -180,26 +180,26 @@ def _plan_blog1_series(keyword: str, count: int, blog_config: dict | None = None
 블로그 주제: 여행, 드라마, 영화, 연예, K-POP
 
 이 주제로 {count}편짜리 블로그 시리즈를 기획하세요.
-글쓰기 방향: 정보 나열이 아닌 '직접 경험하고 공부한 사람의 인사이트 공유' 스타일.
+글쓰기 방향: 정보 나열이 아닌 '자료를 깊이 조사해 비교·해석하는' 스타일. 하지 않은 경험·방문을 주장하지 않음.
 
 시리즈 구조 원칙:
-- 편 1: "왜 이 주제를 파게 됐는지" — 입문자 공감형 도입 (계기·실패담·첫 경험)
-- 편 2~{count - 1}: 실전 경험 기반 심화 (각자 독립적 주제, 남들이 안 다루는 구체적 각도)
+- 편 1: "왜 이 주제를 파게 됐는지" — 입문자 공감형 도입 (독자가 겪는 상황·흔한 실수 사례)
+- 편 2~{count - 1}: 공개 자료·후기 종합 기반 심화 (각자 독립적 주제, 남들이 안 다루는 구체적 각도)
 - 편 {count}: 지금까지 배운 것들의 솔직한 총평 + 실전 액션 플랜
 - 각 편: 독립적으로 읽어도 완결되는 글, "이 각도는 다른 곳에서 못 봤다"는 느낌
-- 제목: 경험·솔직함·구체성 강조 (예: "직접 가봤더니", "이것만은 진짜 주의", "{y}년 현재 기준")
+- 제목: 구체성 강조 (예: "방문 후기 종합", "이것만은 주의", "{y}년 현재 기준"). "직접 ~해봤" 같은 경험 주장 금지
 - 제목: 간결 + 임팩트 — 28자 이내, 핵심 키워드 앞 배치, 군더더기 제거
 
 JSON만 응답 (마크다운 없이):
 {{
-  "series_title": "시리즈 전체 제목 (경험 기반, 예: {keyword} 직접 해보고 정리한 시리즈)",
+  "series_title": "시리즈 전체 제목 (예: {keyword} 자료로 정리한 시리즈)",
   "series_label": "Blogger 라벨 태그 (공백 없음, 하이픈 사용)",
-  "series_description": "시리즈 소개: 어떤 경험을 기반으로 쓰는 시리즈인지 (100자 이내)",
+  "series_description": "시리즈 소개: 어떤 자료를 바탕으로 쓰는 시리즈인지 (100자 이내)",
   "episodes": [
     {{
       "episode": 1,
-      "title": "[1편] ... (28자 이내 간결·임팩트, 경험/솔직함 강조)",
-      "focus": "이 편의 핵심 — 어떤 경험/인사이트를 공유하는지 (30자 이내)",
+      "title": "[1편] ... (28자 이내 간결·임팩트, 구체성 강조)",
+      "focus": "이 편의 핵심 — 어떤 정보/인사이트를 주는지 (30자 이내)",
       "search_keyword": "이 편의 대표 검색 키워드 (구체적으로)"
     }}
   ]
@@ -230,14 +230,14 @@ def plan_finance_series(keyword: str, count: int = 4, blog_config: dict | None =
 블로그 주제: 금융뉴스, 은행·대출, 정부지원시책, 세금·절세, 경제정책
 
 이 금융/정부지원 주제로 {count}편짜리 블로그 시리즈를 기획하세요.
-글쓰기 방향: '직접 알아보고 신청/경험한 직장인·개인 투자자 시점의 실용 정보 공유' 스타일.
+글쓰기 방향: '공식 자료를 조사해 직장인·개인 투자자에게 필요한 것을 정리하는' 스타일. 신청·경험을 주장하지 않음.
 공신력 있는 출처(기획재정부·금융위원회·국세청·금융감독원 등) 기반. 투자 권유 절대 금지.
 
 시리즈 구조 원칙:
 - 편 1: "왜 이걸 알아보기 시작했나" — 실생활 공감 계기 (세금 고지서, 대출 거절, 신청 기회 놓침 등)
 - 편 2~{count - 1}: 핵심 정보 심화 — 신청 방법, 자격 조건, 놓치기 쉬운 조항, 실제 계산 예시
-- 편 {count}: 직접 신청·경험한 후기 + 주의사항 총정리 + 추천 대상 명확히
-- 제목: 실용성·구체성 강조 (예: "직접 신청해봤더니", "자격 조건 총정리", "{y}년 최신 기준")
+- 편 {count}: 공개된 신청 사례 종합 + 주의사항 총정리 + 추천 대상 명확히
+- 제목: 실용성·구체성 강조 (예: "신청 사례 종합", "자격 조건 총정리", "{y}년 최신 기준")
 - 제목: 간결 + 임팩트 — 28자 이내, 핵심 키워드 앞 배치, 군더더기 제거
 - ※ 투자 조언·수익 보장 표현 사용 금지
 
@@ -245,13 +245,13 @@ JSON만 응답 (마크다운 없이):
 {{
   "series_title": "시리즈 전체 제목 (금융 실용 기반, 예: {keyword} 직접 알아본 완전 정리 시리즈)",
   "series_label": "Blogger 라벨 태그 (공백 없음, 하이픈 사용, 금융 관련)",
-  "series_description": "어떤 금융/정책 경험을 기반으로 쓰는 시리즈인지 (100자 이내)",
+  "series_description": "어떤 금융/정책 자료를 바탕으로 쓰는 시리즈인지 (100자 이내)",
   "series_type": "finance_news",
   "episodes": [
     {{
       "episode": 1,
-      "title": "[1편] ... (28자 이내 간결·임팩트, 실용/경험 강조)",
-      "focus": "이 편의 핵심 금융 정보/경험 (30자 이내)",
+      "title": "[1편] ... (28자 이내 간결·임팩트, 실용성 강조)",
+      "focus": "이 편의 핵심 금융 정보 (30자 이내)",
       "search_keyword": "이 편의 대표 금융 검색 키워드 (구체적 제도·상품명 포함)"
     }}
   ]
@@ -278,15 +278,15 @@ def _plan_general_series(keyword: str, count: int, blog_config: dict | None = No
     if BLOG_LANGUAGE == "ko":
         prompt = f"""오늘: {date_str} / 키워드: {keyword} / 편수: {count}
 
-{count}편 블로그 시리즈 기획 (경험 기반 인사이트 공유 스타일).
-편 1: 입문 계기·첫 경험 / 편 2~{count-1}: 실전 심화 / 편 {count}: 총평+액션플랜
+{count}편 블로그 시리즈 기획 (자료 조사·비교형. 하지 않은 경험 주장 금지).
+편 1: 독자 상황·입문 정보 / 편 2~{count-1}: 실전 심화 / 편 {count}: 총평+액션플랜
 제목: 간결 + 임팩트 — 28자 이내, 핵심 키워드 앞 배치.
 
 JSON만 응답:
 {{"series_title":"","series_label":"","series_description":"","episodes":[{{"episode":1,"title":"","focus":"","search_keyword":""}}]}}"""
     else:
         prompt = f"""Today: {date_str} / Topic: {keyword} / Parts: {count}
-Plan a {count}-part series (personal experience angle). Part 1: entry story / Middle: deep dives / Last: honest verdict.
+Plan a {count}-part series (research-based; never claim first-hand experience). Part 1: reader context / Middle: deep dives / Last: summary verdict.
 Titles under 65 chars. JSON only:
 {{"series_title":"","series_label":"","series_description":"","episodes":[{{"episode":1,"title":"","focus":"","search_keyword":""}}]}}"""
     try:
@@ -346,7 +346,7 @@ def plan_drama_series(drama_name: str, count: int = 4) -> dict | None:
 편수: {count}편
 
 "{drama_name}" 드라마 리뷰 블로그 시리즈를 기획하세요.
-관점: 직접 시청한 일반 시청자의 솔직한 감상 — 홍보·광고 아님.
+관점: 공개 정보와 시청자 반응을 종합한 분석 — 직접 시청했다고 주장하지 않음. 홍보·광고 아님.
 
 편 구성 원칙:
 - 편 1: 첫인상 + 시청 전 알면 좋은 것 (줄거리 스포 최소화, 장르·분위기 위주)
@@ -361,7 +361,7 @@ JSON만 응답:
   "series_title": "{drama_name} 드라마 리뷰 시리즈",
   "series_label": "드라마리뷰",
   "drama_label": "{re.sub(r'[^가-힣a-zA-Z0-9]', '-', drama_name)}",
-  "series_description": "직접 본 시청자 입장의 {drama_name} 솔직 리뷰 시리즈 (100자 이내)",
+  "series_description": "공개 정보와 반응을 종합한 {drama_name} 리뷰 시리즈 (100자 이내)",
   "drama_name": "{drama_name}",
   "episodes": [
     {{

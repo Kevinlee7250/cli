@@ -138,6 +138,12 @@ def action_publish(post_id: str) -> int:
     update_post_status(post_id, Status.RETRY_QUEUED)
 
     result = upload_post(post_data, blog_config)
+    if result == "EXPERIENCE_HOLD":
+        reason = post_data.get("pending_reason", "")
+        update_post_status(post_id, Status.PENDING, error=reason)
+        export_for_dashboard(os.path.abspath(DOCS_DATA))
+        print(f"::warning title=품질 보류::발행하지 않음 — {reason}")
+        return 0
     if result == "DUPLICATE":
         update_post_status(post_id, Status.SKIPPED, error="중복 제목 — 업로드 건너뜀")
         export_for_dashboard(os.path.abspath(DOCS_DATA))

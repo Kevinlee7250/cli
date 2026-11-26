@@ -20,6 +20,7 @@ import logging
 import re
 
 from config import claude_generate, CLAUDE_MODEL
+from title_policy import check_title
 
 logger = logging.getLogger(__name__)
 
@@ -142,16 +143,16 @@ def polish_post(post_data: dict) -> dict:
 <tr><td style="border:1px solid #cbd5e1;padding:10px;">...</td><td>...</td><td>...</td></tr>
 </table>
 
-개인 경험 메모 (본문 중간 또는 결론 전):
+자료 정리 메모 (본문 중간 또는 결론 전):
 <div style="background:#fefce8;border-left:4px solid #ca8a04;padding:14px 20px;margin:1.5em 0;border-radius:0 8px 8px 0;color:#713f12;font-size:0.95em;line-height:1.8;">
-📌 <strong>개인 경험 메모</strong><br>
-[4~6문장. 직접 경험이 없으면 "공개 자료와 공식 정보를 바탕으로 정리했습니다"로 표시]
+📌 <strong>자료 정리 메모</strong><br>
+[4~6문장. 어떤 공개 자료·공식 정보를 확인했는지 설명. 경험·방문 주장은 쓰지 말 것]
 </div>
 
 주의사항 ({"건강·금융·법률 주제이므로 반드시 포함" if warning_note else "필요 시 포함"}):
 <div style="background:#fff7ed;border-left:4px solid #ea580c;padding:14px 20px;margin:1.5em 0;border-radius:0 8px 8px 0;color:#7c2d12;font-size:0.9em;line-height:1.7;">
 ⚠️ <strong>주의사항</strong><br>
-이 글은 일반적인 정보와 개인적인 경험을 바탕으로 작성한 글입니다. 개인의 상황, 건강 상태, 재정 상태, 거주 지역, 이용 조건에 따라 결과가 달라질 수 있습니다. 중요한 결정을 하기 전에는 공식 기관, 전문가, 해당 서비스 제공처의 최신 안내를 확인하는 것이 좋습니다.
+이 글은 공개된 정보를 바탕으로 작성한 글입니다. 개인의 상황, 건강 상태, 재정 상태, 거주 지역, 이용 조건에 따라 결과가 달라질 수 있습니다. 중요한 결정을 하기 전에는 공식 기관, 전문가, 해당 서비스 제공처의 최신 안내를 확인하는 것이 좋습니다.
 </div>
 
 FAQ (4~6개, h3 형식):
@@ -166,7 +167,7 @@ FAQ (4~6개, h3 형식):
 작성자 메모 (글 하단):
 <p style="background:#f8fafc;border-left:4px solid #94a3b8;padding:12px 18px;margin:2em 0 0;border-radius:0 8px 8px 0;color:#64748b;font-size:0.9em;line-height:1.7;">
 ✍️ <strong>작성자 메모</strong><br>
-이 글은 실제 경험, 공개 자료, 공식 정보를 바탕으로 작성했습니다. 블로그 운영자는 생활정보, AI 활용, 여행, 건강관리, 재테크 관련 정보를 직접 조사하고 초보자도 이해하기 쉽게 정리하는 것을 목표로 합니다.
+이 글은 공개 자료와 공식 정보를 바탕으로 작성했습니다. 블로그 운영자는 생활정보, AI 활용, 여행, 건강관리, 재테크 관련 정보를 직접 조사하고 초보자도 이해하기 쉽게 정리하는 것을 목표로 합니다.
 </p>
 
 내부 링크 (글 하단, href="#" 같은 미연결 링크 절대 금지 — 실제 URL이 없으면 이 블록 자체를 생략):
@@ -184,7 +185,7 @@ alt text는 구체적으로 — "이미지"처럼 쓰지 말 것.
 [출력 형식 — 반드시 JSON만 출력 (마크다운 코드 블록 없이)]
 
 {{
-  "seo_title": "최종 SEO 제목 (30~45자, 키워드 포함, 과장 없음)",
+  "seo_title": "최종 SEO 제목 (30~45자, 핵심어 포함, 과장 없음. 키워드에 '직접'·'후기'·'겪은'이 있어도 경험담처럼 쓰지 말 것)",
   "meta_description": "최종 메타 설명 (120~160자)",
   "url_slug": "recommended-url-slug-in-english",
   "category": "카테고리 1개 (건강관리/생활정보/AI활용/여행/재테크/맛집/블로그운영 중 선택)",
@@ -250,6 +251,11 @@ alt text는 구체적으로 — "이미지"처럼 쓰지 말 것.
 
         # 제목
         new_title = (result.get("seo_title") or "").strip()
+        # 이 단계의 제목 교체는 앞선 제목 검사를 거치지 않습니다. 경험 주장
+        # 제목은 받지 않습니다 (2026-11-26: 키워드를 따라 "직접 겪은"으로 되돌아감).
+        if new_title and any(v.startswith("경험 주장") for v in check_title(new_title)):
+            logger.warning(f"  ⚠️ 경험 주장 제목이라 교체하지 않음: '{new_title}'")
+            new_title = ""
         if new_title and new_title != title:
             post_data["title"] = new_title
             logger.info(f"  ✏️ 제목 최종 교정: '{title}' → '{new_title}'")

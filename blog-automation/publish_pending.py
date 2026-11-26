@@ -195,7 +195,7 @@ def main() -> None:
         where = (blog_cfg or {}).get("name") or target or "기본 블로그"
         logger.info(f"게시 중: {title[:60]}  →  {where}")
 
-        result, err_log = upload_with_log_capture({
+        payload = {
             "title": post["title"],
             "content": post["content"],
             "labels": post.get("labels", []),
@@ -203,7 +203,16 @@ def main() -> None:
             "faq": post.get("faq", []),
             "meta_description": post.get("metaDescription", ""),
             "sources": post.get("sources", []),
-        }, blog_cfg)
+        }
+        result, err_log = upload_with_log_capture(payload, blog_cfg)
+
+        if result == "EXPERIENCE_HOLD":
+            # 실패가 아니라 품질 보류 — 본문을 고칠 때까지 검토 대기에 남습니다.
+            post["status"] = "pending"
+            post["pendingReason"] = payload.get("pending_reason", "")
+            post.pop("failReason", None)
+            print(f"::warning title=품질 보류::{title[:60]} — {post['pendingReason']}")
+            continue
 
         if result == "DUPLICATE":
             post["status"] = "skipped"

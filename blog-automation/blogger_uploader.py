@@ -5,6 +5,7 @@ import logging
 import re
 import requests
 from datetime import datetime
+from experience_gate import hold_reason as experience_hold_reason
 from schema_generator import generate_all_schemas
 from related_posts import build_related_section
 
@@ -602,6 +603,14 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
         logger.error("포스트 제목 또는 내용이 비어있음 — 업로드 건너뜀")
         return None
     cfg = blog_config or {}
+
+    # 마지막 방어선: 근거 없는 1인칭 경험·방문 주장이 있으면 어떤 경로로 들어와도
+    # 올리지 않습니다. 실패(None)가 아니라 품질 보류이므로 별도 센티널을 돌려줍니다.
+    _hold = experience_hold_reason(post_data, str(cfg.get("id", "")))
+    if _hold:
+        post_data["pending_reason"] = _hold
+        logger.warning(f"⛔ 품질 보류 — 업로드하지 않음: '{post_data['title'][:60]}' — {_hold}")
+        return "EXPERIENCE_HOLD"
     blog_id = str(cfg.get("blog_id") or BLOGGER_BLOG_ID).strip()
     post_status = cfg.get("post_status") or POST_STATUS
 

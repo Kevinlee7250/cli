@@ -65,6 +65,7 @@ from config import (
 from content_generator import generate_post, generate_series_post
 from adsense_validator import validate_adsense
 from blogger_uploader import upload_post
+from experience_gate import hold_reason as experience_hold_reason
 from keyword_collector import get_trending_keywords, _migrate_used_keywords
 from dashboard_exporter import (
     log_run, export_dashboard, save_pending_posts, classify_run_outcome,
@@ -446,6 +447,19 @@ def run_once(
             logger.debug(f"  최종 편집 건너뜀 (무시): {_fe}")
         # ─────────────────────────────────────────────────────────────────────────────
 
+        # ── ③.7 경험 주장 게이트 — 마지막으로 글이 바뀐 뒤에 검사합니다 ──────────
+        _hold = experience_hold_reason(post_data, (blog_config or {}).get("id", ""))
+        if _hold:
+            logger.warning(f"  ⛔ 품질 보류 — pending 저장: '{post_data.get('title', '')}' — {_hold}")
+            post_data["status"] = "pending"
+            post_data["pending_reason"] = _hold
+            _pid = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
+            save_draft(_pid, post_data)
+            save_pending_posts([post_data], blog_config)
+            completed_posts.append(post_data)
+            success_count += 1
+            continue
+
         # ── ④ 레지스트리 등록 (pending) + 초안 저장 ─────────────────────────────────
         _post_id = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
         save_draft(_post_id, post_data)
@@ -463,6 +477,14 @@ def run_once(
                     f"({upload_try}/{MAX_UPLOAD_RETRY})"
                 )
                 time.sleep(_wait)
+
+        if result == "EXPERIENCE_HOLD":
+            update_post_status(_post_id, PostStatus.PENDING, error=post_data.get("pending_reason"))
+            post_data["status"] = "pending"
+            save_pending_posts([post_data], blog_config)
+            completed_posts.append(post_data)
+            success_count += 1
+            continue
 
         if result == "DUPLICATE":
             # 실패가 아니라 중복 가드의 정상 차단 — 실패 집계·재시도 큐에서 제외
@@ -836,8 +858,18 @@ def run_series(
         except Exception as _fe:
             logger.debug(f"  최종 편집 건너뜀 (무시): {_fe}")
 
-        result = upload_post(post_data, blog_config)
-        if result == "DUPLICATE":
+        # 경험 주장 게이트 — 걸리면 업로드하지 않고 검토 대기로 보냅니다
+        _hold = experience_hold_reason(post_data, (blog_config or {}).get("id", ""))
+        if _hold:
+            post_data["pending_reason"] = _hold
+        result = "EXPERIENCE_HOLD" if _hold else upload_post(post_data, blog_config)
+        if result == "EXPERIENCE_HOLD":
+            logger.warning(f"  ⛔ [편 {ep_num}] 품질 보류 — pending 저장: {post_data.get('pending_reason', '')}")
+            post_data["status"] = "pending"
+            pending_list.append(post_data)
+            ep["status"] = "pending_review"
+            pending_eps.append((ep, post_data))
+        elif result == "DUPLICATE":
             ep["status"] = "skipped_duplicate"
             logger.warning(f"  ⏭ 편 {ep_num} 중복 주제 — 업로드 건너뜀")
         elif result:

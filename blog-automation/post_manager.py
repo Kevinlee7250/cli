@@ -421,6 +421,12 @@ def retry_failed_posts(
         update_post_status(post_id, Status.RETRY_QUEUED)
         result = upload_post(post_data, blog_config)
 
+        if result == "EXPERIENCE_HOLD":
+            # 초안은 남기고 재시도 대상에서 뺍니다 (같은 글은 다시 해도 걸립니다)
+            update_post_status(post_id, Status.PENDING, error=post_data.get("pending_reason"))
+            counts["skipped"] += 1
+            continue
+
         if result == "DUPLICATE":
             update_post_status(post_id, Status.SKIPPED, error="중복 제목 — 업로드 건너뜀")
             delete_draft(post_id)

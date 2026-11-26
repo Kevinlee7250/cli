@@ -323,6 +323,7 @@ jobs:
         run: python sync_live_posts.py
 
       - name: 대시보드 데이터 커밋 & 푸시 (blog1)
+        id: record
         if: always()
         run: |
           git config user.name "github-actions[bot]"
@@ -351,16 +352,36 @@ jobs:
             echo "변경사항 없음 — 커밋 건너뜀"
           else
             git commit -m "📊 blog1 게시 완료 (#${{ github.run_number }})"
-            _push_ok=0
-            for i in 1 2 3; do
-              git pull --rebase --autostash origin latest \
-                && git push origin latest \
-                && { _push_ok=1; break; }
-              echo "push 재시도 $i/3..."
-              sleep $((i * 3))
-            done
-            [ "$_push_ok" = "1" ] || { echo "push 3회 실패 — 종료"; exit 1; }
+            # 충돌 시 abort·재시도, 게시가 성공했으면 기록 실패를 경고로 남깁니다
+            bash .github/scripts/commit_push.sh blog1
           fi
+
+      # 게시는 성공했고 기록 커밋만 실패한 경우 — job은 성공, 대신 눈에 띄게 알립니다
+      - name: 미반영 게시 기록 보관 (blog1)
+        if: always() && steps.record.outputs.record_failed == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: unrecorded-publish-blog1-${{ github.run_number }}
+          path: |
+            docs/data/
+            blog-automation/logs/
+          retention-days: 30
+
+      - name: 기록 실패 알림 — blog1 (텔레그램)
+        if: always() && steps.record.outputs.record_failed == 'true'
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then
+            echo "텔레그램 미설정 — 알림 건너뜀"
+            exit 0
+          fi
+          MSG="⚠️ blog1 게시 성공 · 기록 커밋 실패 (#${{ github.run_number }})
+          재실행하지 마세요 (중복 게시 위험). artifact의 기록을 반영해야 합니다.
+          로그: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            -d chat_id="$TG_CHAT" -d text="$MSG" > /dev/null && echo "알림 발송" || echo "알림 실패(무시)"
 
       - name: 로그 업로드 (blog1)
         if: always()
@@ -380,7 +401,13 @@ jobs:
             echo "텔레그램 미설정 — 알림 건너뜀"
             exit 0
           fi
-          MSG="🚨 blog1 게시 실패 (#${{ github.run_number }})
+          PUB=$(python3 -c "import json;print(json.load(open('blog-automation/logs/last_publish_summary.json'))['published'])" 2>/dev/null || echo 0)
+          if [ "$PUB" = "0" ]; then
+            HEADLINE="🚨 blog1 게시 실패"
+          else
+            HEADLINE="⚠️ blog1 게시 ${PUB}건 성공 · 후속 단계 실패 (재실행 전 확인)"
+          fi
+          MSG="${HEADLINE} (#${{ github.run_number }})
           모드: ${{ inputs.mode || 'schedule' }}
           로그: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
@@ -566,6 +593,7 @@ jobs:
         run: python sync_live_posts.py
 
       - name: 대시보드 데이터 커밋 & 푸시 (blog2)
+        id: record
         if: always()
         run: |
           git config user.name "github-actions[bot]"
@@ -592,16 +620,36 @@ jobs:
             echo "변경사항 없음 — 커밋 건너뜀"
           else
             git commit -m "📊 blog2 게시 완료 (#${{ github.run_number }})"
-            _push_ok=0
-            for i in 1 2 3; do
-              git pull --rebase --autostash origin latest \
-                && git push origin latest \
-                && { _push_ok=1; break; }
-              echo "push 재시도 $i/3..."
-              sleep $((i * 3))
-            done
-            [ "$_push_ok" = "1" ] || { echo "push 3회 실패 — 종료"; exit 1; }
+            # 충돌 시 abort·재시도, 게시가 성공했으면 기록 실패를 경고로 남깁니다
+            bash .github/scripts/commit_push.sh blog2
           fi
+
+      # 게시는 성공했고 기록 커밋만 실패한 경우 — job은 성공, 대신 눈에 띄게 알립니다
+      - name: 미반영 게시 기록 보관 (blog2)
+        if: always() && steps.record.outputs.record_failed == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: unrecorded-publish-blog2-${{ github.run_number }}
+          path: |
+            docs/data/
+            blog-automation/logs/
+          retention-days: 30
+
+      - name: 기록 실패 알림 — blog2 (텔레그램)
+        if: always() && steps.record.outputs.record_failed == 'true'
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then
+            echo "텔레그램 미설정 — 알림 건너뜀"
+            exit 0
+          fi
+          MSG="⚠️ blog2 게시 성공 · 기록 커밋 실패 (#${{ github.run_number }})
+          재실행하지 마세요 (중복 게시 위험). artifact의 기록을 반영해야 합니다.
+          로그: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            -d chat_id="$TG_CHAT" -d text="$MSG" > /dev/null && echo "알림 발송" || echo "알림 실패(무시)"
 
       - name: 로그 업로드 (blog2)
         if: always()
@@ -621,7 +669,13 @@ jobs:
             echo "텔레그램 미설정 — 알림 건너뜀"
             exit 0
           fi
-          MSG="🚨 blog2 게시 실패 (#${{ github.run_number }})
+          PUB=$(python3 -c "import json;print(json.load(open('blog-automation/logs/last_publish_summary.json'))['published'])" 2>/dev/null || echo 0)
+          if [ "$PUB" = "0" ]; then
+            HEADLINE="🚨 blog2 게시 실패"
+          else
+            HEADLINE="⚠️ blog2 게시 ${PUB}건 성공 · 후속 단계 실패 (재실행 전 확인)"
+          fi
+          MSG="${HEADLINE} (#${{ github.run_number }})
           모드: ${{ inputs.mode || 'schedule' }}
           로그: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
@@ -811,6 +865,7 @@ jobs:
         run: python sync_live_posts.py
 
       - name: 대시보드 데이터 커밋 & 푸시 (blog3)
+        id: record
         if: always()
         run: |
           git config user.name "github-actions[bot]"
@@ -837,16 +892,36 @@ jobs:
             echo "변경사항 없음 — 커밋 건너뜀"
           else
             git commit -m "📊 blog3 게시 완료 (#${{ github.run_number }})"
-            _push_ok=0
-            for i in 1 2 3; do
-              git pull --rebase --autostash origin latest \
-                && git push origin latest \
-                && { _push_ok=1; break; }
-              echo "push 재시도 $i/3..."
-              sleep $((i * 3))
-            done
-            [ "$_push_ok" = "1" ] || { echo "push 3회 실패 — 종료"; exit 1; }
+            # 충돌 시 abort·재시도, 게시가 성공했으면 기록 실패를 경고로 남깁니다
+            bash .github/scripts/commit_push.sh blog3
           fi
+
+      # 게시는 성공했고 기록 커밋만 실패한 경우 — job은 성공, 대신 눈에 띄게 알립니다
+      - name: 미반영 게시 기록 보관 (blog3)
+        if: always() && steps.record.outputs.record_failed == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: unrecorded-publish-blog3-${{ github.run_number }}
+          path: |
+            docs/data/
+            blog-automation/logs/
+          retention-days: 30
+
+      - name: 기록 실패 알림 — blog3 (텔레그램)
+        if: always() && steps.record.outputs.record_failed == 'true'
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then
+            echo "텔레그램 미설정 — 알림 건너뜀"
+            exit 0
+          fi
+          MSG="⚠️ blog3 게시 성공 · 기록 커밋 실패 (#${{ github.run_number }})
+          재실행하지 마세요 (중복 게시 위험). artifact의 기록을 반영해야 합니다.
+          로그: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            -d chat_id="$TG_CHAT" -d text="$MSG" > /dev/null && echo "알림 발송" || echo "알림 실패(무시)"
 
       - name: 로그 업로드 (blog3)
         if: always()
@@ -866,7 +941,13 @@ jobs:
             echo "텔레그램 미설정 — 알림 건너뜀"
             exit 0
           fi
-          MSG="🚨 blog3 게시 실패 (#${{ github.run_number }})
+          PUB=$(python3 -c "import json;print(json.load(open('blog-automation/logs/last_publish_summary.json'))['published'])" 2>/dev/null || echo 0)
+          if [ "$PUB" = "0" ]; then
+            HEADLINE="🚨 blog3 게시 실패"
+          else
+            HEADLINE="⚠️ blog3 게시 ${PUB}건 성공 · 후속 단계 실패 (재실행 전 확인)"
+          fi
+          MSG="${HEADLINE} (#${{ github.run_number }})
           모드: ${{ inputs.mode || 'schedule' }}
           로그: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \

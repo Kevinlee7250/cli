@@ -20,6 +20,7 @@ import logging
 import re
 
 from config import claude_generate, CLAUDE_MODEL
+from title_policy import check_title
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +57,13 @@ def _extract_sources(post_data: dict) -> str:
     if not sources:
         return "(없음)"
     return "\n".join(f"- {s.get('title','')}: {s.get('url','')}" for s in sources)
+
+
+def _claims_experience(post_data: dict, title: str) -> bool:
+    """실제 경험 자료가 없는 글의 제목이 경험을 주장하는지."""
+    allow = post_data.get("experience_mode") == "experience"
+    return any(v.startswith("경험 주장")
+               for v in check_title(title, allow_experience=allow))
 
 
 def polish_post(post_data: dict) -> dict:
@@ -250,7 +258,10 @@ alt text는 구체적으로 — "이미지"처럼 쓰지 말 것.
 
         # 제목
         new_title = (result.get("seo_title") or "").strip()
-        if new_title and new_title != title:
+        if new_title and new_title != title and _claims_experience(post_data, new_title):
+            # 생성 단계에서 걸러낸 제목에 편집 단계가 경험 표현을 되살리는 것을 막습니다.
+            logger.warning(f"  ⚠️ 교정 제목에 경험 주장 — 기존 제목 유지: '{new_title}'")
+        elif new_title and new_title != title:
             post_data["title"] = new_title
             logger.info(f"  ✏️ 제목 최종 교정: '{title}' → '{new_title}'")
             changed = True

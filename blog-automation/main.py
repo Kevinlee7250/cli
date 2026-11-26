@@ -65,6 +65,7 @@ from config import (
 from content_generator import generate_post, generate_series_post
 from adsense_validator import validate_adsense
 from blogger_uploader import upload_post
+from experience_gate import check_experience_claims, format_reason
 from keyword_collector import get_trending_keywords, _migrate_used_keywords
 from dashboard_exporter import (
     log_run, export_dashboard, save_pending_posts, classify_run_outcome,
@@ -445,6 +446,20 @@ def run_once(
         except Exception as _fe:
             logger.debug(f"  최종 편집 건너뜀 (무시): {_fe}")
         # ─────────────────────────────────────────────────────────────────────────────
+
+        # ── ③.7 경험 주장 게이트 — 최종 편집까지 끝난 글을 검사, 걸리면 품질 보류 ──
+        _claims = check_experience_claims(post_data, (blog_config or {}).get("id", ""))
+        if _claims:
+            post_data["status"] = "pending"
+            post_data["pending_reason"] = format_reason(_claims)
+            post_data["experience_gate"] = _claims[:10]
+            logger.warning(f"  ⚠️ {post_data['pending_reason']} — pending 저장")
+            _pid = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
+            save_draft(_pid, post_data)
+            save_pending_posts([post_data], blog_config)
+            completed_posts.append(post_data)
+            success_count += 1
+            continue
 
         # ── ④ 레지스트리 등록 (pending) + 초안 저장 ─────────────────────────────────
         _post_id = register_post(post_data, PostStatus.PENDING, blog_config, source=_source, run_number=_run_number)
@@ -835,6 +850,19 @@ def run_series(
             post_data = polish_post(post_data)
         except Exception as _fe:
             logger.debug(f"  최종 편집 건너뜀 (무시): {_fe}")
+
+        _claims = check_experience_claims(post_data, (blog_config or {}).get("id", ""))
+        if _claims:
+            post_data["status"] = "pending"
+            post_data["pending_reason"] = format_reason(_claims)
+            post_data["experience_gate"] = _claims[:10]
+            logger.warning(f"  ⚠️ [편 {ep_num}] {post_data['pending_reason']} — pending 저장")
+            pending_list.append(post_data)
+            ep["status"] = "pending_review"
+            pending_eps.append((ep, post_data))
+            generated_posts.append(post_data)
+            save_series(series_plan)
+            continue
 
         result = upload_post(post_data, blog_config)
         if result == "DUPLICATE":

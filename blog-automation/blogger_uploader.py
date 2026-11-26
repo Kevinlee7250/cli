@@ -605,6 +605,14 @@ def upload_post(post_data: dict, blog_config: dict | None = None) -> dict | None
     blog_id = str(cfg.get("blog_id") or BLOGGER_BLOG_ID).strip()
     post_status = cfg.get("post_status") or POST_STATUS
 
+    # 마지막 방어선 — 수동 발행·재시도 경로도 근거 없는 경험 주장은 공개하지 않습니다.
+    if post_status == "live":
+        from experience_gate import check_experience_claims, format_reason
+        claims = check_experience_claims(post_data, cfg.get("id", ""))
+        if claims:
+            logger.error(f"❌ 업로드 차단 — {format_reason(claims)}")
+            return None
+
     # blog_id 사전 검증 — 비어있으면 즉시 실패 (URL이 .../blogs//posts 가 됨)
     if not blog_id:
         logger.error(

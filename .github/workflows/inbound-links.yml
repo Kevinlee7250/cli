@@ -109,9 +109,11 @@ jobs:
             echo "변경 없음"
           else
             git commit -m "🔗 역방향 내부 링크 (#${{ github.run_number }})"
-            for i in 1 2 3; do
-              git pull --rebase --autostash origin latest \
-                && git push origin latest && break
-              sleep $((i * 3))
-            done
+            # 공용 push 스크립트(AIOPS-59)로 올립니다 (AIOPS-65 ③).
+            # 예전 3회 재시도는 rebase 충돌이 나면 rebase를 중단하지 않아
+            # 2·3회차가 "unmerged files"로 헛돌았고, 마지막 sleep이 성공해
+            # 기록이 안 올라가도 job은 초록불이었습니다(2026-11-25 #390 충돌 당시).
+            # 스크립트는 rebase를 정리하고, 이 두 보고서 JSON 충돌은 이번
+            # 실행 결과로 해결하며, 5회 모두 실패하면 job을 실패로 표시합니다.
+            bash .github/scripts/commit_push.sh inbound-links
           fi

@@ -228,13 +228,14 @@ def run_once(
             )
 
     # 시리즈 키워드를 단독 목록에서 제거하고 먼저 시리즈 실행
+    series_tally: dict | None = None
     if auto_series_keyword:
         remaining = [kw for kw in keywords if kw != auto_series_keyword][:POSTS_PER_RUN - 1]
         logger.info(
             f"[자동 시리즈] '{auto_series_keyword}' {AUTO_SERIES_COUNT}편 기획 시작 "
             f"(이후 단독 포스트 {len(remaining)}개)"
         )
-        run_series(auto_series_keyword, AUTO_SERIES_COUNT, series_plan=auto_series_plan, blog_config=blog_config)
+        series_tally = run_series(auto_series_keyword, AUTO_SERIES_COUNT, series_plan=auto_series_plan, blog_config=blog_config)
         keywords = remaining
     else:
         keywords = keywords[:POSTS_PER_RUN]
@@ -579,18 +580,23 @@ def run_once(
     except Exception as e:
         logger.warning(f"대시보드 업데이트 실패 (무시): {e}")
 
+    # 자동 시리즈 결과를 이번 실행 집계에 합칩니다 (AIOPS-65 ④-가).
+    # 2026-11-27 blog1: 시리즈 1·2편 생성 실패, 3편 검토 대기였는데 run_series가
+    # None을 돌려줘 집계에서 빠졌고, 결과가 "발행 시도 없음·실패 0"(idle)으로
+    # 남아 실패 알림도 건너뛰었습니다.
+    st = series_tally or {}
     return {
         "blog": cfg.get("name") or "기본",
-        "attempted": success_count + fail_count,
+        "attempted": success_count + fail_count + st.get("attempted", 0),
         # success_count는 pending 저장(품질 미달·글자 수 미달)까지 성공으로 셉니다.
         # 블로그에 실제로 올라간 건수는 blogger_count뿐이라, 발행 여부를 판단할
         # 때는 반드시 이 값을 봐야 합니다. 이걸 구분하지 않으면 "성공 1건"인데
         # 블로그는 비어 있는 상태를 놓칩니다 (2026-08-22 확인).
-        "published": blogger_count,
-        "pending": max(0, success_count - blogger_count),
-        "success": success_count,
-        "failed": fail_count,
-        "errors": list(error_messages),
+        "published": blogger_count + st.get("published", 0),
+        "pending": max(0, success_count - blogger_count) + st.get("pending", 0),
+        "success": success_count + st.get("published", 0) + st.get("pending", 0),
+        "failed": fail_count + st.get("failed", 0),
+        "errors": list(error_messages) + list(st.get("errors", [])),
     }
 
 
@@ -686,8 +692,13 @@ def run_series(
     review: bool = False,
     series_plan: dict | None = None,  # 기획이 이미 완료된 경우 바로 전달
     blog_config: dict | None = None,
-) -> None:
-    """시리즈 포스트를 순서대로 기획·생성·게시합니다."""
+) -> dict:
+    """시리즈 포스트를 순서대로 기획·생성·게시합니다.
+
+    Returns: 이번 실행에서 처리한 편만 센 집계
+      {"attempted", "published", "pending", "failed", "errors"}
+    이전 실행에서 이미 done/pending_review 인 편, 예약일 전 편은 세지 않습니다.
+    """
     from series_planner import plan_series, build_series_nav, save_series, save_series_with_blog
 
     cfg = blog_config or {}
@@ -701,7 +712,8 @@ def run_series(
         series_plan = plan_series(keyword, count, blog_config=blog_config)
     if not series_plan:
         logger.error("시리즈 기획 실패 — 종료")
-        return
+        return {"attempted": 1, "published": 0, "pending": 0, "failed": 1,
+                "errors": [f"시리즈 기획 실패: {keyword}"]}
     # blog_id 태깅 보장
     if cfg.get("id") and not series_plan.get("blog_id"):
         series_plan["blog_id"] = cfg["id"]
@@ -717,6 +729,8 @@ def run_series(
     # series.json에는 들어가지 않습니다 (회차 레코드를 오염시키면 안 됩니다).
     pending_eps: list[tuple[dict, dict]] = []
     episodes = series_plan.get("episodes", [])
+    # 실행 전 상태를 적어 두고, 끝난 뒤 바뀐 편만 이번 실행 결과로 셉니다
+    status_before = [ep.get("status") for ep in episodes]
 
     from datetime import date as _date
     today_str = _date.today().isoformat()
@@ -940,6 +954,38 @@ def run_series(
     logger.info("\n" + "=" * 60)
     logger.info(f"{blog_label}시리즈 완료: {uploaded}/{len(episodes)}편 성공")
     logger.info("=" * 60)
+
+    return _series_run_tally(episodes, status_before)
+
+
+_SERIES_FAILED = ("failed", "upload_failed", "rejected_policy")
+
+
+def _series_run_tally(episodes: list[dict], status_before: list) -> dict:
+    """run_series 한 번에서 상태가 바뀐 편만 세어 run_once 집계 형식으로 돌려줍니다.
+
+    rejected_policy(애드센스 정책 위반)는 단독 글과 같이 실패로 셉니다.
+    skipped_duplicate·scheduled 는 시도로 세지 않습니다.
+    """
+    changed = [
+        ep for i, ep in enumerate(episodes)
+        if i >= len(status_before) or ep.get("status") != status_before[i]
+    ]
+    published = sum(1 for ep in changed if ep.get("status") == "done")
+    pending = sum(1 for ep in changed if ep.get("status") == "pending_review")
+    failed_eps = [ep for ep in changed if ep.get("status") in _SERIES_FAILED]
+    reason = {"failed": "생성 실패", "upload_failed": "Blogger 업로드 실패",
+              "rejected_policy": "애드센스 정책 위반"}
+    return {
+        "attempted": published + pending + len(failed_eps),
+        "published": published,
+        "pending": pending,
+        "failed": len(failed_eps),
+        "errors": [
+            f"시리즈 편 {ep.get('episode')} {reason[ep['status']]}: {ep.get('title', '')}"
+            for ep in failed_eps
+        ],
+    }
 
 
 # ──────────────────────────────────────────────────────────────────────────────

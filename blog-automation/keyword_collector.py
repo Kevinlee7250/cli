@@ -968,10 +968,29 @@ def _claude_ai_keywords(
 # 시즌 예약 키워드 로드 (trend_scheduler.py가 생성한 큐)
 # ──────────────────────────────────────────────────────────────────────────────
 
+# 행사일 뒤 며칠까지 시즌 예약 키워드를 쓸지. 환경변수로 조정할 수 있습니다.
+def _season_expire_days() -> int:
+    try:
+        return max(0, int(os.getenv("SEASON_KEYWORD_EXPIRE_DAYS", "3")))
+    except ValueError:
+        return 3
+
+
+def _season_expired(item: dict, today: datetime) -> bool:
+    """event_date + 허용일수가 오늘보다 앞이면 True. event_date가 없거나 형식이 틀리면 False."""
+    ev = str(item.get("event_date") or "")[:10]
+    try:
+        ev_day = datetime.strptime(ev, "%Y-%m-%d")
+    except ValueError:
+        return False
+    return today.date() > (ev_day + timedelta(days=_season_expire_days())).date()
+
+
 def _load_scheduled_keywords(today: datetime | None = None, blog_id: str = "") -> list[str]:
     """
     logs/scheduled_keywords.json 큐에서 오늘 포스팅을 시작할 시즌 예약 키워드를 로드합니다.
     - scheduledFor <= 오늘 이면서 consumed=False 인 항목만 반환
+    - 행사일(event_date)로부터 SEASON_KEYWORD_EXPIRE_DAYS일(기본 3일)이 지난 항목은 제외
     - blog_id가 주어지면 해당 블로그 전용(blog_id 일치) 또는 공용(blog_id 빈값) 항목만 반환
     - 우선순위(priority) → trendScore 순으로 정렬
     """
@@ -988,10 +1007,19 @@ def _load_scheduled_keywords(today: datetime | None = None, blog_id: str = "") -
 
         queue = data.get("queue", [])
         eligible = []
+        expired: list[str] = []
         for item in queue:
             if item.get("consumed", False):
                 continue
             if item.get("scheduledFor", "9999-99-99") > today_str:
+                continue
+            # 행사가 지난 지 SEASON_KEYWORD_EXPIRE_DAYS일이 넘은 항목은 쓰지 않습니다 (AIOPS-65 ④-나).
+            # 2026-11-27 blog3에 11/11 빼빼로데이 글이 "출시 초반에 확인" 같은 구매 전
+            # 안내와 함께 발행됐습니다. 그날 쓸 수 있는 미사용 예약 36건 중 21건이
+            # 이미 지난 행사(추석·할로윈·빼빼로·수능)였습니다. "끝나고/후기"형 키워드를
+            # 위해 행사 뒤 며칠은 허용합니다.
+            if _season_expired(item, today):
+                expired.append(item.get("keyword", ""))
                 continue
             # blog_id 필터: 큐 항목의 blog_id가 빈값(공용)이거나 현재 블로그와 일치할 때만 포함
             item_blog = item.get("blog_id", "")
@@ -1002,6 +1030,8 @@ def _load_scheduled_keywords(today: datetime | None = None, blog_id: str = "") -
         # 우선순위(낮을수록 높음) → trendScore 내림차순 정렬
         eligible.sort(key=lambda x: (x.get("priority", 9), -x.get("trendScore", 1.0)))
         result = [item["keyword"] for item in eligible]
+        if expired:
+            logger.info(f"행사가 지난 시즌 예약 키워드 {len(expired)}개 제외: {expired[:3]}{'...' if len(expired)>3 else ''}")
         if result:
             logger.info(f"시즌 예약 키워드 {len(result)}개 로드 (blog={blog_id or '공용'}): {result[:3]}{'...' if len(result)>3 else ''}")
         return result

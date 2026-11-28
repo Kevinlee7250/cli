@@ -1,0 +1,107 @@
+name: 🩺 운영 감시 (조용한 실패 · 제휴 링크 규칙 · 블로그 간 중복)
+
+# 2026-11-29 오너 지시 "전체를 순차적으로 만들어"(결재 사무실 기능 4·5·6).
+# 세 가지 모두 읽기 전용입니다. 글·설정·발행은 바꾸지 않고 보고서 JSON만 씁니다.
+#   silent_failure_watch.py  — 매일 갱신돼야 할 자료·블로그별 발행이 멈췄는지
+#   link_policy_audit.py     — 공개 글의 제휴 링크가 채널 규칙을 지키는지
+#   cross_blog_dup_report.py — 블로그 3개 사이에 같은 주제 글이 공개됐는지
+#
+# 시각: 매일 10:10 KST (UTC 01:10). gsc-indexing(09:00 KST)과 blog-run(07:00 KST)
+# 뒤에 돌아야 그날 갱신 여부를 볼 수 있습니다.
+on:
+  schedule:
+    - cron: '10 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ops-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v5
+        with:
+          ref: latest
+
+      - name: Python 3.11 설정
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: blog-automation/requirements.txt
+
+      - name: 의존성 설치
+        working-directory: blog-automation
+        run: pip install -r requirements.txt
+
+      - name: .env 파일 생성
+        working-directory: blog-automation
+        run: |
+          cat > .env << 'ENVEOF'
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          GOOGLE_REFRESH_TOKEN="${{ secrets.GOOGLE_REFRESH_TOKEN }}"
+          BLOGGER_BLOG_ID="${{ secrets.BLOGGER_BLOG_ID }}"
+          BLOGS_CONFIG='${{ secrets.BLOGS_CONFIG }}'
+          LOG_LEVEL=info
+          ENVEOF
+
+      - name: 조용한 실패 감시
+        id: silent
+        working-directory: blog-automation
+        continue-on-error: true
+        run: python silent_failure_watch.py
+
+      - name: 제휴 링크 규칙 점검 (공개 글)
+        id: links
+        working-directory: blog-automation
+        continue-on-error: true
+        run: python link_policy_audit.py --source live
+
+      - name: 블로그 간 중복 주제 보고서
+        working-directory: blog-automation
+        continue-on-error: true
+        run: python cross_blog_dup_report.py
+
+      - name: 리포트 커밋 & 푸시
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # docs/.gitignore(npm/cli 템플릿)가 docs/* 를 무시하므로 -f 필요
+          for f in docs/data/silent_failures.json docs/data/link_policy.json docs/data/cross_blog_dups.json; do
+            [ -f "$f" ] && git add -f "$f"
+          done
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+            exit 0
+          fi
+          git commit -m "🩺 운영 감시 (#${{ github.run_number }})"
+          # 세 파일은 매번 통째로 다시 만드는 보고서라, 충돌하면 이번 실행 결과를 씁니다.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase -X theirs origin latest && git push origin HEAD:latest; then exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            echo "push 재시도 $i/5..."; sleep $((i * 5))
+          done
+          echo "::error title=운영 감시 기록 실패::보고서를 latest에 올리지 못했습니다"
+          exit 1
+
+      - name: 결과 표시
+        if: always()
+        run: |
+          # 문제를 찾았으면 실행 화면에 빨간 표시를 남깁니다(보고서는 이미 올라갔습니다).
+          if [ "${{ steps.silent.outcome }}" = "failure" ]; then
+            echo "::error title=조용한 실패 감지::docs/data/silent_failures.json 을 확인하세요"
+            exit 1
+          fi
+          if [ "${{ steps.links.outcome }}" = "failure" ]; then
+            echo "::warning title=제휴 링크 점검 불완전::일부 블로그 글 목록을 끝까지 읽지 못했습니다"
+          fi

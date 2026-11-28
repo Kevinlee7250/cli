@@ -66,7 +66,9 @@ from content_generator import generate_post, generate_series_post
 from adsense_validator import validate_adsense
 from blogger_uploader import upload_post
 from experience_gate import hold_reason as experience_hold_reason
-from keyword_collector import get_trending_keywords, _migrate_used_keywords
+from keyword_collector import (
+    get_trending_keywords, filter_published_duplicates, _migrate_used_keywords,
+)
 from dashboard_exporter import (
     log_run, export_dashboard, save_pending_posts, classify_run_outcome,
 )
@@ -172,7 +174,9 @@ def run_once(
                         learned = _json.load(_f)
                     need = collect_count - len(keywords)
                     existing_set = set(keywords)
-                    extras = [kw for kw in learned if kw not in existing_set][:need]
+                    candidates = [kw for kw in learned if kw not in existing_set]
+                    # 학습 키워드도 공개 중인 글과 겹치면 쓰지 않습니다 (AIOPS-86)
+                    extras = filter_published_duplicates(candidates, cfg.get("id", ""))[:need]
                     if extras:
                         keywords += extras
                         logger.info(f"학습 키워드 {len(extras)}개 보완: {extras}")

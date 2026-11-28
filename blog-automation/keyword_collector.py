@@ -487,7 +487,7 @@ def _load_recent_post_corpus(limit_runs: int = 30, blog_id: str = "") -> list[st
     과거 default로 기록된 이력은 blog1 소속으로 간주합니다.
     """
     if not os.path.exists(_HISTORY_FILE):
-        return []
+        return _load_live_post_corpus(blog_id)
 
     def _matches(entry_blog_id: str) -> bool:
         if not blog_id:
@@ -512,13 +512,28 @@ def _load_recent_post_corpus(limit_runs: int = 30, blog_id: str = "") -> list[st
                 if post.get("title"):
                     corpus.append(post["title"])
         corpus.extend(_load_registry_corpus(blog_id))
+        corpus.extend(_load_live_post_corpus(blog_id))
         return corpus
     except Exception as e:
         logger.debug(f"포스팅 이력 로드 실패: {e}")
-        return _load_registry_corpus(blog_id)
+        return _load_registry_corpus(blog_id) + _load_live_post_corpus(blog_id)
 
 
 _REGISTRY_FILE = os.path.join(os.path.dirname(__file__), "logs", "post_registry.json")
+# sync_live_posts.py가 적는 '지금 공개 중인 글'의 주소 목록
+_LIVE_POSTS_FILE = os.path.join(
+    os.path.dirname(__file__), "..", "docs", "data", "live_posts.json"
+)
+
+
+def _entry_in_blog(post: dict, blog_id: str) -> bool:
+    """레지스트리 항목이 해당 블로그 소속인지. default·빈값은 blog1로 봅니다."""
+    if not blog_id:
+        return True
+    entry_blog = post.get("blogId", "")
+    if entry_blog in ("default", ""):
+        return blog_id in ("blog1", "default")
+    return entry_blog == blog_id
 
 
 def _load_registry_corpus(blog_id: str = "", days: int = 30) -> list[str]:
@@ -542,10 +557,7 @@ def _load_registry_corpus(blog_id: str = "", days: int = 30) -> list[str]:
                 continue
             if p.get("createdAt", "") < cutoff:
                 continue
-            entry_blog = p.get("blogId", "")
-            if blog_id and entry_blog not in ("default", "") and entry_blog != blog_id:
-                continue
-            if blog_id and entry_blog in ("default", "") and blog_id not in ("blog1", "default"):
+            if not _entry_in_blog(p, blog_id):
                 continue
             if p.get("title"):
                 corpus.append(p["title"])
@@ -555,6 +567,45 @@ def _load_registry_corpus(blog_id: str = "", days: int = 30) -> list[str]:
     except Exception as e:
         logger.debug(f"레지스트리 코퍼스 로드 실패: {e}")
         return []
+
+
+def _load_live_post_corpus(blog_id: str = "") -> list[str]:
+    """지금 공개 중인 글 전체의 제목·키워드 (발행일 제한 없음, AIOPS-86).
+
+    30일 코퍼스만 보면 그보다 오래된 공개 글과 같은 주제가 다시 선정됩니다
+    (2026-11-28 blog2 호텔 AI 컨시어지: 9/19·10/20 글이 공개 중인데 11/28 재발행).
+
+    공개 여부는 live_posts.json의 주소로 판단합니다. 비공개로 내린 글은 빠집니다.
+    제목은 post_registry에서 가져오므로 레지스트리에 없는 옛 글은 비교하지 못합니다.
+    파일이 없거나 깨졌으면 빈 목록을 돌려주어 기존 30일 기준으로 동작합니다.
+    """
+    try:
+        with open(_LIVE_POSTS_FILE, encoding="utf-8") as f:
+            live_urls = set(json.load(f).get("urls") or [])
+        if not live_urls:
+            return []
+        with open(_REGISTRY_FILE, encoding="utf-8") as f:
+            registry = json.load(f)
+        corpus = []
+        for p in registry:
+            if p.get("status") != "published" or p.get("blogUrl") not in live_urls:
+                continue
+            if not _entry_in_blog(p, blog_id):
+                continue
+            if p.get("title"):
+                corpus.append(p["title"])
+            if p.get("keyword"):
+                corpus.append(p["keyword"])
+        return corpus
+    except Exception as e:
+        logger.warning(f"공개 글 코퍼스 로드 실패 — 30일 이력만 비교합니다: {e}")
+        return []
+
+
+def filter_published_duplicates(keywords: list[str], blog_id: str = "") -> list[str]:
+    """공개 중인 글과 주제가 겹치는 키워드를 뺀 목록 (대체 키워드 경로용)."""
+    corpus = _load_live_post_corpus(blog_id)
+    return [kw for kw in keywords if not _is_too_similar(kw, corpus)]
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -1351,7 +1402,9 @@ def get_trending_keywords(
         logger.info(f"유사 주제 제외 {len(rejected_similar)}개: {rejected_similar[:5]}")
 
     # 그래도 부족하면 유사도 기준을 낮춰서 재시도 (유사도 검사는 완화된 임계값으로 재실행)
+    # 아래 대체 경로에서도 공개 중인 글과 겹치는 후보는 기본 기준으로 계속 제외합니다.
     result_set = set(result)
+    live_corpus = _load_live_post_corpus(blog_id) if len(result) < count else []
     if len(result) < count:
         logger.warning(f"선정 키워드 부족 ({len(result)}/{count}) — 유사도 기준 완화하여 재시도")
         relaxed_corpus = list(session_corpus)
@@ -1359,7 +1412,9 @@ def get_trending_keywords(
             kw = kw.strip()
             if not kw or kw in result_set or kw in active_used_set:
                 continue
-            if _is_too_similar(kw, relaxed_corpus, threshold=0.6):  # 완화된 기준 0.6 (기본 0.5보다 높음)
+            if _is_too_similar(kw, relaxed_corpus, threshold=0.6):  # 완화된 기준 0.6 (기본 0.55보다 높음)
+                continue
+            if _is_too_similar(kw, live_corpus):
                 continue
             result.append(kw)
             result_set.add(kw)
@@ -1374,10 +1429,18 @@ def get_trending_keywords(
             kw = kw.strip()
             if not kw or kw in result_set:
                 continue
+            if _is_too_similar(kw, live_corpus + result):
+                continue
             result.append(kw)
             result_set.add(kw)
             if len(result) >= count:
                 break
+
+    if len(result) < count:
+        logger.warning(
+            f"공개 글과 겹치지 않는 후보가 모자랍니다 ({len(result)}/{count}) — "
+            "겹치는 주제는 발행하지 않습니다"
+        )
 
     # 시즌 예약 키워드 consumed 마킹 (result에 포함된 것만)
     season_used = [kw for kw in result if keyword_sources.get(kw) == "season_scheduled"]

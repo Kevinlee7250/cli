@@ -137,6 +137,19 @@ def run_once(
     logger.info(f"{blog_label}블로그 자동화 시작: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     logger.info("=" * 60)
 
+    # 색인율 연동 발행량 조절 (기능 스위치 index_rate_throttle, 기본 꺼짐 · 2026-11-29).
+    # 자동 키워드 실발행만 대상입니다. 건너뛰면 '시도 0건'(idle)으로 끝나 실패로 세지 않습니다.
+    if not keywords and not dry_run and not review:
+        from feature_flags import is_enabled
+        if is_enabled("index_rate_throttle"):
+            from index_throttle import decide as _throttle_decide
+            _td = _throttle_decide(cfg)
+            logger.info(f"{blog_label}색인율 연동 발행 조절: {_td['reason']}")
+            if _td["skip"]:
+                return {"blog": cfg.get("name") or "기본", "attempted": 0, "published": 0,
+                        "pending": 0, "success": 0, "failed": 0, "errors": [],
+                        "throttled": _td["reason"]}
+
     # 수동 키워드가 있으면 포스팅 이력 대비 유사도 사전 점검 (경고만, 차단 없음)
     if keywords:
         try:

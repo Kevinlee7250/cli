@@ -26,6 +26,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 import requests
+import season_calendar
 from config import claude_text
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -63,7 +64,8 @@ _CATEGORY_BLOG_MAP: dict[str, str] = {
 
 # ──────────────────────────────────────────────────────────────────────────────
 # 한국 연간 시즌 이벤트 캘린더
-# - month / day: 이벤트 기준일 (음력 이벤트는 평균 양력 날짜 사용)
+# - month / day: 이벤트 기준일 (음력·요일 이벤트는 평균 양력 날짜 — 그해 실제
+#   날짜는 season_calendar.resolve()가 정합니다. 2026-11-29)
 # - lead_days: 며칠 전부터 포스트 예약 시작
 # - base_keywords: Claude 확장의 씨앗 키워드
 # - category: 주제 분류 (finance / travel / life / health / drama / kpop)
@@ -103,6 +105,12 @@ SEASONAL_EVENTS = [
         "category": "travel",
     },
     {
+        "month": 3, "day": 14, "name": "화이트데이",  # 2026-11-29 추가
+        "lead_days": 14,
+        "base_keywords": ["화이트데이 선물 추천", "화이트데이 사탕 선물 가격 비교", "화이트데이 데이트 코스"],
+        "category": "life",
+    },
+    {
         "month": 3, "day": 15, "name": "봄벚꽃예고",
         "lead_days": 21,
         "base_keywords": ["벚꽃 명소 추천", "서울 벚꽃 개화 시기", "벚꽃 드라이브 코스", "봄꽃 여행"],
@@ -133,6 +141,12 @@ SEASONAL_EVENTS = [
         "lead_days": 14,
         "base_keywords": ["어버이날 선물 추천", "부모님 선물", "어버이날 맛집", "카네이션 선물"],
         "category": "life",
+    },
+    {
+        "month": 5, "day": 20, "name": "부처님오신날",  # 음력 4.8 — 실제 날짜는 season_calendar (2026-11-29 추가)
+        "lead_days": 14,
+        "base_keywords": ["부처님오신날 연휴 여행지", "연등회 일정 관람 팁", "사찰 템플스테이 예약"],
+        "category": "travel",
     },
     {
         "month": 5, "day": 15, "name": "스승의날",
@@ -216,6 +230,12 @@ SEASONAL_EVENTS = [
         "month": 11, "day": 11, "name": "빼빼로데이",
         "lead_days": 7,
         "base_keywords": ["빼빼로데이 선물", "11월 선물 추천", "과자 선물 세트"],
+        "category": "life",
+    },
+    {
+        "month": 11, "day": 27, "name": "블랙프라이데이",  # 11월 넷째 목요일 다음 날 — season_calendar (2026-11-29 추가)
+        "lead_days": 10,
+        "base_keywords": ["블랙프라이데이 직구 방법", "블랙프라이데이 가전 할인 비교", "해외직구 관부가세 기준"],
         "category": "life",
     },
     {
@@ -339,7 +359,8 @@ def get_upcoming_events(today: datetime, window_days: int = 14) -> list[dict]:
     for ev in SEASONAL_EVENTS:
         for y in (year, year + 1):  # 연말 이벤트가 다음 해로 넘어갈 수 있음
             try:
-                event_date = datetime(y, ev["month"], ev["day"])
+                # 음력·요일로 정해지는 날은 그해 실제 날짜로 (season_calendar 참고)
+                event_date, basis = season_calendar.resolve(ev, y)
             except ValueError:
                 continue
 
@@ -349,12 +370,16 @@ def get_upcoming_events(today: datetime, window_days: int = 14) -> list[dict]:
             # 이미 지났거나 window_days보다 먼 경우 제외
             if days_until_start < -1 or days_until_start > window_days:
                 continue
+            if basis == "missing":
+                logger.warning(f"[{ev['name']}] {y}년 정확한 날짜가 없어 평균 날짜({ev['month']}/{ev['day']})로 "
+                               f"예약합니다 — season_calendar.EXACT 에 {y}년을 추가하세요")
 
             upcoming.append({
                 **ev,
                 "event_date": event_date.strftime("%Y-%m-%d"),
                 "start_date": start_date.strftime("%Y-%m-%d"),
                 "days_until_start": days_until_start,
+                "date_basis": basis,
             })
 
     # 시작일 순 정렬
@@ -627,6 +652,7 @@ def run_scheduler(
                 "keyword": kw,
                 "event": ev["name"],
                 "event_date": ev["event_date"],
+                "date_basis": ev.get("date_basis", "approx"),
                 "scheduledFor": ev["start_date"],
                 "category": ev["category"],
                 "blog_id": _CATEGORY_BLOG_MAP.get(ev["category"], ""),
